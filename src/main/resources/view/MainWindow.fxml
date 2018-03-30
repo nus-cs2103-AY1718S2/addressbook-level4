@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ListView?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="450" minHeight="600">
   <icons>
@@ -66,7 +67,7 @@
 
             <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
           </VBox>
-          <VBox fx:id="test1" style="-fx-background-color:yellow" maxWidth="400" translateX="400"/>
+          <ListView fx:id="notificationCenter"  styleClass="notification-list-cell" maxWidth="330" translateX="330" opacity="0.9"/>
         </children>
       </StackPane>
     </Scene>

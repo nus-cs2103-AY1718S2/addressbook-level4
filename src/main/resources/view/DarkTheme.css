@@ -89,10 +89,10 @@
 }
 
 .list-view {
-    -fx-background-insets: 0;
-    -fx-padding: 0;
-    -fx-background-color: derive(#1d1d1d, 20%);
-}
+     -fx-background-insets: 0;
+     -fx-padding: 0;
+     -fx-background-color: derive(#1d1d1d, 20%);
+ }
 
 .list-cell {
     -fx-label-padding: 0 0 0 0;
@@ -116,6 +116,22 @@
     -fx-border-color: #3e7b91;
     -fx-border-width: 1;
 }
+
+.notification-list-cell {
+    -fx-padding: 15px;
+}
+
+.notification-list-cell:filled:even {
+    -fx-background-color: #3333ff;
+}
+
+.notification-list-cell:filled:odd {
+    -fx-background-color: #3399ff;
+}
+
+    .notification-list-cell:empty {
+        -fx-background-color: #3333ff;;
+    }
 
 .cell_big_label {
     -fx-font-family: "Segoe UI Semibold";

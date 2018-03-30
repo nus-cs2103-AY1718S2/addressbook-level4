@@ -3,6 +3,7 @@ package seedu.address.ui;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
+import seedu.address.model.notification.Notification;
 
 /**
  * An UI component that displays information of a {@code Notification}.
@@ -62,5 +63,25 @@ public class NotificationCard extends UiPart<Region> {
 
     public String getOwnerId() {
         return ownerId;
+    }
+
+    public String getTitle() {
+        return title.getText();
+    }
+
+    public String getIndex() {
+        return index.getText();
+    }
+
+    public String getOwnerName() {
+        return ownerName.getText();
+    }
+
+    public String getEndTime() {
+        return endTime.getText();
+    }
+
+    public NotificationCard getCopy() {
+       return new NotificationCard(getTitle(), getIndex(), getOwnerName(), getEndTime(), getOwnerId());
     }
 }

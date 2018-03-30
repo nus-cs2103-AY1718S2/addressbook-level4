@@ -322,7 +322,7 @@ Figure 3. Example of add Group
 
 === Display Calendar : `display` `[coming in v2.0]`
 
-Show all the group meeting in list in Calendar in time order.+
+Show all the group meeting in list in Calendar in time order. +
 Alias: `d` +
 Format: `display`
 

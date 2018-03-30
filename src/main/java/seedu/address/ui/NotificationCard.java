@@ -21,18 +21,23 @@ public class NotificationCard extends UiPart<Region> {
     @FXML
     private Label title;
     @FXML
-    private Label id;
+    private Label index;
     @FXML
     private Label ownerName;
     @FXML
     private Label endTime;
 
-    public NotificationCard(String title, String displayedIndex, String ownerName, String endTime) {
+    private String ownerId;
+
+
+    public NotificationCard(String title, String displayedIndex, String ownerName, String endTime, String ownerId) {
         super(FXML);
-        id.setText(displayedIndex + ". ");
+        this.index.setText(displayedIndex + ". ");
         this.title.setText(title);
         this.ownerName.setText(ownerName);
         this.endTime.setText(endTime);
+        this.ownerId = ownerId;
+
     }
 
     @Override
@@ -49,9 +54,13 @@ public class NotificationCard extends UiPart<Region> {
 
         // state check
         NotificationCard card = (NotificationCard) other;
-        return id.getText().equals(card.id.getText())
+        return index.getText().equals(card.index.getText())
                 && title.equals(((NotificationCard) other).title)
                 && ownerName.equals(((NotificationCard) other).ownerName)
                 && endTime.equals(((NotificationCard) other).endTime);
+    }
+
+    public String getOwnerId() {
+        return ownerId;
     }
 }

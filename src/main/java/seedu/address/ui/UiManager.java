@@ -163,8 +163,8 @@ public class UiManager extends ComponentManager implements Ui {
             e.printStackTrace();
         }
 
-        trayIcon.displayMessage("Task ended", event.getOwnerName() + " has " + event.getTitle()
-                + " ended at " + event.getEndTime(), TrayIcon.MessageType.INFO);
+        trayIcon.displayMessage("Task ended", event.getOwnerName() + " has " + event.getNotification().getTitle()
+                + " ended at " + event.getNotification().getEndDateDisplay(), TrayIcon.MessageType.INFO);
 
     }
 }

@@ -3,8 +3,6 @@ package seedu.address.ui;
 import static seedu.address.logic.commands.ChangeThemeCommand.BRIGHT_THEME_CSS_FILE_NAME;
 import static seedu.address.logic.commands.ChangeThemeCommand.DARK_THEME_CSS_FILE_NAME;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -48,6 +46,8 @@ public class MainWindow extends UiPart<Stage> {
     private static final String FXML = "MainWindow.fxml";
     private static final int ENTER = -1;
     private static final int EXIT = 1;
+    private static final int DOWN = 1;
+    private static final int UP = -1;
     private static final int NOTIFICATION_CARD_WIDTH = 300;
     private static final int NOTIFICATION_CARD_HEIGHT = 100;
     private static final int NOTIFICATION_CARD_X_OFFSET = 15;
@@ -66,9 +66,9 @@ public class MainWindow extends UiPart<Stage> {
     private Config config;
     private UserPrefs prefs;
 
-    private LinkedList<ShowNotificationEvent> notificationsDisplayed;
-    private LinkedList<ShowNotificationEvent> notificationsHidden;
-    private HashMap<ShowNotificationEvent, Region> eventToCardMapping;
+    private LinkedList<Region> notificationCards;
+    private LinkedList<Region> shownNotificationCards;
+
 
     @FXML
     private StackPane browserPlaceholder;
@@ -109,9 +109,10 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerators();
         registerAsAnEventHandler(this);
 
-        notificationsDisplayed = new LinkedList<>();
-        notificationsHidden = new LinkedList<>();
-        eventToCardMapping = new HashMap<>();
+        notificationCards = new LinkedList<>();
+        //1 based
+        notificationCards.add(null);
+        shownNotificationCards = new LinkedList<>();
     }
 
     public Stage getPrimaryStage() {
@@ -273,7 +274,7 @@ public class MainWindow extends UiPart<Stage> {
      * Show the notification panel with an animation
      */
     public void showNotificationPanel() {
-        animate(test1, NOTIFICATION_PANEL_WIDTH, EXIT);
+        animateHorizontally(test1, NOTIFICATION_PANEL_WIDTH, EXIT);
     }
 
     /**
@@ -283,15 +284,14 @@ public class MainWindow extends UiPart<Stage> {
         logger.info("Preparing in app notification");
 
         //metadata update
-        notificationsDisplayed.add(event);
-        Region notificationCard = (new NotificationCard(event.getTitle(), notificationsDisplayed.size() + "",
-                event.getOwnerName(), event.getEndTime())).getRoot();
-        eventToCardMapping.put(event, notificationCard);
+        Region notificationCard = (new NotificationCard(event.getNotification().getTitle(), notificationCards.size() + "",
+                event.getOwnerName(), event.getNotification().getEndDateDisplay(), event.getNotification().getOwnerId())).getRoot();
+        notificationCards.add(notificationCard);
 
         //hides notificationCard away from screen
         notificationCard.setTranslateX(NOTIFICATION_CARD_WIDTH);
-        notificationCard.setTranslateY(-1 * ((notificationsDisplayed.size() - 1) * NOTIFICATION_CARD_HEIGHT
-                + notificationsDisplayed.size() * NOTIFICATION_CARD_Y_OFFSET));
+        notificationCard.setTranslateY(-1 * ((notificationCards.size() - 2) * NOTIFICATION_CARD_HEIGHT
+                + notificationCards.size() * NOTIFICATION_CARD_Y_OFFSET));
         notificationCard.setMaxHeight(NOTIFICATION_CARD_HEIGHT);
         notificationCard.setMaxWidth(NOTIFICATION_CARD_WIDTH);
 
@@ -300,27 +300,50 @@ public class MainWindow extends UiPart<Stage> {
             @Override
             public void run() {
                 test.getChildren().add(notificationCard);
-                animate(notificationCard, NOTIFICATION_CARD_WIDTH + NOTIFICATION_CARD_X_OFFSET, ENTER);
+                animateHorizontally(notificationCard, NOTIFICATION_CARD_WIDTH + NOTIFICATION_CARD_X_OFFSET, ENTER);
+                shownNotificationCards.add(notificationCard);
                 Timer timer = new Timer();
-                timer.schedule(new TimerTask() {
+                TimerTask timerTask = new TimerTask() {
                     @Override
                     public void run() {
-                        ShowNotificationEvent firstEvent = notificationsDisplayed.removeFirst();
-                        notificationsHidden.add(firstEvent);
-                        Region firstNotificationCard = eventToCardMapping.get(firstEvent);
+                        //it should be the first notification card to expire first
+                        Region firstNotificationCard = shownNotificationCards.removeFirst();
+
                         //cards are reused later in notification center
-                        animate(firstNotificationCard, NOTIFICATION_CARD_WIDTH + NOTIFICATION_CARD_X_OFFSET, EXIT);
-                        //todo: make notification cards move down after earlier ones have exited
+                        animateHorizontally(firstNotificationCard, NOTIFICATION_CARD_WIDTH + NOTIFICATION_CARD_X_OFFSET, EXIT);
+                        moveAllNotificationCardsDown();
                     }
-                }, NOTIFICATION_CARD_SHOW_TIME);
+                };
+                timer.schedule(timerTask, NOTIFICATION_CARD_SHOW_TIME);
             }
         });
     }
 
+    private void moveAllNotificationCardsDown() {
+        for (Region r: shownNotificationCards) {
+            animateVertically(r, NOTIFICATION_CARD_HEIGHT + NOTIFICATION_CARD_Y_OFFSET, DOWN);
+        }
+    }
+
     /**
-     * Animates any Region object according to predefined style.
+     * Animates any Region object vertically according to predefined style.
      */
-    private void animate(Region component, double width, int direction) {
+    private void animateVertically(Region r, int distanceToMove, int direction) {
+        TranslateTransition enterAnimation = new TranslateTransition(Duration.millis(250), r);
+        enterAnimation.setByY(direction * 0.25 * distanceToMove);
+        enterAnimation.play();
+        TranslateTransition enterAnimation1 = new TranslateTransition(Duration.millis(250), r);
+        enterAnimation1.setByY(direction * 0.75 * distanceToMove);
+        enterAnimation1.play();
+        TranslateTransition enterAnimation2 = new TranslateTransition(Duration.millis(250), r);
+        enterAnimation2.setByY(direction * distanceToMove);
+        enterAnimation2.play();
+    }
+
+    /**
+     * Animates any Region object horizontally according to predefined style.
+     */
+    private void animateHorizontally(Region component, double width, int direction) {
         TranslateTransition enterAnimation = new TranslateTransition(Duration.millis(250), component);
         enterAnimation.setByX(direction * 0.25 * width);
         enterAnimation.play();

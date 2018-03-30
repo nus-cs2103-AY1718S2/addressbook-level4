@@ -149,8 +149,8 @@ public class LogicManager extends ComponentManager implements Logic {
                 String title = notification.getTitle();
                 String endTime = notification.getEndDateDisplay();
                 String ownerName = ((ModelManager) model).getNameById(notification.getOwnerId());
-                raise(new ShowNotificationEvent(ownerName, endTime, title));
-                raise(new RequestToDeleteNotificationEvent(timerTaskToTimetableEntryMap.get(this).getId()));
+                raise(new ShowNotificationEvent(ownerName, notification));
+                //raise(new RequestToDeleteNotificationEvent(timerTaskToTimetableEntryMap.get(this).getId()));
             }
         };
         timetableEntriesStatus.put(task, true);

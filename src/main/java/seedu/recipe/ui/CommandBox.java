@@ -4,6 +4,7 @@ import static seedu.recipe.ui.util.KeyboardShortcutsMapping.COMMAND_SUBMISSION;
 import static seedu.recipe.ui.util.KeyboardShortcutsMapping.LAST_COMMAND;
 import static seedu.recipe.ui.util.KeyboardShortcutsMapping.NEW_LINE_IN_COMMAND;
 import static seedu.recipe.ui.util.KeyboardShortcutsMapping.NEXT_COMMAND;
+import static seedu.recipe.ui.util.KeyboardShortcutsMapping.NEXT_FIELD;
 import static seedu.recipe.ui.util.KeyboardShortcutsMapping.SHOW_SUGGESTIONS_COMMAND;
 
 import java.util.logging.Logger;
@@ -20,6 +21,7 @@ import seedu.recipe.logic.Logic;
 import seedu.recipe.logic.commands.CommandResult;
 import seedu.recipe.logic.commands.exceptions.CommandException;
 import seedu.recipe.logic.parser.exceptions.ParseException;
+import seedu.recipe.ui.util.AutoCompletionUtil;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -37,6 +39,7 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private TextArea commandTextArea;
     private SuggestionsPopUp suggestionsPopUp;
+    private AutoCompletionUtil autoCompletionUtil;
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -44,7 +47,8 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextArea.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
-        suggestionsPopUp = new SuggestionsPopUp(this);
+        autoCompletionUtil = new AutoCompletionUtil();
+        suggestionsPopUp = new SuggestionsPopUp(this, autoCompletionUtil);
     }
 
     /**
@@ -68,8 +72,26 @@ public class CommandBox extends UiPart<Region> {
         } else if (SHOW_SUGGESTIONS_COMMAND.match(keyEvent)) {
             keyEvent.consume();
             suggestionsPopUp.showSuggestions();
+        } else if (NEXT_FIELD.match(keyEvent)) {
+            keyEvent.consume();
+            moveToNextField();
         }
     }
+
+    //@@author hoangduong1607
+
+    /**
+     * Moves caret to the next field in input text.
+     * If no field is found after current position, continue from beginning of input text.
+     */
+    private void moveToNextField() {
+        int currentCaretPosition = commandTextArea.getCaretPosition();
+        int nextFieldPosition = autoCompletionUtil.getNextFieldPosition(commandTextArea.getText(),
+                currentCaretPosition);
+        commandTextArea.positionCaret(nextFieldPosition);
+    }
+
+    //@@author
 
     /**
      * Updates the text field with the previous input in {@code historySnapshot},
@@ -131,7 +153,6 @@ public class CommandBox extends UiPart<Region> {
             commandTextArea.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
-
         } catch (CommandException | ParseException e) {
             initHistory();
             // handle command failure

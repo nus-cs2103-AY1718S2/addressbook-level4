@@ -15,6 +15,7 @@ import javafx.scene.layout.Region;
 import seedu.recipe.commons.core.LogsCenter;
 import seedu.recipe.commons.events.ui.JumpToListRequestEvent;
 import seedu.recipe.commons.events.ui.RecipePanelSelectionChangedEvent;
+import seedu.recipe.commons.events.ui.ShareRecipeEvent;
 import seedu.recipe.model.recipe.Recipe;
 
 /**
@@ -66,6 +67,13 @@ public class RecipeListPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
+
+    //@@author RyanAngJY
+    @Subscribe
+    private void handleShareRecipeEvent(ShareRecipeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    }
+    //@@author
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code RecipeCard}.

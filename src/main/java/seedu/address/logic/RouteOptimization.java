@@ -10,7 +10,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Person;
 
-
+//@@author meerakanani10
 /**
  * logic for the shortest delivery route
  */
@@ -26,34 +26,20 @@ public class RouteOptimization {
         List<Person> lastShownList = model.getFilteredPersonList();
         List<String> filteredAddresses = new ArrayList<>();
         List<String> optimizedRoute = new ArrayList<>();
-        int stringCutIndex;
         String addressWithoutUnit;
         String startingPoint;
 
         if (lastShownList.size() == 1) {
             Address address = lastShownList.get(0).getAddress();
             String name = lastShownList.get(0).getName().toString();
-            String addressValue = address.value.trim();
-            if (addressValue.indexOf('#') > 2) {
-                stringCutIndex = addressValue.indexOf('#') - 2;
-                addressWithoutUnit = addressValue.substring(0, stringCutIndex);
-            } else {
-                addressWithoutUnit = addressValue;
-            }
+            addressWithoutUnit = removeUnit(address);
             optimizedRoute.add(addressWithoutUnit);
         } else {
             //need to figure out what the key should be to make sure we know what the hashmap is storing
             for (int i = 0; i < lastShownList.size(); i++) {
                 Address address = lastShownList.get(i).getAddress();
                 String name = lastShownList.get(i).getName().toString();
-                String addressValue = address.value.trim();
-                if (addressValue.indexOf('#') > 2) {
-                    stringCutIndex = addressValue.indexOf('#') - 2;
-                    addressWithoutUnit = addressValue.substring(0, stringCutIndex);
-                } else {
-                    addressWithoutUnit = addressValue;
-                }
-
+                addressWithoutUnit = removeUnit(address);
                 filteredAddresses.add(addressWithoutUnit);
             }
             optimizedRoute = getStartingAddress(filteredAddresses, optimizedRoute);
@@ -69,6 +55,7 @@ public class RouteOptimization {
         SortAddresses sort = new SortAddresses();
         Map<String, Double> dummy = new LinkedHashMap<>();
         String first;
+
 
         for (int i = 0; i < filteredAddresses.size(); i++) {
             String destination = filteredAddresses.get(i);
@@ -141,6 +128,24 @@ public class RouteOptimization {
     public String[] splitLabel(String combinedAddresses) {
         String[] addresses = combinedAddresses.split("_");
         return addresses;
+    }
+
+    /**
+     *
+     * @param address address to be edited
+     * @return
+     */
+    public String removeUnit(Address address) {
+        String addressValue = address.value.trim();
+        int stringCutIndex;
+        String addressWithoutUnit;
+        if (addressValue.indexOf('#') > 2) {
+            stringCutIndex = addressValue.indexOf('#') - 2;
+            addressWithoutUnit = addressValue.substring(0, stringCutIndex);
+        } else {
+            addressWithoutUnit = addressValue;
+        }
+        return addressWithoutUnit;
     }
 }
 

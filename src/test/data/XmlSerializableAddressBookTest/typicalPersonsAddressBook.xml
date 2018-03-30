@@ -12,6 +12,7 @@
         <gradePointAverage>4.84</gradePointAverage>
         <jobApplied>Software Engineer</jobApplied>
         <status>New</status>
+        <interviewDate>1522677600</interviewDate>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
@@ -29,6 +30,7 @@
         <gradePointAverage>4.73</gradePointAverage>
         <jobApplied>Software Engineer</jobApplied>
         <status>1st round</status>
+        <interviewDate>1523030400</interviewDate>
         <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>

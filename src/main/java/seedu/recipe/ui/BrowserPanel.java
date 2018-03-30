@@ -12,6 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.recipe.MainApp;
 import seedu.recipe.commons.core.LogsCenter;
+import seedu.recipe.commons.events.ui.InternetSearchRequestEvent;
 import seedu.recipe.commons.events.ui.RecipePanelSelectionChangedEvent;
 import seedu.recipe.commons.events.ui.ShareRecipeEvent;
 import seedu.recipe.model.recipe.Recipe;
@@ -79,6 +80,15 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleRecipePanelSelectionChangedEvent(RecipePanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadRecipePage(event.getNewSelection().recipe);
+    }
+
+    //@@author kokonguyen191
+    @Subscribe
+    private void handleInternetSearchRequestEvent(InternetSearchRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (event.wikiaQueryHandler.getQueryNumberOfResults() != 0) {
+            loadPage(event.wikiaQueryHandler.getRecipeQueryUrl());
+        }
     }
 
     //@@author RyanAngJY

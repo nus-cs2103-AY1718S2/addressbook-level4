@@ -1,6 +1,5 @@
 package seedu.address.model;
 
-import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_HELP;
@@ -8,16 +7,12 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_HELP_COMM
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.UniqueAliasList;
 import seedu.address.model.alias.exceptions.AliasNotFoundException;
@@ -101,11 +96,15 @@ public class UniqueAliasListTest {
         clearAliasList();
     }
 
+    /**
+     * Removes all aliases in the list.
+     *
+     * @throws AliasNotFoundException if the Alias to add is not an existing Alias in the list.
+     */
     private void clearAliasList() throws AliasNotFoundException {
         UniqueAliasList uniqueAliasList = new UniqueAliasList();
         for (Alias alias : uniqueAliasList.getAliasObservableList()) {
             UniqueAliasList.remove(alias.getAlias());
         }
     }
-
 }

@@ -49,7 +49,7 @@ public class ImportContactsCommandTest {
     static {
         try {
             importValidPath = new ImportContactsCommand("data/Test_contacts.csv");
-            importIllegalPath = new ImportContactsCommand("...");
+            importIllegalPath = new ImportContactsCommand("aaa");
 
             imparse = new ImportContactsCommandParser();
         } catch (Exception e) {

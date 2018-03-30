@@ -184,7 +184,7 @@ public class VacantCommandTest {
         private ArrayList<ArrayList<String>> roomsSchedule = new ArrayList<ArrayList<String>>();
 
         @Override
-        public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) 
+        public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building)
                 throws BuildingNotFoundException {
 
             if (!Building.isValidBuilding(building)) {

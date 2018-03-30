@@ -285,11 +285,9 @@ public class FilterUtil {
             if (range.length != 2) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
             } else {
-                double lowerGradePointAverage = GradePointAverage.GPA_LOWER_BOUND;
-                double higherGradePointAverage = GradePointAverage.GPA_UPPER_BOUND;
                 try {
-                    lowerGradePointAverage = Double.valueOf(range[0].trim());
-                    higherGradePointAverage = Double.valueOf(range[1].trim());
+                    Double.valueOf(range[0].trim());
+                    Double.valueOf(range[1].trim());
                 } catch (NumberFormatException nfe) {
                     throw new IllegalValueException(GradePointAverage.MESSAGE_GRADE_POINT_AVERAGE_CONSTRAINTS);
                 }
@@ -303,9 +301,8 @@ public class FilterUtil {
                 }
             }
         } else { //It is a value instead
-            double exactRating = GradePointAverage.GPA_LOWER_BOUND;
             try {
-                exactRating = Double.valueOf(s.trim());
+                Double.valueOf(s.trim());
             } catch (NumberFormatException nfe) {
                 throw new IllegalValueException(GradePointAverage.MESSAGE_GRADE_POINT_AVERAGE_CONSTRAINTS);
             }

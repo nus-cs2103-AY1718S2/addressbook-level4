@@ -1,16 +1,16 @@
-package seedu.address.model.timetableentry;
+package seedu.address.model.notification;
 
 /**
  * Represents a timetable entry added to Employees Tracker
  */
-public class TimetableEntry {
+public class Notification {
     private String title;
     private String calendarId;
     private String id;
     private String endDate;
     private String ownerId;
 
-    public TimetableEntry(String title, String calendarId, String id, String endDate, String ownerId) {
+    public Notification(String title, String calendarId, String id, String endDate, String ownerId) {
         this.title = title;
         this.calendarId = calendarId;
         this.id = id;

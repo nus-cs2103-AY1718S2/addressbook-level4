@@ -4,11 +4,11 @@ import seedu.address.commons.events.BaseEvent;
 
 /**
  * Indicates timetable entry added/removed*/
-public class RequestToDeleteTimetableEntryEvent extends BaseEvent {
+public class RequestToDeleteNotificationEvent extends BaseEvent {
 
     public final String id;
 
-    public RequestToDeleteTimetableEntryEvent(String id) {
+    public RequestToDeleteNotificationEvent(String id) {
         this.id = id;
     }
 

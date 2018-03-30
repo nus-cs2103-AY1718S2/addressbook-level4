@@ -119,6 +119,7 @@ public class EditCommand extends UndoableCommand {
                 personToEdit.getCalendarId());
         toReturn.setRating(updatedRating);
         toReturn.setReview(updatedReview);
+        toReturn.setId(personToEdit.getId());
 
         return toReturn;
     }

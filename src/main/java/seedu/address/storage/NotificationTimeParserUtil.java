@@ -1,11 +1,11 @@
 package seedu.address.storage;
 
-import seedu.address.model.timetableentry.TimetableEntryTime;
+import seedu.address.model.notification.NotificationTime;
 
 /**
  * Parses timetable endtime to separated fields of time.
  */
-public class TimetableEntryTimeParserUtil {
+public class NotificationTimeParserUtil {
     private static final int YEAR_BEGIN_INDEX = 0;
     private static final int MONTH_BEGIN_INDEX = 5;
     private static final int DAY_BEGIN_INDEX = 8;
@@ -31,11 +31,11 @@ public class TimetableEntryTimeParserUtil {
      * {"dateTime":"YYYY-MM-DDTHH:MM:SS.000+08:00",
      * "timeZone":"Asia/Singapore"}<
      *
-     * @return TimetableEntryTime containing the parsed time fields.
+     * @return NotificationTime containing the parsed time fields.
      */
-    public static TimetableEntryTime parseTime(String input) {
+    public static NotificationTime parseTime(String input) {
         int firstIntegerOffset = findFirstIntegerOffset(input);
-        TimetableEntryTime tet = new TimetableEntryTime(Integer.parseInt(input.substring(YEAR_BEGIN_INDEX
+        NotificationTime tet = new NotificationTime(Integer.parseInt(input.substring(YEAR_BEGIN_INDEX
                         + firstIntegerOffset,
                     YEAR_END_INDEX + firstIntegerOffset)),
                     Integer.parseInt(input.substring(MONTH_BEGIN_INDEX + firstIntegerOffset, MONTH_END_INDEX

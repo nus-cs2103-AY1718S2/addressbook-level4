@@ -17,9 +17,9 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.notification.Notification;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.timetableentry.TimetableEntry;
 
 public class AddressBookTest {
 
@@ -94,7 +94,7 @@ public class AddressBookTest {
         }
 
         @Override
-        public LinkedList<TimetableEntry> getTimetableEntriesList() {
+        public LinkedList<Notification> getNotificationsList() {
             return null;
         }
 

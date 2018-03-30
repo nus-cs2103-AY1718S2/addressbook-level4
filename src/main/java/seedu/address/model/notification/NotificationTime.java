@@ -1,9 +1,9 @@
-package seedu.address.model.timetableentry;
+package seedu.address.model.notification;
 
 /**
  * Container for different time fields
  */
-public class TimetableEntryTime {
+public class NotificationTime {
     private int year;
     private int month;
     private int date;
@@ -11,7 +11,7 @@ public class TimetableEntryTime {
     private int minute;
     private int seconds;
 
-    public TimetableEntryTime(int year, int month, int date, int hour, int minute, int seconds) {
+    public NotificationTime(int year, int month, int date, int hour, int minute, int seconds) {
         this.year = year;
         this.month = month;
         this.date = date;

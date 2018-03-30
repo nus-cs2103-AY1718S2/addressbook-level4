@@ -3,9 +3,10 @@ package seedu.address.model;
 import java.util.LinkedList;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.notification.Notification;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.timetableentry.TimetableEntry;
+
 
 /**
  * Unmodifiable view of an address book
@@ -27,7 +28,7 @@ public interface ReadOnlyAddressBook {
     /**
      * Returns an unmodifiable view of the timetable entry list.
      */
-    LinkedList<TimetableEntry> getTimetableEntriesList();
+    LinkedList<Notification> getNotificationsList();
 
     int getNextId();
 

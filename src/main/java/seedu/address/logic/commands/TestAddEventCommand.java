@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -26,11 +27,15 @@ import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CreateNewCalendar;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.notification.Notification;
+import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.person.Person;
-import seedu.address.model.timetableentry.TimetableEntry;
-import seedu.address.model.timetableentry.exceptions.DuplicateTimetableEntryException;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Adds an event to a person.
@@ -50,6 +55,8 @@ public class TestAddEventCommand extends UndoableCommand {
             + " etime/2017-03-19T10:00:00 descrip/this is a test event";
 
     public static final String MESSAGE_SUCCESS = "Event added!";
+    public static final String MESSAGE_FAILURE = "Unable to add event, please try again later.";
+
 
 
     /** Directory to store user credentials for this application. */
@@ -205,15 +212,49 @@ public class TestAddEventCommand extends UndoableCommand {
         event.setReminders(reminders);*/
 
         String calendarId = personToAddEvent.getCalendarId();
+        Logger logger = LogsCenter.getLogger(TestAddEventCommand.class);
+        if (calendarId == null || calendarId.equals("")) {
+            logger.info("calendarId null, attempting to create calendar");
+            try {
+                calendarId = CreateNewCalendar.execute(personToAddEvent.getName().fullName);
+                logger.info("calendar created successfully");
+            } catch (IOException e) {
+                e.printStackTrace();
+                logger.info("unable to create calendar");
+                return new CommandResult(MESSAGE_FAILURE);
+            }
+            Person newWithCalendar = new Person(personToAddEvent.getName(),
+                    personToAddEvent.getPhone(),
+                    personToAddEvent.getEmail(),
+                    personToAddEvent.getAddress(),
+                    personToAddEvent.getTags(),
+                    calendarId);
+            //retain the oldId
+            newWithCalendar.setId(personToAddEvent.getId());
+
+            try {
+                model.updatePerson(personToAddEvent, newWithCalendar);
+            } catch (PersonNotFoundException e) {
+                logger.info("Unable to find original person in model manager");
+                return new CommandResult(MESSAGE_FAILURE);
+            } catch (DuplicatePersonException e) {
+                logger.info("newly created person (with calendarId) is same as original person");
+                return new CommandResult(MESSAGE_FAILURE);
+            }
+        }
+
         try {
             event = service.events().insert(calendarId, event).execute();
         } catch (IOException e) {
             e.printStackTrace();
+            logger.info("failed to add event to calendarId");
+            return new CommandResult(MESSAGE_FAILURE);
         }
-        TimetableEntry timetableEntry = new TimetableEntry(title, calendarId, event.getId(), event.getEnd().toString(),
+
+        Notification notification = new Notification(title, calendarId, event.getId(), event.getEnd().toString(),
                 model.getPerson(targetIndex.getZeroBased()).getId().toString());
         try {
-            model.addTimetableEntry(timetableEntry);
+            model.addNotification(notification);
         } catch (DuplicateTimetableEntryException e) {
             throw new CommandException("Duplicated event");
         }

@@ -6,19 +6,16 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Worker;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
-import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import seedu.recipe.MainApp;
 import seedu.recipe.commons.core.LogsCenter;
 import seedu.recipe.commons.events.ui.RecipePanelSelectionChangedEvent;
 import seedu.recipe.commons.events.ui.ShareRecipeEvent;
 import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.recipe.Url;
 import seedu.recipe.ui.util.FacebookHandler;
 
 /**
@@ -26,7 +23,8 @@ import seedu.recipe.ui.util.FacebookHandler;
  */
 public class BrowserPanel extends UiPart<Region> {
 
-    public static final String DEFAULT_PAGE = "default.html";
+    public static final String DEFAULT_PAGE_DARK = "defaultdark.html";
+    public static final String DEFAULT_PAGE_LIGHT = "defaultlight.html";
     public static final String SEARCH_PAGE_URL =
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
     private static final String FXML = "BrowserPanel.fxml";
@@ -38,31 +36,35 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private WebView browser;
 
-    public BrowserPanel() {
+    public BrowserPanel(boolean isDarkTheme) {
         super(FXML);
 
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
-        loadDefaultPage();
+        loadDefaultPage(isDarkTheme);
         registerAsAnEventHandler(this);
-
-        setUpBrowserUrlListener();
-    }
-
-    private void loadRecipePage(Recipe recipe) {
-        loadPage(recipe.getUrl().toString());
     }
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
 
+    private void loadRecipePage(Recipe recipe) {
+        loadPage(recipe.getUrl().toString());
+    }
+
     /**
      * Loads a default HTML file with a background that matches the general theme.
+     * @param isDarkTheme true if the app is using dark theme
      */
-    private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+    public void loadDefaultPage(boolean isDarkTheme) {
+        URL defaultPage;
+        if (isDarkTheme) {
+            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_DARK);
+        } else {
+            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_LIGHT);
+        }
         loadPage(defaultPage.toExternalForm());
     }
 
@@ -82,30 +84,16 @@ public class BrowserPanel extends UiPart<Region> {
     //@@author RyanAngJY
     @Subscribe
     private void handleShareRecipeEvent(ShareRecipeEvent event) {
-        loadPage(FacebookHandler.getAuthenticationUrl());
         recipeToShare = event.getTargetRecipe();
-        if (FacebookHandler.hasAccessToken()) {
-            FacebookHandler.postRecipeOnFacebook(recipeToShare);
+        String urlToShare = recipeToShare.getUrl().toString();
+        UiUtil.copyToClipboard(recipeToShare.getTextFormattedRecipe());
+
+        if (!urlToShare.equals(Url.NULL_URL_REFERENCE)) {
+            loadPage(FacebookHandler.getPostDomain() + recipeToShare.getUrl().toString()
+                    + FacebookHandler.getRedirectEmbedded());
+        } else {
+            loadPage(FacebookHandler.REDIRECT_DOMAIN);
         }
-    }
-
-    /**
-     * Sets up a URL listener on the browser to watch for access token.
-     */
-    private void setUpBrowserUrlListener() {
-        WebEngine browserEngine = browser.getEngine();
-        browserEngine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
-            @Override
-            public void changed(ObservableValue ov, Worker.State oldState, Worker.State newState) {
-                if (newState == Worker.State.SUCCEEDED) {
-                    String url = browserEngine.getLocation();
-
-                    if (FacebookHandler.checkAndSetAccessToken(url)) {
-                        FacebookHandler.postRecipeOnFacebook(recipeToShare);
-                    }
-                }
-            }
-        });
     }
     //@@author
 }

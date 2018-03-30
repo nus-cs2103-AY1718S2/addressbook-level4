@@ -71,7 +71,7 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
 
-    //@@Author kokonguyen191
+    //@@author kokonguyen191
     /**
      * Returns a null {@code Ingredient} object to use as the default value if no value is given.
      */

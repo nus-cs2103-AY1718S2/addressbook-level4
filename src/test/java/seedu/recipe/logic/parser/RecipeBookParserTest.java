@@ -27,6 +27,7 @@ import seedu.recipe.logic.commands.HelpCommand;
 import seedu.recipe.logic.commands.HistoryCommand;
 import seedu.recipe.logic.commands.ListCommand;
 import seedu.recipe.logic.commands.RedoCommand;
+import seedu.recipe.logic.commands.SearchCommand;
 import seedu.recipe.logic.commands.SelectCommand;
 import seedu.recipe.logic.commands.ShareCommand;
 import seedu.recipe.logic.commands.TagCommand;
@@ -149,13 +150,26 @@ public class RecipeBookParserTest {
     }
     //@@author
 
-    //@@Author kokonguyen191
+    //@@author kokonguyen191
     @Test
     public void parseCommand_changeTheme() throws Exception {
         assertTrue(parser.parseCommand(ChangeThemeCommand.COMMAND_WORD) instanceof ChangeThemeCommand);
         assertTrue(parser.parseCommand(ChangeThemeCommand.COMMAND_WORD + " 3") instanceof ChangeThemeCommand);
     }
-    //@@Author
+
+    @Test
+    public void parseCommand_search() throws Exception {
+        assertTrue(parser.parseCommand(SearchCommand.COMMAND_WORD + " chicken rice") instanceof SearchCommand);
+
+        String keywords = "chicken rice";
+        SearchCommand command = (SearchCommand) parser.parseCommand(SearchCommand.COMMAND_WORD + " " + keywords);
+        assertEquals(new SearchCommand(keywords.replaceAll("\\s+", "+")), command);
+
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
+        parser.parseCommand(SearchCommand.COMMAND_WORD);
+    }
+    //@@author
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {

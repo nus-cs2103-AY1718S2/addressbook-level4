@@ -9,6 +9,7 @@ import java.time.Month;
 import java.time.format.DateTimeParseException;
 
 import org.junit.Test;
+
 import seedu.address.testutil.Assert;
 
 public class InterviewDateUtilTest {
@@ -16,26 +17,26 @@ public class InterviewDateUtilTest {
     @Test
     public void parse_invalidDateTime_throwsDateTimeParseException() {
         String invalidDateTime1 = "20000000";
-        Assert.assertThrows(DateTimeParseException.class,
-                () -> InterviewDateUtil.formHigherInterviewDateTime(invalidDateTime1));
+        Assert.assertThrows(
+                DateTimeParseException.class, () -> InterviewDateUtil.formHigherInterviewDateTime(invalidDateTime1));
         String invalidDateTime2 = "20180229";
-        Assert.assertThrows(DateTimeParseException.class,
-                () -> InterviewDateUtil.formHigherInterviewDateTime(invalidDateTime2));
+        Assert.assertThrows(
+                DateTimeParseException.class, () -> InterviewDateUtil.formHigherInterviewDateTime(invalidDateTime2));
         String invalidDateTime3 = "20180631";
-        Assert.assertThrows(DateTimeParseException.class,
-                () -> InterviewDateUtil.formHigherInterviewDateTime(invalidDateTime3));
+        Assert.assertThrows(
+                DateTimeParseException.class, () -> InterviewDateUtil.formHigherInterviewDateTime(invalidDateTime3));
         String invalidDateTime4 = "20181313";
-        Assert.assertThrows(DateTimeParseException.class,
-                () -> InterviewDateUtil.formHigherInterviewDateTime(invalidDateTime4));
+        Assert.assertThrows(
+                DateTimeParseException.class, () -> InterviewDateUtil.formHigherInterviewDateTime(invalidDateTime4));
     }
 
     @Test
     public void parse_validDateTime_parseSuccess() {
         String validDateTime1 = "20180331";
         String validDateTime2 = "20200229";
-        LocalDateTime expectedDateTime = LocalDateTime.of(2018, Month.MARCH,31,0,0,0);
+        LocalDateTime expectedDateTime = LocalDateTime.of(2018, Month.MARCH, 31, 0, 0, 0);
         assertEquals(expectedDateTime, InterviewDateUtil.formLowerInterviewDateTime(validDateTime1));
-        expectedDateTime = LocalDateTime.of(2020, Month.FEBRUARY,29,23,59,59);
+        expectedDateTime = LocalDateTime.of(2020, Month.FEBRUARY, 29, 23, 59, 59);
         assertEquals(expectedDateTime, InterviewDateUtil.formHigherInterviewDateTime(validDateTime2));
     }
 

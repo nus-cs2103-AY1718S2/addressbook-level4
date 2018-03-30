@@ -6,6 +6,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIE
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GRADE_POINT_AVERAGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INTERVIEW_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
@@ -169,6 +170,51 @@ public class FilterCommandSystemTest extends AddressBookSystemTest {
         command = FilterCommand.COMMAND_WORD + " " + PREFIX_GRADE_POINT_AVERAGE + "1.00" + " "
                 + PREFIX_GRADE_POINT_AVERAGE + "4.84";
         ModelHelper.setFilteredList(expectedModel, ALICE); //only last keyword effective
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        //Grade Point Average filtering
+        /* Case: filters multiple persons in address book, command with leading spaces and trailing spaces
+         * -> 2 persons found
+         */
+        showAllPersons();
+        command = "   " + FilterCommand.COMMAND_WORD + " "
+                + PREFIX_INTERVIEW_DATE + "   20180402" + "   ";
+        expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, ALICE); // their graduation year is before or equal 2019
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: repeat previous filter command where person list is displaying the persons satisfying the filter
+         * -> 2 persons found
+         */
+        command = FilterCommand.COMMAND_WORD + " " + PREFIX_INTERVIEW_DATE + "20180402";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: filter person twice -> 5 persons found and 2 persons found*/
+        showAllPersons();
+        command = FilterCommand.COMMAND_WORD + " " + PREFIX_INTERVIEW_DATE + "20180402-20180408";
+        ModelHelper.setFilteredList(expectedModel, ALICE, BENSON);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+        command = FilterCommand.COMMAND_WORD + " " + PREFIX_INTERVIEW_DATE + "20180331-20180404";
+        ModelHelper.setFilteredList(expectedModel, ALICE);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: filter no person in address book, 2017 -> 0 persons found */
+        showAllPersons();
+        command = FilterCommand.COMMAND_WORD + " " + PREFIX_INTERVIEW_DATE + "19990101";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: filter multiple persons in address book, 2 keywords -> 3 persons found */
+        showAllPersons();
+        command = FilterCommand.COMMAND_WORD + " " + PREFIX_INTERVIEW_DATE + "20180402" + " "
+                + PREFIX_INTERVIEW_DATE + "20180406";
+        ModelHelper.setFilteredList(expectedModel, BENSON); //only last keyword effective
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 

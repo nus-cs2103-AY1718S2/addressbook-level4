@@ -13,7 +13,6 @@ import seedu.address.model.person.GradePointAverage;
 import seedu.address.model.person.GradePointAverageInKeywordsRangePredicate;
 import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.InterviewDateInKeywordsRangePredicate;
-import seedu.address.model.person.InterviewDateInKeywordsRangePredicateTest;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.RatingInKeywordsRangePredicate;
 import seedu.address.model.util.InterviewDateUtil;

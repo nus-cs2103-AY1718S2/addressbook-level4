@@ -33,6 +33,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TECHNICAL_SKILLS_SCORE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TECHNICAL_SKILLS_SCORE_BOB;
 
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -57,6 +59,7 @@ public class TypicalPersons {
             .withResume(formPathFromFileName("alice.pdf"))
             .withProfileImage(formImagePathFromFileName("elon.jpg"))
             .withComment("Alice!")
+            .withInterviewDate(LocalDateTime.of(2018, Month.APRIL, 2, 14, 0, 0))
             .withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25").withResume(formPathFromFileName(null))
@@ -67,6 +70,7 @@ public class TypicalPersons {
             .withRating("4", "4.5",
                     "3", "3.5")
             .withProfileImage(formImagePathFromFileName("gates.jpg"))
+            .withInterviewDate(LocalDateTime.of(2018, Month.APRIL, 6, 16, 0, 0))
             .withComment("Benson!")
             .withStatus(2).withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")

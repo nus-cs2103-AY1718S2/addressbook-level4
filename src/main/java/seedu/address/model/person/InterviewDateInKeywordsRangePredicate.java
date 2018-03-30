@@ -7,7 +7,10 @@ import java.util.function.Predicate;
 
 import seedu.address.logic.parser.FilterRange;
 
-public class InterviewDateInKeywordsRangePredicate implements Predicate<Person>{
+/**
+ * A Predicate testing whether a person has his/her interview date in the keywords range
+ */
+public class InterviewDateInKeywordsRangePredicate implements Predicate<Person> {
     private final LocalDateTime low;
     private final LocalDateTime high;
     public InterviewDateInKeywordsRangePredicate(InterviewDate low, InterviewDate high) {

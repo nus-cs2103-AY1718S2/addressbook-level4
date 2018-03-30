@@ -182,7 +182,6 @@ public class CommandBox extends UiPart<Region> {
             commandTextArea.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
-
         } catch (CommandException | ParseException | DbxException e) {
             initHistory();
             // handle command failure

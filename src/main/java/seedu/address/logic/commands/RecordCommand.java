@@ -38,7 +38,7 @@ public class RecordCommand extends UndoableCommand {
 
     public static final String MESSAGE_EDIT_RECORD_SUCCESS = "Medical record updated: %1$s";
     public static final String MESSAGE_ADD_RECORD_SUCCESS = "New medical record added: %1$s";
-    public static final String MESSAGE_CLOSE_RECORD_SUCCESS = "Medical record has been closed.";
+    public static final String MESSAGE_CLOSE_RECORD_SUCCESS = "Medical record has been closed with no changes.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This patient already exists in the address book.";
 
     private final Index patientIndex;
@@ -66,7 +66,19 @@ public class RecordCommand extends UndoableCommand {
             throw new AssertionError("The target patient cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_RECORD_SUCCESS, editedPatient));
+        //return new CommandResult(String.format(MESSAGE_EDIT_RECORD_SUCCESS, editedPatient));
+        return generateCommandResult();
+    }
+
+    private CommandResult generateCommandResult() {
+        if (editedPatient == patientToEdit) {
+            return new CommandResult(String.format(MESSAGE_CLOSE_RECORD_SUCCESS));
+        } else if (patientToEdit.getRecordList().getNumberOfRecords() <
+                editedPatient.getRecordList().getNumberOfRecords()) {
+            return new CommandResult(String.format(MESSAGE_ADD_RECORD_SUCCESS, editedPatient));
+        } else {
+            return new CommandResult(String.format(MESSAGE_EDIT_RECORD_SUCCESS, editedPatient));
+        }
     }
 
     @Override

@@ -12,9 +12,9 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.logic.RequestToDeleteTimetableEntryEvent;
-import seedu.address.commons.events.model.TimetableEntryAddedEvent;
-import seedu.address.commons.events.model.TimetableEntryDeletedEvent;
+import seedu.address.commons.events.logic.RequestToDeleteNotificationEvent;
+import seedu.address.commons.events.model.NotificationAddedEvent;
+import seedu.address.commons.events.model.NotificationDeletedEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -25,9 +25,9 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.person.Person;
-import seedu.address.model.timetableentry.TimetableEntry;
-import seedu.address.model.timetableentry.TimetableEntryTime;
-import seedu.address.storage.TimetableEntryTimeParserUtil;
+import seedu.address.model.notification.Notification;
+import seedu.address.model.notification.NotificationTime;
+import seedu.address.storage.NotificationTimeParserUtil;
 
 /**
  * The main LogicManager of the app.
@@ -41,7 +41,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
     private HashMap<TimerTask, Boolean> timetableEntriesStatus;
-    private HashMap<TimerTask, TimetableEntry> timerTaskToTimetableEntryMap;
+    private HashMap<TimerTask, Notification> timerTaskToTimetableEntryMap;
     private HashMap<String, TimerTask> scheduledTimerTasks;
 
     public LogicManager(Model model) {
@@ -127,10 +127,10 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Subscribe
-    private void handleTimetableEntryAddedEvent(TimetableEntryAddedEvent event) {
+    private void handleTimetableEntryAddedEvent(NotificationAddedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
-        TimetableEntryTime parsedTime = TimetableEntryTimeParserUtil.parseTime(event.timetableEntry.getEndDate());
+        NotificationTime parsedTime = NotificationTimeParserUtil.parseTime(event.notification.getEndDate());
         Calendar c = Calendar.getInstance();
         c.set(parsedTime.getYear(), parsedTime.getMonth(), parsedTime.getDate(), parsedTime.getHour(),
                 parsedTime.getMinute());
@@ -145,17 +145,17 @@ public class LogicManager extends ComponentManager implements Logic {
                     System.out.println("A cancelled event ended at: " + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
                             .format(Calendar.getInstance().getTimeInMillis()));
                 }
-                TimetableEntry timetableEntry = timerTaskToTimetableEntryMap.get(this);
-                String title = timetableEntry.getTitle();
-                String endTime = timetableEntry.getEndDateDisplay();
-                String ownerName = ((ModelManager) model).getNameById(timetableEntry.getOwnerId());
+                Notification notification = timerTaskToTimetableEntryMap.get(this);
+                String title = notification.getTitle();
+                String endTime = notification.getEndDateDisplay();
+                String ownerName = ((ModelManager) model).getNameById(notification.getOwnerId());
                 raise(new ShowNotificationEvent(ownerName, endTime, title));
-                raise(new RequestToDeleteTimetableEntryEvent(timerTaskToTimetableEntryMap.get(this).getId()));
+                raise(new RequestToDeleteNotificationEvent(timerTaskToTimetableEntryMap.get(this).getId()));
             }
         };
         timetableEntriesStatus.put(task, true);
-        scheduledTimerTasks.put(event.timetableEntry.getId(), task);
-        timerTaskToTimetableEntryMap.put(task, event.timetableEntry);
+        scheduledTimerTasks.put(event.notification.getId(), task);
+        timerTaskToTimetableEntryMap.put(task, event.notification);
         System.out.println("An event scheduled at " + c.getTime() + " " + (c.getTimeInMillis() - System
                 .currentTimeMillis()));
         long duration = c.getTimeInMillis() - System.currentTimeMillis();
@@ -167,7 +167,7 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Subscribe
-    private void handleTimetableEntryDeletedEvent(TimetableEntryDeletedEvent event) {
+    private void handleTimetableEntryDeletedEvent(NotificationDeletedEvent event) {
         TimerTask associatedTimerTask = scheduledTimerTasks.get(event.id);
         timetableEntriesStatus.put(associatedTimerTask, false);
         scheduledTimerTasks.remove(event.id);

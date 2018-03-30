@@ -24,9 +24,9 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.timetableentry.TimetableEntry;
-import seedu.address.model.timetableentry.exceptions.DuplicateTimetableEntryException;
-import seedu.address.model.timetableentry.exceptions.TimetableEntryNotFoundException;
+import seedu.address.model.notification.Notification;
+import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
+import seedu.address.model.notification.exceptions.TimetableEntryNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -116,12 +116,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteTimetableEntry(String id) throws TimetableEntryNotFoundException {
+        public void deleteNotification(String id) throws TimetableEntryNotFoundException {
 
         }
 
         @Override
-        public void addTimetableEntry(TimetableEntry e) throws DuplicateTimetableEntryException {
+        public void addNotification(Notification e) throws DuplicateTimetableEntryException {
 
         }
 

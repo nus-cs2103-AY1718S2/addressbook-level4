@@ -5,7 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 
 /**
- * An UI component that displays information of a {@code TimetableEntry}.
+ * An UI component that displays information of a {@code Notification}.
  */
 public class NotificationCard extends UiPart<Region> {
 

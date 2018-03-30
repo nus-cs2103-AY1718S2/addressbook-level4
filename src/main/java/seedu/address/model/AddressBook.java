@@ -18,9 +18,9 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-import seedu.address.model.timetableentry.TimetableEntry;
-import seedu.address.model.timetableentry.exceptions.DuplicateTimetableEntryException;
-import seedu.address.model.timetableentry.exceptions.TimetableEntryNotFoundException;
+import seedu.address.model.notification.Notification;
+import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
+import seedu.address.model.notification.exceptions.TimetableEntryNotFoundException;
 
 /**
  * Wraps all data at the address-book level
@@ -30,7 +30,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
-    private LinkedList<TimetableEntry> timetableEntries;
+    private LinkedList<Notification> notifications;
     private int nextId;
     private String password;
 
@@ -44,7 +44,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
-        timetableEntries = new LinkedList<>();
+        notifications = new LinkedList<>();
         nextId = 0;
         password = "admin";
     }
@@ -69,8 +69,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
-    public void setTimetableEntriesList(LinkedList<TimetableEntry> timetableEntriesList) {
-        this.timetableEntries = timetableEntriesList;
+    public void setTimetableEntriesList(LinkedList<Notification> notifications) {
+        this.notifications = notifications;
     }
 
     /**
@@ -82,7 +82,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
-        setTimetableEntriesList(newData.getTimetableEntriesList());
+        setTimetableEntriesList(newData.getNotificationsList());
         this.nextId = newData.getNextId();
         this.password = newData.getPassword();
 
@@ -181,23 +181,23 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// timetable entry level operations
     /**
-     * Adds a timetable entry to the address book.
+     * Adds a notification to the address book.
      */
-    public void addTimetableEntry(TimetableEntry timetableEntry) throws DuplicateTimetableEntryException {
-        if (timetableEntries.contains(timetableEntry)) {
+    public void addNotification(Notification notification) throws DuplicateTimetableEntryException {
+        if (notifications.contains(notification)) {
             throw new DuplicateTimetableEntryException();
         }
-        timetableEntries.add(timetableEntry);
+        notifications.add(notification);
     }
 
     /**
-     * Removes a timetable entry to the address book.
+     * Removes a timetable entry from the address book.
      */
-    public void removeTimetableEntry(String timetableEntryId) throws TimetableEntryNotFoundException {
+    public void deleteNotification(String notificationId) throws TimetableEntryNotFoundException {
         boolean found = false;
-        for (TimetableEntry t: timetableEntries) {
-            if (t != null && t.getId() != null && t.getId().equals(timetableEntryId)) {
-                timetableEntries.remove(t);
+        for (Notification t: notifications) {
+            if (t != null && t.getId() != null && t.getId().equals(notificationId)) {
+                notifications.remove(t);
                 found = true;
             }
         }
@@ -211,7 +211,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags, "
-                + timetableEntries.size() + " timetable entries";
+                + notifications.size() + " timetable entries";
         // TODO: refine later
     }
 
@@ -226,8 +226,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public LinkedList<TimetableEntry> getTimetableEntriesList() {
-        return timetableEntries;
+    public LinkedList<Notification> getNotificationsList() {
+        return notifications;
     }
 
     @Override
@@ -236,7 +236,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
                 && this.tags.equalsOrderInsensitive(((AddressBook) other).tags))
-                && this.timetableEntries.equals(((AddressBook) other).timetableEntries);
+                && this.notifications.equals(((AddressBook) other).notifications);
     }
 
     @Override

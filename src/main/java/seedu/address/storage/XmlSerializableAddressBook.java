@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.timetableentry.TimetableEntry;
+import seedu.address.model.notification.Notification;
 
 /**
  * An Immutable AddressBook that is serializable to XML format
@@ -23,7 +23,7 @@ public class XmlSerializableAddressBook {
     @XmlElement
     private List<XmlAdaptedTag> tags;
     @XmlElement
-    private List<XmlAdaptedTimetableEntry> timetableEntries;
+    private List<XmlAdaptedNotification> notifications;
     @XmlElement
     private Integer nextId;
     @XmlElement
@@ -36,7 +36,7 @@ public class XmlSerializableAddressBook {
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
-        timetableEntries = new ArrayList<>();
+        notifications = new ArrayList<>();
         nextId = 0;
         password = "admin";
     }
@@ -48,8 +48,8 @@ public class XmlSerializableAddressBook {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
-        for (TimetableEntry t: src.getTimetableEntriesList()) {
-            timetableEntries.add(new XmlAdaptedTimetableEntry(t.getTitle(), t.getCalendarId(), t.getId(), t
+        for (Notification t: src.getNotificationsList()) {
+            notifications.add(new XmlAdaptedNotification(t.getTitle(), t.getCalendarId(), t.getId(), t
                     .getEndDate(),
                     t.getOwnerId()));
         }
@@ -71,8 +71,8 @@ public class XmlSerializableAddressBook {
         for (XmlAdaptedPerson p : persons) {
             addressBook.addPerson(p.toModelType());
         }
-        for (XmlAdaptedTimetableEntry t : timetableEntries) {
-            addressBook.addTimetableEntry(t.toModelType());
+        for (XmlAdaptedNotification t : notifications) {
+            addressBook.addNotification(t.toModelType());
         }
         addressBook.setNextId(nextId);
         addressBook.setPassword(password);
@@ -92,6 +92,6 @@ public class XmlSerializableAddressBook {
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
         return persons.equals(otherAb.persons)
                 && tags.equals(otherAb.tags)
-                && timetableEntries.equals(otherAb.timetableEntries);
+                && notifications.equals(otherAb.notifications);
     }
 }

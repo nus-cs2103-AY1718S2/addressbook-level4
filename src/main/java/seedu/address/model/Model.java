@@ -6,9 +6,9 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.timetableentry.TimetableEntry;
-import seedu.address.model.timetableentry.exceptions.DuplicateTimetableEntryException;
-import seedu.address.model.timetableentry.exceptions.TimetableEntryNotFoundException;
+import seedu.address.model.notification.Notification;
+import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
+import seedu.address.model.notification.exceptions.TimetableEntryNotFoundException;
 
 /**
  * The API of the Model component.
@@ -33,10 +33,10 @@ public interface Model {
     Person getPerson(int index) throws IndexOutOfBoundsException;
 
     /** Deletes a timetable entry given its id. */
-    void deleteTimetableEntry(String id) throws TimetableEntryNotFoundException;
+    void deleteNotification(String id) throws TimetableEntryNotFoundException;
 
     /** Adds the given person */
-    void addTimetableEntry(TimetableEntry e) throws DuplicateTimetableEntryException;
+    void addNotification(Notification e) throws DuplicateTimetableEntryException;
 
     /** Adds the given password */
     void setPassword(String e);

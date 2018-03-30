@@ -29,8 +29,8 @@ import com.google.api.services.calendar.model.EventDateTime;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
-import seedu.address.model.timetableentry.TimetableEntry;
-import seedu.address.model.timetableentry.exceptions.DuplicateTimetableEntryException;
+import seedu.address.model.notification.Notification;
+import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 
 /**
  * Adds an event to a person.
@@ -210,10 +210,10 @@ public class TestAddEventCommand extends UndoableCommand {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        TimetableEntry timetableEntry = new TimetableEntry(title, calendarId, event.getId(), event.getEnd().toString(),
+        Notification notification = new Notification(title, calendarId, event.getId(), event.getEnd().toString(),
                 model.getPerson(targetIndex.getZeroBased()).getId().toString());
         try {
-            model.addTimetableEntry(timetableEntry);
+            model.addNotification(notification);
         } catch (DuplicateTimetableEntryException e) {
             throw new CommandException("Duplicated event");
         }

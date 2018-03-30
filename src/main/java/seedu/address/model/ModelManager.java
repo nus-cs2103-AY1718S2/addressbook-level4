@@ -13,17 +13,17 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.logic.RequestToDeleteTimetableEntryEvent;
+import seedu.address.commons.events.logic.RequestToDeleteNotificationEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.AddressBookPasswordChangedEvent;
-import seedu.address.commons.events.model.TimetableEntryAddedEvent;
-import seedu.address.commons.events.model.TimetableEntryDeletedEvent;
+import seedu.address.commons.events.model.NotificationAddedEvent;
+import seedu.address.commons.events.model.NotificationDeletedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.timetableentry.TimetableEntry;
-import seedu.address.model.timetableentry.exceptions.DuplicateTimetableEntryException;
-import seedu.address.model.timetableentry.exceptions.TimetableEntryNotFoundException;
+import seedu.address.model.notification.Notification;
+import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
+import seedu.address.model.notification.exceptions.TimetableEntryNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -75,18 +75,18 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deleteTimetableEntry(String id) throws TimetableEntryNotFoundException {
-        addressBook.removeTimetableEntry(id);
-        indicateTimetableEntriesDeleted(id);
+    public synchronized void deleteNotification(String id) throws TimetableEntryNotFoundException {
+        addressBook.deleteNotification(id);
+        indicateNotificationDeleted(id);
         indicateAddressBookChanged();
     }
 
-    private void indicateTimetableEntriesDeleted(String id) {
-        raise(new TimetableEntryDeletedEvent(id));
+    private void indicateNotificationDeleted(String id) {
+        raise(new NotificationDeletedEvent(id));
     }
 
-    private void indicateTimetableEntryAdded(TimetableEntry e) {
-        raise(new TimetableEntryAddedEvent(e));
+    private void indicateNotificationAdded(Notification e) {
+        raise(new NotificationAddedEvent(e));
     }
 
     private void indicatePasswordChangedEvent(String p) {
@@ -94,10 +94,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void addTimetableEntry(TimetableEntry e) throws DuplicateTimetableEntryException {
-        addressBook.addTimetableEntry(e);
+    public void addNotification(Notification e) throws DuplicateTimetableEntryException {
+        addressBook.addNotification(e);
         indicateAddressBookChanged();
-        indicateTimetableEntryAdded(e);
+        indicateNotificationAdded(e);
     }
 
     @Override
@@ -178,9 +178,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Subscribe
-    private void handleRequestToDeleteTimetableEntryEvent(RequestToDeleteTimetableEntryEvent event) {
+    private void handleRequestToDeleteNotificationEvent(RequestToDeleteNotificationEvent event) {
         try {
-            deleteTimetableEntry(event.id);
+            deleteNotification(event.id);
         } catch (TimetableEntryNotFoundException e) {
             e.printStackTrace();
         }

@@ -137,7 +137,7 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     @Subscribe
-    private void showWindowsNotificationEvent(ShowNotificationEvent event) {
+    private void handleShowNotificationEvent(ShowNotificationEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         if (isWindowMinimized) {
             showNotificationOnWindows(event);

@@ -131,8 +131,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         // Rebuild the list of person tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+        return new Person(person.getName(), person.getPhone(), person.getEmail(),
+                person.getAddress(), person.getSocialMediaPlatformMap(), correctTagReferences);
     }
 
     /**
@@ -147,6 +147,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author Nethergale
+    /**
+     * Sorts all persons by name in alphabetical order in the address book.
+     */
+    public void sort() {
+        persons.sort();
+    }
+
+    //@@author
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {

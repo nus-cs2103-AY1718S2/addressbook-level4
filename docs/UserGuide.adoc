@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Media Socializer - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -13,7 +13,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-F12-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F12-B3`      Since: `Jan 2018`      Licence: `MIT`
 
 == Introduction
 
@@ -31,7 +31,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::MockUi.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -118,6 +118,26 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Locating persons by tag: `findtag` `[Coming in v2.0]`
+
+Finds persons whose tags contain any of the given keywords. +
+Format: `findtag KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `Friends` will match `friends`
+* The order of the keywords does not matter. e.g. `friends classmate` will match `classmate friends`
+* Only the tags are searched.
+* Only full words will be matched e.g. `friend` will not match `friends`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends classmates` will return persons with tags `friends` and `neighbour`, `owesMoney` `friends`
+****
+
+Examples:
+
+* `findtag friends` +
+Returns any person having tags `friends`
+* `find friends classmate neighbour` +
+Returns any person having tags `friends`, `classmate`, or `neighbour`
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -138,13 +158,42 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+// tag::addplatform[]
+=== Adding social media platforms to a person : `addplatform` `[Since v1.3]`
+
+Adds social media platforms to an existing person in the address book by providing the associated profile links. +
+Format: `addplatform INDEX [l/LINK]...`
+
+****
+* Adds the social media platforms by editing the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Existing values will be updated to the input values.
+* During this operation, the existing platform links of the person that are unchanged will be retained i.e adding of platforms is cumulative.
+* You may only store a single link for each social media platform.
+* You can remove all the person's social media platforms by typing `l/` without specifying any links after it.
+****
+
+Examples:
+
+* `addplatform 1 l/www.facebook.com/johndoe` +
+Adds the Facebook platform with the link `www.facebook.com/johndoe` to the 1st person.
+* `addplatform 2 l/` +
+Clears all existing social media platforms of the 2nd person.
+// end::addplatform[]
+
+// tag::sort[]
+=== Sorting all persons : `sort` `[Since v1.2]`
+
+Sorts all persons in the address book alphabetically and then displays the current list in sorted order. +
+Format: `sort`
+// end::sort[]
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the social media linked to the stored person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -176,7 +225,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `sort` and `clear`).
 ====
 
 Examples:
@@ -234,10 +283,108 @@ Address book data are saved in the hard disk automatically after any command tha
 There is no need to save manually.
 
 // tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+=== Encrypting data files : `encrypt` `[Coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
+Encrypt the specified person from the address book so that password will be required to view the information of the specified personz. +
+Format: `encrypt INDEX`
+
+****
+* Encrypts the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`encrypt 3` +
+Encrypts the 3rd person in the address book.
+* `find Betsy` +
+`encrypt 1` +
+Encrypts the 1st person in the results of the `find` command.
 // end::dataencryption[]
+
+=== Login : `login` `[Coming in v2.0]`
+
+Allow user to login to the social media specified. +
+Format: `loging SOCIALMEDIA`
+
+****
+* A login window will pop up upon entering the command.
+* The user can tick the option of remain logged in.
+****
+
+Examples:
+
+* `login facebook` +
+Open the login window to facebook where the user can input his account and password.
+
+
+=== Make a post : `post` `[Coming in v2.0]`
+
+Publish a post on the specified social media. +
+Format: `post SOCIALMEDIA/MESSAGE`
+
+****
+* User is required to login to their social media account.
+* If not logged in, the application will prompt for the user to login.
+****
+
+Examples:
+
+* `post facebook/Sample post.`
+
+=== Search for profile : `search` `[Coming in v2.0]`
+
+Search for the specified profiles on all social media platform linkable with the application. +
+Format: `search KEYWORD`
+
+****
+* The KEYWORD can either be the user name or email.
+* Make use of the search function of the respective social media platform.
+****
+
+Examples:
+
+* `search John`
+Search with keyword "John" on all the social media linked with the application and display the search result in the browser window under the respective tabs.
+
+=== Search for profile on specific platform : `searchon` `[Coming in v2.0]`
+
+Search for the specified profiles on the social media platform specified. +
+Format: `search SOCIALMEDIA KEYWORD`
+
+****
+* The KEYWORD can either be the user name or email.
+* Make use of the search function of the specified social media platform.
+****
+
+Examples:
+
+* `searchon facebook John` +
+Search with keyword "John" on facebook and display the search result in the browser window under the respective tabs.
+
+=== Logout from all the linked platform : `logoutall` `[Coming in v2.0]`
+
+Logout from all the social media platform that the user has logged in. +
+Format: `logoutall`
+
+=== Remove link to stored platform : `removeplatform` `[Coming in v2.0]`
+
+Remove a link to profile of specified social media platform of a specified person. +
+Format: `removeplatform INDEX SOCIALMEDIA`
+
+****
+* After this command, when the person is selected, the tab for the removed platform will not be shown.
+* If the platform specified was not stored in the first place, the application prompt the user.
+****
+
+Examples:
+
+* `list` +
+`removeplatform 3 facebook` +
+Search with keyword "John" on facebook and display the search result in the browser window under the respective tabs.
+
 
 == FAQ
 
@@ -256,6 +403,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
+* *Sort* : `sort`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`

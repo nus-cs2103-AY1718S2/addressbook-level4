@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Media Socializer - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-F12-B3/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F12-B3`      Since: `Jan 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -357,6 +357,105 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
+
+// tag::findtag[]
+=== Findtag feature
+==== Current Implementation
+
+The 'findtag' feature is implemented with the same mechanism as the 'find' feature. It is used for finding stored persons with their tags instead of names. The key components of the feature are 'FindWithTagCommand', 'FindWithTagCommandParser', and 'TagContainsKeywordsPredicate'.
+
+The main component of 'findtag' is the 'FindWithTagCommand' which resides inside the logic component. It inherit from 'Command', as such, similar to 'find', 'findtag' is not an undoable command. The following diagram shows the inheritance diagram for 'FindWithTagCommand':
+
+image::LogicCommandClassDiagram.png[width="800"]
+
+The user execute the FindWithTagCommand with the keyword ‘findtag’ following by the tag keywords, separated by whitespace. When the command is executed, the current list of persons shown in the GUI will only contain the persons with the tags same as the tag keywords. The following image shows the result of a 'findtag' execution:
+
+image::FindTagResultDiagram.png[width="800"]
+
+Note that the tag keywords are not case sensitive; however, the command keyword is. For example, both 'findtag friends' and 'findtag FrIeNdS' can be executed and return a list of persons with the tag 'friends'. However 'FiNdTaG friends' cannot be executed and will result in a 'Unknown Command' feedback, as shown in the following:
+
+image::InvalidCommandKeywordDiagram.png[width="800"]
+
+Note that the list of persons displayed will not change for in this case.
+
+The 'findtag' command can handle multiple input tag keywords and, similar to 'find', 'findtag' is an ‘or’ search. For example, 'findtag friends owesMoney' will find any person with the tag ‘friends’ or ‘owesMoney’ or both.
+
+The following sequence diagram shows how the findtag operation works:
+
+image::UndoRedoSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `FindWithTagCommand`
+
+* **Alternative 1 (current choice):** Follow the mechanism of `FindCommand`
+** Pros: 'findtag' works in the same mechanism as 'find', thus will not deviate from the overall architecture of the address book (i.e. Event Driven design).
+** Cons: May generate classes/ methods that are implemented with very similar style (i.e. a general pattern can be abstract out). Thus, additional work may be needed to handle the abstraction.
+* **Alternative 2:** Implement new mechanism specifically for `FindWithTagCommand`
+** Pros: Does not generate similar classes/ methods.
+** Cons: Hard to implement, risk deviating away from the overall architecture of the address book.
+// end::findtag[]
+
+// tag::sort[]
+=== Sort feature
+==== Current Implementation
+
+The sort mechanism is facilitated by the `SortCommand` and is used for sorting all persons found in the address book by name alphabetically.
+It inherits from `UndoableCommand` and thus supports the undo/redo mechanism, enabling the ability to reverse the command and return the address book to its previous unsorted state.
+
+When the user executes the `SortCommand` using the command word `sort`, the current list of persons shown in the GUI will be retained.
+As illustrated, a filtered list of persons will be displayed in a sorted manner once the command is executed:
+
+image::SortFilteredListDiagram.png[width="850"]
+
+{empty}
+
+The command can also handle multiple persons with similar names (i.e. different letter-casings) as shown below:
+
+image::SortSimilarNamesDiagram.png[width="650"]
+
+{empty}
+
+During sorting, names of two different persons are compared using the static method, `nameComparator`, found in the person class:
+[source, java]
+----
+public static Comparator<Person> nameComparator() {
+    return Comparator.comparing((Person p) -> p.getName().toString(), (
+        s1, s2) -> (s1.compareToIgnoreCase(s2) == 0) ? s1.compareTo(s2) : s1.compareToIgnoreCase(s2));
+}
+----
+As seen, casing is ignored when names are first compared with each other. The usual lexicographical order will instead be used when encountering identical names.
+
+The following sequence diagram shows how the sort operation works:
+
+image::SortCommandSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `SortCommand`
+* **Alternative 1 (current choice):** Create a custom sorting method for person names
+** Pros: Allows list to be displayed in a uniform manner, such that similar names are also sorted.
+** Cons: Requires extra work to write custom method.
+* **Alternative 2:** Utilise `String.CASE_INSENSITIVE_ORDER` for sorting
+** Pros: Does not require additional work to write or override compare methods.
+** Cons: List may be inconsistent when sorting multiple persons with similar names.
+
+===== Aspect: Implementation of Custom Sorting Method
+* **Alternative 1 (current choice):** Use comparators and create one for person names called `nameComparator`
+** Pros: Potentially enabling the ability to sort different fields other than names.
+** Cons: May be more difficult to write.
+* **Alternative 2:** Implement comparable and override the `compareTo` method in person class
+** Pros: Simpler to understand.
+** Cons: Can only define a single sorting sequence when comparing two different persons.
+
+===== Aspect: Display of person list in GUI
+* **Alternative 1 (current choice):** Retain the current list of persons as shown in GUI but shown in a sorted manner
+** Pros: User would not have to key in the command to filter the list after sorting.
+** Cons: User may think that only the current list is sorted.
+* **Alternative 2:** Displays the list of all persons found in the address book sorted alphabetically
+** Pros: More properly describes what `sort` actually does by showing the full list of persons sorted.
+** Cons: Current list is replaced by showing all persons.
+// end::sort[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
@@ -777,6 +876,7 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
+// tag::product-scope[]
 [appendix]
 == Product Scope
 
@@ -791,6 +891,50 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Value proposition*: one-stop access to multiple social media platforms
 
+*Feature Contribution*:
+
+[options="header"]
+|=======================================================================
+|Assignee |Major | Minor
+|Seunghwan Choi
+a|
+* Updating the UI to show multiple social pages on the application window:
+** With all the links to the different social media pages of a person stored in the user's address book, the user can
+view all of the pages in a single window under collapsible tabs (to distinguish the different social media platform
+pages) when he/she selects the particular person.
+This simplifies the process of providing the user with his/her daily social media fix.
+a|
+* `login` function:
+** Allows the user to login to all the available social media platforms as given by the application.
+This feature is essential so that users can perform their required tasks, such as accessing their friends list and
+viewing the social feeds of friends.
+
+|Chuang Cheng Heng
+a|
+* `searchall` function:
+** Allows user to perform the search action on all the social media platforms available with a single command.
+This feature improves the product significantly because a user can do search on the application instead of going to
+the individual social media platform and repeatedly perform the search.
+a|
+* `findtag` command:
+** Allows the user to find persons whose tags contain the input keywords.
+This can assist users in filtering out people who only use a certain social media platform if they are tagged.
+
+|Tan Wei Jie
+a|
+* Add person from social media friends list function:
+** Allows user to perform the `add` command by obtaining the relevant information stated in his/her friend's social
+media page.
+This feature eases the process of having to manually key in all the required information before a user can add a
+person to the address book.
+a|
+* `sort` command:
+** Allows the user to sort the address book list alphabetically.
+This feature organises and arranges the list for easier viewing and searching.
+|=======================================================================
+// end::product-scope[]
+
+// tag::user-stories[]
 [appendix]
 == User Stories
 
@@ -871,6 +1015,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |=======================================================================
 
 _{More to be added}_
+// end::user-stories[]
 
 [appendix]
 == Use Cases
@@ -937,6 +1082,7 @@ Use case resumes at step 3.
 
 _{More to be added}_
 
+// tag::non-functional-requirements[]
 [appendix]
 == Non Functional Requirements
 
@@ -949,6 +1095,7 @@ _{More to be added}_
 .  The application should have an user friendly interface so that even users that are not familiar with CLI will have minimal problem navigating through the application.
 
 _{More to be added}_
+// end::non-functional-requirements[]
 
 [appendix]
 == Glossary

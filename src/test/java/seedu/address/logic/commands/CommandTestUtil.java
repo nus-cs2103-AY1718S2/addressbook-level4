@@ -14,6 +14,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
@@ -24,6 +25,8 @@ import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.smplatform.SocialMediaPlatform;
+import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -78,6 +81,9 @@ public class CommandTestUtil {
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
+    public static final Map<String, SocialMediaPlatform> SMP_MAP_AMY;
+    public static final Map<String, SocialMediaPlatform> SMP_MAP_BOB;
+
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
@@ -85,6 +91,9 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+
+        SMP_MAP_AMY = SampleDataUtil.getSocialMediaPlatformMap("www.facebook.com/a.my", "www.twitter.com/amy");
+        SMP_MAP_BOB = SampleDataUtil.getSocialMediaPlatformMap("www.twitter.com/bob");
     }
 
     /**

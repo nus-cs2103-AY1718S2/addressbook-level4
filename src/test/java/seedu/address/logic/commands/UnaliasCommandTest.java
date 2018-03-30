@@ -1,17 +1,17 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMAND_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_FIND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_HISTORY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_LIST;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_LIST_COMMAND;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -37,95 +37,72 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AliasBuilder;
 
-public class AliasCommandTest {
+public class UnaliasCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+
     @Test
     public void constructor_nullAlias_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AliasCommand(null);
+        new UnaliasCommand(null);
     }
 
     @Test
-    public void execute_aliasAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingAliasAdded modelStub = new ModelStubAcceptingAliasAdded();
-        Alias validAlias = new AliasBuilder().build();
+    public void execute_unaliasRemovedByModel_removeSuccessful() throws Exception {
+        ModelStubAcceptingUnaliasAdded modelStub = new ModelStubAcceptingUnaliasAdded();
 
-        CommandResult commandResult = getAliasCommand(validAlias, modelStub).execute();
+        String validUnalias = VALID_ALIAS_LIST;
+        Alias validUnaliasAlias = new AliasBuilder().withCommand(VALID_ALIAS_LIST_COMMAND)
+                .withAlias(VALID_ALIAS_LIST).build();
+        ArrayList<Alias> expectedAliasesList = new ArrayList<Alias>();
 
-        assertEquals(String.format(AliasCommand.MESSAGE_SUCCESS, validAlias), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validAlias), modelStub.aliasesAdded);
+        CommandResult commandResult = getUnaliasCommand(validUnalias, modelStub).execute();
+
+        assertEquals(String.format(UnaliasCommand.MESSAGE_SUCCESS, validUnaliasAlias), commandResult.feedbackToUser);
+        assertEquals(expectedAliasesList, modelStub.aliases);
     }
 
     @Test
-    public void execute_duplicateAlias_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicateAliasException();
-        Alias validAlias = new AliasBuilder().build();
+    public void execute_unaliasRemovedByModel_removeFailure() throws Exception {
+        ModelStubAcceptingUnaliasAdded modelStub = new ModelStubAcceptingUnaliasAdded();
+
+        String invalidUnalias = VALID_ALIAS_FIND;
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AliasCommand.MESSAGE_DUPLICATE_ALIAS);
+        thrown.expectMessage(UnaliasCommand.MESSAGE_UNKNOWN_UNALIAS);
 
-        getAliasCommand(validAlias, modelStub).execute();
+        getUnaliasCommand(invalidUnalias, modelStub).execute();
     }
-
-    @Test
-    public void execute_aliasWordAlias_failure() throws Exception {
-        //test alias word to be a command word failure
-        ModelStubAcceptingAliasAdded modelStub = new ModelStubAcceptingAliasAdded();
-        List<String> commands = AliasCommand.getCommands();
-        for (int i = 0; i < commands.size(); i++) {
-            for (int j = 0; j < commands.size(); j++) {
-                thrown.expect(CommandException.class);
-                Alias invalidAlias = new Alias(commands.get(i), commands.get(j));
-                getAliasCommand(invalidAlias, modelStub).execute();
-            }
-        }
-    }
-
-    @Test
-    public void execute_commandWordAlias_failure() throws Exception {
-        //test invalid command word with valid alias word failure
-        ModelStubAcceptingAliasAdded modelStub = new ModelStubAcceptingAliasAdded();
-        Alias invalidAlias = new Alias(INVALID_COMMAND_DESC, VALID_ALIAS_ADD);
-
-        thrown.expect(CommandException.class);
-
-        getAliasCommand(invalidAlias, modelStub).execute();
-    }
-
 
     @Test
     public void equals() {
-        Alias edit = new AliasBuilder().withCommand("Edit").build();
-        Alias exit = new AliasBuilder().withCommand("Exit").build();
-
-        AliasCommand editAliasCommand = new AliasCommand(edit);
-        AliasCommand exitAliasCommand = new AliasCommand(exit);
+        UnaliasCommand listUnaliasCommand = new UnaliasCommand(VALID_ALIAS_LIST);
+        UnaliasCommand historyUnaliasCommand = new UnaliasCommand(VALID_ALIAS_HISTORY);
 
         // same object -> returns true
-        assertTrue(editAliasCommand.equals(editAliasCommand));
+        assertTrue(listUnaliasCommand.equals(listUnaliasCommand));
 
         // same values -> returns true
-        AliasCommand editAliasCommandCopy = new AliasCommand(edit);
-        assertTrue(editAliasCommand.equals(editAliasCommandCopy));
+        UnaliasCommand listUnaliasCommandCopy = new UnaliasCommand(VALID_ALIAS_LIST);
+        assertTrue(listUnaliasCommand.equals(listUnaliasCommandCopy));
 
         // different types -> returns false
-        assertFalse(editAliasCommand.equals(1));
+        assertFalse(listUnaliasCommand.equals(1));
 
         // null -> returns false
-        assertFalse(editAliasCommand == null);
+        assertFalse(listUnaliasCommand == null);
 
-        // different alias -> returns false
-        assertFalse(editAliasCommand.equals(exitAliasCommand));
+        // different unalias -> returns false
+        assertFalse(listUnaliasCommand.equals(historyUnaliasCommand));
     }
 
     /**
-     * Generates a new AliasCommand with the details of the given alias.
+     * Generates a new UnaliasCommand with the details of the given alias.
      */
-    private AliasCommand getAliasCommand(Alias alias, Model model) {
-        AliasCommand command = new AliasCommand(alias);
+    private UnaliasCommand getUnaliasCommand(String unalias, Model model) {
+        UnaliasCommand command = new UnaliasCommand(unalias);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -208,31 +185,27 @@ public class AliasCommandTest {
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     * A Model stub that always accept the alias being removed.
      */
-    private class ModelStubThrowingDuplicateAliasException extends ModelStub {
-        @Override
-        public void addAlias(Alias alias) throws DuplicateAliasException {
-            throw new DuplicateAliasException();
-        }
+    private class ModelStubAcceptingUnaliasAdded extends ModelStub {
+        private final ArrayList<Alias> aliases = new ArrayList<>();
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
+        public void removeAlias(String unalias) throws AliasNotFoundException {
+            aliases.add(new Alias(VALID_ALIAS_LIST_COMMAND, VALID_ALIAS_LIST));
+            requireNonNull(unalias);
+            boolean isRemove = false;
+            for (int i = 0; i < aliases.size(); i++) {
+                if (aliases.get(i).getAlias().equals(unalias)) {
+                    aliases.remove(aliases.get(i));
+                    isRemove = true;
+                    break;
+                }
+            }
 
-
-    /**
-     * A Model stub that always accept the alias being added.
-     */
-    private class ModelStubAcceptingAliasAdded extends ModelStub {
-        private final ArrayList<Alias> aliasesAdded = new ArrayList<>();
-
-        @Override
-        public void addAlias(Alias alias) {
-            requireNonNull(alias);
-            aliasesAdded.add(alias);
+            if (!isRemove) {
+                throw new AliasNotFoundException();
+            }
         }
 
         @Override

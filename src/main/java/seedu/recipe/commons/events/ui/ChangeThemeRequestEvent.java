@@ -1,4 +1,4 @@
-//@@Author kokonguyen191
+//@@author kokonguyen191
 package seedu.recipe.commons.events.ui;
 
 import seedu.recipe.commons.events.BaseEvent;

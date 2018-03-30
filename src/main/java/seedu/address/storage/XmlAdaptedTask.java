@@ -61,7 +61,6 @@ public class XmlAdaptedTask {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Task toModelType() throws IllegalValueException {
-
         if (this.title == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Title.class.getSimpleName()));
@@ -71,7 +70,7 @@ public class XmlAdaptedTask {
                 TaskDescription.class.getSimpleName()));
         }
         final Title title = new Title(this.title);
-
+      
         if (!TaskDescription.isValidDescription(this.taskDescription)) {
             throw new IllegalValueException(TaskDescription.MESSAGE_DESCRIPTION_CONSTRAINTS);
         }

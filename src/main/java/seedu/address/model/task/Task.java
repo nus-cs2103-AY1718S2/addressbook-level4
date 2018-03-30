@@ -10,6 +10,7 @@ import java.util.Objects;
  */
 public class Task {
 
+
     private final Title title;
     private final TaskDescription taskDesc;
     private final Deadline deadline;

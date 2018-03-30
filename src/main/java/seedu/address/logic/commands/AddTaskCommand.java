@@ -19,6 +19,7 @@ public class AddTaskCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the todo list and calendar. "
             + "Parameters: "
+
             + PREFIX_TITLE + "TITLE "
             + PREFIX_TASK_DESC + "TASK "
             + PREFIX_DEADLINE + "DEADLINE "

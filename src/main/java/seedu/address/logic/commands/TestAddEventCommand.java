@@ -31,9 +31,9 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CreateNewCalendar;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Person;
 import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -223,8 +223,12 @@ public class TestAddEventCommand extends UndoableCommand {
                 logger.info("unable to create calendar");
                 return new CommandResult(MESSAGE_FAILURE);
             }
-            Person newWithCalendar = new Person(personToAddEvent.getName(), personToAddEvent.getPhone(), personToAddEvent.getEmail(), personToAddEvent.getAddress(),
-                    personToAddEvent.getTags(), calendarId);
+            Person newWithCalendar = new Person(personToAddEvent.getName(),
+                    personToAddEvent.getPhone(),
+                    personToAddEvent.getEmail(),
+                    personToAddEvent.getAddress(),
+                    personToAddEvent.getTags(),
+                    calendarId);
             //retain the oldId
             newWithCalendar.setId(personToAddEvent.getId());
 
@@ -234,8 +238,7 @@ public class TestAddEventCommand extends UndoableCommand {
                 logger.info("Unable to find original person in model manager");
                 return new CommandResult(MESSAGE_FAILURE);
             } catch (DuplicatePersonException e) {
-                logger.info("newly created person (with calendarId) is the same as original person original person in " +
-                        "model manager");
+                logger.info("newly created person (with calendarId) is same as original person");
                 return new CommandResult(MESSAGE_FAILURE);
             }
         }

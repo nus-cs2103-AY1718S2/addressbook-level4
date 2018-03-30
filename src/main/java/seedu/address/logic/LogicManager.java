@@ -24,9 +24,9 @@ import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.person.Person;
 import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.NotificationTime;
+import seedu.address.model.person.Person;
 import seedu.address.storage.NotificationTimeParserUtil;
 
 /**

@@ -4,5 +4,9 @@
     <phone>9482424</phone>
     <email>hans@example</email>
     <address>4th street</address>
+    <platforms>
+        <type>facebook</type>
+        <link>www.facebook.com/hans.muster</link>
+    </platforms>
     <tagged>friends</tagged>
 </person>

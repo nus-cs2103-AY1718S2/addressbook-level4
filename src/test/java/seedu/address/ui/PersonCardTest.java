@@ -44,7 +44,7 @@ public class PersonCardTest extends GuiUnitTest {
         // with platforms
         String[] links = {"www.facebook.com/examplepage", "www.twitter.com/examplepage"};
         Person personWithPlatforms = new PersonBuilder().withPlatforms(links).build();
-        personCard = new PersonCard(personWithPlatforms,3);
+        personCard = new PersonCard(personWithPlatforms, 3);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithPlatforms, 3);
 
@@ -58,7 +58,7 @@ public class PersonCardTest extends GuiUnitTest {
                 new Name("Alice Pauline"), new Phone("85355255"),
                 new Email("alice@gmail.com"), new Address("123, Jurong West Ave 6, #08-111"),
                 customSmpMap, defaultTags);
-        personCard = new PersonCard(personWithIncorrectSmpMap,4);
+        personCard = new PersonCard(personWithIncorrectSmpMap, 4);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithIncorrectSmpMap, 4);
         //@@author

@@ -34,7 +34,7 @@ public class StorageManager extends ComponentManager implements Storage {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
-        xmlRequiredIndexStorage = new XmlRequiredIndexStorage("data/requiredStudentIndex.xml");
+        xmlRequiredIndexStorage = new XmlRequiredIndexStorage("out/production/resources/view/requiredStudentIndex.xml");
         this.scheduleStorage = scheduleStorage;
 
     }

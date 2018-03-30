@@ -83,6 +83,10 @@ public class BrowserPanel extends UiPart<Region> {
         }
     }
 
+    /**
+     * Loads a HTML file based on given URL.
+     * @param url
+     */
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
         additionalInfo.setText("Estimated Required Time for Deliveries: " + FilterCommand.getStringDuration());
@@ -103,11 +107,6 @@ public class BrowserPanel extends UiPart<Region> {
     public void freeResources() {
         browser = null;
     }
-
-    /**
-     * Get controller
-     */
-
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {

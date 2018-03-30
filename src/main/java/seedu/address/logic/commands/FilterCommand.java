@@ -22,9 +22,9 @@ public class FilterCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Filters the list based on the specifed field and given value.";
 
-    private final DatePredicate predicate;
-
     private static String stringDuration;
+
+    private final DatePredicate predicate;
 
     public FilterCommand(DatePredicate predicate) {
         this.predicate = predicate;

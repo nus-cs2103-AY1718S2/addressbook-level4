@@ -108,7 +108,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     public void saveCustomerStats(ReadOnlyCustomerStats customerStats) throws IOException {
-        saveCustomerStats(customerStats, addressBookStorage.getAddressBookFilePath());
+        saveCustomerStats(customerStats, customerStatsStorage.getCustomerStatsFilePath());
     }
 
     @Override

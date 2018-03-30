@@ -196,6 +196,7 @@ public class EditCommand extends UndoableCommand {
 
         if (index.getZeroBased() >= lastShownPersonList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
         }
 
         personToEdit = lastShownPersonList.get(index.getZeroBased());

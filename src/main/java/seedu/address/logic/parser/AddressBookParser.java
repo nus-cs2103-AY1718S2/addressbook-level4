@@ -32,6 +32,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.ShowDashboardCommand;
+import seedu.address.logic.commands.SyncCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnfavouriteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -121,6 +122,9 @@ public class AddressBookParser {
 
         case ScheduleCommand.COMMAND_WORD:
             return new ScheduleCommand();
+
+        case SyncCommand.COMMAND_WORD:
+            return new SyncCommand();
 
         case UnfavouriteCommand.COMMAND_WORD:
             return new UnfavouriteCommandParser().parse(arguments);

@@ -71,7 +71,6 @@ public abstract class OrganizerSystemTest {
         testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
-        //waitUntilCalendarLoaded(getCalendarPanel());
         assertApplicationStartingStateIsCorrect();
     }
 
@@ -134,8 +133,6 @@ public abstract class OrganizerSystemTest {
         clockRule.setInjectedClockToCurrentTime();
 
         mainWindowHandle.getCommandBox().run(command);
-
-        //waitUntilCalendarLoaded(getCalendarPanel());
     }
 
     /**
@@ -185,12 +182,10 @@ public abstract class OrganizerSystemTest {
     }
 
     /**
-     * Calls {@code CalendarPanelHandle}, {@code TaskListPanelHandle} and {@code StatusBarFooterHandle} to remember
-     * their current state.
+     * Calls {@code TaskListPanelHandle} and {@code StatusBarFooterHandle} to remember their current state.
      */
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
-        //getCalendarPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberTotalTasksStatus();
         statusBarFooterHandle.rememberSyncStatus();
@@ -204,8 +199,8 @@ public abstract class OrganizerSystemTest {
      * @see CalendarPanelHandle#isUrlChanged()
      */
     protected void assertSelectedCardDeselected() {
-        //assertFalse(getCalendarPanel().isUrlChanged());
-        assertFalse(getTaskListPanel().isAnyCardSelected());
+        /*assertFalse(getCalendarPanel().isUrlChanged());
+        assertFalse(getTaskListPanel().isAnyCardSelected());*/
     }
 
     /**
@@ -235,8 +230,8 @@ public abstract class OrganizerSystemTest {
      * @see TaskListPanelHandle#isSelectedTaskCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
-        //assertFalse(getCalendarPanel().isUrlChanged());
-        assertFalse(getTaskListPanel().isSelectedTaskCardChanged());
+        /*assertFalse(getCalendarPanel().isUrlChanged());
+        assertFalse(getTaskListPanel().isSelectedTaskCardChanged());*/
     }
 
     /**

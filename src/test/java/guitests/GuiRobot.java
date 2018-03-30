@@ -40,6 +40,15 @@ public class GuiRobot extends FxRobot {
     }
 
     /**
+     * Pauses execution for {@code PAUSE_FOR_HUMAN_DELAY_MILLISECONDS} milliseconds. Used in {@code MonthViewTest}
+     * for threads to complete.
+     */
+    public void pause() {
+        sleep(PAUSE_FOR_HUMAN_DELAY_MILLISECONDS);
+    }
+
+
+    /**
      * Waits for {@code event} to be true by {@code DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS} milliseconds.
      *
      * @throws EventTimeoutException if the time taken exceeds {@code DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS}

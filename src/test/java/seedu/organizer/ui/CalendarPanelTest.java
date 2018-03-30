@@ -1,49 +1,100 @@
 package seedu.organizer.ui;
-/*
-import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
-import static org.junit.Assert.assertEquals;
-import static seedu.organizer.testutil.EventsUtil.postNow;
-import static seedu.organizer.testutil.TypicalTasks.GROCERY;
-import static seedu.organizer.ui.CalendarPanel.DEFAULT_PAGE;
-import static seedu.organizer.ui.UiPart.FXML_FILE_FOLDER;
 
-import java.net.URL;
+import static org.junit.Assert.assertEquals;
+import static seedu.organizer.testutil.TypicalExecutedCommands.getTypicalExecutedCommands;
+import static seedu.organizer.testutil.TypicalTasks.getTypicalTasks;
+
+import java.time.YearMonth;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import guitests.guihandles.BrowserPanelHandle;
-import seedu.organizer.MainApp;
-import seedu.organizer.commons.events.ui.TaskPanelSelectionChangedEvent;
+import guitests.guihandles.CalendarPanelHandle;
+import guitests.guihandles.MonthViewHandle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import seedu.organizer.model.task.Task;
 
+//@@author guekling
 public class CalendarPanelTest extends GuiUnitTest {
-    private TaskPanelSelectionChangedEvent selectionChangedEventStub;
+    private static final ObservableList<Task> TYPICAL_TASKS = FXCollections.observableList(getTypicalTasks());
+    private static final ObservableList<String> TYPICAL_EXECUTED_COMMANDS = FXCollections.observableList
+        (getTypicalExecutedCommands());
+
+    private static final int SUNDAY = 7;
+    private static final int FIRST_ROW = 0;
+    private static final int LAST_ROW = 4;
+    private static final int MAX_NUM_OF_DAYS = 35;
 
     private CalendarPanel calendarPanel;
-    private BrowserPanelHandle browserPanelHandle;
+    private CalendarPanelHandle calendarPanelHandle;
+    private MonthViewHandle monthViewHandle;
+    private YearMonth currentYearMonth;
 
     @Before
     public void setUp() {
-        selectionChangedEventStub = new TaskPanelSelectionChangedEvent(new TaskCard(GROCERY, 0));
-
-        guiRobot.interact(() -> calendarPanel = new CalendarPanel());
+        calendarPanel = new CalendarPanel(TYPICAL_TASKS, TYPICAL_EXECUTED_COMMANDS);
         uiPartRule.setUiPart(calendarPanel);
 
-        browserPanelHandle = new BrowserPanelHandle(calendarPanel.getRoot());
+        calendarPanelHandle = new CalendarPanelHandle(calendarPanel.getRoot());
+        monthViewHandle = new MonthViewHandle(calendarPanel.getMonthView().getRoot());
+
+        currentYearMonth = YearMonth.now();
     }
 
     @Test
-    public void display() throws Exception {
-        // default web page
-        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+    public void display() {
+        // verify that calendar title is displayed correctly
+        monthViewHandle.getCalendarTitleText();
+        String expectedTitle = currentYearMonth.getMonth().toString() + " " + currentYearMonth.getYear();
+        assertEquals(expectedTitle, monthViewHandle.getCalendarTitleText());
 
-        // associated web page of a task
-        postNow(selectionChangedEventStub);
-        URL expectedPersonUrl = new URL(CalendarPanel.SEARCH_PAGE_URL
-                + GROCERY.getName().fullName.replaceAll(" ", "%20"));
+        // verify that the first date of the month is displayed in the correct row and column
+        Node startDateNode = monthViewHandle.getPrintedDateNode(1);
+        int startDateRow = monthViewHandle.getRowIndex(startDateNode);
+        int startDateColumn = monthViewHandle.getColumnIndex(startDateNode);
+        int expectedStartDateColumn = getExpectedDateColumn(currentYearMonth, 1);
 
-        waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+        assertEquals(FIRST_ROW, startDateRow);
+        assertEquals(expectedStartDateColumn, startDateColumn);
+
+        // verify that the last date of the month is displayed in the correct row and column
+        int lastDate = currentYearMonth.lengthOfMonth();
+        Node lastDateNode = monthViewHandle.getPrintedDateNode(lastDate);
+        int lastDateRow = monthViewHandle.getRowIndex(lastDateNode);
+        int lastDateColumn = monthViewHandle.getColumnIndex(lastDateNode);
+        int expectedLastDateColumn = getExpectedDateColumn(currentYearMonth, lastDate);
+        int expectedLastDateRow = getExpectedRowColumn(currentYearMonth, lastDate);
+
+        assertEquals(expectedLastDateColumn, lastDateColumn);
+        assertEquals(expectedLastDateRow, lastDateRow);
     }
-}*/
+
+    /**
+     * Retrieves the expected column index of a {@code date}.
+     */
+    private int getExpectedDateColumn(YearMonth yearMonth, int date) {
+        int expectedDateColumn = yearMonth.atDay(date).getDayOfWeek().getValue();
+
+        if (expectedDateColumn == SUNDAY) {
+            expectedDateColumn = 0;
+        }
+
+        return expectedDateColumn;
+    }
+
+    /**
+     * Retrieves the expected row index of a {@code date}.
+     */
+    private int getExpectedRowColumn(YearMonth yearMonth, int date) {
+        int startDay = yearMonth.atDay(1).getDayOfWeek().getValue();
+        int totalDays = startDay + date;
+
+        if (totalDays <= MAX_NUM_OF_DAYS) {
+            return LAST_ROW;
+        } else {
+            return FIRST_ROW;
+        }
+    }
+}

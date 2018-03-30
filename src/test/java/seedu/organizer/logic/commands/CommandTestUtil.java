@@ -24,6 +24,7 @@ import seedu.organizer.model.task.NameContainsKeywordsPredicate;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
 import seedu.organizer.testutil.EditTaskDescriptorBuilder;
+import seedu.organizer.ui.calendar.MonthView;
 
 /**
  * Contains helper methods for testing commands.
@@ -96,6 +97,22 @@ public class CommandTestUtil {
             CommandResult result = command.execute();
             assertEquals(expectedMessage, result.feedbackToUser);
             assertEquals(expectedModel, actualModel);
+        } catch (CommandException ce) {
+            throw new AssertionError("Execution of command should not fail.", ce);
+        }
+    }
+
+    /**
+     * Executes the given {@code command}, confirms that <br>
+     * - the result message matches {@code expectedMessage} <br>
+     * - the {@code actualMonthView} matches {@code expectedMonthView}
+     */
+    public static void assertCommandSuccess(Command command, MonthView actualMonthView, String expectedMessage,
+                                            MonthView expectedMonthView) {
+        try {
+            CommandResult result = command.execute();
+            assertEquals(expectedMessage, result.feedbackToUser);
+            assertEquals(expectedMonthView, actualMonthView);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
         }

@@ -43,9 +43,9 @@ public class HelpCommandSystemTest extends OrganizerSystemTest {
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 
-        /*getCalendarPanel().click();
+        getCalendarPanel().click();
         getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowOpen();*/
+        assertHelpWindowOpen();
 
         //use menu button
         getMainMenu().openHelpWindowUsingMenu();
@@ -64,7 +64,6 @@ public class HelpCommandSystemTest extends OrganizerSystemTest {
         assertEquals("", getCommandBox().getInput());
         assertCommandBoxShowsDefaultStyle();
         assertNotEquals(HelpCommand.SHOWING_HELP_MESSAGE, getResultDisplay().getText());
-        //assertNotEquals(CalendarPanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
         assertListMatching(getTaskListPanel(), getModel().getFilteredTaskList());
 
         // assert that the status bar too is updated correctly while the help window is open

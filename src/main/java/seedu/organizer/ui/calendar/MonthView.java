@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.fxmisc.easybind.EasyBind;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -45,7 +46,6 @@ public class MonthView extends UiPart<Region> {
     private YearMonth viewYearMonth;
     private String[] datesToBePrinted;
     private ObservableList<Task> taskList;
-
     private ObservableList<String> executedCommandsList;
 
     @FXML
@@ -71,11 +71,11 @@ public class MonthView extends UiPart<Region> {
      * @param yearMonth Year and month in the YearMonth format.
      */
     public void getMonthView(YearMonth yearMonth) {
+        viewYearMonth = yearMonth;
+        int year = yearMonth.getYear();
 
-        int currentYear = yearMonth.getYear();
-
-        setMonthCalendarTitle(currentYear, yearMonth.getMonth().toString());
-        setMonthCalendarDatesAndEntries(currentYear, yearMonth.getMonthValue());
+        setMonthCalendarTitle(year, yearMonth.getMonth().toString());
+        setMonthCalendarDatesAndEntries(year, yearMonth.getMonthValue());
     }
 
     /**
@@ -84,7 +84,7 @@ public class MonthView extends UiPart<Region> {
      * @param month Full month name.
      * @param year Year represented as a 4-digit integer.
      */
-    private void setMonthCalendarTitle(int year, String month) {
+    public void setMonthCalendarTitle(int year, String month) {
         calendarTitle.setText(month + " " + year);
     }
 
@@ -132,7 +132,14 @@ public class MonthView extends UiPart<Region> {
      */
     private void clearCalendar() {
         Node gridLines = taskCalendar.getChildren().get(0);
-        taskCalendar.getChildren().retainAll(gridLines);
+
+        // To update the JavaFX component from a non-JavaFX thread
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                taskCalendar.getChildren().retainAll(gridLines);
+            }
+        });
     }
 
     //====================================== Interacting with Command ==============================================
@@ -238,9 +245,17 @@ public class MonthView extends UiPart<Region> {
      * @param row The row number in {@code taskCalendar}. Row number should range from 0 to 4.
      */
     private void addMonthDate(Text dateToPrint, int column, int row) {
-        taskCalendar.add(dateToPrint, column, row);
+        // To update the JavaFX component from a non-JavaFX thread
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                taskCalendar.add(dateToPrint, column, row);
+            }
+        });
+
         taskCalendar.setHalignment(dateToPrint, HPos.LEFT);
         taskCalendar.setValignment(dateToPrint, VPos.TOP);
+        dateToPrint.setId("date" + String.valueOf(dateCount));
     }
 
     /**
@@ -294,7 +309,7 @@ public class MonthView extends UiPart<Region> {
      */
     private void addEntries(ObservableList<EntryCard> toAddObservableList, int countDate, int remainder, int divisor) {
         if (countDate <= MAX_NUM_OF_DAYS) {
-            if (remainder == NO_REMAINDER) {
+            if (remainder == NO_REMAINDER) { // entry on a Sunday
                 int row = divisor - 1;
                 int column = MAX_COLUMN;
 
@@ -324,11 +339,19 @@ public class MonthView extends UiPart<Region> {
      */
     private void addEntryListView(ObservableList<EntryCard> toAddObservableList, int row, int column) {
         ListView<EntryCard> entries = new ListView<>();
+        entries.setId("entry" + String.valueOf(row) + String.valueOf(column));
         entries.setItems(toAddObservableList);
         entries.setCellFactory(listView -> new EntryListViewCell());
         entries.setMaxHeight(60);
 
-        taskCalendar.add(entries, column, row);
+        // To update the JavaFX component from a non-JavaFX thread
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                taskCalendar.add(entries, column, row);
+            }
+        });
+
         taskCalendar.setValignment(entries, VPos.BOTTOM);
     }
 
@@ -459,5 +482,60 @@ public class MonthView extends UiPart<Region> {
                 setGraphic(entry.getRoot());
             }
         }
+    }
+
+    //================================================= isEqual ======================================================
+
+    /**
+     * Checks if the entries are the same.
+     */
+    public boolean entriesIsEqual(Object other) {
+        MonthView monthView = (MonthView) other;
+
+        for (int size = 0; size < taskList.size(); size++) {
+            return taskList.get(size).equals(monthView.taskList.get(size));
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if the dates are printed in the same row and column.
+     */
+    public boolean dateIsEqual(Object other) {
+        MonthView monthView = (MonthView) other;
+
+        for (int date = 1; date <= viewYearMonth.lengthOfMonth(); date++) {
+            Node expectedText = taskCalendar.lookup("#date" + String.valueOf(date));
+            int expectedRow = taskCalendar.getRowIndex(expectedText);
+            int expectedColumn = taskCalendar.getColumnIndex(expectedText);
+
+            Node actualText = monthView.taskCalendar.lookup("#date" + String.valueOf(date));
+            int actualRow = monthView.taskCalendar.getRowIndex(actualText);
+            int actualColumn = monthView.taskCalendar.getColumnIndex(actualText);
+
+            return (expectedRow == actualRow) && (expectedColumn == actualColumn);
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof MonthView)) {
+            return false;
+        }
+
+        // state check
+        MonthView monthView = (MonthView) other;
+        return calendarTitle.getText().equals(monthView.calendarTitle.getText())
+                && dateIsEqual(monthView)
+                && entriesIsEqual(monthView);
     }
 }

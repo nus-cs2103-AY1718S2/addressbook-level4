@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.EntryCardHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.TaskCardHandle;
 import guitests.guihandles.TaskListPanelHandle;
@@ -45,6 +46,15 @@ public class GuiTestAssert {
         assertEquals("Description : " + expectedTask.getDescription().value, actualCard.getDescription());
         assertTagsEqual(expectedTask, actualCard);
     }
+
+    //@@author guekling
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedTask}.
+     */
+    public static void assertEntryCardDisplaysName(Task expectedTask, EntryCardHandle actualCard) {
+        assertEquals(expectedTask.getName().fullName, actualCard.getEntryCardText());
+    }
+    //@@author
 
     /**
      * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code tasks} correctly and

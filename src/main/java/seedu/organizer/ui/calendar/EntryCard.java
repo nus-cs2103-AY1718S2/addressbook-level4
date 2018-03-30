@@ -29,4 +29,21 @@ public class EntryCard extends UiPart<Region> {
     public Task getTask() {
         return task;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof EntryCard)) {
+            return false;
+        }
+
+        // state check
+        EntryCard card = (EntryCard) other;
+        return task.equals(card.task);
+    }
 }

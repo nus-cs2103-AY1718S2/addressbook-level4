@@ -39,4 +39,8 @@ public class CalendarPanel extends UiPart<Region> {
         monthView.getMonthView(currentYearMonth);
         calendarPane.getChildren().add(monthView.getRoot());
     }
+
+    public MonthView getMonthView() {
+        return monthView;
+    }
 }

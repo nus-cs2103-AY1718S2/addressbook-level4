@@ -4,8 +4,6 @@ package seedu.recipe.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.recipe.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.recipe.logic.commands.UploadCommand.MESSAGE_FAILURE;
-import static seedu.recipe.logic.commands.UploadCommand.MESSAGE_SUCCESS;
 import static seedu.recipe.logic.commands.UploadCommand.MESSAGE_UPLOAD;
 import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipeBook;
 
@@ -13,16 +11,15 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.dropbox.core.DbxException;
-
 import seedu.recipe.model.Model;
 import seedu.recipe.model.ModelManager;
 import seedu.recipe.model.UserPrefs;
 
 public class UploadCommandTest {
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-    
+
     private Model model = new ModelManager(getTypicalRecipeBook(), new UserPrefs());
 
     @Test

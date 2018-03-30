@@ -1,13 +1,14 @@
 package seedu.address.model.policy;
 
-import org.junit.Test;
-import seedu.address.testutil.Assert;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import seedu.address.testutil.Assert;
 
 public class PolicyTest {
 

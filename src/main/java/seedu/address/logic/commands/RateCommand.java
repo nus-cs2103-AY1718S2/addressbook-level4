@@ -89,6 +89,7 @@ public class RateCommand extends UndoableCommand {
                 personToEdit.getAddress(), personToEdit.getTags(), personToEdit.getCalendarId());
         toReturn.setRating(updatedRating);
         toReturn.setReview(personToEdit.getReview());
+        toReturn.setId(personToEdit.getId());
 
         return toReturn;
 

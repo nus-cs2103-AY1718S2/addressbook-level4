@@ -421,7 +421,7 @@ e.g.`select 2`
 * *Rate* : `rate INDEX t/TECHNICAL_SKILLS_SCORE c/COMMUNICATION_SKILLS_SCORE p/PROBLEM_SOLVING_SKILLS_SCORE e/EXPERIENCE_SKILLS_SCORE` +
 e.g. `rate 1 t/4.5 c/3 p/4 e/3.5`
 * *Sort by Rating* : `rating-sort o/SORT ORDER` +
-e.g. `rating_sort o/asc`
+e.g. `rating-sort o/asc`
 * *Delete Rating* : `rating-delete INDEX` +
 e.g. `rating-delete 1`
 * *History* : `history`

@@ -168,15 +168,18 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
             ArrayList<Double> row = new ArrayList<>();
             //record down the actual value
             row.add(personList.get(i).getIncome().value);
+            row.add(personList.get(i).getAge().value.doubleValue());
             targets.add(as);
 
+
+            //push to matrix
             matrix.add(row);
         }
     }
 
     @Override
     public void updatePredictionResult(ArrayList<Double> weights) throws CommandException {
-        ObservableList<Person> personList =  this.addressBook.getPersonList();
+        ObservableList<Person> personList = this.addressBook.getPersonList();
         for (int i = 0; i < personList.size(); i++) {
             if (personList.get(i).getActualSpending().value != 0.0) {
                 //the person already has known value of spending
@@ -185,8 +188,11 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
 
             //else update the person with expected spending
             Person p = personList.get(i);
-            logger.info("Prediction results: income coefficient-> " + weights.get(0));
-            Person updatedPerson = p.mluUpdatedPerson(p.getIncome().value * weights.get(0));
+            logger.info("Prediction results: income coefficient-> " + "\n"
+                    + "Income coefficient: " + weights.get(0) + "\n"
+                    + "Age coefficient: " + weights.get(1) + "\n"
+            );
+            Person updatedPerson = p.updateSelectedField(weights);
             //update the model here
 
 

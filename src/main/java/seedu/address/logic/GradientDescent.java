@@ -8,7 +8,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.PredictionModel;
-import seedu.address.model.person.Person;
 
 
 //@@author SoilChang
@@ -26,9 +25,10 @@ public class GradientDescent {
 
     /**
      * The weights we are calculating
-     * [ x1= income ]
+     * For more fields, please add in the default value below
+     * [ x1= income, x2 = age ]
      */
-    private ArrayList<Double> weights = new ArrayList<>(Arrays.asList(0.0));
+    private ArrayList<Double> weights = new ArrayList<>(Arrays.asList(0.0, 0.0));
 
     /**
      * The learning rate
@@ -63,8 +63,6 @@ public class GradientDescent {
      * Drives the whole algorithm to solve the problem
      */
     public CommandResult solve() throws CommandException {
-
-
         /**
          * row -> each entry of data
          * col -> [ income ]
@@ -80,6 +78,7 @@ public class GradientDescent {
         //extract values
         this.model.preparePredictionData(matrix, targets);
 
+
         //solve
         descent(matrix, targets);
 
@@ -91,8 +90,6 @@ public class GradientDescent {
             return new CommandResult(String.format(MESSAGE_PREDICTION_FAIL));
         }
     }
-
-
     //@@author SoilChang
 
     /**
@@ -112,14 +109,6 @@ public class GradientDescent {
         }
     }
 
-    //@@author SoilChang
-
-    /**
-     * calculate values based on the current weights
-     */
-    private Double predict(Person person) {
-        return this.weights.get(0) * person.getIncome().value;
-    }
 
     //@@author SoilChang
 
@@ -129,7 +118,9 @@ public class GradientDescent {
     private Double predict(ArrayList<Double> row) {
         Double sum = 0.0;
         //sum income
-        sum += this.weights.get(0) * row.get(0);
+        for (int i = 0; i < row.size(); i++) {
+            sum += this.weights.get(i) * row.get(i);
+        }
 
         return sum;
     }

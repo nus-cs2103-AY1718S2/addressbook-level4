@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
@@ -47,10 +48,15 @@ public class Person {
     /**
      * Special method used solely for machine learning result model update
      *
-     * @param expectedSpending
+     * @param weights
      * @return
      */
-    public Person mluUpdatedPerson(double expectedSpending) {
+    public Person updateSelectedField(ArrayList<Double> weights) {
+        Double expectedSpending = 0.0;
+        expectedSpending += weights.get(0) * this.income.value;
+        expectedSpending += weights.get(1) * this.age.value;
+
+
         return new Person(name, phone, email, address, getTags(), income,
                 actualSpending, new Expenditure(expectedSpending), age);
     }

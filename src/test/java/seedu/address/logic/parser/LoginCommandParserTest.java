@@ -1,6 +1,8 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_PASSWORD_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_USERNAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.PASSWORD_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PASSWORD_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
@@ -16,6 +18,8 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.model.account.Account;
+import seedu.address.model.account.Password;
+import seedu.address.model.account.Username;
 import seedu.address.testutil.AccountBuilder;
 
 public class LoginCommandParserTest {
@@ -51,6 +55,21 @@ public class LoginCommandParserTest {
 
         // missing password prefix
         assertParseFailure(parser, USERNAME_DESC_BOB + VALID_PASSWORD_BOB, MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_invalidValue_failure() {
+        // invalid username
+        assertParseFailure(parser, INVALID_USERNAME_DESC + PASSWORD_DESC_BOB,
+                Username.MESSAGE_USERNAME_CONSTRAINTS);
+
+        // invalid password
+        assertParseFailure(parser, USERNAME_DESC_BOB + INVALID_PASSWORD_DESC,
+                Password.MESSAGE_PASSWORD_CONSTRAINTS);
+
+        // multiple invalid values, but only the first invalid value is captured
+        assertParseFailure(parser, INVALID_USERNAME_DESC + INVALID_PASSWORD_DESC,
+                Username.MESSAGE_USERNAME_CONSTRAINTS);
     }
 
     @Test

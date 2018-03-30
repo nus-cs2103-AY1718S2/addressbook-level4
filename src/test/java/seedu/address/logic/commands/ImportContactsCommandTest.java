@@ -197,14 +197,14 @@ public class ImportContactsCommandTest {
 
         //substrings are used in testing to avoid the Date Added parameter
         //Date Added changes everyday (not surprising), so cannot statically type it
-        assertEquals(parray[1].toString().substring(0,65),
+        assertEquals(parray[1].toString().substring(0, 65),
                 "Bob Phone: 32134558 Email: bob@badasbob.com Address: "
                         + "324 green st");
-        assertEquals(parray[2].toString().substring(0,65), "Carol Phone: 91442333 Email: "
+        assertEquals(parray[2].toString().substring(0, 65), "Carol Phone: 91442333 Email: "
                 + "carol@carlcaronna.com Address: 509 b");
-        assertEquals(parray[3].toString().substring(0,65), "Dave Phone: 77004352 Email: "
+        assertEquals(parray[3].toString().substring(0, 65), "Dave Phone: 77004352 Email: "
                 + "dave@doggod.com Address: 409 yellow s");
-        assertEquals(parray[4].toString().substring(0,65), "Edward Phone: 15432349 Email: "
+        assertEquals(parray[4].toString().substring(0, 65), "Edward Phone: 15432349 Email: "
                 + "ed@edible.com Address: 909 grey st ");
     }
 }

@@ -94,9 +94,9 @@ public class DisplayPicStorage {
             return AppUtil.getImage(INTERNAL_DEFAULT_PIC_SAVE_LOCATION);
         } else {
             String filePath = dp.toString();
-            checkArgument(DisplayPicStorage.isValidPath(filePath),
-                    Messages.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
-            checkArgument(DisplayPicStorage.isValidImage(filePath), Messages.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
+            if (!DisplayPicStorage.isValidPath(filePath) || !DisplayPicStorage.isValidImage(filePath)) {
+                return AppUtil.getImage(INTERNAL_DEFAULT_PIC_SAVE_LOCATION);
+            }
             File input = new File(dp.toString());
             return new Image(input.toURI().toString());
         }

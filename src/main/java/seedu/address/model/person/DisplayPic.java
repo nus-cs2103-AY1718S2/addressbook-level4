@@ -66,6 +66,24 @@ public class DisplayPic {
         this.value = DEFAULT_DISPLAY_PIC;
     }
 
+    public void updateDisplay(String personDetails) {
+        if (!this.value.equals(DEFAULT_DISPLAY_PIC)) {
+            String uniqueFileName = NamingUtil.generateUniqueName(personDetails);
+            try {
+                String fileType = FileUtil.getFileType(value);
+                DisplayPicStorage.saveDisplayPic(uniqueFileName, value, fileType);
+                //mark for delete the old photo(value) here
+                this.value = DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType;
+            } catch (IllegalValueException ive) {
+                assert false;
+            }
+        }
+    }
+
+    public boolean isDefault() {
+        return value.equals(DEFAULT_DISPLAY_PIC);
+    }
+
     @Override
     public String toString() {
         return value;

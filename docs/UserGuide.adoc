@@ -507,22 +507,19 @@ Format: `whatsapp INDEX`
 * You may be required to scan a QR code from your phone to login to WhatsApp webpage.
 =====
 
-=== Editing a event `[coming in v2.0]`
+=== Upcoming features
 
-=== Deleting a event `[coming in v2.0]`
+Features yet to be implemented. Coming in `v2.0`.
 
-=== Adding an event in mass to many employees' timetable at once `[coming in v2.0]`
-
-=== Having my own timetable `[coming in v2.0]`
-
-=== Jumping to email composing with a command `[coming in v2.0]`
-
-=== Viewing my to-do-list `[coming in v2.0]`
-
-=== Changing the window scheme/theme/skin `[coming in v2.0]`
-
+* Editing a event.
+* Deleting a event.
+* Adding an event in mass to many employees' timetable at once.
+* Having my own timetable.
+* Jumping to email composing with a command.
+* Viewing my to-do-list.
+* Changing the window scheme/theme/skin.
 // tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+* Encrypting data files.
 
 == FAQ
 

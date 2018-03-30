@@ -54,7 +54,6 @@ public class UniqueAliasListTest {
 
     @Test
     public void removeAlias_invalidAlias_failure() throws AliasNotFoundException {
-        UniqueAliasList uniqueAliasList = new UniqueAliasList();
         Alias validAlias = new AliasBuilder().build();
         thrown.expect(AliasNotFoundException.class);
         UniqueAliasList.remove(validAlias.getAlias());

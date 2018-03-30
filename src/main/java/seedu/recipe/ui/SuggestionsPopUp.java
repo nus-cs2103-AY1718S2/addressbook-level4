@@ -12,10 +12,10 @@ import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
-import seedu.recipe.ui.util.AutoCompletionUtil;
 import seedu.recipe.ui.util.TextInputProcessorUtil;
 
 //@@author hoangduong1607
+
 /**
  * The component that is responsible for showing a suggestion list for auto-completion
  */
@@ -36,7 +36,7 @@ public class SuggestionsPopUp extends ContextMenu {
      * Hides suggestions
      */
     protected void hideSuggestions() {
-        if  (isShowing()) {
+        if (isShowing()) {
             hide();
         }
     }

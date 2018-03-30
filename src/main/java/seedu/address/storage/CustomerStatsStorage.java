@@ -17,19 +17,6 @@ public interface CustomerStatsStorage {
     String getCustomerStatsFilePath();
 
     /**
-     * Returns CustomerStats data as a {@link ReadOnlyCustomerStats}.
-     *   Returns {@code Optional.empty()} if storage file is not found.
-     * @throws DataConversionException if the data in storage is not in the expected format.
-     * @throws IOException if there was any problem when reading from the storage.
-     */
-    Optional<ReadOnlyCustomerStats> readCustomerStats() throws DataConversionException, IOException;
-
-    /**
-     * @see #getCustomerStatsFilePath()
-     */
-    Optional<ReadOnlyCustomerStats> readCustomerStats(String filePath) throws DataConversionException, IOException;
-
-    /**
      * Saves the given {@link ReadOnlyCustomerStats} to the storage.
      * @param customerStats cannot be null.
      * @throws IOException if there was any problem writing to the file.

@@ -415,9 +415,7 @@ public class ParserUtil {
      */
     public static String parseFilename(String filename) throws IllegalValueException {
         requireNonNull(filename);
-        System.out.println(filename);
         if (!Filename.isValidFilename(filename)) {
-            System.out.println("Filename wrong format");
             throw new IllegalValueException(Filename.MESSAGE_FILENAME_CONSTRAINTS);
         }
         String xmlExtensionFilename = filename + ".xml";

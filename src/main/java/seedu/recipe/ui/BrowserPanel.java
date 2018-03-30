@@ -109,19 +109,21 @@ public class BrowserPanel extends UiPart<Region> {
                 if (newState == Worker.State.SUCCEEDED) {
                     String url = browserEngine.getLocation();
 
-                    if (url.contains(CloudStorageUtil.getAuthorizationDomain())) {
+                    if (url.contains(CloudStorageUtil.getRedirectDomain())) {
+                        System.out.println("1");
                         if (CloudStorageUtil.checkAndSetAccessToken(url)) {
+                            System.out.println("2");
                             CloudStorageUtil.upload(uploadFilename);
                             EventsCenter.getInstance().post(new NewResultAvailableEvent(UploadCommand.MESSAGE_SUCCESS));
                             EventsCenter.getInstance().post(new JumpToListRequestEvent(FIRST_INDEX));
                         }
                     }
-
+                    /*
                     else if (url.contains(CloudStorageUtil.getRedirectDomain())) {
                         EventsCenter.getInstance().post(new NewResultAvailableEvent(UploadCommand.MESSAGE_SUCCESS));
                         EventsCenter.getInstance().post(new JumpToListRequestEvent(FIRST_INDEX));
                     }
-
+                    */
                     else {
                         if (FacebookHandler.checkAndSetAccessToken(url)) {
                             FacebookHandler.postRecipeOnFacebook(recipeToShare);

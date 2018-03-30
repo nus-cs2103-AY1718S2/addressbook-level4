@@ -5,6 +5,7 @@ import static seedu.recipe.storage.model.Filename.MESSAGE_FILENAME_CONSTRAINTS;
 
 import seedu.recipe.commons.core.EventsCenter;
 import seedu.recipe.commons.events.ui.UploadRecipesEvent;
+import seedu.recipe.ui.util.CloudStorageUtil;
 
 /**
  * Uploads all recipes online, specifically to Dropbox.
@@ -35,7 +36,9 @@ public class UploadCommand extends Command {
     @Override
     public CommandResult execute() {
         EventsCenter.getInstance().post(new UploadRecipesEvent(xmlExtensionFilename));
-
+        if (CloudStorageUtil.hasAccessToken()) {
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
         return new CommandResult(MESSAGE_UPLOAD);
     }
 

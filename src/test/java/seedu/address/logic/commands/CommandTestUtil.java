@@ -20,6 +20,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PROBLEM_SOLVING_SKILLS
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RESUME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TECHNICAL_SKILLS_SCORE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_UNIVERSITY;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,6 +52,8 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
+    public static final String VALID_UNIVERSITY_AMY = "NUS";
+    public static final String VALID_UNIVERSITY_BOB = "NTU";
     public static final String VALID_EXPECTED_GRADUATION_YEAR_AMY = "2018";
     public static final String VALID_EXPECTED_GRADUATION_YEAR_BOB = "2020";
     public static final String VALID_GRADE_POINT_AVERAGE_AMY = "4.75";
@@ -85,6 +88,8 @@ public class CommandTestUtil {
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
+    public static final String UNIVERSITY_DESC_AMY = " " + PREFIX_UNIVERSITY + VALID_UNIVERSITY_AMY;
+    public static final String UNIVERSITY_DESC_BOB = " " + PREFIX_UNIVERSITY + VALID_UNIVERSITY_BOB;
     public static final String EXPECTED_GRADUATION_YEAR_DESC_AMY = " " + PREFIX_EXPECTED_GRADUATION_YEAR
             + VALID_EXPECTED_GRADUATION_YEAR_AMY;
     public static final String EXPECTED_GRADUATION_YEAR_DESC_BOB = " " + PREFIX_EXPECTED_GRADUATION_YEAR
@@ -110,6 +115,8 @@ public class CommandTestUtil {
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
+    public static final String INVALID_UNIVERSITY_DESC =
+            " " + PREFIX_UNIVERSITY + "NU!S"; // '!' not allowed for addresses
     public static final String INVALID_EXPECTED_GRADUATION_YEAR_DESC = " " + PREFIX_EXPECTED_GRADUATION_YEAR
             + "2o20";
     public static final String INVALID_GRADE_POINT_AVERAGE_DESC = " " + PREFIX_GRADE_POINT_AVERAGE
@@ -135,12 +142,14 @@ public class CommandTestUtil {
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withUniversity(VALID_UNIVERSITY_AMY)
                 .withJobApplied(VALID_JOB_APPLIED_AMY)
                 .withResume(VALID_RESUME_AMY).withProfileImage(VALID_PROFILE_IMAGE_AMY)
                 .withComment(VALID_COMMENT_AMY).withTags(VALID_TAG_FRIEND).build();
 
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
+                .withUniversity(VALID_UNIVERSITY_BOB)
                 .withJobApplied(VALID_JOB_APPLIED_BOB)
                 .withResume(VALID_RESUME_BOB).withProfileImage(VALID_PROFILE_IMAGE_BOB)
                 .withComment(VALID_COMMENT_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();

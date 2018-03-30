@@ -32,6 +32,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TECHNICAL_SKILLS_SCORE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TECHNICAL_SKILLS_SCORE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_UNIVERSITY_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_UNIVERSITY_BOB;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,7 +50,7 @@ public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-            .withPhone("85355255").withExpectedGraduationYear("2020")
+            .withPhone("85355255").withUniversity("NUS").withExpectedGraduationYear("2020")
             .withMajor("Computer Science")
             .withGradePointAverage("4.84")
             .withJobApplied("Software Engineer")
@@ -60,7 +62,8 @@ public class TypicalPersons {
             .withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25").withResume(formPathFromFileName(null))
-            .withEmail("johnd@example.com").withPhone("98765432").withExpectedGraduationYear("2021")
+            .withEmail("johnd@example.com").withPhone("98765432").withUniversity("NTU")
+            .withExpectedGraduationYear("2021")
             .withMajor("Computer Engineering")
             .withGradePointAverage("4.73")
             .withJobApplied("Software Engineer")
@@ -70,7 +73,7 @@ public class TypicalPersons {
             .withComment("Benson!")
             .withStatus(2).withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withEmail("heinz@example.com").withAddress("wall street")
+            .withEmail("heinz@example.com").withAddress("wall street").withUniversity("SMU")
             .withExpectedGraduationYear("2019")
             .withMajor("Computer Science")
             .withGradePointAverage("4.92")
@@ -78,7 +81,7 @@ public class TypicalPersons {
             .withRating("-1", "-1",
                     "-1", "-1").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
-            .withEmail("cornelia@example.com").withAddress("10th street")
+            .withEmail("cornelia@example.com").withAddress("10th street").withUniversity("SUTD")
             .withExpectedGraduationYear("2020")
             .withMajor("Information Security")
             .withGradePointAverage("4.24")
@@ -89,7 +92,7 @@ public class TypicalPersons {
             .withComment("Daniel!")
             .withResume(formPathFromFileName("daniel.pdf")).build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
-            .withEmail("werner@example.com").withAddress("michegan ave")
+            .withEmail("werner@example.com").withAddress("michegan ave").withUniversity("NUS")
             .withExpectedGraduationYear("2018")
             .withMajor("Business Analytics")
             .withGradePointAverage("4.33")
@@ -99,7 +102,7 @@ public class TypicalPersons {
             .withProfileImage(formImagePathFromFileName("larry.jpg"))
             .withComment("Elle!").withStatus(7).build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
-            .withEmail("lydia@example.com").withAddress("little tokyo")
+            .withEmail("lydia@example.com").withAddress("little tokyo").withUniversity("NUS")
             .withExpectedGraduationYear("2019")
             .withMajor("Computer Science")
             .withGradePointAverage("4.75")
@@ -109,7 +112,7 @@ public class TypicalPersons {
             .withProfileImage(formImagePathFromFileName("mark.jpg"))
             .withComment("Fiona!").withStatus(1).build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
-            .withEmail("anna@example.com").withAddress("4th street")
+            .withEmail("anna@example.com").withAddress("4th street").withUniversity("NYU")
             .withExpectedGraduationYear("2022")
             .withMajor("Information Systems")
             .withGradePointAverage("3.88")
@@ -124,7 +127,7 @@ public class TypicalPersons {
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
-            .withEmail("stefan@example.com").withAddress("little india")
+            .withEmail("stefan@example.com").withAddress("little india").withUniversity("NUS")
             .withExpectedGraduationYear("2019")
             .withMajor("Computer Science")
             .withGradePointAverage("3.75")
@@ -132,7 +135,7 @@ public class TypicalPersons {
                     "-1", "-1")
             .withResume(formPathFromFileName("hoon.pdf")).build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
-            .withEmail("hans@example.com").withAddress("chicago ave")
+            .withEmail("hans@example.com").withAddress("chicago ave").withUniversity("NUS")
             .withExpectedGraduationYear("2018")
             .withMajor("Computer Science")
             .withGradePointAverage("3.11")
@@ -141,7 +144,7 @@ public class TypicalPersons {
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withUniversity(VALID_UNIVERSITY_AMY)
             .withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_AMY)
             .withMajor(VALID_MAJOR_AMY)
             .withGradePointAverage(VALID_GRADE_POINT_AVERAGE_AMY)
@@ -152,7 +155,8 @@ public class TypicalPersons {
             .withTags(VALID_TAG_FRIEND).build();
 
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withResume(VALID_RESUME_BOB)
+            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withUniversity(VALID_UNIVERSITY_BOB)
+            .withResume(VALID_RESUME_BOB)
             .withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_BOB)
             .withMajor(VALID_MAJOR_BOB)
             .withGradePointAverage(VALID_GRADE_POINT_AVERAGE_BOB)

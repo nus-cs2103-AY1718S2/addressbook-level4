@@ -1,11 +1,14 @@
 package seedu.recipe.ui;
 
+import java.io.FileInputStream;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.recipe.model.recipe.Image;
 import seedu.recipe.model.recipe.Recipe;
 
 /**
@@ -42,7 +45,7 @@ public class RecipeCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
     @FXML
-    private Image image;
+    private ImageView imageView;
 
     public RecipeCard(Recipe recipe, int displayedIndex) {
         super(FXML);
@@ -53,6 +56,14 @@ public class RecipeCard extends UiPart<Region> {
         instruction.setText(recipe.getInstruction().value);
         ingredient.setText(recipe.getIngredient().value);
         url.setText(recipe.getUrl().value);
+        try {
+            FileInputStream input = new FileInputStream(recipe.getImage().toString());
+            Image image = new Image(input);
+            imageView.setImage(image);
+        } catch (Exception e) {
+            System.out.println("Image cannot be set");
+        }
+
         initTags(recipe);
     }
 

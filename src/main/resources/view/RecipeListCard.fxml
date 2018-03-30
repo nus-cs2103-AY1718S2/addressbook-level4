@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.image.Image?>
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
@@ -36,7 +37,8 @@
       <Label fx:id="ingredient" styleClass="cell_small_label" text="\$ingredient" />
         <Label fx:id="url" styleClass="cell_small_label" text="\$url" />
     </VBox>
-      <ImageView fx:id="img" fitHeight="120.0" fitWidth="152.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+      <ImageView fx:id="imageView" fitHeight="100" fitWidth="152.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+      </ImageView>
       <rowConstraints>
          <RowConstraints />
       </rowConstraints>

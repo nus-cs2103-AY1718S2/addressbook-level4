@@ -4,6 +4,8 @@ package seedu.recipe.logic.commands;
 import static seedu.recipe.storage.model.Filename.MESSAGE_FILENAME_CONSTRAINTS;
 
 import seedu.recipe.commons.core.EventsCenter;
+import seedu.recipe.commons.core.index.Index;
+import seedu.recipe.commons.events.ui.JumpToListRequestEvent;
 import seedu.recipe.commons.events.ui.UploadRecipesEvent;
 import seedu.recipe.ui.util.CloudStorageUtil;
 
@@ -23,6 +25,8 @@ public class UploadCommand extends Command {
             + "Parameters: KEYWORD\n"
             + "Example: " + COMMAND_WORD + " RecipeBook";
 
+    private static final Index FIRST_INDEX = Index.fromOneBased(1);
+
     public final String xmlExtensionFilename;
 
     /**
@@ -37,6 +41,7 @@ public class UploadCommand extends Command {
     public CommandResult execute() {
         EventsCenter.getInstance().post(new UploadRecipesEvent(xmlExtensionFilename));
         if (CloudStorageUtil.hasAccessToken()) {
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(FIRST_INDEX));
             return new CommandResult(MESSAGE_SUCCESS);
         }
         return new CommandResult(MESSAGE_UPLOAD);

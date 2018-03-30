@@ -10,7 +10,6 @@ import java.util.Set;
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.commons.util.StringUtil;
-import seedu.recipe.logic.commands.UploadCommand;
 import seedu.recipe.model.recipe.Calories;
 import seedu.recipe.model.recipe.CookingTime;
 import seedu.recipe.model.recipe.Ingredient;

@@ -31,7 +31,8 @@ public class UploadCommandParserTest {
 
     @Test
     public void parseInvalidArgsThrowsParseException() {
-        assertParseFailure(parser, "recipe/book", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "recipe/book", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                UploadCommand.MESSAGE_USAGE));
     }
 }
 //@@author

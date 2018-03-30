@@ -9,7 +9,8 @@ import static seedu.recipe.commons.util.AppUtil.checkArgument;
  */
 public class Filename {
 
-    public static final String MESSAGE_FILENAME_CONSTRAINTS = "Filenames should not contain any incompatible characters";
+    public static final String MESSAGE_FILENAME_CONSTRAINTS = "Filenames should not contain any"
+            + " incompatible characters";
     public static final String FILENAME_VALIDATION_REGEX = "[^\\Q<>:/|.?\"\\*\\E\\s]+";
 
     public final String filename;

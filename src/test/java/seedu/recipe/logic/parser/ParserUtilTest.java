@@ -22,7 +22,6 @@ import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.tag.Tag;
-import seedu.recipe.storage.model.Filename;
 import seedu.recipe.testutil.Assert;
 
 public class ParserUtilTest {

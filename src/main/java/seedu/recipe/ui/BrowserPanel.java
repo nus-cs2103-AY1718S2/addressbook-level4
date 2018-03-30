@@ -116,12 +116,6 @@ public class BrowserPanel extends UiPart<Region> {
                             EventsCenter.getInstance().post(new JumpToListRequestEvent(FIRST_INDEX));
                         }
                     }
-                    /*
-                    else if (url.contains(CloudStorageUtil.getRedirectDomain())) {
-                        EventsCenter.getInstance().post(new NewResultAvailableEvent(UploadCommand.MESSAGE_SUCCESS));
-                        EventsCenter.getInstance().post(new JumpToListRequestEvent(FIRST_INDEX));
-                    }
-                    */
                     else {
                         if (FacebookHandler.checkAndSetAccessToken(url)) {
                             FacebookHandler.postRecipeOnFacebook(recipeToShare);

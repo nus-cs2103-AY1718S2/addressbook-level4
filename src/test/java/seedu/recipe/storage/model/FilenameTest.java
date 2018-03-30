@@ -9,7 +9,6 @@ import org.junit.Test;
 import seedu.recipe.testutil.Assert;
 
 public class FilenameTest {
-    
     @Test
     public void constructor_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> new Filename(null));

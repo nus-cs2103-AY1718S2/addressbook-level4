@@ -26,6 +26,8 @@ public class FilterCommand extends Command {
 
     private final DatePredicate predicate;
 
+    private String stringDuration;
+
     public FilterCommand(DatePredicate predicate) {
         this.predicate = predicate;
     }
@@ -34,18 +36,12 @@ public class FilterCommand extends Command {
     public CommandResult execute() throws CommandException, IOException {
 
         RouteOptimization route = new RouteOptimization();
-        GetDistance distance = new GetDistance();
         List<String> optimizedRoute;
 
         model.updateFilteredPersonList(predicate);
         optimizedRoute = route.getAddresses(model);
-        Double duration;
-        Double totalDuration = 0.0;
-        for (int  i = 0; i < optimizedRoute.size() - 1; i++) {
-            duration = distance.getTime(optimizedRoute.get(i), optimizedRoute.get(i + 1));
-            totalDuration = totalDuration + duration;
-        }
-        String stringDuration = "The total duration of the route is " + totalDuration.toString() + " mins";
+        stringDuration = getDuration(optimizedRoute);
+
         EventsCenter.getInstance().post(new ShowMultiLocationEvent(optimizedRoute));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
 
@@ -56,5 +52,17 @@ public class FilterCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof FilterCommand // instanceof handles nulls
                 && this.predicate.equals(((FilterCommand) other).predicate)); // state check
+    }
+
+    public String getDuration(List<String> route) {
+        Double duration;
+        GetDistance distance = new GetDistance();
+        Double totalDuration = 0.0;
+        for (int  i = 0; i < route.size() - 1; i++) {
+            duration = distance.getTime(route.get(i), route.get(i + 1));
+            totalDuration = totalDuration + duration;
+        }
+        String stringDuration = totalDuration.toString() + " mins";
+        return stringDuration;
     }
 }

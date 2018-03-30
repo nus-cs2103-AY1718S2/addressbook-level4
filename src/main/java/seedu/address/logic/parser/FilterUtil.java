@@ -14,6 +14,8 @@ import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.ExpectedGraduationYearInKeywordsRangePredicate;
+import seedu.address.model.person.GradePointAverage;
+import seedu.address.model.person.GradePointAverageInKeywordsRangePredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.RatingInKeywordsRangePredicate;
@@ -201,7 +203,7 @@ public class FilterUtil {
         } else { //It is a value instead
             double exactRating = Rating.DEFAULT_SCORE;
             try {
-                exactRating = Double.valueOf(s);
+                exactRating = Double.valueOf(s.trim());
             } catch (NumberFormatException nfe) {
                 throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
             }
@@ -212,6 +214,104 @@ public class FilterUtil {
             }
         }
         Predicate<Person> predicate = new RatingInKeywordsRangePredicate(filterRange);
+        return predicate;
+    }
+
+    /**
+     * Parses a Optional of predicateString to a Predicate used to filter Person
+     * @param predicateString a predicate string read from user input
+     * @return a Predicate for filter command
+     * @throws IllegalValueException
+     */
+    public static Predicate<Person> parseGradePointAverage(Optional<String> predicateString)
+            throws IllegalValueException {
+        requireNonNull(predicateString);
+        if (predicateString.isPresent()) {
+            return parseGradePointAverage(predicateString.get());
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Parses a predicateString to a Predicate used to filter Person
+     * @param predicateString a predicate string read from user input
+     * @return a Predicate for filter command
+     * @throws IllegalValueException
+     */
+    public static Predicate<Person> parseGradePointAverage(String predicateString)
+            throws IllegalValueException {
+        requireNonNull(predicateString);
+        String[] predicateStrings = predicateString.split(",");
+        Arrays.stream(predicateStrings).map(String::trim).toArray(unused -> predicateStrings);
+        if (predicateStrings.length == 0) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+        }
+        Predicate<Person> predicate = processGradePointAveragePredicateStrings(predicateStrings);
+        return predicate;
+    }
+
+    /**
+     * Parses the string array of all single predicate strings to a predicate
+     * @param predicateStrings array of predicateString
+     * @return the predicate user demanded
+     * @throws IllegalValueException
+     */
+    private static Predicate<Person> processGradePointAveragePredicateStrings(String[] predicateStrings)
+            throws IllegalValueException {
+        List<Predicate<Person>> allPredicates = new ArrayList<Predicate<Person>>();
+        for (String s: predicateStrings) {
+            Predicate<Person> predicate = formGradePointAveragePredicateFromPredicateString(s);
+            allPredicates.add(predicate);
+        }
+        return combineAllPredicates(allPredicates);
+    }
+
+    /**
+     * Form a single predicate from a single predicate string
+     * @param s a single predicate string
+     * @return a single predicate
+     * @throws IllegalValueException
+     */
+    private static Predicate<Person> formGradePointAveragePredicateFromPredicateString(String s)
+            throws IllegalValueException {
+        FilterRange<GradePointAverage> filterRange;
+        if (s.contains("-")) { //It is a range
+            String[] range = s.split("-");
+            if (range.length != 2) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+            } else {
+                double lowerGradePointAverage = GradePointAverage.GPA_LOWER_BOUND;
+                double higherGradePointAverage = GradePointAverage.GPA_UPPER_BOUND;
+                try {
+                    lowerGradePointAverage = Double.valueOf(range[0].trim());
+                    higherGradePointAverage = Double.valueOf(range[1].trim());
+                } catch (NumberFormatException nfe) {
+                    throw new IllegalValueException(GradePointAverage.MESSAGE_GRADE_POINT_AVERAGE_CONSTRAINTS);
+                }
+                if (GradePointAverage.isValidGradePointAverage(range[0].trim())
+                        && GradePointAverage.isValidGradePointAverage(range[1].trim())) {
+                    filterRange = new FilterRange<GradePointAverage>(
+                            new GradePointAverage(range[0].trim()),
+                            new GradePointAverage(range[1].trim()));
+                } else {
+                    throw new IllegalValueException(GradePointAverage.MESSAGE_GRADE_POINT_AVERAGE_CONSTRAINTS);
+                }
+            }
+        } else { //It is a value instead
+            double exactRating = GradePointAverage.GPA_LOWER_BOUND;
+            try {
+                exactRating = Double.valueOf(s.trim());
+            } catch (NumberFormatException nfe) {
+                throw new IllegalValueException(GradePointAverage.MESSAGE_GRADE_POINT_AVERAGE_CONSTRAINTS);
+            }
+            if (GradePointAverage.isValidGradePointAverage(s.trim())) {
+                filterRange = new FilterRange<GradePointAverage>(new GradePointAverage(s.trim()));
+            } else {
+                throw new IllegalValueException(GradePointAverage.MESSAGE_GRADE_POINT_AVERAGE_CONSTRAINTS);
+            }
+        }
+        Predicate<Person> predicate = new GradePointAverageInKeywordsRangePredicate(filterRange);
         return predicate;
     }
 }

@@ -11,9 +11,9 @@ public class GradePointAverage {
     public static final String MESSAGE_GRADE_POINT_AVERAGE_CONSTRAINTS =
             "Grade point average can only floating point numbers, and should be between 0.00 and 5.00 "
                     + "(in 2 decimal point).";
+    public static final double GPA_LOWER_BOUND = 0.0;
+    public static final double GPA_UPPER_BOUND = 5.0;
     private static final String EXPECTED_GRADE_POINT_AVERAGE_REGEX = "\\d+([.]\\d{2})?";
-    private static final double GPA_LOWER_BOUND = 0.0;
-    private static final double GPA_UPPER_BOUND = 5.0;
     public final String value;
 
     /**

@@ -120,6 +120,7 @@ public class CommandTestUtil {
 
     public static final String OPTION_OWNER = " -o";
     public static final String OPTION_PET = " -p";
+    public static final String OPTION_APPOINTMENT = " -a";
 
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";

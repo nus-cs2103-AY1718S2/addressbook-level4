@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YEAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GRADE_POINT_AVERAGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INTERVIEW_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
 
 import java.util.function.Predicate;
@@ -25,10 +26,10 @@ public class FilterCommandParser implements Parser<FilterCommand> {
     public FilterCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_EXPECTED_GRADUATION_YEAR, PREFIX_RATING,
-                        PREFIX_GRADE_POINT_AVERAGE);
+                        PREFIX_GRADE_POINT_AVERAGE, PREFIX_INTERVIEW_DATE);
 
         if (!isValidFilterCommandInput(argMultimap,
-                PREFIX_EXPECTED_GRADUATION_YEAR, PREFIX_RATING, PREFIX_GRADE_POINT_AVERAGE)
+                PREFIX_EXPECTED_GRADUATION_YEAR, PREFIX_RATING, PREFIX_GRADE_POINT_AVERAGE, PREFIX_INTERVIEW_DATE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         }
@@ -39,9 +40,11 @@ public class FilterCommandParser implements Parser<FilterCommand> {
             Predicate<Person> ratingPredicate = FilterUtil.parseRating(argMultimap.getValue(PREFIX_RATING));
             Predicate<Person> gpaPredicate =
                     FilterUtil.parseGradePointAverage(argMultimap.getValue(PREFIX_GRADE_POINT_AVERAGE));
+            Predicate<Person> interviewDatePredicate =
+                    FilterUtil.parseInterviewDate(argMultimap.getValue(PREFIX_INTERVIEW_DATE));
             // combine all predicates together using and
             Predicate<Person> combinedPredicate = combinePredicate(expectedGraduationYearPredicate,
-                    ratingPredicate, gpaPredicate);
+                    ratingPredicate, gpaPredicate, interviewDatePredicate);
             return new FilterCommand(combinedPredicate);
         } catch (ParseException pe) {
             throw pe;

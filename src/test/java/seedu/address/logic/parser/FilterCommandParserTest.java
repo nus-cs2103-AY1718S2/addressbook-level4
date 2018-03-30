@@ -13,6 +13,7 @@ import seedu.address.model.person.GradePointAverage;
 import seedu.address.model.person.GradePointAverageInKeywordsRangePredicate;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.RatingInKeywordsRangePredicate;
+import seedu.address.model.util.InterviewDateUtil;
 
 public class FilterCommandParserTest {
     private FilterCommandParser parser = new FilterCommandParser();
@@ -68,6 +69,7 @@ public class FilterCommandParserTest {
         assertParseFailure(parser, "y/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "r/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "g/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "d/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "x/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "   y/2025--2025",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
@@ -75,7 +77,7 @@ public class FilterCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "   y/,",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "   y/,,",
+        assertParseFailure(parser, "   d/,,",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         assertParseFailure(parser, " r/2.22 - ",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
@@ -94,6 +96,8 @@ public class FilterCommandParserTest {
                 GradePointAverage.MESSAGE_GRADE_POINT_AVERAGE_CONSTRAINTS);
         assertParseFailure(parser, " g/3.3-+6.4 ",
                 GradePointAverage.MESSAGE_GRADE_POINT_AVERAGE_CONSTRAINTS);
+        assertParseFailure(parser, " d/20188888 ",
+                InterviewDateUtil.MESSAGE_INTERVIEW_DATE_CONSTRAINT);
         //Both mistakes occured, detect invalid command format first
         assertParseFailure(parser, "   y/2025--2025,2o2o",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));

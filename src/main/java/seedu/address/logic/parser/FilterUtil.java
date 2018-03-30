@@ -3,6 +3,12 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,9 +22,12 @@ import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.ExpectedGraduationYearInKeywordsRangePredicate;
 import seedu.address.model.person.GradePointAverage;
 import seedu.address.model.person.GradePointAverageInKeywordsRangePredicate;
+import seedu.address.model.person.InterviewDate;
+import seedu.address.model.person.InterviewDateInKeywordsRangePredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.RatingInKeywordsRangePredicate;
+import seedu.address.model.util.InterviewDateUtil;
 
 /**
  * A utility class for parsing FilterCommand
@@ -314,4 +323,98 @@ public class FilterUtil {
         Predicate<Person> predicate = new GradePointAverageInKeywordsRangePredicate(filterRange);
         return predicate;
     }
+
+    /**
+     * Parses a Optional of  predicateString to a Predicate used to filter Person
+     * @param predicateString a predicate string read from user input
+     * @return a Predicate for filter command
+     * @throws IllegalValueException
+     */
+    public static Predicate<Person> parseInterviewDate(Optional<String> predicateString)
+            throws IllegalValueException {
+        requireNonNull(predicateString);
+        if (predicateString.isPresent()) {
+            return parseInterviewDate(predicateString.get());
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Parses a predicateString to a Predicate used to filter Person
+     * @param predicateString a predicate string read from user input
+     * @return a Predicate for filter command
+     * @throws IllegalValueException
+     */
+    public static Predicate<Person> parseInterviewDate(String predicateString)
+            throws IllegalValueException {
+        requireNonNull(predicateString);
+        String[] predicateStrings = predicateString.split(",");
+        Arrays.stream(predicateStrings).map(String::trim).toArray(unused -> predicateStrings);
+        if (predicateStrings.length == 0) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+        }
+        Predicate<Person> predicate = processInterviewDatePredicateStrings(predicateStrings);
+        return predicate;
+    }
+
+    /**
+     * Parses the string array of all single predicate strings to a predicate
+     * @param predicateStrings array of predicateString
+     * @return the predicate user demanded
+     * @throws IllegalValueException
+     */
+    private static Predicate<Person> processInterviewDatePredicateStrings(String[] predicateStrings)
+            throws IllegalValueException {
+        List<Predicate<Person>> allPredicates = new ArrayList<Predicate<Person>>();
+        for (String s: predicateStrings) {
+            Predicate<Person> predicate = formInterviewDatePredicateFromPredicateString(s);
+            allPredicates.add(predicate);
+        }
+        return combineAllPredicates(allPredicates);
+    }
+
+    /**
+     * Form a single predicate from a single predicate string
+     * @param s a single predicate string
+     * @return a single predicate
+     * @throws IllegalValueException
+     */
+    private static Predicate<Person> formInterviewDatePredicateFromPredicateString(String s)
+            throws IllegalValueException {
+        FilterRange<InterviewDate> filterRange;
+        if (s.contains("-")) { //It is a range
+            String[] range = s.split("-");
+            if (range.length != 2) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+            } else if (InterviewDateUtil.isValidInterviewDate(range[0].trim())
+                    && InterviewDateUtil.isValidInterviewDate(range[1].trim())) {
+                try {
+                    filterRange = new FilterRange<InterviewDate>(
+                            new InterviewDate(InterviewDateUtil.formLowerInterviewDateTime(range[0].trim())),
+                            new InterviewDate(InterviewDateUtil.formHigherInterviewDateTime(range[1].trim())));
+                } catch (DateTimeParseException dtpe) {
+                    throw new ParseException(InterviewDateUtil.MESSAGE_INTERVIEW_DATE_CONSTRAINT);
+                }
+            } else {
+                throw new IllegalValueException(InterviewDateUtil.MESSAGE_INTERVIEW_DATE_CONSTRAINT);
+            }
+
+        } else { //It is a value instead
+            if (InterviewDateUtil.isValidInterviewDate(s.trim())) {
+                try {
+                    filterRange = new FilterRange<InterviewDate>(
+                            new InterviewDate(InterviewDateUtil.formLowerInterviewDateTime(s.trim())),
+                            new InterviewDate(InterviewDateUtil.formHigherInterviewDateTime(s.trim())));
+                } catch (DateTimeParseException dtpe) {
+                    throw new ParseException(InterviewDateUtil.MESSAGE_INTERVIEW_DATE_CONSTRAINT);
+                }
+            } else {
+                throw new IllegalValueException(InterviewDateUtil.MESSAGE_INTERVIEW_DATE_CONSTRAINT);
+            }
+        }
+        Predicate<Person> predicate = new InterviewDateInKeywordsRangePredicate(filterRange);
+        return predicate;
+    }
+
 }

@@ -14,13 +14,13 @@ public class ExpectedGraduationYearTest {
     }
 
     @Test
-    public void constructor_invalidPhone_throwsIllegalArgumentException() {
+    public void constructor_invalidExpectedGraduationYear_throwsIllegalArgumentException() {
         String invalidExpectedGraduationYear = "";
         Assert.assertThrows(IllegalArgumentException.class, () -> new Phone(invalidExpectedGraduationYear));
     }
 
     @Test
-    public void isValidPhone() {
+    public void isValidExpectedGraduationYear() {
         // null expectedGraduationYear
         Assert.assertThrows(NullPointerException.class, () ->
                 ExpectedGraduationYear.isValidExpectedGraduationYear(null));

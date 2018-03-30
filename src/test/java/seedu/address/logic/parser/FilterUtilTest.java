@@ -11,8 +11,12 @@ import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.ExpectedGraduationYearInKeywordsRangePredicate;
 import seedu.address.model.person.GradePointAverage;
 import seedu.address.model.person.GradePointAverageInKeywordsRangePredicate;
+import seedu.address.model.person.InterviewDate;
+import seedu.address.model.person.InterviewDateInKeywordsRangePredicate;
+import seedu.address.model.person.InterviewDateInKeywordsRangePredicateTest;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.RatingInKeywordsRangePredicate;
+import seedu.address.model.util.InterviewDateUtil;
 
 public class FilterUtilTest {
     @Rule
@@ -103,5 +107,39 @@ public class FilterUtilTest {
         assertEquals(new RatingInKeywordsRangePredicate(
                         new FilterRange<>(new Rating(1.0, 1.0, 1.0, 1.0), new Rating(4.0, 4.0, 4.0, 4.0))),
                 FilterUtil.parseRating("    1.001  -   4.001   "));
+    }
+    @Test
+    public void parseInterviewDate_validInput_success() throws Exception {
+        //Single value
+        //No whitespaces
+        assertEquals(new InterviewDateInKeywordsRangePredicate(
+                        new FilterRange<>(
+                                new InterviewDate(InterviewDateUtil.formLowerInterviewDateTime("20180331")),
+                                new InterviewDate(InterviewDateUtil.formHigherInterviewDateTime("20180331")))),
+                FilterUtil.parseInterviewDate("20180331"));
+        //With whitespaces
+        assertEquals(new InterviewDateInKeywordsRangePredicate(
+                        new FilterRange<>(
+                                new InterviewDate(InterviewDateUtil.formLowerInterviewDateTime("20180331")),
+                                new InterviewDate(InterviewDateUtil.formHigherInterviewDateTime("20180331")))),
+                FilterUtil.parseInterviewDate("  20180331     "));
+        //Ranged values with whitespaces
+        assertEquals(new InterviewDateInKeywordsRangePredicate(
+                        new FilterRange<>(
+                                new InterviewDate(InterviewDateUtil.formLowerInterviewDateTime("20180331")),
+                                new InterviewDate(InterviewDateUtil.formHigherInterviewDateTime("20180401")))),
+                FilterUtil.parseInterviewDate("20180331   -  20180401"));
+    }
+
+    @Test
+    public void parseInterviewDate_invalidCommandFormat_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        FilterUtil.parseInterviewDate("  ");
+    }
+
+    @Test
+    public void parseInterviewDate_invalidInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        FilterUtil.parseInterviewDate("20180100");
     }
 }

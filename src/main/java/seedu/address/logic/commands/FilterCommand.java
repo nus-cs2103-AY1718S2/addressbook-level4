@@ -5,6 +5,7 @@ import java.util.List;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowMultiLocationEvent;
+import seedu.address.logic.GetDistance;
 import seedu.address.logic.RouteOptimization;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.DatePredicate;
@@ -33,11 +34,18 @@ public class FilterCommand extends Command {
     public CommandResult execute() throws CommandException, IOException {
 
         RouteOptimization route = new RouteOptimization();
+        GetDistance distance = new GetDistance();
         List<String> optimizedRoute;
 
         model.updateFilteredPersonList(predicate);
-
         optimizedRoute = route.getAddresses(model);
+        Double duration;
+        Double totalDuration = 0.0;
+        for (int  i = 0; i < optimizedRoute.size() - 1; i++) {
+            duration = distance.getTime(optimizedRoute.get(i), optimizedRoute.get(i + 1));
+            totalDuration = totalDuration + duration;
+        }
+        String stringDuration = "The total duration of the route is " + totalDuration.toString() + " mins";
         EventsCenter.getInstance().post(new ShowMultiLocationEvent(optimizedRoute));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
 

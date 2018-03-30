@@ -7,6 +7,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -18,6 +20,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.smplatform.SocialMediaPlatform;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -44,9 +47,10 @@ public class AddCommandParser implements Parser<AddCommand> {
             Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+            Map<String, SocialMediaPlatform> socialMediaPlatformMap = new HashMap<>();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            Person person = new Person(name, phone, email, address, tagList);
+            Person person = new Person(name, phone, email, address, socialMediaPlatformMap, tagList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

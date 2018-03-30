@@ -4,9 +4,11 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.smplatform.SocialMediaPlatform;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -20,18 +22,21 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
+    private final Map<String, SocialMediaPlatform> smpMap;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Map<String, SocialMediaPlatform> socialMediaPlatformMap, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.smpMap = socialMediaPlatformMap;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -52,6 +57,16 @@ public class Person {
         return address;
     }
 
+    //@@author Nethergale
+    /**
+     * Returns an immutable social media platform map, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Map<String, SocialMediaPlatform> getSocialMediaPlatformMap() {
+        return Collections.unmodifiableMap(smpMap);
+    }
+
+    //@@author
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

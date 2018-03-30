@@ -52,6 +52,8 @@ _{you can add/remove categories in the list above}_
 
 include::../UserGuide.adoc[tag=sort]
 
+include::../UserGuide.adoc[tag=addplatform]
+
 == Contributions to the Developer Guide
 
 |===

@@ -3,7 +3,9 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -14,6 +16,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.smplatform.Link;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -139,6 +142,43 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
     }
 
+    //@@author Nethergale
+    /**
+     * Parses a {@code String link} into a {@code Link}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code link} is invalid.
+     */
+    public static Link parseLink(String link) throws IllegalValueException {
+        requireNonNull(link);
+        String trimmedLink = link.trim();
+        if (!Link.isValidLink(trimmedLink)) {
+            throw new IllegalValueException(Link.MESSAGE_INVALID_LINK);
+        }
+        return new Link(trimmedLink);
+    }
+
+    /**
+     * Parses {@code Collection<String> links} into a {@code Map<String, Link>}.
+     *
+     * @throws IllegalValueException if any social media platform is going to have more than one link each.
+     */
+    public static Map<String, Link> parseLinks(Collection<String> links) throws IllegalValueException {
+        requireNonNull(links);
+        final Map<String, Link> linkMap = new HashMap<>();
+        for (String linkStr : links) {
+            String linkType = Link.getLinkType(linkStr);
+            Link link = parseLink(linkStr);
+            if ((linkType.equals(Link.FACEBOOK_LINK_TYPE) || linkType.equals(Link.TWITTER_LINK_TYPE))
+                    && linkMap.containsKey(linkType)) {
+                throw new IllegalValueException(Link.MESSAGE_LINK_CONSTRAINTS);
+            }
+            linkMap.put(linkType, link);
+        }
+        return linkMap;
+    }
+
+    //@@author
     /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.

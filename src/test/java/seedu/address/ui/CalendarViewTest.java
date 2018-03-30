@@ -7,13 +7,17 @@ import java.time.YearMonth;
 import org.junit.Test;
 
 import guitests.guihandles.CalendarViewHandle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.model.task.Task;
 
 public class CalendarViewTest extends GuiUnitTest {
 
     @Test
     public void display() {
         // no tags
-        CalendarView calendar = new CalendarView();
+        ObservableList<Task> list = FXCollections.observableArrayList();
+        CalendarView calendar = new CalendarView(list);
         uiPartRule.setUiPart(calendar);
         YearMonth yearMonth = YearMonth.now();
         String correctTitle = yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear());

@@ -9,10 +9,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.task.Task;
 
@@ -23,7 +23,7 @@ public class CalendarView extends UiPart<Region> {
 
     private static final String FXML = "CalendarViewWithoutButtons.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
-    private ArrayList<CalendarNode> allCalendarDays = new ArrayList<>(35);
+    private ArrayList<AnchorPane> allCalendarDays = new ArrayList<>(35);
     private YearMonth currentYearMonth;
     private int[] numTasks = new int[31];
     private ObservableList<Task> tasks;
@@ -60,7 +60,7 @@ public class CalendarView extends UiPart<Region> {
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 7; j++) {
-                CalendarNode ap = new CalendarNode();
+                AnchorPane ap = new AnchorPane();
                 ap.setPrefSize(300, 300);
                 calendar.add(ap, j, i);
                 allCalendarDays.add(ap);
@@ -89,21 +89,15 @@ public class CalendarView extends UiPart<Region> {
         while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY")) {
             calendarDate = calendarDate.minusDays(1);
         }
-        for (CalendarNode ap : allCalendarDays) {
+        for (AnchorPane ap : allCalendarDays) {
             if (ap.getChildren().size() != 0) {
                 ap.getChildren().remove(0);
             }
-            Text txt;
-            if (numTasks[calendarDate.getDayOfMonth() - 1] != 0) {
-                txt = new Text(String.valueOf(calendarDate.getDayOfMonth()) + "\n\n"
-                        + numTasks[calendarDate.getDayOfMonth() - 1] + " Tasks. ");
-            } else {
-                txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
-            }
-            ap.setDate(calendarDate);
-            ap.setTopAnchor(txt, 5.0);
-            ap.setLeftAnchor(txt, 5.0);
-            ap.getChildren().add(txt);
+
+            String txt = String.valueOf(calendarDate.getDayOfMonth());
+            CalendarNode node = new CalendarNode(txt, tasks, calendarDate.getDayOfMonth(),
+                currentYearMonth.getMonthValue(), currentYearMonth.getYear());
+            ap.getChildren().add(node.getRoot());
             calendarDate = calendarDate.plusDays(1);
         }
         calendarTitle.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
@@ -124,6 +118,7 @@ public class CalendarView extends UiPart<Region> {
         currentYearMonth = currentYearMonth.minusMonths(1);
         currentMonth = currentYearMonth.getMonthValue();
         setCalendarDays(currentYearMonth);
+        initCalendar(currentYearMonth);
     }
 
     @FXML
@@ -134,13 +129,14 @@ public class CalendarView extends UiPart<Region> {
         currentYearMonth = currentYearMonth.plusMonths(1);
         currentMonth = currentYearMonth.getMonthValue();
         setCalendarDays(currentYearMonth);
+        initCalendar(currentYearMonth);
     }
 
-    public ArrayList<CalendarNode> getAllCalendarDays() {
+    public ArrayList<AnchorPane> getAllCalendarDays() {
         return allCalendarDays;
     }
 
-    public void setAllCalendarDays(ArrayList<CalendarNode> allCalendarDays) {
+    public void setAllCalendarDays(ArrayList<AnchorPane> allCalendarDays) {
         this.allCalendarDays = allCalendarDays;
     }
 }

@@ -10,6 +10,7 @@ import java.util.Objects;
  */
 public class Task {
 
+    private final Title title;
     private final TaskDescription taskDesc;
     private final Deadline deadline;
     private final Priority priority;
@@ -19,14 +20,19 @@ public class Task {
     /**
      * Every field must be present and not null.
      */
-    public Task(TaskDescription taskDesc, Deadline deadline, Priority priority) {
-        requireAllNonNull(taskDesc, deadline, priority);
+    public Task(Title title, TaskDescription taskDesc, Deadline deadline, Priority priority) {
+        requireAllNonNull(title, taskDesc, deadline, priority);
+        this.title = title;
         this.taskDesc = taskDesc;
         this.deadline = deadline;
         this.priority = priority;
 
         //calculates priority based on deadline and priority input of user
         this.actualPriority = calculatePriority(deadline.daysBetween, priority.value);
+    }
+
+    public Title getTitle() {
+        return title;
     }
 
     public TaskDescription getTaskDesc() {

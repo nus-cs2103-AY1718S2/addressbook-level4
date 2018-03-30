@@ -15,6 +15,9 @@ public class Deadline {
 
     public static final String MESSAGE_DEADLINE_CONSTRAINTS =
             "Deadline should be a valid date in the format dd-mm-yyyy. Tasks cannot be scheduled in the past. ";
+
+    public static final String DATE_SEPARATOR = "-";
+
     public final String dateString;
     public final LocalDate value;
     public final long daysBetween;
@@ -31,7 +34,7 @@ public class Deadline {
         requireNonNull(deadline);
         dateString = deadline;
         try {
-            String[] splitDeadline = deadline.split("-");
+            String[] splitDeadline = deadline.split(DATE_SEPARATOR);
             day = Integer.parseInt(splitDeadline[0]);
             month = Integer.parseInt(splitDeadline[1]);
             year = Integer.parseInt(splitDeadline[2]);
@@ -89,4 +92,3 @@ public class Deadline {
     }
 
 }
-

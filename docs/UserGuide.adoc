@@ -280,7 +280,7 @@ Format: `select INDEX`
 ****
 Details
 
-* If the selected recipe has a link, the in-app browser will load that link.
+* If the selected recipe has a URL, the in-app browser will load that URL.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer*, e.g. "1, 2, 3, ...".
 ****
@@ -293,6 +293,33 @@ Selects the 2nd recipe in the recipe book.
 * *`find Chicken`* +
 *`select 1`* +
 Selects the 1st recipe in the results of the *`find`* command.
+
+=== *`share`*: Sharing a recipe on Facebook
+
+Initiates the sharing of a recipe to Facebook, identified by the index number used in the last recipe listing.
+
+Format: `share INDEX`
+
+****
+Details
+
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer*, e.g. "1, 2, 3, ...".
+* The text in the recipe will be copied to the clipboard for the User to paste into the Facebook post.
+* The Facebook authentication page is shown on the browser for the User to log in.
+* Upon logging in: if the shared recipe has a URL, the in-app browser will load a feed dialog for the User to share the URL as shown below:
+image::Facebook_Feed_Dialog.jpg[width="400"]
+* The User will be redirected back to his/her Facebook feed once the post has been made.
+****
+
+Examples:
+
+* *`list`* +
+*`share 2`* +
+Shares the 2nd recipe in the recipe book.
+* *`find Chicken`* +
+*`share 1`* +
+Shares the 1st recipe in the results of the *`find`* command.
 
 === *`tag`* : Locating recipes by tags
 
@@ -434,7 +461,7 @@ A: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue
 *A*: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue in our repo] describing the problem you encountered as detailed as possible.
 
 *Q*: I know how to code, how can I contribute to your project? +
-*A*: Code contributors are always appreaciated! Please https://github.com/CS2103JAN2018-F09-B2/main/pulls[create a PR] with your contribution. You might want to take a look at the <<DeveloperGuide#,Developer Guide>> to get started.
+*A*: Code contributors are always appreciated! Please https://github.com/CS2103JAN2018-F09-B2/main/pulls[create a PR] with your contribution. You might want to take a look at the <<DeveloperGuide#,Developer Guide>> to get started.
 
 == Cheatsheet
 [width=90%, cols="1,9"]
@@ -465,6 +492,8 @@ A: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue
                             |  *`redo`*
 .2+|    *Select*            |  `select INDEX`
                             |   E.g.*`select 2`*
+.2+|    *Share*             |  `share INDEX`
+                            |   E.g.*`share 2`*
 .2+|    *Tag*               |  `tag KEYWORD [MORE_KEYWORDS]`
                             |   E.g. *`tag chicken favourites`*
 .2+|    *Undo*              |  `undo`

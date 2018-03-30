@@ -46,7 +46,7 @@ public class TextInputProcessorUtil {
         String lastWord = EMPTY_STRING;
 
         for (int i = content.length() - 1; i >= 0; i--) {
-            if (isWordSeparator(content.charAt(i)) && lastWord != EMPTY_STRING) {
+            if (isWordSeparator(content.charAt(i))) {
                 break;
             }
             lastWord = content.charAt(i) + lastWord;

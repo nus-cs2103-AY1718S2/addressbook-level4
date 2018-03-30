@@ -3,7 +3,6 @@ package seedu.address.commons.events.model;
 import java.util.HashMap;
 
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.model.CustomerStats;
 import seedu.address.model.ReadOnlyCustomerStats;
 
 /** Indicates the CustomerStats in the model has changed*/

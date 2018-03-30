@@ -195,10 +195,10 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String name} into a {@code Name}.
+     * Parses a {@code String command} and {@code String alias} into {@code Alias}
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code name} is invalid.
+     * @throws IllegalValueException if the given command and alias are invalid.
      */
     public static Alias parseAlias(String command, String alias) throws IllegalValueException {
         requireNonNull(command, alias);
@@ -207,6 +207,21 @@ public class ParserUtil {
 
         }
         return new Alias(command, alias);
+    }
+
+    /**
+     * Parses a {@code String unalias}
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code unalias} is invalid.
+     */
+    public static String parseUnalias(String unalias) throws IllegalValueException {
+        requireNonNull(unalias);
+        if (!Alias.isValidUnaliasName(unalias)) {
+            throw new IllegalValueException(Alias.MESSAGE_ALIAS_CONSTRAINTS);
+
+        }
+        return unalias;
     }
 
     /**

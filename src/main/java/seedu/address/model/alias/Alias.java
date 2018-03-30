@@ -42,6 +42,13 @@ public class Alias {
         return test.matches(ALIAS_VALIDATION_REGEX);
     }
 
+    /**
+     * Returns true if a given string is a valid unalias name.
+     */
+    public static boolean isValidUnaliasName(String test) {
+        return test.matches(ALIAS_VALIDATION_REGEX);
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

@@ -12,7 +12,6 @@ import seedu.recipe.logic.commands.CommandResult;
 import seedu.recipe.logic.commands.HistoryCommand;
 import seedu.recipe.logic.commands.ListCommand;
 import seedu.recipe.logic.commands.exceptions.CommandException;
-import seedu.recipe.logic.commands.exceptions.UploadCommandException;
 import seedu.recipe.logic.parser.exceptions.ParseException;
 import seedu.recipe.model.Model;
 import seedu.recipe.model.ModelManager;

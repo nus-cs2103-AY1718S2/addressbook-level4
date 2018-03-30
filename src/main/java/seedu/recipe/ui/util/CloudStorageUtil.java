@@ -25,6 +25,7 @@ public class CloudStorageUtil {
     public static final String RECIPE_DATA_FOLDER = FileUtil.getPath("data/");
     public static final File RECIPE_BOOK_FILE = new File(RECIPE_DATA_FOLDER + "recipebook.xml");
     public static final String CLIENT_IDENTIFIER = "dropbox/recirecipe";
+    public static final String ACCESS_TOKEN_IDENTIFIER = "#access_token=";
 
     private static final String APP_KEY = "0kj3cb9w27d66n8";
     private static final String APP_SECRET = "7stnncfsyvgim60";
@@ -33,7 +34,6 @@ public class CloudStorageUtil {
     private static final String AUTHORIZATION_URL = AUTHORIZATION_DOMAIN + "response_type=token&client_id="
                                                     + APP_KEY + "&redirect_uri=" + REDIRECT_DOMAIN;
 
-    private static final String ACCESS_TOKEN_IDENTIFIER = "#access_token=";
     private static final String ACCESS_TOKEN_REGEX = REDIRECT_DOMAIN + "#access_token=(.+)&token(.*)";
     private static final String EXTRACT_PORTION = "$1";
 
@@ -69,7 +69,7 @@ public class CloudStorageUtil {
     /**
      * Extracts access token from the given URL.
      */
-    private static String extractAccessToken(String url) {
+    public static String extractAccessToken(String url) {
         assert (url.contains(ACCESS_TOKEN_IDENTIFIER));
         return url.replaceAll(ACCESS_TOKEN_REGEX, EXTRACT_PORTION);
     }

@@ -26,6 +26,7 @@ E.T. is *optimized for those who prefer to work with a Command Line Interface* (
 Jump to the <<Quick Start>> to get started.
 
 == Quick Start
+This section is to help you to start using Employees Tracker quickly.
 
 === Setting up
 
@@ -61,8 +62,10 @@ Refer to <<Features>> for details of each command.
 ****
 
 == Features
+This section outlines all of Employees Tracker's features in detail.
 
 === The User Interface
+
 ==== Knowing the components
 
 _Figure 2_ shows the 6 major components of the user interface of Employees Tracker:
@@ -117,6 +120,7 @@ There is no need to save manually.
 
 [[Commands]]
 == Commands
+This section lists all Employees Tracker's command.
 
 ====
 *Command Format*
@@ -524,12 +528,13 @@ Features yet to be implemented. Coming in `v2.0`.
 // tag::dataencryption[]
 * Encrypting data files.
 
-== FAQ
+== Frequently Asked Questions (FAQ)
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Employees Tracker folder.
 
 == Command Summary
+This section summarizes the usage of all Employees Tracker's commands.
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`

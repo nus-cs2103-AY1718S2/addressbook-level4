@@ -83,11 +83,11 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 |add (`a`)
 |kbd:[Alt+A]
-|`add n: NAME [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
+|`add n:NAME type:r(or c) [p:PHONE_NUMBER] [e:EMAIL] [a:ADDRESS] [t:TAG] ...`
 
 |edit (`e`)
 |kbd:[Alt+E]
-|`edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
+|`edit INDEX [n:NAME] [p:PHONE_NUMBER] [e:EMAIL] [a:ADDRESS] [t:TAG] ...`
 
 |delete (`d`)
 |kbd:[Alt+D]
@@ -129,16 +129,17 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [NOTE]
 ====
 * A person can have any number of tags (including 0).
+* NAME and TYPE must be provided
 ====
 
 *Usage examples:*
 
 ====
- add n: John Doe p: 98765432 e: johnd@example.com a: John street, block 123, #01-01
+ add n: John Doe type: c p: 98765432 e: johnd@example.com a: John street, block 123, #01-01
 ====
 
 ====
- add n: Betsy Crowe t:friend e: betsycrowe@example.com a: Newgate Prison p: 1234567 t: criminal
+ add n: Betsy Crowe type: r t: friend e: betsycrowe@example.com a: Newgate Prison p: 1234567 t: criminal
 ====
 ***
 === Editing a person : `edit`
@@ -196,7 +197,7 @@ _Deletes the first person in the results of the `find` command._
 ====
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Name, address and tags are searched by default (no specifier or -all specifier)
+* Name, phone, full email, address and tags are searched by default (no specifier or -all specifier)
 * `-n` to search only names, `-p` to search only phones, `-e` to search only emails,
 `-a` to search only addresses, `-t` to search only tags.
 * Only full words will be matched e.g. `Han` will not match `Hans`
@@ -341,4 +342,4 @@ _{explain how the user can enable/disable data encryption}_
 
 [qanda]
 How do I transfer my data to another Computer?::
-Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. By default, the path for the data file is "data/addressbook.xml".

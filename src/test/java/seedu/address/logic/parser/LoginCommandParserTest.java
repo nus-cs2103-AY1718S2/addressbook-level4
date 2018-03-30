@@ -15,6 +15,8 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.logic.commands.LoginCommand;
+import seedu.address.model.account.Account;
+import seedu.address.testutil.AccountBuilder;
 
 public class LoginCommandParserTest {
 
@@ -25,7 +27,9 @@ public class LoginCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        LoginCommand expectedCommand = new LoginCommand(VALID_USERNAME_BOB, VALID_PASSWORD_BOB);
+        Account account = new AccountBuilder().withUsername(VALID_USERNAME_BOB)
+                .withPassword(VALID_PASSWORD_BOB).build();
+        LoginCommand expectedCommand = new LoginCommand(account);
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + USERNAME_DESC_BOB + PASSWORD_DESC_BOB,

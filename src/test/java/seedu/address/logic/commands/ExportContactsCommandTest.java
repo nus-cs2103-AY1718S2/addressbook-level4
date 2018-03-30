@@ -1,8 +1,7 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.*;
-
-import org.junit.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 
@@ -10,7 +9,8 @@ import java.nio.file.Path;
 
 import org.apache.commons.csv.CSVPrinter;
 
-import org.junit.rules.ExpectedException;
+import org.junit.Test;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ExportContactsCommandParser;
 import seedu.address.model.ModelManager;
@@ -24,12 +24,9 @@ public class ExportContactsCommandTest {
 
     //featureUnderTest_testScenario_expectedBehavior()
 
-    ExportContactsCommand exportDefaultPath = new ExportContactsCommand();
-    ExportContactsCommand exportExistingPath = new ExportContactsCommand(VALID_EXISTING_FILE_PATH);
-    ExportContactsCommand exportNewPath = new ExportContactsCommand(VALID_NEW_FILE_PATH);
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    private ExportContactsCommand exportDefaultPath = new ExportContactsCommand();
+    private ExportContactsCommand exportExistingPath = new ExportContactsCommand(VALID_EXISTING_FILE_PATH);
+    private ExportContactsCommand exportNewPath = new ExportContactsCommand(VALID_NEW_FILE_PATH);
 
     @Test
     public void exportCommandParse_giveValidArguments_returnCorrectExportContactCommandPath() throws Exception {
@@ -37,8 +34,8 @@ public class ExportContactsCommandTest {
         ExportContactsCommand a = eccp.parse("");
         ExportContactsCommand b = eccp.parse("exampleFile.csv");
 
-        assertEquals(a.getWRITE_TO_PATH().toString(), "data/exportToExisting.csv");
-        assertEquals(b.getWRITE_TO_PATH().toString(), "exampleFile.csv");
+        assertEquals(a.getWriteToPath().toString(), "data/exportToExisting.csv");
+        assertEquals(b.getWriteToPath().toString(), "exampleFile.csv");
     }
 
     @Test
@@ -48,7 +45,7 @@ public class ExportContactsCommandTest {
     }
 
     @Test
-    public void getCSVToWriteTo_workingDirectoryNewFile_noExceptionThrown() throws IOException {
+    public void getCsvToWriteTo_workingDirectoryNewFile_noExceptionThrown() throws IOException {
         CSVPrinter csvpDefault = null;
         CSVPrinter csvpNew = null;
         CSVPrinter csvpExisting = null;

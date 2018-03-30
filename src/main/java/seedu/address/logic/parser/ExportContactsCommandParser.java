@@ -21,10 +21,6 @@ public class ExportContactsCommandParser implements Parser<ExportContactsCommand
         System.out.println("args is:" + args);
         args = args.trim();
 
-      //  if (args.length() < 1) args = null;
-
-     //   System.out.println(args.length());
-
         return (args.length() > 1) ? new ExportContactsCommand(args) : new ExportContactsCommand();
     }
 }

@@ -1,26 +1,29 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.util.Iterator;
-import javafx.collections.ObservableList;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+
+import javafx.collections.ObservableList;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 
-
-import static java.util.Objects.requireNonNull;
-
-
+/**
+ * Class provides main functionality for ExportContactsCommand,
+ * specifically executeUndoableCommand() provides main functionality
+ */
 public class ExportContactsCommand extends UndoableCommand {
 
     public static final String SUCCESS = "Contacts successfully exported.\n";
@@ -28,18 +31,22 @@ public class ExportContactsCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "export_contacts";
     public static final String COMMAND_ALIAS = "ec";
 
-    private Path WRITE_TO_PATH; // This path must include filename at end
+    private Path writeToPath; // This path must include filename at end
 
+    /*
+     * Constructor, one constructor takes no arguments (default file path)
+     * The other constructor takes the file path provided by user as argument
+     */
     public ExportContactsCommand() {
-        System.out.println("Contstructor called without argument");
-        WRITE_TO_PATH = getDefaultPath();
-        System.out.println(WRITE_TO_PATH);
+        //System.out.println("Contstructor called without argument");
+        writeToPath = getDefaultPath();
+        System.out.println(writeToPath);
     }
 
     public ExportContactsCommand(String filePath) {
-        System.out.println("Contstructor called WTIH argument");
+        //System.out.println("Contstructor called WTIH argument");
         requireNonNull(filePath);
-        WRITE_TO_PATH = FileSystems.getDefault().getPath(filePath.trim());
+        writeToPath = FileSystems.getDefault().getPath(filePath.trim());
     }
 
     /*
@@ -88,8 +95,8 @@ public class ExportContactsCommand extends UndoableCommand {
         CSVPrinter csvPrinter;
 
         try {
-            System.out.println("File path is: " + WRITE_TO_PATH);
-            BufferedWriter writer = Files.newBufferedWriter(WRITE_TO_PATH);
+            System.out.println("File path is: " + writeToPath);
+            BufferedWriter writer = Files.newBufferedWriter(writeToPath);
             csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
                     .withHeader("Name", "Email", "Phone", "Address"));
         } catch (IOException ioe) {
@@ -104,7 +111,7 @@ public class ExportContactsCommand extends UndoableCommand {
         return defaultPath;
     }
 
-    public Path getWRITE_TO_PATH() {
-        return WRITE_TO_PATH;
+    public Path getWriteToPath() {
+        return writeToPath;
     }
 }

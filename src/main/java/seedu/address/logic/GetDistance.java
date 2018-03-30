@@ -7,17 +7,13 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DistanceMatrix;
 
-//@@author
 /**
  * Testing retrieve distance data
  */
 public class GetDistance {
-    /**
-     * get driving distance from origin to destination
-     */
 
-    public double getDistance(String origin, String destination) {
-        String distanceWithoutUnit = "";
+    //@@author
+    public DistanceMatrix getMatrix(String origin, String destination) {
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey("AIzaSyBWyCJkCym1dSouzHX_FxLk6Tj11C7F0Ao")
                 .build();
@@ -35,6 +31,18 @@ public class GetDistance {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return matrix;
+    }
+
+    //@@author
+    /**
+     * get driving distance from origin to destination
+     */
+    public double getDistance(String origin, String destination) {
+        String distanceWithoutUnit = "";
+        DistanceMatrix matrix = null;
+        matrix = getMatrix(origin, destination);
+
         String distance = matrix.rows[0].elements[0].distance.toString();
         int space = distance.indexOf(" ");
         String units = distance.substring(space + 1, distance.length());
@@ -48,25 +56,11 @@ public class GetDistance {
         }
     }
 
+    //@@author meerakanani10
     public double getTime(String origin, String destination) {
         String durationWithoutUnit = "";
-        GeoApiContext context = new GeoApiContext.Builder()
-                .apiKey("AIzaSyBWyCJkCym1dSouzHX_FxLk6Tj11C7F0Ao")
-                .build();
-
-        String[] origins = {origin};
-        String[] destinations = {destination};
-
         DistanceMatrix matrix = null;
-        try {
-            matrix = DistanceMatrixApi.getDistanceMatrix(context, origins, destinations).await();
-        } catch (ApiException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        matrix = getMatrix(origin, destination);
         String duration = matrix.rows[0].elements[0].duration.toString();
         System.out.println(matrix);
         System.out.println(duration);
@@ -74,10 +68,6 @@ public class GetDistance {
         String units = duration.substring(space + 1, duration.length());
         double metres;
         durationWithoutUnit = duration.substring(0, space);
-
         return Double.parseDouble(durationWithoutUnit);
     }
-
-
-
 }

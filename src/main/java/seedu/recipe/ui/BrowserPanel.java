@@ -109,12 +109,17 @@ public class BrowserPanel extends UiPart<Region> {
                 if (newState == Worker.State.SUCCEEDED) {
                     String url = browserEngine.getLocation();
 
-                    if (url.contains(CloudStorageUtil.getRedirectDomain())) {
+                    if (url.contains(CloudStorageUtil.getAuthorizationDomain())) {
                         if (CloudStorageUtil.checkAndSetAccessToken(url)) {
                             CloudStorageUtil.upload(uploadFilename);
                             EventsCenter.getInstance().post(new NewResultAvailableEvent(UploadCommand.MESSAGE_SUCCESS));
                             EventsCenter.getInstance().post(new JumpToListRequestEvent(FIRST_INDEX));
                         }
+                    }
+
+                    else if (url.contains(CloudStorageUtil.getRedirectDomain())) {
+                        EventsCenter.getInstance().post(new NewResultAvailableEvent(UploadCommand.MESSAGE_SUCCESS));
+                        EventsCenter.getInstance().post(new JumpToListRequestEvent(FIRST_INDEX));
                     }
 
                     else {
@@ -135,8 +140,6 @@ public class BrowserPanel extends UiPart<Region> {
         uploadFilename = event.getUploadFilename();
         if (CloudStorageUtil.hasAccessToken()) {
             CloudStorageUtil.upload(uploadFilename);
-            EventsCenter.getInstance().post(new NewResultAvailableEvent(UploadCommand.MESSAGE_SUCCESS));
-            EventsCenter.getInstance().post(new JumpToListRequestEvent(FIRST_INDEX));
         }
     }
     //@@author

@@ -19,7 +19,7 @@
       <Insets left="5.0" top="5.0" />
     </StackPane.margin>
   </Text>
-   <Text fx:id="journeyTime" strokeType="OUTSIDE" strokeWidth="0.0" text="+ Additional Information" StackPane.alignment="TOP_LEFT">
+   <Text fx:id="additionalInfo" strokeType="OUTSIDE" strokeWidth="0.0" text="+ Additional Information" StackPane.alignment="TOP_LEFT">
       <StackPane.margin>
          <Insets left="20.0" top="38.0" />
       </StackPane.margin>

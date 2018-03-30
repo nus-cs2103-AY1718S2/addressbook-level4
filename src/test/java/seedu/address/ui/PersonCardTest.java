@@ -52,11 +52,11 @@ public class PersonCardTest extends GuiUnitTest {
         Map<String, SocialMediaPlatform> customSmpMap = new HashMap<String, SocialMediaPlatform>();
         customSmpMap.put("unknown", new Facebook(new Link("www.facebook.com/testlink")));
         Set<Tag> defaultTags = new HashSet<>();
-        defaultTags.add(new Tag(PersonBuilder.DEFAULT_TAGS));
+        defaultTags.add(new Tag("friends"));
 
         Person personWithIncorrectSmpMap = new Person(
-                new Name(PersonBuilder.DEFAULT_NAME), new Phone(PersonBuilder.DEFAULT_PHONE),
-                new Email(PersonBuilder.DEFAULT_EMAIL), new Address(PersonBuilder.DEFAULT_ADDRESS),
+                new Name("Alice Pauline"), new Phone("85355255"),
+                new Email("alice@gmail.com"), new Address("123, Jurong West Ave 6, #08-111"),
                 customSmpMap, defaultTags);
         personCard = new PersonCard(personWithIncorrectSmpMap,4);
         uiPartRule.setUiPart(personCard);

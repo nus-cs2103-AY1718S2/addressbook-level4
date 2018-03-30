@@ -1006,17 +1006,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |edit pet owner's contact information |update any change in contact information (e.g. changed hand phone number, change of address)
 
-|`* * *` |user |search for a pet patient's medical history |know the next step of treatment
-
-|`* * *` |user |create and modify tags |standardize tags used in the application
-
 |`* * *` |user |basic tags to be assigned automatically |type lesser (e.g. when adding a pet owner, the "Person" tag should be assigned by default)
 
 |`* * *` |user |list out appointments for next day |prepare for the required procedures/diagnosis/consultation
 
-|`* * *` |user |change the theme of the application |better suit my preference
-
-|`* * *` |user |classify types of appointment |better organize a long list of appointment
+|`* * *` |user |classify appointments by types |better organize a long list of appointments
 
 |`* * *` |user |cancel an appointment |make space in schedule for other things
 
@@ -1025,8 +1019,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |see a list of today's appointment |check on today's schedule
 
 |`* * *` |user |filter pet patients by species and blood type |contact them for blood donation during emergencies
-
-|`* * *` |user |log in with password |protect my pet patients' and their respective owners' information
 
 |`* * *` |user |reschedule an appointment |make time for emergency situations
 
@@ -1040,21 +1032,31 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |see pet owner's name when checking pet patients' profile |know who it belongs to
 
-|`* *` |user |delete a pet patient after certain period |remove entries that I no longer need
+|`* * *` |user |delete a pet patient after certain period |remove entries that I no longer need
+
+|`* * *` |user |have a simple and intuitive command line interface |maximize workflow efficiency
+
+|`* *` |user |change the theme of the application |better suit my preference
+
+|`* *` |user |log in with password |protect my pet patients' and their respective owners' information
 
 |`* *` |user |update status of pet patient (living, deceased) |know the number of pets I am managing now
 
 |`* *` |user |check who is my assistant for the day/particular pet patient |brief them in advance
 
-|`* *` |user |have reminders sms sent to pet owners automatically 2 days before appointment|
-
 |`* *` |user |check services consumed for a particular appointment |know what a pet patient has gone through
 
-|`* *` |user |update my status |be recognized as an official vet after my training
+|`*` |user |create and modify tags |standardize tags used in the application
 
-|`* *` |user |transfer a pet patient from my clinic to another in case of emergency|
+|`*` |user |have reminders sms sent to pet owners automatically 2 days before appointment|
 
-|`* *` |user |manage the "rooms" in hospital |make space for newly hospitalized pet patient
+|`*` |user |update my status |be recognized as an official vet after my training
+
+|`*` |user |transfer a pet patient from my clinic to another in case of emergency|
+
+|`*` |user |manage the "rooms" in hospital |make space for newly hospitalized pet patient
+
+|`*` |user |search for a pet patient's medical history |know the next step of treatment
 
 |`*` |user with many pet patients in the address book |sort pet patients by name |locate a pet patient easily
 |=======================================================================

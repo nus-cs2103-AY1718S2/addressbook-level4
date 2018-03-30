@@ -45,7 +45,8 @@ public class SuggestionsPopUp extends ContextMenu {
      * Shows suggestions for commands when users type in Command Box
      */
     protected void showSuggestions() {
-        textInputProcessor.setContent(commandTextArea.getText());
+        String prefix = commandTextArea.getText().substring(0, commandTextArea.getCaretPosition());
+        textInputProcessor.setContent(prefix);
         textInputProcessor.setFont(commandTextArea.getFont());
         String lastWord = textInputProcessor.getLastWord();
         // finds suggestions and displays

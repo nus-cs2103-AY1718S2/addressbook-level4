@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
 
 /**
  * A list of appointments that enforces uniqueness between its elements and does not allow nulls.
@@ -35,10 +36,16 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
      *
      * @throws DuplicateAppointmentException if the person to add is a duplicate of an existing person in the list.
      */
-    public void add(Appointment toAdd) throws DuplicateAppointmentException {
+    public void add(Appointment toAdd) throws DuplicateAppointmentException, DuplicateDateTimeException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
             throw new DuplicateAppointmentException();
+        }
+
+        for (Appointment a : internalList) {
+            if (a.getDateTime().equals(toAdd.getDateTime())) {
+                throw new DuplicateDateTimeException();
+            }
         }
         internalList.add(toAdd);
     }
@@ -84,7 +91,8 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         this.internalList.setAll(replacement.internalList);
     }
 
-    public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
+    public void setAppointments(List<Appointment> appointments)
+            throws DuplicateAppointmentException, DuplicateDateTimeException {
         requireAllNonNull(appointments);
         final UniqueAppointmentList replacement = new UniqueAppointmentList();
         for (final Appointment appointment : appointments) {

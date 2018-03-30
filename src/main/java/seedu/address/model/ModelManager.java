@@ -16,6 +16,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentDependencyNotEmptyException;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicateNricException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -131,7 +132,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+    public synchronized void addAppointment(Appointment appointment)
+            throws DuplicateAppointmentException, DuplicateDateTimeException {
         addressBook.addAppointment(appointment);
         updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
         indicateAddressBookChanged();

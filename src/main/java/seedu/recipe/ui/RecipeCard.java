@@ -56,6 +56,12 @@ public class RecipeCard extends UiPart<Region> {
         instruction.setText(recipe.getInstruction().value);
         ingredient.setText(recipe.getIngredient().value);
         url.setText(recipe.getUrl().value);
+        setImageView(imageView);
+        initTags(recipe);
+    }
+
+    //@@author RyanAngJY
+    private void setImageView(ImageView imageView) {
         try {
             FileInputStream input = new FileInputStream(recipe.getImage().toString());
             Image image = new Image(input);
@@ -63,11 +69,7 @@ public class RecipeCard extends UiPart<Region> {
         } catch (Exception e) {
             System.out.println("Image cannot be set");
         }
-
-        initTags(recipe);
     }
-
-    //@@author RyanAngJY
     /**
      * Returns the color style for {@code tagName}'s label.
      */

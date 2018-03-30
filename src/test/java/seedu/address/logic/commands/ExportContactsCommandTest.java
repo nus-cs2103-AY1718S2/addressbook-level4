@@ -12,6 +12,7 @@ import org.apache.commons.csv.CSVPrinter;
 import org.junit.Test;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.ExportContactsCommandParser;
 import seedu.address.model.ModelManager;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -36,6 +37,30 @@ public class ExportContactsCommandTest {
 
         assertEquals(a.getWriteToPath().toString(), "data/exportToExisting.csv");
         assertEquals(b.getWriteToPath().toString(), "exampleFile.csv");
+    }
+
+    @Test
+    public void addressBookParser_inputCommandAndAlias_returnsExportContactsCommand() throws Exception {
+        AddressBookParser ap = new AddressBookParser();
+        ExportContactsCommand e1 = (ExportContactsCommand) ap.parseCommand ("ec");
+        ExportContactsCommand e2 = (ExportContactsCommand) ap.parseCommand("export_contacts");
+
+        assertNotNull(e1);
+        assertNotNull(e2);
+    }
+
+    @Test (expected = Exception.class)
+    public void executeUndoableCommand_invalidPath_throwException() throws Exception {
+        ExportContactsCommand e = new ExportContactsCommand("...");
+        e.getCsvToWriteTo();
+        e.executeUndoableCommand();
+    }
+
+    @Test (expected = Exception.class)
+    public void executeUndoableCommand_nullModel_throwException() throws Exception {
+        ExportContactsCommand e = new ExportContactsCommand("...");
+        e.model = null;
+        e.executeUndoableCommand();
     }
 
     @Test

@@ -70,7 +70,6 @@ public class ExportContactsCommand extends UndoableCommand {
             ReadOnlyAddressBook myBook = model.getAddressBook();
             ObservableList<Person> myPersonList = myBook.getPersonList();
             Iterator personIterator = myPersonList.iterator();
-
             //iterator over the Persons in AddressBook and write them to csv
             Person p;
             while (personIterator.hasNext()) {
@@ -94,14 +93,10 @@ public class ExportContactsCommand extends UndoableCommand {
     public CSVPrinter getCsvToWriteTo() throws IOException {
         CSVPrinter csvPrinter;
 
-        try {
-            System.out.println("File path is: " + writeToPath);
-            BufferedWriter writer = Files.newBufferedWriter(writeToPath);
-            csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
-                    .withHeader("Name", "Email", "Phone", "Address"));
-        } catch (IOException ioe) {
-            throw new IOException("Failed to create writable path - in getCsvToWriteTo");
-        }
+        System.out.println("File path is: " + writeToPath);
+        BufferedWriter writer = Files.newBufferedWriter(writeToPath);
+        csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
+                .withHeader("Name", "Email", "Phone", "Address"));
 
         return csvPrinter;
     }

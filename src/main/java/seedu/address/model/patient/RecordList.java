@@ -97,15 +97,12 @@ public class RecordList {
     }
 
     /**
-     * Returns the string that is equivalent to the command that created this class.
+     * Returns the string of this class.
      */
     public String toCommandString() {
         final StringBuilder builder = new StringBuilder();
         for (int i = 0; i < numRecord; i++) {
-            builder.append("1 ") //as the command will not be executed, we will be placing a dummy patient index
-                    .append(PREFIX_INDEX)
-                    .append((i + 1) + " ")
-                    .append(recordList.get(i).toCommandStringRecordList())
+            builder.append(recordList.get(i).toCommandStringRecordList())
                     .append("\n");
         }
         return builder.toString();

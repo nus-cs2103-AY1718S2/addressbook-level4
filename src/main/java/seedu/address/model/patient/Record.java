@@ -68,35 +68,18 @@ public class Record {
      * @throws ParseException
      */
     private Record parse(String args) throws ParseException {
-        //TODO: remove unnecessary arguments in the string (indexes)
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_INDEX, PREFIX_DATE,
+                ArgumentTokenizer.tokenize(args,
                         PREFIX_SYMPTOM, PREFIX_ILLNESS, PREFIX_TREATMENT);
 
-        Index patientIndex;
-        Index recordIndex;
-
-        try {
-            patientIndex = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
-        }
-
-        if (!arePrefixesPresent(argMultimap, PREFIX_INDEX, PREFIX_DATE,
+        if (!arePrefixesPresent(argMultimap,
                 PREFIX_SYMPTOM, PREFIX_ILLNESS, PREFIX_TREATMENT)
-                || argMultimap.getPreamble().isEmpty()) {
+                || (argMultimap.getPreamble() == null)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
         }
 
-        try {
-            recordIndex = ParserUtil.parseIndex((argMultimap.getValue(PREFIX_INDEX)).get());
-        } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
-        }
-
-        //to nest following lines into try once various classes are set up
-
-        String date = (argMultimap.getValue(PREFIX_DATE)).get();
+        //to nest following lines into try once the various classes are set up
+        String date = (argMultimap.getPreamble());
         String symptom = (argMultimap.getValue(PREFIX_SYMPTOM)).get();
         String illness = (argMultimap.getValue(PREFIX_ILLNESS)).get();
         String treatment = (argMultimap.getValue(PREFIX_TREATMENT)).get();
@@ -199,8 +182,7 @@ public class Record {
      */
     public String toCommandStringRecordList() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(PREFIX_DATE)
-                .append(getDate())
+        builder.append(getDate())
                 .append(" ")
                 .append(PREFIX_SYMPTOM)
                 .append(getSymptom())

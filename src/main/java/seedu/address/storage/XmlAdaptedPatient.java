@@ -188,7 +188,8 @@ public class XmlAdaptedPatient {
         try {
             final RecordList recordList = new RecordList(this.recordList);
         } catch (ParseException pe) {
-            throw new IllegalValueException(Record.MESSAGE_RECORD_CONSTRAINTS);
+            //throw new IllegalValueException(Record.MESSAGE_RECORD_CONSTRAINTS);
+            throw new ParseException(pe.getMessage());
         }
         final RecordList recordList = new RecordList(this.recordList);
 

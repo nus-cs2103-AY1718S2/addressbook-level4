@@ -926,7 +926,9 @@ and various other features. This will help improve the experience of the client 
 their workflow.
 
 *Valerian Rey*:
-* Minor feature: Policy field to the persons in the AddressBook to specify the insurance contract of a client. It contains multiple classes and enumerations to precisely describe a user's policy (Policy, Price, Date, Month, Issue, Coverage).
+
+* Minor feature: Policy field to the persons in the AddressBook to specify the insurance contract of a client.
+It contains multiple classes and enumerations to precisely describe a user's policy (Policy, Price, Date, Month, Issue, Coverage).
 * Major feature: Commands to enter the policy of a client, edit them or even delete them. GUI display of the policies.
 
 

@@ -116,4 +116,11 @@ public class UniqueAliasList {
     public void resetHashmap() {
         hashList.clear();
     }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<Alias> asObservableList() {
+        return FXCollections.unmodifiableObservableList(internalList);
+    }
 }

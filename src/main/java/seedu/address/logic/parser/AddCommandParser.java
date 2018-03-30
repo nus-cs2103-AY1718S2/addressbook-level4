@@ -5,7 +5,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ACTUALSPENDING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTEDSPENDING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INCOME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -42,7 +41,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_INCOME, PREFIX_TAG, PREFIX_ACTUALSPENDING, PREFIX_EXPECTEDSPENDING, PREFIX_AGE);
+                        PREFIX_INCOME, PREFIX_TAG, PREFIX_ACTUALSPENDING, PREFIX_AGE);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_INCOME,
                 PREFIX_AGE) || !argMultimap.getPreamble().isEmpty()) {
@@ -57,12 +56,10 @@ public class AddCommandParser implements Parser<AddCommand> {
             Income income = ParserUtil.parseIncome(argMultimap.getValue(PREFIX_INCOME)).get();
             Expenditure actualSpending = ParserUtil.parseActualSpending(argMultimap
                     .getValue(PREFIX_ACTUALSPENDING)).orElse(null);
-            Expenditure expectedSpending = ParserUtil.parseActualSpending(argMultimap
-                    .getValue(PREFIX_ACTUALSPENDING)).orElse(null);
             Age age = ParserUtil.parseAge(argMultimap.getValue(PREFIX_AGE)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            Person person = new Person(name, phone, email, address, tagList, income, actualSpending, expectedSpending,
+            Person person = new Person(name, phone, email, address, tagList, income, actualSpending, null,
                     age);
 
             return new AddCommand(person);

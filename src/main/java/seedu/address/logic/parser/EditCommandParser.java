@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ACTUALSPENDING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTEDSPENDING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INCOME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -41,7 +40,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         //1. tokienize
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_TAG, PREFIX_INCOME, PREFIX_ACTUALSPENDING, PREFIX_EXPECTEDSPENDING, PREFIX_AGE);
+                        PREFIX_TAG, PREFIX_INCOME, PREFIX_ACTUALSPENDING, PREFIX_AGE);
 
         //2. do something I don't know what for yet
         Index index;
@@ -61,8 +60,6 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseIncome(argMultimap.getValue(PREFIX_INCOME)).ifPresent(editPersonDescriptor::setIncome);
             ParserUtil.parseActualSpending(argMultimap.getValue(PREFIX_ACTUALSPENDING))
                     .ifPresent(editPersonDescriptor::setActualSpending);
-            ParserUtil.parseExpectedSpending(argMultimap.getValue(PREFIX_EXPECTEDSPENDING))
-                    .ifPresent(editPersonDescriptor::setExpectedSpending);
             ParserUtil.parseIncome(argMultimap.getValue(PREFIX_INCOME)).ifPresent(editPersonDescriptor::setIncome);
             ParserUtil.parseAge(argMultimap.getValue(PREFIX_AGE)).ifPresent(editPersonDescriptor::setAge);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);

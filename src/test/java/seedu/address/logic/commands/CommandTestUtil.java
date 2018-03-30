@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ACTUALSPENDING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTEDSPENDING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INCOME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -48,8 +47,6 @@ public class CommandTestUtil {
     public static final Double VALID_INCOME_BOB = 1234.56;
     public static final Double VALID_ACTUALSPENDING_AMY = 1234.56;
     public static final Double VALID_ACTUALSPENDING_BOB = 1234.56;
-    public static final Double VALID_EXPECTEDSPENDING_AMY = 1234.56;
-    public static final Double VALID_EXPECTEDSPENDING_BOB = 1234.56;
     public static final Integer VALID_AGE_AMY = 20;
     public static final Integer VALID_AGE_BOB = 20;
 
@@ -64,8 +61,6 @@ public class CommandTestUtil {
     public static final String INCOME_DESC_AMY = " " + PREFIX_INCOME + VALID_INCOME_AMY;
     public static final String ACTUALSPENDING_DESC_AMY = " " + PREFIX_ACTUALSPENDING + VALID_ACTUALSPENDING_AMY;
     public static final String ACTUALSPENDING_DESC_BOB = " " + PREFIX_ACTUALSPENDING + VALID_ACTUALSPENDING_BOB;
-    public static final String EXPECTEDSPENDING_DESC_AMY = " " + PREFIX_EXPECTEDSPENDING + VALID_EXPECTEDSPENDING_AMY;
-    public static final String EXPECTEDSPENDING_DESC_BOB = " " + PREFIX_EXPECTEDSPENDING + VALID_EXPECTEDSPENDING_BOB;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String INCOME_DESC_BOB = " " + PREFIX_INCOME + VALID_INCOME_BOB;
     public static final String AGE_DESC_AMY = " " + PREFIX_AGE + VALID_AGE_AMY;
@@ -102,7 +97,7 @@ public class CommandTestUtil {
      * - the {@code actualModel} matches {@code expectedModel}
      */
     public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
-            Model expectedModel) {
+                                            Model expectedModel) {
         try {
             CommandResult result = command.execute();
             assertEquals(expectedMessage, result.feedbackToUser);

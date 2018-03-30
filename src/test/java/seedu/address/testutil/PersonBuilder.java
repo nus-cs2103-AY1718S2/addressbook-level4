@@ -25,7 +25,6 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final Double DEFAULT_INCOME = 1234.56;
     public static final Double DEFAULT_ACTUALSPENDING = 1234.56;
-    public static final Double DEFAULT_EXPECTEDSPENDING = 1234.56;
     public static final Integer DEFAULT_AGE = 20;
     public static final String DEFAULT_TAGS = "friends";
 
@@ -46,7 +45,6 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         income = new Income(DEFAULT_INCOME);
         actualSpending = new Expenditure(DEFAULT_ACTUALSPENDING);
-        expectedSpending = new Expenditure(DEFAULT_EXPECTEDSPENDING);
         age = new Age(DEFAULT_AGE);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
@@ -62,7 +60,6 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         income = personToCopy.getIncome();
         actualSpending = personToCopy.getActualSpending();
-        expectedSpending = personToCopy.getExpectedSpending();
         age = personToCopy.getAge();
         tags = new HashSet<>(personToCopy.getTags());
     }
@@ -115,13 +112,6 @@ public class PersonBuilder {
         return this;
     }
 
-    /**
-     * Sets the {@code income} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withExpectedSpending(Double expectedSpending) {
-        this.expectedSpending = new Expenditure(expectedSpending);
-        return this;
-    }
 
     /**
      * Sets the {@code age} of the {@code Person} that we are building.

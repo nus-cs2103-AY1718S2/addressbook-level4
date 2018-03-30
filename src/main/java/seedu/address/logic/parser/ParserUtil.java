@@ -292,32 +292,6 @@ public class ParserUtil {
                 ? Optional.of(parseActualSpending(actualSpending.get())) : Optional.empty();
     }
 
-    /**
-     * Parses a {@code String value} into an {@code value}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code value} is invalid.
-     */
-    public static Expenditure parseExpectedSpending(String expectedSpending) throws IllegalValueException {
-        requireNonNull(expectedSpending);
-        Double trimmedExpectedSpending = Double.parseDouble(expectedSpending.trim());
-        if (!Expenditure.isValid(trimmedExpectedSpending)) {
-            throw new IllegalValueException(Expenditure.MESSAGE_EXPENDITURE_CONSTRAINTS);
-        }
-        return new Expenditure(trimmedExpectedSpending);
-    }
-
-
-    /**
-     * Parses a {@code Optional<String> value} into an {@code Optional<value>} if {@code value} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Expenditure> parseExpectedSpending(Optional<String> expectedSpending)
-            throws IllegalValueException {
-        requireNonNull(expectedSpending);
-        return expectedSpending.isPresent()
-                ? Optional.of(parseExpectedSpending(expectedSpending.get())) : Optional.empty();
-    }
 
     /**
      * Parses a {@code String value} into an {@code value}.

@@ -509,6 +509,15 @@ The image copied over will be stored with a SHA-256 hash name. This hash is calc
 The `DisplayPic` object will store the relative filepath to this new duplicated image. If there is no image or a valid filepath, the `DisplayPic` object will contain the
 relative filepath to the default display picture.
 
+===== Editing a Display Picture
+
+The application will read in the new image to edit and use the `filepath` of the original image to generate a new unique hash name. This is to prevent the overwriting
+of image files such as to facilitate the `undo` command.
+
+===== Deleting a Display Picture
+
+The current delete uses Java's `deleteOnExit` method. It will be updated later on in v1.4 to ensure that files are only deleted when they will definitely not be used.
+
 ==== Design Considerations
 ===== Aspect: Filepath to the image
 * **Alternative 1 (current choice):** Copy the image file over to a designated location
@@ -520,17 +529,16 @@ relative filepath to the default display picture.
 
 ===== Aspect: Filename of the image
 * **Alternative 1 (current choice):** Use a hashing algorithm to name the file.
-** Pros: The filename should be unique.
-** Cons: Could potentially lead to a collision.
+** Pros: SHA-256 provides collision resistant which means the filename would be unique and it is easy to implement.
+** Cons: It is difficult to manually check which `Person` the image file belongs to.
 * **Alternative 2:** Use the name of the `Person` to name the file.
 ** Pros: Image files can be easily identified separately and easy to implement.
 ** Cons: Could lead to potential image files overwriting each other without additional checks.
 
 ==== Future enhancements
 
-* Support to delete photo (Coming in v1.3)
-* Support for undo/redo (Coming in v1.4)
-* Support for photo frames (Coming in v1.5)
+* Support for photo frames and undo for delete (Coming in v1.4)
+* Support for frame color to highlight student status (Coming in v1.5)
 
 === Logging
 

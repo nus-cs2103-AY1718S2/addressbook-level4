@@ -5,10 +5,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.CommandTestUtil.PASSWORD_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.USERNAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PASSWORD_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_USERNAME_AMY;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -38,9 +34,12 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.account.Account;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.smplatform.Link;
+import seedu.address.testutil.AccountBuilder;
+import seedu.address.testutil.AccountUtil;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -53,9 +52,10 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_login() throws Exception {
+        Account account = new AccountBuilder().build();
         LoginCommand command = (LoginCommand) parser.parseCommand(
-                LoginCommand.COMMAND_WORD + " " + USERNAME_DESC_AMY + PASSWORD_DESC_AMY);
-        assertEquals(new LoginCommand(VALID_USERNAME_AMY, VALID_PASSWORD_AMY), command);
+                LoginCommand.COMMAND_WORD + " " + AccountUtil.getAccountDetails(account));
+        assertEquals(new LoginCommand(account), command);
     }
 
     @Test

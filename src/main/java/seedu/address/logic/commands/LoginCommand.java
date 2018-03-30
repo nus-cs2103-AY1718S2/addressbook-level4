@@ -1,12 +1,14 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.account.Account;
 
 /**
- * Logs into a social media platform using the user's name and password.
+ * Logs into a social media platform using the user's account information.
  */
 public class LoginCommand extends Command {
 
@@ -21,12 +23,11 @@ public class LoginCommand extends Command {
             + PREFIX_USERNAME + "johndoe "
             + PREFIX_PASSWORD + "jd9876";
 
-    private final String username;
-    private final String password;
+    private final Account accountToLogin;
 
-    public LoginCommand(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public LoginCommand(Account account) {
+        requireNonNull(account);
+        accountToLogin = account;
     }
 
     @Override
@@ -38,7 +39,6 @@ public class LoginCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof LoginCommand // instanceof handles nulls
-                && this.username.equals(((LoginCommand) other).username) // state check
-                && this.password.equals(((LoginCommand) other).password));
+                && this.accountToLogin.equals(((LoginCommand) other).accountToLogin)); // state check
     }
 }

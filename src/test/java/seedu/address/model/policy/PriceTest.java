@@ -28,7 +28,7 @@ public class PriceTest {
         assertFalse(Price.isValidPrice(-1.0)); // Negative price
 
         // valid price
-        assertTrue(Price.isValidPrice(0.0)); // Zero price
+        assertTrue(Price.isValidPrice(0.0)); // Free
         assertTrue(Price.isValidPrice(1.0)); // Positive price
     }
 }

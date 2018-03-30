@@ -61,6 +61,10 @@ public interface Model {
 
     /** Returns an unmodifiable view of the filtered appointment list */
     ObservableList<Appointment> getFilteredAppointmentList();
+
+    /** Returns an unmodifiable view of the filtered appointment list */
+    ObservableList<PetPatient> getFilteredPetPatientList();
+
     /**
      * Updates the filter of the filtered appointment list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.

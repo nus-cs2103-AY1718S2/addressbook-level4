@@ -132,7 +132,7 @@ public class CoinBook implements ReadOnlyCoinBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         coinTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Coin(
-                coin.getCode(), correctTagReferences);
+                coin, correctTagReferences);
     }
 
     /**

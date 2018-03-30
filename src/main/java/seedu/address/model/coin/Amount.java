@@ -15,6 +15,20 @@ public class Amount {
     }
 
     /**
+     * Constructs an {@code Amount} with given value.
+     */
+    public Amount(Amount amount) {
+        this.value = amount.getValue();
+    }
+
+    /**
+     * Constructs an {@code Amount} with given value.
+     */
+    public Amount(double value) {
+        this.value = value;
+    }
+
+    /**
      * Adds addAmount to the current value.
      *
      * @param addAmount amount to be added.

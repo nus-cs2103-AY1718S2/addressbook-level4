@@ -65,6 +65,19 @@ public class ParserUtil {
     }
 
     /**
+     * Parses {@code value} into a {@code double} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified index is invalid (not number value).
+     */
+    public static double parseDouble(String value) throws IllegalValueException {
+        String trimmedValue = value.trim();
+        if (!StringUtil.isValidNumber(trimmedValue)) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+        }
+        return Double.parseDouble(trimmedValue);
+    }
+
+    /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
      *

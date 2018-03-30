@@ -17,9 +17,10 @@ public class Coin {
 
     private final Code code;
 
-    private final Amount currentAmountHeld;
     private final Amount totalAmountSold;
     private final Amount totalAmountBought;
+    private final Amount totalDollarsSold;
+    private final Amount totalDollarsBought;
     private final Price price;
 
     private final UniqueTagList tags;
@@ -32,10 +33,41 @@ public class Coin {
         this.code = code;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
-        this.currentAmountHeld = new Amount();
         this.price = new Price();
         this.totalAmountSold = new Amount();
         this.totalAmountBought = new Amount();
+        this.totalDollarsSold = new Amount();
+        this.totalDollarsBought = new Amount();
+    }
+
+    /**
+     * Copy constructor for coins.
+     */
+    public Coin(Coin toCopy) {
+        requireAllNonNull(toCopy);
+        this.code = toCopy.code;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(toCopy.getTags());
+        this.price = toCopy.price;
+        this.totalAmountSold = new Amount(toCopy.getTotalAmountSold());
+        this.totalAmountBought = new Amount(toCopy.getTotalAmountBought());
+        this.totalDollarsSold = new Amount(toCopy.getTotalDollarsSold());
+        this.totalDollarsBought = new Amount(toCopy.getTotalDollarsBought());
+    }
+
+    /**
+     * Copy constructor with tag update.
+     */
+    public Coin(Coin toCopy, Set<Tag> tags) {
+        requireAllNonNull(toCopy);
+        this.code = toCopy.code;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+        this.price = toCopy.price;
+        this.totalAmountSold = new Amount(toCopy.getTotalAmountSold());
+        this.totalAmountBought = new Amount(toCopy.getTotalAmountBought());
+        this.totalDollarsSold = new Amount(toCopy.getTotalDollarsSold());
+        this.totalDollarsBought = new Amount(toCopy.getTotalDollarsBought());
     }
 
     public Code getCode() {
@@ -43,7 +75,7 @@ public class Coin {
     }
 
     public Amount getCurrentAmountHeld() {
-        return currentAmountHeld;
+        return new Amount(totalAmountBought.getValue() - totalAmountSold.getValue());
     }
 
     public Price getPrice() {
@@ -77,7 +109,7 @@ public class Coin {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(code, tags, currentAmountHeld, price);
+        return Objects.hash(code, tags, getCurrentAmountHeld(), price);
     }
 
     @Override
@@ -109,15 +141,23 @@ public class Coin {
         this.totalAmountBought.addValue(addAmount);
     }
 
-    public Double getTotalAmountProfit() {
+    public Double getTotalProfit() {
         return totalAmountSold.getValue() - totalAmountBought.getValue();
     }
 
     public Double getDollarsWorth() {
-        return price.getValue() * currentAmountHeld.getValue();
+        return price.getValue() * getCurrentAmountHeld().getValue();
     }
 
     public Double getProfitability() {
         return getDollarsWorth() + ((getProfitability() > 0) ? 0 : getProfitability());
+    }
+
+    public Amount getTotalDollarsSold() {
+        return totalDollarsSold;
+    }
+
+    public Amount getTotalDollarsBought() {
+        return totalDollarsBought;
     }
 }

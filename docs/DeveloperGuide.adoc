@@ -782,7 +782,6 @@ The `_BrowserPanel_` will be updated to show the Facebook feed of the User.
 ** Pros: Recipe is posted immediately on the User's Facebook wall using the *`share`* command. User need not manually paste the recipe from the clipboard onto the post.
 ** Cons: User *must* manually obtain their Facebook access key and input it into the application - this may raise security concerns (Facebook does not allow automatic posting of text even if permission is given by the User upon log in).
 // end::facebook-compatibility[]
-=======
 
 === Undo/Redo feature
 ==== Current Implementation

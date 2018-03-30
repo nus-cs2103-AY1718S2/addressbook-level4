@@ -5,14 +5,16 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.task.Task;
 
 /**
  * The Calendar of the app.
@@ -21,8 +23,10 @@ public class CalendarView extends UiPart<Region> {
 
     private static final String FXML = "CalendarView.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
-    private ArrayList<CalendarNode> allCalendarDays = new ArrayList<>(35);
+    private ArrayList<AnchorPane> allCalendarDays = new ArrayList<>(35);
     private YearMonth currentYearMonth;
+    private ObservableList<Task> tasks;
+    private int currentMonth = 0;
 
     @FXML
     private VBox calendarVBox;
@@ -38,27 +42,29 @@ public class CalendarView extends UiPart<Region> {
     /**
      * Creates the calendar of the app
      */
-    public CalendarView() {
+    public CalendarView(ObservableList<Task> tasks) {
         super(FXML);
-
+        this.tasks = tasks;
         YearMonth yearMonth = YearMonth.now();
         currentYearMonth = yearMonth;
-        initCalendar();
-        setCalendarDays(yearMonth);
+        currentMonth = yearMonth.getMonthValue();
+        initCalendar(yearMonth);
     }
 
     /**
      * Create rows and columns with anchor panes for the calendar
      */
-    private void initCalendar() {
+    private void initCalendar(YearMonth yearMonth) {
+
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 7; j++) {
-                CalendarNode ap = new CalendarNode();
+                AnchorPane ap = new AnchorPane();
                 ap.setPrefSize(300, 300);
                 calendar.add(ap, j, i);
                 allCalendarDays.add(ap);
             }
         }
+        setCalendarDays(yearMonth);
     }
 
     /**
@@ -70,18 +76,24 @@ public class CalendarView extends UiPart<Region> {
         while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY")) {
             calendarDate = calendarDate.minusDays(1);
         }
-        for (CalendarNode ap : allCalendarDays) {
+        for (AnchorPane ap : allCalendarDays) {
             if (ap.getChildren().size() != 0) {
                 ap.getChildren().remove(0);
             }
-            Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
-            ap.setDate(calendarDate);
-            ap.setTopAnchor(txt, 5.0);
-            ap.setLeftAnchor(txt, 5.0);
-            ap.getChildren().add(txt);
+            String txt = String.valueOf(calendarDate.getDayOfMonth());
+            CalendarNode node = new CalendarNode(txt, tasks, calendarDate.getDayOfMonth(),
+                currentYearMonth.getMonthValue(), currentYearMonth.getYear());
+            ap.getChildren().add(node.getRoot());
             calendarDate = calendarDate.plusDays(1);
         }
         calendarTitle.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
+    }
+
+    /**
+     * Refreshes the calendar with new information.
+     */
+    public void refreshCalendar() {
+        initCalendar(currentYearMonth);
     }
 
     @FXML
@@ -90,7 +102,8 @@ public class CalendarView extends UiPart<Region> {
      */
     private void handlePreviousButtonAction() {
         currentYearMonth = currentYearMonth.minusMonths(1);
-        setCalendarDays(currentYearMonth);
+        currentMonth = currentYearMonth.getMonthValue();
+        initCalendar(currentYearMonth);
     }
 
     @FXML
@@ -99,14 +112,15 @@ public class CalendarView extends UiPart<Region> {
      */
     private void handleNextButtonAction() {
         currentYearMonth = currentYearMonth.plusMonths(1);
-        setCalendarDays(currentYearMonth);
+        currentMonth = currentYearMonth.getMonthValue();
+        initCalendar(currentYearMonth);
     }
 
-    public ArrayList<CalendarNode> getAllCalendarDays() {
+    public ArrayList<AnchorPane> getAllCalendarDays() {
         return allCalendarDays;
     }
 
-    public void setAllCalendarDays(ArrayList<CalendarNode> allCalendarDays) {
+    public void setAllCalendarDays(ArrayList<AnchorPane> allCalendarDays) {
         this.allCalendarDays = allCalendarDays;
     }
 }

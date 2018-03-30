@@ -1,11 +1,11 @@
-package seedu.address.model.Todo;
+package seedu.address.model.task;
 
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a short description of a todo task
  */
-public class Description {
+public class TaskDescription {
 
     public static final String MESSAGE_DESCRIPTION_CONSTRAINTS =
             "Task description can take any values, and it should not be blank";
@@ -18,15 +18,22 @@ public class Description {
 
     public final String value;
 
+    public final String shortDesc;
+
     /**
-     * Constructs an {@code Description}.
+     * Constructs an {@code TaskDescription}.
      *
      * @param description A valid address.
      */
-    public Description(String description) {
+    public TaskDescription(String description) {
         assert description != null : MESSAGE_DESCRIPTION_CONSTRAINTS;
         checkArgument(isValidDescription(description));
         this.value = description;
+        if (value.length() <= 7) {
+            shortDesc = value;
+        } else {
+            shortDesc = value.substring(0, 7) + "...";
+        }
     }
 
     /**
@@ -44,8 +51,8 @@ public class Description {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Description // instanceof handles nulls
-                && this.value.equals(((Description) other).value)); // state check
+                || (other instanceof TaskDescription // instanceof handles nulls
+                && this.value.equals(((TaskDescription) other).value)); // state check
     }
 
     @Override

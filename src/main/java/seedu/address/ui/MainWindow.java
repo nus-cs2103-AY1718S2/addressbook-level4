@@ -4,6 +4,10 @@ import static seedu.address.logic.commands.ChangeThemeCommand.BRIGHT_THEME_CSS_F
 import static seedu.address.logic.commands.ChangeThemeCommand.DARK_THEME_CSS_FILE_NAME;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -49,6 +53,7 @@ public class MainWindow extends UiPart<Stage> {
     private static final int NOTIFICATION_CARD_X_OFFSET = 15;
     private static final int NOTIFICATION_CARD_Y_OFFSET = 15;
     private static final int NOTIFICATION_PANEL_WIDTH = 400;
+    private static final int NOTIFICATION_CARD_SHOW_TIME = 5000;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -61,7 +66,9 @@ public class MainWindow extends UiPart<Stage> {
     private Config config;
     private UserPrefs prefs;
 
-    private ArrayList<ShowNotificationEvent> notifications;
+    private LinkedList<ShowNotificationEvent> notificationsDisplayed;
+    private LinkedList<ShowNotificationEvent> notificationsHidden;
+    private HashMap<ShowNotificationEvent, Region> eventToCardMapping;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -102,7 +109,9 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerators();
         registerAsAnEventHandler(this);
 
-        notifications = new ArrayList<>();
+        notificationsDisplayed = new LinkedList<>();
+        notificationsHidden = new LinkedList<>();
+        eventToCardMapping = new HashMap<>();
     }
 
     public Stage getPrimaryStage() {
@@ -265,27 +274,45 @@ public class MainWindow extends UiPart<Stage> {
      */
     public void showNotificationPanel() {
         animate(test1, NOTIFICATION_PANEL_WIDTH, EXIT);
-
     }
 
     /**
      * Show in-app notification
      */
     public void showNewNotification(ShowNotificationEvent event) {
-        notifications.add(event);
-        System.out.println("Preparing in app notification");
-        Region notificationCard = (new NotificationCard(event.getTitle(), notifications.size() + "",
+        logger.info("Preparing in app notification");
+
+        //metadata update
+        notificationsDisplayed.add(event);
+        Region notificationCard = (new NotificationCard(event.getTitle(), notificationsDisplayed.size() + "",
                 event.getOwnerName(), event.getEndTime())).getRoot();
+        eventToCardMapping.put(event, notificationCard);
+
+        //hides notificationCard away from screen
         notificationCard.setTranslateX(NOTIFICATION_CARD_WIDTH);
-        notificationCard.setTranslateY(-1 * ((notifications.size() - 1) * NOTIFICATION_CARD_HEIGHT
-                + notifications.size() * NOTIFICATION_CARD_Y_OFFSET));
+        notificationCard.setTranslateY(-1 * ((notificationsDisplayed.size() - 1) * NOTIFICATION_CARD_HEIGHT
+                + notificationsDisplayed.size() * NOTIFICATION_CARD_Y_OFFSET));
         notificationCard.setMaxHeight(NOTIFICATION_CARD_HEIGHT);
         notificationCard.setMaxWidth(NOTIFICATION_CARD_WIDTH);
+
+        //enter animation
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 test.getChildren().add(notificationCard);
                 animate(notificationCard, NOTIFICATION_CARD_WIDTH + NOTIFICATION_CARD_X_OFFSET, ENTER);
+                Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        ShowNotificationEvent firstEvent = notificationsDisplayed.removeFirst();
+                        notificationsHidden.add(firstEvent);
+                        Region firstNotificationCard = eventToCardMapping.get(firstEvent);
+                        //cards are reused later in notification center
+                        animate(firstNotificationCard, NOTIFICATION_CARD_WIDTH + NOTIFICATION_CARD_X_OFFSET, EXIT);
+                        //todo: make notification cards move down after earlier ones have exited
+                    }
+                }, NOTIFICATION_CARD_SHOW_TIME);
             }
         });
     }

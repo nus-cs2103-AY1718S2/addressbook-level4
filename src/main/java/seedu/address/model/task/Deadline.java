@@ -66,7 +66,7 @@ public class Deadline {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             LocalDate deadlineDate = LocalDate.parse(test, formatter);
         } catch (Exception e) {
-            throw new IllegalArgumentException(MESSAGE_DEADLINE_CONSTRAINTS);
+            return false;
         }
         return true;
     }

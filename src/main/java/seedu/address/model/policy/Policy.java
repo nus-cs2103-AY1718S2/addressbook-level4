@@ -10,7 +10,7 @@ import java.util.Objects;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Policy {
-    public final static String DURATION_CONSTRAINTS = "Beginning date must be before or the same as expiration date.";
+    public static final String DURATION_CONSTRAINTS = "Beginning date must be before or the same as expiration date.";
 
     private final Price price;
     private final Coverage coverage;

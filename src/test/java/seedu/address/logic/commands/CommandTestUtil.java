@@ -77,6 +77,7 @@ public class CommandTestUtil {
     public static final String VALID_ALIAS_HELP = "help1";
     public static final String VALID_ALIAS_HISTORY = "history1";
     public static final String VALID_ALIAS_IMPORT = "import1";
+    public static final String VALID_ALIAS_LIST_COMMAND = ListCommand.COMMAND_WORD;
     public static final String VALID_ALIAS_LIST = "list1";
     public static final String VALID_ALIAS_REDO = "redo1";
     public static final String VALID_ALIAS_SELECT = "select1";
@@ -97,9 +98,20 @@ public class CommandTestUtil {
     public static final String ALIAS_DESC_SELECT = SelectCommand.COMMAND_WORD + " " + VALID_ALIAS_SELECT;
     public static final String ALIAS_DESC_UNDO = UndoCommand.COMMAND_WORD + " " + VALID_ALIAS_UNDO;
 
-    public static final String INVALID_ALIAS_DESC = "alias!";
+    public static final String INVALID_ALIAS_DESC = "alias!" + " " + VALID_ALIAS_ALIAS;
     public static final String INVALID_COMMAND_DESC = "invalid";
 
+    public static final String VALID_BUILDING_1 = "COM1";
+    public static final String VALID_BUILDING_2 = "S1";
+    public static final String VALID_BUILDING_3 = "ERC";
+
+    public static final String INVALID_BUILDING_1 = "ERC*";
+    public static final String INVALID_BUILDING_2 = "COM1 COM2";
+    public static final String INVALID_BUILDING_3 = "Building";
+
+    public static final String VALID_UNALIAS = VALID_ALIAS_ADD;
+
+    public static final String INVALID_UNALIAS_DESC = "alias!";
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;

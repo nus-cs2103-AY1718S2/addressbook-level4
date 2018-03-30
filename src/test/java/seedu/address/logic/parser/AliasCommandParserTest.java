@@ -15,6 +15,7 @@ import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_LIST;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_REDO;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_SELECT;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_UNDO;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_ALIAS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ALIAS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_CLEAR;
@@ -29,7 +30,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_LIST;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_REDO;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_SELECT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_UNDO;
-
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -165,6 +165,12 @@ public class AliasCommandParserTest {
                 .withAlias(VALID_ALIAS_UNDO).build();
 
         assertParseSuccess(parser, ALIAS_DESC_UNDO, new AliasCommand(expectedUndoAlias));
+    }
+
+    @Test
+    public void parse_invalidValue_failure() {
+        //alias with symbols failure
+        assertParseFailure(parser, INVALID_ALIAS_DESC, Alias.MESSAGE_ALIAS_CONSTRAINTS);
     }
 
     @Test

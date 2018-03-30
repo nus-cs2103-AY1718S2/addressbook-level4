@@ -46,6 +46,8 @@ public class ImportCommandTest {
 
     private Model model = new ModelManager(new AddressBook(), new UserPrefs());
 
+    private final ImportCommand standardCommand = prepareCommand(TEST_DATA_FILE_ALICE_BENSON, model);
+
     @Test
     public void execute_validFileImportIntoEmptyAddressBook_success() throws Exception {
         String filepath = TEST_DATA_FOLDER + "aliceBensonAddressBook.xml";
@@ -177,26 +179,33 @@ public class ImportCommandTest {
     }
 
     @Test
-    public void equals() throws Exception {
-        final ImportCommand standardCommand = prepareCommand(TEST_DATA_FILE_ALICE_BENSON, model);
-
-        // same values -> returns true
+    public void equals_sameValues_true() {
         ImportCommand commandWithSameValues = prepareCommand(TEST_DATA_FILE_ALICE_BENSON, model);
         assertTrue(standardCommand.equals(commandWithSameValues));
+    }
 
-        // same object -> returns true
+    @Test
+    public void equals_sameObject_true() {
         assertTrue(standardCommand.equals(standardCommand));
+    }
 
-        // same type -> returns true
+    @Test
+    public void equals_sameType_true() {
         assertTrue(standardCommand.equals(new ImportCommand(TEST_DATA_FILE_ALICE_BENSON, TEST_PASSWORD)));
+    }
 
-        // null -> returns false
+    @Test
+    public void equals_nullInstance_false() {
         assertFalse(standardCommand.equals(null));
+    }
 
-        // different types -> returns false
+    @Test
+    public void equals_differentTypes_false() {
         assertFalse(standardCommand.equals(new ClearCommand()));
+    }
 
-        // different addressbook -> returns false
+    @Test
+    public void equals_differentAddressBook_false() {
         assertFalse(standardCommand.equals(prepareCommand(TEST_DATA_FILE_ALICE, model)));
     }
 
@@ -206,6 +215,7 @@ public class ImportCommandTest {
     private ImportCommand prepareCommand(String filepath, Model model) {
         return prepareCommand(filepath, model, TEST_PASSWORD);
     }
+
     /**
      * Returns a {@code ImportCommand} with the parameter {@code filepath} and {@code password}.
      */

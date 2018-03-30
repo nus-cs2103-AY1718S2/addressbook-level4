@@ -507,9 +507,9 @@ Format: `whatsapp INDEX`
 * You may be required to scan a QR code from your phone to login to WhatsApp webpage.
 =====
 
-=== editing a event `[coming in v2.0]`
+=== Editing a event `[coming in v2.0]`
 
-=== deleting a event `[coming in v2.0]`
+=== Deleting a event `[coming in v2.0]`
 
 === Adding an event in mass to many employees' timetable at once `[coming in v2.0]`
 

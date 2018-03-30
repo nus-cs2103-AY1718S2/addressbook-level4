@@ -14,7 +14,6 @@ public class Config {
     private String appTitle = "Address App";
     private Level logLevel = Level.INFO;
     private String userPrefsFilePath = "preferences.json";
-    private String venueInformationFilePath = "venueinformation.json";
 
     public String getAppTitle() {
         return appTitle;
@@ -38,14 +37,6 @@ public class Config {
 
     public void setUserPrefsFilePath(String userPrefsFilePath) {
         this.userPrefsFilePath = userPrefsFilePath;
-    }
-
-    public String getVenueInformationFilePath() {
-        return venueInformationFilePath;
-    }
-
-    public void setVenueInformationFilePath(String venueInformationFilePath) {
-        this.venueInformationFilePath = venueInformationFilePath;
     }
 
     @Override

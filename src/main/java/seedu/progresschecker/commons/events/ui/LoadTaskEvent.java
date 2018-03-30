@@ -8,10 +8,10 @@ import seedu.progresschecker.commons.events.BaseEvent;
 public class LoadTaskEvent extends BaseEvent {
 
 
-    public final String url;
+    public final String content;
 
-    public LoadTaskEvent(String url) {
-        this.url = url;
+    public LoadTaskEvent(String content) {
+        this.content = content;
     }
 
     @Override
@@ -19,8 +19,8 @@ public class LoadTaskEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 
-    public String getUrl() {
-        return url;
+    public String getContent() {
+        return content;
     }
 
 }

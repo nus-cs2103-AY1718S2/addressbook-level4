@@ -1,13 +1,13 @@
 package seedu.progresschecker.logic.commands;
 
-import static seedu.progresschecker.ui.UiPart.FXML_FILE_FOLDER;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -16,6 +16,7 @@ import com.google.api.services.tasks.model.Task;
 
 import seedu.progresschecker.commons.core.EventsCenter;
 import seedu.progresschecker.commons.events.ui.LoadTaskEvent;
+import seedu.progresschecker.commons.util.FileUtil;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.task.MyTaskList;
 
@@ -53,8 +54,14 @@ public class ViewTaskListCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         List<Task> list = MyTaskList.searchTaskList(listName);
-        writeToHtml(list, getResourcePath(FXML_FILE_FOLDER) + TASK_PAGE);
-        EventsCenter.getInstance().post(new LoadTaskEvent(FXML_FILE_FOLDER + TASK_PAGE));
+        File htmlFile = new File("data/" + TASK_PAGE);
+        writeToHtml(list, htmlFile);
+        try {
+            EventsCenter.getInstance().post(new LoadTaskEvent(readFile(htmlFile.getAbsolutePath(),
+                    StandardCharsets.UTF_8)));
+        } catch (IOException ioe) {
+            throw new CommandException(FILE_FAILURE);
+        }
         return new CommandResult(String.format(MESSAGE_SUCCESS, listName));
     }
 
@@ -69,19 +76,21 @@ public class ViewTaskListCommand extends Command {
      * Writes the loaded task list to an html file.Loads the tasks.
      *
      * @param list task list serialized in a java List.
-     * @param path path of the html file.
+     * @param file File object of the html file.
      */
-    void writeToHtml(List<Task> list, String path) throws CommandException {
+    void writeToHtml(List<Task> list, File file) throws CommandException {
         int size = list.size();
 
         try {
-            FileWriter fw1 = new FileWriter(path, false);
+            FileUtil.createIfMissing(file);
+
+            FileWriter fw1 = new FileWriter(file, false);
             BufferedWriter bw1 = new BufferedWriter(fw1);
             PrintWriter out1 = new PrintWriter(bw1);
 
             out1.print("");
 
-            FileWriter fw = new FileWriter(path, true);
+            FileWriter fw = new FileWriter(file, true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw);
 
@@ -105,6 +114,17 @@ public class ViewTaskListCommand extends Command {
             throw new CommandException(FILE_FAILURE);
 
         }
+    }
+
+    /**
+     * Reads the content of a text file to a String.
+     *
+     * @param path file path
+     * @param encoding the encoding standard, such as StandardCharsets.UTF_8.
+     */
+    static String readFile(String path, Charset encoding) throws IOException {
+        byte[] encoded = Files.readAllBytes(Paths.get(path));
+        return new String(encoded, encoding);
     }
 
     /**

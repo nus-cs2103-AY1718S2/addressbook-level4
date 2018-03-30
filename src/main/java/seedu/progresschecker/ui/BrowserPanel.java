@@ -64,9 +64,12 @@ public class BrowserPanel extends UiPart<Region> {
     /**
      * Loads the HTML file which contains task information.
      */
-    public void loadTaskPage(String url) {
-        URL defaultPage = MainApp.class.getResource(url);
-        loadPage(defaultPage.toExternalForm());
+    public void loadTaskPage(String content) {
+        loadPageViaString(content);
+    }
+
+    public void loadPageViaString(String content) {
+        Platform.runLater(() -> browser.getEngine().loadContent(content));
     }
 
     public void loadPage(String url) {
@@ -103,6 +106,6 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleLoadTaskEvent(LoadTaskEvent event)  {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadTaskPage(event.getUrl());
+        loadTaskPage(event.getContent());
     }
 }

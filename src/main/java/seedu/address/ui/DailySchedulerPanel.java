@@ -1,74 +1,85 @@
+//@@author jaronchan
 package seedu.address.ui;
 
-import java.net.URL;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
-import javafx.scene.web.WebView;
-import seedu.address.MainApp;
+import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.model.person.Person;
+import seedu.address.commons.events.ui.SwitchFeatureEvent;
 
-//@@author jaronchan
 /**
- * The Person Details Panel of the App.
- * To be UPDATED
+ * The UI component that handles the display of daily schedules and directions between locations.
  */
 public class DailySchedulerPanel extends UiPart<Region> {
-
-    public static final String DEFAULT_PAGE = "default.html";
-    public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
 
     private static final String FXML = "DailySchedulerPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
+    private MapPanel directionPanel;
+
     @FXML
-    private WebView browser;
+    private StackPane directionPanelPlaceholder;
+
+
 
     public DailySchedulerPanel() {
         super(FXML);
 
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
-
-        loadDefaultPage();
         registerAsAnEventHandler(this);
     }
 
-    private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
-    }
-
-    public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
-    }
-
     /**
-     * Loads a default HTML file with a background that matches the general theme.
+     * Loads a map with directional information to the allocated stack pane.
      */
-    private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
+    public void loadDirectionPanel() {
+        if (directionPanel == null) {
+            directionPanel = new MapPanel("MapPanel.fxml");
+            directionPanelPlaceholder.getChildren().add(directionPanel.getRoot());
+        }
     }
 
     /**
-     * Frees resources allocated to the browser.
+     * Removes the map with directional information.
+     */
+    public void removeDirectionPanel() {
+
+        if (directionPanel != null && directionPanelPlaceholder.getChildren().contains(directionPanel.getRoot())) {
+            directionPanel.resetMap();
+            directionPanelPlaceholder.getChildren().remove(directionPanel.getRoot());
+            directionPanel = null;
+        }
+    }
+
+    /**
+     * Frees resources allocated to the direction panel if direction panel is not empty.
      */
     public void freeResources() {
-        browser = null;
+        if (directionPanel != null && directionPanelPlaceholder.getChildren().contains(directionPanel.getRoot())) {
+            directionPanel.freeResources();
+        }
     }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handleSwitchFeatureEvent(SwitchFeatureEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (event.getFeatureTarget().equals("scheduler")) {
+            loadDirectionPanel();
+        } else {
+            removeDirectionPanel();
+        }
     }
 }

@@ -4,12 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.web.WebView?>
 
 <!-- @@author jaronchan -->
 
@@ -46,9 +42,16 @@
           <children>
             <TabPane prefHeight="200.0" prefWidth="200.0" side="RIGHT" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab text="      ">
+                <Tab text="  ">
                   <content>
-                    <StackPane>
+                    <StackPane prefHeight="-1.0" prefWidth="-1.0">
+                      <children>
+                        <StackPane fx:id="directionPanelPlaceholder" prefWidth="-1.0">
+                          <padding>
+                            <Insets right="10" left="10"/>
+                          </padding>
+                        </StackPane>
+                      </children>
                     </StackPane>
                   </content>
                 </Tab>

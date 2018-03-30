@@ -55,9 +55,9 @@
                     </GridPane>
                   </children>
                 </VBox>
-                <StackPane prefHeight="150.0" prefWidth="200.0">
+                <StackPane prefHeight="-1.0" prefWidth="-1.0">
                   <children>
-                    <StackPane fx:id="mapPanelPlaceHolder" prefWidth="200.0">
+                    <StackPane fx:id="mapPanelPlaceholder" prefWidth="-1.0">
                       <padding>
                         <Insets right="10" left="10"/>
                       </padding>

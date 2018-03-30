@@ -15,18 +15,19 @@ import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
 import seedu.address.commons.events.ui.SwitchFeatureEvent;
 
 /**
- * The Person Details Panel of the App.
- * To be UPDATED
+ * The UI component that handles the display of beneficiary details, location on map
+ * and session reports.
  */
 public class PersonDetailsPanel extends UiPart<Region> {
 
     private static final String FXML = "PersonDetailsPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
     private MapPanel mapPanel;
 
     @FXML
-    private StackPane mapPanelPlaceHolder;
+    private StackPane mapPanelPlaceholder;
 
 
     public PersonDetailsPanel() {
@@ -39,27 +40,35 @@ public class PersonDetailsPanel extends UiPart<Region> {
         loadMapPanel();
     }
 
-    public void removeMapPanel() {
-
-        if (mapPanel != null && mapPanelPlaceHolder.getChildren().contains(mapPanel.getRoot())) {
-            mapPanel.resetMap();
-            mapPanelPlaceHolder.getChildren().remove(mapPanel.getRoot());
-            mapPanel = null;
-        }
-    }
-
+    /**
+     * Loads a map to the allocated stack pane.
+     */
     public void loadMapPanel() {
         if (mapPanel == null) {
             mapPanel = new MapPanel("MapPanel.fxml");
-            mapPanelPlaceHolder.getChildren().add(mapPanel.getRoot());
+            mapPanelPlaceholder.getChildren().add(mapPanel.getRoot());
         }
     }
 
     /**
-     * Frees resources allocated to the browser.
+     * Removes a map from the allocated stack pane.
+     */
+    public void removeMapPanel() {
+
+        if (mapPanel != null && mapPanelPlaceholder.getChildren().contains(mapPanel.getRoot())) {
+            mapPanel.resetMap();
+            mapPanelPlaceholder.getChildren().remove(mapPanel.getRoot());
+            mapPanel = null;
+        }
+    }
+
+    /**
+     * Frees resources allocated to the map panel if map panel is not empty.
      */
     public void freeResources() {
-        mapPanel.freeResources();
+        if (mapPanel != null && mapPanelPlaceholder.getChildren().contains(mapPanel.getRoot())) {
+            mapPanel.freeResources();
+        }
     }
 
     @Subscribe

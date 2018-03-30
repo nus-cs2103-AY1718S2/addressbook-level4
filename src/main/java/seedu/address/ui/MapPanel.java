@@ -19,6 +19,9 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.MapManager;
 
+/**
+ * The UI component that handles the display of maps.
+ */
 public class MapPanel extends UiPart<Region>
         implements Initializable, MapComponentInitializedListener {
 
@@ -46,7 +49,6 @@ public class MapPanel extends UiPart<Region>
     /**
      * Set the initial properties of the map.
      */
-
     @Override
     public void mapInitialized() {
 
@@ -68,10 +70,8 @@ public class MapPanel extends UiPart<Region>
     }
 
     /**
-     * Update the map based on new selection event.
-     * Default view is shown if no address is invalid.
+     * Resets the map to default view .
      */
-
     public void resetMap() {
         if (map != null) {
             map.clearMarkers();

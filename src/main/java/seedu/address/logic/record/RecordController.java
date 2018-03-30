@@ -1,16 +1,13 @@
 package seedu.address.logic.record;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import seedu.address.model.patient.Record;
 
 /**
@@ -32,6 +29,8 @@ public class RecordController {
     @FXML
     private Text messageText;
 
+    @FXML
+    private javafx.scene.control.Button saveButton;
 
     /**
      * Takes in input to the various record fields when confirm button is clicked.
@@ -47,8 +46,9 @@ public class RecordController {
         } else {
             if (RecordManager.authenticate(date, symptom, illness, treatment)) {
                 messageText.setText("Success! Please close this window.");
+                closeButtonAction();
             } else {
-                messageText.setText("Username and password do not match!");
+                messageText.setText("Invalid entries!");
             }
         }
     }
@@ -58,22 +58,55 @@ public class RecordController {
      */
     @FXML
     protected void handleKeyAction(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER) {
-            String date = this.dateField.getText();
-            String symptom = this.symptomField.getText();
-            String illness = this.illnessField.getText();
-            String treatment = this.treatmentField.getText();
-            if (date.equals("") || symptom.equals("") || illness.equals("") || treatment.equals("")) {
-                messageText.setText("Please fill in all fields.");
-            } else {
-                if (RecordManager.authenticate(date, symptom, illness, treatment)) {
-                    messageText.setText("Success! Please close this window.");
-                } else {
-                    messageText.setText("Username and password do not match!");
-                }
-            }
-            event.consume();
+        KeyCode code = event.getCode();
+        if (code == KeyCode.ENTER) {
+            handleEnterKey(event);
+        } else if (code == KeyCode.TAB && !event.isShiftDown()
+                && !event.isControlDown()) {
+            handleTabKey(event);
         }
+    }
+
+    @FXML
+    protected void handleEnterKey(KeyEvent event) {
+        String date = this.dateField.getText();
+        String symptom = this.symptomField.getText();
+        String illness = this.illnessField.getText();
+        String treatment = this.treatmentField.getText();
+        if (date.equals("") || symptom.equals("") || illness.equals("") || treatment.equals("")) {
+                messageText.setText("Please fill in all fields.");
+        } else {
+            if (RecordManager.authenticate(date, symptom, illness, treatment)) {
+                messageText.setText("Success! Please close this window.");
+                closeButtonAction();
+            } else {
+                messageText.setText("Invalid entries!");
+            }
+        }
+        event.consume();
+    }
+
+    @FXML
+    protected void handleTabKey(KeyEvent event) {
+        event.consume();
+        Node node = (Node) event.getSource();
+        KeyEvent newEvent
+                = new KeyEvent(event.getSource(),
+                event.getTarget(), event.getEventType(),
+                event.getCharacter(), event.getText(),
+                event.getCode(), event.isShiftDown(),
+                true, event.isAltDown(),
+                event.isMetaDown());
+
+        node.fireEvent(newEvent);
+    }
+
+    @FXML
+    private void closeButtonAction(){
+        // get a handle to the stage
+        Stage stage = (Stage) saveButton.getScene().getWindow();
+        // close the stage
+        stage.close();
     }
 
     public void initData(Record record) {

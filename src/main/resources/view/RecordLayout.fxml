@@ -25,16 +25,16 @@
         </rowConstraints>
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" />
-            <TextArea fx:id="dateField" prefHeight="200.0" prefWidth="200.0" onKeyPressed="#handleKeyAction" GridPane.columnIndex="1" />
+            <TextArea fx:id="dateField" onKeyPressed="#handleKeyAction" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Symptoms:" GridPane.rowIndex="1" />
-            <TextArea fx:id="symptomField" prefHeight="200.0" prefWidth="200.0" onKeyPressed="#handleKeyAction" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextArea fx:id="symptomField" onKeyPressed="#handleKeyAction" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Illness:" GridPane.rowIndex="2" />
-            <TextArea fx:id="illnessField" prefHeight="200.0" prefWidth="200.0" onKeyPressed="#handleKeyAction" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextArea fx:id="illnessField" onKeyPressed="#handleKeyAction" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Treatment:" GridPane.rowIndex="3" />
-            <TextArea fx:id="treatmentField" prefHeight="200.0" prefWidth="200.0" onKeyPressed="#handleKeyAction" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextArea fx:id="treatmentField" onKeyPressed="#handleKeyAction" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <Button layoutX="973.0" layoutY="701.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Confirm" textAlignment="CENTER" />
+      <Button fx:id="saveButton" layoutX="973.0" layoutY="701.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Save" textAlignment="CENTER" />
       <Text fx:id="messageText" fill="#cc1919" layoutX="350.0" layoutY="722.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="361.0" />
    </children>
 </AnchorPane>

@@ -5,6 +5,9 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 
 import org.junit.Rule;
@@ -13,12 +16,17 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ReviewsCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.book.Priority;
+import seedu.address.model.book.Rating;
+import seedu.address.model.book.Status;
+import seedu.address.testutil.EditDescriptorBuilder;
 
 public class BookShelfParserTest {
     @Rule
@@ -36,6 +44,15 @@ public class BookShelfParserTest {
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(DeleteCommand.COMMAND_WORD + " 1");
         assertEquals(new DeleteCommand(INDEX_FIRST_BOOK), command);
+    }
+
+    @Test
+    public void parseCommand_edit() throws Exception {
+        EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_BOOK.getOneBased() + " " + PREFIX_RATING + "2" + " " + PREFIX_PRIORITY
+                + "n" + " " + PREFIX_STATUS + "u");
+        assertEquals(new EditCommand(INDEX_FIRST_BOOK, new EditDescriptorBuilder().withRating(new Rating(2))
+                .withPriority(Priority.NONE).withStatus(Status.UNREAD).build()), command);
     }
 
     @Test

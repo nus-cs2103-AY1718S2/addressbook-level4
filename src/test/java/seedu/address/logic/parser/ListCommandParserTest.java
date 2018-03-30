@@ -1,6 +1,5 @@
 package seedu.address.logic.parser;
 
-import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -8,10 +7,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListCommand.FilterDescriptor;
 import seedu.address.logic.parser.ListCommandParser.SortMode;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.book.Priority;
 import seedu.address.model.book.Rating;
@@ -131,31 +130,18 @@ public class ListCommandParserTest {
 
     @Test
     public void parse_invalidFilterOrSortBy_failure() {
-        assertParseFailure(parser, " s/readd", ListCommand.MESSAGE_INVALID_STATUS);
-        assertParseFailure(parser, " t/title p/", ListCommand.MESSAGE_INVALID_PRIORITY);
-        assertParseFailure(parser, " p/123", ListCommand.MESSAGE_INVALID_PRIORITY);
-        assertParseFailure(parser, " r/-2", ListCommand.MESSAGE_INVALID_RATING);
-        assertParseFailure(parser, " r/zero c/category", ListCommand.MESSAGE_INVALID_RATING);
+        assertParseFailure(parser, " s/readd", Messages.MESSAGE_INVALID_STATUS);
+        assertParseFailure(parser, " t/title p/", Messages.MESSAGE_INVALID_PRIORITY);
+        assertParseFailure(parser, " p/123", Messages.MESSAGE_INVALID_PRIORITY);
+        assertParseFailure(parser, " r/-2", Messages.MESSAGE_INVALID_RATING);
+        assertParseFailure(parser, " r/zero c/category", Messages.MESSAGE_INVALID_RATING);
 
-        assertParseFailure(parser, " by/author", ListCommand.MESSAGE_INVALID_SORT_BY);
-        assertParseFailure(parser, " by/", ListCommand.MESSAGE_INVALID_SORT_BY);
-        assertParseFailure(parser, " by/1", ListCommand.MESSAGE_INVALID_SORT_BY);
+        assertParseFailure(parser, " by/author", Messages.MESSAGE_INVALID_SORT_BY);
+        assertParseFailure(parser, " by/", Messages.MESSAGE_INVALID_SORT_BY);
+        assertParseFailure(parser, " by/1", Messages.MESSAGE_INVALID_SORT_BY);
 
         // multiple invalid items -> show first error message from list [status, priority, rating, sort by]
-        assertParseFailure(parser, " s/readd p/ r/zero p/123 s/123 by/1", ListCommand.MESSAGE_INVALID_STATUS);
-        assertParseFailure(parser, " by/1 r/zero r/-2 p/123 p/", ListCommand.MESSAGE_INVALID_PRIORITY);
-    }
-
-    @Test
-    public void parseRating_validRating_success() throws ParseException {
-        assertEquals(-1, ListCommandParser.parseRating("-1").rating);
-        assertEquals(0, ListCommandParser.parseRating("0").rating);
-        assertEquals(5, ListCommandParser.parseRating("5").rating);
-    }
-
-    @Test
-    public void parseRating_invalidRating_throwsParseException() throws ParseException {
-        thrown.expect(ParseException.class);
-        ListCommandParser.parseRating("6");
+        assertParseFailure(parser, " s/readd p/ r/zero p/123 s/123 by/1", Messages.MESSAGE_INVALID_STATUS);
+        assertParseFailure(parser, " by/1 r/zero r/-2 p/123 p/", Messages.MESSAGE_INVALID_PRIORITY);
     }
 }

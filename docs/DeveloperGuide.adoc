@@ -462,6 +462,33 @@ image::UndoRedoActivityDiagram.png[width="550"]
 **Additional Info:** See the discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 // end::undoredo[]
 
+=== Edit status, priority, and rating of books: `edit r/rating p/pirority s/status` command
+
+==== Current implementation
+
+When `edit` command is entered,
+1. `Paser` will extract the command for each field information from the user input.
+2. 'editedBook' will be created, and containing the new field information.
+3. Targeting book 'bookToEdit' will be found by the index.
+4. 'editedBook' Book will replace the target 'bookToEdit'.
+
+The user performs `select 1` to view information on the 1st book in the book shelf.
+User can see the default rating is -1, the default priority is NONE, the default status is UNREAD.
+
+The user performs `rate 1 r/ 1 p/ l s/ u ` to rate 1st with 1 point, low priority and unread.
+
+==== Design considerations
+
+===== Aspect: What to show to user about the rating
+
+* **Alternative 1 (current choice):** Show user the number of rating.
+** Pros: Easy to implement.
+** Cons: User may get bored about the rating.
+* **Alternative 2:** Show them the stars.
+** Pros: Difficult to implement.
+** Cons: User may get excited to see those stars, and the number of stars can show the rating clearer.
+
+
 === View recently selected books: `recent` command
 
 ==== Current implementation

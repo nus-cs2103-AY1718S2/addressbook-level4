@@ -49,6 +49,12 @@ public class BookDetailsPanelTest extends GuiUnitTest {
         postNow(new BookListSelectionChangedEvent(bookWithNoAuthors));
         assertDetailsPanelDisplaysBook(bookWithNoAuthors);
 
+        // no ratings
+        Book bookWithNoRating = new BookBuilder().withRating(-1).build();
+        postNow(new BookListSelectionChangedEvent(bookWithNoRating));
+        assertTrue(bookDetailsPanelHandle.isVisible());
+        assertDetailsPanelDisplaysBook(bookWithNoRating);
+
         // empty book
         Book emptyBook = new BookBuilder().withGid("").withTitle("").withAuthors().withCategories()
                 .withDescription("").withIsbn("").withPublicationDate("").withPublisher("").build();

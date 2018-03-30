@@ -57,6 +57,20 @@ public class BookBuilder {
         publisher = new Publisher(DEFAULT_PUBLISHER);
     }
 
+    public BookBuilder(Book book) {
+        authors = book.getAuthors();
+        title = book.getTitle();
+        categories = book.getCategories();
+        description = book.getDescription();
+        status = book.getStatus();
+        priority = book.getPriority();
+        rating = book.getRating();
+        gid = book.getGid();
+        isbn = book.getIsbn();
+        publicationDate = book.getPublicationDate();
+        publisher = book.getPublisher();
+    }
+
     /**
      * Parses the {@code authors} into a {@code Set<Author>} and set it to the {@code Book} that we are building.
      */

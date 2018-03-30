@@ -45,15 +45,6 @@ public class ListCommand extends Command {
             + PREFIX_SORT_BY + "priority";
 
     public static final String MESSAGE_SUCCESS = "Listed %s books.";
-    public static final String MESSAGE_INVALID_STATUS = "Invalid status entered. "
-            + "Allowed values are: READ, R, UNREAD, U, READING, and RD.";
-    public static final String MESSAGE_INVALID_PRIORITY = "Invalid priority entered. "
-            + "Allowed values are: NONE, N, LOW, L, MEDIUM, M, HIGH, and H.";
-    public static final String MESSAGE_INVALID_RATING = "Invalid rating entered. "
-            + "Please enter a valid integer between -1 and 5 (both inclusive).";
-    public static final String MESSAGE_INVALID_SORT_BY = "Invalid sorting mode entered. "
-            + "Allowed values are: TITLE, T, STATUS, S, PRIORITY, P, RATING, and R. "
-            + "Append a 'D' to sort in descending order.";
 
     private final FilterDescriptor filterDescriptor;
     private final Comparator<Book> bookComparator;

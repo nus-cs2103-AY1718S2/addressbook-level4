@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RecentCommand;
 import seedu.address.model.Model;
@@ -41,16 +42,16 @@ public class ListCommandSystemTest extends BibliotekSystemTest {
         /* ----------------------------------- Perform invalid list operations -------------------------------------- */
 
         /* Case: invalid status filter -> rejected */
-        assertCommandFailure(ListCommand.COMMAND_WORD + " s/", ListCommand.MESSAGE_INVALID_STATUS);
+        assertCommandFailure(ListCommand.COMMAND_WORD + " s/", Messages.MESSAGE_INVALID_STATUS);
 
         /* Case: invalid priority and rating filter -> rejected */
-        assertCommandFailure(ListCommand.COMMAND_WORD + " p/null r/-100", ListCommand.MESSAGE_INVALID_PRIORITY);
+        assertCommandFailure(ListCommand.COMMAND_WORD + " p/null r/-100", Messages.MESSAGE_INVALID_PRIORITY);
 
         /* Case: invalid rating filter -> rejected */
-        assertCommandFailure(ListCommand.COMMAND_WORD + " r/20", ListCommand.MESSAGE_INVALID_RATING);
+        assertCommandFailure(ListCommand.COMMAND_WORD + " r/20", Messages.MESSAGE_INVALID_RATING);
 
         /* Case: invalid sort mode -> rejected */
-        assertCommandFailure(ListCommand.COMMAND_WORD + " by/123", ListCommand.MESSAGE_INVALID_SORT_BY);
+        assertCommandFailure(ListCommand.COMMAND_WORD + " by/123", Messages.MESSAGE_INVALID_SORT_BY);
     }
 
     /**

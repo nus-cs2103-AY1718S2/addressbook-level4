@@ -11,13 +11,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.book.Book;
-import seedu.address.model.book.Priority;
-import seedu.address.model.book.Rating;
-import seedu.address.model.book.Status;
 
 /**
  * Parses input arguments and creates a new ListCommand object.
@@ -39,67 +37,27 @@ public class ListCommandParser implements Parser<ListCommand> {
         argMultimap.getValue(PREFIX_CATEGORY).ifPresent(filterDescriptor::addCategoryFilter);
 
         if (argMultimap.getValue(PREFIX_STATUS).isPresent()) {
-            filterDescriptor.addStatusFilter(parseStatus(argMultimap.getValue(PREFIX_STATUS).get()));
+            filterDescriptor.addStatusFilter(ParserUtil.parseStatus(argMultimap.getValue(PREFIX_STATUS).get()));
         }
 
         if (argMultimap.getValue(PREFIX_PRIORITY).isPresent()) {
-            filterDescriptor.addPriorityFilter(parsePriority(argMultimap.getValue(PREFIX_PRIORITY).get()));
+            filterDescriptor.addPriorityFilter(ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY).get()));
         }
 
         if (argMultimap.getValue(PREFIX_RATING).isPresent()) {
-            Rating rating = parseRating(argMultimap.getValue(PREFIX_RATING).get());
-            filterDescriptor.addRatingFilter(rating);
+            filterDescriptor.addRatingFilter(ParserUtil.parseRating(argMultimap.getValue(PREFIX_RATING).get()));
         }
 
         Comparator<Book> comparator = Model.DEFAULT_BOOK_COMPARATOR;
         if (argMultimap.getValue(PREFIX_SORT_BY).isPresent()) {
             SortMode sortMode = SortMode.findSortMode(argMultimap.getValue(PREFIX_SORT_BY).get());
             if (sortMode == null) {
-                throw new ParseException(ListCommand.MESSAGE_INVALID_SORT_BY);
+                throw new ParseException(Messages.MESSAGE_INVALID_SORT_BY);
             }
             comparator = sortMode.comparator;
         }
 
         return new ListCommand(filterDescriptor, comparator);
-    }
-
-    /**
-     * Parses the given {@code statusString} and returns a {@code Status}.
-     *
-     * @throws ParseException if the string does not represent a valid status.
-     */
-    protected static Status parseStatus(String statusString) throws ParseException {
-        Status status = Status.findStatus(statusString);
-        if (status == null) {
-            throw new ParseException(ListCommand.MESSAGE_INVALID_STATUS);
-        }
-        return status;
-    }
-
-    /**
-     * Parses the given {@code priorityString} and returns a {@code Priority}.
-     *
-     * @throws ParseException if the string does not represent a valid priority.
-     */
-    protected static Priority parsePriority(String priorityString) throws ParseException {
-        Priority priority = Priority.findPriority(priorityString);
-        if (priority == null) {
-            throw new ParseException(ListCommand.MESSAGE_INVALID_PRIORITY);
-        }
-        return priority;
-    }
-
-    /**
-     * Parses the given {@code ratingString} and returns a {@code Rating}.
-     *
-     * @throws ParseException if the string does not represent a valid rating.
-     */
-    protected static Rating parseRating(String ratingString) throws ParseException {
-        try {
-            return new Rating(Integer.parseInt(ratingString));
-        } catch (IllegalArgumentException e) {
-            throw new ParseException(ListCommand.MESSAGE_INVALID_RATING);
-        }
     }
 
     /**

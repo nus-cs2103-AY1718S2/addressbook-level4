@@ -18,9 +18,12 @@ By: `Team W15-B1`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
-Employees Tracker (E.T.) is a *Human Resource Manager* application for managers who *prefer to use a desktop app for managing his/her subordinates*. More importantly, E.T. is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, E.T. can get your employees management tasks done faster than traditional GUI apps.
+This user guide serves to guide you so that you are able to use utilize Employees Tracker to its fullest extent.
 
-Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Employees Tracker (E.T.) is a *Human Resource Manager* application for managers who *prefer to use a desktop app for managing his/her subordinates*.
+E.T. is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, E.T. can get your employees management tasks done faster than traditional GUI apps.
+
+Jump to the <<Quick Start>> to get started.
 
 == Quick Start
 

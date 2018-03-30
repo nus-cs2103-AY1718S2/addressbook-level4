@@ -18,16 +18,16 @@ import seedu.recipe.MainApp;
 import seedu.recipe.commons.core.EventsCenter;
 import seedu.recipe.commons.core.LogsCenter;
 import seedu.recipe.commons.core.index.Index;
+import seedu.recipe.commons.events.ui.InternetSearchRequestEvent;
 import seedu.recipe.commons.events.ui.JumpToListRequestEvent;
 import seedu.recipe.commons.events.ui.NewResultAvailableEvent;
-import seedu.recipe.commons.events.ui.InternetSearchRequestEvent;
 import seedu.recipe.commons.events.ui.RecipePanelSelectionChangedEvent;
 import seedu.recipe.commons.events.ui.ShareRecipeEvent;
 import seedu.recipe.commons.events.ui.UploadRecipesEvent;
 import seedu.recipe.logic.commands.UploadCommand;
 import seedu.recipe.model.recipe.Recipe;
-import seedu.recipe.ui.util.CloudStorageUtil;
 import seedu.recipe.model.recipe.Url;
+import seedu.recipe.ui.util.CloudStorageUtil;
 import seedu.recipe.ui.util.FacebookHandler;
 
 /**

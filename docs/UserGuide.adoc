@@ -321,7 +321,6 @@ Shares the 2nd recipe in the recipe book.
 *`share 1`* +
 Shares the 1st recipe in the results of the *`find`* command.
 
-=======
 === *`tag`* : Locating recipes by tags
 
 Finds recipe whose tags contain any of the given keywords.

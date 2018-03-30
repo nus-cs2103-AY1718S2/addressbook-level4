@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
-import com.google.common.eventbus.Subscribe;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
@@ -13,17 +12,12 @@ import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
 import seedu.address.logic.MapManager;
-import seedu.address.model.person.Person;
-
 
 public class MapPanel extends UiPart<Region>
         implements Initializable, MapComponentInitializedListener {
@@ -37,6 +31,7 @@ public class MapPanel extends UiPart<Region>
     @FXML
     private Pane invalidAddressOverlay;
     private GoogleMap map;
+
     public MapPanel(String fxmlUrl) {
         super(fxmlUrl);
     }

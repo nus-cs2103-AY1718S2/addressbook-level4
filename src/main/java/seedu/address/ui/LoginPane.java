@@ -17,6 +17,7 @@ import seedu.address.commons.events.ui.ExitLoginRequestEvent;
 import seedu.address.login.Login;
 import seedu.address.login.UserPass;
 
+//@@author ngshikang
 /**
  * A ui for the login screen
  */

@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.login.Login;
 
+//@@author ngshikang
 /**
  * The Login Window. Provides the layout for user login before accessing the main program.
  */

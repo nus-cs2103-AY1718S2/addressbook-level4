@@ -170,7 +170,7 @@ public class VacantCommandTest {
         }
 
         @Override
-        public ArrayList<ArrayList<String>> getAllRoomsSchedule(Building building) throws BuildingNotFoundException {
+        public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException {
             fail("This method should not be called.");
             return null;
         }
@@ -183,7 +183,7 @@ public class VacantCommandTest {
         private ArrayList<ArrayList<String>> roomsSchedule = new ArrayList<ArrayList<String>>();
 
         @Override
-        public ArrayList<ArrayList<String>> getAllRoomsSchedule(Building building) throws BuildingNotFoundException {
+        public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException {
 
             if (!Building.isValidBuilding(building)) {
                 throw new BuildingNotFoundException();

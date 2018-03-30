@@ -110,7 +110,6 @@ public class CalendarView extends UiPart<Region> {
         initCalendar(currentYearMonth);
     }
 
-    @FXML
     /**
      * Move the month back by one. Repopulate the calendar with the correct dates.
      */
@@ -121,7 +120,6 @@ public class CalendarView extends UiPart<Region> {
         initCalendar(currentYearMonth);
     }
 
-    @FXML
     /**
      * Move the month forward by one. Repopulate the calendar with the correct dates.
      */

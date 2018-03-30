@@ -10,7 +10,7 @@ import seedu.address.model.task.Task;
 /**
  * A UI component that displays information of a {@code task} in TodoList.
  */
-public class TodoCard extends UiPart<Region>{
+public class TodoCard extends UiPart<Region> {
 
     private static final String FXML = "TodoListCard.fxml";
 

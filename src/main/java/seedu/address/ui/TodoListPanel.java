@@ -84,6 +84,4 @@ public class  TodoListPanel extends UiPart<Region> {
             }
         }
     }
-
 }
-

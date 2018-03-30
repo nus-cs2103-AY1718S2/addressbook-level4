@@ -473,7 +473,7 @@ A: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue
                             |   E.g. *`upload RecipeBook`*
 |===
 
-=== Keyboard shortcuts
+== Keyboard shortcuts
 
 [width=60%, cols="2,4"]
 |===

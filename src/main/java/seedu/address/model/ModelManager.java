@@ -188,11 +188,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public ObservableList<PetPatient> getFilteredPetPatientList() {
-        return FXCollections.unmodifiableObservableList(filteredPetPatients);
-    }
-
-    @Override
     public void updateFilteredPetPatientList(Predicate<PetPatient> predicate) {
         requireNonNull(predicate);
         filteredPetPatients.setPredicate(predicate);

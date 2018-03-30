@@ -82,9 +82,6 @@ public interface Model {
      */
     void updateFilteredAppointmentList(Predicate<Appointment> predicate);
 
-    /** Returns an unmodifiable view of the filtered pet patient list */
-    ObservableList<PetPatient> getFilteredPetPatientList();
-
     void updateFilteredPetPatientList(Predicate<PetPatient> predicate);
 
     void addPetPatient(PetPatient petPatient) throws DuplicatePetPatientException;

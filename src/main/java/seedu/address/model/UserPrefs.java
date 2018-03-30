@@ -12,6 +12,8 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
+    private String customerStatsFilePath = "data/customerstats.xml";
+    private String customerStatsName = "MyCustomerStats";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -33,12 +35,20 @@ public class UserPrefs {
         return addressBookFilePath;
     }
 
+    public String getCustomerStatsFilePath() {
+        return customerStatsFilePath;
+    }
+
     public void setAddressBookFilePath(String addressBookFilePath) {
         this.addressBookFilePath = addressBookFilePath;
     }
 
     public String getAddressBookName() {
         return addressBookName;
+    }
+
+    public String getCustomerStatsName() {
+        return customerStatsName;
     }
 
     public void setAddressBookName(String addressBookName) {

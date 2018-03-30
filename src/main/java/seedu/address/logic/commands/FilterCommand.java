@@ -24,7 +24,7 @@ public class FilterCommand extends Command {
 
     private final DatePredicate predicate;
 
-    private String stringDuration;
+    private static String stringDuration;
 
     public FilterCommand(DatePredicate predicate) {
         this.predicate = predicate;
@@ -64,7 +64,7 @@ public class FilterCommand extends Command {
         return stringDuration;
     }
 
-    public String getStringDuration() {
+    public static String getStringDuration() {
         return stringDuration;
     }
 }

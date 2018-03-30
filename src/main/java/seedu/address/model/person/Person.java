@@ -19,6 +19,7 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
+    private final University university;
     private final ExpectedGraduationYear expectedGraduationYear;
     private final Major major;
     private final GradePointAverage gradePointAverage;
@@ -35,17 +36,19 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, ExpectedGraduationYear expectedGraduationYear,
+    public Person(Name name, Phone phone, Email email, Address address, University university,
+                  ExpectedGraduationYear expectedGraduationYear,
                   Major major, GradePointAverage gradePointAverage, JobApplied jobApplied, Rating rating,
                   Resume resume, ProfileImage profileImage, Comment comment, InterviewDate interviewDate, Status status,
                   Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, expectedGraduationYear, major, gradePointAverage, jobApplied,
-                rating, resume, profileImage, comment, interviewDate, status, tags);
+        requireAllNonNull(name, phone, email, address, university, expectedGraduationYear, major, gradePointAverage,
+                jobApplied, rating, resume, profileImage, comment, interviewDate, status, tags);
 
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.university = university;
         this.expectedGraduationYear = expectedGraduationYear;
         this.major = major;
         this.gradePointAverage = gradePointAverage;
@@ -74,6 +77,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public University getUniversity() {
+        return university;
     }
 
     public ExpectedGraduationYear getExpectedGraduationYear() {
@@ -140,6 +147,7 @@ public class Person {
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
                 && otherPerson.getAddress().equals(this.getAddress())
+                && otherPerson.getUniversity().equals(this.getUniversity())
                 && otherPerson.getExpectedGraduationYear().equals(this.getExpectedGraduationYear())
                 && otherPerson.getMajor().equals(this.getMajor())
                 && otherPerson.getGradePointAverage().equals(this.getGradePointAverage())
@@ -150,7 +158,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, expectedGraduationYear, major,
+        return Objects.hash(name, phone, email, address, university, expectedGraduationYear, major,
                 gradePointAverage, jobApplied, rating, resume, profileImage, comment, interviewDate, status, tags);
     }
 
@@ -164,6 +172,8 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" University: ")
+                .append(getUniversity())
                 .append(" Expected graduation year: ")
                 .append(getExpectedGraduationYear())
                 .append(" Major: ")

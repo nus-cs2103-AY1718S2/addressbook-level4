@@ -13,6 +13,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RESUME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_UNIVERSITY;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
@@ -31,6 +32,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
+            + PREFIX_UNIVERSITY + "UNIVERSITY "
             + PREFIX_EXPECTED_GRADUATION_YEAR + "EXPECTED GRADUATION YEAR "
             + PREFIX_MAJOR + "MAJOR "
             + PREFIX_GRADE_POINT_AVERAGE + "GRADE POINT AVERAGE "
@@ -44,6 +46,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
+            + PREFIX_UNIVERSITY + "NUS "
             + PREFIX_EXPECTED_GRADUATION_YEAR + "2020 "
             + PREFIX_MAJOR + "Computer Science "
             + PREFIX_GRADE_POINT_AVERAGE + "4.93 "

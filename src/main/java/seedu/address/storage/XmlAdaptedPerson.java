@@ -26,6 +26,7 @@ import seedu.address.model.person.ProfileImage;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
 import seedu.address.model.person.Status;
+import seedu.address.model.person.University;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -44,6 +45,8 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String university;
     @XmlElement(required = true)
     private String expectedGraduationYear;
     @XmlElement(required = true)
@@ -86,15 +89,17 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, String expectedGraduationYear,
-                            String major, String gradePointAverage, String jobApplied, String technicalSkillsScore,
-                            String communicationSkillsScore, String problemSolvingSkillsScore, String experienceScore,
-                            String resume, String profileImage, String comment, String interviewDate, String status,
+    public XmlAdaptedPerson(String name, String phone, String email, String address, String university,
+                            String expectedGraduationYear, String major, String gradePointAverage, String jobApplied,
+                            String technicalSkillsScore, String communicationSkillsScore,
+                            String problemSolvingSkillsScore, String experienceScore, String resume,
+                            String profileImage, String comment, String interviewDate, String status,
                             List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.university = university;
         this.expectedGraduationYear = expectedGraduationYear;
         this.major = major;
         this.gradePointAverage = gradePointAverage;
@@ -124,6 +129,7 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        university = source.getUniversity().value;
         expectedGraduationYear = source.getExpectedGraduationYear().value;
         major = source.getMajor().value;
         gradePointAverage = source.getGradePointAverage().value;
@@ -185,6 +191,15 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
         }
         final Address address = new Address(this.address);
+
+        if (this.university == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, University.class.getSimpleName()));
+        }
+        if (!University.isValidUniversity(this.university)) {
+            throw new IllegalValueException(University.MESSAGE_UNIVERSITY_CONSTRAINTS);
+        }
+        final University university = new University(this.university);
 
         if (this.expectedGraduationYear == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
@@ -275,8 +290,8 @@ public class XmlAdaptedPerson {
         }
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, expectedGraduationYear, major, gradePointAverage, jobApplied,
-                rating, resume, profileImage, comment, interviewDate, status, tags);
+        return new Person(name, phone, email, address, university, expectedGraduationYear, major, gradePointAverage,
+                jobApplied, rating, resume, profileImage, comment, interviewDate, status, tags);
     }
 
     @Override
@@ -294,6 +309,7 @@ public class XmlAdaptedPerson {
                 && Objects.equals(phone, otherPerson.phone)
                 && Objects.equals(email, otherPerson.email)
                 && Objects.equals(address, otherPerson.address)
+                && Objects.equals(university, otherPerson.university)
                 && Objects.equals(expectedGraduationYear, otherPerson.expectedGraduationYear)
                 && Objects.equals(major, otherPerson.major)
                 && Objects.equals(gradePointAverage, otherPerson.gradePointAverage)

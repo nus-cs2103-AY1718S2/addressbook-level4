@@ -25,6 +25,7 @@ import seedu.address.model.person.ProfileImage;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
 import seedu.address.model.person.Status;
+import seedu.address.model.person.University;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -98,6 +99,7 @@ public class RatingDeleteCommand extends UndoableCommand {
         Phone phone = targetPerson.getPhone();
         Email email = targetPerson.getEmail();
         Address address = targetPerson.getAddress();
+        University university = targetPerson.getUniversity();
         ExpectedGraduationYear expectedGraduationYear = targetPerson.getExpectedGraduationYear();
         Major major = targetPerson.getMajor();
         GradePointAverage gradePointAverage = targetPerson.getGradePointAverage();
@@ -111,7 +113,7 @@ public class RatingDeleteCommand extends UndoableCommand {
         Status status = targetPerson.getStatus();
         Set<Tag> tags = targetPerson.getTags();
 
-        return new Person(name, phone, email, address,
+        return new Person(name, phone, email, address, university,
                 expectedGraduationYear, major, gradePointAverage, jobApplied,
                 defaultRating, resume, profileImage, comment, interviewDate, status, tags);
     }

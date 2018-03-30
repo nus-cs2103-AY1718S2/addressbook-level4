@@ -104,11 +104,12 @@ public class StatusCommand extends UndoableCommand {
 
         return new Person(personToUpdateStatus.getName(), personToUpdateStatus.getPhone(),
                 personToUpdateStatus.getEmail(), personToUpdateStatus.getAddress(),
-                personToUpdateStatus.getExpectedGraduationYear(), personToUpdateStatus.getMajor(),
-                personToUpdateStatus.getGradePointAverage(), personToUpdateStatus.getJobApplied(),
-                personToUpdateStatus.getRating(), personToUpdateStatus.getResume(),
-                personToUpdateStatus.getProfileImage(), personToUpdateStatus.getComment(),
-                personToUpdateStatus.getInterviewDate(), updatedStatus, personToUpdateStatus.getTags());
+                personToUpdateStatus.getUniversity(), personToUpdateStatus.getExpectedGraduationYear(),
+                personToUpdateStatus.getMajor(), personToUpdateStatus.getGradePointAverage(),
+                personToUpdateStatus.getJobApplied(), personToUpdateStatus.getRating(),
+                personToUpdateStatus.getResume(), personToUpdateStatus.getProfileImage(),
+                personToUpdateStatus.getComment(), personToUpdateStatus.getInterviewDate(),
+                updatedStatus, personToUpdateStatus.getTags());
     }
 
     @Override

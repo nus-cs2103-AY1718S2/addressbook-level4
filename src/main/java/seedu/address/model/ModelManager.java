@@ -2,7 +2,9 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -14,6 +16,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.calendar.AppointmentEntry;
 import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
 import seedu.address.model.calendar.exceptions.DuplicateAppointmentException;
@@ -26,7 +29,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * Represents the in-memory model of the address book data.
  * All changes to any model should be synchronized.
  */
-public class ModelManager extends ComponentManager implements Model {
+public class ModelManager extends ComponentManager implements Model, PredictionModel {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
@@ -151,4 +154,50 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    @Override
+    public void preparePredictionData(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> targets) {
+        ObservableList<Person> personList = this.getAddressBook().getPersonList();
+        for (int i = 0; i < personList.size(); i++) {
+            double as = personList.get(i).getActualSpending().value;
+
+            //the person has no actual spending recorded
+            if (as == 0.0) {
+                continue;
+            }
+
+            ArrayList<Double> row = new ArrayList<>();
+            //record down the actual value
+            row.add(personList.get(i).getIncome().value);
+            targets.add(as);
+
+            matrix.add(row);
+        }
+    }
+
+    @Override
+    public void updatePredictionResult(ArrayList<Double> weights) throws CommandException {
+        ObservableList<Person> personList =  this.addressBook.getPersonList();
+        for (int i = 0; i < personList.size(); i++) {
+            if (personList.get(i).getActualSpending().value != 0.0) {
+                //the person already has known value of spending
+                continue;
+            }
+
+            //else update the person with expected spending
+            Person p = personList.get(i);
+            logger.info("Prediction results: income coefficient-> " + weights.get(0));
+            Person updatedPerson = p.mluUpdatedPerson(p.getIncome().value * weights.get(0));
+            //update the model here
+
+
+            try {
+                this.updatePerson(personList.get(i), updatedPerson);
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing");
+            }
+            this.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        }
+    }
 }

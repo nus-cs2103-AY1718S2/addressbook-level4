@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.logic.GradientDescent;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.PredictionModel;
 
 
 /**
@@ -21,7 +22,7 @@ public class PredictCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        GradientDescent gd = GradientDescent.getInstance(model);
+        GradientDescent gd = GradientDescent.getInstance((PredictionModel) model);
         return gd.solve();
     }
 }

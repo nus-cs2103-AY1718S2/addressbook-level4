@@ -66,15 +66,22 @@ public class XmlAdaptedTask {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Title.class.getSimpleName()));
         }
+
+        if (!Title.isValidTitle(this.title)) {
+            throw new IllegalValueException(Title.MESSAGE_TITLE_CONSTRAINTS);
+        }
+
+        final Title title = new Title(this.title);
+
         if (this.taskDescription == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                 TaskDescription.class.getSimpleName()));
         }
-        final Title title = new Title(this.title);
 
         if (!TaskDescription.isValidDescription(this.taskDescription)) {
             throw new IllegalValueException(TaskDescription.MESSAGE_DESCRIPTION_CONSTRAINTS);
         }
+
         final TaskDescription taskDesc = new TaskDescription(this.taskDescription);
 
         if (this.deadline == null) {
@@ -95,6 +102,7 @@ public class XmlAdaptedTask {
         if (!Priority.isValidPriority(this.priority)) {
             throw new IllegalValueException(Priority.MESSAGE_PRIORITY_CONSTRAINTS);
         }
+
         final Priority priority = new Priority(this.priority);
 
         return new Task(title, taskDesc, deadline, priority);

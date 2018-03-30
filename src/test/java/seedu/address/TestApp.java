@@ -30,6 +30,8 @@ public class TestApp extends MainApp {
     public static final String SAVE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("sampleData.xml");
     public static final String APP_TITLE = "Test App";
 
+    protected static final String DEFAULT_RECENT_BOOKS_FILE_LOCATION_FOR_TESTING =
+            TestUtil.getFilePathInSandboxFolder("recentbooks.xml");
     protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
     protected static final String BOOK_SHELF_NAME = "Test";
@@ -56,6 +58,7 @@ public class TestApp extends MainApp {
         Config config = super.initConfig(configFilePath);
         config.setAppTitle(APP_TITLE);
         config.setUserPrefsFilePath(DEFAULT_PREF_FILE_LOCATION_FOR_TESTING);
+        config.setRecentBooksFilePath(DEFAULT_RECENT_BOOKS_FILE_LOCATION_FOR_TESTING);
         return config;
     }
 

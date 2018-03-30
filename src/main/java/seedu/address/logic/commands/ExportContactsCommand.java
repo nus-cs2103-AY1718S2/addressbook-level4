@@ -56,11 +56,11 @@ public class ExportContactsCommand extends UndoableCommand {
      */
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(model);
         CSVPrinter csvPrinter;
 
         //Write file to path and specify name
         try {
+            requireNonNull(model);
             csvPrinter = getCsvToWriteTo();
         } catch (java.lang.Exception e) {
             throw new CommandException(e.getMessage());
@@ -79,9 +79,9 @@ public class ExportContactsCommand extends UndoableCommand {
 
             csvPrinter.flush();
 
-        } catch (IOException ioe) {
+        } catch (Exception e) {
             throw new CommandException("Failed in exporting Persons.\n"
-                    + ioe.getStackTrace());
+                    + e.getStackTrace());
         }
 
         return new CommandResult(SUCCESS);

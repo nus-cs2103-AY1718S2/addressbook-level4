@@ -12,6 +12,7 @@ import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.building.Building;
 import seedu.address.model.building.exceptions.BuildingNotFoundException;
+import seedu.address.model.building.exceptions.CorruptedVenueInformationException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -40,7 +41,8 @@ public interface Model {
     void addAlias(Alias alias) throws DuplicateAliasException;
 
     /** Returns rooms for the given building */
-    ArrayList<ArrayList<String>> getAllRoomsSchedule(Building building) throws BuildingNotFoundException;
+    ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
+                                                                            CorruptedVenueInformationException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

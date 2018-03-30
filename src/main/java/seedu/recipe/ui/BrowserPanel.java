@@ -58,6 +58,8 @@ public class BrowserPanel extends UiPart<Region> {
 
         loadDefaultPage(isDarkTheme);
         registerAsAnEventHandler(this);
+
+        setUpBrowserUrlListener();
     }
 
     public void loadPage(String url) {
@@ -129,9 +131,10 @@ public class BrowserPanel extends UiPart<Region> {
             public void changed(ObservableValue ov, Worker.State oldState, Worker.State newState) {
                 if (newState == Worker.State.SUCCEEDED) {
                     String url = browserEngine.getLocation();
-
+                    System.out.println("passing by");
                     if (CloudStorageUtil.checkAndSetAccessToken(url)) {
                         CloudStorageUtil.upload(uploadFilename);
+                        System.out.println("a");
                         EventsCenter.getInstance().post(new NewResultAvailableEvent(UploadCommand.MESSAGE_SUCCESS));
                         EventsCenter.getInstance().post(new JumpToListRequestEvent(FIRST_INDEX));
                     }
@@ -145,6 +148,7 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleUploadRecipesEvent(UploadRecipesEvent event) {
         loadPage(CloudStorageUtil.getAppropriateUrl());
+        System.out.println("1");
         uploadFilename = event.getUploadFilename();
         if (CloudStorageUtil.hasAccessToken()) {
             CloudStorageUtil.upload(uploadFilename);

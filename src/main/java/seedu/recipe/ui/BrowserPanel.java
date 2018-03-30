@@ -110,9 +110,7 @@ public class BrowserPanel extends UiPart<Region> {
                     String url = browserEngine.getLocation();
 
                     if (url.contains(CloudStorageUtil.getRedirectDomain())) {
-                        System.out.println("1");
                         if (CloudStorageUtil.checkAndSetAccessToken(url)) {
-                            System.out.println("2");
                             CloudStorageUtil.upload(uploadFilename);
                             EventsCenter.getInstance().post(new NewResultAvailableEvent(UploadCommand.MESSAGE_SUCCESS));
                             EventsCenter.getInstance().post(new JumpToListRequestEvent(FIRST_INDEX));

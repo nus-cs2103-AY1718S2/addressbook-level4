@@ -418,8 +418,7 @@ public class ParserUtil {
         if (!Filename.isValidFilename(filename)) {
             throw new IllegalValueException(Filename.MESSAGE_FILENAME_CONSTRAINTS);
         }
-        String xmlExtensionFilename = filename + ".xml";
-        return xmlExtensionFilename;
+        return filename + ".xml";
     }
     //@@author
 }

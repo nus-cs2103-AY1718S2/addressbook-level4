@@ -50,9 +50,7 @@ public class EmailCommand extends Command {
             Desktop.getDesktop().mail(new URI(MAIL_SYNTAX + emailAddress));
         } catch (HeadlessException hlError) {
             throw new UnsupportDesktopException(Messages.MESSAGE_UNSUPPORTED_DESKTOP);
-        } catch (URISyntaxException Urierror) {
-            throw new CommandException(Messages.MESSAGE_MAIL_APP_ERROR);
-        } catch (IOException e) {
+        } catch (URISyntaxException | IOException error) {
             throw new CommandException(Messages.MESSAGE_MAIL_APP_ERROR);
         }
 

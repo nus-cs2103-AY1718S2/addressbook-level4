@@ -72,6 +72,10 @@ public class Person implements Comparable<Person> {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
+    public String getDetails() {
+        return name.toString() + phone.toString() + email.toString();
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

@@ -41,8 +41,8 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
-    private static boolean isTest = false;
+    public static final Version VERSION = new Version(1, 3, 0, true);
+    private static boolean isTest = true;
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
     protected Ui ui;

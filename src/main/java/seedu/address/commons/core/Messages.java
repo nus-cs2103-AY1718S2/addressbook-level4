@@ -12,5 +12,9 @@ public class Messages {
     public static final String MESSAGE_MAIL_APP_ERROR = "Error opening the default mail app on this system";
     public static final String MESSAGE_UNSUPPORTED_DESKTOP =
             "The client does not support desktop operations on this system";
+    public static final String MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS =
+            "The filepath should lead to a file that exists.";
+    public static final String MESSAGE_DISPLAY_PIC_NOT_IMAGE =
+            "The filepath should point to a valid image file.";
 
 }

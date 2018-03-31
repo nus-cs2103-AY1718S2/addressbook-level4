@@ -21,6 +21,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;
+import seedu.address.commons.events.ui.ToggleNotificationCenterEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -143,6 +144,12 @@ public class UiManager extends ComponentManager implements Ui {
             showNotificationOnWindows(event);
         }
         showNotificationInApp(event);
+    }
+
+    @Subscribe
+    private void handleToggleNotificationEvent(ToggleNotificationCenterEvent event) {
+        System.out.println("Hanlding");
+        mainWindow.toggleNotificationCenter();
     }
 
     private void showNotificationInApp(ShowNotificationEvent event) {

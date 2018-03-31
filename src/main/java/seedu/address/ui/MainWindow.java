@@ -125,6 +125,7 @@ public class MainWindow extends UiPart<Stage> {
 
         shownNotificationCards = new LinkedList<>();
         notificationCenter = new NotificationCenter(notificationCardsBox, notificationCenterPlaceHolder);
+        mainStage.getChildren().remove(notificationCenterPlaceHolder);
         notificationCenterStatus = HIDE;
     }
 
@@ -375,15 +376,17 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Show the notification panel with an animation
      */
-    public void toggleNotificationCenter(int newStatus) {
-        if (newStatus == notificationCenterStatus)
-            return;
-        if (newStatus == SHOW) {
-            animateHorizontally(notificationCenter.getNotificationCenter(), NOTIFICATION_PANEL_WIDTH, ENTER);
-        } else {
-            assert(newStatus == HIDE);
-            animateHorizontally(notificationCenter.getNotificationCenter(), NOTIFICATION_PANEL_WIDTH, EXIT);
+    public void toggleNotificationCenter() {
+        if (notificationCenterStatus == SHOW) {
+            animateHorizontally(notificationCenterPlaceHolder, NOTIFICATION_PANEL_WIDTH, EXIT);
+            mainStage.getChildren().remove(notificationCenterPlaceHolder);
+            notificationCenterStatus = HIDE;
+        } else { //shows
+            assert(notificationCenterStatus == HIDE);
+            notificationCenterPlaceHolder = notificationCenter.getNotificationCenter();
+            mainStage.getChildren().add(notificationCenterPlaceHolder);
+            animateHorizontally(notificationCenterPlaceHolder, NOTIFICATION_PANEL_WIDTH, ENTER);
+            notificationCenterStatus = SHOW;
         }
-        notificationCenterStatus = newStatus;
     }
 }

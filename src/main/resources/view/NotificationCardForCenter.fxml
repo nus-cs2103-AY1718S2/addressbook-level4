@@ -12,7 +12,7 @@
 
 <HBox xmlns:fx="http://javafx.com/fxml/1">
     <VBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
-      <GridPane alignment="CENTER" prefHeight="100" styleClass="notification-card-notification-center" opacity="0.5" HBox.hgrow="ALWAYS">
+      <GridPane alignment="CENTER" prefHeight="100" styleClass="notification-card-notification-center" HBox.hgrow="ALWAYS">
         <columnConstraints>
 
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="300" />

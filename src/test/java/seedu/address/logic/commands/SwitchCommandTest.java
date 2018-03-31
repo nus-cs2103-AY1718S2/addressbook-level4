@@ -15,7 +15,7 @@ public class SwitchCommandTest {
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     @Test
-    public void execute_switch_feature_success() {
+    public void execute_switchFeature_success() {
         CommandResult result = new SwitchCommand("details").execute();
         assertEquals("Switched to details tab", result.feedbackToUser);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof LoadMapPanelEvent);

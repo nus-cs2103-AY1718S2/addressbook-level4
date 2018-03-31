@@ -1,6 +1,9 @@
 package seedu.address.model;
 
+import java.util.Set;
 import java.util.function.Predicate;
+
+import com.google.gson.JsonObject;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.coin.Coin;
@@ -38,6 +41,17 @@ public interface Model {
 
     /** Returns an unmodifiable view of the filtered coin list */
     ObservableList<Coin> getFilteredCoinList();
+
+    //@@author laichengyu
+    /** Returns an unmodifiable view of the code list */
+    Set<String> getCodeList();
+
+    /**
+      * Syncs all coin data
+      */
+    void syncAll(JsonObject newData)
+            throws DuplicateCoinException, CoinNotFoundException;
+    //@@author
 
     /**
      * Updates the filter of the filtered coin list to filter by the given {@code predicate}.

@@ -8,11 +8,14 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import com.google.gson.JsonObject;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
@@ -122,6 +125,20 @@ public class AddCommandTest {
                 throws DuplicateCoinException {
             fail("This method should not be called.");
         }
+
+        //@@author laichengyu
+        @Override
+        public void syncAll(JsonObject newData)
+                throws DuplicateCoinException, CoinNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public Set<String> getCodeList() {
+            fail("This method should not be called.");
+            return null;
+        }
+        //@@author
 
         @Override
         public ObservableList<Coin> getFilteredCoinList() {

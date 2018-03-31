@@ -3,8 +3,11 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import com.google.gson.JsonObject;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -80,6 +83,23 @@ public class ModelManager extends ComponentManager implements Model {
         coinBook.updateCoin(target, editedCoin);
         indicateAddressBookChanged();
     }
+
+    //@@author laichengyu
+    @Override
+    public void syncAll(JsonObject newData)
+            throws DuplicateCoinException, CoinNotFoundException {
+        requireNonNull(newData);
+
+        coinBook.syncAll(newData);
+        indicateAddressBookChanged();
+    }
+
+    /** Returns an unmodifiable view of the code list */
+    @Override
+    public Set<String> getCodeList() {
+        return coinBook.getCodeList();
+    }
+    //@@author
 
     //=========== Filtered Coin List Accessors =============================================================
 

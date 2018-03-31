@@ -2,6 +2,7 @@ package seedu.address.testutil;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Optional;
 
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Age;
@@ -13,6 +14,9 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
+import seedu.address.model.policy.Policy;
+
+import javax.swing.text.html.Option;
 
 /**
  * A utility class to help with building Person objects.
@@ -38,6 +42,7 @@ public class PersonBuilder {
     private Expenditure expectedSpending;
     private Age age;
     private Set<Tag> tags;
+    private Optional<Policy> policy;
 
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -49,6 +54,7 @@ public class PersonBuilder {
         expectedSpending = new Expenditure(DEFAULT_EXPECTEDSPENDING);
         age = new Age(DEFAULT_AGE);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+        policy = Optional.empty();
     }
 
     /**
@@ -65,6 +71,7 @@ public class PersonBuilder {
         expectedSpending = personToCopy.getExpectedSpending();
         age = personToCopy.getAge();
         tags = new HashSet<>(personToCopy.getTags());
+        policy = personToCopy.getPolicy();
     }
 
     /**
@@ -139,8 +146,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Policy} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withPolicy(Optional<Policy> policy) {
+        this.policy = policy;
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, tags, income, actualSpending, expectedSpending, age);
+        return new Person(name, phone, email, address, tags, income, actualSpending, expectedSpending, age, policy);
     }
 
 }

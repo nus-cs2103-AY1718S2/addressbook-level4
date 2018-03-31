@@ -23,7 +23,7 @@ import seedu.address.model.appointment.StartTime;
 /**
  * Parses input arguments and creates a new DeleteAppointmentCommand object
  */
-public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentCommand>{
+public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteAppointmentCommand
      * and returns a DeleteAppointmentCommand object for execution.

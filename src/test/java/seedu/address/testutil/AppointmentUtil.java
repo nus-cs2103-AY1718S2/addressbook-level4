@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTTIME;
 
 import seedu.address.logic.commands.AddAppointmentCommand;
+import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.model.appointment.Appointment;
 
 //@@author jlks96
@@ -22,10 +23,24 @@ public class AppointmentUtil {
     }
 
     /**
-     * Returns an add alias string for adding the {@code appointment}.
+     * Returns an add appointment alias string for adding the {@code appointment}.
      */
     public static String getAddAppointmentAlias(Appointment appointment) {
         return AddAppointmentCommand.COMMAND_ALIAS + " " + getAppointmentDetails(appointment);
+    }
+
+    /**
+     * Returns a delete appointment command string for deleting the {@code appointment}.
+     */
+    public static String getDeleteAppointmentCommand(Appointment appointment) {
+        return DeleteAppointmentCommand.COMMAND_WORD + " " + getAppointmentDetails(appointment);
+    }
+
+    /**
+     * Returns a delete appointment alias string for deleting the {@code appointment}.
+     */
+    public static String getDeleteAppointmentAlias(Appointment appointment) {
+        return DeleteAppointmentCommand.COMMAND_ALIAS + " " + getAppointmentDetails(appointment);
     }
 
     /**

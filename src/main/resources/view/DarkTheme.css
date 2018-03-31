@@ -117,21 +117,25 @@
     -fx-border-width: 1;
 }
 
-.notification-list-cell {
-    -fx-padding: 15px;
+.notification-scroll-pane > .viewport {
+    -fx-background-color: #3366cc;
 }
 
-.notification-list-cell:filled:even {
-    -fx-background-color: #3333ff;
+.notification-scroll-pane {
+    -fx-background-color: #3366cc;
 }
 
-.notification-list-cell:filled:odd {
+.notification-card {
     -fx-background-color: #3399ff;
+    -fx-text-fill: #000000;
+    -fx-opacity: 0.8;
 }
 
-    .notification-list-cell:empty {
-        -fx-background-color: #3333ff;;
-    }
+.notification-card-notification-center {
+    -fx-background-color: #3399ff;
+    -fx-text-fill: #000000;
+    -fx-opacity: 1;
+}
 
 .cell_big_label {
     -fx-font-family: "Segoe UI Semibold";

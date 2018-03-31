@@ -2,7 +2,9 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.model.notification.Notification;
 
 /**
@@ -10,6 +12,11 @@ import seedu.address.model.notification.Notification;
  */
 public class NotificationCard extends UiPart<Region> {
 
+
+    public static final int NOTIFICATION_CARD_X_OFFSET = 15;
+    public static final int NOTIFICATION_CARD_Y_OFFSET = 15;
+    public static final int NOTIFICATION_CARD_WIDTH = 300 + NOTIFICATION_CARD_X_OFFSET;
+    public static final int NOTIFICATION_CARD_HEIGHT = 100 + NOTIFICATION_CARD_Y_OFFSET;
     private static final String FXML = "NotificationCard.fxml";
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -27,6 +34,10 @@ public class NotificationCard extends UiPart<Region> {
     private Label ownerName;
     @FXML
     private Label endTime;
+    @FXML
+    private VBox xOffset;
+    @FXML
+    private VBox yOffset;
 
     private String ownerId;
 
@@ -39,7 +50,23 @@ public class NotificationCard extends UiPart<Region> {
         this.endTime.setText(endTime);
         this.ownerId = ownerId;
 
+        xOffset.setMaxWidth(NOTIFICATION_CARD_X_OFFSET);
+        yOffset.setMaxWidth(NOTIFICATION_CARD_Y_OFFSET);
     }
+
+    public NotificationCard(String title, String displayedIndex, String ownerName, String endTime, String ownerId,
+                            String newFxml) {
+        super(newFxml);
+        this.index.setText(displayedIndex + ". ");
+        this.title.setText(title);
+        this.ownerName.setText(ownerName);
+        this.endTime.setText(endTime);
+        this.ownerId = ownerId;
+
+        xOffset.setMaxWidth(NOTIFICATION_CARD_X_OFFSET);
+        yOffset.setMaxWidth(NOTIFICATION_CARD_Y_OFFSET);
+    }
+
 
     @Override
     public boolean equals(Object other) {
@@ -81,7 +108,7 @@ public class NotificationCard extends UiPart<Region> {
         return endTime.getText();
     }
 
-    public NotificationCard getCopy() {
-       return new NotificationCard(getTitle(), getIndex(), getOwnerName(), getEndTime(), getOwnerId());
+    public NotificationCardForCenter getForCenterCopy() {
+       return new NotificationCardForCenter(getTitle(), getIndex(), getOwnerName(), getEndTime(), getOwnerId());
     }
 }

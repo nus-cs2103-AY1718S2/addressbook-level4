@@ -2,6 +2,10 @@ package seedu.address.ui;
 
 import static seedu.address.logic.commands.ChangeThemeCommand.BRIGHT_THEME_CSS_FILE_NAME;
 import static seedu.address.logic.commands.ChangeThemeCommand.DARK_THEME_CSS_FILE_NAME;
+import static seedu.address.ui.NotificationCard.NOTIFICATION_CARD_HEIGHT;
+import static seedu.address.ui.NotificationCard.NOTIFICATION_CARD_WIDTH;
+import static seedu.address.ui.NotificationCard.NOTIFICATION_CARD_X_OFFSET;
+import static seedu.address.ui.NotificationCard.NOTIFICATION_CARD_Y_OFFSET;
 
 import java.util.LinkedList;
 import java.util.Timer;
@@ -19,6 +23,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -54,12 +59,10 @@ public class MainWindow extends UiPart<Stage> {
     private static final int EXIT = 1;
     private static final int DOWN = 1;
     private static final int UP = -1;
-    private static final int NOTIFICATION_CARD_WIDTH = 300;
-    private static final int NOTIFICATION_CARD_HEIGHT = 100;
-    private static final int NOTIFICATION_CARD_X_OFFSET = 15;
-    private static final int NOTIFICATION_CARD_Y_OFFSET = 15;
     private static final int NOTIFICATION_PANEL_WIDTH = 330;
     private static final int NOTIFICATION_CARD_SHOW_TIME = 5000;
+    private static final int SHOW = 1;
+    private static final int HIDE = 0;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -72,9 +75,9 @@ public class MainWindow extends UiPart<Stage> {
     private Config config;
     private UserPrefs prefs;
 
-    private LinkedList<Region> notificationCards;
     private LinkedList<Region> shownNotificationCards;
-
+    private NotificationCenter notificationCenter;
+    private int notificationCenterStatus;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -95,10 +98,14 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane statusbarPlaceholder;
 
     @FXML
-    private StackPane test;
+    private StackPane mainStage;
 
     @FXML
-    private ListView notificationCenter;
+    private ScrollPane notificationCenterPlaceHolder;
+
+    @FXML
+    private VBox notificationCardsBox;
+
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
@@ -115,10 +122,10 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerators();
         registerAsAnEventHandler(this);
 
-        notificationCards = new LinkedList<>();
-        //1 based
-        notificationCards.add(null);
+
         shownNotificationCards = new LinkedList<>();
+        notificationCenter = new NotificationCenter(notificationCardsBox, notificationCenterPlaceHolder);
+        notificationCenterStatus = HIDE;
     }
 
     public Stage getPrimaryStage() {
@@ -285,36 +292,35 @@ public class MainWindow extends UiPart<Stage> {
 
         //metadata update
         NotificationCard x = new NotificationCard(event.getNotification().getTitle(),
-                notificationCards.size() + "",
+                notificationCenter.getTotalUndismmissedNotificationCards() + "",
                 event.getOwnerName(),
                 event.getNotification().getEndDateDisplay(),
                 event.getNotification().getOwnerId());
         Region notificationCard = x.getRoot();
         notificationCard.setMaxHeight(NOTIFICATION_CARD_HEIGHT);
         notificationCard.setMaxWidth(NOTIFICATION_CARD_WIDTH);
-        addCardToNotificationCenter(x);
+        notificationCenter.add(x);
 
         //hides notificationCard away from screen
         notificationCard.setTranslateX(NOTIFICATION_CARD_WIDTH);
-        notificationCard.setTranslateY(-1 * ((shownNotificationCards.size()) * NOTIFICATION_CARD_HEIGHT
-                + (shownNotificationCards.size() + 1) * NOTIFICATION_CARD_Y_OFFSET));
+        notificationCard.setTranslateY(UP * shownNotificationCards.size() * NOTIFICATION_CARD_HEIGHT);
 
         //enter animation
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                test.getChildren().add(notificationCard);
-                animateHorizontally(notificationCard, NOTIFICATION_CARD_WIDTH + NOTIFICATION_CARD_X_OFFSET, ENTER);
+                mainStage.getChildren().add(notificationCard);
+                animateHorizontally(notificationCard, NOTIFICATION_CARD_WIDTH, ENTER);
                 shownNotificationCards.add(notificationCard);
                 Timer timer = new Timer();
                 TimerTask timerTask = new TimerTask() {
                     @Override
                     public void run() {
-                        //it should be the first notification card to expire first
+                        //it should be the first notification card to exit first
                         Region firstNotificationCard = shownNotificationCards.removeFirst();
 
                         //cards are reused later in notification center
-                        animateHorizontally(firstNotificationCard, NOTIFICATION_CARD_WIDTH + NOTIFICATION_CARD_X_OFFSET, EXIT);
+                        animateHorizontally(firstNotificationCard, NOTIFICATION_CARD_WIDTH, EXIT);
                         moveAllNotificationCardsDown();
                     }
                 };
@@ -323,15 +329,9 @@ public class MainWindow extends UiPart<Stage> {
         });
     }
 
-    private void addCardToNotificationCenter(NotificationCard x) {
-        NotificationCard another = x.getCopy();
-        notificationCards.add(another.getRoot());
-        notificationCenter.getItems().add(0, another.getRoot());
-    }
-
     private void moveAllNotificationCardsDown() {
         for (Region r: shownNotificationCards) {
-            animateVertically(r, NOTIFICATION_CARD_HEIGHT + NOTIFICATION_CARD_Y_OFFSET, DOWN);
+            animateVertically(r, NOTIFICATION_CARD_HEIGHT, DOWN);
         }
     }
 
@@ -375,14 +375,15 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Show the notification panel with an animation
      */
-    public void showNotificationCenter() {
-        animateHorizontally(notificationCenter, NOTIFICATION_PANEL_WIDTH, ENTER);
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                animateHorizontally(notificationCenter, NOTIFICATION_PANEL_WIDTH, EXIT);
-            }
-        }, 5000);
+    public void toggleNotificationCenter(int newStatus) {
+        if (newStatus == notificationCenterStatus)
+            return;
+        if (newStatus == SHOW) {
+            animateHorizontally(notificationCenter.getNotificationCenter(), NOTIFICATION_PANEL_WIDTH, ENTER);
+        } else {
+            assert(newStatus == HIDE);
+            animateHorizontally(notificationCenter.getNotificationCenter(), NOTIFICATION_PANEL_WIDTH, EXIT);
+        }
+        notificationCenterStatus = newStatus;
     }
 }

@@ -16,6 +16,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.petpatient.exceptions.PetDependencyNotEmptyException;
 import seedu.address.model.petpatient.exceptions.PetPatientNotFoundException;
 
 public class UndoableCommandTest {
@@ -60,12 +61,10 @@ public class UndoableCommandTest {
         public CommandResult executeUndoableCommand() throws CommandException {
             Person personToDelete = model.getFilteredPersonList().get(0);
             try {
-                model.deleteForcePerson(personToDelete);
+                model.deletePerson(personToDelete);
             } catch (PersonNotFoundException pnfe) {
                 fail("Impossible: personToDelete was retrieved from model.");
-            } catch (PetPatientNotFoundException e) {
-                fail("Impossible: personToDelete was retrieved from model.");
-            } catch (AppointmentNotFoundException e) {
+            } catch (PetDependencyNotEmptyException e) {
                 fail("Impossible: personToDelete was retrieved from model.");
             }
             return new CommandResult("");

@@ -117,8 +117,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteForcePetPatient(PetPatient target) {
-            fail("This method should not be called.");
+        public List<PetPatient> deletePetPatientDependencies(Person key) {
+            return null;
+        }
+
+        @Override
+        public List<Appointment> deleteAppointmentDependencies(PetPatient target) {
             return null;
         }
 
@@ -146,12 +150,6 @@ public class AddCommandTest {
         @Override
         public void deletePerson(Person target) {
             fail("This method should not be called.");
-        }
-
-        @Override
-        public List<PetPatient> deleteForcePerson(Person target) {
-            fail("This method should not be called.");
-            return null;
         }
 
         @Override

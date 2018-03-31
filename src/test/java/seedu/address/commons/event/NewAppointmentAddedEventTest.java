@@ -6,6 +6,7 @@ import seedu.address.commons.events.model.NewAppointmentAddedEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.testutil.AppointmentBuilder;
 
+//@@author jlks96
 public class NewAppointmentAddedEventTest {
 
     @Test

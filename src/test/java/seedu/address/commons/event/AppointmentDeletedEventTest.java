@@ -11,6 +11,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 
+//@@author jlks96
 public class AppointmentDeletedEventTest {
 
     @Test

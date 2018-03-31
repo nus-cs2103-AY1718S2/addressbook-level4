@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -35,10 +36,6 @@ public interface Model {
 
     /** Deletes the given person. */
     void deletePerson(Person target) throws PersonNotFoundException, PetDependencyNotEmptyException;
-
-    /** Forcefully deletes the given person. */
-    void deleteForcePerson(Person target)
-            throws PersonNotFoundException, PetPatientNotFoundException, AppointmentNotFoundException;
 
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException, DuplicateNricException;
@@ -91,6 +88,9 @@ public interface Model {
     void deletePetPatient(PetPatient target)
             throws PetPatientNotFoundException, AppointmentDependencyNotEmptyException;
 
-    /** Forcefully deletes the given pet. */
-    void deleteForcePetPatient(PetPatient target) throws PetPatientNotFoundException, AppointmentNotFoundException;
+    /** Deletes all pet dependencies. */
+    List<PetPatient> deletePetPatientDependencies(Person key);
+
+    /** Deletes all appointment dependencies. */
+    List<Appointment> deleteAppointmentDependencies(PetPatient target);
 }

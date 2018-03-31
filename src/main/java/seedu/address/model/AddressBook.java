@@ -323,38 +323,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws PetDependencyNotEmptyException if the {@code key} still contains pet patients it is tied to.
      */
     public boolean removePerson(Person key) throws PersonNotFoundException, PetDependencyNotEmptyException {
-        for (PetPatient petPatient : petPatients) {
-            if (petPatient.getOwner().equals(key.getNric())) {
-                throw new PetDependencyNotEmptyException();
-            }
-        }
-
-        if (persons.remove(key)) {
-            removeUselessTags();
-            return true;
-        } else {
-            throw new PersonNotFoundException();
-        }
-    }
-
-    /**
-     * Forcefully removes {@code key} and all dependencies from this {@code AddressBook}.
-     *
-     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
-     */
-    public boolean removeForcePerson(Person key) throws PersonNotFoundException {
-        List<PetPatient> petPatientArrayList = new ArrayList<>();
-        for (PetPatient petPatient : petPatients) {
-            if (petPatient.getOwner().equals(key.getNric())) {
-                petPatientArrayList.add(petPatient);
-            }
-        }
-
-        for (PetPatient petPatient : petPatientArrayList) {
-            removeAllAppointments(petPatient);
-        }
-
-        removeAllPetPatient(key);
+       petPatientDependenciesExist(key);
 
         if (persons.remove(key)) {
             removeUselessTags();
@@ -386,12 +355,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removePetPatient(PetPatient key)
             throws PetPatientNotFoundException, AppointmentDependencyNotEmptyException {
-        for (Appointment appointment : appointments) {
-            if (appointment.getPetPatientName().equals(key.getName())
-                    && appointment.getOwnerNric().equals(key.getOwner())) {
-                throw new AppointmentDependencyNotEmptyException();
-            }
-        }
+       appointmentDependenciesExist(key);
 
         if (petPatients.remove(key)) {
             removeUselessTags();
@@ -402,27 +366,53 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Removes all pet patients belonging to {@code key} from this {@code AddressBook}.
+     * Forcefully removes all pet patients dependencies on {@code key} from this {@code AddressBook}.
      */
-    private void removeAllPetPatient(Person key) {
-        Iterator<PetPatient> petPatientIterator = petPatients.iterator();
 
+    public List<PetPatient> removeAllPetPatientDependencies(Person key) {
+        Iterator<PetPatient> petPatientIterator = petPatients.iterator();
+        List<PetPatient> petPatientsDeleted = new ArrayList<>();
         while (petPatientIterator.hasNext()) {
             PetPatient petPatient = petPatientIterator.next();
 
             if (petPatient.getOwner().equals(key.getNric())) {
+                petPatientsDeleted.add(petPatient);
                 petPatientIterator.remove();
+            }
+        }
+        return petPatientsDeleted;
+    }
+
+    /**
+     * @throws AppointmentDependencyNotEmptyException if appointment dependencies of {@code key}
+     * still exists in {@code AddressBook}.
+     */
+    private void appointmentDependenciesExist(PetPatient key) throws AppointmentDependencyNotEmptyException {
+        for (Appointment appointment : appointments) {
+            if (appointment.getPetPatientName().equals(key.getName())
+                    && appointment.getOwnerNric().equals(key.getOwner())) {
+                throw new AppointmentDependencyNotEmptyException();
             }
         }
     }
 
     /**
-     * Forcefully removes pet patient {@code key} from this {@code AddressBook}.
-     *
-     * @throws PetPatientNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     * @throws PetDependencyNotEmptyException if pet dependencies of {@code key} still exists in {@code AddressBook}.
      */
-    public boolean removeForcePetPatient(PetPatient key)
-            throws PetPatientNotFoundException {
+    private void petPatientDependenciesExist(Person key) throws PetDependencyNotEmptyException {
+        for (PetPatient petPatient : petPatients) {
+            if (petPatient.getOwner().equals(key.getNric())) {
+                throw new PetDependencyNotEmptyException();
+            }
+        }
+    }
+
+    /**
+     * Forcefully removes all dependencies relying on pet patient {@code key} from this {@code AddressBook}.
+     *
+     */
+    public List<Appointment> removeAllAppointmentDependencies(PetPatient key) {
+        List<Appointment> appointmentsDeleted = new ArrayList<>();
         Iterator<Appointment> appointmentIterator = appointments.iterator();
 
         while (appointmentIterator.hasNext()) {
@@ -430,16 +420,12 @@ public class AddressBook implements ReadOnlyAddressBook {
 
             if (appointment.getPetPatientName().equals(key.getName())
                     && appointment.getOwnerNric().equals(key.getOwner())) {
+                appointmentsDeleted.add(appointment);
                 appointmentIterator.remove();
             }
         }
 
-        if (petPatients.remove(key)) {
-            removeUselessTags();
-            return true;
-        } else {
-            throw new PetPatientNotFoundException();
-        }
+        return appointmentsDeleted;
     }
 
     //// tag-level operations

@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -82,13 +83,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deleteForcePerson(Person target)
-            throws PersonNotFoundException {
-        addressBook.removeForcePerson(target);
-        indicateAddressBookChanged();
-    }
-
-    @Override
     public synchronized void addPerson(Person person) throws DuplicatePersonException, DuplicateNricException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -103,10 +97,17 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deleteForcePetPatient(PetPatient target)
-            throws PetPatientNotFoundException {
-        addressBook.removeForcePetPatient(target);
+    public synchronized List<PetPatient> deletePetPatientDependencies(Person target) {
+        List<PetPatient> petPatients = addressBook.removeAllPetPatientDependencies(target);
         indicateAddressBookChanged();
+        return petPatients;
+    }
+
+    @Override
+    public synchronized List<Appointment> deleteAppointmentDependencies(PetPatient target) {
+        List<Appointment> dependenciesDeleted = addressBook.removeAllAppointmentDependencies(target);
+        indicateAddressBookChanged();
+        return dependenciesDeleted;
     }
 
     @Override

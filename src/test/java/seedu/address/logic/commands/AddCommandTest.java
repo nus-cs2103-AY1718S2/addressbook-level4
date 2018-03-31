@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -118,6 +119,7 @@ public class AddCommandTest {
         @Override
         public void deleteForcePetPatient(PetPatient target) {
             fail("This method should not be called.");
+            return null;
         }
 
         @Override
@@ -147,8 +149,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteForcePerson(Person target) {
+        public List<PetPatient> deleteForcePerson(Person target) {
             fail("This method should not be called.");
+            return null;
         }
 
         @Override

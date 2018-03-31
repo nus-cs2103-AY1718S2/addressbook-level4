@@ -4,13 +4,13 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * An event requesting to switch the feature user interface.
+ * An event that triggers the removal of map panel of specified feature UI.
  */
-public class SwitchFeatureEvent extends BaseEvent {
+public class RemoveMapPanelEvent extends BaseEvent {
 
     private final String featureTarget;
 
-    public SwitchFeatureEvent(String feature) {
+    public RemoveMapPanelEvent(String feature) {
         this.featureTarget = feature;
     }
 

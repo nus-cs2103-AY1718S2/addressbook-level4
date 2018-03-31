@@ -7,11 +7,15 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMPANY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CURRENT_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NUMBER_OF_POSITIONS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROFILE_PICTURE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
 import java.util.ArrayList;
@@ -53,7 +57,17 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_USERNAME_USER = "John";
     public static final String VALID_PASSWORD_USER = "1234";
-
+    public static final String VALID_POSITION_SOFTWARE_ENGINEER = "Software Engineer";
+    public static final String VALID_POSITION_INTERN = "Intern";
+    public static final String VALID_TEAM_SOFTWARE_ENGINEER = "Cloud Services";
+    public static final String VALID_TEAM_INTERN = "Human Resources";
+    public static final String VALID_LOCATION_SOFTWARE_ENGINEER = "Singapore";
+    public static final String VALID_LOCATION_INTERN = "Kuala Lampur, Malaysia";
+    public static final String VALID_NUMBER_OF_POSITIONS_SOFTWARE_ENGINEER = "2";   
+    public static final String VALID_NUMBER_OF_POSITIONS_INTERN = "5";   
+    public static final String VALID_TAG_JAVA = "Java";
+    public static final String VALID_TAG_ALGORITHMS = "Algorithms";
+    public static final String VALID_TAG_EXCEL = "Excel";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -71,8 +85,25 @@ public class CommandTestUtil {
     public static final String PROFILE_PICTURE_DESC_BOB = " " + PREFIX_PROFILE_PICTURE + VALID_PROFILE_PICTURE_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String TAG_DESC_JAVA = " " + PREFIX_TAG + VALID_TAG_JAVA;
+    public static final String TAG_DESC_ALGORITHMS = " " + PREFIX_TAG + VALID_TAG_ALGORITHMS;
+    public static final String TAG_DESC_EXCEL = " " + PREFIX_TAG + VALID_TAG_EXCEL;
     public static final String USERNAME_DESC_USER = " " + PREFIX_USERNAME + VALID_USERNAME_USER;
     public static final String PASSWORD_DESC_USER = " " + PREFIX_PASSWORD + VALID_PASSWORD_USER;
+    public static final String POSITION_DESC_SOFTWARE_ENGINEER = " " + PREFIX_POSITION
+            + VALID_POSITION_SOFTWARE_ENGINEER;
+    public static final String POSITION_DESC_INTERN = " " + PREFIX_POSITION + VALID_POSITION_INTERN;
+    public static final String TEAM_DESC_SOFTWARE_ENGINEER = " " + PREFIX_TEAM + VALID_TEAM_SOFTWARE_ENGINEER;
+    public static final String TEAM_DESC_INTERN = " " + PREFIX_TEAM + VALID_TEAM_INTERN;
+    public static final String LOCATION_DESC_SOFTWARE_ENGINEER = " " + PREFIX_LOCATION
+            + VALID_LOCATION_SOFTWARE_ENGINEER;
+    public static final String LOCATION_DESC_INTERN = " " + PREFIX_LOCATION
+            + VALID_LOCATION_INTERN;
+    public static final String NUMBER_OF_POSITIONS_DESC_SOFTWARE_ENGINEER = " " + PREFIX_NUMBER_OF_POSITIONS
+            + VALID_NUMBER_OF_POSITIONS_SOFTWARE_ENGINEER;
+    public static final String NUMBER_OF_POSITIONS_DESC_INTERN= " " + PREFIX_NUMBER_OF_POSITIONS
+            + VALID_NUMBER_OF_POSITIONS_INTERN;
+    
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -81,10 +112,15 @@ public class CommandTestUtil {
     public static final String INVALID_CURRENT_POSITION_DESC =
             " " + PREFIX_CURRENT_POSITION; // empty string not allowed for current position
     public static final String INVALID_COMPANY_DESC = " " + PREFIX_COMPANY + "G@ogle"; // '@' not allowed in companies
-    public static final String INVALID_PROFILE_PICTURE_DESC = " " + PREFIX_PROFILE_PICTURE + "Emy.jpx";
-
     // .jpx not allowed in profile picture
-    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_PROFILE_PICTURE_DESC = " " + PREFIX_PROFILE_PICTURE + "Emy.jpx";
+    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby dubby"; // '*' not allowed in tags
+    // '$' not allowed in positions
+    public static final String INVALID_POSITION_DESC = " " + PREFIX_POSITION + "Enginee$";
+    public static final String INVALID_TEAM_DESC = " " + PREFIX_TEAM; // empty string not allowed for teams
+    public static final String INVALID_LOCATION_DESC = " " + PREFIX_LOCATION; // empty string not allowed for locations
+    // alphabets not allowed in numberOfPositions
+    public static final String INVALID_NUMBER_OF_POSITIONS_DESC = " " + PREFIX_NUMBER_OF_POSITIONS + " a12"; 
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

@@ -1,6 +1,10 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
 
@@ -10,6 +14,7 @@ import seedu.address.model.job.Location;
 import seedu.address.model.job.NumberOfPositions;
 import seedu.address.model.job.Position;
 import seedu.address.model.job.Team;
+import seedu.address.model.tag.Tag;
 
 /**
  * JAXB-friendly version of the Job.
@@ -26,6 +31,8 @@ public class XmlAdaptedJob {
     private String location;
     @XmlElement(required = true)
     private String numberOfPositions;
+    @XmlElement(required = true)
+    private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedJob.
@@ -36,15 +43,17 @@ public class XmlAdaptedJob {
     /**
      * Constructs an {@code XmlAdaptedJob} with the given job details.
      */
-    public XmlAdaptedJob(String position, String team, String location, String numberOfPositions) {
+    public XmlAdaptedJob(String position, String team, String location, String numberOfPositions,
+                         List<XmlAdaptedTag> tagged) {
         this.position = position;
         this.team = team;
         this.location = location;
         this.numberOfPositions = numberOfPositions;
+        this.tagged = new ArrayList<>(tagged);
     }
 
     /**
-     * Converts a given Person into this class for JAXB use.
+     * Converts a given Job into this class for JAXB use.
      *
      * @param source future changes to this will not affect the created XmlAdaptedJob
      */
@@ -53,6 +62,11 @@ public class XmlAdaptedJob {
         team = source.getTeam().value;
         location = source.getLocation().value;
         numberOfPositions = source.getNumberOfPositions().value;
+
+        tagged = new ArrayList<>();
+        for (Tag tag : source.getTags()) {
+            tagged.add(new XmlAdaptedTag(tag));
+        }
     }
 
     /**
@@ -61,6 +75,11 @@ public class XmlAdaptedJob {
      * @throws IllegalValueException if there were any data constraints violated in the adapted job
      */
     public Job toModelType() throws IllegalValueException {
+        final List<Tag> jobTags = new ArrayList<>();
+        for (XmlAdaptedTag tag : tagged) {
+            jobTags.add(tag.toModelType());
+        }
+        
         if (this.position == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Position.class.getSimpleName()));
@@ -96,7 +115,13 @@ public class XmlAdaptedJob {
         }
         final NumberOfPositions numberOfPositions = new NumberOfPositions(this.numberOfPositions);
 
-        return new Job(position, team, location, numberOfPositions);
+        if (this.tagged.size() == 0) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Tag.class.getSimpleName()));
+        }
+        final Set<Tag> tags = new HashSet<>(jobTags);
+
+        return new Job(position, team, location, numberOfPositions, tags);
     }
 
     @Override
@@ -113,6 +138,7 @@ public class XmlAdaptedJob {
         return Objects.equals(position, otherJob.position)
                 && Objects.equals(team, otherJob.team)
                 && Objects.equals(location, otherJob.location)
-                && Objects.equals(numberOfPositions, otherJob.numberOfPositions);
+                && Objects.equals(numberOfPositions, otherJob.numberOfPositions)
+                && tagged.equals(otherJob.tagged);
     }
 }

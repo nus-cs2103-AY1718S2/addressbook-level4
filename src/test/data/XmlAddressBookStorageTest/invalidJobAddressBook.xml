@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <!-- Job with invalid position field -->
+    <jobs>
+        <position>Softwar& Engineer@</position>
+        <team>Cloud Services</team>
+        <location>Singapore</location>
+        <numberOfPositions>2</numberOfPositions>
+        <tagged>Java</tagged>
+        <tagged>Algorithms</tagged>
+    </jobs>
+</addressbook>

@@ -53,13 +53,14 @@ public class SampleDataUtil {
     public static Job[] getSampleJobs() {
         return new Job[] {
             new Job(new Position("Software Engineer"), new Team("Cloud Services"), new Location("Singapore"),
-                new NumberOfPositions("2")),
+                new NumberOfPositions("2"), getTagSet("Java", "Algorithms")),
             new Job(new Position("Marketing Intern"), new Team("Social Media Marketing"),
-                new Location("Kuala Lampur, Malaysia"), new NumberOfPositions("1")),
+                new Location("Kuala Lampur, Malaysia"), new NumberOfPositions("1"), getTagSet("Excel",
+                    "Writing")),
             new Job(new Position("DevOps Engineer"), new Team("DevOps"), new Location("Singapore"),
-                new NumberOfPositions("3")),
+                new NumberOfPositions("3"), getTagSet("AWS", "SQL-Server")),
             new Job(new Position("Product Manager"), new Team("Mobile Products"), new Location("Singapore"),
-                new NumberOfPositions("1"))
+                new NumberOfPositions("1"), getTagSet("UI/UX", "Testing"))
         };
     }
 

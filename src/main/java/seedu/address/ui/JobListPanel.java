@@ -14,7 +14,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JobPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToJobListRequestEvent;
+import seedu.address.commons.events.ui.JumpToPersonListRequestEvent;
 import seedu.address.model.job.Job;
 
 /**
@@ -62,7 +63,7 @@ public class JobListPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+    private void handleJumpToJobListRequestEvent(JumpToJobListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }

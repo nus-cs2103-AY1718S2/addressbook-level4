@@ -2,17 +2,22 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.job.Job;
 
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * A UI component that displays information of a {@code Job}.
  */
 public class JobCard extends UiPart<Region> {
 
     private static final String FXML = "JobListCard.fxml";
+
+    private static final String[] TAG_COLOR_STYLES =
+            { "teal", "red", "green", "blue", "orange", "brown",
+                    "yellow", "pink", "lightgreen", "grey", "purple" };
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -36,6 +41,8 @@ public class JobCard extends UiPart<Region> {
     private Label jobLocation;
     @FXML
     private Label numberOfPositions;
+    @FXML
+    private FlowPane tags;
 
     public JobCard(Job job, int displayedIndex) {
         super(FXML);
@@ -45,6 +52,27 @@ public class JobCard extends UiPart<Region> {
         team.setText(job.getTeam().value);
         jobLocation.setText(job.getLocation().value);
         numberOfPositions.setText("Positions: " + job.getNumberOfPositions().value);
+        initTags(job);
+    }
+
+    /**
+     * Creates the tag labels for {@code job}.
+     */
+    private void initTags(Job job) {
+        job.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.getStyleClass().add(getTagColorStyleFor(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
+    }
+
+    /**
+     * Returns the color style for {@code tagName}'s label.
+     */
+    private String getTagColorStyleFor(String tagName) {
+        // we use the hash code of the tag name to generate a random color, so that the color remain consistent
+        // between different runs of the program while still making it random enough between tags.
+        return TAG_COLOR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOR_STYLES.length];
     }
 
     @Override

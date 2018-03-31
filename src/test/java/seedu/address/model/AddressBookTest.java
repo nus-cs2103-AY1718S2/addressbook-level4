@@ -1,6 +1,8 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.TypicalJobs.MARKETING_INTERN;
+import static seedu.address.testutil.TypicalJobs.SOFTWARE_ENGINEER;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -55,7 +57,20 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        List<Job> newJobs = Arrays.asList(SOFTWARE_ENGINEER, MARKETING_INTERN);
+        AddressBookStub newData = new AddressBookStub(newPersons, newJobs, newTags);
+
+        thrown.expect(AssertionError.class);
+        addressBook.resetData(newData);
+    }
+
+    @Test
+    public void resetData_withDuplicateJobs_throwsAssertionError() {
+        // Repeat SOFTWARE_ENGINEER twice
+        List<Person> newPersons = Arrays.asList(ALICE, BENSON);
+        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
+        List<Job> newJobs = Arrays.asList(SOFTWARE_ENGINEER, SOFTWARE_ENGINEER);
+        AddressBookStub newData = new AddressBookStub(newPersons, newJobs, newTags);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -78,6 +93,12 @@ public class AddressBookTest {
     }
 
     @Test
+    public void getJobList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getJobList().remove(0);
+    }
+
+        @Test
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getTagList().remove(0);
@@ -91,9 +112,10 @@ public class AddressBookTest {
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<Job> jobs = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<Person> persons, Collection<Job> jobs, Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
+            this.jobs.setAll(jobs);
         }
 
         @Override

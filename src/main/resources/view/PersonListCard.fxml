@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="cardPane" fx:id="cardPane" style="-fx-background-radius: 40;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
@@ -30,13 +30,15 @@
         <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
       </HBox>
       <FlowPane fx:id="tags" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
+      <Label fx:id="currentPosition" styleClass="cell_small_label" text="\$currentPosition" />
+      <Label fx:id="company" styleClass="cell_small_label" text="\$company" />
     </VBox>
       <rowConstraints>
          <RowConstraints />
       </rowConstraints>
   </GridPane>
-   <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+   <ImageView fx:id="imageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+      <HBox.margin>
+         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      </HBox.margin></ImageView>
 </HBox>

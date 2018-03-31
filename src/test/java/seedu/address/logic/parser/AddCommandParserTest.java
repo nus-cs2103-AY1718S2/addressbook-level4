@@ -92,18 +92,18 @@ public class AddCommandParserTest {
                 + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
         // multiple addresses - last address accepted
+        assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
+                + ADDRESS_DESC_BOB + CURRENT_POSITION_DESC_BOB + COMPANY_DESC_BOB + PROFILE_PICTURE_DESC_BOB
+                + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+
+        // multiple current positions - last current position accepted
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + CURRENT_POSITION_DESC_AMY + CURRENT_POSITION_DESC_BOB + COMPANY_DESC_BOB + PROFILE_PICTURE_DESC_BOB
                 + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
-        // multiple addresses - last address accepted
+        // multiple companies - last address accepted
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + CURRENT_POSITION_DESC_BOB + COMPANY_DESC_AMY + COMPANY_DESC_BOB + PROFILE_PICTURE_DESC_BOB
-                + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
-
-        // multiple current positions - last current position accepted
-        assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
-                + ADDRESS_DESC_BOB + CURRENT_POSITION_DESC_BOB + COMPANY_DESC_BOB + PROFILE_PICTURE_DESC_BOB
                 + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
         // multiple profilePictures - last profilePicture accepted

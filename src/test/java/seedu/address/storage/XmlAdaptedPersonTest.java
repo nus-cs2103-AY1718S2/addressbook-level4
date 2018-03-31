@@ -28,7 +28,7 @@ public class XmlAdaptedPersonTest {
     private static final String INVALID_CURRENT_POSITION = "";
     private static final String INVALID_COMPANY = "G@@gle";
     private static final String INVALID_PROFILE_PICTURE = "Rachel.jpx";
-    private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_TAG = " ";
     private static final String NON_EXIST_PROFILE_PICTURE = "src/test/data/images/Rachel.jpeg";
 
     private static final String VALID_NAME = BENSON.getName().toString();

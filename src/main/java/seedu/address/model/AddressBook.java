@@ -75,10 +75,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         setTags(new HashSet<>(newData.getTagList()));
         List<Person> syncedPersonList = newData.getPersonList().stream()
-                .map(this::syncWithMasterTagList)
+                .map(this::syncPersonWithMasterTagList)
                 .collect(Collectors.toList());
         List<Job> syncedJobList = newData.getJobList().stream()
-                //.map(this::syncWithMasterTagList)
+                .map(this::syncJobWithMasterTagList)
                 .collect(Collectors.toList());
         try {
             setPersons(syncedPersonList);
@@ -103,7 +103,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
     public void addPerson(Person p) throws DuplicatePersonException {
-        Person person = syncWithMasterTagList(p);
+        Person person = syncPersonWithMasterTagList(p);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
@@ -118,13 +118,13 @@ public class AddressBook implements ReadOnlyAddressBook {
      *      another existing person in the list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      *
-     * @see #syncWithMasterTagList(Person)
+     * @see #syncPersonWithMasterTagList(Person)
      */
     public void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireNonNull(editedPerson);
 
-        Person syncedEditedPerson = syncWithMasterTagList(editedPerson);
+        Person syncedEditedPerson = syncPersonWithMasterTagList(editedPerson);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
@@ -136,7 +136,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
      *  list.
      */
-    private Person syncWithMasterTagList(Person person) {
+    private Person syncPersonWithMasterTagList(Person person) {
         final UniqueTagList personTags = new UniqueTagList(person.getTags());
         tags.mergeFrom(personTags);
 
@@ -206,18 +206,41 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws DuplicateJobException if an equivalent job already exists.
      */
-    public void addJob(Job job) throws DuplicateJobException {
+    public void addJob(Job j) throws DuplicateJobException {
+        Job job = syncJobWithMasterTagList(j);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         jobs.add(job);
     }
 
+    /**
+     *  Updates the master tag list to include tags in {@code job} that are not in the list.
+     *  @return a copy of this {@code job} such that every job in this person points to a Job object in the master
+     *  list.
+     */
+    private Job syncJobWithMasterTagList(Job job) {
+        final UniqueTagList jobTags = new UniqueTagList(job.getTags());
+        tags.mergeFrom(jobTags);
+
+        // Create map with values = tag object references in the master list
+        // used for checking job tag references
+        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
+        tags.forEach(tag -> masterTagObjects.put(tag, tag));
+
+        // Rebuild the list of job tags to point to the relevant tags in the master tag list.
+        final Set<Tag> correctTagReferences = new HashSet<>();
+        jobTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        return new Job(
+                job.getPosition(), job.getTeam(), job.getLocation(), job.getNumberOfPositions(), correctTagReferences);
+    }
+
     /// util methods
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + jobs.asObservableList().size() + " jobs, "
+                + tags.asObservableList().size() +  " tags";
         // TODO: refine later
     }
 

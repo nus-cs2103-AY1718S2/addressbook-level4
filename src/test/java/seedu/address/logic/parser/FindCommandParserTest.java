@@ -37,21 +37,21 @@ public class FindCommandParserTest {
         // no leading and trailing whitespaces
         FindCommand expectedFindTagCommand =
                 new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList("developer", "accountant")));
-        assertParseSuccess(parser, " t/developer accountant", expectedFindTagCommand);
+        assertParseSuccess(parser, " s/developer accountant", expectedFindTagCommand);
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n t/developer \n \t accountant  \t", expectedFindTagCommand);
+        assertParseSuccess(parser, " \n s/developer \n \t accountant  \t", expectedFindTagCommand);
     }
 
     @Test
     public void parse_invalidArg_throwsParseException() {
         assertParseFailure(parser, " n/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
 
-        assertParseFailure(parser, " t/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " s/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
 
-        assertParseFailure(parser, " n/ t/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " n/ s/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
 
-        assertParseFailure(parser, " t/ n/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " s/ n/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 
 }

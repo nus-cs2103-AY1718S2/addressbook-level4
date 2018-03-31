@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static seedu.address.testutil.TypicalJobs.ANALYST;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
@@ -67,9 +68,21 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
+    public void readAddressBook_invalidJobAddressBook_throwDataConversionException() throws Exception {
+        thrown.expect(DataConversionException.class);
+        readAddressBook("invalidJobAddressBook.xml");
+    }
+
+    @Test
     public void readAddressBook_invalidAndValidPersonAddressBook_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
         readAddressBook("invalidAndValidPersonAddressBook.xml");
+    }
+
+    @Test
+    public void readAddressBook_invalidAndValidJobAddressBook_throwDataConversionException() throws Exception {
+        thrown.expect(DataConversionException.class);
+        readAddressBook("invalidAndValidJobAddressBook.xml");
     }
 
     @Test
@@ -85,6 +98,7 @@ public class XmlAddressBookStorageTest {
 
         //Modify data, overwrite exiting file, and read back
         original.addPerson(HOON);
+        original.addJob(ANALYST);
         original.removePerson(ALICE);
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         readBack = xmlAddressBookStorage.readAddressBook(filePath).get();

@@ -76,4 +76,12 @@
         <company>Google</company>
         <profilePicture isPrivate="False">./src/test/data/images/martin.jpeg</profilePicture>
     </persons>
+    <jobs>
+        <position>Software Engineer</position>
+        <team>Cloud Services</team>
+        <location>Singapore</location>
+        <numberOfPositions>2</numberOfPositions>
+        <tagged>Java</tagged>
+    </jobs>
+    <tags>Java</tags>
 </addressbook>

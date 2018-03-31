@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.AddressBook;
+import seedu.address.storage.XmlAdaptedJob;
 import seedu.address.storage.XmlAdaptedPerson;
 import seedu.address.storage.XmlAdaptedTag;
 import seedu.address.storage.XmlSerializableAddressBook;
@@ -29,11 +30,15 @@ public class XmlUtilTest {
     private static final File MISSING_FILE = new File(TEST_DATA_FOLDER + "missing.xml");
     private static final File VALID_FILE = new File(TEST_DATA_FOLDER + "validAddressBook.xml");
     private static final File MISSING_PERSON_FIELD_FILE = new File(TEST_DATA_FOLDER + "missingPersonField.xml");
+    private static final File MISSING_JOB_FIELD_FILE = new File(TEST_DATA_FOLDER + "missingJobField.xml");
     private static final File INVALID_PERSON_FIELD_FILE = new File(TEST_DATA_FOLDER + "invalidPersonField.xml");
+    private static final File INVALID_JOB_FIELD_FILE = new File(TEST_DATA_FOLDER + "invalidJobField.xml");
     private static final File VALID_PERSON_FILE = new File(TEST_DATA_FOLDER + "validPerson.xml");
+    private static final File VALID_JOB_FILE = new File(TEST_DATA_FOLDER + "validJob.xml");
     private static final File TEMP_FILE = new File(TestUtil.getFilePathInSandboxFolder("tempAddressBook.xml"));
 
     private static final String INVALID_PHONE = "9482asf424";
+    private static final String INVALID_POSITION = "Software% Engineer**";
 
     private static final String VALID_NAME = "Hans Muster";
     private static final String VALID_PHONE = "9482424";
@@ -42,7 +47,13 @@ public class XmlUtilTest {
     private static final String VALID_CURRENT_POSITION = "Software Engineer";
     private static final String VALID_COMPANY = "Google";
     private static final String VALID_PROFILE_PICTURE = "./src/test/data/images/hans.jpeg";
-    private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
+    
+    private static final String VALID_POSITION = "Software Engineer";
+    private static final String VALID_TEAM = "Cloud Services";
+    private static final String VALID_LOCATION = "Singapore";
+    private static final String VALID_NUMBER_OF_POSITIONS = "2";    
+    
+    private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("Java"));
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -75,7 +86,8 @@ public class XmlUtilTest {
     public void getDataFromFile_validFile_validResult() throws Exception {
         AddressBook dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableAddressBook.class).toModelType();
         assertEquals(9, dataFromFile.getPersonList().size());
-        assertEquals(0, dataFromFile.getTagList().size());
+        assertEquals(1, dataFromFile.getJobList().size());
+        assertEquals(1, dataFromFile.getTagList().size());
     }
 
     @Test
@@ -88,6 +100,15 @@ public class XmlUtilTest {
     }
 
     @Test
+    public void xmlAdaptedJobFromFile_fileWithMissingJobField_validResult() throws Exception {
+        XmlAdaptedJob actualJob = XmlUtil.getDataFromFile(
+                MISSING_JOB_FIELD_FILE, XmlAdaptedJobWithRootElement.class);
+        XmlAdaptedJob expectedJob = new XmlAdaptedJob(null, VALID_TEAM, VALID_LOCATION,
+                VALID_NUMBER_OF_POSITIONS, VALID_TAGS);
+        assertEquals(expectedJob, actualJob);
+    }
+
+    @Test
     public void xmlAdaptedPersonFromFile_fileWithInvalidPersonField_validResult() throws Exception {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 INVALID_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
@@ -97,12 +118,30 @@ public class XmlUtilTest {
     }
 
     @Test
+    public void xmlAdaptedJobFromFile_fileWithInvalidJobField_validResult() throws Exception {
+        XmlAdaptedJob actualJob = XmlUtil.getDataFromFile(
+                INVALID_JOB_FIELD_FILE, XmlAdaptedJobWithRootElement.class);
+        XmlAdaptedJob expectedJob = new XmlAdaptedJob(INVALID_POSITION, VALID_TEAM, VALID_LOCATION,
+                VALID_NUMBER_OF_POSITIONS, VALID_TAGS);
+        assertEquals(expectedJob, actualJob);
+    }
+
+    @Test
     public void xmlAdaptedPersonFromFile_fileWithValidPerson_validResult() throws Exception {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 VALID_PERSON_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
                 VALID_ADDRESS, VALID_CURRENT_POSITION, VALID_COMPANY, VALID_PROFILE_PICTURE, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
+    }
+
+    @Test
+    public void xmlAdaptedJobFromFile_fileWithValidJobField_validResult() throws Exception {
+        XmlAdaptedJob actualJob = XmlUtil.getDataFromFile(
+                VALID_JOB_FILE, XmlAdaptedJobWithRootElement.class);
+        XmlAdaptedJob expectedJob = new XmlAdaptedJob(VALID_POSITION, VALID_TEAM, VALID_LOCATION,
+                VALID_NUMBER_OF_POSITIONS, VALID_TAGS);
+        assertEquals(expectedJob, actualJob);
     }
 
     @Test
@@ -142,9 +181,16 @@ public class XmlUtilTest {
     }
 
     /**
-     * Test class annotated with {@code XmlRootElement} to allow unmarshalling of .xml data to {@code XmlAdaptedJob}
+     * Test class annotated with {@code XmlRootElement} to allow unmarshalling of .xml data to {@code XmlAdaptedPerson}
      * objects.
      */
     @XmlRootElement(name = "person")
     private static class XmlAdaptedPersonWithRootElement extends XmlAdaptedPerson {}
+
+    /**
+     * Test class annotated with {@code XmlRootElement} to allow unmarshalling of .xml data to {@code XmlAdaptedJob}
+     * objects.
+     */
+    @XmlRootElement(name = "job")
+    private static class XmlAdaptedJobWithRootElement extends XmlAdaptedJob {}
 }

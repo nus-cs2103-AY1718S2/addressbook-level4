@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 
 import java.util.Arrays;
 import java.util.List;
@@ -61,8 +61,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
+                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
+        assertEquals(new DeleteCommand(INDEX_FIRST), command);
     }
 
     @Test
@@ -70,8 +70,8 @@ public class AddressBookParserTest {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+                + INDEX_FIRST.getOneBased() + " " + PersonUtil.getPersonDetails(person));
+        assertEquals(new EditCommand(INDEX_FIRST, descriptor), command);
     }
 
     @Test
@@ -122,22 +122,22 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_select() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
-                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
+        assertEquals(new SelectCommand(INDEX_FIRST), command);
     }
 
     @Test
     public void parseCommand_linkedIn() throws Exception {
         LinkedInCommand command = (LinkedInCommand) parser.parseCommand(
-                LinkedInCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new LinkedInCommand(INDEX_FIRST_PERSON), command);
+                LinkedInCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
+        assertEquals(new LinkedInCommand(INDEX_FIRST), command);
     }
 
     @Test
     public void parseCommand_email() throws Exception {
         EmailCommand command = (EmailCommand) parser.parseCommand(
-                EmailCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new EmailCommand(INDEX_FIRST_PERSON), command);
+                EmailCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
+        assertEquals(new EmailCommand(INDEX_FIRST), command);
     }
 
     @Test

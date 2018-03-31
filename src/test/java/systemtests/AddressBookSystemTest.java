@@ -21,6 +21,7 @@ import org.junit.ClassRule;
 
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.JobListPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
@@ -100,6 +101,10 @@ public abstract class AddressBookSystemTest {
 
     public PersonListPanelHandle getPersonListPanel() {
         return mainWindowHandle.getPersonListPanel();
+    }
+
+    public JobListPanelHandle getJobListPanel() {
+        return mainWindowHandle.getJobListPanel();
     }
 
     public MainMenuHandle getMainMenu() {
@@ -187,6 +192,7 @@ public abstract class AddressBookSystemTest {
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
+        getJobListPanel().rememberSelectedJobCard();
     }
 
     /**
@@ -197,6 +203,13 @@ public abstract class AddressBookSystemTest {
     protected void assertSelectedCardDeselected() {
         assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isAnyCardSelected());
+    }
+
+    /**
+     * Asserts that the previously selected job card is now deselected.
+     */
+    protected void assertSelectedJobCardDeselected() {
+        assertFalse(getJobListPanel().isAnyCardSelected());
     }
 
     /**
@@ -217,7 +230,7 @@ public abstract class AddressBookSystemTest {
 
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
-
+    
     /**
      * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
      * @see BrowserPanelHandle#isUrlChanged()
@@ -226,6 +239,14 @@ public abstract class AddressBookSystemTest {
     protected void assertSelectedCardUnchanged() {
         assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
+    }
+
+    /**
+     * Asserts that the selected card in the job list panel remain unchanged.
+     * @see JobListPanelHandle#isSelectedJobCardChanged()
+     */
+    protected void assertSelectedJobCardUnchanged() {
+        assertFalse(getJobListPanel().isSelectedJobCardChanged());
     }
 
     /**

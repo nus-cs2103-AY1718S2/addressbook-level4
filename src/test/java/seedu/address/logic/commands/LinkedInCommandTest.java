@@ -5,9 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Before;
@@ -16,7 +16,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToPersonListRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -42,8 +42,8 @@ public class LinkedInCommandTest {
     public void execute_validIndexUnfilteredList_success() {
         Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON);
-        assertExecutionSuccess(INDEX_THIRD_PERSON);
+        assertExecutionSuccess(INDEX_FIRST);
+        assertExecutionSuccess(INDEX_THIRD);
         assertExecutionSuccess(lastPersonIndex);
     }
 
@@ -56,16 +56,16 @@ public class LinkedInCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showPersonAtIndex(model, INDEX_FIRST);
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON);
+        assertExecutionSuccess(INDEX_FIRST);
     }
 
     @Test
     public void execute_invalidIndexFilteredList_failure() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showPersonAtIndex(model, INDEX_FIRST);
 
-        Index outOfBoundsIndex = INDEX_SECOND_PERSON;
+        Index outOfBoundsIndex = INDEX_SECOND;
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
@@ -74,14 +74,14 @@ public class LinkedInCommandTest {
 
     @Test
     public void equals() {
-        LinkedInCommand linkedInFirstCommand = new LinkedInCommand(INDEX_FIRST_PERSON);
-        LinkedInCommand linkedInSecondCommand = new LinkedInCommand(INDEX_SECOND_PERSON);
+        LinkedInCommand linkedInFirstCommand = new LinkedInCommand(INDEX_FIRST);
+        LinkedInCommand linkedInSecondCommand = new LinkedInCommand(INDEX_SECOND);
 
         // same object -> returns true
         assertTrue(linkedInFirstCommand.equals(linkedInFirstCommand));
 
         // same values -> returns true
-        LinkedInCommand linkedInFirstCommandCopy = new LinkedInCommand(INDEX_FIRST_PERSON);
+        LinkedInCommand linkedInFirstCommandCopy = new LinkedInCommand(INDEX_FIRST);
         assertTrue(linkedInFirstCommand.equals(linkedInFirstCommandCopy));
 
         // different types -> returns false
@@ -95,7 +95,7 @@ public class LinkedInCommandTest {
     }
 
     /**
-     * Executes a {@code LinkedInCommand} with the given {@code index}, and checks that {@code JumpToListRequestEvent}
+     * Executes a {@code LinkedInCommand} with the given {@code index}, and checks that {@code JumpToPersonListRequestEvent}
      * is raised with the correct index.
      */
     private void assertExecutionSuccess(Index index) {
@@ -109,7 +109,7 @@ public class LinkedInCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        JumpToListRequestEvent lastEvent = (JumpToListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        JumpToPersonListRequestEvent lastEvent = (JumpToPersonListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
         assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
     }
 

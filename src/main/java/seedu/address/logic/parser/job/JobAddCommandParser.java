@@ -4,8 +4,10 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NUMBER_OF_POSITIONS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 
+import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -21,6 +23,7 @@ import seedu.address.model.job.Location;
 import seedu.address.model.job.NumberOfPositions;
 import seedu.address.model.job.Position;
 import seedu.address.model.job.Team;
+import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new JobAddCommand object
@@ -35,8 +38,9 @@ public class JobAddCommandParser implements Parser<JobAddCommand> {
     public JobAddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args,
-                        PREFIX_POSITION, PREFIX_TEAM, PREFIX_LOCATION, PREFIX_NUMBER_OF_POSITIONS);
-        if (!arePrefixesPresent(argMultimap, PREFIX_POSITION, PREFIX_TEAM, PREFIX_LOCATION, PREFIX_NUMBER_OF_POSITIONS)
+                        PREFIX_POSITION, PREFIX_TEAM, PREFIX_LOCATION, PREFIX_NUMBER_OF_POSITIONS, PREFIX_TAG);
+        if (!arePrefixesPresent(argMultimap, PREFIX_POSITION, PREFIX_TEAM, PREFIX_LOCATION,
+                PREFIX_NUMBER_OF_POSITIONS, PREFIX_TAG)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, JobAddCommand.MESSAGE_USAGE));
         }
@@ -47,7 +51,9 @@ public class JobAddCommandParser implements Parser<JobAddCommand> {
             NumberOfPositions numberOfPositions =
                     ParserUtil.parseNumberOfPositions(argMultimap.getValue(PREFIX_NUMBER_OF_POSITIONS)).get();
 
-            Job job = new Job(position, team, location, numberOfPositions);
+            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+
+            Job job = new Job(position, team, location, numberOfPositions, tagList);
 
             return new JobAddCommand(job);
         } catch (IllegalValueException ive) {

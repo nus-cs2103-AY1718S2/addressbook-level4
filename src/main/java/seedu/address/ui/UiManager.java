@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.Semaphore;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;

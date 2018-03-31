@@ -3,6 +3,7 @@ package seedu.address;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -73,6 +74,10 @@ public class MainApp extends Application {
         ui = new UiManager(logic, config, userPrefs);
 
         initEventsCenter();
+    }
+
+    private void initNotifications() {
+        model.findAllSavedNotifications();
     }
 
     private String getApplicationParameter(String parameterName) {
@@ -185,6 +190,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
         ui.start(primaryStage);
+        model.findAllSavedNotifications();
     }
 
     @Override

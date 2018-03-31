@@ -8,8 +8,10 @@ import static seedu.address.ui.NotificationCard.NOTIFICATION_CARD_X_OFFSET;
 import static seedu.address.ui.NotificationCard.NOTIFICATION_CARD_Y_OFFSET;
 
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Semaphore;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -78,6 +80,7 @@ public class MainWindow extends UiPart<Stage> {
     private LinkedList<Region> shownNotificationCards;
     private NotificationCenter notificationCenter;
     private int notificationCenterStatus;
+    private Semaphore semaphore;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -127,6 +130,7 @@ public class MainWindow extends UiPart<Stage> {
         notificationCenter = new NotificationCenter(notificationCardsBox, notificationCenterPlaceHolder);
         mainStage.getChildren().remove(notificationCenterPlaceHolder);
         notificationCenterStatus = HIDE;
+        semaphore = new Semaphore(1);
     }
 
     public Stage getPrimaryStage() {
@@ -304,7 +308,16 @@ public class MainWindow extends UiPart<Stage> {
 
         //hides notificationCard away from screen
         notificationCard.setTranslateX(NOTIFICATION_CARD_WIDTH);
+        try {
+            semaphore.acquire();
+            System.out.println("acquire");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         notificationCard.setTranslateY(UP * shownNotificationCards.size() * NOTIFICATION_CARD_HEIGHT);
+        shownNotificationCards.add(notificationCard);
+        semaphore.release();
+        System.out.println("release");
 
         //enter animation
         Platform.runLater(new Runnable() {
@@ -312,17 +325,25 @@ public class MainWindow extends UiPart<Stage> {
             public void run() {
                 mainStage.getChildren().add(notificationCard);
                 animateHorizontally(notificationCard, NOTIFICATION_CARD_WIDTH, ENTER);
-                shownNotificationCards.add(notificationCard);
+
                 Timer timer = new Timer();
                 TimerTask timerTask = new TimerTask() {
                     @Override
                     public void run() {
                         //it should be the first notification card to exit first
+                        try {
+                            semaphore.acquire();
+                            System.out.println("acquire");
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         Region firstNotificationCard = shownNotificationCards.removeFirst();
 
                         //cards are reused later in notification center
                         animateHorizontally(firstNotificationCard, NOTIFICATION_CARD_WIDTH, EXIT);
                         moveAllNotificationCardsDown();
+                        semaphore.release();
+                        System.out.println("release");
                     }
                 };
                 timer.schedule(timerTask, NOTIFICATION_CARD_SHOW_TIME);

@@ -1,8 +1,8 @@
 package seedu.address.testutil;
 
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Optional;
+import java.util.Set;
 
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Age;
@@ -12,11 +12,9 @@ import seedu.address.model.person.Income;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.policy.Policy;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.model.policy.Policy;
-
-import javax.swing.text.html.Option;
 
 /**
  * A utility class to help with building Person objects.

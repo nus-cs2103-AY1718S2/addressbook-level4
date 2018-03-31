@@ -5,7 +5,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import seedu.address.model.notification.Notification;
 
 /**
  * An UI component that displays information of a {@code Notification}.

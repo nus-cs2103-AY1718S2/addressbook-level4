@@ -11,10 +11,10 @@ import javafx.scene.layout.VBox;
  * Encapsulates all the information and functionalities required for Notification Center.
  */
 public class NotificationCenter {
-    private int NOTIFICATION_CENTER_WIDTH = NotificationCard.NOTIFICATION_CARD_WIDTH +
-            NotificationCard.NOTIFICATION_CARD_X_OFFSET * 3;
-    private int NOTIFICATION_CARD_HEIGHT_IN_CENTER = NotificationCard.NOTIFICATION_CARD_HEIGHT;
-    private int NOTIFICATION_CARD_WIDTH_IN_CENTER = NotificationCard.NOTIFICATION_CARD_WIDTH;
+    private static final int NOTIFICATION_CENTER_WIDTH = NotificationCard.NOTIFICATION_CARD_WIDTH
+            + NotificationCard.NOTIFICATION_CARD_X_OFFSET * 3;
+    private static final int NOTIFICATION_CARD_HEIGHT_IN_CENTER = NotificationCard.NOTIFICATION_CARD_HEIGHT;
+    private static final int NOTIFICATION_CARD_WIDTH_IN_CENTER = NotificationCard.NOTIFICATION_CARD_WIDTH;
     private LinkedList<javafx.scene.layout.Region> notificationCards;
 
     @FXML
@@ -23,7 +23,8 @@ public class NotificationCenter {
     @FXML
     private ScrollPane notificationCenterPlaceHolder;
 
-    public NotificationCenter(VBox notificationCardsBox, javafx.scene.control.ScrollPane notificationCenterPlaceHolder) {
+    public NotificationCenter(VBox notificationCardsBox,
+                              javafx.scene.control.ScrollPane notificationCenterPlaceHolder) {
         notificationCards = new LinkedList<>();
         notificationCards.add(null);
         //for 1 based index
@@ -60,6 +61,9 @@ public class NotificationCenter {
         return notificationCards.size() - 1;
     }
 
+    /**
+     * Adds a notification to the Notification center
+     */
     public void add(NotificationCard newNotificationCard) {
         NotificationCard forCenter = newNotificationCard.getCopyForCenter();
         notificationCards.add(forCenter.getRoot());

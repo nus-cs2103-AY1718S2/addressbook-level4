@@ -2,7 +2,6 @@ package seedu.address.logic;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -13,7 +12,6 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.logic.RequestToDeleteNotificationEvent;
 import seedu.address.commons.events.model.NotificationAddedEvent;
 import seedu.address.commons.events.model.NotificationDeletedEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;

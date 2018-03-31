@@ -4,12 +4,8 @@ import static seedu.address.logic.commands.ChangeThemeCommand.BRIGHT_THEME_CSS_F
 import static seedu.address.logic.commands.ChangeThemeCommand.DARK_THEME_CSS_FILE_NAME;
 import static seedu.address.ui.NotificationCard.NOTIFICATION_CARD_HEIGHT;
 import static seedu.address.ui.NotificationCard.NOTIFICATION_CARD_WIDTH;
-import static seedu.address.ui.NotificationCard.NOTIFICATION_CARD_X_OFFSET;
-import static seedu.address.ui.NotificationCard.NOTIFICATION_CARD_Y_OFFSET;
 
-import java.awt.*;
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
@@ -19,20 +15,14 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -47,10 +37,8 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;
 import seedu.address.commons.events.ui.ShowReviewDialogEvent;
-import seedu.address.commons.events.ui.TestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.notification.Notification;
 import seedu.address.model.theme.Theme;
 
 /**

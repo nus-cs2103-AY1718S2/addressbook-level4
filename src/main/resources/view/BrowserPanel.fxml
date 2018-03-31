@@ -7,12 +7,13 @@
 <?import javafx.scene.web.WebView?>
 
 <!--@@author ngshikang -->
+
 <StackPane stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <WebView fx:id="browser" prefHeight="455.0" prefWidth="758.0">
       <StackPane.margin>
          <Insets top="60.0" />
       </StackPane.margin></WebView>
-  <Text fill="#ffffff" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="  RESULTS DISPLAY" textOrigin="CENTER" translateY="0.5" wrappingWidth="216.80001831054688" StackPane.alignment="TOP_LEFT">
+  <Text fill="#ffffff" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="  RESULTS DISPLAY" textOrigin="CENTER" translateY="0.5" wrappingWidth="750.4000854492188" StackPane.alignment="TOP_LEFT">
     <font>
       <Font name="ADAM.CGPRO" size="24.0" />
     </font>
@@ -20,7 +21,7 @@
       <Insets left="5.0" top="5.0" />
     </StackPane.margin>
   </Text>
-   <Text fx:id="additionalInfo" fill="#ffffff" strokeType="OUTSIDE" strokeWidth="0.0" text="+ Additional Information" StackPane.alignment="TOP_LEFT">
+   <Text fx:id="additionalInfo" fill="#ffffff" strokeType="OUTSIDE" strokeWidth="0.0" text="+ Additional Information" wrappingWidth="735.2000732421875" StackPane.alignment="TOP_LEFT">
       <StackPane.margin>
          <Insets left="20.0" top="38.0" />
       </StackPane.margin>

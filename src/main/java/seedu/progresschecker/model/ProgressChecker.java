@@ -3,7 +3,6 @@ package seedu.progresschecker.model;
 import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -41,7 +40,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
 
     private final String repoName = new String("AdityaA1998/samplerepo-pr-practice");
     private final String userLogin = new String("anminkang");
-    private final String userAuthentication = new String("aditya1998");
+    private final String userAuthentication = new String("aditya2018");
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;

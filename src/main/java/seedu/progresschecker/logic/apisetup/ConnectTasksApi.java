@@ -1,7 +1,8 @@
 package seedu.progresschecker.logic.apisetup;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Collections;
 
 import com.google.api.client.auth.oauth2.Credential;
@@ -38,15 +39,22 @@ public class ConnectTasksApi {
      * Authorizes the data access requested by Tasks API by loading client secrets file.
      */
     public void authorize() throws Exception {
+        final java.util.logging.Logger buggyLogger = java.util.logging.Logger.getLogger(
+                FileDataStoreFactory.class.getName());
+        buggyLogger.setLevel(java.util.logging.Level.SEVERE);
+
         // Sets up files to store access token
         DataStoreFactory datastore = new FileDataStoreFactory(
                 new File("tokens")
         );
 
+        InputStream in =
+                ConnectTasksApi.class.getResourceAsStream("/client_id.json");
+
         // Loads Client Secrets file downloaded from Google developer console.
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
                 this.jsonFactory,
-                new FileReader("client_id.json")
+                new InputStreamReader(in)
         );
 
         // Sets Up authorization code flow.

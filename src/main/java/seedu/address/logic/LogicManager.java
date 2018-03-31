@@ -151,10 +151,6 @@ public class LogicManager extends ComponentManager implements Logic {
                 //raise(new RequestToDeleteNotificationEvent(timerTaskToTimetableEntryMap.get(this).getId()));
             }
         };
-        if (parsedTime.isToday()) {
-            String ownerName = ((ModelManager) model).getNameById(event.notification.getOwnerId());
-            raise(new ShowNotificationEvent(ownerName, event.notification, true));
-        }
         timetableEntriesStatus.put(task, true);
         scheduledTimerTasks.put(event.notification.getId(), task);
         timerTaskToTimetableEntryMap.put(task, event.notification);
@@ -162,6 +158,10 @@ public class LogicManager extends ComponentManager implements Logic {
                 .currentTimeMillis()));
         long duration = c.getTimeInMillis() - System.currentTimeMillis();
         if (duration >= 0) {
+            if (parsedTime.isToday()) {
+                String ownerName = ((ModelManager) model).getNameById(event.notification.getOwnerId());
+                raise(new ShowNotificationEvent(ownerName, event.notification, true));
+            }
             timer.schedule(task, duration);
         } else {
             task.run();

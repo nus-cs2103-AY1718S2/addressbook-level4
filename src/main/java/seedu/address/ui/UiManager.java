@@ -4,6 +4,8 @@ import java.awt.AWTException;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -21,6 +23,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;
+import seedu.address.commons.events.ui.ToggleNotificationCenterEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -45,6 +48,7 @@ public class UiManager extends ComponentManager implements Ui {
     private MainWindow mainWindow;
 
     private boolean isWindowMinimized;
+    private Queue<ShowNotificationEvent> delayedNotifications;
 
     public UiManager(Logic logic, Config config, UserPrefs prefs) {
         super();
@@ -52,6 +56,7 @@ public class UiManager extends ComponentManager implements Ui {
         this.config = config;
         this.prefs = prefs;
         isWindowMinimized = false;
+        delayedNotifications = new LinkedList<>();
     }
 
     @Override
@@ -76,6 +81,9 @@ public class UiManager extends ComponentManager implements Ui {
             public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
                 System.out.println("minimized:" + t1.booleanValue());
                 isWindowMinimized = t1;
+                if (!isWindowMinimized) {
+                    showDelayedNotifications();
+                }
             }
         });
     }
@@ -141,12 +149,26 @@ public class UiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         if (isWindowMinimized) {
             showNotificationOnWindows(event);
+            delayedNotifications.offer(event);
+        } else {
+            showNotificationInApp(event);
         }
-        showNotificationInApp(event);
+    }
+
+    @Subscribe
+    private void handleToggleNotificationEvent(ToggleNotificationCenterEvent event) {
+        System.out.println("Hanlding");
+        mainWindow.toggleNotificationCenter();
     }
 
     private void showNotificationInApp(ShowNotificationEvent event) {
         mainWindow.showNewNotification(event);
+    }
+
+    private void showDelayedNotifications() {
+        for (ShowNotificationEvent e: delayedNotifications) {
+            showNotificationInApp(e);
+        }
     }
 
     /**
@@ -163,8 +185,8 @@ public class UiManager extends ComponentManager implements Ui {
             e.printStackTrace();
         }
 
-        trayIcon.displayMessage("Task ended", event.getOwnerName() + " has " + event.getTitle()
-                + " ended at " + event.getEndTime(), TrayIcon.MessageType.INFO);
+        trayIcon.displayMessage("Task ended", event.getOwnerName() + " has " + event.getNotification().getTitle()
+                + " ended at " + event.getNotification().getEndDateDisplay(), TrayIcon.MessageType.INFO);
 
     }
 }

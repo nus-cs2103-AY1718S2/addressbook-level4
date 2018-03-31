@@ -12,6 +12,8 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="450" minHeight="600">
   <icons>
@@ -24,7 +26,7 @@
         <URL value="@Extensions.css" />
       </stylesheets>
 
-      <StackPane fx:id="test" alignment="BOTTOM_RIGHT">
+      <StackPane fx:id="mainStage" alignment="BOTTOM_RIGHT">
         <children>
           <VBox>
             <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
@@ -66,7 +68,9 @@
 
             <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
           </VBox>
-          <VBox fx:id="test1" style="-fx-background-color:yellow" maxWidth="400" translateX="400"/>
+          <ScrollPane fx:id="notificationCenterPlaceHolder" maxWidth="330" styleClass="notification-scroll-pane" opacity="0.98">
+            <VBox fx:id="notificationCardsBox" opacity="1"/>
+          </ScrollPane>
         </children>
       </StackPane>
     </Scene>

@@ -75,6 +75,10 @@ public class MainApp extends Application {
         initEventsCenter();
     }
 
+    private void initNotifications() {
+        model.findAllSavedNotifications();
+    }
+
     private String getApplicationParameter(String parameterName) {
         Map<String, String> applicationParameters = getParameters().getNamed();
         return applicationParameters.get(parameterName);
@@ -185,6 +189,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
         ui.start(primaryStage);
+        model.findAllSavedNotifications();
     }
 
     @Override

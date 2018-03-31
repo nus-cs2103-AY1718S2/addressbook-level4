@@ -186,4 +186,13 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    @Override
+    public void findAllSavedNotifications() {
+
+        //schedule all notification
+        for (Notification n: getAddressBook().getNotificationsList()) {
+            System.out.println("Scheduling all notification");
+            indicateNotificationAdded(n);
+        }
+    }
 }

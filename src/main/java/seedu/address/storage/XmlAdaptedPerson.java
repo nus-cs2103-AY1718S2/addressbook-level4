@@ -1,8 +1,12 @@
 package seedu.address.storage;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
-import javax.swing.text.html.Option;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -166,7 +170,8 @@ public class XmlAdaptedPerson {
         final Age age = new Age(this.age);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags, income, actualSpending, expectedSpending, age, Optional.empty());
+        return new Person(name, phone, email, address, tags, income,
+                actualSpending, expectedSpending, age, Optional.empty());
     }
 
     @Override

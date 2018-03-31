@@ -21,11 +21,13 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.logic.AddressBookUnlockedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;
 import seedu.address.commons.events.ui.ToggleNotificationCenterEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.LogicManager;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -147,18 +149,29 @@ public class UiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handleShowNotificationEvent(ShowNotificationEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if (isWindowMinimized) {
-            showNotificationOnWindows(event);
+        if (LogicManager.isLocked()) {
             delayedNotifications.offer(event);
         } else {
-            showNotificationInApp(event);
+            if (isWindowMinimized) {
+                showNotificationOnWindows(event);
+                delayedNotifications.offer(event);
+            } else {
+                showNotificationInApp(event);
+            }
         }
     }
 
     @Subscribe
     private void handleToggleNotificationEvent(ToggleNotificationCenterEvent event) {
-        System.out.println("Hanlding");
-        mainWindow.toggleNotificationCenter();
+        System.out.println("Handling");
+        if (!LogicManager.isLocked()) {
+            mainWindow.toggleNotificationCenter();
+        }
+    }
+
+    @Subscribe
+    private void handleAddressBookUnlockedEvent(AddressBookUnlockedEvent event) {
+        showDelayedNotifications();
     }
 
     private void showNotificationInApp(ShowNotificationEvent event) {

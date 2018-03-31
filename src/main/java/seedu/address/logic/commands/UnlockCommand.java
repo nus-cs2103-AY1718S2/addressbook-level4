@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.logic.AddressBookUnlockedEvent;
 import seedu.address.logic.LogicManager;
 
 /**
@@ -29,6 +31,7 @@ public class UnlockCommand extends Command {
 
         if (this.password.compareTo(LogicManager.getPassword()) == 0) {
             LogicManager.unLock();
+            EventsCenter.getInstance().post(new AddressBookUnlockedEvent());
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
             return new CommandResult(MESSAGE_INCORRECT_PASSWORD);

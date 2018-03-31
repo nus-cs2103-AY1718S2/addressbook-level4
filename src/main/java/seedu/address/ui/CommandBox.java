@@ -1,5 +1,9 @@
 package seedu.address.ui;
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -9,6 +13,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.ToggleNotificationCenterEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -22,10 +27,12 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
+    private static final int DOUBLE_KEY_TOLERANCE = 300;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private Queue<KeyEvent> consecutiveShiftPressed;
 
     @FXML
     private TextField commandTextField;
@@ -36,6 +43,7 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+        consecutiveShiftPressed = new LinkedList<>();
     }
 
     /**
@@ -55,9 +63,40 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        case SHIFT:
+            registerShiftPressed(keyEvent);
+            if (consecutiveShiftPressed.size() == 2) {
+                resetWaitForSecondShift();
+                raise(new ToggleNotificationCenterEvent());
+            }
+            break;
         default:
             // let JavaFx handle the keypress
         }
+    }
+
+    /**
+     * Records SHIFT key has been registered and waits for the next SHIFT.
+     */
+    private void registerShiftPressed(KeyEvent keyEvent) {
+        consecutiveShiftPressed.offer(keyEvent);
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                resetWaitForSecondShift();
+            }
+        }, DOUBLE_KEY_TOLERANCE);
+    }
+
+    /**
+     * Stops the wait for the second consecutive SHIFT (for double SHIFT keyEvent) and reset the metadata
+     */
+    private void resetWaitForSecondShift() {
+        for (KeyEvent ke: consecutiveShiftPressed) {
+            ke.consume();
+        }
+        consecutiveShiftPressed.clear();
     }
 
     /**

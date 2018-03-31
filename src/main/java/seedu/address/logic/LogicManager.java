@@ -125,6 +125,7 @@ public class LogicManager extends ComponentManager implements Logic {
         return isLocked;
     }
 
+
     @Subscribe
     private void handleTimetableEntryAddedEvent(NotificationAddedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

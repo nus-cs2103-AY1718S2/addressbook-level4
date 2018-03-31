@@ -26,6 +26,7 @@ import seedu.address.commons.events.ui.ShowNotificationEvent;
 import seedu.address.commons.events.ui.ToggleNotificationCenterEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.LogicManager;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -157,8 +158,10 @@ public class UiManager extends ComponentManager implements Ui {
 
     @Subscribe
     private void handleToggleNotificationEvent(ToggleNotificationCenterEvent event) {
-        System.out.println("Hanlding");
-        mainWindow.toggleNotificationCenter();
+        System.out.println("Handling");
+        if (!LogicManager.isLocked()) {
+            mainWindow.toggleNotificationCenter();
+        }
     }
 
     private void showNotificationInApp(ShowNotificationEvent event) {

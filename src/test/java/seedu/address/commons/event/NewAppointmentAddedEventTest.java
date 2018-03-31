@@ -2,7 +2,7 @@ package seedu.address.commons.event;
 
 import org.junit.Test;
 
-import seedu.address.commons.events.ui.NewAppointmentAddedEvent;
+import seedu.address.commons.events.model.NewAppointmentAddedEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.testutil.AppointmentBuilder;
 

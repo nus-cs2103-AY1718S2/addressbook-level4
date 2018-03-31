@@ -97,7 +97,10 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void assertTodaysBirthdayListWithZeroPerson() {
         LocalDate currentDate = LocalDate.now();
-        int currentDay = currentDate.getDayOfMonth() + 1;
+        int currentDay = currentDate.getDayOfMonth() - 1;
+        if (currentDate.getDayOfMonth() == 1) {
+            currentDay = currentDate.getDayOfMonth() + 1;
+        }
         int currentMonth = currentDate.getMonthValue();
         int currentYear = currentDate.getYear();
         StringBuilder string = new StringBuilder();

@@ -51,6 +51,10 @@ public class CalendarPanelTest extends GuiUnitTest {
         //can't zoom out anymore, stays at Year Page
         raiseZoomOutEvent();
         assertEquals(calendarPanel.getCalendarView().getYearPage(), calendarPanel.getPageBase());
+
+        //zoom in to Month Page
+        raiseZoomInEvent();
+        assertEquals(calendarPanel.getCalendarView().getMonthPage(), calendarPanel.getPageBase());
     }
 
     /**

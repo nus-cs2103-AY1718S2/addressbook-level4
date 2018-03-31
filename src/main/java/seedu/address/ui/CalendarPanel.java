@@ -15,6 +15,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.AppointmentDeletedEvent;
 import seedu.address.commons.events.ui.NewAppointmentAddedEvent;
 import seedu.address.model.appointment.Appointment;
 
@@ -90,6 +91,25 @@ public class CalendarPanel extends UiPart<CalendarView> {
     }
 
     /**
+     * Deletes an entry with the {@code appointment} details from the calendar
+     */
+    private void unloadEntry(Appointment appointment) {
+        String dateString = appointment.getDate().date;
+        String startTimeString = appointment.getStartTime().time;
+        String endTimeString = appointment.getEndTime().time;
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
+        LocalDateTime startDateTime = LocalDateTime.parse(dateString + " " + startTimeString, formatter);
+        LocalDateTime endDateTime = LocalDateTime.parse(dateString + " " + endTimeString, formatter);
+
+        Entry entry = new Entry();
+        entry.setInterval(startDateTime, endDateTime);
+        entry.setLocation(appointment.getLocation().value);
+        entry.setTitle(ENTRY_TITLE + appointment.getName());
+        calendar.removeEntry(entry);
+    }
+
+    /**
      * Handles the event where a new appointment is added by loading the appointment into the calendar
      * @param event contains the newly added appointment
      */
@@ -97,6 +117,16 @@ public class CalendarPanel extends UiPart<CalendarView> {
     private void handleNewAppointmentAddedEvent(NewAppointmentAddedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadEntry(event.getAppointmentAdded());
+    }
+
+    /**
+     * Handles the event where an appointment is deleted by unloading the appointment from the calendar
+     * @param event contains the deleted appointment
+     */
+    @Subscribe
+    private void handleAppointmentDeletedEvent(AppointmentDeletedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        unloadEntry(event.getAppointmentDeleted());
     }
 
     /**

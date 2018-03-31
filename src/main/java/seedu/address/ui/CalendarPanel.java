@@ -36,6 +36,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
     @javafx.fxml.FXML
     private CalendarView calendarView;
     private Calendar calendar;
+    private PageBase pageBase;
 
     public CalendarPanel(ObservableList<Appointment> appointments) {
         super(FXML);
@@ -44,6 +45,14 @@ public class CalendarPanel extends UiPart<CalendarView> {
         loadEntries(appointments);
         updateTime();
         registerAsAnEventHandler(this);
+    }
+
+    public CalendarView getCalendarView() {
+        return calendarView;
+    }
+
+    public PageBase getPageBase() {
+        return pageBase;
     }
 
     /**
@@ -64,6 +73,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
 
         calendarView.setRequestedTime(LocalTime.now());
         calendarView.showMonthPage();
+        pageBase = calendarView.getSelectedPage();
     }
 
     /**
@@ -115,7 +125,6 @@ public class CalendarPanel extends UiPart<CalendarView> {
      * Zooms in on the calendar if possible
      */
     private void zoomIn() {
-        PageBase pageBase = calendarView.getSelectedPage();
         if (pageBase.equals(calendarView.getYearPage())) {
             calendarView.showMonthPage();
         } else if (pageBase.equals(calendarView.getMonthPage())) {
@@ -123,6 +132,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
         } else if (pageBase.equals(calendarView.getWeekPage())) {
             calendarView.showDayPage();
         }
+        pageBase = calendarView.getSelectedPage();
     }
 
     /**
@@ -138,7 +148,6 @@ public class CalendarPanel extends UiPart<CalendarView> {
      * Zooms out on the calendar if possible
      */
     private void zoomOut() {
-        PageBase pageBase = calendarView.getSelectedPage();
         if (pageBase.equals(calendarView.getDayPage())) {
             calendarView.showWeekPage();
         } else if (pageBase.equals(calendarView.getWeekPage())) {
@@ -146,6 +155,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
         } else if (pageBase.equals(calendarView.getMonthPage())) {
             calendarView.showYearPage();
         }
+        pageBase = calendarView.getSelectedPage();
     }
 
     /**

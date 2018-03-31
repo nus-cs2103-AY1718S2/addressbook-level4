@@ -14,7 +14,7 @@ import seedu.address.ui.MainWindow;
 public class LocateCommand extends Command {
     public static final String COMMAND_WORD = "locate";
     public static final String COMMAND_ALIAS = "lo";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose fields contain any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Locate person whose fields contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Valid specifiers are -n, -p, -e, -a, -t, for NAME, PHONE, EMAIL, ADDRESS and TAGS"
             + " respectively \n"

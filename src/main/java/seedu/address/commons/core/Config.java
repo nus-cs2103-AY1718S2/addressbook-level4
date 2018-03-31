@@ -9,6 +9,7 @@ import java.util.logging.Level;
 public class Config {
 
     public static final String DEFAULT_CONFIG_FILE = "config.json";
+    public static final String DEFAULT_VENUEINFORMATION_FILE = "/json/venueinformation.json";
 
     // Config values customizable through config file
     private String appTitle = "Address App";

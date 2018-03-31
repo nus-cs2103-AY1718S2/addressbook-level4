@@ -72,7 +72,7 @@ public class MainApp extends Application {
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         ReadOnlyVenueInformation venueInformationStorage =
-                new ReadOnlyJsonVenueInformation("/json/venueinformation.json");
+                new ReadOnlyJsonVenueInformation(config.DEFAULT_VENUEINFORMATION_FILE);
         initVenueInformation(venueInformationStorage);
         storage = new StorageManager(addressBookStorage, userPrefsStorage, venueInformationStorage);
 

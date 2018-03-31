@@ -34,7 +34,7 @@ public class ZoomOutCommandTest {
     }
 
     /**
-     * Handles the event where the user is trying to zoom in on the calendar
+     * Handles the event where the user is trying to zoom out on the calendar
      */
     @Subscribe
     private void handleZoomOutEvent(ZoomOutEvent event) {

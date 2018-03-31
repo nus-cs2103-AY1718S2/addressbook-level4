@@ -34,4 +34,11 @@ public class SwitchCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, featureTarget));
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SwitchCommand // instanceof handles nulls
+                && this.featureTarget.equals(((SwitchCommand) other).featureTarget)); // state check
+    }
+
 }

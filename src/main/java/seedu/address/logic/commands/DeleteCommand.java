@@ -212,8 +212,8 @@ public class DeleteCommand extends UndoableCommand {
         try {
             requireNonNull(petPatientToDelete);
             List<Appointment> appointmentDependenciesDeleted = model.deleteAppointmentDependencies(petPatientToDelete);
-            for (Appointment appointment : appointmentDependenciesDeleted){
-               deleteDependenciesList += "\n" + (String.format(MESSAGE_DELETE_APPOINTMENT_SUCCESS, appointment));
+            for (Appointment appointment : appointmentDependenciesDeleted) {
+                deleteDependenciesList += "\n" + (String.format(MESSAGE_DELETE_APPOINTMENT_SUCCESS, appointment));
             }
             model.deletePetPatient(petPatientToDelete);
         } catch (PetPatientNotFoundException ppnfe) {

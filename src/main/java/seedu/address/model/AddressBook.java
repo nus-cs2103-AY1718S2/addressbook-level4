@@ -323,7 +323,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws PetDependencyNotEmptyException if the {@code key} still contains pet patients it is tied to.
      */
     public boolean removePerson(Person key) throws PersonNotFoundException, PetDependencyNotEmptyException {
-       petPatientDependenciesExist(key);
+        petPatientDependenciesExist(key);
 
         if (persons.remove(key)) {
             removeUselessTags();
@@ -355,7 +355,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removePetPatient(PetPatient key)
             throws PetPatientNotFoundException, AppointmentDependencyNotEmptyException {
-       appointmentDependenciesExist(key);
+        appointmentDependenciesExist(key);
 
         if (petPatients.remove(key)) {
             removeUselessTags();

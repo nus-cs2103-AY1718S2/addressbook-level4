@@ -7,6 +7,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentDependencyNotEmptyException;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicateNricException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -56,7 +57,7 @@ public interface Model {
     void deleteTag(Tag tag);
 
     /** Adds the given appointment */
-    void addAppointment(Appointment appointment) throws DuplicateAppointmentException;
+    void addAppointment(Appointment appointment) throws DuplicateAppointmentException, DuplicateDateTimeException;
 
     /** Deletes the given appointment. */
     void deleteAppointment(Appointment target) throws AppointmentNotFoundException;

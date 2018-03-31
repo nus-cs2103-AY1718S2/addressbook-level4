@@ -7,6 +7,6 @@ import seedu.address.commons.exceptions.DuplicateDataException;
  */
 public class DuplicateAppointmentException extends DuplicateDataException {
     public DuplicateAppointmentException() {
-        super("Operation would result in duplicate persons");
+        super("Operation would result in duplicate appointments");
     }
 }

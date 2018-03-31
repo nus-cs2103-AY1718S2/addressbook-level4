@@ -18,6 +18,7 @@ import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.appointment.exceptions.AppointmentDependencyNotEmptyException;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicateNricException;
@@ -76,7 +77,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
-    public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
+    public void setAppointments(List<Appointment> appointments)
+            throws DuplicateAppointmentException, DuplicateDateTimeException {
         this.appointments.setAppointments(appointments);
     }
 
@@ -109,6 +111,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             setAppointments(syncedAppointmentList);
         } catch (DuplicateAppointmentException dae) {
+            throw new AssertionError("AddressBook should not have duplicate appointments.");
+        } catch (DuplicateDateTimeException ddte) {
             throw new AssertionError("AddressBook should not have appointments on the same slot");
         }
 
@@ -169,7 +173,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws DuplicateAppointmentException if an equivalent person already exists.
      */
-    public void addAppointment(Appointment a) throws DuplicateAppointmentException {
+    public void addAppointment(Appointment a) throws DuplicateAppointmentException, DuplicateDateTimeException {
         Appointment appointment = syncWithAppointmentMasterTagList(a);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any appointment

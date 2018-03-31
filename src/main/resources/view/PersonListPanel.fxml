@@ -8,9 +8,9 @@
 
 <!--@@author ngshikang -->
 <VBox stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <Text fill="#ffffff" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Addressees" textOrigin="CENTER" translateY="1.0">
+   <Text fill="#ffffff" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="ADDRESSEES" textOrigin="CENTER" translateY="1.0">
       <font>
-         <Font name="ADAM.CGPRO" size="20.0" />
+         <Font name="ADAM.CGPRO" size="14.0" />
       </font>
       <VBox.margin>
          <Insets bottom="5.0" left="5.0" top="5.0" />

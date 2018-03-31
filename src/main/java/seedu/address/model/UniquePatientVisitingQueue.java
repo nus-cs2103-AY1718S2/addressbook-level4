@@ -15,30 +15,30 @@ import seedu.address.model.patient.exceptions.PatientNotFoundException;
  * Patient visiting queue in Imdb
  * Gurantees: immutable
  */
-public class UniquePatientVisitingQueue implements Iterable<Patient> {
+public class UniquePatientVisitingQueue implements Iterable<Integer> {
 
-    private LinkedList<Patient> visitingQueue;
+    private LinkedList<Integer> visitingQueue;
 
     public UniquePatientVisitingQueue() {
-        visitingQueue = new LinkedList<Patient>();
+        visitingQueue = new LinkedList<Integer>();
     }
 
     /**
      * Adds a patient to the visiting queue.
      *
-     * @throws DuplicatePatientException if the patient to add is a duplicate of an existing patient in the queue.
+     * @throws DuplicatePatientException if the patient index to add is a duplicate of an existing patient in the queue.
      */
-    public void add(Patient patient) throws DuplicatePatientException {
-        requireNonNull(patient);
+    public void add(int patientIndex) throws DuplicatePatientException {
+        requireNonNull(patientIndex);
 
-        if (contains(patient)) {
+        if (contains(patientIndex)) {
             throw new DuplicatePatientException();
         }
 
-        visitingQueue.add(patient);
+        visitingQueue.add(patientIndex);
     }
 
-    public Patient getNextPatient() {
+    public int getNextPatient() {
         return visitingQueue.peekFirst();
     }
 
@@ -47,7 +47,7 @@ public class UniquePatientVisitingQueue implements Iterable<Patient> {
      *
      * @throws PatientNotFoundException if the queue is empty.
      */
-    public Patient removePatient() throws PatientNotFoundException {
+    public int removePatient() throws PatientNotFoundException {
         if (visitingQueue.isEmpty()) {
             throw new PatientNotFoundException();
         }
@@ -55,20 +55,20 @@ public class UniquePatientVisitingQueue implements Iterable<Patient> {
         return visitingQueue.removeFirst();
     }
 
-    public LinkedList<Patient> getVisitingQueue() {
+    public LinkedList<Integer> getVisitingQueue() {
         return visitingQueue;
     }
 
     /**
      * Returns true if the queue contains an equivalent patient as the given argument.
      */
-    public boolean contains(Patient toCheck) {
+    public boolean contains(int toCheck) {
         requireNonNull(toCheck);
         return visitingQueue.contains(toCheck);
     }
 
     @Override
-    public Iterator<Patient> iterator() {
+    public Iterator<Integer> iterator() {
         return visitingQueue.iterator();
     }
 
@@ -87,8 +87,8 @@ public class UniquePatientVisitingQueue implements Iterable<Patient> {
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
-    public ObservableList<Patient> asObservableList() {
-        ObservableList<Patient> patientList = FXCollections.observableArrayList(this.visitingQueue);
+    public ObservableList<Integer> asObservableList() {
+        ObservableList<Integer> patientList = FXCollections.observableArrayList(this.visitingQueue);
         return FXCollections.unmodifiableObservableList(patientList);
     }
 }

@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_JOBS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
@@ -24,6 +25,13 @@ public class ModelManagerTest {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredPersonList().remove(0);
+    }
+
+    @Test
+    public void getFilteredJobList_modifyList_throwsUnsupportedOperationException() {
+        ModelManager modelManager = new ModelManager();
+        thrown.expect(UnsupportedOperationException.class);
+        modelManager.getFilteredJobList().remove(0);
     }
 
     @Test
@@ -53,9 +61,10 @@ public class ModelManagerTest {
         String[] keywords = ALICE.getName().fullName.split("\\s+");
         modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
-
+        
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        modelManager.updateFilteredJobList(PREDICATE_SHOW_ALL_JOBS);
 
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();

@@ -2,6 +2,8 @@
 package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.LoadMapPanelEvent;
+import seedu.address.commons.events.ui.RemoveMapPanelEvent;
 import seedu.address.commons.events.ui.SwitchFeatureEvent;
 
 /**
@@ -27,6 +29,8 @@ public class SwitchCommand extends Command {
     @Override
     public CommandResult execute() {
         EventsCenter.getInstance().post(new SwitchFeatureEvent(featureTarget));
+        EventsCenter.getInstance().post(new RemoveMapPanelEvent(featureTarget));
+        EventsCenter.getInstance().post(new LoadMapPanelEvent(featureTarget));
         return new CommandResult(String.format(MESSAGE_SUCCESS, featureTarget));
     }
 

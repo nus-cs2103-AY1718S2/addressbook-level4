@@ -10,7 +10,9 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.LoadMapPanelEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.RemoveMapPanelEvent;
 import seedu.address.commons.events.ui.SwitchFeatureEvent;
 
 /**
@@ -74,11 +76,17 @@ public class DailySchedulerPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleSwitchFeatureEvent(SwitchFeatureEvent event) {
+    private void handleLoadMapPanelEvent(LoadMapPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         if (event.getFeatureTarget().equals("scheduler")) {
             loadDirectionPanel();
-        } else {
+        }
+    }
+
+    @Subscribe
+    private void handleRemoveMapPanelEvent(RemoveMapPanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (!event.getFeatureTarget().equals("scheduler")) {
             removeDirectionPanel();
         }
     }

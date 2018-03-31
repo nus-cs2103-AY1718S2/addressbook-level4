@@ -16,6 +16,7 @@ import seedu.organizer.model.task.Priority;
 import seedu.organizer.model.task.Status;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
+import seedu.organizer.model.user.User;
 
 /**
  * Contains utility methods for populating {@code Organizer} with sample data.
@@ -25,22 +26,22 @@ public class SampleDataUtil {
         return new Task[]{
             new Task(new Name("Learn PHP"), new Priority("5"), new Deadline("2018-04-30"),
                     new Description("Find a PHP tutorial and learn from it"),
-                    getTagSet("colleagues")),
+                    getTagSet("colleagues"), new User("admin", "admin")),
             new Task(new Name("Learn Java"), new Priority("4"), new Deadline("2018-07-07"),
                     new Description("Learn OOP"),
-                    getTagSet("classmates")),
+                    getTagSet("classmates"), new User("admin", "admin")),
             new Task(new Name("Interview preparation"), new Priority("3"), new Deadline("2018-04-03"),
                     new Description("Prepare for MOH Interview"),
-                    getTagSet("family")),
+                    getTagSet("family"), new User("admin", "admin")),
             new Task(new Name("Revision"), new Priority("2"), new Deadline("2018-03-27"),
                     new Description("Revise Topic 3 for CS2103T"),
-                    getTagSet("neighbours")),
+                    getTagSet("neighbours"), new User("admin", "admin")),
             new Task(new Name("Study"), new Priority("1"), new Deadline("2018-03-29"),
                     new Description("Study for CS2103T Exam"),
-                    getTagSet("colleagues", "friends")),
+                    getTagSet("colleagues", "friends"), new User("admin", "admin")),
             new Task(new Name("Exam"), new Priority("0"), new Deadline("2018-05-11"),
                         new Description("CS2103T Exam"),
-                        getTagSet("friends"))
+                        getTagSet("friends"), new User("admin", "admin"))
         };
     }
 

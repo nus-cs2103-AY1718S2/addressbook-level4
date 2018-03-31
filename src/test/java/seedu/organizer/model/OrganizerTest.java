@@ -27,6 +27,7 @@ import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
+import seedu.organizer.model.user.User;
 import seedu.organizer.testutil.OrganizerBuilder;
 import seedu.organizer.testutil.TaskBuilder;
 
@@ -63,7 +64,8 @@ public class OrganizerTest {
         // Repeat GROCERY twice
         List<Task> newTasks = Arrays.asList(GROCERY, GROCERY);
         List<Tag> newTags = new ArrayList<>(GROCERY.getTags());
-        OrganizerStub newData = new OrganizerStub(newTasks, newTags);
+        List<User> users = Arrays.asList(new User("admin", "admin"));
+        OrganizerStub newData = new OrganizerStub(newTasks, newTags, users);
 
         thrown.expect(AssertionError.class);
         organizer.resetData(newData);
@@ -140,10 +142,12 @@ public class OrganizerTest {
     private static class OrganizerStub implements ReadOnlyOrganizer {
         private final ObservableList<Task> tasks = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final ObservableList<User> users = FXCollections.observableArrayList();
 
-        OrganizerStub(Collection<Task> tasks, Collection<? extends Tag> tags) {
+        OrganizerStub(Collection<Task> tasks, Collection<? extends Tag> tags, Collection<? extends User> users) {
             this.tasks.setAll(tasks);
             this.tags.setAll(tags);
+            this.users.setAll(users);
         }
 
         @Override
@@ -152,8 +156,18 @@ public class OrganizerTest {
         }
 
         @Override
+        public ObservableList<Task> getCurrentUserTaskList() {
+            return tasks;
+        }
+
+        @Override
         public ObservableList<Tag> getTagList() {
             return tags;
+        }
+
+        @Override
+        public ObservableList<User> getUserList() {
+            return users;
         }
     }
 

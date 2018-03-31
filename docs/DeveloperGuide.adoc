@@ -857,6 +857,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |recover my past data |rewrite existing data by recovering past data when necessary
 
+|`* *`|user using the same machine as others |have my tasks privatized | avoid privacy issues
+
+|`* *`|user using the same machine as others |create a user account |
+
+|`* *`|user using the same machine as others |login to PrioriTask with my own account |manage my own tasks
+
+|`* *`|user using the same machine as others |logout of PrioriTask |ensure privacy of my tasks
+
+|`* *`|user who has a user account |retrieve my password |login to my account if I forget my password
 |=======================================================================
 
 _{More to be added}_

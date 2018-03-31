@@ -19,6 +19,7 @@ import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
 import seedu.organizer.model.task.Status;
 import seedu.organizer.model.task.Task;
+import seedu.organizer.model.user.User;
 
 /**
  * JAXB-friendly version of the Task.
@@ -48,6 +49,9 @@ public class XmlAdaptedTask {
     @XmlElement
     private List<XmlAdaptedSubtask> subtasks = new ArrayList<>();
 
+    @XmlElement(required = true)
+    private XmlAdaptedUser user;
+
     /**
      * Constructs an XmlAdaptedTask.
      * This is the no-arg constructor that is required by JAXB.
@@ -60,7 +64,7 @@ public class XmlAdaptedTask {
      */
     public XmlAdaptedTask(String name, String priority, String deadline, String dateadded, String datecompleted,
                           String description, Boolean status, List<XmlAdaptedTag> tagged,
-                          List<XmlAdaptedSubtask> subtasks) {
+                          List<XmlAdaptedSubtask> subtasks, XmlAdaptedUser user) {
         this.name = name;
         this.priority = priority;
         this.deadline = deadline;
@@ -74,6 +78,7 @@ public class XmlAdaptedTask {
         if (subtasks != null) {
             this.subtasks = new ArrayList<>(subtasks);
         }
+        this.user = user;
     }
 
     /**
@@ -97,6 +102,7 @@ public class XmlAdaptedTask {
         for (Subtask subtask: source.getSubtasks()) {
             subtasks.add(new XmlAdaptedSubtask(subtask));
         }
+        user = new XmlAdaptedUser(source.getUser());
     }
 
     /**
@@ -114,6 +120,14 @@ public class XmlAdaptedTask {
         for (XmlAdaptedSubtask subtask : subtasks) {
             personSubtasks.add(subtask.toModelType());
         }
+
+        if (this.user == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, User.class.getSimpleName()));
+        }
+        if (!User.isValidUsername(this.user.getUsername()) || !User.isValidPassword(this.user.getPassword())) {
+            throw new IllegalValueException(User.MESSAGE_USER_CONSTRAINTS);
+        }
+        final User user = new User(this.user.getUsername(), this.user.getPassword());
 
         if (this.name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
@@ -174,7 +188,7 @@ public class XmlAdaptedTask {
 
         final List<Subtask> subtasks = new ArrayList<>(personSubtasks);
 
-        return new Task(name, priority, deadline, dateadded, datecompleted, description, status, tags, subtasks);
+        return new Task(name, priority, deadline, dateadded, datecompleted, description, status, tags, subtasks, user);
     }
 
     @Override
@@ -195,6 +209,7 @@ public class XmlAdaptedTask {
                 && Objects.equals(datecompleted, otherTask.datecompleted)
                 && Objects.equals(description, otherTask.description)
                 && Objects.equals(status, otherTask.status)
+                && Objects.equals(user, otherTask.user)
                 && tagged.equals(otherTask.tagged);
     }
 }

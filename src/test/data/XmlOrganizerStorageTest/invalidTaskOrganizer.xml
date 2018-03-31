@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addressbook>
+<organizer>
     <!-- Task with invalid name field -->
     <tasks>
         <name>St!@#$dy</name>
         <priority isPrivate="false">9</priority>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
+        <user>
+            <username>admin</username>
+            <password>admin</password>
+        </user>
     </tasks>
-</addressbook>
+    <users>
+        <username>admin</username>
+        <password>admin</password>
+    </users>
+</organizer>

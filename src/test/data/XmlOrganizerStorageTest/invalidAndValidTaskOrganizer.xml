@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addressbook>
+<organizer>
     <!-- Valid Task -->
     <tasks>
         <name>Revision</name>
         <priority isPrivate="false">9</priority>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
+        <user>
+            <username>admin</username>
+            <password>admin</password>
+        </user>
     </tasks>
     <!-- Task with invalid priority field -->
     <tasks>
@@ -13,5 +17,13 @@
         <priority isPrivate="false">948asdf2424</priority>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
+        <user>
+            <username>admin</username>
+            <password>admin</password>
+        </user>
     </tasks>
-</addressbook>
+    <users>
+        <username>admin</username>
+        <password>admin</password>
+    </users>
+</organizer>

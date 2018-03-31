@@ -25,6 +25,10 @@ import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
+import seedu.organizer.model.user.User;
+import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
+import seedu.organizer.model.user.exceptions.DuplicateUserException;
+import seedu.organizer.model.user.exceptions.UserNotFoundException;
 import seedu.organizer.testutil.TaskBuilder;
 
 public class AddCommandTest {
@@ -97,6 +101,21 @@ public class AddCommandTest {
      * A default model stub that have all of the methods failing.
      */
     private class ModelStub implements Model {
+        @Override
+        public void addUser(User user) throws DuplicateUserException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void loginUser(User user) throws UserNotFoundException, CurrentlyLoggedInException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void deleteCurrentUserTasks() {
+            fail("This method should not be called");
+        }
+
         @Override
         public void addTask(Task task) throws DuplicateTaskException {
             fail("This method should not be called.");

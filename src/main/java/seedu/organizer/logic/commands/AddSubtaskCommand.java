@@ -3,6 +3,7 @@ package seedu.organizer.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
+import static seedu.organizer.model.ModelManager.getCurrentlyLoggedInUser;
 import static seedu.organizer.model.subtask.UniqueSubtaskList.DuplicateSubtaskException;
 
 import java.util.List;
@@ -101,7 +102,7 @@ public class AddSubtaskCommand extends UndoableCommand {
         updatedSubtasks.add(toAdd);
 
         return new Task(updatedName, updatedPriority, updatedDeadline, oldDateAdded, oldDateCompleted,
-                updatedDescription, updatedStatus, updatedTags, updatedSubtasks.toList());
+                updatedDescription, updatedStatus, updatedTags, updatedSubtasks.toList(), getCurrentlyLoggedInUser());
     }
 
     @Override

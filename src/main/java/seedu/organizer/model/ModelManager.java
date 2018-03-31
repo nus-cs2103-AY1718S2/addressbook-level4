@@ -16,12 +16,19 @@ import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
+import seedu.organizer.model.user.User;
+import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
+import seedu.organizer.model.user.exceptions.DuplicateUserException;
+import seedu.organizer.model.user.exceptions.UserNotFoundException;
 
 /**
  * Represents the in-memory model of the organizer book data.
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
+
+    private static User currentlyLoggedInUser = null;
+
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final Organizer organizer;
@@ -42,6 +49,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     public ModelManager() {
         this(new Organizer(), new UserPrefs());
+    }
+
+    public static User getCurrentlyLoggedInUser() {
+        return currentlyLoggedInUser;
     }
 
     @Override
@@ -72,6 +83,26 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         indicateOrganizerChanged();
     }
+
+    //@@author dominickenn
+    @Override
+    public synchronized void addUser(User user) throws DuplicateUserException {
+        organizer.addUser(user);
+        indicateOrganizerChanged();
+    }
+
+    @Override
+    public synchronized void loginUser(User user) throws UserNotFoundException, CurrentlyLoggedInException {
+        organizer.loginUser(user);
+        currentlyLoggedInUser = organizer.getCurrentLoggedInUser();
+    }
+
+    @Override
+    public synchronized void deleteCurrentUserTasks() {
+        organizer.deleteUserTasks(getCurrentlyLoggedInUser());
+        indicateOrganizerChanged();
+    }
+    //@@author
 
     @Override
     public void updateTask(Task target, Task editedTask)

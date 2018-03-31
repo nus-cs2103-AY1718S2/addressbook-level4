@@ -19,6 +19,7 @@ import seedu.organizer.model.Organizer;
 import seedu.organizer.storage.XmlAdaptedSubtask;
 import seedu.organizer.storage.XmlAdaptedTag;
 import seedu.organizer.storage.XmlAdaptedTask;
+import seedu.organizer.storage.XmlAdaptedUser;
 import seedu.organizer.storage.XmlSerializableOrganizer;
 import seedu.organizer.testutil.OrganizerBuilder;
 import seedu.organizer.testutil.TaskBuilder;
@@ -36,6 +37,8 @@ public class XmlUtilTest {
     private static final File TEMP_FILE = new File(TestUtil.getFilePathInSandboxFolder("tempOrganizer.xml"));
 
     private static final String INVALID_PRIORITY = "9!@#";
+
+    private static final XmlAdaptedUser VALID_XML_ADAPTED_USER = new XmlAdaptedUser("admin", "admin");
 
     private static final String VALID_NAME = "Work on PrioriTask";
     private static final String VALID_PRIORITY = "9";
@@ -90,7 +93,7 @@ public class XmlUtilTest {
                 MISSING_TASK_FIELD_FILE, XmlAdaptedTaskWithRootElement.class);
         XmlAdaptedTask expectedTask = new XmlAdaptedTask(
                 null, VALID_PRIORITY, VALID_DEADLINE, current_date, VALID_DATECOMPLETED,
-                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS, VALID_SUBTASKS);
+                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER);
         assertEquals(expectedTask, actualTask);
     }
 
@@ -100,7 +103,7 @@ public class XmlUtilTest {
                 INVALID_TASK_FIELD_FILE, XmlAdaptedTaskWithRootElement.class);
         XmlAdaptedTask expectedTask = new XmlAdaptedTask(
                 VALID_NAME, INVALID_PRIORITY, VALID_DEADLINE, current_date, VALID_DATECOMPLETED,
-                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS, VALID_SUBTASKS);
+                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER);
         assertEquals(expectedTask, actualTask);
     }
 
@@ -110,7 +113,7 @@ public class XmlUtilTest {
                 VALID_TASK_FILE, XmlAdaptedTaskWithRootElement.class);
         XmlAdaptedTask expectedTask = new XmlAdaptedTask(
                 VALID_NAME, VALID_PRIORITY, VALID_DEADLINE, current_date, VALID_DATECOMPLETED,
-                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS, VALID_SUBTASKS);
+                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER);
         assertEquals(expectedTask, actualTask);
     }
 

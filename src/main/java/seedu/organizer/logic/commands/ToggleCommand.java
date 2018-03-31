@@ -1,6 +1,7 @@
 package seedu.organizer.logic.commands;
 
 import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
+import static seedu.organizer.model.ModelManager.getCurrentlyLoggedInUser;
 
 import java.util.List;
 import java.util.Set;
@@ -88,7 +89,8 @@ public class ToggleCommand extends UndoableCommand {
         Status updatedStatus = taskToEdit.getStatus().getInverse();
 
         return new Task(updatedName, updatedPriority, updatedDeadline, oldDateAdded,
-                updatedDateCompleted, updatedDescription, updatedStatus, updatedTags, updatedSubtasks);
+                updatedDateCompleted, updatedDescription, updatedStatus,
+                updatedTags, updatedSubtasks, getCurrentlyLoggedInUser());
     }
 
     @Override

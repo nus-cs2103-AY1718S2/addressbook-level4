@@ -8,4 +8,8 @@
     <datecompleted>not completed</datecompleted>
     <description>Refactor Address to Description</description>
     <tagged>friends</tagged>
+    <user>
+        <username>admin</username>
+        <password>admin</password>
+    </user>
 </task>

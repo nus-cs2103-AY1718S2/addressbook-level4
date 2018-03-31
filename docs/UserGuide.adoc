@@ -84,9 +84,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PRIORITY_LEVEL`, `p/PRIORITY_LEVEL n/NAME` is also acceptable.
 ====
 
-=== Basic Features
+=== User Features
 
-_{ To explain what a basic feature is. }_
+{ To explain what a user feature is. }_
 
 ==== Viewing help : `help`
 
@@ -94,6 +94,44 @@ _{ To explain what a basic feature is. }_
 ====
 [format-title]#Format:# `help`
 ====
+
+==== Signing up: `signup` or `su`
+
+Sign up for a PrioriTask account +
+
+[.format]
+====
+[format-title]#Format:# `signup u/USERNAME p/PASSWORD`
+====
+
+[.example]
+====
+[example-title]#Examples:#
+
+* [example]#`signup u/patrick p/pat19503#
+* [example]#`signup u/mary p/m4ry`#
+====
+
+==== Logging in: `login` or `log`
+
+Login to PrioriTask +
+
+[.format]
+====
+[format-title]#Format:# `login u/USERNAME p/PASSWORD`
+====
+
+[.example]
+====
+[example-title]#Examples:#
+
+* [example]#`login u/patrick p/pat19503#
+* [example]#`login u/mary p/m4ry`#
+====
+
+=== Task Management Features
+
+_{ To explain what a task management feature is. }_
 
 ==== Adding a task: `add` or `a`
 
@@ -553,7 +591,14 @@ Goes to `February 2018`
 
 == Command Summary
 
-=== Basic Features
+=== User Features
+* *Help* : [format-no-box]#`help`#
+* *Sign Up* : [format-no-box]#`signup u/USERNAME p/PASSWORD`#
+e.g. [example-no-box]#`signup u/patrick p/pat12351`#
+* *Login* : [format-no-box]#`login u/USERNAME p/PASSWORD`#
+e.g. [example-no-box]#`login u/patrick p/pat12351`#
+
+=== Task Management Features
 * *Add* : [format-no-box]#`add n/NAME [p/PRIORITY_LEVEL] d/DEADLINE [des/DESCRIPTION] [t/TAG]…`# +
 e.g. [example-no-box]#`add n/CS2101 Script p/8 d/2018-03-05 des/Script should be 500 words long t/CS2101 t/PhaseA`#
 * *Clear* : [format-no-box]#`clear`#
@@ -570,7 +615,6 @@ e.g. [example-no-box]#`finddes study update`#
 ** *Find Deadline* : [format-no-box]#`findd KEYWORD [MORE_KEYWORDS]` or `fd KEYWORDS [MORE_KEYWORDS]`# +
 e.g. [example-no-box]#`findd 2018-03-17 2018-09-07`#
 * *List* : [format-no-box]#`list`#
-* *Help* : [format-no-box]#`help`#
 * *Select* : [format-no-box]#`select INDEX`# +
 e.g.[example-no-box]#`select 2`#
 * *Toggle* : [format-no-box]#`toggle INDEX`# +

@@ -19,11 +19,15 @@ import java.util.List;
 import seedu.organizer.model.Organizer;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
+import seedu.organizer.model.user.User;
+import seedu.organizer.model.user.exceptions.DuplicateUserException;
 
 /**
  * A utility class containing a list of {@code Task} objects to be used in tests.
  */
 public class TypicalTasks {
+
+    public static final User ADMIN_USER = new User("admin", "admin");
 
     public static final String KEYWORD_MATCHING_DO = "Do"; // A keyword that matches DO
     public static final String KEYWORD_MATCHING_REVISION = "Revision"; // A keyword that matches REVISION
@@ -88,6 +92,11 @@ public class TypicalTasks {
             } catch (DuplicateTaskException e) {
                 throw new AssertionError("not possible");
             }
+        }
+        try {
+            ab.addUser(ADMIN_USER);
+        } catch (DuplicateUserException e) {
+            e.printStackTrace();
         }
         return ab;
     }

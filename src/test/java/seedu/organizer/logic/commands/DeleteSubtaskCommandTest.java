@@ -124,7 +124,8 @@ public class DeleteSubtaskCommandTest {
                 task.getDescription(),
                 task.getStatus(),
                 task.getTags(),
-                subtasks
+                subtasks,
+                task.getUser()
         );
     }
 

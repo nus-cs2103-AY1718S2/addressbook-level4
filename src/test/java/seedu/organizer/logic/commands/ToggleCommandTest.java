@@ -99,7 +99,8 @@ public class ToggleCommandTest {
                 task.getDateCompleted(), task.getDescription(),
                 task.getStatus().getInverse(),
                 task.getTags(),
-                task.getSubtasks()
+                task.getSubtasks(),
+                task.getUser()
         );
     }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addressbook>
+<organizer>
     <tasks>
         <name>Study</name>
         <priority isPrivate="false">9</priority>
@@ -7,6 +7,10 @@
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
         <description isPrivate="false">Study for CS2103T Exam</description>
+        <user>
+            <username>admin</username>
+            <password>admin</password>
+        </user>
     </tasks>
     <tasks>
         <name>Exam</name>
@@ -15,6 +19,10 @@
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
         <description isPrivate="false">CS2103T Exam</description>
+        <user>
+            <username>admin</username>
+            <password>admin</password>
+        </user>
     </tasks>
     <tasks>
         <name>Grocery</name>
@@ -23,6 +31,10 @@
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
         <description isPrivate="false">Go NTUC</description>
+        <user>
+            <username>admin</username>
+            <password>admin</password>
+        </user>
     </tasks>
     <tasks>
         <name>Housework</name>
@@ -31,6 +43,10 @@
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
         <description isPrivate="false">Wash the toilets</description>
+        <user>
+            <username>admin</username>
+            <password>admin</password>
+        </user>
     </tasks>
     <tasks>
         <name>BirthdayCard</name>
@@ -39,6 +55,10 @@
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
         <description isPrivate="false">Create birthday card for Denise</description>
+        <user>
+            <username>admin</username>
+            <password>admin</password>
+        </user>
     </tasks>
     <tasks>
         <name>Homework</name>
@@ -47,6 +67,10 @@
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
         <description isPrivate="false">Finish CS2103T v1.1</description>
+        <user>
+            <username>admin</username>
+            <password>admin</password>
+        </user>
     </tasks>
     <tasks>
         <name>Revision</name>
@@ -55,6 +79,10 @@
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
         <description isPrivate="false">Revise for MA1101R midterms</description>
+        <user>
+            <username>admin</username>
+            <password>admin</password>
+        </user>
     </tasks>
     <tasks>
         <name>SendEmail</name>
@@ -63,6 +91,10 @@
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
         <description isPrivate="false">Send email for job interview</description>
+        <user>
+            <username>admin</username>
+            <password>admin</password>
+        </user>
     </tasks>
     <tasks>
         <name>InterviewPrep</name>
@@ -71,5 +103,13 @@
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
         <description isPrivate="false">Prepare technical questions</description>
+        <user>
+            <username>admin</username>
+            <password>admin</password>
+        </user>
     </tasks>
-</addressbook>
+    <users>
+        <username>admin</username>
+        <password>admin</password>
+    </users>
+</organizer>

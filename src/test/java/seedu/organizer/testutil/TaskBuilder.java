@@ -16,6 +16,7 @@ import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
 import seedu.organizer.model.task.Status;
 import seedu.organizer.model.task.Task;
+import seedu.organizer.model.user.User;
 import seedu.organizer.model.util.SampleDataUtil;
 
 /**
@@ -23,6 +24,7 @@ import seedu.organizer.model.util.SampleDataUtil;
  */
 public class TaskBuilder {
 
+    public static final User DEFAULT_USER = new User("admin", "admin");
     public static final String DEFAULT_NAME = "Study";
     public static final String DEFAULT_PRIORITY = "2";
     public static final String DEFAULT_DEADLINE = "2018-05-18";
@@ -42,6 +44,7 @@ public class TaskBuilder {
     private Status status;
     private Set<Tag> tags;
     private List<Subtask> subtasks;
+    private User user;
 
     public TaskBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -53,6 +56,7 @@ public class TaskBuilder {
         status = new Status(DEFAULT_STATUS);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
         subtasks = SampleDataUtil.getSubtaskList(DEFAULT_SUBTASKS);
+        user = DEFAULT_USER;
     }
 
     /**
@@ -68,6 +72,7 @@ public class TaskBuilder {
         status = taskToCopy.getStatus();
         tags = new HashSet<>(taskToCopy.getTags());
         subtasks = new ArrayList<>(taskToCopy.getSubtasks());
+        user = taskToCopy.getUser();
     }
 
     /**
@@ -152,8 +157,12 @@ public class TaskBuilder {
         return this;
     }
 
+    /**
+     * Returns a task
+     */
     public Task build() {
-        return new Task(name, priority, deadline, dateAdded, dateCompleted, description, status, tags, subtasks);
+        return new Task(name, priority, deadline, dateAdded, dateCompleted,
+                description, status, tags, subtasks, user);
     }
 
 }

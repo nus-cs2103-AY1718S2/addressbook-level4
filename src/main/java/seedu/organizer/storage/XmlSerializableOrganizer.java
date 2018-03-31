@@ -14,13 +14,15 @@ import seedu.organizer.model.ReadOnlyOrganizer;
 /**
  * An Immutable Organizer that is serializable to XML format
  */
-@XmlRootElement(name = "addressbook")
+@XmlRootElement(name = "organizer")
 public class XmlSerializableOrganizer {
 
     @XmlElement
     private List<XmlAdaptedTask> tasks;
     @XmlElement
     private List<XmlAdaptedTag> tags;
+    @XmlElement
+    private List<XmlAdaptedUser> users;
 
     /**
      * Creates an empty XmlSerializableOrganizer.
@@ -29,6 +31,7 @@ public class XmlSerializableOrganizer {
     public XmlSerializableOrganizer() {
         tasks = new ArrayList<>();
         tags = new ArrayList<>();
+        users = new ArrayList<>();
     }
 
     /**
@@ -38,13 +41,14 @@ public class XmlSerializableOrganizer {
         this();
         tasks.addAll(src.getTaskList().stream().map(XmlAdaptedTask::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        users.addAll(src.getUserList().stream().map(XmlAdaptedUser::new).collect(Collectors.toList()));
     }
 
     /**
-     * Converts this addressbook into the model's {@code Organizer} object.
+     * Converts this organizer into the model's {@code Organizer} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
-     * {@code XmlAdaptedTask} or {@code XmlAdaptedTag}.
+     * {@code XmlAdaptedTask} or {@code XmlAdaptedTag} or {@code XmlAdaptedUser}.
      */
     public Organizer toModelType() throws IllegalValueException {
         Organizer organizer = new Organizer();
@@ -53,6 +57,9 @@ public class XmlSerializableOrganizer {
         }
         for (XmlAdaptedTask p : tasks) {
             organizer.addTask(p.toModelType());
+        }
+        for (XmlAdaptedUser u : users) {
+            organizer.addUser(u.toModelType());
         }
         return organizer;
     }
@@ -68,6 +75,6 @@ public class XmlSerializableOrganizer {
         }
 
         XmlSerializableOrganizer otherAb = (XmlSerializableOrganizer) other;
-        return tasks.equals(otherAb.tasks) && tags.equals(otherAb.tags);
+        return tasks.equals(otherAb.tasks) && tags.equals(otherAb.tags) && users.equals(otherAb.users);
     }
 }

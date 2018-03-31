@@ -7,6 +7,7 @@ import static seedu.organizer.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
+import static seedu.organizer.model.ModelManager.getCurrentlyLoggedInUser;
 
 import java.util.List;
 import java.util.Objects;
@@ -115,7 +116,8 @@ public class EditCommand extends UndoableCommand {
         List<Subtask> updatedSubtasks = editTaskDescriptor.getSubtasks().orElse(taskToEdit.getSubtasks());
 
         return new Task(updatedName, updatedPriority, updatedDeadline, oldDateAdded,
-                oldDateCompleted, updatedDescription, updatedstatus, updatedTags, updatedSubtasks);
+                oldDateCompleted, updatedDescription, updatedstatus,
+                updatedTags, updatedSubtasks, getCurrentlyLoggedInUser());
     }
 
     @Override

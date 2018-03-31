@@ -1,6 +1,7 @@
 package systemtests;
 
 import static seedu.organizer.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
 import static seedu.organizer.testutil.TypicalTasks.KEYWORD_MATCHING_SPRING;
 
 import org.junit.Test;
@@ -10,13 +11,21 @@ import seedu.organizer.logic.commands.ClearCommand;
 import seedu.organizer.logic.commands.RedoCommand;
 import seedu.organizer.logic.commands.UndoCommand;
 import seedu.organizer.model.Model;
-import seedu.organizer.model.ModelManager;
+import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
+import seedu.organizer.model.user.exceptions.UserNotFoundException;
 
 public class ClearCommandSystemTest extends OrganizerSystemTest {
 
     @Test
     public void clear() {
         final Model defaultModel = getModel();
+        try {
+            defaultModel.loginUser(ADMIN_USER);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        }
 
         /* Case: clear non-empty organizer book, command with leading spaces and trailing alphanumeric characters and
          * spaces -> cleared
@@ -33,7 +42,7 @@ public class ClearCommandSystemTest extends OrganizerSystemTest {
         /* Case: redo clearing organizer book -> cleared */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, expectedResultMessage, new ModelManager());
+        assertCommandSuccess(command, expectedResultMessage);
         assertSelectedCardUnchanged();
 
         /* Case: selects first card in task list and clears organizer book -> cleared and no card selected */
@@ -66,8 +75,41 @@ public class ClearCommandSystemTest extends OrganizerSystemTest {
      * @see OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command) {
-        assertCommandSuccess(command, ClearCommand.MESSAGE_SUCCESS, new ModelManager());
+        Model expectedModel = getModel();
+        try {
+            expectedModel.loginUser(ADMIN_USER);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        }
+        expectedModel.deleteCurrentUserTasks();
+        assertCommandSuccess(command, ClearCommand.MESSAGE_SUCCESS, expectedModel);
     }
+
+    //@@author dominickenn
+    /**
+     * Executes {@code command} and verifies that the command box displays an empty string, the result display
+     * box displays {@code ClearCommand#MESSAGE_SUCCESS} and the model related components equal to an empty model.
+     * These verifications are done by
+     * {@code OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the command box has the default style class and the status bar's sync status changes.
+     * Also verifies that the {@code expectedResultMessage} is displayed
+     * @see OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    public void assertCommandSuccess(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+        try {
+            expectedModel.loginUser(ADMIN_USER);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        }
+        expectedModel.deleteCurrentUserTasks();
+        assertCommandSuccess(command, expectedResultMessage, expectedModel);
+    }
+    //@@author
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(String)} except that the result box displays
@@ -94,6 +136,13 @@ public class ClearCommandSystemTest extends OrganizerSystemTest {
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
+        try {
+            expectedModel.loginUser(ADMIN_USER);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        }
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);

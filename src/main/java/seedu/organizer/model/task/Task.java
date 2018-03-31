@@ -1,6 +1,7 @@
 package seedu.organizer.model.task;
 
 import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.organizer.model.ModelManager.getCurrentlyLoggedInUser;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,6 +13,7 @@ import seedu.organizer.model.subtask.Subtask;
 import seedu.organizer.model.subtask.UniqueSubtaskList;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.tag.UniqueTagList;
+import seedu.organizer.model.user.User;
 
 /**
  * Represents a Task in the organizer book.
@@ -26,6 +28,7 @@ public class Task {
     private final DateCompleted dateCompleted;
     private final Description description;
     private final Status status;
+    private final User user;
 
     private final UniqueTagList tags;
     private final UniqueSubtaskList subtasks;
@@ -42,6 +45,25 @@ public class Task {
         this.dateCompleted = new DateCompleted(false);
         this.description = description;
         this.status = null;
+        this.user = getCurrentlyLoggedInUser();
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+        this.subtasks = new UniqueSubtaskList();
+    }
+
+    /**
+     * Every field must be present and not null except status and dateCompleted
+     */
+    public Task(Name name, Priority priority, Deadline deadline, Description description, Set<Tag> tags, User user) {
+        requireAllNonNull(name, priority, deadline, description, tags, user);
+        this.name = name;
+        this.priority = priority;
+        this.deadline = deadline;
+        this.dateAdded = new DateAdded();
+        this.dateCompleted = new DateCompleted(false);
+        this.description = description;
+        this.status = null;
+        this.user = user;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.subtasks = new UniqueSubtaskList();
@@ -51,8 +73,8 @@ public class Task {
      * Every field must be present and not null except status
      */
     public Task(Name name, Priority priority, Deadline deadline, DateAdded dateAdded,
-                DateCompleted dateCompleted, Description description, Set<Tag> tags) {
-        requireAllNonNull(name, priority, deadline, description, tags);
+                DateCompleted dateCompleted, Description description, Set<Tag> tags, User user) {
+        requireAllNonNull(name, priority, deadline, description, tags, user);
         this.name = name;
         this.priority = priority;
         this.deadline = deadline;
@@ -60,6 +82,7 @@ public class Task {
         this.dateCompleted = dateCompleted;
         this.description = description;
         this.status = null;
+        this.user = user;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.subtasks = new UniqueSubtaskList();
@@ -69,7 +92,7 @@ public class Task {
      * Another constructor with custom status and subtask
      */
     public Task(Name name, Priority priority, Deadline deadline, DateAdded dateAdded, DateCompleted dateCompleted,
-                Description description, Status status, Set<Tag> tags, List<Subtask> subtasks) {
+                Description description, Status status, Set<Tag> tags, List<Subtask> subtasks, User user) {
         requireAllNonNull(name, priority, deadline, description, tags);
         this.name = name;
         this.priority = priority;
@@ -78,6 +101,7 @@ public class Task {
         this.dateCompleted = dateCompleted;
         this.description = description;
         this.status = status;
+        this.user = user;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.subtasks = new UniqueSubtaskList(subtasks);
@@ -117,6 +141,10 @@ public class Task {
         return status;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -143,13 +171,14 @@ public class Task {
         return otherTask.getName().equals(this.getName())
                 && otherTask.getPriority().equals(this.getPriority())
                 && otherTask.getDeadline().equals(this.getDeadline())
-                && otherTask.getDescription().equals(this.getDescription());
+                && otherTask.getDescription().equals(this.getDescription())
+                && otherTask.getUser().equals(this.getUser());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, priority, deadline, description, tags, status);
+        return Objects.hash(name, priority, deadline, description, tags, status, user);
     }
 
     @Override
@@ -166,6 +195,8 @@ public class Task {
                 .append(getDescription())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
+        builder.append(" User : ")
+                .append(getUser());
         return builder.toString();
     }
 

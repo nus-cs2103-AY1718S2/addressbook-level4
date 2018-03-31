@@ -3,7 +3,9 @@ package seedu.organizer.logic;
 import static org.junit.Assert.assertEquals;
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
 import static seedu.organizer.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -16,6 +18,9 @@ import seedu.organizer.logic.parser.exceptions.ParseException;
 import seedu.organizer.model.Model;
 import seedu.organizer.model.ModelManager;
 import seedu.organizer.model.UserPrefs;
+import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
+import seedu.organizer.model.user.exceptions.DuplicateUserException;
+import seedu.organizer.model.user.exceptions.UserNotFoundException;
 
 
 public class LogicManagerTest {
@@ -24,6 +29,22 @@ public class LogicManagerTest {
 
     private Model model = new ModelManager();
     private Logic logic = new LogicManager(model);
+
+    @Before
+    public void setUp() {
+        try {
+            model.addUser(ADMIN_USER);
+        } catch (DuplicateUserException e) {
+            throw new AssertionError("Admin user should not exist");
+        }
+        try {
+            model.loginUser(ADMIN_USER);
+        } catch (UserNotFoundException e) {
+            throw new AssertionError("Admin user should exist");
+        } catch (CurrentlyLoggedInException e) {
+            throw new AssertionError("No user should be logged in");
+        }
+    }
 
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {
@@ -87,6 +108,13 @@ public class LogicManagerTest {
      */
     private void assertCommandFailure(String inputCommand, Class<?> expectedException, String expectedMessage) {
         Model expectedModel = new ModelManager(model.getOrganizer(), new UserPrefs());
+        try {
+            expectedModel.loginUser(ADMIN_USER);
+        } catch (UserNotFoundException e) {
+            throw new AssertionError("Admin user should exist");
+        } catch (CurrentlyLoggedInException e) {
+            throw new AssertionError("No user should be logged in");
+        }
         assertCommandBehavior(expectedException, inputCommand, expectedMessage, expectedModel);
     }
 

@@ -61,13 +61,9 @@ public class NotificationCenter {
     }
 
     public void add(NotificationCard newNotificationCard) {
-        javafx.scene.layout.Region other = newNotificationCard.getForCenterCopy().getRoot();
-        other.setMaxHeight(NOTIFICATION_CARD_HEIGHT_IN_CENTER);
-        other.setMaxWidth(NOTIFICATION_CARD_WIDTH_IN_CENTER);
-        //adds to meta
-        notificationCards.add(other);
-        //adds to Ui
-        notificationCardsBox.getChildren().add(other);
+        NotificationCard forCenter = newNotificationCard.getCopyForCenter();
+        notificationCards.add(forCenter.getRoot());
+        notificationCardsBox.getChildren().add(forCenter.getRoot());
     }
 
     public ScrollPane getNotificationCenter() {

@@ -43,6 +43,7 @@ public class NotificationCard extends UiPart<Region> {
 
     private String ownerId;
     private boolean isFirstStage;
+    private boolean isForCenter;
 
 
     public NotificationCard(String title, String displayedIndex, String ownerName, String endTime, String ownerId,
@@ -57,12 +58,13 @@ public class NotificationCard extends UiPart<Region> {
         xOffset.setMaxWidth(NOTIFICATION_CARD_X_OFFSET);
         yOffset.setMaxWidth(NOTIFICATION_CARD_Y_OFFSET);
         this.isFirstStage = isFirstStage;
+        isForCenter = false;
         setStyle();
     }
 
     public NotificationCard(String title, String displayedIndex, String ownerName, String endTime, String ownerId,
-                            String newFxml, boolean isFirstStage) {
-        super(newFxml);
+                            boolean isFirstStage, boolean isForCenter) {
+        super(FXML);
         this.index.setText(displayedIndex + ". ");
         this.title.setText(title);
         this.ownerName.setText(ownerName);
@@ -72,6 +74,7 @@ public class NotificationCard extends UiPart<Region> {
         xOffset.setMaxWidth(NOTIFICATION_CARD_X_OFFSET);
         yOffset.setMaxWidth(NOTIFICATION_CARD_Y_OFFSET);
         this.isFirstStage = isFirstStage;
+        this.isForCenter = isForCenter;
         setStyle();
     }
 
@@ -117,10 +120,23 @@ public class NotificationCard extends UiPart<Region> {
     }
 
     public void setStyle() {
-        if (isFirstStage) {
-            content.getStyleClass().add("notification-card-first-stage");
+        if (!isForCenter) {
+            if (isFirstStage) {
+                content.getStyleClass().add("notification-card-first-stage");
+            } else {
+                content.getStyleClass().add("notification-card-second-stage");
+            }
         } else {
-            content.getStyleClass().add("notification-card");
+            if (isFirstStage) {
+                content.getStyleClass().add("notification-card-notification-center-first-stage");
+            } else {
+                content.getStyleClass().add("notification-card-notification-center-second-stage");
+            }
         }
+    }
+
+    public NotificationCard getCopyForCenter() {
+        return new NotificationCard(this.getTitle(), this.getIndex(), this.getOwnerName(), this.getEndTime(), this
+                .getOwnerId(), isFirstStage, true);
     }
 }

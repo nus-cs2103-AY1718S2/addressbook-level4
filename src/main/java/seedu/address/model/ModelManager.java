@@ -13,8 +13,8 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.DeskBoardChangedEvent;
 import seedu.address.model.activity.Activity;
-import seedu.address.model.activity.Event;
-import seedu.address.model.activity.Task;
+import seedu.address.model.activity.EventOnlyPredicate;
+import seedu.address.model.activity.TaskOnlyPredicate;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 
@@ -28,9 +28,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final DeskBoard deskBoard;
     private final FilteredList<Activity> filteredActivities;
-    //@@author jasmoon
-    private final FilteredList<Task> filteredTasks;
-    private final FilteredList<Event> filteredEvents;
     /**
      * Initializes a ModelManager with the given deskBoard and userPrefs.
      */
@@ -42,9 +39,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.deskBoard = new DeskBoard(deskBoard);
         filteredActivities = new FilteredList<>(this.deskBoard.getActivityList());
-        //@@author jasmoon
-        filteredTasks = new FilteredList<>(this.deskBoard.getTaskList());
-        filteredEvents = new FilteredList<>(this.deskBoard.getEventList());
     }
 
     public ModelManager() {
@@ -81,7 +75,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updateActivity(Activity target, Activity editedActivity)
+    public synchronized void updateActivity(Activity target, Activity editedActivity)
             throws DuplicateActivityException, ActivityNotFoundException {
         requireAllNonNull(target, editedActivity);
 
@@ -106,8 +100,10 @@ public class ModelManager extends ComponentManager implements Model {
      * {@code deskBoard}
      */
     @Override
-    public ObservableList<Task> getFilteredTaskList()   {
-        return FXCollections.unmodifiableObservableList(filteredTasks);
+    public ObservableList<Activity> getFilteredTaskList()   {
+        FilteredList<Activity> taskList =  new FilteredList<>(filteredActivities, new TaskOnlyPredicate());
+        ObservableList<Activity> result = FXCollections.unmodifiableObservableList(taskList);
+        return result;
     }
 
     /**
@@ -115,8 +111,10 @@ public class ModelManager extends ComponentManager implements Model {
      * {@code deskBoard}
      */
     @Override
-    public ObservableList<Event> getFilteredEventList() {
-        return FXCollections.unmodifiableObservableList(filteredEvents);
+    public ObservableList<Activity> getFilteredEventList() {
+        FilteredList<Activity> eventList =  new FilteredList<>(filteredActivities, new EventOnlyPredicate());
+        ObservableList<Activity> result = FXCollections.unmodifiableObservableList(eventList);
+        return result;
     }
 
     @Override

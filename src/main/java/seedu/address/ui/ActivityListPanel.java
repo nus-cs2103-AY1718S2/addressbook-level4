@@ -9,6 +9,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
@@ -27,10 +28,14 @@ public class ActivityListPanel extends UiPart<Region> {
     @FXML
     private ListView<ActivityCard> activityListView;
 
+    private Label emptyLabel = new Label("Event List is empty!");
+
     public ActivityListPanel(ObservableList<Activity> activityList) {
         super(FXML);
         setConnections(activityList);
         registerAsAnEventHandler(this);
+        activityListView.setPlaceholder(emptyLabel);
+        emptyLabel.setStyle("-fx-font-family: \"Open Sans\"; -fx-font-size: 25px; ");
     }
 
     private void setConnections(ObservableList<Activity> activityList) {

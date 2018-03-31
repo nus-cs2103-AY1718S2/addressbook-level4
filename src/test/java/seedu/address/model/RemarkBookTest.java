@@ -38,20 +38,14 @@ public class RemarkBookTest {
         addressBook.resetData(null);
     }
 
-    //TODO: TEST
-    /**
-     * Test
-     */
+    @Test
     public void resetData_withValidReadOnlyAddressBook_replacesData() {
         DeskBoard newData = getTypicalDeskBoard();
         addressBook.resetData(newData);
         assertEquals(newData, addressBook);
     }
 
-    //TODO: TEST
-    /**
-     * Test
-     */
+    @Test
     public void resetData_withDuplicatePersons_throwsAssertionError() {
         // Repeat ASSIGNMENT1 twice
         List<Activity> newActivities = Arrays.asList(ASSIGNMENT1, ASSIGNMENT1);

@@ -7,6 +7,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CompleteCommand;
+import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EventCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.TaskCommand;
@@ -53,17 +55,23 @@ public class DeskBoardParser {
         case TaskCommand.COMMAND_WORD:
             return new TaskCommandParser().parse(arguments);
 
+
+        case CompleteCommand.COMMAND_WORD:
+            return new CompleteCommandParser().parse(arguments);
+
         case EventCommand.COMMAND_WORD:
             return new EventCommandParser().parse(arguments);
+
 
         //case EditCommand.COMMAND_WORD:
             //return new EditCommandParser().parse(arguments);
 
         //case SelectCommand.COMMAND_WORD:
             //return new SelectCommandParser().parse(arguments);
-
-        //case DeleteCommand.COMMAND_WORD:
-            //return new DeleteCommandParser().parse(arguments);
+        case DeleteCommand.ALIAS:
+            // Fallthrough
+        case DeleteCommand.COMMAND_WORD:
+            return new DeleteCommandParser().parse(arguments);
 
         //case ClearCommand.COMMAND_WORD:
             //return new ClearCommand();
@@ -83,11 +91,11 @@ public class DeskBoardParser {
         //case ExitCommand.COMMAND_WORD:
             //return new ExitCommand();
 
-        //case HelpCommand.COMMAND_WORD:
-            //return new HelpCommandParser().parse(arguments);
+        case HelpCommand.COMMAND_WORD:
+            return new HelpCommandParser().parse(arguments);
 
-        //case HelpCommand.COMMAND_ALIAS:
-            //return new HelpCommandParser().parse(arguments);
+        case HelpCommand.COMMAND_ALIAS:
+            return new HelpCommandParser().parse(arguments);
 
         //case UndoCommand.COMMAND_WORD:
             //return new UndoCommand();

@@ -15,26 +15,34 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public abstract class Activity {
 
-    private static final String ACTIVITY_TYPE = "BASE TYPE";
 
     private final Name name;
     private final DateTime dateTime;
     private final Remark remark;
 
     private final UniqueTagList tags;
-
-    private boolean isCompleted;
+    private final boolean isCompleted;
     /**
      * Every field must be present and not null.
      */
     public Activity(Name name, DateTime dateTime, Remark remark, Set<Tag> tags) {
-        requireAllNonNull(name, dateTime, remark, tags);
+        requireAllNonNull(name, dateTime, tags);
         this.name = name;
         this.dateTime = dateTime;
         this.remark = remark;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.isCompleted = false;
+    }
+
+    public Activity(Name name, DateTime dateTime, Remark remark, Set<Tag> tags, boolean isCompleted) {
+        requireAllNonNull(name, dateTime, tags);
+        this.name = name;
+        this.dateTime = dateTime;
+        this.remark = remark;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+        this.isCompleted = isCompleted;
     }
 
     public Name getName() {
@@ -61,12 +69,9 @@ public abstract class Activity {
 
     public abstract Activity copy(Set<Tag> tags);
 
-    public Activity setCompleted(boolean isCompleted) {
-        this.isCompleted = isCompleted;
-        return this;
-    }
-
     public boolean isCompleted() {
         return isCompleted;
     }
+
+    public abstract Activity getCompletedCopy();
 }

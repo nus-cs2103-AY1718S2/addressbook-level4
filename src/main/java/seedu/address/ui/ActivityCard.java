@@ -37,7 +37,8 @@ public class ActivityCard extends UiPart<Region> {
     private Label remark;
     @FXML
     private FlowPane tags;
-
+    @FXML
+    private FlowPane status;
     public ActivityCard(Activity activity, int displayedIndex) {
         super(FXML);
         this.activity = activity;
@@ -46,6 +47,11 @@ public class ActivityCard extends UiPart<Region> {
         dateTime.setText(activity.getDateTime().toString());
         remark.setText(activity.getRemark().value);
         activity.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        if (activity.isCompleted()) {
+            status.getChildren().add(new Label("Completed"));
+        } else {
+            status.getChildren().add(new Label("Uncompleted"));
+        }
     }
 
     @Override

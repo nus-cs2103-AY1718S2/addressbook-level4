@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.Task;
 
 /**
@@ -29,15 +30,22 @@ public class TaskCard extends UiPart<Region> {
     private Label remark;
     @FXML
     private FlowPane tags;
+    @FXML
+    private FlowPane status;
 
-    public TaskCard(Task task, int displayedIndex) {
+    public TaskCard(Activity task, int displayedIndex) {
         super(FXML);
-        this.task = task;
+        this.task = (Task) task;
         id.setText(displayedIndex + ". ");
-        name.setText(task.getName().fullName);
-        dateTime.setText(task.getDateTime().toString());
-        remark.setText(task.getRemark().value);
+        name.setText(this.task.getName().fullName);
+        dateTime.setText(this.task.getDateTime().toString());
+        remark.setText(this.task.getRemark().value);
         task.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        if (task.isCompleted()) {
+            status.getChildren().add(new Label("Completed"));
+        } else {
+            status.getChildren().add(new Label("Uncompleted"));
+        }
     }
 
     @Override

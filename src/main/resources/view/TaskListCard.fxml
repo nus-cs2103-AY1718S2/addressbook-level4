@@ -29,6 +29,7 @@
                 <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
             </HBox>
             <FlowPane fx:id="tags" />
+            <FlowPane fx:id="status" />
             <Label fx:id="dateTime" styleClass="cell_small_label" text="\$dateTime" />
             <Label fx:id="remark" styleClass="cell_small_label" text="\$remark" />
         </VBox>

@@ -4,8 +4,6 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.activity.Activity;
-import seedu.address.model.activity.Event;
-import seedu.address.model.activity.Task;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 
@@ -44,10 +42,10 @@ public interface Model {
 
     //@@author jasmoon
     /** Returns an unmodifiable view of the filtered task list */
-    ObservableList<Task> getFilteredTaskList();
+    ObservableList<Activity> getFilteredTaskList();
 
     /** Returns an unmodifiable view of the filtered event list */
-    ObservableList<Event> getFilteredEventList();
+    ObservableList<Activity> getFilteredEventList();
 
     /**
      * Updates the filter of the filtered activity list to filter by the given {@code predicate}.

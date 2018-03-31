@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -169,7 +170,8 @@ public class XmlAdaptedPerson {
         final Age age = new Age(this.age);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags, income, actualSpending, expectedSpending, age);
+        return new Person(name, phone, email, address, tags, income,
+                actualSpending, expectedSpending, age, Optional.empty());
     }
 
     @Override

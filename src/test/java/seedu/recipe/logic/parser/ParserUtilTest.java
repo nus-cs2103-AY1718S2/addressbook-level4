@@ -30,6 +30,7 @@ public class ParserUtilTest {
     private static final String INVALID_INSTRUCTION = " ";
     private static final String INVALID_INGREDIENT = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_FILENAME = "recipe/book";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PREPARATION_TIME = "50m";
@@ -37,6 +38,7 @@ public class ParserUtilTest {
     private static final String VALID_INGREDIENT = "some, test, ingredients";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_FILENAME_1 = "Recipe_Book";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -250,4 +252,24 @@ public class ParserUtilTest {
 
         assertEquals(expectedTagSet, actualTagSet);
     }
+
+    //@@author nicholasangcx
+    @Test
+    public void parseFilename_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseFilename(null);
+    }
+
+    @Test
+    public void parseFilename_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseFilename(INVALID_FILENAME);
+    }
+
+    @Test
+    public void parseFilename_validValueWithoutWhitespace_returnsString() throws Exception {
+        String expectedFilename = VALID_FILENAME_1 + ".xml";
+        assertEquals(expectedFilename, ParserUtil.parseFilename(VALID_FILENAME_1));
+    }
+    //@@author
 }

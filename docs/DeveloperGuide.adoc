@@ -545,6 +545,55 @@ public static Optional<Url> parseUrlOnInitialAdd(Optional<String> url) throws Il
 ** Cons: Complex implementation may confuse new developers. Interaction with other components may become needlessly complex.
 // end::embedded-url[]
 
+// tag::facebook-compatibility[]
+=== Facebook Compatibility
+==== Current Implementation
+
+The *`share`* command is implemented in the `_ShareCommand_` class. On command execution, a new `_ShareRecipeEvent_` is created (with parameters index and recipe) and posted to the `_EventsCenter_`.
+
+The event is then propagated through the `_EventsCenter_` to the `_BrowserPanel_`, which is supported by the `_FacebookHandler_` class (contains methods for Facebook integration and authentication).
+
+The `_BrowserPanel_` will call `handleShareRecipeEvent()` and update the web view to show the Facebook authentication page. The recipe name, ingredients, and instructions, are also formatted and copied to the clipboard.
+
+The `_recipe_` class handles the formatting of the recipe text before it is copied to the clipboard:
+
+[source,java]
+----
+public String getTextFormattedRecipe() {
+    return NAME_HEADER + getName() + LINE_BREAK
+            + INGREDIENTS_HEADER + getIngredient() + LINE_BREAK
+            + INSTRUCTIONS_HEADER + getInstruction() + LINE_BREAK;
+}
+----
+
+The method for copying a string to the clipboard is implemented in the `_UiUtil_` class. This makes the method reusable by other UI classes.
+
+[source,java]
+----
+public static void copyToClipboard(String string) {
+    Toolkit toolkit = Toolkit.getDefaultToolkit();
+    Clipboard clipboard = toolkit.getSystemClipboard();
+    StringSelection stringSelection = new StringSelection(string);
+    clipboard.setContents(stringSelection, null);
+}
+----
+
+Upon logging in, the User will be shown a feed dialog with the embedded URL of the recipe. The user may choose to input any text into the post (eg. pasting the copied recipe from clipboard). The User then has to manually click "post" before an actual Facebook post is made.
+
+The `_BrowserPanel_` will be updated to show the Facebook feed of the User.
+
+==== Design considerations
+
+===== Aspect: Implementation of Facebook sharing
+
+* **Alternative 1 (current choice):** Use a feed dialog
+** Pros: User has more control over what is posted on their Facebook wall. Implementation is easier to maintain.
+** Cons: User has to take more steps to successfully make a post (paste recipe onto post, click "post").
+* **Alternative 2:** Use RestFB API
+** Pros: Recipe is posted immediately on the User's Facebook wall using the *`share`* command. User need not manually paste the recipe from the clipboard onto the post.
+** Cons: User *must* manually obtain their Facebook access key and input it into the application - this may raise security concerns (Facebook does not allow automatic posting of text even if permission is given by the User upon log in).
+// end::facebook-compatibility[]
+
 === Keyboard shortcuts
 // tag::keyboard-shortcut[]
 ==== Current implementation
@@ -733,55 +782,6 @@ private void handleInternetSearchRequestEvent(InternetSearchRequestEvent event) 
 ** Pros: This approach is significantly easier to implement, requiring only 3-4 lines in `_BrowserPanel_`.
 ** Cons: However, we don't get any extra information for pre-processing and this could lead to redundant requests.
 // end::internet-search[]
-
-// tag::facebook-compatibility[]
-=== Facebook Compatibility
-==== Current Implementation
-
-The *`share`* command is implemented in the `_ShareCommand_` class. On command execution, a new `_ShareRecipeEvent_` is created (with parameters index and recipe) and posted to the `_EventsCenter_`.
-
-The event is then propagated through the `_EventsCenter_` to the `_BrowserPanel_`, which is supported by the `_FacebookHandler_` class (contains methods for Facebook integration and authentication).
-
-The `_BrowserPanel_` will call `handleShareRecipeEvent()` and update the web view to show the Facebook authentication page. The recipe name, ingredients, and instructions, are also formatted and copied to the clipboard.
-
-The `_recipe_` class handles the formatting of the recipe text before it is copied to the clipboard:
-
-[source,java]
-----
-public String getTextFormattedRecipe() {
-    return NAME_HEADER + getName() + LINE_BREAK
-            + INGREDIENTS_HEADER + getIngredient() + LINE_BREAK
-            + INSTRUCTIONS_HEADER + getInstruction() + LINE_BREAK;
-}
-----
-
-The method for copying a string to the clipboard is implemented in the `_UiUtil_` class. This makes the method reusable by other UI classes.
-
-[source,java]
-----
-public static void copyToClipboard(String string) {
-    Toolkit toolkit = Toolkit.getDefaultToolkit();
-    Clipboard clipboard = toolkit.getSystemClipboard();
-    StringSelection stringSelection = new StringSelection(string);
-    clipboard.setContents(stringSelection, null);
-}
-----
-
-Upon logging in, the User will be shown a feed dialog with the embedded URL of the recipe. The user may choose to input any text into the post (eg. pasting the copied recipe from clipboard). The User then has to manually click "post" before an actual Facebook post is made.
-
-The `_BrowserPanel_` will be updated to show the Facebook feed of the User.
-
-==== Design considerations
-
-===== Aspect: Implementation of Facebook sharing
-
-* **Alternative 1 (current choice):** Use a feed dialog
-** Pros: User has more control over what is posted on their Facebook wall. Implementation is easier to maintain.
-** Cons: User has to take more steps to successfully make a post (paste recipe onto post, click "post").
-* **Alternative 2:** Use RestFB API
-** Pros: Recipe is posted immediately on the User's Facebook wall using the *`share`* command. User need not manually paste the recipe from the clipboard onto the post.
-** Cons: User *must* manually obtain their Facebook access key and input it into the application - this may raise security concerns (Facebook does not allow automatic posting of text even if permission is given by the User upon log in).
-// end::facebook-compatibility[]
 
 === Undo/Redo feature
 ==== Current Implementation

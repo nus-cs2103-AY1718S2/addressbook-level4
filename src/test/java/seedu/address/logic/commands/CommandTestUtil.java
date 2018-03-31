@@ -69,11 +69,14 @@ public class CommandTestUtil {
 
     public static final String VALID_ALIAS_ADD = "add1";
     public static final String VALID_ALIAS_ALIAS = "alias1";
+    public static final String VALID_ALIAS_CLEAR_COMMAND = ClearCommand.COMMAND_WORD;
     public static final String VALID_ALIAS_CLEAR = "clear1";
+    public static final String VALID_ALIAS_DELETE_COMMAND = DeleteCommand.COMMAND_WORD;
     public static final String VALID_ALIAS_DELETE = "delete1";
     public static final String VALID_ALIAS_EDIT = "edit1";
     public static final String VALID_ALIAS_EXIT = "exit1";
     public static final String VALID_ALIAS_FIND = "find1";
+    public static final String VALID_ALIAS_HELP_COMMAND = HelpCommand.COMMAND_WORD;
     public static final String VALID_ALIAS_HELP = "help1";
     public static final String VALID_ALIAS_HISTORY = "history1";
     public static final String VALID_ALIAS_IMPORT = "import1";
@@ -82,6 +85,7 @@ public class CommandTestUtil {
     public static final String VALID_ALIAS_REDO = "redo1";
     public static final String VALID_ALIAS_SELECT = "select1";
     public static final String VALID_ALIAS_UNDO = "undo1";
+    public static final String VALID_ALIAS_NUMBER = "9";
 
     public static final String ALIAS_DESC_ADD = AddCommand.COMMAND_WORD + " " + VALID_ALIAS_ADD;
     public static final String ALIAS_DESC_ALIAS = AliasCommand.COMMAND_WORD + " " + VALID_ALIAS_ALIAS;
@@ -98,7 +102,8 @@ public class CommandTestUtil {
     public static final String ALIAS_DESC_SELECT = SelectCommand.COMMAND_WORD + " " + VALID_ALIAS_SELECT;
     public static final String ALIAS_DESC_UNDO = UndoCommand.COMMAND_WORD + " " + VALID_ALIAS_UNDO;
 
-    public static final String INVALID_ALIAS_DESC = "alias!" + " " + VALID_ALIAS_ALIAS;
+    public static final String INVALID_ALIAS = "alias!";
+    public static final String INVALID_ALIAS_DESC = INVALID_ALIAS + " " + VALID_ALIAS_ALIAS;
     public static final String INVALID_COMMAND_DESC = "invalid";
 
     public static final String VALID_BUILDING_1 = "COM1";

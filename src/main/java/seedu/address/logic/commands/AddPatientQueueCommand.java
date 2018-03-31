@@ -36,15 +36,15 @@ public class AddPatientQueueCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        Patient patientFound = model.getPatientFromList(predicate);
+        //Patient patientFound = model.getPatientFromList(predicate);
 
-        if (patientFound == null) {
-            throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
-        }
+//        if (patientFound == null) {
+//            throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
+//        }
 
         try {
-            model.addPatientToQueue(patientFound);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, patientFound.getName()));
+            model.addPatientToQueue(predicate);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, predicate.toString()));
         } catch (DuplicateDataException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }

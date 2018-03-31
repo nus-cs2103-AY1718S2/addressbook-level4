@@ -15,6 +15,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AppointmentChangedEvent;
 import seedu.address.commons.events.model.ImdbChangedEvent;
 import seedu.address.model.appointment.UniqueAppointmentList;
+import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -116,12 +117,22 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPatients.setPredicate(predicate);
     }
 
-    public Patient getPatientFromList(Predicate<Patient> predicate) {
+//    public Patient getPatientFromList(Predicate<Patient> predicate) {
+//        filteredPatients.setPredicate(predicate);
+//        if (filteredPatients.size() > 0) {
+//            return filteredPatients.get(0);
+//        }
+//        return null;
+//    }
+
+    private int getPatientIndex(Predicate<Patient> predicate) throws PatientNotFoundException {
         filteredPatients.setPredicate(predicate);
+
         if (filteredPatients.size() > 0) {
-            return filteredPatients.get(0);
+            return filteredPatients.getSourceIndex(0);
         }
-        return null;
+
+        throw new PatientNotFoundException();
     }
 
     @Override
@@ -137,9 +148,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void addPatientToQueue(Patient patient) throws DuplicatePatientException {
-        requireNonNull(patient);
-        imdb.addPatientToQueue(patient);
+    public synchronized void addPatientToQueue(NameContainsKeywordsPredicate predicate) throws DuplicatePatientException, PatientNotFoundException {
+        requireNonNull(predicate);
+        int patientIndex = getPatientIndex(predicate);
+        imdb.addPatientToQueue(patientIndex);
         indicateAddressBookChanged();
     }
 

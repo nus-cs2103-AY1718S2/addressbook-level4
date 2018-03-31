@@ -113,6 +113,14 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code DisplayPic} of the {@code Person} that we are building to null.
+     */
+    public PersonBuilder withoutDisplayPic() {
+        this.displayPic = null;
+        return this;
+    }
+
     public Person build() {
         return new Person(name, matricNumber, phone, email, address, displayPic, tags);
     }

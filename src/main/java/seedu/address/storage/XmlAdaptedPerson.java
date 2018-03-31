@@ -74,7 +74,7 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        displayPic = source.getDisplayPic().value;
+        displayPic = source.getDisplayPic().toString();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -139,13 +139,13 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     DisplayPic.class.getSimpleName()));
         }
-        if (!DisplayPic.isValidPath(this.displayPic)) {
-            throw new IllegalValueException(DisplayPic.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
+        final DisplayPic displayPic;
+
+        if (!DisplayPicStorage.isValidPath(this.displayPic) || !DisplayPicStorage.isValidImage(this.displayPic)) {
+            displayPic = new DisplayPic();
+        } else {
+            displayPic = new DisplayPic(this.displayPic);
         }
-        if (!DisplayPic.isValidImage(this.displayPic)) {
-            throw new IllegalValueException(DisplayPic.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
-        }
-        final DisplayPic displayPic = new DisplayPic(this.displayPic);
 
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, matricNumber, phone, email, address, displayPic, tags);

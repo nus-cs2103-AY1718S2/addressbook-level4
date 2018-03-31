@@ -95,6 +95,15 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Sorts the persons in the list lexicographically.
+     */
+    public void sortList() {
+        requireAllNonNull(internalList);
+
+        FXCollections.sort(internalList);
+    }
+
+    /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<Person> asObservableList() {

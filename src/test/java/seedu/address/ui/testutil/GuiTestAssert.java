@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import guitests.guihandles.JobCardHandle;
+import guitests.guihandles.JobListPanelHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
@@ -175,11 +176,29 @@ public class GuiTestAssert {
     }
 
     /**
+     * Asserts that the list in {@code jobListPanelHandle} displays the details of {@code jobs} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(JobListPanelHandle jobListPanelHandle, Job... jobs) {
+        for (int i = 0; i < jobs.length; i++) {
+            assertCardDisplaysJob(jobs[i], jobListPanelHandle.getJobCardHandle(i));
+        }
+    }
+
+    /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
      * in the correct order.
      */
     public static void assertListMatching(PersonListPanelHandle personListPanelHandle, List<Person> persons) {
         assertListMatching(personListPanelHandle, persons.toArray(new Person[0]));
+    }
+
+    /**
+     * Asserts that the list in {@code jobListPanelHandle} displays the details of {@code jobs} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(JobListPanelHandle jobListPanelHandle, List<Job> jobs) {
+        assertListMatching(jobListPanelHandle, jobs.toArray(new Job[0]));
     }
 
     /**

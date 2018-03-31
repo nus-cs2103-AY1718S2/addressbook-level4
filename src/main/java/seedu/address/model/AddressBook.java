@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.UniqueJobList;
 import seedu.address.model.job.exceptions.DuplicateJobException;
+import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -212,6 +213,18 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         jobs.add(job);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws JobNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeJob(Job key) throws JobNotFoundException {
+        if (jobs.contains(key)) {
+            return jobs.remove(key);
+        } else {
+            throw new JobNotFoundException();
+        }
     }
 
     /**

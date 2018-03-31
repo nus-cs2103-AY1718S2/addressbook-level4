@@ -23,6 +23,8 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SignupCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.job.JobAddCommand;
+import seedu.address.logic.commands.job.JobDeleteCommand;
 import seedu.address.logic.commands.person.AddCommand;
 import seedu.address.logic.commands.person.ClearCommand;
 import seedu.address.logic.commands.person.DeleteCommand;
@@ -33,9 +35,12 @@ import seedu.address.logic.commands.person.LinkedInCommand;
 import seedu.address.logic.commands.person.ListCommand;
 import seedu.address.logic.commands.person.SelectCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.job.Job;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.JobBuilder;
+import seedu.address.testutil.JobUtil;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
@@ -53,6 +58,13 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_addJob() throws Exception {
+        Job job = new JobBuilder().build();
+        JobAddCommand command = (JobAddCommand) parser.parseCommand(JobUtil.getJobAddCommand(job));
+        assertEquals(new JobAddCommand(job), command);
+    }
+
+    @Test
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
@@ -63,6 +75,13 @@ public class AddressBookParserTest {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST), command);
+    }
+
+    @Test
+    public void parseCommand_deleteJob() throws Exception {
+        JobDeleteCommand command = (JobDeleteCommand) parser.parseCommand(
+                JobDeleteCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
+        assertEquals(new JobDeleteCommand(INDEX_FIRST), command);
     }
 
     @Test

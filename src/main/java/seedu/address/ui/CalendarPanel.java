@@ -10,11 +10,14 @@ import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.CalendarView;
+import com.calendarfx.view.page.PageBase;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.logic.ZoomInEvent;
+import seedu.address.commons.events.logic.ZoomOutEvent;
 import seedu.address.commons.events.ui.NewAppointmentAddedEvent;
 import seedu.address.model.appointment.Appointment;
 
@@ -97,6 +100,52 @@ public class CalendarPanel extends UiPart<CalendarView> {
     private void handleNewAppointmentAddedEvent(NewAppointmentAddedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadEntry(event.getAppointmentAdded());
+    }
+
+    /**
+     * Handles the event where the user is trying to zoom in on the calendar
+     */
+    @Subscribe
+    private void handleZoomInEvent(ZoomInEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        zoomIn();
+    }
+
+    /**
+     * Zooms in on the calendar if possible
+     */
+    private void zoomIn() {
+        PageBase pageBase = calendarView.getSelectedPage();
+        if (pageBase.equals(calendarView.getYearPage())) {
+            calendarView.showMonthPage();
+        } else if (pageBase.equals(calendarView.getMonthPage())) {
+            calendarView.showWeekPage();
+        } else if (pageBase.equals(calendarView.getWeekPage())) {
+            calendarView.showDayPage();
+        }
+    }
+
+    /**
+     * Handles the event where the user is trying to zoom out on the calendar
+     */
+    @Subscribe
+    private void handleZoomOutEvent(ZoomOutEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        zoomOut();
+    }
+
+    /**
+     * Zooms out on the calendar if possible
+     */
+    private void zoomOut() {
+        PageBase pageBase = calendarView.getSelectedPage();
+        if (pageBase.equals(calendarView.getDayPage())) {
+            calendarView.showWeekPage();
+        } else if (pageBase.equals(calendarView.getWeekPage())) {
+            calendarView.showMonthPage();
+        } else if (pageBase.equals(calendarView.getMonthPage())) {
+            calendarView.showYearPage();
+        }
     }
 
     /**

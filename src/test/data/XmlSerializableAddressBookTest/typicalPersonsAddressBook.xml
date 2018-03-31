@@ -53,6 +53,7 @@
     <persons>
         <name>Fiona Kunz</name>
         <phone>9482427</phone>
+        <order>Chicken Rice</order>
         <email>lydia@example.com</email>
         <address>little tokyo</address>
         <halal>Non-halal</halal>

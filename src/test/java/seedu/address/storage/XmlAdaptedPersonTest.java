@@ -84,7 +84,7 @@ public class XmlAdaptedPersonTest {
     @Test
     public void toModelType_invalidOrder_throwsIllegalValueException() {
         XmlAdaptedPerson person =
-                new XmlAdaptedPerson(INVALID_NAME, VALID_PHONE, INVALID_ORDER, VALID_EMAIL,
+                new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, INVALID_ORDER, VALID_EMAIL,
                         VALID_ADDRESS, VALID_HALAL, VALID_VEGETARIAN, VALID_TAGS);
         String expectedMessage = Order.MESSAGE_ORDER_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);

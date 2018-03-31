@@ -4,6 +4,7 @@
     <persons>
         <name>Hans Muster</name>
         <phone isPrivate="false">9482424</phone>
+        <order isPrivate="false">Chicken Rice</order>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
     </persons>
@@ -11,6 +12,7 @@
     <persons>
         <name>Hans Muster</name>
         <phone isPrivate="false">948asdf2424</phone>
+        <order isPrivate="false">Chicken Rice</order>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
     </persons>

@@ -1,5 +1,5 @@
 //@@author Eldon-Chung
-package seedu.address.logic.conditionalparser;
+package seedu.address.logic.parser;
 
 /**
  * Represents the token type that that portions of the string can be grouped into.
@@ -15,6 +15,10 @@ public class Token {
 
     public TokenType getType() {
         return this.type;
+    }
+
+    public boolean hasType(TokenType type) {
+        return this.type == type;
     }
 
     public String getPattern() {

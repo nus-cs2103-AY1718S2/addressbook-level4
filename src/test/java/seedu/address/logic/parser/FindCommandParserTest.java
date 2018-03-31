@@ -21,7 +21,7 @@ public class FindCommandParserTest {
     public void parse_validArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
         FindCommand expectedFindCommand = new FindCommand();
-        assertParseSuccess(parser, "n/BTC OR t/fav", expectedFindCommand);
+        assertParseSuccess(parser, "t/fav OR n/BTC", expectedFindCommand);
 
         // multiple whitespaces between keywords
         assertParseSuccess(parser, " \n n/BTC \n OR \t t/fav  \t", expectedFindCommand);

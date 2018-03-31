@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.TokenType.PREFIXTAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_COINS;
 
 import java.util.Collections;
@@ -33,12 +33,12 @@ public class TagCommand extends UndoableCommand {
             + "by the index number used in the last coin listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_TAG + "fav";
+            + "[" + PREFIXTAG + "TAG]...\n"
+            + "Example: " + COMMAND_WORD + " 1 " + PREFIXTAG + "fav";
 
     public static final String MESSAGE_EDIT_COIN_SUCCESS = "Tagged Coin: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one tag must be provided.";
-    public static final String MESSAGE_DUPLICATE_COIN = "This coin already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_COIN = "This coin already exists in the coin book.";
 
     private final Index index;
     private final EditCoinDescriptor editCoinDescriptor;

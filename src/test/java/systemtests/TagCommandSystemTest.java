@@ -7,7 +7,7 @@ import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.TokenType.PREFIXTAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_COINS;
 import static seedu.address.testutil.TypicalCoins.ALICE;
 import static seedu.address.testutil.TypicalCoins.BOB;
@@ -68,7 +68,7 @@ public class TagCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: clear tags -> cleared */
         index = INDEX_FIRST_COIN;
-        command = TagCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_TAG.getPrefix();
+        command = TagCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIXTAG;
         editedCoin = new CoinBuilder(coinToEdit).withTags().build();
         assertCommandSuccess(command, index, editedCoin);
 

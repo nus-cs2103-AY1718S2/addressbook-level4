@@ -1,6 +1,11 @@
 //@@author Eldon-Chung
-
 package seedu.address.logic.conditionalparser;
+
+import java.util.List;
+
+import seedu.address.logic.parser.Token;
+import seedu.address.logic.parser.TokenStack;
+import seedu.address.logic.parser.TokenType;
 
 /**
  * Parses tokenized boolean logic statements to verify correctness
@@ -9,8 +14,8 @@ public class SyntaxParser {
 
     private TokenStack tokenStack;
 
-    public SyntaxParser(TokenStack tokenStack) {
-        this.tokenStack = tokenStack;
+    public SyntaxParser(List<Token> tokenList) {
+        this.tokenStack = new TokenStack(tokenList);
     }
 
     public TokenType getExpectedType() {
@@ -26,7 +31,8 @@ public class SyntaxParser {
      * @return correctness of the tokenStack
      */
     public boolean parse() {
-        return expression() && tokenStack.isEmpty();
+        return expression()
+                && tokenStack.matchAndPopTokenType(TokenType.EOF);
     }
 
     /**
@@ -67,7 +73,7 @@ public class SyntaxParser {
      * @return true if the tokenStack was correct
      */
     boolean cond() {
-        if (!tokenStack.matchAndPopTokenType(TokenType.SPECIFIER)) {
+        if (!isPrefix()) {
             return false;
         }
 
@@ -75,6 +81,17 @@ public class SyntaxParser {
         tokenStack.matchAndPopTokenType(TokenType.COMPARATOR);
 
         return (tokenStack.matchAndPopTokenType(TokenType.NUM) || tokenStack.matchAndPopTokenType(TokenType.STRING));
+    }
+
+    /**
+     * Checks if the top of the tokenStack is currently a prefix TokenType.
+     */
+    private boolean isPrefix() {
+        if (!tokenStack.isEmpty() && TokenType.isPrefixType(tokenStack.getActualType())) {
+            tokenStack.popToken();
+            return true;
+        }
+        return false;
     }
 
 }

@@ -9,7 +9,7 @@ import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.TokenType.PREFIXTAG;
 import static seedu.address.testutil.TypicalCoins.ALICE;
 import static seedu.address.testutil.TypicalCoins.AMY;
 import static seedu.address.testutil.TypicalCoins.BOB;
@@ -94,9 +94,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         // "friends" is an existing tag used in the default model, see TypicalCoins#ALICE
         // This test will fail if a new tag that is not in the model is used, see the bug documented in
         // CoinBook#addCoin(Coin)
-        command = CoinUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";
+        command = CoinUtil.getAddCommand(HOON) + " " + PREFIXTAG + "friends";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_COIN);
-
         /* Case: missing name -> rejected */
         command = AddCommand.COMMAND_WORD;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));

@@ -25,6 +25,6 @@ public class FindCommand extends Command {
 
     @Override
     public boolean equals(Object other) {
-        return other instanceof FindCommand; // short circuit if same class
+        return (other instanceof FindCommand); // short circuit if same class
     }
 }

@@ -1,9 +1,11 @@
 //@@author Eldon-Chung
 
-package seedu.address.logic.conditionalparser;
+package seedu.address.logic.parser;
 
 import java.util.List;
 import java.util.Stack;
+
+import com.google.common.collect.Lists;
 
 /**
  * Represents stack of Token objects.
@@ -14,7 +16,7 @@ public class TokenStack {
 
     public TokenStack(List<Token> tokenList) {
         tokenStack = new Stack<Token>();
-        tokenStack.addAll(tokenList);
+        tokenStack.addAll(Lists.reverse(tokenList));
     }
 
     /**

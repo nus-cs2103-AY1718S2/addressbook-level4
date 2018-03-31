@@ -24,6 +24,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.commands.DeleteBeforeCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -123,7 +124,23 @@ public class AddressBookParserTest {
                 (AddAppointmentCommand) parser.parseCommand(AppointmentUtil.getAddAppointmentAlias(appointment));
         assertEquals(new AddAppointmentCommand(appointment), command);
     }
-    //@@author jlks96
+
+    @Test
+    public void parseCommand_deleteAppointment() throws Exception {
+        Appointment appointment = new AppointmentBuilder().build();
+        DeleteAppointmentCommand command =
+                (DeleteAppointmentCommand) parser.parseCommand(AppointmentUtil.getDeleteAppointmentCommand(appointment));
+        assertEquals(new DeleteAppointmentCommand(appointment), command);
+    }
+
+    @Test
+    public void parseCommand_deleteAppointmentAlias() throws Exception {
+        Appointment appointment = new AppointmentBuilder().build();
+        DeleteAppointmentCommand command =
+                (DeleteAppointmentCommand) parser.parseCommand(AppointmentUtil.getDeleteAppointmentAlias(appointment));
+        assertEquals(new DeleteAppointmentCommand(appointment), command);
+    }
+    //@@author
 
     @Test
     public void parseCommand_edit() throws Exception {

@@ -9,7 +9,7 @@ import seedu.address.testutil.AppointmentBuilder;
 public class NewAppointmentAddedEventTest {
 
     @Test
-    public void getAppointmentAdded_valid_success() {
+    public void getAppointmentAdded_validAppointment_success() {
         Appointment appointment = new AppointmentBuilder().build();
         NewAppointmentAddedEvent event = new NewAppointmentAddedEvent(appointment);
         assert(event.getAppointmentAdded().equals(appointment));

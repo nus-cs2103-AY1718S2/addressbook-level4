@@ -18,10 +18,7 @@ By: `Team W15-B3`      Since: `February 2018`      Licence: `MIT`
 == Introduction
 
 image:FASTIS.png[ align="center"] +
-Fastis is a desktop Event Manager application. It has a GUI but most of the user interactions happen using + 
-a CLI (Command Line Interface). This application is for students with group projects to keep track of their +
-teammates' timetable, in order to schedule the most suitable meetup time. Users can store person's timetables, +
-arrange persons in groups and generate a suitable meetup time.
+Fastis is a desktop Event Manager application. It has a GUI but most of the user interactions happen + using a CLI (Command Line Interface). This application is for students with group projects to keep track of their teammates' + timetable, in order to schedule the most suitable meetup time. Users can store person's timetables, arrange persons in groups and  + generate a suitable meetup time.
 
 == Quick Start
 

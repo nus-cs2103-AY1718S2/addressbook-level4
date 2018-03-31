@@ -9,10 +9,18 @@ import seedu.address.model.notification.Notification;
 public class ShowNotificationEvent extends BaseEvent {
     private String ownerName;
     private Notification notification;
+    private boolean isFirstSatge;
 
     public ShowNotificationEvent(String ownerName, Notification notification) {
         this.ownerName = ownerName;
         this.notification = notification;
+        isFirstSatge = false;
+    }
+
+    public ShowNotificationEvent(String ownerName, Notification notification, boolean isFirstSatge) {
+        this.ownerName = ownerName;
+        this.notification = notification;
+        this.isFirstSatge = isFirstSatge;
     }
 
     public String getOwnerName() {
@@ -26,5 +34,9 @@ public class ShowNotificationEvent extends BaseEvent {
     @Override
     public String toString() {
         return "ShowNotificationEvent: " + notification.toString();
+    }
+
+    public boolean isFirstSatge() {
+        return isFirstSatge;
     }
 }

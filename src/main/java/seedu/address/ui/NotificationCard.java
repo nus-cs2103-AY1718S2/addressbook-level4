@@ -38,11 +38,15 @@ public class NotificationCard extends UiPart<Region> {
     private VBox xOffset;
     @FXML
     private VBox yOffset;
+    @FXML
+    private GridPane content;
 
     private String ownerId;
+    private boolean isFirstStage;
 
 
-    public NotificationCard(String title, String displayedIndex, String ownerName, String endTime, String ownerId) {
+    public NotificationCard(String title, String displayedIndex, String ownerName, String endTime, String ownerId,
+                            boolean isFirstStage) {
         super(FXML);
         this.index.setText(displayedIndex + ". ");
         this.title.setText(title);
@@ -52,10 +56,12 @@ public class NotificationCard extends UiPart<Region> {
 
         xOffset.setMaxWidth(NOTIFICATION_CARD_X_OFFSET);
         yOffset.setMaxWidth(NOTIFICATION_CARD_Y_OFFSET);
+        this.isFirstStage = isFirstStage;
+        setStyle();
     }
 
     public NotificationCard(String title, String displayedIndex, String ownerName, String endTime, String ownerId,
-                            String newFxml) {
+                            String newFxml, boolean isFirstStage) {
         super(newFxml);
         this.index.setText(displayedIndex + ". ");
         this.title.setText(title);
@@ -65,6 +71,8 @@ public class NotificationCard extends UiPart<Region> {
 
         xOffset.setMaxWidth(NOTIFICATION_CARD_X_OFFSET);
         yOffset.setMaxWidth(NOTIFICATION_CARD_Y_OFFSET);
+        this.isFirstStage = isFirstStage;
+        setStyle();
     }
 
 
@@ -108,7 +116,11 @@ public class NotificationCard extends UiPart<Region> {
         return endTime.getText();
     }
 
-    public NotificationCardForCenter getForCenterCopy() {
-       return new NotificationCardForCenter(getTitle(), getIndex(), getOwnerName(), getEndTime(), getOwnerId());
+    public void setStyle() {
+        if (isFirstStage) {
+            content.getStyleClass().add("notification-card-first-stage");
+        } else {
+            content.getStyleClass().add("notification-card");
+        }
     }
 }

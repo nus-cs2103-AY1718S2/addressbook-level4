@@ -7,6 +7,7 @@ import static seedu.address.ui.NotificationCard.NOTIFICATION_CARD_WIDTH;
 import static seedu.address.ui.NotificationCard.NOTIFICATION_CARD_X_OFFSET;
 import static seedu.address.ui.NotificationCard.NOTIFICATION_CARD_Y_OFFSET;
 
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Timer;
@@ -30,6 +31,8 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -300,7 +303,7 @@ public class MainWindow extends UiPart<Stage> {
                 notificationCenter.getTotalUndismmissedNotificationCards() + "",
                 event.getOwnerName(),
                 event.getNotification().getEndDateDisplay(),
-                event.getNotification().getOwnerId());
+                event.getNotification().getOwnerId(), event.isFirstSatge());
         Region notificationCard = x.getRoot();
         notificationCard.setMaxHeight(NOTIFICATION_CARD_HEIGHT);
         notificationCard.setMaxWidth(NOTIFICATION_CARD_WIDTH);
@@ -310,14 +313,12 @@ public class MainWindow extends UiPart<Stage> {
         notificationCard.setTranslateX(NOTIFICATION_CARD_WIDTH);
         try {
             semaphore.acquire();
-            System.out.println("acquire");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         notificationCard.setTranslateY(UP * shownNotificationCards.size() * NOTIFICATION_CARD_HEIGHT);
         shownNotificationCards.add(notificationCard);
         semaphore.release();
-        System.out.println("release");
 
         //enter animation
         Platform.runLater(new Runnable() {
@@ -333,7 +334,6 @@ public class MainWindow extends UiPart<Stage> {
                         //it should be the first notification card to exit first
                         try {
                             semaphore.acquire();
-                            System.out.println("acquire");
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -343,7 +343,6 @@ public class MainWindow extends UiPart<Stage> {
                         animateHorizontally(firstNotificationCard, NOTIFICATION_CARD_WIDTH, EXIT);
                         moveAllNotificationCardsDown();
                         semaphore.release();
-                        System.out.println("release");
                     }
                 };
                 timer.schedule(timerTask, NOTIFICATION_CARD_SHOW_TIME);

@@ -2,6 +2,7 @@ package seedu.address.logic;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -129,7 +130,6 @@ public class LogicManager extends ComponentManager implements Logic {
     @Subscribe
     private void handleTimetableEntryAddedEvent(NotificationAddedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-
         NotificationTime parsedTime = NotificationTimeParserUtil.parseTime(event.notification.getEndDate());
         Calendar c = Calendar.getInstance();
         c.set(parsedTime.getYear(), parsedTime.getMonth(), parsedTime.getDate(), parsedTime.getHour(),
@@ -146,13 +146,15 @@ public class LogicManager extends ComponentManager implements Logic {
                             .format(Calendar.getInstance().getTimeInMillis()));
                 }
                 Notification notification = timerTaskToTimetableEntryMap.get(this);
-                String title = notification.getTitle();
-                String endTime = notification.getEndDateDisplay();
                 String ownerName = ((ModelManager) model).getNameById(notification.getOwnerId());
                 raise(new ShowNotificationEvent(ownerName, notification));
                 //raise(new RequestToDeleteNotificationEvent(timerTaskToTimetableEntryMap.get(this).getId()));
             }
         };
+        if (parsedTime.isToday()) {
+            String ownerName = ((ModelManager) model).getNameById(event.notification.getOwnerId());
+            raise(new ShowNotificationEvent(ownerName, event.notification, true));
+        }
         timetableEntriesStatus.put(task, true);
         scheduledTimerTasks.put(event.notification.getId(), task);
         timerTaskToTimetableEntryMap.put(task, event.notification);

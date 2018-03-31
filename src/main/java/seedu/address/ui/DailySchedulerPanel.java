@@ -13,7 +13,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.LoadMapPanelEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.RemoveMapPanelEvent;
-import seedu.address.commons.events.ui.SwitchFeatureEvent;
 
 /**
  * The UI component that handles the display of daily schedules and directions between locations.

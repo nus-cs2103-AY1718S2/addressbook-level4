@@ -14,7 +14,6 @@ import seedu.address.commons.events.ui.LoadMapPanelEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.RemoveMapPanelEvent;
 import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
-import seedu.address.commons.events.ui.SwitchFeatureEvent;
 
 /**
  * The UI component that handles the display of beneficiary details, location on map

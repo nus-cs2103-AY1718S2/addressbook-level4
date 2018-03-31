@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-import seedu.address.external.GoogleContactService;
+import seedu.address.external.OAuth2Sample;
 
 /**
  * Displays the user's schedule.
@@ -18,7 +18,7 @@ public class SyncCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        GoogleContactService newService = new GoogleContactService();
+        OAuth2Sample newService = new OAuth2Sample();
         newService.initialise();
         return new CommandResult(MESSAGE_SUCCESS);
     }

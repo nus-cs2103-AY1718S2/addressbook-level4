@@ -129,7 +129,8 @@ public class AddressBookParserTest {
     public void parseCommand_deleteAppointment() throws Exception {
         Appointment appointment = new AppointmentBuilder().build();
         DeleteAppointmentCommand command =
-                (DeleteAppointmentCommand) parser.parseCommand(AppointmentUtil.getDeleteAppointmentCommand(appointment));
+                (DeleteAppointmentCommand) parser.parseCommand(
+                        AppointmentUtil.getDeleteAppointmentCommand(appointment));
         assertEquals(new DeleteAppointmentCommand(appointment), command);
     }
 

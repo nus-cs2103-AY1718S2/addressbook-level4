@@ -180,7 +180,6 @@ public class Imdb implements ReadOnlyImdb {
      */
     public void addPatientToQueue(int p) throws DuplicatePatientException {
         requireNonNull(p);
-//        Patient patient = syncWithMasterTagList(p);
         visitingQueue.add(p);
     }
 

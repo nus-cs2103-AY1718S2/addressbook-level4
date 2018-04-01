@@ -42,6 +42,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label appointment;
     @FXML
+    private Label insurance;
+    @FXML
     private FlowPane tags;
 
     public PersonCard(Person person, int displayedIndex) {
@@ -53,11 +55,16 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         birthday.setText(person.getBirthday().value);
-        if (person.getAppointment() == null) {
+        if (person.getAppointment() == null || person.getAppointment().equals("")) {
             appointment.setText("No Appointment Date");
+        } else {
+            appointment.setText(person.getAppointment().value);
+        }
+        if (person.getInsurance() == null) {
+            insurance.setText("Potential Client");
         }
         else {
-            appointment.setText(person.getAppointment().value);
+            insurance.setText(person.getInsurance().insuranceName);
         }
         startTag(person);
     }
@@ -108,9 +115,9 @@ public class PersonCard extends UiPart<Region> {
         case "colleagues":
             return TAG_COLOR_STYLES[4];
 
+        default:
+            return "";
         }
-
-        return "";
     }
 
 

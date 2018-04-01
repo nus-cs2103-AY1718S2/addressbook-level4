@@ -82,6 +82,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void export(ExportType typeToExport) {
+        requireAllNonNull(typeToExport);
+        if (typeToExport.equals(ExportType.PORTFOLIO)) {
+            addressBook.exportPortfolio();
+        }
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -97,11 +105,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
-    }
-
-    @Override
-    public void export(ExportType typeToExport) {
-
     }
 
     @Override

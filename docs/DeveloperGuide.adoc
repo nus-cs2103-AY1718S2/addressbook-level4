@@ -413,20 +413,20 @@ The following sequence diagram shows how the sortCommand operation works. In the
 
 Suppose that the user has a list of clients in the application as shown in the diagram below, after executing the command, the list of clients will be as follows.
 
-====Design Consideration
+==== Design Considerations
 
-=====Aspect: Implementation of SortCommand
+===== Aspect: Implementation of SortCommand
 
-* **Alternative 1 (Current): Implementation of SortCommand as a command that is not undoable
+* **Alternative 1 (Current):** Implementation of SortCommand as a command that is not undoable
 ** Pros: The SortCommand will be easier for developers to implement this way.
 ** Cons: Users that wish to revert the changes made might not be able to do so and this will decrease the usability of the program.
 * **Alternative 2 (Prospective):** Implementation of SortCommand as a undoable command
 ** Pros: Users that wish to revert the changes made will be able to do so, thus increasing the usability of the program.
 ** Cons: The SortCommand will be harder for developers to implement.
 
-=====Aspect: Parameters of the SortCommand
+===== Aspect: Parameters of the SortCommand
 
-* **Alternative 1 (Current): Implementation of SortCommand as a command that only allows users to sort clients according to their names in lexicographical order.
+* **Alternative 1 (Current):** Implementation of SortCommand as a command that only allows users to sort clients according to their names in lexicographical order.
 ** Pros: The SortCommand will be easier for developers to implement as it only needs to sort the names of the internalList.
 ** Cons: Usability is low as the client might wish to sort clients according to their commissions earned.
 * **Alternative 2 (Prospective):** Implementation of SortCommand as a command that allows users to sort clients according to multiple parameters such as commission
@@ -436,18 +436,18 @@ Suppose that the user has a list of clients in the application as shown in the d
 // end::sort[]
 
 // tag::group[]
-===Group feature
+=== Group feature
 
-====Current Implementation
+==== Current Implementation
 The Group feature will allow users to group their clients according to a specified group. Users will be required to add their clients to a group when adding a new user. Users can change the grouping of their clients later on if they wish to do so.
 
 The following sequence diagram shows how the group feature is being implemented.
 
-====Design Consideration
+==== Design Considerations
 
-=====Aspect: Implementation of Group
+===== Aspect: Implementation of Group
 
-* ** Alternative 1: Requires users to specify the group of the client when adding a new client
+* ** Alternative 1:** Requires users to specify the group of the client when adding a new client
 ** Pros: It will easier for developers to implement this way.
 ** Cons: Users of the application might not know which group to place the clients into when adding a new client.
 * ** Alternative 2:** Allow users to add the group of the client after they have added a new client
@@ -494,11 +494,6 @@ To do this, a commission storage will be created to store existing commission, a
  ** Pros: TBC
  ** Cons: TBC
 
-
-=== [Proposed] Data Encryption
-
-_{Explain here how the data encryption feature will be implemented}_
-
 // end::dataencryption[]
 
 === Exporting
@@ -506,10 +501,10 @@ _{Explain here how the data encryption feature will be implemented}_
 We are creating export functionality so that the users of the application can take the data that is being locally stored and download it onto their personal computer.
 There will be various types of data to export with different ways to export (i.e. file types).
 
-*Since v1.2*
+*Since v1.3*
 
 * The application will handle the `export` command with one argument (Format: `export EXPORT_TYPE`).
-* The application simply catches the command but does not exporting at the moment.
+* The application simply catches the command but does not exporting at the moment for the calendar.
 * The export types are from an enum class at `seedu.address.model.export.ExportType`.
 * To add another export type to be caught by the user's input, simply add another value to the enum class mentioned above.
 
@@ -970,8 +965,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |remove my client | remove entries that I no longer need
 
-|`* * *` |user |add the appointment date I have with my client |keep track of the next meet up
-
 |`* * *` |user |sort the client based on different category |directly get the type of data I want
 
 |`* * *` |user |add my client’s personal detail  |know more about them
@@ -998,7 +991,27 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |view the total commission I am getting |view my total earning
 
+|`* * *` |user |view which are my top clients |to serve them better
+
+|`* * *` |user |group my clients|to manage the different groups differently
+
+|`* * *` |user |add the birthday date of my client |keep track of my client's birthday
+
+|`* * *` |user |edit the birthday date of my client |update it in case I got their birthday wrong at a earlier date
+
+|`* * *` |user |add the appointment date I have with my client |schedule a meeting date with a client
+
+|`* * *` |user |edit the appointment date I have with my client |make changes to the meeting date with a client
+
+|`* * *` |user |delete the appointment date I have with my client |cancel a meeting date with a client
+
+|`* * *` |user |view the appointment date I have with my client |keep track of the next meeting with a client
+
 |`* * *` |user |view appointment on the calendar |have a more organized view of my schedule and at the same time plan for future appointment
+
+|`* *` |user |export a calendar of my appointments and client birthdays |can use the data on a calendar outside of the application
+
+|`* *` |user |receive notification 3 day prior to my client's appointment date |ensure that I will not miss it
 
 |`* *` |user |check the history of my command |know what I have done
 
@@ -1010,15 +1023,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |export a portfolio of my clients |can use the data of the application elsewhere
 
-|`* *` |user |export a calendar of my appointments and client birthdays |can use the data on a calendar outside of the application
-
 |`* *` |user |hide some of my client's information |minimize the leak of my client's information
 
 |`* *` |user |sort persons by name (by default) |view the address book in an organized manner
 
 |`* *` |user |receive notification of my client's birthday |keep in touch with my clients
-
-|`* *` |user |receive notification 3 day prior to my client's appointment date |ensure that I will not miss it
 
 |`* *` |user |add in password access to my address book |be viewed/edited only by allowed users
 
@@ -1026,11 +1035,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |forget password |have a backup plan
 
-|`*` |user |encrypt the data |feel safer for my client's data
-
 |`*` |user |request access to other address book |seek potential customer from leaving colleague
 
-|`*` |user |upload my client's info on social network |protect myself against cyber bullying or defaming
+
 
 
 |=======================================================================
@@ -1231,34 +1238,18 @@ _{More to be added}_
 
 [appendix]
 == Glossary
-User
-.  An User is defined as the insurance agent.
-Mainstream OS
-.  A mainstream OS includes Windows, Linux, Unix and OS-X
-Client Information
-.  Client Information includes all personal details and metrics.
-[[mainstream-os]] Mainstream OS::
-Windows, Linux, Unix, OS-X
+
+[[User]] User::
+An User is defined as the insurance agent
+
+[[mainstream-OS]] Mainstream OS::
+A mainstream OS includes Windows, Linux, Unix and OS-X
+
+[[client-information]] Clients's Information::
+Client's Information includes all personal details and metrics
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
 
 [appendix]
 == Instructions for Manual Testing

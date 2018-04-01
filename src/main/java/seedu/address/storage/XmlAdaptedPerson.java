@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.Insurance.Insurance;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Birthday;
@@ -39,18 +41,26 @@ public class XmlAdaptedPerson {
     @XmlElement
     private String appointment;
     @XmlElement
+    private String group;
+    @XmlElement
+    private String insurance;
+    @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedPerson() {}
+    public XmlAdaptedPerson() {
+    }
 
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged, String birthday, String appointment) {
+
+    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged,
+                            String birthday, String appointment, String group, String insurance) {
+
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -59,8 +69,12 @@ public class XmlAdaptedPerson {
         if (appointment != null) {
             this.appointment = appointment;
         }
+        this.group = group;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
+        }
+        if (insurance != null) {
+            this.insurance = insurance;
         }
     }
 
@@ -75,7 +89,8 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         birthday = source.getBirthday().value;
-        if (source.getAppointment() == null) {
+        group = source.getGroup().groupName;
+        if (source.getAppointment() == null || source.getAppointment().equals("")) {
             appointment = null;
         }
         else {
@@ -84,6 +99,12 @@ public class XmlAdaptedPerson {
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
+        }
+        if (source.getInsurance() == null) {
+            insurance = null;
+        }
+        else {
+            insurance = source.getInsurance().insuranceName;
         }
     }
 
@@ -131,7 +152,8 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
 
         if (this.birthday == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Birthday.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                Birthday.class.getSimpleName()));
         }
         if (!Birthday.isValidBirthday(this.birthday)) {
             throw new IllegalValueException(Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
@@ -143,8 +165,21 @@ public class XmlAdaptedPerson {
         }
         final Appointment appointment = new Appointment(this.appointment);
 
+        if (this.group == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Group.class.getSimpleName()));
+        }
+        if (!Group.isValidGroup(this.group)) {
+            throw new IllegalValueException(Group.MESSAGE_GROUP_CONSTRAINTS);
+        }
+        final Group group = new Group(this.group);
+        if (!Insurance.isValidInsurance(this.insurance)) {
+            throw new IllegalValueException(Insurance.MESSAGE_INSURANCE_CONSTRAINTS);
+        }
+        final Insurance insurance = new Insurance(this.insurance);
+
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags, birthday, appointment);
+        return new Person(name, phone, email, address, tags, birthday, appointment, group, insurance);
     }
 
     @Override
@@ -164,6 +199,7 @@ public class XmlAdaptedPerson {
                 && Objects.equals(address, otherPerson.address)
                 && Objects.equals(birthday, otherPerson.birthday)
                 && Objects.equals(appointment, otherPerson.appointment)
+                && Objects.equals(insurance, otherPerson.insurance)
                 && tagged.equals(otherPerson.tagged);
     }
 }

@@ -1,42 +1,61 @@
 package seedu.address.model.Insurance;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
-
-import seedu.address.model.tag.Tag;
 
 /**
  * Represents a Insurance plan in reInsurance.
- * Guarantees: immutable; commission is valid as declared in {@link #isValidCommission(String)}
+ * Guarantees: immutable;
  */
-public class Insurance extends Tag {
+public class Insurance {
 
-    public static final String MESSAGE_COMMISSION_CONSTRAINTS =
-        "Commission can only contain numbers, should be at least 1 digit long";
-    public static final String COMMISSION_VALIDATION_REGEX = "\\d{1,}";
-    private final String commission;
+
+    public static final String MESSAGE_INSURANCE_CONSTRAINTS =
+        "Insurance should only contain alphanumeric characters";
+
+    /*
+     * The first character of the address must not be a whitespace,
+     */
+    public static final String INSURANCE_VALIDATION_REGEX = "[\\p{Alnum} ]*";
+
+
+    public final String insuranceName;
 
     /**
-     * Constructs a {@code Tag}.
+     * Constructs a {@code Name}.
      *
-     * @param tagName A valid tag name.
+     * @param insurance A valid insurance.
      */
-    public Insurance(String tagName, String commission) {
-        super(tagName);
-        requireNonNull(commission);
-        checkArgument(isValidCommission(commission), MESSAGE_COMMISSION_CONSTRAINTS);
-        this.commission = commission;
+    public Insurance(String insurance) {
+        checkArgument(isValidInsurance(insurance), MESSAGE_INSURANCE_CONSTRAINTS);
+        this.insuranceName = insurance;
     }
 
     /**
-     * Returns true if a given string is a valid commission.
+     * Returns true if a given string is a valid insurance.
      */
-    private Boolean isValidCommission(String commission) {
-        return commission.matches(COMMISSION_VALIDATION_REGEX);
+    public static boolean isValidInsurance(String test) {
+        if (test == null) {
+            return true;
+        }
+        return test.matches(INSURANCE_VALIDATION_REGEX);
     }
 
-    public String getCommission() {
-        return commission;
+
+    @Override
+    public String toString() {
+        return insuranceName;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+            || (other instanceof Insurance // instanceof handles nulls
+            && this.insuranceName.equals(((Insurance) other).insuranceName)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return insuranceName.hashCode();
     }
 
 }

@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.model.UserPrefs;
 import seedu.address.model.export.ExportType;
 
 /**
@@ -16,7 +17,9 @@ public class ExportCommand extends UndoableCommand {
             + "Parameters: ExportType (must be one of the following - CALENDAR, PORTFOLIO)\n"
             + "Example: " + COMMAND_WORD + " portfolio";
 
-    public static final String MESSAGE_SUCCESS = "Successfully exported: %1$s";
+    public static final String MESSAGE_SUCCESS = "Successfully exported %1$s to %2$s";
+
+    public final UserPrefs userPrefs = new UserPrefs();
 
     private ExportType typeToExport;
 
@@ -28,6 +31,7 @@ public class ExportCommand extends UndoableCommand {
     protected CommandResult executeUndoableCommand() {
         requireNonNull(model);
         model.export(typeToExport);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, typeToExport.toString()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, typeToExport.toString(),
+        userPrefs.getExportPortfolioFilePath()));
     }
 }

@@ -63,15 +63,15 @@ Format: `help`, Alias: `h`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` Alias: `a`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [d/APPOINTMENT] [t/TAG]...` Alias: `a`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/09-12-1994 g/family`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/29-10-1992 g/friends t/criminal`
 
 === Listing all persons : `list`
 
@@ -86,7 +86,7 @@ Format: `count`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` Alias: `e`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [d/APPOINTMENT] [t/TAG]...` Alias: `e`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -253,7 +253,7 @@ Clears all entries from the address book. +
 Alias: `c` +
 Format: `clear` Alias: `c`
 
-=== Export data : `Since v1.2`
+=== Export data : `Since v1.3`
 
 Exports the data from the specified export type (case insensitive). +
 Format: `export EXPORT_TYPE`
@@ -268,7 +268,8 @@ Exports the data in the portfolio to a .csv file
 [NOTE]
 ====
 * Coming in v2.0, there will be more options on the types of data to export, since as of v1.2 the only export types are CALENDAR and PORTFOLIO.
-* As of v1.2, the application only handles the command without actually exporting. The actual export of the data files will come in v2.0.
+* As of v1.2, the application only handles the command for the portfolio. The actual export of the data files of the calendar will come in v2.0.
+* Default destination file is at `data/portfolio.csv` for the `export portfolio` command.
 ====
 
 === Exiting the program : `exit`

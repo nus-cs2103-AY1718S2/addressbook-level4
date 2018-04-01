@@ -8,6 +8,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
 
+import javax.xml.transform.Result;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -93,7 +95,7 @@ public class CommandBox extends UiPart<Region> {
             if (LogicManager.isLocked()) {
                 raise(new ShowSuggestionEvent(ResultDisplay.WELCOME_MESSAGE));
             } else {
-                raise(new ShowSuggestionEvent(""));
+                raise(new ShowSuggestionEvent(ResultDisplay.SUGGEST_HELP_MESSAGE));
             }
             return;
         }

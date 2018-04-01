@@ -69,7 +69,7 @@ public class BuildingTest {
             expectedSchedule.add("vacant");
         }
         expectedList.add(expectedSchedule);
-        assertEquals(validBuilding.retrieveAllRoomsSchedule(), expectedList);
+        assertEquals(expectedList, validBuilding.retrieveAllRoomsSchedule());
     }
 
     @Test
@@ -98,7 +98,7 @@ public class BuildingTest {
 
         ArrayList<String> expectedList = new ArrayList<>();
         expectedList.add(RoomBuilder.DEFAULT_ROOMNAME);
-        assertEquals(validBuilding.retrieveAllRoomsInBuilding(), expectedList);
+        assertEquals(expectedList, validBuilding.retrieveAllRoomsInBuilding());
     }
 
     @Test

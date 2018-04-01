@@ -62,7 +62,7 @@ public class Week {
                 return getNoClassSchedule();
             }
             WeekDay weekDay = initializeWeekDay();
-            return weekDay.retrieveWeekDayRoomSchedule();
+            return weekDay.retrieveWeekDaySchedule();
         } catch (InvalidWeekScheduleException e) {
             throw new CorruptedVenueInformationException();
         }

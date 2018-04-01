@@ -208,7 +208,7 @@ public class MainApp extends Application {
             Room room = roomOptional.orElseThrow(() -> new DataConversionException(new IOException()));
             Room.setNusVenues(room.getNusRooms());
         } catch (DataConversionException de) {
-            logger.warning("UserPrefs file at " + venueInformationFilePath + " is not in the correct format.");
+            logger.warning("VenueInformation file at " + venueInformationFilePath + " is not in the correct format.");
         } catch (IOException ioe) {
             logger.warning("Problem while reading from the file at " + venueInformationFilePath);
         }

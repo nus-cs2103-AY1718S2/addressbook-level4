@@ -21,28 +21,28 @@ public class WeekDayTest {
             new WeekDayBuilder().withWeekDay("Monday").withRoomName("COM2-0108").build();
 
     @Test
-    public void retrieveWeekDayRoomSchedule_nullWeekDaySchedule_throwsCorruptedVenueInformationException() {
+    public void retrieveWeekDaySchedule_nullWeekDaySchedule_throwsCorruptedVenueInformationException() {
         weekDay.setWeekDaySchedule(null);
-        assertThrows(CorruptedVenueInformationException.class, () -> weekDay.retrieveWeekDayRoomSchedule());
+        assertThrows(CorruptedVenueInformationException.class, () -> weekDay.retrieveWeekDaySchedule());
     }
 
     @Test
-    public void retrieveWeekDayRoomSchedule_invalidWeekDayScheduleFormat_throwsCorruptedVenueInformationException() {
+    public void retrieveWeekDaySchedule_invalidWeekDayScheduleFormat_throwsCorruptedVenueInformationException() {
         HashMap<String, String> invalidWeekDaySchedule = new HashMap<>();
         invalidWeekDaySchedule.put("800", "vacant");
         weekDay.setWeekDaySchedule(invalidWeekDaySchedule);
-        assertThrows(CorruptedVenueInformationException.class, () -> weekDay.retrieveWeekDayRoomSchedule());
+        assertThrows(CorruptedVenueInformationException.class, () -> weekDay.retrieveWeekDaySchedule());
     }
 
     @Test
-    public void retrieveWeekDayRoomSchedule_invalidWeekDayScheduleData_throwsCorruptedVenueInformationException() {
+    public void retrieveWeekDaySchedule_invalidWeekDayScheduleData_throwsCorruptedVenueInformationException() {
         HashMap<String, String> invalidWeekDaySchedule = createInvalidWeekDaySchedule();
         weekDay.setWeekDaySchedule(invalidWeekDaySchedule);
-        assertThrows(CorruptedVenueInformationException.class, () -> weekDay.retrieveWeekDayRoomSchedule());
+        assertThrows(CorruptedVenueInformationException.class, () -> weekDay.retrieveWeekDaySchedule());
     }
 
     @Test
-    public void retrieveWeekDayRoomSchedule_validWeekDaySchedule_success() throws Exception {
+    public void retrieveWeekDaySchedule_validWeekDaySchedule_success() throws Exception {
         WeekDay validWeekDay = new WeekDayBuilder().build();
         HashMap<String, String> validWeekDaySchedule = validWeekDay.getWeekDaySchedule();
         weekDay.setWeekDaySchedule(validWeekDaySchedule);
@@ -51,17 +51,17 @@ public class WeekDayTest {
         for (int i = 0; i < WeekDay.NUMBER_OF_CLASSES; i++) {
             expectedList.add("vacant");
         }
-        assertEquals(weekDay.retrieveWeekDayRoomSchedule(), expectedList);
+        assertEquals(expectedList, weekDay.retrieveWeekDaySchedule());
     }
 
     @Test
-    public void isValidWeekDayRoomSchedule_nullWeekDaySchedule_throwsInvalidWeekDayScheduleException() {
+    public void isValidWeekDaySchedule_nullWeekDaySchedule_throwsInvalidWeekDayScheduleException() {
         weekDay.setWeekDaySchedule(null);
         assertThrows(InvalidWeekDayScheduleException.class, () -> weekDay.isValidWeekDaySchedule());
     }
 
     @Test
-    public void isValidWeekDayRoomSchedule_invalidWeekDayScheduleFormat_throwsInvalidWeekDayScheduleException() {
+    public void isValidWeekDaySchedule_invalidWeekDayScheduleFormat_throwsInvalidWeekDayScheduleException() {
         HashMap<String, String> invalidWeekDaySchedule = new HashMap<>();
         invalidWeekDaySchedule.put("800", "vacant");
         weekDay.setWeekDaySchedule(invalidWeekDaySchedule);
@@ -69,14 +69,14 @@ public class WeekDayTest {
     }
 
     @Test
-    public void isValidWeekDayRoomSchedule_invalidWeekDayScheduleData_throwsInvalidWeekDayScheduleException() {
+    public void isValidWeekDaySchedule_invalidWeekDayScheduleData_throwsInvalidWeekDayScheduleException() {
         HashMap<String, String> invalidWeekDaySchedule = createInvalidWeekDaySchedule();
         weekDay.setWeekDaySchedule(invalidWeekDaySchedule);
         assertThrows(InvalidWeekDayScheduleException.class, () -> weekDay.isValidWeekDaySchedule());
     }
 
     @Test
-    public void isValidWeekDayRoomSchedule_validWeekDaySchedule_success() throws Exception {
+    public void isValidWeekDaySchedule_validWeekDaySchedule_success() throws Exception {
         WeekDay validWeekDay = new WeekDayBuilder().build();
         HashMap<String, String> validWeekDaySchedule = validWeekDay.getWeekDaySchedule();
         weekDay.setWeekDaySchedule(validWeekDaySchedule);

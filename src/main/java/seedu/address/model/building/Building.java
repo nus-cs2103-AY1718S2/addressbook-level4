@@ -36,7 +36,7 @@ public class Building {
 
     private final String buildingName;
 
-    private HashMap<String, ArrayList<String>> buildingsAndRooms;
+    private HashMap<String, ArrayList<String>> buildingsAndRooms = null;
 
     /**
      * Uses a private {@code Building} constructor for Jackson JSON API to instantiate an object

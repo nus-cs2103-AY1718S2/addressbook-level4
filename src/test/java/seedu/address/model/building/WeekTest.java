@@ -26,7 +26,7 @@ public class WeekTest {
     }
 
     @Test
-    public void retrieveWeekDayRoomSchedule_nonNullInvalidWeekDaySchedule_throwsCorruptedVenueInformationException() {
+    public void retrieveWeekDaySchedule_nonNullInvalidWeekDaySchedule_throwsCorruptedVenueInformationException() {
         ArrayList<WeekDay> invalidWeekSchedule = new ArrayList<>();
         invalidWeekSchedule.add(new WeekDayBuilder().build());
         week.setWeekSchedule(invalidWeekSchedule);
@@ -34,18 +34,18 @@ public class WeekTest {
     }
 
     @Test
-    public void retrieveWeekDayRoomSchedule_validWeekDaySchedule_success() throws Exception {
+    public void retrieveWeekDaySchedule_validWeekDaySchedule_success() throws Exception {
         Week validWeek = new WeekBuilder().build();
 
         ArrayList<String> expectedList = new ArrayList<>();
         for (int i = 0; i < WeekDay.NUMBER_OF_CLASSES; i++) {
             expectedList.add("vacant");
         }
-        assertEquals(validWeek.retrieveWeekDaySchedule(), expectedList);
+        assertEquals(expectedList, validWeek.retrieveWeekDaySchedule());
     }
 
     @Test
-    public void retrieveWeekDayRoomSchedule_sundayWeekDaySchedule_success() throws Exception {
+    public void retrieveWeekDaySchedule_sundayWeekDaySchedule_success() throws Exception {
         Week validWeek = new WeekBuilder().build();
         validWeek.setWeekday(Week.SUNDAY);
 
@@ -53,7 +53,7 @@ public class WeekTest {
         for (int i = 0; i < WeekDay.NUMBER_OF_CLASSES; i++) {
             expectedList.add("vacant");
         }
-        assertEquals(validWeek.retrieveWeekDaySchedule(), expectedList);
+        assertEquals(expectedList, validWeek.retrieveWeekDaySchedule());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class WeekTest {
     }
 
     @Test
-    public void isValidWeekDayRoomSchedule_nonNullInvalidWeekDaySchedule_throwsInvalidWeekScheduleException() {
+    public void isValidWeekSchedule_nonNullInvalidWeekDaySchedule_throwsInvalidWeekScheduleException() {
         ArrayList<WeekDay> invalidWeekSchedule = new ArrayList<>();
         invalidWeekSchedule.add(new WeekDayBuilder().build());
         week.setWeekSchedule(invalidWeekSchedule);
@@ -71,7 +71,7 @@ public class WeekTest {
     }
 
     @Test
-    public void isValidWeekDayRoomSchedule_validWeekDaySchedule_success() throws Exception {
+    public void isValidWeekSchedule_validWeekDaySchedule_success() throws Exception {
         Week validWeek = new WeekBuilder().build();
         assertTrue(validWeek.isValidWeekSchedule());
     }

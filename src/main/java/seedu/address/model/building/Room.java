@@ -30,7 +30,7 @@ public class Room {
 
     private final String roomName;
 
-    private HashMap<String, Week> nusRooms;
+    private HashMap<String, Week> nusRooms = null;
     private Week week = null;
 
     /**

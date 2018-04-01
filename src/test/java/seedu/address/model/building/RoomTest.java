@@ -26,7 +26,7 @@ public class RoomTest {
     }
 
     @Test
-    public void retrieveWeekDayRoomSchedule_nonNullInvalidNusVenues_throwsCorruptedVenueInformationException() {
+    public void retrieveWeekDaySchedule_nonNullInvalidNusVenues_throwsCorruptedVenueInformationException() {
         HashMap<String, Week> invalidNusVenues = new HashMap<>();
         invalidNusVenues.put("COM2-0108", null);
         Room.setNusVenues(invalidNusVenues);
@@ -34,7 +34,7 @@ public class RoomTest {
     }
 
     @Test
-    public void retrieveWeekDayRoomSchedule_validNusVenues_success() throws Exception {
+    public void retrieveWeekDaySchedule_validNusVenues_success() throws Exception {
         Room validRoom = new RoomBuilder().build();
 
         ArrayList<String> expectedList = new ArrayList<>();
@@ -42,7 +42,7 @@ public class RoomTest {
         for (int i = 0; i < WeekDay.NUMBER_OF_CLASSES; i++) {
             expectedList.add("vacant");
         }
-        assertEquals(validRoom.retrieveWeekDaySchedule(), expectedList);
+        assertEquals(expectedList, validRoom.retrieveWeekDaySchedule());
     }
 
     @Test
@@ -65,7 +65,7 @@ public class RoomTest {
         validRoom.initializeWeek();
 
         Week expectedWeek = new WeekBuilder().build();
-        assertEquals(validRoom.getWeek(), expectedWeek);
+        assertEquals(expectedWeek, validRoom.getWeek());
     }
 
     @Test

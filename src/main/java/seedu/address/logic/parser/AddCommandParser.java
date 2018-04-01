@@ -173,7 +173,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    "Missing prefix \"n/\" for pet patient name after -p option"));
+                    AddCommand.MESSAGE_MISSING_NRIC_PREFIX));
         }
 
         try {
@@ -211,9 +211,13 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     private AddCommand createNewApptforExistingOwnerAndPet(String apptInfo, String ownerNric, String petName)
             throws ParseException {
-        Appointment appt = parseAppointment(apptInfo);
         Nric nric = parseNric(ownerNric);
         PetPatientName petPatientName = parsePetPatientName(petName);
+
+        Appointment appt = parseAppointment(apptInfo);
+        appt.setOwnerNric(nric);
+        appt.setPetPatientName(petPatientName);
+
         return new AddCommand(appt, nric, petPatientName);
     }
 
@@ -223,8 +227,11 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format.
      */
     private AddCommand createNewPetForExistingPerson(String petInfo, String ownerNric) throws ParseException {
-        PetPatient petPatient = parsePetPatient(petInfo);
         Nric nric = parseNric(ownerNric);
+
+        PetPatient petPatient = parsePetPatient(petInfo);
+        petPatient.setOwnerNric(nric);
+
         return new AddCommand(petPatient, nric);
     }
 

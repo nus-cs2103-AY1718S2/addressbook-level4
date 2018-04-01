@@ -122,6 +122,10 @@ public class Building {
             logger.warning("NUS buildings and rooms is null, venueinformation.json file is corrupted.");
             throw new CorruptedVenueInformationException();
         }
+        if (nusBuildingsAndRooms.get(buildingName) == null) {
+            logger.warning("NUS buildings and rooms has some null data, venueinformation.json file is corrupted.");
+            throw new CorruptedVenueInformationException();
+        }
         return nusBuildingsAndRooms.get(buildingName);
     }
 

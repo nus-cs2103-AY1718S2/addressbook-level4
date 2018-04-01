@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import javafx.stage.Stage;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ShowMyCalendarEvent;
 import seedu.address.ui.MyCalendarView;
 
 /**
@@ -17,8 +19,7 @@ public class MyCalendarCommand extends Command {
     @Override
     public CommandResult execute() {
 
-        MyCalendarView webViewSample = new MyCalendarView();
-        webViewSample.start(new Stage());
+        EventsCenter.getInstance().post(new ShowMyCalendarEvent());
 
         return new CommandResult(MESSAGE_SUCCESS);
     }

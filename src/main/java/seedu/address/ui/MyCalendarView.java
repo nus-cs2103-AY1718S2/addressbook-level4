@@ -2,18 +2,22 @@ package seedu.address.ui;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-
+/**
+ * View the pop-uped browser window of user's calendar.
+ */
 public class MyCalendarView extends Application {
+
     private Scene scene;
-    @Override public void start(Stage stage) {
-        // create the scene
+
+    @Override
+    public void start(Stage stage) {
         stage.setTitle("My Calendar");
-        scene = new Scene(new CalendarBrowser(),750,500, Color.web("#000000"));
+        CalendarBrowser calendarBrowser = new CalendarBrowser();
+        scene = new Scene(calendarBrowser,calendarBrowser.computePrefWidth(750),
+                calendarBrowser.computePrefHeight(600));
         stage.setScene(scene);
-        //scene.getStylesheets().add("webviewsample/BrowserToolbar.css");
         stage.show();
     }
 }

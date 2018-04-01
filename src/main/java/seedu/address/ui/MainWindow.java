@@ -139,6 +139,7 @@ public class MainWindow extends UiPart<Stage> {
         mainContentPlaceholder.getChildren().add(bookDetailsPanel.getRoot());
         mainContentPlaceholder.getChildren().add(bookReviewsPanel.getRoot());
         bookReviewsPanel.getRoot().setVisible(false);
+        bookDetailsPanel.setStyleSheet(prefs.getAppTheme().getCssFile());
 
         bookListPanel = new BookListPanel(logic.getDisplayBookList());
         searchResultsPanel = new SearchResultsPanel(logic.getSearchResultsList());
@@ -182,6 +183,9 @@ public class MainWindow extends UiPart<Stage> {
     /** Updates the stylesheet used based on user preferences. */
     private void updateStylesheet(UserPrefs prefs) {
         scene.getStylesheets().setAll(prefs.getAppTheme().getCssFile());
+        if (bookDetailsPanel != null) {
+            bookDetailsPanel.setStyleSheet(prefs.getAppTheme().getCssFile());
+        }
     }
 
     /**

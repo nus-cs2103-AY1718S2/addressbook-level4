@@ -1,5 +1,13 @@
 /* Theme design inspired by https://github.com/CS2103AUG2017-W15-B2/main */
 
+body {
+    background-color: transparent;
+    font-size: 11pt;
+    font-family: "Segoe UI";
+    color: #222;
+    overflow-y: hidden;
+}
+
 .root {
     -fx-accent: #81D4FADD;
     -fx-focus-color: #81D4FADD;

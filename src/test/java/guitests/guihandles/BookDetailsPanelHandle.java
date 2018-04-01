@@ -11,13 +11,12 @@ import javafx.scene.layout.Region;
  * Provides a handle for the {@code BookDetailsPanel} of the UI.
  */
 public class BookDetailsPanelHandle extends NodeHandle<Node> {
-    public static final String BOOK_DETAILS_PANE_ID = "#bookDetailsPane";
+    protected static final String BOOK_DETAILS_PANE_ID = "#bookDetailsPane";
 
     private static final String TITLE_FIELD_ID = "#title";
     private static final String ISBN_FIELD_ID = "#isbn";
     private static final String PUBLISHER_FIELD_ID = "#publisher";
     private static final String PUBLICATION_DATE_FIELD_ID = "#publicationDate";
-    private static final String DESCRIPTION_FIELD_ID = "#description";
     private static final String AUTHORS_FIELD_ID = "#authors";
     private static final String CATEGORIES_FIELD_ID = "#categories";
 
@@ -25,7 +24,7 @@ public class BookDetailsPanelHandle extends NodeHandle<Node> {
     private final Label isbnLabel;
     private final Label publisherLabel;
     private final Label publicationDateLabel;
-    private final Label descriptionLabel;
+    private final BookDescriptionViewHandle bookDescriptionViewHandle;
     private List<Label> authorsLabel;
     private List<Label> categoriesLabel;
 
@@ -39,7 +38,8 @@ public class BookDetailsPanelHandle extends NodeHandle<Node> {
         this.isbnLabel = getChildNode(ISBN_FIELD_ID);
         this.publisherLabel = getChildNode(PUBLISHER_FIELD_ID);
         this.publicationDateLabel = getChildNode(PUBLICATION_DATE_FIELD_ID);
-        this.descriptionLabel = getChildNode(DESCRIPTION_FIELD_ID);
+        this.bookDescriptionViewHandle =
+                new BookDescriptionViewHandle(getChildNode(BookDescriptionViewHandle.BOOK_DESCRIPTION_VIEW_ID));
 
         updateAuthorsLabel();
         updateCategoriesLabel();
@@ -62,7 +62,7 @@ public class BookDetailsPanelHandle extends NodeHandle<Node> {
     }
 
     public String getDescription() {
-        return descriptionLabel.getText();
+        return bookDescriptionViewHandle.getContent();
     }
 
     public List<String> getAuthors() {

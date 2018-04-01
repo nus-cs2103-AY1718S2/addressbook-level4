@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
 import seedu.address.commons.events.ui.RecentBooksSelectionChangedEvent;
@@ -25,6 +26,9 @@ public class BookDetailsPanel extends UiPart<Region> {
     private static final String DEFAULT_LABEL_STYLE_CLASS = "label";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    // Independent Ui parts residing in this Ui container
+    private BookDescriptionView bookDescriptionView;
 
     @FXML
     private Label title;
@@ -45,7 +49,7 @@ public class BookDetailsPanel extends UiPart<Region> {
     @FXML
     private Label rating;
     @FXML
-    private Label description;
+    private StackPane descriptionPlaceholder;
     @FXML
     private ScrollPane scrollPane;
 
@@ -53,6 +57,9 @@ public class BookDetailsPanel extends UiPart<Region> {
         super(FXML);
         registerAsAnEventHandler(this);
         getRoot().setVisible(false);
+
+        bookDescriptionView = new BookDescriptionView();
+        descriptionPlaceholder.getChildren().add(bookDescriptionView.getRoot());
     }
 
     private void scrollToTop() {
@@ -66,7 +73,7 @@ public class BookDetailsPanel extends UiPart<Region> {
             isbn.setText(book.getIsbn().toString());
             publisher.setText(book.getPublisher().toString());
             publicationDate.setText(book.getPublicationDate().toString());
-            description.setText(book.getDescription().toString());
+            bookDescriptionView.loadContent(book);
 
             status.setText(book.getStatus().getDisplayText());
             status.getStyleClass().setAll(DEFAULT_LABEL_STYLE_CLASS, book.getStatus().getStyleClass());
@@ -85,6 +92,10 @@ public class BookDetailsPanel extends UiPart<Region> {
             scrollToTop();
             getRoot().setVisible(true);
         });
+    }
+
+    protected void setStyleSheet(String styleSheet) {
+        bookDescriptionView.setStyleSheet(styleSheet);
     }
 
     protected void hide() {

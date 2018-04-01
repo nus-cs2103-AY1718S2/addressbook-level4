@@ -1,3 +1,11 @@
+body {
+    background-color: transparent;
+    font-size: 11pt;
+    font-family: "Segoe UI";
+    color: #212121;
+    overflow-y: hidden;
+}
+
 .background {
     -fx-background-color: #ECEFF1;
     background-color: #ECEFF1; /* Used in the default.html file */

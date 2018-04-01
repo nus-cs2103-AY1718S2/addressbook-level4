@@ -49,7 +49,7 @@ public class JsonBookDetails {
 
         return new Book(new Gid(id), isbn,
                 BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
-                getCategorySet(volumeInfo.categories), getDescription(volumeInfo.description),
+                getCategorySet(volumeInfo.categories), new Description(volumeInfo.description),
                 new Publisher(volumeInfo.publisher),
                 new PublicationDate(volumeInfo.publishedDate));
     }
@@ -68,11 +68,6 @@ public class JsonBookDetails {
                 .map(token -> new Category(token.trim()))
                 .collect(Collectors.toSet());
     }
-
-    private static Description getDescription(String description) {
-        return new Description(description.replaceAll("<br>", "\n"));
-    }
-
 
     /** Temporary data holder used for deserialization. */
     private static class JsonVolumeInfo {

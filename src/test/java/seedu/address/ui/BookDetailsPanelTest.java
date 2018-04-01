@@ -17,11 +17,12 @@ import seedu.address.ui.testutil.GuiTestAssert;
 
 public class BookDetailsPanelTest extends GuiUnitTest {
 
+    private BookDetailsPanel bookDetailsPanel;
     private BookDetailsPanelHandle bookDetailsPanelHandle;
 
     @Before
     public void setUp() {
-        BookDetailsPanel bookDetailsPanel = new BookDetailsPanel();
+        guiRobot.interact(() -> bookDetailsPanel = new BookDetailsPanel());
         uiPartRule.setUiPart(bookDetailsPanel);
         bookDetailsPanelHandle = new BookDetailsPanelHandle(bookDetailsPanel.getRoot());
     }

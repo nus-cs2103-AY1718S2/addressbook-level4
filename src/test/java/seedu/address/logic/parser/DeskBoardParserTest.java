@@ -4,17 +4,14 @@ import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.Messages;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.EventCommand;
-import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.TaskCommand;
+import seedu.address.logic.commands.*;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.activity.Event;
 import seedu.address.model.activity.Task;
@@ -46,21 +43,19 @@ public class DeskBoardParserTest {
         assertTrue(command instanceof EventCommand);
     }
 
-
     @Test
     public void parseCommandPlusAlias_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS + " 3") instanceof ClearCommand);
     }
 
-//
-//
-//    public void parseCommand_delete() throws Exception {
-//        DeleteCommand command = (DeleteCommand) parser.parseCommand(
-//                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-//        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
-//    }
-//
+    @Test
+    public void parseCommand_delete() throws Exception {
+        DeleteCommand command = (DeleteCommand) parser.parseCommand(
+                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_ACTIVITY.getOneBased());
+        assertEquals(new DeleteCommand(INDEX_FIRST_ACTIVITY), command);
+    }
+
 //
 //    public void parseCommand_edit() throws Exception {
 //        Person person = new PersonBuilder().build();

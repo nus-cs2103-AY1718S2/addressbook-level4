@@ -29,9 +29,9 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
  */
 public class AddRemarkCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "remark";
+    public static final String COMMAND_WORD = "addremark";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": You can put anything, even nothing.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adding remarks to the student that you want. "
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_REMARK + "REMARKS...\n"
             + "Example: " + COMMAND_WORD + " 1 "

@@ -7,8 +7,8 @@ import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
 import org.junit.rules.ExpectedException;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.ShowActivityRequestEvent;
 import seedu.address.commons.events.ui.ShowTaskOnlyRequestEvent;

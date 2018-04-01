@@ -1,5 +1,7 @@
 package seedu.organizer;
 
+import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.function.Supplier;
@@ -16,6 +18,8 @@ import seedu.organizer.model.ModelManager;
 import seedu.organizer.model.Organizer;
 import seedu.organizer.model.ReadOnlyOrganizer;
 import seedu.organizer.model.UserPrefs;
+import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
+import seedu.organizer.model.user.exceptions.UserNotFoundException;
 import seedu.organizer.storage.UserPrefsStorage;
 import seedu.organizer.storage.XmlSerializableOrganizer;
 import seedu.organizer.testutil.TestUtil;
@@ -95,6 +99,13 @@ public class TestApp extends MainApp {
      */
     public Model getModel() {
         Model copy = new ModelManager((model.getOrganizer()), new UserPrefs());
+        try {
+            copy.loginUser(ADMIN_USER);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        }
         ModelHelper.setFilteredList(copy, model.getFilteredTaskList());
         return copy;
     }
@@ -118,6 +129,19 @@ public class TestApp extends MainApp {
             XmlUtil.saveDataToFile(saveFileForTesting, data);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Login to admin
+     */
+    public void loginAdmin() {
+        try {
+            model.loginUser(ADMIN_USER);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
         }
     }
 }

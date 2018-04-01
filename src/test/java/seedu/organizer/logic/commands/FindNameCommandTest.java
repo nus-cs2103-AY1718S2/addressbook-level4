@@ -3,6 +3,7 @@ package seedu.organizer.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.organizer.commons.core.Messages.MESSAGE_TASKS_LISTED_OVERVIEW;
+import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
 import static seedu.organizer.testutil.TypicalTasks.PREPAREBREAKFAST;
 import static seedu.organizer.testutil.TypicalTasks.PROJECT;
 import static seedu.organizer.testutil.TypicalTasks.REVISION;
@@ -10,17 +11,32 @@ import static seedu.organizer.testutil.TypicalTasks.REVISION;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.organizer.logic.CommandHistory;
 import seedu.organizer.logic.UndoRedoStack;
 import seedu.organizer.logic.commands.exceptions.CommandException;
 import seedu.organizer.model.task.NameContainsKeywordsPredicate;
+import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
+import seedu.organizer.model.user.exceptions.UserNotFoundException;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindNameCommand}.
  */
 public class FindNameCommandTest extends FindCommandTest<FindNameCommand> {
+
+    @Before
+    public void setUp() {
+        try {
+            model.loginUser(ADMIN_USER);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Test
     public void equals() {
         NameContainsKeywordsPredicate firstPredicate =

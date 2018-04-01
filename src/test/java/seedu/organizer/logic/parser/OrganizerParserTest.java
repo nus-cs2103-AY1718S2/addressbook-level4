@@ -6,11 +6,14 @@ import static org.junit.Assert.fail;
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.organizer.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
+import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -37,12 +40,17 @@ import seedu.organizer.logic.commands.ToggleSubtaskCommand;
 import seedu.organizer.logic.commands.UndoCommand;
 import seedu.organizer.logic.commands.util.EditTaskDescriptor;
 import seedu.organizer.logic.parser.exceptions.ParseException;
+import seedu.organizer.model.Model;
+import seedu.organizer.model.ModelManager;
+import seedu.organizer.model.UserPrefs;
 import seedu.organizer.model.subtask.Subtask;
 import seedu.organizer.model.task.DeadlineContainsKeywordsPredicate;
 import seedu.organizer.model.task.DescriptionContainsKeywordsPredicate;
 import seedu.organizer.model.task.MultipleFieldsContainsKeywordsPredicate;
 import seedu.organizer.model.task.NameContainsKeywordsPredicate;
 import seedu.organizer.model.task.Task;
+import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
+import seedu.organizer.model.user.exceptions.UserNotFoundException;
 import seedu.organizer.testutil.EditTaskDescriptorBuilder;
 import seedu.organizer.testutil.TaskBuilder;
 import seedu.organizer.testutil.TaskUtil;
@@ -52,6 +60,12 @@ public class OrganizerParserTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private final OrganizerParser parser = new OrganizerParser();
+
+    @Before
+    public void setUp() throws UserNotFoundException, CurrentlyLoggedInException {
+        Model model = new ModelManager(getTypicalOrganizer(), new UserPrefs());
+        model.loginUser(ADMIN_USER);
+    }
 
     @Test
     public void parseCommand_add() throws Exception {

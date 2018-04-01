@@ -7,6 +7,7 @@ import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_UNUSED;
 import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
+import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
 import static seedu.organizer.testutil.TypicalTasks.EXAM;
 import static seedu.organizer.testutil.TypicalTasks.GROCERY;
 import static seedu.organizer.testutil.TypicalTasks.SPRINGCLEAN;
@@ -21,6 +22,9 @@ import org.junit.rules.ExpectedException;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.NameContainsKeywordsPredicate;
 import seedu.organizer.model.task.Task;
+import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
+import seedu.organizer.model.user.exceptions.DuplicateUserException;
+import seedu.organizer.model.user.exceptions.UserNotFoundException;
 import seedu.organizer.testutil.OrganizerBuilder;
 import seedu.organizer.testutil.TaskBuilder;
 
@@ -88,7 +92,18 @@ public class ModelManagerTest {
         // different filteredList -> returns false
         String[] keywords = GROCERY.getName().fullName.split("\\s+");
         modelManager.updateFilteredTaskList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
-        assertFalse(modelManager.equals(new ModelManager(organizer, userPrefs)));
+        ModelManager expectedModel = new ModelManager(organizer, userPrefs);
+        try {
+            expectedModel.addUser(ADMIN_USER);
+            expectedModel.loginUser(ADMIN_USER);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        } catch (DuplicateUserException e) {
+            e.printStackTrace();
+        }
+        assertFalse(modelManager.equals(expectedModel));
 
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
@@ -96,6 +111,17 @@ public class ModelManagerTest {
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setOrganizerName("differentName");
-        assertTrue(modelManager.equals(new ModelManager(organizer, differentUserPrefs)));
+        ModelManager differentModel = new ModelManager(organizer, differentUserPrefs);
+        try {
+            differentModel.addUser(ADMIN_USER);
+            differentModel.loginUser(ADMIN_USER);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        } catch (DuplicateUserException e) {
+            e.printStackTrace();
+        }
+        assertTrue(modelManager.equals(differentModel));
     }
 }

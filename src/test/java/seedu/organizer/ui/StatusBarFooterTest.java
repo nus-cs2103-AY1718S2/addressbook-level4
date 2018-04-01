@@ -66,7 +66,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
         postNow(EVENT_STUB);
         assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
             String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()),
-            String.format(TOTAL_TASKS_STATUS, EVENT_STUB.data.getTaskList().size()));
+            String.format(TOTAL_TASKS_STATUS, EVENT_STUB.data.getCurrentUserTaskList().size()));
     }
 
     /**

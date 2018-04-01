@@ -5,8 +5,10 @@ import static org.junit.Assert.fail;
 import static seedu.organizer.logic.commands.CommandTestUtil.deleteFirstPerson;
 import static seedu.organizer.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
 import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.organizer.logic.commands.exceptions.CommandException;
@@ -15,12 +17,26 @@ import seedu.organizer.model.ModelManager;
 import seedu.organizer.model.UserPrefs;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
+import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
+import seedu.organizer.model.user.exceptions.UserNotFoundException;
 
 public class UndoableCommandTest {
     private final Model model = new ModelManager(getTypicalOrganizer(), new UserPrefs());
     private final DummyCommand dummyCommand = new DummyCommand(model);
 
     private Model expectedModel = new ModelManager(getTypicalOrganizer(), new UserPrefs());
+
+    @Before
+    public void setUp() {
+        try {
+            model.loginUser(ADMIN_USER);
+            expectedModel.loginUser(ADMIN_USER);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void executeUndo() throws Exception {
@@ -33,6 +49,7 @@ public class UndoableCommandTest {
         // undo() should cause the model's filtered list to show all persons
         dummyCommand.undo();
         expectedModel = new ModelManager(getTypicalOrganizer(), new UserPrefs());
+        expectedModel.loginUser(ADMIN_USER);
         assertEquals(expectedModel, model);
     }
 

@@ -6,8 +6,10 @@ import static seedu.organizer.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.organizer.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_SECOND_TASK;
+import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
 import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.organizer.commons.core.Messages;
@@ -19,6 +21,8 @@ import seedu.organizer.model.ModelManager;
 import seedu.organizer.model.Organizer;
 import seedu.organizer.model.UserPrefs;
 import seedu.organizer.model.task.Task;
+import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
+import seedu.organizer.model.user.exceptions.UserNotFoundException;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
@@ -26,6 +30,11 @@ import seedu.organizer.model.task.Task;
  */
 public class ToggleCommandTest {
     private Model model = new ModelManager(getTypicalOrganizer(), new UserPrefs());
+
+    @Before
+    public void setUp() throws UserNotFoundException, CurrentlyLoggedInException {
+        model.loginUser(ADMIN_USER);
+    }
 
     @Test
     public void execute_unfilteredList_success() throws Exception {
@@ -37,6 +46,7 @@ public class ToggleCommandTest {
         String expectedMessage = String.format(ToggleCommand.MESSAGE_EDIT_TASK_SUCCESS, toggledTask);
 
         Model expectedModel = new ModelManager(new Organizer(model.getOrganizer()), new UserPrefs());
+        expectedModel.loginUser(ADMIN_USER);
         expectedModel.updateTask(originalTask, toggledTask);
 
         assertCommandSuccess(toggleCommand, model, expectedMessage, expectedModel);
@@ -52,6 +62,7 @@ public class ToggleCommandTest {
         String expectedMessage = String.format(ToggleCommand.MESSAGE_EDIT_TASK_SUCCESS, toggledTask);
 
         Model expectedModel = new ModelManager(new Organizer(model.getOrganizer()), new UserPrefs());
+        expectedModel.loginUser(ADMIN_USER);
         expectedModel.updateTask(originalTask, toggledTask);
 
         assertCommandSuccess(toggleCommand, model, expectedMessage, expectedModel);
@@ -74,6 +85,7 @@ public class ToggleCommandTest {
         Task toggledTask = toggleTask(originalTask);
         ToggleCommand toggleCommand = prepareCommand(INDEX_FIRST_TASK);
         Model expectedModel = new ModelManager(new Organizer(model.getOrganizer()), new UserPrefs());
+        expectedModel.loginUser(ADMIN_USER);
 
         // edit -> first task edited
         toggleCommand.execute();

@@ -14,6 +14,7 @@ import seedu.organizer.commons.core.LogsCenter;
 import seedu.organizer.commons.events.model.OrganizerChangedEvent;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Task;
+import seedu.organizer.model.task.TaskByUserPredicate;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
 import seedu.organizer.model.user.User;
@@ -27,7 +28,7 @@ import seedu.organizer.model.user.exceptions.UserNotFoundException;
  */
 public class ModelManager extends ComponentManager implements Model {
 
-    private static User currentlyLoggedInUser = null;
+    private static User currentlyLoggedInUser;
 
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
@@ -44,7 +45,9 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with organizer book: " + organizer + " and user prefs " + userPrefs);
 
         this.organizer = new Organizer(organizer);
+        currentlyLoggedInUser = this.organizer.getCurrentLoggedInUser();
         filteredTasks = new FilteredList<>(this.organizer.getTaskList());
+        updateFilteredTaskList(PREDICATE_SHOW_NO_TASKS);
     }
 
     public ModelManager() {
@@ -95,6 +98,8 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void loginUser(User user) throws UserNotFoundException, CurrentlyLoggedInException {
         organizer.loginUser(user);
         currentlyLoggedInUser = organizer.getCurrentLoggedInUser();
+        updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        indicateOrganizerChanged();
     }
 
     @Override
@@ -132,7 +137,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateFilteredTaskList(Predicate<Task> predicate) {
         requireNonNull(predicate);
-        filteredTasks.setPredicate(predicate);
+        if (getCurrentlyLoggedInUser() == null) {
+            filteredTasks.setPredicate(PREDICATE_SHOW_NO_TASKS);
+        } else {
+            Predicate<Task> newPredicate = predicate.and(new TaskByUserPredicate(getCurrentlyLoggedInUser()));
+            filteredTasks.setPredicate(newPredicate);
+        }
     }
 
     @Override

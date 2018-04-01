@@ -1,6 +1,7 @@
 package seedu.organizer.ui;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,9 @@ import seedu.organizer.logic.LogicManager;
 import seedu.organizer.logic.commands.ListCommand;
 import seedu.organizer.model.Model;
 import seedu.organizer.model.ModelManager;
+import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
+import seedu.organizer.model.user.exceptions.DuplicateUserException;
+import seedu.organizer.model.user.exceptions.UserNotFoundException;
 
 public class CommandBoxTest extends GuiUnitTest {
 
@@ -28,6 +32,16 @@ public class CommandBoxTest extends GuiUnitTest {
     @Before
     public void setUp() {
         Model model = new ModelManager();
+        try {
+            model.addUser(ADMIN_USER);
+            model.loginUser(ADMIN_USER);
+        } catch (DuplicateUserException e) {
+            e.printStackTrace();
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        }
         Logic logic = new LogicManager(model);
 
         CommandBox commandBox = new CommandBox(logic);

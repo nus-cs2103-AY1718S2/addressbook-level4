@@ -21,7 +21,7 @@ public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
-    public static final String TOTAL_TASKS_STATUS = "%d subtask(s) total";
+    public static final String TOTAL_TASKS_STATUS = "%d task(s) total";
 
     /**
      * Used to generate time stamps.
@@ -81,11 +81,11 @@ public class StatusBarFooter extends UiPart<Region> {
     }
     //@@author
     @Subscribe
-    public void handleAddressBookChangedEvent(OrganizerChangedEvent oce) {
+    public void handleOrganizerChangedEvent(OrganizerChangedEvent oce) {
         long now = clock.millis();
         String lastUpdated = new Date(now).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(oce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
-        setTotalTasks(oce.data.getTaskList().size());
+        setTotalTasks(oce.data.getCurrentUserTaskList().size());
     }
 }

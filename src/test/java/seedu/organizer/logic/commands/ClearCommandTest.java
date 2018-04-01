@@ -12,25 +12,29 @@ import seedu.organizer.model.Model;
 import seedu.organizer.model.ModelManager;
 import seedu.organizer.model.UserPrefs;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
+import seedu.organizer.model.user.exceptions.DuplicateUserException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
 
 public class ClearCommandTest {
 
     @Test
-    public void execute_emptyAddressBook_success() {
+    public void execute_emptyOrganizer_success() {
         Model model = new ModelManager();
         try {
+            model.addUser(ADMIN_USER);
             model.loginUser(ADMIN_USER);
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        } catch (DuplicateUserException e) {
             e.printStackTrace();
         }
         assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, model);
     }
 
     @Test
-    public void execute_nonEmptyAddressBook_success() {
+    public void execute_nonEmptyOrganizer_success() {
         Model model = new ModelManager(getTypicalOrganizer(), new UserPrefs());
         try {
             model.loginUser(ADMIN_USER);

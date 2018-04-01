@@ -8,11 +8,13 @@ import static seedu.organizer.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.organizer.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_SECOND_TASK;
+import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
 import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.organizer.commons.core.Messages;
@@ -25,6 +27,8 @@ import seedu.organizer.model.Organizer;
 import seedu.organizer.model.UserPrefs;
 import seedu.organizer.model.subtask.Subtask;
 import seedu.organizer.model.task.Task;
+import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
+import seedu.organizer.model.user.exceptions.UserNotFoundException;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
@@ -32,6 +36,17 @@ import seedu.organizer.model.task.Task;
  */
 public class DeleteSubtaskCommandTest {
     private Model model = new ModelManager(getTypicalOrganizer(), new UserPrefs());
+
+    @Before
+    public void setUp() {
+        try {
+            model.loginUser(ADMIN_USER);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void execute_unfilteredList_success() throws Exception {
@@ -44,6 +59,7 @@ public class DeleteSubtaskCommandTest {
         String expectedMessage = String.format(DeleteSubtaskCommand.MESSAGE_EDIT_SUBTASK_SUCCESS, toggledSubtask);
 
         Model expectedModel = new ModelManager(new Organizer(model.getOrganizer()), new UserPrefs());
+        expectedModel.loginUser(ADMIN_USER);
         expectedModel.updateTask(originalTask, toggledTask);
 
         assertCommandSuccess(deleteSubtaskCommand, model, expectedMessage, expectedModel);
@@ -82,6 +98,7 @@ public class DeleteSubtaskCommandTest {
         Task toggledTask = toggleTask(originalTask, INDEX_FIRST_TASK);
         DeleteSubtaskCommand deleteSubtaskCommand = prepareCommand(INDEX_FIRST_TASK, INDEX_FIRST_TASK);
         Model expectedModel = new ModelManager(new Organizer(model.getOrganizer()), new UserPrefs());
+        expectedModel.loginUser(ADMIN_USER);
 
         // edit -> first task edited
         deleteSubtaskCommand.execute();

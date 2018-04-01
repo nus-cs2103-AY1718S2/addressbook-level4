@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 //import static seedu.organizer.ui.CalendarPanel.DEFAULT_PAGE;
-import static seedu.organizer.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
+//import static seedu.organizer.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.organizer.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.organizer.ui.StatusBarFooter.TOTAL_TASKS_STATUS;
 //import static seedu.organizer.ui.UiPart.FXML_FILE_FOLDER;
@@ -72,6 +72,8 @@ public abstract class OrganizerSystemTest {
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
         assertApplicationStartingStateIsCorrect();
+
+        testApp.loginAdmin();
     }
 
     @After
@@ -255,7 +257,8 @@ public abstract class OrganizerSystemTest {
         StatusBarFooterHandle handle = getStatusBarFooter();
         assertFalse(handle.isSaveLocationChanged());
         assertFalse(handle.isTotalTasksStatusChanged());
-        assertFalse(handle.isSyncStatusChanged());
+        //Does not apply as login occurs first
+        //assertFalse(handle.isSyncStatusChanged());
     }
 
     /**
@@ -265,6 +268,7 @@ public abstract class OrganizerSystemTest {
      */
     protected void assertStatusBarUnchangedExceptSyncStatus() {
         StatusBarFooterHandle handle = getStatusBarFooter();
+        //Does not apply due to login
         String timestamp = new Date(clockRule.getInjectedClock().millis()).toString();
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
         assertEquals(expectedSyncStatus, handle.getSyncStatus());
@@ -283,8 +287,9 @@ public abstract class OrganizerSystemTest {
             //assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getCalendarPanel().getLoadedUrl
             //        ());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
-            assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
-            assertEquals(String.format(TOTAL_TASKS_STATUS, getModel().getOrganizer().getTaskList().size()),
+            //Does not apply as login occurs first
+            //assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
+            assertEquals(String.format(TOTAL_TASKS_STATUS, getModel().getOrganizer().getCurrentUserTaskList().size()),
                 getStatusBarFooter().getTotalTasksStatus());
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);

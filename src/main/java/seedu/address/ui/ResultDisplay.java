@@ -13,6 +13,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.ShowSuggestionEvent;
 
 /**
  * A ui for the status bar that is displayed at the header of the application.
@@ -20,6 +21,7 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
 public class ResultDisplay extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
+    public static final String SUGGESTION_STYLE_CLASS = "suggestion";
 
     private static final Logger logger = LogsCenter.getLogger(ResultDisplay.class);
     private static final String FXML = "ResultDisplay.fxml";
@@ -38,12 +40,20 @@ public class ResultDisplay extends UiPart<Region> {
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        removeStyleForSuggestion();
         Platform.runLater(() -> displayed.setValue(event.message));
         if (event.isSuccessful) {
             setStyleToIndicateCommandSuccess();
         } else {
             setStyleToIndicateCommandFailure();
         }
+    }
+
+    @Subscribe
+    private void handleShowSuggestionEvent(ShowSuggestionEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setStyleForSuggestion();
+        Platform.runLater(() -> displayed.setValue(event.getSuggestion()));
     }
 
     /**
@@ -62,6 +72,22 @@ public class ResultDisplay extends UiPart<Region> {
      */
     private void setStyleToIndicateCommandSuccess() {
         resultDisplay.getStyleClass().remove(ERROR_STYLE_CLASS);
+    }
+
+    /**
+     * Sets the {@code ResultDisplay} style to use the suggestion style.
+     */
+    private void setStyleForSuggestion() {
+        if (!resultDisplay.getStyleClass().contains(SUGGESTION_STYLE_CLASS)) {
+            resultDisplay.getStyleClass().add(SUGGESTION_STYLE_CLASS);
+        }
+    }
+
+    /**
+     * Sets the {@code ResultDisplay} style to use the suggestion style.
+     */
+    private void removeStyleForSuggestion() {
+        resultDisplay.getStyleClass().remove(SUGGESTION_STYLE_CLASS);
     }
 
 }

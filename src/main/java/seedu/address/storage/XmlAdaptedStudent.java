@@ -8,14 +8,17 @@ import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.programminglanguage.ProgrammingLanguage;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Email;
+import seedu.address.model.student.Favourite;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.UniqueKey;
+import seedu.address.model.student.dashboard.Dashboard;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -37,8 +40,11 @@ public class XmlAdaptedStudent {
     private String address;
     @XmlElement(required = true)
     private String programmingLanguage;
+    @XmlElement(required = true)
+    private String favourite;
 
-
+    @XmlElement
+    private XmlAdaptedDashboard dashboard = new XmlAdaptedDashboard();
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -52,7 +58,8 @@ public class XmlAdaptedStudent {
      * Constructs an {@code XmlAdaptedStudent} with the given student details.
      */
     public XmlAdaptedStudent(String uniqueKey, String name, String phone, String email, String address,
-                             String programmingLanguage, List<XmlAdaptedTag> tagged) {
+                             String programmingLanguage, List<XmlAdaptedTag> tagged, String favourite,
+                             XmlAdaptedDashboard dashboard) {
         this.key = uniqueKey;
         this.name = name;
         this.phone = phone;
@@ -61,6 +68,10 @@ public class XmlAdaptedStudent {
         this.programmingLanguage = programmingLanguage;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
+        }
+        this.favourite = favourite;
+        if (dashboard != null) {
+            this.dashboard = dashboard;
         }
     }
 
@@ -80,6 +91,8 @@ public class XmlAdaptedStudent {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        favourite = source.getFavourite().value;
+        dashboard = new XmlAdaptedDashboard(source.getDashboard());
     }
 
     /**
@@ -143,8 +156,16 @@ public class XmlAdaptedStudent {
         }
         final ProgrammingLanguage programmingLanguage = new ProgrammingLanguage(this.programmingLanguage);
 
+        if (this.favourite == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Favourite.class.getSimpleName()));
+        }
+        final Favourite favourite = new Favourite(this.favourite);
+
+        final Dashboard dashboard = this.dashboard.toModelType();
+
         final Set<Tag> tags = new HashSet<>(studentTags);
-        return new Student(uniqueKey, name, phone, email, address, programmingLanguage, tags);
+        return new Student(uniqueKey, name, phone, email, address, programmingLanguage, tags, favourite, dashboard);
     }
 
     @Override
@@ -162,6 +183,8 @@ public class XmlAdaptedStudent {
                 && Objects.equals(phone, otherStudent.phone)
                 && Objects.equals(email, otherStudent.email)
                 && Objects.equals(address, otherStudent.address)
-                && tagged.equals(otherStudent.tagged);
+                && Objects.equals(favourite, otherStudent.favourite)
+                && tagged.equals(otherStudent.tagged)
+                && dashboard.equals(otherStudent.dashboard);
     }
 }

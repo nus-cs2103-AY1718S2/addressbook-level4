@@ -39,13 +39,14 @@ public class Date {
     private static final int GROUP_HOUR = 4;
     private static final int GROUP_MINUTE = 5;
 
-    private final LocalDateTime value;
+    private final String value;
 
     public Date(String date) {
         requireNonNull(date);
         checkArgument(isValidDate(date), MESSAGE_DATE_CONSTRAINTS);
 
-        Matcher matcher = dateFormatPattern.matcher(date.trim());
+        String trimmedDate = date.trim();
+        Matcher matcher = dateFormatPattern.matcher(trimmedDate);
         matcher.matches();
         int day = Integer.parseInt(matcher.group(GROUP_DAY));
         int month = Integer.parseInt(matcher.group(GROUP_MONTH));
@@ -53,7 +54,7 @@ public class Date {
         int hour = Integer.parseInt(matcher.group(GROUP_HOUR));
         int min = Integer.parseInt(matcher.group(GROUP_MINUTE));
 
-        value = LocalDateTime.of(year, month, day, hour, min);
+        value = trimmedDate;
     }
 
     /**
@@ -78,14 +79,13 @@ public class Date {
                 && (hour >= 0 && hour <= 23) && (min >= 0 && min <= 59);
     }
 
-    public LocalDateTime getValue() {
+    public String getValue() {
         return value;
     }
 
     @Override
     public String toString() {
-        return "Date: " + value.getDayOfMonth() + " " + value.getMonth() + " " + value.getYear()
-                + " Time: " + value.getHour() + ":" + value.getMinute();
+        return value;
     }
 
     @Override

@@ -39,10 +39,9 @@ public class Dashboard {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        int index;
+        int index = 1;
 
         builder.append("Milestones:\n");
-        index = 1;
         for (Milestone milestone : milestoneList) {
             builder.append(index++)
                     .append(". ")

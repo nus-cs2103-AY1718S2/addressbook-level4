@@ -15,8 +15,11 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.AddressBook;
+import seedu.address.storage.XmlAdaptedDashboard;
+import seedu.address.storage.XmlAdaptedMilestone;
 import seedu.address.storage.XmlAdaptedStudent;
 import seedu.address.storage.XmlAdaptedTag;
+import seedu.address.storage.XmlAdaptedTask;
 import seedu.address.storage.XmlSerializableAddressBook;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.StudentBuilder;
@@ -41,7 +44,9 @@ public class XmlUtilTest {
     private static final String VALID_EMAIL = "hans@example";
     private static final String VALID_ADDRESS = "4th street";
     private static final String VALID_SUBJECT = "English";
+    private static final String VALID_FAVOURITE = "false";
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
+    private static final XmlAdaptedDashboard VALID_DASHBOARD = new XmlAdaptedDashboard();
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -82,7 +87,8 @@ public class XmlUtilTest {
         XmlAdaptedStudent actualStudent = XmlUtil.getDataFromFile(
                 MISSING_STUDENT_FIELD_FILE, XmlAdaptedStudentWithRootElement.class);
         XmlAdaptedStudent expectedStudent = new XmlAdaptedStudent(VALID_KEY,
-                null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_SUBJECT, VALID_TAGS);
+                null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_SUBJECT, VALID_TAGS, VALID_FAVOURITE,
+                VALID_DASHBOARD);
         assertEquals(expectedStudent, actualStudent);
     }
 
@@ -91,7 +97,8 @@ public class XmlUtilTest {
         XmlAdaptedStudent actualStudent = XmlUtil.getDataFromFile(
                 INVALID_STUDENT_FIELD_FILE, XmlAdaptedStudentWithRootElement.class);
         XmlAdaptedStudent expectedStudent = new XmlAdaptedStudent(VALID_KEY,
-                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_SUBJECT, VALID_TAGS);
+                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_SUBJECT, VALID_TAGS, VALID_FAVOURITE,
+                VALID_DASHBOARD);
         assertEquals(expectedStudent, actualStudent);
     }
 
@@ -100,7 +107,8 @@ public class XmlUtilTest {
         XmlAdaptedStudent actualStudent = XmlUtil.getDataFromFile(
                 VALID_STUDENT_FILE, XmlAdaptedStudentWithRootElement.class);
         XmlAdaptedStudent expectedStudent = new XmlAdaptedStudent(VALID_KEY,
-                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_SUBJECT, VALID_TAGS);
+                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_SUBJECT, VALID_TAGS, VALID_FAVOURITE,
+                VALID_DASHBOARD);
         assertEquals(expectedStudent, actualStudent);
     }
 

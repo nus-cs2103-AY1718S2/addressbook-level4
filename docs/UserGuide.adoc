@@ -168,7 +168,6 @@ Abbreviation Format: `td TAGNAME`
 
 ****
 * Deletes the specified tag from every student in Edubuddy.
-* The tag refers to the index number shown in the most recent listing.
 * The tag must be a valid tag name that is assigned to at least one student in the Edubuddy.
 ****
 
@@ -185,7 +184,6 @@ Abbreviation Format: `tr t/TAGNAME t/TAGNAME`
 
 ****
 * Replaces the specified tag from every student in Edubuddy with a specific tag.
-* The tag refers to the index number shown in the most recent listing.
 * The tag must be a valid tag name that is assigned to at least one student in the Edubuddy.
 ****
 
@@ -278,6 +276,29 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `r` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::remarks Command[]
+=== Remarks Command `[Since v1.3]`
+
+Adds a remark to the student. +
+Format: `remark INDEX r/REMARK` +
+
+****
+* Adds a remark to the student profile of the student at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`remark 2` +
+Adds a remark to the 2nd student in EduBuddy.
+* `find Betsy` +
+`remark 1` +
+Adds a remark to the 1st student in the results of the `find` command.
+
+// end::remarks Command[]
+
 === Clearing all entries : `clear` or `c`
 
 Clears all entries from EduBuddy. +
@@ -307,12 +328,6 @@ Examples:
 * `create 1 date/01022018 time/1500` +
 Creates an appointment with the 1st student on `01022018` at `1500`
 
-// tag::remarks Command[]
-=== Remarks Command `[coming in v2.0]`
-
-_{Allows the teachers to write a remark for the student for all other teachers to see. e.g. Medical/Injuries history}_
-
-// end::remarks Command[]
 
 // tag::CCA section[]
 === CCA section `[coming in v2.0]`

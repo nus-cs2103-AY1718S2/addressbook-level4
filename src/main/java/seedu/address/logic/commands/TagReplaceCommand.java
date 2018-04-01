@@ -20,7 +20,7 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
  */
 public class TagReplaceCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "tagReplace";
+    public static final String COMMAND_WORD = "tagreplace";
     public static final String COMMAND_ALIAS = "tr";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Replace specified tag from everyone in the "

@@ -18,7 +18,8 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.logic.ZoomInEvent;
 import seedu.address.commons.events.logic.ZoomOutEvent;
-import seedu.address.commons.events.ui.NewAppointmentAddedEvent;
+import seedu.address.commons.events.model.AppointmentDeletedEvent;
+import seedu.address.commons.events.model.NewAppointmentAddedEvent;
 import seedu.address.model.appointment.Appointment;
 
 //@@author jlks96
@@ -29,7 +30,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
 
     private static final String FXML = "CalendarPanel.fxml";
     private static final String DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm";
-    private static final String ENTRY_TITLE = "Appointment with ";
+    private static final String ENTRY_TITLE = "Appt: ";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -98,7 +99,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
         Entry entry = new Entry();
         entry.setInterval(startDateTime, endDateTime);
         entry.setLocation(appointment.getLocation().value);
-        entry.setTitle(ENTRY_TITLE + appointment.getName());
+        entry.setTitle(ENTRY_TITLE + appointment.getName() + " " + appointment.getLocation());
         entry.setCalendar(calendar);
     }
 
@@ -110,6 +111,17 @@ public class CalendarPanel extends UiPart<CalendarView> {
     private void handleNewAppointmentAddedEvent(NewAppointmentAddedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadEntry(event.getAppointmentAdded());
+    }
+
+    /**
+     * Handles the event where an appointment is deleted by loading the updated appointments list into the calendar
+     * @param event contains the updated appointments list
+     */
+    @Subscribe
+    private void handleAppointmentDeletedEvent(AppointmentDeletedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        calendar.clear();
+        loadEntries(event.getUpdatedAppointments());
     }
 
     /**

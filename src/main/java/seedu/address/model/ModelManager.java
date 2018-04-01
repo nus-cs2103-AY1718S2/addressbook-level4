@@ -13,7 +13,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.commons.events.ui.NewAppointmentAddedEvent;
+import seedu.address.commons.events.model.AppointmentDeletedEvent;
+import seedu.address.commons.events.model.NewAppointmentAddedEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
@@ -73,6 +74,11 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateAppointmentAdded(Appointment appointment) {
         raise(new NewAppointmentAddedEvent(appointment));
     }
+
+    /** Raises an event to indicate an appointment has been deleted */
+    private void indicateAppointmentDeleted(ObservableList<Appointment> appointments) {
+        raise(new AppointmentDeletedEvent(appointments));
+    }
     //@@author
 
     //=========== Person Mutators =============================================================
@@ -112,6 +118,8 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deleteAppointment(Appointment target) throws AppointmentNotFoundException {
         addressBook.removeAppointment(target);
+        updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        indicateAppointmentDeleted(getFilteredAppointmentList());
         indicateAddressBookChanged();
     }
 

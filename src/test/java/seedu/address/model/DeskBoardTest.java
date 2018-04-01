@@ -19,7 +19,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.activity.Activity;
 import seedu.address.model.tag.Tag;
 
-public class RemarkBookTest {
+public class DeskBoardTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

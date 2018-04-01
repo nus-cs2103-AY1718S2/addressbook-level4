@@ -1,19 +1,24 @@
 package systemtests;
 
-import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+//import java.util.ArrayList;
+import java.util.Arrays;
 
 //import org.junit.Test;
 
 import seedu.address.model.DeskBoard;
+import seedu.address.model.ReadOnlyDeskBoard;
 import seedu.address.model.activity.Activity;
+import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.TestUtil;
 
-public class SampleDataTest extends RemarkBookSystemTest {
+public class SampleDataTest extends DeskBoardSystemTest {
     /**
      * Returns null to force test app to load data of the file in {@code getDataFileLocation()}.
      */
@@ -43,12 +48,23 @@ public class SampleDataTest extends RemarkBookSystemTest {
         }
     }
 
-    //TODO: TEST
+    //TODO:TEST
+
     /**
      * Test
      */
     public void addressBook_dataFileDoesNotExist_loadSampleData() {
         Activity[] expectedList = SampleDataUtil.getSampleActivity();
-        assertListMatching(getPersonListPanel(), expectedList);
+        ReadOnlyDeskBoard expectedDeskBoard = SampleDataUtil.getSampleDeskBoard();
+        DeskBoard generatedDeskBoard = new DeskBoard();
+        try {
+            generatedDeskBoard.setActivities(Arrays.asList(expectedList));
+        } catch (DuplicateActivityException e) {
+            fail();
+        }
+
+        assertTrue(expectedDeskBoard.equals(generatedDeskBoard));
+        //TODO: After ui part finished
+        //assertListMatching(getPersonListPanel(), expectedList);
     }
 }

@@ -1,11 +1,10 @@
-package seedu.address.model.person;
+package seedu.address.model.activity;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import seedu.address.model.activity.DateTime;
 import seedu.address.testutil.Assert;
 
 public class DateTimeTest {

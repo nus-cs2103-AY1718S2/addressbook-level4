@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.activity;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import seedu.address.model.activity.NameContainsKeywordsPredicate;
 import seedu.address.testutil.TaskBuilder;
 
 public class NameContainsKeywordsPredicateTest {
@@ -58,10 +57,7 @@ public class NameContainsKeywordsPredicateTest {
         assertTrue(predicate.test(new TaskBuilder().withName("Alice Bob").build()));
     }
 
-    //TODO: TEST
-    /**
-     * Test
-     */
+    @Test
     public void test_nameDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
         NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Collections.emptyList());
@@ -73,7 +69,7 @@ public class NameContainsKeywordsPredicateTest {
 
         // Keywords match phone, email and address, but does not match name
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Main", "Street"));
-        assertFalse(predicate.test(new TaskBuilder().withName("Alice").withDateTime("12345")
+        assertFalse(predicate.test(new TaskBuilder().withName("Alice").withDateTime("04/04/2018 19:00")
                 .withRemark("Main Street").build()));
     }
 }

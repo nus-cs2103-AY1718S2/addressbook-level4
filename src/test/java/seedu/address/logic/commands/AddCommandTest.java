@@ -40,6 +40,7 @@ import seedu.address.testutil.TypicalAppointments;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.testutil.TypicalPetPatients;
 
+//@@author aquarinte
 public class AddCommandTest {
 
     @Rule
@@ -245,8 +246,18 @@ public class AddCommandTest {
         }
 
         @Override
+        public Person getPersonWithNric(Nric nric) {
+            return null;
+        }
+
+        @Override
         public void addPetPatient(PetPatient petPatient) throws DuplicatePetPatientException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public PetPatient getPetPatientWithNricAndName(Nric nric, PetPatientName petPatientName) {
+            return null;
         }
 
         @Override
@@ -449,32 +460,47 @@ public class AddCommandTest {
         final ArrayList<PetPatient> petPatientsAdded = new ArrayList<>();
         final ArrayList<Appointment> appointmentsAdded = new ArrayList<>();
 
-        private AddressBook addressBook = new AddressBook();
-
         @Override
         public void addPerson(Person person) throws DuplicatePersonException, DuplicateNricException {
             requireNonNull(person);
-            addressBook.addPerson(person);
             personsAdded.add(person);
+        }
+
+        @Override
+        public Person getPersonWithNric(Nric nric) {
+            for (Person p : personsAdded) {
+                if (p.getNric().equals(nric)) {
+                    return p;
+                }
+            }
+            return null;
         }
 
         @Override
         public void addPetPatient(PetPatient petPatient) throws DuplicatePetPatientException {
             requireNonNull(petPatient);
-            addressBook.addPetPatient(petPatient);
             petPatientsAdded.add(petPatient);
+        }
+
+        @Override
+        public PetPatient getPetPatientWithNricAndName(Nric nric, PetPatientName petPatientName) {
+            for (PetPatient p : petPatientsAdded) {
+                if (p.getOwner().equals(nric) && p.getName().equals(petPatientName)) {
+                    return p;
+                }
+            }
+            return null;
         }
 
         @Override
         public void addAppointment(Appointment appt) throws DuplicateAppointmentException, DuplicateDateTimeException {
             requireNonNull(appt);
-            addressBook.addAppointment(appt);
             appointmentsAdded.add(appt);
         }
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {
-            return addressBook;
+            return new AddressBook();
         }
     }
 

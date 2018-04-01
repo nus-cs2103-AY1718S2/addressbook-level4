@@ -1,9 +1,7 @@
 package seedu.address.logic.commands;
 
-import javafx.stage.Stage;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowMyCalendarEvent;
-import seedu.address.ui.MyCalendarView;
 
 /**
  * Show my own calendar

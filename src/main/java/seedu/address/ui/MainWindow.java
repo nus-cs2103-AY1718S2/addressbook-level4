@@ -211,6 +211,9 @@ public class MainWindow extends UiPart<Stage> {
                 (int) primaryStage.getX(), (int) primaryStage.getY(), Theme.getTheme());
     }
 
+    /**
+     * Opens calendar web page window.
+     */
     public void handleShowMyCalendar() {
         MyCalendarView myCalendarView = new MyCalendarView();
         myCalendarView.start(new Stage());

@@ -23,7 +23,7 @@ class CalendarBrowser extends Region {
     protected void layoutChildren() {
         double w = getWidth();
         double h = getHeight();
-        layoutInArea(browser,0,0,w,h,0, HPos.CENTER, VPos.CENTER);
+        layoutInArea(browser, 0, 0, w, h, 0, HPos.CENTER, VPos.CENTER);
     }
 
     @Override

@@ -15,7 +15,7 @@ public class MyCalendarView extends Application {
     public void start(Stage stage) {
         stage.setTitle("My Calendar");
         CalendarBrowser calendarBrowser = new CalendarBrowser();
-        scene = new Scene(calendarBrowser,calendarBrowser.computePrefWidth(750),
+        scene = new Scene(calendarBrowser, calendarBrowser.computePrefWidth(750),
                 calendarBrowser.computePrefHeight(600));
         stage.setScene(scene);
         stage.show();

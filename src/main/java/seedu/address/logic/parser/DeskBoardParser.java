@@ -66,10 +66,10 @@ public class DeskBoardParser {
             return new DeleteCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
-            //return new ClearCommand();
+            return new ClearCommand();
 
         case ClearCommand.COMMAND_ALIAS:
-            //return new ClearCommand();
+            return new ClearCommand();
 
         //case FindCommand.COMMAND_WORD:
             //return new FindCommandParser().parse(arguments);

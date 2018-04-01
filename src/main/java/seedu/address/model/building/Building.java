@@ -5,6 +5,10 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.building.exceptions.CorruptedVenueInformationException;
 
 /**
  * Represents a Building in National University of Singapore.
@@ -26,7 +30,9 @@ public class Building {
         "S17", "E1", "E2", "E2A", "E3", "E3A", "E4", "E4A", "E5", "EA", "ERC", "UTSRC", "LT"
     };
 
-    private static HashMap<String, ArrayList<String>> nusBuildingsAndRooms;
+    private static final Logger logger = LogsCenter.getLogger(Building.class);
+
+    private static HashMap<String, ArrayList<String>> nusBuildingsAndRooms = null;
 
     private final String buildingName;
 
@@ -69,6 +75,14 @@ public class Building {
         return false;
     }
 
+    public static HashMap<String, ArrayList<String>> getNusBuildingsAndRooms() {
+        return nusBuildingsAndRooms;
+    }
+
+    public static void setNusBuildingsAndRooms(HashMap<String, ArrayList<String>> nusBuildingsAndRooms) {
+        Building.nusBuildingsAndRooms = nusBuildingsAndRooms;
+    }
+
     public String getBuildingName() {
         return buildingName;
     }
@@ -81,23 +95,17 @@ public class Building {
         this.buildingsAndRooms = buildingsAndRooms;
     }
 
-    public static HashMap<String, ArrayList<String>> getNusBuildingsAndRooms() {
-        return nusBuildingsAndRooms;
-    }
-
-    public static void setNusBuildingsAndRooms(HashMap<String, ArrayList<String>> nusBuildingsAndRooms) {
-        Building.nusBuildingsAndRooms = nusBuildingsAndRooms;
-    }
-
     /**
      * Retrieves weekday schedule of all {@code Room}s in the {@code Building} in an ArrayList of ArrayList
+     *
+     * @throws CorruptedVenueInformationException if the room schedule format is not as expected.
      */
-    public ArrayList<ArrayList<String>> getAllRoomsSchedule() {
+    public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule() throws CorruptedVenueInformationException {
         ArrayList<ArrayList<String>> allRoomsSchedule = new ArrayList<>();
-        ArrayList<String> allRoomsInBuilding = getAllRoomsInBuilding();
+        ArrayList<String> allRoomsInBuilding = retrieveAllRoomsInBuilding();
         for (String roomName : allRoomsInBuilding) {
             Room room = new Room(roomName);
-            ArrayList<String> weekDayRoomSchedule = room.getWeekDaySchedule();
+            ArrayList<String> weekDayRoomSchedule = room.retrieveWeekDaySchedule();
             allRoomsSchedule.add(weekDayRoomSchedule);
         }
         return allRoomsSchedule;
@@ -105,9 +113,15 @@ public class Building {
 
     /**
      * Retrieves all {@code Room}s in the {@code Building} in an ArrayList
+     *
+     * @throws CorruptedVenueInformationException if the NUS Buildings and Rooms format is not as expected.
      */
-    public ArrayList<String> getAllRoomsInBuilding() {
+    public ArrayList<String> retrieveAllRoomsInBuilding() throws CorruptedVenueInformationException {
         checkArgument(isValidBuilding(this));
+        if (nusBuildingsAndRooms == null) {
+            logger.warning("NUS buildings and rooms is null, venueinformation.json file is corrupted.");
+            throw new CorruptedVenueInformationException();
+        }
         return nusBuildingsAndRooms.get(buildingName);
     }
 

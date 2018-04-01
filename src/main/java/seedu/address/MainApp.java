@@ -72,7 +72,7 @@ public class MainApp extends Application {
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         ReadOnlyVenueInformation venueInformationStorage =
-                new ReadOnlyJsonVenueInformation(config.getVenueInformationFilePath());
+                new ReadOnlyJsonVenueInformation(config.DEFAULT_VENUEINFORMATION_FILE);
         initVenueInformation(venueInformationStorage);
         storage = new StorageManager(addressBookStorage, userPrefsStorage, venueInformationStorage);
 
@@ -202,10 +202,10 @@ public class MainApp extends Application {
 
         try {
             Optional<Building> buildingOptional = storage.readBuildingsAndRoomsInformation();
-            Building building = buildingOptional.orElse(new Building("Test"));
+            Building building = buildingOptional.orElseThrow(() -> new DataConversionException(new IOException()));
             Building.setNusBuildingsAndRooms(building.getBuildingsAndRooms());
             Optional<Room> roomOptional = storage.readVenueInformation();
-            Room room = roomOptional.orElse(new Room("Test"));
+            Room room = roomOptional.orElseThrow(() -> new DataConversionException(new IOException()));
             Room.setNusVenues(room.getNusRooms());
         } catch (DataConversionException de) {
             logger.warning("UserPrefs file at " + venueInformationFilePath + " is not in the correct format.");

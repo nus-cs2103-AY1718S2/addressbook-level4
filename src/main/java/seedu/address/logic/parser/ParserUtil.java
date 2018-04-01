@@ -14,6 +14,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Halal;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Order;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Vegetarian;
 import seedu.address.model.tag.Tag;
@@ -91,6 +92,30 @@ public class ParserUtil {
     public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
         requireNonNull(phone);
         return phone.isPresent() ? Optional.of(parsePhone(phone.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String order} into a {@code Order}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code order} is invalid.
+     */
+    public static Order parseOrder(String order) throws IllegalValueException {
+        requireNonNull(order);
+        String trimmedOrder = order.trim();
+        if (!Order.isValidOrder(trimmedOrder)) {
+            throw new IllegalValueException(Order.MESSAGE_ORDER_CONSTRAINTS);
+        }
+        return new Order(trimmedOrder);
+    }
+
+    /**
+     * Parses a {@code Optional<String> order} into an {@code Optional<Order>} if {@code order} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Order> parseOrder(Optional<String> order) throws IllegalValueException {
+        requireNonNull(order);
+        return order.isPresent() ? Optional.of(parseOrder(order.get())) : Optional.empty();
     }
 
     /**

@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_HALAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ORDER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VEGETARIAN;
@@ -25,6 +26,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Halal;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Vegetarian;
@@ -47,6 +49,7 @@ public class EditCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
+            + "[" + PREFIX_ORDER + "ORDER] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_HALAL + "HALAL] "
@@ -112,13 +115,14 @@ public class EditCommand extends UndoableCommand {
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
+        Order updatedOrder = editPersonDescriptor.getOrder().orElse(personToEdit.getOrder());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Halal updatedHalal = editPersonDescriptor.getHalal().orElse(personToEdit.getHalal());
         Vegetarian updatedVegetarian = editPersonDescriptor.getVegetarian().orElse(personToEdit.getVegetarian());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
+        return new Person(updatedName, updatedPhone, updatedOrder, updatedEmail, updatedAddress,
                 updatedHalal, updatedVegetarian, updatedTags);
     }
 
@@ -148,6 +152,7 @@ public class EditCommand extends UndoableCommand {
     public static class EditPersonDescriptor {
         private Name name;
         private Phone phone;
+        private Order order;
         private Email email;
         private Address address;
         private Halal halal;
@@ -163,6 +168,7 @@ public class EditCommand extends UndoableCommand {
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
             setPhone(toCopy.phone);
+            setOrder(toCopy.order);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setHalal(toCopy.halal);
@@ -174,7 +180,7 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address,
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.order, this.email, this.address,
                     this.halal, this.vegetarian, this.tags);
         }
 
@@ -192,6 +198,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Phone> getPhone() {
             return Optional.ofNullable(phone);
+        }
+
+        public void setOrder(Order order) {
+            this.order = order;
+        }
+
+        public Optional<Order> getOrder() {
+            return Optional.ofNullable(order);
         }
 
         public void setEmail(Email email) {
@@ -260,6 +274,7 @@ public class EditCommand extends UndoableCommand {
 
             return getName().equals(e.getName())
                     && getPhone().equals(e.getPhone())
+                    && getOrder().equals(e.getOrder())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getHalal().equals(e.getHalal())

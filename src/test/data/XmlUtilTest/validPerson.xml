@@ -2,6 +2,7 @@
 <person>
     <name>Hans Muster</name>
     <phone>9482424</phone>
+    <order>Chicken Rice</order>
     <email>hans@example</email>
     <address>4th street</address>
     <halal>Non-halal</halal>

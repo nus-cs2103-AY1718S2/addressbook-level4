@@ -40,7 +40,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 /**
  * Adds an event to a person.
  */
-public class TestAddEventCommand extends UndoableCommand {
+public class TestAddEventCommand extends Command {
 
     public static final String COMMAND_WORD = "addEvent";
 
@@ -157,7 +157,7 @@ public class TestAddEventCommand extends UndoableCommand {
 
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
 
         List<Person> lastShownList = model.getFilteredPersonList();
         Person personToAddEvent = lastShownList.get(targetIndex.getZeroBased());

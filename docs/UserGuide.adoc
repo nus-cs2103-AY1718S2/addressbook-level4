@@ -457,7 +457,7 @@ Sort the employees by rating in descending order.
 
 === Adding an event on one employee's timetable: `addEvent`
 
-Add an event to the employee identified by the index number used in the last employees listing. +
+Adds an event to the employee identified by the index number used in the last employees listing. +
 Format: `addEvent INDEX title/TITLE loca/LOCATION stime/STRATTIME etime/ENDTIME descrip/DESCRIPTION`
 
 ****
@@ -471,6 +471,23 @@ Examples:
 * `list` +
 `addEvent 2 title/Test Event loca/NUS, Singapore stime/2017-04-09T19:00:00 etime/2018-04-09T21:00:00 descrip/A Test Event` +
 Adds the event to 2nd employee's timetable in the list.
+
+=== Deleting an event in one employee's timetable: `deleteEvent`
+
+Deletes an event with specified title in the timetable of employee identified by the index number used in the last employees listing. +
+Format: `deleteEvent INDEX TITLE`
+
+****
+* The `TITLE` is a String.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer 1, 2, 3,* …​
+****
+
+Examples:
+
+* `list` +
+`deleteEvent 1 some event` +
+Deletes the event with title "some event" in 2nd employee's timetable in the list.
 
 === Clearing all entries : `clear`
 
@@ -538,9 +555,13 @@ This section summarizes the usage of all Employees Tracker's commands.
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *AddEvent* : `addEvent INDEX title/TITLE loca/LOCATION stime/STRATTIME etime/ENDTIME descrip/DESCRIPTION` +
+e.g. `addEvent 2 title/Test Event loca/NUS, Singapore stime/2017-04-09T19:00:00 etime/2018-04-09T21:00:00 descrip/A Test Event`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *DeleteEvent* : `deleteEvent INDEX TITLE` +
+e.g. `deleteEvent 1 event title`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Review* : `review INDEX` +
@@ -548,9 +569,14 @@ e.g. `review 2`
 * *Find* : `find (n/NAME_KEYPHRASE | t/TAG_KEYPHRASE | r/RATING_KEYPHRASE) [n/NAME_KEYPHRASE]…​ [t/TAG_KEYPHRASE]…​ [r/RATING_KEYPHRASE]…` +
 e.g. `find n/James n/Jake Black t/Sales t/Marketing Senior r/3`
 * *List* : `list`
+* *Lock* : `lock`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *SetPassword* : `setPassword OLD_PASSWORD NEW_PASSWORD ` +
+e.g.`setPassword admin 12345`
 * *History* : `history`
 * *Undo* : `undo`
+* *Unlock* : `unlock PASSWORD` +
+e.g.`unlock admin`
 * *Redo* : `redo`

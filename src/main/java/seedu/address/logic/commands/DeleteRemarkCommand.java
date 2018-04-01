@@ -4,9 +4,6 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.ArgumentMultimap;
-import seedu.address.logic.parser.ArgumentTokenizer;
-import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
@@ -31,17 +28,17 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 /**
  * Edits the details of an existing person in the address book.
  */
-public class AddRemarkCommand extends UndoableCommand {
+public class DeleteRemarkCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "addremark";
+    public static final String COMMAND_WORD = "deleteremark";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds remarks to the student that you want. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": delete remarks from the student that you want. "
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_REMARK + "REMARKS...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_REMARK + "Need help" + "\n";
 
-    public static final String MESSAGE_REMARK_PERSON_SUCCESS = "Remark added: %1$s";
+    public static final String MESSAGE_REMARK_PERSON_SUCCESS = "Remark deleted: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
@@ -55,7 +52,7 @@ public class AddRemarkCommand extends UndoableCommand {
      * @param index of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public AddRemarkCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public DeleteRemarkCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(index);
         requireNonNull(editPersonDescriptor);
 
@@ -73,7 +70,7 @@ public class AddRemarkCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_REMARK_PERSON_SUCCESS, editedPerson));
+        return new CommandResult(String.format(MESSAGE_REMARK_PERSON_SUCCESS, editPersonDescriptor.getRemark().get()));
     }
 
     @Override
@@ -99,8 +96,15 @@ public class AddRemarkCommand extends UndoableCommand {
         Nric updatedNric = editPersonDescriptor.getNric().orElse(personToEdit.getNric());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
-        Remark updatedRemark = parseRemark(((personToEdit.getRemark()).toString() + "\n"
-                                            + editPersonDescriptor.getRemark().get().toString()));
+        String[] remarkArray = personToEdit.getRemark().toString().split("\n");
+        String updatingRemark = "";
+            for (String remark: remarkArray) {
+                System.out.println(remark + (editPersonDescriptor.getRemark()).get());
+                if(!remark.contains(editPersonDescriptor.getRemark().get().toString())){
+                    updatingRemark = updatingRemark + remark + "\n";
+                }
+            }
+        Remark updatedRemark = parseRemark(updatingRemark);
 
         return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark);
     }
@@ -113,12 +117,12 @@ public class AddRemarkCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddRemarkCommand)) {
+        if (!(other instanceof DeleteRemarkCommand)) {
             return false;
         }
 
         // state check
-        AddRemarkCommand e = (AddRemarkCommand) other;
+        DeleteRemarkCommand e = (DeleteRemarkCommand) other;
         return index.equals(e.index)
                 && editPersonDescriptor.equals(e.editPersonDescriptor)
                 && Objects.equals(personToEdit, e.personToEdit);

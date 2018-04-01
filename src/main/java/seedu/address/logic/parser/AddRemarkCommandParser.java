@@ -3,7 +3,6 @@ package seedu.address.logic.parser;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddRemarkCommand;
-import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.AddRemarkCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -28,7 +27,7 @@ public class AddRemarkCommandParser implements Parser<AddRemarkCommand> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_REMARK);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_REMARK)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemarkCommand.MESSAGE_USAGE));
         }
         Index index;
 

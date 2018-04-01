@@ -6,7 +6,6 @@ import seedu.address.commons.events.ui.ShowActivityRequestEvent;
 import seedu.address.commons.events.ui.ShowEventOnlyRequestEvent;
 import seedu.address.commons.events.ui.ShowTaskOnlyRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
   * Lists task or events, or both.

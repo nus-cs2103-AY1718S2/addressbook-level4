@@ -1,9 +1,5 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Person;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,6 +20,10 @@ import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Person;
+
 /**
  * Deletes an event with specified title in a person's calendar.
  */
@@ -32,7 +32,8 @@ public class DeleteEventCommand extends Command {
     public static final String COMMAND_WORD = "deleteEvent";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Delete an event specified by title of the person identified by the index number used in the last person listing.\n"
+            + ": Delete an event specified by title of the person identified by the index number used "
+            + "in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "TITLE (event tilte)"
             + "Example: " + COMMAND_WORD + " 1 test event";
@@ -116,7 +117,7 @@ public class DeleteEventCommand extends Command {
      * @throws IOException
      */
     public static com.google.api.services.calendar.Calendar
-    getCalendarService() throws IOException {
+        getCalendarService() throws IOException {
         Credential credential = authorize();
         return new com.google.api.services.calendar.Calendar.Builder(
                 httpTransport, JSON_FACTORY, credential)

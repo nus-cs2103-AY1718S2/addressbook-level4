@@ -32,6 +32,7 @@ public class ResultDisplayTest extends GuiUnitTest {
                 ResultDisplayHandle.RESULT_DISPLAY_ID));
 
         defaultStyleOfResultDisplay = new ArrayList<>(resultDisplayHandle.getStyleClass());
+        defaultStyleOfResultDisplay.remove(ResultDisplay.SUGGESTION_STYLE_CLASS);
 
         errorStyleOfResultDisplay = new ArrayList<>(defaultStyleOfResultDisplay);
         errorStyleOfResultDisplay.add(ResultDisplay.ERROR_STYLE_CLASS);
@@ -41,7 +42,8 @@ public class ResultDisplayTest extends GuiUnitTest {
     public void display() {
         // default result text
         guiRobot.pauseForHuman();
-        assertEquals("", resultDisplayHandle.getText());
+        resultDisplayHandle.getStyleClass().remove(ResultDisplay.SUGGESTION_STYLE_CLASS);
+        assertEquals(ResultDisplay.WELCOME_MESSAGE, resultDisplayHandle.getText());
         assertEquals(defaultStyleOfResultDisplay, resultDisplayHandle.getStyleClass());
 
         // receiving new results
@@ -60,6 +62,7 @@ public class ResultDisplayTest extends GuiUnitTest {
         guiRobot.pauseForHuman();
 
         List<String> expectedStyleClass = event.isSuccessful ? defaultStyleOfResultDisplay : errorStyleOfResultDisplay;
+        resultDisplayHandle.getStyleClass().remove(ResultDisplay.SUGGESTION_STYLE_CLASS);
 
         assertEquals(event.message, resultDisplayHandle.getText());
         assertEquals(expectedStyleClass, resultDisplayHandle.getStyleClass());

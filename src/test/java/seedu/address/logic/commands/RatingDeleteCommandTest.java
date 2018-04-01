@@ -28,33 +28,33 @@ import seedu.address.testutil.PersonBuilder;
 /**
  * Contains integration tests (interaction with the Model) and unit tests for RateCommand.
  */
-public class DeleteRatingCommandTest {
+public class RatingDeleteCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
         Person personToDeleteRating = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteRatingCommand deleteRatingCommand = prepareCommand(INDEX_FIRST_PERSON);
+        RatingDeleteCommand ratingDeleteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
         PersonBuilder firstPerson = new PersonBuilder(personToDeleteRating);
         Person editedPerson = firstPerson.withRating("-1", "-1",
                 "-1", "-1").build();
 
-        String expectedMessage = String.format(DeleteRatingCommand.MESSAGE_DELETE_RATING_SUCCESS,
+        String expectedMessage = String.format(RatingDeleteCommand.MESSAGE_DELETE_RATING_SUCCESS,
                 personToDeleteRating.getName());
 
         ModelManager expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(personToDeleteRating, editedPerson);
 
-        assertCommandSuccess(deleteRatingCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(ratingDeleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        DeleteRatingCommand deleteRatingCommand = prepareCommand(outOfBoundIndex);
+        RatingDeleteCommand ratingDeleteCommand = prepareCommand(outOfBoundIndex);
 
-        assertCommandFailure(deleteRatingCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(ratingDeleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
@@ -62,19 +62,19 @@ public class DeleteRatingCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         Person personToDeleteRating = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteRatingCommand deleteRatingCommand = prepareCommand(INDEX_FIRST_PERSON);
+        RatingDeleteCommand ratingDeleteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
         PersonBuilder firstPerson = new PersonBuilder(personToDeleteRating);
         Person editedPerson = firstPerson.withRating("-1", "-1",
                 "-1", "-1").build();
 
-        String expectedMessage = String.format(DeleteRatingCommand.MESSAGE_DELETE_RATING_SUCCESS,
+        String expectedMessage = String.format(RatingDeleteCommand.MESSAGE_DELETE_RATING_SUCCESS,
                 personToDeleteRating.getName());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(personToDeleteRating, editedPerson);
 
-        assertCommandSuccess(deleteRatingCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(ratingDeleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -85,21 +85,21 @@ public class DeleteRatingCommandTest {
         // ensures that outOfBoundIndex is still in bounds of list of candidates
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        DeleteRatingCommand deleteRatingCommand = prepareCommand(outOfBoundIndex);
+        RatingDeleteCommand ratingDeleteCommand = prepareCommand(outOfBoundIndex);
 
-        assertCommandFailure(deleteRatingCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(ratingDeleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_personNotRated_throwsCommandException() {
         Person personNotRated = model.getFilteredPersonList().get(INDEX_THIRD_PERSON.getZeroBased());
 
-        DeleteRatingCommand deleteRatingCommand = prepareCommand(INDEX_THIRD_PERSON);
+        RatingDeleteCommand ratingDeleteCommand = prepareCommand(INDEX_THIRD_PERSON);
 
-        String expectedMessage = String.format(DeleteRatingCommand.MESSAGE_PERSON_NOT_RATED,
+        String expectedMessage = String.format(RatingDeleteCommand.MESSAGE_PERSON_NOT_RATED,
                 personNotRated.getName());
 
-        assertCommandFailure(deleteRatingCommand, model, expectedMessage);
+        assertCommandFailure(ratingDeleteCommand, model, expectedMessage);
     }
 
     @Test
@@ -113,12 +113,12 @@ public class DeleteRatingCommandTest {
                 "-1", "-1").build();
 
 
-        DeleteRatingCommand deleteRatingCommand = prepareCommand(INDEX_FIRST_PERSON);
+        RatingDeleteCommand ratingDeleteCommand = prepareCommand(INDEX_FIRST_PERSON);
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
         // deleteRating -> first person's rating deleted
-        deleteRatingCommand.execute();
-        undoRedoStack.push(deleteRatingCommand);
+        ratingDeleteCommand.execute();
+        undoRedoStack.push(ratingDeleteCommand);
 
         // undo -> reverts HR+ back to previous state and filtered person list to show all persons
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
@@ -134,10 +134,10 @@ public class DeleteRatingCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        DeleteRatingCommand deleteRatingCommand = prepareCommand(outOfBoundIndex);
+        RatingDeleteCommand ratingDeleteCommand = prepareCommand(outOfBoundIndex);
 
-        // execution failed -> deleteRatingCommand not pushed into undoRedoStack
-        assertCommandFailure(deleteRatingCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        // execution failed -> ratingDeleteCommand not pushed into undoRedoStack
+        assertCommandFailure(ratingDeleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         // no commands in undoRedoStack -> undoCommand and redoCommand fail
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
@@ -156,7 +156,7 @@ public class DeleteRatingCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        DeleteRatingCommand deleteRatingCommand = prepareCommand(INDEX_FIRST_PERSON);
+        RatingDeleteCommand ratingDeleteCommand = prepareCommand(INDEX_FIRST_PERSON);
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
@@ -165,8 +165,8 @@ public class DeleteRatingCommandTest {
                 "-1", "-1", "-1").build();
 
         // deleteRating -> modifies second person in unfiltered person list / first person in filtered person list
-        deleteRatingCommand.execute();
-        undoRedoStack.push(deleteRatingCommand);
+        ratingDeleteCommand.execute();
+        undoRedoStack.push(ratingDeleteCommand);
 
         // undo -> reverts HR+ back to previous state and filtered person list to show all persons
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
@@ -178,11 +178,11 @@ public class DeleteRatingCommandTest {
     }
 
     /**
-     * Returns a {@code DeleteRatingCommand} with the parameter {@code index}.
+     * Returns a {@code RatingDeleteCommand} with the parameter {@code index}.
      */
-    private DeleteRatingCommand prepareCommand(Index index) {
-        DeleteRatingCommand deleteRatingCommand = new DeleteRatingCommand(index);
-        deleteRatingCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return deleteRatingCommand;
+    private RatingDeleteCommand prepareCommand(Index index) {
+        RatingDeleteCommand ratingDeleteCommand = new RatingDeleteCommand(index);
+        ratingDeleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return ratingDeleteCommand;
     }
 }

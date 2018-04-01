@@ -25,6 +25,7 @@ import seedu.address.model.person.ProfileImage;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
 import seedu.address.model.person.Status;
+import seedu.address.model.person.University;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -32,9 +33,9 @@ import seedu.address.model.tag.Tag;
 /**
  * Deletes the rating of a person identified using it's last displayed index from HR+.
  */
-public class DeleteRatingCommand extends UndoableCommand {
+public class RatingDeleteCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "deleteRating";
+    public static final String COMMAND_WORD = "rating-delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the rating of the person identified by the index number used in the last person listing.\n"
@@ -49,7 +50,7 @@ public class DeleteRatingCommand extends UndoableCommand {
     private Person targetPerson;
     private Person editedPerson;
 
-    public DeleteRatingCommand(Index targetIndex) {
+    public RatingDeleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
@@ -98,6 +99,7 @@ public class DeleteRatingCommand extends UndoableCommand {
         Phone phone = targetPerson.getPhone();
         Email email = targetPerson.getEmail();
         Address address = targetPerson.getAddress();
+        University university = targetPerson.getUniversity();
         ExpectedGraduationYear expectedGraduationYear = targetPerson.getExpectedGraduationYear();
         Major major = targetPerson.getMajor();
         GradePointAverage gradePointAverage = targetPerson.getGradePointAverage();
@@ -111,7 +113,7 @@ public class DeleteRatingCommand extends UndoableCommand {
         Status status = targetPerson.getStatus();
         Set<Tag> tags = targetPerson.getTags();
 
-        return new Person(name, phone, email, address,
+        return new Person(name, phone, email, address, university,
                 expectedGraduationYear, major, gradePointAverage, jobApplied,
                 defaultRating, resume, profileImage, comment, interviewDate, status, tags);
     }
@@ -119,8 +121,8 @@ public class DeleteRatingCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DeleteRatingCommand // instanceof handles nulls
-                && this.targetIndex.equals(((DeleteRatingCommand) other).targetIndex) // state check
-                && Objects.equals(this.targetPerson, ((DeleteRatingCommand) other).targetPerson));
+                || (other instanceof RatingDeleteCommand // instanceof handles nulls
+                && this.targetIndex.equals(((RatingDeleteCommand) other).targetIndex) // state check
+                && Objects.equals(this.targetPerson, ((RatingDeleteCommand) other).targetPerson));
     }
 }

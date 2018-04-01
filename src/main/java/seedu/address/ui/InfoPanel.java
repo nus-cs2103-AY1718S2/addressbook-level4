@@ -158,9 +158,9 @@ public class InfoPanel extends UiPart<Region> {
 
         infoPaneWrapper.setVisible(true);
         infoMainName.setText(person.getName().fullName);
-        infoMainUniversity.setText("-");
+        infoMainUniversity.setText(person.getUniversity().value);
         infoMainMajorYear.setText("- (Expected " + person.getExpectedGraduationYear().value + ")");
-        infoMainCgpa.setText("-");
+        infoMainCgpa.setText(person.getGradePointAverage().value);
         infoMainEmail.setText(person.getEmail().value);
         infoMainAddress.setText(person.getAddress().value);
         infoMainPhone.setText(person.getPhone().value);

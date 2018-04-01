@@ -13,6 +13,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RESUME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_UNIVERSITY;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.FilterCommand;
@@ -39,6 +40,7 @@ public class PersonUtil {
         sb.append(PREFIX_PHONE + person.getPhone().value + " ");
         sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
+        sb.append(PREFIX_UNIVERSITY + person.getUniversity().value + " ");
         sb.append(PREFIX_EXPECTED_GRADUATION_YEAR + person.getExpectedGraduationYear().value + " ");
         sb.append(PREFIX_MAJOR + person.getMajor().value + " ");
         sb.append(PREFIX_GRADE_POINT_AVERAGE + person.getGradePointAverage().value + " ");

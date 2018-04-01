@@ -10,7 +10,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
  */
 public class RatingSortCommand extends Command {
 
-    public static final String COMMAND_WORD = "rating_sort";
+    public static final String COMMAND_WORD = "rating-sort";
     public static final String SORT_ORDER_ASC = "asc";
     public static final String SORT_ORDER_DESC = "desc";
 

@@ -98,7 +98,8 @@ public class InterviewCommand extends UndoableCommand {
         requireAllNonNull(personToInterview, dateTime);
 
         return new Person(personToInterview.getName(), personToInterview.getPhone(), personToInterview.getEmail(),
-                personToInterview.getAddress(), personToInterview.getExpectedGraduationYear(),
+                personToInterview.getAddress(), personToInterview.getUniversity(),
+                personToInterview.getExpectedGraduationYear(),
                 personToInterview.getMajor(), personToInterview.getGradePointAverage(),
                 personToInterview.getJobApplied(), personToInterview.getRating(),
                 personToInterview.getResume(), personToInterview.getProfileImage(), personToInterview.getComment(),

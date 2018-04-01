@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
+import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
 
 /**
@@ -37,8 +38,8 @@ public class AddPatientQueueCommand extends Command {
     public CommandResult execute() throws CommandException {
 
         try {
-            model.addPatientToQueue(predicate);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, predicate.toString()));
+            Patient patientAdded = model.addPatientToQueue(predicate);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, patientAdded.getName()));
         } catch (DuplicateDataException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PatientNotFoundException e) {

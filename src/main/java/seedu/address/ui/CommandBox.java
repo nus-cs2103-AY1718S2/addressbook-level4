@@ -1,11 +1,15 @@
 package seedu.address.ui;
 
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 import java.util.Queue;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -13,10 +17,24 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.ShowSuggestionEvent;
 import seedu.address.commons.events.ui.ToggleNotificationCenterEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.LockCommand;
+import seedu.address.logic.commands.RateCommand;
+import seedu.address.logic.commands.ReviewCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SetPasswordCommand;
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.TestAddEventCommand;
+import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -28,6 +46,16 @@ public class CommandBox extends UiPart<Region> {
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
     private static final int DOUBLE_KEY_TOLERANCE = 300;
+    private static final String[] allCommandsWord = {AddCommand.COMMAND_WORD, EditCommand.COMMAND_WORD,
+        RateCommand.COMMAND_WORD, ReviewCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD,
+        FindCommand.COMMAND_WORD, TestAddEventCommand.COMMAND_WORD, SortCommand.COMMAND_WORD,
+        LockCommand.COMMAND_WORD, UnlockCommand.COMMAND_WORD, SetPasswordCommand.COMMAND_WORD,
+        ChangeThemeCommand.COMMAND_WORD};
+    private static final String[] allCommandsUsage = {AddCommand.MESSAGE_USAGE, EditCommand.MESSAGE_USAGE,
+        RateCommand.MESSAGE_USAGE, ReviewCommand.MESSAGE_USAGE, SelectCommand.MESSAGE_USAGE,
+        DeleteCommand.MESSAGE_USAGE, FindCommand.MESSAGE_USAGE, TestAddEventCommand.MESSAGE_USAGE,
+        SortCommand.MESSAGE_USAGE, LockCommand.MESSAGE_USAGE, UnlockCommand.MESSAGE_USAGE,
+        SetPasswordCommand.MESSAGE_USAGE, ChangeThemeCommand.MESSAGE_USAGE};
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
@@ -44,6 +72,35 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
         consecutiveShiftPressed = new LinkedList<>();
+
+        commandTextField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                raiseSuggestionEventIfMatchesCommandWord(newValue);
+            }
+        });
+    }
+
+    /**
+     * Raises a ShowSuggestionEvent if the {@param newValue } matches one of command word.
+     */
+    private void raiseSuggestionEventIfMatchesCommandWord(String newValue) {
+        try {
+            newValue = (new Scanner(newValue)).next();
+        } catch (NoSuchElementException e) {
+            raise(new ShowSuggestionEvent(""));
+        }
+        boolean found = false;
+        for (int i = 0; i < allCommandsWord.length; i++) {
+            if (newValue.equals(allCommandsWord[i])) {
+                raise(new ShowSuggestionEvent(allCommandsUsage[i]));
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            raise(new ShowSuggestionEvent(""));
+        }
     }
 
     /**

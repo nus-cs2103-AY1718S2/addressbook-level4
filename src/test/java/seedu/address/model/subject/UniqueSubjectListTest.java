@@ -1,5 +1,8 @@
 package seedu.address.model.subject;
 
+import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -13,6 +16,20 @@ public class UniqueSubjectListTest {
         UniqueSubjectList uniqueSubjectList = new UniqueSubjectList();
         thrown.expect(UnsupportedOperationException.class);
         uniqueSubjectList.asObservableList().remove(0);
+    }
+
+    @Test
+    public void testEquals_similarSubjectObject_returnTrue() {
+        UniqueSubjectList uniqueSubjectList = new UniqueSubjectList();
+        UniqueSubjectList uniqueSubjectList1 = new UniqueSubjectList();
+        assertEquals(uniqueSubjectList, uniqueSubjectList1);
+    }
+
+    @Test
+    public void hashCode_checkForHashCode_sameHashCode() {
+        UniqueSubjectList uniqueSubjectList = new UniqueSubjectList();
+        UniqueSubjectList uniqueSubjectList1 = new UniqueSubjectList();
+        assertEquals(uniqueSubjectList.hashCode(), uniqueSubjectList1.hashCode());
     }
 
 }

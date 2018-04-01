@@ -7,4 +7,7 @@ public class InvalidSubjectCombinationException extends Exception {
     public InvalidSubjectCombinationException(String message) {
         super(message);
     }
+    
+
+
 }

@@ -43,9 +43,10 @@ public class EmailPanel extends UiPart<Region> {
      *Shows the recipient of this email draft
      */
     private void showRecipient(Person person) {
-        to.setText(person.getEmail().toString());
-    }
+        to.setText(person.getEmail().value);
+        body.setHtmlText("Dear " + person.getName().fullName + ",");
 
+    }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {

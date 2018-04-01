@@ -1,8 +1,12 @@
 package seedu.address.model;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.exceptions.InvalidPasswordException;
 import seedu.address.model.exceptions.InvalidUsernameException;
 import seedu.address.model.exceptions.MultipleLoginException;
@@ -19,6 +23,9 @@ import seedu.address.model.tag.UniqueTagList;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<Appointment> PREDICATE_SHOW_ALL_APPOINTMENTS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -68,5 +75,24 @@ public interface Model {
      * @throws UserLogoutException if no user is login to the system.
      */
     void logout() throws UserLogoutException;
+
+    /** Deletes the given appointment. */
+    void deleteAppointment(Appointment target) throws AppointmentNotFoundException;
+
+    /** Adds the given appointment */
+    void addAppointment(Appointment appointment) throws DuplicateAppointmentException;
+
+    /**
+     * Replaces the given appointment {@code target} with {@code editedAppointment}.
+     *
+     * @throws DuplicateAppointmentException if updating the appointment's details causes the appointment
+     * to be equivalent to another existing appointment in the list.
+     * @throws AppointmentNotFoundException if {@code target} could not be found in the list.
+     */
+    void updateAppointment(Appointment target, Appointment editedPerson)
+            throws DuplicateAppointmentException, AppointmentNotFoundException;
+
+    /** Returns an unmodifiable view of the filtered appointment list */
+    List<Appointment> getAppointmentList();
 
 }

@@ -1,9 +1,13 @@
 package seedu.address.model.appointment;
 
-import java.util.Objects;
-
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Objects;
+
+/**
+ * Represents a Appointment in the address book.
+ * Guarantees: details are present and not null, field values are validated, immutable.
+ */
 public class Appointment {
 
     private final Title title;

@@ -8,13 +8,14 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Guarantees: is valid as declared in {@link #isValidStartDateTime(String)} }
  */
 public class StartDateTime {
-    public static final String MESSAGE_START_DATE_TIME_CONSTRAINTS = "Start date time should be a valid local date time";
+    public static final String MESSAGE_START_DATE_TIME_CONSTRAINTS =
+            "Start date time should be a valid local date time";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String START_DATE_TIME_VALIDATION_REGEX = "^\\d{4}-\\d{2}-\\d{2}[T]\\d{2}:\\d{2}:\\d{2}$";
+    public static final String START_DATE_TIME_VALIDATION_REGEX = "^\\d{4}-\\d{2}-\\d{2}[ ]\\d{2}:\\d{2}$";
 
     public final String startDateTime;
 
@@ -45,8 +46,8 @@ public class StartDateTime {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof EndDateTime // instanceof handles nulls
-                && this.startDateTime.equals(((EndDateTime) other).startDateTime)); // state check
+                || (other instanceof StartDateTime // instanceof handles nulls
+                && this.startDateTime.equals(((StartDateTime) other).startDateTime)); // state check
     }
 
     @Override

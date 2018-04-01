@@ -3,7 +3,11 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.SwitchTabRequestEvent;
 
-public class CalendarCommand extends Command{
+//@@author trafalgarandre
+/**
+ * Switch tab to Calendar
+ */
+public class CalendarCommand extends Command {
     public static final String COMMAND_WORD = "calendar";
 
     public static final String MESSAGE_SUCCESS = "Opened your calendar";

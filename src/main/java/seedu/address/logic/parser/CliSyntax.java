@@ -14,6 +14,9 @@ public class CliSyntax {
     public static final Prefix PREFIX_PROFILE_PICTURE = new Prefix("pp/");
     public static final Prefix PREFIX_USERNAME = new Prefix("u/");
     public static final Prefix PREFIX_PASSWORD = new Prefix("pw/");
+    public static final Prefix PREFIX_TITLE = new Prefix("t/");
+    public static final Prefix PREFIX_START_DATE_TIME = new Prefix("sdt/");
+    public static final Prefix PREFIX_END_DATE_TIME = new Prefix("edt/");
 
 
 }

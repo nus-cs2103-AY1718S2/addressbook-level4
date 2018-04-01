@@ -123,7 +123,7 @@ public class MainWindow extends UiPart<Stage> {
         detailsPanel = new DetailsPanel();
         detailsPanel.addBrowserPanel();
         detailsPanel.addContactDetailsDisplayPanel();
-        detailsPanel.addCalendarPanel();
+        detailsPanel.addCalendarPanel(logic.getAppointmentList());
         detailsPlaceholder.getChildren().add(detailsPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());

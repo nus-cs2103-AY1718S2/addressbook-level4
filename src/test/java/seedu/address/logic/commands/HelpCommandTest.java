@@ -25,13 +25,13 @@ public class HelpCommandTest {
     @Test
     public void execute_helpForTask_success() {
         HelpCommand command = new HelpCommand("task");
-        assertCommandSuccess(command,TaskCommand.MESSAGE_USAGE);
+        assertCommandSuccess(command, TaskCommand.MESSAGE_USAGE);
     }
 
     @Test
     public void execute_helpForDelete_success()    {
         HelpCommand command = new HelpCommand("delete");
-        assertCommandSuccess(command,DeleteCommand.MESSAGE_USAGE);;
+        assertCommandSuccess(command, DeleteCommand.MESSAGE_USAGE);;
     }
 
 }

@@ -22,12 +22,11 @@ import seedu.address.ui.testutil.EventsCollectorRule;
  */
 public class ListCommandTest {
 //may need revising, is the interaction with the model needed?
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
     private Model model;
     private Model expectedModel;
     private ListCommand listCommand;
-
-    @Rule
-    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     @Before
     public void setUp() {

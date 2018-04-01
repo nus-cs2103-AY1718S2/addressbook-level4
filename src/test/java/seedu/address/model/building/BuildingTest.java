@@ -19,30 +19,30 @@ public class BuildingTest {
     private Building building = new Building("COM2");
     private final Building standardBuilding = new BuildingBuilder().withBuildingName("COM2").build();
 
-    @Test 
+    @Test
     public void isValidBuilding_validString_true() {
         String validString = "COM2";
         assertTrue(Building.isValidBuilding(validString));
     }
-    
-    @Test 
+
+    @Test
     public void isValidBuilding_invalidString_false() {
         String invalidString = "COM2!";
         assertFalse(Building.isValidBuilding(invalidString));
     }
-    
+
     @Test
     public void isValidBuilding_buildingFoundInListOfNusBuildings_true() {
         Building validBuilding = new Building("COM2");
         assertTrue(Building.isValidBuilding(validBuilding));
     }
-    
+
     @Test
     public void isValidBuilding_buildingNotFoundInListOfNusBuildings_false() {
         Building invalidBuilding = new Building("COM3");
         assertFalse(Building.isValidBuilding(invalidBuilding));
     }
-    
+
     @Test
     public void retrieveAllRoomsSchedule_nullNusBuildingsAndRooms_throwsCorruptedVenueInformationException() {
         Building.setNusBuildingsAndRooms(null);

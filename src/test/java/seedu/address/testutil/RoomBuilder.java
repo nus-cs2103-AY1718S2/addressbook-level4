@@ -77,6 +77,9 @@ public class RoomBuilder {
         return this;
     }
 
+    /**
+     * Builds a {@code Room} object
+     */
     public Room build() {
         Room room = new Room(roomName);
         room.setNusRooms(nusRooms);

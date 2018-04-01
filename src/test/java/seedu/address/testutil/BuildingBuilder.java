@@ -67,6 +67,9 @@ public class BuildingBuilder {
         return this;
     }
 
+    /**
+     * Builds a {@code Building} object
+     */
     public Building build() {
         Building building = new Building(buildingName);
         Building.setNusBuildingsAndRooms(nusBuildingsAndRooms);

@@ -67,6 +67,9 @@ public class WeekBuilder {
         return this;
     }
 
+    /**
+     * Builds a {@code Week} object
+     */
     public Week build() {
         Week week = new Week();
         week.setWeekday(weekday);

@@ -107,7 +107,6 @@ public class AddCommandTest {
         CommandResult resultToAddAll = getAddCommandForNewPersonPetPatientAppointment(newPerson, newPetPatient, newAppt,
                 modelStub).execute();
         assertEquals(String.format(messageAddall, newPerson, newPetPatient, newAppt), resultToAddAll.feedbackToUser);
-
     }
 
     @Test
@@ -155,6 +154,20 @@ public class AddCommandTest {
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_APPOINTMENT);
+
+        getAddCommandForNewPersonPetPatientAppointment(validPerson, validPetPatient, validAppointment,
+                modelStub).execute();
+    }
+
+    @Test
+    public void execute_duplicateAppointmentDateTime_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateDateTimeException();
+        Person validPerson = new PersonBuilder().build();
+        PetPatient validPetPatient = new PetPatientBuilder().build();
+        Appointment validAppointment = new AppointmentBuilder().build();
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_DATETIME);
 
         getAddCommandForNewPersonPetPatientAppointment(validPerson, validPetPatient, validAppointment,
                 modelStub).execute();
@@ -389,12 +402,37 @@ public class AddCommandTest {
 
         @Override
         public void addPetPatient(PetPatient petPatient) {
-            //also do nothing
+            //do nothing
         }
 
         @Override
         public void addAppointment(Appointment appt) throws DuplicateAppointmentException {
             throw new DuplicateAppointmentException();
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+    }
+
+    /**
+     * A Model stub that always throw a DuplicateDateTimeException when trying to add an appointment.
+     */
+    private class ModelStubThrowingDuplicateDateTimeException extends ModelStub {
+        @Override
+        public void addPerson(Person person) {
+            //do nothing
+        }
+
+        @Override
+        public void addPetPatient(PetPatient petPatient) {
+            //do nothing
+        }
+
+        @Override
+        public void addAppointment(Appointment appt) throws DuplicateDateTimeException {
+            throw new DuplicateDateTimeException();
         }
 
         @Override

@@ -188,15 +188,6 @@ public class Imdb implements ReadOnlyImdb {
     }
 
     /**
-     * Remove a patient's appointment
-     * @return true if the appointment is deleted successfully
-     */
-    public boolean deletePatientAppointment(Patient patient, Index index) {
-        requireAllNonNull(patient, index);
-        return patient.deletePatientAppointment(index);
-    }
-
-    /**
      * Remove {@code tag} from {@code patient}
      */
     private void removeTagFromPerson (Tag tag, Patient patient) throws PatientNotFoundException {
@@ -268,6 +259,16 @@ public class Imdb implements ReadOnlyImdb {
         }
 
         return queueList;
+    }
+
+
+    /**
+     * Remove a patient's appointment
+     * @return true if the appointment is deleted successfully
+     */
+    public boolean deletePatientAppointment(Patient patient, Index index) {
+        requireAllNonNull(patient, index);
+        return patient.deletePatientAppointment(index);
     }
 
     @Override

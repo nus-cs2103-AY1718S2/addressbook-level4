@@ -1,7 +1,6 @@
 package seedu.address.model.subject;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,7 +18,7 @@ public class UniqueSubjectListTest {
     }
 
     @Test
-    public void testEquals_similarSubjectObject_returnTrue() {
+    public void testEquals_similarObject_returnTrue() {
         UniqueSubjectList uniqueSubjectList = new UniqueSubjectList();
         UniqueSubjectList uniqueSubjectList1 = new UniqueSubjectList();
         assertEquals(uniqueSubjectList, uniqueSubjectList1);

@@ -20,7 +20,7 @@ public class UniqueTagListTest {
     }
 
     @Test
-    public void testEquals_sameSubjectObject_returnTrue() {
+    public void testEquals_similarObject_returnTrue() {
         UniqueTagList uniqueTagList = new UniqueTagList();
         UniqueTagList uniqueTagList1 = new UniqueTagList();
         assertEquals(uniqueTagList, uniqueTagList1);

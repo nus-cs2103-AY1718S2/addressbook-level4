@@ -7,24 +7,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 
 import java.util.List;
-import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.programminglanguage.ProgrammingLanguage;
-import seedu.address.model.student.Address;
-import seedu.address.model.student.Email;
-import seedu.address.model.student.Favourite;
-import seedu.address.model.student.Name;
-import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
-import seedu.address.model.student.dashboard.Dashboard;
 import seedu.address.model.student.dashboard.Milestone;
-import seedu.address.model.student.dashboard.UniqueMilestoneList;
 import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneException;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
-import seedu.address.model.tag.Tag;
 
 /**
  * Adds a Milestone to a Student's Dashboard
@@ -99,21 +89,7 @@ public class AddMilestoneCommand extends UndoableCommand {
             throws DuplicateMilestoneException {
         requireAllNonNull(studentToEdit, newMilestone);
 
-        /* Get all the attributes of the student */
-        Name name = studentToEdit.getName();
-        Phone phone = studentToEdit.getPhone();
-        Email email = studentToEdit.getEmail();
-        Address address = studentToEdit.getAddress();
-        Set<Tag> tags = studentToEdit.getTags();
-        ProgrammingLanguage programmingLanguage = studentToEdit.getProgrammingLanguage();
-        Favourite fav = studentToEdit.getFavourite();
-        UniqueMilestoneList milestoneList = studentToEdit.getDashboard().getMilestoneList();
-
-        milestoneList.add(newMilestone);
-
-        Dashboard dashboard = new Dashboard(milestoneList);
-
-        return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard);
+        return new StudentBuilder(studentToEdit).withNewMilestone(newMilestone).build();
     }
 
     @Override

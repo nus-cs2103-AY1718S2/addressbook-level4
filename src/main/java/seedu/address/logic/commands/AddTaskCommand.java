@@ -9,29 +9,17 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MILESTONE_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import java.util.List;
-import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.programminglanguage.ProgrammingLanguage;
-import seedu.address.model.student.Address;
-import seedu.address.model.student.Email;
-import seedu.address.model.student.Favourite;
-import seedu.address.model.student.Name;
-import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
-import seedu.address.model.student.dashboard.Dashboard;
-import seedu.address.model.student.dashboard.Milestone;
-import seedu.address.model.student.dashboard.Progress;
 import seedu.address.model.student.dashboard.Task;
 import seedu.address.model.student.dashboard.UniqueMilestoneList;
-import seedu.address.model.student.dashboard.UniqueTaskList;
 import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneException;
 import seedu.address.model.student.dashboard.exceptions.DuplicateTaskException;
 import seedu.address.model.student.dashboard.exceptions.MilestoneNotFoundException;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
-import seedu.address.model.tag.Tag;
 
 /**
  * Adds a Task to a Milestone
@@ -102,7 +90,7 @@ public class AddTaskCommand extends UndoableCommand {
         }
 
         try {
-            editedStudent = createEditedStudent(studentToEdit, newTask);
+            editedStudent = createEditedStudent(studentToEdit, newTask, milestoneIndex);
         } catch (DuplicateTaskException e) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         } catch (DuplicateMilestoneException e) {
@@ -115,36 +103,11 @@ public class AddTaskCommand extends UndoableCommand {
     /**
      * Creates and return a copy of {@code Student} with the new task added to its targeted milestone in the Dashboard.
      */
-    private Student createEditedStudent(Student studentToEdit, Task newTask)
+    private Student createEditedStudent(Student studentToEdit, Task newTask, Index targetMilestoneIndex)
             throws DuplicateTaskException, DuplicateMilestoneException, MilestoneNotFoundException {
         requireAllNonNull(studentToEdit, newTask);
 
-        /* Get all the attributes of the student */
-        Name name = studentToEdit.getName();
-        Phone phone = studentToEdit.getPhone();
-        Email email = studentToEdit.getEmail();
-        Address address = studentToEdit.getAddress();
-        Set<Tag> tags = studentToEdit.getTags();
-        ProgrammingLanguage programmingLanguage = studentToEdit.getProgrammingLanguage();
-        Favourite fav = studentToEdit.getFavourite();
-        UniqueMilestoneList milestoneList = studentToEdit.getDashboard().getMilestoneList();
-
-        /* Get the components that needs to be modified */
-        Milestone targetMilestone = milestoneList.get(milestoneIndex);
-        UniqueTaskList targetTaskList = targetMilestone.getTaskList();
-
-        /* Update the task list and milestone list to reflect the new task added */
-        targetTaskList.add(newTask);
-        Progress newProgress = new Progress(
-                targetMilestone.getProgress().getTotalTasks() + 1,
-                targetMilestone.getProgress().getNumCompletedTasks());
-        Milestone newMilestone = new Milestone(targetMilestone.getDueDate(), targetTaskList,
-                newProgress, targetMilestone.getDescription());
-        milestoneList.setMilestone(targetMilestone, newMilestone);
-
-        Dashboard dashboard = new Dashboard(milestoneList);
-
-        return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard);
+        return new StudentBuilder(studentToEdit).withNewTask(targetMilestoneIndex, newTask).build();
     }
 
     @Override

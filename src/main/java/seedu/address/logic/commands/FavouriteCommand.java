@@ -1,24 +1,16 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
-import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.programminglanguage.ProgrammingLanguage;
-import seedu.address.model.student.Address;
-import seedu.address.model.student.Email;
-import seedu.address.model.student.Favourite;
-import seedu.address.model.student.Name;
-import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
-import seedu.address.model.student.dashboard.Dashboard;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
-import seedu.address.model.tag.Tag;
 
 /**
  * Add a student to favourites
@@ -73,17 +65,8 @@ public class FavouriteCommand extends UndoableCommand {
      * Create and return a copy of the target {@Code Student} to favourite with its' Favourite attribute set to true.
      */
     private static Student createEditedStudent(Student target) {
-        assert target != null;
+        requireNonNull(target);
 
-        Name name = target.getName();
-        Phone phone = target.getPhone();
-        Email email = target.getEmail();
-        Address address = target.getAddress();
-        Set<Tag> tags = target.getTags();
-        ProgrammingLanguage programmingLanguage = target.getProgrammingLanguage();
-        Favourite fav = new Favourite(true);
-        Dashboard dashboard = target.getDashboard();
-
-        return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard);
+        return new StudentBuilder(target).withFavourite(true).build();
     }
 }

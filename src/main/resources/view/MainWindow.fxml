@@ -52,7 +52,7 @@
             </padding>
             <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
           </VBox>
-          
+
           <!-- @@author kush1509 -->
           <StackPane fx:id="detailsPlaceholder">
             <padding>

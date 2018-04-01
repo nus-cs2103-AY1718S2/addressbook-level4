@@ -35,7 +35,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-    private ExercisesPanel exercisesPanel;
+    private ExerciseListPanel exerciseListPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
@@ -47,7 +47,7 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane commandBoxPlaceholder;
 
     @FXML
-    private StackPane exercisesPlaceholder;
+    private StackPane exerciseListPanelPlaceholder;
 
     @FXML
     private MenuItem helpMenuItem;
@@ -123,8 +123,8 @@ public class MainWindow extends UiPart<Stage> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        exercisesPanel = new ExercisesPanel();
-        exercisesPlaceholder.getChildren().add(exercisesPanel.getRoot());
+        exerciseListPanel = new ExerciseListPanel(logic.getFilteredExerciseList());
+        exerciseListPanelPlaceholder.getChildren().add(exerciseListPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());

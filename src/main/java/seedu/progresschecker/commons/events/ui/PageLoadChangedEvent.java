@@ -3,11 +3,11 @@ package seedu.progresschecker.commons.events.ui;
 import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.commons.events.BaseEvent;
 
+//@@author iNekox3
 /**
  * Represents a page change in the Browser Panel
  */
 public class PageLoadChangedEvent extends BaseEvent {
-
 
     public final int targetIndex;
 

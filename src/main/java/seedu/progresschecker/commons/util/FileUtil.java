@@ -11,6 +11,7 @@ import java.nio.file.Files;
  */
 public class FileUtil {
 
+    public static final String VALID_IMAGE = "([^\\s]+(\\.(?i)(jpg|jpeg|png))$)";
     private static final String CHARSET = "UTF-8";
 
     public static boolean isFileExists(File file) {
@@ -90,4 +91,23 @@ public class FileUtil {
         return pathWithForwardSlash.replace("/", File.separator);
     }
 
+    /**
+     * Returns whether the uploaded file is a valid image file
+     * Valid image file should have extension: '.jpg', '.jepg' or 'png'.
+     * @param path of the uploaded image file
+     * @return true if the uploaded file has valid extension
+     */
+    public static boolean isValidImageFile(String path) {
+        return path.matches(VALID_IMAGE);
+    }
+
+    /**
+     * Returns whether the path of uploaded file is under the specific folder
+     * @param path of the uploaded file
+     * @param parentFolder of the specific folder
+     * @return true if the file is under this specific folder
+     */
+    public static boolean isUnderFolder(String path, String parentFolder) {
+        return path.startsWith(parentFolder);
+    }
 }

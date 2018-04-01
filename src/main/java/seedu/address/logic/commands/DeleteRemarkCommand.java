@@ -1,5 +1,17 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.ParserUtil.parseRemark;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -12,18 +24,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
-import static seedu.address.logic.parser.ParserUtil.parseRemark;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -38,7 +38,7 @@ public class DeleteRemarkCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_REMARK + "Need help" + "\n";
 
-    public static final String MESSAGE_REMARK_PERSON_SUCCESS = "Remark deleted: %1$s";
+    public static final String MESSAGE_REMARK_PERSON_SUCCESS = "Remark deleted: %1$s\nPerson: %2$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
@@ -63,14 +63,15 @@ public class DeleteRemarkCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
-            model.addRemark(personToEdit, editedPerson);
+            model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_REMARK_PERSON_SUCCESS, editPersonDescriptor.getRemark().get()));
+        return new CommandResult(String.format(MESSAGE_REMARK_PERSON_SUCCESS, editPersonDescriptor.getRemark().get(),
+                                                personToEdit.getName()));
     }
 
     @Override
@@ -98,12 +99,14 @@ public class DeleteRemarkCommand extends UndoableCommand {
         Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
         String[] remarkArray = personToEdit.getRemark().toString().split("\n");
         String updatingRemark = "";
-            for (String remark: remarkArray) {
-                System.out.println(remark + (editPersonDescriptor.getRemark()).get());
-                if(!remark.contains(editPersonDescriptor.getRemark().get().toString())){
-                    updatingRemark = updatingRemark + remark + "\n";
-                }
+        for (String remark: remarkArray) {
+            System.out.println(remark + (editPersonDescriptor.getRemark()).get());
+            if (!remark.contains(editPersonDescriptor.getRemark().get().toString())) {
+                updatingRemark = updatingRemark + remark + "\n";
+            } else {
+                editPersonDescriptor.setRemark(parseRemark(remark));
             }
+        }
         Remark updatedRemark = parseRemark(updatingRemark);
 
         return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark);

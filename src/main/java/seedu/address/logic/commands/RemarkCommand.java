@@ -138,6 +138,7 @@ public class RemarkCommand extends UndoableCommand {
          * Copy constructor.
          * A defensive copy of {@code tags} is used internally.
          */
+
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
             setNric(toCopy.nric);

@@ -1,18 +1,16 @@
 package seedu.address.logic.parser;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddRemarkCommand;
-import seedu.address.logic.commands.DeleteRemarkCommand.EditPersonDescriptor;
-import seedu.address.logic.commands.DeleteRemarkCommand;
-import seedu.address.logic.commands.RemarkCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-
-import java.util.stream.Stream;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+
+import java.util.stream.Stream;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.DeleteRemarkCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.DeleteRemarkCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -41,7 +39,8 @@ public class DeleteRemarkCommandParser implements Parser<DeleteRemarkCommand> {
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
         if (ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get().toString().isEmpty()) {
-            throw new ParseException((String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteRemarkCommand.MESSAGE_USAGE)));
+            throw new ParseException((String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                                                    DeleteRemarkCommand.MESSAGE_USAGE)));
         } else {
             ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).ifPresent(editPersonDescriptor::setRemark);
         }

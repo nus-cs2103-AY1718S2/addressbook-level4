@@ -1,6 +1,8 @@
 package seedu.address.logic.record;
 
+import seedu.address.model.patient.DateOfBirth;
 import seedu.address.model.patient.Record;
+import seedu.address.model.patient.TextField;
 
 /**
  * RecordManager class to handle user inputs to medical record.
@@ -18,7 +20,8 @@ public final class RecordManager {
         if (currRecord == null) {
             return null;
         }
-        Record temp = new Record(currRecord.getDate(), currRecord.getSymptom(), currRecord.getIllness(), currRecord.getTreatment());
+        Record temp = new Record(currRecord.getDate(), currRecord.getSymptom(),
+                currRecord.getIllness(), currRecord.getTreatment());
         //reset current record so it cannot be duplicated to other patients
         currRecord = null;
         return temp;

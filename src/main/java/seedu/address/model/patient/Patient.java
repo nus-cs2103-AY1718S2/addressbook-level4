@@ -102,7 +102,7 @@ public class Patient {
             return recordList.getRecordList().get(i);
         } else {
             //accessing new record
-            return new Record("", "", "", "");
+            return new Record();
         }
     }
 

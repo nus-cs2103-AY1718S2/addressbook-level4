@@ -8,6 +8,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SYMPTOM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TREATMENT;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -29,13 +31,13 @@ public class Record {
     public static final String MESSAGE_RECORD_CONSTRAINTS =
             "Patient record can take any values, but each field must be populated";
 
-    private final String date;
-    private final String symptom;
-    private final String illness;
-    private final String treatment;
+    private final DateOfBirth date;
+    private final TextField symptom;
+    private final TextField illness;
+    private final TextField treatment;
 
     public Record() {
-        this("", "", "", "");
+        this(new SimpleDateFormat("dd/MM/yyyy").format(new Date()), "", "", "");
     }
 
     /**
@@ -43,22 +45,23 @@ public class Record {
      */
     public Record(String date, String symptom, String illness, String treatment) {
         requireAllNonNull(date, symptom, illness, treatment);
-        this.date = date;
-        this.symptom = symptom;
-        this.illness = illness;
-        this.treatment = treatment;
+        this.date = new DateOfBirth(date);
+        this.symptom = new TextField(symptom);
+        this.illness = new TextField(illness);
+        this.treatment = new TextField(treatment);
     }
 
     public Record(Record record) {
-        this(record.getDate(), record.getSymptom(), record.getIllness(), record.getTreatment());
+        this(record.getDate(), record.getSymptom(),
+                record.getIllness(), record.getTreatment());
     }
 
     public Record(String string) throws ParseException {
         Record temp = this.parse(string);
-        this.date = temp.getDate();
-        this.symptom = temp.getSymptom();
-        this.illness = temp.getIllness();
-        this.treatment = temp.getTreatment();
+        this.date = new DateOfBirth(temp.getDate());
+        this.symptom = new TextField(temp.getSymptom());
+        this.illness = new TextField(temp.getIllness());
+        this.treatment = new TextField(temp.getTreatment());
     }
 
     /**
@@ -79,7 +82,7 @@ public class Record {
         }
 
         //to nest following lines into try once the various classes are set up
-        String date = (argMultimap.getPreamble());
+        String date = argMultimap.getPreamble();
         String symptom = (argMultimap.getValue(PREFIX_SYMPTOM)).get();
         String illness = (argMultimap.getValue(PREFIX_ILLNESS)).get();
         String treatment = (argMultimap.getValue(PREFIX_TREATMENT)).get();
@@ -96,19 +99,19 @@ public class Record {
     }
 
     public String getDate() {
-        return date;
+        return date.toString();
     }
 
     public String getSymptom() {
-        return symptom;
+        return symptom.toString();
     }
 
     public String getIllness() {
-        return illness;
+        return illness.toString();
     }
 
     public String getTreatment() {
-        return treatment;
+        return treatment.toString();
     }
 
     @Override

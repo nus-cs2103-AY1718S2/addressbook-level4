@@ -12,7 +12,7 @@ public class BuildingBuilder {
 
     public static final String DEFAULT_BUILDINGNAME = "COM2";
 
-    private static HashMap<String, ArrayList<String>> nusBuildingsAndRooms = null;
+    private static HashMap<String, ArrayList<String>> nusBuildingsAndRooms;
 
     private HashMap<String, ArrayList<String>> buildingsAndRooms;
     private String buildingName;

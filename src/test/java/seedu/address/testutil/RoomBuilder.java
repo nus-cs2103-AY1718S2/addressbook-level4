@@ -12,7 +12,7 @@ public class RoomBuilder {
 
     public static final String DEFAULT_ROOMNAME = "COM2-0108";
 
-    private static HashMap<String, Week> nusVenues = null;
+    private static HashMap<String, Week> nusVenues;
 
     private String roomName;
     private HashMap<String, Week> nusRooms;

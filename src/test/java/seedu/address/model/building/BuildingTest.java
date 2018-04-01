@@ -64,7 +64,7 @@ public class BuildingTest {
         ArrayList<ArrayList<String>> expectedList = new ArrayList<>();
         ArrayList<String> expectedSchedule = new ArrayList<>();
         Room room = new RoomBuilder().build();
-        expectedSchedule.add(RoomBuilder.DEFAULT_ROOMNAME);
+        expectedSchedule.add(room.getRoomName());
         for (int i = 0; i < WeekDay.NUMBER_OF_CLASSES; i++) {
             expectedSchedule.add("vacant");
         }

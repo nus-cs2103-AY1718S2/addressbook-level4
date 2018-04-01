@@ -80,10 +80,7 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
         executeCommand(command);
         assertCommandBoxShowsDefaultStyle();
 
-        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(
-                String.format(ReviewsCommand.MESSAGE_LOADING, toLoad)), 15000);
-
-        String expectedResultMessage = ReviewsCommand.MESSAGE_SUCCESS;
+        String expectedResultMessage = String.format(ReviewsCommand.MESSAGE_SUCCESS, toLoad);
 
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertSelectedBookListCardUnchanged();

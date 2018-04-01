@@ -168,6 +168,6 @@ public class ReviewsCommandTest {
      * Returns the expected loading message of the book at {@code index} of {@code list}.
      */
     private String prepareExpectedMessage(List<Book> list, Index index) {
-        return String.format(ReviewsCommand.MESSAGE_LOADING, list.get(index.getZeroBased()));
+        return String.format(ReviewsCommand.MESSAGE_SUCCESS, list.get(index.getZeroBased()));
     }
 }

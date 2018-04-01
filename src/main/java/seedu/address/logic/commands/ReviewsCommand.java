@@ -23,10 +23,7 @@ public class ReviewsCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_LOADING = "Loading reviews of book: %1$s...";
-    public static final String MESSAGE_SUCCESS = "Reviews loaded successfully!";
-    public static final String MESSAGE_FAIL = "Failed to load reviews. "
-            + "Make sure you are connected to the Internet.";
+    public static final String MESSAGE_SUCCESS = "Showing reviews for book: %1$s.";
     public static final String MESSAGE_WRONG_ACTIVE_LIST = "Cannot load reviews for items "
             + "from the current list.";
 
@@ -80,7 +77,7 @@ public class ReviewsCommand extends Command {
         }
 
         EventsCenter.getInstance().post(new ShowBookReviewsRequestEvent(toLoad));
-        return new CommandResult(String.format(MESSAGE_LOADING, toLoad));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toLoad));
     }
 
     @Override

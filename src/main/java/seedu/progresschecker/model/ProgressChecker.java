@@ -20,6 +20,7 @@ import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
 
 import javafx.collections.ObservableList;
+import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.model.issues.Assignees;
 import seedu.progresschecker.model.issues.Issue;
 import seedu.progresschecker.model.issues.Labels;
@@ -153,6 +154,18 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
         createdIssue.setAssignees(listOfUsers);
         createdIssue.setLabels(listOfLabels.toArray(new String[0]));
         createdIssue.setMilestone(check);
+    }
+
+    /**
+     * closes an issue on github
+     *
+     * @throws IOException if the index mentioned is not valid or he's closed
+     */
+    public void closeIssueOnGithub(Index index) throws IOException {
+        GitHub github = GitHub.connectUsingPassword(userLogin, userAuthentication);
+        GHRepository repository = github.getRepository(repoName);
+        GHIssue issue = repository.getIssue(index.getOneBased());
+        issue.close();
     }
 
     /**

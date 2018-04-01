@@ -172,4 +172,20 @@ public class DeleteEventCommand extends Command {
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }
+
+    public Index getTargetIndex() {
+        return this.targetIndex;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DeleteEventCommand // instanceof handles nulls
+                && this.targetIndex.equals(((DeleteEventCommand) other).getTargetIndex())
+                && this.title.equals(((DeleteEventCommand) other).getTitle())); // state check
+    }
 }

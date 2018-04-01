@@ -129,6 +129,7 @@ public class MainWindow extends UiPart<Stage> {
         eventListPanel = new EventListPanel(logic.getFilteredEventList());
         eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
+        //@@author
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 

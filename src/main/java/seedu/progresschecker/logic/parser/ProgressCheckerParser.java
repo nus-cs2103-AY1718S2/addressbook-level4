@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import seedu.progresschecker.logic.commands.AddCommand;
 import seedu.progresschecker.logic.commands.AddDefaultTasksCommand;
 import seedu.progresschecker.logic.commands.ClearCommand;
+import seedu.progresschecker.logic.commands.CloseIssueCommand;
 import seedu.progresschecker.logic.commands.Command;
 import seedu.progresschecker.logic.commands.CreateIssue;
 import seedu.progresschecker.logic.commands.DeleteCommand;
@@ -126,6 +127,10 @@ public class ProgressCheckerParser {
         case ViewCommand.COMMAND_WORD:
         case ViewCommand.COMMAND_ALIAS:
             return new ViewCommandParser().parse(arguments);
+
+        case CloseIssueCommand.COMMAND_WORD:
+        case CloseIssueCommand.COMMAND_ALIAS:
+            return new CloseIssueCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

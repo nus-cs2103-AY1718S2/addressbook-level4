@@ -153,12 +153,14 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void addPatientToQueue(NameContainsKeywordsPredicate predicate) throws
+    public synchronized Patient addPatientToQueue(NameContainsKeywordsPredicate predicate) throws
             DuplicatePatientException, PatientNotFoundException {
         requireNonNull(predicate);
         int patientIndex = getPatientIndex(predicate);
         imdb.addPatientToQueue(patientIndex);
         indicateAddressBookChanged();
+
+        return filteredPatients.get(patientIndex);
     }
 
     @Override

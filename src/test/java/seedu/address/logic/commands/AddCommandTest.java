@@ -143,13 +143,14 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addPatientToQueue(NameContainsKeywordsPredicate predicate) throws DuplicatePatientException {
-            //update later
+        public Patient addPatientToQueue(NameContainsKeywordsPredicate predicate) throws DuplicatePatientException {
+            fail("This method should not be called.");
+            return null;
         }
 
         @Override
         public Patient removePatientFromQueue() {
-            //update later
+            fail("This method should not be called.");
             return null;
         }
 

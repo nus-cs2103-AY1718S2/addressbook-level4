@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.SortCommand.MESSAGE_INVALID_SORT_FIELD;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -78,17 +80,47 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Sorts all students in HR+ based on overall rating in ascending order
+     * Sorts all students in HR+ based on {@code sortField} in ascending order
      */
-    public void sortAsc() {
-        persons.sortPersonsAsc();
+    public void sortAsc(SortCommand.SortField sortField) {
+        switch (sortField) {
+        case GPA:
+            persons.sortPersonsGradePointAverageAsc();
+            break;
+
+        case NAME:
+            persons.sortPersonsNameAsc();
+            break;
+
+        case RATING:
+            persons.sortPersonsRatingAsc();
+            break;
+
+        default:
+            throw new IllegalArgumentException(MESSAGE_INVALID_SORT_FIELD);
+        }
     }
 
     /**
-     * Sorts all students in HR+ based on overall rating in descending order
+     * Sorts all students in HR+ based on {@code sortField} in descending order
      */
-    public void sortDesc() {
-        persons.sortPersonsDesc();
+    public void sortDesc(SortCommand.SortField sortField) {
+        switch (sortField) {
+        case GPA:
+            persons.sortPersonsGradePointAverageDesc();
+            break;
+
+        case NAME:
+            persons.sortPersonsNameDesc();
+            break;
+
+        case RATING:
+            persons.sortPersonsRatingDesc();
+            break;
+
+        default:
+            throw new IllegalArgumentException(MESSAGE_INVALID_SORT_FIELD);
+        }
     }
 
     //// person-level operations

@@ -98,18 +98,47 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Sorts the list based on overall rating in ascending order
      */
-    public void sortPersonsAsc() {
+    public void sortPersonsRatingAsc() {
         Collections.sort(internalList, Person::compareByOverallRating);
     }
 
     /**
      * Sorts the list based on overall rating in descending order
      */
-    public void sortPersonsDesc() {
+    public void sortPersonsRatingDesc() {
         Collections.sort(internalList, Person::compareByOverallRating);
         Collections.reverse(internalList);
     }
 
+    /**
+     * Sorts the list based on GPA in ascending order
+     */
+    public void sortPersonsGradePointAverageAsc() {
+        Collections.sort(internalList, Person::compareByGradePointAverage);
+    }
+
+    /**
+     * Sorts the list based on GPA in descending order
+     */
+    public void sortPersonsGradePointAverageDesc() {
+        Collections.sort(internalList, Person::compareByGradePointAverage);
+        Collections.reverse(internalList);
+    }
+
+    /**
+     * Sorts the list based on name in ascending order
+     */
+    public void sortPersonsNameAsc() {
+        Collections.sort(internalList, Person::compareByName);
+    }
+
+    /**
+     * Sorts the list based on name in descending order
+     */
+    public void sortPersonsNameDesc() {
+        Collections.sort(internalList, Person::compareByName);
+        Collections.reverse(internalList);
+    }
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.

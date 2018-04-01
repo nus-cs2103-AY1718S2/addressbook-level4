@@ -22,7 +22,7 @@ public class CliSyntax {
     // Used only in filter command
     public static final Prefix PREFIX_RATING = new Prefix("r/");
 
-    // used in rating_sort command only
+    // used in rating-sort and gpa-sort commands only
     public static final Prefix PREFIX_SORT_ORDER = new Prefix("o/");
 
     public static final Prefix PREFIX_TECHNICAL_SKILLS_SCORE = new Prefix("t/");

@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -53,13 +54,13 @@ public interface Model {
     void filterFilteredPersonList(Predicate<Person> predicate);
 
     /**
-     * Sorts the filtered person list based on overall rating in ascending order
+     * Sorts the filtered person list based on {@code sortField} in ascending order
      */
-    void sortPersonListAscOrder();
+    void sortPersonListAscOrder(SortCommand.SortField sortField);
 
     /**
-     * Sorts the filtered person list based on overall rating in descending order
+     * Sorts the filtered person list based on {@code sortField} in descending order
      */
-    void sortPersonListDescOrder();
+    void sortPersonListDescOrder(SortCommand.SortField sortField);
 
 }

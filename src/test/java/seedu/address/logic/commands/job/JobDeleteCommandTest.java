@@ -1,7 +1,9 @@
 // @@author kush1509
 package seedu.address.logic.commands.job;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
@@ -148,7 +150,7 @@ public class JobDeleteCommandTest {
         // redo -> deletes same second job in unfiltered job list
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
-    
+
     @Test
     public void equals() throws Exception {
         JobDeleteCommand jobDeleteFirstCommand = prepareCommand(INDEX_FIRST);

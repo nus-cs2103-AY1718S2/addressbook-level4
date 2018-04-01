@@ -17,8 +17,8 @@ public class JobCard extends UiPart<Region> {
     private static final String FXML = "JobListCard.fxml";
 
     private static final String[] TAG_COLOR_STYLES =
-            { "teal", "red", "green", "blue", "orange", "brown",
-                    "yellow", "pink", "lightgreen", "grey", "purple" };
+        { "teal", "red", "green", "blue", "orange", "brown",
+            "yellow", "pink", "lightgreen", "grey", "purple" };
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.

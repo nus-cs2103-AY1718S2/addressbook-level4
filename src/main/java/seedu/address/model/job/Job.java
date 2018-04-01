@@ -26,7 +26,7 @@ public class Job {
     /**
      * Every field must be present and not null.
      */
-    public Job(Position position, Team team, Location location, NumberOfPositions numberOfPositions, 
+    public Job(Position position, Team team, Location location, NumberOfPositions numberOfPositions,
                Set<Tag> tags) {
         requireAllNonNull(position, team, location);
         this.position = position;

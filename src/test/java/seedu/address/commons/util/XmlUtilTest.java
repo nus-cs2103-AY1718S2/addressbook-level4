@@ -47,12 +47,12 @@ public class XmlUtilTest {
     private static final String VALID_CURRENT_POSITION = "Software Engineer";
     private static final String VALID_COMPANY = "Google";
     private static final String VALID_PROFILE_PICTURE = "./src/test/data/images/hans.jpeg";
-    
+
     private static final String VALID_POSITION = "Software Engineer";
     private static final String VALID_TEAM = "Cloud Services";
     private static final String VALID_LOCATION = "Singapore";
-    private static final String VALID_NUMBER_OF_POSITIONS = "2";    
-    
+    private static final String VALID_NUMBER_OF_POSITIONS = "2";
+
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("Java"));
 
     @Rule

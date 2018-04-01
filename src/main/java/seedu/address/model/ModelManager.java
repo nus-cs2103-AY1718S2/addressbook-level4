@@ -141,7 +141,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
-    
+
 
     //@@author kush1509
     //=========== Filtered Job List Accessors =============================================================

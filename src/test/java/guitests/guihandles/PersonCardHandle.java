@@ -42,8 +42,10 @@ public class PersonCardHandle extends NodeHandle<Node> {
     public String getId() {
         return idLabel.getText();
     }
-    
-    public String getName() { return nameLabel.getText(); }
+
+    public String getName() {
+        return nameLabel.getText();
+    }
 
     public String getCurrentPosition() {
         return currentPositionLabel.getText();

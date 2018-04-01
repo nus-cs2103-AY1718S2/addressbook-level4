@@ -7,27 +7,27 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_NUMBER_OF_POS
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_POSITION_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TEAM_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.LOCATION_DESC_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.LOCATION_DESC_DEVELOPER_INTERN;
-import static seedu.address.logic.commands.CommandTestUtil.NUMBER_OF_POSITIONS_DESC_INTERN;
+import static seedu.address.logic.commands.CommandTestUtil.LOCATION_DESC_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.NUMBER_OF_POSITIONS_DESC_DEVELOPER_INTERN;
-import static seedu.address.logic.commands.CommandTestUtil.POSITION_DESC_INTERN;
+import static seedu.address.logic.commands.CommandTestUtil.NUMBER_OF_POSITIONS_DESC_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.POSITION_DESC_DEVELOPER_INTERN;
+import static seedu.address.logic.commands.CommandTestUtil.POSITION_DESC_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_ALGORITHMS;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_EXCEL;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_JAVASCRIPT;
-import static seedu.address.logic.commands.CommandTestUtil.TEAM_DESC_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.TEAM_DESC_DEVELOPER_INTERN;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_INTERN;
+import static seedu.address.logic.commands.CommandTestUtil.TEAM_DESC_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_DEVELOPER_INTERN;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NUMBER_OF_POSITIONS_INTERN;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NUMBER_OF_POSITIONS_DEVELOPER_INTERN;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_INTERN;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NUMBER_OF_POSITIONS_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_DEVELOPER_INTERN;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_ALGORITHMS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_JAVASCRIPT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TEAM_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TEAM_DEVELOPER_INTERN;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TEAM_INTERN;
 import static seedu.address.testutil.TypicalJobs.DEVELOPER_INTERN;
 
 import org.junit.Test;
@@ -148,7 +148,7 @@ public class JobAddCommandSystemTest extends AddressBookSystemTest {
         /* Case: invalid keyword -> rejected */
         command = "adds " + JobUtil.getJobDetails(toAdd);
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
-        
+
         /* Case: invalid position -> rejected */
         command = JobAddCommand.COMMAND_WORD + INVALID_POSITION_DESC + TEAM_DESC_INTERN
                 + LOCATION_DESC_INTERN + NUMBER_OF_POSITIONS_DESC_INTERN + TAG_DESC_EXCEL;

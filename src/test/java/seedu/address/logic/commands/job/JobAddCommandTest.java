@@ -27,7 +27,7 @@ public class JobAddCommandTest {
 
     @Test
     public void execute_newJob_success() throws Exception {
-        
+
         Job validJob = new JobBuilder().build();
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
@@ -51,6 +51,5 @@ public class JobAddCommandTest {
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
-
 
 }

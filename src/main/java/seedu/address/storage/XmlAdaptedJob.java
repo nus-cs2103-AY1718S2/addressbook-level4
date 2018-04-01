@@ -80,7 +80,7 @@ public class XmlAdaptedJob {
         for (XmlAdaptedTag tag : tagged) {
             jobTags.add(tag.toModelType());
         }
-        
+
         if (this.position == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Position.class.getSimpleName()));

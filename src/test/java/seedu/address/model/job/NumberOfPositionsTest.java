@@ -35,7 +35,7 @@ public class NumberOfPositionsTest {
 
         // valid locations
         assertTrue(NumberOfPositions.isValidNumberOfPositions("1")); // one digit
-        assertTrue(NumberOfPositions.isValidNumberOfPositions("33")); 
+        assertTrue(NumberOfPositions.isValidNumberOfPositions("33"));
         assertTrue(NumberOfPositions.isValidNumberOfPositions("3545")); // long number of positions
     }
 }

@@ -18,7 +18,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToJobListRequestEvent;
 import seedu.address.model.job.Job;
 
-public class JobListPanelTest extends GuiUnitTest{
+public class JobListPanelTest extends GuiUnitTest {
     private static final ObservableList<Job> TYPICAL_JOBS =
             FXCollections.observableList(getTypicalJobs());
 
@@ -56,5 +56,5 @@ public class JobListPanelTest extends GuiUnitTest{
         JobCardHandle selectedCard = jobListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedCard, selectedCard);
     }
-    
+
 }

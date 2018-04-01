@@ -65,8 +65,8 @@ public class CommandTestUtil {
     public static final String VALID_TEAM_INTERN = "Human Resources";
     public static final String VALID_LOCATION_DEVELOPER_INTERN = "Jakarta, Indonesia";
     public static final String VALID_LOCATION_INTERN = "Kuala Lampur, Malaysia";
-    public static final String VALID_NUMBER_OF_POSITIONS_DEVELOPER_INTERN = "2";   
-    public static final String VALID_NUMBER_OF_POSITIONS_INTERN = "5";   
+    public static final String VALID_NUMBER_OF_POSITIONS_DEVELOPER_INTERN = "2";
+    public static final String VALID_NUMBER_OF_POSITIONS_INTERN = "5";
     public static final String VALID_TAG_JAVASCRIPT = "JavaScript";
     public static final String VALID_TAG_ALGORITHMS = "Algorithms";
     public static final String VALID_TAG_EXCEL = "Excel";
@@ -103,9 +103,8 @@ public class CommandTestUtil {
             + VALID_LOCATION_INTERN;
     public static final String NUMBER_OF_POSITIONS_DESC_DEVELOPER_INTERN = " " + PREFIX_NUMBER_OF_POSITIONS
             + VALID_NUMBER_OF_POSITIONS_DEVELOPER_INTERN;
-    public static final String NUMBER_OF_POSITIONS_DESC_INTERN= " " + PREFIX_NUMBER_OF_POSITIONS
+    public static final String NUMBER_OF_POSITIONS_DESC_INTERN = " " + PREFIX_NUMBER_OF_POSITIONS
             + VALID_NUMBER_OF_POSITIONS_INTERN;
-    
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -122,7 +121,7 @@ public class CommandTestUtil {
     public static final String INVALID_TEAM_DESC = " " + PREFIX_TEAM; // empty string not allowed for teams
     public static final String INVALID_LOCATION_DESC = " " + PREFIX_LOCATION; // empty string not allowed for locations
     // alphabets not allowed in numberOfPositions
-    public static final String INVALID_NUMBER_OF_POSITIONS_DESC = " " + PREFIX_NUMBER_OF_POSITIONS + " a12"; 
+    public static final String INVALID_NUMBER_OF_POSITIONS_DESC = " " + PREFIX_NUMBER_OF_POSITIONS + " a12";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

@@ -2,7 +2,6 @@
 package seedu.address.logic.commands.job;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -10,11 +9,13 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.job.Job;
-import seedu.address.model.person.Person;
 import seedu.address.model.tag.TagMatchesPredicate;
 
-public class JobMatchCommand extends Command { 
-    
+/**
+ * Matches the job to potential employees.
+ */
+public class JobMatchCommand extends Command {
+
     public static final String COMMAND_WORD = "matchjob";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -30,13 +31,13 @@ public class JobMatchCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        
+
         List<Job> lastShownList = model.getFilteredJobList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_JOB_DISPLAYED_INDEX);
         }
-        
+
         Job jobToMatch = lastShownList.get(targetIndex.getZeroBased());
 
         model.updateFilteredPersonList(new TagMatchesPredicate(jobToMatch.getTags()));

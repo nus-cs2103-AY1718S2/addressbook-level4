@@ -16,7 +16,6 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JobPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToJobListRequestEvent;
-import seedu.address.commons.events.ui.JumpToPersonListRequestEvent;
 import seedu.address.model.job.Job;
 
 /**

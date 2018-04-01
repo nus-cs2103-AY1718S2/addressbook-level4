@@ -59,32 +59,32 @@ public class JobDeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
-//        /* Case: filtered Job list, delete index within bounds of address book and Job list -> deleted */
-//        showJobsWithName(KEYWORD_MATCHING_MEIER);
-//        Index index = INDEX_FIRST;
-//        assertTrue(index.getZeroBased() < getModel().getFilteredJobList().size());
-//        assertCommandSuccess(index);
-//
-//        /* Case: filtered Job list, delete index within bounds of address book but out of bounds of Job list
-//         * -> rejected
-//         */
-//        showJobsWithName(KEYWORD_MATCHING_MEIER);
-//        int invalidIndex = getModel().getAddressBook().getJobList().size();
-//        command = JobDeleteCommand.COMMAND_WORD + " " + invalidIndex;
-//        assertCommandFailure(command, MESSAGE_INVALID_JOB_DISPLAYED_INDEX);
-//
-//        /* --------------------- Performing delete operation while a Job card is selected ------------------------ */
-//
-//        /* Case: delete the selected Job -> Job list panel selects the Job before the deleted Job */
-//        showAllJobs();
-//        expectedModel = getModel();
-//        Index selectedIndex = getLastPersonIndex(expectedModel);
-//        Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
-//        selectJob(selectedIndex);
-//        command = JobDeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
-//        deletedJob = removeJob(expectedModel, selectedIndex);
-//        expectedResultMessage = String.format(MESSAGE_DELETE_JOB_SUCCESS, deletedJob);
-//        assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
+        //        /* Case: filtered Job list, delete index within bounds of address book and Job list -> deleted */
+        //        showJobsWithName(KEYWORD_MATCHING_MEIER);
+        //        Index index = INDEX_FIRST;
+        //        assertTrue(index.getZeroBased() < getModel().getFilteredJobList().size());
+        //        assertCommandSuccess(index);
+        //
+        //        /* Case: filtered Job list, delete index within bounds of address book but out of bounds of Job list
+        //         * -> rejected
+        //         */
+        //        showJobsWithName(KEYWORD_MATCHING_MEIER);
+        //        int invalidIndex = getModel().getAddressBook().getJobList().size();
+        //        command = JobDeleteCommand.COMMAND_WORD + " " + invalidIndex;
+        //        assertCommandFailure(command, MESSAGE_INVALID_JOB_DISPLAYED_INDEX);
+        //
+        // /* --------------------- Performing delete operation while a Job card is selected ------------------------ */
+        //
+        //        /* Case: delete the selected Job -> Job list panel selects the Job before the deleted Job */
+        //        showAllJobs();
+        //        expectedModel = getModel();
+        //        Index selectedIndex = getLastPersonIndex(expectedModel);
+        //        Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
+        //        selectJob(selectedIndex);
+        //        command = JobDeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
+        //        deletedJob = removeJob(expectedModel, selectedIndex);
+        //        expectedResultMessage = String.format(MESSAGE_DELETE_JOB_SUCCESS, deletedJob);
+        //        assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
 
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
 
@@ -103,10 +103,12 @@ public class JobDeleteCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, MESSAGE_INVALID_JOB_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(JobDeleteCommand.COMMAND_WORD + " abc", MESSAGE_INVALID_JOB_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(JobDeleteCommand.COMMAND_WORD + " abc",
+                MESSAGE_INVALID_JOB_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(JobDeleteCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_JOB_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(JobDeleteCommand.COMMAND_WORD + " 1 abc",
+                MESSAGE_INVALID_JOB_DELETE_COMMAND_FORMAT);
 
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
@@ -127,8 +129,9 @@ public class JobDeleteCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * JobDeletes the Job at {@code toJobDelete} by creating a default {@code JobDeleteCommand} using {@code toJobDelete} and
-     * performs the same verification as {@code assertCommandSuccess(String, Model, String)}.
+     * JobDeletes the Job at {@code toJobDelete} by creating a default {@code JobDeleteCommand}
+     * using {@code toJobDelete} and performs the same verification as
+     * {@code assertCommandSuccess(String, Model, String)}.
      * @see JobDeleteCommandSystemTest#assertCommandSuccess(String, Model, String)
      */
     private void assertCommandSuccess(Index toJobDelete) {
@@ -177,7 +180,7 @@ public class JobDeleteCommandSystemTest extends AddressBookSystemTest {
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
     }
-    
+
     /**
      * Executes {@code command} and in addition,<br>
      * 1. Asserts that the command box displays {@code command}.<br>

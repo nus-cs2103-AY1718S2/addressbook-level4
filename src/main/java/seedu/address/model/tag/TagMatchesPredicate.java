@@ -27,7 +27,7 @@ public class TagMatchesPredicate implements Predicate<Person> {
         return jobTags.stream()
                 .anyMatch(jobTag -> StringUtil.containsWordIgnoreCase(personTags, jobTag));
     }
-    
+
     private String getTagsAsString(Set<Tag> tags) {
         Iterator tagsIterator = tags.iterator();
         StringBuilder sb = new StringBuilder();

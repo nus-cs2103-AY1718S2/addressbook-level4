@@ -31,9 +31,7 @@ public class JobUtil {
         sb.append(PREFIX_TEAM + job.getTeam().value + " ");
         sb.append(PREFIX_LOCATION + job.getLocation().value + " ");
         sb.append(PREFIX_NUMBER_OF_POSITIONS + job.getNumberOfPositions().value + " ");
-        job.getTags().stream().forEach(
-                s -> sb.append(PREFIX_TAG + s.tagName + " ")
-        );
+        job.getTags().stream().forEach(s -> sb.append(PREFIX_TAG + s.tagName + " "));
         return sb.toString();
     }
 }

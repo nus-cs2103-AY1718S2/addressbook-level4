@@ -98,7 +98,7 @@ public class AddressBookTest {
         addressBook.getJobList().remove(0);
     }
 
-        @Test
+    @Test
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getTagList().remove(0);

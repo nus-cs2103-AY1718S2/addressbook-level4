@@ -122,7 +122,7 @@ public class AddressBookParser {
 
         case JobMatchCommand.COMMAND_WORD:
             return new JobMatchCommandParser().parse(arguments);
-            
+
         case JobDeleteCommand.COMMAND_WORD:
             return new JobDeleteCommandParser().parse(arguments);
 

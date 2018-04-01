@@ -19,13 +19,13 @@ import seedu.address.model.job.Team;
 import seedu.address.testutil.Assert;
 
 public class XmlAdaptedJobTest {
-    
+
     private static final String INVALID_POSITION = "Associ@te";
     private static final String INVALID_TEAM = "Engineering#";
     private static final String INVALID_LOCATION = " ";
     private static final String INVALID_NUMBER_OF_POSITIONS = "a12";
     private static final String INVALID_TAG = "C and Java";
-    
+
     private static final String VALID_POSITION = MARKETING_INTERN.getPosition().toString();
     private static final String VALID_TEAM = MARKETING_INTERN.getTeam().toString();
     private static final String VALID_LOCATION = MARKETING_INTERN.getLocation().toString();
@@ -111,7 +111,7 @@ public class XmlAdaptedJobTest {
                 new XmlAdaptedJob(VALID_POSITION, VALID_TEAM, VALID_LOCATION, VALID_NUMBER_OF_POSITIONS, emptyTags);
         Assert.assertThrows(IllegalValueException.class, job::toModelType);
     }
-    
+
     @Test
     public void toModelType_invalidTags_throwsIllegalValueException() {
         List<XmlAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
@@ -120,5 +120,5 @@ public class XmlAdaptedJobTest {
                 new XmlAdaptedJob(VALID_POSITION, VALID_TEAM, VALID_LOCATION, VALID_NUMBER_OF_POSITIONS, invalidTags);
         Assert.assertThrows(IllegalValueException.class, job::toModelType);
     }
-    
+
 }

@@ -16,7 +16,7 @@ import seedu.address.model.util.SampleDataUtil;
  * A utility class to help with building Person objects.
  */
 public class JobBuilder {
-    
+
     public static final String DEFAULT_POSITION = "Hardware Engineer";
     public static final String DEFAULT_TEAM = "Microprocessor";
     public static final String DEFAULT_LOCATION = "Singapore";
@@ -79,7 +79,7 @@ public class JobBuilder {
         this.numberOfPositions = new NumberOfPositions(numberOfPositions);
         return this;
     }
-    
+
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Job} that we are building.
      */

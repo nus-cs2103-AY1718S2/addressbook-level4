@@ -9,8 +9,10 @@ import seedu.address.logic.commands.job.JobMatchCommand;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.ReadOnlyAddressBook;
 
+/**
+ * Parses input arguments and creates a new JobMatchCommand object
+ */
 public class JobMatchCommandParser implements Parser<JobMatchCommand> {
 
     /**
@@ -27,5 +29,5 @@ public class JobMatchCommandParser implements Parser<JobMatchCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, JobMatchCommand.MESSAGE_USAGE));
         }
     }
-    
+
 }

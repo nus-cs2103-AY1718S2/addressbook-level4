@@ -12,10 +12,10 @@ import guitests.guihandles.JobCardHandle;
 import seedu.address.model.job.Job;
 import seedu.address.testutil.JobBuilder;
 
-public class JobCardTest extends GuiUnitTest{
+public class JobCardTest extends GuiUnitTest {
     @Test
     public void display() {
-        
+
         // sample job
         Job job = new JobBuilder().build();
         JobCard jobCard = new JobCard(job, 1);

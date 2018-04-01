@@ -59,15 +59,15 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_USERNAME_USER = "John";
     public static final String VALID_PASSWORD_USER = "1234";
-    public static final String VALID_POSITION_SOFTWARE_ENGINEER = "Software Engineer";
+    public static final String VALID_POSITION_DEVELOPER_INTERN = "Developer Intern";
     public static final String VALID_POSITION_INTERN = "Intern";
-    public static final String VALID_TEAM_SOFTWARE_ENGINEER = "Cloud Services";
+    public static final String VALID_TEAM_DEVELOPER_INTERN = "Web Development";
     public static final String VALID_TEAM_INTERN = "Human Resources";
-    public static final String VALID_LOCATION_SOFTWARE_ENGINEER = "Singapore";
+    public static final String VALID_LOCATION_DEVELOPER_INTERN = "Jakarta, Indonesia";
     public static final String VALID_LOCATION_INTERN = "Kuala Lampur, Malaysia";
-    public static final String VALID_NUMBER_OF_POSITIONS_SOFTWARE_ENGINEER = "2";   
+    public static final String VALID_NUMBER_OF_POSITIONS_DEVELOPER_INTERN = "2";   
     public static final String VALID_NUMBER_OF_POSITIONS_INTERN = "5";   
-    public static final String VALID_TAG_JAVA = "Java";
+    public static final String VALID_TAG_JAVASCRIPT = "JavaScript";
     public static final String VALID_TAG_ALGORITHMS = "Algorithms";
     public static final String VALID_TAG_EXCEL = "Excel";
 
@@ -87,22 +87,22 @@ public class CommandTestUtil {
     public static final String PROFILE_PICTURE_DESC_BOB = " " + PREFIX_PROFILE_PICTURE + VALID_PROFILE_PICTURE_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
-    public static final String TAG_DESC_JAVA = " " + PREFIX_TAG + VALID_TAG_JAVA;
+    public static final String TAG_DESC_JAVASCRIPT = " " + PREFIX_TAG + VALID_TAG_JAVASCRIPT;
     public static final String TAG_DESC_ALGORITHMS = " " + PREFIX_TAG + VALID_TAG_ALGORITHMS;
     public static final String TAG_DESC_EXCEL = " " + PREFIX_TAG + VALID_TAG_EXCEL;
     public static final String USERNAME_DESC_USER = " " + PREFIX_USERNAME + VALID_USERNAME_USER;
     public static final String PASSWORD_DESC_USER = " " + PREFIX_PASSWORD + VALID_PASSWORD_USER;
-    public static final String POSITION_DESC_SOFTWARE_ENGINEER = " " + PREFIX_POSITION
-            + VALID_POSITION_SOFTWARE_ENGINEER;
+    public static final String POSITION_DESC_DEVELOPER_INTERN = " " + PREFIX_POSITION
+            + VALID_POSITION_DEVELOPER_INTERN;
     public static final String POSITION_DESC_INTERN = " " + PREFIX_POSITION + VALID_POSITION_INTERN;
-    public static final String TEAM_DESC_SOFTWARE_ENGINEER = " " + PREFIX_TEAM + VALID_TEAM_SOFTWARE_ENGINEER;
+    public static final String TEAM_DESC_DEVELOPER_INTERN = " " + PREFIX_TEAM + VALID_TEAM_DEVELOPER_INTERN;
     public static final String TEAM_DESC_INTERN = " " + PREFIX_TEAM + VALID_TEAM_INTERN;
-    public static final String LOCATION_DESC_SOFTWARE_ENGINEER = " " + PREFIX_LOCATION
-            + VALID_LOCATION_SOFTWARE_ENGINEER;
+    public static final String LOCATION_DESC_DEVELOPER_INTERN = " " + PREFIX_LOCATION
+            + VALID_LOCATION_DEVELOPER_INTERN;
     public static final String LOCATION_DESC_INTERN = " " + PREFIX_LOCATION
             + VALID_LOCATION_INTERN;
-    public static final String NUMBER_OF_POSITIONS_DESC_SOFTWARE_ENGINEER = " " + PREFIX_NUMBER_OF_POSITIONS
-            + VALID_NUMBER_OF_POSITIONS_SOFTWARE_ENGINEER;
+    public static final String NUMBER_OF_POSITIONS_DESC_DEVELOPER_INTERN = " " + PREFIX_NUMBER_OF_POSITIONS
+            + VALID_NUMBER_OF_POSITIONS_DEVELOPER_INTERN;
     public static final String NUMBER_OF_POSITIONS_DESC_INTERN= " " + PREFIX_NUMBER_OF_POSITIONS
             + VALID_NUMBER_OF_POSITIONS_INTERN;
     

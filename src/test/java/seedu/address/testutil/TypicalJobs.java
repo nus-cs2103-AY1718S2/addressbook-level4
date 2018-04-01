@@ -31,7 +31,7 @@ public class TypicalJobs {
             .withLocation("New Delhi, India").withNumberOfPositions("5").withTags("Excel").build();
     public static final Job DEVELOPER_INTERN = new JobBuilder().withPosition("Developer Intern")
             .withLocation("Jakarta, Indonesia").withTeam("Web Development").withNumberOfPositions("2")
-            .withTags("JavaScript").build();
+            .withTags("JavaScript", "Algorithms").build();
 
     // Manually added - Job's details found in {@code CommandTestUtil}
     public static final Job INTERN = new JobBuilder().withPosition("Intern").withTeam("HR")

@@ -7,27 +7,27 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_POSITION_DESC
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TEAM_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.LOCATION_DESC_INTERN;
-import static seedu.address.logic.commands.CommandTestUtil.LOCATION_DESC_SOFTWARE_ENGINEER;
+import static seedu.address.logic.commands.CommandTestUtil.LOCATION_DESC_DEVELOPER_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.NUMBER_OF_POSITIONS_DESC_INTERN;
-import static seedu.address.logic.commands.CommandTestUtil.NUMBER_OF_POSITIONS_DESC_SOFTWARE_ENGINEER;
+import static seedu.address.logic.commands.CommandTestUtil.NUMBER_OF_POSITIONS_DESC_DEVELOPER_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.POSITION_DESC_INTERN;
-import static seedu.address.logic.commands.CommandTestUtil.POSITION_DESC_SOFTWARE_ENGINEER;
+import static seedu.address.logic.commands.CommandTestUtil.POSITION_DESC_DEVELOPER_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_ALGORITHMS;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_EXCEL;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_JAVA;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_JAVASCRIPT;
 import static seedu.address.logic.commands.CommandTestUtil.TEAM_DESC_INTERN;
-import static seedu.address.logic.commands.CommandTestUtil.TEAM_DESC_SOFTWARE_ENGINEER;
+import static seedu.address.logic.commands.CommandTestUtil.TEAM_DESC_DEVELOPER_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_INTERN;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_SOFTWARE_ENGINEER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_DEVELOPER_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NUMBER_OF_POSITIONS_INTERN;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NUMBER_OF_POSITIONS_SOFTWARE_ENGINEER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NUMBER_OF_POSITIONS_DEVELOPER_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_INTERN;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_SOFTWARE_ENGINEER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_DEVELOPER_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_ALGORITHMS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_JAVA;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_JAVASCRIPT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TEAM_INTERN;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TEAM_SOFTWARE_ENGINEER;
-import static seedu.address.testutil.TypicalJobs.SOFTWARE_ENGINEER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TEAM_DEVELOPER_INTERN;
+import static seedu.address.testutil.TypicalJobs.DEVELOPER_INTERN;
 
 import org.junit.Test;
 
@@ -58,10 +58,10 @@ public class JobAddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a job to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
          */
-        Job toAdd = SOFTWARE_ENGINEER;
-        String command = "   " + JobAddCommand.COMMAND_WORD + "  " + POSITION_DESC_SOFTWARE_ENGINEER + " "
-                + TEAM_DESC_SOFTWARE_ENGINEER + " " + LOCATION_DESC_SOFTWARE_ENGINEER + " "
-                + NUMBER_OF_POSITIONS_DESC_SOFTWARE_ENGINEER + " " + TAG_DESC_JAVA + " " + TAG_DESC_ALGORITHMS;
+        Job toAdd = DEVELOPER_INTERN;
+        String command = "   " + JobAddCommand.COMMAND_WORD + "  " + POSITION_DESC_DEVELOPER_INTERN + " "
+                + TEAM_DESC_DEVELOPER_INTERN + " " + LOCATION_DESC_DEVELOPER_INTERN + " "
+                + NUMBER_OF_POSITIONS_DESC_DEVELOPER_INTERN + " " + TAG_DESC_JAVASCRIPT + " " + TAG_DESC_ALGORITHMS;
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Software Engineer to the list -> Software Engineer deleted */
@@ -76,47 +76,47 @@ public class JobAddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a job with all fields same as another job in the address book except position -> added */
-        toAdd = new JobBuilder().withPosition(VALID_POSITION_INTERN).withTeam(VALID_TEAM_SOFTWARE_ENGINEER)
-                .withLocation(VALID_LOCATION_SOFTWARE_ENGINEER)
-                .withNumberOfPositions(VALID_NUMBER_OF_POSITIONS_SOFTWARE_ENGINEER)
-                .withTags(VALID_TAG_JAVA, VALID_TAG_ALGORITHMS).build();
-        command = JobAddCommand.COMMAND_WORD + POSITION_DESC_INTERN + TEAM_DESC_SOFTWARE_ENGINEER
-                + LOCATION_DESC_SOFTWARE_ENGINEER + NUMBER_OF_POSITIONS_DESC_SOFTWARE_ENGINEER
-                + TAG_DESC_JAVA + TAG_DESC_ALGORITHMS;
+        toAdd = new JobBuilder().withPosition(VALID_POSITION_INTERN).withTeam(VALID_TEAM_DEVELOPER_INTERN)
+                .withLocation(VALID_LOCATION_DEVELOPER_INTERN)
+                .withNumberOfPositions(VALID_NUMBER_OF_POSITIONS_DEVELOPER_INTERN)
+                .withTags(VALID_TAG_JAVASCRIPT, VALID_TAG_ALGORITHMS).build();
+        command = JobAddCommand.COMMAND_WORD + POSITION_DESC_INTERN + TEAM_DESC_DEVELOPER_INTERN
+                + LOCATION_DESC_DEVELOPER_INTERN + NUMBER_OF_POSITIONS_DESC_DEVELOPER_INTERN
+                + TAG_DESC_JAVASCRIPT + TAG_DESC_ALGORITHMS;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a job with all fields same as another job in the address book except team -> added */
-        toAdd = new JobBuilder().withPosition(VALID_POSITION_SOFTWARE_ENGINEER).withTeam(VALID_TEAM_INTERN)
-                .withLocation(VALID_LOCATION_SOFTWARE_ENGINEER)
-                .withNumberOfPositions(VALID_NUMBER_OF_POSITIONS_SOFTWARE_ENGINEER)
-                .withTags(VALID_TAG_JAVA, VALID_TAG_ALGORITHMS).build();
-        command = JobAddCommand.COMMAND_WORD + POSITION_DESC_SOFTWARE_ENGINEER + TEAM_DESC_INTERN
-                + LOCATION_DESC_SOFTWARE_ENGINEER + NUMBER_OF_POSITIONS_DESC_SOFTWARE_ENGINEER
-                + TAG_DESC_JAVA + TAG_DESC_ALGORITHMS;
+        toAdd = new JobBuilder().withPosition(VALID_POSITION_DEVELOPER_INTERN).withTeam(VALID_TEAM_INTERN)
+                .withLocation(VALID_LOCATION_DEVELOPER_INTERN)
+                .withNumberOfPositions(VALID_NUMBER_OF_POSITIONS_DEVELOPER_INTERN)
+                .withTags(VALID_TAG_JAVASCRIPT, VALID_TAG_ALGORITHMS).build();
+        command = JobAddCommand.COMMAND_WORD + POSITION_DESC_DEVELOPER_INTERN + TEAM_DESC_INTERN
+                + LOCATION_DESC_DEVELOPER_INTERN + NUMBER_OF_POSITIONS_DESC_DEVELOPER_INTERN
+                + TAG_DESC_JAVASCRIPT + TAG_DESC_ALGORITHMS;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a job with all fields same as another job in the address book except location -> added */
-        toAdd = new JobBuilder().withPosition(VALID_POSITION_SOFTWARE_ENGINEER).withTeam(VALID_TEAM_SOFTWARE_ENGINEER)
-                .withLocation(VALID_LOCATION_INTERN).withNumberOfPositions(VALID_NUMBER_OF_POSITIONS_SOFTWARE_ENGINEER)
-                .withTags(VALID_TAG_JAVA, VALID_TAG_ALGORITHMS).build();
-        command = JobAddCommand.COMMAND_WORD + POSITION_DESC_SOFTWARE_ENGINEER + TEAM_DESC_SOFTWARE_ENGINEER
-                + LOCATION_DESC_INTERN + NUMBER_OF_POSITIONS_DESC_SOFTWARE_ENGINEER
-                + TAG_DESC_JAVA + TAG_DESC_ALGORITHMS;
+        toAdd = new JobBuilder().withPosition(VALID_POSITION_DEVELOPER_INTERN).withTeam(VALID_TEAM_DEVELOPER_INTERN)
+                .withLocation(VALID_LOCATION_INTERN).withNumberOfPositions(VALID_NUMBER_OF_POSITIONS_DEVELOPER_INTERN)
+                .withTags(VALID_TAG_JAVASCRIPT, VALID_TAG_ALGORITHMS).build();
+        command = JobAddCommand.COMMAND_WORD + POSITION_DESC_DEVELOPER_INTERN + TEAM_DESC_DEVELOPER_INTERN
+                + LOCATION_DESC_INTERN + NUMBER_OF_POSITIONS_DESC_DEVELOPER_INTERN
+                + TAG_DESC_JAVASCRIPT + TAG_DESC_ALGORITHMS;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a job with all fields same as another job in the address book except numberOfPositions -> added */
-        toAdd = new JobBuilder().withPosition(VALID_POSITION_SOFTWARE_ENGINEER).withTeam(VALID_TEAM_SOFTWARE_ENGINEER)
-                .withLocation(VALID_LOCATION_SOFTWARE_ENGINEER).withNumberOfPositions(VALID_NUMBER_OF_POSITIONS_INTERN)
-                .withTags(VALID_TAG_JAVA, VALID_TAG_ALGORITHMS).build();
-        command = JobAddCommand.COMMAND_WORD + POSITION_DESC_SOFTWARE_ENGINEER + TEAM_DESC_SOFTWARE_ENGINEER
-                + LOCATION_DESC_SOFTWARE_ENGINEER + NUMBER_OF_POSITIONS_DESC_INTERN + TAG_DESC_JAVA
+        toAdd = new JobBuilder().withPosition(VALID_POSITION_DEVELOPER_INTERN).withTeam(VALID_TEAM_DEVELOPER_INTERN)
+                .withLocation(VALID_LOCATION_DEVELOPER_INTERN).withNumberOfPositions(VALID_NUMBER_OF_POSITIONS_INTERN)
+                .withTags(VALID_TAG_JAVASCRIPT, VALID_TAG_ALGORITHMS).build();
+        command = JobAddCommand.COMMAND_WORD + POSITION_DESC_DEVELOPER_INTERN + TEAM_DESC_DEVELOPER_INTERN
+                + LOCATION_DESC_DEVELOPER_INTERN + NUMBER_OF_POSITIONS_DESC_INTERN + TAG_DESC_JAVASCRIPT
                 + TAG_DESC_ALGORITHMS;
         assertCommandSuccess(command, toAdd);
 
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
 
         /* Case: add a duplicate job -> rejected */
-        command = JobUtil.getJobAddCommand(SOFTWARE_ENGINEER);
+        command = JobUtil.getJobAddCommand(DEVELOPER_INTERN);
         assertCommandFailure(command, JobAddCommand.MESSAGE_DUPLICATE_JOB);
 
         /* Case: missing position -> rejected */

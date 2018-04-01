@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
@@ -8,11 +10,14 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 import org.junit.Before;
 import org.junit.Test;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+
+import java.util.List;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -38,8 +43,21 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_listIsFiltered_showsEverything() {
-        showPersonAtIndex(model, INDEX_FIRST_ACTIVITY);
-        assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    public void execute_helpForTask_success() {
+        CommandResult result = new ListCommand("task").execute();
+        assertEquals(ListCommand.MESSAGE_SUCCESS_TASK, result.feedbackToUser);
     }
+
+    @Test
+    public void execute_helpForEvent_success()    {
+        CommandResult result = new ListCommand("event").execute();
+        assertEquals(ListCommand.MESSAGE_SUCCESS_EVENT, result.feedbackToUser);
+    }
+
+    @Test
+    public void execute_helpForTaskAndEvent_success()    {
+        CommandResult result = new ListCommand().execute();
+        assertEquals(ListCommand.MESSAGE_SUCCESS, result.feedbackToUser);
+    }
+    
 }

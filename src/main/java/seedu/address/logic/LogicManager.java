@@ -12,7 +12,6 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.logic.RequestToDeleteNotificationEvent;
 import seedu.address.commons.events.model.NotificationAddedEvent;
 import seedu.address.commons.events.model.NotificationDeletedEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;
@@ -126,10 +125,10 @@ public class LogicManager extends ComponentManager implements Logic {
         return isLocked;
     }
 
+
     @Subscribe
     private void handleTimetableEntryAddedEvent(NotificationAddedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-
         NotificationTime parsedTime = NotificationTimeParserUtil.parseTime(event.notification.getEndDate());
         Calendar c = Calendar.getInstance();
         c.set(parsedTime.getYear(), parsedTime.getMonth(), parsedTime.getDate(), parsedTime.getHour(),
@@ -146,11 +145,9 @@ public class LogicManager extends ComponentManager implements Logic {
                             .format(Calendar.getInstance().getTimeInMillis()));
                 }
                 Notification notification = timerTaskToTimetableEntryMap.get(this);
-                String title = notification.getTitle();
-                String endTime = notification.getEndDateDisplay();
                 String ownerName = ((ModelManager) model).getNameById(notification.getOwnerId());
-                raise(new ShowNotificationEvent(ownerName, endTime, title));
-                raise(new RequestToDeleteNotificationEvent(timerTaskToTimetableEntryMap.get(this).getId()));
+                raise(new ShowNotificationEvent(ownerName, notification));
+                //raise(new RequestToDeleteNotificationEvent(timerTaskToTimetableEntryMap.get(this).getId()));
             }
         };
         timetableEntriesStatus.put(task, true);
@@ -160,6 +157,10 @@ public class LogicManager extends ComponentManager implements Logic {
                 .currentTimeMillis()));
         long duration = c.getTimeInMillis() - System.currentTimeMillis();
         if (duration >= 0) {
+            if (parsedTime.isToday()) {
+                String ownerName = ((ModelManager) model).getNameById(event.notification.getOwnerId());
+                raise(new ShowNotificationEvent(ownerName, event.notification, true));
+            }
             timer.schedule(task, duration);
         } else {
             task.run();

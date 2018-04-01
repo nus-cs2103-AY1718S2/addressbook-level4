@@ -1,5 +1,7 @@
 package seedu.address.model.notification;
 
+import java.util.Calendar;
+
 /**
  * Container for different time fields
  */
@@ -43,5 +45,16 @@ public class NotificationTime {
 
     public int getSeconds() {
         return seconds;
+    }
+
+    /**
+     * Checks if the date contained refers to today's date
+     */
+    public boolean isToday() {
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        return this.year == year && this.month == month && this.date == day;
     }
 }

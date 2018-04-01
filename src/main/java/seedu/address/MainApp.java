@@ -41,7 +41,11 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
+<<<<<<< HEAD
     public static final Version VERSION = new Version(0, 6, 0, true);
+=======
+    public static final Version VERSION = new Version(1, 3, 0, true);
+>>>>>>> 7b86da68c8bd4dff6f90bffaf79adf8987550306
     private static boolean isTest = true;
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 

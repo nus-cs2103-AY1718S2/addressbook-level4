@@ -9,11 +9,13 @@ import seedu.address.model.appointment.exceptions.AppointmentDependencyNotEmptyE
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicateNricException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.petpatient.PetPatient;
+import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
 import seedu.address.model.petpatient.exceptions.PetDependencyNotEmptyException;
 import seedu.address.model.petpatient.exceptions.PetPatientNotFoundException;
@@ -83,6 +85,10 @@ public interface Model {
     void updateFilteredPetPatientList(Predicate<PetPatient> predicate);
 
     void addPetPatient(PetPatient petPatient) throws DuplicatePetPatientException;
+
+    Person getPersonWithNric(Nric ownerNric);
+
+    PetPatient getPetPatientWithNricAndName(Nric ownerNric, PetPatientName petPatientName);
 
     /** Deletes the given pet. */
     void deletePetPatient(PetPatient target)

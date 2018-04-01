@@ -26,7 +26,7 @@ import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
 
-//@@ aquarinte
+//@@author aquarinte
 /**
  * Adds a Person, Petpatient and/or Appointment to the address book.
  */
@@ -220,7 +220,7 @@ public class AddCommand extends UndoableCommand {
      * Add a new pet patient under an existing person.
      */
     private CommandResult addNewPetPatient() throws DuplicatePetPatientException, CommandException {
-        Person p = getPersonWithNric();
+        Person p = model.getPersonWithNric(ownerNric);
         if (p != null) {
             toAddPet.setOwnerNric(ownerNric);
             model.addPetPatient(toAddPet);
@@ -234,8 +234,8 @@ public class AddCommand extends UndoableCommand {
      */
     private CommandResult addNewAppt()
             throws CommandException, DuplicateAppointmentException, DuplicateDateTimeException {
-        Person owner = getPersonWithNric();
-        PetPatient pet = getPetPatientWithNricAndName();
+        Person owner = model.getPersonWithNric(ownerNric);
+        PetPatient pet = model.getPetPatientWithNricAndName(ownerNric, petPatientName);
         if (owner != null) {
             toAddAppt.setOwnerNric(ownerNric);
         } else {
@@ -263,32 +263,6 @@ public class AddCommand extends UndoableCommand {
         model.addPetPatient(toAddPet);
         model.addAppointment(toAddAppt);
         return new CommandResult(String.format(message, toAddOwner, toAddPet, toAddAppt));
-    }
-
-    /**
-     * Checks whether a Person object with ownerNric exists.
-     * Return the Person object if it exists.
-     */
-    private Person getPersonWithNric() {
-        for (Person p : model.getAddressBook().getPersonList()) {
-            if (p.getNric().equals(ownerNric)) {
-                return p;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Checks whether a PetPatient object with ownerNric and petPatientName exists.
-     * Return the PetPatient object if it exists.
-     */
-    private PetPatient getPetPatientWithNricAndName() {
-        for (PetPatient p : model.getAddressBook().getPetPatientList()) {
-            if (p.getOwner().equals(ownerNric) && p.getName().equals(petPatientName)) {
-                return p;
-            }
-        }
-        return null;
     }
 
     @Override

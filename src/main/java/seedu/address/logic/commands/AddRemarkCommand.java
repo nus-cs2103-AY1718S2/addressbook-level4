@@ -4,6 +4,9 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ArgumentMultimap;
+import seedu.address.logic.parser.ArgumentTokenizer;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
@@ -22,6 +25,7 @@ import java.util.Set;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.ParserUtil.parseRemark;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 /**
@@ -31,13 +35,11 @@ public class AddRemarkCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addremark";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adding remarks to the student that you want. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds remarks to the student that you want. "
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_REMARK + "REMARKS...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_REMARK + "Need help\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_REMARK + "\n";
+            + PREFIX_REMARK + "Need help" + "\n";
 
     public static final String MESSAGE_REMARK_PERSON_SUCCESS = "Remark added: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -64,7 +66,7 @@ public class AddRemarkCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
-            model.updatePerson(personToEdit, editedPerson);
+            model.addRemark(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
@@ -97,7 +99,8 @@ public class AddRemarkCommand extends UndoableCommand {
         Nric updatedNric = editPersonDescriptor.getNric().orElse(personToEdit.getNric());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
-        Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
+        Remark updatedRemark = parseRemark(((personToEdit.getRemark()).toString() + "\n"
+                                            + editPersonDescriptor.getRemark().get().toString()));
 
         return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark);
     }
@@ -194,10 +197,18 @@ public class AddRemarkCommand extends UndoableCommand {
             this.subjects = (subjects != null) ? new HashSet<>(subjects) : null;
         }
 
+        /**
+         * Sets {@code remarks} to this object's {@code remarks}.
+         * A defensive copy of {@code remarks} is used internally.
+         */
         public void setRemark(Remark remark) {
             this.remark = remark;
         }
 
+        /**
+         * Sets {@code remarks} to this object's {@code remarks}.
+         * A defensive copy of {@code remarks} is used internally.
+         */
         public Optional<Remark> getRemark() {
             return Optional.ofNullable(remark);
         }

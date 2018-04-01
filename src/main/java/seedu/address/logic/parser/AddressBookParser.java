@@ -98,7 +98,7 @@ public class AddressBookParser {
             return new RemarkCommandParser().parse(arguments);
 
         case AddRemarkCommand.COMMAND_WORD:
-            return new RemarkCommandParser().parse(arguments);
+            return new AddRemarkCommandParser().parse(arguments);
 
         case SortCommand.COMMAND_WORD:
             return new SortCommandParser().parse(arguments);

@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 
@@ -11,7 +12,12 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.Messages;
-import seedu.address.logic.commands.*;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EventCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.TaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.activity.Event;
 import seedu.address.model.activity.Task;
@@ -132,14 +138,13 @@ public class DeskBoardParserTest {
 //        assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
 //    }
 //
-//
-//    public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
-//        thrown.expect(ParseException.class);
-//        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
-//        parser.parseCommand("");
-//    }
-//
-//
+    @Test
+    public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        parser.parseCommand(" ");
+    }
+
     @Test
     public void parseCommand_unknownCommand_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);

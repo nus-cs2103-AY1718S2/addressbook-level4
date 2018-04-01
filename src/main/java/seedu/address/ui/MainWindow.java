@@ -15,7 +15,11 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.*;
+import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ShowActivityRequestEvent;
+import seedu.address.commons.events.ui.ShowEventOnlyRequestEvent;
+import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowTaskOnlyRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 

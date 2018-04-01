@@ -247,8 +247,7 @@ public class AddCommand extends UndoableCommand {
         } else {
             throw new CommandException(MESSAGE_INVALID_PET_PATIENT);
         }
-
-        toAddAppt.setPetPatientName(petPatientName);
+        
         model.addAppointment(toAddAppt);
         return new CommandResult(String.format(message, toAddAppt, owner, pet));
     }

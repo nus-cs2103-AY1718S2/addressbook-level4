@@ -61,8 +61,8 @@ public interface Model {
     /** Get patient visiting queue*/
     ObservableList<Patient> getVisitingQueue();
 
-//    /** Get Patient from the patient list */
-//    Patient getPatientFromList(Predicate<Patient> predicate);
+    /** Get Patient from the patient list */
+    Patient getPatientFromList(Predicate<Patient> predicate);
 
     /** Delete a patient's appointment*/
     boolean deletePatientAppointment(Patient patient, Index index);

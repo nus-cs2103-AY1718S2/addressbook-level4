@@ -117,13 +117,13 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPatients.setPredicate(predicate);
     }
 
-//    public Patient getPatientFromList(Predicate<Patient> predicate) {
-//        filteredPatients.setPredicate(predicate);
-//        if (filteredPatients.size() > 0) {
-//            return filteredPatients.get(0);
-//        }
-//        return null;
-//    }
+    public Patient getPatientFromList(Predicate<Patient> predicate) {
+        filteredPatients.setPredicate(predicate);
+        if (filteredPatients.size() > 0) {
+            return filteredPatients.get(0);
+        }
+        return null;
+    }
 
     private int getPatientIndex(Predicate<Patient> predicate) throws PatientNotFoundException {
         filteredPatients.setPredicate(predicate);

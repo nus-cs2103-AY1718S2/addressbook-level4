@@ -6,6 +6,7 @@ import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
+import seedu.address.model.patient.exceptions.PatientNotFoundException;
 
 /**
  * Add patient to visiting queue (registration)
@@ -47,6 +48,8 @@ public class AddPatientQueueCommand extends Command {
             return new CommandResult(String.format(MESSAGE_SUCCESS, predicate.toString()));
         } catch (DuplicateDataException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PatientNotFoundException e) {
+            throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
         }
 
     }

@@ -156,7 +156,7 @@ public class AddressBookParser {
             entities = response.getEntities();
             //System.out.println("list of entities: " + entities);
 
-            for(int i = 0; i < intents.size(); i++){
+            for (int i = 0; i < intents.size(); i++) {
                 intention = intents.get(i).getIntent();
                 //entity = entities.get(i).getValue();
             }
@@ -164,32 +164,32 @@ public class AddressBookParser {
             //System.out.println("this is the value of the entity " + entity);
 
             switch (intention) {
-                case "Clear":
-                    return new ClearCommand();
+            case "Clear":
+                return new ClearCommand();
 
-                case "Undo":
-                    return new UndoCommand();
+            case "Undo":
+                return new UndoCommand();
 
-                case "Redo":
-                    return new RedoCommand();
+            case "Redo":
+                return new RedoCommand();
 
-                case "Help":
-                    return new HelpCommand();
+            case "Help":
+                return new HelpCommand();
 
-                case "Exit":
-                    return new ExitCommand();
+            case "Exit":
+                return new ExitCommand();
 
-                case "History":
-                    return new HistoryCommand();
+            case "History":
+                return new HistoryCommand();
 
-                case "List":
-                    return new ListCommandParser().parse("");
+            case "List":
+                return new ListCommandParser().parse("");
 
-                case "Schedule":
-                    return new ScheduleCommand();
+            case "Schedule":
+                return new ScheduleCommand();
 
-                default:
-                    throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            default:
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
             }
             //@@
         }

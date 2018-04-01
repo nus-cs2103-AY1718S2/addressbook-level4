@@ -419,6 +419,16 @@ Examples:
 * `lock` +
 Lock the Employees Tracker.
 
+=== Viewing my own calendar: `myCalendar`
+
+Views my own calendar in a seperate pop-up web page window.
+Format: `myCalendar`
+
+Examples:
+
+* `myCalendar` +
+view my own calendar in a pop-up window.
+
 === Setting the application unlock password: `setPassword`
 
 Sets Employees Tracker's password. +
@@ -570,6 +580,7 @@ e.g. `review 2`
 e.g. `find n/James n/Jake Black t/Sales t/Marketing Senior r/3`
 * *List* : `list`
 * *Lock* : `lock`
+* *MyCalendar* : `myCalendar`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`

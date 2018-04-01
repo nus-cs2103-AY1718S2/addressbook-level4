@@ -15,7 +15,7 @@ import seedu.address.ui.testutil.EventsCollectorRule;
 public class HelpCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
-    public ExpectedException thrown = ExpectedException.none();
+    public final ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void execute_help_success() {

@@ -27,7 +27,7 @@ public class ListCommandTest {
 //may need revising, is the interaction with the model needed?
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
-    public ExpectedException thrown = ExpectedException.none();
+    public final ExpectedException thrown = ExpectedException.none();
 
     private Model model;
     private Model expectedModel;

@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 
@@ -27,7 +28,6 @@ public class ListCommandTest {
 //may need revising, is the interaction with the model needed?
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
-    public final ExpectedException thrown = ExpectedException.none();
 
     private Model model;
     private Model expectedModel;
@@ -66,8 +66,8 @@ public class ListCommandTest {
 
     @Test
     public void execute_invalidArgs_throwsCommandException() throws Exception   {
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(String.format(Messages.MESSAGE_INVALID_LIST_REQUEST, "3"));
-        ListCommand command = new ListCommand("3");
+        ListCommand command = new ListCommand("hello");
+        assertCommandFailure(command, String.format(Messages.MESSAGE_INVALID_LIST_REQUEST, "hello"));
     }
+    
 }

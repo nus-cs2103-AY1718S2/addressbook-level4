@@ -151,8 +151,7 @@ public class Person {
                 && otherPerson.getExpectedGraduationYear().equals(this.getExpectedGraduationYear())
                 && otherPerson.getMajor().equals(this.getMajor())
                 && otherPerson.getGradePointAverage().equals(this.getGradePointAverage())
-                && otherPerson.getComment().equals(this.getComment())
-                && otherPerson.getInterviewDate().equals(this.getInterviewDate());
+                && otherPerson.getComment().equals(this.getComment());
     }
 
     @Override

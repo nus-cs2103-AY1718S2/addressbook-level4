@@ -22,6 +22,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_COMMENT = new Prefix("c/");
     // Used only in filter command
     public static final Prefix PREFIX_RATING = new Prefix("r/");
+    public static final Prefix PREFIX_INTERVIEW_DATE = new Prefix("d/");
 
     // used in rating_sort command only
     public static final Prefix PREFIX_SORT_ORDER = new Prefix("o/");

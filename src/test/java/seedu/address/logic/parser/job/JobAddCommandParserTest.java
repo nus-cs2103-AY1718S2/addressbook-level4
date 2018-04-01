@@ -1,3 +1,4 @@
+// @@author kush1509
 package seedu.address.logic.parser.job;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -139,5 +140,4 @@ public class JobAddCommandParserTest {
                 + LOCATION_DESC_DEVELOPER_INTERN + NUMBER_OF_POSITIONS_DESC_DEVELOPER_INTERN
                 + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS);
     }
-
 }

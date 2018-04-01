@@ -1,14 +1,12 @@
+// @@author kush1509
 package seedu.address.logic.commands.job;
 
-import static org.junit.Assert.*;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalJobs.getTypicalAddressBook;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;

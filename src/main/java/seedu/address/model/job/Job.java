@@ -1,3 +1,4 @@
+//@@author kush1509
 package seedu.address.model.job;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;

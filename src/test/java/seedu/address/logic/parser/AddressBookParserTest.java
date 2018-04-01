@@ -57,6 +57,7 @@ public class AddressBookParserTest {
         assertEquals(new AddCommand(person), command);
     }
 
+    // @@author kush1509
     @Test
     public void parseCommand_addJob() throws Exception {
         Job job = new JobBuilder().build();
@@ -64,6 +65,7 @@ public class AddressBookParserTest {
         assertEquals(new JobAddCommand(job), command);
     }
 
+    // @@author
     @Test
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
@@ -77,6 +79,7 @@ public class AddressBookParserTest {
         assertEquals(new DeleteCommand(INDEX_FIRST), command);
     }
 
+    // @@author kush1509
     @Test
     public void parseCommand_deleteJob() throws Exception {
         JobDeleteCommand command = (JobDeleteCommand) parser.parseCommand(
@@ -84,6 +87,7 @@ public class AddressBookParserTest {
         assertEquals(new JobDeleteCommand(INDEX_FIRST), command);
     }
 
+    // @@author
     @Test
     public void parseCommand_edit() throws Exception {
         Person person = new PersonBuilder().build();
@@ -145,6 +149,7 @@ public class AddressBookParserTest {
         assertEquals(new SelectCommand(INDEX_FIRST), command);
     }
 
+    // @@author kush1509
     @Test
     public void parseCommand_linkedIn() throws Exception {
         LinkedInCommand command = (LinkedInCommand) parser.parseCommand(
@@ -152,6 +157,7 @@ public class AddressBookParserTest {
         assertEquals(new LinkedInCommand(INDEX_FIRST), command);
     }
 
+    // @@author KevinCJH
     @Test
     public void parseCommand_email() throws Exception {
         EmailCommand command = (EmailCommand) parser.parseCommand(

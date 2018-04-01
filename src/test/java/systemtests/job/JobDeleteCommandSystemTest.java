@@ -1,6 +1,6 @@
-package systemtests;
+// @@author kush1509
+package systemtests.job;
 
-import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_JOB_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.job.JobDeleteCommand.MESSAGE_DELETE_JOB_SUCCESS;
@@ -19,6 +19,7 @@ import seedu.address.logic.commands.job.JobDeleteCommand;
 import seedu.address.model.Model;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.JobNotFoundException;
+import systemtests.AddressBookSystemTest;
 
 public class JobDeleteCommandSystemTest extends AddressBookSystemTest {
 
@@ -155,6 +156,7 @@ public class JobDeleteCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel, expectedResultMessage, null);
     }
 
+    // @@author kush1509-reused
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, Model, String)} except that the browser url
      * and selected card are expected to update accordingly depending on the card at {@code expectedSelectedCardIndex}.
@@ -175,7 +177,7 @@ public class JobDeleteCommandSystemTest extends AddressBookSystemTest {
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
     }
-
+    
     /**
      * Executes {@code command} and in addition,<br>
      * 1. Asserts that the command box displays {@code command}.<br>

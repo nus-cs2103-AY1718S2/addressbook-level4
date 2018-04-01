@@ -99,6 +99,7 @@ public class XmlUtilTest {
         assertEquals(expectedPerson, actualPerson);
     }
 
+    // @@author kush1509
     @Test
     public void xmlAdaptedJobFromFile_fileWithMissingJobField_validResult() throws Exception {
         XmlAdaptedJob actualJob = XmlUtil.getDataFromFile(
@@ -108,6 +109,7 @@ public class XmlUtilTest {
         assertEquals(expectedJob, actualJob);
     }
 
+    // @@author
     @Test
     public void xmlAdaptedPersonFromFile_fileWithInvalidPersonField_validResult() throws Exception {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
@@ -117,6 +119,7 @@ public class XmlUtilTest {
         assertEquals(expectedPerson, actualPerson);
     }
 
+    // @@author kush1509
     @Test
     public void xmlAdaptedJobFromFile_fileWithInvalidJobField_validResult() throws Exception {
         XmlAdaptedJob actualJob = XmlUtil.getDataFromFile(
@@ -126,6 +129,7 @@ public class XmlUtilTest {
         assertEquals(expectedJob, actualJob);
     }
 
+    // @@author
     @Test
     public void xmlAdaptedPersonFromFile_fileWithValidPerson_validResult() throws Exception {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
@@ -135,6 +139,7 @@ public class XmlUtilTest {
         assertEquals(expectedPerson, actualPerson);
     }
 
+    // @@author kush1509
     @Test
     public void xmlAdaptedJobFromFile_fileWithValidJobField_validResult() throws Exception {
         XmlAdaptedJob actualJob = XmlUtil.getDataFromFile(
@@ -144,8 +149,8 @@ public class XmlUtilTest {
         assertEquals(expectedJob, actualJob);
     }
 
+    // @@author
     @Test
-
     public void saveDataToFile_nullFile_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         XmlUtil.saveDataToFile(null, new AddressBook());
@@ -187,6 +192,7 @@ public class XmlUtilTest {
     @XmlRootElement(name = "person")
     private static class XmlAdaptedPersonWithRootElement extends XmlAdaptedPerson {}
 
+    // @@author kush1509
     /**
      * Test class annotated with {@code XmlRootElement} to allow unmarshalling of .xml data to {@code XmlAdaptedJob}
      * objects.

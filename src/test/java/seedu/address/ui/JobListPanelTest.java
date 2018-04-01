@@ -1,3 +1,4 @@
+// @@author kush1509
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
@@ -55,5 +56,5 @@ public class JobListPanelTest extends GuiUnitTest{
         JobCardHandle selectedCard = jobListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedCard, selectedCard);
     }
-
+    
 }

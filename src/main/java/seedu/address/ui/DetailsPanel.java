@@ -1,5 +1,5 @@
+//@@author kush1509
 package seedu.address.ui;
-
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -60,6 +60,7 @@ public class DetailsPanel extends UiPart<Region> {
         linkedIn.setContent(browserPanel.getRoot());
     }
 
+    //@@author trafalgarandre
     /**
      * Adds the CalendarView to the DetailsPanel
      */
@@ -68,6 +69,7 @@ public class DetailsPanel extends UiPart<Region> {
         calendar.setContent(calendarPanel.getRoot());
     }
 
+    //@@author kush1509
     /**
      * Adds the ContactDetailsPanel to the DetailsPanel
      */

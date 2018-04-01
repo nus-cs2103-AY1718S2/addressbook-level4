@@ -52,7 +52,8 @@
             </padding>
             <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
           </VBox>
-
+          
+          <!-- @@author kush1509 -->
           <StackPane fx:id="detailsPlaceholder">
             <padding>
               <Insets bottom="10" left="10" right="10" top="10" />
@@ -66,7 +67,8 @@
           </VBox>
         </SplitPane>
 
-        <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+          <!-- @@author -->
+          <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
       </VBox>
     </Scene>
   </scene>

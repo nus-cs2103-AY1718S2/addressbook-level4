@@ -1,6 +1,8 @@
+// @@author kush1509
 package seedu.address.model.job;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -36,5 +38,4 @@ public class NumberOfPositionsTest {
         assertTrue(NumberOfPositions.isValidNumberOfPositions("33")); 
         assertTrue(NumberOfPositions.isValidNumberOfPositions("3545")); // long number of positions
     }
-
 }

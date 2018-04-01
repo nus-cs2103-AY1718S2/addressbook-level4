@@ -130,6 +130,7 @@ public class XmlAdaptedPerson {
         }
         final Address address = new Address(this.address);
 
+        //@@author kush1509
         if (this.currentPosition == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     CurrentPosition.class.getSimpleName()));
@@ -147,6 +148,7 @@ public class XmlAdaptedPerson {
         }
         final Company company = new Company(this.company);
 
+        //@@author
         if (this.profilePicture != null) {
             if (!ProfilePicture.isValidProfilePicture(this.profilePicture)) {
                 throw new IllegalValueException(ProfilePicture.MESSAGE_PROFILEPICTURE_CONSTRAINTS);

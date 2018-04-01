@@ -1,6 +1,8 @@
+// @@author kush1509
 package seedu.address.model.job;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -37,5 +39,4 @@ public class PositionTest {
         assertTrue(Position.isValidPosition("Software Engineer")); // with capital letters
         assertTrue(Position.isValidPosition("Computer Science undergraduate")); // long positions
     }
-
 }

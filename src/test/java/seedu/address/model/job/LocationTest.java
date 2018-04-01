@@ -1,6 +1,8 @@
+// @@author kush1509
 package seedu.address.model.job;
 
-import static org.junit.Assert.*;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 

@@ -1,6 +1,8 @@
+// @@author kush1509
 package seedu.address.model.job;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -37,5 +39,4 @@ public class TeamTest {
         assertTrue(Team.isValidTeam("Cloud Services")); // with capital letters
         assertTrue(Team.isValidTeam("Frontend Web Development")); // long teams
     }
-
 }

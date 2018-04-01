@@ -44,6 +44,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private ImageView imageView;
 
+    //@@author kush1509
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
@@ -55,6 +56,7 @@ public class PersonCard extends UiPart<Region> {
         initTags(person);
     }
 
+    //@@author KevinCJH
     /**
      * Returns the color style for {@code tagName}'s label.
      */
@@ -64,6 +66,7 @@ public class PersonCard extends UiPart<Region> {
         return TAG_COLOR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOR_STYLES.length];
     }
 
+    //@@author
     /**
      * Creates the tag labels for {@code person}.
      */

@@ -36,6 +36,7 @@ public class XmlSerializableAddressBookTest {
         assertEquals(addressBookFromFile, typicalPersonsAddressBook);
     }
 
+    // @@author kush1509
     @Test
     public void toModelType_typicalJobsFile_success() throws Exception {
         XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(TYPICAL_JOBS_FILE,
@@ -45,6 +46,7 @@ public class XmlSerializableAddressBookTest {
         assertEquals(addressBookFromFile, typicalJobsAddressBook);
     }
 
+    // @@author
     @Test
     public void toModelType_invalidPersonFile_throwsIllegalValueException() throws Exception {
         XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(INVALID_PERSON_FILE,

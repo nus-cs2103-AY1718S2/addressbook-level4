@@ -27,6 +27,7 @@ public class ModelManagerTest {
         modelManager.getFilteredPersonList().remove(0);
     }
 
+    // @@author kush1509
     @Test
     public void getFilteredJobList_modifyList_throwsUnsupportedOperationException() {
         ModelManager modelManager = new ModelManager();
@@ -34,6 +35,7 @@ public class ModelManagerTest {
         modelManager.getFilteredJobList().remove(0);
     }
 
+    // @@author
     @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();

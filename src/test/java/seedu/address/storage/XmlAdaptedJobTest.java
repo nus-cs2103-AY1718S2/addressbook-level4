@@ -1,6 +1,7 @@
+// @@author kush1509
 package seedu.address.storage;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static seedu.address.storage.XmlAdaptedJob.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.TypicalJobs.MARKETING_INTERN;
 

@@ -1,3 +1,4 @@
+//@@author kush1509
 package seedu.address.model.job;
 
 import java.util.List;

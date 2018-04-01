@@ -110,6 +110,7 @@ public class ModelManager extends ComponentManager implements Model {
         accountsManager.register(username, password);
     }
 
+    //@@author kush1509
     @Override
     public synchronized void addJob(Job job) throws DuplicateJobException {
         addressBook.addJob(job);
@@ -123,6 +124,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -139,7 +141,27 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+    
 
+    //@@author kush1509
+    //=========== Filtered Job List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Jobs} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<Job> getFilteredJobList() {
+        return FXCollections.unmodifiableObservableList(filteredJobs);
+    }
+
+    @Override
+    public void updateFilteredJobList(Predicate<Job> predicate) {
+        requireNonNull(predicate);
+        filteredJobs.setPredicate(predicate);
+    }
+
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -157,22 +179,5 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons)
                 && filteredJobs.equals(other.filteredJobs);
-    }
-
-    //=========== Filtered Job List Accessors =============================================================
-
-    /**
-     * Returns an unmodifiable view of the list of {@code Jobs} backed by the internal list of
-     * {@code addressBook}
-     */
-    @Override
-    public ObservableList<Job> getFilteredJobList() {
-        return FXCollections.unmodifiableObservableList(filteredJobs);
-    }
-
-    @Override
-    public void updateFilteredJobList(Predicate<Job> predicate) {
-        requireNonNull(predicate);
-        filteredJobs.setPredicate(predicate);
     }
 }

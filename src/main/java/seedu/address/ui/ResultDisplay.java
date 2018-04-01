@@ -22,6 +22,8 @@ public class ResultDisplay extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     public static final String SUGGESTION_STYLE_CLASS = "suggestion";
+    public static final String WELCOME_MESSAGE = "Welcome to Employee Tracker (ET) ! Please unlock ET to use it! If " +
+            "you need help, please press F1 or use help command!";
 
     private static final Logger logger = LogsCenter.getLogger(ResultDisplay.class);
     private static final String FXML = "ResultDisplay.fxml";
@@ -34,6 +36,8 @@ public class ResultDisplay extends UiPart<Region> {
     public ResultDisplay() {
         super(FXML);
         resultDisplay.textProperty().bind(displayed);
+        setStyleForSuggestion();
+        Platform.runLater(() -> displayed.setValue(WELCOME_MESSAGE));
         registerAsAnEventHandler(this);
     }
 

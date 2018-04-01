@@ -21,6 +21,7 @@ import seedu.address.commons.events.ui.ShowSuggestionEvent;
 import seedu.address.commons.events.ui.ToggleNotificationCenterEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
+import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.CommandResult;
@@ -89,7 +90,12 @@ public class CommandBox extends UiPart<Region> {
         try {
             newValue = (new Scanner(newValue)).next();
         } catch (NoSuchElementException e) {
-            raise(new ShowSuggestionEvent(""));
+            if (LogicManager.isLocked()) {
+                raise(new ShowSuggestionEvent(ResultDisplay.WELCOME_MESSAGE));
+            } else {
+                raise(new ShowSuggestionEvent(""));
+            }
+            return;
         }
         boolean found = false;
         for (int i = 0; i < allCommandsWord.length; i++) {

@@ -16,6 +16,7 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowDefaultPageEvent;
 import seedu.address.commons.events.ui.ShowMultiLocationEvent;
 import seedu.address.logic.GetDistance;
 
@@ -124,5 +125,11 @@ public class BrowserPanel extends UiPart<Region> {
             url.append("/");
         }
         loadPage(url.toString());
+    }
+
+    @Subscribe
+    public void handleShowDefaultPageEvent(ShowDefaultPageEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadDefaultPage();
     }
 }

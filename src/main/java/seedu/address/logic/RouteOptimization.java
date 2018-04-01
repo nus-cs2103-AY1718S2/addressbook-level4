@@ -30,23 +30,36 @@ public class RouteOptimization {
         String startingPoint;
 
         if (lastShownList.size() == 1) {
-            Address address = lastShownList.get(0).getAddress();
-            String name = lastShownList.get(0).getName().toString();
-            addressWithoutUnit = removeUnit(address);
-            optimizedRoute.add(addressWithoutUnit);
+            Address address = lastShownList.get(0).getAddress(); 
+            if (isFindableAddress(address)) {
+                String name = lastShownList.get(0).getName().toString();
+                addressWithoutUnit = removeUnit(address);
+                optimizedRoute.add(addressWithoutUnit);
+            }
         } else {
             //need to figure out what the key should be to make sure we know what the hashmap is storing
             for (int i = 0; i < lastShownList.size(); i++) {
                 Address address = lastShownList.get(i).getAddress();
-                String name = lastShownList.get(i).getName().toString();
-                addressWithoutUnit = removeUnit(address);
-                filteredAddresses.add(addressWithoutUnit);
+                if (isFindableAddress(address)) {
+                    String name = lastShownList.get(i).getName().toString();
+                    addressWithoutUnit = removeUnit(address);
+                    filteredAddresses.add(addressWithoutUnit);
+                }
             }
-            optimizedRoute = getStartingAddress(filteredAddresses, optimizedRoute);
-            filteredAddresses = removeAddress(optimizedRoute.get(0), filteredAddresses);
-            optimizedRoute = getDistances(filteredAddresses, optimizedRoute.get(0), optimizedRoute);
+            if (!filteredAddresses.isEmpty()) {
+                optimizedRoute = getStartingAddress(filteredAddresses, optimizedRoute);
+                filteredAddresses = removeAddress(optimizedRoute.get(0), filteredAddresses);
+                optimizedRoute = getDistances(filteredAddresses, optimizedRoute.get(0), optimizedRoute);
+            }
         }
         return optimizedRoute;
+    }
+
+    private boolean isFindableAddress(Address address) {
+        String addressUnderCheck = address.toString();
+        GetDistance distance = new GetDistance();
+        if (distance.getDistance(HQ_ADDRESS, addressUnderCheck) == -1.0) return false;
+        return true;
     }
 
     public List<String> getStartingAddress(List<String> filteredAddresses, List<String> optimizedRoute) {

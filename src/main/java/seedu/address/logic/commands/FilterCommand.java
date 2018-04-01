@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ShowDefaultPageEvent;
 import seedu.address.commons.events.ui.ShowMultiLocationEvent;
 import seedu.address.logic.GetDistance;
 import seedu.address.logic.RouteOptimization;
@@ -40,9 +41,36 @@ public class FilterCommand extends Command {
         optimizedRoute = route.getAddresses(model);
         stringDuration = getDuration(optimizedRoute);
 
-        EventsCenter.getInstance().post(new ShowMultiLocationEvent(optimizedRoute));
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        int numberOfPersonsListed = model.getFilteredPersonList().size();
 
+        //no person matchs date
+        if (numberOfPersonsListed == 0) {
+            EventsCenter.getInstance().post(new ShowDefaultPageEvent());
+            return new CommandResult(getMessageForPersonListShownSummary(numberOfPersonsListed));
+        }
+
+        //all addresses are invalid
+        if (optimizedRoute.size() == 0) {
+            EventsCenter.getInstance().post(new ShowDefaultPageEvent());
+            String shown = getMessageForPersonListShownSummary(numberOfPersonsListed) + "\n" +
+                    "All the addresses on " +
+                    model.getFilteredPersonList().get(0).getDate().toString() +
+                    " cannot be found.";
+            return new CommandResult(shown);
+        }
+
+        EventsCenter.getInstance().post(new ShowMultiLocationEvent(optimizedRoute));
+        //some addresses are invalid
+        if (optimizedRoute.size() < numberOfPersonsListed) {
+            String shown = getMessageForPersonListShownSummary(numberOfPersonsListed) + "\n" +
+                    "At least one address on " +
+                    model.getFilteredPersonList().get(0).getDate().toString() +
+                    " cannot be found.";
+            return new CommandResult(shown);
+        }
+
+        //all addresses are valid
+        return new CommandResult(getMessageForPersonListShownSummary(numberOfPersonsListed));
     }
 
     @Override

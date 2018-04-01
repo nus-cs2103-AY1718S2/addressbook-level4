@@ -19,6 +19,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LockCommand;
+import seedu.address.logic.commands.MyCalendarCommand;
 import seedu.address.logic.commands.NotiCommand;
 import seedu.address.logic.commands.RateCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -127,6 +128,8 @@ public class AddressBookParser {
         case NotiCommand.COMMAND_WORD:
             return new NotiCommand();
 
+        case MyCalendarCommand.COMMAND_WORD:
+            return new MyCalendarCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

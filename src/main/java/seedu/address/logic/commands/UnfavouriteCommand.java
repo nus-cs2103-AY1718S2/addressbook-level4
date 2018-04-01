@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
@@ -73,17 +74,8 @@ public class UnfavouriteCommand extends UndoableCommand {
      * Create and return a copy of the target {@Code Student} to favourite with its' Favourite attribute set to false.
      */
     private static Student createEditedStudent(Student target) {
-        assert target != null;
+        requireNonNull(target);
 
-        Name name = target.getName();
-        Phone phone = target.getPhone();
-        Email email = target.getEmail();
-        Address address = target.getAddress();
-        Set<Tag> tags = target.getTags();
-        ProgrammingLanguage programmingLanguage = target.getProgrammingLanguage();
-        Favourite fav = new Favourite(false);
-        Dashboard dashboard = target.getDashboard();
-
-        return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard);
+        return new StudentBuilder(target).withFavourite(false).build();
     }
 }

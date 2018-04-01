@@ -157,9 +157,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized Patient removePatientFromQueue() throws PatientNotFoundException {
-        Patient patientToRemove = imdb.removePatientFromQueue();
+        int patientIndexToRemove = imdb.removePatientFromQueue();
         indicateAddressBookChanged();
-        return patientToRemove;
+        return filteredPatients.get(patientIndexToRemove);
     }
 
     @Override

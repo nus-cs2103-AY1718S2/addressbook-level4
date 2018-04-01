@@ -184,7 +184,7 @@ public class Imdb implements ReadOnlyImdb {
         visitingQueue.add(p);
     }
 
-    public Patient removePatientFromQueue() throws PatientNotFoundException {
+    public int removePatientFromQueue() throws PatientNotFoundException {
         return visitingQueue.removePatient();
     }
 
@@ -253,7 +253,22 @@ public class Imdb implements ReadOnlyImdb {
 
     @Override
     public ObservableList<Patient> getUniquePatientQueue() {
-        return visitingQueue.asObservableList();
+        UniquePatientList patientQueueList = getPatientQueueList();
+        return patientQueueList.asObservableList();
+    }
+
+    private UniquePatientList getPatientQueueList() {
+        UniquePatientList queueList = new UniquePatientList();
+
+        for (int patientIndex : visitingQueue.getVisitingQueue()) {
+            try {
+                queueList.add(persons.getPatientByIndex(patientIndex));
+            } catch (DuplicatePatientException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return queueList;
     }
 
     @Override

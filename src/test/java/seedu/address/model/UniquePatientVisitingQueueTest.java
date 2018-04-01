@@ -23,8 +23,8 @@ public class UniquePatientVisitingQueueTest {
     public void execute_addPatient_addSuccessful() throws Exception {
         Patient samplePatient = new PatientBuilder().build();
         UniquePatientVisitingQueue anotherQueue = new UniquePatientVisitingQueue();
-        anotherQueue.add(samplePatient);
-        queueToTest.add(samplePatient);
+        anotherQueue.add(1);
+        queueToTest.add(1);
         assertEquals(anotherQueue, queueToTest);
     }
 
@@ -32,8 +32,8 @@ public class UniquePatientVisitingQueueTest {
     public void execute_removePatient_removeSuccessful() throws Exception {
         Patient samplePatient = new PatientBuilder().build();
         UniquePatientVisitingQueue anotherQueue = new UniquePatientVisitingQueue();
-        anotherQueue.add(samplePatient);
-        queueToTest.add(samplePatient);
+        anotherQueue.add(1);
+        queueToTest.add(1);
         queueToTest.removePatient();
         anotherQueue.removePatient();
         assertEquals(anotherQueue, queueToTest);
@@ -42,17 +42,17 @@ public class UniquePatientVisitingQueueTest {
     @Test
     public void execute_duplicatePatient_throwsDuplicateException() throws Exception {
         Patient samplePatient = new PatientBuilder().build();
-        queueToTest.add(samplePatient);
+        queueToTest.add(1);
 
         thrown.expect(DuplicatePatientException.class);
 
-        queueToTest.add(samplePatient);
+        queueToTest.add(1);
     }
 
     @Test
     public void execute_addNullObject_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        queueToTest.add(null);
+        queueToTest.add(Integer.parseInt(null));
     }
 
     @Test

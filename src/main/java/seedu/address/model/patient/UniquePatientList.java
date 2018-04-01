@@ -99,6 +99,10 @@ public class UniquePatientList implements Iterable<Patient> {
         return FXCollections.unmodifiableObservableList(internalList);
     }
 
+    public Patient getPatientByIndex(int index) {
+        return internalList.get(index);
+    }
+
     @Override
     public Iterator<Patient> iterator() {
         return internalList.iterator();

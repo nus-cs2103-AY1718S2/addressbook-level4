@@ -1,38 +1,18 @@
 package seedu.address.logic.parser;
 
+import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
-//import static org.junit.Assert.assertTrue;
-//import static org.junit.Assert.fail;
-//import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-//import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-//import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
-//
-//import java.util.Arrays;
-//import java.util.List;
-//import java.util.stream.Collectors;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.Messages;
+import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.TaskCommand;
-//import seedu.address.logic.commands.EventCommand;
-//import seedu.address.logic.commands.ClearCommand;
-//import seedu.address.logic.commands.DeleteCommand;
-//import seedu.address.logic.commands.EditCommand;
-//import seedu.address.logic.commands.EditCommand.EditActivityDescriptor;
-//import seedu.address.logic.commands.ExitCommand;
-//import seedu.address.logic.commands.FindCommand;
-//import seedu.address.logic.commands.HelpCommand;
-//import seedu.address.logic.commands.HistoryCommand;
-//import seedu.address.logic.commands.ListCommand;
-//import seedu.address.logic.commands.RedoCommand;
-//import seedu.address.logic.commands.SelectCommand;
-//import seedu.address.logic.commands.UndoCommand;
-//import seedu.address.logic.parser.exceptions.ParseException;
-//import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.activity.Task;
-//import seedu.address.testutil.EditActivityDescriptorBuilder;
 import seedu.address.testutil.TaskBuilder;
 import seedu.address.testutil.TaskUtil;
 
@@ -52,7 +32,7 @@ public class DeskBoardParserTest {
     }
 
     // TODO: parseCommand_event() fails; not sure why
-//
+//    @Test
 //    public void parseCommand_event() throws Exception {
 //        Event event = new EventBuilder().build();
 //        EventCommand command = (EventCommand) parser.parseCommand(EventUtil.getEventCommand(event));
@@ -60,6 +40,7 @@ public class DeskBoardParserTest {
 //    }
 //
 //
+//    @Test
 //    public void parseCommand_clear() throws Exception {
 //        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
 //        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
@@ -102,10 +83,18 @@ public class DeskBoardParserTest {
 //    }
 //
 //
-//    public void parseCommand_help() throws Exception {
-//        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
-//        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
-//    }
+    //@@author jasmoon
+    @Test
+    public void parseCommand_help() throws Exception {
+        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
+        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " task") instanceof HelpCommand);
+        try {
+            parser.parseCommand(HelpCommand.COMMAND_WORD + " 3");
+            fail("The expected ParseException was not thrown.");
+        } catch (ParseException pe) {
+            assertEquals(String.format(Messages.MESSAGE_INVALID_HELP_REQUEST, "3"), pe.getMessage());
+        }
+    }
 //
 //
 //    public void parseCommand_history() throws Exception {

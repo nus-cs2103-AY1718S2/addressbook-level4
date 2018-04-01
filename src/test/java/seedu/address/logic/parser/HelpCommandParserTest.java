@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 
 import org.junit.Test;
+
 import seedu.address.commons.core.Messages;
 
 //@@author jasmoon

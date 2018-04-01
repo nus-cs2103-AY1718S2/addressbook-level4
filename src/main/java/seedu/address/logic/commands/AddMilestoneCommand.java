@@ -20,7 +20,6 @@ import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.dashboard.Dashboard;
 import seedu.address.model.student.dashboard.Milestone;
-import seedu.address.model.student.dashboard.UniqueHomeworkList;
 import seedu.address.model.student.dashboard.UniqueMilestoneList;
 import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneException;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
@@ -109,11 +108,10 @@ public class AddMilestoneCommand extends UndoableCommand {
         ProgrammingLanguage programmingLanguage = studentToEdit.getProgrammingLanguage();
         Favourite fav = studentToEdit.getFavourite();
         UniqueMilestoneList milestoneList = studentToEdit.getDashboard().getMilestoneList();
-        UniqueHomeworkList homeworkList = studentToEdit.getDashboard().getHomeworkList();
 
         milestoneList.add(newMilestone);
 
-        Dashboard dashboard = new Dashboard(milestoneList, homeworkList);
+        Dashboard dashboard = new Dashboard(milestoneList);
 
         return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard);
     }

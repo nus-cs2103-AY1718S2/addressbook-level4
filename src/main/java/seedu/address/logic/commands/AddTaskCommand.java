@@ -24,7 +24,6 @@ import seedu.address.model.student.dashboard.Dashboard;
 import seedu.address.model.student.dashboard.Milestone;
 import seedu.address.model.student.dashboard.Progress;
 import seedu.address.model.student.dashboard.Task;
-import seedu.address.model.student.dashboard.UniqueHomeworkList;
 import seedu.address.model.student.dashboard.UniqueMilestoneList;
 import seedu.address.model.student.dashboard.UniqueTaskList;
 import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneException;
@@ -129,7 +128,6 @@ public class AddTaskCommand extends UndoableCommand {
         ProgrammingLanguage programmingLanguage = studentToEdit.getProgrammingLanguage();
         Favourite fav = studentToEdit.getFavourite();
         UniqueMilestoneList milestoneList = studentToEdit.getDashboard().getMilestoneList();
-        UniqueHomeworkList homeworkList = studentToEdit.getDashboard().getHomeworkList();
 
         /* Get the components that needs to be modified */
         Milestone targetMilestone = milestoneList.get(milestoneIndex);
@@ -144,7 +142,7 @@ public class AddTaskCommand extends UndoableCommand {
                 newProgress, targetMilestone.getDescription());
         milestoneList.setMilestone(targetMilestone, newMilestone);
 
-        Dashboard dashboard = new Dashboard(milestoneList, homeworkList);
+        Dashboard dashboard = new Dashboard(milestoneList);
 
         return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard);
     }

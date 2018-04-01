@@ -26,7 +26,6 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.DeleteRatingCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
@@ -37,6 +36,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.InterviewCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RateCommand;
+import seedu.address.logic.commands.RatingDeleteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
@@ -134,9 +134,9 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_deleteRating() throws Exception {
-        DeleteRatingCommand command = (DeleteRatingCommand) parser.parseCommand(
-                DeleteRatingCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteRatingCommand(INDEX_FIRST_PERSON), command);
+        RatingDeleteCommand command = (RatingDeleteCommand) parser.parseCommand(
+                RatingDeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new RatingDeleteCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test

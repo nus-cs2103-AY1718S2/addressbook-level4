@@ -10,6 +10,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_PHONE = new Prefix("p/");
     public static final Prefix PREFIX_EMAIL = new Prefix("e/");
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
+    public static final Prefix PREFIX_UNIVERSITY = new Prefix("u/");
     public static final Prefix PREFIX_EXPECTED_GRADUATION_YEAR = new Prefix("y/");
     public static final Prefix PREFIX_MAJOR = new Prefix("m/");
     public static final Prefix PREFIX_GRADE_POINT_AVERAGE = new Prefix("g/");
@@ -21,6 +22,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_COMMENT = new Prefix("c/");
     // Used only in filter command
     public static final Prefix PREFIX_RATING = new Prefix("r/");
+    public static final Prefix PREFIX_INTERVIEW_DATE = new Prefix("d/");
 
     // used in rating-sort and gpa-sort commands only
     public static final Prefix PREFIX_SORT_ORDER = new Prefix("o/");

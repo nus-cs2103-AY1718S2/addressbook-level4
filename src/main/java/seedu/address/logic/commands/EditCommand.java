@@ -13,6 +13,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RESUME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_UNIVERSITY;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Collections;
@@ -41,6 +42,7 @@ import seedu.address.model.person.ProfileImage;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
 import seedu.address.model.person.Status;
+import seedu.address.model.person.University;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -61,6 +63,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_UNIVERSITY + "UNIVERSITY] "
             + "[" + PREFIX_EXPECTED_GRADUATION_YEAR + "EXPECTED GRADUATION YEAR] "
             + "[" + PREFIX_MAJOR + "MAJOR] "
             + "[" + PREFIX_GRADE_POINT_AVERAGE + "GRADE POINT AVERAGE] "
@@ -131,6 +134,7 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        University updatedUniversity = editPersonDescriptor.getUniversity().orElse(personToEdit.getUniversity());
         ExpectedGraduationYear updatedExpectedGraduationYear = editPersonDescriptor.getExpectedGraduationYear()
                 .orElse(personToEdit.getExpectedGraduationYear());
         Major updatedMajor = editPersonDescriptor.getMajor().orElse(personToEdit.getMajor());
@@ -154,9 +158,9 @@ public class EditCommand extends UndoableCommand {
 
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedExpectedGraduationYear,
-                updatedMajor, updatedGradePointAverage, updatedJobApplied, rating, updatedResume, updatedProfileImage,
-                updatedComment, interviewDate, status, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedUniversity,
+                updatedExpectedGraduationYear, updatedMajor, updatedGradePointAverage, updatedJobApplied,
+                rating, updatedResume, updatedProfileImage, updatedComment, interviewDate, status, updatedTags);
     }
 
     @Override
@@ -187,6 +191,7 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        private University university;
         private ExpectedGraduationYear expectedGraduationYear;
         private Major major;
         private GradePointAverage gradePointAverage;
@@ -207,6 +212,7 @@ public class EditCommand extends UndoableCommand {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
+            setUniversity(toCopy.university);
             setExpectedGraduationYear(toCopy.expectedGraduationYear);
             setMajor(toCopy.major);
             setGradePointAverage(toCopy.gradePointAverage);
@@ -221,7 +227,7 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address,
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.university,
                     this.expectedGraduationYear, this.major, this.gradePointAverage, this.jobApplied,
                     this.resume, this.profileImage, this.comment, this.tags);
         }
@@ -256,6 +262,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
+        }
+
+        public void setUniversity(University university) {
+            this.university = university;
+        }
+
+        public Optional<University> getUniversity() {
+            return Optional.ofNullable(university);
         }
 
         public void setExpectedGraduationYear(ExpectedGraduationYear expectedGraduationYear) {

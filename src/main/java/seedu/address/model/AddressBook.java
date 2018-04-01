@@ -179,7 +179,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), person.getUniversity(),
                 person.getExpectedGraduationYear(), person.getMajor(), person.getGradePointAverage(),
                 person.getJobApplied(), person.getRating(), person.getResume(), person.getProfileImage(),
                 person.getComment(), person.getInterviewDate(), person.getStatus(), correctTagReferences);
@@ -225,7 +225,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         Set<Tag> editedTags = new HashSet<>(person.getTags());
         if (editedTags.remove(tag)) {
             Person editedPerson = new Person(person.getName(), person.getPhone(), person.getEmail(),
-                    person.getAddress(), person.getExpectedGraduationYear(), person.getMajor(),
+                    person.getAddress(), person.getUniversity(), person.getExpectedGraduationYear(), person.getMajor(),
                     person.getGradePointAverage(), person.getJobApplied(), person.getRating(), person.getResume(),
                     person.getProfileImage(), person.getComment(), person.getInterviewDate(), person.getStatus(),
                     editedTags);

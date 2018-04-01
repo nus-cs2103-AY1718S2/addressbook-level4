@@ -24,6 +24,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ProfileImage;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
+import seedu.address.model.person.University;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -166,6 +167,32 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String university} into an {@code University}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if given {@code University} is invalid.
+     */
+    public static University parseUniversity(String university) throws IllegalValueException {
+        requireNonNull(university);
+        String trimmedUniversity = university.trim();
+        if (!University.isValidUniversity(trimmedUniversity)) {
+            throw new IllegalValueException(University.MESSAGE_UNIVERSITY_CONSTRAINTS);
+        }
+        return new University(trimmedUniversity);
+    }
+
+    /**
+     * Parses a {@code Optional<String> university}
+     * into an {@code Optional<University>} if {@code university} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<University> parseUniversity(Optional<String> university) throws IllegalValueException {
+        requireNonNull(university);
+        return university.isPresent() ? Optional.of(parseUniversity(
+                university.get())) : Optional.empty();
     }
 
     /**

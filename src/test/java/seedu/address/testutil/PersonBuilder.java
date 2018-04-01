@@ -21,6 +21,7 @@ import seedu.address.model.person.ProfileImage;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.Resume;
 import seedu.address.model.person.Status;
+import seedu.address.model.person.University;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -35,6 +36,7 @@ public class PersonBuilder {
     private static final String DEFAULT_PHONE = "85355255";
     private static final String DEFAULT_EMAIL = "alice@gmail.com";
     private static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    private static final String DEFAULT_UNIVERSITY = "NUS";
     private static final String DEFAULT_EXPECTED_GRADUATION_YEAR = "2020";
     private static final String DEFAULT_MAJOR = "Computer Science";
     private static final String DEFAULT_GRADE_POINT_AVERAGE = "4.96";
@@ -52,6 +54,7 @@ public class PersonBuilder {
     private Phone phone;
     private Email email;
     private Address address;
+    private University university;
     private ExpectedGraduationYear expectedGraduationYear;
     private Major major;
     private GradePointAverage gradePointAverage;
@@ -70,6 +73,7 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        university = new University(DEFAULT_UNIVERSITY);
         expectedGraduationYear = new ExpectedGraduationYear(DEFAULT_EXPECTED_GRADUATION_YEAR);
         major = new Major(DEFAULT_MAJOR);
         gradePointAverage = new GradePointAverage(DEFAULT_GRADE_POINT_AVERAGE);
@@ -94,6 +98,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        university = personToCopy.getUniversity();
         expectedGraduationYear = personToCopy.getExpectedGraduationYear();
         major = personToCopy.getMajor();
         gradePointAverage = personToCopy.getGradePointAverage();
@@ -144,6 +149,14 @@ public class PersonBuilder {
      */
     public PersonBuilder withEmail(String email) {
         this.email = new Email(email);
+        return this;
+    }
+
+    /**
+     * Sets the {@code University} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withUniversity(String university) {
+        this.university = new University(university);
         return this;
     }
 
@@ -235,8 +248,8 @@ public class PersonBuilder {
      * Builds and returns a {@code Person}.
      */
     public Person build() {
-        return new Person(name, phone, email, address, expectedGraduationYear, major, gradePointAverage, jobApplied,
-                rating, resume, profileImage, comment, interviewDate, status, tags);
+        return new Person(name, phone, email, address, university, expectedGraduationYear, major, gradePointAverage,
+                jobApplied, rating, resume, profileImage, comment, interviewDate, status, tags);
     }
 
     /**

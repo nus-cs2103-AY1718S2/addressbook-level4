@@ -5,6 +5,7 @@
     <phone>9482asf424</phone>
     <email>hans@example</email>
     <address>4th street</address>
+    <university>NUS</university>
     <expectedGraduationYear>2020</expectedGraduationYear>
     <major>Computer Science</major>
     <gradePointAverage>4.77</gradePointAverage>

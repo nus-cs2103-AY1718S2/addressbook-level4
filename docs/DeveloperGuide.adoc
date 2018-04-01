@@ -25,17 +25,10 @@ attendance and participation as well.
 
 === New Developers
 
-<<<<<<< HEAD
 You may wish to refer to the https://github.com/CS2103JAN2018-F09-B1/main/blob/master/docs/DeveloperGuide.adoc#setting-up[set up] portion
 to set up the Your TA project file.
 
 Read through the rest of the guide to familiarise yourself with how Your TA components function together.
-=======
-You may wish to refer to the <<Setting up, setting up>> portion
-to set up the Your TA project file.
-
-Read through the rest of the guide to familiarise yourself with how Your TA components functions together.
->>>>>>> 7b86da68c8bd4dff6f90bffaf79adf8987550306
 
 Try making some enhancements or edits to a component and make a Pull Request (PR) to our repo! We will take a look at your PR and
 give you some feedback or even merge your code if it's great.
@@ -46,10 +39,6 @@ The Developer Guide contains the design of the models that make up the program. 
 is implemented and how it interacts with the different models. We would greatly appreciate your help in fine-tuning the components and also
 welcome any suggestions or feedback to improve Your TA.
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 7b86da68c8bd4dff6f90bffaf79adf8987550306
 == Setting up
 
 === Prerequisites

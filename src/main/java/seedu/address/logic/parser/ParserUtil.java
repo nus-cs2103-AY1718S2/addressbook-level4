@@ -13,7 +13,13 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.appointment.EndDateTime;
 import seedu.address.model.appointment.StartDateTime;
 import seedu.address.model.appointment.Title;
+import seedu.address.model.job.Location;
+import seedu.address.model.job.NumberOfPositions;
+import seedu.address.model.job.Position;
+import seedu.address.model.job.Team;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Company;
+import seedu.address.model.person.CurrentPosition;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -32,6 +38,8 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_NUMBER_OF_POSITIONS = "Number of Positions is not a "
+            + "non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
     /**
@@ -117,6 +125,56 @@ public class ParserUtil {
     public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
         requireNonNull(address);
         return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String currentPosition} into an {@code CurrentPosition}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code currentPosition} is invalid.
+     */
+    public static CurrentPosition parseCurrentPosition(String currentPosition) throws IllegalValueException {
+        requireNonNull(currentPosition);
+        String trimmedCurrentPosition = currentPosition.trim();
+        if (!CurrentPosition.isValidCurrentPosition(trimmedCurrentPosition)) {
+            throw new IllegalValueException(CurrentPosition.MESSAGE_CURRENT_POSITION_CONSTRAINTS);
+        }
+        return new CurrentPosition(trimmedCurrentPosition);
+    }
+
+    /**
+     * Parses a {@code Optional<String> company} into an {@code Optional<Company>} if {@code company} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<CurrentPosition> parseCurrentPosition(Optional<String> currentPosition)
+            throws IllegalValueException {
+        requireNonNull(currentPosition);
+        return currentPosition.isPresent() ? Optional.of(parseCurrentPosition(currentPosition.get()))
+                : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String company} into an {@code Company}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code company} is invalid.
+     */
+    public static Company parseCompany(String company) throws IllegalValueException {
+        requireNonNull(company);
+        String trimmedCompany = company.trim();
+        if (!Company.isValidCompany(trimmedCompany)) {
+            throw new IllegalValueException(Company.MESSAGE_COMPANY_CONSTRAINTS);
+        }
+        return new Company(trimmedCompany);
+    }
+
+    /**
+     * Parses a {@code Optional<String> company} into an {@code Optional<Company>} if {@code company} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Company> parseCompany(Optional<String> company) throws IllegalValueException {
+        requireNonNull(company);
+        return company.isPresent() ? Optional.of(parseCompany(company.get())) : Optional.empty();
     }
 
     /**
@@ -269,4 +327,102 @@ public class ParserUtil {
         return endDateTime.isPresent() ? Optional.of(parseEndDateTime(endDateTime.get())) : Optional.empty();
     }
 
+    /**
+     * Parses a {@code String position} into a {@code Position}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code position} is invalid.
+     */
+    public static Position parsePosition(String position) throws IllegalValueException {
+        requireNonNull(position);
+        String trimmedPosition = position.trim();
+        if (!Position.isValidPosition(trimmedPosition)) {
+            throw new IllegalValueException(Position.MESSAGE_POSITION_CONSTRAINTS);
+        }
+        return new Position(trimmedPosition);
+    }
+
+    /**
+     * Parses a {@code Optional<String> position} into an {@code Optional<Position>} if {@code position} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Position> parsePosition(Optional<String> position) throws IllegalValueException {
+        requireNonNull(position);
+        return position.isPresent() ? Optional.of(parsePosition(position.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String team} into a {@code Team}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code team} is invalid.
+     */
+    public static Team parseTeam(String team) throws IllegalValueException {
+        requireNonNull(team);
+        String trimmedTeam = team.trim();
+        if (!Team.isValidTeam(trimmedTeam)) {
+            throw new IllegalValueException(Team.MESSAGE_TEAM_CONSTRAINTS);
+        }
+        return new Team(trimmedTeam);
+    }
+
+    /**
+     * Parses a {@code Optional<String> team} into an {@code Optional<Team>} if {@code team} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Team> parseTeam(Optional<String> team) throws IllegalValueException {
+        requireNonNull(team);
+        return team.isPresent() ? Optional.of(parseTeam(team.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String location} into a {@code Location}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code location} is invalid.
+     */
+    public static Location parseLocation(String location) throws IllegalValueException {
+        requireNonNull(location);
+        String trimmedLocation = location.trim();
+        if (!Location.isValidLocation(trimmedLocation)) {
+            throw new IllegalValueException(Location.MESSAGE_LOCATION_CONSTRAINTS);
+        }
+        return new Location(trimmedLocation);
+    }
+
+    /**
+     * Parses a {@code Optional<String> location} into an {@code Optional<Location>} if {@code location} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Location> parseLocation(Optional<String> location) throws IllegalValueException {
+        requireNonNull(location);
+        return location.isPresent() ? Optional.of(parseLocation(location.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String numberOfPositions} into a {@code numberOfPositions}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code numberOfPositions} is invalid.
+     */
+    public static NumberOfPositions parseNumberOfPositions(String numberOfPositions) throws IllegalValueException {
+        requireNonNull(numberOfPositions);
+        String trimmedNumberOfPositions = numberOfPositions.trim();
+        if (!NumberOfPositions.isValidNumberOfPositions(trimmedNumberOfPositions)) {
+            throw new IllegalValueException(NumberOfPositions.MESSAGE_NUMBER_OF_POSITIONS_CONSTRAINTS);
+        }
+        return new NumberOfPositions(trimmedNumberOfPositions);
+    }
+
+    /**
+     * Parses a {@code Optional<String> numberOfPositions} into an {@code Optional<String>}
+     * if {@code numberOfPositions} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<NumberOfPositions> parseNumberOfPositions(Optional<String> numberOfPositions)
+            throws IllegalValueException {
+        requireNonNull(numberOfPositions);
+        return numberOfPositions.isPresent() ? Optional.of(parseNumberOfPositions(numberOfPositions.get()))
+                : Optional.empty();
+    }
 }

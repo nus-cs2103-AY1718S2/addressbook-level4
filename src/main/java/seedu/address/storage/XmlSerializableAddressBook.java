@@ -23,6 +23,8 @@ public class XmlSerializableAddressBook {
     private List<XmlAdaptedTag> tags;
     @XmlElement
     private List<XmlAdaptedAppointment> appointments;
+    @XmlElement
+    private List<XmlAdaptedJob> jobs;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -32,6 +34,7 @@ public class XmlSerializableAddressBook {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
         appointments = new ArrayList<>();
+        jobs = new ArrayList<>();
     }
 
     /**
@@ -43,13 +46,14 @@ public class XmlSerializableAddressBook {
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
         appointments.addAll(src.getAppointmentList().stream()
                 .map(XmlAdaptedAppointment::new).collect(Collectors.toList()));
+        jobs.addAll(src.getJobList().stream().map(XmlAdaptedJob::new).collect(Collectors.toList()));
     }
 
     /**
      * Converts this addressbook into the model's {@code AddressBook} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
-     * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag}.
+     * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag} or {@code XmlAdaptedJob}.
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
@@ -61,6 +65,9 @@ public class XmlSerializableAddressBook {
         }
         for (XmlAdaptedAppointment a : appointments) {
             addressBook.addAppointment(a.toModelType());
+        }
+        for (XmlAdaptedJob j : jobs) {
+            addressBook.addJob(j.toModelType());
         }
         return addressBook;
     }
@@ -77,6 +84,6 @@ public class XmlSerializableAddressBook {
 
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
         return persons.equals(otherAb.persons) && tags.equals(otherAb.tags)
-                && appointments.equals(otherAb.appointments);
+                && appointments.equals(otherAb.appointments) && jobs.equals(otherAb.jobs);
     }
 }

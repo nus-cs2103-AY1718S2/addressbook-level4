@@ -7,26 +7,35 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddAppointmentCommand;
-import seedu.address.logic.commands.AddCommand;
+
 import seedu.address.logic.commands.CalendarCommand;
-import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ClearHistoryCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.LinkedInCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.LoginCommand;
-import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SignupCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.job.JobAddCommand;
+import seedu.address.logic.commands.person.AddCommand;
+import seedu.address.logic.commands.person.ClearCommand;
+import seedu.address.logic.commands.person.DeleteCommand;
+import seedu.address.logic.commands.person.EditCommand;
+import seedu.address.logic.commands.person.FindCommand;
+import seedu.address.logic.commands.person.LinkedInCommand;
+import seedu.address.logic.commands.person.ListCommand;
+import seedu.address.logic.commands.person.SelectCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.job.JobAddCommandParser;
+import seedu.address.logic.parser.person.AddCommandParser;
+import seedu.address.logic.parser.person.DeleteCommandParser;
+import seedu.address.logic.parser.person.EditCommandParser;
+import seedu.address.logic.parser.person.FindCommandParser;
+import seedu.address.logic.parser.person.LinkedInCommandParser;
+import seedu.address.logic.parser.person.SelectCommandParser;
+
 
 /**
  * Parses user input.
@@ -79,12 +88,6 @@ public class AddressBookParser {
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
 
-        case LoginCommand.COMMAND_WORD:
-            return new LoginCommandParser().parse(arguments);
-
-        case LogoutCommand.COMMAND_WORD:
-            return new LogoutCommand();
-
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
 
@@ -106,8 +109,14 @@ public class AddressBookParser {
         case EmailCommand.COMMAND_WORD:
             return new EmailCommandParser().parse(arguments);
 
+        case SignupCommand.COMMAND_WORD:
+            return new SignupCommandParser().parse(arguments);
+
         case CalendarCommand.COMMAND_WORD:
             return new CalendarCommand();
+
+        case JobAddCommand.COMMAND_WORD:
+            return new JobAddCommandParser().parse(arguments);
 
         case AddAppointmentCommand.COMMAND_WORD:
             return new AddAppointmentCommandParser().parse(arguments);

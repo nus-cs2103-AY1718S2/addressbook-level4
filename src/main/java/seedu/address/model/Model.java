@@ -7,10 +7,9 @@ import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
-import seedu.address.model.exceptions.InvalidPasswordException;
-import seedu.address.model.exceptions.InvalidUsernameException;
-import seedu.address.model.exceptions.MultipleLoginException;
-import seedu.address.model.exceptions.UserLogoutException;
+import seedu.address.model.exception.DuplicateUsernameException;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -23,6 +22,7 @@ import seedu.address.model.tag.UniqueTagList;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Job> PREDICATE_SHOW_ALL_JOBS = unused -> true;
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<Appointment> PREDICATE_SHOW_ALL_APPOINTMENTS = unused -> true;
@@ -62,19 +62,27 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     /**
-     * Logs the user into contactHeRo.
-     * @throws InvalidUsernameException if username is invalid.
-     * @throws InvalidPasswordException if the password is invalid.
-     * @throws MultipleLoginException if a user is already logged in.
+     * Returns AccountsManager.
      */
-    void login(String username, String password) throws InvalidUsernameException,
-                                    InvalidPasswordException, MultipleLoginException;
+    AccountsManager getAccountsManager();
 
     /**
-     * Logs the user out of contactHeRo
-     * @throws UserLogoutException if no user is login to the system.
+     * Register a new account for user.
+     * @throws DuplicateUsernameException if {@param username} is already in used.
      */
-    void logout() throws UserLogoutException;
+    void register(String username, String password) throws DuplicateUsernameException;
+
+    /** Adds the given person */
+    void addJob(Job job) throws DuplicateJobException;
+
+    /** Returns an unmodifiable view of the filtered person list */
+    ObservableList<Job> getFilteredJobList();
+
+    /**
+     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredJobList(Predicate<Job> predicate);
 
     /** Deletes the given appointment. */
     void deleteAppointment(Appointment target) throws AppointmentNotFoundException;

@@ -1,14 +1,20 @@
 package seedu.address.model;
 
-import seedu.address.model.exceptions.InvalidPasswordException;
-import seedu.address.model.exceptions.InvalidUsernameException;
-
 /**
- * Represents a database which stores all the registered user accounts.
+ * Represents a user account.
  */
-public class Account {
-    private final String username = "JohnDoe";
-    private final String password = "12345";
+public final class Account {
+    private String username = "JohnDoe";
+    private String password = "12345";
+
+    /**
+     * @param username should not be null
+     * @param password should not be null
+     */
+    public Account(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     public String getUsername() {
         return username;
@@ -19,18 +25,30 @@ public class Account {
     }
 
     /**
-     * @return true if both inputs are valid.
-     * @throws InvalidUsernameException if inputUsername is not found.
-     * @throws InvalidPasswordException if inputPassword is incorrect for the inputUsername.
+     * @param newUsername should not be null
      */
-    public boolean identify(String inputUsername, String inputPassword) throws InvalidUsernameException,
-            InvalidPasswordException {
-        if (!this.username.equals(inputUsername)) {
-            throw new InvalidUsernameException();
-        } else if (!this.password.equals(inputPassword)) {
-            throw new InvalidPasswordException();
-        } else {
+    public void updateUsername(String newUsername) {
+        username = newUsername;
+    }
+
+    /**
+     * @param newPassword should not be null
+     */
+    public void updatePassword(String newPassword) {
+        password = newPassword;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
             return true;
         }
+        if (!(other instanceof Account)) {
+            return false;
+        }
+        Account otherAccount = (Account) other;
+        return otherAccount.getUsername().equals(this.getUsername())
+                && otherAccount.getPassword().equals(this.getPassword());
     }
+
 }

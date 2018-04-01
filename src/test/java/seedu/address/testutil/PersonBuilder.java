@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Company;
+import seedu.address.model.person.CurrentPosition;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -21,6 +23,8 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_CURRENT_POSITION = "Software Engineer";
+    public static final String DEFAULT_COMPANY = "Google";
     public static final String DEFAULT_PROFILE_PICTURE =
             "./src/test/data/images/alice.jpeg";
     public static final String DEFAULT_TAGS = "friends";
@@ -30,6 +34,8 @@ public class PersonBuilder {
     private Email email;
     private Address address;
     private ProfilePicture profilePicture;
+    private CurrentPosition currentPosition;
+    private Company company;
     private Set<Tag> tags;
 
     public PersonBuilder() {
@@ -37,6 +43,8 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        currentPosition = new CurrentPosition(DEFAULT_CURRENT_POSITION);
+        company = new Company(DEFAULT_COMPANY);
         profilePicture = new ProfilePicture(DEFAULT_PROFILE_PICTURE);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
@@ -49,6 +57,8 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        currentPosition = personToCopy.getCurrentPosition();
+        company = personToCopy.getCompany();
         profilePicture = personToCopy.getProfilePicture();
         tags = new HashSet<>(personToCopy.getTags());
     }
@@ -94,6 +104,22 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code CurrentPosition} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withCurrentPosition(String currentPosition) {
+        this.currentPosition = new CurrentPosition(currentPosition);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Company} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withCompany(String company) {
+        this.company = new Company(company);
+        return this;
+    }
+
+    /**
      * Sets the {@code ProfilePicture} of the {@code Person} that we are building.
      */
     public PersonBuilder withProfilePicture(String... profilePicture) {
@@ -106,7 +132,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, profilePicture, tags);
+        return new Person(name, phone, email, address, currentPosition, company, profilePicture, tags);
     }
 
 }

@@ -19,10 +19,9 @@ import seedu.address.commons.events.ui.ReloadCalendarEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
-import seedu.address.model.exceptions.InvalidPasswordException;
-import seedu.address.model.exceptions.InvalidUsernameException;
-import seedu.address.model.exceptions.MultipleLoginException;
-import seedu.address.model.exceptions.UserLogoutException;
+import seedu.address.model.exception.DuplicateUsernameException;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -39,8 +38,9 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final List<Appointment> appointments;
-    private Optional<String> user; // tracks current user
-    private final Account account; // manages the user
+    private Optional<Account> user; //tracks the current user
+    private AccountsManager accountsManager;
+    private final FilteredList<Job> filteredJobs;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -54,9 +54,10 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         appointments = new ArrayList<Appointment>(this.addressBook.getAppointmentList());
-
-        this.account = new Account();
         this.user = Optional.empty();
+        accountsManager = new AccountsManager();
+        user = Optional.empty();
+        filteredJobs = new FilteredList<>(this.addressBook.getJobList());
     }
 
     public ModelManager() {
@@ -106,41 +107,27 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteTag(Tag t)
-            throws PersonNotFoundException, DuplicatePersonException, UniqueTagList.DuplicateTagException {
+    public void deleteTag(Tag t) throws PersonNotFoundException, DuplicatePersonException,
+            UniqueTagList.DuplicateTagException {
         addressBook.removeTag(t);
         indicateAddressBookChanged();
     }
 
-    /**
-     * Logs the user into the system.
-     * @throws InvalidUsernameException
-     * @throws InvalidPasswordException
-     * @throws MultipleLoginException
-     */
     @Override
-    public void login(String username, String password)
-            throws InvalidUsernameException, InvalidPasswordException, MultipleLoginException {
-        if (user.isPresent()) {
-            throw new MultipleLoginException();
-        } else {
-            requireNonNull(account);
-            account.identify(username, password);
-            user = user.of(username);
-        }
+    public AccountsManager getAccountsManager() {
+        return accountsManager;
     }
 
-    /**
-     * Logs the user out of the system.
-     * @throws UserLogoutException
-     */
     @Override
-    public void logout() throws UserLogoutException {
-        if (user.isPresent()) {
-            user = user.empty();
-        } else {
-            throw new UserLogoutException();
-        }
+    public void register(String username, String password) throws DuplicateUsernameException {
+        accountsManager.register(username, password);
+    }
+
+    @Override
+    public synchronized void addJob(Job job) throws DuplicateJobException {
+        addressBook.addJob(job);
+        updateFilteredJobList(PREDICATE_SHOW_ALL_JOBS);
+        indicateAddressBookChanged();
     }
 
     @Override
@@ -197,6 +184,7 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons)
+                && filteredJobs.equals(other.filteredJobs)
                 && appointments.equals(other.appointments);
     }
 
@@ -211,4 +199,20 @@ public class ModelManager extends ComponentManager implements Model {
         return appointments;
     }
 
+    //=========== Filtered Job List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Jobs} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<Job> getFilteredJobList() {
+        return FXCollections.unmodifiableObservableList(filteredJobs);
+    }
+
+    @Override
+    public void updateFilteredJobList(Predicate<Job> predicate) {
+        requireNonNull(predicate);
+        filteredJobs.setPredicate(predicate);
+    }
 }

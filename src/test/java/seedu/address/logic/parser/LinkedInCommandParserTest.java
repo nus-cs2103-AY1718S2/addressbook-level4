@@ -7,7 +7,8 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.LinkedInCommand;
+import seedu.address.logic.commands.person.LinkedInCommand;
+import seedu.address.logic.parser.person.LinkedInCommandParser;
 
 public class LinkedInCommandParserTest {
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.job.Job;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -30,4 +31,9 @@ public interface ReadOnlyAddressBook {
      */
     List<Appointment> getAppointmentList();
 
+    /**
+     * Returns an unmodifiable view of the jobs list.
+     * This list will not contain any duplicate jobs.
+     */
+    ObservableList<Job> getJobList();
 }

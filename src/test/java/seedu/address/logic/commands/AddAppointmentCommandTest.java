@@ -19,12 +19,16 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.AccountsManager;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.exception.DuplicateUsernameException;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -147,12 +151,29 @@ public class AddAppointmentCommandTest {
         }
 
         @Override
-        public void login(String username, String password) {
+        public AccountsManager getAccountsManager() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void register(String username, String password) throws DuplicateUsernameException {
             fail("This method should not be called.");
         }
 
         @Override
-        public void logout() {
+        public void addJob(Job job) throws DuplicateJobException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Job> getFilteredJobList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredJobList(Predicate<Job> predicate) {
             fail("This method should not be called.");
         }
 

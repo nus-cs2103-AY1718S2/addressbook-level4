@@ -54,9 +54,7 @@ public class GuiTestAssert {
      */
     public static void assertListMatching(BookListPanelHandle bookListPanelHandle, Book... books) {
         for (int i = 0; i < books.length; i++) {
-            if (!bookListPanelHandle.getBookCardHandle(i).isPresent()) {
-                bookListPanelHandle.navigateToCard(i);
-            }
+            bookListPanelHandle.navigateToCard(i);
             assertCardDisplaysBook(books[i], bookListPanelHandle.getBookCardHandle(i).get());
         }
     }
@@ -67,9 +65,7 @@ public class GuiTestAssert {
      */
     public static void assertListMatching(SearchResultsPanelHandle searchResultsPanelHandle, Book... books) {
         for (int i = 0; i < books.length; i++) {
-            if (!searchResultsPanelHandle.getBookCardHandle(i).isPresent()) {
-                searchResultsPanelHandle.navigateToCard(i);
-            }
+            searchResultsPanelHandle.navigateToCard(i);
             assertCardDisplaysBook(books[i], searchResultsPanelHandle.getBookCardHandle(i).get());
         }
     }
@@ -80,9 +76,7 @@ public class GuiTestAssert {
      */
     public static void assertListMatching(RecentBooksPanelHandle recentBooksPanelHandle, Book... books) {
         for (int i = 0; i < books.length; i++) {
-            if (!recentBooksPanelHandle.getBookCardHandle(i).isPresent()) {
-                recentBooksPanelHandle.navigateToCard(i);
-            }
+            recentBooksPanelHandle.navigateToCard(i);
             assertCardDisplaysBook(books[i], recentBooksPanelHandle.getBookCardHandle(i).get());
         }
     }

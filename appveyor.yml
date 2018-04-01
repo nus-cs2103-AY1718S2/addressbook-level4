@@ -1,6 +1,14 @@
 # AppVeyor configuration file
 # For more details see https://www.appveyor.com/docs/build-configuration/
 
+image: Visual Studio 2017
+
+platform:
+    - x64
+
+environment:
+    JAVA_HOME: C:\Program Files\Java\jdk1.8.0  # Use 64-bit Java
+
 # Call on gradle to build and run tests
 # --no-daemon: Prevent the daemon from launching to prevent file-in-use errors
 #     when we cache the ~/.gradle directory
@@ -10,8 +18,21 @@ build_script:
 test_script:
     - appveyor-retry gradlew.bat --no-daemon headless allTests
 
-environment:
-    JAVA_HOME: C:\Program Files\Java\jdk1.8.0  # Use 64-bit Java
+# upload test results via rest-api
+after_test:
+    - ps: |
+          $wc = New-Object 'System.Net.WebClient'
+          $url = "https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)"
+          $files = Get-ChildItem '.\build\test-results\test\TEST-*.xml'
+          ForEach ($file in $files) {
+              $wc.UploadFile($url, (Resolve-Path $file))
+          }
+
+on_success:
+    - ps: rm C:\Users\appveyor\.gradle\caches\modules-2\modules-2.lock -force
+    - ps: rm C:\Users\appveyor\.gradle\caches\*\plugin-resolution\ -recurse -force
+    - ps: rm C:\Users\appveyor\.gradle\caches\*\fileHashes\fileHashes.bin -recurse -force
+    - ps: rm C:\Users\appveyor\.gradle\caches\*\fileHashes\fileHashes.lock -recurse -force
 
 # Files/folders to preserve between builds to speed them up
 cache:

@@ -120,16 +120,21 @@ public class ModelManager extends ComponentManager implements Model {
     public Patient getPatientFromList(Predicate<Patient> predicate) {
         filteredPatients.setPredicate(predicate);
         if (filteredPatients.size() > 0) {
-            return filteredPatients.get(0);
+            Patient targetPatient = filteredPatients.get(0);
+            updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            return targetPatient;
         }
         return null;
     }
 
     private int getPatientIndex(Predicate<Patient> predicate) throws PatientNotFoundException {
-        filteredPatients.setPredicate(predicate);
 
+        filteredPatients.setPredicate(predicate);
+        int patientIndex = 0;
         if (filteredPatients.size() > 0) {
-            return filteredPatients.getSourceIndex(0);
+            patientIndex = filteredPatients.getSourceIndex(0);
+            updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            return patientIndex;
         }
 
         throw new PatientNotFoundException();

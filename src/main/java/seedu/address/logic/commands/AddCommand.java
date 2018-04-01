@@ -66,7 +66,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_BLOODTYPE + "BLOOD_TYPE "
             + "[" + PREFIX_TAG + "TAG]... -a "  + PREFIX_DATE + "DATE "
             + PREFIX_REMARK + "REMARK "
-            + "[" + PREFIX_TAG + "TYPE OF APPOINTMENT]...";
+            + PREFIX_TAG + "TYPE OF APPOINTMENT...";
 
     public static final String MESSAGE_PERSON = "Option -o : Person details. "
             + "Parameters: "
@@ -82,14 +82,13 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_NRIC + "S1234567Q "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_TAG + "medical supplier";
 
     public static final String MESSAGE_APPOINTMENT = "Option -a : Appointment details. "
             + "Parameters: "
             + PREFIX_DATE + "DATE "
             + PREFIX_REMARK + "REMARK "
-            + "[" + PREFIX_TAG + "TYPE OF APPOINTMENT]...\n"
+            + PREFIX_TAG + "TYPE OF APPOINTMENT...\n"
             + "Example: " + "-a "
             + PREFIX_DATE + "2018-12-31 12:30 "
             + PREFIX_REMARK + "nil "

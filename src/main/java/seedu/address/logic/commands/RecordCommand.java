@@ -42,7 +42,7 @@ public class RecordCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_PERSON = "This patient already exists in the address book.";
 
     private final Index patientIndex;
-    private final int recordIndex;
+    private final Index recordIndex;
 
     private Patient patientToEdit;
     private Patient editedPatient;
@@ -50,7 +50,7 @@ public class RecordCommand extends UndoableCommand {
     /**
      * Creates a RecordCommand to edit the records of the specified {@code Patient}
      */
-    public RecordCommand(Index patientIndex, int recordIndex) {
+    public RecordCommand(Index patientIndex, Index recordIndex) {
         requireNonNull(patientIndex);
         this.patientIndex = patientIndex;
         this.recordIndex = recordIndex;
@@ -94,7 +94,7 @@ public class RecordCommand extends UndoableCommand {
         //creating medical record window here and obtaining user input
         RecordWindow recordWindow = new RecordWindow();
         Stage stage = new Stage();
-        recordWindow.start(stage, patientToEdit.getRecord(recordIndex));
+        recordWindow.start(stage, patientToEdit.getRecord(recordIndex.getZeroBased()));
 
         Record editedRecord = RecordManager.getRecord();
 
@@ -102,7 +102,7 @@ public class RecordCommand extends UndoableCommand {
             editedPatient = patientToEdit;
         }
         else {
-            editedPatient = createEditedPatient(patientToEdit, recordIndex, editedRecord);
+            editedPatient = createEditedPatient(patientToEdit, recordIndex.getZeroBased(), editedRecord);
         }
     }
 
@@ -151,10 +151,6 @@ public class RecordCommand extends UndoableCommand {
     public Index getPatientIndex() {
         return patientIndex;
     }
-    public int getRecordIndex() {
-        return recordIndex;
-    }
-
     public Patient getToEdit() {
         return patientToEdit;
     }

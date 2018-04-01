@@ -44,7 +44,7 @@ public class RecordCommandParser implements Parser<RecordCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
         }
 
-        return new RecordCommand(patientIndex, recordIndex.getZeroBased());
+        return new RecordCommand(patientIndex, recordIndex);
     }
 
     /**

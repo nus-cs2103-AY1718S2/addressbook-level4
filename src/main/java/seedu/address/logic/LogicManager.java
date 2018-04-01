@@ -17,6 +17,7 @@ import seedu.address.commons.events.model.NotificationDeletedEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
@@ -73,8 +74,8 @@ public class LogicManager extends ComponentManager implements Logic {
         try {
             Command command;
             CommandResult result = new CommandResult("");
-            if (isLocked) {
-                command = addressBookParser.parseCommand(commandText);
+            command = addressBookParser.parseCommand(commandText);
+            if (isLocked && !(command instanceof HelpCommand)) {
                 command.setData(model, history, undoRedoStack);
                 if (command instanceof UnlockCommand) {
                     UnlockCommand unlockCommand = (UnlockCommand) command;
@@ -83,7 +84,6 @@ public class LogicManager extends ComponentManager implements Logic {
                     result = new CommandResult("Addressbook has been locked, please unlock it first!");
                 }
             } else {
-                command = addressBookParser.parseCommand(commandText);
                 command.setData(model, history, undoRedoStack);
                 result = command.execute();
                 undoRedoStack.push(command);

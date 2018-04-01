@@ -21,12 +21,14 @@ import seedu.address.commons.events.ui.ShowSuggestionEvent;
 import seedu.address.commons.events.ui.ToggleNotificationCenterEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
+import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.RateCommand;
 import seedu.address.logic.commands.ReviewCommand;
@@ -88,7 +90,12 @@ public class CommandBox extends UiPart<Region> {
         try {
             newValue = (new Scanner(newValue)).next();
         } catch (NoSuchElementException e) {
-            raise(new ShowSuggestionEvent(""));
+            if (LogicManager.isLocked()) {
+                raise(new ShowSuggestionEvent(ResultDisplay.WELCOME_MESSAGE));
+            } else {
+                raise(new ShowSuggestionEvent(ResultDisplay.SUGGEST_HELP_MESSAGE));
+            }
+            return;
         }
         boolean found = false;
         for (int i = 0; i < allCommandsWord.length; i++) {
@@ -126,6 +133,10 @@ public class CommandBox extends UiPart<Region> {
                 resetWaitForSecondShift();
                 raise(new ToggleNotificationCenterEvent());
             }
+            break;
+        case F1:
+            keyEvent.consume();
+            new HelpCommand().execute();
             break;
         default:
             // let JavaFx handle the keypress

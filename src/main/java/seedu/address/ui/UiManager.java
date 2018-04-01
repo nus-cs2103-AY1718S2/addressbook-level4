@@ -83,7 +83,7 @@ public class UiManager extends ComponentManager implements Ui {
             public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
                 System.out.println("minimized:" + t1.booleanValue());
                 isWindowMinimized = t1;
-                if (!isWindowMinimized) {
+                if (!isWindowMinimized && !LogicManager.isLocked()) {
                     showDelayedNotifications();
                 }
             }

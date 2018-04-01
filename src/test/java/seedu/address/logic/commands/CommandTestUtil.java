@@ -23,7 +23,6 @@ import seedu.address.model.activity.NameContainsKeywordsPredicate;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.testutil.EditActivityDescriptorBuilder;
 
-//@@author
 /**
  * Contains helper methods for testing commands.
  */
@@ -76,6 +75,21 @@ public class CommandTestUtil {
                 .withTags(VALID_TAG_MA2108, VALID_TAG_CS2010).build();
     }
 
+    //@@author jasmoon
+    /**
+     * Executes the given {@code command}, confirms that <br>
+     * - the result message matches {@code expectedMessage} <br>
+     */
+    public static void assertCommandSuccess(Command command, String expectedMessage)   {
+        try {
+            CommandResult result = command.execute();
+            assertEquals(expectedMessage, result.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new AssertionError("Execution of command should not fail.", ce);
+        }
+    }
+
+    //@@author
     /**
      * Executes the given {@code command}, confirms that <br>
      * - the result message matches {@code expectedMessage} <br>

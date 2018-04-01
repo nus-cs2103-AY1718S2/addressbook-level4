@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.HelpCommand.SHOWING_HELP_MESSAGE;
 
 import org.junit.Rule;
@@ -16,22 +16,22 @@ public class HelpCommandTest {
 
     @Test
     public void execute_help_success() {
-        CommandResult result = new HelpCommand().execute();
-        assertEquals(SHOWING_HELP_MESSAGE, result.feedbackToUser);
+        HelpCommand command = new HelpCommand();
+        assertCommandSuccess(command, SHOWING_HELP_MESSAGE);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ShowHelpRequestEvent);
         assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
     }
 
     @Test
     public void execute_helpForTask_success() {
-        CommandResult result = new HelpCommand("task").execute();
-        assertEquals(TaskCommand.MESSAGE_USAGE, result.feedbackToUser);
+        HelpCommand command = new HelpCommand("task");
+        assertCommandSuccess(command,TaskCommand.MESSAGE_USAGE);
     }
 
     @Test
     public void execute_helpForDelete_success()    {
-        CommandResult result = new HelpCommand("delete").execute();
-        assertEquals(DeleteCommand.MESSAGE_USAGE, result.feedbackToUser);
+        HelpCommand command = new HelpCommand("delete");
+        assertCommandSuccess(command,DeleteCommand.MESSAGE_USAGE);;
     }
 
 }

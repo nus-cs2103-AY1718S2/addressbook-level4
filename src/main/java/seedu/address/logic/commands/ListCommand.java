@@ -5,6 +5,8 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.ShowActivityRequestEvent;
 import seedu.address.commons.events.ui.ShowEventOnlyRequestEvent;
 import seedu.address.commons.events.ui.ShowTaskOnlyRequestEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
   * Lists task or events, or both.
@@ -28,7 +30,7 @@ public class ListCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
 
         if (commandRequest == null)  {
             EventsCenter.getInstance().post(new ShowActivityRequestEvent());
@@ -45,7 +47,7 @@ public class ListCommand extends Command {
             return new CommandResult(MESSAGE_SUCCESS_EVENT);
 
         default:
-            return new CommandResult(String.format(Messages.MESSAGE_INVALID_LIST_REQUEST, commandRequest));
+            throw new CommandException(String.format(Messages.MESSAGE_INVALID_LIST_REQUEST, commandRequest));
         }
     }
 }

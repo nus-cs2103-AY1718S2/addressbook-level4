@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
  * Format full help instructions for every command for display or command requested
@@ -27,7 +28,7 @@ public class HelpCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         if (commandRequest == null)   {
             EventsCenter.getInstance().post(new ShowHelpRequestEvent());
             return new CommandResult(SHOWING_HELP_MESSAGE);
@@ -56,12 +57,10 @@ public class HelpCommand extends Command {
                 //return new CommandResult(FindCommand.MESSAGE_USAGE);
 
             default:
-                return new CommandResult(MESSAGE_USAGE);
+                throw new CommandException(MESSAGE_USAGE);
             }
         }
     }
 
-    public String getCommandRequest() {
-        return commandRequest;
-    }
+
 }

@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.ShowActivityRequestEvent;
 import seedu.address.commons.events.ui.ShowEventOnlyRequestEvent;
 import seedu.address.commons.events.ui.ShowTaskOnlyRequestEvent;
@@ -44,7 +45,7 @@ public class ListCommand extends Command {
             return new CommandResult(MESSAGE_SUCCESS_EVENT);
 
         default:
-            return new CommandResult(HelpCommand.MESSAGE_USAGE);
+            return new CommandResult(String.format(Messages.MESSAGE_INVALID_LIST_REQUEST, commandRequest));
         }
     }
 }

@@ -312,6 +312,7 @@ Examples:
 * `theme`
 * `t`
 
+// tag::undoredo[]
 === Undoing previous command : `undo OR u`
 
 Restores the ProgressChecker to the state before the previous _undoable_ command was executed. +

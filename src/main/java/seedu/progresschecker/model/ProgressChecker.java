@@ -21,6 +21,9 @@ import org.kohsuke.github.GitHub;
 
 import javafx.collections.ObservableList;
 import seedu.progresschecker.commons.core.index.Index;
+import seedu.progresschecker.model.exercise.Exercise;
+import seedu.progresschecker.model.exercise.UniqueExerciseList;
+import seedu.progresschecker.model.exercise.exceptions.DuplicateExerciseException;
 import seedu.progresschecker.model.issues.Assignees;
 import seedu.progresschecker.model.issues.Issue;
 import seedu.progresschecker.model.issues.Labels;
@@ -49,6 +52,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     private final UniquePersonList persons;
     private final UniquePhotoList photos;
     private final UniqueTagList tags;
+    private final UniqueExerciseList exercises;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -60,7 +64,11 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+<<<<<<< HEAD
         photos = new UniquePhotoList();
+=======
+        exercises = new UniqueExerciseList();
+>>>>>>> Read exercises from data/progresschecker.xml if exist, otherwise read from sample data (#153)
     }
 
     public ProgressChecker() {}
@@ -83,6 +91,12 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
         this.tags.setTags(tags);
     }
 
+    //@@author iNekox3
+    public void setExercises(List<Exercise> exercises) throws DuplicateExerciseException {
+        this.exercises.setExercises(exercises);
+    }
+
+    //@@author
     /**
      * Resets the existing data of this {@code ProgressChecker} with {@code newData}.
      */
@@ -95,8 +109,11 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
 
         try {
             setPersons(syncedPersonList);
+            setExercises(newData.getExerciseList());
         } catch (DuplicatePersonException e) {
             throw new AssertionError("ProgressChecker should not have duplicate persons");
+        } catch (DuplicateExerciseException e) {
+            throw new AssertionError("ProgressChecker should not have duplicate exercises");
         }
     }
 
@@ -256,6 +273,22 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
         tags.add(t);
     }
 
+    //@@author iNekox3
+    //// exercise-level operations
+
+    /**
+     * Adds an exercise to the ProgressChecker.
+     *
+     * @throws DuplicateExerciseException if an equivalent exercise already exists.
+     */
+    public void addExercise(Exercise e) throws DuplicateExerciseException {
+        Exercise exercise = new Exercise(
+                e.getQuestionIndex(), e.getQuestionType(), e.getQuestion(),
+                e.getStudentAnswer(), e.getModelAnswer());
+        exercises.add(exercise);
+    }
+
+    //@@author
     //// util methods
 
     @Override
@@ -274,6 +307,13 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
         return tags.asObservableList();
     }
 
+    //@@author iNekox3
+    @Override
+    public ObservableList<Exercise> getExerciseList() {
+        return exercises.asObservableList();
+    }
+
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

@@ -23,6 +23,7 @@ import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.Model;
 import seedu.progresschecker.model.ProgressChecker;
 import seedu.progresschecker.model.ReadOnlyProgressChecker;
+import seedu.progresschecker.model.exercise.Exercise;
 import seedu.progresschecker.model.issues.Issue;
 import seedu.progresschecker.model.person.Person;
 import seedu.progresschecker.model.person.exceptions.DuplicatePersonException;
@@ -156,6 +157,12 @@ public class AddCommandTest {
         public void uploadPhoto(Person target, String path)
                 throws DuplicatePersonException, PersonNotFoundException, IOException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Exercise> getFilteredExerciseList() {
+            fail("This method should not be called.");
+            return null;
         }
     }
 

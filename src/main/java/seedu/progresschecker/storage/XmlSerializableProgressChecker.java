@@ -21,6 +21,8 @@ public class XmlSerializableProgressChecker {
     private List<XmlAdaptedPerson> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
+    @XmlElement
+    private List<XmlAdaptedExercise> exercises;
 
     /**
      * Creates an empty XmlSerializableProgressChecker.
@@ -29,6 +31,7 @@ public class XmlSerializableProgressChecker {
     public XmlSerializableProgressChecker() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
+        exercises = new ArrayList<>();
     }
 
     /**
@@ -38,6 +41,7 @@ public class XmlSerializableProgressChecker {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        exercises.addAll(src.getExerciseList().stream().map(XmlAdaptedExercise::new).collect(Collectors.toList()));
     }
 
     /**
@@ -53,6 +57,9 @@ public class XmlSerializableProgressChecker {
         }
         for (XmlAdaptedPerson p : persons) {
             progressChecker.addPerson(p.toModelType());
+        }
+        for (XmlAdaptedExercise e : exercises) {
+            progressChecker.addExercise(e.toModelType());
         }
         return progressChecker;
     }

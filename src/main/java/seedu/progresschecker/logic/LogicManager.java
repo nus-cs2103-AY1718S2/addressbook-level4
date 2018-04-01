@@ -11,6 +11,7 @@ import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.logic.parser.ProgressCheckerParser;
 import seedu.progresschecker.logic.parser.exceptions.ParseException;
 import seedu.progresschecker.model.Model;
+import seedu.progresschecker.model.exercise.Exercise;
 import seedu.progresschecker.model.person.Person;
 
 /**
@@ -50,6 +51,13 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getFilteredPersonList();
     }
 
+    //@@author iNekox3
+    @Override
+    public ObservableList<Exercise> getFilteredExerciseList() {
+        return model.getFilteredExerciseList();
+    }
+
+    //@@author
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());

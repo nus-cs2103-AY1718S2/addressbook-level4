@@ -6,6 +6,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
+
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddLessonCommand;
 import seedu.address.logic.commands.AddMilestoneCommand;
@@ -13,6 +15,8 @@ import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.logic.commands.CheckTaskCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+//import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.ConversationCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteLessonCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -31,6 +35,7 @@ import seedu.address.logic.commands.ShowDashboardCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnfavouriteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+//import seedu.address.ui.ResultDisplay;
 
 /**
  * Parses user input.
@@ -120,6 +125,23 @@ public class AddressBookParser {
         case UnfavouriteCommand.COMMAND_WORD:
             return new UnfavouriteCommandParser().parse(arguments);
 
+        //@@ chweeee
+        case "assistant":
+            ConversationCommand.setUpAgent();
+            MessageResponse response = null;
+            String text;
+            Command command = new ConversationCommand(); //this is a dummy
+
+            //need to talk to the agent here
+            //the while loop needs to occur here
+            //initiate communication with agent
+            response = ConversationCommand.getMessageResponse("Hello");
+            text = ConversationCommand.getResponseText(response);
+
+            //has to return the appropriate command, to be decided by the agent
+            return command;
+
+        //@@
         case MoreInfoCommand.COMMAND_WORD:
             return new MoreInfoCommandParser().parse(arguments);
 
@@ -131,7 +153,7 @@ public class AddressBookParser {
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+
         }
     }
-
 }

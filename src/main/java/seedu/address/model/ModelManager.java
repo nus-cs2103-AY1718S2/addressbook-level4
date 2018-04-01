@@ -130,7 +130,7 @@ public class ModelManager extends ComponentManager implements Model {
     private int getPatientIndex(Predicate<Patient> predicate) throws PatientNotFoundException {
 
         filteredPatients.setPredicate(predicate);
-        int patientIndex = 0;
+        int patientIndex;
         if (filteredPatients.size() > 0) {
             patientIndex = filteredPatients.getSourceIndex(0);
             updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);

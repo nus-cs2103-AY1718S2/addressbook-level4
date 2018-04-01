@@ -7,10 +7,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
-import seedu.address.testutil.PatientBuilder;
 
 public class UniquePatientVisitingQueueTest {
     @Rule
@@ -21,7 +19,6 @@ public class UniquePatientVisitingQueueTest {
 
     @Test
     public void execute_addPatient_addSuccessful() throws Exception {
-        Patient samplePatient = new PatientBuilder().build();
         UniquePatientVisitingQueue anotherQueue = new UniquePatientVisitingQueue();
         anotherQueue.add(1);
         queueToTest.add(1);
@@ -30,7 +27,6 @@ public class UniquePatientVisitingQueueTest {
 
     @Test
     public void execute_removePatient_removeSuccessful() throws Exception {
-        Patient samplePatient = new PatientBuilder().build();
         UniquePatientVisitingQueue anotherQueue = new UniquePatientVisitingQueue();
         anotherQueue.add(1);
         queueToTest.add(1);
@@ -41,18 +37,11 @@ public class UniquePatientVisitingQueueTest {
 
     @Test
     public void execute_duplicatePatient_throwsDuplicateException() throws Exception {
-        Patient samplePatient = new PatientBuilder().build();
         queueToTest.add(1);
 
         thrown.expect(DuplicatePatientException.class);
 
         queueToTest.add(1);
-    }
-
-    @Test
-    public void execute_addNullObject_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        queueToTest.add(Integer.parseInt(null));
     }
 
     @Test

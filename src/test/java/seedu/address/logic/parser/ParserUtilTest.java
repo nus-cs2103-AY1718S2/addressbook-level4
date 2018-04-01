@@ -18,7 +18,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.RatingSortCommand;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -67,6 +67,21 @@ public class ParserUtilTest {
 
         // Leading and trailing whitespaces
         assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
+    }
+
+    @Test
+    public void parseSortField_invalidInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseSortField("gpa name");
+    }
+
+    @Test
+    public void parseSortField_validInput_success() throws Exception {
+        // No whitespaces
+        assertEquals(SortCommand.SortField.GPA, ParserUtil.parseSortField("gpa"));
+
+        // Leading and trailing whitespaces
+        assertEquals(SortCommand.SortField.RATING, ParserUtil.parseSortField("   rating   "));
     }
 
     @Test
@@ -213,14 +228,14 @@ public class ParserUtilTest {
 
     @Test
     public void parseSortOrder_validValueWithoutWhitespace_returnsSortOrder() throws Exception {
-        RatingSortCommand.SortOrder expectedSortOrder = RatingSortCommand.SortOrder.ASC;
+        SortCommand.SortOrder expectedSortOrder = SortCommand.SortOrder.ASC;
         assertEquals(expectedSortOrder, ParserUtil.parseSortOrder(VALID_SORT_ORDER));
         assertEquals(Optional.of(expectedSortOrder), ParserUtil.parseSortOrder(Optional.of(VALID_SORT_ORDER)));
     }
 
     @Test
     public void parseSortOrder_validValueWithWhitespace_returnsSortOrder() throws Exception {
-        RatingSortCommand.SortOrder expectedSortOrder = RatingSortCommand.SortOrder.ASC;
+        SortCommand.SortOrder expectedSortOrder = SortCommand.SortOrder.ASC;
         String sortOrderWithWhitespace = WHITESPACE + VALID_SORT_ORDER + WHITESPACE;
         assertEquals(expectedSortOrder, ParserUtil.parseSortOrder(sortOrderWithWhitespace));
         assertEquals(Optional.of(expectedSortOrder), ParserUtil.parseSortOrder(Optional.of(sortOrderWithWhitespace)));

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.SortCommand.SORT_FIELD_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMUNICATION_SKILLS_SCORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPERIENCE_SCORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROBLEM_SOLVING_SKILLS_SCORE;
@@ -36,9 +37,9 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.InterviewCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RateCommand;
-import seedu.address.logic.commands.RatingSortCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.StatusCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -139,10 +140,12 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_ratingSort() throws Exception {
-        RatingSortCommand command = (RatingSortCommand) parser.parseCommand(
-                RatingSortCommand.COMMAND_WORD + " " + PREFIX_SORT_ORDER + RatingSortCommand.SORT_ORDER_ASC);
-        assertEquals(new RatingSortCommand(RatingSortCommand.SortOrder.ASC), command);
+    public void parseCommand_sort() throws Exception {
+        SortCommand command =
+                (SortCommand) parser.parseCommand(
+                        SortCommand.COMMAND_WORD + " " + SORT_FIELD_NAME + " " + PREFIX_SORT_ORDER
+                                + SortCommand.SORT_ORDER_ASC);
+        assertEquals(new SortCommand(SortCommand.SortOrder.ASC, SortCommand.SortField.NAME), command);
     }
 
     @Test

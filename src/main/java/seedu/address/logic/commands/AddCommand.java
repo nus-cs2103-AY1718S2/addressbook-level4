@@ -119,6 +119,7 @@ public class AddCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_PET_PATIENT = "This pet patient already exists in Medeina";
     public static final String MESSAGE_INVALID_NRIC = "The specified NRIC does not belong to anyone in Medeina."
             + " Please add a new person.";
+    public static final String MESSAGE_MISSING_NRIC_PREFIX = "Missing prefix \"nr/\" for NRIC after -o option";
     public static final String MESSAGE_INVALID_PET_PATIENT = "The specified pet cannot be found under the specified "
             + "owner in Medeina. Please add a new pet patient.";
 

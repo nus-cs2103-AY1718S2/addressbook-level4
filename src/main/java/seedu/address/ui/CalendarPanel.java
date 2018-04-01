@@ -10,11 +10,14 @@ import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.CalendarView;
+import com.calendarfx.view.page.PageBase;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.logic.ZoomInEvent;
+import seedu.address.commons.events.logic.ZoomOutEvent;
 import seedu.address.commons.events.model.AppointmentDeletedEvent;
 import seedu.address.commons.events.model.NewAppointmentAddedEvent;
 import seedu.address.model.appointment.Appointment;
@@ -34,6 +37,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
     @javafx.fxml.FXML
     private CalendarView calendarView;
     private Calendar calendar;
+    private PageBase pageBase;
 
     public CalendarPanel(ObservableList<Appointment> appointments) {
         super(FXML);
@@ -42,6 +46,14 @@ public class CalendarPanel extends UiPart<CalendarView> {
         loadEntries(appointments);
         updateTime();
         registerAsAnEventHandler(this);
+    }
+
+    public CalendarView getCalendarView() {
+        return calendarView;
+    }
+
+    public PageBase getPageBase() {
+        return pageBase;
     }
 
     /**
@@ -62,6 +74,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
 
         calendarView.setRequestedTime(LocalTime.now());
         calendarView.showMonthPage();
+        pageBase = calendarView.getSelectedPage();
     }
 
     /**
@@ -109,6 +122,52 @@ public class CalendarPanel extends UiPart<CalendarView> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         calendar.clear();
         loadEntries(event.getUpdatedAppointments());
+    }
+
+    /**
+     * Handles the event where the user is trying to zoom in on the calendar
+     */
+    @Subscribe
+    private void handleZoomInEvent(ZoomInEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        zoomIn();
+    }
+
+    /**
+     * Zooms in on the calendar if possible
+     */
+    private void zoomIn() {
+        if (pageBase.equals(calendarView.getYearPage())) {
+            calendarView.showMonthPage();
+        } else if (pageBase.equals(calendarView.getMonthPage())) {
+            calendarView.showWeekPage();
+        } else if (pageBase.equals(calendarView.getWeekPage())) {
+            calendarView.showDayPage();
+        }
+        pageBase = calendarView.getSelectedPage();
+    }
+
+    /**
+     * Handles the event where the user is trying to zoom out on the calendar
+     */
+    @Subscribe
+    private void handleZoomOutEvent(ZoomOutEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        zoomOut();
+    }
+
+    /**
+     * Zooms out on the calendar if possible
+     */
+    private void zoomOut() {
+        if (pageBase.equals(calendarView.getDayPage())) {
+            calendarView.showWeekPage();
+        } else if (pageBase.equals(calendarView.getWeekPage())) {
+            calendarView.showMonthPage();
+        } else if (pageBase.equals(calendarView.getMonthPage())) {
+            calendarView.showYearPage();
+        }
+        pageBase = calendarView.getSelectedPage();
     }
 
     /**

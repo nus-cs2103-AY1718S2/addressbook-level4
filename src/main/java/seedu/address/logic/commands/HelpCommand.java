@@ -47,10 +47,8 @@ public class HelpCommand extends Command {
             //case SelectCommand.COMMAND_WORD:
                 //return new CommandResult(SelectCommand.MESSAGE_USAGE);
 
-            case DeleteCommand.ALIAS:
-                // Fallthrough
-            case DeleteCommand.COMMAND_WORD:
-                return new CommandResult(DeleteCommand.MESSAGE_USAGE);
+            case RemoveCommand.COMMAND_WORD:
+                return new CommandResult(RemoveCommand.MESSAGE_USAGE);
 
             //case FindCommand.COMMAND_WORD:
                 //return new CommandResult(FindCommand.MESSAGE_USAGE);

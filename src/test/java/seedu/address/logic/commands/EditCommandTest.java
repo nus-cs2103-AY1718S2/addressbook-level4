@@ -12,7 +12,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.commands.CommandTestUtil.showActivityAtIndex;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ACTIVITY;
@@ -101,7 +101,7 @@ public class EditCommandTest {
      * Test
      */
     public void execute_filteredList_success() throws Exception {
-        showPersonAtIndex(model, INDEX_FIRST_ACTIVITY);
+        showActivityAtIndex(model, INDEX_FIRST_ACTIVITY);
 
         Activity activityInFilteredList = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
         Activity editedActivity = new TaskBuilder(activityInFilteredList).withName(VALID_NAME_CS2010_QUIZ).build();
@@ -133,7 +133,7 @@ public class EditCommandTest {
      * Test
      */
     public void execute_duplicatePersonFilteredList_failure() {
-        showPersonAtIndex(model, INDEX_FIRST_ACTIVITY);
+        showActivityAtIndex(model, INDEX_FIRST_ACTIVITY);
 
         // edit activity in filtered list into a duplicate in address book
         Activity activityInList = model.getDeskBoard().getActivityList().get(INDEX_SECOND_ACTIVITY.getZeroBased());
@@ -162,7 +162,7 @@ public class EditCommandTest {
      */
 
     public void execute_invalidPersonIndexFilteredList_failure() {
-        showPersonAtIndex(model, INDEX_FIRST_ACTIVITY);
+        showActivityAtIndex(model, INDEX_FIRST_ACTIVITY);
         Index outOfBoundIndex = INDEX_SECOND_ACTIVITY;
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getDeskBoard().getActivityList().size());
@@ -237,7 +237,7 @@ public class EditCommandTest {
         EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY, descriptor);
         Model expectedModel = new ModelManager(new DeskBoard(model.getDeskBoard()), new UserPrefs());
 
-        showPersonAtIndex(model, INDEX_SECOND_ACTIVITY);
+        showActivityAtIndex(model, INDEX_SECOND_ACTIVITY);
         Activity activityToEdit = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
         // edit -> edits second activity in unfiltered activity list / first activity in filtered activity list
         editCommand.execute();

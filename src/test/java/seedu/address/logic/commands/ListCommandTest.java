@@ -8,14 +8,13 @@ import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.ShowActivityRequestEvent;
+import seedu.address.commons.events.ui.ShowEventOnlyRequestEvent;
 import seedu.address.commons.events.ui.ShowTaskOnlyRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -58,6 +57,14 @@ public class ListCommandTest {
 
     @Test
     public void execute_helpForEvent_success()    {
+        ListCommand command = new ListCommand("event");
+        assertCommandSuccess(command, ListCommand.MESSAGE_SUCCESS_EVENT);
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ShowEventOnlyRequestEvent);
+        assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
+    }
+
+    @Test
+    public void execute_helpForActivity_success()    {
         ListCommand command = new ListCommand();
         assertCommandSuccess(command, ListCommand.MESSAGE_SUCCESS);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ShowActivityRequestEvent);
@@ -69,5 +76,5 @@ public class ListCommandTest {
         ListCommand command = new ListCommand("hello");
         assertCommandFailure(command, String.format(Messages.MESSAGE_INVALID_LIST_REQUEST, "hello"));
     }
-    
+
 }

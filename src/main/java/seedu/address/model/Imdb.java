@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -85,7 +86,7 @@ public class Imdb implements ReadOnlyImdb {
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
         setAppointments(new HashSet<>(newData.getAppointmentList()));
-        setQueue(new HashSet<>(newData.getUniquePatientQueueNo()));
+        setQueue(new LinkedHashSet<>(newData.getUniquePatientQueueNo()));
 
         try {
             setPersons(syncedPatientList);

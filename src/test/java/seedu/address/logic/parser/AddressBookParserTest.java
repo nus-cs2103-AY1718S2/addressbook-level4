@@ -132,7 +132,7 @@ public class AddressBookParserTest {
                 DeleteToDoCommand.COMMAND_ALIAS + " " + INDEX_FIRST_TODO.getOneBased());
         assertEquals(new DeleteToDoCommand(INDEX_FIRST_TODO), command);
     }
-    
+
     @Test
     public void parseCommand_addGroup() throws Exception {
         Group group = new GroupBuilder().build();

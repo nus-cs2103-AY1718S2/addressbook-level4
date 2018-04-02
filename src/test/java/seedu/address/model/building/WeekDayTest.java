@@ -17,6 +17,7 @@ import seedu.address.testutil.WeekDayBuilder;
 public class WeekDayTest {
 
     private WeekDay weekDay = new WeekDay();
+    private final WeekDay validWeekDay = new WeekDayBuilder().build();
     private final WeekDay standardWeekDay =
             new WeekDayBuilder().withWeekDay("Monday").withRoomName("COM2-0108").build();
 
@@ -43,7 +44,6 @@ public class WeekDayTest {
 
     @Test
     public void retrieveWeekDaySchedule_validWeekDaySchedule_success() throws Exception {
-        WeekDay validWeekDay = new WeekDayBuilder().build();
         HashMap<String, String> validWeekDaySchedule = validWeekDay.getWeekDaySchedule();
         weekDay.setWeekDaySchedule(validWeekDaySchedule);
 
@@ -77,7 +77,6 @@ public class WeekDayTest {
 
     @Test
     public void isValidWeekDaySchedule_validWeekDaySchedule_success() throws Exception {
-        WeekDay validWeekDay = new WeekDayBuilder().build();
         HashMap<String, String> validWeekDaySchedule = validWeekDay.getWeekDaySchedule();
         weekDay.setWeekDaySchedule(validWeekDaySchedule);
 

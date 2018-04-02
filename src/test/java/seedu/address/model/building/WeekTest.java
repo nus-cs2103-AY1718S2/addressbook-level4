@@ -17,6 +17,7 @@ import seedu.address.testutil.WeekDayBuilder;
 public class WeekTest {
 
     private Week week = new Week();
+    private final Week validWeek = new WeekBuilder().build();
     private final Week standardWeek = new WeekBuilder().withDay(0).withRoomName("COM2-0108").build();
 
     @Test
@@ -35,8 +36,6 @@ public class WeekTest {
 
     @Test
     public void retrieveWeekDaySchedule_validWeekDaySchedule_success() throws Exception {
-        Week validWeek = new WeekBuilder().build();
-
         ArrayList<String> expectedList = new ArrayList<>();
         for (int i = 0; i < WeekDay.NUMBER_OF_CLASSES; i++) {
             expectedList.add("vacant");
@@ -46,7 +45,6 @@ public class WeekTest {
 
     @Test
     public void retrieveWeekDaySchedule_sundayWeekDaySchedule_success() throws Exception {
-        Week validWeek = new WeekBuilder().build();
         validWeek.setWeekday(Week.SUNDAY);
 
         ArrayList<String> expectedList = new ArrayList<>();
@@ -72,7 +70,6 @@ public class WeekTest {
 
     @Test
     public void isValidWeekSchedule_validWeekDaySchedule_success() throws Exception {
-        Week validWeek = new WeekBuilder().build();
         assertTrue(validWeek.isValidWeekSchedule());
     }
 

@@ -17,12 +17,13 @@ import seedu.address.testutil.RoomBuilder;
 public class BuildingTest {
 
     private Building building = new Building("COM2");
+    private final String validBuildingName = "COM2";
+    private final Building validBuilding = new BuildingBuilder().build();
     private final Building standardBuilding = new BuildingBuilder().withBuildingName("COM2").build();
 
     @Test
     public void isValidBuilding_validString_true() {
-        String validString = "COM2";
-        assertTrue(Building.isValidBuilding(validString));
+        assertTrue(Building.isValidBuilding(validBuildingName));
     }
 
     @Test
@@ -33,7 +34,6 @@ public class BuildingTest {
 
     @Test
     public void isValidBuilding_buildingFoundInListOfNusBuildings_true() {
-        Building validBuilding = new Building("COM2");
         assertTrue(Building.isValidBuilding(validBuilding));
     }
 
@@ -59,8 +59,6 @@ public class BuildingTest {
 
     @Test
     public void retrieveAllRoomsSchedule_validNusBuildingsAndRooms_success() throws Exception {
-        Building validBuilding = new BuildingBuilder().build();
-
         ArrayList<ArrayList<String>> expectedList = new ArrayList<>();
         ArrayList<String> expectedSchedule = new ArrayList<>();
         Room room = new RoomBuilder().build();
@@ -94,8 +92,6 @@ public class BuildingTest {
 
     @Test
     public void retrieveAllRoomsInBuilding_validNusBuildingsAndRooms_success() throws Exception {
-        Building validBuilding = new BuildingBuilder().build();
-
         ArrayList<String> expectedList = new ArrayList<>();
         expectedList.add(RoomBuilder.DEFAULT_ROOMNAME);
         assertEquals(expectedList, validBuilding.retrieveAllRoomsInBuilding());

@@ -17,6 +17,7 @@ import seedu.address.testutil.WeekBuilder;
 public class RoomTest {
 
     private Room room = new Room("COM2-0108");
+    private final Room validRoom = new RoomBuilder().build();
     private final Room standardRoom = new RoomBuilder().withRoomName("COM2-0108").build();
 
     @Test
@@ -35,8 +36,6 @@ public class RoomTest {
 
     @Test
     public void retrieveWeekDaySchedule_validNusVenues_success() throws Exception {
-        Room validRoom = new RoomBuilder().build();
-
         ArrayList<String> expectedList = new ArrayList<>();
         expectedList.add(room.getRoomName());
         for (int i = 0; i < WeekDay.NUMBER_OF_CLASSES; i++) {
@@ -61,7 +60,6 @@ public class RoomTest {
 
     @Test
     public void initializeWeek_validNusVenues_success() throws Exception {
-        Room validRoom = new RoomBuilder().build();
         validRoom.initializeWeek();
 
         Week expectedWeek = new WeekBuilder().build();

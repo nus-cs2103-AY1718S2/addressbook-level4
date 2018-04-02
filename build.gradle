@@ -43,7 +43,7 @@ jacocoTestReport {
 }
 
 dependencies {
-    String testFxVersion = '4.0.8-alpha'
+    String testFxVersion = '4.0.13-alpha'
 
     compile group: 'org.asynchttpclient', name: 'async-http-client', version: '2.4.3'
     compile group: 'org.controlsfx', name: 'controlsfx', version: '8.40.14'
@@ -55,10 +55,7 @@ dependencies {
     testCompile group: 'org.mockito', name: 'mockito-core', version: '2.16.0'
     testCompile group: 'org.testfx', name: 'testfx-core', version: testFxVersion
     testCompile group: 'org.testfx', name: 'testfx-junit', version: testFxVersion
-    testCompile group: 'org.testfx', name: 'testfx-legacy', version: testFxVersion, {
-        exclude group: 'junit', module: 'junit'
-    }
-    testCompile group: 'org.testfx', name: 'openjfx-monocle', version: '1.8.0_20'
+    testCompile group: 'org.testfx', name: 'openjfx-monocle', version: '8u76-b04'
 }
 
 shadowJar {

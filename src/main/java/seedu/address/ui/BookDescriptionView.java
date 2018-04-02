@@ -3,6 +3,7 @@ package seedu.address.ui;
 import com.sun.javafx.webkit.Accessor;
 
 import javafx.application.Platform;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebEngine;
@@ -29,6 +30,12 @@ public class BookDescriptionView extends UiPart<Region> {
 
         // disable interaction with web view
         description.setDisable(true);
+
+        description.getEngine().getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+            if (newState == Worker.State.SUCCEEDED) {
+                adjustHeight();
+            }
+        });
     }
 
     /**
@@ -38,7 +45,6 @@ public class BookDescriptionView extends UiPart<Region> {
         description.getEngine().loadContent(getHtml(book.getDescription().toString()));
         // set transparent background for web view
         Accessor.getPageFor(webEngine).setBackgroundColor(0);
-        adjustHeight();
     }
 
     // Reused from http://tech.chitgoks.com/2014/09/13/how-to-fit-webview-height-based-on-its-content-in-java-fx-2-2/

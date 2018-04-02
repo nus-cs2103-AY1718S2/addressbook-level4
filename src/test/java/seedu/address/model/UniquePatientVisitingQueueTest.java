@@ -3,6 +3,10 @@ package seedu.address.model;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -48,6 +52,15 @@ public class UniquePatientVisitingQueueTest {
     public void execute_removeEmptyQueue_throwsNoSuchElementException() throws Exception {
         thrown.expect(PatientNotFoundException.class);
         queueToTest.removePatient();
+    }
+
+    @Test
+    public void execute_setVisitingQueue_setSuccessful() {
+        Set<Integer> queueNo = new HashSet<>(Arrays.asList(3, 1, 2));
+        UniquePatientVisitingQueue anotherQueue = new UniquePatientVisitingQueue();
+        queueToTest.setVisitingQueue(queueNo);
+        anotherQueue.setVisitingQueue(queueNo);
+        assertEquals(queueToTest, anotherQueue);
     }
 
     @Test

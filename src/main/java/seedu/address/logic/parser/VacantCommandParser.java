@@ -7,6 +7,7 @@ import seedu.address.logic.commands.VacantCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.building.Building;
 
+//@@author jingyinno
 /**
  * Parses input arguments and creates a new VacantCommand object
  */

@@ -7,6 +7,7 @@ import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.Alias;
 
+//@@author jingyinno
 /**
  * Parses input arguments and creates a new AddCommand object
  */

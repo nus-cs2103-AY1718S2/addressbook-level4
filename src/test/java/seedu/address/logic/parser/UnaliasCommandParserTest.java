@@ -11,6 +11,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.UnaliasCommand;
 import seedu.address.model.alias.Alias;
 
+//@@author jingyinno
 public class UnaliasCommandParserTest {
     private UnaliasCommandParser parser = new UnaliasCommandParser();
 

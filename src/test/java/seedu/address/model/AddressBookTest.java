@@ -138,7 +138,9 @@ public class AddressBookTest {
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        //@@author jingyinno
         private final ObservableList<Alias> aliases = FXCollections.observableArrayList();
+        //@@author
         private final Password password = new Password("test");
 
         AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
@@ -156,6 +158,7 @@ public class AddressBookTest {
             return tags;
         }
 
+        //@@author jingyinno
         @Override
         public ObservableList<Alias> getAliasList() {
             return aliases;
@@ -165,6 +168,7 @@ public class AddressBookTest {
         public void resetAliasList() {
             fail("This method should not be called.");
         }
+        //@@author
 
         @Override
         public Password getPassword() {

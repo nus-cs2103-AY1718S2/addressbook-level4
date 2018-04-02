@@ -11,17 +11,6 @@ import seedu.address.model.petpatient.PetPatient;
  * A utility class containing a list of {@code PetPatient} objects to be used in tests.
  */
 public class TypicalPetPatients {
-
-    // Pet patient with no tags
-    public static final PetPatient JOKER = new PetPatientBuilder()
-            .withName("Joker")
-            .withSpecies("Cat")
-            .withBreed("Domestic Shorthair")
-            .withColour("Brown and White")
-            .withBloodType("O")
-            .withOwnerNric(TypicalPersons.BOB.getNric().toString())
-            .withTags(new String[]{}).build();
-
     // Pet patient with tags
     public static final PetPatient JEWEL = new PetPatientBuilder()
             .withName("Jewel")
@@ -31,6 +20,16 @@ public class TypicalPetPatients {
             .withBloodType("AB")
             .withOwnerNric(TypicalPersons.ALICE.getNric().toString())
             .withTags("Depression", "Test").build();
+
+    // Pet patient with no tags
+    public static final PetPatient JOKER = new PetPatientBuilder()
+            .withName("Joker")
+            .withSpecies("Cat")
+            .withBreed("Domestic Shorthair")
+            .withColour("Brown and White")
+            .withBloodType("O")
+            .withOwnerNric(TypicalPersons.BENSON.getNric().toString())
+            .withTags(new String[]{}).build();
 
     private TypicalPetPatients() {}
 

@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -23,6 +24,20 @@ public class CommandParserTestUtil {
             throw new IllegalArgumentException("Invalid userInput.", pe);
         }
     }
+
+    /**
+     * Special asserts for AddCommandParser to successfully parse and create AddCommand.
+     */
+    public static void assertParseSuccess(AddCommandParser parser, boolean isTest,
+                                          String userInput, Command expectedCommand) {
+        try {
+            Command command = parser.parse(userInput, isTest);
+            assertEquals(expectedCommand, command);
+        } catch (ParseException pe) {
+            throw new IllegalArgumentException("Invalid userInput.", pe);
+        }
+    }
+
 
     /**
      * Asserts that the parsing of {@code userInput} by {@code parser} is unsuccessful and the error message

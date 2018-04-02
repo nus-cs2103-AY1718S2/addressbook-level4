@@ -18,13 +18,6 @@ public class XmlAdaptedQueue {
      */
     public XmlAdaptedQueue() {}
 
-    /**
-     * Constructs a {@code XmlAdaptedQueue} with the given {@code queueNo}.
-     */
-    public XmlAdaptedQueue(String queueNo) {
-        this.queueNo = Integer.parseInt(queueNo);
-    }
-
     public XmlAdaptedQueue(Integer queueNo) {
         this.queueNo = queueNo;
     }

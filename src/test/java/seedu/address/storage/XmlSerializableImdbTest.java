@@ -71,6 +71,6 @@ public class XmlSerializableImdbTest {
 
         //null -> returns false
         assertFalse(dataFromFileFirstTest.equals(null));
-        
+
     }
 }

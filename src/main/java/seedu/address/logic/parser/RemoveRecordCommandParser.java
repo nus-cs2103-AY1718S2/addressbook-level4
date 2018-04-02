@@ -17,8 +17,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class RemoveRecordCommandParser implements Parser<RemoveRecordCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the RecordCommand
-     * and returns an RecordCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the RemoveRecordCommand
+     * and returns an RemoveRecordCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public RemoveRecordCommand parse(String args) throws ParseException {
@@ -31,18 +31,18 @@ public class RemoveRecordCommandParser implements Parser<RemoveRecordCommand> {
         try {
             patientIndex = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveRecordCommand.MESSAGE_USAGE));
         }
 
         if (!arePrefixesPresent(argMultimap, PREFIX_INDEX)
                 || argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveRecordCommand.MESSAGE_USAGE));
         }
 
         try {
             recordIndex = ParserUtil.parseIndex((argMultimap.getValue(PREFIX_INDEX)).get());
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveRecordCommand.MESSAGE_USAGE));
         }
 
         return new RemoveRecordCommand(patientIndex, recordIndex);

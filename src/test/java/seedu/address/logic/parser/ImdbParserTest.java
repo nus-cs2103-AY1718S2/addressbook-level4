@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -28,9 +29,11 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.RecordCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.RemovePatientQueueCommand;
+import seedu.address.logic.commands.RemoveRecordCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAppointmentCommand;
@@ -280,7 +283,6 @@ public class ImdbParserTest {
         LoginManager.authenticate("alice", "password123");
         assertTrue(parser.parseCommand(RemarkCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + "r/ Is very clever") instanceof RemarkCommand);
-
     }
 
     @Test
@@ -291,6 +293,34 @@ public class ImdbParserTest {
                 ViewAppointmentCommand.COMMAND_WORD + " " + keywords.stream()
                         .collect(Collectors.joining(" ")));
         assertEquals(new ViewAppointmentCommand(new NameContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void record_returnsRecordCommand() throws Exception {
+        LoginManager.authenticate("alice", "password123");
+        assertTrue(parser.parseCommand(RecordCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_INDEX + "1") instanceof RecordCommand);
+    }
+
+    @Test
+    public void recordAlias_returnsRecordCommand() throws Exception {
+        LoginManager.authenticate("alice", "password123");
+        assertTrue(parser.parseCommand(RecordCommand.COMMAND_ALIAS + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_INDEX + "1") instanceof RecordCommand);
+    }
+
+    @Test
+    public void removeRecord_returnsRemoveRecordCommand() throws Exception {
+        LoginManager.authenticate("alice", "password123");
+        assertTrue(parser.parseCommand(RemoveRecordCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_INDEX + "1") instanceof RemoveRecordCommand);
+    }
+
+    @Test
+    public void removeRecordAlias_returnsRecordCommand() throws Exception {
+        LoginManager.authenticate("alice", "password123");
+        assertTrue(parser.parseCommand(RemoveRecordCommand.COMMAND_ALIAS + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_INDEX + "1") instanceof RemoveRecordCommand);
     }
 
     @Test

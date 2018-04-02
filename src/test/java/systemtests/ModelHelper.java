@@ -26,19 +26,19 @@ public class ModelHelper {
     }
 
     /**
+     * @see ModelHelper#setFilteredPersonList(Model, List)
+     */
+    public static void setFilteredPersonList(Model model, Person... toDisplay) {
+        setFilteredPersonList(model, Arrays.asList(toDisplay));
+    }
+
+    /**
      * Updates {@code model}'s filtered job list to display only {@code toDisplay}.
      */
     public static void setFilteredJobList(Model model, List<Job> toDisplay) {
         Optional<Predicate<Job>> predicate =
                 toDisplay.stream().map(ModelHelper::getPredicateMatching).reduce(Predicate::or);
         model.updateFilteredJobList(predicate.orElse(PREDICATE_MATCHING_NO_JOBS));
-    }
-
-    /**
-     * @see ModelHelper#setFilteredPersonList(Model, List)
-     */
-    public static void setFilteredPersonList(Model model, Person... toDisplay) {
-        setFilteredPersonList(model, Arrays.asList(toDisplay));
     }
 
     //    /**

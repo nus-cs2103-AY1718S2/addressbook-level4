@@ -22,9 +22,11 @@ public class DistanceCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Finds the distance from the headquarter to a person address "
-            + "by the index number used in the last person listing.\n"
+            + "or the distance from a person address to another person address "
+            + "by the index number(s) used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Example: " + COMMAND_WORD + " 1\n"
+            + "Example: " + COMMAND_WORD + " 1 2";
 
     public static final String MESSAGE_DISTANCE_FROM_HQ_SUCCESS = "Distance from Head quarter to this Person: %1$s km";
     public static final String MESSAGE_DISTANCE_FROM_PERSON_SUCCESS = "Distance from %1$s to %2$s: %3$s km";

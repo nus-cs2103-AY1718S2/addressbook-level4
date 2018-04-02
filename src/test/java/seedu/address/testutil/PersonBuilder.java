@@ -23,8 +23,8 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final Double DEFAULT_INCOME = 1234.56;
-    public static final Double DEFAULT_ACTUALSPENDING = 1234.56;
+    public static final Double DEFAULT_INCOME = 2000.0;
+    public static final Double DEFAULT_ACTUALSPENDING = 2000.0;
     public static final Integer DEFAULT_AGE = 20;
     public static final String DEFAULT_TAGS = "friends";
 

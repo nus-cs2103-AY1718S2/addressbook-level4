@@ -54,7 +54,6 @@ public class Person {
     public Person updateSelectedField(ArrayList<Double> weights) {
         Double expectedSpending = 0.0;
         expectedSpending += weights.get(0) * this.income.value;
-        expectedSpending += weights.get(1) * this.age.value;
 
 
         return new Person(name, phone, email, address, getTags(), income,

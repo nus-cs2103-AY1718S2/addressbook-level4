@@ -155,7 +155,8 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
     }
 
     @Override
-    public void preparePredictionData(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> targets) {
+    public void preparePredictionData(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> targets,
+                                      ArrayList<Double> normalizationConstant) {
         ObservableList<Person> personList = this.getAddressBook().getPersonList();
         for (int i = 0; i < personList.size(); i++) {
             double as = personList.get(i).getActualSpending().value;
@@ -167,8 +168,7 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
 
             ArrayList<Double> row = new ArrayList<>();
             //record down the actual value
-            row.add(personList.get(i).getIncome().value);
-            row.add(personList.get(i).getAge().value.doubleValue());
+            row.add(personList.get(i).getIncome().value / normalizationConstant.get(0));
             targets.add(as);
 
 
@@ -178,7 +178,8 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
     }
 
     @Override
-    public void updatePredictionResult(ArrayList<Double> weights) throws CommandException {
+    public void updatePredictionResult(ArrayList<Double> weights,
+                                       ArrayList<Double> normalizationConstant) throws CommandException {
         ObservableList<Person> personList = this.addressBook.getPersonList();
         for (int i = 0; i < personList.size(); i++) {
             if (personList.get(i).getActualSpending().value != 0.0) {
@@ -189,10 +190,17 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
             //else update the person with expected spending
             Person p = personList.get(i);
             logger.info("Prediction results: income coefficient-> " + "\n"
-                    + "Income coefficient: " + weights.get(0) + "\n"
-                    + "Age coefficient: " + weights.get(1) + "\n"
+                            + "Income coefficient: " + weights.get(0) + "\n"
             );
-            Person updatedPerson = p.updateSelectedField(weights);
+
+            //restore the un-normalized value
+            ArrayList<Double> trueWeights = new ArrayList<>();
+            for (int j = 0; j < weights.size(); j++) {
+                trueWeights.add(weights.get(j) * normalizationConstant.get(j));
+            }
+
+
+            Person updatedPerson = p.updateSelectedField(trueWeights);
             //update the model here
 
 

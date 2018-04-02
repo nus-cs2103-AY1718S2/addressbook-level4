@@ -38,7 +38,7 @@ public class Expenditure {
      */
     public static boolean isValid(Double expenditure) {
         requireNonNull(expenditure);
-        return (expenditure >= 0);
+        return (expenditure >= 0.0);
     }
 
     @Override

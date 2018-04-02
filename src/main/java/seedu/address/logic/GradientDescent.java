@@ -18,6 +18,7 @@ import seedu.address.model.PredictionModel;
 public class GradientDescent {
     public static final String MESSAGE_PREDICTION_SUCCESS = "Prediction success";
     public static final String MESSAGE_PREDICTION_FAIL = "Prediction failed";
+    public static final String MESSAGE_PREDICTION_DIVERGENT = "Prediction Solution is not convergent";
     private static GradientDescent instance;
 
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
@@ -28,17 +29,23 @@ public class GradientDescent {
      * For more fields, please add in the default value below
      * [ x1= income, x2 = age ]
      */
-    private ArrayList<Double> weights = new ArrayList<>(Arrays.asList(0.0, 0.0));
+    private ArrayList<Double> weights = new ArrayList<>(Arrays.asList(0.0));
+
+    /**
+     * Some constants to normalize income and age so that the value don't differ so much
+     */
+    private ArrayList<Double> normalizationConstant =
+            new ArrayList<>(Arrays.asList(1000.0));
 
     /**
      * The learning rate
      */
-    private final Double learningRate = 0.0001;
+    private final Double learningRate = 0.000001;
 
     /**
      * The amount of epoch of looping through training data
      */
-    private final Integer epoch = 10000;
+    private final Integer epoch = 3000;
 
 
     /**
@@ -59,6 +66,8 @@ public class GradientDescent {
     }
 
 
+    //@@author SoilChang
+
     /**
      * Drives the whole algorithm to solve the problem
      */
@@ -76,15 +85,18 @@ public class GradientDescent {
 
 
         //extract values
-        this.model.preparePredictionData(matrix, targets);
+        this.model.preparePredictionData(matrix, targets, normalizationConstant);
 
 
         //solve
         descent(matrix, targets);
 
+        if (this.hasNaN(this.weights)) {
+            return new CommandResult(String.format(MESSAGE_PREDICTION_DIVERGENT));
+        }
         //update results
         try {
-            this.model.updatePredictionResult(this.weights);
+            this.model.updatePredictionResult(this.weights, normalizationConstant);
             return new CommandResult(String.format(MESSAGE_PREDICTION_SUCCESS));
         } catch (CommandException e) {
             return new CommandResult(String.format(MESSAGE_PREDICTION_FAIL));
@@ -96,8 +108,17 @@ public class GradientDescent {
      * Perform stochastic gradient descent on the input data
      */
     private void descent(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> targets) {
-        for (int itt = 0; itt < epoch; itt++) { // fixed amount of training epoch
+        for (int itt = 0; itt < epoch; itt++) {
+
+            //check data validity
+            if (this.hasNaN(this.weights)) {
+                this.logger.warning("The solution is not convergent");
+                break;
+            }
+
+            // fixed amount of training iteration
             for (int r = 0; r < matrix.size(); r++) { //going through each training data
+
                 ArrayList<Double> row = matrix.get(r);
                 Double outcome = predict(row);
                 Double error = targets.get(r) - outcome;
@@ -109,6 +130,21 @@ public class GradientDescent {
         }
     }
 
+    /**
+     * Check if the ArrayList contains NaN
+     *
+     * @param weights
+     * @return
+     */
+    private boolean hasNaN(ArrayList<Double> weights) {
+        for (Double i : weights) {
+            if (i.isNaN()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     //@@author SoilChang
 

@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 
+import java.io.IOException;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
@@ -12,6 +13,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
+import seedu.address.ui.Calendar;
 
 /**
  * Creates an appointment for the student at the specified index.
@@ -42,6 +44,7 @@ public class AppointmentCommand extends UndoableCommand {
     private final Appointment toAdd;
 
     private Person selectedPerson;
+    private Calendar calendar;
 
     /**
      * Creates an AppointmentCommand to add the specified {@code Appointment}
@@ -55,12 +58,13 @@ public class AppointmentCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException, IOException {
         requireNonNull(model);
         try {
             model.addAppointment(toAdd);
             List<Person> lastShownList = model.getFilteredPersonList();
             selectedPerson = lastShownList.get(index.getZeroBased());
+            calendar.createEvent(toAdd, selectedPerson);
             String appointmentDetails = toAdd.getStartTime() + " to " + toAdd.getEndTime() + " on " + toAdd.getDate()
                     + " with " + selectedPerson.getName();
             return new CommandResult(String.format(MESSAGE_SUCCESS, appointmentDetails));

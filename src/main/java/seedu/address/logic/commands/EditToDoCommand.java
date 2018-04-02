@@ -61,9 +61,9 @@ public class EditToDoCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
             model.updateToDo(toDoToEdit, editedToDo);
-        } catch (DuplicateToDoException dpe) {
+        } catch (DuplicateToDoException dte) {
             throw new CommandException(MESSAGE_DUPLICATE_TODO);
-        } catch (ToDoNotFoundException pnfe) {
+        } catch (ToDoNotFoundException tnfe) {
             throw new AssertionError("The target to-do cannot be missing");
         }
         model.updateFilteredToDoList(PREDICATE_SHOW_ALL_TODOS);

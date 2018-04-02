@@ -30,7 +30,7 @@ public class RouteOptimization {
         String startingPoint;
 
         if (lastShownList.size() == 1) {
-            Address address = lastShownList.get(0).getAddress(); 
+            Address address = lastShownList.get(0).getAddress();
             if (isFindableAddress(address)) {
                 String name = lastShownList.get(0).getName().toString();
                 addressWithoutUnit = removeUnit(address);
@@ -56,10 +56,17 @@ public class RouteOptimization {
         return optimizedRoute;
     }
 
+    /**
+     * Check whether the address can be found by Google Map API or not
+     * @param address
+     * @return
+     */
     private boolean isFindableAddress(Address address) {
         String addressUnderCheck = address.toString();
         GetDistance distance = new GetDistance();
-        if (distance.getDistance(HQ_ADDRESS, addressUnderCheck) == -1.0) return false;
+        if (distance.getDistance(HQ_ADDRESS, addressUnderCheck) == -1.0) {
+            return false;
+        }
         return true;
     }
 

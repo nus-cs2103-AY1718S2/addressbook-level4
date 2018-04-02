@@ -17,7 +17,8 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowDefaultPageEvent;
-import seedu.address.commons.events.ui.ShowMultiLocationEvent;
+import seedu.address.commons.events.ui.ShowMultiLocationFromHQEvent;
+import seedu.address.commons.events.ui.ShowRouteFromOneToAnotherEvent;
 import seedu.address.logic.GetDistance;
 
 import seedu.address.logic.commands.FilterCommand;
@@ -117,7 +118,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    public void handleShowMultiLocationEvent(ShowMultiLocationEvent event) {
+    public void handleShowMultiLocationEvent(ShowMultiLocationFromHQEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         StringBuilder url = new StringBuilder(SEARCH_PAGE_URL);
         for (String address: event.sortedList) {
@@ -131,5 +132,16 @@ public class BrowserPanel extends UiPart<Region> {
     public void handleShowDefaultPageEvent(ShowDefaultPageEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadDefaultPage();
+    }
+
+    @Subscribe
+    public void handleShowFromOneToAnotherEvent(ShowRouteFromOneToAnotherEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        StringBuilder url = new StringBuilder("https://www.google.com.sg/maps/dir/");
+        for (String address: event.sortedList) {
+            url.append(address);
+            url.append("/");
+        }
+        loadPage(url.toString());
     }
 }

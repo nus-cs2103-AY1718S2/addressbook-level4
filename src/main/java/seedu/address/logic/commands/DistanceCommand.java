@@ -7,7 +7,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.ShowMultiLocationEvent;
+import seedu.address.commons.events.ui.ShowMultiLocationFromHQEvent;
 import seedu.address.logic.GetDistance;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
@@ -98,7 +98,7 @@ public class DistanceCommand extends Command {
                 List<String> addressesList = new ArrayList<>();
                 addressesList.add(origin);
                 addressesList.add(destination);
-                EventsCenter.getInstance().post(new ShowMultiLocationEvent(addressesList));
+                EventsCenter.getInstance().post(new ShowMultiLocationFromHQEvent(addressesList));
                 return new CommandResult(String.format(
                         MESSAGE_DISTANCE_FROM_PERSON_SUCCESS, personNameOrigin, personNameDestination, distance));
             }

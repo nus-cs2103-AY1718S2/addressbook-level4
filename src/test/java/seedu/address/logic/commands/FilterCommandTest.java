@@ -91,10 +91,10 @@ public class FilterCommandTest {
 
         try {
             CommandResult actualCommandResult = filterCommand.execute();
-            String shown = getMessageForPersonListShownSummary(numberOfPersonsListed) + "\n" +
-                    "All the addresses on " +
-                    model.getFilteredPersonList().get(0).getDate().toString() +
-                    " cannot be found.";
+            String shown = getMessageForPersonListShownSummary(numberOfPersonsListed)
+                    + "\nAll the addresses on "
+                    + model.getFilteredPersonList().get(0).getDate().toString()
+                    + " cannot be found.";
             CommandResult expectedCommandResult =
                     new CommandResult(shown);
             assertEquals(actualCommandResult.feedbackToUser, expectedCommandResult.feedbackToUser);
@@ -115,10 +115,10 @@ public class FilterCommandTest {
 
         try {
             CommandResult actualCommandResult = filterCommand.execute();
-            String shown = getMessageForPersonListShownSummary(numberOfPersonsListed) + "\n" +
-                    "At least one address on " +
-                    model.getFilteredPersonList().get(0).getDate().toString() +
-                    " cannot be found.";
+            String shown = getMessageForPersonListShownSummary(numberOfPersonsListed)
+                    + "\nAt least one address on "
+                    + model.getFilteredPersonList().get(0).getDate().toString()
+                    + " cannot be found.";
             CommandResult expectedCommandResult =
                     new CommandResult(shown);
             assertEquals(actualCommandResult.feedbackToUser, expectedCommandResult.feedbackToUser);

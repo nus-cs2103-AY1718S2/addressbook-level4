@@ -12,6 +12,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 
+//@@author jingyinno
 /**
  * A list of aliases that enforces no nulls and uniqueness between its elements.
  *

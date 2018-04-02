@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.BaseEvent;
 
+//@@author jingyinno
 /**
  * Represents a schedule list in VenueTable
  */

@@ -366,6 +366,41 @@ On running the above command, you should see the following success message: +
 You can exit the program using the following format. +
 Format: `exit`
 
+=== Registering new account : `signup`
+
+You can create a new user account through the command line by using the following format. +
+Format: `signup u/USERNAME pw/PASSWORD`
+
+[NOTE]
+===
+* Username has to be at least 3 characters starting with a alphanumeric character. +
+* Password should be at least 4 characters long. +
+* Both username and password should not contain any whitespaces. +
+===
+Examples
+* signup u/JohnDoe pw/doe123
+
+On running the above command, you should see the following success message: +
+  `You have signup successfully!`
+
+=== Logging in : `login`
+You can login through the command line by using the following this format. +
+Format: `login u/USERNAME pw/PASSWORD`
+
+Examples
+* login u/JohnDoe pw/doe123
+
+On running the above command, you should see the following success message: +
+ `You have successfully login as JohnDoe`
+
+=== Logging out : `logout`
+You can logout through the command line by using the following this format. +
+Format: `logout`
+
+On running this command, you should see the following success message: +
+ `You have logout successfully!`
+
+Examples
 === Auto-complete command
 
 To save your time, after typing a partial command, you can press TAB for the command to be auto-completed.
@@ -409,15 +444,15 @@ You can send email to any person you have saved in contactHeRo, without having t
 
 You will soon be able to set reminders for meetings, appointments or any other event and contactHeRo will remind you of the event.
 
+=== Login system `[coming in v2.0]`
+
+The login system shall provide security to your data stored in contactHeRo.
+
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
-
-=== Login system `[coming in v2.0]`
-
-The login system shall provide security to your data stored in contactHeRo.
 
 == FAQ
 
@@ -458,3 +493,9 @@ e.g.`select 2`
 e.g. `linkedIn 2`
 * *<<adding-a-job-opening, Add job opening>>* : `addjob p/POSITION t/TEAM l/LOCATION n/NUMBER_OF_POSITIONS` +
 e.g. `addjob p/Software Engineer t/Cloud Services l/Singapore n/2`
+* *<<registering-new-account, Signup>>* : `signup u/USERNAME pw/PASSWORD` +
+e.g. `signup u/JohnDoe pw/doe123` +
+* *<<logging-in, Login>>* : `login u/USERNAME pw/PASSWORD` +
+e.g. `login u/JohnDoe pw/doe123` +
+* *<<logging-out, Logout>>* : `logout`
+

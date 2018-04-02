@@ -107,7 +107,7 @@ public class XmlAdaptedEvent extends XmlAdaptedActivity {
         final Remark remark = new Remark(this.remark);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Event(name, startDateTime, endDateTime, location, remark, tags);
+        return new Event(name, startDateTime, endDateTime, location, remark, tags, this.iscompleted);
     }
 
     @Override

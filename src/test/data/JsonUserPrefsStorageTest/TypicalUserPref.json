@@ -7,6 +7,26 @@
       "y" : 100
     }
   },
-  "addressBookFilePath" : "addressbook.xml",
-  "addressBookName" : "TypicalAddressBookName"
+  "carvicimFilePath": "carvicim.xml",
+  "carvicimName": "TypicalCarviciMName",
+  "commandWords" : {
+    "commands" : {
+      "add" : "add",
+      "select" : "select",
+      "set" : "set",
+      "edit" : "edit",
+      "clear" : "clear",
+      "history" : "history",
+      "redo" : "redo",
+      "list" : "list",
+      "delete" : "delete",
+      "exit" : "exit",
+      "help" : "help",
+      "undo" : "undo",
+      "find" : "find",
+      "theme" : "theme"
+    }
+  },
+  "themeName" : "DarkTheme",
+  "extensionName" : "ExtensionsDark"
 }

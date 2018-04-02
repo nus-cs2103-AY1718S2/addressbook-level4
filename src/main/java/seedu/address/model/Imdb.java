@@ -247,6 +247,11 @@ public class Imdb implements ReadOnlyImdb {
         return patientQueueList.asObservableList();
     }
 
+    @Override
+    public ObservableList<Integer> getUniquePatientQueueNo() {
+        return visitingQueue.asObservableList();
+    }
+
     private UniquePatientList getPatientQueueList() {
         UniquePatientList queueList = new UniquePatientList();
 

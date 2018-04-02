@@ -180,6 +180,11 @@ public class ImdbTest {
         public ObservableList<Patient> getUniquePatientQueue() {
             return visitingQueue;
         }
+
+        @Override
+        public ObservableList<Integer> getUniquePatientQueueNo() {
+            return null;
+        }
     }
 
 }

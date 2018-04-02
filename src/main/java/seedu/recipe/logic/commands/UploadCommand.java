@@ -18,6 +18,7 @@ public class UploadCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Upload success!";
     public static final String MESSAGE_FAILURE = "Failed to upload!";
     public static final String MESSAGE_UPLOAD = "Connecting to Dropbox......";
+    public static final String MESSAGE_WRONG_URL = "The entered URL has the wrong format";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Uploads all recipes to your Dropbox with the "
             + "specified filename, with no spaces. It will only take in the first parameter. "

@@ -1,5 +1,9 @@
 package seedu.recipe.ui;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -25,6 +29,7 @@ import seedu.recipe.commons.events.ui.RecipePanelSelectionChangedEvent;
 import seedu.recipe.commons.events.ui.ShareRecipeEvent;
 import seedu.recipe.commons.events.ui.UploadRecipesEvent;
 import seedu.recipe.logic.commands.UploadCommand;
+import seedu.recipe.logic.commands.exceptions.CommandException;
 import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.recipe.Url;
 import seedu.recipe.ui.util.CloudStorageUtil;
@@ -64,6 +69,15 @@ public class BrowserPanel extends UiPart<Region> {
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
+    }
+
+    public void loadPageExternalBrowser(String url) {
+        Desktop d = Desktop.getDesktop();
+        try {
+            d.browse(new URI(url));
+        } catch (IOException | URISyntaxException e) {
+            throw new AssertionError("URL wrong format exception " + e.getMessage());
+        }
     }
 
     private void loadRecipePage(Recipe recipe) {
@@ -147,7 +161,7 @@ public class BrowserPanel extends UiPart<Region> {
     //@@author nicholasangcx
     @Subscribe
     private void handleUploadRecipesEvent(UploadRecipesEvent event) {
-        loadPage(CloudStorageUtil.getAppropriateUrl());
+        loadPageExternalBrowser(CloudStorageUtil.getAppropriateUrl());
         System.out.println("1");
         uploadFilename = event.getUploadFilename();
         if (CloudStorageUtil.hasAccessToken()) {

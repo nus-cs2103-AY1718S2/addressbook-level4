@@ -5,9 +5,14 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.commons.core.appointment.TypicalCalendar.FIRST_DATE;
+import static seedu.address.commons.core.appointment.TypicalCalendar.FIRST_WEEK;
+import static seedu.address.commons.core.appointment.TypicalCalendar.FIRST_YEAR;
+import static seedu.address.commons.core.appointment.TypicalCalendar.FIRST_YEAR_MONTH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +28,12 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SignupCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.appointment.AddAppointmentCommand;
+import seedu.address.logic.commands.appointment.CalendarCommand;
+import seedu.address.logic.commands.appointment.DateCommand;
+import seedu.address.logic.commands.appointment.MonthCommand;
+import seedu.address.logic.commands.appointment.WeekCommand;
+import seedu.address.logic.commands.appointment.YearCommand;
 import seedu.address.logic.commands.person.AddCommand;
 import seedu.address.logic.commands.person.ClearCommand;
 import seedu.address.logic.commands.person.DeleteCommand;
@@ -33,8 +44,11 @@ import seedu.address.logic.commands.person.LinkedInCommand;
 import seedu.address.logic.commands.person.ListCommand;
 import seedu.address.logic.commands.person.SelectCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.testutil.AppointmentBuilder;
+import seedu.address.testutil.AppointmentUtil;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -173,5 +187,47 @@ public class AddressBookParserTest {
         thrown.expect(ParseException.class);
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
         parser.parseCommand("unknownCommand");
+    }
+
+    //@@author trafalgarandre
+    @Test
+    public void parseCommand_calendar() throws Exception {
+        assertTrue(parser.parseCommand(CalendarCommand.COMMAND_WORD) instanceof CalendarCommand);
+    }
+
+    @Test
+    public void parseCommand_addapp() throws Exception {
+        Appointment appointment = new AppointmentBuilder().build();
+        AddAppointmentCommand command =
+                (AddAppointmentCommand) parser.parseCommand(AppointmentUtil.getAddAppointmentCommand(appointment));
+        assertEquals(new AddAppointmentCommand(appointment), command);
+    }
+
+    @Test
+    public void parseCommand_dateCommand() throws Exception {
+        DateCommand command = (DateCommand) parser.parseCommand(
+                DateCommand.COMMAND_WORD + " " + FIRST_DATE);
+        assertEquals(new DateCommand(FIRST_DATE), command);
+    }
+
+    @Test
+    public void parseCommand_weekCommand() throws Exception {
+        WeekCommand command = (WeekCommand) parser.parseCommand(
+                WeekCommand.COMMAND_WORD + " " + FIRST_YEAR + " " + String.format("%02d", FIRST_WEEK));
+        assertEquals(new WeekCommand(FIRST_YEAR, FIRST_WEEK), command);
+    }
+
+    @Test
+    public void parseCommand_monthCommand() throws Exception {
+        MonthCommand command = (MonthCommand) parser.parseCommand(
+                MonthCommand.COMMAND_WORD + " " + FIRST_YEAR_MONTH);
+        assertEquals(new MonthCommand(FIRST_YEAR_MONTH), command);
+    }
+
+    @Test
+    public void parseCommand_yearCommand() throws Exception {
+        YearCommand command = (YearCommand) parser.parseCommand(
+                YearCommand.COMMAND_WORD + " " + FIRST_YEAR);
+        assertEquals(new YearCommand(FIRST_YEAR), command);
     }
 }

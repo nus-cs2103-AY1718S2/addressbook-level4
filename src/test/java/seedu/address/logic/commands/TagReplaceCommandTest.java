@@ -1,13 +1,10 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.tag.Tag;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
+import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,11 +12,13 @@ import java.util.List;
 
 import org.junit.Test;
 
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
-import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import seedu.address.commons.core.Messages;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.tag.Tag;
 
 public class TagReplaceCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -31,7 +30,8 @@ public class TagReplaceCommandTest {
         List<Tag> tagList = model.getAddressBook().getTagList();
         TagReplaceCommand tagReplaceCommand = prepareCommand(tagList);
 
-        String expectedMessage = String.format(TagReplaceCommand.MESSAGE_REPLACE_TAG_SUCCESS, tagList.get(0), tagList.get(1));
+        String expectedMessage = String.format(TagReplaceCommand.MESSAGE_REPLACE_TAG_SUCCESS, tagList.get(0),
+                                                tagList.get(1));
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.replaceTag(tagList);
@@ -47,7 +47,6 @@ public class TagReplaceCommandTest {
         TagReplaceCommand tagReplaceCommand = prepareCommand(tagList);
         assertCommandFailure(tagReplaceCommand, model, Messages.MESSAGE_INVALID_TAG_ENTERED);
     }
-
 
     @Test
     public void executeUndoRedo_invalidTagToReplaceEntered_failure() throws IOException {

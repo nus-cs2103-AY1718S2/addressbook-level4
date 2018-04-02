@@ -63,7 +63,7 @@ public final class LoginManager {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException ioe){
+        } catch (IOException ioe) {
             ioe.printStackTrace();
         }
 

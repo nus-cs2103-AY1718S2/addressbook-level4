@@ -1,5 +1,7 @@
 package seedu.progresschecker.ui;
 
+import java.io.File;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -66,8 +68,7 @@ public class PersonCard extends UiPart<Region> {
             label.getStyleClass().add(getTagColor(tag.tagName));
             tags.getChildren().add(label);
         });
-        Image profilePhoto = new Image(MainApp.class.getResourceAsStream(person.getPhotoPath()));
-        profile.setFill(new ImagePattern(profilePhoto));
+        loadPhoto();
     }
 
     /**
@@ -76,6 +77,26 @@ public class PersonCard extends UiPart<Region> {
     private String getTagColor(String tagName) {
         int index = getValueOfString(tagName) % TAG_COLORS.length;
         return TAG_COLORS[index];
+    }
+
+    /**
+     * Loads profile photo
+     */
+    private void loadPhoto() {
+        String photoPath = person.getPhotoPath();
+        Image profilePhoto;
+        if (photoPath.contains("contact")) {
+            File photo = new File(photoPath);
+            if (photo.exists() && !photo.isDirectory()) {
+                String url = photo.toURI().toString();
+                profilePhoto = new Image(url);
+                profile.setFill(new ImagePattern(profilePhoto));
+            }
+        } else {
+            profilePhoto = new Image(
+                    MainApp.class.getResourceAsStream(person.getDefaultPath()));
+            profile.setFill(new ImagePattern(profilePhoto));
+        }
     }
 
     /**

@@ -21,8 +21,8 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 
 /**
  * Manages storage of AddressBook data in local storage.
@@ -169,8 +169,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
         if (tobeReplacedWithJpg.exists()) {
             tobeReplacedWithJpg.delete();
-        }
-        else {
+        } else {
             tobeReplacedWithPng.delete();
         }
 
@@ -180,10 +179,9 @@ public class StorageManager extends ComponentManager implements Storage {
      * Makes a picture storage folder if it does not already exist.
      */
     private void ensureProfilePictureStorageExist() {
-        if(!profilePictureStorage.storageFileExist()) {
+        if (!profilePictureStorage.storageFileExist()) {
             File pictureStorage = new File(profilePictureStorage.getFilePath());
             pictureStorage.mkdir();
-
         }
     }
 

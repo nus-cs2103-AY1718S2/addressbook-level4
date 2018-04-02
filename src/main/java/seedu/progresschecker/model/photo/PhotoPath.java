@@ -26,7 +26,7 @@ public class PhotoPath {
      */
     public PhotoPath(String path) throws IllegalValueException {
         requireNonNull(path);
-        if (isValidPhotoPath(path)){
+        if (isValidPhotoPath(path)) {
             this.value = path;
         } else {
             throw new IllegalValueException(MESSAGE_PHOTOPATH_CONSTRAINTS);
@@ -37,7 +37,7 @@ public class PhotoPath {
      * Validates the given photo path
      */
     public boolean isValidPhotoPath (String path) {
-        if (path.isEmpty()){ //empty path
+        if (path.isEmpty()) { //empty path
             return true;
         }
         boolean isValidImage = isValidImageFile(path);

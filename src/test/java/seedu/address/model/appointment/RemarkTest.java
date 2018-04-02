@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import seedu.address.testutil.Assert;
 
+//@@author wynonaK
 public class RemarkTest {
 
     @Test
@@ -25,11 +26,11 @@ public class RemarkTest {
         // null remark
         Assert.assertThrows(NullPointerException.class, () -> Remark.isValidRemark(null));
 
-        // invalid addresses
+        // invalid remarks
         assertFalse(Remark.isValidRemark("")); // empty string
         assertFalse(Remark.isValidRemark(" ")); // spaces only
 
-        // valid addresses
+        // valid remarks
         assertTrue(Remark.isValidRemark("Might need a house visit."));
         assertTrue(Remark.isValidRemark("-")); // one character
         assertTrue(Remark.isValidRemark("Might need a house visit, and medication.")); // long address

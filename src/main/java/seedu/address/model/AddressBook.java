@@ -196,6 +196,19 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     *
+     * @throws ToDoNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeToDo(ToDo key) throws ToDoNotFoundException {
+        if (todos.remove(key)) {
+            return true;
+        } else {
+            throw new ToDoNotFoundException();
+        }
+    }
+
     //// to-do-level operations
 
     /**

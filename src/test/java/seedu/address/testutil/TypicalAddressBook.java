@@ -42,7 +42,7 @@ public class TypicalAddressBook {
                 ab.addAppointment(appt);
             } catch (DuplicateAppointmentException e) {
                 throw new AssertionError("Duplicate appointment.");
-            } catch (DuplicateDateTimeException e ) {
+            } catch (DuplicateDateTimeException e) {
                 throw new AssertionError("Duplicate date time.");
             }
         }

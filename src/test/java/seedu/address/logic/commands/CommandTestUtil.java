@@ -64,12 +64,12 @@ public class CommandTestUtil {
     // Person: Charlie
     public static final String VALID_NAME_CHARLIE = "Charlie Brown";
     public static final String VALID_PHONE_CHARLIE = "94127890";
-    public static final String VALID_EMAIL_ChARLIE = "charliebrown@gmail.com";
+    public static final String VALID_EMAIL_CHARLIE = "charliebrown@gmail.com";
     public static final String VALID_ADDRESS_CHARLIE = "Chocolate Factory Avenue";
     public static final String VALID_NRIC_CHARLIE = "S1078899P";
     public static final String NAME_DESC_CHARLIE = " " + PREFIX_NAME + VALID_NAME_CHARLIE;
     public static final String PHONE_DESC_CHARLIE = " " + PREFIX_PHONE + VALID_PHONE_CHARLIE;
-    public static final String EMAIL_DESC_CHARLIE = " " + PREFIX_EMAIL + VALID_EMAIL_ChARLIE;
+    public static final String EMAIL_DESC_CHARLIE = " " + PREFIX_EMAIL + VALID_EMAIL_CHARLIE;
     public static final String ADDRESS_DESC_CHARLIE = " " + PREFIX_ADDRESS + VALID_ADDRESS_CHARLIE;
     public static final String NRIC_DESC_CHARLIE = " " + PREFIX_NRIC + VALID_NRIC_CHARLIE;
 

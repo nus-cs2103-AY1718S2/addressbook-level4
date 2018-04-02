@@ -5,7 +5,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_BLOODTYPE_NERO;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BREED_NERO;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_COLOUR_NERO;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_ONE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_ChARLIE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_CHARLIE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_CHARLIE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_NERO;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_CHARLIE;
@@ -101,8 +101,8 @@ public class AddCommandIntegrationTest {
     @Test
     public void execute_newPetPatientWithNricDoesNotExist_throwsCommandException() {
         // Nric does not exists in address book
-        String doesNotExistInAB = VALID_NRIC_DION;
-        PetPatient validPetPatient = new PetPatientBuilder().withOwnerNric(doesNotExistInAB).build();
+        String nricDoesNotExist = VALID_NRIC_DION;
+        PetPatient validPetPatient = new PetPatientBuilder().withOwnerNric(nricDoesNotExist).build();
 
         assertCommandFailure(prepareCommand(validPetPatient, validPetPatient.getOwner(), model),
                 model, AddCommand.MESSAGE_INVALID_NRIC);
@@ -124,9 +124,9 @@ public class AddCommandIntegrationTest {
 
     @Test
     public void execute_newAppointmentWithNricDoesNotExists_throwsCommandException() {
-        String doesNotExistInAB = VALID_NRIC_DION;
+        String nricDoesNotExist = VALID_NRIC_DION;
         String petPatientNameExists = model.getAddressBook().getPetPatientList().get(0).getName().toString();
-        Appointment validAppt = new AppointmentBuilder().withOwnerNric(doesNotExistInAB)
+        Appointment validAppt = new AppointmentBuilder().withOwnerNric(nricDoesNotExist)
                 .withPetPatientName(petPatientNameExists).build();
 
         assertCommandFailure(prepareCommand(validAppt, validAppt.getOwnerNric(), validAppt.getPetPatientName(), model),
@@ -135,10 +135,10 @@ public class AddCommandIntegrationTest {
 
     @Test
     public void execute_newAppointmentWithPetPatientNameDoesNotExists_throwsCommandException() {
-        String doesNotExistInAB = VALID_NAME_NERO;
+        String petNameDoesNotExist = VALID_NAME_NERO;
         String ownerNricExists = model.getAddressBook().getPersonList().get(0).getNric().toString();
         Appointment validAppt = new AppointmentBuilder().withOwnerNric(ownerNricExists)
-                .withPetPatientName(doesNotExistInAB).build();
+                .withPetPatientName(petNameDoesNotExist).build();
 
         assertCommandFailure(prepareCommand(validAppt, validAppt.getOwnerNric(), validAppt.getPetPatientName(), model),
                 model, AddCommand.MESSAGE_INVALID_PET_PATIENT);
@@ -168,7 +168,7 @@ public class AddCommandIntegrationTest {
     @Test
     public void execute_addAllNew_success() throws Exception {
         Person newPerson = new PersonBuilder().withName(VALID_NAME_CHARLIE).withPhone(VALID_PHONE_CHARLIE)
-                .withEmail(VALID_EMAIL_ChARLIE).withAddress(VALID_ADDRESS_CHARLIE).withNric(VALID_NRIC_CHARLIE).build();
+                .withEmail(VALID_EMAIL_CHARLIE).withAddress(VALID_ADDRESS_CHARLIE).withNric(VALID_NRIC_CHARLIE).build();
 
         PetPatient newPetPatient = new PetPatientBuilder().withName(VALID_NAME_NERO).withSpecies(VALID_SPECIES_NERO)
                 .withBreed(VALID_BREED_NERO).withColour(VALID_COLOUR_NERO).withBloodType(VALID_BLOODTYPE_NERO)

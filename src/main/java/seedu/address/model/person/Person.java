@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.person.timetable.Timetable;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -20,19 +21,21 @@ public class Person {
     private final Email email;
     private final Address address;
     private final Birthday birthday;
+    private final Timetable timetable;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, Timetable timetable, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.birthday = birthday;
+        this.timetable = timetable;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -55,6 +58,10 @@ public class Person {
 
     public Birthday getBirthday() {
         return birthday;
+    }
+
+    public Timetable getTimetable() {
+        return timetable;
     }
 
     /**

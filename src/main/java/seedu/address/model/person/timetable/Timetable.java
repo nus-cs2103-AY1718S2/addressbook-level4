@@ -27,12 +27,11 @@ public class Timetable {
 
     public Timetable(String url) {
         requireNonNull(url);
-        String trimmedUrl = url.trim();
-        checkArgument(isValidUrl(trimmedUrl), MESSAGE_URL_CONSTRAINTS);
+        checkArgument(isValidUrl(url), MESSAGE_URL_CONSTRAINTS);
 
-        this.value = trimmedUrl;
+        this.value = url;
         try {
-            this.data = parseUrl(trimmedUrl);
+            this.data = parseUrl(url);
         } catch (ParseException pe) {
             this.data = new TimetableData(); // Create new empty timetable if url fails
         }
@@ -49,9 +48,9 @@ public class Timetable {
             return false;
         }
 
+
         String hostName = matcher.group()
                 .substring(2, matcher.group().length() - 1);
-
         return hostName.equals(NUSMODS_SHORT);
     }
 

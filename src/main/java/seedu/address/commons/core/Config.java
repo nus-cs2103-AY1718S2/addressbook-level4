@@ -9,12 +9,12 @@ import java.util.logging.Level;
 public class Config {
 
     public static final String DEFAULT_CONFIG_FILE = "config.json";
+    public static final String DEFAULT_VENUEINFORMATION_FILE = "/json/venueinformation.json";
 
     // Config values customizable through config file
     private String appTitle = "Address App";
     private Level logLevel = Level.INFO;
     private String userPrefsFilePath = "preferences.json";
-    private String venueInformationFilePath = "venueinformation.json";
 
     public String getAppTitle() {
         return appTitle;
@@ -38,14 +38,6 @@ public class Config {
 
     public void setUserPrefsFilePath(String userPrefsFilePath) {
         this.userPrefsFilePath = userPrefsFilePath;
-    }
-
-    public String getVenueInformationFilePath() {
-        return venueInformationFilePath;
-    }
-
-    public void setVenueInformationFilePath(String venueInformationFilePath) {
-        this.venueInformationFilePath = venueInformationFilePath;
     }
 
     @Override

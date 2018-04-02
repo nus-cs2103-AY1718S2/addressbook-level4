@@ -21,6 +21,7 @@ import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.building.Building;
 import seedu.address.model.building.exceptions.BuildingNotFoundException;
+import seedu.address.model.building.exceptions.CorruptedVenueInformationException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -95,14 +96,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public ArrayList<ArrayList<String>> getAllRoomsSchedule(Building building) throws BuildingNotFoundException {
-        if (!Building.isValidBuilding(building)) {
-            throw new BuildingNotFoundException();
-        }
-        return building.getAllRoomsSchedule();
-    }
-
-    @Override
     public void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
@@ -158,6 +151,17 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    //=========== Vacant Room Finder ==========================================================================
+
+    @Override
+    public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
+            CorruptedVenueInformationException {
+        if (!Building.isValidBuilding(building)) {
+            throw new BuildingNotFoundException();
+        }
+        return building.retrieveAllRoomsSchedule();
     }
 
     @Override

@@ -11,6 +11,7 @@ import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.PetPatientCardHandle;
 //import guitests.guihandles.PetPatientListPanelHandle;
+import guitests.guihandles.PetPatientListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.model.person.Person;
 import seedu.address.model.petpatient.PetPatient;
@@ -129,6 +130,28 @@ public class GuiTestAssert {
         assertListMatching(personListPanelHandle, persons.toArray(new Person[0]));
     }
 
+    //@@author aquarinte
+    /**
+     * Asserts that the list in {@code petPatientListPanelHandle} displays the details of {@code petpatients}
+     * correctly and in the correct order.
+     */
+    public static void assertListMatching(PetPatientListPanelHandle petPatientListPanelHandle,
+                                          PetPatient... petPatients) {
+        for (int i = 0; i < petPatients.length; i++) {
+            assertCardDisplaysPetPatient(petPatients[i], petPatientListPanelHandle.getPetPatientCardHandle(i));
+        }
+    }
+
+    /**
+     * Asserts that the list in {@code petPatientListPanelHandle} displays the details of {@code petpatients}
+     * correctly and in the correct order.
+     */
+    public static void assertListMatching(PetPatientListPanelHandle petPatientListPanelHandle,
+                                          List<PetPatient> petPatients) {
+        assertListMatching(petPatientListPanelHandle, petPatients.toArray(new PetPatient[0]));
+    }
+
+    //@@author
     /**
      * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.
      */

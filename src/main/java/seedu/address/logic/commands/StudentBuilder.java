@@ -149,6 +149,16 @@ public class StudentBuilder {
     }
 
     /**
+     * Removes the {@code milestone} from the {@code dashboard} of the {@code Student} that we are building.
+     *
+     * @throws MilestoneNotFoundException if the specified milestone is not found in the dashboard
+     */
+    public StudentBuilder withoutMilestone(Milestone milestone) throws MilestoneNotFoundException {
+        dashboard.getMilestoneList().remove(milestone);
+        return this;
+    }
+
+    /**
      * Adds a new {@code task} to the specified milestone in the {@code dashboard}
      * of the {@code Student} we are building.
      *

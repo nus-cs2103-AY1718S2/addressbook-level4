@@ -2,14 +2,12 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
-import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.lesson.Day;
@@ -17,7 +15,7 @@ import seedu.address.model.lesson.Time;
 import seedu.address.model.programminglanguage.ProgrammingLanguage;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Email;
-import seedu.address.model.student.MiscellaneousInfo.ProfilePicturePath;
+import seedu.address.model.student.miscellaneousInfo.ProfilePicturePath;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.dashboard.Date;
@@ -263,19 +261,27 @@ public class ParserUtil {
         return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
     }
 
-    public static Optional<ProfilePicturePath> parsePictureUrl(Optional<String> url) throws MalformedURLException,
+    /**
+     * Parses a {@code Optional<String> path} into an {@code Optional<ProfilePicturePath>} if {@code path} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ProfilePicturePath> parsePictureUrl(Optional<String> path) throws
             IllegalValueException {
 
-        requireNonNull(url);
-        return url.isPresent() ? Optional.of(parsePictureUrl(url.get())) : Optional.empty();
+        requireNonNull(path);
+        return path.isPresent() ? Optional.of(parsePictureUrl(path.get())) : Optional.empty();
     }
 
-    public static ProfilePicturePath parsePictureUrl(String url) throws MalformedURLException, IllegalValueException {
-        requireNonNull(url);
-        if(!ProfilePicturePath.isValidPath(url)) {
+    /**
+     * Parses a {@code String path} into a {@code ProfilePicturePath}.
+     * @throws IllegalValueException if the given {@code path} is invalid.
+     */
+    public static ProfilePicturePath parsePictureUrl(String path) throws IllegalValueException {
+        requireNonNull(path);
+        if (!ProfilePicturePath.isValidPath(path)) {
             throw new IllegalValueException(ProfilePicturePath.MESSAGE_PICTURE_CONSTRAINTS);
         }
-        return new ProfilePicturePath(url);
+        return new ProfilePicturePath(path);
     }
 
 }

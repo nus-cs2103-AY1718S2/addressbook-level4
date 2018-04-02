@@ -54,7 +54,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Student student = new Student(name, phone, email, address, programmingLanguage, tagList);
 
             return new AddCommand(student);
-        } catch (IllegalValueException e ) {
+        } catch (IllegalValueException e) {
             throw new ParseException(e.getMessage(), e);
         }
     }

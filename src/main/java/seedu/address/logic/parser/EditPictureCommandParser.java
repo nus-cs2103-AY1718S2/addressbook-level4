@@ -5,15 +5,17 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PICTURE_PATH;
 
-import java.net.MalformedURLException;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditPictureCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.student.MiscellaneousInfo.ProfilePicturePath;
+import seedu.address.model.student.miscellaneousInfo.ProfilePicturePath;
 
+/**
+ * Parses input arguments and creates a new EditPictureCommand object
+ */
 public class EditPictureCommandParser implements Parser<EditPictureCommand> {
 
     @Override
@@ -21,7 +23,8 @@ public class EditPictureCommandParser implements Parser<EditPictureCommand> {
         requireNonNull(userInput);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(userInput, PREFIX_INDEX, PREFIX_PICTURE_PATH);
 
-        if (!arePrefixesPresent(argMultimap,PREFIX_INDEX, PREFIX_PICTURE_PATH) || !argMultimap.getPreamble().isEmpty()) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_INDEX, PREFIX_PICTURE_PATH)
+                || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditPictureCommand.MESSAGE_USAGE));
         }
         Index index;
@@ -35,7 +38,7 @@ public class EditPictureCommandParser implements Parser<EditPictureCommand> {
 
         try {
             profilePicturePath = ParserUtil.parsePictureUrl(argMultimap.getValue(PREFIX_PICTURE_PATH)).get();
-        } catch (MalformedURLException|IllegalValueException e) {
+        } catch (IllegalValueException e) {
             throw new ParseException(e.getMessage(), e);
         }
 

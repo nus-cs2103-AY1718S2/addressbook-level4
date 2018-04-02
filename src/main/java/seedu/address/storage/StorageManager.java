@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
+
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
@@ -20,7 +21,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.student.MiscellaneousInfo.ProfilePicturePath;
+import seedu.address.model.student.miscellaneousInfo.ProfilePicturePath;
 import seedu.address.model.student.Student;
 
 /**
@@ -166,10 +167,12 @@ public class StorageManager extends ComponentManager implements Storage {
         File tobeReplacedWithJpg = new File(studentPictureFilePath.toString() + ".jpg");
         File tobeReplacedWithPng = new File(studentPictureFilePath.toString() + ".png");
 
-        if(tobeReplacedWithJpg.exists())
+        if (tobeReplacedWithJpg.exists()) {
             tobeReplacedWithJpg.delete();
-        else
+        }
+        else {
             tobeReplacedWithPng.delete();
+        }
 
     }
 
@@ -188,11 +191,11 @@ public class StorageManager extends ComponentManager implements Storage {
     @Subscribe
     public void handleProfilePictureChangeEvent(ProfilePictureChangeEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
-    try {
-        saveProfilePicture(event.getUrlToChangeTo(), event.getStudent());
-    } catch (IOException e) {
-        raise(new DataSavingExceptionEvent(e));
-    }
+        try {
+            saveProfilePicture(event.getUrlToChangeTo(), event.getStudent());
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
 
     }
 

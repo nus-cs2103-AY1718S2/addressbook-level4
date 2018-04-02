@@ -1,4 +1,4 @@
-package seedu.address.model.student.MiscellaneousInfo;
+package seedu.address.model.student.miscellaneousInfo;
 
 import static java.util.Objects.requireNonNull;
 
@@ -6,16 +6,18 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Represents a Student's profile picture's pathname in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidPath(String)}
+ */
 public class ProfilePicturePath {
-
-    public final Path profilePicturePath;
 
     public static final String MESSAGE_PICTURE_CONSTRAINTS =
             "File URL must exist and have extensions of '.jpg' or '.png' only.";
     public static final String DEFAULT_PROFILE_PICTURE =
             "out/production/resources/images/profile_photo_placeholder.png";
 
-    public static final String INVALID_PICTURE_URL = "The URL entered for the picture is invalid or corrupted";
+    public final Path profilePicturePath;
 
     public ProfilePicturePath(String filePath) {
         requireNonNull(filePath);
@@ -58,7 +60,7 @@ public class ProfilePicturePath {
     /**
      * Returns the extension of the profile picture path.
      */
-    public String getExtension(){
+    public String getExtension() {
         int extensionSeparator = profilePicturePath.toString().lastIndexOf(".");
         return profilePicturePath.toString().substring(extensionSeparator);
     }

@@ -1,7 +1,7 @@
 package seedu.address.commons.events.storage;
 
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.model.student.MiscellaneousInfo.ProfilePicturePath;
+import seedu.address.model.student.miscellaneousInfo.ProfilePicturePath;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.UniqueKey;
 
@@ -14,7 +14,7 @@ public class ProfilePictureChangeEvent extends BaseEvent {
     private final ProfilePicturePath urlToChangeTo;
     private final UniqueKey uniqueKey;
 
-    public ProfilePictureChangeEvent(Student student){
+    public ProfilePictureChangeEvent(Student student) {
         this.student = student;
         this.urlToChangeTo = student.getProfilePicturePath();
         this.uniqueKey = student.getUniqueKey();

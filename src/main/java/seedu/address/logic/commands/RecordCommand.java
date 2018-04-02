@@ -84,11 +84,15 @@ public class RecordCommand extends UndoableCommand {
         return generateCommandResult();
     }
 
+    /**
+     * Creates and returns a {@code CommandResult} with the details of {@code RecordCommand}
+     * edited with {@code record}.
+     */
     private CommandResult generateCommandResult() {
         if (editedPatient == patientToEdit) {
             return new CommandResult(String.format(MESSAGE_CLOSE_RECORD_SUCCESS));
-        } else if (patientToEdit.getRecordList().getNumberOfRecords() <
-                editedPatient.getRecordList().getNumberOfRecords()) {
+        } else if (patientToEdit.getRecordList().getNumberOfRecords()
+                < editedPatient.getRecordList().getNumberOfRecords()) {
             return new CommandResult(String.format(MESSAGE_ADD_RECORD_SUCCESS, editedPatient));
         } else {
             return new CommandResult(String.format(MESSAGE_EDIT_RECORD_SUCCESS, editedPatient));
@@ -116,8 +120,7 @@ public class RecordCommand extends UndoableCommand {
 
         if (editedRecord == null) {
             editedPatient = patientToEdit;
-        }
-        else {
+        } else {
             editedPatient = createEditedPatient(patientToEdit, recordIndex.getZeroBased(), editedRecord);
         }
     }
@@ -161,8 +164,8 @@ public class RecordCommand extends UndoableCommand {
         // state check
         RecordCommand e = (RecordCommand) other;
 
-        return getPatientIndex().equals(e.getPatientIndex()) &&
-                getRecordIndex().equals(e.getRecordIndex());
+        return getPatientIndex().equals(e.getPatientIndex())
+                && getRecordIndex().equals(e.getRecordIndex());
     }
 
     public Index getPatientIndex() {

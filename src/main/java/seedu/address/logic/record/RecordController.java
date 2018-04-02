@@ -68,13 +68,17 @@ public class RecordController {
     }
 
     @FXML
+    /**
+     * Takes in user input to every field, verifies if it is a valid entry
+     * and calls for the method to close the stage.
+     */
     protected void handleEnterKey(KeyEvent event) {
         String date = this.dateField.getText();
         String symptom = this.symptomField.getText();
         String illness = this.illnessField.getText();
         String treatment = this.treatmentField.getText();
         if (date.equals("") || symptom.equals("") || illness.equals("") || treatment.equals("")) {
-                messageText.setText("Please fill in all fields.");
+            messageText.setText("Please fill in all fields.");
         } else {
             if (RecordManager.authenticate(date, symptom, illness, treatment)) {
                 messageText.setText("Success! Please close this window.");
@@ -87,11 +91,14 @@ public class RecordController {
     }
 
     @FXML
+    /**
+     * Overwrites default tab key to allow for moving to next text field.
+     */
     protected void handleTabKey(KeyEvent event) {
         event.consume();
         Node node = (Node) event.getSource();
-        KeyEvent newEvent
-                = new KeyEvent(event.getSource(),
+        KeyEvent newEvent =
+                new KeyEvent(event.getSource(),
                 event.getTarget(), event.getEventType(),
                 event.getCharacter(), event.getText(),
                 event.getCode(), event.isShiftDown(),
@@ -102,13 +109,19 @@ public class RecordController {
     }
 
     @FXML
-    private void closeButtonAction(){
+    /**
+     * Handles closing the stage.
+     */
+    private void closeButtonAction() {
         // get a handle to the stage
         Stage stage = (Stage) saveButton.getScene().getWindow();
         // close the stage
         stage.close();
     }
 
+    /**
+     * Initialises the text fields with data from the patient's {@code record}.
+     */
     public void initData(Record record) {
         dateField.setWrapText(true);
         symptomField.setWrapText(true);

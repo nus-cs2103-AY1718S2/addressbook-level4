@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -176,18 +177,29 @@ public class DeleteCommand extends UndoableCommand {
      * All related dependencies (pet patients, appointments) will be deleted as well.
      */
     private CommandResult deleteForcePerson() {
+        String deleteDependenciesList = "";
+
         try {
             requireNonNull(personToDelete);
-            model.deleteForcePerson(personToDelete);
-        } catch (PersonNotFoundException pnfe) {
+            List<PetPatient> petPatientsDeleted = model.deletePetPatientDependencies(personToDelete);
+            List<Appointment> appointmentsDeleted = new ArrayList<>();
+            for (PetPatient pp : petPatientsDeleted) {
+                System.out.println(pp.getName());
+                appointmentsDeleted.addAll(model.deleteAppointmentDependencies(pp));
+                deleteDependenciesList += "\n" + (String.format(MESSAGE_DELETE_PET_PATIENT_SUCCESS, pp));
+            }
+            for (Appointment appointment : appointmentsDeleted) {
+                deleteDependenciesList += "\n" + (String.format(MESSAGE_DELETE_APPOINTMENT_SUCCESS, appointment));
+            }
+            model.deletePerson(personToDelete);
+        } catch (PersonNotFoundException e) {
             throw new AssertionError("The target person cannot be missing");
-        } catch (AppointmentNotFoundException anfe) {
-            throw new AssertionError("The relevant appointments cannot be missing");
-        } catch (PetPatientNotFoundException ppnfe) {
-            throw new AssertionError("The relevant pet patients cannot be missing");
+        } catch (PetDependencyNotEmptyException e) {
+            throw new AssertionError("Pet dependencies still exist!");
         }
 
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete)
+                + deleteDependenciesList);
     }
 
     /**
@@ -195,16 +207,23 @@ public class DeleteCommand extends UndoableCommand {
      * All related dependencies (appointments) will be deleted as well.
      */
     private CommandResult deleteForcePetPatient() {
+        String deleteDependenciesList = "";
+
         try {
             requireNonNull(petPatientToDelete);
-            model.deleteForcePetPatient(petPatientToDelete);
+            List<Appointment> appointmentDependenciesDeleted = model.deleteAppointmentDependencies(petPatientToDelete);
+            for (Appointment appointment : appointmentDependenciesDeleted) {
+                deleteDependenciesList += "\n" + (String.format(MESSAGE_DELETE_APPOINTMENT_SUCCESS, appointment));
+            }
+            model.deletePetPatient(petPatientToDelete);
         } catch (PetPatientNotFoundException ppnfe) {
             throw new AssertionError("The target pet cannot be missing");
-        } catch (AppointmentNotFoundException anfe) {
-            throw new AssertionError("The relevant appointments cannot be missing");
+        }  catch (AppointmentDependencyNotEmptyException e) {
+            throw new AssertionError("Appointment dependencies still exist!");
         }
 
-        return new CommandResult(String.format(MESSAGE_DELETE_PET_PATIENT_SUCCESS, petPatientToDelete));
+        return new CommandResult(String.format(MESSAGE_DELETE_PET_PATIENT_SUCCESS, petPatientToDelete)
+                + deleteDependenciesList);
     }
 
     @Override

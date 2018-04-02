@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -8,11 +9,13 @@ import seedu.address.model.appointment.exceptions.AppointmentDependencyNotEmptyE
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicateNricException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.petpatient.PetPatient;
+import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
 import seedu.address.model.petpatient.exceptions.PetDependencyNotEmptyException;
 import seedu.address.model.petpatient.exceptions.PetPatientNotFoundException;
@@ -35,10 +38,6 @@ public interface Model {
 
     /** Deletes the given person. */
     void deletePerson(Person target) throws PersonNotFoundException, PetDependencyNotEmptyException;
-
-    /** Forcefully deletes the given person. */
-    void deleteForcePerson(Person target)
-            throws PersonNotFoundException, PetPatientNotFoundException, AppointmentNotFoundException;
 
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException, DuplicateNricException;
@@ -87,10 +86,17 @@ public interface Model {
 
     void addPetPatient(PetPatient petPatient) throws DuplicatePetPatientException;
 
+    Person getPersonWithNric(Nric ownerNric);
+
+    PetPatient getPetPatientWithNricAndName(Nric ownerNric, PetPatientName petPatientName);
+
     /** Deletes the given pet. */
     void deletePetPatient(PetPatient target)
             throws PetPatientNotFoundException, AppointmentDependencyNotEmptyException;
 
-    /** Forcefully deletes the given pet. */
-    void deleteForcePetPatient(PetPatient target) throws PetPatientNotFoundException, AppointmentNotFoundException;
+    /** Deletes all pet dependencies. */
+    List<PetPatient> deletePetPatientDependencies(Person key);
+
+    /** Deletes all appointment dependencies. */
+    List<Appointment> deleteAppointmentDependencies(PetPatient target);
 }

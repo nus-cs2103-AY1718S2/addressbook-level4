@@ -87,7 +87,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     public void deletePage(Person person) {
         File deleteTemplateFile = new File("/Users/johnnychan/Documents/"
-                + "GitHub/main/src/main/resources/StudentPage/" + person.getName() + "html");
+                + "GitHub/main/src/main/resources/StudentPage/" + person.getName() + ".html");
         boolean bool = deleteTemplateFile.delete();
         System.out.println(bool);
     }

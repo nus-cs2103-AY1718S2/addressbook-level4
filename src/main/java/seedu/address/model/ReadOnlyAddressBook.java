@@ -30,8 +30,10 @@ public interface ReadOnlyAddressBook {
 
     void resetAliasList();
 
+    //@@author yeggasd
     /**
      * Returns the hashed password
      */
     Password getPassword();
+    //@@author
 }

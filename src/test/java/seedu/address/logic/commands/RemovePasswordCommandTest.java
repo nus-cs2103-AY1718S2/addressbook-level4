@@ -15,6 +15,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.Password;
 import seedu.address.model.UserPrefs;
 
+//@@author yeggasd
 /**
  * Contains integration tests (interaction with the Model and Password) and unit tests
  * for {@code RemovePasswordCommand}.

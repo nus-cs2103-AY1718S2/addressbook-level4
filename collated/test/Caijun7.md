@@ -1,101 +1,4 @@
 # Caijun7
-###### \data\ImportCommandTest\aliceAddressBook.xml
-``` xml
-<addressbook>
-    <persons>
-        <name>Alice Pauline</name>
-        <phone isPrivate="false">85355255</phone>
-        <email isPrivate="false">alice@example.com</email>
-        <address isPrivate="false">123, Jurong West Ave 6, #08-111</address>
-        <birthday>01011995</birthday>
-        <tagged>friends</tagged>
-    </persons>
-    <tags>friends</tags>
-</addressbook>
-```
-###### \data\ImportCommandTest\aliceBensonAddressBook.xml
-``` xml
-<addressbook>
-    <persons>
-        <name>Alice Pauline</name>
-        <phone isPrivate="false">85355255</phone>
-        <email isPrivate="false">alice@example.com</email>
-        <address isPrivate="false">123, Jurong West Ave 6, #08-111</address>
-        <birthday>01011995</birthday>
-        <tagged>friends</tagged>
-    </persons>
-    <persons>
-        <name>Benson Meier</name>
-        <phone isPrivate="false">98765432</phone>
-        <email isPrivate="false">johnd@example.com</email>
-        <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
-        <birthday>02011989</birthday>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
-    </persons>
-    <tags>owesMoney</tags>
-    <tags>friends</tags>
-</addressbook>
-```
-###### \data\ImportCommandTest\bensonAddressBook.xml
-``` xml
-<addressbook>
-    <persons>
-        <name>Benson Meier</name>
-        <phone isPrivate="false">98765432</phone>
-        <email isPrivate="false">johnd@example.com</email>
-        <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
-        <birthday>01021989</birthday>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
-    </persons>
-</addressbook>
-```
-###### \data\ImportCommandTest\invalidFileFormatAddressBook.xml
-``` xml
-<addressbook>
-    <persons>
-        <name>Alice Pauline</name>
-        <phone isPrivate="false">85355255</phone>
-        <email isPrivate="false">alice@example.com</email>
-        <birthday>01011995</birthday>
-        <tagged>friends</tagged>
-    </persons>
-    <persons>
-        <name>Benson Meier</name>
-        <phone isPrivate="false">98765432</phone>
-        <email isPrivate="false">johnd@example.com</email>
-        <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
-        <birthday>01021998</birthday>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
-    </persons>
-</addressbook>
-```
-###### \data\XmlAddressBookStorageTest\validAddressBook.xml
-``` xml
-<addressbook>
-    <persons>
-        <name>Alice Pauline</name>
-        <phone isPrivate="false">85355255</phone>
-        <email isPrivate="false">alice@example.com</email>
-        <address isPrivate="false">123, Jurong West Ave 6, #08-111</address>
-        <birthday>01011995</birthday>
-        <tagged>friends</tagged>
-    </persons>
-    <persons>
-        <name>Benson Meier</name>
-        <phone isPrivate="false">98765432</phone>
-        <email isPrivate="false">johnd@example.com</email>
-        <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
-        <birthday>01011995</birthday>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
-    </persons>
-    <tags>owesMoney</tags>
-    <tags>friends</tags>
-</addressbook>
-```
 ###### \java\seedu\address\logic\commands\ImportCommandTest.java
 ``` java
 /**
@@ -139,25 +42,9 @@ public class ImportCommandTest {
         expectedModel.importAddressBook(filepath, SecurityUtil.hashPassword(""));
         assertCommandSuccess(importCommand, model, ImportCommand.MESSAGE_SUCCESS, expectedModel);
     }
-
-    @Test
-    public void execute_encryptedAddressBook_success() throws Exception {
-        String encryptedFile = TEST_DATA_FOLDER + "encryptedAliceBensonAddressBook.xml";
-
-        ImportCommand importCommand = prepareCommand(encryptedFile, model, TEST_PASSWORD);
-        importCommand.executeUndoableCommand();
-        SecurityUtil.encrypt(encryptedFile, TEST_PASSWORD);
-        assertEquals(model.getAddressBook(), addressBookWithAliceAndBenson);
-    }
-
-    @Test
-    public void execute_wrongPasswordEncryptedAddressBook_throwsCommandException() throws Exception {
-        String encryptedFile = TEST_DATA_FOLDER + "encryptedAliceBensonAddressBook.xml";
-        ImportCommand importCommand = prepareCommand(encryptedFile, model, TEST_PASSWORD + "1");
-        thrown.expect(CommandException.class);
-        importCommand.executeUndoableCommand();
-    }
-
+```
+###### \java\seedu\address\logic\commands\ImportCommandTest.java
+``` java
     @Test
     public void execute_nonExistentFileImportIntoAddressBook_throwsCommandException() throws Exception {
         String nonExistentFile = TEST_DATA_FOLDER + "nonExistentFile.xml";

@@ -48,6 +48,7 @@ public class AddressBookBuilder {
         return this;
     }
 
+    //@@author yeggasd
     /**
      * Parses {@code password} into a {@code Password} and updates the {@code AddressBook} 's password
      * that we are building.
@@ -56,6 +57,7 @@ public class AddressBookBuilder {
         addressBook.updatePassword(new Password(password));
         return this;
     }
+    //@@author
 
     public AddressBook build() {
         return addressBook;

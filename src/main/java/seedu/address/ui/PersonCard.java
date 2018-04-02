@@ -55,6 +55,7 @@ public class PersonCard extends UiPart<Region> {
         initializeTags(person);
     }
 
+    //@@author yeggasd-reused
     /**
      * Initializes the tag labels for {@code person}.
      */
@@ -73,7 +74,7 @@ public class PersonCard extends UiPart<Region> {
     public static String getColorStyleFor(String tagName) {
         return TAG_COLOR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOR_STYLES.length];
     }
-
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

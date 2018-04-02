@@ -26,6 +26,14 @@ public class FindCommand extends Command implements PopulatableCommand {
         this.predicate = predicate;
     }
 
+    /**
+     * For call in PopulatePrefixRequestEvent class, to assign string values.
+     */
+    public FindCommand() {
+        predicate = null;
+    }
+
+
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);

@@ -29,6 +29,14 @@ public class SelectCommand extends Command implements PopulatableCommand {
         this.targetIndex = targetIndex;
     }
 
+    /**
+     * For call in PopulatePrefixRequestEvent class, to assign string values.
+     */
+    public SelectCommand() {
+        targetIndex = null;
+    }
+
+
     @Override
     public CommandResult execute() throws CommandException {
 

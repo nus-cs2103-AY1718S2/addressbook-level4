@@ -77,6 +77,15 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
+    /**
+     * For call in PopulatePrefixRequestEvent class, to assign string values.
+     */
+    public EditCommand() {
+        index = null;
+        editPersonDescriptor = null;
+    }
+
+
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {

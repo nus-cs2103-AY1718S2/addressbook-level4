@@ -34,6 +34,13 @@ public class DeleteCommand extends UndoableCommand implements PopulatableCommand
         this.targetIndex = targetIndex;
     }
 
+    /**
+     * For call in PopulatePrefixRequestEvent class, to assign string values.
+     */
+    public DeleteCommand() {
+        targetIndex = null;
+    }
+
 
     @Override
     public CommandResult executeUndoableCommand() {

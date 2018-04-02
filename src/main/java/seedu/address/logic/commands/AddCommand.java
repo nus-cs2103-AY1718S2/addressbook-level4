@@ -49,6 +49,13 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
         toAdd = person;
     }
 
+    /**
+     * For call in PopulatePrefixRequestEvent class, to assign string values.
+     */
+    public AddCommand() {
+        toAdd = null;
+    }
+
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);

@@ -27,8 +27,15 @@ public class LocateCommand extends Command implements PopulatableCommand {
 
     public LocateCommand (Index targetIndex) {
         this.targetIndex = targetIndex;
-
     }
+
+    /**
+     * For call in PopulatePrefixRequestEvent class, to assign string values.
+     */
+    public LocateCommand() {
+        targetIndex = null;
+    }
+
 
     @Override
     public CommandResult execute() throws CommandException {

@@ -90,6 +90,14 @@ public class SecurityUtilTest {
 
     @Test
     public void encryptDecrypt_wrongPassword_throwsWrongPasswordException() throws Exception {
+        File file = new File (TEST_DATA_FILE + "EncryptedAddressBook.xml");
+
+        thrown.expect(WrongPasswordException.class);
+        SecurityUtil.decryptFile(file, new Password(WRONG_PASSWORD));
+    }
+
+    @Test
+    public void encryptDecrypt_wrongPasswordBadPadding_throwsWrongPasswordException() throws Exception {
         FileWriter writer = new FileWriter(TEST_DATA_FILE);
         writer.write(TEST_DATA);
         writer.close();

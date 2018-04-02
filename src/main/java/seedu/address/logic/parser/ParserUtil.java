@@ -19,6 +19,9 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.customer.LateInterest;
+import seedu.address.model.person.customer.MoneyBorrowed;
+import seedu.address.model.person.customer.StandardInterest;
 import seedu.address.model.tag.Tag;
 
 
@@ -191,8 +194,102 @@ public class ParserUtil {
      * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Date> parseDate(Optional<Date> date) throws IllegalValueException {
+    public static Optional<Date> parseDate(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
-        return date.isPresent() ? Optional.of(parseDate(date.get().toString())) : Optional.empty();
+        return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
     }
+
+    //TODO: add methods to parse Customer fields and Runner fields
+
+    /**
+     * Parses a {@code string double} into an {@code MoneyOwed}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code MoneyOwed} is invalid.
+     */
+    public static MoneyBorrowed parseMoneyBorrowed(String moneyBorrowed) throws IllegalValueException {
+        requireNonNull(moneyBorrowed);
+
+        /*
+        String trimmed = moneyBorrowed.trim();
+        if (!Email.isValidEmail(trimmed)) {
+            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
+        }
+        */
+
+        return new MoneyBorrowed(Double.parseDouble(moneyBorrowed));
+    }
+
+    /**
+     * Parses a {@code Optional<String> MoneyBorrowed} into an {@code Optional<MoneyBorrowed>} if {@code moneyBorrowed}
+     * is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<MoneyBorrowed> parseMoneyBorrowed(Optional<String> moneyBorrowed) throws
+            IllegalValueException {
+        requireNonNull(moneyBorrowed);
+        return moneyBorrowed.isPresent() ? Optional.of(parseMoneyBorrowed(moneyBorrowed.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code string double} into an {@code StandardInterest}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code MoneyOwed} is invalid.
+     */
+    public static StandardInterest parseStandardInterest(String value) throws IllegalValueException {
+        requireNonNull(value);
+
+        /*
+        String trimmed = moneyBorrowed.trim();
+        if (!Email.isValidEmail(trimmed)) {
+            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
+        }
+        */
+
+        return new StandardInterest(Double.parseDouble(value));
+    }
+
+    /**
+     * Parses a {@code Optional<String> StandardInterest} into an {@code Optional<StandardInterest>} if {@code
+     * value} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<StandardInterest> parseStandardInterest(Optional<String> value) throws
+            IllegalValueException {
+        requireNonNull(value);
+        return value.isPresent() ? Optional.of(parseStandardInterest(value.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code string double} into an {@code StandardInterest}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code MoneyOwed} is invalid.
+     */
+    public static LateInterest parseLateInterest(String value) throws IllegalValueException {
+        requireNonNull(value);
+
+        /*
+        String trimmed = moneyBorrowed.trim();
+        if (!Email.isValidEmail(trimmed)) {
+            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
+        }
+        */
+
+        return new LateInterest(Double.parseDouble(value));
+    }
+
+    /**
+     * Parses a {@code Optional<String> StandardInterest} into an {@code Optional<StandardInterest>} if {@code
+     * value} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<LateInterest> parseLateInterest(Optional<String> value) throws
+            IllegalValueException {
+        requireNonNull(value);
+        return value.isPresent() ? Optional.of(parseLateInterest(value.get())) : Optional.empty();
+    }
+
+
 }

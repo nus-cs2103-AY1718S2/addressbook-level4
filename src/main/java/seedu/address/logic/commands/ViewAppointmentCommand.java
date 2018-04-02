@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ShowCalendarViewRequestEvent;
 import seedu.address.commons.events.ui.ShowPatientAppointmentRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
@@ -54,6 +55,8 @@ public class ViewAppointmentCommand extends Command {
             EventsCenter.getInstance().post(new ShowPatientAppointmentRequestEvent(patientFound));
 
             return new CommandResult(String.format(MESSAGE_SUCCESS_PATIENT, patientFound.getName()));
+        } else {
+            EventsCenter.getInstance().post(new ShowCalendarViewRequestEvent());
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }

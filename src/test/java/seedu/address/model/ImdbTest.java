@@ -23,6 +23,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.patient.Patient;
+import seedu.address.model.patient.exceptions.DuplicatePatientException;
+import seedu.address.model.patient.exceptions.PatientNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.ImdbBuilder;
 import seedu.address.testutil.PatientBuilder;
@@ -104,6 +106,44 @@ public class ImdbTest {
     public void getVisitingQueue_modifyQueue_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         imdb.getUniquePatientQueue().remove(0);
+    }
+
+    @Test
+    public void addPatientToQueue_queueUpdate() throws DuplicatePatientException {
+        imdbWithAmyAndBob.addPatientToQueue(1);
+        Imdb expectedImdb = new ImdbBuilder().withPerson(AMY).withPerson(BOB).build();
+
+        expectedImdb.addPatientToQueue(1);
+
+        assertEquals(imdbWithAmyAndBob, expectedImdb);
+    }
+
+    @Test
+    public void addPatientToQueue_duplicateIndex() throws DuplicatePatientException {
+        imdbWithAmyAndBob.addPatientToQueue(1);
+
+        thrown.expect(DuplicatePatientException.class);
+
+        imdbWithAmyAndBob.addPatientToQueue(1);
+    }
+
+    @Test
+    public void removePatientFromQueue_queueUpdate() throws DuplicatePatientException, PatientNotFoundException {
+        imdbWithAmyAndBob.addPatientToQueue(1);
+        Imdb expectedImdb = new ImdbBuilder().withPerson(AMY).withPerson(BOB).build();
+
+        expectedImdb.addPatientToQueue(1);
+
+        imdbWithAmyAndBob.removePatientFromQueue();
+        expectedImdb.removePatientFromQueue();
+
+        assertEquals(imdbWithAmyAndBob, expectedImdb);
+    }
+
+    @Test
+    public void removePatientFromQueue_emptyQueue() throws PatientNotFoundException {
+        thrown.expect(PatientNotFoundException.class);
+        imdbWithAmyAndBob.removePatientFromQueue();
     }
 
     /**

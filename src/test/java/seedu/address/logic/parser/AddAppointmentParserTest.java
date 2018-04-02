@@ -20,7 +20,8 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.AddAppointmentCommand;
+import seedu.address.logic.commands.appointment.AddAppointmentCommand;
+import seedu.address.logic.parser.appointment.AddAppointmentCommandParser;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.EndDateTime;
 import seedu.address.model.appointment.StartDateTime;

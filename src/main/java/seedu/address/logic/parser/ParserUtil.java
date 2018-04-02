@@ -1,7 +1,10 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.appointment.MonthCommand.MESSAGE_YEAR_MONTH_CONSTRAINTS;
+import static seedu.address.logic.commands.appointment.MonthCommand.YEAR_MONTH_VALIDATION_REGEX;
 
+import java.time.YearMonth;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -424,5 +427,23 @@ public class ParserUtil {
         requireNonNull(numberOfPositions);
         return numberOfPositions.isPresent() ? Optional.of(parseNumberOfPositions(numberOfPositions.get()))
                 : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String yearMonth} into a {@code yearMonth}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code yearMonth} is invalid.
+     */
+    public static YearMonth parseYearMonth(String yearMonth) throws IllegalValueException {
+        String trimmedYearMonth = yearMonth.trim();
+        if (!trimmedYearMonth.matches(YEAR_MONTH_VALIDATION_REGEX)) {
+            throw new IllegalValueException(MESSAGE_YEAR_MONTH_CONSTRAINTS);
+        }
+        if (trimmedYearMonth.length() == 0) {
+            return null;
+        } else {
+            return YearMonth.parse(trimmedYearMonth);
+        }
     }
 }

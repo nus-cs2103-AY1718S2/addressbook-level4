@@ -6,6 +6,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import seedu.address.commons.events.ui.SwitchTabRequestEvent;
+import seedu.address.logic.commands.appointment.CalendarCommand;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author trafalgarandre

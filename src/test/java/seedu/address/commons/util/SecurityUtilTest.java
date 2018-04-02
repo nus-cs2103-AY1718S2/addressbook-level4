@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -18,11 +19,12 @@ import seedu.address.model.Password;
 //@@author yeggasd
 public class SecurityUtilTest {
     private static final File TEST_DATA_FILE = new File("./src/test/data/sandbox/temp");
+    private static final File VALID_DATA_FILE = new File(
+            "./src/test/data/XmlAddressBookStorageTest/validAddressBook.xml");
     private static final String TEST_DATA = "<xml>";
     private static final String TEST_PASSWORD =  "test";
     private static final String WRONG_PASSWORD = "wrong";
-
-
+    private static final byte[] hashedPassword = SecurityUtil.hashPassword(TEST_PASSWORD);
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -44,7 +46,6 @@ public class SecurityUtilTest {
 
     @Test
     public void decrypt_fileProcessorPlainText_success() throws Exception {
-        byte[] hashedPassword = SecurityUtil.hashPassword(TEST_PASSWORD);
         FileWriter writer = new FileWriter(TEST_DATA_FILE);
         writer.write(TEST_DATA);
         writer.close();
@@ -60,7 +61,6 @@ public class SecurityUtilTest {
 
     @Test
     public void encryptDecrypt_customisedPassword_success() throws Exception {
-        byte[] hashedPassword = SecurityUtil.hashPassword(TEST_PASSWORD);
 
         FileWriter writer = new FileWriter(TEST_DATA_FILE);
         writer.write(TEST_DATA);
@@ -78,7 +78,6 @@ public class SecurityUtilTest {
 
     @Test
     public void decrypt_withPassword_throwsWrongPasswordException() throws Exception {
-        byte[] hashedPassword = SecurityUtil.hashPassword(TEST_PASSWORD);
         FileWriter writer = new FileWriter(TEST_DATA_FILE);
         writer.write(TEST_DATA);
         writer.close();
@@ -90,10 +89,10 @@ public class SecurityUtilTest {
 
     @Test
     public void encryptDecrypt_wrongPassword_throwsWrongPasswordException() throws Exception {
-        File file = new File (TEST_DATA_FILE + "EncryptedAddressBook.xml");
 
+        SecurityUtil.encrypt(VALID_DATA_FILE, hashedPassword);
         thrown.expect(WrongPasswordException.class);
-        SecurityUtil.decryptFile(file, new Password(WRONG_PASSWORD));
+        SecurityUtil.decryptFile(VALID_DATA_FILE, new Password(WRONG_PASSWORD));
     }
 
     @Test
@@ -109,8 +108,6 @@ public class SecurityUtilTest {
 
     @Test
     public void encryptDecryptFile_wrongPassword_throwsWrongPasswordException() throws Exception {
-
-        byte[] hashedPassword = SecurityUtil.hashPassword(TEST_PASSWORD);
         byte[] hashedWrong = SecurityUtil.hashPassword(WRONG_PASSWORD);
 
         FileWriter writer = new FileWriter(TEST_DATA_FILE);
@@ -125,28 +122,29 @@ public class SecurityUtilTest {
     @Test
     public void encrypt_wrongPasswordLength_throwsAssertionError() throws Exception {
 
-        byte[] hashedPassword = SecurityUtil.hashPassword(TEST_PASSWORD);
-
         FileWriter writer = new FileWriter(TEST_DATA_FILE);
         writer.write(TEST_DATA);
         writer.close();
-        hashedPassword = Arrays.copyOf(hashedPassword, 13);
+        byte[] truncatedHashedPassword = Arrays.copyOf(hashedPassword, 13);
 
         thrown.expect(AssertionError.class);
-        SecurityUtil.encrypt(TEST_DATA_FILE, hashedPassword);
+        SecurityUtil.encrypt(TEST_DATA_FILE, truncatedHashedPassword);
     }
 
     @Test
     public void decrypt_wrongPasswordLength_throwsAssertionError() throws Exception {
 
-        byte[] hashedPassword = SecurityUtil.hashPassword(TEST_PASSWORD);
-
         FileWriter writer = new FileWriter(TEST_DATA_FILE);
         writer.write(TEST_DATA);
         writer.close();
-        hashedPassword = Arrays.copyOf(hashedPassword, 13);
+        byte[] truncatedHashedPassword = Arrays.copyOf(hashedPassword, 13);
 
         thrown.expect(AssertionError.class);
-        SecurityUtil.decrypt(TEST_DATA_FILE, hashedPassword);
+        SecurityUtil.decrypt(TEST_DATA_FILE, truncatedHashedPassword);
+    }
+
+    @After
+    public void reset() throws Exception {
+        SecurityUtil.decrypt(VALID_DATA_FILE, hashedPassword);
     }
 }

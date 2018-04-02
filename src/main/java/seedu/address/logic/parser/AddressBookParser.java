@@ -91,7 +91,7 @@ public class AddressBookParser {
 
         case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
-            
+
         //@@author luca590
         case ImportContactsCommand.COMMAND_WORD: //import contacts from csv
             return new ImportContactsCommandParser().parse(arguments);
@@ -141,7 +141,7 @@ public class AddressBookParser {
 
         case EmailCommand.COMMAND_ALIAS:
             return new EmailCommandParser().parse(arguments);
-        
+
         //@@author luca590
         case ExportContactsCommand.COMMAND_WORD: //export contacts from csv
             return new ExportContactsCommandParser().parse(arguments);
@@ -149,7 +149,7 @@ public class AddressBookParser {
         case ExportContactsCommand.COMMAND_ALIAS:
             return new ExportContactsCommandParser().parse(arguments);
         //@@author
-            
+
         //@@author jlks96
         case DeleteBeforeCommand.COMMAND_WORD:
             return new DeleteBeforeCommandParser().parse(arguments);
@@ -162,7 +162,7 @@ public class AddressBookParser {
 
         case AddAppointmentCommand.COMMAND_ALIAS:
             return new AddAppointmentCommandParser().parse(arguments);
-            
+
         case DeleteAppointmentCommand.COMMAND_WORD:
             return new DeleteAppointmentCommandParser().parse(arguments);
 

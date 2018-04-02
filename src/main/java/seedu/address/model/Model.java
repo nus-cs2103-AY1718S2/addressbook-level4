@@ -26,6 +26,8 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
+    void deletePage(Person target);
+
     /** Deletes the given person. */
     void deletePerson(Person target) throws PersonNotFoundException;
 
@@ -35,8 +37,11 @@ public interface Model {
 
     void addPage(Person person) throws IOException;
 
+
     /** Adds the given appointment */
     void addAppointment(Appointment appointment) throws DuplicateAppointmentException;
+
+   // void deletePage(Person person) throws IOException;
 
     /** Sorts the person list by name in alphabetical order */
     void sortPersonList(String parameter);

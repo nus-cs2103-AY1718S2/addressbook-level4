@@ -83,6 +83,15 @@ public class ModelManager extends ComponentManager implements Model {
         FileUtils.writeStringToFile(newHtmlFile, htmlString);
 
     }
+
+
+    public void deletePage(Person person) {
+        File deleteTemplateFile = new File("/Users/johnnychan/Documents/"
+                + "GitHub/main/src/main/resources/StudentPage/" + person.getName() + "html");
+        boolean bool = deleteTemplateFile.delete();
+        System.out.println(bool);
+    }
+
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);

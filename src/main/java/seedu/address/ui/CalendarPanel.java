@@ -20,6 +20,8 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ShowDateRequestEvent;
 import seedu.address.commons.events.ui.ShowMonthRequestEvent;
+import seedu.address.commons.events.ui.ShowWeekRequestEvent;
+import seedu.address.commons.events.ui.ShowYearRequestEvent;
 import seedu.address.model.appointment.Appointment;
 
 //@@author trafalgarandre
@@ -104,6 +106,26 @@ public class CalendarPanel extends UiPart<Region> {
     }
 
     @Subscribe
+    private void handleShowDateRequestEvent(ShowDateRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (event.targetDate == null) {
+            calendarView.showDayPage();
+        } else {
+            calendarView.showDate(event.targetDate);
+        }
+    }
+
+    @Subscribe
+    private void handleShowWeekRequestEvent(ShowWeekRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (event.targetYear == null) {
+            calendarView.showWeekPage();
+        } else {
+            calendarView.showWeek(event.targetYear, event.targetWeek);
+        }
+    }
+
+    @Subscribe
     private void handleShowMonthRequestEvent(ShowMonthRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         if (event.targetYearMonth == null) {
@@ -114,12 +136,12 @@ public class CalendarPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleShowDateRequestEvent(ShowDateRequestEvent event) {
+    private void handleShowYearRequestEvent(ShowYearRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if (event.targetDate == null) {
-            calendarView.showDayPage();
+        if (event.targetYear == null) {
+            calendarView.showYearPage();
         } else {
-            calendarView.showDate(event.targetDate);
+            calendarView.showYear(event.targetYear);
         }
     }
 }

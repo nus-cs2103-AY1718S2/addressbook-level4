@@ -5,8 +5,12 @@ import static seedu.address.logic.commands.appointment.DateCommand.DATE_VALIDATI
 import static seedu.address.logic.commands.appointment.DateCommand.MESSAGE_DATE_CONSTRAINTS;
 import static seedu.address.logic.commands.appointment.MonthCommand.MESSAGE_YEAR_MONTH_CONSTRAINTS;
 import static seedu.address.logic.commands.appointment.MonthCommand.YEAR_MONTH_VALIDATION_REGEX;
+import static seedu.address.logic.commands.appointment.WeekCommand.WEEK_VALIDATION_REGEX;
+import static seedu.address.logic.commands.appointment.YearCommand.MESSAGE_YEAR_CONSTRAINTS;
+import static seedu.address.logic.commands.appointment.YearCommand.YEAR_VALIDATION_REGEX;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.YearMonth;
 import java.util.Collection;
 import java.util.HashSet;
@@ -420,6 +424,7 @@ public class ParserUtil {
         return new NumberOfPositions(trimmedNumberOfPositions);
     }
 
+    //@@author trafalgarandre
     /**
      * Parses a {@code Optional<String> numberOfPositions} into an {@code Optional<String>}
      * if {@code numberOfPositions} is present.
@@ -465,6 +470,60 @@ public class ParserUtil {
             return null;
         } else {
             return LocalDate.parse(trimmedDate);
+        }
+    }
+
+    /**
+     * Parses a {@code String date} into a {@code year}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code year} is invalid.
+     */
+    public static Year parseYear(String year) throws IllegalValueException {
+        String trimmedYear = year.trim();
+        if (!trimmedYear.matches(YEAR_VALIDATION_REGEX)) {
+            throw new IllegalValueException(MESSAGE_YEAR_CONSTRAINTS);
+        }
+        if (trimmedYear.length() == 0) {
+            return null;
+        } else {
+            return Year.parse(trimmedYear);
+        }
+    }
+
+    /**
+     * Parses a {@code String args} into a {@code year}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code args} is invalid.
+     */
+    public static Year parseYearOfWeek(String args) throws IllegalValueException {
+        String trimmedArgs = args.trim();
+        if (!trimmedArgs.matches(WEEK_VALIDATION_REGEX)) {
+            throw new IllegalValueException(MESSAGE_YEAR_CONSTRAINTS);
+        }
+        if (trimmedArgs.length() == 0) {
+            return null;
+        } else {
+            return Year.parse(trimmedArgs.substring(0, 4));
+        }
+    }
+
+    /**
+     * Parses a {@code String args} into a {@code week}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code args} is invalid.
+     */
+    public static int parseWeek(String args) throws IllegalValueException {
+        String trimmedArgs = args.trim();
+        if (!trimmedArgs.matches(WEEK_VALIDATION_REGEX)) {
+            throw new IllegalValueException(MESSAGE_YEAR_CONSTRAINTS);
+        }
+        if (trimmedArgs.length() == 0) {
+            return 0;
+        } else {
+            return Integer.parseInt(trimmedArgs.substring(5));
         }
     }
 }

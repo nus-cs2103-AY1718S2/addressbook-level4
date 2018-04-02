@@ -18,6 +18,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ShowDateRequestEvent;
 import seedu.address.commons.events.ui.ShowMonthRequestEvent;
 import seedu.address.model.appointment.Appointment;
 
@@ -109,6 +110,16 @@ public class CalendarPanel extends UiPart<Region> {
             calendarView.showMonthPage();
         } else {
             calendarView.showYearMonth(event.targetYearMonth);
+        }
+    }
+
+    @Subscribe
+    private void handleShowDateRequestEvent(ShowDateRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (event.targetDate == null) {
+            calendarView.showDayPage();
+        } else {
+            calendarView.showDate(event.targetDate);
         }
     }
 }

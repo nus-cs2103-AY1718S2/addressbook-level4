@@ -1,9 +1,12 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.appointment.DateCommand.DATE_VALIDATION_REGEX;
+import static seedu.address.logic.commands.appointment.DateCommand.MESSAGE_DATE_CONSTRAINTS;
 import static seedu.address.logic.commands.appointment.MonthCommand.MESSAGE_YEAR_MONTH_CONSTRAINTS;
 import static seedu.address.logic.commands.appointment.MonthCommand.YEAR_MONTH_VALIDATION_REGEX;
 
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.Collection;
 import java.util.HashSet;
@@ -444,6 +447,24 @@ public class ParserUtil {
             return null;
         } else {
             return YearMonth.parse(trimmedYearMonth);
+        }
+    }
+
+    /**
+     * Parses a {@code String date} into a {@code date}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code date} is invalid.
+     */
+    public static LocalDate parseDate(String date) throws IllegalValueException {
+        String trimmedDate = date.trim();
+        if (!trimmedDate.matches(DATE_VALIDATION_REGEX)) {
+            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
+        }
+        if (trimmedDate.length() == 0) {
+            return null;
+        } else {
+            return LocalDate.parse(trimmedDate);
         }
     }
 }

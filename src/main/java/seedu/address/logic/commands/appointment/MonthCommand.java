@@ -15,7 +15,7 @@ public class MonthCommand extends Command {
     public static final String COMMAND_WORD = "month";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": View month. "
-            + "Parameters: MONTH (must be in format YYYY-MM)\n"
+            + "Parameters: MONTH (optional, but must be in format YYYY-MM if have)\n"
             + "Example: " + COMMAND_WORD + " 2018-03";
 
     public static final String MESSAGE_SUCCESS = "View month: %1$s";
@@ -25,7 +25,7 @@ public class MonthCommand extends Command {
     private final YearMonth yearMonth;
 
     /**
-     * Creates an AddCommand to add the specified {@code Person}
+     * Creates an MonthCommand to view the specified {@code yearMonth} or current if null
      */
     public MonthCommand(YearMonth yearMonth) {
         this.yearMonth = yearMonth;

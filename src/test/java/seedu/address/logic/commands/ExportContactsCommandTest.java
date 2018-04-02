@@ -1,3 +1,5 @@
+//@@author luca590
+
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
@@ -147,3 +149,4 @@ public class ExportContactsCommandTest {
         assertEquals("Contacts successfully exported.\n", cr.feedbackToUser);
     }
 }
+//@@author

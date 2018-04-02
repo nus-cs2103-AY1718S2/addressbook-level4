@@ -22,7 +22,6 @@ import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.logic.CommandHistory;
 import seedu.recipe.logic.UndoRedoStack;
 import seedu.recipe.logic.commands.exceptions.CommandException;
-import seedu.recipe.logic.commands.exceptions.UploadCommandException;
 import seedu.recipe.model.Model;
 import seedu.recipe.model.RecipeBook;
 import seedu.recipe.model.recipe.Image;
@@ -137,8 +136,6 @@ public class CommandTestUtil {
             assertEquals(expectedModel, actualModel);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
-        } catch (UploadCommandException uce) {
-            throw new AssertionError("Execution of command should not fail.", uce);
         }
     }
 
@@ -162,10 +159,6 @@ public class CommandTestUtil {
             fail("The expected CommandException was not thrown.");
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
-            assertEquals(expectedRecipeBook, actualModel.getRecipeBook());
-            assertEquals(expectedFilteredList, actualModel.getFilteredRecipeList());
-        } catch (UploadCommandException uce) {
-            assertEquals(expectedMessage, uce.getMessage());
             assertEquals(expectedRecipeBook, actualModel.getRecipeBook());
             assertEquals(expectedFilteredList, actualModel.getFilteredRecipeList());
         }

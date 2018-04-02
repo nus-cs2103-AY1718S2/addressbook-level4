@@ -30,7 +30,7 @@ public class MainMenuHandle extends NodeHandle<Node> {
         guiRobot.push(KeyCode.F1);
     }
 
-    //@@Author kokonguyen191
+    //@@author kokonguyen191
     /**
      * Change theme using the menu bar in {@code MainWindow}.
      */
@@ -45,7 +45,7 @@ public class MainMenuHandle extends NodeHandle<Node> {
         guiRobot.push(KeyCode.F2);
     }
 
-    //@@Author
+    //@@author
     /**
      * Clicks on {@code menuItems} in order.
      */

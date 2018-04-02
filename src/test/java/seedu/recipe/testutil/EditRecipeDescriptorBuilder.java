@@ -57,7 +57,7 @@ public class EditRecipeDescriptorBuilder {
         return this;
     }
 
-    //@@Author kokonguyen191
+    //@@author kokonguyen191
     /**
      * Sets the {@code Ingredient} of the {@code EditRecipeDescriptor} that we are building.
      */
@@ -105,8 +105,9 @@ public class EditRecipeDescriptorBuilder {
         descriptor.setServings(new Servings(servings));
         return this;
     }
+    //@@author
 
-    //@@Author RyanAngJY
+    //@@author RyanAngJY
     /**
      * Sets the {@code Url} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -122,7 +123,7 @@ public class EditRecipeDescriptorBuilder {
         descriptor.setImage(new Image(image));
         return this;
     }
-    //@@Author
+    //@@author
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditRecipeDescriptor}

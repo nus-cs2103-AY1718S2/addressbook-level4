@@ -12,10 +12,10 @@ import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
-import seedu.recipe.ui.util.AutoCompletionUtil;
 import seedu.recipe.ui.util.TextInputProcessorUtil;
 
 //@@author hoangduong1607
+
 /**
  * The component that is responsible for showing a suggestion list for auto-completion
  */
@@ -24,21 +24,19 @@ public class SuggestionsPopUp extends ContextMenu {
     private CommandBox commandBox;
     private TextArea commandTextArea;
     private TextInputProcessorUtil textInputProcessor;
-    private AutoCompletionUtil autoCompletionUtil;
 
-    protected SuggestionsPopUp(CommandBox commandBox, AutoCompletionUtil autoCompletionUtil) {
+    protected SuggestionsPopUp(CommandBox commandBox) {
         super();
         this.commandBox = commandBox;
         commandTextArea = commandBox.getCommandTextArea();
         textInputProcessor = new TextInputProcessorUtil();
-        this.autoCompletionUtil = autoCompletionUtil;
     }
 
     /**
      * Hides suggestions
      */
     protected void hideSuggestions() {
-        if  (isShowing()) {
+        if (isShowing()) {
             hide();
         }
     }
@@ -47,7 +45,8 @@ public class SuggestionsPopUp extends ContextMenu {
      * Shows suggestions for commands when users type in Command Box
      */
     protected void showSuggestions() {
-        textInputProcessor.setContent(commandTextArea.getText());
+        String prefix = commandTextArea.getText().substring(0, commandTextArea.getCaretPosition());
+        textInputProcessor.setContent(prefix);
         textInputProcessor.setFont(commandTextArea.getFont());
         String lastWord = textInputProcessor.getLastWord();
         // finds suggestions and displays
@@ -102,22 +101,7 @@ public class SuggestionsPopUp extends ContextMenu {
      */
     private void addSuggestion(String suggestion) {
         MenuItem item = new MenuItem(suggestion);
-        textInputProcessor.setContent(commandTextArea.getText());
-
-        String autoCompletionText;
-        int caretPosition;
-        if (autoCompletionUtil.isCommandKeyWord(item.getText())) {
-            autoCompletionText = autoCompletionUtil.getAutoCompletionText(item.getText());
-            caretPosition = item.getText().length() + 1;
-        } else {
-            autoCompletionText = textInputProcessor.replaceLastWord(item.getText());
-            caretPosition = autoCompletionText.length();
-        }
-
-        item.setOnAction(event -> {
-            commandBox.replaceText(autoCompletionText);
-            commandTextArea.positionCaret(caretPosition);
-        });
+        item.setOnAction(event -> commandBox.autoComplete(item.getText()));
         getItems().add(item);
     }
 }

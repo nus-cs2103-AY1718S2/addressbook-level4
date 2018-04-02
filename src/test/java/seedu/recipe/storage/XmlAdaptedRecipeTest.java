@@ -71,7 +71,7 @@ public class XmlAdaptedRecipeTest {
         Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
     }
 
-    //@@Author kokonguyen191
+    //@@author kokonguyen191
     @Test
     public void toModelType_invalidIngredient_throwsIllegalValueException() {
         XmlAdaptedRecipe recipe =

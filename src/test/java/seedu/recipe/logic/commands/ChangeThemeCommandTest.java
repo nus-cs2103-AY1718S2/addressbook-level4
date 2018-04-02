@@ -1,4 +1,4 @@
-//@@Author kokonguyen191
+//@@author kokonguyen191
 package seedu.recipe.logic.commands;
 
 import static org.junit.Assert.assertEquals;

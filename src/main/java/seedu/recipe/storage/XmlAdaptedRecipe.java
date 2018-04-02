@@ -117,7 +117,7 @@ public class XmlAdaptedRecipe {
         }
         final Name name = new Name(this.name);
 
-        //@@Author kokonguyen191
+        //@@author kokonguyen191
         if (this.ingredient == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Ingredient.class.getSimpleName()));

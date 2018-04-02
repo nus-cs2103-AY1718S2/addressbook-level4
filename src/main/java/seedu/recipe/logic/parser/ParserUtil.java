@@ -20,6 +20,7 @@ import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.recipe.Servings;
 import seedu.recipe.model.recipe.Url;
 import seedu.recipe.model.tag.Tag;
+import seedu.recipe.storage.model.Filename;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -72,7 +73,7 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
 
-    //@@Author kokonguyen191
+    //@@author kokonguyen191
     /**
      * Returns a null {@code Ingredient} object to use as the default value if no value is given.
      */
@@ -441,14 +442,20 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
     //@@author nicholasangcx
     /**
      * Parses {@code String filename} into a {@code String XmlExtensionFilename}.
      * A .xml extension will be added to the original filename.
+     *
+     * @throws IllegalValueException if the give {@code filename} is invalid.
      */
-    public static String parseFilename(String filename) {
-        String xmlExtensionFilename = filename + ".xml";
-        return xmlExtensionFilename;
+    public static String parseFilename(String filename) throws IllegalValueException {
+        requireNonNull(filename);
+        if (!Filename.isValidFilename(filename)) {
+            throw new IllegalValueException(Filename.MESSAGE_FILENAME_CONSTRAINTS);
+        }
+        return filename + ".xml";
     }
     //@@author
 }

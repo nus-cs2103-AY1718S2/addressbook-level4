@@ -89,7 +89,7 @@ public class RecipeBuilder {
         return this;
     }
 
-    //@@Author kokonguyen191
+    //@@author kokonguyen191
     /**
      * Sets the {@code Instruction} of the {@code Recipe} that we are building.
      */

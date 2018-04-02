@@ -173,7 +173,7 @@ public class MainWindow extends UiPart<Stage> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
-    //@@Author kokonguyen191
+    //@@author kokonguyen191
     @Subscribe
     private void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -190,7 +190,7 @@ public class MainWindow extends UiPart<Stage> {
         loadStyle(!isUsingDarkTheme);
         prefs.setIsUsingDarkTheme(!isUsingDarkTheme);
     }
-    //@@Author
+    //@@author
 
     /**
      * Opens the help window.

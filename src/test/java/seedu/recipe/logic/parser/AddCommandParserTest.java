@@ -290,7 +290,7 @@ public class AddCommandParserTest {
                 INVALID_NAME_DESC + PREPARATION_TIME_DESC_BOB + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB
                         + URL_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Name.MESSAGE_NAME_CONSTRAINTS);
 
-        //@@Author kokonguyen191
+        //@@author kokonguyen191
         // invalid ingredient
         assertParseFailure(parser,
                 NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB + INVALID_INGREDIENT_DESC + INSTRUCTION_DESC_BOB

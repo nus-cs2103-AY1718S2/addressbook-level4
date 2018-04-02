@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
  */
 public class TextInputProcessorUtil {
 
+    private static final String EMPTY_STRING = "";
     private static final char LF = '\n';
     private static final char SPACE = ' ';
 
@@ -42,7 +43,7 @@ public class TextInputProcessorUtil {
      * Gets last word from {@code content}
      */
     public String getLastWord() {
-        String lastWord = new String("");
+        String lastWord = EMPTY_STRING;
 
         for (int i = content.length() - 1; i >= 0; i--) {
             if (isWordSeparator(content.charAt(i))) {

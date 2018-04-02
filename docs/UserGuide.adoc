@@ -20,9 +20,9 @@ By: `Team F09-B2`      Since: `Jan 2018`      Licence: `MIT`
 // tag::applicationDescription[]
 *<<ReciRecipe,ReciRecipé>>* is for those who *prefer to use a desktop app for managing recipes*. More importantly, ReciRecipé is *optimized for those who prefer to work with a Command Line Interface* (<<CLI,CLI>>) while still having the benefits of a Graphical User Interface (<<GUI, GUI>>).
 // end::applicationDescription[]
-If you can type fast, ReciRecipé can get your recipe management done faster than traditional GUI apps. Interested? Jump to <<Quick Start>> to get started. Enjoy!
+If you can type fast, ReciRecipé can get your recipe management done faster than traditional GUI apps. Interested? Jump to <<Quick start>> to get started. Enjoy!
 
-== Quick Start
+== Quick start
 
 [TIP]
 You can use kbd:[Ctrl]+kbd:[F] to search in the user guide.
@@ -52,12 +52,12 @@ E.g. typing `help` and pressing kbd:[Enter] will open the help window.
 [[CommandFormat]]
 *Command Format*
 
-* Words in upper case are the parameters to be supplied by the user e.g. in `add name/NAME`, `NAME` is a parameter which can be used as *`add name/Chicken rice`*.
-** `INGREDIENT` is a list of ingredients, delimited by commas. E.g. `chicken,fish,rice` and `chicken, fish, rice` are valid.
-** `INSTRUCTION` can receive multiple lines as its value.
-** `TIME` fields accept a number of formats: `1h20m`, `1h20min`, `1 hour 20 minutes`, `80m`, `80min`, `80 mins`, etc. However, sticking to the most simple format `80m` is recommended.
-** `CALORIES` and `SERVINGS` are positive numbers. E.g. `120`, `5000`, etc.
-** `LINK` takes a valid website address as its value. E.g. `http://google.com`.
+* Words in upper case are the parameters to be supplied by the user e.g. in `add name/NAME`, *_NAME_* is a parameter which can be used as *`add name/Chicken rice`*.
+** *_INGREDIENT_* is a list of ingredients, delimited by commas. E.g. `chicken,fish,rice` and `chicken, fish, rice` are valid.
+** *_INSTRUCTION_* can receive multiple lines as its value.
+** *_TIME_* fields accept a number of formats: `1h20m`, `1h20min`, `1 hour 20 minutes`, `80m`, `80min`, `80 mins`, etc. However, sticking to the most simple format `80m` is recommended.
+** *_CALORIES_* and *_SERVINGS_* are positive numbers. E.g. `120`, `5000`, etc.
+** *_LINK_* takes a valid website address as its value. E.g. `http://google.com`.
 * Items in square brackets are optional e.g `name/NAME [tag/TAG]` can be used as *`name/Chicken rice tag/chicken`* or as *`name/Chicken rice`*.
 * Items with `...` after them can be used multiple times including zero times e.g. `[tag/TAG]...` can be used as `{nbsp}` (i.e. 0 times), *`tag/rice`*, *`tag/rice tag/chicken`*, etc.
 * Parameters can be in any order. E.g. if the command specifies `name/RECIPE_NAME instruction/INSTRUCTION`, `instruction/INSTRUCTION name/RECIPE_NAME` has the same effect.
@@ -72,13 +72,7 @@ E.g. typing `help` and pressing kbd:[Enter] will open the help window.
 * Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows while holding down kbd:[Ctrl] will display the previous and next input respectively in the command box.
 // end::app-navigation[]
 
-=== Viewing help: *`help`*
-
-Shows the user guide.
-
-Format: `help`
-
-=== Adding a recipe: *`add`*
+=== *`add`* : Adding a recipe
 
 Adds a recipe to the recipe book.
 
@@ -95,7 +89,7 @@ Details
 * See <<CommandFormat,Command Format>> for more details on which input is acceptable for each field.
 * White spaces after a colon are automatically trimmed. For example, `add name/ Chicken rice` and `add name/Chicken rice` are the same. However, the former is more visually pleasing.
 * Press kbd:[Enter] while holding down kbd:[Shift] to add a new line to your input.
-* `INSTRUCTION` can receive multiple lines as a valid input.
+* *_INSTRUCTION_* can receive multiple lines as a valid input.
 * You can split a command into multiple lines for ease of input.
 ****
 
@@ -104,94 +98,34 @@ Examples:
 * *`add name/Chicken Rice ingredient/chicken, rice cooking_time/10m tag/good tag/fast`*
 [TIP]
 You can split the command into multiple lines as shown in the figure below. In case you forgot how to add a new line, it's kbd:[Shift]+kbd:[Enter].
-
++
 .Add a recipe with multiple lines
 image::AddCommandEg2.png[width="750"]
 
 {nbsp} +
-If you follow correctly, the result box will tell you so and your recipe will be added to the book (figure below).
+If you follow correctly, the result box will tell you so and your recipe will be added to the book (<<fig-AddRecipeResult>>).
 {nbsp} +
 {nbsp}
 
+[[fig-AddRecipeResult]]
 .After adding a recipe
 image::AddCommandResultEg.png[width="750"]
 
-=== Listing all recipes: *`list`*
+=== *`clear`* : Clearing all entries
 
-Shows a list of all recipes in the recipe book.
+Clears all entries from the recipe book.
 
-Format: `list`
+Format: `clear`
 
-=== Editing a recipe: *`edit`*
+See figure below for the expected behavior of this command. +
+{nbsp}
 
-Edits an existing recipe in the recipe book.
+.Effect of the clear command
+image::ClearCommand.png[width="750"]
+[TIP]
+If you clear your recipe book by mistake, you can reverse the destructive process with an `undo`.
 
-Format: `edit INDEX [name/RECIPE_NAME] [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/LINK] [tag/TAG]`
-
-****
-Details
-
-* See <<CommandFormat,Command Format>> for more details on which input is acceptable for each field.
-* `INDEX` refers to the index number shown in the last recipe listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields *must* be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the recipe will be removed, i.e. adding of tags is not cumulative.
-* You can remove all the recipe's tags by typing `t/` without specifying any tags after it.
-****
-
-Examples:
-
-* *`edit 1 ingredient/fish, bread cooking_time/5m`* +
-Edits the ingredient and cooking time of the 1st recipe to be `_fish, bread_` and `_5m_` respectively.
-* *`edit 2 name/Pizza tag/`* +
-Edits the name of the 2nd recipe to be `_Pizza_` and clears all of its existing tags.
-
-=== Locating recipes by name: *`find`*
-
-Finds recipes whose names contain any of the given keywords.
-
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-Details
-
-* The search is case-insensitive. e.g *`find chicken`* will match `_Chicken_`.
-* The order of the keywords does not matter. e.g. *`find Rice Chicken`* will match `_Chicken rice_`.
-* Only the name is searched.
-* Only full words will be matched e.g. *`find Chic`* will not match `_Chicken_`.
-* Recipes matching at least one keyword will be returned (i.e. "OR" search). E.g. *`find Chicken Pizza`* will return `_Chicken rice_` and `_Pizza_`.
-****
-
-Examples:
-
-* *`find chicken`* +
-Returns `_Chicken rice_` and `_Chicken pizza_`.
-* *`find chicken fish pasta`* +
-Returns any recipe having substrings `_chicken_`, `_fish_`, or `_pasta_`.
-
-=== Locating recipes by tags: *`tag`*
-
-Finds recipe whose tags contain any of the given keywords.
-
-Format: `tag KEYWORD [MORE_KEYWORDS]`
-
-****
-Details
-
-* The search is case sensitive. For example, *`tag drinks`* will not match `_Drinks_`.
-* Only the tags are searched.
-* Only full words will be matched. For example, *`tag drinks`* will not match `_drink_`.
-* Recipes matching at least one keyword will be returned (i.e. "OR" search). E.g. *`tag fast drink`* will return recipes with either `_fast_` OR `_drink_` as one of their tags.
-****
-
-Examples:
-
-* *`tag drink`* +
-Returns all recipes with the tag `_drink_`.
-* *`tag drink food`* +
-Returns any recipe with the tag `_drink_` or `_food_`.
-
-=== Deleting a recipe: *`delete`*
+=== *`delete`* : Deleting a recipe
 
 Deletes the specified recipe from the recipe book.
 
@@ -214,7 +148,130 @@ Deletes the 2nd recipe in the recipe book.
 *`delete 1`* +
 Deletes the 1st recipe in the results of the *`find`* command.
 
-=== Selecting a recipe: *`select`*
+=== *`edit`* : Editing a recipe
+
+Edits an existing recipe in the recipe book.
+
+Format: `edit INDEX [name/RECIPE_NAME] [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/LINK] [tag/TAG]`
+
+****
+Details
+
+* See <<CommandFormat,Command Format>> for more details on which input is acceptable for each field.
+* *_INDEX_* refers to the index number shown in the last recipe listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields *must* be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the recipe will be removed, i.e. adding of tags is not cumulative.
+* You can remove all the recipe's tags by typing `t/` without specifying any tags after it.
+****
+
+Examples:
+
+* *`edit 1 ingredient/fish, bread cooking_time/5m`* +
+Edits the ingredient and cooking time of the 1st recipe to be `_fish, bread_` and `_5m_` respectively.
+* *`edit 2 name/Pizza tag/`* +
+Edits the name of the 2nd recipe to be `_Pizza_` and clears all of its existing tags.
+
+=== *`exit`* : Exiting the program
+
+Exits the program.
+
+Format: `exit`
+
+=== *`find`* : Locating recipes by name
+
+Finds recipes whose names contain any of the given keywords.
+
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+****
+Details
+
+* The search is case-insensitive. e.g *`find chicken`* will match `_Chicken_`.
+* The order of the keywords does not matter. e.g. *`find Rice Chicken`* will match `_Chicken rice_`.
+* Only the name is searched.
+* Only full words will be matched e.g. *`find Chic`* will not match `_Chicken_`.
+* Recipes matching at least one keyword will be returned (i.e. "OR" search). E.g. *`find Chicken Pizza`* will return `_Chicken rice_` and `_Pizza_`.
+****
+
+Examples:
+
+* *`find chicken`* +
+Returns `_Chicken rice_` and `_Chicken pizza_`.
+* *`find chicken fish pasta`* +
+Returns any recipe having substrings `_chicken_`, `_fish_`, or `_pasta_`.
+
+=== *`help`* : Viewing help
+
+Shows the user guide.
+
+Format: `help`
+
+=== *`history`* : Listing entered commands
+
+Lists all the commands that you have entered in reverse chronological order.
+
+Format: `history`
+
+[TIP]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows while holding down kbd:[Ctrl] will display the previous and next input respectively in the command box.
+====
+
+=== *`list`* : Listing all recipes
+
+Shows a list of all recipes in the recipe book.
+
+Format: `list`
+
+=== *`redo`* : Redoing the previously undone command
+
+Reverses the most recent *`undo`* command.
+
+Format: `redo`
+
+Examples:
+
+* *`delete 1`* +
+*`undo`* (reverses the *`delete 1`* command) +
+*`redo`* (reapplies the *`delete 1`* command) +
+
+* *`delete 1`* +
+*`redo`* +
+The *`redo`* command fails as there are no *`undo`* commands executed previously.
+
+* *`delete 1`* +
+*`clear`* +
+*`undo`* (reverses the *`clear`* command) +
+*`undo`* (reverses the *`delete 1`* command) +
+*`redo`* (reapplies the *`delete 1`* command) +
+*`redo`* (reapplies the *`clear`* command) +
+
+=== Saving the data
+
+ReciRecipé saves data in the hard disk automatically after any command that changes the data (`add`, `edit`, `clear`, ...). +
+There is no need to save manually.
+
+//tag::internet-search[]
+=== *`search`* : Searching on the Internet
+
+Searchs for your recipe on the Internet.
+
+Format: `search RECIPE_NAME`
+
+See <<fig-InternetSearchCommand>> for more information. +
+{nbsp}
+
+[[fig-InternetSearchCommand]]
+.Searching for your recipe on the Internet directly from ReciRecipé
+image::InternetSearchCommand.png[width="750"]
+Examples:
+
+* *`search chicken rice`* +
+You will be brought to the result page and from there, you can select any recipes that you want.
+//end::internet-search[]
+
+=== *`select`* : Selecting a recipe
 
 Selects the recipe identified by the index number used in the last recipe listing.
 
@@ -223,7 +280,7 @@ Format: `select INDEX`
 ****
 Details
 
-* If the selected recipe has a link, the in-app browser will load that link.
+* If the selected recipe has a URL, the in-app browser will load that URL.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer*, e.g. "1, 2, 3, ...".
 ****
@@ -237,19 +294,73 @@ Selects the 2nd recipe in the recipe book.
 *`select 1`* +
 Selects the 1st recipe in the results of the *`find`* command.
 
-=== Listing entered commands: *`history`*
+=== *`share`*: Sharing a recipe on Facebook
 
-Lists all the commands that you have entered in reverse chronological order.
+Initiates the sharing of a recipe to Facebook, identified by the index number used in the last recipe listing.
 
-Format: `history`
+Format: `share INDEX`
 
+****
+Details
+
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer*, e.g. "1, 2, 3, ...".
+* The text in the recipe will be copied to the clipboard for the User to paste into the Facebook post.
+* The Facebook authentication page is shown on the browser for the User to log in.
+* Upon logging in: if the shared recipe has a URL, the in-app browser will load a feed dialog for the User to share the URL as shown below:
+image::Facebook_Feed_Dialog.jpg[width="400"]
+* The User will be redirected back to his/her Facebook feed once the post has been made.
+****
+
+Examples:
+
+* *`list`* +
+*`share 2`* +
+Shares the 2nd recipe in the recipe book.
+* *`find Chicken`* +
+*`share 1`* +
+Shares the 1st recipe in the results of the *`find`* command.
+
+=== *`tag`* : Locating recipes by tags
+
+Finds recipe whose tags contain any of the given keywords.
+
+Format: `tag KEYWORD [MORE_KEYWORDS]`
+
+****
+Details
+
+* The search is case sensitive. For example, *`tag drinks`* will not match `_Drinks_`.
+* Only the tags are searched.
+* Only full words will be matched. For example, *`tag drinks`* will not match `_drink_`.
+* Recipes matching at least one keyword will be returned (i.e. "OR" search). E.g. *`tag fast drink`* will return recipes with either `_fast_` OR `_drink_` as one of their tags.
+****
+
+Examples:
+
+* *`tag drink`* +
+Returns all recipes with the tag `_drink_`.
+* *`tag drink food`* +
+Returns any recipe with the tag `_drink_` or `_food_`.
+
+//tag::change-theme[]
+=== *`theme`* : Changing theme
+
+Toggles between dark and light theme.
+
+Format: `theme`
+
+See <<fig-ChangeThemeCommand>> for more information. +
+{nbsp}
+
+[[fig-ChangeThemeCommand]]
+.Two themes provided for ReciRecipé
+image::ChangeThemeCommand.png[width="750"]
 [TIP]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows while holding down kbd:[Ctrl] will display the previous and next input respectively in the command box.
-====
+You can change theme from the menu bar or by pressing F2 too!
+//end::change-theme[]
 
-// tag::undoredo[]
-=== Undoing previous command: *`undo`*
+=== *`undo`* : Undoing previous command
 
 Restores the recipe book to the state before the previous _undoable_ command was executed.
 
@@ -276,37 +387,15 @@ The *`undo`* command fails as there are no undoable commands executed previously
 *`undo`* (reverses the *`clear`* command) +
 *`undo`* (reverses the *`delete 1`* command) +
 
-=== Redoing the previously undone command: *`redo`*
-
-Reverses the most recent *`undo`* command.
-
-Format: `redo`
-
-Examples:
-
-* *`delete 1`* +
-*`undo`* (reverses the *`delete 1`* command) +
-*`redo`* (reapplies the *`delete 1`* command) +
-
-* *`delete 1`* +
-*`redo`* +
-The *`redo`* command fails as there are no *`undo`* commands executed previously.
-
-* *`delete 1`* +
-*`clear`* +
-*`undo`* (reverses the *`clear`* command) +
-*`undo`* (reverses the *`delete 1`* command) +
-*`redo`* (reapplies the *`delete 1`* command) +
-*`redo`* (reapplies the *`clear`* command) +
-// end::undoredo[]
-
-=== Uploading all recipes : *`upload`*
+=== *`upload`* : Uploading all recipes
 
 Uploads the xml file containing data of all recipes to Dropbox, giving it the specified filename.
 
 Format: `upload FILENAME`
 
 ****
+Details
+
 * *_FILENAME_* must not start with / or \ or have consecutie slashes.
 * *_FILENAME_* will be concatenated with .xml to maintain formatting.
 * If *_FILENAME_* already exists in the user's Dropbox, one of two things will happen:
@@ -322,53 +411,37 @@ Data file will be uploaded to Dropbox with the name RecipeBook.xml.
 * *`upload RecipeBook`* +
 Updated data file will be uploaded to Dropbox with the name RecipeBook(1).xml.
 
-=== Clearing all entries: *`clear`*
+== Upcoming features
 
-Clears all entries from the recipe book.
+=== *`pull`* : Getting a recipe from the recipes database (Coming in v2.0)
 
-Format: `clear`
+Downloads a recipe from the recipes server.
 
-See figures below for the expected behavior of this command. +
-{nbsp}
+Format: `pull RECIPE_NAME`
 
-.Effect of the clear command
-image::ClearCommand.png[width="750"]
+Examples:
 
-{nbsp} +
+* *`pull chicken rice`* +
+Downloads all recipes that match the query `Chicken rice` from the server.
 
-[TIP]
-If you clear your recipe book by mistake, you can reverse the destructive process with an `undo`.
+=== *`push`* : Uploading a recipe to the recipes database (Coming in v2.0)
 
-//tag::change-theme[]
-=== Changing theme: *`theme`*
+Uploads a selected recipe to the recipes server.
 
-Toggles between dark and light theme.
+Format: `push INDEX`
 
-Format: `theme`
+****
+Details
 
-See <<fig-ChangeThemeCommand>> for more information. +
-{nbsp}
+* If the selected recipe has a link, the in-app browser will load that link.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer*, e.g. "1, 2, 3, ...".
+****
 
-[[fig-ChangeThemeCommand]]
-.Two themes provided for ReciRecipé
-image::ChangeThemeCommand.png[width="750"]
+Examples:
 
-{nbsp} +
-
-[TIP]
-You can change theme from the menu bar or by pressing F2 too!
-//end::change-theme[]
-
-=== Exiting the program: *`exit`*
-
-Exits the program.
-
-Format: `exit`
-
-=== Saving the data
-
-ReciRecipé saves data in the hard disk automatically after any command that changes the data (`add`, `edit`, `clear`, ...). +
-There is no need to save manually.
+* *`push 6`* +
+Uploads the 6th recipe in the recipe book to the server.
 
 == FAQ
 
@@ -376,37 +449,72 @@ There is no need to save manually.
 *A*: Install the app on the other computer and overwrite the empty data file it creates with the file that contains the data of your previous ReciRecipé.
 
 *Q*: Where do I find my data file? +
-*A*:
+*A*: +
 
 image::FAQ1.png[width="450"]
 {nbsp}
 
+Q: There is still something I don't understand after reading this guide! +
+A: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue in our repo] about what you're confused about. We will try our best to answer your query.
+
 *Q*: I found a bug in your program, what should I do? +
-*A*: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue in our repo].
+*A*: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue in our repo] describing the problem you encountered as detailed as possible.
+
+*Q*: I know how to code, how can I contribute to your project? +
+*A*: Code contributors are always appreciated! Please https://github.com/CS2103JAN2018-F09-B2/main/pulls[create a PR] with your contribution. You might want to take a look at the <<DeveloperGuide#,Developer Guide>> to get started.
 
 == Cheatsheet
+[width=90%, cols="1,9"]
+|===
+| Command | Format and example
 
-* *Add*: `add name/RECIPE_NAME [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/LINK] [tag/TAG]...` +
-E.g. *`add name/Chicken Rice ingredient/chicken, rice cooking_time/10m tag/good tag/fast`*
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-E.g. *`delete 3`*
-* *Edit* : `edit INDEX [name/RECIPE_NAME] [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/LINK] [tag/TAG]` +
-E.g. *`edit 2 name/Chicken pizza ingredient/INGREDIENT/flour,chicken,pepper`*
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-E.g. *`find Chicken Pizza`*
-* *Tag* : `tag KEYWORD [MORE_KEYWORDS]` +
-E.g. *`tag chicken favourites`*
-* *Upload* : `upload FILENAME` +
-E.g. *`upload RecipeBook`*
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-E.g.*`select 2`*
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
-* *Change theme* : `theme`
+.2+|    *Add*               |   `add name/RECIPE_NAME [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/LINK] [tag/TAG]...`
+                            |   E.g. *`add name/Chicken Rice ingredient/chicken, rice cooking_time/10m tag/good tag/fast`*
+.2+|    *Change theme*      |  `theme`
+                            |  *`theme`*
+.2+|    *Clear*             |  `clear`
+                            |  *`clear`*
+.2+|    *Delete*            |  `delete INDEX`
+                            |   E.g. *`delete 3`*
+.2+|    *Edit*              |  `edit INDEX [name/RECIPE_NAME] [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/LINK] [tag/TAG]`
+                            |   E.g. *`edit 2 name/Chicken pizza ingredient/INGREDIENT/flour,chicken,pepper`*
+.2+|    *Find*              |  `find KEYWORD [MORE_KEYWORDS]`
+                            |   E.g. *`find Chicken Pizza`*
+.2+|    *Help*              |  `help`
+                            |  *`help`*
+.2+|    *History*           |  `history`
+                            |  *`history`*
+.2+|    *Internet search*   |  `search RECIPE_NAME`
+                            |   E.g. *`search chicken rice`*
+.2+|    *List*              |  `list`
+                            |  *`list`*
+.2+|    *Redo*              |  `redo`
+                            |  *`redo`*
+.2+|    *Select*            |  `select INDEX`
+                            |   E.g.*`select 2`*
+.2+|    *Share*             |  `share INDEX`
+                            |   E.g.*`share 2`*
+.2+|    *Tag*               |  `tag KEYWORD [MORE_KEYWORDS]`
+                            |   E.g. *`tag chicken favourites`*
+.2+|    *Undo*              |  `undo`
+                            |  *`undo`*
+.2+|    *Upload*            |  `upload FILENAME`
+                            |   E.g. *`upload RecipeBook`*
+|===
+
+== Keyboard shortcuts
+
+[width=60%, cols="2,4"]
+|===
+| Shortcut                  |   Function
+
+| kbd:[Enter]               |   Command submission
+| kbd:[Ctrl] + kbd:[&uarr;] |   Previous command
+| kbd:[Ctrl] + kbd:[&darr;] |   Next command
+| kbd:[Shift] + kbd:[Enter] |   New line in command
+| kbd:[Shift] + kbd:[Space] |   Show command suggestions
+| kbd:[Tab]                 |   Next field in command
+|===
 
 == Glossary
 

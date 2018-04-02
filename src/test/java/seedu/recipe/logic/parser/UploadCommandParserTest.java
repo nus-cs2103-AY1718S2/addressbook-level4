@@ -28,5 +28,11 @@ public class UploadCommandParserTest {
         // ignores subsequent keywords after the first
         assertParseSuccess(parser, " \n RecipeBook \n \t otherBook \t", expectedUploadCommand);
     }
+
+    @Test
+    public void parseInvalidArgsThrowsParseException() {
+        assertParseFailure(parser, "recipe/book", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                UploadCommand.MESSAGE_USAGE));
+    }
 }
 //@@author

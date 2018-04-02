@@ -1,30 +1,45 @@
-[[ReciRecipe]] ReciRecipé / RecipeBook / The App::
-This name is derived from "**Reci**te" and "**Recipé**", an alternate spelling of "Recipe". ReciRecipé is what will tell you all the info you need about your recipes so you don't have to remember your recipes anymore. Also, ReciRecipé sounds fun and kinda French.
-
 [[API]] API::
-Abbreviation of **Application Programming Interface**.
-+
+====
+Abbreviation of **Application Programming Interface**. +
 API is a set of subroutine definitions, protocols, and tools for building application software. In general terms, it is a set of clearly defined methods of communication between various software components. Definition taken from link:https://en.wikipedia.org/wiki/Application_programming_interface[wiki].
+====
 
 [[CI]] CI::
-Abbreviation of **Continuous Integration**.
-+
+====
+Abbreviation of **Continuous Integration**. +
 CI is the practice of merging all developer working copies to a shared mainline several times a day. Definition taken from link:https://en.wikipedia.org/wiki/Continuous_integration[wiki].
+====
 
 [[CLI]] CLI::
-Abbreviation of **Command Line Interface**.
-+
+====
+Abbreviation of **Command Line Interface**. +
 In contrast to <<GUI,GUI>>, CLI is a means of interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines). Definition taken from link:https://en.wikipedia.org/wiki/Command-line_interface[wiki].
+====
 
 [[CSS]] CSS::
-Abbreviation of **Cascading Style Sheets**.
-+
+====
+Abbreviation of **Cascading Style Sheets**. +
 CSS is is a style sheet language used for describing the presentation of a document written in a markup language. Definition taken from link:https://en.wikipedia.org/wiki/Cascading_Style_Sheets[wiki]. All visual effects in ReciRecipé are written in CSS.
+====
 
 [[GUI]] GUI::
-Abbreviation of **Graphical User Interface**.
-+
+====
+Abbreviation of **Graphical User Interface**. +
 In contrast to <<CLI,CLI>>, GUI is a type of user interface that allows users to interact with electronic devices through graphical icons and visual indicators such as secondary notation, instead of text-based user interfaces, typed command labels or text navigation. Definition taken from link:https://en.wikipedia.org/wiki/Graphical_user_interface[wiki].
+====
+
+[[Java]] Java::
+====
+Java is a general-purpose computer-programming language that is concurrent, class-based, object-oriented, and specifically designed to have as few implementation dependencies as possible. It is intended to let application developers "write once, run anywhere".
+====
 
 [[mainstream-os]] Mainstream OS::
-Windows, Linux, Unix, OS-X
+====
+High chance you are using one. +
+Some prime examples are Windows, Linux, Unix, OS-X.
+====
+
+[[ReciRecipe]] ReciRecipé / RecipeBook / The App::
+====
+This name is derived from "**Reci**te" and "**Recipé**", an alternate spelling of "Recipe". ReciRecipé is what will tell you all the info you need about your recipes so you don't have to remember your recipes anymore. Also, ReciRecipé sounds fun and kinda French.
+====

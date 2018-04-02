@@ -260,6 +260,7 @@ public class MonthViewTest extends GuiUnitTest {
         otherMonthView.getMonthView(DEC_2018);
         guiRobot.pause();
         newMonthView.setMonthCalendarTitle(2018, "MAY");
+        guiRobot.pause();
         assertFalse(monthView.dateIsEqual(otherMonthView));
 
     }

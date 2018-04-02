@@ -1,10 +1,13 @@
 = PrioriTask - Developer Guide
+:linkcss:
+:icons: font
 :toc:
 :toc-title:
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
+:stylesheet: guides-style.css
 :xrefstyle: full
 ifdef::env-github[]
 :tip-caption: :bulb:
@@ -16,102 +19,157 @@ By: `CS2103JAN2018-W13-B4`      Since: `March 2018`      Licence: `MIT`
 
 == Introduction
 
-_{ Introduction to be added. }_
+PrioriTask is a desktop task management application. It is not just any task management application, but a combination of the to-do list, calendar and reminder features, with an added bonus of an automatic updating and sorting of your tasks based on priority levels. It helps you keep track of your tasks, while providing you with at-a-glance views of upcoming tasks by day, week or month.
 
-== Setting Up
+PrioriTask is a fairly new application that has much room for improvement. We welcome any form of contributions to the PrioriTask project, be it from beginners or seasoned Java developers. Whether you're a new developer or an experienced contributor, this guide can serve as a helpful reference and source for information about writing code for the PrioriTask project.
 
-_{ Preface to be added. }_
+This developer's guide consists of the following sections.
 
-=== Prerequisites
+* <<Getting Started>>
+* <<Design>>
+* <<Implementation>>
+* <<Documentation>>
+* <<Testing>>
+* <<Dev Ops>>
 
-Before working on PrioriTask, please install these following requirements:
+== Getting Started
+
+This section contains information to help you get started developing for PrioriTask. The simple list below will ensure that you get up and running with the application in no time.
+
+* <<Installing prerequisites>>
+* <<Setting up the project in your computer>>
+* <<Verifying the setup>>
+* <<Configuring the project before writing code>>
+* <<Getting started with developing>>
+
+=== Installing prerequisites
+
+Before working on PrioriTask, ensure that you have the following software installed.
 
 . *JDK `1.8.0_60`* or later
 +
 [NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+PrioriTask works best on JDK `1.8.0_60` or later. +
+It will not work with earlier versions of Java 8.
 +
 
 . *IntelliJ* IDE
 +
 [NOTE]
-IntelliJ by default has Gradle and JavaFx plugins installed. +
-Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
-
+PrioriTask requires Gradle and JavaFX plugins. +
+IntelliJ has both plugins installed by default. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 === Setting up the project in your computer
 
-After installing all requirements, please do these following steps to setup this project in your computer:
+After you've ensured that you've met all requirements, follow the steps below to setup this project in your computer.
+
+[NOTE]
+The following steps are written for IntelliJ IDEA `2017.3.5` (Ultimate Edition). +
+There may be slight variations in the steps if using other versions of IntelliJ.
 
 . Fork this repo, and clone the fork to your computer.
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first) and set up the correct JDK version for Gradle.
-.. Click `Configure` > `Project Defaults` > `Project Structure`.
-.. Click `New...` and find the directory of the JDK.
-. Click `Import Project`.
-. Locate the `build.gradle` file and select it. Click `OK`.
-. Click `Open as Project`.
+. Open IntelliJ. You should see the welcome screen (refer to <<fig-GettingStarted1>>). If you do not see the welcome screen, select `File` > `Close Project` to close the existing project dialog first.
+
+[[fig-GettingStarted1]]
+.IntelliJ's Welcome Screen
+image::DeveloperGettingStarted1.png[width="600"]
+
+[start=3]
+. Click on `Import Project`.
+. Locate the cloned folder, and select it. Click `OK`. You will be directed to the `Import Project` window (refer to <<fig-GettingStarted2>>).
+
+[[fig-GettingStarted2]]
+.The first page of the `Import Project` window
+image::DeveloperGettingStarted2.png[width="600"]
+
+[start=5]
+. Check the `Create project from existing sources` box and click `Next`. You will be directed to the next window (refer to <<fig-GettingStarted3>>).
+
+[[fig-GettingStarted3]]
+.The second page of the `Import Project` window
+image::DeveloperGettingStarted3.png[width="600"]
+
+[start=6]
+. Fill up the necessary information as follows, and click `Next`. You will be directed to the next window.
+. Click `Next` until to reach the window to select the project SDK (refer to <<fig-GettingStarted4>>).
+
+[[fig-GettingStarted4]]
+.Selecting project SDK in the `Import Project` window
+image::DeveloperGettingStarted4.png[width="600"]
+
+[start=8]
+. Click on the JDK `1.8` folder in the left pane and click `Next`. If you do not see a JDK `1.8` folder, click on `+` > `JDK`, and find the directory of the JDK.
+. Click `Next` until you reach the last window. Click `Finish` to complete the import of the project. The project will be loaded and you will be brought to the main project window (refer to <<fig-GettingStarted5>>).
+
+[[fig-GettingStarted5]]
+.Main Project Window
+image::DeveloperGettingStarted5.png[width="600"]
+
+[start=10]
+. Select `File` > `New` > `Module from Existing Sources...`.
+. Locate the `build.gradle` file and select it. Click `OK`. You will be directed to the `Import Module from Gradle` window (refer to <<fig-GettingStarted6>>).
+
+[[fig-GettingStarted6]]
+.`Import Module from Gradle` Window
+image::DeveloperGettingStarted6.png[width="600"]
+
 . Click `OK` to accept the default settings.
-. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+. Open the `Terminal` (select `Tool Windows` > `Terminal`) and run the command `gradlew processResources` (run `./gradlew processResources` for Mac/Linux users). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-After setting up the project, you can do these step to verify that all requirements are met and the project is correctly set up.
+After setting up the project, do the following steps to verify that the project has been correctly set up.
 
-. Run the `seedu.organizer.MainApp` and try a few commands.
+. Run the `seedu.organizer.MainApp` and try a few commands. You may refer to the <<UserGuide#, UserGuide.adoc>> for more information about the commands.
 . <<Testing,Run the tests>> to ensure they all pass.
 
-=== Configurations to do before writing code
+=== Configuring the project before writing code
 
-_{ Preface to be added. }_
+Before you begin developing, there are a few configurations to be done to ensure that the code you write meets our project standards.
 
 ==== Configuring the coding style
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (Mac).
 . Select `Editor` > `Code Style` > `Java`.
 . Click on the `Imports` tab to set the order.
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
-Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
-
-==== Updating documentation to match your fork
-
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write the code.
 
 ==== Setting up CI
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+This project relies heavily on Travis to perform Continuous Integration (CI). You may also set up Travis for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
 After setting up Travis, you can optionally set up coverage reporting for your team fork (see <<UsingCoveralls#, UsingCoveralls.adoc>>).
 
 [NOTE]
-Coverage reporting could be useful for a team repository that hosts the final version but it is not that useful for your personal fork.
+Coverage reporting could be useful for a team repository that hosts the final version, but is not that useful for your personal fork.
 
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+Having both Travis and AppVeyor ensures the application works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based).
 
-==== Getting started with coding
+=== Getting started with developing
 
-When you are ready to start coding,
+When you are ready to start developing,
 
-1. Get some sense of the overall design by reading <<Design-Architecture>>.
-2. Take a look at <<GetStartedProgramming>>.
+1. Read <<Design-Architecture>> to get some sense of the overall design.
+2. Look at <<Implementation>> to find out more about the major features, and better understand how you can contribute enhancements to those features.
 
 == Design
 
-_{ Preface to be added. }_
+PrioriTask consists of multiple components written in Java, with data being written and stored in XML files. This section contains an overview of the architecture systems used to design and implement the application, and an introduction to some of its major components.
 
 [[Design-Architecture]]
 === Architecture
 
-The *_Architecture Diagram_* (refer to Figure 1) given below explains the high-level design of the App.
+The *_Architecture Diagram_* given below explains the high-level design of the application.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
@@ -119,35 +177,41 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 .Architecture Diagram
 image::Architecture.png[width="600"]
 
-Given below is a quick overview of each component. The two main components of the App includes:
+Given below is a quick overview of each component. The two main components of the application includes:
 
 . `Main`, with only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
 
-.. Initializing the components in the correct sequence, and connecting them up with each other at app launch.
-.. Shutting down the components and invokes cleanup method where necessary during shut down.
+.. Initializing the components in the correct sequence, and connecting them up with each other at application launch.
+.. Shutting down the components and invoking cleanup method where necessary during shut down.
 
 . <<Design-Commons,*`Commons`*>>, representing a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
 .. `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
-.. `LogsCenter` : This class is used by many classes to write log messages to the App's log file.
+.. `LogsCenter` : This class is used by many classes to write log messages to the application's log file.
 
-The rest of the App consists of four components:
+The rest of the application consists of four components:
 
-. <<Design-Ui,*`UI`*>>: Represents the UI of the App
+. <<Design-Ui,*`UI`*>>: Represents the UI of the application
 . <<Design-Logic,*`Logic`*>>: Executes commands
-. <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
-. <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
+. <<Design-Model,*`Model`*>>: Holds the data of the application in-memory
+. <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk
 
-Each of the four components
+Each of the four components,
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (refer to Figure 2) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (refer to <<fig-LogicComponent>>) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
+[[fig-LogicComponent]]
 .Class Diagram of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
+[.infoblock]
+====
+[infoblock-title]#*More Information*#
+
+[discrete]
 ==== Events-Driven nature of the design
 
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
@@ -156,7 +220,7 @@ The _Sequence Diagram_ below shows how the components interact for the scenario 
 image::SDforDeleteTask.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `OrganizerChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `OrganizerChangedEvent` when the Organizer data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -165,20 +229,23 @@ image::SDforDeleteTaskEventHandling.png[width="800"]
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+====
 
 The sections below give more details of each component.
 
 [[Design-Ui]]
 === UI component
 
+The UI consists of a `MainWindow` that is made up of numerous parts (e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`, `StatusBarFooter`, `CalendarPanel`, etc.). All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+
+The class diagram below describes the structure of the `UI` component.
+
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/organizer/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
-
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses JavaFX UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
 The `UI` component,
 
@@ -189,28 +256,42 @@ The `UI` component,
 [[Design-Logic]]
 === Logic component
 
+The `Logic` component consists of the commands and their respective parsers (if necessary). For commands requiring parsers, they are defined in `.java` files prefixed with _'-Parser'_ that are in the `src/main/java/logic/parser` folder. For example, the parser for `AddCommand` is specified in `AddCommandParser.java`.
+
+The class diagram below gives an overview of the structure of the `Logic` component.
+
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
-.Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
-image::LogicCommandClassDiagram.png[width="800"]
-
 *API* :
 link:{repoURL}/src/main/java/seedu/organizer/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `OrganizerParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a task) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+There are two types of commands. Commands that modify the state of the organizer inherit from the `UndoableCommand` class, to be used by the undo/redo mechanism (see <<Undo/Redo feature>> for more information). Commands that do not modify the state of the organizer, and cannot be undone, inherit from the `Command` class instead.
+
+The class diagram below gives a more detailed overview of how the command system in the `Logic` component works. It shows the finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>.
+
+.Structure of Commands in the Logic Component
+image::LogicCommandClassDiagram.png[width="800"]
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 .Interactions Inside the Logic Component for the `delete 1` Command
 image::DeleteTaskSdForLogic.png[width="800"]
 
+The sequence flow is as follows:
+
+.  `Logic` uses the `OrganizerParser` class to parse the user command.
+.  This results in a `Command` object which is executed by the `LogicManager`.
+.  The command execution can affect the `Model` (e.g. adding a task) and/or raise events.
+.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `UI`.
+
 [[Design-Model]]
 === Model component
+
+The `Model` component consists of a `UniqueTaskList` and `UniqueTagList` that contains and manipulates the data within the application using an `ObservableList`. The component also includes `Task`, and its respective parameters (e.g. `Name`, `Priority`, `Date Added`, etc.).
+
+The class diagram below gives an overview of the structure of the `Model` component.
 
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
@@ -221,13 +302,17 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Organizer data.
-* automatically updates Tasks' priority levels within the Organizer via the UniqueTaskList
-* sorts tasks within the Organizer
-* exposes an unmodifiable `ObservableList<Task>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* updates Tasks' priority levels within the Organizer via the `UniqueTaskList` automatically.
+* sorts tasks within the Organizer.
+* exposes an unmodifiable `ObservableList<Task>` that can be 'observed' (e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list changes).
 * does not depend on any of the other three components.
 
 [[Design-Storage]]
 === Storage component
+
+The `Storage` component consists of the `XmlOrganizerStorage`, which reads data from, and writes data to, the hard disk. Data is stored in XML format, and can be retrieved from `data` > `organizer.xml`. The component also contains the `UserPrefsStorage`, which stores user preferences (e.g. the application window's preferred height and width) in a JSON file. The file is titled `preferences.json`, and can be retrieved from the main folder.
+
+The class diagram below gives an overview of the structure of the `Storage` component.
 
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
@@ -236,13 +321,13 @@ image::StorageClassDiagram.png[width="800"]
 
 The `Storage` component,
 
-* can save `UserPref` objects in json format and read it back.
-* can save the Organizer data in xml format and read it back.
+* saves `UserPref` objects in JSON format and reads it back.
+* saves the Organizer data in XML format and reads it back.
 
 [[Design-Commons]]
 === Common classes
 
-Classes used by multiple components are in the `seedu.organizer.commons` package.
+Classes used by multiple components are in the `seedu.organizer.commons` package. Such classes include the `EventsCenter` and `LogsCenter`.
 
 == Implementation
 

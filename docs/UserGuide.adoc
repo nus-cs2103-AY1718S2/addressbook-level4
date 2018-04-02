@@ -7,6 +7,7 @@
 :sectnumlevels: 5
 :imagesDir: images
 :stylesDir: stylesheets
+:stylesheet: guides-style.css
 :xrefstyle: full
 :experimental:
 ifdef::env-github[]

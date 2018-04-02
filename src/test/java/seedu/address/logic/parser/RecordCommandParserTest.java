@@ -57,14 +57,9 @@ public class RecordCommandParserTest {
         Index targetIndex = INDEX_SECOND_PERSON;
         final StringBuilder builder = new StringBuilder();
         builder.append(targetIndex.getOneBased())
-                .append(" " + PREFIX_INDEX + "1 ")
-                .append(PREFIX_DATE + "1st March 2018 ")
-                .append(PREFIX_SYMPTOM + "Headache, runny nose ")
-                .append(PREFIX_ILLNESS + "Flu ")
-                .append(PREFIX_TREATMENT + "Zyrtec");
+                .append(" " + PREFIX_INDEX + "1 ");
 
-        RecordCommand expectedCommand = new RecordCommand(targetIndex, 1,
-                new Record("1st March 2018", "Headache, runny nose", "Flu", "Zyrtec"));
+        RecordCommand expectedCommand = new RecordCommand(targetIndex, Index.fromZeroBased(0));
 
         assertParseSuccess(parser, builder.toString(), expectedCommand);
     }

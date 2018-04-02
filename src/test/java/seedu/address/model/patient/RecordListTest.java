@@ -1,11 +1,13 @@
 package seedu.address.model.patient;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
 import org.junit.Test;
 
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.testutil.Assert;
 
 public class RecordListTest {
@@ -22,19 +24,18 @@ public class RecordListTest {
 
         ArrayList<Record> temp = new ArrayList<Record>();
 
-        // valid recordLists for now
-        temp.add(new Record("", "", "", ""));
+        // valid recordLists
+        temp.add(new Record("01/04/2018", "", "", ""));
         assertTrue(RecordList.isValidRecordList(new RecordList(temp))); // empty string
         temp.remove(0);
-        temp.add(new Record(" ", " ", " ", " "));
+        temp.add(new Record("01/04/2018", " ", " ", " "));
         assertTrue(RecordList.isValidRecordList(new RecordList(temp))); // spaces only
-
-        // valid recordLists
         temp.remove(0);
-        temp.add(new Record("5th March 2016", "High temperature", "Fever", "Antibiotics"));
-        assertTrue(RecordList.isValidRecordList(new RecordList(temp)));
-        temp.remove(0);
-        temp.add(new Record("a", "b", "c", "d"));
+        temp.add(new Record("01/04/2018", "b", "c", "d"));
         assertTrue(RecordList.isValidRecordList(new RecordList(temp))); // one character
+
+        // invalid recordList
+        temp.remove(0);
+        Assert.assertThrows(IllegalArgumentException.class, () -> new RecordList("9th March 2017 s/ i/ t/"));
     }
 }

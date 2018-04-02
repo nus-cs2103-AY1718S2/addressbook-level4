@@ -47,6 +47,8 @@ public class RecordCommand extends UndoableCommand {
     private Patient patientToEdit;
     private Patient editedPatient;
 
+    private boolean isTest;
+
     /**
      * Creates a RecordCommand to edit the records of the specified {@code Patient}
      */
@@ -54,6 +56,18 @@ public class RecordCommand extends UndoableCommand {
         requireNonNull(patientIndex);
         this.patientIndex = patientIndex;
         this.recordIndex = recordIndex;
+        this.isTest = false;
+    }
+
+    /**
+     * Creates a RecordCommand to edit the records of the specified {@code Patient}
+     * This constructor is utilised when testing.
+     */
+    public RecordCommand(Index patientIndex, Index recordIndex, boolean isTest) {
+        requireNonNull(patientIndex);
+        this.patientIndex = patientIndex;
+        this.recordIndex = recordIndex;
+        this.isTest = isTest;
     }
 
     @Override
@@ -92,9 +106,11 @@ public class RecordCommand extends UndoableCommand {
         patientToEdit = lastShownList.get(patientIndex.getZeroBased());
 
         //creating medical record window here and obtaining user input
-        RecordWindow recordWindow = new RecordWindow();
-        Stage stage = new Stage();
-        recordWindow.start(stage, patientToEdit.getRecord(recordIndex.getZeroBased()));
+        if (!isTest) { //only execute if it is not a test
+            RecordWindow recordWindow = new RecordWindow();
+            Stage stage = new Stage();
+            recordWindow.start(stage, patientToEdit.getRecord(recordIndex.getZeroBased()));
+        }
 
         Record editedRecord = RecordManager.getRecord();
 
@@ -145,11 +161,15 @@ public class RecordCommand extends UndoableCommand {
         // state check
         RecordCommand e = (RecordCommand) other;
 
-        return getPatientIndex().equals(e.getPatientIndex());
+        return getPatientIndex().equals(e.getPatientIndex()) &&
+                getRecordIndex().equals(e.getRecordIndex());
     }
 
     public Index getPatientIndex() {
         return patientIndex;
+    }
+    public Index getRecordIndex() {
+        return recordIndex;
     }
     public Patient getToEdit() {
         return patientToEdit;

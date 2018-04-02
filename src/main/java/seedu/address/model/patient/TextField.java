@@ -16,7 +16,7 @@ public class TextField {
     /*
      * TextField must not be null and it can only contain alphanumeric characters and spaces.
      */
-    public static final String TEXTFIELD_VALIDATION_REGEX = "[\\p{Graph}]?";
+    public static final String TEXTFIELD_VALIDATION_REGEX = "[\\p{Graph}\\p{Blank}]*";
 
     public final String textField;
 

@@ -36,12 +36,18 @@ public class RecordList {
     }
 
     public RecordList(String string) throws ParseException {
-        this.recordList = new ArrayList<Record>();
-        String[] lines = string.split("\\r?\\n");
-        for (int i = 0; i < lines.length; i++) {
-            recordList.add(new Record(lines[i]));
+        if (string.isEmpty()) {
+            this.recordList = new ArrayList<Record>();
+            recordList.add(new Record());
+            this.numRecord = 1;
+        } else {
+            this.recordList = new ArrayList<Record>();
+            String[] lines = string.split("\\r?\\n");
+            for (int i = 0; i < lines.length; i++) {
+                recordList.add(new Record(lines[i]));
+            }
+            this.numRecord = lines.length;
         }
-        this.numRecord = lines.length;
     }
 
     public int getNumberOfRecords() {

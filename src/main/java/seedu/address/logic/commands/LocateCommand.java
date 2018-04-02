@@ -9,7 +9,8 @@ import seedu.address.model.person.Person;
 import seedu.address.ui.MainWindow;
 
 /**
- * Display the place identified using its las displayed index from the address book
+ * Locate the address of a person by keywords on Google Map.
+ * Keyword matching is case sensitive.
  */
 public class LocateCommand extends Command {
     public static final String COMMAND_WORD = "locate";
@@ -21,7 +22,7 @@ public class LocateCommand extends Command {
             + "Parameters: [SPECIFIER] KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " -n alice bob charlie";
 
-    public static final String MESSAGE_LOCATE_SUCCESS = "Locate: %1$s";
+    public static final String MESSAGE_LOCATE_SUCCESS = "Locate successful";
 
     private final int target = 0;
     private final int targetOne = 1;

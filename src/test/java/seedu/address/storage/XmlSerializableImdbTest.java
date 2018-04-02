@@ -53,8 +53,10 @@ public class XmlSerializableImdbTest {
 
     @Test
     public void equals() throws Exception {
-        XmlSerializableImdb dataFromFileFirstTest = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE, XmlSerializableImdb.class);
-        XmlSerializableImdb dataFromFileSecondTest = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE, XmlSerializableImdb.class);
+        XmlSerializableImdb dataFromFileFirstTest = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE,
+                XmlSerializableImdb.class);
+        XmlSerializableImdb dataFromFileSecondTest = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE,
+                XmlSerializableImdb.class);
 
         //same object --> return true
         assertTrue(dataFromFileFirstTest.equals(dataFromFileFirstTest));

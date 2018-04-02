@@ -1,8 +1,14 @@
 package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+
+import javax.xml.bind.JAXBException;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,5 +53,24 @@ public class XmlSerializableImdbTest {
                 XmlSerializableImdb.class);
         thrown.expect(IllegalValueException.class);
         dataFromFile.toModelType();
+    }
+
+    @Test
+    public void equals() throws Exception {
+        XmlSerializableImdb dataFromFileFirstTest = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE, XmlSerializableImdb.class);
+        XmlSerializableImdb dataFromFileSecondTest = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE, XmlSerializableImdb.class);
+
+        //same object --> return true
+        assertTrue(dataFromFileFirstTest.equals(dataFromFileFirstTest));
+
+        //same value --> return true
+        assertTrue(dataFromFileFirstTest.equals(dataFromFileSecondTest));
+
+        // different types -> returns false
+        assertFalse(dataFromFileFirstTest.equals(1));
+
+        //null -> returns false
+        assertFalse(dataFromFileFirstTest.equals(null));
+        
     }
 }

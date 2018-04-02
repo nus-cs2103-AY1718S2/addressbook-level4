@@ -41,7 +41,6 @@ public class RouteOptimization {
             for (int i = 0; i < lastShownList.size(); i++) {
                 Address address = lastShownList.get(i).getAddress();
                 if (isFindableAddress(address)) {
-                    String name = lastShownList.get(i).getName().toString();
                     addressWithoutUnit = removeUnit(address);
                     filteredAddresses.add(addressWithoutUnit);
                 }
@@ -49,7 +48,9 @@ public class RouteOptimization {
             if (!filteredAddresses.isEmpty()) {
                 optimizedRoute = getStartingAddress(filteredAddresses, optimizedRoute);
                 filteredAddresses = removeAddress(optimizedRoute.get(0), filteredAddresses);
-                optimizedRoute = getDistances(filteredAddresses, optimizedRoute.get(0), optimizedRoute);
+                if (!filteredAddresses.isEmpty()) {
+                    optimizedRoute = getDistances(filteredAddresses, optimizedRoute.get(0), optimizedRoute);
+                }
             }
         }
         return optimizedRoute;

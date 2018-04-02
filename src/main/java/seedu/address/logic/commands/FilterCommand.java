@@ -43,13 +43,13 @@ public class FilterCommand extends Command {
 
         int numberOfPersonsListed = model.getFilteredPersonList().size();
 
-        //no person matchs date
+        //no person matches date
         if (numberOfPersonsListed == 0) {
             EventsCenter.getInstance().post(new ShowDefaultPageEvent());
             return new CommandResult(getMessageForPersonListShownSummary(numberOfPersonsListed));
         }
 
-        //all addresses are invalid
+        //all addresses cannot be found
         if (optimizedRoute.size() == 0) {
             EventsCenter.getInstance().post(new ShowDefaultPageEvent());
             String shown = getMessageForPersonListShownSummary(numberOfPersonsListed) + "\n" +
@@ -69,7 +69,7 @@ public class FilterCommand extends Command {
             return new CommandResult(shown);
         }
 
-        //all addresses are valid
+        //all addresses can be found
         return new CommandResult(getMessageForPersonListShownSummary(numberOfPersonsListed));
     }
 

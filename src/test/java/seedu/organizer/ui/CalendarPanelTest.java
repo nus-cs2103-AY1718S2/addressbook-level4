@@ -1,4 +1,4 @@
-/*package seedu.organizer.ui;
+package seedu.organizer.ui;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.organizer.testutil.TypicalExecutedCommands.getTypicalExecutedCommands;
@@ -14,10 +14,10 @@ import guitests.guihandles.MonthViewHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import seedu.organizer.model.task.Task;*/
+import seedu.organizer.model.task.Task;
 
 //@@author guekling
-/*public class CalendarPanelTest extends GuiUnitTest {
+public class CalendarPanelTest extends GuiUnitTest {
     private static final ObservableList<Task> TYPICAL_TASKS = FXCollections.observableList(getTypicalTasks());
     private static final ObservableList<String> TYPICAL_EXECUTED_COMMANDS = FXCollections.observableList
         (getTypicalExecutedCommands());
@@ -69,12 +69,12 @@ import seedu.organizer.model.task.Task;*/
 
         assertEquals(expectedLastDateColumn, lastDateColumn);
         assertEquals(expectedLastDateRow, lastDateRow);
-    }*/
+    }
 
     /**
      * Retrieves the expected column index of a {@code date}.
      */
-    /*private int getExpectedDateColumn(YearMonth yearMonth, int date) {
+    private int getExpectedDateColumn(YearMonth yearMonth, int date) {
         int expectedDateColumn = yearMonth.atDay(date).getDayOfWeek().getValue();
 
         if (expectedDateColumn == SUNDAY) {
@@ -82,13 +82,18 @@ import seedu.organizer.model.task.Task;*/
         }
 
         return expectedDateColumn;
-    }*/
+    }
 
     /**
      * Retrieves the expected row index of a {@code date}.
      */
-    /*private int getExpectedRowColumn(YearMonth yearMonth, int date) {
+    private int getExpectedRowColumn(YearMonth yearMonth, int date) {
         int startDay = yearMonth.atDay(1).getDayOfWeek().getValue();
+
+        if (startDay == SUNDAY) {
+            startDay = 0;
+        }
+
         int totalDays = startDay + date;
 
         if (totalDays <= MAX_NUM_OF_DAYS) {
@@ -97,4 +102,4 @@ import seedu.organizer.model.task.Task;*/
             return FIRST_ROW;
         }
     }
-}*/
+}

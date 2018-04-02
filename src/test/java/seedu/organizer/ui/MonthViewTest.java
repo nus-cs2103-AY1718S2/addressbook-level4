@@ -1,4 +1,4 @@
-/*package seedu.organizer.ui;
+package seedu.organizer.ui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -17,7 +17,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.MonthViewHandle;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -25,10 +24,10 @@ import javafx.scene.control.ListView;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.testutil.TaskBuilder;
 import seedu.organizer.ui.calendar.EntryCard;
-import seedu.organizer.ui.calendar.MonthView;*/
+import seedu.organizer.ui.calendar.MonthView;
 
 //@@author guekling
-/*public class MonthViewTest extends GuiUnitTest {
+public class MonthViewTest extends GuiUnitTest {
     private static final ObservableList<Task> TYPICAL_TASKS = FXCollections.observableList(getTypicalTasks());
     private static final ObservableList<String> TYPICAL_EXECUTED_COMMANDS = FXCollections.observableList
         (getTypicalExecutedCommands());
@@ -263,19 +262,19 @@ import seedu.organizer.ui.calendar.MonthView;*/
         newMonthView.setMonthCalendarTitle(2018, "MAY");
         assertFalse(monthView.dateIsEqual(otherMonthView));
 
-    }*/
+    }
 
     /**
      * Adds a new {@code command} to the {@code TYPICAL_EXECUTED_COMMANDS} observable list.
      */
-    /*private void addCommandToExecutedCommandsList(String command) {
+    private void addCommandToExecutedCommandsList(String command) {
         TYPICAL_EXECUTED_COMMANDS.add(command);
-    }*/
+    }
 
     /**
      * Adds a new {@code task} to the {@code TYPICAL_TASKS} observable list.
      */
-    /*private void addTaskToTaskList(Task task) {
+    private void addTaskToTaskList(Task task) {
         TYPICAL_TASKS.add(task);
     }
-}*/
+}

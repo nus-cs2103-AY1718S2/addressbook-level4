@@ -1,6 +1,6 @@
 package seedu.organizer.logic.commands;
 
-/*import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.organizer.testutil.TypicalExecutedCommands.PREVIOUS_MONTH_COMMAND_WORD;
 import static seedu.organizer.testutil.TypicalExecutedCommands.getTypicalExecutedCommands;
 import static seedu.organizer.testutil.TypicalTasks.getTypicalTasks;
@@ -14,13 +14,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.ui.GuiUnitTest;
-import seedu.organizer.ui.calendar.MonthView;*/
+import seedu.organizer.ui.calendar.MonthView;
 
 //@@author guekling
 /**
  * Contains integration tests (interaction with the UI) and unit tests for PreviousMonthCommand.
  */
-/*public class PreviousMonthCommandTest extends GuiUnitTest {
+public class PreviousMonthCommandTest extends GuiUnitTest {
     private static final ObservableList<Task> TYPICAL_TASKS = FXCollections.observableList(getTypicalTasks());
     private static final ObservableList<String> TO_BE_UPDATED_TYPICAL_EXECUTED_COMMANDS = FXCollections.observableList
         (getTypicalExecutedCommands());
@@ -48,12 +48,12 @@ import seedu.organizer.ui.calendar.MonthView;*/
         expectedMonthView.getMonthView(currentYearMonth.minusMonths(1));
         guiRobot.pause();
         assertCommandSuccess(previousMonthCommand, monthView, previousMonthCommand.MESSAGE_SUCCESS, expectedMonthView);
-    }*/
+    }
 
     /**
      * Adds a new {@code command} to the {@code TO_BE_UPDATED_TYPICAL_EXECUTED_COMMANDS} observable list.
      */
-    /*private void addCommandToExecutedCommandsList(String command) {
+    private void addCommandToExecutedCommandsList(String command) {
         TO_BE_UPDATED_TYPICAL_EXECUTED_COMMANDS.add(command);
     }
-}*/
+}

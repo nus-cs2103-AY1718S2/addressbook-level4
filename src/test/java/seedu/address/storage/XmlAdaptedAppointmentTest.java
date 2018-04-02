@@ -12,6 +12,7 @@ import seedu.address.model.appointment.StartDateTime;
 import seedu.address.model.appointment.Title;
 import seedu.address.testutil.Assert;
 
+//@@author trafalgarandre
 public class XmlAdaptedAppointmentTest {
     private static final String INVALID_TITLE = "";
     private static final String INVALID_START_DATE_TIME = "2018-20-03";
@@ -21,6 +22,7 @@ public class XmlAdaptedAppointmentTest {
     private static final String VALID_START_DATE_TIME = BIRTHDAY.getStartDateTime().toString();
     private static final String VALID_END_DATE_TIME = BIRTHDAY.getEndDateTime().toString();
 
+    @Test
     public void toModelType_validAppointmentDetails_returnsAppointment() throws Exception {
         XmlAdaptedAppointment appointment = new XmlAdaptedAppointment(BIRTHDAY);
         assertEquals(BIRTHDAY, appointment.toModelType());

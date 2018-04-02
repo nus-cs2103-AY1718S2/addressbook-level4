@@ -1,14 +1,14 @@
 package seedu.address.logic.parser.appointment;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import java.time.LocalDate;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.appointment.DateCommand;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-
-import java.time.LocalDate;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 //@@author trafalgarandre
 /**

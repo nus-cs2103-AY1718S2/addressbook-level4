@@ -1,11 +1,11 @@
 package seedu.address.logic.commands.appointment;
 
+import java.time.Year;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowWeekRequestEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
-
-import java.time.Year;
 
 //@@author trafalgarandre
 /**

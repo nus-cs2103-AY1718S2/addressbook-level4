@@ -42,8 +42,8 @@ public class YearCommandTest {
         assertTrue(yearFirstCommand.equals(yearFirstCommand));
 
         // same values -> returns true
-        YearCommand YearFirstCommandCopy = new YearCommand(FIRST_YEAR);
-        assertTrue(yearFirstCommand.equals(YearFirstCommandCopy));
+        YearCommand yearFirstCommandCopy = new YearCommand(FIRST_YEAR);
+        assertTrue(yearFirstCommand.equals(yearFirstCommandCopy));
 
         // both null
         YearCommand nullYearCommandCopy = new YearCommand(null);

@@ -6,9 +6,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.address.logic.commands.appointment.AddAppointmentCommand;
-
-import seedu.address.logic.commands.appointment.CalendarCommand;
 import seedu.address.logic.commands.ClearHistoryCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.EmailCommand;
@@ -18,6 +15,8 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SignupCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.appointment.AddAppointmentCommand;
+import seedu.address.logic.commands.appointment.CalendarCommand;
 import seedu.address.logic.commands.appointment.DateCommand;
 import seedu.address.logic.commands.appointment.MonthCommand;
 import seedu.address.logic.commands.appointment.WeekCommand;

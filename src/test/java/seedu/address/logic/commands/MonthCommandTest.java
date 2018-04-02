@@ -42,8 +42,8 @@ public class MonthCommandTest {
         assertTrue(monthFirstCommand.equals(monthFirstCommand));
 
         // same values -> returns true
-        MonthCommand MonthFirstCommandCopy = new MonthCommand(FIRST_YEAR_MONTH);
-        assertTrue(monthFirstCommand.equals(MonthFirstCommandCopy));
+        MonthCommand monthFirstCommandCopy = new MonthCommand(FIRST_YEAR_MONTH);
+        assertTrue(monthFirstCommand.equals(monthFirstCommandCopy));
 
         // both null
         MonthCommand nullMonthCommandCopy = new MonthCommand(null);
@@ -71,7 +71,8 @@ public class MonthCommandTest {
             assertEquals(String.format(MonthCommand.MESSAGE_SUCCESS, yearMonth),
                     commandResult.feedbackToUser);
 
-            ShowMonthRequestEvent lastEvent = (ShowMonthRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+            ShowMonthRequestEvent lastEvent =
+                    (ShowMonthRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
             assertEquals(ParserUtil.parseYearMonth(yearMonth), lastEvent.targetYearMonth);
         } catch (IllegalValueException e) {
             throw new IllegalArgumentException("Execution of command should not fail.", e);

@@ -24,7 +24,7 @@ public class DateCommandTest {
 
     @Test
     public void execute_validDate_success() {
-       assertExecutionSuccess("2018-02-27");
+        assertExecutionSuccess("2018-02-27");
     }
 
     @Test
@@ -42,8 +42,8 @@ public class DateCommandTest {
         assertTrue(dateFirstCommand.equals(dateFirstCommand));
 
         // same values -> returns true
-        DateCommand DateFirstCommandCopy = new DateCommand(FIRST_DATE);
-        assertTrue(dateFirstCommand.equals(DateFirstCommandCopy));
+        DateCommand dateFirstCommandCopy = new DateCommand(FIRST_DATE);
+        assertTrue(dateFirstCommand.equals(dateFirstCommandCopy));
 
         // both null
         DateCommand nullDateCommandCopy = new DateCommand(null);

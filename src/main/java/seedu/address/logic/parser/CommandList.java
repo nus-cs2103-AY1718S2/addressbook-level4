@@ -2,9 +2,6 @@ package seedu.address.logic.parser;
 
 import java.util.ArrayList;
 
-import seedu.address.logic.commands.appointment.AddAppointmentCommand;
-
-import seedu.address.logic.commands.appointment.CalendarCommand;
 import seedu.address.logic.commands.ClearHistoryCommand;
 import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -12,6 +9,8 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.appointment.AddAppointmentCommand;
+import seedu.address.logic.commands.appointment.CalendarCommand;
 import seedu.address.logic.commands.appointment.DateCommand;
 import seedu.address.logic.commands.appointment.MonthCommand;
 import seedu.address.logic.commands.appointment.WeekCommand;

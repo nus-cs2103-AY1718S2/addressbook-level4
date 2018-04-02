@@ -44,8 +44,8 @@ public class WeekCommandTest {
         assertTrue(weekFirstCommand.equals(weekFirstCommand));
 
         // same values -> returns true
-        WeekCommand WeekFirstCommandCopy = new WeekCommand(FIRST_YEAR, FIRST_WEEK);
-        assertTrue(weekFirstCommand.equals(WeekFirstCommandCopy));
+        WeekCommand weekFirstCommandCopy = new WeekCommand(FIRST_YEAR, FIRST_WEEK);
+        assertTrue(weekFirstCommand.equals(weekFirstCommandCopy));
 
         // both null
         WeekCommand nullWeekCommandCopy = new WeekCommand(null, 0);

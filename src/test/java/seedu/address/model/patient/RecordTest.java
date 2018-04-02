@@ -18,12 +18,14 @@ public class RecordTest {
         // null record
         Assert.assertThrows(NullPointerException.class, () -> Record.isValidRecord(null));
 
-        // valid records for now
-        assertTrue(Record.isValidRecord(new Record("", "", "", ""))); // empty string
-        assertTrue(Record.isValidRecord(new Record(" ", " ", " ", " "))); // spaces only
+        // invalid records
+        Assert.assertThrows(IllegalArgumentException.class, () -> Record.isValidRecord(new Record("", "", "", "")));
+        Assert.assertThrows(IllegalArgumentException.class, () -> Record.isValidRecord(new Record(" ", " ", " ", " ")));
+        Assert.assertThrows(IllegalArgumentException.class, () -> Record.isValidRecord(
+                new Record("5th March 2016", " ", " ", " ")));
 
         // valid records
-        assertTrue(Record.isValidRecord(new Record("5th March 2016", "High temperature", "Fever", "Antibiotics")));
-        assertTrue(Record.isValidRecord(new Record("a", "b", "c", "d"))); // one character
+        assertTrue(Record.isValidRecord(new Record("01/04/2018", "High temperature", "Fever", "Antibiotics")));
+        assertTrue(Record.isValidRecord(new Record("99/99/9999", "b", "c", "d"))); // one character
     }
 }

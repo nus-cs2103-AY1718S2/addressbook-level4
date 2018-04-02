@@ -1,15 +1,21 @@
 package seedu.address.model.patient;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ILLNESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SYMPTOM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TREATMENT;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import seedu.address.logic.commands.RecordCommand;
-import seedu.address.logic.parser.RecordCommandParser;
+import seedu.address.logic.parser.ArgumentMultimap;
+import seedu.address.logic.parser.ArgumentTokenizer;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -21,13 +27,13 @@ public class Record {
     public static final String MESSAGE_RECORD_CONSTRAINTS =
             "Patient record can take any values, but each field must be populated";
 
-    private final String date;
-    private final String symptom;
-    private final String illness;
-    private final String treatment;
+    private final DateOfBirth date;
+    private final TextField symptom;
+    private final TextField illness;
+    private final TextField treatment;
 
     public Record() {
-        this("", "", "", "");
+        this(new SimpleDateFormat("dd/MM/yyyy").format(new Date()), "", "", "");
     }
 
     /**
@@ -35,38 +41,73 @@ public class Record {
      */
     public Record(String date, String symptom, String illness, String treatment) {
         requireAllNonNull(date, symptom, illness, treatment);
-        this.date = date;
-        this.symptom = symptom;
-        this.illness = illness;
-        this.treatment = treatment;
+        this.date = new DateOfBirth(date);
+        this.symptom = new TextField(symptom);
+        this.illness = new TextField(illness);
+        this.treatment = new TextField(treatment);
     }
 
     public Record(Record record) {
-        this(record.getDate(), record.getSymptom(), record.getIllness(), record.getTreatment());
+        this(record.getDate(), record.getSymptom(),
+                record.getIllness(), record.getTreatment());
     }
 
     public Record(String string) throws ParseException {
-        RecordCommand command = new RecordCommandParser().parse(string); //command will not be executed
-        this.date = command.getRecord().getDate();
-        this.symptom = command.getRecord().getSymptom();
-        this.illness = command.getRecord().getIllness();
-        this.treatment = command.getRecord().getTreatment();
+        Record temp = this.parse(string);
+        this.date = new DateOfBirth(temp.getDate());
+        this.symptom = new TextField(temp.getSymptom());
+        this.illness = new TextField(temp.getIllness());
+        this.treatment = new TextField(temp.getTreatment());
+    }
+
+    /**
+     *
+     * @param args Takes in a string that represents a medical record.
+     * @return Returns the medical record that is represented by the string.
+     * @throws ParseException
+     */
+    private Record parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args,
+                        PREFIX_SYMPTOM, PREFIX_ILLNESS, PREFIX_TREATMENT);
+
+        if (!arePrefixesPresent(argMultimap,
+                PREFIX_SYMPTOM, PREFIX_ILLNESS, PREFIX_TREATMENT)
+                || (argMultimap.getPreamble() == null)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
+        }
+
+        //to nest following lines into try once the various classes are set up
+        String date = argMultimap.getPreamble();
+        String symptom = (argMultimap.getValue(PREFIX_SYMPTOM)).get();
+        String illness = (argMultimap.getValue(PREFIX_ILLNESS)).get();
+        String treatment = (argMultimap.getValue(PREFIX_TREATMENT)).get();
+
+        return new Record(date, symptom, illness, treatment);
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
     public String getDate() {
-        return date;
+        return date.toString();
     }
 
     public String getSymptom() {
-        return symptom;
+        return symptom.toString();
     }
 
     public String getIllness() {
-        return illness;
+        return illness.toString();
     }
 
     public String getTreatment() {
-        return treatment;
+        return treatment.toString();
     }
 
     @Override
@@ -140,8 +181,7 @@ public class Record {
      */
     public String toCommandStringRecordList() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(PREFIX_DATE)
-                .append(getDate())
+        builder.append(getDate())
                 .append(" ")
                 .append(PREFIX_SYMPTOM)
                 .append(getSymptom())

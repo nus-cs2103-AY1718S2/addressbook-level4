@@ -53,7 +53,8 @@ public class TypicalPatients {
                     .withTags("friends")
                     .withNric("S1234567A")
                     .withBloodType("A")
-                    .withDob("11/11/1991").build();
+                    .withDob("11/11/1991")
+                    .build();
         } catch (ParseException pe) {
             try {
                 throw pe;

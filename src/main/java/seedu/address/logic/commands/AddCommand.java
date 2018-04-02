@@ -15,7 +15,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 /**
  * Adds a person to the address book.
  */
-public class AddCommand extends UndoableCommand {
+public class AddCommand extends UndoableCommand implements PopulatableCommand {
 
     public static final String COMMAND_WORD = "add";
     public static final String COMMAND_ALIAS = "a";
@@ -66,5 +66,27 @@ public class AddCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof AddCommand // instanceof handles nulls
                 && toAdd.equals(((AddCommand) other).toAdd));
+    }
+
+    @Override
+    public String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
+    @Override
+    public String getTemplate() {
+        return COMMAND_WORD + " " + PREFIX_TYPE + "  " + PREFIX_NAME + "  "
+                + PREFIX_PHONE + "  " + PREFIX_EMAIL + "  " + PREFIX_ADDRESS + "  "
+                + PREFIX_TAG + " ";
+    }
+
+    @Override
+    public int getCaretIndex() {
+        return (COMMAND_WORD + " " + PREFIX_TYPE + " ").length();
+    }
+
+    @Override
+    public String getUsageMessage() {
+        return MESSAGE_USAGE;
     }
 }

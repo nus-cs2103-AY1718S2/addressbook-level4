@@ -12,7 +12,7 @@ import seedu.address.model.person.Person;
 /**
  * Selects a person identified using it's last displayed index from the address book.
  */
-public class SelectCommand extends Command {
+public class SelectCommand extends Command implements PopulatableCommand {
 
     public static final String COMMAND_WORD = "select";
     public static final String COMMAND_ALIAS = "s";
@@ -48,5 +48,25 @@ public class SelectCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof SelectCommand // instanceof handles nulls
                 && this.targetIndex.equals(((SelectCommand) other).targetIndex)); // state check
+    }
+
+    @Override
+    public String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
+    @Override
+    public String getTemplate() {
+        return COMMAND_WORD + " ";
+    }
+
+    @Override
+    public int getCaretIndex() {
+        return getTemplate().length();
+    }
+
+    @Override
+    public String getUsageMessage() {
+        return MESSAGE_USAGE;
     }
 }

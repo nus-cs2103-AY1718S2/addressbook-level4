@@ -21,7 +21,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.student.MiscellaneousInfo.ProfilePicturePath;
-import seedu.address.model.student.UniqueKey;
+import seedu.address.model.student.Student;
 
 /**
  * Manages storage of AddressBook data in local storage.
@@ -141,23 +141,27 @@ public class StorageManager extends ComponentManager implements Storage {
      * Saves the new profile picture of the {@code Student}
      * @throws IOException
      */
-    public void saveProfilePicture(ProfilePicturePath pathToChangeTo, UniqueKey uniqueKey) throws IOException {
+    public void saveProfilePicture(ProfilePicturePath pathToChangeTo, Student student) throws IOException {
         ensureProfilePictureStorageExist();
 
         Path newPath = pathToChangeTo.getProfilePicturePath();
-        int extensionSeparator = newPath.toString().lastIndexOf(".");
-        String extension = newPath.toString().substring(extensionSeparator);
-        // Done to obtain the specific extension (jpg/png) of the file
+        String extension = pathToChangeTo.getExtension();
 
-        Path studentPictureFilePath = Paths.get(profilePictureStorage.getFilePath() + "/" + uniqueKey.toString());
+        Path studentPictureFilePath = Paths.get(profilePictureStorage.getFilePath() + "/"
+                + student.getUniqueKey().toString());
         deleteExistingProfilePicture(studentPictureFilePath);
         Path studentPictureFilePathWithExtension = Paths.get(studentPictureFilePath.toString() + extension);
-        logger.fine("Attempting to write to data file: data/" + uniqueKey.toString());
+        logger.fine("Attempting to write to data file: data/" + student.getUniqueKey().toString());
+
 
         Files.copy(newPath, studentPictureFilePathWithExtension);
 
     }
 
+
+    /**
+     * Deletes the existing profile picture
+     */
     private void deleteExistingProfilePicture(Path studentPictureFilePath) {
         File tobeReplacedWithJpg = new File(studentPictureFilePath.toString() + ".jpg");
         File tobeReplacedWithPng = new File(studentPictureFilePath.toString() + ".png");
@@ -185,7 +189,7 @@ public class StorageManager extends ComponentManager implements Storage {
     public void handleProfilePictureChangeEvent(ProfilePictureChangeEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
     try {
-        saveProfilePicture(event.getUrlToChangeTo(), event.getUniqueKey());
+        saveProfilePicture(event.getUrlToChangeTo(), event.getStudent());
     } catch (IOException e) {
         raise(new DataSavingExceptionEvent(e));
     }

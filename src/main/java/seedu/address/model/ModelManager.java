@@ -165,12 +165,16 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updateProfilePicture (Student target, Student editedStudent)
+    public void updateProfilePicture (Student target, Student editedStudent, Student finalEditedStudent)
             throws DuplicateStudentException, StudentNotFoundException {
 
         requireAllNonNull(target, editedStudent);
         addressBook.updateStudent(target, editedStudent);
         indicateProfilePictureChange(editedStudent);
+        addressBook.updateStudent(editedStudent, finalEditedStudent);
+        indicateAddressBookChanged();
+        indicateStudentInfoChanged();
+
     }
 
     /** Raises an event to indicate a student's profile picture has been changed*/

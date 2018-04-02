@@ -37,6 +37,10 @@ public class XmlAdaptedStudent {
     private String address;
     @XmlElement(required = true)
     private String programmingLanguage;
+    @XmlElement(required = true)
+    private String profilePicturePath;
+
+
 
 
     @XmlElement
@@ -76,6 +80,7 @@ public class XmlAdaptedStudent {
         email = source.getEmail().value;
         address = source.getAddress().value;
         programmingLanguage = source.getProgrammingLanguage().programmingLanguage;
+        profilePicturePath = source.getProfilePicturePath().toString();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));

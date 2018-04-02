@@ -28,6 +28,10 @@ public class ProfilePictureChangeEvent extends BaseEvent {
         return uniqueKey;
     }
 
+    public Student getStudent() {
+        return student;
+    }
+
     @Override
     public String toString() {
         return "Changing Url of profile picture for student: " + student.toString() ;

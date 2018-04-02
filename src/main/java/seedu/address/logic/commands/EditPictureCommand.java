@@ -46,6 +46,7 @@ public class EditPictureCommand extends UndoableCommand {
 
     private Student studentToEditPicture;
     private Student pictureEditedStudent;
+    private Student finalPictureEditedStudent;
 
     public EditPictureCommand(Index index, ProfilePicturePath profilePicturePath) {
         requireNonNull(index);
@@ -58,7 +59,7 @@ public class EditPictureCommand extends UndoableCommand {
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         try {
-            model.updateProfilePicture(studentToEditPicture, pictureEditedStudent);
+            model.updateProfilePicture(studentToEditPicture, pictureEditedStudent, finalPictureEditedStudent);
         } catch (DuplicateStudentException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
         } catch (StudentNotFoundException pnfe) {
@@ -78,11 +79,12 @@ public class EditPictureCommand extends UndoableCommand {
 
         studentToEditPicture = lastShownList.get(index.getZeroBased());
         pictureEditedStudent = createPictureEditedStudent(studentToEditPicture);
+        finalPictureEditedStudent = createFinalEditedStudent(pictureEditedStudent);
 
     }
     /**
      * Creates and returns a {@code Student} with the details of {@code studentToEdit}
-     * edited with the new {@code profilePictureUrl}.
+     * edited with the new {@code profilePicturePath}.
      */
     private Student createPictureEditedStudent(Student studentToEditPicture) {
         Name name = studentToEditPicture.getName();
@@ -99,4 +101,28 @@ public class EditPictureCommand extends UndoableCommand {
         return new Student(uniqueKey, name, phone, email, address, programmingLanguage,
                 tags, isFavourite, dashboard, profilePicturePath);
     }
+
+    /**
+     * Creates and returns a {@code Student} with the details of {@code studentToEdit}
+     * edited with the designated path for the profile picture in addressbook.
+     */
+    private Student createFinalEditedStudent(Student studentToEdit) {
+        Name name = studentToEdit.getName();
+        UniqueKey uniqueKey = studentToEdit.getUniqueKey();
+        Phone phone = studentToEdit.getPhone();
+        Email email = studentToEdit.getEmail();
+        Address address = studentToEdit.getAddress();
+        ProgrammingLanguage programmingLanguage = studentToEdit.getProgrammingLanguage();
+        Set<Tag> tags = studentToEdit.getTags();
+        Favourite isFavourite = studentToEdit.getFavourite();
+        Dashboard dashboard = studentToEdit.getDashboard();
+        ProfilePicturePath profilePicturePath = new ProfilePicturePath("/data/profilePictures/"
+                    + uniqueKey.toString() + this.newProfilePicturePath.getExtension());
+
+
+        return new Student(uniqueKey, name, phone, email, address, programmingLanguage,
+                tags, isFavourite, dashboard, profilePicturePath);
+    }
+
+
 }

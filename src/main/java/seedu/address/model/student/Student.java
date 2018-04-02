@@ -27,7 +27,7 @@ public class Student {
     private final Dashboard dashboard;
     private UniqueKey uniqueKey;
     private final UniqueTagList tags;
-    private final ProfilePicturePath profilePicturePath;
+    private ProfilePicturePath profilePicturePath;
 
     /**
      * Every field must be present and not null. For when dashboard, favourite and profilePictureURL is not initialised
@@ -218,6 +218,7 @@ public class Student {
         return profilePicturePath;
     }
 
+
     /**
      * Returns true if Student is in favourites, else returns false.
      */
@@ -284,8 +285,11 @@ public class Student {
         getTags().forEach(builder::append);
         builder.append(" Favourite: ")
                 .append(getFavourite())
+                .append(" ProfilePicturePath: ")
+                .append(getProfilePicturePath())
                 .append(" Dashboard: ")
                 .append(getDashboard());
+
         return builder.toString();
     }
 
@@ -310,8 +314,11 @@ public class Student {
         getTags().forEach(builder::append);
         builder.append(" Favourite: ")
                 .append(getFavourite())
+                .append(" ProfilePicturePath: ")
+                .append(getProfilePicturePath())
                 .append(" Dashboard: ")
-                .append(getDashboard());
+                .append(getDashboard())
+                ;
         return builder.toString();
     }
 

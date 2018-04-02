@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 
 public class ProfilePicturePath {
 
-    private final Path profilePicturePath;
+    public final Path profilePicturePath;
 
     public static final String MESSAGE_PICTURE_CONSTRAINTS =
             "File URL must exist and have extensions of '.jpg' or '.png' only.";
@@ -43,7 +43,7 @@ public class ProfilePicturePath {
     /**
      * Returns true if a given string is a valid file path with extensions either '.jpg' or '.png'.
      */
-    public static boolean isValidUrl(String test) {
+    public static boolean isValidPath(String test) {
         File testFile = new File(test);
         if (!testFile.exists()) {
             return false;
@@ -53,5 +53,18 @@ public class ProfilePicturePath {
 
     public Path getProfilePicturePath() {
         return profilePicturePath;
+    }
+
+    /**
+     * Returns the extension of the profile picture path.
+     */
+    public String getExtension(){
+        int extensionSeparator = profilePicturePath.toString().lastIndexOf(".");
+        return profilePicturePath.toString().substring(extensionSeparator);
+    }
+
+    @Override
+    public String toString() {
+        return profilePicturePath.toString();
     }
 }

@@ -272,7 +272,7 @@ public class ParserUtil {
 
     public static ProfilePicturePath parsePictureUrl(String url) throws MalformedURLException, IllegalValueException {
         requireNonNull(url);
-        if(!ProfilePicturePath.isValidUrl(url)) {
+        if(!ProfilePicturePath.isValidPath(url)) {
             throw new IllegalValueException(ProfilePicturePath.MESSAGE_PICTURE_CONSTRAINTS);
         }
         return new ProfilePicturePath(url);

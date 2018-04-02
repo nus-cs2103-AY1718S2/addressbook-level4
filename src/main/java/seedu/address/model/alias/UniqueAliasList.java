@@ -72,7 +72,6 @@ public class UniqueAliasList {
         hashList.remove(toRemove);
     }
 
-    //@@author Caijun7
     /**
      * Imports an Alias to the list if the Alias is not a duplicate of an existing Alias in the list.
      */
@@ -82,7 +81,6 @@ public class UniqueAliasList {
             hashList.put(toAdd.getAlias(), toAdd.getCommand());
         }
     }
-    //@@author
 
     /**
      * Converts HashMap into an observable list

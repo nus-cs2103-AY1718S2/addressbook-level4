@@ -2,6 +2,10 @@ package seedu.address.logic.commands;
 
 import seedu.address.commons.core.index.Index;
 
+/**
+ * Selects a patient identified using it's last displayed index from the address book.
+ * Formats and prints that patient's medical records.
+ */
 public class PrintCommand extends Command {
     public static final String COMMAND_WORD = "print";
     public static final String COMMAND_ALIAS = "p";

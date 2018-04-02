@@ -21,10 +21,11 @@ public class MapCommand extends Command {
     public static final String COMMAND_WORD = "map";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds the location of the specified address(es) \n"
-            + "Parameters: [LOCATION]\n"
-            + "Example: " + COMMAND_WORD + " COM1";
+            + "Parameters: [LOCATION] or\n"
+            + "Parameters: [LOCATION]/[DESTINATION]\n"
+            + "Example: " + COMMAND_WORD + " 119077/117417 ";
 
-    public static final String MESSAGE_SUCCESS = "List of rooms in building successfully retrieved.";
+    public static final String MESSAGE_SUCCESS = "Google Maps is successful.";
     public static final String MESSAGE_INVALID_BUILDING =
             "Building is not in the list of NUS Buildings given below: \n"
                     + Arrays.toString(Building.NUS_BUILDINGS);

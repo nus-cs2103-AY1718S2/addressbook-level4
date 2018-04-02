@@ -17,7 +17,7 @@ import java.net.URL;
 
 public class GoogleMapsDisplay extends UiPart<Region> {
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String MAP_URL_PREFIX = "https://www.google.com/maps/search/";
+    public static final String MAP_URL_PREFIX = "https://www.google.com/maps/dir/";
     private static final String FXML = "GoogleMapsDisplay.fxml";
 
     @FXML
@@ -32,8 +32,8 @@ public class GoogleMapsDisplay extends UiPart<Region> {
         loadDefaultPage();
     }
 
-    public void loadMapPage(String address) {
-        loadPage(MAP_URL_PREFIX + address);
+    public void loadMapPage(String locations) {
+        loadPage(MAP_URL_PREFIX + locations);
     }
 
     public void loadPage(String url) {

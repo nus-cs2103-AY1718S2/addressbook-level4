@@ -20,7 +20,7 @@ import seedu.address.model.person.Person;
  */
 public class BrowserPanel extends UiPart<Region> {
 
-    public static final String DEFAULT_PAGE = "default.html";
+    public static final String DEFAULT_PAGE = "CalendarDisplay.html";
     public static final String SEARCH_PAGE_URL = "https"
            + "://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
     public static final String PERSON_PAGE = ".html";

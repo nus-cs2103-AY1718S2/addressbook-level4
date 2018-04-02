@@ -84,7 +84,8 @@ public class ImdbTest {
         // Repeat ALICE twice
         List<Patient> newPatients = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        ImdbStub newData = new ImdbStub(newPatients, newTags);
+        List<Integer> newQueue = new ArrayList<>();
+        ImdbStub newData = new ImdbStub(newPatients, newTags, newQueue);
 
         thrown.expect(AssertionError.class);
         imdb.resetData(newData);
@@ -153,12 +154,13 @@ public class ImdbTest {
         private final ObservableList<Patient> patients = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<Appointment> appointments = FXCollections.observableArrayList();
-        private final ObservableList<Patient> visitingQueue = FXCollections.observableArrayList();
+        private final ObservableList<Integer> visitingQueue = FXCollections.observableArrayList();
 
-        ImdbStub(Collection<Patient> patients, Collection<? extends Tag> tags) {
+        ImdbStub(Collection<Patient> patients, Collection<? extends Tag> tags, Collection<Integer> queue) {
             this.patients.setAll(patients);
             this.tags.setAll(tags);
             this.appointments.setAll(appointments);
+            this.visitingQueue.setAll(queue);
         }
 
         @Override
@@ -178,12 +180,12 @@ public class ImdbTest {
 
         @Override
         public ObservableList<Patient> getUniquePatientQueue() {
-            return visitingQueue;
+            return null;
         }
 
         @Override
         public ObservableList<Integer> getUniquePatientQueueNo() {
-            return null;
+            return visitingQueue;
         }
     }
 

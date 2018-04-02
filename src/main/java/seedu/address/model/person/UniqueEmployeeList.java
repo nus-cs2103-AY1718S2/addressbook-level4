@@ -21,7 +21,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  *
  * @see Person#equals(Object)
  */
-public class UniquePersonList implements Iterable<Person> {
+public class UniqueEmployeeList implements Iterable<Person> {
 
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
 
@@ -82,13 +82,13 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
-    public void setPersons(UniquePersonList replacement) {
+    public void setPersons(UniqueEmployeeList replacement) {
         this.internalList.setAll(replacement.internalList);
     }
 
     public void setPersons(List<Person> persons) throws DuplicatePersonException {
         requireAllNonNull(persons);
-        final UniquePersonList replacement = new UniquePersonList();
+        final UniqueEmployeeList replacement = new UniqueEmployeeList();
         for (final Person person : persons) {
             replacement.add(person);
         }
@@ -110,8 +110,8 @@ public class UniquePersonList implements Iterable<Person> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UniquePersonList // instanceof handles nulls
-                        && this.internalList.equals(((UniquePersonList) other).internalList));
+                || (other instanceof UniqueEmployeeList // instanceof handles nulls
+                        && this.internalList.equals(((UniqueEmployeeList) other).internalList));
     }
     /**
      * Sorts existing persons, check sort field here

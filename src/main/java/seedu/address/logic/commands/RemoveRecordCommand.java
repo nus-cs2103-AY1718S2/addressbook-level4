@@ -22,13 +22,13 @@ import seedu.address.model.patient.exceptions.PatientNotFoundException;
 /**
  * Adds a patient to the address book.
  */
-public class RecordCommand extends UndoableCommand {
+public class RemoveRecordCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "record";
-    public static final String COMMAND_ALIAS = "rec";
+    public static final String COMMAND_WORD = "remover";
+    public static final String COMMAND_ALIAS = "rr";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Edits the medical record of a patient in the address book. "
+            + ": Removes the medical record of a patient in the address book. "
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_INDEX + "INDEX] "
             + "\n"
@@ -36,9 +36,8 @@ public class RecordCommand extends UndoableCommand {
             + "1 "
             + PREFIX_INDEX + "1 ";
 
-    public static final String MESSAGE_EDIT_RECORD_SUCCESS = "Medical record updated: %1$s";
-    public static final String MESSAGE_ADD_RECORD_SUCCESS = "New medical record added: %1$s";
-    public static final String MESSAGE_CLOSE_RECORD_SUCCESS = "Medical record has been closed with no changes.";
+    public static final String MESSAGE_REMOVE_RECORD_SUCCESS = "Medical record removed: %1$s";
+    public static final String MESSAGE_REMOVE_RECORD_FAILURE = "The index specified does not exist.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This patient already exists in the address book.";
 
     private final Index patientIndex;
@@ -47,27 +46,13 @@ public class RecordCommand extends UndoableCommand {
     private Patient patientToEdit;
     private Patient editedPatient;
 
-    private boolean isTest;
-
     /**
      * Creates a RecordCommand to edit the records of the specified {@code Patient}
      */
-    public RecordCommand(Index patientIndex, Index recordIndex) {
+    public RemoveRecordCommand(Index patientIndex, Index recordIndex) {
         requireNonNull(patientIndex);
         this.patientIndex = patientIndex;
         this.recordIndex = recordIndex;
-        this.isTest = false;
-    }
-
-    /**
-     * Creates a RecordCommand to edit the records of the specified {@code Patient}
-     * This constructor is utilised when testing.
-     */
-    public RecordCommand(Index patientIndex, Index recordIndex, boolean isTest) {
-        requireNonNull(patientIndex);
-        this.patientIndex = patientIndex;
-        this.recordIndex = recordIndex;
-        this.isTest = isTest;
     }
 
     @Override
@@ -80,22 +65,7 @@ public class RecordCommand extends UndoableCommand {
             throw new AssertionError("The target patient cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return generateCommandResult();
-    }
-
-    /**
-     * Creates and returns a {@code CommandResult} with the details of {@code RecordCommand}
-     * edited with {@code record}.
-     */
-    private CommandResult generateCommandResult() {
-        if (editedPatient == patientToEdit) {
-            return new CommandResult(String.format(MESSAGE_CLOSE_RECORD_SUCCESS));
-        } else if (patientToEdit.getRecordList().getNumberOfRecords()
-                < editedPatient.getRecordList().getNumberOfRecords()) {
-            return new CommandResult(String.format(MESSAGE_ADD_RECORD_SUCCESS, editedPatient));
-        } else {
-            return new CommandResult(String.format(MESSAGE_EDIT_RECORD_SUCCESS, editedPatient));
-        }
+        return new CommandResult(String.format(MESSAGE_REMOVE_RECORD_SUCCESS, editedPatient));
     }
 
     @Override
@@ -108,27 +78,14 @@ public class RecordCommand extends UndoableCommand {
 
         patientToEdit = lastShownList.get(patientIndex.getZeroBased());
 
-        //creating medical record window here and obtaining user input
-        if (!isTest) { //only execute if it is not a test
-            RecordWindow recordWindow = new RecordWindow();
-            Stage stage = new Stage();
-            recordWindow.start(stage, patientToEdit.getRecord(recordIndex.getZeroBased()));
-        }
-
-        Record editedRecord = RecordManager.getRecord();
-
-        if (editedRecord == null) {
-            editedPatient = patientToEdit;
-        } else {
-            editedPatient = createEditedPatient(patientToEdit, recordIndex.getZeroBased(), editedRecord);
-        }
+        editedPatient = createEditedPatient(patientToEdit, recordIndex.getZeroBased());
     }
 
     /**
      * Creates and returns a {@code Patient} with the details of {@code patientToEdit}
      * edited with {@code record}.
      */
-    private static Patient createEditedPatient(Patient patientToEdit, int recordIndex, Record record) {
+    private static Patient createEditedPatient(Patient patientToEdit, int recordIndex) throws CommandException {
         assert patientToEdit != null;
 
         ArrayList<Record> temp = new ArrayList<Record>();
@@ -139,8 +96,15 @@ public class RecordCommand extends UndoableCommand {
             String treatment = patientToEdit.getRecordList().getRecordList().get(i).getTreatment();
             temp.add(new Record(date, symptom, illness, treatment));
         }
+        try {
+            temp.remove(recordIndex);
+        } catch (IndexOutOfBoundsException ie) {
+            throw new CommandException(MESSAGE_REMOVE_RECORD_FAILURE);
+        }
+        if (temp.size() == 0) {
+            temp.add(new Record());
+        }
         RecordList recordlist = new RecordList(temp);
-        recordlist.edit(recordIndex, record);
 
         return new Patient(patientToEdit.getName(), patientToEdit.getNric(), patientToEdit.getPhone(),
                 patientToEdit.getEmail(), patientToEdit.getAddress(), patientToEdit.getDob(),
@@ -156,12 +120,12 @@ public class RecordCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof RecordCommand)) {
+        if (!(other instanceof RemoveRecordCommand)) {
             return false;
         }
 
         // state check
-        RecordCommand e = (RecordCommand) other;
+        RemoveRecordCommand e = (RemoveRecordCommand) other;
 
         return getPatientIndex().equals(e.getPatientIndex())
                 && getRecordIndex().equals(e.getRecordIndex());

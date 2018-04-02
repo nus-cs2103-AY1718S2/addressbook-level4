@@ -202,6 +202,34 @@ Format: `history` or `hist`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+=== Importing contacts from CSV : `import_contacts` or `ic`
+
+Imports contacts from a csv file that contains the header (Name, Email, Phone, Address) +
+Format: `import_contacts f/PATH`
+
+For example `import_contacts f/examplefile.csv` will import the contacts contained in the .csv file `examplefile.csv`
+
+[NOTE]
+Please include the file extension (.csv), do include the full file path, and do not include quotations ("...") around the file path.
+
+=== Exporting contacts to CSV: `export_contacts` or `ec`
+
+Export all contacts to a .csv file.
+
+Format: `ec f/PATH`
+
+[NOTE]
+It is not necessary to include a file path after the command. If no file path is included, `ec` will create and write to a new .csv file, _data/exportToExisting.csv_
+
+
+****
+* Be sure to include .csv at the end of the file name
+* No need to put the file path in quotes ("..."), can simply write it directly
+* Can write absolute or local file path
+* You may also give the path to a file name that doesn't yet exist. For example, you may call `ec data/newFileExample.csv` where `data/newFileExample.csv` does not yet exist. In this case, a new .csv file will be automatically created and written to.
+****
+
+
 // tag::scheduling[]
 === Adding an appointment : `addappointment` or `aa`
 

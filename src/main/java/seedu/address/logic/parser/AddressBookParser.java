@@ -16,9 +16,11 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportContactsCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ImportContactsCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -90,6 +92,14 @@ public class AddressBookParser {
         case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
 
+        //@@author luca590
+        case ImportContactsCommand.COMMAND_WORD: //import contacts from csv
+            return new ImportContactsCommandParser().parse(arguments);
+
+        case ImportContactsCommand.COMMAND_ALIAS:
+            return new ImportContactsCommandParser().parse(arguments);
+        //@@author
+
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
 
@@ -131,6 +141,14 @@ public class AddressBookParser {
 
         case EmailCommand.COMMAND_ALIAS:
             return new EmailCommandParser().parse(arguments);
+
+        //@@author luca590
+        case ExportContactsCommand.COMMAND_WORD: //export contacts from csv
+            return new ExportContactsCommandParser().parse(arguments);
+
+        case ExportContactsCommand.COMMAND_ALIAS:
+            return new ExportContactsCommandParser().parse(arguments);
+        //@@author
 
         //@@author jlks96
         case DeleteBeforeCommand.COMMAND_WORD:

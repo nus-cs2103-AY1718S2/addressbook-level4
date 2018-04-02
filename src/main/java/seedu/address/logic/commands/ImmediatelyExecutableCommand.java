@@ -6,6 +6,6 @@ package seedu.address.logic.commands;
  * keyboard shortcuts.
  */
 public interface ImmediatelyExecutableCommand {
-    /** Returns the COMMAND_WORD of the Command */
+    /** Returns the command word of the Command */
     String getCommandWord();
 }

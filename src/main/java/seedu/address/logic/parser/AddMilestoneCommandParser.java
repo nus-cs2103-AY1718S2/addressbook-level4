@@ -31,7 +31,7 @@ public class AddMilestoneCommandParser implements Parser<AddMilestoneCommand> {
 
         ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_INDEX, PREFIX_DATE, PREFIX_DESCRIPTION);
 
-        if (!arePrefixesPresent(argMultiMap, PREFIX_INDEX, PREFIX_DATE, PREFIX_DESCRIPTION)
+        if (!argMultiMap.arePrefixesPresent(PREFIX_INDEX, PREFIX_DATE, PREFIX_DESCRIPTION)
                 || !argMultiMap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMilestoneCommand.MESSAGE_USAGE));
         }
@@ -47,13 +47,5 @@ public class AddMilestoneCommandParser implements Parser<AddMilestoneCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
-    }
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }

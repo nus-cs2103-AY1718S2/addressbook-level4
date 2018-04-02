@@ -9,7 +9,9 @@ import java.nio.file.Paths;
 import org.junit.Test;
 
 import seedu.address.model.AddressBook;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Person;
+import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.TestUtil;
 
@@ -44,8 +46,22 @@ public class SampleDataTest extends AddressBookSystemTest {
     }
 
     @Test
-    public void addressBook_dataFileDoesNotExist_loadSampleData() {
+    public void addressBook_dataFileDoesNotExist_loadSampleOwnerData() {
         Person[] expectedList = SampleDataUtil.getSamplePersons();
         assertListMatching(getPersonListPanel(), expectedList);
     }
+
+    @Test
+    public void addressBook_dataFileDoesNotExist_loadSamplePetData() {
+        PetPatient[] expectedList = SampleDataUtil.getSamplePetPatients();
+        assertListMatching(getPetPatientListPanel(), expectedList);
+    }
+
+    /** unable to be done until appointments can be viewed.
+    @Test
+    public void addressBook_dataFileDoesNotExist_loadSampleAppointmentData() {
+        Appointment[] expectedList = SampleDataUtil.getSampleAppointments();
+        assertListMatching(getApp)
+    }
+    */
 }

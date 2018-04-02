@@ -18,11 +18,13 @@ import seedu.address.model.appointment.exceptions.AppointmentDependencyNotEmptyE
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicateNricException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.petpatient.PetPatient;
+import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
 import seedu.address.model.petpatient.exceptions.PetDependencyNotEmptyException;
 import seedu.address.model.petpatient.exceptions.PetPatientNotFoundException;
@@ -90,6 +92,16 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public Person getPersonWithNric(Nric ownerNric) {
+        for (Person p : addressBook.getPersonList()) {
+            if (p.getNric().equals(ownerNric)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public synchronized void deletePetPatient(PetPatient target)
             throws PetPatientNotFoundException, AppointmentDependencyNotEmptyException {
         addressBook.removePetPatient(target);
@@ -115,6 +127,16 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addPetPatient(petPatient);
         updateFilteredPetPatientList(PREDICATE_SHOW_ALL_PET_PATIENTS);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public PetPatient getPetPatientWithNricAndName(Nric ownerNric, PetPatientName petPatientName) {
+        for (PetPatient p : addressBook.getPetPatientList()) {
+            if (p.getOwner().equals(ownerNric) && p.getName().equals(petPatientName)) {
+                return p;
+            }
+        }
+        return null;
     }
 
     @Override

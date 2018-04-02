@@ -40,6 +40,7 @@ import seedu.address.testutil.TypicalAppointments;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.testutil.TypicalPetPatients;
 
+//@@author aquarinte
 public class AddCommandTest {
 
     @Rule
@@ -176,25 +177,58 @@ public class AddCommandTest {
     @Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
+        Person bob = new PersonBuilder().withName("Bob").withNric("T0011223G").build();
         AddCommand addAliceCommand = new AddCommand(alice);
         AddCommand addBobCommand = new AddCommand(bob);
 
+        PetPatient joseph = new PetPatientBuilder().build();
+        PetPatient tia = new PetPatientBuilder().withName("Tia").build();
+        AddCommand addJosephCommand = new AddCommand(joseph, alice.getNric());
+        AddCommand addTiaCommand = new AddCommand(tia, bob.getNric());
+
+        Appointment appt = new AppointmentBuilder().build();
+        Appointment appt2 = new AppointmentBuilder().withDateTime("2018-11-11 15:30").build();
+        AddCommand addApptCommand = new AddCommand(appt, alice.getNric(), joseph.getName());
+        AddCommand addAppt2Command = new AddCommand(appt2, bob.getNric(), tia.getName());
+
+        AddCommand addAllCommand = new AddCommand(alice, joseph, appt);
+
         // same object -> returns true
         assertTrue(addAliceCommand.equals(addAliceCommand));
+        assertTrue(addJosephCommand.equals(addJosephCommand));
+        assertTrue(addApptCommand.equals(addApptCommand));
+        assertTrue(addAllCommand.equals(addAllCommand));
 
         // same values -> returns true
         AddCommand addAliceCommandCopy = new AddCommand(alice);
         assertTrue(addAliceCommand.equals(addAliceCommandCopy));
 
+        AddCommand addJosephCommandCopy = new AddCommand(joseph, alice.getNric());
+        assertTrue(addJosephCommand.equals(addJosephCommandCopy));
+
+        AddCommand addApptCommandCopy = new AddCommand(appt, alice.getNric(), joseph.getName());
+        assertTrue(addApptCommand.equals(addApptCommandCopy));
+
+        AddCommand addAllCommandCopy = new AddCommand(alice, joseph, appt);
+        assertTrue(addAllCommand.equals(addAllCommandCopy));
+
         // different types -> returns false
         assertFalse(addAliceCommand.equals(1));
+        assertFalse(addJosephCommand.equals(2));
+        assertFalse(addApptCommand.equals(new AppointmentBuilder().build()));
+        assertFalse(addAllCommand.equals("hello"));
 
         // null -> returns false
         assertFalse(addAliceCommand.equals(null));
+        assertFalse(addJosephCommand.equals(null));
+        assertFalse(addApptCommand.equals(null));
+        assertFalse(addAllCommand.equals(null));
 
-        // different person -> returns false
+        // different person/pet patient/appointment -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
+        assertFalse(addJosephCommand.equals(addTiaCommand));
+        assertFalse(addApptCommand.equals(addAppt2Command));
+
     }
 
     /**
@@ -245,8 +279,18 @@ public class AddCommandTest {
         }
 
         @Override
+        public Person getPersonWithNric(Nric nric) {
+            return null;
+        }
+
+        @Override
         public void addPetPatient(PetPatient petPatient) throws DuplicatePetPatientException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public PetPatient getPetPatientWithNricAndName(Nric nric, PetPatientName petPatientName) {
+            return null;
         }
 
         @Override
@@ -449,32 +493,47 @@ public class AddCommandTest {
         final ArrayList<PetPatient> petPatientsAdded = new ArrayList<>();
         final ArrayList<Appointment> appointmentsAdded = new ArrayList<>();
 
-        private AddressBook addressBook = new AddressBook();
-
         @Override
         public void addPerson(Person person) throws DuplicatePersonException, DuplicateNricException {
             requireNonNull(person);
-            addressBook.addPerson(person);
             personsAdded.add(person);
+        }
+
+        @Override
+        public Person getPersonWithNric(Nric nric) {
+            for (Person p : personsAdded) {
+                if (p.getNric().equals(nric)) {
+                    return p;
+                }
+            }
+            return null;
         }
 
         @Override
         public void addPetPatient(PetPatient petPatient) throws DuplicatePetPatientException {
             requireNonNull(petPatient);
-            addressBook.addPetPatient(petPatient);
             petPatientsAdded.add(petPatient);
+        }
+
+        @Override
+        public PetPatient getPetPatientWithNricAndName(Nric nric, PetPatientName petPatientName) {
+            for (PetPatient p : petPatientsAdded) {
+                if (p.getOwner().equals(nric) && p.getName().equals(petPatientName)) {
+                    return p;
+                }
+            }
+            return null;
         }
 
         @Override
         public void addAppointment(Appointment appt) throws DuplicateAppointmentException, DuplicateDateTimeException {
             requireNonNull(appt);
-            addressBook.addAppointment(appt);
             appointmentsAdded.add(appt);
         }
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {
-            return addressBook;
+            return new AddressBook();
         }
     }
 

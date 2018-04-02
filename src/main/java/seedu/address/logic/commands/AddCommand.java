@@ -26,7 +26,7 @@ import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
 
-//@@ aquarinte
+//@@author aquarinte
 /**
  * Adds a Person, Petpatient and/or Appointment to the address book.
  */
@@ -66,7 +66,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_BLOODTYPE + "BLOOD_TYPE "
             + "[" + PREFIX_TAG + "TAG]... -a "  + PREFIX_DATE + "DATE "
             + PREFIX_REMARK + "REMARK "
-            + "[" + PREFIX_TAG + "TYPE OF APPOINTMENT]...";
+            + PREFIX_TAG + "TYPE OF APPOINTMENT...";
 
     public static final String MESSAGE_PERSON = "Option -o : Person details. "
             + "Parameters: "
@@ -82,14 +82,13 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_NRIC + "S1234567Q "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_TAG + "medical supplier";
 
     public static final String MESSAGE_APPOINTMENT = "Option -a : Appointment details. "
             + "Parameters: "
             + PREFIX_DATE + "DATE "
             + PREFIX_REMARK + "REMARK "
-            + "[" + PREFIX_TAG + "TYPE OF APPOINTMENT]...\n"
+            + PREFIX_TAG + "TYPE OF APPOINTMENT...\n"
             + "Example: " + "-a "
             + PREFIX_DATE + "2018-12-31 12:30 "
             + PREFIX_REMARK + "nil "
@@ -119,12 +118,13 @@ public class AddCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_PET_PATIENT = "This pet patient already exists in Medeina";
     public static final String MESSAGE_INVALID_NRIC = "The specified NRIC does not belong to anyone in Medeina."
             + " Please add a new person.";
+    public static final String MESSAGE_MISSING_NRIC_PREFIX = "Missing prefix \"nr/\" for NRIC after -o option";
     public static final String MESSAGE_INVALID_PET_PATIENT = "The specified pet cannot be found under the specified "
             + "owner in Medeina. Please add a new pet patient.";
 
-    private Person toAddOwner;
-    private PetPatient toAddPet;
-    private Appointment toAddAppt;
+    private Person person;
+    private PetPatient petPatient;
+    private Appointment appt;
     private Nric ownerNric;
     private PetPatientName petPatientName;
     private int type;
@@ -133,13 +133,13 @@ public class AddCommand extends UndoableCommand {
     /**
      * Creates an AddCommand to add the specified {@code Person} and {@code PetPatient} and {@code Appointment}.
      */
-    public AddCommand(Person owner, PetPatient pet, Appointment appt) {
-        requireNonNull(owner);
-        requireNonNull(pet);
+    public AddCommand(Person person, PetPatient petPatient, Appointment appt) {
+        requireNonNull(person);
+        requireNonNull(petPatient);
         requireNonNull(appt);
-        toAddOwner = owner;
-        toAddPet = pet;
-        toAddAppt = appt;
+        this.person = person;
+        this.petPatient = petPatient;
+        this.appt = appt;
         type = 1;
         message += "New pet patient added: %2$s\nNew appointment made: %3$s";
     }
@@ -153,7 +153,7 @@ public class AddCommand extends UndoableCommand {
         requireNonNull(appt);
         requireNonNull(ownerNric);
         requireNonNull(petPatientName);
-        toAddAppt = appt;
+        this.appt = appt;
         this.ownerNric = ownerNric;
         this.petPatientName = petPatientName;
         type = 2;
@@ -164,10 +164,10 @@ public class AddCommand extends UndoableCommand {
      * Creates an AddCommand to add the specified {@code PetPatient} if an existing Person object getNric() is
      * equivalent to {@code Nric}.
      */
-    public AddCommand(PetPatient pet, Nric ownerNric) {
-        requireNonNull(pet);
+    public AddCommand(PetPatient petPatient, Nric ownerNric) {
+        requireNonNull(petPatient);
         requireNonNull(ownerNric);
-        toAddPet = pet;
+        this.petPatient = petPatient;
         this.ownerNric = ownerNric;
         type = 3;
         message = "New pet patient added: %1$s \nunder owner: %2$s";
@@ -178,7 +178,7 @@ public class AddCommand extends UndoableCommand {
      */
     public AddCommand(Person owner) {
         requireNonNull(owner);
-        toAddOwner = owner;
+        person = owner;
         type = 4;
     }
 
@@ -212,19 +212,18 @@ public class AddCommand extends UndoableCommand {
     }
 
     private CommandResult addNewPerson() throws DuplicatePersonException, DuplicateNricException {
-        model.addPerson(toAddOwner);
-        return new CommandResult(String.format(message, toAddOwner));
+        model.addPerson(person);
+        return new CommandResult(String.format(message, person));
     }
 
     /**
      * Add a new pet patient under an existing person.
      */
     private CommandResult addNewPetPatient() throws DuplicatePetPatientException, CommandException {
-        Person p = getPersonWithNric();
-        if (p != null) {
-            toAddPet.setOwnerNric(ownerNric);
-            model.addPetPatient(toAddPet);
-            return new CommandResult(String.format(message, toAddPet, p));
+        person = model.getPersonWithNric(ownerNric);
+        if (person != null) {
+            model.addPetPatient(petPatient);
+            return new CommandResult(String.format(message, petPatient, person));
         }
         throw new CommandException(MESSAGE_INVALID_NRIC);
     }
@@ -232,25 +231,21 @@ public class AddCommand extends UndoableCommand {
     /**
      * Add a new appointment for an existing pet patient under an existing person.
      */
-    private CommandResult addNewAppt()
-            throws CommandException, DuplicateAppointmentException, DuplicateDateTimeException {
-        Person owner = getPersonWithNric();
-        PetPatient pet = getPetPatientWithNricAndName();
-        if (owner != null) {
-            toAddAppt.setOwnerNric(ownerNric);
-        } else {
+    private CommandResult addNewAppt() throws CommandException, DuplicateAppointmentException,
+            DuplicateDateTimeException {
+        person = model.getPersonWithNric(ownerNric);
+        petPatient = model.getPetPatientWithNricAndName(ownerNric, petPatientName);
+
+        if (person == null) {
             throw new CommandException(MESSAGE_INVALID_NRIC);
         }
 
-        if (pet != null) {
-            toAddAppt.setPetPatientName(petPatientName);
-        } else {
+        if (petPatient == null) {
             throw new CommandException(MESSAGE_INVALID_PET_PATIENT);
         }
 
-        toAddAppt.setPetPatientName(petPatientName);
-        model.addAppointment(toAddAppt);
-        return new CommandResult(String.format(message, toAddAppt, owner, pet));
+        model.addAppointment(appt);
+        return new CommandResult(String.format(message, appt, person, petPatient));
     }
 
     /**
@@ -259,42 +254,51 @@ public class AddCommand extends UndoableCommand {
      */
     private CommandResult addAllNew() throws DuplicatePersonException, DuplicateNricException,
             DuplicatePetPatientException, DuplicateAppointmentException, DuplicateDateTimeException {
-        model.addPerson(toAddOwner);
-        model.addPetPatient(toAddPet);
-        model.addAppointment(toAddAppt);
-        return new CommandResult(String.format(message, toAddOwner, toAddPet, toAddAppt));
-    }
-
-    /**
-     * Checks whether a Person object with ownerNric exists.
-     * Return the Person object if it exists.
-     */
-    private Person getPersonWithNric() {
-        for (Person p : model.getAddressBook().getPersonList()) {
-            if (p.getNric().equals(ownerNric)) {
-                return p;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Checks whether a PetPatient object with ownerNric and petPatientName exists.
-     * Return the PetPatient object if it exists.
-     */
-    private PetPatient getPetPatientWithNricAndName() {
-        for (PetPatient p : model.getAddressBook().getPetPatientList()) {
-            if (p.getOwner().equals(ownerNric) && p.getName().equals(petPatientName)) {
-                return p;
-            }
-        }
-        return null;
+        model.addPerson(person);
+        model.addPetPatient(petPatient);
+        model.addAppointment(appt);
+        return new CommandResult(String.format(message, person, petPatient, appt));
     }
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AddCommand // instanceof handles nulls
-                && toAddOwner.equals(((AddCommand) other).toAddOwner));
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof AddCommand)) {
+            return false;
+        }
+
+        AddCommand otherAddCommand = (AddCommand) other;
+
+        boolean personSame = isTheSame(person, otherAddCommand.person);
+        boolean petPatientSame = isTheSame(petPatient, otherAddCommand.petPatient);
+        boolean appointmentSame = isTheSame(appt, otherAddCommand.appt);
+
+        if (personSame && petPatientSame && appointmentSame) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if both objects are the same.
+     * Returns true if both objects are equivalent.
+     * Returns true if both objects are null.
+     */
+    public boolean isTheSame(Object one, Object two) {
+        if (one != null && two != null) {
+            if (one.equals(two)) {
+                return true;
+            }
+        }
+
+        if (one == null && two == null) {
+            return true;
+        }
+
+        return false;
     }
 }

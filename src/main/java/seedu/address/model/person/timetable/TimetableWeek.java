@@ -1,12 +1,14 @@
 package seedu.address.model.person.timetable;
 
 import seedu.address.commons.util.timetable.Lesson;
+import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Represents a week in the timetable
  */
 public class TimetableWeek {
 
+    public static final int NUM_OF_DAYS = 5;
     public static final int MONDAY_INDEX = 0;
     public static final int TUESDAY_INDEX = 1;
     public static final int WEDNESDAY_INDEX = 2;
@@ -22,9 +24,9 @@ public class TimetableWeek {
     private TimetableDay[] timetableDays;
 
     public TimetableWeek() {
-        timetableDays = new TimetableDay[5];
-        for (TimetableDay timetableDay: timetableDays) {
-            timetableDay = new TimetableDay();
+        timetableDays = new TimetableDay[NUM_OF_DAYS];
+        for (int i = 0; i < NUM_OF_DAYS; i++) {
+            timetableDays[i] = new TimetableDay();
         }
     }
 
@@ -32,7 +34,7 @@ public class TimetableWeek {
      * Add lesson to its respective day
      * @param lesson Lesson
      */
-    public void addLessonToWeek(Lesson lesson) {
+    public void addLessonToWeek(Lesson lesson) throws ParseException {
         switch (lesson.getDay()) {
         case MONDAY_IDENTIFIER:
             timetableDays[MONDAY_INDEX].addLessontoDay(lesson);
@@ -55,7 +57,7 @@ public class TimetableWeek {
             break;
 
         default:
-
+            throw new ParseException("Invalid day type");
         }
     }
 

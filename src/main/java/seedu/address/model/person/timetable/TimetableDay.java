@@ -7,13 +7,15 @@ import seedu.address.commons.util.timetable.Lesson;
  */
 public class TimetableDay {
 
+    public static final int NUM_OF_SLOTS = 24;
+
     // Cut into 24-h slots. 0000 being timetableSlots[0] and 2300 being timetableSlots[23]
     private TimetableSlot[] timetableSlots;
 
     public TimetableDay() {
-        timetableSlots = new TimetableSlot[24];
-        for (TimetableSlot timetableSlot: timetableSlots) {
-            timetableSlot = new TimetableSlot();
+        timetableSlots = new TimetableSlot[NUM_OF_SLOTS];
+        for (int i = 0; i < NUM_OF_SLOTS; i++) {
+            timetableSlots[i] = new TimetableSlot();
         }
     }
 

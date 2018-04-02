@@ -96,6 +96,16 @@ public class Patient {
         return recordList;
     }
 
+    public Record getRecord(int i) {
+        if (recordList.getNumberOfRecords() > i) {
+            //accessing existing record
+            return recordList.getRecordList().get(i);
+        } else {
+            //accessing new record
+            return new Record();
+        }
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

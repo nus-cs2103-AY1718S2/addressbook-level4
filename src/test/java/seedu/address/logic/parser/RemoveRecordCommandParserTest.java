@@ -9,14 +9,14 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.RecordCommand;
+import seedu.address.logic.commands.RemoveRecordCommand;
 
-public class RecordCommandParserTest {
+public class RemoveRecordCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE);
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveRecordCommand.MESSAGE_USAGE);
 
-    private RecordCommandParser parser = new RecordCommandParser();
+    private RemoveRecordCommandParser parser = new RemoveRecordCommandParser();
 
     @Test
     public void parse_missingParts_failure() {
@@ -52,7 +52,7 @@ public class RecordCommandParserTest {
         builder.append(targetIndex.getOneBased())
                 .append(" " + PREFIX_INDEX + "1 ");
 
-        RecordCommand expectedCommand = new RecordCommand(targetIndex, Index.fromZeroBased(0));
+        RemoveRecordCommand expectedCommand = new RemoveRecordCommand(targetIndex, Index.fromZeroBased(0));
 
         assertParseSuccess(parser, builder.toString(), expectedCommand);
     }

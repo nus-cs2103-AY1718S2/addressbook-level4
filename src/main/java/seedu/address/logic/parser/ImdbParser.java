@@ -24,6 +24,7 @@ import seedu.address.logic.commands.RecordCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.RemovePatientQueueCommand;
+import seedu.address.logic.commands.RemoveRecordCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAppointmentCommand;
@@ -320,6 +321,12 @@ public class ImdbParser {
             case RecordCommand.COMMAND_ALIAS:
                 return new RecordCommandParser().parse(arguments);
 
+            case RemoveRecordCommand.COMMAND_WORD:
+                return new RemoveRecordCommandParser().parse(arguments);
+
+            case RemoveRecordCommand.COMMAND_ALIAS:
+                return new RemoveRecordCommandParser().parse(arguments);
+
             case AddConditionCommand.COMMAND_WORD:
                 return new AddConditionCommandParser().parse(arguments);
 
@@ -447,6 +454,12 @@ public class ImdbParser {
 
             case RecordCommand.COMMAND_ALIAS:
                 return new RecordCommandParser().parse(arguments);
+
+            case RemoveRecordCommand.COMMAND_WORD:
+                return new RemoveRecordCommandParser().parse(arguments);
+
+            case RemoveRecordCommand.COMMAND_ALIAS:
+                return new RemoveRecordCommandParser().parse(arguments);
 
             case RemovePatientQueueCommand.COMMAND_WORD:
                 return new RemovePatientQueueCommandParser().parse(arguments);

@@ -24,6 +24,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.commands.DeleteBeforeCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -37,6 +38,8 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.ZoomInCommand;
+import seedu.address.logic.commands.ZoomOutCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -123,7 +126,48 @@ public class AddressBookParserTest {
                 (AddAppointmentCommand) parser.parseCommand(AppointmentUtil.getAddAppointmentAlias(appointment));
         assertEquals(new AddAppointmentCommand(appointment), command);
     }
-    //@@author jlks96
+
+    @Test
+    public void parseCommand_deleteAppointment() throws Exception {
+        Appointment appointment = new AppointmentBuilder().build();
+        DeleteAppointmentCommand command =
+                (DeleteAppointmentCommand) parser.parseCommand(
+                        AppointmentUtil.getDeleteAppointmentCommand(appointment));
+        assertEquals(new DeleteAppointmentCommand(appointment), command);
+    }
+
+    @Test
+    public void parseCommand_deleteAppointmentAlias() throws Exception {
+        Appointment appointment = new AppointmentBuilder().build();
+        DeleteAppointmentCommand command =
+                (DeleteAppointmentCommand) parser.parseCommand(AppointmentUtil.getDeleteAppointmentAlias(appointment));
+        assertEquals(new DeleteAppointmentCommand(appointment), command);
+    }
+
+    @Test
+    public void parseCommand_zoomIn() throws Exception {
+        assertTrue(parser.parseCommand(ZoomInCommand.COMMAND_WORD) instanceof ZoomInCommand);
+        assertTrue(parser.parseCommand(ZoomInCommand.COMMAND_WORD + " 3") instanceof ZoomInCommand);
+    }
+
+    @Test
+    public void parseCommand_zoomInAlias() throws Exception {
+        assertTrue(parser.parseCommand(ZoomInCommand.COMMAND_ALIAS) instanceof ZoomInCommand);
+        assertTrue(parser.parseCommand(ZoomInCommand.COMMAND_ALIAS + " 3") instanceof ZoomInCommand);
+    }
+
+    @Test
+    public void parseCommand_zoomOut() throws Exception {
+        assertTrue(parser.parseCommand(ZoomOutCommand.COMMAND_WORD) instanceof ZoomOutCommand);
+        assertTrue(parser.parseCommand(ZoomOutCommand.COMMAND_WORD + " 3") instanceof ZoomOutCommand);
+    }
+
+    @Test
+    public void parseCommand_zoomOutAlias() throws Exception {
+        assertTrue(parser.parseCommand(ZoomOutCommand.COMMAND_ALIAS) instanceof ZoomOutCommand);
+        assertTrue(parser.parseCommand(ZoomOutCommand.COMMAND_ALIAS + " 3") instanceof ZoomOutCommand);
+    }
+    //@@author
 
     @Test
     public void parseCommand_edit() throws Exception {

@@ -231,7 +231,8 @@ It is not necessary to include a file path after the command. If no file path is
 
 
 // tag::scheduling[]
-=== Add an appointment : `addappointment` or `aa`
+=== Adding an appointment : `addappointment` or `aa`
+
 Adds an appointment with a person in the address book that will be shown in the calendar panel. +
 Format: `addappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` or `aa n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION`
 
@@ -247,12 +248,13 @@ Examples:
 * `aa n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate` +
 Creates an appointment with Betsy on 12/12/2017 from 12:30pm to 1:30pm at Gold Park Estate.
 
-=== Remove an appointment : `rmappointment` or `ra` `[Coming in v1.4]`
-Removes an appointment in the address book. +
-Format: `rmappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` or `ra n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION`
+=== Deleting an appointment : `deleteappointment` or `da`
+
+Deletes an appointment in the address book. +
+Format: `deleteappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` or `da n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION`
 
 ****
-* Removes an appointment that matches all the input `NAME`, `DATE`, `STARTTIME`, `ENDTIME` and `LOCATION`.
+* Deletes an appointment that matches all the input `NAME`, `DATE`, `STARTTIME`, `ENDTIME` and `LOCATION`.
 * The input date *must be in the following format: dd/MM/yyyy*.
 * The input time *must be in the following format: HH:mm (24hr format)*.
 * The calendar panel will be updated accordingly.
@@ -260,10 +262,11 @@ Format: `rmappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` or `ra 
 
 Examples:
 
-* `rm n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate` +
-Removes the appointment previously arranged with Betsy on 12/12/2017 from 12:30pm to 1:30pm at Gold Park Estate.
+* `da n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate` +
+Deletes the appointment previously arranged with Betsy on 12/12/2017 from 12:30pm to 1:30pm at Gold Park Estate.
 
-=== Zoom in calendar view : `zoomin` or `zi` `[Coming in v1.5]`
+=== Zooming in calendar view : `zoomin` or `zi` `[Coming in v1.5]`
+
 Zooms in the calendar panel to show a more detailed calendar view  +
 Format: `zoomin` or `zi`
 
@@ -276,7 +279,8 @@ Examples:
 * `zi` +
 If the calendar panel is previously showing the Year View, it will now be showing the Month View.
 
-=== Zoom out calendar view : `zoomout` or `zo` `[Coming in v1.5]`
+=== Zooming out calendar view : `zoomout` or `zo` `[Coming in v1.5]`
+
 Zooms out the calendar panel to show a wider calendar view  +
 Format: `zoomout` or `zo`
 
@@ -289,7 +293,8 @@ Examples:
 * `zo` +
 If the calendar panel is previously showing the Day View, it will now be showing the Week View.
 
-=== Find an appointment : `findappointment` or `fa` `[Coming in v2.0]`
+=== Finding an appointment : `findappointment` or `fa` `[Coming in v2.0]`
+
 Finds appointments with details containing any of the given keywords or part thereof. +
 Format: `findappointment KEYWORD...` or `fa KEYWORD...`
 
@@ -307,8 +312,9 @@ Returns any appointment that is scheduled on 12/12/2018
 * `findappointment Betsy Tim John` +
 Returns any appointment with `Betsy`, `Tim`, or `John`
 
-=== Edit an appointment : `editappointment` or `ea` `[Coming in v2.0]`
-Edit an appointment in the address book. +
+=== Editing an appointment : `editappointment` or `ea` `[Coming in v2.0]`
+
+Edits an appointment in the address book. +
 Format: `editappointment INDEX [n/NAME] [d/DATE] [st/STARTTIME] [et/ENDTIME] [l/LOCATION]`
 or `ea INDEX [n/NAME] [d/DATE] [st/STARTTIME] [et/ENDTIME] [l/LOCATION]`
 
@@ -328,8 +334,9 @@ Examples:
 `editappointment 1 d/25/12/2017 l/Parkway Parade` +
 Edits the date and location of the first appointment with Betsy in the listing to 25/12/2017 and Parkway Parade respectively.
 
-=== Configure calendar theme : `configcalendar` or `cc` `[Coming in v2.0]`
-Configure the calendar view. +
+=== Configuring calendar theme : `configcalendar` or `cc` `[Coming in v2.0]`
+
+Configures the calendar view. +
 Format: `configcalendar s/STYLE` or `cc s/STYLE`
 
 ****
@@ -440,8 +447,8 @@ e.g.`select 2`
 * *History* : `history`
 * *Add Appointment* : `addappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` +
 e.g. `addappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate`
-* *Remove Appointment* : `rmappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` +
-e.g. `rmappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate`
+* *Delete Appointment* : `deleteappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` +
+e.g. `deleteappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate`
 * *Zoom In* : `zoomin`
 * *Zoom Out* : `zoomout`
 * *Find Appointment*: `findappointment KEYWORD...` +

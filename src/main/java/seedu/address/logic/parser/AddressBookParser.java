@@ -10,6 +10,7 @@ import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.commands.DeleteBeforeCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -24,6 +25,8 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.ZoomInCommand;
+import seedu.address.logic.commands.ZoomOutCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -77,12 +80,6 @@ public class AddressBookParser {
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
 
-        case DeleteBeforeCommand.COMMAND_WORD:
-            return new DeleteBeforeCommandParser().parse(arguments);
-
-        case DeleteBeforeCommand.COMMAND_ALIAS:
-            return new DeleteBeforeCommandParser().parse(arguments);
-
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
@@ -94,12 +91,14 @@ public class AddressBookParser {
 
         case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
-
+            
+        //@@author luca590
         case ImportContactsCommand.COMMAND_WORD: //import contacts from csv
             return new ImportContactsCommandParser().parse(arguments);
 
         case ImportContactsCommand.COMMAND_ALIAS:
             return new ImportContactsCommandParser().parse(arguments);
+        //@@author
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
@@ -142,18 +141,47 @@ public class AddressBookParser {
 
         case EmailCommand.COMMAND_ALIAS:
             return new EmailCommandParser().parse(arguments);
+        
+        //@@author luca590
+        case ExportContactsCommand.COMMAND_WORD: //export contacts from csv
+            return new ExportContactsCommandParser().parse(arguments);
+
+        case ExportContactsCommand.COMMAND_ALIAS:
+            return new ExportContactsCommandParser().parse(arguments);
+        //@@author
+            
+        //@@author jlks96
+        case DeleteBeforeCommand.COMMAND_WORD:
+            return new DeleteBeforeCommandParser().parse(arguments);
+
+        case DeleteBeforeCommand.COMMAND_ALIAS:
+            return new DeleteBeforeCommandParser().parse(arguments);
 
         case AddAppointmentCommand.COMMAND_WORD:
             return new AddAppointmentCommandParser().parse(arguments);
 
         case AddAppointmentCommand.COMMAND_ALIAS:
             return new AddAppointmentCommandParser().parse(arguments);
+            
+        case DeleteAppointmentCommand.COMMAND_WORD:
+            return new DeleteAppointmentCommandParser().parse(arguments);
 
-        case ExportContactsCommand.COMMAND_WORD: //export contacts from csv
-            return new ExportContactsCommandParser().parse(arguments);
+        case DeleteAppointmentCommand.COMMAND_ALIAS:
+            return new DeleteAppointmentCommandParser().parse(arguments);
 
-        case ExportContactsCommand.COMMAND_ALIAS:
-            return new ExportContactsCommandParser().parse(arguments);
+        case ZoomInCommand.COMMAND_WORD:
+            return new ZoomInCommand();
+
+        case ZoomInCommand.COMMAND_ALIAS:
+            return new ZoomInCommand();
+
+        case ZoomOutCommand.COMMAND_WORD:
+            return new ZoomOutCommand();
+
+        case ZoomOutCommand.COMMAND_ALIAS:
+            return new ZoomOutCommand();
+        //@@author
+
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }

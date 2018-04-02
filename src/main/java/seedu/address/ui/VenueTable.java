@@ -11,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 
+//@@author jingyinno
 /**
  * A ui for the info panal that is displayed when the vacant command is called.
  */

@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.alias.Alias;
 
+//@@author jingyinno
 /**
  * JAXB-friendly adapted version of the Alias.
  */

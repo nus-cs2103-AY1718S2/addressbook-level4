@@ -42,4 +42,11 @@ public class ShowDashboardCommand extends Command {
         EventsCenter.getInstance().post(new ShowStudentDashboardEvent(lastShownList.get(targetIndex.getZeroBased())));
         return new CommandResult(String.format(MESSAGE_SELECT_STUDENT_DASHBOARD_SUCCESS, targetIndex.getOneBased()));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ShowDashboardCommand // instanceof handles null
+                && ((ShowDashboardCommand) other).targetIndex == this.targetIndex);
+    }
 }

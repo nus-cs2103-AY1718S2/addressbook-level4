@@ -76,7 +76,6 @@ public class CheckTaskCommand extends UndoableCommand {
         } else {
             return new CommandResult(MESSAGE_TASK_ALREADY_COMPLETED);
         }
-
     }
 
     @Override
@@ -137,13 +136,22 @@ public class CheckTaskCommand extends UndoableCommand {
         Student student = lastShownList.get(targetStudentIndex.getZeroBased());
         UniqueMilestoneList milestoneList = student.getDashboard().getMilestoneList();
         if (targetMilestoneIndex.getZeroBased() < 0 || targetMilestoneIndex.getZeroBased() >= milestoneList.size()) {
-            throw new IllegalValueException((MESSAGE_INVALID_MILESTONE_DISPLAYED_INDEX));
+            throw new IllegalValueException(MESSAGE_INVALID_MILESTONE_DISPLAYED_INDEX);
         }
 
         /*  Check if task index is valid */
         UniqueTaskList taskList = milestoneList.get(targetMilestoneIndex).getTaskList();
         if (targetTaskIndex.getZeroBased() < 0 || targetTaskIndex.getZeroBased() >= taskList.size()) {
-            throw new IllegalValueException((MESSAGE_INVALID_TASK_DISPLAYED_INDEX));
+            throw new IllegalValueException(MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CheckTaskCommand // instanceof handles null
+                && ((CheckTaskCommand) other).targetStudentIndex == this.targetStudentIndex
+                && ((CheckTaskCommand) other).targetMilestoneIndex == this.targetMilestoneIndex
+                && ((CheckTaskCommand) other).targetTaskIndex == this.targetTaskIndex);
     }
 }

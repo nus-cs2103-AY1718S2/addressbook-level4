@@ -69,14 +69,11 @@ public class DeleteMilestoneCommand extends UndoableCommand {
     protected void preprocessUndoableCommand() throws CommandException {
         try {
             setTargetObjects();
-        } catch (IllegalValueException ive) {
-            throw new CommandException(ive.getMessage());
-        }
-
-        try {
             editedStudent = createEditedStudent(targetStudent, targetMilestone);
         } catch (MilestoneNotFoundException e) {
             throw new AssertionError("Milestone cannot be missing");
+        } catch (IllegalValueException e) {
+            throw new CommandException(e.getMessage());
         }
     }
 
@@ -111,5 +108,13 @@ public class DeleteMilestoneCommand extends UndoableCommand {
         }
 
         targetMilestone = milestoneList.get(milestoneIndex);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DeleteMilestoneCommand // instanceof handles null
+                && ((DeleteMilestoneCommand) other).studentIndex == this.studentIndex
+                && ((DeleteMilestoneCommand) other).milestoneIndex == this.milestoneIndex);
     }
 }

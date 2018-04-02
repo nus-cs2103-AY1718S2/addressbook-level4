@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.dashboard.Milestone;
@@ -36,25 +37,25 @@ public class AddMilestoneCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_MILESTONE = "Milestone already exists in the student's Dashboard";
     public static final String MESSAGE_SUCCESS = "Milestone added to Student's Dashboard: %1$s";
 
-    private final Index index;
+    private final Index studentIndex;
     private final Milestone newMilestone;
 
-    private Student studentToEdit;
+    private Student targetStudent;
     private Student editedStudent;
 
     public AddMilestoneCommand(Index index, Milestone newMilestone) {
         requireAllNonNull(index, newMilestone);
 
         this.newMilestone = newMilestone;
-        this.index = index;
+        this.studentIndex = index;
     }
 
     @Override
     public CommandResult executeUndoableCommand() {
-        requireAllNonNull(studentToEdit, editedStudent);
+        requireAllNonNull(targetStudent, editedStudent);
 
         try {
-            model.updateStudent(studentToEdit, editedStudent);
+            model.updateStudent(targetStudent, editedStudent);
         } catch (DuplicateStudentException e) {
             /* DuplicateStudentException caught will mean that the milestone list is the same as before */
             throw new AssertionError("New milestone cannot be missing");
@@ -67,18 +68,14 @@ public class AddMilestoneCommand extends UndoableCommand {
 
     @Override
     public void preprocessUndoableCommand() throws CommandException {
-        List<Student> lastShownList = model.getFilteredStudentList();
-
-        if (index.getZeroBased() >= lastShownList.size() || index.getZeroBased() < 0) {
-            throw new CommandException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
-        }
-
-        studentToEdit = lastShownList.get(index.getZeroBased());
 
         try {
-            editedStudent = createEditedStudent(studentToEdit, newMilestone);
+            setTargetStudent();
+            editedStudent = createEditedStudent(targetStudent, newMilestone);
         } catch (DuplicateMilestoneException e) {
             throw new CommandException(MESSAGE_DUPLICATE_MILESTONE);
+        } catch (IllegalValueException e) {
+            throw new CommandException(e.getMessage());
         }
     }
 
@@ -92,8 +89,25 @@ public class AddMilestoneCommand extends UndoableCommand {
         return new StudentBuilder(studentToEdit).withNewMilestone(newMilestone).build();
     }
 
+    /**
+     * Sets the {@code targetStudent} object
+     * @throws IllegalValueException if the studentIndex is invalid
+     */
+    private void setTargetStudent() throws IllegalValueException {
+        List<Student> lastShownList = model.getFilteredStudentList();
+
+        if (studentIndex.getZeroBased() >= lastShownList.size() || studentIndex.getZeroBased() < 0) {
+            throw new IllegalValueException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+        }
+
+        targetStudent = lastShownList.get(studentIndex.getZeroBased());
+    }
+
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddMilestoneCommand // instanceof handles null
+                && ((AddMilestoneCommand) other).studentIndex == this.studentIndex
+                && ((AddMilestoneCommand) other).newMilestone == this.newMilestone);
     }
 }

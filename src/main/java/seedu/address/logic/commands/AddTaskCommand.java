@@ -47,7 +47,7 @@ public class AddTaskCommand extends UndoableCommand {
     private final Index milestoneIndex;
     private final Task newTask;
 
-    private Student studentToEdit;
+    private Student targetStudent;
     private Student editedStudent;
 
     public AddTaskCommand(Index studentIndex, Index milestoneIndex, Task newTask) {
@@ -60,10 +60,10 @@ public class AddTaskCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() {
-        requireAllNonNull(studentToEdit, editedStudent);
+        requireAllNonNull(targetStudent, editedStudent);
 
         try {
-            model.updateStudent(studentToEdit, editedStudent);
+            model.updateStudent(targetStudent, editedStudent);
         } catch (DuplicateStudentException e) {
             /* DuplicateStudentException caught will mean that the task list is the same as before */
             throw new AssertionError("New task cannot be missing");
@@ -82,15 +82,15 @@ public class AddTaskCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
         }
 
-        studentToEdit = lastShownList.get(studentIndex.getZeroBased());
-        UniqueMilestoneList milestoneList = studentToEdit.getDashboard().getMilestoneList();
+        targetStudent = lastShownList.get(studentIndex.getZeroBased());
+        UniqueMilestoneList milestoneList = targetStudent.getDashboard().getMilestoneList();
 
         if (milestoneIndex.getZeroBased() >= milestoneList.size() || milestoneIndex.getZeroBased() < 0) {
             throw new CommandException(MESSAGE_INVALID_MILESTONE_DISPLAYED_INDEX);
         }
 
         try {
-            editedStudent = createEditedStudent(studentToEdit, newTask, milestoneIndex);
+            editedStudent = createEditedStudent(targetStudent, newTask, milestoneIndex);
         } catch (DuplicateTaskException e) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         } catch (DuplicateMilestoneException e) {
@@ -111,7 +111,11 @@ public class AddTaskCommand extends UndoableCommand {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddTaskCommand // instanceof handles null
+                && ((AddTaskCommand) other).studentIndex == this.studentIndex
+                && ((AddTaskCommand) other).milestoneIndex  == this.milestoneIndex
+                && ((AddTaskCommand) other).newTask == this.newTask);
     }
 }

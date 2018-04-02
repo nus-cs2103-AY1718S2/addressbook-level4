@@ -8,6 +8,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 
+//@@author jingyinno
 /**
  * A utility class containing a list of {@code Alias} objects to be used in tests.
  */

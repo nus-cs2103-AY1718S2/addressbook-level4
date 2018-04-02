@@ -89,11 +89,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author jingyinno
     @Override
     public synchronized void addAlias(Alias alias) throws DuplicateAliasException {
         addressBook.addAlias(alias);
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public void updatePerson(Person target, Person editedPerson)
@@ -110,11 +112,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author jingyinno
     @Override
     public void removeAlias(String toRemove) throws AliasNotFoundException {
         addressBook.removeAlias(toRemove);
         indicateAddressBookChanged();
     }
+    //@@author
 
     //@@author Caijun7
     @Override

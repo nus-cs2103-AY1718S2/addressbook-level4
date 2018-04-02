@@ -14,6 +14,7 @@ import seedu.address.model.building.Building;
 import seedu.address.model.building.exceptions.BuildingNotFoundException;
 import seedu.address.model.building.exceptions.CorruptedVenueInformationException;
 
+//@@author jingyinno
 /**
  * Retrieves all vacant rooms in a given building
  */

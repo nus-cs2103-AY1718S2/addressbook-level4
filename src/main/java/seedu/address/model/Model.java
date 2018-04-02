@@ -37,8 +37,10 @@ public interface Model {
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
 
+    //@@author jingyinno
     /** Adds the given alias */
     void addAlias(Alias alias) throws DuplicateAliasException;
+    //@@author
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -80,10 +82,12 @@ public interface Model {
      */
     void updatePassword(byte[] password);
 
+    //@@author jingyinno
     /**
      * Removes alias given the alias string to remove.
      */
     void removeAlias(String toRemove) throws AliasNotFoundException;
+    //@@author
 
     //@@author Caijun7
     /** Returns rooms for the given building */

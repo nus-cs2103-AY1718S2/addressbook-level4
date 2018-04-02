@@ -52,6 +52,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.alias.Alias;
 import seedu.address.testutil.AliasBuilder;
 
+//@@author jingyinno
 public class AliasCommandParserTest {
     private AliasCommandParser parser = new AliasCommandParser();
 

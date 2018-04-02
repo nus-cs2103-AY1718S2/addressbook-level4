@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import seedu.address.logic.commands.AliasCommand;
 import seedu.address.model.alias.Alias;
 
+//@@author jingyinno
 /**
  * A utility class for Alias.
  */

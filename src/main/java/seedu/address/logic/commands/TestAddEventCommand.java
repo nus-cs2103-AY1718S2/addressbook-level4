@@ -262,4 +262,15 @@ public class TestAddEventCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof TestAddEventCommand // instanceof handles nulls
+                && targetIndex.equals(((TestAddEventCommand) other).targetIndex)
+                && title.equals(((TestAddEventCommand) other).title)
+                && location.equals(((TestAddEventCommand) other).location)
+                && startTime.equals(((TestAddEventCommand) other).startTime)
+                && endTime.equals(((TestAddEventCommand) other).endTime)
+                && description.equals(((TestAddEventCommand) other).description));
+    }
 }

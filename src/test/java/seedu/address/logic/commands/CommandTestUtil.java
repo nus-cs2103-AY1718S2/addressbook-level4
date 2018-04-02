@@ -4,11 +4,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ENDTIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTTIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +47,11 @@ public class CommandTestUtil {
     public static final String VALID_RATING_BOB = "5";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_EVENT_TITLE = "Test Event";
+    public static final String VALID_EVENT_LOCATION = "NUS";
+    public static final String VALID_EVENT_STARTTIME = "2018-05-15T10:00:00";
+    public static final String VALID_EVENT_ENDTIME = "2018-05-15T12:00:00";
+    public static final String VALID_EVENT_DESCRIPTION = "A test event.";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -55,12 +65,20 @@ public class CommandTestUtil {
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
+    public static final String EVENT_TITLE = " " + PREFIX_TITLE + VALID_EVENT_TITLE;
+    public static final String EVENT_LOCATION = " " + PREFIX_LOCATION + VALID_EVENT_LOCATION;
+    public static final String EVENT_STARTTIME = " " + PREFIX_STARTTIME + VALID_EVENT_STARTTIME;
+    public static final String EVENT_ENDTIME = " " + PREFIX_ENDTIME + VALID_EVENT_ENDTIME;
+    public static final String EVENT_DESCRIPTION = " " + PREFIX_DESCCRIPTION + VALID_EVENT_DESCRIPTION;
+
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_THEME_NAME = " " + "iridescent"; //invalid theme name
+    public static final String INVALID_EVENT_STARTTIME = " " + PREFIX_STARTTIME + "2018-04-09T08:00";
+    public static final String INVALID_EVENT_ENDTIME = " " + PREFIX_ENDTIME + "2018-04-09T10";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

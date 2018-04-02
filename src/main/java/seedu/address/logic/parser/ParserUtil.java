@@ -5,6 +5,7 @@ import static seedu.address.logic.commands.appointment.DateCommand.DATE_VALIDATI
 import static seedu.address.logic.commands.appointment.DateCommand.MESSAGE_DATE_CONSTRAINTS;
 import static seedu.address.logic.commands.appointment.MonthCommand.MESSAGE_YEAR_MONTH_CONSTRAINTS;
 import static seedu.address.logic.commands.appointment.MonthCommand.YEAR_MONTH_VALIDATION_REGEX;
+import static seedu.address.logic.commands.appointment.WeekCommand.MESSAGE_WEEK_CONSTRAINTS;
 import static seedu.address.logic.commands.appointment.WeekCommand.WEEK_VALIDATION_REGEX;
 import static seedu.address.logic.commands.appointment.YearCommand.MESSAGE_YEAR_CONSTRAINTS;
 import static seedu.address.logic.commands.appointment.YearCommand.YEAR_VALIDATION_REGEX;
@@ -500,7 +501,7 @@ public class ParserUtil {
     public static Year parseYearOfWeek(String args) throws IllegalValueException {
         String trimmedArgs = args.trim();
         if (!trimmedArgs.matches(WEEK_VALIDATION_REGEX)) {
-            throw new IllegalValueException(MESSAGE_YEAR_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_WEEK_CONSTRAINTS);
         }
         if (trimmedArgs.length() == 0) {
             return null;

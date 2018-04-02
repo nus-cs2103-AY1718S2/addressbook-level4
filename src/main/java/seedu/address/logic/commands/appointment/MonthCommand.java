@@ -42,6 +42,8 @@ public class MonthCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof MonthCommand // instanceof handles nulls
-                && yearMonth.equals(((MonthCommand) other).yearMonth));
+                && ((yearMonth == null && ((MonthCommand) other).yearMonth == null)
+                || (yearMonth != null && ((MonthCommand) other).yearMonth != null
+                && yearMonth.equals(((MonthCommand) other).yearMonth))));
     }
 }

@@ -3,6 +3,7 @@ package seedu.address.logic.parser.appointment;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.appointment.MonthCommand;
 import seedu.address.logic.commands.appointment.YearCommand;
+import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -15,7 +16,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 /**
  * Parses input arguments and creates a new YearCommand object
  */
-public class YearCommandParser {
+public class YearCommandParser implements Parser<YearCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the YearCommand

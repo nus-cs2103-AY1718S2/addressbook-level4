@@ -42,6 +42,7 @@ public class YearCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof YearCommand // instanceof handles nulls
-                && year.equals(((YearCommand) other).year));
+                && ((year == null && ((YearCommand) other).year == null)
+                || (year != null && ((YearCommand) other).year != null && year.equals(((YearCommand) other).year))));
     }
 }

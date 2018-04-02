@@ -18,9 +18,9 @@ public class WeekCommand extends Command {
             + "Parameters: YEAR WEEK (optional, but must be in format YYYY WW if have)\n"
             + "Example: " + COMMAND_WORD + " 2018";
 
-    public static final String MESSAGE_SUCCESS = "View week: %1$s of %l$s";
+    public static final String MESSAGE_SUCCESS = "View week: %1$s";
     public static final String WEEK_VALIDATION_REGEX = "^$|^\\d{4}\\s\\d{2}";
-    public static final String MESSAGE_WEEK_CONSTRAINTS = "week needs to be null or in format YYYY DD";
+    public static final String MESSAGE_WEEK_CONSTRAINTS = "Week needs to be null or in format YYYY DD";
 
     private final Year year;
     private final int week;
@@ -36,15 +36,15 @@ public class WeekCommand extends Command {
     @Override
     public CommandResult execute() {
         EventsCenter.getInstance().post(new ShowWeekRequestEvent(year, week));
-
-        return new CommandResult(String.format(MESSAGE_SUCCESS, week, year));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, week + " " + year));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof YearCommand // instanceof handles nulls
-                && year.equals(((WeekCommand) other).year)
-                && week == (((WeekCommand) other).week));
+                || (other instanceof WeekCommand // instanceof handles nulls
+                && ((year == null && ((WeekCommand) other).year == null)
+                || (year != null && ((WeekCommand) other).year != null && year.equals(((WeekCommand) other).year))
+                && week == (((WeekCommand) other).week)));
     }
 }

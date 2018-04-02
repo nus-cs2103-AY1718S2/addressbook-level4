@@ -6,6 +6,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 //@@author trafalgarandre
 /**
@@ -42,6 +43,8 @@ public class DateCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DateCommand // instanceof handles nulls
-                && date.equals(((DateCommand) other).date));
+                && ((date == null && ((DateCommand) other).date == null)
+                || (date != null && ((DateCommand) other).date != null && date.equals(((DateCommand) other).date))));
+
     }
 }

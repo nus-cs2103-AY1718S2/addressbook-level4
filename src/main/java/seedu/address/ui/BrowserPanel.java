@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -34,6 +35,8 @@ public class BrowserPanel extends UiPart<Region> {
             "https://www.google.com.sg/maps/dir/Kent+Ridge+MRT+Station/";
 
     private static final String FXML = "BrowserPanel.fxml";
+
+    public static final String HQ_ADDRESS = "Kent Ridge MRT";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -91,7 +94,6 @@ public class BrowserPanel extends UiPart<Region> {
      */
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
-        additionalInfo.setText("Estimated Required Time for Deliveries: " + FilterCommand.getStringDuration());
     }
 
     /**
@@ -113,7 +115,16 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        String destination = event.getNewSelection().person.getAddress().toString();
+
         GetDistance distance = new GetDistance();
+        try {
+            Double duration = distance.getTime(HQ_ADDRESS, destination);
+            additionalInfo.setText("Estimated Required Time for Deliveries: "
+                    + duration + "mins");
+        } catch (Exception e) {
+            additionalInfo.setText("This person address cannot be found.");
+        }
         loadPersonDirection(event.getNewSelection().person);
     }
 
@@ -125,6 +136,11 @@ public class BrowserPanel extends UiPart<Region> {
             url.append(address);
             url.append("/");
         }
+
+        List<String> temp = event.sortedList;
+        temp.add(0, HQ_ADDRESS);
+        additionalInfo.setText("Estimated Required Time for Deliveries: "
+                + FilterCommand.getDuration(event.sortedList));
         loadPage(url.toString());
     }
 
@@ -142,6 +158,8 @@ public class BrowserPanel extends UiPart<Region> {
             url.append(address);
             url.append("/");
         }
+        additionalInfo.setText("Estimated Required Time for Deliveries: "
+                + FilterCommand.getDuration(event.sortedList));
         loadPage(url.toString());
     }
 }

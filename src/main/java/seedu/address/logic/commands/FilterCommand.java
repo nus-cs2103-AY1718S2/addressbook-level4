@@ -80,7 +80,7 @@ public class FilterCommand extends Command {
                 && this.predicate.equals(((FilterCommand) other).predicate)); // state check
     }
 
-    public String getDuration(List<String> route) {
+    public static String getDuration(List<String> route) {
         Double duration;
         GetDistance distance = new GetDistance();
         Double totalDuration = 0.0;

@@ -51,15 +51,6 @@
         <tagged>fragile</tagged>
         <tagged>priority</tagged>
     </persons>
-    <persons>
-        <name>Andy</name>
-        <phone>93354671</phone>
-        <email>ad@nus.edu.sg</email>
-        <address>Meow Meow</address>
-        <date>2018-03-29</date>
-        <tagged>fragile</tagged>
-        <tagged>priority</tagged>
-    </persons>
     <tags>friend</tags>
     <tags>enemy</tags>
     <tags>fragile</tags>

@@ -185,7 +185,8 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> timetableUrl} into an {@code Optional<Timetable>} if {@code timetableUrl} is present.
+     * Parses a {@code Optional<String> timetableUrl} into an {@code Optional<Timetable>}
+     * if {@code timetableUrl} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Timetable> parseTimetable(Optional<String> timetableUrl) throws IllegalValueException {

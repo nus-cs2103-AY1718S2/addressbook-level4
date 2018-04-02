@@ -37,7 +37,7 @@ public class TimetableData {
                 timetableWeeks[EVEN_WEEK_INDEX].addLessonToWeek(lessonToAdd);
             } else if (lessonToAdd.getWeekType().equalsIgnoreCase(ODD_WEEK_IDENTIFIER)) {
                 timetableWeeks[ODD_WEEK_INDEX].addLessonToWeek(lessonToAdd);
-            } else if (lessonToAdd.getWeekType().equalsIgnoreCase(EVERY_WEEK_IDENTIFIER)){
+            } else if (lessonToAdd.getWeekType().equalsIgnoreCase(EVERY_WEEK_IDENTIFIER)) {
                 timetableWeeks[EVEN_WEEK_INDEX].addLessonToWeek(lessonToAdd);
                 timetableWeeks[ODD_WEEK_INDEX].addLessonToWeek(lessonToAdd);
             } else {

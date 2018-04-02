@@ -1,8 +1,8 @@
 package seedu.address.model.person.timetable;
 
-import seedu.address.commons.util.timetable.Lesson;
-
 import static java.util.Objects.requireNonNull;
+
+import seedu.address.commons.util.timetable.Lesson;
 
 /**
  * Represents a slot in the timetable

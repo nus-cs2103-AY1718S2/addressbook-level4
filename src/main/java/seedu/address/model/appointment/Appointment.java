@@ -13,6 +13,7 @@ import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
+//@@author wynonaK
 /**
  * Represents an Appointment.
  * Guarantees: details are present and not null, field values are validated.

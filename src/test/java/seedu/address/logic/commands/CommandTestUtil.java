@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -121,6 +122,9 @@ public class CommandTestUtil {
     public static final String VALID_STATUS_DONE = "done";
     public static final String VALID_STATUS_UNDONE = "undone";
     public static final String INVALID_STATUS = "invalid status";
+
+    public static final String CONTENT_DESC = " " + PREFIX_CONTENT + VALID_CONTENT;
+    public static final String INVALID_CONTENT_DESC = " " + PREFIX_CONTENT + INVALID_CONTENT;
 
     public static final String INFORMATION_A = "Group A";
     public static final String VALID_INFORMATION = "GROUP A";

@@ -33,6 +33,10 @@ public class RecordListTest {
         temp.remove(0);
         temp.add(new Record("01/04/2018", "b", "c", "d"));
         assertTrue(RecordList.isValidRecordList(new RecordList(temp))); // one character
+        try {
+            assertTrue(RecordList.isValidRecordList(new RecordList("01/04/2018 s/a i/b t/c"))); // one character
+        } catch (ParseException pe) {
+        }
 
         // invalid recordList
         temp.remove(0);

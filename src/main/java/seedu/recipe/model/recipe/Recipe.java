@@ -101,7 +101,6 @@ public class Recipe {
     public String getRecipeInHtmlFormat() {
         URL recipeCss = MainApp.class.getResource(FXML_FILE_FOLDER + "Recipe.css");
         URL bootstrapCss = MainApp.class.getResource(FXML_FILE_FOLDER + "bootstrap.css");
-        String testURL = "file:/Users/administrator/Desktop/NotePad.jpg";
 
         return "<html>"
                 + "<head>"
@@ -130,7 +129,7 @@ public class Recipe {
                 + "</div>"
                 + "</div>"
                 + "<div class='col-sm-6'>"
-                + "<img src='" + image.getUsablePath() + "' />"
+        //       + "<img src='" + image.getUsablePath() + "' />"
                 + "</div>"
                 + "<div class='col-sm-12'>"
                 + "<div class='col-sm-12'>"

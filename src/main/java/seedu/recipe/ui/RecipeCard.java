@@ -61,7 +61,13 @@ public class RecipeCard extends UiPart<Region> {
     }
 
     //@@author RyanAngJY
+    /**
+     * Sets the image for {@code imageView}.
+     */
     private void setImageView(ImageView imageView) {
+        if (recipe.getImage().toString().equals("-")) {
+            return;
+        }
         try {
             FileInputStream input = new FileInputStream(recipe.getImage().toString());
             Image image = new Image(input);
@@ -70,6 +76,7 @@ public class RecipeCard extends UiPart<Region> {
             System.out.println("Image cannot be set");
         }
     }
+
     /**
      * Returns the color style for {@code tagName}'s label.
      */

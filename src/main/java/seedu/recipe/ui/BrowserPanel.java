@@ -75,8 +75,6 @@ public class BrowserPanel extends UiPart<Region> {
      * Loads the text recipe onto the browser
      */
     private void loadLocalRecipe(Recipe recipe) {
-        String testURL = "file:/Users/administrator/Desktop/NotePad.jpg";
-        // browser.getEngine().loadContent("<img src='" + testURL + "' width=300px/>" );
         browser.getEngine().loadContent(recipe.getRecipeInHtmlFormat());
     }
     //@@author

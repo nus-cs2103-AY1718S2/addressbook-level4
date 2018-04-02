@@ -7,20 +7,20 @@ import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.RecordCommand;
+import seedu.address.logic.commands.RemoveRecordCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Parses input arguments and creates a new RecordCommand object
  */
-public class RecordCommandParser implements Parser<RecordCommand> {
+public class RemoveRecordCommandParser implements Parser<RemoveRecordCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the RecordCommand
-     * and returns an RecordCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the RemoveRecordCommand
+     * and returns an RemoveRecordCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public RecordCommand parse(String args) throws ParseException {
+    public RemoveRecordCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_INDEX);
 
@@ -30,21 +30,21 @@ public class RecordCommandParser implements Parser<RecordCommand> {
         try {
             patientIndex = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveRecordCommand.MESSAGE_USAGE));
         }
 
         if (!arePrefixesPresent(argMultimap, PREFIX_INDEX)
                 || argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveRecordCommand.MESSAGE_USAGE));
         }
 
         try {
             recordIndex = ParserUtil.parseIndex((argMultimap.getValue(PREFIX_INDEX)).get());
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveRecordCommand.MESSAGE_USAGE));
         }
 
-        return new RecordCommand(patientIndex, recordIndex);
+        return new RemoveRecordCommand(patientIndex, recordIndex);
     }
 
     /**

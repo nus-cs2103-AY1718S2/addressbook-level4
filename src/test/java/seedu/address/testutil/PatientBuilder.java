@@ -1,5 +1,7 @@
 package seedu.address.testutil;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,11 +33,8 @@ public class PatientBuilder {
     public static final String DEFAULT_DOB = "11/11/1991";
     public static final String DEFAULT_BLOODTYPE = "A";
     public static final String DEFAULT_REMARK = "";
-    public static final String DEFAULT_DATE = "";
-    public static final String DEFAULT_SYMPTOM = "";
-    public static final String DEFAULT_ILLNESS = "";
-    public static final String DEFAULT_TREATMENT = "";
-    public static final String DEFAULT_RECORDLIST = "1 in/1 d/ s/ i/ t/\n";
+    public static final String DEFAULT_RECORDLIST =
+            new SimpleDateFormat("dd/MM/yyyy").format(new Date()) + " s/ i/ t/\n";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_APPOINTMENTS = "";
 

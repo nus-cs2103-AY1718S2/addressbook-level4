@@ -1,7 +1,6 @@
 package seedu.address.model.patient;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -36,12 +35,18 @@ public class RecordList {
     }
 
     public RecordList(String string) throws ParseException {
-        this.recordList = new ArrayList<Record>();
-        String[] lines = string.split("\\r?\\n");
-        for (int i = 0; i < lines.length; i++) {
-            recordList.add(new Record(lines[i]));
+        if (string.isEmpty()) {
+            this.recordList = new ArrayList<Record>();
+            recordList.add(new Record());
+            this.numRecord = 1;
+        } else {
+            this.recordList = new ArrayList<Record>();
+            String[] lines = string.split("\\r?\\n");
+            for (int i = 0; i < lines.length; i++) {
+                recordList.add(new Record(lines[i]));
+            }
+            this.numRecord = lines.length;
         }
-        this.numRecord = lines.length;
     }
 
     public int getNumberOfRecords() {
@@ -97,15 +102,12 @@ public class RecordList {
     }
 
     /**
-     * Returns the string that is equivalent to the command that created this class.
+     * Returns the string of this class.
      */
     public String toCommandString() {
         final StringBuilder builder = new StringBuilder();
         for (int i = 0; i < numRecord; i++) {
-            builder.append("1 ") //as the command will not be executed, we will be placing a dummy patient index
-                    .append(PREFIX_INDEX)
-                    .append((i + 1) + " ")
-                    .append(recordList.get(i).toCommandStringRecordList())
+            builder.append(recordList.get(i).toCommandStringRecordList())
                     .append("\n");
         }
         return builder.toString();

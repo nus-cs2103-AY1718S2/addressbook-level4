@@ -11,7 +11,7 @@
         <dob>11/11/1991</dob>
         <bloodType>A</bloodType>
         <remark></remark>
-        <recordList>1 in/1 d/ s/ i/ t/</recordList>
+        <recordList></recordList>
         <tagged>friends</tagged>
     </patients>
     <patients>
@@ -23,7 +23,7 @@
         <dob>10/10/1990</dob>
         <bloodType>B-</bloodType>
         <remark></remark>
-        <recordList>1 in/1 d/ s/ i/ t/</recordList>
+        <recordList></recordList>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </patients>
@@ -36,7 +36,7 @@
         <bloodType>A+</bloodType>
         <address>wall street</address>
         <remark></remark>
-        <recordList>1 in/1 d/ s/ i/ t/</recordList>
+        <recordList></recordList>
         <tagged>friends</tagged>
     </patients>
     <patients>
@@ -48,7 +48,7 @@
         <dob>08/08/1988</dob>
         <bloodType>B+</bloodType>
         <remark></remark>
-        <recordList>1 in/1 d/ s/ i/ t/</recordList>
+        <recordList></recordList>
         <tagged>friends</tagged>
     </patients>
     <patients>
@@ -60,7 +60,7 @@
         <dob>07/07/1987</dob>
         <bloodType>O</bloodType>
         <remark></remark>
-        <recordList>1 in/1 d/ s/ i/ t/</recordList>
+        <recordList></recordList>
         <tagged>friends</tagged>
     </patients>
     <patients>
@@ -72,7 +72,7 @@
         <dob>06/06/1986</dob>
         <bloodType>O+</bloodType>
         <remark></remark>
-        <recordList>1 in/1 d/ s/ i/ t/</recordList>
+        <recordList></recordList>
         <tagged>friends</tagged>
     </patients>
     <patients>
@@ -84,9 +84,11 @@
         <dob>11/11/1991</dob>
         <bloodType>B+</bloodType>
         <remark>Comes for checkup every Tuesday</remark>
-        <recordList>1 in/1 d/ s/ i/ t/</recordList>
+        <recordList></recordList>
         <tagged>friends</tagged>
     </patients>
     <tags>friends</tags>
     <tags>owesMoney</tags>
+    <queue>2</queue>
+    <queue>4</queue>
 </imdb>

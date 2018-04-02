@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
+import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -52,7 +53,8 @@ public interface Model {
 
     /** Adds patient into visiting queue
      * @throws NullPointerException if {@code Patient} is null.*/
-    void addPatientToQueue(Patient patient) throws DuplicatePatientException;
+    Patient addPatientToQueue(NameContainsKeywordsPredicate predicate) throws DuplicatePatientException,
+            PatientNotFoundException;
 
     /** Remove a patient from the visiting queue*/
     Patient removePatientFromQueue() throws PatientNotFoundException;

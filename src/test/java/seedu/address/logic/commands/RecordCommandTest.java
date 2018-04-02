@@ -3,8 +3,6 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_RECORD_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_RECORD_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
@@ -14,6 +12,9 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -22,6 +23,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.record.RecordManager;
 import seedu.address.model.Imdb;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -40,15 +42,15 @@ public class RecordCommandTest {
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new RecordCommand(null, 0, null);
+        new RecordCommand(null, null);
     }
 
     @Test
     public void execute_addRecordUnfilteredList_success() throws Exception {
         Patient toEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient editedPatient = new PatientBuilder(toEdit).withRecordList("1 in/1 d/ s/ i/ t/").build();
+        Patient editedPatient = new PatientBuilder(toEdit).withRecordList("01/04/2018 s/ i/ t/").build();
         RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0,
-                new Record("", "", "", ""));
+                new Record("01/04/2018", "", "", ""));
 
         String expectedMessage = String.format(RecordCommand.MESSAGE_EDIT_RECORD_SUCCESS, editedPatient);
 
@@ -61,8 +63,8 @@ public class RecordCommandTest {
     @Test
     public void execute_deleteRecordUnfilteredList_success() throws Exception {
         Patient toEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient editedPatient = new PatientBuilder(toEdit).withRecordList("1 in/1 d/ s/ i/ t/").build();
-        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("", "", "", ""));
+        Patient editedPatient = new PatientBuilder(toEdit).withRecordList("01/04/2018 s/ i/ t/").build();
+        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("01/04/2018", "", "", ""));
 
         String expectedMessage = String.format(RecordCommand.MESSAGE_EDIT_RECORD_SUCCESS, editedPatient);
 
@@ -77,10 +79,10 @@ public class RecordCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         Patient patientInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient editedPatient = new PatientBuilder(patientInFilteredList).withRecordList("1 in/1 "
-                + "d/test s/test i/test t/test").build();
-        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("test", "test", "test", "test"));
-        RecordCommand undoCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("", "", "", ""));
+        Patient editedPatient = new PatientBuilder(patientInFilteredList)
+                .withRecordList("01/04/2018 s/test i/test t/test").build();
+        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0,
+                new Record("01/04/2018", "test", "test", "test"));
 
         String expectedMessage = String.format(RecordCommand.MESSAGE_EDIT_RECORD_SUCCESS, editedPatient);
 
@@ -88,13 +90,16 @@ public class RecordCommandTest {
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
 
         assertCommandSuccess(recordCommand, model, expectedMessage, expectedModel);
+        RecordCommand undoCommand = prepareCommand(INDEX_FIRST_PERSON, 0,
+                new Record(new SimpleDateFormat("dd/MM/yyyy").format(new Date()),
+                "", "", ""));
         undoCommand.execute();
     }
 
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        RecordCommand recordCommand = prepareCommand(outOfBoundIndex, 0, new Record("test", "test", "test", "test"));
+        RecordCommand recordCommand = prepareCommand(outOfBoundIndex, 0);
 
         assertCommandFailure(recordCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -110,7 +115,7 @@ public class RecordCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getImdb().getPersonList().size());
 
-        RecordCommand recordCommand = prepareCommand(outOfBoundIndex, 0, new Record("test", "test", "test", "test"));
+        RecordCommand recordCommand = prepareCommand(outOfBoundIndex, 0);
 
         assertCommandFailure(recordCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -121,8 +126,11 @@ public class RecordCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Patient patientToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("test", "test", "test", "test"));
-        RecordCommand toUndoCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("", "", "", ""));
+        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0,
+                new Record("01/04/2018", "test", "test", "test"));
+        RecordCommand toUndoCommand = prepareCommand(INDEX_FIRST_PERSON, 0,
+                new Record(new SimpleDateFormat("dd/MM/yyyy").format(new Date()),
+                "", "", ""));
         Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
 
         // edit -> first patient edited
@@ -146,7 +154,7 @@ public class RecordCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        RecordCommand recordCommand = prepareCommand(outOfBoundIndex, 0, new Record("test", "test", "test", "test"));
+        RecordCommand recordCommand = prepareCommand(outOfBoundIndex, 0);
 
         // execution failed -> recordCommand not pushed into undoRedoStack
         assertCommandFailure(recordCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -168,8 +176,10 @@ public class RecordCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("b", "b", "b", "b"));
-        RecordCommand toUndoCommand = prepareCommand(INDEX_SECOND_PERSON, 0, new Record("", "", "", ""));
+        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("01/04/2018", "b", "b", "b"));
+        RecordCommand toUndoCommand = prepareCommand(INDEX_SECOND_PERSON, 0,
+                new Record(new SimpleDateFormat("dd/MM/yyyy").format(new Date()),
+                "", "", ""));
         Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
@@ -192,10 +202,10 @@ public class RecordCommandTest {
 
     @Test
     public void equals() throws Exception {
-        final RecordCommand standardCommand = prepareCommand(INDEX_FIRST_PERSON, 1, new Record(VALID_RECORD_AMY));
+        final RecordCommand standardCommand = prepareCommand(INDEX_FIRST_PERSON, 1);
 
         // same values -> returns true
-        RecordCommand commandWithSameValues = prepareCommand(INDEX_FIRST_PERSON, 1, new Record(VALID_RECORD_AMY));
+        RecordCommand commandWithSameValues = prepareCommand(INDEX_FIRST_PERSON, 1);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -207,18 +217,28 @@ public class RecordCommandTest {
         // different types -> returns false
         assertFalse(standardCommand.equals(new ClearCommand()));
 
-        // different index -> returns false
-        assertFalse(standardCommand.equals(new RecordCommand(INDEX_SECOND_PERSON, 1, new Record(VALID_RECORD_AMY))));
+        // different patient index -> returns false
+        assertFalse(standardCommand.equals(new RecordCommand(INDEX_SECOND_PERSON, Index.fromOneBased(1))));
 
-        // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new RecordCommand(INDEX_FIRST_PERSON, 1, new Record(VALID_RECORD_BOB))));
+        // different record index -> returns false
+        assertFalse(standardCommand.equals(new RecordCommand(INDEX_FIRST_PERSON, Index.fromOneBased(5))));
+    }
+
+    /**
+     * Returns an {@code RecordCommand} with parameters {@code index} and {@code descriptor}
+     */
+    private RecordCommand prepareCommand(Index patientIndex, int recordIndex) {
+        RecordCommand recordCommand = new RecordCommand(patientIndex, Index.fromZeroBased(recordIndex));
+        recordCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return recordCommand;
     }
 
     /**
      * Returns an {@code RecordCommand} with parameters {@code index} and {@code descriptor}
      */
     private RecordCommand prepareCommand(Index patientIndex, int recordIndex, Record record) {
-        RecordCommand recordCommand = new RecordCommand(patientIndex, recordIndex, record);
+        RecordCommand recordCommand = new RecordCommand(patientIndex, Index.fromZeroBased(recordIndex), true);
+        RecordManager.authenticate(record.getDate(), record.getSymptom(), record.getIllness(), record.getTreatment());
         recordCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return recordCommand;
     }

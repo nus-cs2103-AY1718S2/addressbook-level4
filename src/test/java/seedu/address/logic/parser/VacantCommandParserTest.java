@@ -13,6 +13,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.VacantCommand;
 import seedu.address.model.building.Building;
 
+//@@author jingyinno
 public class VacantCommandParserTest {
     private VacantCommandParser parser = new VacantCommandParser();
 

@@ -37,8 +37,10 @@ public interface Model {
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
 
+    //@@author jingyinno
     /** Adds the given alias */
     void addAlias(Alias alias) throws DuplicateAliasException;
+    //@@author
 
     /** Returns rooms for the given building */
     ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
@@ -80,8 +82,10 @@ public interface Model {
      */
     void updatePassword(byte[] password);
 
+    //@@author jingyinno
     /**
      * Removes alias given the alias string to remove.
      */
     void removeAlias(String toRemove) throws AliasNotFoundException;
+    //@@author
 }

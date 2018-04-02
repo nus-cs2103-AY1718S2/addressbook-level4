@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.StackPane?>
 
 <!-- @@author jingyinno -->
-
 <StackPane fx:id="venuePlaceholder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <TableView fx:id="venueTable" stylesheets="@DarkTheme.css">

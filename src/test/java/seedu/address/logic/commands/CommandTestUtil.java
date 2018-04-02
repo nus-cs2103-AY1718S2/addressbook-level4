@@ -67,6 +67,7 @@ public class CommandTestUtil {
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
+    //@@author jingyinno
     public static final String VALID_ALIAS_ADD = "add1";
     public static final String VALID_ALIAS_ALIAS = "alias1";
     public static final String VALID_ALIAS_CLEAR_COMMAND = ClearCommand.COMMAND_WORD;
@@ -117,6 +118,7 @@ public class CommandTestUtil {
     public static final String VALID_UNALIAS = VALID_ALIAS_ADD;
 
     public static final String INVALID_UNALIAS_DESC = "alias!";
+    //@@author
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;

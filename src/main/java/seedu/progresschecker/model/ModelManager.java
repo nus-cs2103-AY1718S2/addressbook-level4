@@ -17,6 +17,8 @@ import seedu.progresschecker.model.issues.Issue;
 import seedu.progresschecker.model.person.Person;
 import seedu.progresschecker.model.person.exceptions.DuplicatePersonException;
 import seedu.progresschecker.model.person.exceptions.PersonNotFoundException;
+import seedu.progresschecker.model.photo.PhotoPath;
+import seedu.progresschecker.model.photo.exceptions.DuplicatePhotoException;
 
 /**
  * Represents the in-memory model of the ProgressChecker data.
@@ -111,11 +113,18 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author Livian1107
     @Override
     public void uploadPhoto(Person target, String path)
-            throws DuplicatePersonException, PersonNotFoundException, IOException {
+            throws PersonNotFoundException, DuplicatePersonException {
         progressChecker.uploadPhoto(target, path);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateProgressCheckerChanged();
+    }
+
+    @Override
+    public void addPhoto(PhotoPath photoPath) throws DuplicatePhotoException {
+        progressChecker.addPhotoPath(photoPath);
         indicateProgressCheckerChanged();
     }
 

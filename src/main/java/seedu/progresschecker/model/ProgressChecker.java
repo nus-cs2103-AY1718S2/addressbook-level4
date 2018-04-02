@@ -29,6 +29,9 @@ import seedu.progresschecker.model.person.Person;
 import seedu.progresschecker.model.person.UniquePersonList;
 import seedu.progresschecker.model.person.exceptions.DuplicatePersonException;
 import seedu.progresschecker.model.person.exceptions.PersonNotFoundException;
+import seedu.progresschecker.model.photo.PhotoPath;
+import seedu.progresschecker.model.photo.UniquePhotoList;
+import seedu.progresschecker.model.photo.exceptions.DuplicatePhotoException;
 import seedu.progresschecker.model.tag.Tag;
 import seedu.progresschecker.model.tag.UniqueTagList;
 
@@ -43,6 +46,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     private final String userAuthentication = new String("aditya2018");
 
     private final UniquePersonList persons;
+    private final UniquePhotoList photos;
     private final UniqueTagList tags;
 
     /*
@@ -55,6 +59,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        photos = new UniquePhotoList();
     }
 
     public ProgressChecker() {}
@@ -101,6 +106,15 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     public void sort() {
         requireNonNull(persons);
         persons.sort();
+    }
+
+    /**
+     * Adds a new uploaded photo path to the the list of profile photos
+     * @param photoPath of a new uploaded photo
+     * @throws DuplicatePhotoException if there already exists the same photo path
+     */
+    public void addPhotoPath(PhotoPath photoPath) throws DuplicatePhotoException {
+        photos.add(photoPath);
     }
 
     //// person-level operations
@@ -211,11 +225,13 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     }
 
     /**
-     * Uploads {@code Image} from the {@code path} offered
-     * @throws IOException if the {@code image} is not found
+     * Uploads the profile photo path of target person
+     * @param target
+     * @param path
+     * @throws PersonNotFoundException
+     * @throws DuplicatePersonException
      */
-    public void uploadPhoto(Person target, String path)
-            throws DuplicatePersonException, PersonNotFoundException {
+    public void uploadPhoto(Person target, String path) throws PersonNotFoundException, DuplicatePersonException {
         Person tempPerson = target;
         target.updatePhoto(path);
         persons.setPerson(tempPerson, target);

@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.WrongPasswordException;
+import seedu.address.model.Password;
 
 //@@author yeggasd
 public class SecurityUtilTest {
@@ -42,6 +43,22 @@ public class SecurityUtilTest {
     }
 
     @Test
+    public void decrypt_fileProcessorPlainText_success() throws Exception {
+        byte[] hashedPassword = SecurityUtil.hashPassword(TEST_PASSWORD);
+        FileWriter writer = new FileWriter(TEST_DATA_FILE);
+        writer.write(TEST_DATA);
+        writer.close();
+
+        SecurityUtil.decrypt(TEST_DATA_FILE, hashedPassword);
+
+        Scanner reader = new Scanner(TEST_DATA_FILE);
+        String read = reader.nextLine();
+        reader.close();
+
+        assertEquals(TEST_DATA, read);
+    }
+
+    @Test
     public void encryptDecrypt_customisedPassword_success() throws Exception {
         byte[] hashedPassword = SecurityUtil.hashPassword(TEST_PASSWORD);
 
@@ -60,7 +77,30 @@ public class SecurityUtilTest {
     }
 
     @Test
+    public void decrypt_withPassword_throwsWrongPasswordException() throws Exception {
+        byte[] hashedPassword = SecurityUtil.hashPassword(TEST_PASSWORD);
+        FileWriter writer = new FileWriter(TEST_DATA_FILE);
+        writer.write(TEST_DATA);
+        writer.close();
+
+        SecurityUtil.encrypt(TEST_DATA_FILE, hashedPassword);
+        thrown.expect(WrongPasswordException.class);
+        SecurityUtil.decrypt(TEST_DATA_FILE);
+    }
+
+    @Test
     public void encryptDecrypt_wrongPassword_throwsWrongPasswordException() throws Exception {
+        FileWriter writer = new FileWriter(TEST_DATA_FILE);
+        writer.write(TEST_DATA);
+        writer.close();
+
+        SecurityUtil.encryptFile(TEST_DATA_FILE, new Password(TEST_PASSWORD));
+        thrown.expect(WrongPasswordException.class);
+        SecurityUtil.decryptFile(TEST_DATA_FILE, new Password(WRONG_PASSWORD));
+    }
+
+    @Test
+    public void encryptDecryptFile_wrongPassword_throwsWrongPasswordException() throws Exception {
 
         byte[] hashedPassword = SecurityUtil.hashPassword(TEST_PASSWORD);
         byte[] hashedWrong = SecurityUtil.hashPassword(WRONG_PASSWORD);

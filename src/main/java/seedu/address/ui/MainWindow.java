@@ -17,6 +17,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ShowCalendarViewRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowPatientAppointmentRequestEvent;
 import seedu.address.logic.Logic;
@@ -43,6 +44,7 @@ public class MainWindow extends UiPart<Stage> {
     private Config config;
     private UserPrefs prefs;
     private PatientAppointmentPanel patientAppointmentPanel;
+    private CalendarPanel calendarPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -214,5 +216,12 @@ public class MainWindow extends UiPart<Stage> {
 
         patientAppointmentPanel = new PatientAppointmentPanel(pastAppointments, upcomingAppointment);
         browserPlaceholder.getChildren().add(patientAppointmentPanel.getRoot());
+    }
+
+    @Subscribe
+    private void handleShowCalendarAppointment(ShowCalendarViewRequestEvent scvre) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(scvre));
+        calendarPanel = new CalendarPanel();
+        browserPlaceholder.getChildren().add(calendarPanel.getRoot());
     }
 }

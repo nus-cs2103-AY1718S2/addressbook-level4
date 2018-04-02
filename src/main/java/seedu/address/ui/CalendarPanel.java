@@ -34,9 +34,4 @@ public class CalendarPanel extends UiPart<Region> {
     private void setConnections() {
         calendarView.setAlignment(calendar, Pos.CENTER);
     }
-
-    @Subscribe
-    public void handleShowCalendarEvent(ShowCalendarViewRequestEvent scvre) {
-        setConnections();
-    }
 }

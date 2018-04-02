@@ -62,11 +62,4 @@ public class TagReplaceCommand extends UndoableCommand {
         }
 
     }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof TagReplaceCommand // instanceof handles nulls
-                && this.tagToReplace.equals(((TagReplaceCommand) other).tagToReplace)); // state check
-    }
 }

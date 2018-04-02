@@ -40,6 +40,9 @@ public interface Model {
     /** Login a user */
     void loginUser(User user) throws UserNotFoundException, CurrentlyLoggedInException;
 
+    /** Logout from organizer */
+    void logout();
+
     /** Deletes all current user tasks */
     void deleteCurrentUserTasks();
 

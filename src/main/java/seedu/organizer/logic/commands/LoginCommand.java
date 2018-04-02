@@ -16,7 +16,7 @@ import seedu.organizer.model.user.exceptions.UserNotFoundException;
 public class LoginCommand extends Command {
 
     public static final String COMMAND_WORD = "login";
-    public static final String COMMAND_ALIAS = "log";
+    public static final String COMMAND_ALIAS = "in";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Login to PrioriTask. "
             + "Parameters: "

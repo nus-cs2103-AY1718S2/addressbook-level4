@@ -1,3 +1,4 @@
+/*
 package systemtests;
 
 import static org.junit.Assert.assertTrue;
@@ -20,84 +21,121 @@ import seedu.organizer.model.Model;
 public class SelectCommandSystemTest extends OrganizerSystemTest {
     @Test
     public void select() {
-        /* ------------------------ Perform select operations on the shown unfiltered list -------------------------- */
+        */
+/* ------------------------ Perform select operations on the shown unfiltered list -------------------------- *//*
 
-        /* Case: select the first card in the task list, command with leading spaces and trailing spaces
+
+        */
+/* Case: select the first card in the task list, command with leading spaces and trailing spaces
          * -> selected
-         */
+         *//*
+
         String command = "   " + SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased() + "   ";
         assertCommandSuccess(command, INDEX_FIRST_TASK);
 
-        /* Case: select the last card in the task list -> selected */
+        */
+/* Case: select the last card in the task list -> selected *//*
+
         Index personCount = Index.fromOneBased(getTypicalTasks().size());
         command = SelectCommand.COMMAND_WORD + " " + personCount.getOneBased();
         assertCommandSuccess(command, personCount);
 
-        /* Case: undo previous selection -> rejected */
+        */
+/* Case: undo previous selection -> rejected *//*
+
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
-        /* Case: redo selecting last card in the list -> rejected */
+        */
+/* Case: redo selecting last card in the list -> rejected *//*
+
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
-        /* Case: select the middle card in the task list -> selected */
+        */
+/* Case: select the middle card in the task list -> selected *//*
+
         Index middleIndex = Index.fromOneBased(personCount.getOneBased() / 2);
         command = SelectCommand.COMMAND_WORD + " " + middleIndex.getOneBased();
         assertCommandSuccess(command, middleIndex);
 
-        /* Case: select the current selected card -> selected */
+        */
+/* Case: select the current selected card -> selected *//*
+
         assertCommandSuccess(command, middleIndex);
 
-        /* ------------------------ Perform select operations on the shown filtered list ---------------------------- */
+        */
+/* ------------------------ Perform select operations on the shown filtered list ---------------------------- *//*
 
-        /* Case: filtered task list, select index within bounds of organizer book but out of bounds of task list
+
+        */
+/* Case: filtered task list, select index within bounds of organizer book but out of bounds of task list
          * -> rejected
-         */
+         *//*
+
         showTasksWithName(KEYWORD_MATCHING_SPRING);
         int invalidIndex = getModel().getOrganizer().getTaskList().size();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
 
-        /* Case: filtered task list, select index within bounds of organizer book and task list -> selected */
+        */
+/* Case: filtered task list, select index within bounds of organizer book and task list -> selected *//*
+
         Index validIndex = Index.fromOneBased(1);
         assertTrue(validIndex.getZeroBased() < getModel().getFilteredTaskList().size());
         command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased();
         assertCommandSuccess(command, validIndex);
 
-        /* ----------------------------------- Perform invalid select operations ------------------------------------ */
+        */
+/* ----------------------------------- Perform invalid select operations ------------------------------------ *//*
 
-        /* Case: invalid index (0) -> rejected */
+
+        */
+/* Case: invalid index (0) -> rejected *//*
+
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + 0,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
-        /* Case: invalid index (-1) -> rejected */
+        */
+/* Case: invalid index (-1) -> rejected *//*
+
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + -1,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
-        /* Case: invalid index (size + 1) -> rejected */
+        */
+/* Case: invalid index (size + 1) -> rejected *//*
+
         invalidIndex = getModel().getFilteredTaskList().size() + 1;
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
 
-        /* Case: invalid arguments (alphabets) -> rejected */
+        */
+/* Case: invalid arguments (alphabets) -> rejected *//*
+
         assertCommandFailure(SelectCommand.COMMAND_WORD + " abc",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
-        /* Case: invalid arguments (extra argument) -> rejected */
+        */
+/* Case: invalid arguments (extra argument) -> rejected *//*
+
         assertCommandFailure(SelectCommand.COMMAND_WORD + " 1 abc",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
-        /* Case: mixed case command word -> rejected */
+        */
+/* Case: mixed case command word -> rejected *//*
+
         assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
 
-        /* Case: select from empty organizer book -> rejected */
+        */
+/* Case: select from empty organizer book -> rejected *//*
+
         deleteAllTasks();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased(),
                 MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
 
-    /**
+    */
+/**
      * Executes {@code command} and asserts that the,<br>
      * 1. Command box displays an empty string.<br>
      * 2. Command box has the default style class.<br>
@@ -111,7 +149,8 @@ public class SelectCommandSystemTest extends OrganizerSystemTest {
      *
      * @see OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      * @see OrganizerSystemTest#assertSelectedCardChanged(Index)
-     */
+     *//*
+
     private void assertCommandSuccess(String command, Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
         String expectedResultMessage = String.format(
@@ -131,7 +170,8 @@ public class SelectCommandSystemTest extends OrganizerSystemTest {
         assertStatusBarUnchanged();
     }
 
-    /**
+    */
+/**
      * Executes {@code command} and asserts that the,<br>
      * 1. Command box displays {@code command}.<br>
      * 2. Command box has the error style class.<br>
@@ -142,7 +182,8 @@ public class SelectCommandSystemTest extends OrganizerSystemTest {
      * {@code OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      *
      * @see OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
+     *//*
+
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
 
@@ -153,3 +194,4 @@ public class SelectCommandSystemTest extends OrganizerSystemTest {
         assertStatusBarUnchanged();
     }
 }
+*/

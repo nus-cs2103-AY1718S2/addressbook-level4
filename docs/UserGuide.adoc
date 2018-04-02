@@ -95,7 +95,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [format-title]#Format:# `help`
 ====
 
-==== Signing up: `signup` or `su`
+==== Signing up: `signup` or `su` `[since v1.3]`
 
 Sign up for a PrioriTask account +
 
@@ -112,7 +112,7 @@ Sign up for a PrioriTask account +
 * [example]#`signup u/mary p/m4ry`#
 ====
 
-==== Logging in: `login` or `log`
+==== Logging in: `login` or `in` `[since v1.4]`
 
 Login to PrioriTask +
 
@@ -127,6 +127,15 @@ Login to PrioriTask +
 
 * [example]#`login u/patrick p/pat19503#
 * [example]#`login u/mary p/m4ry`#
+====
+
+==== Logging out: `logout` or `out` `[since v1.4]`
+
+Logout of PrioriTask +
+
+[.format]
+====
+[format-title]#Format:# `logout`
 ====
 
 === Task Management Features
@@ -597,6 +606,7 @@ Goes to `February 2018`
 e.g. [example-no-box]#`signup u/patrick p/pat12351`#
 * *Login* : [format-no-box]#`login u/USERNAME p/PASSWORD`#
 e.g. [example-no-box]#`login u/patrick p/pat12351`#
+* *Logout* : [format-no-box]#`logout`#
 
 === Task Management Features
 * *Add* : [format-no-box]#`add n/NAME [p/PRIORITY_LEVEL] d/DEADLINE [des/DESCRIPTION] [t/TAG]…`# +

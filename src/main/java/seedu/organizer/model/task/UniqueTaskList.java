@@ -184,10 +184,8 @@ public class UniqueTaskList implements Iterable<Task> {
                     task.getDateCompleted(), task.getDescription(), task.getStatus(), task.getTags(),
                     task.getSubtasks(), task.getUser());
         } else if (currentDate.isBefore(deadline)) {
-            int priorityToIncrease = (int) (priorityDifferenceFromMax
-                    * ((double) (dayDifferenceAddedToDeadline - dayDifferenceCurrentToDeadline)
-                    / (double) dayDifferenceAddedToDeadline));
-            newPriority = new Priority(String.valueOf(Integer.parseInt(curPriority.value) + priorityToIncrease));
+            newPriority = calculateNewPriority(curPriority,
+                    priorityDifferenceFromMax, dayDifferenceCurrentToDeadline, dayDifferenceAddedToDeadline);
             newTask = new Task(task.getName(), newPriority, task.getDeadline(), task.getDateAdded(),
                     task.getDateCompleted(), task.getDescription(), task.getStatus(), task.getTags(),
                     task.getSubtasks(), task.getUser());
@@ -201,4 +199,21 @@ public class UniqueTaskList implements Iterable<Task> {
         requireNonNull(newTask);
         return newTask;
     }
+
+    /**
+     * Calculate a new priority level for updatePriority method
+     */
+    private Priority calculateNewPriority(Priority curPriority, int priorityDifferenceFromMax,
+                                          long dayDifferenceCurrentToDeadline, long dayDifferenceAddedToDeadline) {
+        requireAllNonNull(curPriority, priorityDifferenceFromMax,
+                dayDifferenceCurrentToDeadline, dayDifferenceAddedToDeadline);
+        Priority newPriority;
+        int priorityToIncrease = (int) (priorityDifferenceFromMax
+                * ((double) (dayDifferenceAddedToDeadline - dayDifferenceCurrentToDeadline)
+                / (double) dayDifferenceAddedToDeadline));
+        newPriority = new Priority(String.valueOf(Integer.parseInt(curPriority.value) + priorityToIncrease));
+        return newPriority;
+    }
+
+    //@@author
 }

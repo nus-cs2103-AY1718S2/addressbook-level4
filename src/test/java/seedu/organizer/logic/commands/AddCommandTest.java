@@ -112,6 +112,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void logout() {
+            fail("This method should not be called");
+        }
+
+        @Override
         public void deleteCurrentUserTasks() {
             fail("This method should not be called");
         }

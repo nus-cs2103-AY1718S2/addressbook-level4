@@ -7,7 +7,6 @@ import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -31,7 +30,7 @@ import seedu.organizer.model.user.exceptions.DuplicateUserException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
 
 //@@author dominickenn
-public class SignUpCommandTest {
+public class LoginCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -39,60 +38,59 @@ public class SignUpCommandTest {
     @Test
     public void constructor_nullTask_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new SignUpCommand(null);
+        new LoginCommand(null);
     }
 
     @Test
     public void execute_userAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingUserAdded modelStub = new ModelStubAcceptingUserAdded();
+        ModelStubLoginAccepted modelStub = new ModelStubLoginAccepted();
         User validUser = new User("david", "david123");
 
-        CommandResult commandResult = getSignUpCommandForUser(validUser, modelStub).execute();
+        CommandResult commandResult = getLoginCommandForUser(validUser, modelStub).execute();
 
-        assertEquals(String.format(SignUpCommand.MESSAGE_SUCCESS, validUser), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validUser), modelStub.usersAdded);
+        assertEquals(String.format(LoginCommand.MESSAGE_SUCCESS, validUser), commandResult.feedbackToUser);
     }
 
     @Test
-    public void execute_duplicateUser_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicateUserException();
+    public void execute_userNotFound_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingUserNotFoundException();
         User validUser = new User("admin", "admin");
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(SignUpCommand.MESSAGE_DUPLICATE_USER);
+        thrown.expectMessage(LoginCommand.MESSAGE_USER_NOT_FOUND);
 
-        getSignUpCommandForUser(validUser, modelStub).execute();
+        getLoginCommandForUser(validUser, modelStub).execute();
     }
 
     @Test
     public void equals() {
         User alice = new User("alice", "alice123");
         User bob = new User("bob", "bob123");
-        SignUpCommand signUpAliceCommand = new SignUpCommand(alice);
-        SignUpCommand signUpBobCommand = new SignUpCommand(bob);
+        LoginCommand loginAliceCommand = new LoginCommand(alice);
+        LoginCommand loginBobCommand = new LoginCommand(bob);
 
         // same object -> returns true
-        assertTrue(signUpAliceCommand.equals(signUpAliceCommand));
+        assertTrue(loginAliceCommand.equals(loginAliceCommand));
 
         // same values -> returns true
-        SignUpCommand addAliceCommandCopy = new SignUpCommand(alice);
-        assertTrue(signUpAliceCommand.equals(addAliceCommandCopy));
+        LoginCommand loginAliceCommandCopy = new LoginCommand(alice);
+        assertTrue(loginAliceCommand.equals(loginAliceCommandCopy));
 
         // different types -> returns false
-        assertFalse(signUpAliceCommand.equals(1));
+        assertFalse(loginAliceCommand.equals(1));
 
         // null -> returns false
-        assertFalse(signUpAliceCommand.equals(null));
+        assertFalse(loginAliceCommand.equals(null));
 
         // different task -> returns false
-        assertFalse(signUpAliceCommand.equals(signUpBobCommand));
+        assertFalse(loginAliceCommand.equals(loginBobCommand));
     }
 
     /**
-     * Generates a new SignUpCommand with the given user.
+     * Generates a new LoginCommand with the given user.
      */
-    private SignUpCommand getSignUpCommandForUser(User user, Model model) {
-        SignUpCommand command = new SignUpCommand(user);
+    private LoginCommand getLoginCommandForUser(User user, Model model) {
+        LoginCommand command = new LoginCommand(user);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -166,12 +164,12 @@ public class SignUpCommandTest {
     }
 
     /**
-     * A Model stub that always throw a DuplicateUserException when trying to add a user.
+     * A Model stub that always throw a UserNotFoundException when trying to login.
      */
-    private class ModelStubThrowingDuplicateUserException extends ModelStub {
+    private class ModelStubThrowingUserNotFoundException extends ModelStub {
         @Override
-        public void addUser(User user) throws DuplicateUserException {
-            throw new DuplicateUserException();
+        public void loginUser(User user) throws UserNotFoundException {
+            throw new UserNotFoundException();
         }
 
         @Override
@@ -181,15 +179,15 @@ public class SignUpCommandTest {
     }
 
     /**
-     * A Model stub that always accept the user being added.
+     * A Model stub that always accept login request.
      */
-    private class ModelStubAcceptingUserAdded extends ModelStub {
-        final ArrayList<User> usersAdded = new ArrayList<>();
+    private class ModelStubLoginAccepted extends ModelStub {
+        final ArrayList<User> users = new ArrayList<>();
 
         @Override
-        public void addUser(User user) throws DuplicateUserException {
+        public void loginUser(User user) throws UserNotFoundException {
             requireNonNull(user);
-            usersAdded.add(user);
+            users.add(user);
         }
 
         @Override
@@ -197,5 +195,4 @@ public class SignUpCommandTest {
             return new Organizer();
         }
     }
-
 }

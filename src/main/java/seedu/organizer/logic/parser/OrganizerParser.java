@@ -1,8 +1,8 @@
 package seedu.organizer.logic.parser;
 
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.organizer.commons.core.Messages.MESSAGE_NO_USER_LOGGED_IN;
 import static seedu.organizer.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.organizer.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND_OR_NO_USER;
 import static seedu.organizer.model.ModelManager.getCurrentlyLoggedInUser;
 
 import java.util.regex.Matcher;
@@ -24,6 +24,7 @@ import seedu.organizer.logic.commands.HelpCommand;
 import seedu.organizer.logic.commands.HistoryCommand;
 import seedu.organizer.logic.commands.ListCommand;
 import seedu.organizer.logic.commands.LoginCommand;
+import seedu.organizer.logic.commands.LogoutCommand;
 import seedu.organizer.logic.commands.PreviousMonthCommand;
 import seedu.organizer.logic.commands.RedoCommand;
 import seedu.organizer.logic.commands.SelectCommand;
@@ -78,11 +79,17 @@ public class OrganizerParser {
                 return new ExitCommand();
 
             default :
-                throw new ParseException(MESSAGE_NO_USER_LOGGED_IN);
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND_OR_NO_USER);
             }
         }
 
         switch (commandWord) {
+
+        case LogoutCommand.COMMAND_WORD:
+            return new LogoutCommand();
+
+        case LogoutCommand.COMMAND_ALIAS:
+            return new LogoutCommand();
 
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);

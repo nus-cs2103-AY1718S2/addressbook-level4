@@ -109,6 +109,10 @@ public class Organizer implements ReadOnlyOrganizer {
         users.setCurrentLoggedInUser(user);
     }
 
+    public void logout() {
+        users.setCurrentLoggedInUserToNull();
+    }
+
     public User getCurrentLoggedInUser() {
         return users.getCurrentLoggedInUser();
     }

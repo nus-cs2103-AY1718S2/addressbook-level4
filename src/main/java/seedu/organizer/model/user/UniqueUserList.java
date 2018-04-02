@@ -58,6 +58,10 @@ public class UniqueUserList implements Iterable<User> {
         this.currentLoggedInUser = userToLogIn;
     }
 
+    public void setCurrentLoggedInUserToNull() {
+        currentLoggedInUser = null;
+    }
+
     public User getCurrentLoggedInUser() {
         return currentLoggedInUser;
     }

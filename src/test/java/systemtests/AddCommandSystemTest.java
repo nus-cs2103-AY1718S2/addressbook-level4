@@ -1,5 +1,6 @@
-// Commented out as it takes too long on travis, please uncomment before running local tests
 /*
+// Commented out as it takes too long on travis, please uncomment before running local tests
+
 package systemtests;
 
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -60,7 +61,6 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
         */
 /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- *//*
 
-
         */
 /* Case: add a task without tags to a non-empty organizer, command with leading spaces and trailing spaces
          * -> added
@@ -96,7 +96,6 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
 
         */
 /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- *//*
-
 
         */
 /* Case: add a task with all fields same as another task in the organizer book except name -> added *//*
@@ -147,10 +146,8 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
     public void add_withMissingNonCompulsoryParameters() {
         Task toAdd;
         String command;
-
         */
 /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- *//*
-
 
         */
 /* Case: add to empty organizer book -> added *//*
@@ -187,10 +184,8 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
 
     @Test
     public void add_performAddInDifferentSituations() {
-
         */
 /* -------------------------- Perform add operation on the shown filtered list ------------------------------ *//*
-
 
         */
 /* Case: filters the task list before adding -> added *//*
@@ -200,7 +195,6 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
 
         */
 /* ------------------------ Perform add operation while a task card is selected --------------------------- *//*
-
 
         */
 /* Case: selects first card in the task list, add a task -> added, card selection remains unchanged *//*
@@ -214,10 +208,8 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
         String command;
 
         assertCommandSuccess(MAKEPRESENT);
-
         */
 /* ----------------------------------- Perform invalid add operations --------------------------------------- *//*
-
 
         */
 /* Case: add a duplicate task -> rejected *//*
@@ -233,13 +225,11 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
         // Organizer#addTask(Task)
         command = TaskUtil.getAddCommand(MAKEPRESENT) + " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_TASK);
-
     }
 
     @Test
     public void add_invalidOperationsMissingParameters() {
         String command;
-
         */
 /* Case: missing name -> rejected *//*
 
@@ -258,7 +248,6 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
     public void add_invalidOperationsInvalidParameters() {
         Task toAdd;
         String command;
-
         */
 /* Case: invalid keyword -> rejected *//*
 

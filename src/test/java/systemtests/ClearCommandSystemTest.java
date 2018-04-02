@@ -1,5 +1,6 @@
-// Commented out as it takes too long on travis, please uncomment before running local tests
 /*
+// Commented out as it takes too long on travis, please uncomment before running local tests
+
 package systemtests;
 
 import static seedu.organizer.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;

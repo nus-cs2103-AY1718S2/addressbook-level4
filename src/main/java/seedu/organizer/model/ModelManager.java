@@ -103,6 +103,14 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void logout() {
+        organizer.logout();
+        currentlyLoggedInUser = organizer.getCurrentLoggedInUser();
+        updateFilteredTaskList(PREDICATE_SHOW_NO_TASKS);
+        indicateOrganizerChanged();
+    }
+
+    @Override
     public synchronized void deleteCurrentUserTasks() {
         organizer.deleteUserTasks(getCurrentlyLoggedInUser());
         indicateOrganizerChanged();

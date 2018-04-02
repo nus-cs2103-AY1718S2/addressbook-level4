@@ -1,5 +1,6 @@
-// Commented out as it takes too long on travis, please uncomment before running local tests
 /*
+// Commented out as it takes too long on travis, please uncomment before running local tests
+
 package systemtests;
 
 import static org.junit.Assert.assertTrue;
@@ -30,9 +31,9 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
 
     @Test
     public void delete() {
+
         */
 /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- *//*
-
 
         */
 /* Case: delete the first task in the list, command with leading spaces and trailing spaces -> deleted *//*
@@ -74,7 +75,6 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
         */
 /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- *//*
 
-
         */
 /* Case: filtered task list, delete index within bounds of organizer and task list -> deleted *//*
 
@@ -96,7 +96,6 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
         */
 /* --------------------- Performing delete operation while a task card is selected ------------------------ *//*
 
-
         */
 /* Case: delete the selected task -> task list panel selects the task before the deleted task *//*
 
@@ -112,7 +111,6 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
 
         */
 /* --------------------------------- Performing invalid delete operation ------------------------------------ *//*
-
 
         */
 /* Case: invalid index (0) -> rejected *//*

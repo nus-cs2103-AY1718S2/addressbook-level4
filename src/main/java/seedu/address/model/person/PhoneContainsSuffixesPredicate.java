@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 import seedu.address.commons.util.StringUtil;
 
 /**
- * Tests that a {@code Person}'s {@code Name} matches the suffix string given.
+ * Tests that a {@code Person}'s {@code Phone} matches the suffix string given.
  */
 public class PhoneContainsSuffixesPredicate implements Predicate<Person> {
     private final List<String> suffixKeywords;

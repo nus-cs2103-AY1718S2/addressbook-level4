@@ -10,33 +10,33 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.PredictionModel;
 
 
-//@@author SoilChang
+
 
 /**
  * Gradient Descent solver on Person models in prediction of purchasing power
  */
+//@@author SoilChang
 public class GradientDescent {
     public static final String MESSAGE_PREDICTION_SUCCESS = "Prediction success";
     public static final String MESSAGE_PREDICTION_FAIL = "Prediction failed";
     public static final String MESSAGE_PREDICTION_DIVERGENT = "Prediction Solution is not convergent";
     private static GradientDescent instance;
-
-    private final Logger logger = LogsCenter.getLogger(LogicManager.class);
-    private PredictionModel model;
-
     /**
      * The weights we are calculating
      * For more fields, please add in the default value below
      * [ x1= income, x2 = age ]
      */
-    private ArrayList<Double> weights = new ArrayList<>(Arrays.asList(0.0));
+    private static ArrayList<Double> weights = new ArrayList<>();
 
     /**
      * Some constants to normalize income and age so that the value don't differ so much
      */
-    private ArrayList<Double> normalizationConstant =
+    private static ArrayList<Double> normalizationConstant =
             new ArrayList<>(Arrays.asList(1000.0));
 
+
+    private final Logger logger = LogsCenter.getLogger(LogicManager.class);
+    private PredictionModel model;
     /**
      * The learning rate
      */
@@ -45,7 +45,7 @@ public class GradientDescent {
     /**
      * The amount of epoch of looping through training data
      */
-    private final Integer epoch = 3000;
+    private final Integer epoch = 300000;
 
 
     /**
@@ -61,6 +61,7 @@ public class GradientDescent {
     public static GradientDescent getInstance(PredictionModel model) {
         if (instance == null) {
             instance = new GradientDescent(model);
+            instance.resetWeights();
         }
         return instance;
     }
@@ -96,7 +97,7 @@ public class GradientDescent {
         }
         //update results
         try {
-            this.model.updatePredictionResult(this.weights, normalizationConstant);
+            this.model.updatePredictionResult(this.getWeights());
             return new CommandResult(String.format(MESSAGE_PREDICTION_SUCCESS));
         } catch (CommandException e) {
             return new CommandResult(String.format(MESSAGE_PREDICTION_FAIL));
@@ -159,5 +160,27 @@ public class GradientDescent {
         }
 
         return sum;
+    }
+
+
+    /**
+     * Weight getter
+     *
+     * @return
+     */
+    public static ArrayList<Double> getWeights() {
+        //restore the un-normalized value
+        ArrayList<Double> trueWeights = new ArrayList<>();
+        for (int j = 0; j < GradientDescent.weights.size(); j++) {
+            trueWeights.add(GradientDescent.weights.get(j) / normalizationConstant.get(j));
+        }
+        return trueWeights;
+    }
+
+    /**
+     * reset the weights to initial values of zeros
+     */
+    public static void resetWeights() {
+        GradientDescent.weights = new ArrayList<>(Arrays.asList(0.0));
     }
 }

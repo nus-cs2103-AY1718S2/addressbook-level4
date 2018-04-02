@@ -13,6 +13,6 @@ public interface PredictionModel extends Model {
     void preparePredictionData(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> targets,
                                ArrayList<Double> normalizationConstant);
 
-    void updatePredictionResult(ArrayList<Double> weights, ArrayList<Double> normalizationConstant)
+    void updatePredictionResult(ArrayList<Double> weights)
             throws CommandException;
 }

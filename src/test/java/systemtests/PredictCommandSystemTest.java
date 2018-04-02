@@ -2,6 +2,7 @@ package systemtests;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.GradientDescent;
@@ -12,6 +13,8 @@ import seedu.address.model.PredictionModel;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.PersonBuilder;
+
+
 
 
 //@author SoilChang
@@ -43,10 +46,14 @@ public class PredictCommandSystemTest extends AddressBookSystemTest {
             .withAge(20)
             .build();
 
+
     @Test
     public void predict() {
         Model model = getModel();
         model.resetData(new AddressBook());
+        GradientDescent.resetWeights();
+
+
         //prepare data
         try {
             model.addPerson(old1);
@@ -70,6 +77,44 @@ public class PredictCommandSystemTest extends AddressBookSystemTest {
 
         Double p4es = model.getFilteredPersonList().get(3).getExpectedSpending().value;
 
+        assertEquals(0.05, GradientDescent.getWeights().get(0), 0.01);
+        assertEquals(500.0, p4es, 5.0);
+
+
+
+    }
+
+    @Test
+    public void predict2(){
+        Model model = getModel();
+        model.resetData(new AddressBook());
+        GradientDescent.resetWeights();
+
+
+        //prepare data
+        try {
+            model.addPerson(old1);
+            model.addPerson(old2);
+            model.addPerson(old3);
+            model.addPerson(new1);
+        } catch (DuplicatePersonException dpe) {
+            System.out.println(dpe.getMessage());
+
+            System.out.println("Data Preparation Failed");
+            return;
+        }
+
+        GradientDescent gd = GradientDescent.getInstance((PredictionModel) model);
+        try {
+            gd.solve();
+        } catch (CommandException ce) {
+            System.out.println(ce.getMessage());
+            return;
+        }
+
+        Double p4es = model.getFilteredPersonList().get(3).getExpectedSpending().value;
+
+        assertEquals(0.05, GradientDescent.getWeights().get(0), 0.01);
         assertEquals(500.0, p4es, 5.0);
     }
 

@@ -20,6 +20,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.PrintCommand;
 import seedu.address.logic.commands.RecordCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
@@ -204,11 +205,19 @@ public class ImdbParser {
 
             case AddConditionCommand.COMMAND_WORD:
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
-                        AddConditionCommand.MESSAGE_USAGE));
+                        LoginCommand.MESSAGE_USAGE));
 
             case AddConditionCommand.COMMAND_ALIAS:
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
-                        AddConditionCommand.MESSAGE_USAGE));
+                        LoginCommand.MESSAGE_USAGE));
+
+            case PrintCommand.COMMAND_WORD:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        LoginCommand.MESSAGE_USAGE));
+
+            case PrintCommand.COMMAND_ALIAS:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        LoginCommand.MESSAGE_USAGE));
 
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
@@ -325,6 +334,12 @@ public class ImdbParser {
 
             case AddConditionCommand.COMMAND_ALIAS:
                 return new AddConditionCommandParser().parse(arguments);
+
+            case PrintCommand.COMMAND_WORD:
+                return new PrintCommandParser().parse(arguments);
+
+            case PrintCommand.COMMAND_ALIAS:
+                return new PrintCommandParser().parse(arguments);
 
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
@@ -459,6 +474,12 @@ public class ImdbParser {
 
             case AddConditionCommand.COMMAND_ALIAS:
                 return new AddConditionCommandParser().parse(arguments);
+
+            case PrintCommand.COMMAND_WORD:
+                return new PrintCommandParser().parse(arguments);
+
+            case PrintCommand.COMMAND_ALIAS:
+                return new PrintCommandParser().parse(arguments);
 
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

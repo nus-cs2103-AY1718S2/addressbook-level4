@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTENT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TODOS;
 
 import java.util.List;
@@ -17,19 +18,22 @@ import seedu.address.model.todo.ToDo;
 import seedu.address.model.todo.exceptions.DuplicateToDoException;
 import seedu.address.model.todo.exceptions.ToDoNotFoundException;
 
+
 /**
  * Edit the content of an existing ToDo in the address book.
  */
 public class EditToDoCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "editToDo";
+    public static final String COMMAND_ALIAS = "eTD";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the content of the ToDo identified"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the content of the ToDo identified "
             + "by the index number used in the last ToDo listing. "
             + "Content of the ToDo will be overwritten by the input value.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[CONTENT] "
-            + "Example: " + COMMAND_WORD + " Submit presentation scripts";
+            + "[" + PREFIX_CONTENT + "CONTENT] "
+            + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_CONTENT + "Submit presentation scripts";
 
     public static final String MESSAGE_EDIT_TODO_SUCCESS = "Edited ToDo: %1$s";
     public static final String MESSAGE_NOT_EDITED_TODO = "The new to-do content to edit must be provided.";

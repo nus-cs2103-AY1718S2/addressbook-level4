@@ -64,6 +64,15 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code Optional<String> content} into an {@code Optional<Content>} if {@code content} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Content> parseContent(Optional<String> content) throws IllegalValueException {
+        requireNonNull(content);
+        return content.isPresent() ? Optional.of(parseContent(content.get())) : Optional.empty();
+    }
+
+    /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
      *

@@ -20,6 +20,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.*;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -229,7 +230,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleUndo() {
-        raise(new ExecuteCommandRequestEvent("undo"));
+        raise(new ExecuteCommandRequestEvent(new UndoCommand()));
     }
 
     /**
@@ -237,7 +238,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleRedo() {
-        raise(new ExecuteCommandRequestEvent("redo"));
+        raise(new ExecuteCommandRequestEvent(new RedoCommand()));
     }
 
     /**
@@ -245,7 +246,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleClear() {
-        raise(new ExecuteCommandRequestEvent("clear"));
+        raise(new ExecuteCommandRequestEvent(new ClearCommand()));
     }
 
     /**
@@ -253,7 +254,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleHistory() {
-        raise(new ExecuteCommandRequestEvent("history"));
+        raise(new ExecuteCommandRequestEvent(new HistoryCommand()));
     }
 
     /**
@@ -261,7 +262,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleList() {
-        raise(new ExecuteCommandRequestEvent("list"));
+        raise(new ExecuteCommandRequestEvent(new ListCommand()));
     }
 
     /**

@@ -3,8 +3,6 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_RECORD_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_RECORD_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
@@ -81,8 +79,10 @@ public class RecordCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         Patient patientInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient editedPatient = new PatientBuilder(patientInFilteredList).withRecordList("01/04/2018 s/test i/test t/test").build();
-        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("01/04/2018", "test", "test", "test"));
+        Patient editedPatient = new PatientBuilder(patientInFilteredList)
+                .withRecordList("01/04/2018 s/test i/test t/test").build();
+        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0,
+                new Record("01/04/2018", "test", "test", "test"));
 
         String expectedMessage = String.format(RecordCommand.MESSAGE_EDIT_RECORD_SUCCESS, editedPatient);
 
@@ -90,7 +90,8 @@ public class RecordCommandTest {
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
 
         assertCommandSuccess(recordCommand, model, expectedMessage, expectedModel);
-        RecordCommand undoCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record(new SimpleDateFormat("dd/MM/yyyy").format(new Date()),
+        RecordCommand undoCommand = prepareCommand(INDEX_FIRST_PERSON, 0,
+                new Record(new SimpleDateFormat("dd/MM/yyyy").format(new Date()),
                 "", "", ""));
         undoCommand.execute();
     }
@@ -125,8 +126,10 @@ public class RecordCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Patient patientToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("01/04/2018", "test", "test", "test"));
-        RecordCommand toUndoCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record(new SimpleDateFormat("dd/MM/yyyy").format(new Date()),
+        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0,
+                new Record("01/04/2018", "test", "test", "test"));
+        RecordCommand toUndoCommand = prepareCommand(INDEX_FIRST_PERSON, 0,
+                new Record(new SimpleDateFormat("dd/MM/yyyy").format(new Date()),
                 "", "", ""));
         Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
 
@@ -174,7 +177,8 @@ public class RecordCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("01/04/2018", "b", "b", "b"));
-        RecordCommand toUndoCommand = prepareCommand(INDEX_SECOND_PERSON, 0, new Record(new SimpleDateFormat("dd/MM/yyyy").format(new Date()),
+        RecordCommand toUndoCommand = prepareCommand(INDEX_SECOND_PERSON, 0,
+                new Record(new SimpleDateFormat("dd/MM/yyyy").format(new Date()),
                 "", "", ""));
         Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
 

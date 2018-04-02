@@ -1,6 +1,5 @@
 package seedu.address.model.patient;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -22,7 +21,8 @@ public class RecordTest {
         // invalid records
         Assert.assertThrows(IllegalArgumentException.class, () -> Record.isValidRecord(new Record("", "", "", "")));
         Assert.assertThrows(IllegalArgumentException.class, () -> Record.isValidRecord(new Record(" ", " ", " ", " ")));
-        Assert.assertThrows(IllegalArgumentException.class, () -> Record.isValidRecord(new Record("5th March 2016", " ", " ", " ")));
+        Assert.assertThrows(IllegalArgumentException.class, () -> Record.isValidRecord(
+                new Record("5th March 2016", " ", " ", " ")));
 
         // valid records
         assertTrue(Record.isValidRecord(new Record("01/04/2018", "High temperature", "Fever", "Antibiotics")));

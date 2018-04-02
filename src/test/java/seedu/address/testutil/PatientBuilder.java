@@ -33,7 +33,8 @@ public class PatientBuilder {
     public static final String DEFAULT_DOB = "11/11/1991";
     public static final String DEFAULT_BLOODTYPE = "A";
     public static final String DEFAULT_REMARK = "";
-    public static final String DEFAULT_RECORDLIST = new SimpleDateFormat("dd/MM/yyyy").format(new Date()) + " s/ i/ t/\n";
+    public static final String DEFAULT_RECORDLIST =
+            new SimpleDateFormat("dd/MM/yyyy").format(new Date()) + " s/ i/ t/\n";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_APPOINTMENTS = "";
 

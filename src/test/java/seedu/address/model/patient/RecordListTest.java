@@ -1,6 +1,5 @@
 package seedu.address.model.patient;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ public class RecordListTest {
     }
 
     @Test
-    public void isValidRecordList() {
+    public void isValidRecordList() throws ParseException {
         // null address
         Assert.assertThrows(NullPointerException.class, () -> RecordList.isValidRecordList(null));
 
@@ -36,6 +35,7 @@ public class RecordListTest {
         try {
             assertTrue(RecordList.isValidRecordList(new RecordList("01/04/2018 s/a i/b t/c"))); // one character
         } catch (ParseException pe) {
+            throw pe;
         }
 
         // invalid recordList

@@ -67,11 +67,11 @@ public class RecordController {
         }
     }
 
-    @FXML
     /**
      * Takes in user input to every field, verifies if it is a valid entry
      * and calls for the method to close the stage.
      */
+    @FXML
     protected void handleEnterKey(KeyEvent event) {
         String date = this.dateField.getText();
         String symptom = this.symptomField.getText();
@@ -90,10 +90,10 @@ public class RecordController {
         event.consume();
     }
 
-    @FXML
     /**
      * Overwrites default tab key to allow for moving to next text field.
      */
+    @FXML
     protected void handleTabKey(KeyEvent event) {
         event.consume();
         Node node = (Node) event.getSource();
@@ -108,10 +108,10 @@ public class RecordController {
         node.fireEvent(newEvent);
     }
 
-    @FXML
     /**
      * Handles closing the stage.
      */
+    @FXML
     private void closeButtonAction() {
         // get a handle to the stage
         Stage stage = (Stage) saveButton.getScene().getWindow();

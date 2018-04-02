@@ -1,11 +1,13 @@
 package seedu.address.model.activity;
 
-import org.junit.Test;
-import seedu.address.testutil.Assert;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.testutil.Assert;
+
 //@@Author YuanQLLer
 public class LocationTest {
     @Test
@@ -38,8 +40,8 @@ public class LocationTest {
 
     @Test
     public void hashCodeTest() {
-        assertEquals(new Location("Clementi").hashCode(),new Location("Clementi").hashCode());
-        assertEquals(new Location("-").hashCode(),new Location("-").hashCode());
+        assertEquals(new Location("Clementi").hashCode(), new Location("Clementi").hashCode());
+        assertEquals(new Location("-").hashCode(), new Location("-").hashCode());
     }
 
     @Test

@@ -1,11 +1,12 @@
 package seedu.address.model.activity;
 
-import org.junit.Test;
-import seedu.address.testutil.EventBuilder;
-import seedu.address.testutil.TaskBuilder;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.testutil.EventBuilder;
+import seedu.address.testutil.TaskBuilder;
 
 //Author YuanQLLer
 public class EventOnlyPredicateTest {

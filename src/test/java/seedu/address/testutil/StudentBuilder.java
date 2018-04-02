@@ -27,6 +27,7 @@ public class StudentBuilder {
     public static final String DEFAULT_PROGRAMMING_LANGUAGE = "Java";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_FAVOURITE = "false";
+    public static final String DEFAULT_PATH = "/src/main/resources/view/images/profile_photo_placeholder";
 
     private UniqueKey key;
     private Name name;

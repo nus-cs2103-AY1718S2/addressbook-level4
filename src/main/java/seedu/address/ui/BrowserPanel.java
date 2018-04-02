@@ -1,12 +1,9 @@
 package seedu.address.ui;
 
-import java.net.CookieHandler;
-import java.net.CookieManager;
 import java.net.URL;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
-
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -35,9 +32,6 @@ public class BrowserPanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private CookieManager cookieManager;
-    private CookieHandler cookieHandler;
-
     @FXML
     private WebView browser;
 
@@ -47,8 +41,6 @@ public class BrowserPanel extends UiPart<Region> {
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
-        cookieManager = new CookieManager();
-        cookieHandler.setDefault(cookieManager);
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
@@ -106,7 +98,6 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleStudentInfoChangedEvent(StudentInfoChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        cookieHandler.setDefault(new CookieManager());
         reloadPage();
     }
 }

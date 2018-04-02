@@ -111,6 +111,26 @@ public class Student {
      * Every field must be present and not null. For when dashboard and favourite is not initialised
      */
     public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email, Address address,
+                   ProgrammingLanguage programmingLanguage, Set<Tag> tags, ProfilePicturePath profilePicturePath) {
+        requireAllNonNull(uniqueKey, name, phone, email, address, tags);
+        this.uniqueKey = uniqueKey;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.programmingLanguage = programmingLanguage;
+        this.tags = new UniqueTagList(tags);
+        this.favourite = new Favourite(false); // Default value
+        this.dashboard = new Dashboard();
+        this.profilePicturePath = profilePicturePath;
+    }
+
+    /**
+     * Every field must be present and not null. For when dashboard, favourite and profilePicturePath
+     * is not initialised
+     */
+    public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email, Address address,
                    ProgrammingLanguage programmingLanguage, Set<Tag> tags) {
         requireAllNonNull(uniqueKey, name, phone, email, address, tags);
         this.uniqueKey = uniqueKey;
@@ -123,7 +143,27 @@ public class Student {
         this.tags = new UniqueTagList(tags);
         this.favourite = new Favourite(false); // Default value
         this.dashboard = new Dashboard();
-        this.profilePicturePath = getProfilePicturePath();
+        this.profilePicturePath = new ProfilePicturePath(ProfilePicturePath.DEFAULT_PROFILE_PICTURE);
+    }
+
+    /**
+     * Every field must be present and not null. For when dashboard and profilePicturePath
+     * is not initialised
+     */
+    public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email, Address address,
+                   ProgrammingLanguage programmingLanguage, Set<Tag> tags, Favourite fav) {
+        requireAllNonNull(uniqueKey, name, phone, email, address, tags);
+        this.uniqueKey = uniqueKey;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.programmingLanguage = programmingLanguage;
+        this.tags = new UniqueTagList(tags);
+        this.favourite = fav;
+        this.dashboard = new Dashboard();
+        this.profilePicturePath = new ProfilePicturePath(ProfilePicturePath.DEFAULT_PROFILE_PICTURE);
     }
 
     /**

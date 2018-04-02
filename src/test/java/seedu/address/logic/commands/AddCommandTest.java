@@ -152,6 +152,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateProfilePicture(Student target, Student editedStudent, Student finalEditedStudent)
+                throws DuplicateStudentException, StudentNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void addLesson(Student student, Day day, Time start, Time end)
                 throws DuplicateLessonException, StudentNotFoundException, InvalidLessonTimeSlotException {
             fail("This method should not be called");

@@ -41,7 +41,7 @@ public class TestAddEventCommandParserTest {
                 expectedLocation, expectedStarttime, expectedEndtime, expectedDescription));
 
         // whitespace only preamble
-        assertParseSuccess(parser,PREAMBLE_WHITESPACE + "1" + EVENT_TITLE + EVENT_LOCATION + EVENT_STARTTIME
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + "1" + EVENT_TITLE + EVENT_LOCATION + EVENT_STARTTIME
                 + EVENT_ENDTIME + EVENT_DESCRIPTION, new TestAddEventCommand(INDEX_FIRST_PERSON, expectedTitle,
                 expectedLocation, expectedStarttime, expectedEndtime, expectedDescription));
     }
@@ -87,6 +87,7 @@ public class TestAddEventCommandParserTest {
 
         //non-empty preamble
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + "1" + EVENT_TITLE + EVENT_LOCATION + EVENT_STARTTIME
-                + EVENT_ENDTIME + EVENT_DESCRIPTION, String.format(MESSAGE_INVALID_COMMAND_FORMAT, TestAddEventCommand.MESSAGE_USAGE));
+                + EVENT_ENDTIME + EVENT_DESCRIPTION,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, TestAddEventCommand.MESSAGE_USAGE));
     }
 }

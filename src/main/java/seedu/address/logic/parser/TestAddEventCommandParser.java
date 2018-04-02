@@ -11,14 +11,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
+import com.google.api.client.util.DateTime;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.TestAddEventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Name;
-
-import com.google.api.client.util.DateTime;
 
 /**
  * Parses input arguments and creates a new TestAddEventCommand object

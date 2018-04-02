@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -233,5 +234,10 @@ public class XmlAddressBookStorageTest {
         saveAddressBook(new AddressBook(), null);
     }
 
-
+    @After
+    public void reset() throws Exception {
+        String filePath = "TempEncryptedAddressBook.xml";
+        File file = new File(TEST_DATA_FOLDER + filePath);
+        SecurityUtil.decrypt(file, SecurityUtil.hashPassword("wrongPassword"));
+    }
 }

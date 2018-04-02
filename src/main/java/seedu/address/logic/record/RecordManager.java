@@ -1,6 +1,8 @@
 package seedu.address.logic.record;
 
+import seedu.address.model.patient.DateOfBirth;
 import seedu.address.model.patient.Record;
+import seedu.address.model.patient.TextField;
 
 /**
  * RecordManager class to handle user inputs to medical record.
@@ -30,7 +32,8 @@ public final class RecordManager {
      * Current medical record will be updated.
      */
     public static boolean authenticate (String date, String symptom, String illness, String treatment) {
-        if (date == null || symptom == null || illness == null || treatment == null) {
+        if (!DateOfBirth.isValidDob(date) || !TextField.isValidTextField(symptom)
+                || !TextField.isValidTextField(illness) || !TextField.isValidTextField(treatment)) {
             //currently all non-null strings are valid
             return false;
         }

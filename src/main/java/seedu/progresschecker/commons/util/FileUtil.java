@@ -2,7 +2,11 @@ package seedu.progresschecker.commons.util;
 
 import static seedu.progresschecker.commons.util.AppUtil.checkArgument;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 
@@ -11,7 +15,7 @@ import java.nio.file.Files;
  */
 public class FileUtil {
 
-    public static final String VALID_IMAGE = "([^\\s]+(\\.(?i)(jpg|jpeg|png))$)";
+    public static final String REGEX_VALID_IMAGE = "([^\\s]+(\\.(?i)(jpg|jpeg|png))$)";
     private static final String CHARSET = "UTF-8";
 
     public static boolean isFileExists(File file) {
@@ -82,6 +86,38 @@ public class FileUtil {
     }
 
     /**
+     * Copies all the contents from the file in original path to the one in destination path.
+     * @param oriPath of the file to be copied
+     * @param destPath of the file to be pasted
+     * @return true if the file is successfully copied to the specified place.
+     */
+    public static boolean copyFile(String oriPath, String destPath) throws IOException {
+
+        //create a buffer to store content
+        byte[] buffer = new byte[1024];
+
+        //bufferedInputStream
+        FileInputStream fis = new FileInputStream(oriPath);
+        BufferedInputStream bis = new BufferedInputStream(fis);
+
+        //bufferedOutputStream
+        FileOutputStream fos = new FileOutputStream(destPath);
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+        int numBytes = bis.read(buffer);
+        while (numBytes > 0) {
+            bos.write(buffer, 0, numBytes);
+            numBytes = bis.read(buffer);
+        }
+
+        //close input,output stream
+        bis.close();
+        bos.close();
+
+        return true;
+    }
+
+    /**
      * Converts a string to a platform-specific file path
      * @param pathWithForwardSlash A String representing a file path but using '/' as the separator
      * @return {@code pathWithForwardSlash} but '/' replaced with {@code File.separator}
@@ -92,13 +128,33 @@ public class FileUtil {
     }
 
     /**
+     * Returns the extension information from the file path
+     * @param filePath
+     * @return extension String
+     */
+    public static String getFileExtension(String filePath) {
+        return "." + filePath.split("\\.")[1];
+    }
+
+    /**
+     * Creates a new file if it does not exist
+     * @param file to created
+     * @throws IOException if the file cannot be created
+     */
+    public static void createMissing(File file) throws IOException {
+        if (!file.exists()) {
+            createFile(file);
+        }
+    }
+
+    /**
      * Returns whether the uploaded file is a valid image file
      * Valid image file should have extension: '.jpg', '.jepg' or 'png'.
      * @param path of the uploaded image file
      * @return true if the uploaded file has valid extension
      */
     public static boolean isValidImageFile(String path) {
-        return path.matches(VALID_IMAGE);
+        return path.matches(REGEX_VALID_IMAGE);
     }
 
     /**

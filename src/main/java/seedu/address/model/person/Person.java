@@ -30,7 +30,7 @@ public class Person {
      */
     public Person(Name name, Phone phone, Email email, Address address, Birthday birthday,
                   Timetable timetable, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+        requireAllNonNull(name, phone, email, address, birthday, timetable, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -88,13 +88,14 @@ public class Person {
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
                 && otherPerson.getAddress().equals(this.getAddress())
-                && otherPerson.getBirthday().equals(this.getBirthday());
+                && otherPerson.getBirthday().equals(this.getBirthday())
+                && otherPerson.getTimetable().equals(this.getTimetable());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, birthday, tags);
+        return Objects.hash(name, phone, email, address, birthday, timetable, tags);
     }
 
     @Override
@@ -109,6 +110,8 @@ public class Person {
                 .append(getAddress())
                 .append(" Birthday: ")
                 .append(getBirthday())
+                .append(" Timetable: ")
+                .append(getTimetable())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

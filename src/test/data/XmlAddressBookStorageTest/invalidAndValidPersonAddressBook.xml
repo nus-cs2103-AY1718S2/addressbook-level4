@@ -7,6 +7,7 @@
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
         <birthday isPrivate="false">01011994</birthday>
+        <timetable isPrivate="false">http://modsn.us/oNZLY</timetable>
     </persons>
     <!-- Person with invalid phone field -->
     <persons>
@@ -15,6 +16,7 @@
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
         <birthday isPrivate="false">01011994</birthday>
+        <timetable isPrivate="false">http://google.com/</timetable>
     </persons>
 </addressbook>
 

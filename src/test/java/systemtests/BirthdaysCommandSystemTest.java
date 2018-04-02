@@ -6,6 +6,7 @@ import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.TIMETABLE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 
 import java.time.LocalDate;
@@ -47,12 +48,65 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
     }
 
     @Test
-    public void assertTodayBirthdayListWithOnePerson() {
+    public void assertBirthdayListWithOnePersonToday() {
+        // Simulation of commands to create only one person whose birthday is today
+        deleteAllPersons();
+        executeCommand("   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
+                + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   b/"
+                + buildBirthday(true) + " " + TIMETABLE_DESC_AMY + TAG_DESC_FRIEND + " ");
+
+        // Create expected result
+
+
+        // use command
+        executeCommand(BirthdaysCommand.COMMAND_WORD + " " + BirthdaysCommand.ADDITIONAL_COMMAND_PARAMETER);
+        guiRobot.waitForEvent(() -> guiRobot.isWindowShown("Birthdays Today"));
+
+        BirthdayNotificationHandle alertDialog = new BirthdayNotificationHandle(guiRobot
+                .getStage("Birthdays Today"));
+
+        assertEquals(buildExpectedBirthday(), alertDialog.getContentText());
+    }
+
+    @Test
+    public void assertBirthdayListWithZeroPersonToday() {
+        // Simulation of commands to create only one person whose birthday is today
+        deleteAllPersons();
+        executeCommand("   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
+                + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   b/"
+                + buildBirthday(false) + " " + TIMETABLE_DESC_AMY + " " + TAG_DESC_FRIEND + " ");
+
+        // use command
+        executeCommand(BirthdaysCommand.COMMAND_WORD + " " + BirthdaysCommand.ADDITIONAL_COMMAND_PARAMETER);
+        guiRobot.waitForEvent(() -> guiRobot.isWindowShown("Birthdays Today"));
+
+        BirthdayNotificationHandle alertDialog = new BirthdayNotificationHandle(guiRobot
+                .getStage("Birthdays Today"));
+
+        assertEquals("", alertDialog.getContentText());
+    }
+
+    /**
+     * Helper method to build a birthday desc for the add command
+     * @param isTodayABirthday if the person is having a person today, her birthday will be set to today
+     *                         Otherwise, it will be set +/- 1 day
+     * @return String for " b/" portion of AddCommand
+     */
+    private String buildBirthday(boolean isTodayABirthday) {
         LocalDate currentDate = LocalDate.now();
-        int currentDay = currentDate.getDayOfMonth();
-        int currentMonth = currentDate.getMonthValue();
-        int currentYear = currentDate.getYear();
+        int currentDay;
+        int currentMonth  = currentDate.getMonthValue();
         StringBuilder string = new StringBuilder();
+
+        if (isTodayABirthday) {
+            currentDay = currentDate.getDayOfMonth();
+        } else {
+            if (currentDate.getDayOfMonth() == 1 || currentDate.getDayOfMonth() < 28) {
+                currentDay = currentDate.getDayOfMonth() + 1;
+            } else {
+                currentDay = currentDate.getDayOfMonth() - 1;
+            }
+        }
 
         // Creation of birthday to fit today
         if (currentDay <= 9) {
@@ -65,14 +119,18 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
         string.append(currentMonth);
         string.append("1995");
 
-        // Simulation of commands to create only one person with the birthday
-        deleteAllPersons();
-        executeCommand("   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
-                + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   b/"
-                + string.toString() + " " + TAG_DESC_FRIEND + " ");
+        return string.toString();
+    }
 
-        // Create expected result
-        string = new StringBuilder();
+    /**
+     * Helper method to create the stub for the testing of Birthdays
+     * @return Amy with her current age
+     */
+    private String buildExpectedBirthday() {
+        LocalDate currentDate = LocalDate.now();
+        int currentYear = currentDate.getYear();
+        StringBuilder string = new StringBuilder();
+
         int age = currentYear - 1995;
         string.append(VALID_NAME_AMY);
         string.append(" (");
@@ -84,52 +142,7 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
         }
         string.append("\n");
 
-        // use command
-        executeCommand(BirthdaysCommand.COMMAND_WORD + " " + BirthdaysCommand.ADDITIONAL_COMMAND_PARAMETER);
-        guiRobot.waitForEvent(() -> guiRobot.isWindowShown("Birthdays Today"));
-
-        BirthdayNotificationHandle alertDialog = new BirthdayNotificationHandle(guiRobot
-                .getStage("Birthdays Today"));
-
-        assertEquals(string.toString(), alertDialog.getContentText());
-    }
-
-    @Test
-    public void assertTodaysBirthdayListWithZeroPerson() {
-        LocalDate currentDate = LocalDate.now();
-        int currentDay = currentDate.getDayOfMonth() - 1;
-        if (currentDate.getDayOfMonth() == 1) {
-            currentDay = currentDate.getDayOfMonth() + 1;
-        }
-        int currentMonth = currentDate.getMonthValue();
-        int currentYear = currentDate.getYear();
-        StringBuilder string = new StringBuilder();
-
-        // Creation of birthday to fit today + additional one day to differ birthdays
-        if (currentDay <= 9) {
-            string.append(0);
-        }
-        string.append(currentDay);
-        if (currentMonth <= 9) {
-            string.append(0);
-        }
-        string.append(currentMonth);
-        string.append("1995");
-
-        // Simulation of commands to create only one person with the birthday
-        deleteAllPersons();
-        executeCommand("   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
-                + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   b/"
-                + string.toString() + " " + TAG_DESC_FRIEND + " ");
-
-        // use command
-        executeCommand(BirthdaysCommand.COMMAND_WORD + " " + BirthdaysCommand.ADDITIONAL_COMMAND_PARAMETER);
-        guiRobot.waitForEvent(() -> guiRobot.isWindowShown("Birthdays Today"));
-
-        BirthdayNotificationHandle alertDialog = new BirthdayNotificationHandle(guiRobot
-                .getStage("Birthdays Today"));
-
-        assertEquals("", alertDialog.getContentText());
+        return string.toString();
     }
 
 }

@@ -134,7 +134,7 @@ public class XmlAdaptedPersonTest {
         XmlAdaptedPerson person =
                 new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_BIRTHDAY,
                         INVALID_TIMETABLE, VALID_TAGS);
-        String expectedMessage = Timetable.MESSAGE_INVALID_URL;
+        String expectedMessage = Timetable.MESSAGE_URL_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 

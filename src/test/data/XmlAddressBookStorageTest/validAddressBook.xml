@@ -6,6 +6,7 @@
         <email isPrivate="false">alice@example.com</email>
         <address isPrivate="false">123, Jurong West Ave 6, #08-111</address>
         <birthday>01011995</birthday>
+        <timetable isPrivate="false">http://modsn.us/oNZLY</timetable>
         <tagged>friends</tagged>
     </persons>
     <persons>
@@ -14,6 +15,7 @@
         <email isPrivate="false">johnd@example.com</email>
         <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
         <birthday>01011995</birthday>
+        <timetable isPrivate="false">http://modsn.us/ojGeu</timetable>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </persons>

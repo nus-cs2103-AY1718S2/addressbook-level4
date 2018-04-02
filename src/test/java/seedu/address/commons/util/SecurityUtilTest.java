@@ -14,9 +14,10 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.WrongPasswordException;
 
+//@@author yeggasd
 public class SecurityUtilTest {
     private static final File TEST_DATA_FILE = new File("./src/test/data/sandbox/temp");
-    private static final String TEST_DATA = "Test Data";
+    private static final String TEST_DATA = "<xml>";
     private static final String TEST_PASSWORD =  "test";
     private static final String WRONG_PASSWORD = "wrong";
 
@@ -25,13 +26,12 @@ public class SecurityUtilTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void encryptDecrypt_defaultPassword_success() throws Exception {
+    public void decrypt_noPassword_success() throws Exception {
 
         FileWriter writer = new FileWriter(TEST_DATA_FILE);
         writer.write(TEST_DATA);
         writer.close();
 
-        SecurityUtil.encrypt(TEST_DATA_FILE);
         SecurityUtil.decrypt(TEST_DATA_FILE);
 
         Scanner reader = new Scanner(TEST_DATA_FILE);

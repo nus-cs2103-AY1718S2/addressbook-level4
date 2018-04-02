@@ -9,6 +9,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.timetable.Timetable;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -22,6 +23,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_BIRTHDAY = "01011995";
+    public static final String DEFAULT_TIMETABLE = "";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
@@ -29,6 +31,7 @@ public class PersonBuilder {
     private Email email;
     private Address address;
     private Birthday birthday;
+    private Timetable timetable;
     private Set<Tag> tags;
 
     public PersonBuilder() {
@@ -37,6 +40,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         birthday = new Birthday(DEFAULT_BIRTHDAY);
+        timetable = new Timetable(DEFAULT_TIMETABLE);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -49,6 +53,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         birthday = personToCopy.getBirthday();
+        timetable = personToCopy.getTimetable();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -100,8 +105,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code timetable} of the {@code Timetable} that we are building.
+     */
+    public PersonBuilder withTimetable(String timetable) {
+        this.timetable = new Timetable(timetable);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, birthday, , tags);
+        return new Person(name, phone, email, address, birthday, timetable, tags);
     }
 
 }

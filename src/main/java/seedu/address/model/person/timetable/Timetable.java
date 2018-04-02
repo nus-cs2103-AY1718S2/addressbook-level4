@@ -27,9 +27,14 @@ public class Timetable {
 
     public Timetable(String url) {
         requireNonNull(url);
+        this.value = url;
+        if (url.equals("")){    // Create new empty timetable if url is empty
+            this.data = new TimetableData();
+            return;
+        }
+
         checkArgument(isValidUrl(url), MESSAGE_URL_CONSTRAINTS);
 
-        this.value = url;
         try {
             this.data = parseUrl(url);
         } catch (ParseException pe) {

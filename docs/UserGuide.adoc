@@ -280,11 +280,20 @@ Predict the potential spending of the of a new customer.
 Examples:
 
 * `Initially` +
-two customers one with `actualSpending` > 0 while the other with
-`actualSpending` == 0.
+two customers with `actualSpending` > 0 while the other with
+`actualSpending` == 0(actual spending will actually not be shown
+if it is zero).
 
 * `After` +
 The customer with `actualSpending` == 0 now has `expectedSpending` shown.
+
+Other Specification:
+
+*  When adding an new `Person`, the `/as`(Actual Spending) is optional.
+if the actual spending is specified, the person is considered as existing
+customer. Otherwise potential customer. The prediction is to predict
+the potential customer's spending based on the information on the
+existing customers.
 
 === Clearing all entries : `clear`
 

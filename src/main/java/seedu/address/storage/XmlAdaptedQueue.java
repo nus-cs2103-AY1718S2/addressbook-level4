@@ -2,8 +2,6 @@ package seedu.address.storage;
 
 import javax.xml.bind.annotation.XmlValue;
 
-import seedu.address.model.patient.Patient;
-
 /**
  * JAXB-friendly adapted version of the PatientQueue.
  */

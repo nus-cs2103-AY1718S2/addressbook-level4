@@ -90,6 +90,10 @@ public class Recipe {
         return image;
     }
 
+    public boolean isNullImage() {
+        return image.toString().equals(Image.NULL_IMAGE_REFERENCE);
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

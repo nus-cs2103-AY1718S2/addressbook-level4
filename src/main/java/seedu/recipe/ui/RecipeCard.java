@@ -1,5 +1,7 @@
 package seedu.recipe.ui;
 
+import static seedu.recipe.model.recipe.Image.NULL_IMAGE_REFERENCE;
+
 import java.io.FileInputStream;
 
 import javafx.fxml.FXML;
@@ -65,7 +67,7 @@ public class RecipeCard extends UiPart<Region> {
      * Sets the image for {@code imageView}.
      */
     private void setImageView(ImageView imageView) {
-        if (recipe.getImage().toString().equals("-")) {
+        if (recipe.isNullImage()) {
             return;
         }
         try {

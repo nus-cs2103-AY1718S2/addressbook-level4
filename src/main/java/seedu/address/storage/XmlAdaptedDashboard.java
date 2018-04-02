@@ -10,6 +10,7 @@ import seedu.address.model.student.dashboard.Dashboard;
 import seedu.address.model.student.dashboard.Milestone;
 import seedu.address.model.student.dashboard.UniqueMilestoneList;
 
+//@@author yapni
 /**
  * JAXB-friendly adapted version of the Dashboard.
  */

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- @@author yapni -->
 <?import javafx.scene.layout.StackPane?>
 
 <StackPane fx:id="infoPanel" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">

@@ -5,7 +5,7 @@ import java.util.List;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowDefaultPageEvent;
-import seedu.address.commons.events.ui.ShowMultiLocationFromHQEvent;
+import seedu.address.commons.events.ui.ShowMultiLocationFromHeadQuarterEvent;
 import seedu.address.logic.GetDistance;
 import seedu.address.logic.RouteOptimization;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -59,7 +59,7 @@ public class FilterCommand extends Command {
             return new CommandResult(shown);
         }
 
-        EventsCenter.getInstance().post(new ShowMultiLocationFromHQEvent(optimizedRoute));
+        EventsCenter.getInstance().post(new ShowMultiLocationFromHeadQuarterEvent(optimizedRoute));
         //some addresses are invalid
         if (optimizedRoute.size() < numberOfPersonsListed) {
             String shown = getMessageForPersonListShownSummary(numberOfPersonsListed)

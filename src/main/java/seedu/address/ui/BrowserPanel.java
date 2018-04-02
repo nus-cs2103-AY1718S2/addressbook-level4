@@ -17,7 +17,7 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowDefaultPageEvent;
-import seedu.address.commons.events.ui.ShowMultiLocationFromHQEvent;
+import seedu.address.commons.events.ui.ShowMultiLocationFromHeadQuarterEvent;
 import seedu.address.commons.events.ui.ShowRouteFromOneToAnotherEvent;
 import seedu.address.logic.GetDistance;
 
@@ -118,7 +118,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    public void handleShowMultiLocationEvent(ShowMultiLocationFromHQEvent event) {
+    public void handleShowMultiLocationEvent(ShowMultiLocationFromHeadQuarterEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         StringBuilder url = new StringBuilder(SEARCH_PAGE_URL);
         for (String address: event.sortedList) {

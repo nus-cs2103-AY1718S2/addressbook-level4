@@ -7,11 +7,11 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * Show Google map route from HQ to many locations
  */
-public class ShowMultiLocationFromHQEvent extends BaseEvent {
+public class ShowMultiLocationFromHeadQuarterEvent extends BaseEvent {
 
     public final List<String> sortedList;
 
-    public ShowMultiLocationFromHQEvent(List<String> sortedList) {
+    public ShowMultiLocationFromHeadQuarterEvent(List<String> sortedList) {
         this.sortedList = sortedList;
     }
 

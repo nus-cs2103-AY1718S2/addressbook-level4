@@ -71,6 +71,10 @@ public class Imdb implements ReadOnlyImdb {
         this.appointments.setAppointment(appointments);
     }
 
+    public void setQueue(Set<Integer> queueNos) {
+        this.visitingQueue.setVisitingQueue(queueNos);
+    }
+
     /**
      * Resets the existing data of this {@code Imdb} with {@code newData}.
      */
@@ -81,6 +85,7 @@ public class Imdb implements ReadOnlyImdb {
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
         setAppointments(new HashSet<>(newData.getAppointmentList()));
+        setQueue(new HashSet<>(newData.getUniquePatientQueueNo()));
 
         try {
             setPersons(syncedPatientList);

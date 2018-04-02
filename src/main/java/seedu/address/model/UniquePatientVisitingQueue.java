@@ -1,12 +1,15 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
 
@@ -89,5 +92,14 @@ public class UniquePatientVisitingQueue implements Iterable<Integer> {
     public ObservableList<Integer> asObservableList() {
         ObservableList<Integer> patientList = FXCollections.observableArrayList(this.visitingQueue);
         return FXCollections.unmodifiableObservableList(patientList);
+    }
+
+    /**
+     * Replaces the Queue in this list with those in the argument queue list.
+     */
+    public void setVisitingQueue(Set<Integer> queueNos) {
+        requireAllNonNull(queueNos);
+        visitingQueue.addAll(queueNos);
+        assert CollectionUtil.elementsAreUnique(visitingQueue);
     }
 }

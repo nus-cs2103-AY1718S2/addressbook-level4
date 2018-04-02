@@ -24,6 +24,8 @@ public class XmlSerializableImdb {
     @XmlElement
     private List<XmlAdaptedAppointment> appointments;
 
+    @XmlElement
+    private List<XmlAdaptedQueue> queue;
     /**
      * Creates an empty XmlSerializableImdb.
      * This empty constructor is required for marshalling.
@@ -32,6 +34,7 @@ public class XmlSerializableImdb {
         patients = new ArrayList<>();
         tags = new ArrayList<>();
         appointments = new ArrayList<>();
+        queue = new ArrayList<>();
     }
 
     /**
@@ -43,6 +46,7 @@ public class XmlSerializableImdb {
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
         appointments.addAll(src.getAppointmentList().stream().map(XmlAdaptedAppointment::new)
             .collect(Collectors.toList()));
+        queue.addAll(src.getUniquePatientQueueNo().stream().map(XmlAdaptedQueue::new).collect(Collectors.toList()));
     }
 
     /**
@@ -63,6 +67,10 @@ public class XmlSerializableImdb {
         for (XmlAdaptedAppointment appt : appointments) {
             imdb.addAppointment(appt.toModelType());
         }
+
+        for (XmlAdaptedQueue queueNo : queue) {
+            imdb.addPatientToQueue(queueNo.toModelType());
+        }
         return imdb;
     }
 
@@ -78,6 +86,6 @@ public class XmlSerializableImdb {
 
         XmlSerializableImdb otherAb = (XmlSerializableImdb) other;
         return patients.equals(otherAb.patients) && tags.equals(otherAb.tags)
-                && appointments.equals(otherAb.appointments);
+                && appointments.equals(otherAb.appointments) && queue.equals(otherAb.queue);
     }
 }

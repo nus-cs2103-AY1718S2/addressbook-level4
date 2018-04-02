@@ -20,16 +20,10 @@ public class RemovePatientQueueCommand extends Command {
     public static final String MESSAGE_REMOVE_SUCCESS = "%1$s is removed from the waiting list";
     public static final String MESSAGE_PERSON_NOT_FOUND_QUEUE = "Waiting list is empty";
 
-    private final Index targetIndex;
-
-    private Patient patientToRemove;
-
     public RemovePatientQueueCommand() {
-        this.targetIndex = null;
     }
 
     public RemovePatientQueueCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
     }
 
     @Override

@@ -23,6 +23,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.patient.Patient;
+import seedu.address.model.patient.exceptions.DuplicatePatientException;
+import seedu.address.model.patient.exceptions.PatientNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.ImdbBuilder;
 import seedu.address.testutil.PatientBuilder;
@@ -82,7 +84,8 @@ public class ImdbTest {
         // Repeat ALICE twice
         List<Patient> newPatients = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        ImdbStub newData = new ImdbStub(newPatients, newTags);
+        List<Integer> newQueue = new ArrayList<>();
+        ImdbStub newData = new ImdbStub(newPatients, newTags, newQueue);
 
         thrown.expect(AssertionError.class);
         imdb.resetData(newData);
@@ -106,6 +109,44 @@ public class ImdbTest {
         imdb.getUniquePatientQueue().remove(0);
     }
 
+    @Test
+    public void addPatientToQueue_queueUpdate() throws DuplicatePatientException {
+        imdbWithAmyAndBob.addPatientToQueue(1);
+        Imdb expectedImdb = new ImdbBuilder().withPerson(AMY).withPerson(BOB).build();
+
+        expectedImdb.addPatientToQueue(1);
+
+        assertEquals(imdbWithAmyAndBob, expectedImdb);
+    }
+
+    @Test
+    public void addPatientToQueue_duplicateIndex() throws DuplicatePatientException {
+        imdbWithAmyAndBob.addPatientToQueue(1);
+
+        thrown.expect(DuplicatePatientException.class);
+
+        imdbWithAmyAndBob.addPatientToQueue(1);
+    }
+
+    @Test
+    public void removePatientFromQueue_queueUpdate() throws DuplicatePatientException, PatientNotFoundException {
+        imdbWithAmyAndBob.addPatientToQueue(1);
+        Imdb expectedImdb = new ImdbBuilder().withPerson(AMY).withPerson(BOB).build();
+
+        expectedImdb.addPatientToQueue(1);
+
+        imdbWithAmyAndBob.removePatientFromQueue();
+        expectedImdb.removePatientFromQueue();
+
+        assertEquals(imdbWithAmyAndBob, expectedImdb);
+    }
+
+    @Test
+    public void removePatientFromQueue_emptyQueue() throws PatientNotFoundException {
+        thrown.expect(PatientNotFoundException.class);
+        imdbWithAmyAndBob.removePatientFromQueue();
+    }
+
     /**
      * A stub ReadOnlyImdb whose patients and tags lists can violate interface constraints.
      */
@@ -113,12 +154,13 @@ public class ImdbTest {
         private final ObservableList<Patient> patients = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<Appointment> appointments = FXCollections.observableArrayList();
-        private final ObservableList<Patient> visitingQueue = FXCollections.observableArrayList();
+        private final ObservableList<Integer> visitingQueue = FXCollections.observableArrayList();
 
-        ImdbStub(Collection<Patient> patients, Collection<? extends Tag> tags) {
+        ImdbStub(Collection<Patient> patients, Collection<? extends Tag> tags, Collection<Integer> queue) {
             this.patients.setAll(patients);
             this.tags.setAll(tags);
             this.appointments.setAll(appointments);
+            this.visitingQueue.setAll(queue);
         }
 
         @Override
@@ -138,6 +180,11 @@ public class ImdbTest {
 
         @Override
         public ObservableList<Patient> getUniquePatientQueue() {
+            return null;
+        }
+
+        @Override
+        public ObservableList<Integer> getUniquePatientQueueNo() {
             return visitingQueue;
         }
     }

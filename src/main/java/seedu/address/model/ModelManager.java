@@ -15,6 +15,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AppointmentChangedEvent;
 import seedu.address.commons.events.model.ImdbChangedEvent;
 import seedu.address.model.appointment.UniqueAppointmentList;
+import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -29,7 +30,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final Imdb imdb;
     private final FilteredList<Patient> filteredPatients;
-    private final FilteredList<Patient> patientVisitingQueue;
+    private final FilteredList<Integer> patientVisitingQueue;
 
     /**
      * Initializes a ModelManager with the given Imdb and userPrefs.
@@ -42,7 +43,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.imdb = new Imdb(addressBook);
         filteredPatients = new FilteredList<>(this.imdb.getPersonList());
-        patientVisitingQueue = new FilteredList<>(this.imdb.getUniquePatientQueue());
+        patientVisitingQueue = new FilteredList<>(this.imdb.getUniquePatientQueueNo());
     }
 
     public ModelManager() {
@@ -119,9 +120,24 @@ public class ModelManager extends ComponentManager implements Model {
     public Patient getPatientFromList(Predicate<Patient> predicate) {
         filteredPatients.setPredicate(predicate);
         if (filteredPatients.size() > 0) {
-            return filteredPatients.get(0);
+            Patient targetPatient = filteredPatients.get(0);
+            updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            return targetPatient;
         }
         return null;
+    }
+
+    private int getPatientIndex(Predicate<Patient> predicate) throws PatientNotFoundException {
+
+        filteredPatients.setPredicate(predicate);
+        int patientIndex;
+        if (filteredPatients.size() > 0) {
+            patientIndex = filteredPatients.getSourceIndex(0);
+            updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            return patientIndex;
+        }
+
+        throw new PatientNotFoundException();
     }
 
     @Override
@@ -137,17 +153,21 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void addPatientToQueue(Patient patient) throws DuplicatePatientException {
-        requireNonNull(patient);
-        imdb.addPatientToQueue(patient);
+    public synchronized Patient addPatientToQueue(NameContainsKeywordsPredicate predicate) throws
+            DuplicatePatientException, PatientNotFoundException {
+        requireNonNull(predicate);
+        int patientIndex = getPatientIndex(predicate);
+        imdb.addPatientToQueue(patientIndex);
         indicateAddressBookChanged();
+
+        return filteredPatients.get(patientIndex);
     }
 
     @Override
     public synchronized Patient removePatientFromQueue() throws PatientNotFoundException {
-        Patient patientToRemove = imdb.removePatientFromQueue();
+        int patientIndexToRemove = imdb.removePatientFromQueue();
         indicateAddressBookChanged();
-        return patientToRemove;
+        return filteredPatients.get(patientIndexToRemove);
     }
 
     @Override

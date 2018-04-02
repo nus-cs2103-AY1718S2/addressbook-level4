@@ -22,6 +22,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Imdb;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyImdb;
+import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -142,13 +143,14 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addPatientToQueue(Patient patient) throws DuplicatePatientException {
-            //update later
+        public Patient addPatientToQueue(NameContainsKeywordsPredicate predicate) throws DuplicatePatientException {
+            fail("This method should not be called.");
+            return null;
         }
 
         @Override
         public Patient removePatientFromQueue() {
-            //update later
+            fail("This method should not be called.");
             return null;
         }
 

@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -71,6 +72,10 @@ public class Imdb implements ReadOnlyImdb {
         this.appointments.setAppointment(appointments);
     }
 
+    public void setQueue(Set<Integer> queueNos) {
+        this.visitingQueue.setVisitingQueue(queueNos);
+    }
+
     /**
      * Resets the existing data of this {@code Imdb} with {@code newData}.
      */
@@ -81,6 +86,7 @@ public class Imdb implements ReadOnlyImdb {
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
         setAppointments(new HashSet<>(newData.getAppointmentList()));
+        setQueue(new LinkedHashSet<>(newData.getUniquePatientQueueNo()));
 
         try {
             setPersons(syncedPatientList);
@@ -178,23 +184,13 @@ public class Imdb implements ReadOnlyImdb {
      *
      * @throws DuplicatePatientException if an equivalent patient already exists.
      */
-    public void addPatientToQueue(Patient p) throws DuplicatePatientException {
+    public void addPatientToQueue(int p) throws DuplicatePatientException {
         requireNonNull(p);
-        Patient patient = syncWithMasterTagList(p);
-        visitingQueue.add(patient);
+        visitingQueue.add(p);
     }
 
-    public Patient removePatientFromQueue() throws PatientNotFoundException {
+    public int removePatientFromQueue() throws PatientNotFoundException {
         return visitingQueue.removePatient();
-    }
-
-    /**
-     * Remove a patient's appointment
-     * @return true if the appointment is deleted successfully
-     */
-    public boolean deletePatientAppointment(Patient patient, Index index) {
-        requireAllNonNull(patient, index);
-        return patient.deletePatientAppointment(index);
     }
 
     /**
@@ -253,7 +249,37 @@ public class Imdb implements ReadOnlyImdb {
 
     @Override
     public ObservableList<Patient> getUniquePatientQueue() {
+        UniquePatientList patientQueueList = getPatientQueueList();
+        return patientQueueList.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Integer> getUniquePatientQueueNo() {
         return visitingQueue.asObservableList();
+    }
+
+    private UniquePatientList getPatientQueueList() {
+        UniquePatientList queueList = new UniquePatientList();
+
+        for (int patientIndex : visitingQueue.getVisitingQueue()) {
+            try {
+                queueList.add(persons.getPatientByIndex(patientIndex));
+            } catch (DuplicatePatientException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return queueList;
+    }
+
+
+    /**
+     * Remove a patient's appointment
+     * @return true if the appointment is deleted successfully
+     */
+    public boolean deletePatientAppointment(Patient patient, Index index) {
+        requireAllNonNull(patient, index);
+        return patient.deletePatientAppointment(index);
     }
 
     @Override

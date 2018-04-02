@@ -89,4 +89,6 @@
     </patients>
     <tags>friends</tags>
     <tags>owesMoney</tags>
+    <queue>2</queue>
+    <queue>4</queue>
 </imdb>

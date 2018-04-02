@@ -168,6 +168,7 @@ public class XmlAddressBookStorageTest {
         assertEquals(original, new AddressBook(readBack));
     }
 
+    //@@author Caijun7
     @Test
     public void importAddressBook_invalidFileFormat_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
@@ -199,6 +200,7 @@ public class XmlAddressBookStorageTest {
         expected.importPerson(BENSON);
         assertEquals(original, expected);
     }
+    //@@author
 
     @Test
     public void saveAddressBook_nullAddressBook_throwsNullPointerException() {

@@ -111,6 +111,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         }
     }
 
+    //@@author Caijun7
     /**
      * Imports the specified {@code AddressBook} from the filepath to the current {@code AddressBook}.
      *
@@ -138,6 +139,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             throw new DataConversionException(ive);
         }
     }
+    //@@author
 
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException, WrongPasswordException {

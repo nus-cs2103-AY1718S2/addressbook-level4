@@ -9,6 +9,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.building.exceptions.CorruptedVenueInformationException;
 import seedu.address.model.building.exceptions.InvalidWeekScheduleException;
 
+//@@author Caijun7
 /**
  * Represents a Week schedule of a Room in National University of Singapore.
  */

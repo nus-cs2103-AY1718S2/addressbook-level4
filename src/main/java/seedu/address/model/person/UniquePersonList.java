@@ -45,6 +45,7 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.add(toAdd);
     }
 
+    //@@author Caijun7
     /**
      * Adds a person to the list if the person is not a duplicate of an existing person in the list
      */
@@ -54,6 +55,7 @@ public class UniquePersonList implements Iterable<Person> {
             internalList.add(toAdd);
         }
     }
+    //@@author
 
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.

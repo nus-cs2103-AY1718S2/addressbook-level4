@@ -192,6 +192,7 @@ public class MainApp extends Application {
         return initializedPrefs;
     }
 
+    //@@author Caijun7
     /**
      * Initialize {@code nusVenues} and {@code nusBuildingsAndRooms} using the file at
      * {@code storage}'s venue information file path
@@ -214,6 +215,7 @@ public class MainApp extends Application {
         }
 
     }
+    //@@author
 
     private void initEventsCenter() {
         EventsCenter.getInstance().registerHandler(this);

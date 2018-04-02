@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import seedu.address.model.building.Week;
 import seedu.address.model.building.WeekDay;
 
+//@@author Caijun7
 /**
  * A utility class to help with building {@code Week} objects
  */

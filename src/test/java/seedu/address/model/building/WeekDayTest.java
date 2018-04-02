@@ -14,6 +14,7 @@ import seedu.address.model.building.exceptions.CorruptedVenueInformationExceptio
 import seedu.address.model.building.exceptions.InvalidWeekDayScheduleException;
 import seedu.address.testutil.WeekDayBuilder;
 
+//@@author Caijun7
 public class WeekDayTest {
 
     private WeekDay weekDay = new WeekDay();

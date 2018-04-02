@@ -81,6 +81,7 @@ public class AddressBookTest {
         addressBook.getTagList().remove(0);
     }
 
+    //@@author Caijun7-reused
     @Test
     public void updatePerson_detailsChanged_personsAndTagsListUpdated() throws Exception {
         AddressBook addressBookUpdatedToAmy = new AddressBookBuilder().withPerson(BOB).build();
@@ -107,6 +108,7 @@ public class AddressBookTest {
 
         assertEquals(expectedAddressBook, addressBookWithAmyAndBob);
     }
+    //@@author
 
     @Test
     public void createdWithPassword_passwordChanged_passwordChanged() throws Exception {

@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.RecordCommand;
 import seedu.address.logic.commands.RemoveRecordCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 

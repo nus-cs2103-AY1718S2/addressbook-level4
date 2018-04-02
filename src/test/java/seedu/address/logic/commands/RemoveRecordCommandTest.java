@@ -12,9 +12,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -23,13 +20,11 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.record.RecordManager;
 import seedu.address.model.Imdb;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.patient.Patient;
-import seedu.address.model.patient.Record;
 import seedu.address.testutil.PatientBuilder;
 
 public class RemoveRecordCommandTest {
@@ -67,7 +62,8 @@ public class RemoveRecordCommandTest {
         Patient editedPatient = new PatientBuilder(patientInFilteredList)
                 .withRecordList("01/04/2018 s/test i/test t/test").build();
 
-        String expectedMessage = String.format(RemoveRecordCommand.MESSAGE_REMOVE_RECORD_SUCCESS, patientInFilteredList);
+        String expectedMessage = String
+                .format(RemoveRecordCommand.MESSAGE_REMOVE_RECORD_SUCCESS, patientInFilteredList);
 
         Model updatedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
         updatedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
@@ -108,7 +104,8 @@ public class RemoveRecordCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
 
         Patient oldPatient = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient currentPatient = new PatientBuilder(oldPatient).withRecordList("01/04/2018 s/test i/test t/test").build();
+        Patient currentPatient = new PatientBuilder(oldPatient)
+                .withRecordList("01/04/2018 s/test i/test t/test").build();
 
         Model currentModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
         currentModel.updatePerson(model.getFilteredPersonList().get(0), currentPatient);
@@ -161,7 +158,8 @@ public class RemoveRecordCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
 
         Patient oldPatient = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
-        Patient currentPatient = new PatientBuilder(oldPatient).withRecordList("01/04/2018 s/test i/test t/test").build();
+        Patient currentPatient = new PatientBuilder(oldPatient)
+                .withRecordList("01/04/2018 s/test i/test t/test").build();
 
         Model currentModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
         currentModel.updatePerson(model.getFilteredPersonList().get(1), currentPatient);
@@ -218,7 +216,8 @@ public class RemoveRecordCommandTest {
      * Returns an {@code RecordCommand} with parameters {@code index} and {@code descriptor}
      */
     private RemoveRecordCommand prepareCommand(Index patientIndex, int recordIndex, Model model) {
-        RemoveRecordCommand removeRecordCommand = new RemoveRecordCommand(patientIndex, Index.fromZeroBased(recordIndex));
+        RemoveRecordCommand removeRecordCommand = new RemoveRecordCommand(
+                patientIndex, Index.fromZeroBased(recordIndex));
         removeRecordCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return removeRecordCommand;
     }

@@ -1,18 +1,21 @@
 package seedu.address.model.person.timetable;
 
-import seedu.address.logic.parser.exceptions.ParseException;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.timetable.TimetableParserUtil.parseUrl;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Represents a Person's timetable in the address book
+ */
 public class Timetable {
 
-    private static final String NUSMODS_SHORT = "modsn.us";
-    private static final String URL_HOST_REGEX = "\\/\\/.*?\\/";
+    public static final String NUSMODS_SHORT = "modsn.us";
+    public static final String URL_HOST_REGEX = "\\/\\/.*?\\/";
     public static final String MESSAGE_URL_CONSTRAINTS =
             "Timetable URL should only be NUSMods shortened URLs";
     public static final String MESSAGE_INVALID_URL =
@@ -30,13 +33,15 @@ public class Timetable {
         this.value = trimmedUrl;
         try {
             this.data = parseUrl(trimmedUrl);
-        } catch (ParseException pe){
+        } catch (ParseException pe) {
             this.data = new TimetableData(); // Create new empty timetable if url fails
         }
     }
 
     /**
-     * Returns if a url is a valid NUSMods url
+     * Checks if string is a valid shortened NUSMods url
+     * @param test
+     * @return
      */
     public static boolean isValidUrl(String test) {
         Matcher matcher = Pattern.compile(URL_HOST_REGEX).matcher(test);

@@ -1,9 +1,9 @@
 package seedu.address.commons.util.timetable;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import seedu.address.commons.exceptions.NoInternetConnectionException;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.timetable.TimetableData;
+import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.model.person.timetable.Timetable.MESSAGE_INVALID_URL;
+import static seedu.address.model.person.timetable.Timetable.MESSAGE_URL_CONSTRAINTS;
+import static seedu.address.model.person.timetable.Timetable.isValidUrl;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -14,13 +14,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static seedu.address.commons.util.AppUtil.checkArgument;
-import static seedu.address.model.person.timetable.Timetable.MESSAGE_INVALID_URL;
-import static seedu.address.model.person.timetable.Timetable.MESSAGE_URL_CONSTRAINTS;
-import static seedu.address.model.person.timetable.Timetable.isValidUrl;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import seedu.address.commons.exceptions.NoInternetConnectionException;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.timetable.TimetableData;
+
+/**
+ * Utility functions to parse a url into a TimetableData
+ */
 public class TimetableParserUtil {
 
+    /**
+     * Parse
+     * @param url shortened NUSMods url
+     * @return TimetableData
+     * @throws ParseException when parsing
+     */
     public static TimetableData parseUrl(String url) throws ParseException {
         checkArgument(isValidUrl(url), MESSAGE_URL_CONSTRAINTS);
 
@@ -33,6 +43,13 @@ public class TimetableParserUtil {
 
     }
 
+    /**
+     * Attempts to access NUSMods to obtain the full NUSMods url
+     * @param url shortened NUSMods url
+     * @return long url
+     * @throws ParseException
+     * @throws NoInternetConnectionException
+     */
     public static String parseShortUrl (String url) throws ParseException, NoInternetConnectionException {
         try {
             URL shortUrl = new URL(url);
@@ -51,11 +68,17 @@ public class TimetableParserUtil {
             }
 
             return longUrl;
-        } catch (IOException ioe){
+        } catch (IOException ioe) {
             throw new ParseException(MESSAGE_INVALID_URL);
         }
     }
 
+    /**
+     * Parses the full NUSMods link into TimetableData format
+     * @param url Full NUSMods link
+     * @return TimetableData parsed from link
+     * @throws ParseException
+     */
     public static TimetableData parseLongUrl(String url) throws ParseException {
 
         String[] urlParts = url.split("/");
@@ -66,17 +89,25 @@ public class TimetableParserUtil {
         String[] toParse = urlParts[5].split("\\?");
         String[] modules = toParse[1].split("&");
 
-        for(String module: modules){
+        for (String module: modules) {
             lessonsToAddFromModule = parseModule(module, semNum);
-            for (Lesson lessonToAdd: lessonsToAddFromModule){
+            for (Lesson lessonToAdd: lessonsToAddFromModule) {
                 totalLessonList.add(lessonToAdd);
             }
         }
         return new TimetableData(totalLessonList);
     }
 
+    /**
+     *
+     * @param module String that contains module code and lessons selected
+     * @param semNum Semester number
+     * @return ArrayList of lessons taken
+     * @throws ParseException when invalid lessons are received
+     */
     public static ArrayList<Lesson> parseModule(String module, String semNum) throws ParseException {
-        ArrayList<Lesson> lessonListFromApi, lessonsTakenList;
+        ArrayList<Lesson> lessonListFromApi;
+        ArrayList<Lesson> lessonsTakenList;
         lessonsTakenList = new ArrayList<Lesson>();
         String[] moduleInfo = module.split("=");
         String[] semNumToParse = semNum.split("-");
@@ -91,7 +122,7 @@ public class TimetableParserUtil {
             String lessonType = convertShortFormToLong(lessonToParse[0]);
             String lessonNum = lessonToParse[1];
 
-            for (Lesson lessonFromApi: lessonListFromApi){
+            for (Lesson lessonFromApi: lessonListFromApi) {
                 if (lessonType.equalsIgnoreCase(lessonFromApi.getLessonType())
                         && lessonNum.equalsIgnoreCase(lessonFromApi.getClassNo())) {
                     lessonsTakenList.add(lessonFromApi);
@@ -102,13 +133,20 @@ public class TimetableParserUtil {
         return lessonsTakenList;
     }
 
+    /**
+     * Access NUSMods API and obtains and parses the json file
+     * @param moduleCode
+     * @param semNum current semester number
+     * @return Total list of lessons a module has
+     * @throws ParseException
+     */
     public static ArrayList<Lesson> obtainModuleInfoFromApi(String moduleCode, int semNum) throws ParseException {
         LocalDate currentDate = LocalDate.now();
         String acadYear;
 
         // Calculate current academic year
         if (currentDate.getMonthValue() <= 6) {
-            acadYear = (currentDate.getYear()-1) + "-" + (currentDate.getYear());
+            acadYear = (currentDate.getYear() - 1) + "-" + (currentDate.getYear());
         } else {
             acadYear = currentDate.getYear() + "-" + (currentDate.getYear() + 1);
         }
@@ -140,36 +178,40 @@ public class TimetableParserUtil {
         }
     }
 
+    /**
+     * Helper method to convert the short form (in url) to the lengthened form (in json file)
+     * @param shortform shortform in url
+     * @return String Full form of shortform
+     * @throws ParseException when invalid shortform
+     */
     private static String convertShortFormToLong(String shortform) throws ParseException {
         switch (shortform) {
-            case "LEC":
-                return "Lecture";
+        case "LEC":
+            return "Lecture";
 
-            case "TUT":
-                return "Tutorial";
+        case "TUT":
+            return "Tutorial";
 
-            case "LAB":
-                return "Laboratory";
+        case "LAB":
+            return "Laboratory";
 
-            case "SEM":
-                return "Seminar-Style Module Class";
+        case "SEM":
+            return "Seminar-Style Module Class";
 
-            case "SEC":
-                return "Sectional Teaching";
+        case "SEC":
+            return "Sectional Teaching";
 
-            case "REC":
-                return "Recitation";
+        case "REC":
+            return "Recitation";
 
-            case "TUT2":
-                return "Tutorial Type 2";
+        case "TUT2":
+            return "Tutorial Type 2";
 
-            case "TUT3":
-                return "Tutorial Type 3";
+        case "TUT3":
+            return "Tutorial Type 3";
 
-            default:
-                throw new ParseException("Error converting invalid shortform");
+        default:
+            throw new ParseException("Error converting invalid shortform");
         }
     }
-
-
 }

@@ -1,9 +1,14 @@
 package seedu.address.model.person.timetable;
 
-import seedu.address.commons.util.timetable.Lesson;
+import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 
+import seedu.address.commons.util.timetable.Lesson;
+
+/**
+ * Represents the data of the timetable
+ */
 public class TimetableData {
 
     public static final int EVEN_WEEK_INDEX = 0;
@@ -13,26 +18,32 @@ public class TimetableData {
 
     private TimetableWeek[] evenOddWeek;
 
-    public TimetableData(){
+    // Empty constructor
+    public TimetableData() {
         constructEmptyData();
     }
 
-    public TimetableData(ArrayList<Lesson> lessonsToAdd){
+    // Constructor with arraylist
+    public TimetableData(ArrayList<Lesson> lessonsToAdd) {
         constructEmptyData();
+        requireNonNull(lessonsToAdd);
 
         // Immediate adding of lessons
-        for (Lesson lessonToAdd: lessonsToAdd){
-            if (lessonToAdd.getWeekType().equalsIgnoreCase(EVEN_WEEK_IDENTIFIER)){
+        for (Lesson lessonToAdd: lessonsToAdd) {
+            if (lessonToAdd.getWeekType().equalsIgnoreCase(EVEN_WEEK_IDENTIFIER)) {
                 evenOddWeek[EVEN_WEEK_INDEX].addLessonToWeek(lessonToAdd);
-            } else if (lessonToAdd.getWeekType().equalsIgnoreCase(ODD_WEEK_IDENTIFIER)){
+            } else if (lessonToAdd.getWeekType().equalsIgnoreCase(ODD_WEEK_IDENTIFIER)) {
                 evenOddWeek[ODD_WEEK_INDEX].addLessonToWeek(lessonToAdd);
             }
         }
     }
 
-    private void constructEmptyData(){
+    /**
+     * Constructs a empty structure for Timetable
+     */
+    private void constructEmptyData() {
         evenOddWeek = new TimetableWeek[2];
-        for (TimetableWeek timetableWeek: evenOddWeek){
+        for (TimetableWeek timetableWeek: evenOddWeek) {
             timetableWeek = new TimetableWeek();
         }
     }

@@ -2,7 +2,9 @@ package seedu.address.model.person.timetable;
 
 import seedu.address.commons.util.timetable.Lesson;
 
-
+/**
+ * Represents a week in the timetable
+ */
 public class TimetableWeek {
 
     public static final int MONDAY_INDEX = 0;
@@ -19,36 +21,40 @@ public class TimetableWeek {
 
     private TimetableDay[] timetableDays;
 
-    public TimetableWeek(){
+    public TimetableWeek() {
         timetableDays = new TimetableDay[5];
-        for (TimetableDay timetableDay: timetableDays){
+        for (TimetableDay timetableDay: timetableDays) {
             timetableDay = new TimetableDay();
         }
     }
 
-    public void addLessonToWeek(Lesson lesson){
+    /**
+     * Add lesson to its respective day
+     * @param lesson Lesson
+     */
+    public void addLessonToWeek(Lesson lesson) {
         switch (lesson.getDay()) {
-            case MONDAY_IDENTIFIER:
-                timetableDays[MONDAY_INDEX].addLessontoDay(lesson);
-                break;
+        case MONDAY_IDENTIFIER:
+            timetableDays[MONDAY_INDEX].addLessontoDay(lesson);
+            break;
 
-            case TUESDAY_IDENTIFIER:
-                timetableDays[TUESDAY_INDEX].addLessontoDay(lesson);
-                break;
+        case TUESDAY_IDENTIFIER:
+            timetableDays[TUESDAY_INDEX].addLessontoDay(lesson);
+            break;
 
-            case WEDNESDAY_IDENTIFIER:
-                timetableDays[WEDNESDAY_INDEX].addLessontoDay(lesson);
-                break;
+        case WEDNESDAY_IDENTIFIER:
+            timetableDays[WEDNESDAY_INDEX].addLessontoDay(lesson);
+            break;
 
-            case THURSDAY_IDENTIFIER:
-                timetableDays[THURSDAY_INDEX].addLessontoDay(lesson);
-                break;
+        case THURSDAY_IDENTIFIER:
+            timetableDays[THURSDAY_INDEX].addLessontoDay(lesson);
+            break;
 
-            case FRIDAY_IDENTIFIER:
-                timetableDays[FRIDAY_INDEX].addLessontoDay(lesson);
-                break;
+        case FRIDAY_IDENTIFIER:
+            timetableDays[FRIDAY_INDEX].addLessontoDay(lesson);
+            break;
 
-            default:
+        default:
 
         }
     }

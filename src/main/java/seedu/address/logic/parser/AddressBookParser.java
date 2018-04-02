@@ -7,7 +7,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
-
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddLessonCommand;
 import seedu.address.logic.commands.AddMilestoneCommand;
@@ -15,11 +14,11 @@ import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.logic.commands.CheckTaskCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-//import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.ConversationCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteLessonCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditPictureCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FavouriteCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -35,6 +34,8 @@ import seedu.address.logic.commands.ShowDashboardCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnfavouriteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+
+//import seedu.address.logic.commands.CommandResult;
 //import seedu.address.ui.ResultDisplay;
 
 /**
@@ -124,6 +125,10 @@ public class AddressBookParser {
 
         case UnfavouriteCommand.COMMAND_WORD:
             return new UnfavouriteCommandParser().parse(arguments);
+
+        //@@ samuelloh
+        case EditPictureCommand.COMMAND_WORD:
+            return new EditPictureCommandParser().parse(arguments);
 
         //@@ chweeee
         case "assistant":

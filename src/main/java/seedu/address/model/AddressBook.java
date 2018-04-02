@@ -147,7 +147,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return new Student(
                 student.getUniqueKey(), student.getName(), student.getPhone(), student.getEmail(),
                 student.getAddress(), student.getProgrammingLanguage(), correctTagReferences,
-                student.getFavourite(), student.getDashboard());
+                student.getFavourite(), student.getDashboard(), student.getProfilePicturePath());
     }
 
     /**
@@ -193,7 +193,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         Student newStudent =
                 new Student(student.getName(), student.getPhone(), student.getEmail(), student.getAddress(),
-                        student.getProgrammingLanguage(), newTags);
+                        student.getProgrammingLanguage(), newTags, student.getFavourite(), student.getDashboard(),
+                        student.getProfilePicturePath());
 
         try {
             updateStudent(student, newStudent);

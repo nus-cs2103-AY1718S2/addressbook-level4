@@ -67,4 +67,7 @@ public interface Model {
 
     void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException;
 
+    void updateProfilePicture(Student target, Student editedStudent)
+        throws DuplicateStudentException, StudentNotFoundException;
+
 }

@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.programminglanguage.ProgrammingLanguage;
+import seedu.address.model.student.MiscellaneousInfo.ProfilePicturePath;
 import seedu.address.model.student.dashboard.Dashboard;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -26,9 +27,10 @@ public class Student {
     private final Dashboard dashboard;
     private UniqueKey uniqueKey;
     private final UniqueTagList tags;
+    private final ProfilePicturePath profilePicturePath;
 
     /**
-     * Every field must be present and not null. For when dashboard and favourite is not initialised
+     * Every field must be present and not null. For when dashboard, favourite and profilePictureURL is not initialised
      */
     public Student(Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
                    Set<Tag> tags) {
@@ -42,13 +44,14 @@ public class Student {
         this.tags = new UniqueTagList(tags);
         this.favourite = new Favourite(false); // Default value
         this.dashboard = new Dashboard();
+        this.profilePicturePath = new ProfilePicturePath(ProfilePicturePath.DEFAULT_PROFILE_PICTURE);
     }
 
     /**
      * Every field must be present and not null. For when dashboard is not initialised
      */
     public Student(Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
-                   Set<Tag> tags, Favourite fav) {
+                   Set<Tag> tags, Favourite fav, ProfilePicturePath profilePicturePath) {
         requireAllNonNull(name, phone, email, address, tags, fav);
         this.name = name;
         this.phone = phone;
@@ -59,10 +62,11 @@ public class Student {
         this.tags = new UniqueTagList(tags);
         this.favourite = fav;
         this.dashboard = new Dashboard();
+        this.profilePicturePath = profilePicturePath;
     }
 
     /**
-     * Every field must be present and not null. For when all attributes can be passed in as parameters
+     *Every field must be present and not null. For when {@code profilePicturePath} is not initialised.
      */
     public Student(Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
                    Set<Tag> tags, Favourite fav, Dashboard dashboard) {
@@ -76,6 +80,28 @@ public class Student {
         this.tags = new UniqueTagList(tags);
         this.favourite = fav;
         this.dashboard = dashboard;
+        this.profilePicturePath = new ProfilePicturePath(ProfilePicturePath.DEFAULT_PROFILE_PICTURE);
+    }
+
+
+
+    /**
+     * Every field must be present and not null. For when all attributes can be passed in as parameters
+     */
+    public Student(Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
+                   Set<Tag> tags, Favourite fav, Dashboard dashboard,
+                   ProfilePicturePath profilePicturePath) {
+        requireAllNonNull(name, phone, email, address, tags, fav);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.programmingLanguage = programmingLanguage;
+        this.tags = new UniqueTagList(tags);
+        this.favourite = fav;
+        this.dashboard = dashboard;
+        this.profilePicturePath = profilePicturePath;
     }
 
     /**
@@ -97,13 +123,15 @@ public class Student {
         this.tags = new UniqueTagList(tags);
         this.favourite = new Favourite(false); // Default value
         this.dashboard = new Dashboard();
+        this.profilePicturePath = getProfilePicturePath();
     }
 
     /**
      * Every field must be present and not null. For when dashboard is not initialised
      */
     public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email, Address address,
-                   ProgrammingLanguage programmingLanguage, Set<Tag> tags, Favourite fav) {
+                   ProgrammingLanguage programmingLanguage, Set<Tag> tags,
+                   ProfilePicturePath profilePicturePath, Favourite fav) {
         requireAllNonNull(uniqueKey, name, phone, email, address, tags, fav);
         this.uniqueKey = uniqueKey;
         this.name = name;
@@ -115,14 +143,15 @@ public class Student {
         this.tags = new UniqueTagList(tags);
         this.favourite = fav;
         this.dashboard = new Dashboard();
+        this.profilePicturePath = profilePicturePath;
     }
 
     /** TODO RequireNonNull for uniquekey
      * Every field must be present and not null. For when all attributes can be passed in as parameters
      */
     public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email,
-                   Address address, ProgrammingLanguage programmingLanguage,
-                   Set<Tag> tags, Favourite fav, Dashboard dashboard) {
+                   Address address, ProgrammingLanguage programmingLanguage, Set<Tag> tags, Favourite fav,
+                   Dashboard dashboard, ProfilePicturePath profilePicturePath) {
         requireAllNonNull(name, phone, email, address, tags, fav);
         this.uniqueKey = uniqueKey;
         this.name = name;
@@ -134,8 +163,27 @@ public class Student {
         this.tags = new UniqueTagList(tags);
         this.favourite = fav;
         this.dashboard = dashboard;
+        this.profilePicturePath = profilePicturePath;
     }
 
+    /**
+     *Every field must be present and not null. For when {@code profilePicturePath} is not initialised.
+     */
+    public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email, Address address,
+                   ProgrammingLanguage programmingLanguage,
+                   Set<Tag> tags, Favourite fav, Dashboard dashboard) {
+        requireAllNonNull(uniqueKey, name, phone, email, address, tags, fav);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.programmingLanguage = programmingLanguage;
+        this.tags = new UniqueTagList(tags);
+        this.favourite = fav;
+        this.dashboard = dashboard;
+        this.profilePicturePath = new ProfilePicturePath(ProfilePicturePath.DEFAULT_PROFILE_PICTURE);
+    }
 
 
     public Name getName() {
@@ -164,6 +212,10 @@ public class Student {
 
     public UniqueKey getUniqueKey() {
         return uniqueKey;
+    }
+
+    public ProfilePicturePath getProfilePicturePath() {
+        return profilePicturePath;
     }
 
     /**

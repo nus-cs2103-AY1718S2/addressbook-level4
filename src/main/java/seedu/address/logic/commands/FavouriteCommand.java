@@ -12,6 +12,7 @@ import seedu.address.model.programminglanguage.ProgrammingLanguage;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Email;
 import seedu.address.model.student.Favourite;
+import seedu.address.model.student.MiscellaneousInfo.ProfilePicturePath;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
@@ -83,7 +84,8 @@ public class FavouriteCommand extends UndoableCommand {
         ProgrammingLanguage programmingLanguage = target.getProgrammingLanguage();
         Favourite fav = new Favourite(true);
         Dashboard dashboard = target.getDashboard();
+        ProfilePicturePath profilePicturePath = target.getProfilePicturePath();
 
-        return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard);
+        return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard, profilePicturePath);
     }
 }

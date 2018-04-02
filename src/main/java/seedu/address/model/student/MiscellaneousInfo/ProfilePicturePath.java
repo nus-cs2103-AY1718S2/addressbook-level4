@@ -3,31 +3,35 @@ package seedu.address.model.student.MiscellaneousInfo;
 import static java.util.Objects.requireNonNull;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-public class ProfilePictureUrl {
+public class ProfilePicturePath {
 
-    private final URL profilePictureUrl;
+    private final Path profilePicturePath;
 
     public static final String MESSAGE_PICTURE_CONSTRAINTS =
             "File URL must exist and have extensions of '.jpg' or '.png' only.";
+    public static final String DEFAULT_PROFILE_PICTURE =
+            "out/production/resources/images/profile_photo_placeholder.png";
 
-    public ProfilePictureUrl (String url) throws MalformedURLException {
-        requireNonNull(url);
+    public static final String INVALID_PICTURE_URL = "The URL entered for the picture is invalid or corrupted";
 
-        profilePictureUrl = new URL(url);
+    public ProfilePicturePath(String filePath) {
+        requireNonNull(filePath);
+        profilePicturePath = Paths.get(filePath);
     }
 
     /**
      * Checks if file extension is either 'jpg' or 'png'
+     *
      * @param filePath
      * @return True if extensions are as above. False if otherwise
      */
     public static boolean checkPictureExtension(String filePath) {
         String extension;
 
-        if(filePath.lastIndexOf(".") != -1 && filePath.lastIndexOf(".") != 0) {
+        if (filePath.lastIndexOf(".") != -1 && filePath.lastIndexOf(".") != 0) {
             extension = filePath.substring(filePath.lastIndexOf(".") + 1);
             return extension.equals("jpg") || extension.equals("png");
         }
@@ -41,9 +45,13 @@ public class ProfilePictureUrl {
      */
     public static boolean isValidUrl(String test) {
         File testFile = new File(test);
-        if(!testFile.exists()){
+        if (!testFile.exists()) {
             return false;
         }
-        return ProfilePictureUrl.checkPictureExtension(testFile.getPath());
+        return ProfilePicturePath.checkPictureExtension(testFile.getPath());
+    }
+
+    public Path getProfilePicturePath() {
+        return profilePicturePath;
     }
 }

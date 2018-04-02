@@ -17,7 +17,7 @@ import seedu.address.model.lesson.Time;
 import seedu.address.model.programminglanguage.ProgrammingLanguage;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Email;
-import seedu.address.model.student.MiscellaneousInfo.ProfilePictureUrl;
+import seedu.address.model.student.MiscellaneousInfo.ProfilePicturePath;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.dashboard.Date;
@@ -263,19 +263,19 @@ public class ParserUtil {
         return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
     }
 
-    public static Optional<ProfilePictureUrl> parsePictureUrl(Optional<String> url) throws MalformedURLException,
+    public static Optional<ProfilePicturePath> parsePictureUrl(Optional<String> url) throws MalformedURLException,
             IllegalValueException {
 
         requireNonNull(url);
         return url.isPresent() ? Optional.of(parsePictureUrl(url.get())) : Optional.empty();
     }
 
-    public static ProfilePictureUrl parsePictureUrl(String url) throws MalformedURLException, IllegalValueException {
+    public static ProfilePicturePath parsePictureUrl(String url) throws MalformedURLException, IllegalValueException {
         requireNonNull(url);
-        if(!ProfilePictureUrl.isValidUrl(url)) {
-            throw new IllegalValueException(ProfilePictureUrl.MESSAGE_PICTURE_CONSTRAINTS);
+        if(!ProfilePicturePath.isValidUrl(url)) {
+            throw new IllegalValueException(ProfilePicturePath.MESSAGE_PICTURE_CONSTRAINTS);
         }
-        return new ProfilePictureUrl(url);
+        return new ProfilePicturePath(url);
     }
 
 }

@@ -1,21 +1,27 @@
 package seedu.address.storage;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
-
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.ScheduleChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.storage.ProfilePictureChangeEvent;
 import seedu.address.commons.events.storage.RequiredStudentIndexChangeEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.student.MiscellaneousInfo.ProfilePicturePath;
+import seedu.address.model.student.UniqueKey;
 
 /**
  * Manages storage of AddressBook data in local storage.
@@ -27,6 +33,7 @@ public class StorageManager extends ComponentManager implements Storage {
     private UserPrefsStorage userPrefsStorage;
     private XmlRequiredIndexStorage  xmlRequiredIndexStorage;
     private ScheduleStorage scheduleStorage;
+    private ProfilePictureStorage profilePictureStorage;
 
 
     public StorageManager(AddressBookStorage addressBookStorage,
@@ -36,6 +43,7 @@ public class StorageManager extends ComponentManager implements Storage {
         this.userPrefsStorage = userPrefsStorage;
         xmlRequiredIndexStorage = new XmlRequiredIndexStorage("out/production/resources/view/requiredStudentIndex.xml");
         this.scheduleStorage = scheduleStorage;
+        profilePictureStorage = new ProfilePictureStorage("data/profilePictures");
 
     }
 
@@ -94,7 +102,8 @@ public class StorageManager extends ComponentManager implements Storage {
     @Override
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local addressbook data changed, saving to file"));
+        logger.info(LogsCenter.getEventHandlingLogMessage(event,
+                "Local addressbook data changed, saving to file"));
         try {
             saveAddressBook(event.data);
         } catch (IOException e) {
@@ -104,7 +113,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
 
     /**
-     *  Saves the required index of the {@code Student}
+     * Saves the required index of the {@code Student}
      * @param newIndex
      * @throws IOException
      */
@@ -116,8 +125,8 @@ public class StorageManager extends ComponentManager implements Storage {
 
     /**
      * Handles the event where the required student index for displaying misc info is changed
-     * @param event
      */
+    @Override
     @Subscribe
     public void handleRequiredStudentIndexChangedEvent(RequiredStudentIndexChangeEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
@@ -126,6 +135,61 @@ public class StorageManager extends ComponentManager implements Storage {
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
+    }
+
+    /**
+     * Saves the new profile picture of the {@code Student}
+     * @throws IOException
+     */
+    public void saveProfilePicture(ProfilePicturePath pathToChangeTo, UniqueKey uniqueKey) throws IOException {
+        ensureProfilePictureStorageExist();
+
+        Path newPath = pathToChangeTo.getProfilePicturePath();
+        int extensionSeparator = newPath.toString().lastIndexOf(".");
+        String extension = newPath.toString().substring(extensionSeparator);
+        // Done to obtain the specific extension (jpg/png) of the file
+
+        Path studentPictureFilePath = Paths.get(profilePictureStorage.getFilePath() + "/" + uniqueKey.toString());
+        deleteExistingProfilePicture(studentPictureFilePath);
+        Path studentPictureFilePathWithExtension = Paths.get(studentPictureFilePath.toString() + extension);
+        logger.fine("Attempting to write to data file: data/" + uniqueKey.toString());
+
+        Files.copy(newPath, studentPictureFilePathWithExtension);
+
+    }
+
+    private void deleteExistingProfilePicture(Path studentPictureFilePath) {
+        File tobeReplacedWithJpg = new File(studentPictureFilePath.toString() + ".jpg");
+        File tobeReplacedWithPng = new File(studentPictureFilePath.toString() + ".png");
+
+        if(tobeReplacedWithJpg.exists())
+            tobeReplacedWithJpg.delete();
+        else
+            tobeReplacedWithPng.delete();
+
+    }
+
+    /**
+     * Makes a picture storage folder if it does not already exist.
+     */
+    private void ensureProfilePictureStorageExist() {
+        if(!profilePictureStorage.storageFileExist()) {
+            File pictureStorage = new File(profilePictureStorage.getFilePath());
+            pictureStorage.mkdir();
+
+        }
+    }
+
+    @Override
+    @Subscribe
+    public void handleProfilePictureChangeEvent(ProfilePictureChangeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
+    try {
+        saveProfilePicture(event.getUrlToChangeTo(), event.getUniqueKey());
+    } catch (IOException e) {
+        raise(new DataSavingExceptionEvent(e));
+    }
+
     }
 
     // ================ Schedule methods ==============================

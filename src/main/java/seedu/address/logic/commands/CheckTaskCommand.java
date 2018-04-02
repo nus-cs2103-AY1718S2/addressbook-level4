@@ -18,6 +18,7 @@ import seedu.address.model.programminglanguage.ProgrammingLanguage;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Email;
 import seedu.address.model.student.Favourite;
+import seedu.address.model.student.MiscellaneousInfo.ProfilePicturePath;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
@@ -138,6 +139,7 @@ public class CheckTaskCommand extends UndoableCommand {
         Set<Tag> tags = studentToEdit.getTags();
         ProgrammingLanguage programmingLanguage = studentToEdit.getProgrammingLanguage();
         Favourite fav = studentToEdit.getFavourite();
+        ProfilePicturePath profilePicturePath = studentToEdit.getProfilePicturePath();
         UniqueMilestoneList milestoneList = studentToEdit.getDashboard().getMilestoneList();
         UniqueHomeworkList homeworkList = studentToEdit.getDashboard().getHomeworkList();
 
@@ -159,7 +161,8 @@ public class CheckTaskCommand extends UndoableCommand {
 
         Dashboard newDashboard = new Dashboard(milestoneList, homeworkList);
 
-        return new Student(name, phone, email, address, programmingLanguage, tags, fav, newDashboard);
+        return new Student(name, phone, email, address, programmingLanguage, tags, fav, newDashboard,
+                profilePicturePath);
     }
 
     /**

@@ -24,6 +24,7 @@ import seedu.address.model.programminglanguage.ProgrammingLanguage;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Email;
 import seedu.address.model.student.Favourite;
+import seedu.address.model.student.MiscellaneousInfo.ProfilePicturePath;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
@@ -118,9 +119,10 @@ public class EditCommand extends UndoableCommand {
         Set<Tag> updatedTags = editStudentDescriptor.getTags().orElse(studentToEdit.getTags());
         Favourite isFavourite = studentToEdit.getFavourite();
         Dashboard dashboard = studentToEdit.getDashboard();
+        ProfilePicturePath profilePicturePath = studentToEdit.getProfilePicturePath();
 
         return new Student(uniqueKey, updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedProgrammingLanguage, updatedTags, isFavourite, dashboard);
+                updatedProgrammingLanguage, updatedTags, isFavourite, dashboard, profilePicturePath);
     }
 
     @Override

@@ -17,6 +17,7 @@ import seedu.address.model.programminglanguage.ProgrammingLanguage;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Email;
 import seedu.address.model.student.Favourite;
+import seedu.address.model.student.MiscellaneousInfo.ProfilePicturePath;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
@@ -130,6 +131,7 @@ public class AddTaskCommand extends UndoableCommand {
         Favourite fav = studentToEdit.getFavourite();
         UniqueMilestoneList milestoneList = studentToEdit.getDashboard().getMilestoneList();
         UniqueHomeworkList homeworkList = studentToEdit.getDashboard().getHomeworkList();
+        ProfilePicturePath profilePicturePath = studentToEdit.getProfilePicturePath();
 
         /* Get the components that needs to be modified */
         Milestone targetMilestone = milestoneList.get(milestoneIndex);
@@ -146,7 +148,7 @@ public class AddTaskCommand extends UndoableCommand {
 
         Dashboard dashboard = new Dashboard(milestoneList, homeworkList);
 
-        return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard);
+        return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard, profilePicturePath);
     }
 
     @Override

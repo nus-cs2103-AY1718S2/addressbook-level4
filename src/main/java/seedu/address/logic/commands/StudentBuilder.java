@@ -1,5 +1,8 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.student.MiscellaneousInfo.ProfilePicturePath.DEFAULT_PROFILE_PICTURE;
+
+import java.net.MalformedURLException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,6 +10,7 @@ import seedu.address.model.programminglanguage.ProgrammingLanguage;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Email;
 import seedu.address.model.student.Favourite;
+import seedu.address.model.student.MiscellaneousInfo.ProfilePicturePath;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
@@ -25,6 +29,7 @@ public class StudentBuilder {
     public static final String DEFAULT_PROGRAMMING_LANGUAGE = "Java";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_FAVOURITE = "false";
+    public static final String DEFAULT_PROFILE_PICTURE_URL = DEFAULT_PROFILE_PICTURE;
 
     private Name name;
     private Phone phone;
@@ -33,8 +38,9 @@ public class StudentBuilder {
     private ProgrammingLanguage programmingLanguage;
     private Set<Tag> tags;
     private Favourite favourite;
+    private ProfilePicturePath profilePicturePath;
 
-    public StudentBuilder() {
+    public StudentBuilder() throws MalformedURLException {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
@@ -42,6 +48,7 @@ public class StudentBuilder {
         programmingLanguage = new ProgrammingLanguage(DEFAULT_PROGRAMMING_LANGUAGE);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
         favourite = new Favourite(DEFAULT_FAVOURITE);
+        profilePicturePath = new ProfilePicturePath(DEFAULT_PROFILE_PICTURE_URL);
     }
 
     /**
@@ -55,6 +62,7 @@ public class StudentBuilder {
         programmingLanguage = studentToCopy.getProgrammingLanguage();
         tags = new HashSet<>(studentToCopy.getTags());
         favourite = studentToCopy.getFavourite();
+        profilePicturePath = studentToCopy.getProfilePicturePath();
     }
 
     /**
@@ -113,8 +121,16 @@ public class StudentBuilder {
         return this;
     }
 
-    public Student build() {
-        return new Student(name, phone, email, address, programmingLanguage, tags, favourite);
+    /**
+     * Sets the {@code profilePicturePath} of the {@code Student} that we are building.
+     */
+    public StudentBuilder withProfilePictureUrl(String url) throws MalformedURLException {
+        this.profilePicturePath = new ProfilePicturePath(url);
+        return this;
+    }
+
+    public Student build() throws MalformedURLException {
+        return new Student(name, phone, email, address, programmingLanguage, tags, favourite, profilePicturePath);
     }
 
 }

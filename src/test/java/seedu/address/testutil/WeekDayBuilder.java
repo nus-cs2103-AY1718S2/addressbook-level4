@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import seedu.address.model.building.WeekDay;
 
+//@@author Caijun7
 /**
  * A utility class to help with building {@code WeekDay} objects
  */

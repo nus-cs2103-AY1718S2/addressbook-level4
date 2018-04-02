@@ -5,6 +5,7 @@ import java.util.HashMap;
 import seedu.address.model.building.Room;
 import seedu.address.model.building.Week;
 
+//@@author Caijun7
 /**
  * A utility class to help with building {@code Room} objects
  */

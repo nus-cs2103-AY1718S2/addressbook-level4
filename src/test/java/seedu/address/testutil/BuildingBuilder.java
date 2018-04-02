@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import seedu.address.model.building.Building;
 
+//@@author Caijun7
 /**
  * A utility class to help with building {@code Building} objects
  */

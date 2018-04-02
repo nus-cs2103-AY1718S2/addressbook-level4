@@ -55,7 +55,7 @@ public class WeekDay {
      *
      * @throws CorruptedVenueInformationException if the weekday schedule format is not as expected.
      */
-    public ArrayList<String> retrieveWeekDayRoomSchedule() throws CorruptedVenueInformationException {
+    public ArrayList<String> retrieveWeekDaySchedule() throws CorruptedVenueInformationException {
         try {
             isValidWeekDaySchedule();
             ArrayList<String> weekDayScheduleList = new ArrayList<>();

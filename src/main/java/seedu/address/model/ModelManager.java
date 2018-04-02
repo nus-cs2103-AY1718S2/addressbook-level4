@@ -96,15 +96,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
-                                                                                CorruptedVenueInformationException {
-        if (!Building.isValidBuilding(building)) {
-            throw new BuildingNotFoundException();
-        }
-        return building.retrieveAllRoomsSchedule();
-    }
-
-    @Override
     public void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
@@ -160,6 +151,17 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    //=========== Vacant Room Finder ==========================================================================
+
+    @Override
+    public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
+            CorruptedVenueInformationException {
+        if (!Building.isValidBuilding(building)) {
+            throw new BuildingNotFoundException();
+        }
+        return building.retrieveAllRoomsSchedule();
     }
 
     @Override

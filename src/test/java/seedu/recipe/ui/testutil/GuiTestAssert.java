@@ -24,7 +24,6 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getName(), actualCard.getName());
         assertEquals(expectedCard.getPreparationTime(), actualCard.getPreparationTime());
         assertEquals(expectedCard.getUrl(), actualCard.getUrl());
-        assertEquals(expectedCard.getImage(), actualCard.getImage());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 

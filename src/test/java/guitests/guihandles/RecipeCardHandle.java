@@ -73,10 +73,6 @@ public class RecipeCardHandle extends NodeHandle<Node> {
         return urlLabel.getText();
     }
 
-    public String getImage() {
-        return imageView.getImage().toString();
-    }
-
     public List<String> getTags() {
         return tagLabels
                 .stream()

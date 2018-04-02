@@ -101,7 +101,7 @@ public class InfoPanel extends UiPart<Region> {
     @Subscribe
     private void handleGoogleMapsEvent(GoogleMapsEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mapsDisplay.loadMapPage("510192 to 670201");
+        mapsDisplay.loadMapPage("117584 to 117417");
 
         mapsPlaceholder.toFront();
     }

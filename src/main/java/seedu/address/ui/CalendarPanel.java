@@ -2,10 +2,7 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import com.calendarfx.view.CalendarView;
-
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
@@ -21,15 +18,14 @@ public class CalendarPanel extends UiPart<Region> {
     @FXML
     private StackPane calendarView;
 
-    private CalendarView calendar;
-
     public CalendarPanel() {
         super(FXML);
-        calendar = new CalendarView();
+
         setConnections();
+        registerAsAnEventHandler(this);
     }
 
     private void setConnections() {
-        calendarView.setAlignment(calendar, Pos.CENTER);
+
     }
 }

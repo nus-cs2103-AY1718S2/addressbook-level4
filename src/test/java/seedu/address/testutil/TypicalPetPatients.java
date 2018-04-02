@@ -1,5 +1,12 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.commands.CommandTestUtil.VALID_BLOODTYPE_NERO;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_BREED_NERO;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_COLOUR_NERO;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_NERO;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SPECIES_NERO;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +36,26 @@ public class TypicalPetPatients {
             .withColour("Brown and White")
             .withBloodType("O")
             .withOwnerNric(TypicalPersons.BENSON.getNric().toString())
+            .withTags(new String[]{}).build();
+
+    // Manually added
+    public static final PetPatient KARUPIN = new PetPatientBuilder()
+            .withName("Karupin")
+            .withSpecies("Cat")
+            .withBreed("Himalayan")
+            .withColour("Sealpoint")
+            .withBloodType("AB")
+            .withOwnerNric(TypicalPersons.ELLE.getNric().toString())
+            .withTags(new String[]{}).build();
+
+    // Manually added - Pet Patient's details found in {@code CommandTestUtil}
+    public static final PetPatient NERO = new PetPatientBuilder()
+            .withName(VALID_NAME_NERO)
+            .withSpecies(VALID_SPECIES_NERO)
+            .withBreed(VALID_BREED_NERO)
+            .withColour(VALID_COLOUR_NERO)
+            .withBloodType(VALID_BLOODTYPE_NERO)
+            .withOwnerNric(VALID_NRIC_BOB)
             .withTags(new String[]{}).build();
 
     private TypicalPetPatients() {}

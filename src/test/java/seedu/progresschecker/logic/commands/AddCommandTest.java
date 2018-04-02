@@ -16,12 +16,14 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.logic.CommandHistory;
 import seedu.progresschecker.logic.UndoRedoStack;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.Model;
 import seedu.progresschecker.model.ProgressChecker;
 import seedu.progresschecker.model.ReadOnlyProgressChecker;
+import seedu.progresschecker.model.exercise.Exercise;
 import seedu.progresschecker.model.issues.Issue;
 import seedu.progresschecker.model.person.Person;
 import seedu.progresschecker.model.person.exceptions.DuplicatePersonException;
@@ -104,6 +106,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void closeIssueOnGithub(Index index) throws IOException {
+            fail("This method should not be called");
+        }
+
+        @Override
         public void addPerson(Person person) throws DuplicatePersonException {
             fail("This method should not be called.");
         }
@@ -150,6 +157,12 @@ public class AddCommandTest {
         public void uploadPhoto(Person target, String path)
                 throws DuplicatePersonException, PersonNotFoundException, IOException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Exercise> getFilteredExerciseList() {
+            fail("This method should not be called.");
+            return null;
         }
     }
 

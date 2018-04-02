@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import seedu.progresschecker.logic.commands.CommandResult;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.logic.parser.exceptions.ParseException;
+import seedu.progresschecker.model.exercise.Exercise;
 import seedu.progresschecker.model.person.Person;
 
 /**
@@ -21,6 +22,9 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<Person> getFilteredPersonList();
+
+    /** Returns an unmodifiable view of the filtered list of exercises */
+    ObservableList<Exercise> getFilteredExerciseList();
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();

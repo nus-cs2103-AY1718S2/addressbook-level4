@@ -62,12 +62,13 @@
               </padding>
             </StackPane>
 
-            <StackPane VBox.vgrow="NEVER" fx:id="exercisesPlaceholder" prefWidth="340"
-                       minHeight="200" prefHeight="1000">
+            <VBox fx:id="exerciseList" minWidth="340" prefWidth="340"
+                  minHeight="200" prefHeight="1000" SplitPane.resizableWithParent="false">
               <padding>
-                <Insets top="5" right="10" bottom="5" left="10" />
+                <Insets top="10" right="10" bottom="10" left="10" />
               </padding>
-            </StackPane>
+              <StackPane fx:id="exerciseListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+            </VBox>
           </VBox>
         </SplitPane>
 

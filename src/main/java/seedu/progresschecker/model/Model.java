@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.progresschecker.commons.core.index.Index;
+import seedu.progresschecker.model.exercise.Exercise;
 import seedu.progresschecker.model.issues.Issue;
 import seedu.progresschecker.model.person.Person;
 import seedu.progresschecker.model.person.exceptions.DuplicatePersonException;
@@ -31,8 +33,11 @@ public interface Model {
     /** Sorts the persons in ProgressChecker according to their names in alphabetical order */
     void sort();
 
-    /** creates and issue on github */
+    /** creates an issue on github */
     void createIssueOnGitHub(Issue issue) throws IOException;
+
+    /** closes an issue issue on github */
+    void closeIssueOnGithub(Index index) throws IOException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -52,6 +57,9 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /** Returns an unmodifiable view of the filtered exercise list */
+    ObservableList<Exercise> getFilteredExerciseList();
 
     /** Uploads the given photo with given path */
     void uploadPhoto(Person target, String path)

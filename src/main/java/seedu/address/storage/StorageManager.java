@@ -21,7 +21,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.student.miscellaneousInfo.ProfilePicturePath;
+import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 import seedu.address.model.student.Student;
 
 /**

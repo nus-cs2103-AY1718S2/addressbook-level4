@@ -1,9 +1,9 @@
 package seedu.address.commons.events.storage;
 
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.model.student.miscellaneousInfo.ProfilePicturePath;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.UniqueKey;
+import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 
 /**
  * Indicates a change in the profile picture of the student.
@@ -34,6 +34,6 @@ public class ProfilePictureChangeEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return "Changing Url of profile picture for student: " + student.toString() ;
+        return "Changing Url of profile picture for student: " + student.toString();
     }
 }

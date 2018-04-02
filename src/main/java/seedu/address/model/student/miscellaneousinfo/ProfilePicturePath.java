@@ -1,4 +1,4 @@
-package seedu.address.model.student.miscellaneousInfo;
+package seedu.address.model.student.miscellaneousinfo;
 
 import static java.util.Objects.requireNonNull;
 

@@ -270,7 +270,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleFind() {
-        raise(new PopulatePrefixesRequestEvent("find"));
+        raise(new PopulatePrefixesRequestEvent(new FindCommand()));
     }
 
     /**
@@ -278,7 +278,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleAdd() {
-        raise(new PopulatePrefixesRequestEvent("add"));
+        raise(new PopulatePrefixesRequestEvent(new AddCommand()));
     }
 
     /**
@@ -286,7 +286,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleDelete() {
-        raise(new PopulatePrefixesRequestEvent("delete"));
+        raise(new PopulatePrefixesRequestEvent(new DeleteCommand()));
     }
 
     /**
@@ -294,7 +294,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleEdit() {
-        raise(new PopulatePrefixesRequestEvent("edit"));
+        raise(new PopulatePrefixesRequestEvent(new EditCommand()));
     }
 
     /**
@@ -302,7 +302,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleLocate() {
-        raise(new PopulatePrefixesRequestEvent("locate"));
+        raise(new PopulatePrefixesRequestEvent(new LocateCommand()));
     }
 
     /**
@@ -310,7 +310,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleSelect() {
-        raise(new PopulatePrefixesRequestEvent("select"));
+        raise(new PopulatePrefixesRequestEvent(new SelectCommand()));
     }
 
     void show() {

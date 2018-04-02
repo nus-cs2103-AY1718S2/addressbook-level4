@@ -120,11 +120,14 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
+    //@@author Caijun7
     @Override
     public void deleteTag(Tag tag) {
         addressBook.removeTag(tag);
     }
+    //@@author
 
+    //@@author Caijun7
     /**
      * Imports the specified {@code AddressBook} from the filepath to the current {@code AddressBook}.
      * @param filepath
@@ -139,6 +142,7 @@ public class ModelManager extends ComponentManager implements Model {
         xmlAddressBook.importAddressBook(filepath, this.addressBook, password);
         indicateAddressBookChanged();
     }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -159,6 +163,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Vacant Room Finder ==========================================================================
 
+    //@@author Caijun7
     @Override
     public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
             CorruptedVenueInformationException {
@@ -167,6 +172,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
         return building.retrieveAllRoomsSchedule();
     }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {

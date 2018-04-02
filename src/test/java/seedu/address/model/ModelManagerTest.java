@@ -35,6 +35,7 @@ public class ModelManagerTest {
         modelManager.getFilteredPersonList().remove(0);
     }
 
+    //@@author Caijun7-reused
     @Test
     public void removeTag_tagNotInUsed_addressBookUnchanged() throws Exception {
         AddressBook addressBookWithAmyAndBob = new AddressBookBuilder().withPerson(AMY)
@@ -65,6 +66,7 @@ public class ModelManagerTest {
 
         assertEquals(expectedModelManager, modelManager);
     }
+    //@@author
 
     @Test
     public void equals() {

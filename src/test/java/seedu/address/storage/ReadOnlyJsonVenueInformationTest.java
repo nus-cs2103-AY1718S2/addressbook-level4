@@ -18,6 +18,7 @@ import seedu.address.model.building.Week;
 import seedu.address.testutil.BuildingBuilder;
 import seedu.address.testutil.RoomBuilder;
 
+//@@author Caijun7
 public class ReadOnlyJsonVenueInformationTest {
 
     private static final String TEST_DATA_FOLDER = "/ReadOnlyJsonVenueInformationTest/";

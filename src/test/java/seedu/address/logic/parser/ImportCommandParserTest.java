@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.ImportCommand;
 
+//@@author Caijun7
 public class ImportCommandParserTest {
     private static final String TEST_PASSWORD = "test";
 

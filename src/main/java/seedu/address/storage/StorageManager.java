@@ -125,6 +125,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
     // ================ VenueInformation methods ==============================
 
+    //@@author Caijun7
     @Override
     public String getVenueInformationFilePath() {
         return venueInformationStorage.getVenueInformationFilePath();
@@ -139,5 +140,6 @@ public class StorageManager extends ComponentManager implements Storage {
     public Optional<Building> readBuildingsAndRoomsInformation() throws DataConversionException, IOException {
         return venueInformationStorage.readBuildingsAndRoomsInformation();
     }
+    //@@author
 
 }

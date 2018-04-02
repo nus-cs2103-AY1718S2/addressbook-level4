@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.building.exceptions.CorruptedVenueInformationException;
 
+//@@author Caijun7
 /**
  * Represents a Room in National University of Singapore.
  * Guarantees: immutable; is valid as declared in {@link #isValidRoom(String)}

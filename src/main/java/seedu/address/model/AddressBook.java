@@ -11,6 +11,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.UniqueAppointmentList;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -31,6 +34,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueSubjectList subjects;
+    private final UniqueAppointmentList appointments;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -43,6 +47,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         subjects = new UniqueSubjectList();
+        appointments = new UniqueAppointmentList();
     }
 
     public AddressBook() {}
@@ -125,6 +130,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         removeUnusedTags();
     }
 
+    public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+        appointments.add(appointment);
+    }
+
     /**
      * Removes all {@code Tag}s that are not used by any {@code Person} in this {@code AddressBook}.
      */
@@ -164,7 +173,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Subject> correctSubjectReferences = new HashSet<>();
         personSubjects.forEach(subject -> correctSubjectReferences.add(masterSubjectObjects.get(subject)));
         return new Person(
-                person.getName(), person.getNric(), correctTagReferences, correctSubjectReferences);
+                person.getName(), person.getNric(), correctTagReferences, correctSubjectReferences, person.getRemark());
     }
 
     /**
@@ -245,7 +254,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removeTagFromPerson(Tag tag, Person person) {
         Set<Tag> tagList = new HashSet<>(person.getTags());
         if (tagList.remove(tag)) {
-            Person newPerson = new Person(person.getName(), person.getNric(), tagList, person.getSubjects());
+            Person newPerson = new Person(person.getName(), person.getNric(), tagList, person.getSubjects(),
+                                        person.getRemark());
             try {
                 updatePerson(person, newPerson);
             } catch (DuplicatePersonException error1) {
@@ -268,7 +278,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         Set<Tag> tagList = new HashSet<>(person.getTags());
         if (tagList.remove(tagToBeReplaced)) {
             tagList.add(tagToBePlaced);
-            Person newPerson = new Person(person.getName(), person.getNric(), tagList, person.getSubjects());
+            Person newPerson = new Person(person.getName(), person.getNric(), tagList, person.getSubjects(),
+                                        person.getRemark());
+
             try {
                 updatePerson(person, newPerson);
             } catch (DuplicatePersonException error1) {

@@ -21,6 +21,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.subject.Subject;
@@ -105,8 +106,8 @@ public class EditCommand extends UndoableCommand {
         Nric updatedNric = editPersonDescriptor.getNric().orElse(personToEdit.getNric());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
-
-        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects);
+        Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
+        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark);
     }
 
     @Override
@@ -137,6 +138,7 @@ public class EditCommand extends UndoableCommand {
         private Nric nric;
         private Set<Tag> tags;
         private Set<Subject>  subjects;
+        private Remark remark;
 
         public EditPersonDescriptor() {}
 
@@ -149,6 +151,7 @@ public class EditCommand extends UndoableCommand {
             setNric(toCopy.nric);
             setTags(toCopy.tags);
             setSubjects(toCopy.subjects);
+            setRemark(toCopy.remark);
         }
 
         /**
@@ -206,6 +209,14 @@ public class EditCommand extends UndoableCommand {
          */
         public Optional<Set<Subject>> getSubjects() {
             return (subjects != null) ? Optional.of(Collections.unmodifiableSet(subjects)) : Optional.empty();
+        }
+
+        public void setRemark(Remark remark) {
+            this.remark = remark;
+        }
+
+        public Optional<Remark> getRemark() {
+            return Optional.ofNullable(remark);
         }
 
         @Override

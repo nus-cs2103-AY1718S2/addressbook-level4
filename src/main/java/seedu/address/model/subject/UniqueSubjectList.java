@@ -92,20 +92,6 @@ public class UniqueSubjectList implements Iterable<Subject> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
-    /**
-     * Remove a specific Subject from the list.
-     * @param toRemove
-     */
-    public void remove(Subject toRemove) {
-        requireNonNull(toRemove);
-        if (!contains(toRemove)) {
-            //throw new exception?
-        }
-        internalList.remove(toRemove);
-
-        assert CollectionUtil.elementsAreUnique(internalList);
-    }
-
     @Override
     public Iterator<Subject> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);

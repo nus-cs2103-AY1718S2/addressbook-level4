@@ -6,6 +6,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.io.IOException;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -49,12 +51,17 @@ public class AddCommand extends UndoableCommand {
         toAdd = person;
     }
 
+
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException, IOException {
         requireNonNull(model);
         try {
             model.addPerson(toAdd);
+            model.addPage(toAdd);
+            //EventsCenter.getInstance().post(new JumpToListRequestEvent(model.getFilteredPersonList().size() - 1));
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+
+
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }

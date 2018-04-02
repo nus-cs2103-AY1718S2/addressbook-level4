@@ -3,6 +3,8 @@ package seedu.address.logic.commands;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,7 +41,7 @@ public class AddCommandIntegrationTest {
     */
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
+    public void execute_duplicatePerson_throwsCommandException() throws IOException {
         Person personInList = model.getAddressBook().getPersonList().get(0);
         assertCommandFailure(prepareCommand(personInList, model), model, AddCommand.MESSAGE_DUPLICATE_PERSON);
     }

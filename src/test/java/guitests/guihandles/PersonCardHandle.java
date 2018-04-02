@@ -44,7 +44,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return nameLabel.getText();
     }
 
-    public String getPhone() {
+    public String getNric() {
         return nricLabel.getText();
     }
 

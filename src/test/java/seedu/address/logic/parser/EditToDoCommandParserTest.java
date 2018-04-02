@@ -8,13 +8,11 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TODO;
 
-import seedu.address.logic.commands.EditToDoCommand.EditToDoDescriptor;
-
-
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditToDoCommand;
+import seedu.address.logic.commands.EditToDoCommand.EditToDoDescriptor;
 import seedu.address.model.todo.Content;
 import seedu.address.testutil.EditToDoDescriptorBuilder;
 

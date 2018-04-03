@@ -243,12 +243,13 @@ Selects the 1st person in the results of the `find` command.
 
 === Importing data : `import` (since v1.1)
 
-Imports an encrypted StardyTogether instance from filepath to the existing StardyTogether application. Persons, Tags, and Aliases that are not in your StardyTogether will be added. +
+Imports an encrypted or unencrypted StardyTogether instance from filepath to the existing StardyTogether application. Persons, Tags, and Aliases that are not in your StardyTogether will be added. +
 Format: `import FILEPATH PASSWORD`
 
 ****
 * Imports an instance of StardyTogether from the specified `FILEPATH`.
 * Decrypt that instance using the `PASSWORD` provided.
+* If no `PASSWORD` is provided, the instance will be read without decryption.
 * The filepath refers to the filepath where the instance file is stored.
 * The instance file *must be in XML file format* after decryption.
 ****
@@ -258,14 +259,15 @@ Example:
 * `import data/addressBook.xml testpassword` +
 Imports `addressBook.xml` file at data folder using "testpassword" as the password.
 
-=== Exporting data : `export` (coming in v1.4)
+=== Exporting data : `export` (since v1.4)
 
-Exports the current list of the existing StardyTogether application with password encryption to the specified filepath
+Exports the current view of the existing StardyTogether application with or without password encryption to the specified filepath
 Format: `export FILEPATH PASSWORD`
 
 ****
 * Exports an instance of StardyTogether to the specified `FILEPATH`.
 * Encrypt that instance using the `PASSWORD` provided.
+* If no `PASSWORD` is provided, the instance will be exported without encryption.
 * The filepath refers to the filepath where the instance file will be stored.
 ****
 
@@ -274,7 +276,7 @@ Example:
 * `export data/addressBook.xml testpassword` +
 Exports the current list of StardyTogether application to the `addressBook.xml` file at data folder using "testpassword" as the password for encryption.
 
-=== Vacant study rooms finder : `vacant` (since in v1.3)
+=== Vacant study rooms finder : `vacant` (since v1.3)
 
 Displays a list of rooms in the specified building and whether each room is vacant or not, in blocks of 1 hours. +
 Format: `vacant BUILDING`
@@ -427,7 +429,7 @@ e.g. `find James Jake`
 * *Import* : `import FILEPATH PASSWORD` +
 e.g.`import data/addressBook.xml testpassword`
 * *Export* : `Export FILEPATH PASSWORD` +
-e.g.`Export data/addressBook.xml testpassword`
+e.g.`export data/addressBook.xml testpassword`
 * *List* : `list`
 * *Password* : `password PASSWORD` +
 e.g. `password test`

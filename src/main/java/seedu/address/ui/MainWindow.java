@@ -89,6 +89,7 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -121,7 +122,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        calendar = new Calendar();
+        calendar = new Calendar(logic.getFilteredEventList());
         calendarPlaceholder.getChildren().add(calendar.getCalendarView());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
@@ -139,6 +140,12 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+    }
+
+    void redisplayCalendar() {
+        calendarPlaceholder.getChildren().clear();
+        calendar = new Calendar(logic.getFilteredEventList());
+        calendarPlaceholder.getChildren().add(calendar.getCalendarView());
     }
 
     void hide() {

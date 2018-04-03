@@ -74,12 +74,10 @@ public class ChangeTagColorCommand extends UndoableCommand {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof ChangeTagColorCommand)) {
             return false;
         }
 
-        // state check
         ChangeTagColorCommand e = (ChangeTagColorCommand) other;
         return tagName.equals(e.tagName)
                 && tagColor.equals(e.tagColor);

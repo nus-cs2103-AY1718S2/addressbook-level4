@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.AddGroupCommand;
 import seedu.address.logic.commands.AddToDoCommand;
 import seedu.address.logic.commands.CheckToDoCommand;
@@ -38,6 +39,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UnCheckToDoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
@@ -45,6 +47,8 @@ import seedu.address.model.person.TagContainKeywordsPredicate;
 import seedu.address.model.todo.ToDo;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.EditToDoDescriptorBuilder;
+import seedu.address.testutil.EventBuilder;
+import seedu.address.testutil.EventUtil;
 import seedu.address.testutil.GroupBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -147,6 +151,21 @@ public class AddressBookParserTest {
         AddGroupCommand command = (AddGroupCommand) parser.parseCommand(AddGroupCommand.COMMAND_ALIAS
                 + " " + group.getInformation());
         assertEquals(new AddGroupCommand(group), command);
+    }
+
+    @Test
+    public void parseCommand_addEvent() throws Exception {
+        Event event = new EventBuilder().build();
+        AddEventCommand command = (AddEventCommand) parser.parseCommand(EventUtil.getAddEventCommand(event));
+        assertEquals(new AddEventCommand(event), command);
+    }
+
+    @Test
+    public void parseCommand_addEventAlias() throws Exception {
+        Event event = new EventBuilder().build();
+        AddEventCommand command = (AddEventCommand) parser.parseCommand(AddEventCommand.COMMAND_ALIAS + " "
+                + EventUtil.getEventDetails(event));
+        assertEquals(new AddEventCommand(event), command);
     }
 
     @Test

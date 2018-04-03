@@ -23,6 +23,7 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
     Predicate<ToDo> PREDICATE_SHOW_ALL_TODOS = unused -> true;
+    Predicate<Event> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -71,6 +72,9 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered to-do list */
     ObservableList<ToDo> getFilteredToDoList();
 
+    /** Returns an unmodifiable view of the filtered to-do list */
+    ObservableList<Event> getFilteredEventList();
+
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
@@ -82,6 +86,12 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredToDoList(Predicate<ToDo> predicate);
+
+    /**
+     * Updates the filter of the filtered event list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredEventList(Predicate<Event> predicate);
 
     /** Adds the given to-do */
     void addToDo(ToDo todo) throws DuplicateToDoException;

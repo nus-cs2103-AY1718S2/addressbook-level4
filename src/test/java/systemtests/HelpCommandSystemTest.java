@@ -50,7 +50,7 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
         getMainMenu().openHelpWindowUsingMenu();
         assertHelpWindowOpen();
 
-        //use command box
+        //use command node
         executeCommand(HelpCommand.COMMAND_WORD);
         assertHelpWindowOpen();
 

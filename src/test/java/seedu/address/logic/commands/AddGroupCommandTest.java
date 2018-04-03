@@ -182,11 +182,22 @@ public class AddGroupCommandTest {
         }
 
         @Override
+        public ObservableList<Event> getFilteredEventList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }
 
         public void updateFilteredToDoList(Predicate<ToDo> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredEventList(Predicate<Event> predicate) {
             fail("This method should not be called.");
         }
 

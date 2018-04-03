@@ -10,6 +10,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.ui.CalendarChangedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
@@ -59,18 +60,21 @@ public class StorageManager extends ComponentManager implements Storage {
     public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
         return readAddressBook(addressBookStorage.getAddressBookFilePath());
     }
+
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
         return addressBookStorage.readAddressBook(filePath);
     }
+
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBookBackup() throws DataConversionException, IOException {
         return readAddressBookBackup(addressBookStorage.getAddressBookFilePath());
     }
+
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBookBackup(String filePath) throws DataConversionException,
-                                                                                       IOException {
+            IOException {
         logger.fine("Attempting to read data from backup: " + filePath);
         return addressBookStorage.readAddressBookBackup(filePath);
     }
@@ -102,6 +106,7 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveAddressBook(event.data);
+            raise(new CalendarChangedEvent());
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }

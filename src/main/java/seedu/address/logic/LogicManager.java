@@ -11,6 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 import seedu.address.model.todo.ToDo;
 
@@ -54,6 +55,11 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<ToDo> getFilteredToDoList() {
         return model.getFilteredToDoList();
+    }
+
+    @Override
+    public ObservableList<Event> getFilteredEventList() {
+        return model.getFilteredEventList();
     }
 
     @Override

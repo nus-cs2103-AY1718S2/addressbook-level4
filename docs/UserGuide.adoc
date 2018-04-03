@@ -70,23 +70,23 @@ image::commandBox.png[width="790"]
 Here is the format for the commands that will enable you to make most of contactHeRo.
 
 * Words in `UPPER_CASE` are the parameters you suppose to fill in.
-
- If the command specifies `add n/NAME`, `NAME` is a parameter where you put the name of the person you want to add.
- For example, you want to add John: `add n/John Doe`.
++
+If the command specifies `add n/NAME`, `NAME` is a parameter where you put the name of the person you want to add.
+For example, you want to add John: `add n/John Doe`.
 
 * Items in square brackets are optional. You can choose to type in or not.
-
- If the command specifies `n/NAME [t/TAG]`. `t/TAG` is optional.
- For example, you can type in `n/John Doe t/friend` or as `n/John Doe`.
++
+If the command specifies `n/NAME [t/TAG]`. `t/TAG` is optional.
+For example, you can type in `n/John Doe t/friend` or as `n/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.
-
- If the command specifies `[t/TAG]...`.  `t/TAG` can be used multiple times.
- For example, you can type in `` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
++
+If the command specifies `[t/TAG]...`.  `t/TAG` can be used multiple times.
+For example, you can type in `` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.
-
- If the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
++
+If the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
 [NOTE]
 In case you make a mistake while typing the command, contactHeRo will show you the right format of the command. +

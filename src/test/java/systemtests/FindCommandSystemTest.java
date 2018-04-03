@@ -168,6 +168,30 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
 
+    @Test
+    public void populateFindCommandTemplate() {
+        //use accelerator
+        getCommandBox().click();
+        getMainMenu().populateFindCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        getResultDisplay().click();
+        getMainMenu().populateFindCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        getPersonListPanel().click();
+        getMainMenu().populateFindCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        getBrowserPanel().click();
+        getMainMenu().populateFindCommandUsingAccelerator();
+        assertPopulationFailure();
+
+        //use menu button
+        getMainMenu().populateFindCommandUsingMenu();
+        assertPopulationSuccess();
+    }
+
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
      * box displays {@code Messages#MESSAGE_PERSONS_LISTED_OVERVIEW} with the number of people in the filtered list,

@@ -5,7 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPECTED_GRADUATION_YE
 import java.util.function.Predicate;
 
 import seedu.address.model.person.Person;
-
+//@@author mhq199657
 /**
  * Filters and lists all persons in address book whose graduation year is before or equal to the specified year..
  */
@@ -23,7 +23,6 @@ public class FilterCommand extends Command {
             + PREFIX_EXPECTED_GRADUATION_YEAR + " 2020, 2021-2024";
 
     private final Predicate<Person> predicate;
-
     public FilterCommand(Predicate<Person> predicate) {
         this.predicate = predicate;
     }

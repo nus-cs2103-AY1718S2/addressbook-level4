@@ -87,6 +87,7 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         return new EditCommand(index, editPersonDescriptor);
     }
+    //@@author mhq199657
     /**
      * Parses {@code Optional<Resume> resume} into a {@code Optional<Resume>} if {@code resume} is non-empty.
      * If resume is present and equals to empty string, it will be parsed into a

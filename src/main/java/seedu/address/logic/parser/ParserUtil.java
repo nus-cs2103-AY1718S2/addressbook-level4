@@ -198,7 +198,7 @@ public class ParserUtil {
                 university.get())) : Optional.empty();
     }
 
-    //@@author
+    //@@author mhq199657
     /**
      * Parses a {@code String expectedGraduationYear} into an {@code ExpectedGraduationYear}.
      * Leading and trailing whitespaces will be trimmed.
@@ -489,7 +489,7 @@ public class ParserUtil {
         }
         return tagSet;
     }
-
+    //@@author mhq199657
     /**
      * Parses a {@code String resume} into an {@code Resume}.
      * Leading and trailing whitespaces will be trimmed.

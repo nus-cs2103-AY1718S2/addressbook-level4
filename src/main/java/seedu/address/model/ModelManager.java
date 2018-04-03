@@ -107,7 +107,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
-
+    //@@author mhq199657
     @Override
     public void filterFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);

@@ -11,9 +11,8 @@ import java.time.format.DateTimeParseException;
 import org.junit.Test;
 
 import seedu.address.testutil.Assert;
-
+//@@author mhq199657
 public class InterviewDateUtilTest {
-
     @Test
     public void parse_invalidDateTime_throwsDateTimeParseException() {
         String invalidDateTime1 = "20000000";

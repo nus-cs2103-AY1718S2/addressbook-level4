@@ -8,12 +8,11 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.StatusCommand;
 import seedu.address.model.person.Status;
-
+//@@author mhq199657
 public class StatusCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, StatusCommand.MESSAGE_USAGE);
     private StatusCommandParser parser = new StatusCommandParser();
-
     @Test
     public void parse_missingParts_failure() {
         // No status index specified

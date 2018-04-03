@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+//@@author mhq199657
 /**
  * A range recorder for PredicateParsing
  * @param <E> a filterable field
@@ -9,7 +10,6 @@ public class FilterRange<E> {
     private E lowValue;
     private E highValue;
     private E exactValue;
-
     public FilterRange(E exactValue) {
         this.isRange = false;
         this.lowValue = null;

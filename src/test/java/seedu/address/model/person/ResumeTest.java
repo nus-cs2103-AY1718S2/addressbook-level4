@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import seedu.address.testutil.Assert;
-
+//@@author mhq199657
 public class ResumeTest {
     private static final String TEST_DATA_FOLDER = "src/test/data/ResumeTest/";
     @Test

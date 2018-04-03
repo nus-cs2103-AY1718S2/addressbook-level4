@@ -7,7 +7,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-
+//@@author mhq199657
 /**
  * Represents a Person's resume's file name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidResume(String)}
@@ -19,7 +19,6 @@ public class Resume {
     private static final int ONEMEGABYTE = 1 * 1024 * 1024;
     private static final String RESUME_VALIDATION_REGEX = ".*\\S.*";
     public final String value;
-
     /**
      * Constructs a {@code Resume}.
      *

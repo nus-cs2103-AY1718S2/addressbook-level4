@@ -7,13 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javafx.scene.paint.Color;
-
+//@@author mhq199657
 /**
  * Represents a candidate's status of his/her application.
  * Guarantees: Status value is one of the seven predefined values.
  */
 public class Status {
-
     public static final String MESSAGE_STATUS_CONSTRAINTS =
             "Person status should only be specified by one of the predefined status indices.";
     public static final String STATUS_NEW = "New";
@@ -73,7 +72,6 @@ public class Status {
     }
     public final String value;
     public final Color color;
-
     /**
      * Constructs a {@code Status}.
      *

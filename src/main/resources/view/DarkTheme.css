@@ -53,7 +53,7 @@
 }
 
 .table-cell {
-    -fx-alignment: CENTER;
+    -fx-alignment: CENTER-LEFT;
     -fx-background-color: #000000;
 }
 

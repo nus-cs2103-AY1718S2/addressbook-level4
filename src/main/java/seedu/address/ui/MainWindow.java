@@ -139,7 +139,7 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerator(listMenuItem, KeyCombination.valueOf("F2"));
         setAccelerator(findMenuItem, KeyCombination.valueOf("Ctrl + F"));
 
-        setAccelerator(addMenuItem, KeyCombination.valueOf("Ctrl + A"));
+        setAccelerator(addMenuItem, KeyCombination.valueOf("Ctrl + Space"));
         setAccelerator(deleteMenuItem, KeyCombination.valueOf("Ctrl + D"));
         setAccelerator(editMenuItem, KeyCombination.valueOf("Ctrl + E"));
         setAccelerator(locateMenuItem, KeyCombination.valueOf("Ctrl + L"));

@@ -31,12 +31,11 @@ import seedu.address.model.person.Person;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
+    public static final String HQ_ADDRESS = "Kent Ridge MRT";
     public static final String SEARCH_PAGE_URL =
             "https://www.google.com.sg/maps/dir/Kent+Ridge+MRT+Station/";
 
     private static final String FXML = "BrowserPanel.fxml";
-
-    public static final String HQ_ADDRESS = "Kent Ridge MRT";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 

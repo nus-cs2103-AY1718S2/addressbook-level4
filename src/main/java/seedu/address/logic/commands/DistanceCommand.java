@@ -7,7 +7,6 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.ShowMultiLocationFromHeadQuarterEvent;
 import seedu.address.commons.events.ui.ShowRouteFromOneToAnotherEvent;
 import seedu.address.logic.GetDistance;
 import seedu.address.logic.commands.exceptions.CommandException;

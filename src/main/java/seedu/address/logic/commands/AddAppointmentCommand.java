@@ -8,7 +8,7 @@ import seedu.address.model.patient.NameContainsKeywordsPredicate;
 /**
  * Add patient appointment
  */
-public class AddAppointmentCommand extends Command{
+public class AddAppointmentCommand extends Command {
     public static final String COMMAND_WORD = "addappt";
     public static final String COMMAND_ALIAS = "aa";
 

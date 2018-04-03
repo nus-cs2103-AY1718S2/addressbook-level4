@@ -118,6 +118,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void reopenIssueOnGithub(Index index) throws IOException, CommandException {
+            fail("This method should not be called");
+        }
+
+        @Override
         public void sort() {
             fail("This method should not be called.");
         }

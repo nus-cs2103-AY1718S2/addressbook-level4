@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 import org.kohsuke.github.GHIssue;
 import org.kohsuke.github.GHIssueBuilder;
+import org.kohsuke.github.GHIssueState;
 import org.kohsuke.github.GHMilestone;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
@@ -21,6 +22,7 @@ import org.kohsuke.github.GitHub;
 
 import javafx.collections.ObservableList;
 import seedu.progresschecker.commons.core.index.Index;
+import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.exercise.Exercise;
 import seedu.progresschecker.model.exercise.UniqueExerciseList;
 import seedu.progresschecker.model.exercise.exceptions.DuplicateExerciseException;
@@ -182,6 +184,20 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
         createdIssue.setAssignees(listOfUsers);
         createdIssue.setLabels(listOfLabels.toArray(new String[0]));
         createdIssue.setMilestone(check);
+    }
+
+    /**
+     * reopens an issue on github
+     *
+     * @throws IOException if the index mentioned is not valid or he's closed
+     */
+    public void reopenIssueOnGithub(Index index) throws IOException, CommandException {
+        GitHub github = GitHub.connectUsingPassword(userLogin, userAuthentication);
+        GHRepository repository = github.getRepository(repoName);
+        GHIssue issue = repository.getIssue(index.getOneBased());
+        if (issue.getState() == GHIssueState.OPEN) {
+            throw new CommandException("Issue is already open");
+        }
     }
 
     /**

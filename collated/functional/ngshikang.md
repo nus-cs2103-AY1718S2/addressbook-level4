@@ -574,6 +574,52 @@ public class LoginWindow extends UiPart<Stage> {
     }
 
 ```
+###### \resources\view\BrowserPanel.fxml
+``` fxml
+
+<StackPane stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <WebView fx:id="browser" prefHeight="455.0" prefWidth="758.0">
+      <StackPane.margin>
+         <Insets top="28.0" />
+      </StackPane.margin></WebView>
+  <Text fill="#ffffff" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="ADDITIONAL INFORMATION" textOrigin="CENTER" translateY="0.5" wrappingWidth="198.40008544921875" StackPane.alignment="TOP_LEFT">
+    <font>
+      <Font name="ADAM.CGPRO" size="14.0" />
+    </font>
+    <StackPane.margin>
+      <Insets left="5.0" top="5.0" />
+    </StackPane.margin>
+  </Text>
+   <Text fx:id="additionalInfo" fill="#ffffff" strokeType="OUTSIDE" strokeWidth="0.0" text="+ Additional Information" wrappingWidth="547.2000732421875" StackPane.alignment="TOP_RIGHT">
+      <StackPane.margin>
+         <Insets left="20.0" top="5.0" />
+      </StackPane.margin>
+      <font>
+         <Font name="ADAM.CGPRO" size="14.0" />
+      </font>
+   </Text>
+</StackPane>
+```
+###### \resources\view\CommandBox.fxml
+``` fxml
+<StackPane opacity="0.91" prefHeight="26.0" prefWidth="377.0" styleClass="anchor-pane" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" prefHeight="23.0" prefWidth="215.0" promptText="Enter command here...">
+      <StackPane.margin>
+         <Insets left="145.0" />
+      </StackPane.margin>
+      <font>
+         <Font name="ADAM.CGPRO" size="12.0" />
+      </font></TextField>
+   <Text fill="#ffffff" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="COMMAND LINE " textAlignment="LEFT" textOrigin="CENTER" translateY="0.5" wrappingWidth="120.0" StackPane.alignment="CENTER_LEFT">
+      <font>
+         <Font name="ADAM.CGPRO" size="14.0" />
+      </font>
+      <StackPane.margin>
+         <Insets left="5.0" />
+      </StackPane.margin>
+   </Text>
+</StackPane>
+```
 ###### \resources\view\LoginPane.fxml
 ``` fxml
 <?import javafx.scene.control.Button?>
@@ -583,25 +629,50 @@ public class LoginWindow extends UiPart<Stage> {
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="loginPanePlaceholder" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="loginPanePlaceholder" maxHeight="600.0" maxWidth="400.0" minHeight="600.0" minWidth="400.0" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane blendMode="DARKEN" cache="true" depthTest="ENABLE" pickOnBounds="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Pane blendMode="DARKEN" cache="true" depthTest="ENABLE" maxHeight="600.0" maxWidth="400.0" minHeight="600.0" minWidth="400.0" pickOnBounds="false" prefHeight="600.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <TextField fx:id="usernameTextField" layoutX="163.0" layoutY="300.0" />
-                <PasswordField fx:id="passwordField" layoutX="163.0" layoutY="335.0" onKeyPressed="#handleKeyPress" />
-                <Button fx:id="loginButton" layoutX="106.0" layoutY="388.0" mnemonicParsing="false" onAction="#checkLoginDetails" onKeyPressed="#handleKeyPress" text="Login" />
-                <Button fx:id="createButton" layoutX="183.0" layoutY="388.0" mnemonicParsing="false" onAction="#createNewAccount" onKeyPressed="#handleKeyPress" text="Create" />
-                <Button fx:id="exitButton" layoutX="264.0" layoutY="388.0" mnemonicParsing="false" onAction="#closeApplication" onKeyPressed="#handleKeyPress" text="Exit" />
-                <ImageView blendMode="SOFT_LIGHT" cacheHint="QUALITY" depthTest="ENABLE" fitHeight="243.0" fitWidth="243.0" layoutX="78.0" layoutY="45.0" preserveRatio="true">
+                <TextField fx:id="usernameTextField" layoutX="161.0" layoutY="271.0" promptText="Enter Username Here">
+               <font>
+                  <Font name="ADAM.CGPRO" size="12.0" />
+               </font></TextField>
+                <PasswordField fx:id="passwordField" layoutX="161.0" layoutY="306.0" onKeyPressed="#handleKeyPress" promptText="ENTER PASSWORD HERE">
+               <font>
+                  <Font name="ADAM.CGPRO" size="12.0" />
+               </font></PasswordField>
+                <Button fx:id="loginButton" layoutX="137.0" layoutY="379.0" mnemonicParsing="false" onAction="#checkLoginDetails" onKeyPressed="#handleKeyPress" prefHeight="25.0" prefWidth="127.0" text="Login">
+               <font>
+                  <Font name="ADAM.CGPRO" size="12.0" />
+               </font></Button>
+                <Button fx:id="createButton" layoutX="137.0" layoutY="417.0" mnemonicParsing="false" onAction="#createNewAccount" onKeyPressed="#handleKeyPress" prefHeight="25.0" prefWidth="127.0" text="Create Account">
+               <font>
+                  <Font name="ADAM.CGPRO" size="12.0" />
+               </font></Button>
+                <Button fx:id="exitButton" layoutX="355.0" layoutY="20.0" mnemonicParsing="false" onAction="#closeApplication" onKeyPressed="#handleKeyPress" text="X">
+               <font>
+                  <Font name="ADAM.CGPRO" size="12.0" />
+               </font></Button>
+                <ImageView blendMode="SOFT_LIGHT" cacheHint="QUALITY" depthTest="ENABLE" fitHeight="225.0" fitWidth="251.0" layoutX="85.0" layoutY="43.0" preserveRatio="true">
                     <image>
-                        <Image url="@../images/pigeons logo 2.jpg" />
+                        <Image url="@PigeonsLogoDigital.png" />
                     </image>
                 </ImageView>
-                <Text layoutX="93.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username: " />
-                <Text layoutX="93.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
-            <Text fx:id="loginStatus" boundsType="VISUAL" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Status: " textOrigin="CENTER" x="165.0" y="464.0" />
+                <Text layoutX="76.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username: ">
+               <font>
+                  <Font name="ADAM.CGPRO" size="12.0" />
+               </font></Text>
+                <Text layoutX="76.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:">
+               <font>
+                  <Font name="ADAM.CGPRO" size="12.0" />
+               </font></Text>
+            <Text fx:id="loginStatus" boundsType="VISUAL" layoutX="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Status: " textOrigin="CENTER" translateX="18.0" translateY="10.0" wrappingWidth="126.99999809265137" x="137.0" y="464.0">
+               <font>
+                  <Font name="ADAM.CGPRO" size="12.0" />
+               </font></Text>
             </children>
         </Pane>
     </children>
@@ -621,4 +692,42 @@ public class LoginWindow extends UiPart<Stage> {
         </Scene>
     </scene>
 </fx:root>
+```
+###### \resources\view\PersonListPanel.fxml
+``` fxml
+<VBox stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <Text fill="#ffffff" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="ADDRESSEES" textOrigin="CENTER" translateY="1.0">
+      <font>
+         <Font name="ADAM.CGPRO" size="14.0" />
+      </font>
+      <VBox.margin>
+         <Insets bottom="5.0" left="5.0" top="5.0" />
+      </VBox.margin>
+   </Text>
+  <ListView fx:id="personListView" VBox.vgrow="ALWAYS" />
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</VBox>
+```
+###### \resources\view\ResultDisplay.fxml
+``` fxml
+
+<StackPane fx:id="placeHolder" minHeight="100.0" minWidth="150.0" styleClass="pane-with-border" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <TextArea fx:id="resultDisplay" editable="false" prefHeight="150.0" prefWidth="600.0" promptText="Results will be displayed here." styleClass="result-display" StackPane.alignment="BOTTOM_CENTER">
+      <StackPane.margin>
+         <Insets />
+      </StackPane.margin>
+      <padding>
+         <Insets left="150.0" />
+      </padding></TextArea>
+   <Text fill="#ffffff" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="COMMAND RESULTS" wrappingWidth="150.0" StackPane.alignment="TOP_LEFT">
+      <StackPane.margin>
+         <Insets left="5" top="12.5" />
+      </StackPane.margin>
+      <font>
+         <Font name="ADAM.CGPRO" size="14.0" />
+      </font>
+   </Text>
+</StackPane>
 ```

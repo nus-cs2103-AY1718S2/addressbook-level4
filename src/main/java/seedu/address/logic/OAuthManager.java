@@ -130,34 +130,41 @@ public class OAuthManager {
         } else {
             System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s): ");
             for (Event event : upcomingEvents) {
-                String title = event.getSummary();
-                DateTime startAsDateTime = event.getStart().getDateTime();
-                DateTime endAsDateTime = event.getEnd().getDateTime();
-                String location = event.getLocation();
-                String personUniqueId = event.getDescription();
-
-                String start = getDateTimeAsHumanReadable(startAsDateTime);
-                String end = getDateTimeAsHumanReadable(endAsDateTime);
-
-                if (start == null) {
-                    start = "Unable to retrieve start time";
-                }
-                if (end == null) {
-                    end = "Unable to retrieve end time";
-                }
-                if (location == null) {
-                    location = "No Location Specified";
-                }
-                if (personUniqueId == null) {
-                    personUniqueId = "No Person Specified";
-                }
-                System.out.printf("%s From: %s To: %s @ %s [%s]\n", title, start, end, location, personUniqueId);
-                eventListAsString.add(title + " From: " + start + " To: " + end + " @ "
-                        + location + " [" + personUniqueId + "]");
+                String eventAsString = getEventDetailsAsString(event);
+                eventListAsString.add(eventAsString);
             }
         }
 
         return eventListAsString;
+    }
+
+    private static String getEventDetailsAsString(Event event) {
+        String title = event.getSummary();
+        DateTime startAsDateTime = event.getStart().getDateTime();
+        DateTime endAsDateTime = event.getEnd().getDateTime();
+        String location = event.getLocation();
+        String personUniqueId = event.getDescription();
+
+        String start = getDateTimeAsHumanReadable(startAsDateTime);
+        String end = getDateTimeAsHumanReadable(endAsDateTime);
+
+        if (start == null) {
+            start = "Unable to retrieve start time";
+        }
+        if (end == null) {
+            end = "Unable to retrieve end time";
+        }
+        if (location == null) {
+            location = "No Location Specified";
+        }
+        if (personUniqueId == null) {
+            personUniqueId = "No Person Specified";
+        }
+        String eventAsString = title + " From: " + start + " To: " + end + " @ "
+                + location + " [" + personUniqueId + "]";
+        System.out.printf(eventAsString);
+
+        return eventAsString;
     }
 
     private static String getDateTimeAsHumanReadable(DateTime inputDateTime) {
@@ -264,10 +271,11 @@ public class OAuthManager {
             e.printStackTrace();
         }
         String eventUrl = event.getHtmlLink();
+        String eventAsString = getEventDetailsAsString(event);
         String apiResponse = "Something went wrong. No event was added.";
 
         if (eventUrl != null) {
-            apiResponse = "Event created: " + eventUrl;
+            apiResponse = "Event created!" + "\n" + eventAsString + "\nUrl: " + eventUrl;
         }
 
         System.out.printf(apiResponse + "\n");

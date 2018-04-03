@@ -47,7 +47,7 @@ public class EventsCollectorRule implements TestRule {
         }
 
         /**
-         * Collects any event raised by any class
+         * Collects any listEvent raised by any class
          */
         @Subscribe
         public void collectEvent(BaseEvent event) {
@@ -66,7 +66,7 @@ public class EventsCollectorRule implements TestRule {
         }
 
         /**
-         * Returns the most recent event collected
+         * Returns the most recent listEvent collected
          */
         public BaseEvent getMostRecent() {
             if (events.isEmpty()) {

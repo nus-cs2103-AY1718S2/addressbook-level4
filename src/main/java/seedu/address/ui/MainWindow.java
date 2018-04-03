@@ -148,10 +148,10 @@ public class MainWindow extends UiPart<Stage> {
          * According to the bug report, TextInputControl (TextField, TextArea) will
          * consume function-key events. Because CommandBox contains a TextField, and
          * ResultDisplay contains a TextArea, thus some accelerators (e.g F1) will
-         * not work when the focus is in them because the key event is consumed by
+         * not work when the focus is in them because the key listEvent is consumed by
          * the TextInputControl(s).
          *
-         * For now, we add following event filter to capture such key events and open
+         * For now, we add following listEvent filter to capture such key events and open
          * help window purposely so to support accelerators even when focus is
          * in CommandBox or ResultDisplay.
          */
@@ -220,14 +220,6 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
-    /**
-     * Opens the todolist window.
-     */
-    @FXML
-    public void handleTodoList(TodoListWindow todoListWindow) {
-        todoListWindow.show();
-    }
-
     @FXML
     private void handleChangeDarkTheme() {
         EventsCenter.getInstance().post(new ChangeThemeEvent("dark"));
@@ -262,12 +254,6 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
-    }
-
-    @Subscribe
-    private void handleShowTodoListEvent(ShowTodoListEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleTodoList(event.getTodoListWindow());
     }
 
     @Subscribe

@@ -1,8 +1,8 @@
-package seedu.address.model.event;
+package seedu.address.model.listEvent;
 
 import com.google.api.client.util.DateTime;
 
-public class Event {
+public class ListEvent {
 
     private String title;
     private String location;
@@ -32,7 +32,7 @@ public class Event {
         this.endTime = endTime;
     }
 
-    public Event(String title, String location, DateTime endTime) {
+    public ListEvent(String title, String location, DateTime endTime) {
         this.setTitle(title);
         this.setLocation(location);
         this.setEndTime(endTime);
@@ -40,6 +40,6 @@ public class Event {
 
     @Override
     public String toString() {
-        return title + " " + location + " End at: " + endTime.toString();
+        return "Event: " + title + "  Location: " + location + "   End at: " + endTime.toString();
     }
 }

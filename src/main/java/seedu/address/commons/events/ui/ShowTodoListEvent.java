@@ -5,14 +5,13 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.ui.TodoListWindow;
 
 /**
- * An event requesting to show to do list window.
+ * An listEvent requesting to show to do list window.
  */
 public class ShowTodoListEvent extends BaseEvent{
 
     public TodoListWindow todoListWindow;
 
-    public ShowTodoListEvent(TodoListWindow todoListWindow) {
-        this.todoListWindow = todoListWindow;
+    public ShowTodoListEvent() {
     }
 
     @Override

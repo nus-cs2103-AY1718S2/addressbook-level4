@@ -1,14 +1,16 @@
 package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.model.event.Event;
+import seedu.address.model.listEvent.ListEvent;
+
+import java.util.ArrayList;
 
 public class ShowTodoListDisplayContentEvent extends BaseEvent {
 
-    private final Event event;
+    private final ArrayList<ListEvent> eventList;
 
-    public ShowTodoListDisplayContentEvent(Event event) {
-        this.event = event;
+    public ShowTodoListDisplayContentEvent(ArrayList<ListEvent> eventList) {
+        this.eventList = eventList;
     }
 
     @Override
@@ -16,7 +18,7 @@ public class ShowTodoListDisplayContentEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 
-    public Event getEvent() {
-        return this.event;
+    public ArrayList<ListEvent> getListEvent() {
+        return this.eventList;
     }
 }

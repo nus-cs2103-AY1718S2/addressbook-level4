@@ -3,7 +3,7 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * An event requesting to show the review dialog.
+ * An listEvent requesting to show the review dialog.
  */
 public class ShowReviewDialogEvent extends BaseEvent {
 

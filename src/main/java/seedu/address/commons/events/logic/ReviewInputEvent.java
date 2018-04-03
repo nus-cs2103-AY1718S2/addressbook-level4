@@ -3,7 +3,7 @@ package seedu.address.commons.events.logic;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * An event to inform review input is available.
+ * An listEvent to inform review input is available.
  */
 public class ReviewInputEvent extends BaseEvent {
 

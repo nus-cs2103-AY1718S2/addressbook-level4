@@ -30,11 +30,11 @@ public class TestAddEventCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        final String expectedTitle = "Test Event";
+        final String expectedTitle = "Test ListEvent";
         final String expectedLocation = "NUS";
         final String expectedStarttime = "2018-05-15T10:00:00";
         final String expectedEndtime = "2018-05-15T12:00:00";
-        final String expectedDescription = "A test event.";
+        final String expectedDescription = "A test listEvent.";
 
         assertParseSuccess(parser, "1" + EVENT_TITLE + EVENT_LOCATION + EVENT_STARTTIME
                 + EVENT_ENDTIME + EVENT_DESCRIPTION, new TestAddEventCommand(INDEX_FIRST_PERSON, expectedTitle,

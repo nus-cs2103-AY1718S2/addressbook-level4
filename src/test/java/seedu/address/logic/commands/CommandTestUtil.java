@@ -47,11 +47,11 @@ public class CommandTestUtil {
     public static final String VALID_RATING_BOB = "5";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
-    public static final String VALID_EVENT_TITLE = "Test Event";
+    public static final String VALID_EVENT_TITLE = "Test ListEvent";
     public static final String VALID_EVENT_LOCATION = "NUS";
     public static final String VALID_EVENT_STARTTIME = "2018-05-15T10:00:00";
     public static final String VALID_EVENT_ENDTIME = "2018-05-15T12:00:00";
-    public static final String VALID_EVENT_DESCRIPTION = "A test event.";
+    public static final String VALID_EVENT_DESCRIPTION = "A test listEvent.";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;

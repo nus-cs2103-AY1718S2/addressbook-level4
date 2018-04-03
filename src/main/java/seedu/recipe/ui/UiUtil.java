@@ -25,7 +25,7 @@ public class UiUtil {
     private static final String HEX_COLOR_BUFFER = "000000";
     private static final int HEX_COLOR_LENGTH = 6;
 
-    private static final String NEUTRAL_COLOR_DENSITY = "88";
+    private static final int NEUTRAL_COLOR_DENSITY = 384;
 
 
     /**
@@ -91,20 +91,18 @@ public class UiUtil {
         color = removeAllWhitespaceInString(color);
         color = isValidHexColorCode(color) ? color : HEX_COLOR_WHITE;
 
-        int darknessCount = 0;
+        int lightnessCount = 0;
 
         for (int i = 1; i < 6; i = i + 2) {
             String colorDensity = color.substring(i, i + 2);
-            if (colorDensity.compareToIgnoreCase(NEUTRAL_COLOR_DENSITY) < 0) {
-                darknessCount++;
-            }
+            lightnessCount += Integer.parseInt(colorDensity, 16);
         }
 
-        if (darknessCount >= 2) {
-            return true;
+        if (lightnessCount >= NEUTRAL_COLOR_DENSITY) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     /**

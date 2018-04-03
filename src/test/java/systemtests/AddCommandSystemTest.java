@@ -5,15 +5,19 @@ import static seedu.recipe.logic.commands.CommandTestUtil.CALORIES_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.CALORIES_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.COOKING_TIME_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.COOKING_TIME_DESC_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.IMG_DESC_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.IMG_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.INGREDIENT_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.INGREDIENT_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.INSTRUCTION_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.INSTRUCTION_DESC_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_IMG_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_INGREDIENT_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_INSTRUCTION_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_PREPARATION_TIME_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static seedu.recipe.logic.commands.CommandTestUtil.INVALID_URL_DESC;
 import static seedu.recipe.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.PREPARATION_TIME_DESC_AMY;
@@ -26,6 +30,7 @@ import static seedu.recipe.logic.commands.CommandTestUtil.URL_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.URL_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_CALORIES_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_COOKING_TIME_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_IMG_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INGREDIENT_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INGREDIENT_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INSTRUCTION_AMY;
@@ -54,11 +59,13 @@ import seedu.recipe.logic.commands.AddCommand;
 import seedu.recipe.logic.commands.RedoCommand;
 import seedu.recipe.logic.commands.UndoCommand;
 import seedu.recipe.model.Model;
+import seedu.recipe.model.recipe.Image;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
 import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.recipe.Url;
 import seedu.recipe.model.recipe.exceptions.DuplicateRecipeException;
 import seedu.recipe.model.tag.Tag;
 import seedu.recipe.testutil.RecipeBuilder;
@@ -79,7 +86,7 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + INGREDIENT_DESC_AMY + " "
                 + INSTRUCTION_DESC_AMY + "   " + PREPARATION_TIME_DESC_AMY + "   " + COOKING_TIME_DESC_AMY + "   "
                 + CALORIES_DESC_AMY + "   " + SERVINGS_DESC_AMY + "   " + URL_DESC_AMY + "   "
-                + TAG_DESC_FRIEND + " ";
+                + IMG_DESC_AMY + "   " + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -103,6 +110,7 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
                 .withCalories(VALID_CALORIES_AMY)
                 .withServings(VALID_SERVINGS_AMY)
                 .withUrl(VALID_URL_AMY)
+                .withImage(VALID_IMG_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD
                 + NAME_DESC_BOB
@@ -113,6 +121,7 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
                 + CALORIES_DESC_AMY
                 + SERVINGS_DESC_AMY
                 + URL_DESC_AMY
+                + IMG_DESC_AMY
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
@@ -126,6 +135,7 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
                 .withCalories(VALID_CALORIES_AMY)
                 .withServings(VALID_SERVINGS_AMY)
                 .withUrl(VALID_URL_AMY)
+                .withImage(VALID_IMG_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD
                 + NAME_DESC_AMY
@@ -136,6 +146,7 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
                 + CALORIES_DESC_AMY
                 + SERVINGS_DESC_AMY
                 + URL_DESC_AMY
+                + IMG_DESC_AMY
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
@@ -159,6 +170,7 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
                 + CALORIES_DESC_AMY
                 + SERVINGS_DESC_AMY
                 + URL_DESC_AMY
+                + IMG_DESC_AMY
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
@@ -173,6 +185,7 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
                 .withCalories(VALID_CALORIES_AMY)
                 .withServings(VALID_SERVINGS_AMY)
                 .withUrl(VALID_URL_BOB)
+                .withImage(VALID_IMG_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD
                 + NAME_DESC_AMY
@@ -183,9 +196,9 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
                 + CALORIES_DESC_AMY
                 + SERVINGS_DESC_AMY
                 + URL_DESC_BOB
+                + IMG_DESC_AMY
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
-
 
         /* Case: add to empty recipe book -> added */
         deleteAllRecipes();
@@ -194,7 +207,7 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
         /* Case: add a recipe with tags, command with parameters in random order -> added */
         toAdd = BOB;
         command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + URL_DESC_BOB + PREPARATION_TIME_DESC_BOB
-                + COOKING_TIME_DESC_BOB + CALORIES_DESC_BOB + SERVINGS_DESC_BOB
+                + COOKING_TIME_DESC_BOB + CALORIES_DESC_BOB + SERVINGS_DESC_BOB + IMG_DESC_BOB
                 + INSTRUCTION_DESC_BOB + NAME_DESC_BOB + TAG_DESC_HUSBAND + INGREDIENT_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
@@ -253,6 +266,16 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY
                 + INVALID_INSTRUCTION_DESC;
         assertCommandFailure(command, Instruction.MESSAGE_INSTRUCTION_CONSTRAINTS);
+
+        /* Case: invalid url -> rejected */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY
+                + INSTRUCTION_DESC_AMY + INVALID_URL_DESC;
+        assertCommandFailure(command, Url.MESSAGE_URL_CONSTRAINTS);
+
+        /* Case: invalid image -> rejected */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY
+                + INSTRUCTION_DESC_AMY + INVALID_IMG_DESC;
+        assertCommandFailure(command, Image.MESSAGE_IMAGE_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY + INGREDIENT_DESC_AMY

@@ -6,6 +6,8 @@ import static seedu.recipe.logic.commands.CommandTestUtil.CALORIES_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.CALORIES_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.COOKING_TIME_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.COOKING_TIME_DESC_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.IMG_DESC_AMY;
+import static seedu.recipe.logic.commands.CommandTestUtil.IMG_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.INGREDIENT_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.INGREDIENT_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.INSTRUCTION_DESC_AMY;
@@ -27,6 +29,7 @@ import static seedu.recipe.logic.commands.CommandTestUtil.URL_DESC_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.URL_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_CALORIES_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_COOKING_TIME_BOB;
+import static seedu.recipe.logic.commands.CommandTestUtil.VALID_IMG_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INGREDIENT_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INSTRUCTION_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_NAME_BOB;
@@ -76,7 +79,7 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_BOB + "  "
                 + INGREDIENT_DESC_BOB + "  " + INSTRUCTION_DESC_BOB + " " + PREPARATION_TIME_DESC_BOB + " "
                 + COOKING_TIME_DESC_BOB + " " + CALORIES_DESC_BOB + " " + SERVINGS_DESC_BOB + " "
-                + URL_DESC_BOB + TAG_DESC_HUSBAND + " ";
+                + URL_DESC_BOB + IMG_DESC_BOB + TAG_DESC_HUSBAND + " ";
         Recipe editedRecipe = new RecipeBuilder()
                 .withName(VALID_NAME_BOB)
                 .withIngredient(VALID_INGREDIENT_BOB)
@@ -86,6 +89,7 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
                 .withCalories(VALID_CALORIES_BOB)
                 .withServings(VALID_SERVINGS_BOB)
                 .withUrl(VALID_URL_BOB)
+                .withImage(VALID_IMG_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedRecipe);
 
@@ -104,7 +108,8 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         /* Case: edit a recipe with new values same as existing values -> edited */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB
                 + COOKING_TIME_DESC_BOB + PREPARATION_TIME_DESC_BOB + CALORIES_DESC_BOB + SERVINGS_DESC_BOB
-                + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB + URL_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+                + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB + URL_DESC_BOB
+                + IMG_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandSuccess(command, index, BOB);
 
         /* Case: edit some fields -> edited */
@@ -148,8 +153,8 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         index = INDEX_FIRST_RECIPE;
         selectRecipe(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PREPARATION_TIME_DESC_AMY
-                + COOKING_TIME_DESC_AMY + SERVINGS_DESC_AMY + CALORIES_DESC_AMY
-                + INGREDIENT_DESC_AMY + INSTRUCTION_DESC_AMY  + URL_DESC_AMY + TAG_DESC_FRIEND;
+                + COOKING_TIME_DESC_AMY + SERVINGS_DESC_AMY + CALORIES_DESC_AMY + INGREDIENT_DESC_AMY
+                + INSTRUCTION_DESC_AMY  + URL_DESC_AMY + IMG_DESC_AMY + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new recipe's name
         assertCommandSuccess(command, index, AMY, index);
@@ -209,13 +214,14 @@ public class EditCommandSystemTest extends RecipeBookSystemTest {
         assertFalse(getModel().getFilteredRecipeList().get(index.getZeroBased()).equals(BOB));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB
                 + COOKING_TIME_DESC_BOB + PREPARATION_TIME_DESC_BOB + CALORIES_DESC_BOB + SERVINGS_DESC_BOB
-                + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB + URL_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+                + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB + URL_DESC_BOB + IMG_DESC_BOB + TAG_DESC_FRIEND
+                + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_RECIPE);
 
         /* Case: edit a recipe with new values same as another recipe's values but with different tags -> rejected */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PREPARATION_TIME_DESC_BOB
                 + COOKING_TIME_DESC_BOB + PREPARATION_TIME_DESC_BOB + CALORIES_DESC_BOB + SERVINGS_DESC_BOB
-                + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB + URL_DESC_BOB + TAG_DESC_HUSBAND;
+                + INGREDIENT_DESC_BOB + INSTRUCTION_DESC_BOB + URL_DESC_BOB + IMG_DESC_BOB + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_RECIPE);
     }
 

@@ -21,12 +21,17 @@ public class SelectCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SELECT_RECIPE_SUCCESS = "Selected Recipe: %1$s";
+    public static final String MESSAGE_SELECT_RECIPE_SUCCESS = "Selected Recipe:\n%s";
 
     private final Index targetIndex;
+    private Recipe selectedRecipe = null;
 
     public SelectCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
+    }
+
+    public Recipe getSelectedRecipe() {
+        return selectedRecipe;
     }
 
     @Override
@@ -38,9 +43,10 @@ public class SelectCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_RECIPE_DISPLAYED_INDEX);
         }
 
+        selectedRecipe = model.getFilteredRecipeList().get(targetIndex.getZeroBased());
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
-        return new CommandResult(String.format(MESSAGE_SELECT_RECIPE_SUCCESS, targetIndex.getOneBased()));
-
+        return new CommandResult(String.format(MESSAGE_SELECT_RECIPE_SUCCESS,
+                selectedRecipe.getTextFormattedRecipe()));
     }
 
     @Override

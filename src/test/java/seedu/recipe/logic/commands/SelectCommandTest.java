@@ -104,8 +104,8 @@ public class SelectCommandTest {
 
         try {
             CommandResult commandResult = selectCommand.execute();
-            assertEquals(String.format(SelectCommand.MESSAGE_SELECT_RECIPE_SUCCESS, index.getOneBased()),
-                    commandResult.feedbackToUser);
+            assertEquals(String.format(SelectCommand.MESSAGE_SELECT_RECIPE_SUCCESS,
+                    selectCommand.getSelectedRecipe().getTextFormattedRecipe()), commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }

@@ -457,7 +457,6 @@ You do not need to save manually. contactHeRo saves the data into the hard disk 
 
 // tag::dataencryption[]
 
-<<<<<<< HEAD
 === Opening the calendar
 You can switch to the calendar tab using the following format. +
 Format: `calendar`

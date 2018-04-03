@@ -63,7 +63,7 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS u/UNIVERSITY y/EXPECTED_GRADUATION_YEAR m/MAJOR g/GRADE_POINT_AVERAGE j/JOB_APPLIED [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS u/UNIVERSITY y/EXPECTED_GRADUATION_YEAR m/MAJOR g/GRADE_POINT_AVERAGE j/JOB_APPLIED [r/RESUME] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -81,13 +81,14 @@ Format: `list`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [u/UNIVERSITY] [y/EXPECTED_GRADUATION_YEAR] [m/MAJOR] [g/GRADE_POINT_AVERAGE] [j/JOB_APPLIED] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [u/UNIVERSITY] [y/EXPECTED_GRADUATION_YEAR] [r/Resume] [m/MAJOR] [g/GRADE_POINT_AVERAGE] [j/JOB_APPLIED] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* You can remove the person's resume by typing `r/` without specifying any resume after it.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
@@ -302,6 +303,24 @@ Examples:
 * `rating-delete 1` +
 Deletes the rating of the first applicant in HR+.
 
+=== Update applicant's status: `status` [Since v1.3]
+Updates the status of an applicant. +
+Format: `status INDEX STATUS_INDEX`
+
+****
+* The index refers to the index number shown in the last person listing.
+* The index *must be a positive number* 1,2,3, ...
+* Status index are
+1. New
+2. 1st round
+3. 2nd round
+4. Rejected
+5. Waitlist
+6. Offered
+7. Accepted
+8. Withdrawn
+****
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -413,7 +432,7 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [u/UNIVERSITY] [y/EXPECTED_GRADUATION_YEAR] [m/MAJOR] [j/JOB_APPLIED] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [u/UNIVERSITY] [y/EXPECTED_GRADUATION_YEAR] [r/RESUME] [m/MAJOR] [j/JOB_APPLIED] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`

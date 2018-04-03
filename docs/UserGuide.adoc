@@ -175,7 +175,7 @@ Format: `addplatform INDEX [l/LINK]...`
 :link: \https://www.facebook.com/
 
 |=======================================================================
-|*Accepted Facebook links may take the form:*
+a|*Accepted Facebook links may take the form:*
 - {link}<profile username>
 - \https://facebook.com/<profile username>
 - {\http://www.facebook.com/<profile} username>
@@ -183,15 +183,14 @@ Format: `addplatform INDEX [l/LINK]...`
 - {\www.facebook.com/<profile} username>
 - facebook.com/<profile username>
 - facebook.com/profile.php?id=<user profile id>
-
-|*Accepted Twitter links may take the form:*
+a|*Accepted Twitter links may take the form:*
 - {\https://www.twitter.com/<username} handle>
 - {\https://twitter.com/<username} handle>
 - {\http://www.twitter.com/<username} handle>
 - {\http://twitter.com/<username} handle>
 - {\www.twitter.com/<username} handle>
 - twitter.com/<username handle>
-=======================================================================
+|=======================================================================
 
 Examples:
 

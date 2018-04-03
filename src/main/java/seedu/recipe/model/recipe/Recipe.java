@@ -1,16 +1,14 @@
 package seedu.recipe.model.recipe;
 
 import static seedu.recipe.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.recipe.ui.UiPart.FXML_FILE_FOLDER;
 
-import java.net.URL;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.recipe.MainApp;
 import seedu.recipe.model.tag.Tag;
 import seedu.recipe.model.tag.UniqueTagList;
+import seedu.recipe.model.util.HtmlFormatter;
 
 /**
  * Represents a Recipe in the recipe book.
@@ -103,51 +101,7 @@ public class Recipe {
     }
 
     public String getRecipeInHtmlFormat() {
-        URL recipeCss = MainApp.class.getResource(FXML_FILE_FOLDER + "Recipe.css");
-        URL bootstrapCss = MainApp.class.getResource(FXML_FILE_FOLDER + "bootstrap.css");
-
-        return "<html>"
-                + "<head>"
-                + "<link rel='stylesheet' type='text/css' href='" + bootstrapCss.toExternalForm() + "' />"
-                + "<link rel='stylesheet' type='text/css' href='" + recipeCss.toExternalForm() + "' />"
-                + "</head>"
-                + "<body>"
-                + "<div class='row'>"
-                + "<h1 class='name'>" + name + "</h1>"
-                + "<div class='col-sm-6'>"
-                + "<div class='col-sm-3'>"
-                + "<h5>Cooking Time:</h5>"
-                + "<p>" + cookingTime + "</p>"
-                + "</div>"
-                + "<div class='col-sm-3'>"
-                + "<h5>Preparation Time:</h5>"
-                + "<p>" + preparationTime + "</p>"
-                + "</div>"
-                + "<div class='col-sm-3'>"
-                + "<h5>Calories:</h5>"
-                + "<p>" + calories + "</p>"
-                + "</div>"
-                + "<div class='col-sm-3'>"
-                + "<h5>Servings:</h5>"
-                + "<p>" + servings + "</p>"
-                + "</div>"
-                + "</div>"
-                + "<div class='col-sm-6'>"
-                + "<img src='" + image.getUsablePath() + "' />"
-                + "</div>"
-                + "<div class='col-sm-12'>"
-                + "<div class='col-sm-12'>"
-                + "<h5>Ingredients:</h5>"
-                + "<p>" + ingredient + "</p>"
-                + "</div>"
-                + "<div class='col-sm-12'>"
-                + "<h5>Instructions:</h5>"
-                + "<p>" + instruction + "</p>"
-                + "</div>"
-                + "</div>"
-                + "</div>"
-                + "</body>"
-                + "</html>";
+        return HtmlFormatter.getHtmlFormat(this);
     }
 
     //@@author RyanAngJY
@@ -178,7 +132,8 @@ public class Recipe {
                 && otherRecipe.getServings().equals(this.getServings())
                 && otherRecipe.getUrl().equals(this.getUrl())
                 && otherRecipe.getImage().equals(this.getImage())
-                && otherRecipe.getTextFormattedRecipe().equals(this.getTextFormattedRecipe());
+                && otherRecipe.getTextFormattedRecipe().equals(this.getTextFormattedRecipe())
+                && otherRecipe.getRecipeInHtmlFormat().equals(this.getRecipeInHtmlFormat());
     }
 
     @Override

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.timetable.TimetableParserUtil.parseUrl;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -83,6 +84,14 @@ public class Timetable {
      */
     public void addLessonToSlot(Lesson lessonToAdd) throws IllegalValueException {
         data.addLessonToSlot(lessonToAdd);
+    }
+
+    /**
+     * Returns the timetable
+     * @return Timetable as an Array
+     */
+    public ArrayList<ArrayList<ArrayList<String>>> getTimetable() {
+        return data.getTimeTable();
     }
 
     @Override

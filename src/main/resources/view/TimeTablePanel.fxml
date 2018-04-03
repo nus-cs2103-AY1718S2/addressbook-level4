@@ -4,12 +4,13 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.StackPane?>
 
-<!-- @@author jingyinno -->
-<StackPane fx:id="venuePlaceholder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
+<!-- @@author yeggasd -->
+
+<StackPane fx:id="venuePlaceholder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <TableView fx:id="venueTable" stylesheets="@DarkTheme.css">
+        <TableView fx:id="timeTable" stylesheets="@DarkTheme.css">
          <columns>
-             <TableColumn fx:id="roomId" prefWidth="100.0" text="Room" />
+             <TableColumn fx:id="day" prefWidth="100.0" text="" />
              <TableColumn fx:id="eightAm" prefWidth="60.0" text="0800" />
              <TableColumn fx:id="nineAm" prefWidth="60.0" text="0900" />
              <TableColumn fx:id="tenAm" prefWidth="60.0" text="1000" />

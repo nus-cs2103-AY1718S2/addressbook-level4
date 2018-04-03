@@ -102,6 +102,30 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
                 MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+    @Test
+    public void populateSelectCommandTemplate() {
+        //use accelerator
+        getCommandBox().click();
+        getMainMenu().populateSelectCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        getResultDisplay().click();
+        getMainMenu().populateSelectCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        getPersonListPanel().click();
+        getMainMenu().populateSelectCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        getBrowserPanel().click();
+        getMainMenu().populateSelectCommandUsingAccelerator();
+        assertPopulationFailure();
+
+        //use menu button
+        getMainMenu().populateSelectCommandUsingMenu();
+        assertPopulationSuccess();
+    }
+
     /**
      * Executes {@code command} and asserts that the,<br>
      * 1. Command box displays an empty string.<br>

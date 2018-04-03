@@ -36,7 +36,7 @@ public class GroupBuilder {
     }
 
     public Group build() {
-        return new Group(information,personList);
+        return new Group(information, personList);
     }
 
 }

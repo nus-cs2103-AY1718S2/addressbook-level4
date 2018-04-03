@@ -130,6 +130,10 @@ public class Patient {
         return appointments.remove(index);
     }
 
+    public void addAppointment(Appointment appointment) throws UniqueAppointmentList.DuplicatedAppointmentException {
+        appointments.add(appointment);
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

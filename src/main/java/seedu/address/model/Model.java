@@ -5,6 +5,8 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.appointment.AppointmentEntry;
+import seedu.address.model.appointment.UniqueAppointmentEntryList;
+import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
@@ -71,4 +73,7 @@ public interface Model {
 
     /** Get appointment entries*/
     ObservableList<AppointmentEntry> getAppointmentEntryList();
+
+    /** Delete a patient's appointment*/
+    void addPatientAppointment(Patient patient, String dateTimeString) throws UniqueAppointmentList.DuplicatedAppointmentException, UniqueAppointmentEntryList.DuplicatedAppointmentEntryException;
 }

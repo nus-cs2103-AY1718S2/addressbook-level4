@@ -38,6 +38,16 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     }
 
     /**
+     * Clears all text in the Command Box.
+     * @return true if the command succeeded, false otherwise.
+     */
+    public boolean clear() {
+        click();
+        guiRobot.interact(() -> getRootNode().setText(""));
+        return getRootNode().getText().equals("");
+    }
+
+    /**
      * Returns the list of style classes present in the command box.
      */
     public ObservableList<String> getStyleClass() {

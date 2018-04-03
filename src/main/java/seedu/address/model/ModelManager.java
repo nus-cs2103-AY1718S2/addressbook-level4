@@ -177,6 +177,16 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
+    //@@author luca590
+    //============ Sorting algo ===========================================================
+    @Override
+    public void sortAddressBookAlphabeticallyByName() throws DuplicatePersonException {
+        addressBook.sortAddressBookAlphabeticallyByName();
+    }
+
+    //======================================================================================
+    //@@author
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

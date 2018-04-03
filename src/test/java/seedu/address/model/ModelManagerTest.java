@@ -1,10 +1,11 @@
 package seedu.address.model;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersonsAndAppointments.ALICE;
 import static seedu.address.testutil.TypicalPersonsAndAppointments.ALICE_APPT;
@@ -23,7 +24,10 @@ import javafx.collections.ObservableList;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.NameContainsFullKeywordsPredicate;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 public class ModelManagerTest {
     @Rule
@@ -52,6 +56,37 @@ public class ModelManagerTest {
         assertThat(modelManager.getAllTemplates(), instanceOf(ObservableList.class));
     }
     //@@author
+
+    //@@author luca590
+    @Test
+    public void fromModelManagerSortAddressBookAlphabeticallyByName_simpleFunctionCallWithValidData_sortedList()
+            throws DuplicatePersonException {
+        ModelManager testModel = new ModelManager();
+
+        PersonBuilder pb = new PersonBuilder();
+        Person p1 = pb.build();
+        testModel.addPerson(p1);
+
+        pb.withName("Car");
+        Person p2 = pb.build();
+        testModel.addPerson(p2);
+
+        pb.withName("Bob");
+        Person p3 = pb.build();
+        testModel.addPerson(p3);
+
+
+        testModel.sortAddressBookAlphabeticallyByName();
+
+        Object[] parray = testModel.getFilteredPersonList().toArray();
+        assertTrue(parray.length > 0);
+
+        //substrings are used in testing to avoid the Date Added parameter
+        assertEquals(parray[0].toString().substring(0, 5), "Alice");
+        assertEquals(parray[1].toString().substring(0, 3), "Bob");
+        assertEquals(parray[2].toString().substring(0, 3), "Car");
+    }
+    //@@ author
 
     @Test
     public void equals() throws DuplicateAppointmentException, AppointmentNotFoundException {

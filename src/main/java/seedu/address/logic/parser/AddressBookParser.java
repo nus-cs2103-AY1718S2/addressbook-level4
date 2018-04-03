@@ -24,6 +24,7 @@ import seedu.address.logic.commands.ImportContactsCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ZoomInCommand;
 import seedu.address.logic.commands.ZoomOutCommand;
@@ -148,6 +149,12 @@ public class AddressBookParser {
 
         case ExportContactsCommand.COMMAND_ALIAS:
             return new ExportContactsCommandParser().parse(arguments);
+
+        case SortCommand.COMMAND_WORD:
+            return new SortCommand();
+
+        case SortCommand.COMMAND_ALIAS:
+            return new SortCommand();
         //@@author
 
         //@@author jlks96

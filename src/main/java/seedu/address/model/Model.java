@@ -82,4 +82,11 @@ public interface Model {
     void updateFilteredAppointmentList(Predicate<Appointment> predicate);
     //@@author
 
+    //@@author luca590
+    /**
+     * Sorts the addressbook lexographically by users' first name
+     * @throws Exception if {@code predicate} is null.
+     */
+    void sortAddressBookAlphabeticallyByName() throws DuplicatePersonException;
+
 }

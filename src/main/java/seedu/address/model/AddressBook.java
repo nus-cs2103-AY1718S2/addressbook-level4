@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -11,7 +12,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.google.common.collect.Lists;
+
 import javafx.collections.ObservableList;
+
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
@@ -20,6 +24,7 @@ import seedu.address.model.email.Template;
 import seedu.address.model.email.UniqueTemplateList;
 import seedu.address.model.email.exceptions.DuplicateTemplateException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonCompare;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -238,6 +243,22 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new AppointmentNotFoundException();
         }
     }
+    //@@author
+
+    //@@author luca590
+    /**
+     * This function is intended to be called from ModelManager to protect
+     * the private {@code UniquePersonList persons} variable
+     */
+    public void sortAddressBookAlphabeticallyByName() throws DuplicatePersonException {
+        //persons is UniquePersonList implements Iterable
+        //setPersons(List<Persons> ...)
+        List list = Lists.newArrayList(persons);
+        Collections.sort(list, new PersonCompare());
+        setPersons((List<Person>) list);
+
+    }
+
     //@@author
 
     //// util methods

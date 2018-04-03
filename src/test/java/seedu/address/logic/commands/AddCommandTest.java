@@ -180,6 +180,13 @@ public class AddCommandTest {
         public void updateFilteredAppointmentList(Predicate<Appointment> predicate) {
             fail("This method should not be called.");
         }
+
+        //@@author luca590
+        @Override
+        public void sortAddressBookAlphabeticallyByName() throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+        //@@author
     }
 
     /**

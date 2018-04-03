@@ -371,6 +371,7 @@ Format: `exit`
 To save your time, after typing a partial command, you can press TAB for the command to be auto-completed.
 [NOTE]
 The first lexicographically matched command is returned.
+
 Examples:
 
 * Typing `ad` and pressing `TAB` gives: +
@@ -385,6 +386,93 @@ You do not need to save manually. contactHeRo saves the data into the hard disk 
 
 // tag::dataencryption[]
 
+=== Opening the calendar
+You can switch to the calendar tab using the following format. +
+Format: `calendar`
+
+=== Viewing calendar
+You can view your calendar using these commands: +
+
+==== Viewing a specific date or switch to the date view
+You can view a specifc date or switch to the date view by using the following format. +
+Format: `date [DATE]` +
+
+[NOTE]
+`DATE` needs to be in format YYYY-MM-DD
+
+* With `DATE`, you view the specific date +
+Example: `date 2018-03-26`
+
+* Without `DATE`, you change to the date view +
+Example: `date`
+
+==== Viewing a specific week or switch to the week view
+You can view a specifc week or switch to the week view by using the following format. +
+Format: `week [YEAR WEEK]` +
+
+[NOTE]
+`Year` needs to be in format YYYY. +
+`Week` needs to be in format WW and WW refers to the order of week in one year.
+
+
+* With `YEAR WEEK`, you view the specific week +
+Example: `week 2018 10`
+
+* Without `YEAR WEEK`, you change to the week view +
+Example: `week`
+
+==== Viewing a specific month or switch to the month view
+You can view a specifc month or switch to the month view by using the following format. +
+Format: `month [MONTH]` +
+
+[NOTE]
+`MONTH` needs to be in format YYYY-MM
+
+* With `MONTH`, you view the specific month +
+Example: `month 2018-10`
+
+* Without `MONTH`, you change to the month view +
+Example: `month`
+
+==== Viewing a specific year or switch to the year view
+You can view a specifc year or switch to the year view by using the following format. +
+Format: `year [YEAR]` +
+
+[NOTE]
+`YEAR` needs to be in format YYYY
+
+* With `YEAR`, you view the specific year +
+Example: `year 2018`
+
+* Without `YEAR`, you change to the year view +
+Example: `year`
+
+=== Adding appointment
+You can add appointment by using the following format. +
+
+Format: `addapp t/TITLE sdt/START_DATE_TIME edt/END_DATE_TIME`
+
+Examples:
+
+* `addapp t/Meeting sdt/2018-04-05 14:00 edt/2018-04-05 15:00`
+
+On running the above command, you should see the following success message: +
+
+ New appointment added: Meeting Start Date Time: 2018-04-05 14:00 End Date Time: 2018-04-05 15:00
+
+=== Deleting appointment
+You can delete appointment by using the following format. +
+
+Format: `delapp t/TITLE sdt/START_DATE_TIME edt/END_DATE_TIME`
+
+Examples:
+
+* `delapp t/Meeting sdt/2018-04-05 14:00 edt/2018-04-05 15:00`
+
+On running the above command, you should see the following success message: +
+
+ Appointment deleted: Meeting Start Date Time: 2018-04-05 14:00 End Date Time: 2018-04-05 15:00
+
 === Editing a job opening `[coming in v1.4]`
 
 You will soon be able to edit a job opening in contactHeRo.
@@ -397,13 +485,13 @@ You will soon be able to delete a job opening in contactHeRo.
 
 You will soon be able to match job openings to people in contactHeRo.
 
-=== Arranging meetings with Gmail calendar `[coming in v1.5]`
-
-You will soon be able to arrange meeting on Gmail calender using contactHero.
-
 === Emailing a person `[coming in v1.5]`
 
 You can send email to any person you have saved in contactHeRo, without having to leave the app!
+
+=== Arranging meetings with Gmail calendar `[coming in v2.0]`
+
+You will soon be able to arrange meeting on Gmail calender using contactHero.
 
 === Add reminders `[coming in v2.0]`
 
@@ -458,3 +546,16 @@ e.g.`select 2`
 e.g. `linkedIn 2`
 * *<<adding-a-job-opening, Add job opening>>* : `addjob p/POSITION t/TEAM l/LOCATION n/NUMBER_OF_POSITIONS` +
 e.g. `addjob p/Software Engineer t/Cloud Services l/Singapore n/2`
+* *<<openning-the-calendar, Open calendar>>* : `calendar`
+* *<<viewing-specific-date-or-switching-to-date-view, View specific date or switch date view>>* : `date [DATE]` +
+e.g. `date` or `date 2018-04-04`
+* *<<viewing-specific-week-or-switching-to-week-view, View specific week or switch week view>>* : `week [YEAR WEEK]` +
+e.g. `week` or `week 2018 14`
+* *<<viewing-specific-month-or-switching-to-month-view, View specific month or switch month view>>* : `month [MONTH]` +
+e.g. `month` or `month 2018-04`
+* *<<viewing-specific-year-or-switching-to-year-view, View specific year or switch year view>>* : `year [YEAR]` +
+e.g. `year` or `year 2018`
+* *<<adding-appointment, Adding appointment>>* : `addapp t/TITLE sdt/START_DATE_TIME edt/END_DATE_TIME` +
+e.g `addapp t/Meeting sdt/2018-04-05 14:00 edt/2018-04-05 15:00`
+* *<<deleting-appointment, Deleting appointment>>* : `delapp t/TITLE sdt/START_DATE_TIME edt/END_DATE_TIME` +
+e.g `delapp t/Meeting sdt/2018-04-05 14:00 edt/2018-04-05 15:00`

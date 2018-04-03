@@ -46,6 +46,7 @@ public class TestUtil {
         return Index.fromOneBased(model.getAddressBook().getPersonList().size());
     }
 
+    //@@author amad-person
     /**
      * Returns the middle index of the order in the {@code model}'s order list.
      */
@@ -59,6 +60,7 @@ public class TestUtil {
     public static Index getLastOrderIndex(Model model) {
         return Index.fromOneBased(model.getAddressBook().getOrderList().size());
     }
+    //@@author amad-person
 
     /**
      * Returns the person in the {@code model}'s person list at {@code index}.
@@ -67,10 +69,12 @@ public class TestUtil {
         return model.getAddressBook().getPersonList().get(index.getZeroBased());
     }
 
+    //@@author amad-person
     /**
      * Returns the order in the {@code model}'s order list at {@code index}.
      */
     public static Order getOrder(Model model, Index index) {
         return model.getAddressBook().getOrderList().get(index.getZeroBased());
     }
+    //@@author
 }

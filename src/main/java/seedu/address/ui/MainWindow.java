@@ -164,9 +164,11 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    //@@author amad-person
     private void setTheme() {
         Theme.changeTheme(primaryStage, Theme.DARK_THEME_KEYWORD);
     }
+    //@@author
 
     /**
      * Returns the current size and the position of the main Window.

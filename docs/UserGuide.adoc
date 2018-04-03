@@ -282,7 +282,7 @@ On running the above command, you should see the following success message: +
 
  New job opening added: Marketing Intern Team: Social Media Marketing Location: Singapore Number of Positions: 1 Skills: [Excel]
 
-=== Deleting a job opening 
+=== Deleting a job opening
 
 You can delete a specified job opening from contactHeRo using the following format. +
 Format: `deletejob INDEX`

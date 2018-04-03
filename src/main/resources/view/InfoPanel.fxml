@@ -6,4 +6,5 @@
     <StackPane fx:id="birthdayPlaceholder" prefHeight="150.0" prefWidth="200.0" />
     <StackPane fx:id="venuePlaceholder" prefHeight="150.0" prefWidth="200.0" />
     <StackPane fx:id="timetablePlaceholder" prefHeight="150.0" prefWidth="200.0" />
+    <StackPane fx:id="mapsPlaceholder" prefHeight="150.0" prefWidth="200.0" />
 </StackPane>

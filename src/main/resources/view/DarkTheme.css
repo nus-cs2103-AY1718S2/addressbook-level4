@@ -101,15 +101,15 @@
 }
 
 .list-cell:filled:even {
-    -fx-background-color: #3c3e3f;
+    -fx-background-color: #424d5f;
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #515658;
+    -fx-background-color: slategrey;
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: #424d5f;
+    -fx-background-color: steelblue;
 }
 
 .list-cell:filled:selected #cardPane {
@@ -231,7 +231,7 @@
 }
 
 .menu-bar .label {
-    -fx-font-size: 19pt;
+    -fx-font-size: 15pt;
     -fx-font-family: "Times New Roman";
     -fx-text-fill: darkorange;
     -fx-opacity: 0.95;
@@ -381,36 +381,6 @@
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 13;
-}
-
-#tags .red {
-    -fx-text-fill: black;
-    -fx-background-color: red;
-}
-
-#tags .yellow {
-    -fx-background-color: yellow;
-    -fx-text-fill: black;
-}
-
-#tags .blue {
-    -fx-text-fill: white;
-    -fx-background-color: blue;
-}
-
-#tags .orange {
-    -fx-text-fill: black;
-    -fx-background-color: orange;
-}
-
-#tags .brown {
-    -fx-text-fill: white;
-    -fx-background-color: brown;
-}
-
-#tags .green {
-    -fx-text-fill: black;
-    -fx-background-color: green;
 }
 
 #tags .red {

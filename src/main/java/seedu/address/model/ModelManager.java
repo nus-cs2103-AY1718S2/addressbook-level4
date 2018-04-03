@@ -14,6 +14,10 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.exception.DuplicateUsernameException;
+import seedu.address.model.exception.InvalidPasswordException;
+import seedu.address.model.exception.InvalidUsernameException;
+import seedu.address.model.exception.MultipleLoginException;
+import seedu.address.model.exception.UserLogoutException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.job.exceptions.JobNotFoundException;
@@ -32,9 +36,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
-    private Optional<Account> user; //tracks the current user
-    private AccountsManager accountsManager;
     private final FilteredList<Job> filteredJobs;
+    private AccountsManager accountsManager;
+    private Optional<Account> user;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -47,9 +51,9 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        accountsManager = new AccountsManager();
-        user = Optional.empty();
         filteredJobs = new FilteredList<>(this.addressBook.getJobList());
+        this.accountsManager = new AccountsManager();
+        this.user = Optional.empty();
     }
 
     public ModelManager() {
@@ -99,10 +103,51 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeSkill(t);
         indicateAddressBookChanged();
     }
+    @Override
+    public synchronized void addJob(Job job) throws DuplicateJobException {
+        addressBook.addJob(job);
+        updateFilteredJobList(PREDICATE_SHOW_ALL_JOBS);
+        indicateAddressBookChanged();
+    }
 
     @Override
-    public AccountsManager getAccountsManager() {
+    public ReadOnlyAccountsManager getAccountsManager() {
         return accountsManager;
+    }
+
+    /**
+     * Logs the user into the system.
+     * @throws InvalidUsernameException
+     * @throws InvalidPasswordException
+     * @throws MultipleLoginException if a user is already logged in.
+     */
+    @Override
+    public void login(String username, String password)
+            throws InvalidUsernameException, InvalidPasswordException, MultipleLoginException {
+        if (user.isPresent()) {
+            throw new MultipleLoginException();
+        } else {
+            requireNonNull(accountsManager);
+            Account user = accountsManager.login(username, password);
+            setUser(user);
+        }
+    }
+
+    /**
+     * Logs the user out of the system.
+     * @throws UserLogoutException
+     */
+    @Override
+    public void logout() throws UserLogoutException {
+        if (user.isPresent()) {
+            setUser(null);
+        } else {
+            throw new UserLogoutException();
+        }
+    }
+
+    private void setUser(Account account) {
+        user = user.ofNullable(account);
     }
 
     @Override
@@ -111,13 +156,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author kush1509
-    @Override
-    public synchronized void addJob(Job job) throws DuplicateJobException {
-        addressBook.addJob(job);
-        updateFilteredJobList(PREDICATE_SHOW_ALL_JOBS);
-        indicateAddressBookChanged();
-    }
-
     @Override
     public synchronized void deleteJob(Job target) throws JobNotFoundException {
         addressBook.removeJob(target);

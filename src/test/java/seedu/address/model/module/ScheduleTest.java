@@ -4,11 +4,18 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class ScheduleTest {
+    private static final String DEFAULT_CLASSNO = "1";
+    private static final String DEFAULT_LESSON_TYPE = "Lecture";
+    private static final String DEFAULT_WEEK_TEXT = "EVERY WEEK";
+    private static final String DEFAULT_DAY_TEXT = "MONDAY";
+    private static final String DEFAULT_START_TIME = "0000";
+    private static final String DEFAULT_END_TIME = "2359";
+    private static final String DEFAULT_VENUE = "LT17";
+
 
     private Schedule testBlank = new Schedule();
-    private Schedule test = new Schedule("1", "Lecture", "EVERY WEEK", "MONDAY",
-            "0000", "2359", "LT17");
-
+    private Schedule test = new Schedule(DEFAULT_CLASSNO, DEFAULT_LESSON_TYPE, DEFAULT_WEEK_TEXT, DEFAULT_DAY_TEXT,
+            DEFAULT_START_TIME, DEFAULT_END_TIME, DEFAULT_VENUE);
 
     @Test
     public void getClassNo() {
@@ -53,21 +60,34 @@ public class ScheduleTest {
     }
 
     @Test
-    public void equals_test() {
-        Assert.assertTrue(test.equals(test));
-        Assert.assertTrue(testBlank.equals(new Schedule()));
-        Assert.assertTrue(test.equals(new Schedule("1", "Lecture", "EVERY WEEK", "MONDAY",
-                "0000", "2359", "LT17")));
-        Assert.assertFalse(test.equals(1));
-        Assert.assertFalse(test.equals(testBlank));
+    public void testToString() {
+        String expected = "ClassNo: " + DEFAULT_CLASSNO
+                + "\nLessonType: " + DEFAULT_LESSON_TYPE
+                + "\nWeekText: " + DEFAULT_WEEK_TEXT
+                + "\nDayText: " + DEFAULT_DAY_TEXT
+                + "\nStartTime: " + DEFAULT_START_TIME
+                + "\nEndTime: " + DEFAULT_END_TIME
+                + "\nVenue: " + DEFAULT_VENUE + "\n";
+        String expectedBlank = "ClassNo: "
+                + "\nLessonType: "
+                + "\nWeekText: "
+                + "\nDayText: "
+                + "\nStartTime: "
+                + "\nEndTime: "
+                + "\nVenue: " + "\n";
+        Assert.assertEquals(expected, test.toString());
+        Assert.assertEquals(expectedBlank, testBlank.toString());
     }
 
     @Test
-    public void toString_test() {
-        Assert.assertNotEquals(testBlank.toString(), test.toString());
-        String expectedString = "ClassNo: 1\nLessonType: Lecture\nWeekText: EVERY WEEK"
-                + "\nDayText: MONDAY\nStartTime: 0000\nEndTime: 2359\n";
-        Assert.assertEquals(test.toString(), expectedString);
+    public void testEquals() {
+        Assert.assertTrue(test.equals(test));
+        Assert.assertTrue(test.equals(new Schedule(DEFAULT_CLASSNO, DEFAULT_LESSON_TYPE, DEFAULT_WEEK_TEXT,
+                DEFAULT_DAY_TEXT, DEFAULT_START_TIME, DEFAULT_END_TIME, DEFAULT_VENUE)));
+        Assert.assertFalse(test.equals(DEFAULT_LESSON_TYPE));
+        Assert.assertFalse(test.equals(new Schedule("4", DEFAULT_LESSON_TYPE, DEFAULT_WEEK_TEXT,
+                DEFAULT_DAY_TEXT, DEFAULT_START_TIME, DEFAULT_END_TIME, DEFAULT_VENUE)));
+
     }
 
 }

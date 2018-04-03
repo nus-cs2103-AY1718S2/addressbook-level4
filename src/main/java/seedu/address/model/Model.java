@@ -34,6 +34,9 @@ public interface Model {
     /** Deletes the given person. */
     void deletePerson(Person target) throws PersonNotFoundException;
 
+    /** Deletes the given to-do. */
+    void deleteToDo(ToDo target) throws ToDoNotFoundException;
+
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
 

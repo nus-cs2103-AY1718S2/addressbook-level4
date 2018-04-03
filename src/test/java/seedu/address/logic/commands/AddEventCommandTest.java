@@ -152,6 +152,11 @@ public class AddEventCommandTest {
         }
 
         @Override
+        public void deleteToDo(ToDo target) throws ToDoNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updatePerson(Person target, Person editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");

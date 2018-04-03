@@ -17,7 +17,8 @@ By: `Team W15-B3`      Since: `February 2018`      Licence: `MIT`
 
 == Introduction
 
-This is a desktop Event Manager application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface). This application is for students with group projects to keep track of their teammates' timetable, in order to schedule the most suitable meetup time. Users can store person's timetables, arrange persons in groups and generate a suitable meetup time.
+image:FASTIS.png[ align="center"] +
+Fastis is a desktop Event Manager application. It has a GUI but most of the user interactions happen + using a CLI (Command Line Interface). This application is for students with group projects to keep track of their teammates' + timetable, in order to schedule the most suitable meetup time. Users can store person's timetables, arrange persons in groups and  + generate a suitable meetup time.
 
 == Quick Start
 
@@ -253,6 +254,9 @@ Examples:
 * `addToDo Do homework before next Wednesday`
 * `aTD Swim like a fish`
 
+image:AddToDoCommandExample.png[width="500"] +
+Figure 2. Example of to-dos
+
 === Check a to-do as done: `check` `v1.3`
 
 Checks a to-do in the address book as done +
@@ -292,10 +296,34 @@ Examples:
 
 * `ListGroupMembers CS3230 CS1010` +
 Returns any person having group tags `CS3230`, `CS1010`
+Refer to Figure 2 for example.
+
+image:lgmExample.png[width="500"] +
+Figure 2. Example of ListGroupMembers
+
+=== Add Group: `AddGroup`
+
+Creates a group named `KEYWORD` +
+Alias: `aG` +
+Format: `aG KEYWORD[KEYWORDS]`
+
+[NOTE]
+====
+Keyword cannot be an empty input.
+====
+
+Examples:
+
+* `addGroups CS2101 Oral Presentation` +
+New Group `CS2101 Oral Presentation` added, refer to Figure 3. +
+image:addGroupExample.png[width ="500"] +
+Figure 3. Example of add Group
+// end:AddGroup[]
+
 
 === Display Calendar : `display` `[coming in v2.0]`
 
-Show all the group meeting in list in Calendar in time order.+
+Show all the group meeting in list in Calendar in time order. +
 Alias: `d` +
 Format: `display`
 
@@ -352,10 +380,22 @@ Data files created by FASTIS will be encrypted using the `password` you have pro
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+== Appendix
+
+=== Timetable Links
+
+Timetable links can be retrieved from the NUSmods website. To retrieve it simply go the the NUSMods website and click the *share* button.
+
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *AddToDo* `CONTENT` +
+e.g. `addToDo Do home work`
+* *CheckToDo* : `check INDEX` +
+e.g. `check 3`
+* *UnCheckToDo* : `uncheck INDEX` +
+e.g. `uncheck 3`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`

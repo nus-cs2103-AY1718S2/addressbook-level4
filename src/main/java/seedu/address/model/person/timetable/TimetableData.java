@@ -91,4 +91,16 @@ public class TimetableData {
         }
     }
 
+    /**
+     * Returns the Time Table
+     * @return ArrayList with the  Time Table
+     */
+    public ArrayList<ArrayList<ArrayList<String>>> getTimeTable() {
+        ArrayList<ArrayList<ArrayList<String>>> timetable = new ArrayList<>();
+        for (TimetableWeek t : timetableWeeks) {
+            timetable.add(t.getWeeklyTimeTable());
+        }
+        return timetable;
+    }
+
 }

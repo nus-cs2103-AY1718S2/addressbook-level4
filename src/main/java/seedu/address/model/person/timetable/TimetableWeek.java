@@ -1,5 +1,7 @@
 package seedu.address.model.person.timetable;
 
+import java.util.ArrayList;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.timetable.Lesson;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -95,5 +97,36 @@ public class TimetableWeek {
         default:
             throw new IllegalValueException(MESSAGE_INVALID_DAY);
         }
+    }
+
+    /**
+     * Returns the Time Table for the week
+     * @return ArrayList with the  Time Table
+     */
+    public ArrayList<ArrayList<String>> getWeeklyTimeTable() {
+        ArrayList<ArrayList<String>> timetable = new ArrayList<>();
+        for(int i = 0; i < timetableDays.length; i++) {
+            TimetableDay t = timetableDays[i];
+            ArrayList<String> dailyTimeTable = t.getDailyTimeTable();
+            switch (i) {
+                case 0:
+                    dailyTimeTable.add(0, MONDAY_IDENTIFIER);
+                    break;
+                case 1:
+                    dailyTimeTable.add(0, TUESDAY_IDENTIFIER);
+                    break;
+                case 2:
+                    dailyTimeTable.add(0, WEDNESDAY_IDENTIFIER);
+                    break;
+                case 3:
+                    dailyTimeTable.add(0, THURSDAY_IDENTIFIER);
+                    break;
+                case 4:
+                    dailyTimeTable.add(0, FRIDAY_IDENTIFIER);
+                    break;
+            }
+            timetable.add(dailyTimeTable);
+        }
+        return timetable;
     }
 }

@@ -23,4 +23,12 @@ public class TimetableSlot {
     public Lesson getLesson() {
         return lesson;
     }
+
+    @Override
+    public String toString() {
+        if (lesson == null ) {
+            return "";
+        }
+        return lesson.toString();
+    }
 }

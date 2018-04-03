@@ -18,3 +18,18 @@
 .tooltip-text {
     -fx-text-fill: white;
 }
+
+.timetable-cell-empty {
+    -fx-background-color: #383838;
+    -fx-border-color: gray;
+}
+
+.timetable-cell-filled {
+    -fx-background-color: #F08080;
+    -fx-border-color: gray;
+}
+
+.timetable-cell-day {
+    -fx-background-color: #F08080;
+    -fx-border-color: gray;
+}

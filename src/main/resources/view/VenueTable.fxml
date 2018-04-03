@@ -10,19 +10,19 @@
         <TableView fx:id="venueTable" stylesheets="@DarkTheme.css">
          <columns>
              <TableColumn fx:id="roomId" prefWidth="100.0" text="Room" />
-            <TableColumn fx:id="eightAm" prefWidth="60.0" text="0800" />
-            <TableColumn fx:id="nineAm" prefWidth="60.0" text="0900" />
+             <TableColumn fx:id="eightAm" prefWidth="60.0" text="0800" />
+             <TableColumn fx:id="nineAm" prefWidth="60.0" text="0900" />
              <TableColumn fx:id="tenAm" prefWidth="60.0" text="1000" />
              <TableColumn fx:id="elevenAm" prefWidth="60.0" text="1100" />
              <TableColumn fx:id="twelvePm" prefWidth="60.0" text="1200" />
              <TableColumn fx:id="onePm" prefWidth="60.0" text="1300" />
              <TableColumn fx:id="twoPm" prefWidth="60.0" text="1400" />
              <TableColumn fx:id="threePm" prefWidth="60.0" text="1500" />
-            <TableColumn fx:id="fourPm" prefWidth="60.0" text="1600" />
-            <TableColumn fx:id="fivePm" prefWidth="60.0" text="1700" />
-            <TableColumn fx:id="sixPm" prefWidth="60.0" text="1800" />
-            <TableColumn fx:id="sevenPm" prefWidth="60.0" text="1900" />
-            <TableColumn fx:id="eightPm" prefWidth="60.0" text="2000" />
+             <TableColumn fx:id="fourPm" prefWidth="60.0" text="1600" />
+             <TableColumn fx:id="fivePm" prefWidth="60.0" text="1700" />
+             <TableColumn fx:id="sixPm" prefWidth="60.0" text="1800" />
+             <TableColumn fx:id="sevenPm" prefWidth="60.0" text="1900" />
+             <TableColumn fx:id="eightPm" prefWidth="60.0" text="2000" />
          </columns></TableView>
     </children>
 </StackPane>

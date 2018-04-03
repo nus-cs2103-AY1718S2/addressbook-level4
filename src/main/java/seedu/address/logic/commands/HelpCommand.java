@@ -31,12 +31,14 @@ public class HelpCommand extends Command {
         if (commandRequest == null)   {
             EventsCenter.getInstance().post(new ShowHelpRequestEvent());
             return new CommandResult(SHOWING_HELP_MESSAGE);
-
         } else   {
             switch(commandRequest) {
 
             case TaskCommand.COMMAND_WORD:
                 return new CommandResult(TaskCommand.MESSAGE_USAGE);
+
+            case EventCommand.COMMAND_WORD:
+                return new CommandResult(EventCommand.MESSAGE_USAGE);
 
             case CompleteCommand.COMMAND_WORD:
                 return new CommandResult(CompleteCommand.MESSAGE_USAGE);

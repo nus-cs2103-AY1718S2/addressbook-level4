@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.StackPane?>
+
+<!-- @@author yeggasd -->
+
+<StackPane fx:id="venuePlaceholder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <TableView fx:id="timeTable" stylesheets="@DarkTheme.css">
+         <columns>
+             <TableColumn fx:id="modId" prefWidth="100.0" text="Modules" />
+             <TableColumn fx:id="monday" prefWidth="60.0" text="Monday" />
+             <TableColumn fx:id="tuesday" prefWidth="60.0" text="Tuesday" />
+             <TableColumn fx:id="wednesday" prefWidth="60.0" text="Wednesday" />
+             <TableColumn fx:id="thursday" prefWidth="60.0" text="Thursday" />
+             <TableColumn fx:id="friday" prefWidth="60.0" text="Friday" />
+         </columns></TableView>
+    </children>
+</StackPane>

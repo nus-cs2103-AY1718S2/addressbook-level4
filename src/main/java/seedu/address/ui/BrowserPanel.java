@@ -17,6 +17,7 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.HideBrowserPanelEvent;
+import seedu.address.commons.events.ui.PersonEditedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
 
@@ -125,9 +126,25 @@ public class BrowserPanel extends UiPart<Region> {
         review.setText(person.getReview().value);
         review.setWrapText(true);
         tags.getChildren().clear();
-        //person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         initTags(person);
         loadPersonPage(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    public void handlePersonEditedEvent(PersonEditedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Person newPerson = event.getNewPerson();
+        name.setText(newPerson.getName().fullName);
+        phone.setText(newPerson.getPhone().value);
+        address.setText(newPerson.getAddress().value);
+        email.setText(newPerson.getEmail().value);
+        rating.setText(newPerson.getRatingDisplay());
+        rating.setTextFill(Color.RED);
+        review.setText(newPerson.getReview().value);
+        review.setWrapText(true);
+        tags.getChildren().clear();
+        initTags(newPerson);
+        loadPersonPage(event.getNewPerson());
     }
 
     /**

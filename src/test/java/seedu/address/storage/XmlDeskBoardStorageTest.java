@@ -2,7 +2,6 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.testutil.TypicalActivities.ASSIGNMENT1;
 import static seedu.address.testutil.TypicalActivities.ASSIGNMENT3;
 import static seedu.address.testutil.TypicalActivities.DEMO1;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;

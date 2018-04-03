@@ -1,14 +1,5 @@
 package seedu.address.testutil;
 
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_TIME_CS2010_QUIZ;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_TIME_MA2108_HOMEWORK;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_CS2010_QUIZ;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_MA2108_HOMEWORK;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_CS2010_QUIZ;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_MA2108_HOMEWORK;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_CS2010;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_MA2108;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

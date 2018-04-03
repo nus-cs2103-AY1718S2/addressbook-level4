@@ -108,9 +108,12 @@ public class EditCommandParserTest {
 
         // while parsing {@code PREFIX_SKILL} alone will reset the SKILLs of the {@code Person} being edited,
         // parsing it together with a valid skill results in error
-        assertParseFailure(parser, "1" + SKILL_DESC_FRIEND + SKILL_DESC_HUSBAND + SKILL_EMPTY, Skill.MESSAGE_SKILL_CONSTRAINTS);
-        assertParseFailure(parser, "1" + SKILL_DESC_FRIEND + SKILL_EMPTY + SKILL_DESC_HUSBAND, Skill.MESSAGE_SKILL_CONSTRAINTS);
-        assertParseFailure(parser, "1" + SKILL_EMPTY + SKILL_DESC_FRIEND + SKILL_DESC_HUSBAND, Skill.MESSAGE_SKILL_CONSTRAINTS);
+        assertParseFailure(parser, "1" + SKILL_DESC_FRIEND + SKILL_DESC_HUSBAND + SKILL_EMPTY,
+                Skill.MESSAGE_SKILL_CONSTRAINTS);
+        assertParseFailure(parser, "1" + SKILL_DESC_FRIEND + SKILL_EMPTY + SKILL_DESC_HUSBAND,
+                Skill.MESSAGE_SKILL_CONSTRAINTS);
+        assertParseFailure(parser, "1" + SKILL_EMPTY + SKILL_DESC_FRIEND + SKILL_DESC_HUSBAND,
+                Skill.MESSAGE_SKILL_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_AMY + VALID_PHONE_AMY,
@@ -199,8 +202,8 @@ public class EditCommandParserTest {
                 + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB + SKILL_DESC_HUSBAND;
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withSkills(VALID_SKILL_FRIEND, VALID_SKILL_HUSBAND)
-                .build();
+                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
+                .withSkills(VALID_SKILL_FRIEND, VALID_SKILL_HUSBAND).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);

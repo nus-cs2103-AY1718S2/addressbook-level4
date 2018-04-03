@@ -137,7 +137,8 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withCurrentPosition(VALID_CURRENT_POSITION_BOB).withCompany(VALID_COMPANY_BOB)
-                .withProfilePicture(VALID_PROFILE_PICTURE_BOB).withSkills(VALID_SKILL_HUSBAND, VALID_SKILL_FRIEND).build();
+                .withProfilePicture(VALID_PROFILE_PICTURE_BOB).withSkills(VALID_SKILL_HUSBAND, VALID_SKILL_FRIEND)
+                .build();
     }
 
     /**

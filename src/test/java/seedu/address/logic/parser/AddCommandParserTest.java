@@ -115,7 +115,8 @@ public class AddCommandParserTest {
         Person expectedPersonMultipleSkills = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withCurrentPosition(VALID_CURRENT_POSITION_BOB).withCompany(VALID_COMPANY_BOB)
-                .withProfilePicture(VALID_PROFILE_PICTURE_BOB).withSkills(VALID_SKILL_FRIEND, VALID_SKILL_HUSBAND).build();
+                .withProfilePicture(VALID_PROFILE_PICTURE_BOB).withSkills(VALID_SKILL_FRIEND, VALID_SKILL_HUSBAND)
+                .build();
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                         + CURRENT_POSITION_DESC_BOB + COMPANY_DESC_BOB + PROFILE_PICTURE_DESC_BOB
                         + SKILL_DESC_HUSBAND + SKILL_DESC_FRIEND, new AddCommand(expectedPersonMultipleSkills));

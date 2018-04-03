@@ -134,7 +134,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      *  Updates the master skill list to include skills in {@code person} that are not in the list.
-     *  @return a copy of this {@code person} such that every skill in this person points to a Skill object in the master
+     *  @return a copy of this {@code person} such that every skill in this person points to a
+     *  Skill object in the master
      *  list.
      */
     private Person syncPersonWithMasterSkillList(Person person) {
@@ -244,8 +245,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         // Rebuild the list of job skills to point to the relevant skills in the master skill list.
         final Set<Skill> correctSkillReferences = new HashSet<>();
         jobSkills.forEach(skill -> correctSkillReferences.add(masterSkillObjects.get(skill)));
-        return new Job(
-                job.getPosition(), job.getTeam(), job.getLocation(), job.getNumberOfPositions(), correctSkillReferences);
+        return new Job(job.getPosition(), job.getTeam(), job.getLocation(),
+                job.getNumberOfPositions(), correctSkillReferences);
     }
 
     /// util methods

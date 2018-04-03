@@ -25,7 +25,8 @@ public class SkillContainsKeywordsPredicateTest {
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        SkillContainsKeywordsPredicate firstPredicateCopy = new SkillContainsKeywordsPredicate(firstPredicateKeywordList);
+        SkillContainsKeywordsPredicate firstPredicateCopy =
+                new SkillContainsKeywordsPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false

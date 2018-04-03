@@ -47,7 +47,8 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
 
     /** Delete specified skill from everyone in the address book */
-    void deleteSkill(Skill t) throws PersonNotFoundException, DuplicatePersonException, UniqueSkillList.DuplicateSkillException;
+    void deleteSkill(Skill t) throws PersonNotFoundException, DuplicatePersonException,
+            UniqueSkillList.DuplicateSkillException;
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();

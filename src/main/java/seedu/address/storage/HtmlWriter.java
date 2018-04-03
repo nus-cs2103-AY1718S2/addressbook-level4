@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 
 import seedu.address.model.person.Person;
 import seedu.address.model.person.customer.Customer;
+import seedu.address.model.person.runner.Runner;
 
 /**
  * Writes Person Data to a HTML file
@@ -33,6 +34,13 @@ public class HtmlWriter {
         this.amountOwed = String.format("%,.2f", customer.getMoneyCurrentlyOwed());
         this.dueDate = customer.getOweDueDate().toString();
         this.runnerAssigned = customer.getRunner().getName().fullName;
+    }
+
+    public HtmlWriter(Runner runner) {
+        this.name = runner.getName().fullName;
+        this.amountOwed = "test";
+        this.dueDate = "test";
+        this.runnerAssigned = "test";
     }
 
     /**

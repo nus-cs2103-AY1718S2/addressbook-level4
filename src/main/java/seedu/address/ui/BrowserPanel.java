@@ -15,6 +15,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.customer.Customer;
+import seedu.address.model.person.runner.Runner;
 import seedu.address.storage.HtmlWriter;
 
 /**
@@ -52,6 +53,7 @@ public class BrowserPanel extends UiPart<Region> {
      */
     private void loadPersonPage(Person person) {
         if (person instanceof Customer) { htmlWriter = new HtmlWriter((Customer) person); }
+        else if (person instanceof Runner) { htmlWriter = new HtmlWriter((Runner) person); }
         String personfilepath = htmlWriter.writePerson();
         loadPage("file:///" + personfilepath);
     }

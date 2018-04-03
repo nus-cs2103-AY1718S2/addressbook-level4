@@ -7,14 +7,9 @@ package seedu.address.model.appointment;
 public class Appointment {
 
     private DateTime appointmentDateTime;
-    private String patientName;
-    public Appointment(String appointmentDateTime) {
-        this.patientName = "";
-        this.appointmentDateTime = new DateTime(appointmentDateTime);
-    }
 
-    public String getPatientName() {
-        return this.patientName;
+    public Appointment(String appointmentDateTime) {
+        this.appointmentDateTime = new DateTime(appointmentDateTime);
     }
 
     public DateTime getAppointmentDateTime() {

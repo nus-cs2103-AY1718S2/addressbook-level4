@@ -11,9 +11,6 @@ import seedu.address.model.appointment.Appointment;
 public class XmlAdaptedAppointment {
 
     @XmlElement
-    private String patientName;
-
-    @XmlElement
     private String dateTime;
 
     /**
@@ -26,7 +23,6 @@ public class XmlAdaptedAppointment {
      * Constructs a {@code XmlAdaptedAppointment} with the given {@code patientName} and {@code dateTime}.
      */
     public XmlAdaptedAppointment(String dateTime) {
-        this.patientName = "";
         this.dateTime = dateTime;
     }
 
@@ -36,7 +32,6 @@ public class XmlAdaptedAppointment {
      * @param source future changes to this will not affect the created
      */
     public XmlAdaptedAppointment(Appointment source) {
-        this.patientName = source.getPatientName();
         this.dateTime = source.getAppointmentDateTimeString();
     }
 
@@ -53,7 +48,6 @@ public class XmlAdaptedAppointment {
         if (!(other instanceof  XmlAdaptedAppointment)) {
             return false;
         }
-        return (patientName.equals(((XmlAdaptedAppointment) other).patientName)
-                && dateTime.equals(((XmlAdaptedAppointment) other).dateTime));
+        return (dateTime.equals(((XmlAdaptedAppointment) other).dateTime));
     }
 }

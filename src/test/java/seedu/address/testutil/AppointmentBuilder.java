@@ -19,7 +19,6 @@ public class AppointmentBuilder {
      * Initializes the AppointmentBuilder with the data of {@code appointmentToCopy}.
      */
     public AppointmentBuilder(Appointment appointmentToCopy) {
-        patientName = appointmentToCopy.getPatientName();
         dateTime = appointmentToCopy.getAppointmentDateTimeString();
     }
 

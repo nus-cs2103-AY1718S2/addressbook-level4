@@ -17,7 +17,7 @@ public class JobCardHandle extends NodeHandle<Node> {
     private static final String TEAM_FIELD_ID = "#team";
     private static final String LOCATION_FIELD_ID = "#jobLocation";
     private static final String NUMBER_OF_POSITIONS_FIELD_ID = "#numberOfPositions";
-    private static final String TAGS_FIELD_ID = "#tags";
+    private static final String TAGS_FIELD_ID = "#skills";
 
     private final Label idLabel;
     private final Label positionLabel;

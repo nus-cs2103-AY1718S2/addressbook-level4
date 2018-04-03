@@ -15,7 +15,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private static final String NAME_FIELD_ID = "#name";
     private static final String CURRENT_POSITION_FIELD_ID = "#currentPosition";
     private static final String COMPANY_FIELD_ID = "#company";
-    private static final String TAGS_FIELD_ID = "#tags";
+    private static final String TAGS_FIELD_ID = "#skills";
 
     private final Label idLabel;
     private final Label nameLabel;

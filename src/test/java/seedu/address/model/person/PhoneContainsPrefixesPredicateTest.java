@@ -20,8 +20,8 @@ public class PhoneContainsPrefixesPredicateTest {
 
         PhoneContainsPrefixesPredicate firstPredicate =
                 new PhoneContainsPrefixesPredicate(firstPredicateKeywordList);
-        PhoneContainsPrefixesPredicate secondPredicate
-                = new PhoneContainsPrefixesPredicate(secondPredicateKeywordList);
+        PhoneContainsPrefixesPredicate secondPredicate =
+                new PhoneContainsPrefixesPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));

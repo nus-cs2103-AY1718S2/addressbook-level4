@@ -1,17 +1,12 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -21,15 +16,11 @@ import org.junit.Test;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.parser.FindCommandParser;
-import seedu.address.logic.parser.PredicateUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.AddressBook;
-import seedu.address.model.FindResults;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.AllPredicate;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 
 /**
@@ -80,7 +71,8 @@ public class FindCommandTest {
 
     @Test
     public void execute_multiplePrefixesWithMultipleKeywords_zeroPersonsFound() throws ParseException {
-        FindCommand command = prepareCommand(" n/Kurz, Elle, Kunz p/999, 555, 000 e/heinz@example.com a/wall street y/2019");
+        FindCommand command = prepareCommand(" n/Kurz, Elle, Kunz p/999, 555, "
+                + "000 e/heinz@example.com a/wall street y/2019");
         assertCommandSuccess(command, Arrays.asList());
     }
 

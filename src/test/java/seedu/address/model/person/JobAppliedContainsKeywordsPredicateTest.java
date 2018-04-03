@@ -75,6 +75,7 @@ public class JobAppliedContainsKeywordsPredicateTest {
         // Keywords match phone, email, expected graduation year and name, but does not match job applied
         predicate = new JobAppliedContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Alice", "2020"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
-                .withEmail("alice@email.com").withJobApplied("Software Engineer").withExpectedGraduationYear("2020").build()));
+                .withEmail("alice@email.com").withJobApplied("Software Engineer")
+                .withExpectedGraduationYear("2020").build()));
     }
 }

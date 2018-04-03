@@ -20,8 +20,8 @@ public class PhoneContainsSubstringsPredicateTest {
 
         PhoneContainsSubstringsPredicate firstPredicate =
                 new PhoneContainsSubstringsPredicate(firstPredicateKeywordList);
-        PhoneContainsSubstringsPredicate secondPredicate
-                = new PhoneContainsSubstringsPredicate(secondPredicateKeywordList);
+        PhoneContainsSubstringsPredicate secondPredicate =
+                new PhoneContainsSubstringsPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));

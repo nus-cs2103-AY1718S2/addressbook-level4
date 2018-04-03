@@ -20,8 +20,8 @@ public class PhoneContainsSuffixesPredicateTest {
 
         PhoneContainsSuffixesPredicate firstPredicate =
                 new PhoneContainsSuffixesPredicate(firstPredicateKeywordList);
-        PhoneContainsSuffixesPredicate secondPredicate
-                = new PhoneContainsSuffixesPredicate(secondPredicateKeywordList);
+        PhoneContainsSuffixesPredicate secondPredicate =
+                new PhoneContainsSuffixesPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));

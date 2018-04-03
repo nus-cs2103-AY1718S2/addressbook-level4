@@ -63,5 +63,5 @@ public class JobAppliedContainsSubstringsPredicateTest {
         // Non-matching substring
         predicate = new JobAppliedContainsSubstringsPredicate(Arrays.asList("are Dev"));
         assertFalse(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
-   }
+    }
 }

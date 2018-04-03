@@ -70,6 +70,7 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
+        UserPrefs.setUserAddressBookFilePath(userPrefs.getAddressBookFilePath());
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         ReadOnlyVenueInformation venueInformationStorage =
                 new ReadOnlyJsonVenueInformation(config.DEFAULT_VENUEINFORMATION_FILE);

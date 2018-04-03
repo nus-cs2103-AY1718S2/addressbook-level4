@@ -7,7 +7,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.ShowMultiLocationFromHeadQuarterEvent;
+import seedu.address.commons.events.ui.ShowRouteFromOneToAnotherEvent;
 import seedu.address.logic.GetDistance;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
@@ -60,6 +60,8 @@ public class DistanceCommand extends Command {
         String destination;
         String personNameOrigin = "";
         String personNameDestination = "";
+
+        //case 1: get distance from HQ to a person address
         if (targetIndexOrigin == null) {
             if (targetIndexDestination.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -70,6 +72,7 @@ public class DistanceCommand extends Command {
             origin = "Kent Ridge MRT";
             destination = person.getAddress().toString();
         } else {
+            //case 2: get distance from a person address to another person address
             if (targetIndexOrigin.getZeroBased() >= lastShownList.size()
                     || targetIndexDestination.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -90,15 +93,17 @@ public class DistanceCommand extends Command {
             GetDistance route = new GetDistance();
             Double distance = route.getDistance(origin, destination);
 
+            //case 1: get distance from HQ to a person address
             if (targetIndexOrigin == null) {
                 EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndexDestination));
                 return new CommandResult(String.format
                         (MESSAGE_DISTANCE_FROM_HQ_SUCCESS, distance));
             } else {
+                //case 2: get distance from a person address to another person address
                 List<String> addressesList = new ArrayList<>();
                 addressesList.add(origin);
                 addressesList.add(destination);
-                EventsCenter.getInstance().post(new ShowMultiLocationFromHeadQuarterEvent(addressesList));
+                EventsCenter.getInstance().post(new ShowRouteFromOneToAnotherEvent(addressesList));
                 return new CommandResult(String.format(
                         MESSAGE_DISTANCE_FROM_PERSON_SUCCESS, personNameOrigin, personNameDestination, distance));
             }

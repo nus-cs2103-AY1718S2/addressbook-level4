@@ -15,7 +15,7 @@ import seedu.address.model.person.Person;
  * logic for the shortest delivery route
  */
 public class RouteOptimization {
-    public static final String HQ_ADDRESS = "301 South Buona Vista Road";
+    public static final String HQ_ADDRESS = "Kent Ridge MRT";
 
     /**
      *

@@ -68,4 +68,19 @@ public class StringUtil {
             return false;
         }
     }
+
+    //@@author yeggasd
+    /**
+     * Returns true if {@code s} represents odd or even
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static boolean isOddEven(String s) {
+        requireNonNull(s);
+
+        if (!s.equalsIgnoreCase("even") && !s.equalsIgnoreCase("odd")) {
+            return false;
+        }
+        return true;
+    }
+    //@@author
 }

@@ -6,14 +6,12 @@
 package seedu.address.ui;
 
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import seedu.address.model.person.Person;
 
-public class PersonDetail extends UiPart<Region> {
+public class PersonDetail extends UiPart<Stage> {
     private static final String FXML = "PersonDetail.fxml";
     public final Person person;
     @FXML
@@ -38,8 +36,7 @@ public class PersonDetail extends UiPart<Region> {
     private Label age;
 
     public PersonDetail(Person person, int displayedIndex) {
-
-        super("PersonDetail.fxml");
+        super("PersonDetail.fxml", new Stage());
         this.person = person;
         this.id.setText(displayedIndex + ". ");
         this.name.setText(person.getName().fullName);
@@ -85,9 +82,6 @@ public class PersonDetail extends UiPart<Region> {
      * </ul>
      */
     public void show() {
-        Stage stage = new Stage();
-        stage.setTitle("My New Stage Title");
-        stage.setScene(new Scene(getRoot(), 450, 450));
-        stage.show();
+        getRoot().show();
     }
 }

@@ -3,6 +3,8 @@ package seedu.organizer.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.organizer.testutil.TypicalExecutedCommands.NEXT_MONTH_COMMAND_ALIAS;
+import static seedu.organizer.testutil.TypicalExecutedCommands.NEXT_MONTH_COMMAND_WORD;
 import static seedu.organizer.testutil.TypicalExecutedCommands.PREVIOUS_MONTH_COMMAND_ALIAS;
 import static seedu.organizer.testutil.TypicalExecutedCommands.PREVIOUS_MONTH_COMMAND_WORD;
 import static seedu.organizer.testutil.TypicalExecutedCommands.getTypicalExecutedCommands;
@@ -168,7 +170,6 @@ public class MonthViewTest extends GuiUnitTest {
         // using command alias to go to previous month
 
         addCommandToExecutedCommandsList(PREVIOUS_MONTH_COMMAND_ALIAS);
-
         expectedMonthView.getMonthView(YearMonth.of(2018, 3));
         guiRobot.pause();
         monthView.equals(expectedMonthView);
@@ -218,6 +219,74 @@ public class MonthViewTest extends GuiUnitTest {
         assertEquals(expectedEntryCard, actualEntryCard);
 
         entriesListView = (ListView) monthViewHandle.getListViewEntriesNode(3, 3);
+        actualEntryCard = entriesListView.getItems().get(0);
+        expectedEntryCard = new EntryCard(toAddTaskTwo);
+        assertEquals(expectedEntryCard, actualEntryCard);
+    }
+
+    @Test
+    public void goToNextMonth_commandsSuccessful() {
+        monthView.getMonthView(MAY_2018);
+
+        // using command word to go to next month
+        addCommandToExecutedCommandsList(NEXT_MONTH_COMMAND_WORD);
+
+        MonthView expectedMonthView = new MonthView(TYPICAL_TASKS, TYPICAL_EXECUTED_COMMANDS);
+        expectedMonthView.getMonthView(YearMonth.of(2018, 6));
+        guiRobot.pause();
+        monthView.equals(expectedMonthView);
+
+        // using command alias to go to previous month
+        addCommandToExecutedCommandsList(NEXT_MONTH_COMMAND_ALIAS);
+        expectedMonthView.getMonthView(YearMonth.of(2018, 7));
+        guiRobot.pause();
+        monthView.equals(expectedMonthView);
+    }
+
+    @Test
+    public void goToNextMonth_titleDatesAndEntriesPrintedSuccessfully() {
+        monthView.getMonthView(MAY_2018);
+
+        Task toAddTaskOne = new TaskBuilder().withName("GER1000").withDeadline("2018-06-12").build();
+        addTaskToTaskList(toAddTaskOne);
+
+        Task toAddTaskTwo = new TaskBuilder().withName("CS2010").withDeadline("2018-06-25").build();
+        addTaskToTaskList(toAddTaskTwo);
+
+        addCommandToExecutedCommandsList(NEXT_MONTH_COMMAND_WORD);
+        guiRobot.pause();
+
+        // verify that calendar title is displayed correctly
+        monthViewHandle.getCalendarTitleText();
+        String expectedTitle = "JUNE 2018";
+        assertEquals(expectedTitle, monthViewHandle.getCalendarTitleText());
+
+        // verify that grid lines are visible after clearCalendar() is called
+        assertEquals(true, monthViewHandle.isGridLinesVisible());
+
+        // verify that the first date of the month is displayed in the correct row and column
+        Node startDateNode = monthViewHandle.getPrintedDateNode(1);
+        int startDateRow = monthViewHandle.getRowIndex(startDateNode);
+        int startDateColumn = monthViewHandle.getColumnIndex(startDateNode);
+
+        assertEquals(0, startDateRow);
+        assertEquals(5, startDateColumn);
+
+        // verify that the last date of the month is displayed in the correct row and column
+        Node lastDateNode = monthViewHandle.getPrintedDateNode(30);
+        int lastDateRow = monthViewHandle.getRowIndex(lastDateNode);
+        int lastDateColumn = monthViewHandle.getColumnIndex(lastDateNode);
+
+        assertEquals(6, lastDateColumn);
+        assertEquals(4, lastDateRow);
+
+        // verify that entries are displayed
+        ListView<EntryCard> entriesListView = (ListView) monthViewHandle.getListViewEntriesNode(2, 2);
+        EntryCard actualEntryCard = entriesListView.getItems().get(0);
+        EntryCard expectedEntryCard = new EntryCard(toAddTaskOne);
+        assertEquals(expectedEntryCard, actualEntryCard);
+
+        entriesListView = (ListView) monthViewHandle.getListViewEntriesNode(4, 1);
         actualEntryCard = entriesListView.getItems().get(0);
         expectedEntryCard = new EntryCard(toAddTaskTwo);
         assertEquals(expectedEntryCard, actualEntryCard);

@@ -594,6 +594,24 @@ Changes the view of the calendar to that of the previous month. +
 Goes to `February 2018`
 ====
 
+==== Go to next month: `nmonth` or `nm` `[since v1.4]`
+
+Changes the view of the calendar to that of the next month. +
+
+[.format]
+====
+[format-title]#Format:# `nmonth`
+====
+
+[.example]
+====
+[example-title]#Example:#
+
+* Views `March 2018` +
+[example]#`nmonth`# +
+Goes to `April 2018`
+====
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -644,3 +662,4 @@ e.g. [example-no-box]#`delete-subtask 2 3`#
 
 === Calendar Feature
 * *Go To Previous Month* : [format-no-box]#`pmonth`#
+* *Go To Next Month* : [format-no-box]#`nmonth`#

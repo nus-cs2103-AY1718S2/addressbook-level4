@@ -23,6 +23,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+import seedu.organizer.logic.commands.NextMonthCommand;
 import seedu.organizer.logic.commands.PreviousMonthCommand;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.ui.UiPart;
@@ -155,6 +156,16 @@ public class MonthView extends UiPart<Region> {
     }
 
     /**
+     * Shows the view of the month after the currently viewed month.
+     */
+    private void goToNextMonth() {
+        viewYearMonth = viewYearMonth.plusMonths(1);
+
+        clearCalendar();
+        getMonthView(viewYearMonth);
+    }
+
+    /**
      * Tracks the commands executed by the user in the {@code executedCommandsList}. Calendar view may change depending
      * on the commands executed by the user.
      */
@@ -170,6 +181,11 @@ public class MonthView extends UiPart<Region> {
                     if ((executedCommand.equals(PreviousMonthCommand.COMMAND_WORD)) || (
                         executedCommand.equals(PreviousMonthCommand.COMMAND_ALIAS))) {
                         goToPreviousMonth();
+                    }
+
+                    if ((executedCommand.equals(NextMonthCommand.COMMAND_WORD)) || (
+                        executedCommand.equals(NextMonthCommand.COMMAND_ALIAS))) {
+                        goToNextMonth();
                     }
                 }
             }

@@ -32,6 +32,7 @@ import seedu.organizer.logic.commands.FindNameCommand;
 import seedu.organizer.logic.commands.HelpCommand;
 import seedu.organizer.logic.commands.HistoryCommand;
 import seedu.organizer.logic.commands.ListCommand;
+import seedu.organizer.logic.commands.NextMonthCommand;
 import seedu.organizer.logic.commands.PreviousMonthCommand;
 import seedu.organizer.logic.commands.RedoCommand;
 import seedu.organizer.logic.commands.SelectCommand;
@@ -272,6 +273,16 @@ public class OrganizerParserTest {
         assertTrue(parser.parseCommand(PreviousMonthCommand.COMMAND_ALIAS) instanceof PreviousMonthCommand);
         assertTrue(parser.parseCommand(PreviousMonthCommand.COMMAND_ALIAS + " 3")
                 instanceof PreviousMonthCommand);
+    }
+
+    @Test
+    public void parseCommand_nextMonthCommand() throws Exception {
+        assertTrue(parser.parseCommand(NextMonthCommand.COMMAND_WORD) instanceof NextMonthCommand);
+        assertTrue(parser.parseCommand(NextMonthCommand.COMMAND_WORD + " 3")
+                instanceof NextMonthCommand);
+        assertTrue(parser.parseCommand(NextMonthCommand.COMMAND_ALIAS) instanceof NextMonthCommand);
+        assertTrue(parser.parseCommand(NextMonthCommand.COMMAND_ALIAS + " 3")
+                instanceof NextMonthCommand);
     }
     //@@author
 

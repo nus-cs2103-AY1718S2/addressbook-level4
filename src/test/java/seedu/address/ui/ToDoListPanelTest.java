@@ -45,14 +45,4 @@ public class ToDoListPanelTest extends GuiUnitTest {
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
         }
     }
-
-    @Test
-    public void handleJumpToListRequestEvent() {
-        postNow(JUMP_TO_SECOND_EVENT);
-        guiRobot.pauseForHuman();
-
-        ToDoCardHandle expectedCard = toDoListPanelHandle.getToDoCardHandle(INDEX_SECOND_TODO.getZeroBased());
-        ToDoCardHandle selectedCard = toDoListPanelHandle.getHandleToSelectedCard();
-        assertCardEquals(expectedCard, selectedCard);
-    }
 }

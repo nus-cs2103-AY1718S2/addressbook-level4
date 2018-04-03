@@ -174,18 +174,15 @@ Format: `addplatform INDEX [l/LINK]...`
 
 [NOTE]
 =======================================================================
-:link: \https://www.facebook.com/<profile
-.*Accepted Facebook links may take the form:*
-- {link} username>
-- https://facebook.com/<profile} username>
-- {\http://www.facebook.com/<profile} username>
-- {\http://facebook.com/<profile} username>
-- {\www.facebook.com/<profile} username>
-- facebook.com/<profile username>
-- facebook.com/profile.php?id=<user profile id>
-
-{empty}
-
+.*Accepted Facebook links may take the form:* +
+- pass:macros[\https://www.facebook.com/<profile username>] +
+- https://facebook.com/<profile} username> +
+- {\http://www.facebook.com/<profile} username> +
+- {\http://facebook.com/<profile} username> +
+- {\www.facebook.com/<profile} username> +
+- facebook.com/<profile username> +
+- facebook.com/profile.php?id=<user profile id> +
+{empty} +
 .*Accepted Twitter links may take the form:*
 - {\https://www.twitter.com/<username} handle>
 - {\https://twitter.com/<username} handle>

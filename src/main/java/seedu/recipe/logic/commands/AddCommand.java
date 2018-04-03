@@ -44,7 +44,8 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_CALORIES + " 500\n"
             + PREFIX_SERVINGS + " 2\n"
             + PREFIX_URL + " http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice\n"
-            + PREFIX_IMG + " /Users/administrator/Desktop/myImage.jpg\n"
+            + PREFIX_IMG + " /Users/administrator/Desktop/myImage.jpg (for macOS) OR "
+            + PREFIX_IMG + " C:\\Users\\administrator\\myImage.jpg (for Windows)\n"
             + PREFIX_TAG + "yummy "
             + PREFIX_TAG + "best";
 

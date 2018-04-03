@@ -6,8 +6,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
@@ -16,7 +16,7 @@ import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 /**
  * Add appointment to calendar of addressbook
  */
-public class AddAppointmentCommand extends UndoableCommand {
+public class AddAppointmentCommand extends Command {
     public static final String COMMAND_WORD = "addapp";
 
     public static final String COMMAND_SYNTAX = COMMAND_WORD + " "
@@ -48,7 +48,7 @@ public class AddAppointmentCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
         try {
             model.addAppointment(toAdd);

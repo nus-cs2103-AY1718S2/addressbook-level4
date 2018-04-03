@@ -302,7 +302,6 @@ public class AddressBook implements ReadOnlyAddressBook {
                 && this.persons.equals(((AddressBook) other).persons)
                 && this.tags.equalsOrderInsensitive(((AddressBook) other).tags))
                 && this.appointments.equals(((AddressBook) other).appointments)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags)
                 && this.jobs.equals(((AddressBook) other).jobs);
     }
 

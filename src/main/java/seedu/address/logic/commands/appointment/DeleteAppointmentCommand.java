@@ -6,8 +6,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
@@ -16,7 +16,7 @@ import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 /**
  * delete appointment from calendar of addressbook
  */
-public class DeleteAppointmentCommand extends UndoableCommand {
+public class DeleteAppointmentCommand extends Command {
     public static final String COMMAND_WORD = "delapp";
 
     public static final String COMMAND_SYNTAX = COMMAND_WORD + " "
@@ -49,7 +49,7 @@ public class DeleteAppointmentCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
         try {
             model.deleteAppointment(toDelete);

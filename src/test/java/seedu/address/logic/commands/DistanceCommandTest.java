@@ -20,6 +20,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.ShowMultiLocationFromHeadQuarterEvent;
+import seedu.address.commons.events.ui.ShowRouteFromOneToAnotherEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.GetDistance;
 import seedu.address.logic.UndoRedoStack;
@@ -151,8 +152,8 @@ public class DistanceCommandTest {
             addressesList.add(addressOrigin);
             addressesList.add(addressDestination);
 
-            ShowMultiLocationFromHeadQuarterEvent lastEvent =
-                    (ShowMultiLocationFromHeadQuarterEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+            ShowRouteFromOneToAnotherEvent lastEvent =
+                    (ShowRouteFromOneToAnotherEvent) eventsCollectorRule.eventsCollector.getMostRecent();
             assertEquals(addressesList, lastEvent.sortedList);
             assertEquals(String.format(DistanceCommand.MESSAGE_DISTANCE_FROM_PERSON_SUCCESS,
                     nameOrigin, nameDestination, distance),

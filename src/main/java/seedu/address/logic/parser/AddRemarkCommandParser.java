@@ -8,39 +8,42 @@ import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.RemarkCommand;
-import seedu.address.logic.commands.RemarkCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.AddRemarkCommand;
+import seedu.address.logic.commands.AddRemarkCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new RemarkCommand object
+ * Parses input arguments and creates a new EditCommand object
  */
-public class RemarkCommandParser implements Parser<RemarkCommand> {
+public class AddRemarkCommandParser implements Parser<AddRemarkCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the RemarkCommand
-     * and returns an RemarkCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the EditCommand
+     * and returns an EditCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public RemarkCommand parse(String args) throws ParseException {
+    public AddRemarkCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_REMARK);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_REMARK)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemarkCommand.MESSAGE_USAGE));
         }
         Index index;
 
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemarkCommand.MESSAGE_USAGE));
         }
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
-        ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).ifPresent(editPersonDescriptor::setRemark);
-
-        return new RemarkCommand(index, editPersonDescriptor);
+        if (ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get().toString().isEmpty()) {
+            throw new ParseException((String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemarkCommand.MESSAGE_USAGE)));
+        } else {
+            ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).ifPresent(editPersonDescriptor::setRemark);
+        }
+        return new AddRemarkCommand(index, editPersonDescriptor);
     }
 
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {

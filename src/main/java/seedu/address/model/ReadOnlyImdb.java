@@ -1,7 +1,7 @@
 package seedu.address.model;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.tag.Tag;
 
@@ -26,7 +26,7 @@ public interface ReadOnlyImdb {
      * Returns an unmodifiable view of the appointment list.
      * This list will not contain any duplicate appointment.
      */
-    ObservableList<Appointment> getAppointmentList();
+    ObservableList<AppointmentEntry> getAppointmentEntryList();
 
     /**
      * Returns an unmodifiable view of the patient queue.

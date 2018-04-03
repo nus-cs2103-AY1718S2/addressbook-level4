@@ -22,6 +22,7 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -110,6 +111,14 @@ public class ImdbTest {
     }
 
     @Test
+    public void getAppointmentEntryList_modifyList_throwsUnsupportedOperationException() {
+        AppointmentEntry entry = new AppointmentEntry(new Appointment("3/4/2017 1030"),
+                "test");
+        thrown.expect(UnsupportedOperationException.class);
+        imdb.getAppointmentEntryList().add(entry);
+    }
+
+    @Test
     public void addPatientToQueue_queueUpdate() throws DuplicatePatientException {
         imdbWithAmyAndBob.addPatientToQueue(1);
         Imdb expectedImdb = new ImdbBuilder().withPerson(AMY).withPerson(BOB).build();
@@ -153,13 +162,12 @@ public class ImdbTest {
     private static class ImdbStub implements ReadOnlyImdb {
         private final ObservableList<Patient> patients = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
-        private final ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        private final ObservableList<AppointmentEntry> appointments = FXCollections.observableArrayList();
         private final ObservableList<Integer> visitingQueue = FXCollections.observableArrayList();
 
         ImdbStub(Collection<Patient> patients, Collection<? extends Tag> tags, Collection<Integer> queue) {
             this.patients.setAll(patients);
             this.tags.setAll(tags);
-            this.appointments.setAll(appointments);
             this.visitingQueue.setAll(queue);
         }
 
@@ -174,7 +182,7 @@ public class ImdbTest {
         }
 
         @Override
-        public ObservableList<Appointment> getAppointmentList() {
+        public ObservableList<AppointmentEntry> getAppointmentEntryList() {
             return appointments;
         }
 

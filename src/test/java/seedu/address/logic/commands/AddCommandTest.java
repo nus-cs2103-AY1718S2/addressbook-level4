@@ -22,6 +22,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Imdb;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyImdb;
+import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
@@ -167,6 +168,11 @@ public class AddCommandTest {
         @Override
         public boolean deletePatientAppointment(Patient patient, Index index) {
             return false;
+        }
+
+        @Override
+        public ObservableList<AppointmentEntry> getAppointmentEntryList() {
+            return null;
         }
     }
 

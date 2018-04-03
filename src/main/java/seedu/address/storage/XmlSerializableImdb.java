@@ -21,8 +21,6 @@ public class XmlSerializableImdb {
     private List<XmlAdaptedPatient> patients;
     @XmlElement
     private List<XmlAdaptedTag> tags;
-    @XmlElement
-    private List<XmlAdaptedAppointment> appointments;
 
     @XmlElement
     private List<XmlAdaptedQueue> queue;
@@ -33,7 +31,6 @@ public class XmlSerializableImdb {
     public XmlSerializableImdb() {
         patients = new ArrayList<>();
         tags = new ArrayList<>();
-        appointments = new ArrayList<>();
         queue = new ArrayList<>();
     }
 
@@ -44,8 +41,6 @@ public class XmlSerializableImdb {
         this();
         patients.addAll(src.getPersonList().stream().map(XmlAdaptedPatient::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
-        appointments.addAll(src.getAppointmentList().stream().map(XmlAdaptedAppointment::new)
-            .collect(Collectors.toList()));
         queue.addAll(src.getUniquePatientQueueNo().stream().map(XmlAdaptedQueue::new).collect(Collectors.toList()));
     }
 
@@ -62,10 +57,6 @@ public class XmlSerializableImdb {
         }
         for (XmlAdaptedPatient p : patients) {
             imdb.addPerson(p.toModelType());
-        }
-
-        for (XmlAdaptedAppointment appt : appointments) {
-            imdb.addAppointment(appt.toModelType());
         }
 
         for (XmlAdaptedQueue queueNo : queue) {
@@ -86,6 +77,6 @@ public class XmlSerializableImdb {
 
         XmlSerializableImdb otherAb = (XmlSerializableImdb) other;
         return patients.equals(otherAb.patients) && tags.equals(otherAb.tags)
-                && appointments.equals(otherAb.appointments) && queue.equals(otherAb.queue);
+                && queue.equals(otherAb.queue);
     }
 }

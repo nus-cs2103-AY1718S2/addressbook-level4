@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
+import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
@@ -67,4 +68,7 @@ public interface Model {
 
     /** Delete a patient's appointment*/
     boolean deletePatientAppointment(Patient patient, Index index);
+
+    /** Get appointment entries*/
+    ObservableList<AppointmentEntry> getAppointmentEntryList();
 }

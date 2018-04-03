@@ -1,6 +1,9 @@
 package seedu.address.model.appointment;
 
+import static java.util.Objects.requireNonNull;
+
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -10,13 +13,13 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Gurantees: details are present and not null, field values are validated, immutable
  */
 public class DateTime {
-
-    public static final int APPOINTMENT_DURATION = 30;
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+    private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+    private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmm");
     private String dateString;
     private String timeString;
 
     public DateTime(String appointmentDateTime) {
+        requireNonNull(appointmentDateTime);
         String trimmedArgs = appointmentDateTime.trim();
 
         String[] dateTimeKeys = trimmedArgs.split("\\s");
@@ -41,7 +44,7 @@ public class DateTime {
         LocalDate compareDate;
 
         try {
-            compareDate = LocalDate.parse(dateTimeKeys[0], formatter);
+            compareDate = LocalDate.parse(dateTimeKeys[0], dateFormatter);
         } catch (Exception e) {
             throw new ParseException(e.getMessage());
         }
@@ -61,11 +64,23 @@ public class DateTime {
         LocalDate compareDate;
 
         try {
-            compareDate = LocalDate.parse(dateTimeKeys[0], formatter);
+            compareDate = LocalDate.parse(dateTimeKeys[0], dateFormatter);
         } catch (Exception e) {
             throw new ParseException(e.getMessage());
         }
 
         return (compareDate.isAfter(LocalDate.now()) || compareDate.isEqual(LocalDate.now()));
+    }
+
+    public LocalDate getLocalDate() {
+        return LocalDate.parse(dateString, dateFormatter);
+    }
+
+    public LocalTime getLocalTime() {
+        return LocalTime.parse(timeString, timeFormatter);
+    }
+
+    public LocalTime getEndLocalTime(int minutes) {
+        return getLocalTime().plusMinutes(minutes);
     }
 }

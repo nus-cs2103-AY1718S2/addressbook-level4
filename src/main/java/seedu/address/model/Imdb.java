@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
-import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.AppointmentEntry;
+import seedu.address.model.appointment.UniqueAppointmentEntryList;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.UniquePatientList;
@@ -31,7 +32,7 @@ public class Imdb implements ReadOnlyImdb {
 
     private final UniquePatientList persons;
     private final UniqueTagList tags;
-    private final UniqueAppointmentList appointments;
+    private final UniqueAppointmentEntryList appointments;
     private final UniquePatientVisitingQueue visitingQueue;
 
     /*
@@ -44,7 +45,7 @@ public class Imdb implements ReadOnlyImdb {
     {
         persons = new UniquePatientList();
         tags = new UniqueTagList();
-        appointments = new UniqueAppointmentList();
+        appointments = new UniqueAppointmentEntryList();
         visitingQueue = new UniquePatientVisitingQueue();
     }
 
@@ -68,10 +69,6 @@ public class Imdb implements ReadOnlyImdb {
         this.tags.setTags(tags);
     }
 
-    public void setAppointments(Set<Appointment> appointments) {
-        this.appointments.setAppointment(appointments);
-    }
-
     public void setQueue(Set<Integer> queueNos) {
         this.visitingQueue.setVisitingQueue(queueNos);
     }
@@ -85,13 +82,19 @@ public class Imdb implements ReadOnlyImdb {
         List<Patient> syncedPatientList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
-        setAppointments(new HashSet<>(newData.getAppointmentList()));
+
         setQueue(new LinkedHashSet<>(newData.getUniquePatientQueueNo()));
 
         try {
             setPersons(syncedPatientList);
         } catch (DuplicatePatientException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
+        }
+
+        try {
+            syncWithMasterAppointment(newData.getPersonList());
+        } catch (UniqueAppointmentEntryList.DuplicatedAppointmentEntryException e) {
+            throw new AssertionError("IMDB should not have duplicate appointment");
         }
     }
 
@@ -156,6 +159,19 @@ public class Imdb implements ReadOnlyImdb {
     }
 
     /**
+     *  Updates the master appointment list to include appointment in all patients.
+     */
+    private void syncWithMasterAppointment(List<Patient> patientList) throws
+            UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
+
+        for (Patient p :patientList) {
+            final UniqueAppointmentList patientAppt = new UniqueAppointmentList(p.getAppointments());
+
+            appointments.mergeFrom(patientAppt, p.getName().fullName);
+        }
+    }
+
+    /**
      * Removes {@code key} from this {@code Imdb}.
      * @throws PatientNotFoundException if the {@code key} is not in this {@code Imdb}.
      */
@@ -173,7 +189,8 @@ public class Imdb implements ReadOnlyImdb {
         tags.add(t);
     }
 
-    public void addAppointment(Appointment appt) throws UniqueAppointmentList.DuplicatedAppointmentException {
+    public void addAppointment(AppointmentEntry appt) throws
+            UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
         appointments.add(appt);
     }
 
@@ -243,7 +260,7 @@ public class Imdb implements ReadOnlyImdb {
     }
 
     @Override
-    public ObservableList<Appointment> getAppointmentList() {
+    public ObservableList<AppointmentEntry> getAppointmentEntryList() {
         return appointments.asObservableList();
     }
 
@@ -287,8 +304,7 @@ public class Imdb implements ReadOnlyImdb {
         return other == this // short circuit if same object
                 || (other instanceof Imdb // instanceof handles nulls
                 && this.persons.equals(((Imdb) other).persons)
-                && this.tags.equalsOrderInsensitive(((Imdb) other).tags)
-                && this.appointments.equalsOrderInsensitive(((Imdb) other).appointments));
+                && this.tags.equalsOrderInsensitive(((Imdb) other).tags));
     }
 
     @Override

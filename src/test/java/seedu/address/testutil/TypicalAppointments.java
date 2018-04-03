@@ -6,7 +6,6 @@ import java.util.List;
 
 import seedu.address.model.Imdb;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.appointment.UniqueAppointmentList;
 
 /**
  * A utility class containing a list of {@code Appointment} objects to be userd in tests.
@@ -35,14 +34,6 @@ public class TypicalAppointments {
      */
     public static Imdb getTypicalAddressBook() {
         Imdb ab = new Imdb();
-
-        for (Appointment appointment : getTypicalAppointment()) {
-            try {
-                ab.addAppointment(appointment);
-            } catch (UniqueAppointmentList.DuplicatedAppointmentException e) {
-                throw new AssertionError("not possible");
-            }
-        }
 
         return ab;
     }

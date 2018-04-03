@@ -56,7 +56,7 @@ public class ViewAppointmentCommand extends Command {
 
             return new CommandResult(String.format(MESSAGE_SUCCESS_PATIENT, patientFound.getName()));
         } else {
-            EventsCenter.getInstance().post(new ShowCalendarViewRequestEvent());
+            EventsCenter.getInstance().post(new ShowCalendarViewRequestEvent(model.getAppointmentEntryList()));
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }

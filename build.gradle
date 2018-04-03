@@ -54,6 +54,9 @@ dependencies {
         exclude group: 'junit', module: 'junit'
     }
     testCompile group: 'org.testfx', name: 'openjfx-monocle', version: '1.8.0_20'
+    compile 'com.calendarfx:calendar:8.4.2'
+    compile 'com.calendarfx:view:8.4.2'
+    compile 'com.calendarfx:recurrence:8.4.2'
 }
 
 shadowJar {

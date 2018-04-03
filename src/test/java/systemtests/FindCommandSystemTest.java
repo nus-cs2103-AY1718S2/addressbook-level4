@@ -1,6 +1,9 @@
 package systemtests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -17,6 +20,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import guitests.GuiRobot;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -26,6 +30,7 @@ import seedu.address.model.Model;
 import seedu.address.model.tag.Tag;
 
 public class FindCommandSystemTest extends AddressBookSystemTest {
+    private final GuiRobot guiRobot = new GuiRobot();
 
     @Test
     public void find() {
@@ -200,5 +205,29 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
         assertCommandBoxAndResultDisplayShowsErrorStyle();
         assertStatusBarUnchanged();
+    }
+
+    /**
+     * Asserts that population of the {@code CommandBox} with the AddCommand
+     * template was successful.
+     */
+    private void assertPopulationSuccess() {
+        assertEquals((new FindCommand()).getTemplate(), getCommandBox().getInput());
+        guiRobot.pauseForHuman();
+
+        assertTrue(getCommandBox().clear());
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Asserts that population of the {@code CommandBox} with the AddCommand
+     * template was unsuccessful.
+     */
+    private void assertPopulationFailure() {
+        assertNotEquals((new FindCommand()).getTemplate(), getCommandBox().getInput());
+        guiRobot.pauseForHuman();
+
+        assertTrue(getCommandBox().clear());
+        guiRobot.pauseForHuman();
     }
 }

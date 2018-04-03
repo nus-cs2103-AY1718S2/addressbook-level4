@@ -1,6 +1,8 @@
 package systemtests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
@@ -32,6 +34,7 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
+import guitests.GuiRobot;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
@@ -49,6 +52,7 @@ import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
 public class EditCommandSystemTest extends AddressBookSystemTest {
+    private final GuiRobot guiRobot = new GuiRobot();
 
     @Test
     public void edit() throws Exception {
@@ -279,5 +283,29 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
         assertCommandBoxAndResultDisplayShowsErrorStyle();
         assertStatusBarUnchanged();
+    }
+
+    /**
+     * Asserts that population of the {@code CommandBox} with the AddCommand
+     * template was successful.
+     */
+    private void assertPopulationSuccess() {
+        assertEquals((new EditCommand()).getTemplate(), getCommandBox().getInput());
+        guiRobot.pauseForHuman();
+
+        assertTrue(getCommandBox().clear());
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Asserts that population of the {@code CommandBox} with the AddCommand
+     * template was unsuccessful.
+     */
+    private void assertPopulationFailure() {
+        assertNotEquals((new EditCommand()).getTemplate(), getCommandBox().getInput());
+        guiRobot.pauseForHuman();
+
+        assertTrue(getCommandBox().clear());
+        guiRobot.pauseForHuman();
     }
 }

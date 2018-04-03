@@ -1,5 +1,7 @@
 package systemtests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
@@ -11,6 +13,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
 import org.junit.Test;
 
+import guitests.GuiRobot;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -18,6 +21,8 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 
 public class SelectCommandSystemTest extends AddressBookSystemTest {
+    private final GuiRobot guiRobot = new GuiRobot();
+
     @Test
     public void select() {
         /* ------------------------ Perform select operations on the shown unfiltered list -------------------------- */
@@ -149,5 +154,29 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
         assertCommandBoxAndResultDisplayShowsErrorStyle();
         assertStatusBarUnchanged();
+    }
+
+    /**
+     * Asserts that population of the {@code CommandBox} with the AddCommand
+     * template was successful.
+     */
+    private void assertPopulationSuccess() {
+        assertEquals((new SelectCommand()).getTemplate(), getCommandBox().getInput());
+        guiRobot.pauseForHuman();
+
+        assertTrue(getCommandBox().clear());
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Asserts that population of the {@code CommandBox} with the AddCommand
+     * template was unsuccessful.
+     */
+    private void assertPopulationFailure() {
+        assertNotEquals((new SelectCommand()).getTemplate(), getCommandBox().getInput());
+        guiRobot.pauseForHuman();
+
+        assertTrue(getCommandBox().clear());
+        guiRobot.pauseForHuman();
     }
 }

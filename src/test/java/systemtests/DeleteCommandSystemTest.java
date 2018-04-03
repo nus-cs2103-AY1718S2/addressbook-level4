@@ -1,5 +1,7 @@
 package systemtests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
@@ -12,6 +14,7 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
+import guitests.GuiRobot;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
@@ -25,6 +28,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
+    private final GuiRobot guiRobot = new GuiRobot();
 
     @Test
     public void delete() {
@@ -196,5 +200,29 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
         assertCommandBoxAndResultDisplayShowsErrorStyle();
         assertStatusBarUnchanged();
+    }
+
+    /**
+     * Asserts that population of the {@code CommandBox} with the AddCommand
+     * template was successful.
+     */
+    private void assertPopulationSuccess() {
+        assertEquals((new DeleteCommand()).getTemplate(), getCommandBox().getInput());
+        guiRobot.pauseForHuman();
+
+        assertTrue(getCommandBox().clear());
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Asserts that population of the {@code CommandBox} with the AddCommand
+     * template was unsuccessful.
+     */
+    private void assertPopulationFailure() {
+        assertNotEquals((new DeleteCommand()).getTemplate(), getCommandBox().getInput());
+        guiRobot.pauseForHuman();
+
+        assertTrue(getCommandBox().clear());
+        guiRobot.pauseForHuman();
     }
 }

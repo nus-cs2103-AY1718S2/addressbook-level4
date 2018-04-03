@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 
+//import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddLessonCommand;
 import seedu.address.logic.commands.AddMilestoneCommand;
@@ -15,7 +16,6 @@ import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.logic.commands.CheckTaskCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-//import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.ConversationCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteLessonCommand;
@@ -27,6 +27,8 @@ import seedu.address.logic.commands.FindTagCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.MoreInfoCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.ScheduleCommand;
@@ -104,6 +106,12 @@ public class AddressBookParser {
 
         case ListCommand.COMMAND_WORD:
             return new ListCommandParser().parse(arguments);
+
+        case LoginCommand.COMMAND_WORD:
+            return new LoginCommand();
+
+        case LogoutCommand.COMMAND_WORD:
+            return new LogoutCommand();
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();

@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.Time;
@@ -67,4 +68,7 @@ public interface Model {
 
     void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException;
 
+    void loginGoogleAccount() throws CredentialsException;
+
+    void logoutGoogleAccount() throws CredentialsException;
 }

@@ -82,7 +82,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |`clear`
 
 |add (`a`)
-|kbd:[Ctrl+A]
+|kbd:[Ctrl+Space]
 |`add n:NAME type:r(or c) [p:PHONE_NUMBER] [e:EMAIL] [a:ADDRESS] [t:TAG] ...`
 
 |edit (`e`)

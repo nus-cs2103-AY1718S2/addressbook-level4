@@ -519,6 +519,45 @@ image::UiComponentBirthdayListSequenceDiagram.png[width="800"]
 ** Pros: Users can enter their birthday in their preferred format.
 ** Cons: External API will be used. May introduce unforeseen bugs.
 
+=== Timeable feature
+==== Current Implementation
+
+The `Timetable` feature uses the NUSMods website to allow students to add their timetable in the fastest possbile way.
+`Timetable` is currently stored as a NUSMods link and within `Person` class.
+
+When the user uses the `TimeTableCommand`, it will raise the `TimeTableEvent` which will be caught and handled by the `InfoPanel`.
+The `InfoPanel` will swap between `BrowsePanel`, `BirthdayList`, `VenueTable` and `TimeTablePanel` so that the UI would not be too cluttered.
+
+==== Design Considerations
+
+===== Aspect: Displaying of Timetable in UI
+* **Alternative 1 (Current choice):** Change between the different panels
+** Pros: UI would not be too cluttered.
+** Cons: User cannot simultaneously use the different panels.
+* **Alternative 2:** Have a dedicated spot in the UI for `TimeTablePanel`
+** Pros: Easy to refer for users.
+** Cons: UI would be confusing and cluttered.
+
+===== Aspect: Size of Timetable size
+* **Alternative 1 (Current choice):** Automatically resize according to the size of the Application
+** Pros: Size is adaptable to the size of the Application.
+** Cons: Variable size may make it confusing for users.
+* **Alternative 2:** Fixed Size
+** Pros: Easy and predictable size and location of timings.
+** Cons: Since display may different from computer to computer, it would be inflexible to use a one size fit all approach.
+
+===== Aspect: Color of Modules in Timetable
+* **Alternative 1 (Current choice):** Automatically randomized based on the `hashcode()` of the module name
+** Pros: Colors are fixed and more or less randomized.
+** Cons: Colors may be same for different modules in the same timetable and Colors are not customizable.
+* **Alternative 2:** Pre-defined colors for the different modules
+** Pros: No overlap in color and different color for each module
+** Cons: Since there are many different modules in NUS, it would be very time-consuming and almost impossible to be implemented.
+* **Alternative 3:** User customize colors
+** Pros: Customized Application for users.
+** Cons: Implementation of this system would be complex and time-consuming, it would be implemented in later versions.
+Current implementation is the best in terms of variability and ease of implementation.
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

@@ -174,7 +174,7 @@ Format: `addplatform INDEX [l/LINK]...`
 
 [NOTE]
 ========================================================================
-[cols=2]
+[frame=none,grid=none,cols="45%,55%"]
 |=======================================================================
 a|*Accepted Facebook links may take the form:*
 

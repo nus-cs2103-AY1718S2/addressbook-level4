@@ -1,5 +1,6 @@
 package seedu.address.commons.exceptions;
 
+//@@author yeggasd
 /**
  * Represents an error during decryption
  */

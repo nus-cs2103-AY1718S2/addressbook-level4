@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import seedu.address.commons.util.SecurityUtil;
 import seedu.address.model.Password;
+
+//@@author yeggasd
 public class XmlAdaptedPasswordTest {
 
     @Test

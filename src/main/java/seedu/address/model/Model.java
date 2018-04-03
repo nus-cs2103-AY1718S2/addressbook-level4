@@ -77,10 +77,12 @@ public interface Model {
             WrongPasswordException;
     //@@author
 
+    //@@author yeggasd
     /**
      * Updates the password with the given password.
      */
     void updatePassword(byte[] password);
+    //@@author
 
     //@@author jingyinno
     /**

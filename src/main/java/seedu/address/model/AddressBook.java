@@ -46,6 +46,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         aliases = new UniqueAliasList();
     }
 
+    //@@author yeggasd
     public AddressBook() {
         password = new Password();
     }
@@ -53,6 +54,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public AddressBook(String password) {
         this.password = new Password(password);
     }
+    //@@author
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -288,6 +290,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         aliases.resetHashmap();
     }
 
+    //@@author yeggasd
     @Override
     public Password getPassword() {
         return password;
@@ -308,6 +311,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void updatePassword (Password newPassword) {
         password.updatePassword(newPassword);
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

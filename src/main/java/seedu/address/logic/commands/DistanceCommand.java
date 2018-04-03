@@ -12,6 +12,7 @@ import seedu.address.logic.GetDistance;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 
+//@@author ncaminh
 /**
  * Finds the distance from the headquarter to a person address
  * using his or her last displayed index from the address book.

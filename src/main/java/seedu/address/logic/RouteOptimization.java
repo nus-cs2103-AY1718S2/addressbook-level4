@@ -56,6 +56,7 @@ public class RouteOptimization {
         return optimizedRoute;
     }
 
+    //@@author ncaminh
     /**
      * Check whether the address can be found by Google Map API or not
      * @param address
@@ -70,6 +71,7 @@ public class RouteOptimization {
         return true;
     }
 
+    //@@author meerakanani10
     public List<String> getStartingAddress(List<String> filteredAddresses, List<String> optimizedRoute) {
         Map<String, Double> startingRoute = new LinkedHashMap<>();
         GetDistance distance = new GetDistance();

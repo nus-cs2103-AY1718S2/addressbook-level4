@@ -54,8 +54,8 @@ public class SelectCommand extends Command {
         try {
             score = selectedPerson.calculateL1R5();
         } catch (InvalidSubjectCombinationException isce) {
-            return new CommandResult("Please check that you have at least 1 subject in each L1R5 " +
-                    "category.\n"  + "Please use edit to change subjects allocated to student.");
+            return new CommandResult("Please check that you have at least 1 subject in each L1R5 "
+                    + "category.\n"  + "Please use edit to change subjects allocated to student.");
         }
 
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));

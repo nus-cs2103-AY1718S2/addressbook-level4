@@ -8,7 +8,7 @@
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
         <birthday>01011995</birthday>
-        <timetable isPrivate="false">http://modsn.us/oNZLY</timetable>
+        <timetable isPrivate="false">http://modsn.us/aaaaa</timetable>
         <tagged>friends</tagged>
     </persons>
     <persons>
@@ -17,7 +17,7 @@
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
         <birthday>02011989</birthday>
-        <timetable isPrivate="false">http://modsn.us/ojGeu</timetable>
+        <timetable isPrivate="false">http://modsn.us/bbbbb</timetable>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </persons>
@@ -27,7 +27,7 @@
         <email>heinz@example.com</email>
         <address>wall street</address>
         <birthday>03011991</birthday>
-        <timetable isPrivate="false">http://modsn.us/Zu75n</timetable>
+        <timetable isPrivate="false">http://modsn.us/aaaaa</timetable>
     </persons>
     <persons>
         <name>Daniel Meier</name>
@@ -35,7 +35,7 @@
         <email>cornelia@example.com</email>
         <address>10th street</address>
         <birthday>04021991</birthday>
-        <timetable isPrivate="false">http://modsn.us/Zu75n</timetable>
+        <timetable isPrivate="false">http://modsn.us/aaaaa</timetable>
     </persons>
     <persons>
         <name>Elle Meyer</name>
@@ -43,7 +43,7 @@
         <email>werner@example.com</email>
         <address>michegan ave</address>
         <birthday>05031991</birthday>
-        <timetable isPrivate="false">http://modsn.us/Zu75n</timetable>
+        <timetable isPrivate="false">http://modsn.us/aaaaa</timetable>
     </persons>
     <persons>
         <name>Fiona Kunz</name>
@@ -51,7 +51,7 @@
         <email>lydia@example.com</email>
         <address>little tokyo</address>
         <birthday>06011994</birthday>
-        <timetable isPrivate="false">http://modsn.us/Zu75n</timetable>
+        <timetable isPrivate="false">http://modsn.us/aaaaa</timetable>
     </persons>
     <persons>
         <name>George Best</name>
@@ -59,7 +59,7 @@
         <email>anna@example.com</email>
         <address>4th street</address>
         <birthday>07101995</birthday>
-        <timetable isPrivate="false">http://modsn.us/Zu75n</timetable>
+        <timetable isPrivate="false">http://modsn.us/aaaaa</timetable>
     </persons>
     <tags>friends</tags>
     <tags>owesMoney</tags>

@@ -10,6 +10,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMETABLE;
+import static seedu.address.testutil.TimetableBuilder.DUMMY_LINK_ONE;
+import static seedu.address.testutil.TimetableBuilder.DUMMY_LINK_TWO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,8 +43,8 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_BIRTHDAY_AMY = "01011995";
     public static final String VALID_BIRTHDAY_BOB = "02021993";
-    public static final String VALID_TIMETABLE_AMY = "http://modsn.us/Zu75n";
-    public static final String VALID_TIMETABLE_BOB = "http://modsn.us/C4lZI";
+    public static final String VALID_TIMETABLE_AMY = DUMMY_LINK_ONE;
+    public static final String VALID_TIMETABLE_BOB = DUMMY_LINK_TWO;
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_TAG_UNUSED = "unused"; // do not use this tag when creating a person

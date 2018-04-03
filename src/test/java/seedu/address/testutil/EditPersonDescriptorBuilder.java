@@ -1,5 +1,8 @@
 package seedu.address.testutil;
 
+import static seedu.address.testutil.TimetableBuilder.DUMMY_LINK_ONE;
+import static seedu.address.testutil.TimetableBuilder.DUMMY_LINK_TWO;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -87,7 +90,13 @@ public class EditPersonDescriptorBuilder {
      * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withTimetable(String timetable) {
-        descriptor.setTimetable(new Timetable(timetable));
+        if (timetable.equalsIgnoreCase(DUMMY_LINK_ONE)) {
+            descriptor.setTimetable(new TimetableBuilder().getDummy(0));
+        } else if (timetable.equalsIgnoreCase(DUMMY_LINK_TWO)) {
+            descriptor.setTimetable(new TimetableBuilder().getDummy(1));
+        } else {
+            descriptor.setTimetable(new Timetable(timetable));
+        }
         return this;
     }
 

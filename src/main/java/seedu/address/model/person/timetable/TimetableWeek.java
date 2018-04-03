@@ -21,6 +21,7 @@ public class TimetableWeek {
     public static final String WEDNESDAY_IDENTIFIER = "Wednesday";
     public static final String THURSDAY_IDENTIFIER = "Thursday";
     public static final String FRIDAY_IDENTIFIER = "Friday";
+    public static final String MESSAGE_INVALID_DAY = "Day is invalid";
 
     private TimetableDay[] timetableDays;
 
@@ -33,35 +34,47 @@ public class TimetableWeek {
 
     /**
      * Add lesson to its respective day
-     * @param lesson Lesson
+     * @param lesson Lesson to be added
+     * @throws ParseException when Day is invalid
      */
     public void addLessonToWeek(Lesson lesson) throws ParseException {
-        switch (lesson.getDay()) {
-        case MONDAY_IDENTIFIER:
-            timetableDays[MONDAY_INDEX].addLessontoDay(lesson);
-            break;
+        try {
+            switch (lesson.getDay()) {
+            case MONDAY_IDENTIFIER:
+                timetableDays[MONDAY_INDEX].addLessonToDay(lesson);
+                break;
 
-        case TUESDAY_IDENTIFIER:
-            timetableDays[TUESDAY_INDEX].addLessontoDay(lesson);
-            break;
+            case TUESDAY_IDENTIFIER:
+                timetableDays[TUESDAY_INDEX].addLessonToDay(lesson);
+                break;
 
-        case WEDNESDAY_IDENTIFIER:
-            timetableDays[WEDNESDAY_INDEX].addLessontoDay(lesson);
-            break;
+            case WEDNESDAY_IDENTIFIER:
+                timetableDays[WEDNESDAY_INDEX].addLessonToDay(lesson);
+                break;
 
-        case THURSDAY_IDENTIFIER:
-            timetableDays[THURSDAY_INDEX].addLessontoDay(lesson);
-            break;
+            case THURSDAY_IDENTIFIER:
+                timetableDays[THURSDAY_INDEX].addLessonToDay(lesson);
+                break;
 
-        case FRIDAY_IDENTIFIER:
-            timetableDays[FRIDAY_INDEX].addLessontoDay(lesson);
-            break;
+            case FRIDAY_IDENTIFIER:
+                timetableDays[FRIDAY_INDEX].addLessonToDay(lesson);
+                break;
 
-        default:
-            throw new ParseException("Invalid day type");
+            default:
+                throw new ParseException(MESSAGE_INVALID_DAY);
+            }
+        } catch (IllegalValueException ie) {
+            throw new ParseException(ie.getMessage());
         }
     }
 
+    /**
+     * Returns the lesson at the specified slot, null if slot is empty
+     * @param day
+     * @param timeSlot
+     * @return the Lesson at the specified day and timeslot
+     * @throws IllegalValueException when day, timeslot are invalid values
+     */
     public Lesson getLessonFromSlot(String day, int timeSlot) throws IllegalValueException {
         switch (day) {
         case MONDAY_IDENTIFIER:
@@ -80,7 +93,7 @@ public class TimetableWeek {
             return timetableDays[FRIDAY_INDEX].getLessonFromSlot(timeSlot);
 
         default:
-            throw new IllegalValueException("Day does not exist");
+            throw new IllegalValueException(MESSAGE_INVALID_DAY);
         }
     }
 }

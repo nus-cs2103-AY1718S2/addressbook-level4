@@ -16,6 +16,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class Timetable {
 
+    public static final String DUMMY_LINK_ONE = "http://modsn.us/aaaaa";
+    public static final String DUMMY_LINK_TWO = "http://modsn.us/bbbbb";
     public static final String NUSMODS_SHORT = "modsn.us";
     public static final String URL_HOST_REGEX = "\\/\\/.*?\\/";
     public static final String MESSAGE_URL_CONSTRAINTS =
@@ -30,7 +32,8 @@ public class Timetable {
     public Timetable(String url) {
         requireNonNull(url);
         this.value = url;
-        if (url.equals("")) {    // Create new empty timetable if url is empty
+        // Create new empty timetable if url is empty or a dummy link
+        if (url.equals("") || url.equals(DUMMY_LINK_ONE) || url.equals(DUMMY_LINK_TWO)) {
             this.data = new TimetableData();
             return;
         }
@@ -60,8 +63,25 @@ public class Timetable {
         return hostName.equals(NUSMODS_SHORT);
     }
 
+    /**
+     * Returns the lesson at the specified slot, null if empty
+     * @param week the week the lesson is found at
+     * @param day the day the lesson is found at
+     * @param timeSlot the timeslot the lesson is found at
+     * @return Lesson found at that slot, null if slot is empty
+     * @throws IllegalValueException when week,day,timeslot are invalid values
+     */
     public Lesson getLessonFromSlot(String week, String day, int timeSlot) throws IllegalValueException {
         return data.getLessonFromSlot(week, day, timeSlot);
+    }
+
+    /**
+     * Adds a lesson to the timetable
+     * @param lessonToAdd lesson to be added
+     * @throws IllegalValueException when week,day,timeslot are invalid values
+     */
+    public void addLessonToSlot(Lesson lessonToAdd) throws IllegalValueException {
+        data.addLessonToSlot(lessonToAdd);
     }
 
     @Override

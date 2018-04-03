@@ -1,5 +1,8 @@
 package seedu.address.testutil;
 
+import static seedu.address.testutil.TimetableBuilder.DUMMY_LINK_ONE;
+import static seedu.address.testutil.TimetableBuilder.DUMMY_LINK_TWO;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,12 +21,14 @@ import seedu.address.model.util.SampleDataUtil;
  */
 public class PersonBuilder {
 
+    public static final String DUMMY_TIMETABLE_ONE = "dummy1";
+    public static final String DUMMY_TIMETABLE_TWO = "dummy2";
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_BIRTHDAY = "01011995";
-    public static final String DEFAULT_TIMETABLE = "http://modsn.us/Zu75n";
+    public static final String DEFAULT_TIMETABLE = DUMMY_LINK_ONE;
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
@@ -40,7 +45,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         birthday = new Birthday(DEFAULT_BIRTHDAY);
-        timetable = new Timetable(DEFAULT_TIMETABLE);
+        timetable = new TimetableBuilder().getDummy(0);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -109,7 +114,13 @@ public class PersonBuilder {
      * Sets the {@code timetable} of the {@code Timetable} that we are building.
      */
     public PersonBuilder withTimetable(String timetable) {
-        this.timetable = new Timetable(timetable);
+        if (timetable.equalsIgnoreCase(DUMMY_LINK_ONE)) {
+            this.timetable = new TimetableBuilder().getDummy(0);
+        } else if (timetable.equalsIgnoreCase(DUMMY_LINK_TWO)) {
+            this.timetable = new TimetableBuilder().getDummy(1);
+        } else {
+            this.timetable = new Timetable(timetable);
+        }
         return this;
     }
 

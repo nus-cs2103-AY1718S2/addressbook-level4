@@ -5,6 +5,7 @@ package seedu.address.commons.util.timetable;
  */
 public class Lesson {
 
+    private final String moduleCode;
     private final String classNo;
     private final String lessonType;
     private final String weekType;
@@ -12,14 +13,19 @@ public class Lesson {
     private final String startTime;
     private final String endTime;
 
-    public Lesson(String classNo, String lessonType, String weekType,
+    public Lesson(String moduleCode, String classNo, String lessonType, String weekType,
                   String day, String startTime, String endTime) {
+        this.moduleCode = moduleCode;
         this.classNo = classNo;
         this.lessonType = lessonType;
         this.weekType = weekType;
         this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public String getModuleCode() {
+        return moduleCode;
     }
 
     public String getClassNo() {

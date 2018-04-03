@@ -10,12 +10,6 @@ import seedu.address.commons.util.timetable.Lesson;
 public class TimetableSlot {
 
     private Lesson lesson;
-    private boolean isEmpty;
-
-    // Empty Constructor
-    public TimetableSlot() {
-        isEmpty = true;
-    }
 
     /**
      * Fills up the slot with the given lesson
@@ -24,7 +18,6 @@ public class TimetableSlot {
     public void addLessonToSlot(Lesson lesson) {
         requireNonNull(lesson);
         this.lesson = lesson;
-        isEmpty = false;
     }
 
     public Lesson getLesson() {

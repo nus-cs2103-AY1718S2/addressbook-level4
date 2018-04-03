@@ -19,30 +19,26 @@ public class TimetableData {
     public static final String EVEN_WEEK_IDENTIFIER = "Even Week";
     public static final String ODD_WEEK_IDENTIFIER = "Odd Week";
     public static final String EVERY_WEEK_IDENTIFIER = "Every Week";
+    public static final String MESSAGE_INVALID_WEEK = "Week is invalid";
 
     private TimetableWeek[] timetableWeeks;
 
-    // Empty constructor
+    // Constructs empty data
     public TimetableData() {
         constructEmptyData();
     }
 
-    // Constructor with arraylist
+    // Constructs with ArrayList of {@Lesson}
     public TimetableData(ArrayList<Lesson> lessonsToAdd) throws ParseException {
         constructEmptyData();
         requireNonNull(lessonsToAdd);
 
         // Immediate adding of lessons
         for (Lesson lessonToAdd: lessonsToAdd) {
-            if (lessonToAdd.getWeekType().equalsIgnoreCase(EVEN_WEEK_IDENTIFIER)) {
-                timetableWeeks[EVEN_WEEK_INDEX].addLessonToWeek(lessonToAdd);
-            } else if (lessonToAdd.getWeekType().equalsIgnoreCase(ODD_WEEK_IDENTIFIER)) {
-                timetableWeeks[ODD_WEEK_INDEX].addLessonToWeek(lessonToAdd);
-            } else if (lessonToAdd.getWeekType().equalsIgnoreCase(EVERY_WEEK_IDENTIFIER)) {
-                timetableWeeks[EVEN_WEEK_INDEX].addLessonToWeek(lessonToAdd);
-                timetableWeeks[ODD_WEEK_INDEX].addLessonToWeek(lessonToAdd);
-            } else {
-                throw new ParseException("Invalid week data");
+            try {
+                addLessonToSlot(lessonToAdd);
+            } catch (IllegalValueException ie) {
+                throw new ParseException(ie.getMessage());
             }
         }
     }
@@ -58,13 +54,41 @@ public class TimetableData {
         }
     }
 
+    /**
+     * Returns the lesson at the specified slot, null if slot is empty
+     * @param week
+     * @param day
+     * @param timeSlot
+     * @return Lesson at the specified week, day and slot, null if slot is empty
+     * @throws IllegalValueException when week, day, timeslot are invalid values
+     */
     public Lesson getLessonFromSlot(String week, String day, int timeSlot) throws IllegalValueException {
         if (week.equalsIgnoreCase(EVEN_WEEK_IDENTIFIER)) {
             return timetableWeeks[EVEN_WEEK_INDEX].getLessonFromSlot(day, timeSlot);
         } else if (week.equalsIgnoreCase(ODD_WEEK_IDENTIFIER)) {
             return timetableWeeks[ODD_WEEK_INDEX].getLessonFromSlot(day, timeSlot);
         } else {
-            throw new IllegalValueException("Week does not exist");
+            throw new IllegalValueException(MESSAGE_INVALID_WEEK);
         }
     }
+
+    /**
+     * Adds a lesson at its respective week
+     * @param lessonToAdd lesson to be added
+     * @throws IllegalValueException when week, day, timeslot are invalid values
+     */
+    public void addLessonToSlot(Lesson lessonToAdd) throws IllegalValueException {
+
+        if (lessonToAdd.getWeekType().equalsIgnoreCase(EVEN_WEEK_IDENTIFIER)) {
+            timetableWeeks[EVEN_WEEK_INDEX].addLessonToWeek(lessonToAdd);
+        } else if (lessonToAdd.getWeekType().equalsIgnoreCase(ODD_WEEK_IDENTIFIER)) {
+            timetableWeeks[ODD_WEEK_INDEX].addLessonToWeek(lessonToAdd);
+        } else if (lessonToAdd.getWeekType().equalsIgnoreCase(EVERY_WEEK_IDENTIFIER)) {
+            timetableWeeks[EVEN_WEEK_INDEX].addLessonToWeek(lessonToAdd);
+            timetableWeeks[ODD_WEEK_INDEX].addLessonToWeek(lessonToAdd);
+        } else {
+            throw new IllegalValueException(MESSAGE_INVALID_WEEK);
+        }
+    }
+
 }

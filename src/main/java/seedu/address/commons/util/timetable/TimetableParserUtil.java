@@ -21,15 +21,15 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.timetable.TimetableData;
 
 /**
- * Utility functions to parse a url into a TimetableData
+ * Utility functions to parse a shortened NUSMods url to create TimetableData
  */
 public class TimetableParserUtil {
 
     /**
-     * Parse
+     * Parses a shortened NUSMods url and creates TimetableData
      * @param url shortened NUSMods url
-     * @return TimetableData
-     * @throws ParseException when parsing
+     * @return TimetableData of the NUSMods timetable
+     * @throws ParseException when an error in parsing is encountered
      */
     public static TimetableData parseUrl(String url) throws ParseException {
         checkArgument(isValidUrl(url), MESSAGE_URL_CONSTRAINTS);
@@ -47,8 +47,8 @@ public class TimetableParserUtil {
      * Attempts to access NUSMods to obtain the full NUSMods url
      * @param url shortened NUSMods url
      * @return long url
-     * @throws ParseException
-     * @throws NoInternetConnectionException
+     * @throws ParseException when the long
+     * @throws NoInternetConnectionException when
      */
     public static String parseShortUrl (String url) throws ParseException, NoInternetConnectionException {
         try {
@@ -99,7 +99,7 @@ public class TimetableParserUtil {
     }
 
     /**
-     *
+     * Parses the module string and returns the lessons taken
      * @param module String that contains module code and lessons selected
      * @param semNum Semester number
      * @return ArrayList of lessons taken
@@ -134,11 +134,11 @@ public class TimetableParserUtil {
     }
 
     /**
-     * Access NUSMods API and obtains and parses the json file
-     * @param moduleCode
+     * Accesses NUSMods API and obtains and parses the json file
+     * @param moduleCode the module
      * @param semNum current semester number
      * @return Total list of lessons a module has
-     * @throws ParseException
+     * @throws ParseException when information from NUSMods API cannot be retrieved successfully
      */
     public static ArrayList<Lesson> obtainModuleInfoFromApi(String moduleCode, int semNum) throws ParseException {
         LocalDate currentDate = LocalDate.now();
@@ -166,7 +166,7 @@ public class TimetableParserUtil {
             // Parse info from API and creates an Arraylist of all lessons
             ArrayList<Lesson> lessons = new ArrayList<>();
             for (HashMap<String, String> lesson : lessonInfo) {
-                Lesson lessonToAdd = new Lesson(lesson.get("ClassNo"), lesson.get("LessonType"),
+                Lesson lessonToAdd = new Lesson(moduleCode, lesson.get("ClassNo"), lesson.get("LessonType"),
                         lesson.get("WeekText"), lesson.get("DayText"),
                         lesson.get("StartTime"), lesson.get("EndTime"));
                 lessons.add(lessonToAdd);
@@ -179,7 +179,7 @@ public class TimetableParserUtil {
     }
 
     /**
-     * Helper method to convert the short form (in url) to the lengthened form (in json file)
+     * Converts the short form (in url) to the lengthened form (in json file)
      * @param shortform shortform in url
      * @return String Full form of shortform
      * @throws ParseException when invalid shortform

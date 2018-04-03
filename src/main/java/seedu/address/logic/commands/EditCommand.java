@@ -124,7 +124,7 @@ public class EditCommand extends UndoableCommand {
         Age updatedAge = editPersonDescriptor.getAge().orElse(personToEdit.getAge());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
-                updatedIncome, updatedActualSpending, updatedExpectedSpending, updatedAge);
+                updatedIncome, updatedActualSpending, updatedExpectedSpending, updatedAge, personToEdit.getPolicy());
     }
 
     @Override

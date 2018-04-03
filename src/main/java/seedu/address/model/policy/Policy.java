@@ -1,5 +1,6 @@
 package seedu.address.model.policy;
 
+import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
@@ -9,6 +10,8 @@ import java.util.Objects;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Policy {
+    public static final String DURATION_CONSTRAINTS = "Beginning date must be before or the same as expiration date.";
+
     private final Price price;
     private final Coverage coverage;
     private final Date beginning;
@@ -16,9 +19,12 @@ public class Policy {
 
     /**
      * Every field must be present and not null.
+     * Beginning date must be before or the same as expiration date.
      */
     public Policy(Price price, Coverage coverage, Date beginning, Date expiration) {
         requireAllNonNull(price, coverage, beginning, expiration);
+        checkArgument(isValidDuration(beginning, expiration), DURATION_CONSTRAINTS);
+
         this.price = price;
         this.coverage = coverage;
         this.beginning = beginning;
@@ -40,6 +46,13 @@ public class Policy {
 
     public Date getExpiration() {
         return expiration;
+    }
+
+    /**
+     * Returns true if a given (beginningDate, expirationDate) tuple represents a valid duration.
+     */
+    public static boolean isValidDuration(Date beginning, Date expiration) {
+        return beginning.compareTo(expiration) <= 0;
     }
 
     @Override

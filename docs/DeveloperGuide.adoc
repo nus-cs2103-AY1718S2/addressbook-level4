@@ -1,4 +1,4 @@
-= Smart Insurance Collection - Developer Guide
+﻿= Smart Insurance Collection - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-T15-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -925,6 +925,13 @@ determining insurance policies
 and various other features. This will help improve the experience of the client as well as increase the efficiency of
 their workflow.
 
+*Valerian Rey*:
+
+* Minor feature: Policy field to the persons in the AddressBook to specify the insurance contract of a client.
+It contains multiple classes and enumerations to precisely describe a user's policy (Policy, Price, Date, Month, Issue, Coverage).
+* Major feature: Commands to enter the policy of a client, edit them or even delete them. GUI display of the policies.
+
+
 [appendix]
 == User Stories
 
@@ -962,6 +969,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |Insurance agent that needs to meet clients |Record client’s job |Prioritize purchasing power
 
 |`* * *` |Insurance agent |Assign different policies to each contact |Know the policy my client is under
+
+|`* * *` |Insurance agent |Edit the policies of a contact |Keep my contact data updated
+
+|`* * *` |Insurance agent |Delete the policies of a contact |Keep my contact data updated
 
 |`* *` |Insurance agent that work for someone |Mark important tasks on my calendar |Don’s miss important meeting or tasks
 

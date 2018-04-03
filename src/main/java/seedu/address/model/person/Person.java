@@ -5,10 +5,14 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.model.policy.Policy;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+
+
 
 /**
  * Represents a Person in the address book.
@@ -26,13 +30,14 @@ public class Person {
     private final Income income;
     private final Expenditure actualSpending;
     private final Expenditure expectedSpending;
+    private final Optional<Policy> policy;
 
     /**
      * Every field except actualSpending, expectedSpending must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Income income,
-                  Expenditure actualSpending, Expenditure expectedSpending, Age age) {
-        requireAllNonNull(name, phone, email, address, tags);
+                  Expenditure actualSpending, Expenditure expectedSpending, Age age, Optional<Policy> policy) {
+        requireAllNonNull(name, phone, email, address, tags, policy);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -43,6 +48,7 @@ public class Person {
         this.actualSpending = actualSpending == null ? new Expenditure(0.0) : actualSpending;
         this.expectedSpending = expectedSpending == null ? new Expenditure(0.0) : expectedSpending;
         this.age = age;
+        this.policy = policy;
     }
 
     /**
@@ -57,7 +63,7 @@ public class Person {
 
 
         return new Person(name, phone, email, address, getTags(), income,
-                actualSpending, new Expenditure(expectedSpending), age);
+                actualSpending, new Expenditure(expectedSpending), age, policy);
     }
 
 
@@ -93,6 +99,10 @@ public class Person {
         return this.expectedSpending;
     }
 
+    public Optional<Policy> getPolicy() {
+        return this.policy;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -121,7 +131,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, income, actualSpending, expectedSpending);
+        return Objects.hash(name, phone, email, address, tags, income, actualSpending, expectedSpending, policy);
     }
 
     @Override
@@ -140,7 +150,15 @@ public class Person {
                 .append(getActualSpending())
                 .append(" ExpectedSpending: ")
                 .append(getExpectedSpending())
-                .append(" Tags: ");
+                .append(" Policy: ");
+
+        if (!policy.isPresent()) {
+            builder.append("None");
+        } else {
+            builder.append(getPolicy().get());
+        }
+
+        builder.append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

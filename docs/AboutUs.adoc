@@ -37,6 +37,15 @@ Responsibilities: Data
 
 '''
 
+=== Valerian Johan Marie Rey
+image::valerian.jpg[width="150", align="left"]
+{empty}[https://github.com/ValerianRey[github]] [<<valerian#, portfolio>>]
+
+Role: Developer
+Responsibilities: Model
+
+'''
+
 === Johnny Roe
 image::m133225.jpg[width="150", align="left"]
 {empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]

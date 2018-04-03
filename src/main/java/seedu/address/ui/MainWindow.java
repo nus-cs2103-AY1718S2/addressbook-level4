@@ -122,17 +122,17 @@ public class MainWindow extends UiPart<Stage> {
 
         setAccelerator(undoMenuItem, KeyCombination.valueOf("Ctrl + Z"));
         setAccelerator(redoMenuItem, KeyCombination.valueOf("Ctrl + Y"));
-        setAccelerator(clearMenuItem, KeyCombination.valueOf("Alt + C"));
+        setAccelerator(clearMenuItem, KeyCombination.valueOf("Ctrl + Shift + C"));
 
-        setAccelerator(historyMenuItem, KeyCombination.valueOf("Alt + H"));
+        setAccelerator(historyMenuItem, KeyCombination.valueOf("Ctrl + H"));
         setAccelerator(listMenuItem, KeyCombination.valueOf("F2"));
         setAccelerator(findMenuItem, KeyCombination.valueOf("Ctrl + F"));
 
-        setAccelerator(addMenuItem, KeyCombination.valueOf("Alt + A"));
-        setAccelerator(deleteMenuItem, KeyCombination.valueOf("Alt + D"));
-        setAccelerator(editMenuItem, KeyCombination.valueOf("Alt + E"));
-        setAccelerator(locateMenuItem, KeyCombination.valueOf("Alt + L"));
-        setAccelerator(selectMenuItem, KeyCombination.valueOf("Alt + S"));
+        setAccelerator(addMenuItem, KeyCombination.valueOf("Ctrl + A"));
+        setAccelerator(deleteMenuItem, KeyCombination.valueOf("Ctrl + D"));
+        setAccelerator(editMenuItem, KeyCombination.valueOf("Ctrl + E"));
+        setAccelerator(locateMenuItem, KeyCombination.valueOf("Ctrl + L"));
+        setAccelerator(selectMenuItem, KeyCombination.valueOf("Ctrl + S"));
 
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
     }

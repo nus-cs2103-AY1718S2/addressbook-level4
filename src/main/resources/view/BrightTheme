@@ -117,6 +117,38 @@
     -fx-border-width: 1;
 }
 
+.notification-scroll-pane > .viewport {
+    -fx-background-color: #3366cc;
+}
+
+.notification-scroll-pane {
+    -fx-background-color: #3366cc;
+}
+
+.notification-card-first-stage {
+    -fx-background-color: #3399ff;
+    -fx-text-fill: #000000;
+    -fx-opacity: 0.8;
+}
+
+.notification-card-second-stage {
+    -fx-background-color: #cc3300;
+    -fx-text-fill: #000000;
+    -fx-opacity: 0.8;
+}
+
+.notification-card-notification-center-first-stage {
+    -fx-background-color: #3399ff;
+    -fx-text-fill: #000000;
+    -fx-opacity: 1;
+}
+
+.notification-card-notification-center-second-stage {
+    -fx-background-color: #cc3300;
+    -fx-text-fill: #000000;
+    -fx-opacity: 1;
+}
+
 .cell_big_label {
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 16px;
@@ -199,14 +231,14 @@
 }
 
 .menu-bar .label {
-    -fx-font-size: 19pt;
+    -fx-font-size: 15pt;
     -fx-font-family: "Times New Roman";
-    -fx-text-fill: skyblue;
+    -fx-text-fill: black;
     -fx-opacity: 0.95;
 }
 
 .menu .left-container {
-    -fx-background-color: lightskyblue;
+    -fx-background-color: mediumslateblue;
 }
 
 /*

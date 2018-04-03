@@ -11,6 +11,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import seedu.address.model.person.Person;
 
+/**
+ * An UI component that displays information of a {@code Person}.
+ */
 public class PersonDetail extends UiPart<Stage> {
     private static final String FXML = "PersonDetail.fxml";
     public final Person person;
@@ -43,22 +46,25 @@ public class PersonDetail extends UiPart<Stage> {
         this.phone.setText(person.getPhone().value);
         this.address.setText(person.getAddress().value);
         this.income.setText(person.getIncome().toString());
-        this.age.setText(person.getAge().toString());
+        this.age.setText("Age: " + person.getAge().toString());
         this.email.setText(person.getEmail().value);
-        this.actualSpending.setText(person.getActualSpending().toString());
-        this.expectedSpending.setText(person.getExpectedSpending().toString());
+        this.actualSpending.setText("Actual Spending: " + person.getActualSpending().toString());
+        this.expectedSpending.setText("Expected Spending: " + person.getExpectedSpending().toString());
         person.getTags().forEach((tag) -> {
             this.tags.getChildren().add(new Label(tag.tagName));
         });
     }
 
+    /**
+     * Equals function.
+     */
     public boolean equals(Object other) {
         if (other == this) {
             return true;
         } else if (!(other instanceof PersonDetail)) {
             return false;
         } else {
-            PersonDetail detail = (PersonDetail)other;
+            PersonDetail detail = (PersonDetail) other;
             return this.id.getText().equals(detail.id.getText()) && this.person.equals(detail.person);
         }
     }

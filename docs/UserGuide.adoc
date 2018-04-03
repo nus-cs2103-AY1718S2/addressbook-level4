@@ -172,26 +172,30 @@ Format: `addplatform INDEX [l/LINK]...`
 * You can remove all the person's social media platforms by typing `l/` without specifying any links after it.
 ****
 
-:link: \https://www.facebook.com/
-
+[NOTE]
+========================================================================
+[cols=2]
 |=======================================================================
 a|*Accepted Facebook links may take the form:*
 
-* {link}<profile username>
+* `\https://www.facebook.com/<profile username>`
 * `\https://facebook.com/<profile username>`
-* {\http://www.facebook.com/<profile} username>
-* {\http://facebook.com/<profile} username>
-* {\www.facebook.com/<profile} username>
-* facebook.com/<profile username>
-* facebook.com/profile.php?id=<user profile id>
+* `\http://www.facebook.com/<profile username>`
+* `\http://facebook.com/<profile username>`
+* `\www.facebook.com/<profile username>`
+* `facebook.com/<profile username>`
+* `facebook.com/profile.php?id=<user profile id>`
+
 a|*Accepted Twitter links may take the form:*
-- {\https://www.twitter.com/<username} handle>
-- {\https://twitter.com/<username} handle>
-- {\http://www.twitter.com/<username} handle>
-- {\http://twitter.com/<username} handle>
-- {\www.twitter.com/<username} handle>
-- twitter.com/<username handle>
+
+* `\https://www.twitter.com/<username handle>`
+* `\https://twitter.com/<username handle>`
+* `\http://www.twitter.com/<username handle>`
+* `\http://twitter.com/<username handle>`
+* `\www.twitter.com/<username handle>`
+* `twitter.com/<username handle>`
 |=======================================================================
+========================================================================
 
 Examples:
 

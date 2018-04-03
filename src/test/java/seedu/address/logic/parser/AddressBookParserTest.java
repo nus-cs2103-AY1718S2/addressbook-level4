@@ -20,6 +20,8 @@ import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SignupCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -142,6 +144,23 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
     }
 
+    //@@author Jason1im
+    @Test
+    public void parseCommand_login() throws Exception {
+        String username = "John";
+        String password = "123";
+        LoginCommand command = (LoginCommand) parser.parseCommand(LoginCommand.COMMAND_WORD
+                + " u/" + username + " pw/" + password);
+        assertEquals(new LoginCommand(username, password), command);
+    }
+
+    @Test
+    public void parseCommand_logout() throws Exception {
+        assertTrue(parser.parseCommand(LogoutCommand.COMMAND_WORD) instanceof LogoutCommand);
+        assertTrue(parser.parseCommand(LogoutCommand.COMMAND_WORD + " 3") instanceof LogoutCommand);
+    }
+
+    //@@author
     @Test
     public void parseCommand_select() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
@@ -171,6 +190,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
     }
 
+    //@@author Jason1im
     @Test
     public void parseCommand_signupCommandWord_returnsSignupCommand() throws Exception {
         String testUsername = "test";
@@ -180,6 +200,7 @@ public class AddressBookParserTest {
         assertEquals(new SignupCommand(testUsername, testPassword), command);
     }
 
+    //@@author
     @Test
     public void parseCommand_undoCommandWord_returnsUndoCommand() throws Exception {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD) instanceof UndoCommand);

@@ -52,7 +52,9 @@ public class PersonCard extends UiPart<Region> {
         name.setText(person.getName().fullName);
         currentPosition.setText(person.getCurrentPosition().value);
         company.setText(person.getCompany().value);
-        imageView.setImage(person.getProfilePicture().getImage());
+        if (person.getProfilePicture().filePath != null) {
+            imageView.setImage(person.getProfilePicture().getImage());
+        }
         initSkills(person);
     }
 

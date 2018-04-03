@@ -12,6 +12,8 @@ import static seedu.address.testutil.TypicalOddEven.EVEN_INDEX;
 import static seedu.address.testutil.TypicalOddEven.ODD_INDEX;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -114,6 +116,7 @@ public class TimeTableCommandTest {
     private void assertExecutionSuccess(Index index, int oddEven) {
         TimeTableCommand timeTableCommand = prepareCommand(index, oddEven);
         Person target = model.getFilteredPersonList().get(index.getZeroBased());
+        ArrayList<ArrayList<ArrayList<String>>> targetList = target.getTimetable().getTimetable();
         try {
             CommandResult commandResult = timeTableCommand.execute();
             assertEquals(String.format(TimeTableCommand.MESSAGE_SELECT_PERSON_SUCCESS, oddEven, index.getOneBased()),
@@ -123,7 +126,7 @@ public class TimeTableCommandTest {
         }
 
         TimeTableEvent lastEvent = (TimeTableEvent) eventsCollectorRule.eventsCollector.getMostRecent();
-        //assertEquals(target.getTimeTable(), lastEvent.getTimeTable());
+        assertEquals(targetList.get(oddEven), lastEvent.getTimeTable());
     }
 
     /**

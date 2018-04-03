@@ -78,11 +78,7 @@ public class StringUtil {
      */
     public static boolean isOddEven(String s) {
         requireNonNull(s);
-
-        if (!s.equalsIgnoreCase("even") && !s.equalsIgnoreCase("odd")) {
-            return false;
-        }
-        return true;
+        return s.equalsIgnoreCase("even") || s.equalsIgnoreCase("odd");
     }
 
     /**
@@ -93,13 +89,11 @@ public class StringUtil {
      * @throws NullPointerException if {@code s} is null.
      */
     public static boolean isDay(String s) {
-        if (s.equalsIgnoreCase("Monday") || s.equalsIgnoreCase("Tuesday")
+        requireNonNull(s);
+        return s.equalsIgnoreCase("Monday") || s.equalsIgnoreCase("Tuesday")
                 || s.equalsIgnoreCase("Wednesday") || s.equalsIgnoreCase("Thursday")
                 || s.equalsIgnoreCase("Friday") || s.equalsIgnoreCase("Saturday")
-                || s.equalsIgnoreCase("Sunday")) {
-            return true;
-        }
-        return false;
+                || s.equalsIgnoreCase("Sunday");
     }
     //@@author
 }

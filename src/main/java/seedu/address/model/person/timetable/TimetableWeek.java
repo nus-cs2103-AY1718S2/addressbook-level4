@@ -1,5 +1,6 @@
 package seedu.address.model.person.timetable;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.timetable.Lesson;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -61,4 +62,25 @@ public class TimetableWeek {
         }
     }
 
+    public Lesson getLessonFromSlot(String day, int timeSlot) throws IllegalValueException {
+        switch (day) {
+        case MONDAY_IDENTIFIER:
+            return timetableDays[MONDAY_INDEX].getLessonFromSlot(timeSlot);
+
+        case TUESDAY_IDENTIFIER:
+            return timetableDays[TUESDAY_INDEX].getLessonFromSlot(timeSlot);
+
+        case WEDNESDAY_IDENTIFIER:
+            return timetableDays[WEDNESDAY_INDEX].getLessonFromSlot(timeSlot);
+
+        case THURSDAY_IDENTIFIER:
+            return timetableDays[THURSDAY_INDEX].getLessonFromSlot(timeSlot);
+
+        case FRIDAY_IDENTIFIER:
+            return timetableDays[FRIDAY_INDEX].getLessonFromSlot(timeSlot);
+
+        default:
+            throw new IllegalValueException("Day does not exist");
+        }
+    }
 }

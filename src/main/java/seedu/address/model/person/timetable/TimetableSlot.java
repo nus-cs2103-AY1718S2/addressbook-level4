@@ -26,4 +26,8 @@ public class TimetableSlot {
         this.lesson = lesson;
         isEmpty = false;
     }
+
+    public Lesson getLesson() {
+        return lesson;
+    }
 }

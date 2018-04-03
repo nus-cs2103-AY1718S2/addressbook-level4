@@ -7,6 +7,8 @@ import static seedu.address.commons.util.timetable.TimetableParserUtil.parseUrl;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.timetable.Lesson;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -53,10 +55,13 @@ public class Timetable {
             return false;
         }
 
-
         String hostName = matcher.group()
                 .substring(2, matcher.group().length() - 1);
         return hostName.equals(NUSMODS_SHORT);
+    }
+
+    public Lesson getLessonFromSlot(String week, String day, int timeSlot) throws IllegalValueException {
+        return data.getLessonFromSlot(week, day, timeSlot);
     }
 
     @Override

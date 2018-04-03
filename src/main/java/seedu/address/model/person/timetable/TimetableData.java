@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.timetable.Lesson;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -57,4 +58,13 @@ public class TimetableData {
         }
     }
 
+    public Lesson getLessonFromSlot(String week, String day, int timeSlot) throws IllegalValueException {
+        if (week.equalsIgnoreCase(EVEN_WEEK_IDENTIFIER)) {
+            return timetableWeeks[EVEN_WEEK_INDEX].getLessonFromSlot(day, timeSlot);
+        } else if (week.equalsIgnoreCase(ODD_WEEK_IDENTIFIER)) {
+            return timetableWeeks[ODD_WEEK_INDEX].getLessonFromSlot(day, timeSlot);
+        } else {
+            throw new IllegalValueException("Week does not exist");
+        }
+    }
 }

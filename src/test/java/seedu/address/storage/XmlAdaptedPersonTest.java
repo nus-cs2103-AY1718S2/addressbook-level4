@@ -33,7 +33,7 @@ public class XmlAdaptedPersonTest {
     private static final String VALID_EMAIL = BENSON.getEmail().toString();
     private static final String VALID_ADDRESS = BENSON.getAddress().toString();
     private static final String VALID_BIRTHDAY = "01011994";
-    private static final String VALID_TIMETABLE = "http://modsn.us/phiZF";
+    private static final String VALID_TIMETABLE = "http://modsn.us/Zu75n";
     private static final List<XmlAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
             .map(XmlAdaptedTag::new)
             .collect(Collectors.toList());

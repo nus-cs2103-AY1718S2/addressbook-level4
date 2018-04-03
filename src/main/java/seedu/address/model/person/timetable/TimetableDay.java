@@ -1,5 +1,6 @@
 package seedu.address.model.person.timetable;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.timetable.Lesson;
 
 /**
@@ -41,5 +42,13 @@ public class TimetableDay {
         int value = Integer.parseInt(time);
 
         return value / 100;
+    }
+
+    public Lesson getLessonFromSlot(int timeSlot) throws IllegalValueException {
+        if (timeSlot > 0 && timeSlot <= 23) {
+            return timetableSlots[timeSlot].getLesson();
+        } else {
+            throw new IllegalValueException("Slot does not exist");
+        }
     }
 }

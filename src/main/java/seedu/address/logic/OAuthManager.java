@@ -6,6 +6,7 @@ package seedu.address.logic;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -105,26 +106,29 @@ public class OAuthManager {
     }
 
     public static List<Event> getUpcomingEvents() throws IOException {
-        // Build a new authorized API client service.
-        // Note: Do not confuse this class with the
-        //   com.google.api.services.calendar.model.Calendar class.
-        com.google.api.services.calendar.Calendar service =
-                getCalendarService();
+        List<Event> upcomingEvents = getNextXEvents(10);
+        int numberOfEventsRetrieved = upcomingEvents.size();
 
-        // List the next 10 events from the primary calendar.
-        DateTime now = new DateTime(System.currentTimeMillis());
-        Events events = service.events().list("primary")
-                .setMaxResults(10)
-                .setTimeMin(now)
-                .setOrderBy("startTime")
-                .setSingleEvents(true)
-                .execute();
-        List<Event> upcomingEvents = events.getItems();
-        if (upcomingEvents.size() == 0) {
+        if (numberOfEventsRetrieved == 0) {
             System.out.println("No upcoming events found.");
         } else {
-            System.out.println("Upcoming events");
+            System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s).");
+        }
+
+        return upcomingEvents;
+    }
+
+    public static List<String> getUpcomingEventsAsStringList() throws IOException {
+        List<Event> upcomingEvents = getNextXEvents(10);
+        int numberOfEventsRetrieved = upcomingEvents.size();
+        List<String> eventListAsString = new ArrayList<>();
+
+        if (numberOfEventsRetrieved == 0) {
+            System.out.println("No upcoming events found.");
+        } else {
+            System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s): ");
             for (Event event : upcomingEvents) {
+                String title = event.getSummary();
                 DateTime start = event.getStart().getDateTime();
                 DateTime end = event.getEnd().getDateTime();
                 String location = event.getLocation();
@@ -138,11 +142,34 @@ public class OAuthManager {
                 if (location == null) {
                     location = "No Location Specified";
                 }
-                System.out.printf("%s From: %s To: %s) @ %s [%s]\n",
-                        event.getSummary(), start, end, location, personUniqueId);
+                if (personUniqueId == null) {
+                    personUniqueId = "No Person Specified";
+                }
+                System.out.printf("%s From: %s To: %s) @ %s [%s]\n", title, start, end, location, personUniqueId);
+                eventListAsString.add(title + "From: " + start + " To: " + end + ") @ "
+                        + location + " [" + personUniqueId + "]");
             }
         }
 
+        return eventListAsString;
+    }
+
+    private static List<Event> getNextXEvents(int x) throws IOException {
+        // Build a new authorized API client service.
+        // Note: Do not confuse this class with the
+        //   com.google.api.services.calendar.model.Calendar class.
+        com.google.api.services.calendar.Calendar service =
+                getCalendarService();
+
+        // List the next 10 events from the primary calendar.
+        DateTime now = new DateTime(System.currentTimeMillis());
+        Events events = service.events().list("primary")
+                .setMaxResults(x)
+                .setTimeMin(now)
+                .setOrderBy("startTime")
+                .setSingleEvents(true)
+                .execute();
+        List<Event> upcomingEvents = events.getItems();
         return upcomingEvents;
     }
 

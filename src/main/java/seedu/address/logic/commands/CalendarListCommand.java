@@ -5,8 +5,6 @@ package seedu.address.logic.commands;
 import java.io.IOException;
 import java.util.List;
 
-import com.google.api.services.calendar.model.Event;
-
 import seedu.address.logic.OAuthManager;
 
 /**
@@ -23,8 +21,10 @@ public class CalendarListCommand extends Command {
     public CommandResult execute() {
 
         try {
-            List<Event> upcomingEvents = OAuthManager.getUpcomingEvents();
-            return new CommandResult(upcomingEvents.toString());
+            List<String> upcomingEvents = OAuthManager.getUpcomingEventsAsStringList();
+            String upcomingEventsAsString = String.join("\n", upcomingEvents);
+
+            return new CommandResult(upcomingEventsAsString);
         } catch (IOException e) {
             return new CommandResult(MESSAGE_ERROR);
         }

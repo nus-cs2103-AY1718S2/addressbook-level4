@@ -3,7 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -22,7 +21,6 @@ import seedu.address.model.calendar.exceptions.EditApointmentFailException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.policy.Policy;
 
 /**
  * Represents the in-memory model of the address book data.

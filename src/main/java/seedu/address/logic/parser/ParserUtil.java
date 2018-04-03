@@ -24,10 +24,9 @@ import seedu.address.model.person.Expenditure;
 import seedu.address.model.person.Income;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.policy.Date;
 import seedu.address.model.policy.Month;
 import seedu.address.model.policy.Price;
-import seedu.address.model.policy.Date;
-import seedu.address.model.policy.Issue;
 
 import seedu.address.model.tag.Tag;
 
@@ -401,8 +400,8 @@ public class ParserUtil {
         requireNonNull(date);
         String trimmedInput = date.trim();
 
-        String parts[] = trimmedInput.split("/");
-        if(parts.length != 3) {
+        String[] parts = trimmedInput.split("/");
+        if (parts.length != 3) {
             throw new IllegalValueException(Date.DATE_CONSTRAINTS);
         }
 
@@ -410,13 +409,13 @@ public class ParserUtil {
         Integer monthValue = Integer.parseInt(parts[1]) - 1;    //month value is from 0 to 11 if the input is valid
         Integer year = Integer.parseInt(parts[2]);
 
-        if(monthValue < 0 || monthValue >= Month.values().length) {
+        if (monthValue < 0 || monthValue >= Month.values().length) {
             throw new IllegalValueException(Date.DATE_CONSTRAINTS);
         }
 
         Month month = Month.values()[monthValue];
 
-        if(!Date.isValidDate(day, month, year)) {
+        if (!Date.isValidDate(day, month, year)) {
             throw new IllegalValueException(Date.DATE_CONSTRAINTS);
         }
 

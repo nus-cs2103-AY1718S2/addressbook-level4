@@ -2,16 +2,21 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BEGINNING_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRATION_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ISSUE;
 
-import java.util.*;
+import java.util.ArrayList;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddPolicyCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.policy.*;
+import seedu.address.model.policy.Coverage;
 import seedu.address.model.policy.Date;
+import seedu.address.model.policy.Policy;
+import seedu.address.model.policy.Price;
 
 /**
  * Parses input arguments and creates a new AddPolicyCommand object
@@ -27,8 +32,8 @@ public class AddPolicyCommandParser implements Parser<AddPolicyCommand> {
     public AddPolicyCommand parse(String args) throws ParseException {
         requireNonNull(args);
 
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_BEGINNING_DATE, PREFIX_EXPIRATION_DATE, PREFIX_PRICE, PREFIX_ISSUE);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_BEGINNING_DATE,
+                PREFIX_EXPIRATION_DATE, PREFIX_PRICE, PREFIX_ISSUE);
 
         Index index;
         try {
@@ -37,10 +42,10 @@ public class AddPolicyCommandParser implements Parser<AddPolicyCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPolicyCommand.MESSAGE_USAGE));
         }
 
-        Price price = null;
-        Date beginningDate = null;
-        Date expirationDate = null;
-        Coverage coverage = new Coverage(new ArrayList<Issue>());
+        Price price;
+        Date beginningDate;
+        Date expirationDate;
+        Coverage coverage = new Coverage(new ArrayList<>());
 
         try {
             price = ParserUtil.parsePrice(argMultimap.getValue(PREFIX_PRICE).get());
@@ -50,7 +55,7 @@ public class AddPolicyCommandParser implements Parser<AddPolicyCommand> {
             throw new ParseException(ive.getMessage(), ive);
         }
 
-        if(!Policy.isValidDuration(beginningDate, expirationDate)) {
+        if (!Policy.isValidDuration(beginningDate, expirationDate)) {
             throw new ParseException(Policy.DURATION_CONSTRAINTS);
         }
 

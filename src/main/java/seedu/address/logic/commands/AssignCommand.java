@@ -132,7 +132,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         editPersonDescriptor.setTags(runnerToBeEdited.getTags());
 
         //the following list contains all UNIQUE customers that should be in Runner's customer list after AssignCommand
-        // command is executed
+        //command is executed
         List<Customer> updatedCustomers = new ArrayList<>();
         updatedCustomers.addAll(((Runner) runnerToBeEdited).getCustomers());
 
@@ -142,13 +142,13 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
             if (!(p instanceof Customer)) {
                 throw new CommandException("invalid customer index");
             }
-            if (lastShownList.indexOf(p) >= 0) {
+            if (updatedCustomers.indexOf(p) >= 0) {
                 throw new CommandException(String.format("customer at index %d, already assigned to runner",
                         index.getOneBased()));
             }
-            updatedCustomers.add((Customer) p);
+            customersToBeAdded.add((Customer) p);
         }
-
+        updatedCustomers.addAll(customersToBeAdded); //add new unique customers to current list of customers
         editPersonDescriptor.setCustomers(updatedCustomers);
     }
 

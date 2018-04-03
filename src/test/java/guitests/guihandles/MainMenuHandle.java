@@ -23,11 +23,27 @@ public class MainMenuHandle extends NodeHandle<Node> {
     }
 
     /**
+     * Populates the {@code CommandBox} with the AddCommand template
+     * using the menu bar in {@code MainWindow}.
+     */
+    public void populateAddCommandUsingMenu() {
+        clickOnMenuItemsSequentially("Actions", "Add a Person...");
+    }
+
+    /**
      * Opens the {@code HelpWindow} by pressing the shortcut key associated
      * with the menu bar in {@code MainWindow}.
      */
     public void openHelpWindowUsingAccelerator() {
         guiRobot.push(KeyCode.F1);
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the AddCommand template
+     * by pressing the shortcut key associated with the menu bar in {@code MainWindow}.
+     */
+    public void populateAddCommandUsingAccelerator() {
+        guiRobot.push(KeyCode.CONTROL, KeyCode.SPACE);
     }
 
     /**

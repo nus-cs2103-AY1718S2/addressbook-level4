@@ -23,7 +23,7 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     mavenCentral()
-    jcenter()
+    jcenter { url "http://jcenter.bintray.com" }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 

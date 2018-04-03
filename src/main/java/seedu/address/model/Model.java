@@ -4,6 +4,10 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.exception.DuplicateUsernameException;
+import seedu.address.model.exception.InvalidPasswordException;
+import seedu.address.model.exception.InvalidUsernameException;
+import seedu.address.model.exception.MultipleLoginException;
+import seedu.address.model.exception.UserLogoutException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
@@ -54,10 +58,26 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    //@@author Jason1im
     /**
      * Returns AccountsManager.
      */
-    AccountsManager getAccountsManager();
+    ReadOnlyAccountsManager getAccountsManager();
+
+    /**
+     * Logs the user into contactHeRo.
+     * @throws InvalidUsernameException if username is invalid.
+     * @throws InvalidPasswordException if the password is invalid.
+     * @throws MultipleLoginException if a user is already logged in.
+     */
+    void login(String username, String password) throws InvalidUsernameException,
+            InvalidPasswordException, MultipleLoginException;
+
+    /**
+     * Logs the user out of contactHeRo
+     * @throws UserLogoutException if no user is login to the system.
+     */
+    void logout() throws UserLogoutException;
 
     /**
      * Register a new account for user.
@@ -65,6 +85,7 @@ public interface Model {
      */
     void register(String username, String password) throws DuplicateUsernameException;
 
+    //@@author
     /** Adds the given person */
     void addJob(Job job) throws DuplicateJobException;
 

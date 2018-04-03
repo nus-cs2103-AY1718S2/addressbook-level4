@@ -13,21 +13,21 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.SignupCommand;
+import seedu.address.logic.commands.LoginCommand;
 
+public class LoginCommandParserTest {
 
-public class SignupCommandParserTest {
-    private SignupCommandParser parser = new SignupCommandParser();
+    private LoginCommandParser parser = new LoginCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + USERNAME_DESC_USER
-                + PASSWORD_DESC_USER, new SignupCommand("John", "1234"));
+                + PASSWORD_DESC_USER, new LoginCommand("John", "1234"));
     }
 
     @Test
     public void parse_compulsoryFieldMissing_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SignupCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE);
 
         // Missing username prefix.
         assertParseFailure(parser, PREAMBLE_WHITESPACE + VALID_USERNAME_USER

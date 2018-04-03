@@ -2,8 +2,6 @@
 package seedu.address.logic.parser;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 
 import seedu.address.logic.commands.CalendarCommand;
 import seedu.address.logic.commands.ClearHistoryCommand;

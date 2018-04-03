@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.skill.Skill;
+import seedu.address.model.skill.UniqueSkillList;
 
 /**
  * Represents a Person in the address book.
@@ -24,14 +24,14 @@ public class Person {
     private final CurrentPosition currentPosition;
     private final Company company;
 
-    private final UniqueTagList tags;
+    private final UniqueSkillList skills;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, CurrentPosition currentPosition,
-                  Company company, ProfilePicture profilePicture, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags, currentPosition, company);
+                  Company company, ProfilePicture profilePicture, Set<Skill> skills) {
+        requireAllNonNull(name, phone, email, address, skills, currentPosition, company);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -44,8 +44,8 @@ public class Person {
         } else {
             this.profilePicture = profilePicture;
         }
-        // protect internal tags from changes in the arg list
-        this.tags = new UniqueTagList(tags);
+        // protect internal skills from changes in the arg list
+        this.skills = new UniqueSkillList(skills);
     }
 
     public Name getName() {
@@ -77,11 +77,11 @@ public class Person {
     }
 
     /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * Returns an immutable skill set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags.toSet());
+    public Set<Skill> getSkills() {
+        return Collections.unmodifiableSet(skills.toSet());
     }
 
     @Override
@@ -104,7 +104,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, profilePicture, currentPosition, company, tags);
+        return Objects.hash(name, phone, email, address, profilePicture, currentPosition, company, skills);
     }
 
     @Override
@@ -121,8 +121,8 @@ public class Person {
                 .append(getCurrentPosition())
                 .append(" Company: ")
                 .append(getCompany())
-                .append(" Tags: ");
-        getTags().forEach(builder::append);
+                .append(" Skills: ");
+        getSkills().forEach(builder::append);
         return builder.toString();
     }
 }

@@ -128,6 +128,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         removeUnusedTags();
     }
 
+    //@@author XavierMaYuqian
     /**
      * Removes all {@code Tag}s that are not used by any {@code Person} in this {@code AddressBook}.
      */
@@ -259,6 +260,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    //@@author XavierMaYuqian
     /**
      * Removes tags from persons
      */
@@ -272,6 +274,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author XavierMaYuqian
     /**
      * Removes tags from persons
      */

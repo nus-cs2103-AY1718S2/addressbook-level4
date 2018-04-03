@@ -21,7 +21,7 @@ public class JobBuilder {
     public static final String DEFAULT_TEAM = "Microprocessor";
     public static final String DEFAULT_LOCATION = "Singapore";
     public static final String DEFAULT_NUMBER_OF_POSITIONS = "2";
-    public static final String DEFAULT_TAGS = "C++";
+    public static final String DEFAULT_SKILLS = "C++";
 
     private Position position;
     private Team team;
@@ -34,7 +34,7 @@ public class JobBuilder {
         team = new Team(DEFAULT_TEAM);
         location = new Location(DEFAULT_LOCATION);
         numberOfPositions = new NumberOfPositions(DEFAULT_NUMBER_OF_POSITIONS);
-        skills = SampleDataUtil.getSkillSet(DEFAULT_TAGS);
+        skills = SampleDataUtil.getSkillSet(DEFAULT_SKILLS);
     }
 
     /**

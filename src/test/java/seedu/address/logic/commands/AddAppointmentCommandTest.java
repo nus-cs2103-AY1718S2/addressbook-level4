@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -34,11 +35,12 @@ import seedu.address.model.exception.MultipleLoginException;
 import seedu.address.model.exception.UserLogoutException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
+import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.skill.Skill;
+import seedu.address.model.skill.UniqueSkillList;
 import seedu.address.testutil.AppointmentBuilder;
 
 //@@author trafalgarandre
@@ -134,14 +136,19 @@ public class AddAppointmentCommandTest {
         }
 
         @Override
+        public void deleteJob(Job target) throws JobNotFoundException {
+            Assert.fail("This method should not be called.");
+        }
+
+        @Override
         public void updatePerson(Person target, Person editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
         }
 
         @Override
-        public void deleteTag(Tag t)
-                throws PersonNotFoundException, DuplicatePersonException, UniqueTagList.DuplicateTagException {
+        public void deleteSkill(Skill t)
+                throws PersonNotFoundException, DuplicatePersonException, UniqueSkillList.DuplicateSkillException {
             fail("This method should not be called.");
         }
         @Override

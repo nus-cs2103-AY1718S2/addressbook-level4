@@ -13,7 +13,7 @@ import seedu.address.model.skill.Skill;
 /**
  * A utility class to help with building Addressbook objects.
  * Example usage: <br>
- *     {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").withTag("Friend").build();}
+ *     {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").withSkill("Friend").build();}
  */
 public class AddressBookBuilder {
 
@@ -54,9 +54,9 @@ public class AddressBookBuilder {
     /**
      * Parses {@code skillName} into a {@code Skill} and adds it to the {@code AddressBook} that we are building.
      */
-    public AddressBookBuilder withTag(String tagName) {
+    public AddressBookBuilder withSkill(String skillName) {
         try {
-            addressBook.addSkill(new Skill(tagName));
+            addressBook.addSkill(new Skill(skillName));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("skillName is expected to be valid.");
         }

@@ -253,4 +253,28 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandBoxAndResultDisplayShowsErrorStyle();
         assertStatusBarUnchanged();
     }
+
+    /**
+     * Asserts that population of the {@code CommandBox} with the AddCommand
+     * template was successful.
+     */
+    private void assertPopulationSuccess() {
+        assertEquals((new AddCommand()).getTemplate(), getCommandBox().getInput());
+        guiRobot.pauseForHuman();
+
+        assertTrue(getCommandBox().clear());
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Asserts that population of the {@code CommandBox} with the AddCommand
+     * template was unsuccessful.
+     */
+    private void assertPopulationFailure() {
+        assertNotEquals((new AddCommand()).getTemplate(), getCommandBox().getInput());
+        guiRobot.pauseForHuman();
+
+        assertTrue(getCommandBox().clear());
+        guiRobot.pauseForHuman();
+    }
 }

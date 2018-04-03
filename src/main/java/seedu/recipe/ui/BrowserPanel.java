@@ -48,7 +48,6 @@ public class BrowserPanel extends UiPart<Region> {
     private static final Index FIRST_INDEX = Index.fromOneBased(1);
 
     private Recipe recipeToShare;
-    private String uploadFilename;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -160,11 +159,7 @@ public class BrowserPanel extends UiPart<Region> {
     //@@author nicholasangcx
     @Subscribe
     private void handleUploadRecipesEvent(UploadRecipesEvent event) {
-        loadPageExternalBrowser(CloudStorageUtil.getAppropriateUrl());
-        uploadFilename = event.getUploadFilename();
-
-        CloudStorageUtil.setUploadFilename(uploadFilename);
-
+        loadPageExternalBrowser(CloudStorageUtil.getAuthorizationUrl());
     }
     //@@author
 }

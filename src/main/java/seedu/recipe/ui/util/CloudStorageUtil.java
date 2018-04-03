@@ -11,7 +11,6 @@ import java.io.InputStream;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
-import com.google.common.base.Strings;
 
 import seedu.recipe.commons.util.FileUtil;
 import seedu.recipe.logic.commands.UploadCommand;
@@ -28,13 +27,9 @@ public class CloudStorageUtil {
     public static final String ACCESS_TOKEN_IDENTIFIER = "#access_token=";
 
     private static final String APP_KEY = "0kj3cb9w27d66n8";
-    private static final String REDIRECT_DOMAIN = "https://www.dropbox.com/h";
     private static final String AUTHORIZATION_DOMAIN = "https://www.dropbox.com/1/oauth2/authorize?";
-    private static final String AUTHORIZATION_URL = AUTHORIZATION_DOMAIN + "response_type=token&client_id="
-                                                    + APP_KEY + "&redirect_uri=" + REDIRECT_DOMAIN;
-
-    private static final String ACCESS_TOKEN_REGEX = REDIRECT_DOMAIN + "#access_token=(.+)&token(.*)";
-    private static final String EXTRACT_PORTION = "$1";
+    private static final String AUTHORIZATION_URL = AUTHORIZATION_DOMAIN + "response_type=code&client_id="
+                                                    + APP_KEY + "&redirect_uri=";
 
     private static String accessToken = null;
     private static String uploadFilename = null;
@@ -48,30 +43,6 @@ public class CloudStorageUtil {
         } else {
             return true;
         }
-    }
-
-    /**
-     * Checks if an access token is embedded in the url.
-     * If access token is found, set the accessToken variable to be the found access token.
-     *
-     * @return Returns true when access token is found.
-     */
-    public static boolean checkAndSetAccessToken(String url) {
-        if (url.contains(ACCESS_TOKEN_IDENTIFIER)) {
-            String token = extractAccessToken(url);
-            setAccessToken(token);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Extracts access token from the given URL.
-     */
-    public static String extractAccessToken(String url) {
-        assert (url.contains(ACCESS_TOKEN_IDENTIFIER));
-        return url.replaceAll(ACCESS_TOKEN_REGEX, EXTRACT_PORTION);
     }
 
     /**
@@ -99,18 +70,6 @@ public class CloudStorageUtil {
         }
     }
 
-    /**
-     * Checks is the access token has already been obtained by the app.
-     * @return Returns the appropriate URL depending on whether authorization
-     * has taken place yet.
-     */
-    public static String getAppropriateUrl() {
-        if (Strings.isNullOrEmpty(accessToken)) {
-            return AUTHORIZATION_URL;
-        }
-        return REDIRECT_DOMAIN;
-    }
-
     public static void setAccessToken(String token) {
         accessToken = token;
     }
@@ -123,8 +82,8 @@ public class CloudStorageUtil {
         CloudStorageUtil.uploadFilename = uploadFilename;
     }
 
-    public static String getRedirectDomain() {
-        return REDIRECT_DOMAIN;
+    public static String getAuthorizationUrl() {
+        return AUTHORIZATION_URL;
     }
 }
 //@@author

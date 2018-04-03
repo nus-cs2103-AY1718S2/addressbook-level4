@@ -15,19 +15,17 @@ import seedu.recipe.ui.util.CloudStorageUtil;
 public class UploadCommand extends Command {
 
     public static final String COMMAND_WORD = "upload";
-    public static final String MESSAGE_SUCCESS = "Upload success!";
+    public static final String MESSAGE_SUCCESS = "Upload Success!";
     public static final String MESSAGE_FAILURE = "Failed to upload!";
-    public static final String MESSAGE_UPLOAD = "Connecting to Dropbox......";
     public static final String MESSAGE_WRONG_URL = "The entered URL has the wrong format";
-    public static final String MESSAGE_ACCESS_TOKEN = "Copy and paste the code given by dropbox";
+    public static final String MESSAGE_ACCESS_TOKEN = "Copy and paste the code given by dropbox.\n"
+            + "Example: " + COMMAND_WORD + " VALID_ACCESS_TOKEN";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Uploads all recipes to your Dropbox with the "
             + "specified filename, with no spaces. It will only take in the first parameter. "
             + MESSAGE_FILENAME_CONSTRAINTS + "\n"
             + "Parameters: KEYWORD\n"
             + "Example: " + COMMAND_WORD + " RecipeBook";
-
-    private static final Index FIRST_INDEX = Index.fromOneBased(1);
 
     private final String xmlExtensionFilename;
 
@@ -44,10 +42,10 @@ public class UploadCommand extends Command {
     public CommandResult execute() {
         EventsCenter.getInstance().post(new UploadRecipesEvent());
         if (CloudStorageUtil.hasAccessToken()) {
-            EventsCenter.getInstance().post(new JumpToListRequestEvent(FIRST_INDEX));
+            CloudStorageUtil.upload();
             return new CommandResult(MESSAGE_SUCCESS);
         }
-        return new CommandResult(MESSAGE_UPLOAD);
+        return new CommandResult(MESSAGE_ACCESS_TOKEN);
     }
 
     @Override

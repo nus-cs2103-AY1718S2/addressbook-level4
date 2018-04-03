@@ -11,6 +11,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.UniqueAppointmentList;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.UniqueJobList;
 import seedu.address.model.job.exceptions.DuplicateJobException;
@@ -28,6 +32,7 @@ import seedu.address.model.skill.UniqueSkillList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
+    private final UniqueAppointmentList appointments;
     private final UniquePersonList persons;
     private final UniqueSkillList skills;
     private final UniqueJobList jobs;
@@ -42,6 +47,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         skills = new UniqueSkillList();
+        appointments = new UniqueAppointmentList();
         jobs = new UniqueJobList();
     }
 
@@ -65,6 +71,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.skills.setSkills(skills);
     }
 
+    public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
+        this.appointments.setAppointments(appointments);
+    }
+
     public void setJobs(List<Job> jobs) throws DuplicateJobException {
         this.jobs.setJobs(jobs);
     }
@@ -78,13 +88,18 @@ public class AddressBook implements ReadOnlyAddressBook {
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncPersonWithMasterSkillList)
                 .collect(Collectors.toList());
+        List<Appointment> syncedAppointmentList = newData.getAppointmentList().stream()
+                .collect(Collectors.toList());
         List<Job> syncedJobList = newData.getJobList().stream()
                 .map(this::syncJobWithMasterSkillList)
                 .collect(Collectors.toList());
         try {
+            setAppointments(syncedAppointmentList);
             setPersons(syncedPersonList);
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
+        } catch (DuplicateAppointmentException e) {
+            throw new AssertionError("Calendar should not have duplicate appointments");
         }
 
         try {
@@ -199,6 +214,45 @@ public class AddressBook implements ReadOnlyAddressBook {
         skills.remove(t);
     }
 
+    //// appointment-level operations
+    //@@author trafalgarandre
+    /**
+     * Adds an appointment to the address book.
+     *
+     *
+     * @throws DuplicateAppointmentException if an equivalent appointment already exists.
+     */
+    public void addAppointment(Appointment a) throws DuplicateAppointmentException {
+        appointments.add(a);
+    }
+
+    /**
+     * Replaces the given appointment {@code target} in the list with {@code editedAppointment}.
+     * @throws DuplicateAppointmentException if updating the appointment's details causes the appointment to be
+     * equivalent to another existing appointment in the list.
+     * @throws AppointmentNotFoundException if {@code target} could not be found in the list.
+     *
+     */
+    public void updateAppointment(Appointment target, Appointment editedAppointment)
+            throws DuplicateAppointmentException, AppointmentNotFoundException {
+        requireNonNull(editedAppointment);
+
+        appointments.setAppointment(target, editedAppointment);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws AppointmentNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeAppointment(Appointment key) throws AppointmentNotFoundException {
+        if (appointments.remove(key)) {
+            return true;
+        } else {
+            throw new AppointmentNotFoundException();
+        }
+    }
+
+
     //// job-level operations
 
     /**
@@ -254,8 +308,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + jobs.asObservableList().size() + " jobs, "
-                + skills.asObservableList().size() +  " skills";
-        // TODO: refine later
+                + skills.asObservableList().size() +  " skills" + appointments.asList().size() + " appointments";
     }
 
     @Override
@@ -269,6 +322,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public List<Appointment> getAppointmentList() {
+        return appointments.asList();
+    }
+
     public ObservableList<Job> getJobList() {
         return jobs.asObservableList();
     }
@@ -279,12 +336,13 @@ public class AddressBook implements ReadOnlyAddressBook {
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
                 && this.skills.equalsOrderInsensitive(((AddressBook) other).skills)
+                && this.appointments.equals(((AddressBook) other).appointments)
                 && this.jobs.equals(((AddressBook) other).jobs));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, skills, jobs);
+        return Objects.hash(persons, skills, appointments, jobs);
     }
 }

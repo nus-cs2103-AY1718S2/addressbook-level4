@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMPANY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CURRENT_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NUMBER_OF_POSITIONS;
@@ -15,7 +16,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROFILE_PICTURE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
 import java.util.ArrayList;
@@ -128,6 +131,29 @@ public class CommandTestUtil {
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+
+    public static final String VALID_TITLE_INTERVIEW1 = "Interview1";
+    public static final String VALID_TITLE_INTERVIEW2 = "Interview2";
+    public static final String VALID_START_DATE_TIME_INTERVIEW1 = "2018-05-01 10:00";
+    public static final String VALID_START_DATE_TIME_INTERVIEW2 = "2018-05-03 10:00";
+    public static final String VALID_END_DATE_TIME_INTERVIEW1 = "2018-05-01 12:00";
+    public static final String VALID_END_DATE_TIME_INTERVIEW2 = "2018-05-03 12:00";
+
+    public static final String TITLE_DESC_INTERVIEW1 = " " + PREFIX_TITLE + VALID_TITLE_INTERVIEW1;
+    public static final String TITLE_DESC_INTERVIEW2 = " " + PREFIX_TITLE + VALID_TITLE_INTERVIEW2;
+    public static final String START_DATE_TIME_DESC_INTERVIEW1 = " " + PREFIX_START_DATE_TIME
+            + VALID_START_DATE_TIME_INTERVIEW1;
+    public static final String START_DATE_TIME_DESC_INTERVIEW2 = " " + PREFIX_START_DATE_TIME
+            + VALID_START_DATE_TIME_INTERVIEW2;
+    public static final String END_DATE_TIME_DESC_INTERVIEW1 = " " + PREFIX_END_DATE_TIME
+            + VALID_END_DATE_TIME_INTERVIEW1;
+    public static final String END_DATE_TIME_DESC_INTERVIEW2 = " " + PREFIX_END_DATE_TIME
+            + VALID_END_DATE_TIME_INTERVIEW2;
+
+    public static final String INVALID_TITLE_DESC = " " + PREFIX_TITLE + " "; // can not be blank
+    public static final String INVALID_START_DATE_TIME = " " + PREFIX_START_DATE_TIME + "26/03/2018 20:00";
+    // wrong format
+    public static final String INVALID_END_DATE_TIME = " " + PREFIX_END_DATE_TIME + "26/03/2018"; // missing time
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)

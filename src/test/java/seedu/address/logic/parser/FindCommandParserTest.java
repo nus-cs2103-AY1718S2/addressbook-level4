@@ -16,7 +16,7 @@ import seedu.address.model.skill.SkillContainsKeywordsPredicate;
 public class FindCommandParserTest {
 
     private FindCommandParser parser = new FindCommandParser();
-
+    //@@author KevinCJH
     @Test
     public void parse_emptyArg_throwsParseException() {
         assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));

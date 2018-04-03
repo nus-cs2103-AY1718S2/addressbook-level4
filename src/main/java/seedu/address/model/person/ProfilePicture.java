@@ -9,6 +9,7 @@ import java.util.Date;
 
 import javafx.scene.image.Image;
 
+//@@author trafalgarandre
 /**
  * Represents a ProfilePicture in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.

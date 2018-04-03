@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_JOBS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.testutil.TypicalAppointments.MEETING;
 import static seedu.address.testutil.TypicalJobs.SOFTWARE_ENGINEER;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
@@ -40,7 +41,7 @@ public class ModelManagerTest {
     @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON)
-                .withJob(SOFTWARE_ENGINEER).build();
+                .withJob(SOFTWARE_ENGINEER).withAppointment(MEETING).build();
         AddressBook differentAddressBook = new AddressBook();
         UserPrefs userPrefs = new UserPrefs();
 

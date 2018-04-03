@@ -22,6 +22,8 @@ public class XmlSerializableAddressBook {
     @XmlElement
     private List<XmlAdaptedSkill> skills;
     @XmlElement
+    private List<XmlAdaptedAppointment> appointments;
+    @XmlElement
     private List<XmlAdaptedJob> jobs;
 
     /**
@@ -31,6 +33,7 @@ public class XmlSerializableAddressBook {
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
         skills = new ArrayList<>();
+        appointments = new ArrayList<>();
         jobs = new ArrayList<>();
     }
 
@@ -41,6 +44,8 @@ public class XmlSerializableAddressBook {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         skills.addAll(src.getSkillList().stream().map(XmlAdaptedSkill::new).collect(Collectors.toList()));
+        appointments.addAll(src.getAppointmentList().stream()
+                .map(XmlAdaptedAppointment::new).collect(Collectors.toList()));
         jobs.addAll(src.getJobList().stream().map(XmlAdaptedJob::new).collect(Collectors.toList()));
     }
 
@@ -57,6 +62,9 @@ public class XmlSerializableAddressBook {
         }
         for (XmlAdaptedPerson p : persons) {
             addressBook.addPerson(p.toModelType());
+        }
+        for (XmlAdaptedAppointment a : appointments) {
+            addressBook.addAppointment(a.toModelType());
         }
         for (XmlAdaptedJob j : jobs) {
             addressBook.addJob(j.toModelType());
@@ -75,6 +83,7 @@ public class XmlSerializableAddressBook {
         }
 
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
-        return persons.equals(otherAb.persons) && skills.equals(otherAb.skills) && jobs.equals(otherAb.jobs);
+        return persons.equals(otherAb.persons) && skills.equals(otherAb.skills)
+                && appointments.equals(otherAb.appointments) && jobs.equals(otherAb.jobs);
     }
 }

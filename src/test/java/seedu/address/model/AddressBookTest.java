@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.TypicalAppointments.MEETING;
 import static seedu.address.testutil.TypicalJobs.MARKETING_INTERN;
 import static seedu.address.testutil.TypicalJobs.SOFTWARE_ENGINEER;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -19,6 +20,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.job.Job;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -58,20 +60,9 @@ public class AddressBookTest {
         List<Person> newPersons = Arrays.asList(ALICE, ALICE);
         List<Skill> newSkills = new ArrayList<>(ALICE.getSkills());
         List<Job> newJobs = Arrays.asList(SOFTWARE_ENGINEER, MARKETING_INTERN);
-        AddressBookStub newData = new AddressBookStub(newPersons, newJobs, newSkills);
-
-        thrown.expect(AssertionError.class);
-        addressBook.resetData(newData);
-    }
-
-    @Test
-    public void resetData_withDuplicateJobs_throwsAssertionError() {
-        // Repeat SOFTWARE_ENGINEER twice
-        List<Person> newPersons = Arrays.asList(ALICE, BENSON);
-        List<Skill> newSkills = new ArrayList<>(ALICE.getSkills());
-        List<Job> newJobs = Arrays.asList(SOFTWARE_ENGINEER, SOFTWARE_ENGINEER);
-        AddressBookStub newData = new AddressBookStub(newPersons, newJobs, newSkills);
-
+        List<Appointment> newAppointments = new ArrayList<>();
+        newAppointments.add(MEETING);
+        AddressBookStub newData = new AddressBookStub(newPersons, newJobs, newSkills, newAppointments);
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
     }
@@ -111,11 +102,14 @@ public class AddressBookTest {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Skill> skills = FXCollections.observableArrayList();
         private final ObservableList<Job> jobs = FXCollections.observableArrayList();
+        private final List<Appointment> appointments = new ArrayList<Appointment>();
 
-        AddressBookStub(Collection<Person> persons, Collection<Job> jobs, Collection<? extends Skill> skills) {
+        AddressBookStub(Collection<Person> persons, Collection<Job> jobs, Collection<? extends Skill> skills,
+                        Collection<? extends Appointment> appointments) {
             this.persons.setAll(persons);
             this.skills.setAll(skills);
             this.jobs.setAll(jobs);
+            this.appointments.addAll(appointments);
         }
 
         @Override
@@ -129,6 +123,10 @@ public class AddressBookTest {
         }
 
         @Override
+        public List<Appointment> getAppointmentList() {
+            return appointments;
+        }
+
         public ObservableList<Job> getJobList() {
             return jobs;
         }

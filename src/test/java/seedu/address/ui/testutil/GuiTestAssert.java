@@ -31,9 +31,10 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getCompany(), actualCard.getCompany());
         assertEquals(expectedCard.getName(), actualCard.getName());
         assertEquals(expectedCard.getSkills(), actualCard.getSkills());
-
+        //@@author KevinCJH
         expectedCard.getSkills().forEach(tag ->
             assertEquals(expectedCard.getSkillStyleClasses(tag), actualCard.getSkillStyleClasses(tag)));
+        //@@author
     }
 
     /**
@@ -59,7 +60,9 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getName().fullName, actualCard.getName());
         assertEquals(expectedPerson.getCurrentPosition().value, actualCard.getCurrentPosition());
         assertEquals(expectedPerson.getCompany().value, actualCard.getCompany());
-
+        assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
+        assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
+        assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertTagsEquals(expectedPerson, actualCard);
     }
 
@@ -171,6 +174,7 @@ public class GuiTestAssert {
         expectedTags.forEach(tag -> assertEquals(
                 Arrays.asList(LABEL_DEFAULT_STYLE, getTagColorStyleFor(tag)), actualCard.getSkillStyleClasses(tag)));
     }
+    //@@author
 
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and

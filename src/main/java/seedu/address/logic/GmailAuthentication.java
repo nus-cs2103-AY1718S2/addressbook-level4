@@ -16,18 +16,16 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
-
+//@@author KevinCJH-reused
 /**
- * Creates a Gmail service for user to send email to contact.
+ * Creates a Gmail Authentication for user credential.
  */
-public class GmailService {
-    private static final String APPLICATION_NAME = "contactHeRo";
+public class GmailAuthentication {
 
     /** Directory to store user credentials for this application. */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
-            System.getProperty("user.home"), ".credentials/gmail-contactHeRo");
+            "./src/main/resources/.credentials/gmail-contactHeRo");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
     private static FileDataStoreFactory dataStoreFactory;
@@ -65,7 +63,7 @@ public class GmailService {
     public static Credential authorize() throws IOException {
         // Load client secrets.
         InputStream in =
-                GmailService.class.getResourceAsStream("/client_secret.json");
+                GmailAuthentication.class.getResourceAsStream("/client_secret.json");
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
@@ -82,17 +80,12 @@ public class GmailService {
                 "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
     }
-
-    /**
-     * Build and return an authorized Gmail client service.
-     * @return an authorized Gmail client service
-     * @throws IOException
-     */
-    public static Gmail getGmailService() throws IOException {
-        Credential credential = authorize();
-        return new Gmail.Builder(httpTransport, JSON_FACTORY, credential)
-                .setApplicationName(APPLICATION_NAME)
-                .build();
+    //@@author KevinCJH
+    public static HttpTransport getHttpTransport() {
+        return httpTransport;
     }
 
+    public static JsonFactory getJsonFactory() {
+        return JSON_FACTORY;
+    }
 }

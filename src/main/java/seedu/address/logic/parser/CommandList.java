@@ -3,7 +3,6 @@ package seedu.address.logic.parser;
 
 import java.util.ArrayList;
 
-import seedu.address.logic.commands.CalendarCommand;
 import seedu.address.logic.commands.ClearHistoryCommand;
 import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -11,6 +10,13 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.appointment.AddAppointmentCommand;
+import seedu.address.logic.commands.appointment.CalendarCommand;
+import seedu.address.logic.commands.appointment.DateCommand;
+import seedu.address.logic.commands.appointment.DeleteAppointmentCommand;
+import seedu.address.logic.commands.appointment.MonthCommand;
+import seedu.address.logic.commands.appointment.WeekCommand;
+import seedu.address.logic.commands.appointment.YearCommand;
 import seedu.address.logic.commands.job.JobAddCommand;
 import seedu.address.logic.commands.job.JobDeleteCommand;
 import seedu.address.logic.commands.job.JobMatchCommand;
@@ -36,9 +42,12 @@ public class CommandList {
         //add all commands to the list lexicographically
         commandList.add(AddCommand.COMMAND_WORD);
         commandList.add(JobAddCommand.COMMAND_WORD);
+        commandList.add(AddAppointmentCommand.COMMAND_WORD);
         commandList.add(CalendarCommand.COMMAND_WORD);
         commandList.add(ClearCommand.COMMAND_WORD);
         commandList.add(ClearHistoryCommand.COMMAND_WORD);
+        commandList.add(DateCommand.COMMAND_WORD);
+        commandList.add(DeleteAppointmentCommand.COMMAND_WORD);
         commandList.add(DeleteCommand.COMMAND_WORD);
         commandList.add(JobDeleteCommand.COMMAND_WORD);
         commandList.add(EditCommand.COMMAND_WORD);
@@ -53,6 +62,12 @@ public class CommandList {
         commandList.add(RedoCommand.COMMAND_WORD);
         commandList.add(SelectCommand.COMMAND_WORD);
         commandList.add(UndoCommand.COMMAND_WORD);
+        commandList.add(MonthCommand.COMMAND_WORD);
+        commandList.add(RedoCommand.COMMAND_WORD);
+        commandList.add(SelectCommand.COMMAND_WORD);
+        commandList.add(UndoCommand.COMMAND_WORD);
+        commandList.add(WeekCommand.COMMAND_WORD);
+        commandList.add(YearCommand.COMMAND_WORD);
 
         //sort
         commandList.sort(String::compareToIgnoreCase);
@@ -77,6 +92,9 @@ public class CommandList {
 
         case JobAddCommand.COMMAND_WORD:
             return JobAddCommand.COMMAND_SYNTAX;
+
+        case AddAppointmentCommand.COMMAND_WORD:
+            return AddAppointmentCommand.COMMAND_SYNTAX;
 
         default:
             return matchedCommandWord;

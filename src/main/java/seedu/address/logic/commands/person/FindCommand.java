@@ -15,7 +15,7 @@ import seedu.address.model.person.Person;
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
-
+    //@@author KevinCJH
     public static final String COMMAND_SYNTAX = COMMAND_WORD + " " + PREFIX_NAME;
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose"
@@ -31,6 +31,7 @@ public class FindCommand extends Command {
     public FindCommand(Predicate<Person> predicate) {
         this.predicate = predicate;
     }
+    //@@author
 
     @Override
     public CommandResult execute() {

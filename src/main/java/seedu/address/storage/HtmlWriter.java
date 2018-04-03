@@ -3,6 +3,7 @@ package seedu.address.storage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import seedu.address.model.person.Person;
 import seedu.address.model.person.customer.Customer;
@@ -22,11 +23,14 @@ public class HtmlWriter {
     private final String dueDate;
     private final String runnerAssigned;
 
+    private final List<Customer> customerList;
+
     public HtmlWriter() {
         this.name = null;
         this.amountOwed = null;
         this.dueDate = null;
         this.runnerAssigned = null;
+        this.customerList = null;
     }
 
     public HtmlWriter(Customer customer) {
@@ -34,6 +38,7 @@ public class HtmlWriter {
         this.amountOwed = String.format("%,.2f", customer.getMoneyCurrentlyOwed());
         this.dueDate = customer.getOweDueDate().toString();
         this.runnerAssigned = customer.getRunner().getName().fullName;
+        this.customerList = null;
     }
 
     public HtmlWriter(Runner runner) {
@@ -41,6 +46,7 @@ public class HtmlWriter {
         this.amountOwed = "test";
         this.dueDate = "test";
         this.runnerAssigned = "test";
+        this.customerList = runner.getCustomers();
     }
 
     /**

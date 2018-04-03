@@ -116,6 +116,30 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
     }
 
+    @Test
+    public void populateDeleteCommandTemplate() {
+        //use accelerator
+        getCommandBox().click();
+        getMainMenu().populateDeleteCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        getResultDisplay().click();
+        getMainMenu().populateDeleteCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        getPersonListPanel().click();
+        getMainMenu().populateDeleteCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        getBrowserPanel().click();
+        getMainMenu().populateDeleteCommandUsingAccelerator();
+        assertPopulationFailure();
+
+        //use menu button
+        getMainMenu().populateDeleteCommandUsingMenu();
+        assertPopulationSuccess();
+    }
+
     /**
      * Removes the {@code Person} at the specified {@code index} in {@code model}'s address book.
      * @return the removed person

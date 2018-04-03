@@ -178,7 +178,7 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
     }
 
     @Override
-    public void updatePredictionResult(ArrayList<Double> weights) throws CommandException {
+    public void updatePredictionResult(ArrayList<Double> trueWeights) throws CommandException {
         ObservableList<Person> personList = this.addressBook.getPersonList();
         for (int i = 0; i < personList.size(); i++) {
             if (personList.get(i).getActualSpending().value != 0.0) {
@@ -189,11 +189,11 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
             //else update the person with expected spending
             Person p = personList.get(i);
             logger.info("Prediction results: income coefficient-> " + "\n"
-                    + "Income coefficient: " + weights.get(0) + "\n"
+                    + "Income coefficient: " + trueWeights.get(0) + "\n"
             );
 
 
-            Person updatedPerson = p.updateSelectedField(weights);
+            Person updatedPerson = p.updateSelectedField(trueWeights);
             //update the model here
 
 

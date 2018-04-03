@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 import seedu.address.model.person.Person;
+import seedu.address.model.person.customer.Customer;
 
 /**
  * Writes Person Data to a HTML file
@@ -15,7 +16,24 @@ public class HtmlWriter {
             + "<body style=\"background-color:#383838;\"\n>"
             + "<font face=\"Segoe UI Semibold\" size=\"5\" color=\"white\">\n";
 
-    public HtmlWriter(Person person) {}
+    private final String name;
+    private final String amountOwed;
+    private final String dueDate;
+    private final String runnerAssigned;
+
+    public HtmlWriter() {
+        this.name = null;
+        this.amountOwed = null;
+        this.dueDate = null;
+        this.runnerAssigned = null;
+    }
+
+    public HtmlWriter(Customer customer) {
+        this.name = "wala";
+        this.amountOwed = "wala";
+        this.dueDate = "walala";
+        this.runnerAssigned = "walalalala";
+    }
 
     /**
      * Writes person's data to a HTML file and returns the file location

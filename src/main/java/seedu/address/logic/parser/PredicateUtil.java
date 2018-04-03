@@ -54,15 +54,33 @@ public class PredicateUtil {
         }
 
         for (String keyword : keywords) {
+            keyword = keyword.trim();
+
+            if (keyword.equals("*") || keyword.equals("\"")) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, "One * or \" is not a valid parameter"));
+            }
             String strippedKeyword;
-            if (keyword.startsWith("*") && keyword.endsWith("*")) { // substring
+            if (keyword.startsWith("\"") && keyword.endsWith("\"")) { // substring
                 strippedKeyword = keyword.substring(1, keyword.length() - 1);
+                if (strippedKeyword.isEmpty()) {
+                    throw new ParseException(
+                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, "Substring parameter cannot be empty"));
+                }
                 substringKeywords.add(strippedKeyword);
             } else if (!keyword.startsWith("*") && keyword.endsWith("*")) { // prefix
                 strippedKeyword = keyword.substring(0, keyword.length() - 1);
+                if (strippedKeyword.isEmpty()) {
+                    throw new ParseException(
+                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, "Prefix parameter cannot be empty"));
+                }
                 prefixKeywords.add(strippedKeyword);
             } else if (keyword.startsWith("*") && !keyword.endsWith("*")) { // suffix
                 strippedKeyword = keyword.substring(1, keyword.length());
+                if (strippedKeyword.isEmpty()) {
+                    throw new ParseException(
+                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, "Suffix parameter cannot be empty"));
+                }
                 suffixKeywords.add(strippedKeyword);
             } else {
                 exactKeywords.add(keyword);
@@ -87,7 +105,7 @@ public class PredicateUtil {
             if (prefix.toString().equals("")) {
                 continue;
             }
-            String[] keywords = argMultimap.getValue(prefix).get().split("\\s+");
+            String[] keywords = argMultimap.getValue(prefix).get().split(",");
             ArrayList<String> substringKeywords = new ArrayList<>();
             ArrayList<String> exactKeywords = new ArrayList<>();
             ArrayList<String> prefixKeywords = new ArrayList<>();
@@ -132,8 +150,20 @@ public class PredicateUtil {
             allPredicate.setAddressPredicate(exactKeywords, substringKeywords,
                     prefixKeywords, suffixKeywords);
             break;
+        case "u/":
+            allPredicate.setUniversityPredicate(exactKeywords, substringKeywords,
+                    prefixKeywords, suffixKeywords);
+            break;
         case "m/":
             allPredicate.setMajorPredicate(exactKeywords, substringKeywords,
+                    prefixKeywords, suffixKeywords);
+            break;
+        case "j/":
+            allPredicate.setJobAppliedPredicate(exactKeywords, substringKeywords,
+                    prefixKeywords, suffixKeywords);
+            break;
+        case "c/":
+            allPredicate.setCommentPredicate(exactKeywords, substringKeywords,
                     prefixKeywords, suffixKeywords);
             break;
         default:

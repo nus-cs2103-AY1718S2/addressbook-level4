@@ -8,6 +8,7 @@ import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import com.google.gdata.util.ServiceException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;

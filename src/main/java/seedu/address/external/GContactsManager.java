@@ -1,5 +1,10 @@
 package seedu.address.external;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -10,17 +15,20 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.gdata.client.contacts.ContactsService;
 import com.google.gdata.data.contacts.ContactEntry;
-import com.google.gdata.data.extensions.*;
+import com.google.gdata.data.extensions.Email;
+import com.google.gdata.data.extensions.FullName;
+import com.google.gdata.data.extensions.Name;
+import com.google.gdata.data.extensions.PhoneNumber;
 import com.google.gdata.util.ServiceException;
+
 import seedu.address.external.exceptions.CredentialsException;
+
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.student.Student;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
-
+/**
+ * Constructs a new GContactsManager object to communicate with Google's APIs
+ */
 public class GContactsManager {
     private static final String CLIENT_ID = "126472549776-8cd9bk56sfubm9rkacjivecikppte982.apps.googleusercontent.com";
     private static final String CLIENT_SECRET = "nyBpzm1OjnKNZOd0-kT1uo7W";
@@ -29,30 +37,35 @@ public class GContactsManager {
             JacksonFactory.getDefaultInstance();
 
     /** Global instance of the HTTP transport. */
-    private static HttpTransport HTTP_TRANSPORT;
-
-    private Credential credential;
+    private static HttpTransport httpTransport;
 
     private static final String APPLICATION_NAME = "codeducator/v1.4";
 
-    String[] scopes = new String[]{
-            "https://www.googleapis.com/auth/userinfo.profile",
-            "https://www.googleapis.com/auth/userinfo.email",
-            "https://www.google.com/m8/feeds/"};
-    /** OAuth 2.0 scopes. */
-    private final List<String> SCOPES = Arrays.asList(scopes);
 
+    private static final String[] scopesArray = new String[]{
+        "https://www.googleapis.com/auth/userinfo.profile",
+        "https://www.googleapis.com/auth/userinfo.email",
+        "https://www.google.com/m8/feeds/"};
+    /** OAuth 2.0 scopes. */
+    public final List<String> scopes = Arrays.asList(scopesArray);
     static {
         try {
-            HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+            httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         } catch (Throwable t) {
             t.printStackTrace();
         }
     }
+
+    private Credential credential;
+
     public GContactsManager() {
 
     }
 
+    /**
+     * Login method for user to login to their Google account
+     * @throws CredentialsException
+     */
     public void login() throws CredentialsException {
         if (credential != null) {
             throw new CredentialsException("You are already logged in.");
@@ -60,7 +73,7 @@ public class GContactsManager {
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow =
                 new GoogleAuthorizationCodeFlow.Builder(
-                        HTTP_TRANSPORT, JSON_FACTORY, CLIENT_ID,CLIENT_SECRET, SCOPES)
+                        httpTransport, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, scopes)
                         .setAccessType("offline")
                         .build();
         try {
@@ -72,6 +85,10 @@ public class GContactsManager {
 
     }
 
+    /**
+     * Logout method for the user to logout of their Google account locally
+     * @throws CredentialsException
+     */
     public void logout() throws CredentialsException {
         // Delete credentials from data store directory
         if (credential == null) {
@@ -80,12 +97,18 @@ public class GContactsManager {
         credential = null;
     }
 
+    /**
+     * Converts a Student object to a ContactEntry for insertion
+     * @param student
+     * @return
+     */
     private ContactEntry studentToContactEntry(Student student) {
         ContactEntry contact = new ContactEntry();
 
         Name name = new Name();
-        final String NO_YOMI = null;
-        name.setFullName(new FullName(student.getName().toString(), NO_YOMI));
+        FullName newFullName = new FullName();
+        newFullName.setValue(student.getName().toString());
+        name.setFullName(newFullName);
         contact.setName(name);
 
         PhoneNumber primaryPhoneNumber = new PhoneNumber();
@@ -103,6 +126,12 @@ public class GContactsManager {
         return contact;
     }
 
+    /**
+     * Syncs the Addressbook with the user's Google account's Google Contacts.
+     * @param addressBook
+     * @throws ServiceException
+     * @throws IOException
+     */
     public void synchronize(ReadOnlyAddressBook addressBook)
             throws ServiceException, IOException {
         ContactEntry contact = new ContactEntry();

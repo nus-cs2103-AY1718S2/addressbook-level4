@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.function.Predicate;
 
 import com.google.gdata.util.ServiceException;
+
 import javafx.collections.ObservableList;
 import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.model.lesson.Day;

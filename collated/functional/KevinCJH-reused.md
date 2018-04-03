@@ -1,29 +1,10 @@
-package seedu.address.logic;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.List;
-
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.gmail.Gmail;
-import com.google.api.services.gmail.GmailScopes;
-
+# KevinCJH-reused
+###### \java\seedu\address\logic\GmailAuthentication.java
+``` java
 /**
- * Creates a Gmail service for user to send email to contact.
+ * Creates a Gmail Authentication for user credential.
  */
-public class GmailService {
-    private static final String APPLICATION_NAME = "contactHeRo";
+public class GmailAuthentication {
 
     /** Directory to store user credentials for this application. */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
@@ -65,7 +46,7 @@ public class GmailService {
     public static Credential authorize() throws IOException {
         // Load client secrets.
         InputStream in =
-                GmailService.class.getResourceAsStream("/client_secret.json");
+                GmailAuthentication.class.getResourceAsStream("/client_secret.json");
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
@@ -82,17 +63,4 @@ public class GmailService {
                 "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
     }
-
-    /**
-     * Build and return an authorized Gmail client service.
-     * @return an authorized Gmail client service
-     * @throws IOException
-     */
-    public static Gmail getGmailService() throws IOException {
-        Credential credential = authorize();
-        return new Gmail.Builder(httpTransport, JSON_FACTORY, credential)
-                .setApplicationName(APPLICATION_NAME)
-                .build();
-    }
-
-}
+```

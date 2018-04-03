@@ -490,8 +490,23 @@ diagrams::ModelComponentClassDiagram.pptx[width="650"]
 The `EmailCommand` class will allow user to open an email interface to send email to the chosen contact. `EmailCommand` extends the `Command` class. It takes in an index through the `EmailCommandParser`,
 similar to the implementation of `DeleteCommand` and `DeleteCommandParser`.
 
-The sending of email will be implemented using Gmail API. First, `GoogleAuthorizationCodeFlow` is used to build and request for authorization from user.
+The sending of email will be implemented using the Gmail API.
+
+Firstly, `GoogleAuthorizationCodeFlow` is used to build and request for authorization from user.
 Then it saves the user authorization into `Credential`, which is saved into a local file so that they do not need to repeat the authorization step.
+This authorization is handled in the `GmailAuthentication` class.
+
+Next, a `GmailClient` is created using the `Credential` that was created by `GmailAuthentication`.
+The `GmailClient` class provides all the services that uses the Gmail API.
+
+The `EmailPanel` is the UI for user to draft their email. The UI has 3 inputs, *To*, *Subject* and *Body*. *From* is not needed here as we already have
+the authorised user's email address, which we can retrieve using `GmailClient`.
+
+The `GmailMessage` class will take in the values inputted by the user
+in the UI. These values will be stored in `GmailMessage`
+and packaged into a `MimeMessage` ready to be send out.
+
+Finally, `GmailClient` will send out the `MimeMessage` of `GmailMessage` as an email.
 
 ==== Design consideration
 ===== Aspect: How to send an email

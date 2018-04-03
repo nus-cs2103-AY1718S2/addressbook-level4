@@ -13,8 +13,9 @@ import seedu.address.commons.events.ui.BirthdayListEvent;
 import seedu.address.commons.events.ui.BirthdayNotificationEvent;
 import seedu.address.model.person.Person;
 
+//@@author AzuraAiR
 /**
- * Format full help instructions for every command for display.
+ * Shows either the birthday list or notification of Persons in StardyTogether
  */
 public class BirthdaysCommand extends Command {
 
@@ -57,7 +58,7 @@ public class BirthdaysCommand extends Command {
     }
 
     /**
-     * Helper method to parse the given list into their respective birthdays into a sorted string
+     * Parses the given list into their respective birthdays into a sorted string
      * @param observablelist given list of current addressBook
      * @return String to be displayed
      */
@@ -105,7 +106,7 @@ public class BirthdaysCommand extends Command {
     }
 
     /**
-     * Helper method to parse the given list into their respective birthdays into a sorted string
+     * Parses the given list into their respective birthdays into a sorted string
      * @param observablelist given list of current addressBook
      * @return String to be displayed
      */

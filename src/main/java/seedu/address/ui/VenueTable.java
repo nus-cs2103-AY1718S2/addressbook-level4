@@ -2,10 +2,7 @@ package seedu.address.ui;
 
 import java.util.ArrayList;
 
-import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
@@ -93,11 +90,11 @@ public class VenueTable extends UiPart<Region> {
         for (int i = 0; i < columns.size(); i++) {
             final int j = i;
             columns.get(i).setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(j)));
-           columns.get(i).impl_setReorderable(false);
-           if(j!=0){
-               columns.get(i).setMinWidth(75);
-               columns.get(i).setMaxWidth(200);
-           }
+            columns.get(i).impl_setReorderable(false);
+            if (j != 0) {
+                columns.get(i).setMinWidth(75);
+                columns.get(i).setMaxWidth(200);
+            }
 
         }
     }

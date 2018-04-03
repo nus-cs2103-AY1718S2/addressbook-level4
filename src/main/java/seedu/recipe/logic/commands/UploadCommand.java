@@ -38,11 +38,11 @@ public class UploadCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        EventsCenter.getInstance().post(new UploadRecipesEvent());
         if (CloudStorageUtil.hasAccessToken()) {
             CloudStorageUtil.upload();
             return new CommandResult(MESSAGE_SUCCESS);
         }
+        EventsCenter.getInstance().post(new UploadRecipesEvent());
         return new CommandResult(MESSAGE_ACCESS_TOKEN);
     }
 

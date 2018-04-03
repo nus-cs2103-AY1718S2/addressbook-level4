@@ -13,9 +13,7 @@ import com.dropbox.core.DbxAuthFinish;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.DbxWebAuth;
-import com.dropbox.core.DbxWebAuthNoRedirect;
 import com.dropbox.core.v2.DbxClientV2;
-
 import seedu.recipe.commons.util.FileUtil;
 import seedu.recipe.logic.commands.UploadCommand;
 
@@ -35,6 +33,8 @@ public class CloudStorageUtil {
     private static final String AUTHORIZATION_DOMAIN = "https://www.dropbox.com/1/oauth2/authorize?";
     private static final String AUTHORIZATION_URL = AUTHORIZATION_DOMAIN + "response_type=code&client_id="
                                                     + APP_KEY;
+
+    private static final DbxRequestConfig config = DbxRequestConfig.newBuilder(CLIENT_IDENTIFIER).build();
 
     private static String accessToken = null;
     private static String uploadFilename = null;
@@ -56,24 +56,12 @@ public class CloudStorageUtil {
      *
      * @throws DbxException
      */
-    public static void processAuthorizationCode(String code) {
+    public static void upload() {
         // Ensures access token has been obtained
         requireNonNull(CloudStorageUtil.getAccessToken());
 
-        DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
-        DbxRequestConfig config = DbxRequestConfig.newBuilder(CLIENT_IDENTIFIER).build();
-        DbxWebAuth webAuth = new DbxWebAuth(config, appInfo);
-
         // Create Dropbox client
         DbxClientV2 client = new DbxClientV2(config, CloudStorageUtil.getAccessToken());
-
-        // Converts authorization code to access token
-        try {
-            DbxAuthFinish authFinish = webAuth.finishFromCode(code);
-            accessToken = authFinish.getAccessToken();
-        } catch (DbxException e) {
-            throw new AssertionError(UploadCommand.MESSAGE_FAILURE + " Invalid authorization code");
-        }
 
         // Upload "recipebook.xml" to Dropbox
         try (InputStream in = new FileInputStream(RECIPE_BOOK_FILE)) {
@@ -84,6 +72,25 @@ public class CloudStorageUtil {
         } catch (IOException | DbxException e) {
             throw new AssertionError(UploadCommand.MESSAGE_FAILURE + " Invalid access token.");
         }
+
+    }
+
+    /**
+     * Takes in the authorization code
+     * @param code given by Dropbox after user has allowed access
+     * and converts it into the access token that can be used to upload files
+     */
+    public static void processAuthorizationCode(String code) {
+        // Converts authorization code to access token
+        DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
+        DbxWebAuth webAuth = new DbxWebAuth(config, appInfo);
+        try {
+            DbxAuthFinish authFinish = webAuth.finishFromCode(code);
+            accessToken = authFinish.getAccessToken();
+        } catch (DbxException e) {
+            throw new AssertionError(UploadCommand.MESSAGE_FAILURE + " Invalid authorization code");
+        }
+        upload();
     }
 
     public static void setAccessToken(String token) {

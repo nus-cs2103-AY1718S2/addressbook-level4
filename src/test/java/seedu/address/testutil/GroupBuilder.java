@@ -8,7 +8,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMETABLE_LINK_BOB;
 
-
 import seedu.address.model.group.Group;
 import seedu.address.model.group.Information;
 import seedu.address.model.person.Person;
@@ -46,20 +45,6 @@ public class GroupBuilder {
         return this;
     }
 
-    /**
-     * Sets the {@code Information} of the {@code Group} that we are building.
-     */
-    public GroupBuilder withInformationAndPerson(String information) {
-        this.information = new Information(information);
-        Person personToAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTimeTableLink(VALID_TIMETABLE_LINK_BOB)
-                .withDetail(VALID_DETAIL_BOB).withTags(VALID_TAG_FRIEND).build();
-        try {
-            this.personList.add(personToAdd);
-        } catch (DuplicatePersonException e) {
-        }
-        return this;
-    }
     public Group build() {
         return new Group(information,personList);
     }

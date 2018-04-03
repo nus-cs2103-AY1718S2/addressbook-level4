@@ -38,7 +38,7 @@ Not sure how to install Java? Visit the oracle website link below for more infor
 .  Download the latest `contactHeRo.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for contactHeRo.
 .  Double-click the file to start the app. The user interface should appear in a few seconds as shown below (Refer to figure 1).
-
++
 .contactHeRo on launch
 image::Ui.png[width="790"]
 
@@ -118,16 +118,16 @@ Profile Picture indicates the profile picture's file path
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 cp/Software Engineer cc/Google pp//home/john/Desktop/John.jpg` +
-
++
 On running the above command, you should see the following success message: +
-
- New person added: John Doe Phone: 98765432 Email: johnd@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Tags:
++
+New person added: John Doe Phone: 98765432 Email: johnd@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Tags:
 
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 cp/Student cc/NUS t/Developer`
-
++
 On running the above command, you should see the following success message: +
-
- New person added: Betsy Crowe Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS  Tags: Developer
++
+New person added: Betsy Crowe Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS  Tags: Developer
 
 === Listing all persons : `list`
 
@@ -152,17 +152,17 @@ Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-
++
 On running the above command, you should see the following success message: +
-
- Edited Person: John Doe Phone: 91234567 Email: johndoe@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Tags:
++
+Edited Person: John Doe Phone: 91234567 Email: johndoe@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Tags:
 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
++
 On running the above command, you should see the following success message: +
-
- Edited Person: Betsy Crower Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS Tags:
++
+Edited Person: Betsy Crower Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS Tags:
 
 === Locating persons by name : `find`
 
@@ -202,14 +202,14 @@ Examples:
 * `list` +
 `delete 2` +
 This deletes the 2nd person in contactHeRo and on running the above command, you should see the following success message: +
-
- Deleted Person: John Doe Phone: 98765432 Email: johnd@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Tags:
++
+Deleted Person: John Doe Phone: 98765432 Email: johnd@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Tags:
 
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command and on running the above command, you should see the following success message: +
-
-  Deleted Person: Betsy Crower Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS Tags:
++
+Deleted Person: Betsy Crower Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS Tags:
 
 
 === Viewing the contact details of a person: `select`

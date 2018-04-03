@@ -72,7 +72,7 @@ Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 u/NUS y/2020 m/Computer Science g/4.93 j/Software Tester`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 u/SMU y/2018 m/Information Security g/4.56 j/Web Security Analyst t/Python`
-
+* Resume to be added is specified by the relative path to the jar file. It also must be valid PDF, and smaller than 1MB.
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +

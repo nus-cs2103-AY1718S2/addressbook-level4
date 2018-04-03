@@ -121,11 +121,11 @@ public class AddressBookParser {
             return new BirthdaysCommandParser().parse(arguments);
 
         case RemovePasswordCommand.COMMAND_WORD:
-            return new RemovePasswordCommandParser().parse(arguments)
-              
+            return new RemovePasswordCommandParser().parse(arguments);
+
         case TimeTableCommand.COMMAND_WORD:
             return new TimeTableCommandParser().parse(arguments);
-            
+
         case MapCommand.COMMAND_WORD:
             return new MapCommandParser().parse(arguments);
 

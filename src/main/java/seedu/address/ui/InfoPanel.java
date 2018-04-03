@@ -31,16 +31,12 @@ public class InfoPanel extends UiPart<Region> {
 
     @FXML
     private StackPane browserPlaceholder;
-
     @FXML
     private StackPane birthdayPlaceholder;
-
     @FXML
     private StackPane venuePlaceholder;
-
     @FXML
     private StackPane timetablePlaceholder;
-    
     @FXML
     private StackPane mapsPlaceholder;
 

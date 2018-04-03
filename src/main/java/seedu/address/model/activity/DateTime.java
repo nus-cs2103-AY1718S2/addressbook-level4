@@ -19,8 +19,8 @@ public class DateTime {
             "Date and Time should be in the format of " + DEFAULT_DATETIME_FORMAT;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DEFAULT_DATETIME_FORMAT);
 
-    private String dateTimeString;
-    private LocalDateTime dateTime;
+    private final LocalDateTime dateTime;
+    private final String dateTimeString;
 
     /**
      * Constructs a {@code DateTime}.
@@ -47,29 +47,25 @@ public class DateTime {
         }
     }
 
-    /**
-     * Get the datetime
-     */
-    public LocalDateTime getDateTime() {
+    public LocalDateTime getLocalDateTime() {
         return this.dateTime;
     }
 
-
     @Override
     public String toString() {
-        return dateTimeString;
+        return this.dateTimeString;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DateTime // instanceof handles nulls
-                && this.dateTimeString.equals(((DateTime) other).dateTimeString)); // state check
+                && this.dateTime.equals(((DateTime) other).dateTime)); // state check
     }
 
     @Override
     public int hashCode() {
-        return dateTimeString.hashCode();
+        return dateTime.hashCode();
     }
 
 }

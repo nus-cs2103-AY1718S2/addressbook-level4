@@ -1,6 +1,9 @@
 //@author jasmoon
 package seedu.address.ui;
 
+import static seedu.address.ui.util.DateTimeUtil.getDisplayedEndDateTime;
+import static seedu.address.ui.util.DateTimeUtil.getDisplayedStartDateTime;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -41,8 +44,8 @@ public class EventCard extends UiPart<Region>   {
         this.event = (Event) event;
         id.setText(displayedIndex + ". ");
         name.setText(this.event.getName().fullName);
-        startDateTime.setText(this.event.getStartDateTime().toString());
-        endDateTime.setText(this.event.getEndDateTime().toString());
+        startDateTime.setText(getDisplayedStartDateTime(this.event));
+        endDateTime.setText(getDisplayedEndDateTime(this.event));
         locationEvent.setText(this.event.getLocation().toString());
         remark.setText(this.event.getRemark().value);
         event.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));

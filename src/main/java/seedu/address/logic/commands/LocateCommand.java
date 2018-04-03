@@ -23,6 +23,8 @@ public class LocateCommand extends Command {
             + "Example: " + COMMAND_WORD + " -n alice bob charlie";
 
     public static final String MESSAGE_LOCATE_SUCCESS = "Locate successful";
+    public static final String MESSAGE_LOCATE_SELECT = "More than one person found! " +
+            "Locate the person on top of the list by default.";
 
     private final int target = 0;
     private final int targetOne = 1;
@@ -42,9 +44,12 @@ public class LocateCommand extends Command {
         MainWindow.loadUrl("https://www.google.com.sg/maps/place/"
                 + location.getAddress().toString());
 
+        if (model.getFilteredPersonList().size() > 1) {
+            return new CommandResult(String.format(MESSAGE_LOCATE_SELECT, targetOne));
+        }
+
         EventsCenter.getInstance().post(new LocateRequestEvent(target));
         return new CommandResult(String.format(MESSAGE_LOCATE_SUCCESS, targetOne));
-
     }
     @Override
     public boolean equals(Object other) {

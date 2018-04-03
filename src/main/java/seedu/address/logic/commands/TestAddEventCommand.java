@@ -54,7 +54,7 @@ public class TestAddEventCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 title/test event loca/NUS, Singapore stime/2017-03-19T08:00:00"
             + " etime/2017-03-19T10:00:00 descrip/this is a test event";
 
-    public static final String MESSAGE_SUCCESS = "event added!";
+    public static final String MESSAGE_SUCCESS = "Event added!";
     public static final String MESSAGE_FAILURE = "Unable to add event, please try again later.";
 
 
@@ -206,7 +206,7 @@ public class TestAddEventCommand extends Command {
                 new EventReminder().setMethod("email").setMinutes(24 * 60),
                 new EventReminder().setMethod("popup").setMinutes(10),
         };
-        event.Reminders reminders = new ListEvent.Reminders()
+        Event.Reminders reminders = new Event.Reminders()
                 .setUseDefault(false)
                 .setOverrides(Arrays.asList(reminderOverrides));
         event.setReminders(reminders);*/
@@ -258,7 +258,7 @@ public class TestAddEventCommand extends Command {
         } catch (DuplicateTimetableEntryException e) {
             throw new CommandException("Duplicated event");
         }
-        System.out.printf("event created: %s\n", event.getHtmlLink());
+        System.out.printf("Event created: %s\n", event.getHtmlLink());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

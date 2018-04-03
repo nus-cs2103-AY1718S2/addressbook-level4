@@ -38,7 +38,7 @@ public class DeleteEventCommand extends Command {
             + "TITLE (event tilte)"
             + "Example: " + COMMAND_WORD + " 1 test event";
 
-    public static final String MESSAGE_SUCCESS = "event deleted!";
+    public static final String MESSAGE_SUCCESS = "Event deleted!";
     public static final String MESSAGE_NO_SUCH_EVENT = "There is no such event!";
     public static final String MESSAGE_FAILURE = "Unable to delete event, please try again later.";
 

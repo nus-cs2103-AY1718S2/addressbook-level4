@@ -23,8 +23,8 @@ import seedu.address.model.job.Job;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.skill.Skill;
+import seedu.address.model.skill.UniqueSkillList;
 
 public class AddressBookTest {
 
@@ -36,7 +36,7 @@ public class AddressBookTest {
     @Test
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
-        assertEquals(Collections.emptyList(), addressBook.getTagList());
+        assertEquals(Collections.emptyList(), addressBook.getSkillList());
     }
 
     @Test
@@ -56,9 +56,9 @@ public class AddressBookTest {
     public void resetData_withDuplicatePersons_throwsAssertionError() {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(ALICE, ALICE);
-        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
+        List<Skill> newSkills = new ArrayList<>(ALICE.getSkills());
         List<Job> newJobs = Arrays.asList(SOFTWARE_ENGINEER, MARKETING_INTERN);
-        AddressBookStub newData = new AddressBookStub(newPersons, newJobs, newTags);
+        AddressBookStub newData = new AddressBookStub(newPersons, newJobs, newSkills);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -68,9 +68,9 @@ public class AddressBookTest {
     public void resetData_withDuplicateJobs_throwsAssertionError() {
         // Repeat SOFTWARE_ENGINEER twice
         List<Person> newPersons = Arrays.asList(ALICE, BENSON);
-        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
+        List<Skill> newSkills = new ArrayList<>(ALICE.getSkills());
         List<Job> newJobs = Arrays.asList(SOFTWARE_ENGINEER, SOFTWARE_ENGINEER);
-        AddressBookStub newData = new AddressBookStub(newPersons, newJobs, newTags);
+        AddressBookStub newData = new AddressBookStub(newPersons, newJobs, newSkills);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -78,12 +78,12 @@ public class AddressBookTest {
 
     @Test
     public void removeTag_withValidAddressBook()
-            throws DuplicatePersonException, PersonNotFoundException, UniqueTagList.DuplicateTagException {
+            throws DuplicatePersonException, PersonNotFoundException, UniqueSkillList.DuplicateSkillException {
         addressBook.addPerson(BENSON);
-        List<Tag> tagList = new ArrayList<Tag>();
-        tagList.add(new Tag("owesMoney"));
-        addressBook.removeTag(new Tag("friends"));
-        assertEquals(addressBook.getTagList(), tagList);
+        List<Skill> skillList = new ArrayList<Skill>();
+        skillList.add(new Skill("owesMoney"));
+        addressBook.removeSkill(new Skill("friends"));
+        assertEquals(addressBook.getSkillList(), skillList);
     }
 
     @Test
@@ -101,20 +101,20 @@ public class AddressBookTest {
     @Test
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        addressBook.getTagList().remove(0);
+        addressBook.getSkillList().remove(0);
     }
 
     /**
-     * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
+     * A stub ReadOnlyAddressBook whose persons and skills lists can violate interface constraints.
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
-        private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final ObservableList<Skill> skills = FXCollections.observableArrayList();
         private final ObservableList<Job> jobs = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Person> persons, Collection<Job> jobs, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<Person> persons, Collection<Job> jobs, Collection<? extends Skill> skills) {
             this.persons.setAll(persons);
-            this.tags.setAll(tags);
+            this.skills.setAll(skills);
             this.jobs.setAll(jobs);
         }
 
@@ -124,8 +124,8 @@ public class AddressBookTest {
         }
 
         @Override
-        public ObservableList<Tag> getTagList() {
-            return tags;
+        public ObservableList<Skill> getSkillList() {
+            return skills;
         }
 
         @Override

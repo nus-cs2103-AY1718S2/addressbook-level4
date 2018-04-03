@@ -65,6 +65,6 @@
         <company>NTU</company>
         <profilePicture>./src/test/data/images/george.jpeg</profilePicture>
     </persons>
-    <tags>friends</tags>
-    <tags>owesMoney</tags>
+    <skills>friends</skills>
+    <skills>owesMoney</skills>
 </addressbook>

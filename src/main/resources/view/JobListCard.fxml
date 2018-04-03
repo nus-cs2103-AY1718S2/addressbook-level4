@@ -31,7 +31,7 @@
                 </Label>
                 <Label fx:id="position" styleClass="cell_big_label" text="\$position" />
             </HBox>
-            <FlowPane fx:id="tags" />
+            <FlowPane fx:id="skills" />
          <HBox>
             <children>
                <ImageView fitHeight="25.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">

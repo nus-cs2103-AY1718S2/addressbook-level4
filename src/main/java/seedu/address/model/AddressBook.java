@@ -19,8 +19,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.skill.Skill;
+import seedu.address.model.skill.UniqueSkillList;
 
 /**
  * Wraps all data at the address-book level
@@ -29,7 +29,7 @@ import seedu.address.model.tag.UniqueTagList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
-    private final UniqueTagList tags;
+    private final UniqueSkillList skills;
     private final UniqueJobList jobs;
 
     /*
@@ -41,14 +41,14 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniquePersonList();
-        tags = new UniqueTagList();
+        skills = new UniqueSkillList();
         jobs = new UniqueJobList();
     }
 
     public AddressBook() {}
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an AddressBook using the Persons, Jobs and Skills in the {@code toBeCopied}
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -61,8 +61,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
-    public void setTags(Set<Tag> tags) {
-        this.tags.setTags(tags);
+    public void setSkills(Set<Skill> skills) {
+        this.skills.setSkills(skills);
     }
 
     public void setJobs(List<Job> jobs) throws DuplicateJobException {
@@ -74,12 +74,12 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
-        setTags(new HashSet<>(newData.getTagList()));
+        setSkills(new HashSet<>(newData.getSkillList()));
         List<Person> syncedPersonList = newData.getPersonList().stream()
-                .map(this::syncPersonWithMasterTagList)
+                .map(this::syncPersonWithMasterSkillList)
                 .collect(Collectors.toList());
         List<Job> syncedJobList = newData.getJobList().stream()
-                .map(this::syncJobWithMasterTagList)
+                .map(this::syncJobWithMasterSkillList)
                 .collect(Collectors.toList());
         try {
             setPersons(syncedPersonList);
@@ -98,60 +98,60 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Adds a person to the address book.
-     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * Also checks the new person's skills and updates {@link #skills} with any new skills found,
+     * and updates the Skill objects in the person to point to those in {@link #skills}.
      *
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
     public void addPerson(Person p) throws DuplicatePersonException {
-        Person person = syncPersonWithMasterTagList(p);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
+        Person person = syncPersonWithMasterSkillList(p);
+        // TODO: the skills master list will be updated even though the below line fails.
+        // This can cause the skills master list to have additional skills that are not tagged to any person
         // in the person list.
         persons.add(person);
     }
 
     /**
      * Replaces the given person {@code target} in the list with {@code editedPerson}.
-     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPerson}.
+     * {@code AddressBook}'s skill list will be updated with the skills of {@code editedPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
      *      another existing person in the list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      *
-     * @see #syncPersonWithMasterTagList(Person)
+     * @see #syncPersonWithMasterSkillList(Person)
      */
     public void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireNonNull(editedPerson);
 
-        Person syncedEditedPerson = syncPersonWithMasterTagList(editedPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
+        Person syncedEditedPerson = syncPersonWithMasterSkillList(editedPerson);
+        // TODO: the skills master list will be updated even though the below line fails.
+        // This can cause the skills master list to have additional skills that are not tagged to any person
         // in the person list.
         persons.setPerson(target, syncedEditedPerson);
     }
 
     /**
-     *  Updates the master tag list to include tags in {@code person} that are not in the list.
-     *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
+     *  Updates the master skill list to include skills in {@code person} that are not in the list.
+     *  @return a copy of this {@code person} such that every skill in this person points to a Skill object in the master
      *  list.
      */
-    private Person syncPersonWithMasterTagList(Person person) {
-        final UniqueTagList personTags = new UniqueTagList(person.getTags());
-        tags.mergeFrom(personTags);
+    private Person syncPersonWithMasterSkillList(Person person) {
+        final UniqueSkillList personSkills = new UniqueSkillList(person.getSkills());
+        skills.mergeFrom(personSkills);
 
-        // Create map with values = tag object references in the master list
-        // used for checking person tag references
-        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
-        tags.forEach(tag -> masterTagObjects.put(tag, tag));
+        // Create map with values = skill object references in the master list
+        // used for checking person skill references
+        final Map<Skill, Skill> masterSkillObjects = new HashMap<>();
+        skills.forEach(skill -> masterSkillObjects.put(skill, skill));
 
-        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
-        final Set<Tag> correctTagReferences = new HashSet<>();
-        personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        // Rebuild the list of person skills to point to the relevant skills in the master skill list.
+        final Set<Skill> correctSkillReferences = new HashSet<>();
+        personSkills.forEach(skill -> correctSkillReferences.add(masterSkillObjects.get(skill)));
         return new Person(
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
-                person.getCurrentPosition(), person.getCompany(), person.getProfilePicture(), correctTagReferences);
+                person.getCurrentPosition(), person.getCompany(), person.getProfilePicture(), correctSkillReferences);
     }
 
     /**
@@ -166,51 +166,51 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    //// tag-level operations
+    //// skill-level operations
 
-    public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
-        tags.add(t);
+    public void addSkill(Skill t) throws UniqueSkillList.DuplicateSkillException {
+        skills.add(t);
     }
 
     /**
-     * Remove tag {@code t} from everyone in the Addressbook
-     * @throws UniqueTagList.DuplicateTagException
+     * Remove skill {@code t} from everyone in the Addressbook
+     * @throws UniqueSkillList.DuplicateSkillException
      * @throws PersonNotFoundException
      * @throws DuplicatePersonException
      */
-    public void removeTag(Tag t)
-            throws UniqueTagList.DuplicateTagException, PersonNotFoundException, DuplicatePersonException {
+    public void removeSkill(Skill t)
+            throws UniqueSkillList.DuplicateSkillException, PersonNotFoundException, DuplicatePersonException {
         for (Person person: persons) {
 
-            // cannot remove tag from initTagSet since initTagSet is unmodifiableSet
-            // create new Tag Set manually
-            Set<Tag> initTagSet = person.getTags();
-            UniqueTagList afterRemovedTagSet = new UniqueTagList();
-            for (Tag tag: initTagSet) {
-                if (!tag.equals(t)) {
-                    afterRemovedTagSet.add(tag);
+            // cannot remove skill from initSkillSet since initSkillSet is unmodifiableSet
+            // create new Skill Set manually
+            Set<Skill> initSkillSet = person.getSkills();
+            UniqueSkillList afterRemovedSkillSet = new UniqueSkillList();
+            for (Skill skill : initSkillSet) {
+                if (!skill.equals(t)) {
+                    afterRemovedSkillSet.add(skill);
                 }
             }
             updatePerson(person, new Person(person.getName(),
                     person.getPhone(), person.getEmail(), person.getAddress(), person.getCurrentPosition(),
-                    person.getCompany(), person.getProfilePicture(), afterRemovedTagSet.toSet()));
+                    person.getCompany(), person.getProfilePicture(), afterRemovedSkillSet.toSet()));
         }
-        tags.remove(t);
+        skills.remove(t);
     }
 
     //// job-level operations
 
     /**
      * Adds a job to the address book.
-     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * Also checks the new person's skills and updates {@link #skills} with any new skills found,
+     * and updates the Skill objects in the person to point to those in {@link #skills}.
      *
      * @throws DuplicateJobException if an equivalent job already exists.
      */
     public void addJob(Job j) throws DuplicateJobException {
-        Job job = syncJobWithMasterTagList(j);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
+        Job job = syncJobWithMasterSkillList(j);
+        // TODO: the skills master list will be updated even though the below line fails.
+        // This can cause the skills master list to have additional skills that are not tagged to any person
         // in the person list.
         jobs.add(job);
     }
@@ -228,24 +228,24 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     *  Updates the master tag list to include tags in {@code job} that are not in the list.
+     *  Updates the master skill list to include skills in {@code job} that are not in the list.
      *  @return a copy of this {@code job} such that every job in this person points to a Job object in the master
      *  list.
      */
-    private Job syncJobWithMasterTagList(Job job) {
-        final UniqueTagList jobTags = new UniqueTagList(job.getTags());
-        tags.mergeFrom(jobTags);
+    private Job syncJobWithMasterSkillList(Job job) {
+        final UniqueSkillList jobSkills = new UniqueSkillList(job.getSkills());
+        skills.mergeFrom(jobSkills);
 
-        // Create map with values = tag object references in the master list
-        // used for checking job tag references
-        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
-        tags.forEach(tag -> masterTagObjects.put(tag, tag));
+        // Create map with values = skill object references in the master list
+        // used for checking job skill references
+        final Map<Skill, Skill> masterSkillObjects = new HashMap<>();
+        skills.forEach(skill -> masterSkillObjects.put(skill, skill));
 
-        // Rebuild the list of job tags to point to the relevant tags in the master tag list.
-        final Set<Tag> correctTagReferences = new HashSet<>();
-        jobTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        // Rebuild the list of job skills to point to the relevant skills in the master skill list.
+        final Set<Skill> correctSkillReferences = new HashSet<>();
+        jobSkills.forEach(skill -> correctSkillReferences.add(masterSkillObjects.get(skill)));
         return new Job(
-                job.getPosition(), job.getTeam(), job.getLocation(), job.getNumberOfPositions(), correctTagReferences);
+                job.getPosition(), job.getTeam(), job.getLocation(), job.getNumberOfPositions(), correctSkillReferences);
     }
 
     /// util methods
@@ -253,7 +253,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + jobs.asObservableList().size() + " jobs, "
-                + tags.asObservableList().size() +  " tags";
+                + skills.asObservableList().size() +  " skills";
         // TODO: refine later
     }
 
@@ -263,8 +263,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<Tag> getTagList() {
-        return tags.asObservableList();
+    public ObservableList<Skill> getSkillList() {
+        return skills.asObservableList();
     }
 
     @Override
@@ -277,13 +277,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags)
+                && this.skills.equalsOrderInsensitive(((AddressBook) other).skills)
                 && this.jobs.equals(((AddressBook) other).jobs));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags, jobs);
+        return Objects.hash(persons, skills, jobs);
     }
 }

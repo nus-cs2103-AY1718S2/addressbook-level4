@@ -30,8 +30,8 @@ public class XmlAdaptedJobTest {
     private static final String VALID_TEAM = MARKETING_INTERN.getTeam().toString();
     private static final String VALID_LOCATION = MARKETING_INTERN.getLocation().toString();
     private static final String VALID_NUMBER_OF_POSITIONS = MARKETING_INTERN.getNumberOfPositions().toString();
-    private static final List<XmlAdaptedTag> VALID_TAGS = MARKETING_INTERN.getTags().stream()
-            .map(XmlAdaptedTag::new)
+    private static final List<XmlAdaptedSkill> VALID_TAGS = MARKETING_INTERN.getSkills().stream()
+            .map(XmlAdaptedSkill::new)
             .collect(Collectors.toList());
 
     @Test
@@ -106,7 +106,7 @@ public class XmlAdaptedJobTest {
 
     @Test
     public void toModelType_emptyTags_throwsIllegalValueException() {
-        List<XmlAdaptedTag> emptyTags = new ArrayList<>();
+        List<XmlAdaptedSkill> emptyTags = new ArrayList<>();
         XmlAdaptedJob job =
                 new XmlAdaptedJob(VALID_POSITION, VALID_TEAM, VALID_LOCATION, VALID_NUMBER_OF_POSITIONS, emptyTags);
         Assert.assertThrows(IllegalValueException.class, job::toModelType);
@@ -114,8 +114,8 @@ public class XmlAdaptedJobTest {
 
     @Test
     public void toModelType_invalidTags_throwsIllegalValueException() {
-        List<XmlAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
-        invalidTags.add(new XmlAdaptedTag(INVALID_TAG));
+        List<XmlAdaptedSkill> invalidTags = new ArrayList<>(VALID_TAGS);
+        invalidTags.add(new XmlAdaptedSkill(INVALID_TAG));
         XmlAdaptedJob job =
                 new XmlAdaptedJob(VALID_POSITION, VALID_TEAM, VALID_LOCATION, VALID_NUMBER_OF_POSITIONS, invalidTags);
         Assert.assertThrows(IllegalValueException.class, job::toModelType);

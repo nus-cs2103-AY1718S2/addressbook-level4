@@ -15,7 +15,7 @@ import seedu.address.model.job.Location;
 import seedu.address.model.job.NumberOfPositions;
 import seedu.address.model.job.Position;
 import seedu.address.model.job.Team;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.skill.Skill;
 
 /**
  * JAXB-friendly version of the Job.
@@ -33,7 +33,7 @@ public class XmlAdaptedJob {
     @XmlElement(required = true)
     private String numberOfPositions;
     @XmlElement(required = true)
-    private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    private List<XmlAdaptedSkill> tagged = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedJob.
@@ -45,7 +45,7 @@ public class XmlAdaptedJob {
      * Constructs an {@code XmlAdaptedJob} with the given job details.
      */
     public XmlAdaptedJob(String position, String team, String location, String numberOfPositions,
-                         List<XmlAdaptedTag> tagged) {
+                         List<XmlAdaptedSkill> tagged) {
         this.position = position;
         this.team = team;
         this.location = location;
@@ -65,8 +65,8 @@ public class XmlAdaptedJob {
         numberOfPositions = source.getNumberOfPositions().value;
 
         tagged = new ArrayList<>();
-        for (Tag tag : source.getTags()) {
-            tagged.add(new XmlAdaptedTag(tag));
+        for (Skill skill : source.getSkills()) {
+            tagged.add(new XmlAdaptedSkill(skill));
         }
     }
 
@@ -76,9 +76,9 @@ public class XmlAdaptedJob {
      * @throws IllegalValueException if there were any data constraints violated in the adapted job
      */
     public Job toModelType() throws IllegalValueException {
-        final List<Tag> jobTags = new ArrayList<>();
-        for (XmlAdaptedTag tag : tagged) {
-            jobTags.add(tag.toModelType());
+        final List<Skill> jobSkills = new ArrayList<>();
+        for (XmlAdaptedSkill tag : tagged) {
+            jobSkills.add(tag.toModelType());
         }
 
         if (this.position == null) {
@@ -118,11 +118,11 @@ public class XmlAdaptedJob {
 
         if (this.tagged.size() == 0) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Tag.class.getSimpleName()));
+                    Skill.class.getSimpleName()));
         }
-        final Set<Tag> tags = new HashSet<>(jobTags);
+        final Set<Skill> skills = new HashSet<>(jobSkills);
 
-        return new Job(position, team, location, numberOfPositions, tags);
+        return new Job(position, team, location, numberOfPositions, skills);
     }
 
     @Override

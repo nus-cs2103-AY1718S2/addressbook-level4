@@ -17,7 +17,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ProfilePicture;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.skill.Skill;
 
 /**
  * JAXB-friendly version of the Person.
@@ -42,7 +42,7 @@ public class XmlAdaptedPerson {
     private String profilePicture;
 
     @XmlElement
-    private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    private List<XmlAdaptedSkill> tagged = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedJob.
@@ -54,7 +54,7 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedJob} with the given person details.
      */
     public XmlAdaptedPerson(String name, String phone, String email, String address, String currentPosition,
-                            String company, String profilePicture, List<XmlAdaptedTag> tagged) {
+                            String company, String profilePicture, List<XmlAdaptedSkill> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -82,8 +82,8 @@ public class XmlAdaptedPerson {
         profilePicture = source.getProfilePicture().filePath;
 
         tagged = new ArrayList<>();
-        for (Tag tag : source.getTags()) {
-            tagged.add(new XmlAdaptedTag(tag));
+        for (Skill skill : source.getSkills()) {
+            tagged.add(new XmlAdaptedSkill(skill));
         }
     }
 
@@ -93,9 +93,9 @@ public class XmlAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Person toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (XmlAdaptedTag tag : tagged) {
-            personTags.add(tag.toModelType());
+        final List<Skill> personSkills = new ArrayList<>();
+        for (XmlAdaptedSkill tag : tagged) {
+            personSkills.add(tag.toModelType());
         }
 
         if (this.name == null) {
@@ -157,8 +157,8 @@ public class XmlAdaptedPerson {
             }
         }
         final ProfilePicture profilePicture = new ProfilePicture(this.profilePicture);
-        final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, currentPosition, company, profilePicture, tags);
+        final Set<Skill> skills = new HashSet<>(personSkills);
+        return new Person(name, phone, email, address, currentPosition, company, profilePicture, skills);
     }
 
     @Override

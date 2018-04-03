@@ -19,7 +19,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.person.DeleteCommand;
 import seedu.address.logic.commands.person.FindCommand;
 import seedu.address.model.Model;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.skill.Skill;
 
 public class FindCommandSystemTest extends AddressBookSystemTest {
 
@@ -126,9 +126,9 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find tags of person in address book -> 0 persons found */
-        List<Tag> tags = new ArrayList<>(DANIEL.getTags());
-        command = FindCommand.COMMAND_WORD + " n/" + tags.get(0).tagName;
+        /* Case: find skills of person in address book -> 0 persons found */
+        List<Skill> skills = new ArrayList<>(DANIEL.getSkills());
+        command = FindCommand.COMMAND_WORD + " n/" + skills.get(0).skillName;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 

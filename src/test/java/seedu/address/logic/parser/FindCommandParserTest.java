@@ -11,7 +11,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.person.FindCommand;
 import seedu.address.logic.parser.person.FindCommandParser;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.tag.TagContainsKeywordsPredicate;
+import seedu.address.model.skill.SkillContainsKeywordsPredicate;
 
 public class FindCommandParserTest {
 
@@ -36,7 +36,7 @@ public class FindCommandParserTest {
 
         // no leading and trailing whitespaces
         FindCommand expectedFindTagCommand =
-                new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList("developer", "accountant")));
+                new FindCommand(new SkillContainsKeywordsPredicate(Arrays.asList("developer", "accountant")));
         assertParseSuccess(parser, " s/developer accountant", expectedFindTagCommand);
 
         // multiple whitespaces between keywords

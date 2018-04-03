@@ -16,7 +16,7 @@ public class JobCard extends UiPart<Region> {
 
     private static final String FXML = "JobListCard.fxml";
 
-    private static final String[] TAG_COLOR_STYLES =
+    private static final String[] SKILL_COLOR_STYLES =
         { "teal", "red", "green", "blue", "orange", "brown",
             "yellow", "pink", "lightgreen", "grey", "purple" };
 
@@ -43,7 +43,7 @@ public class JobCard extends UiPart<Region> {
     @FXML
     private Label numberOfPositions;
     @FXML
-    private FlowPane tags;
+    private FlowPane skills;
 
     public JobCard(Job job, int displayedIndex) {
         super(FXML);
@@ -53,27 +53,27 @@ public class JobCard extends UiPart<Region> {
         team.setText(job.getTeam().value);
         jobLocation.setText(job.getLocation().value);
         numberOfPositions.setText("Positions: " + job.getNumberOfPositions().value);
-        initTags(job);
+        initSkills(job);
     }
 
     /**
-     * Creates the tag labels for {@code job}.
+     * Creates the skill labels for {@code job}.
      */
-    private void initTags(Job job) {
-        job.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.getStyleClass().add(getTagColorStyleFor(tag.tagName));
-            tags.getChildren().add(tagLabel);
+    private void initSkills(Job job) {
+        job.getSkills().forEach(skill -> {
+            Label skillLabel = new Label(skill.skillName);
+            skillLabel.getStyleClass().add(getSkillColorStyleFor(skill.skillName));
+            skills.getChildren().add(skillLabel);
         });
     }
 
     /**
-     * Returns the color style for {@code tagName}'s label.
+     * Returns the color style for {@code skillName}'s label.
      */
-    private String getTagColorStyleFor(String tagName) {
-        // we use the hash code of the tag name to generate a random color, so that the color remain consistent
-        // between different runs of the program while still making it random enough between tags.
-        return TAG_COLOR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOR_STYLES.length];
+    private String getSkillColorStyleFor(String skillName) {
+        // we use the hash code of the skill name to generate a random color, so that the color remain consistent
+        // between different runs of the program while still making it random enough between skills.
+        return SKILL_COLOR_STYLES[Math.abs(skillName.hashCode()) % SKILL_COLOR_STYLES.length];
     }
 
     @Override

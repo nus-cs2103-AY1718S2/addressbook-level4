@@ -15,7 +15,7 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static final String[] TAG_COLOR_STYLES =
+    private static final String[] SKILL_COLOR_STYLES =
         { "teal", "red", "green", "blue", "orange", "brown",
             "yellow", "pink", "lightgreen", "grey", "purple" };
 
@@ -40,7 +40,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label company;
     @FXML
-    private FlowPane tags;
+    private FlowPane skills;
     @FXML
     private ImageView imageView;
 
@@ -53,28 +53,28 @@ public class PersonCard extends UiPart<Region> {
         currentPosition.setText(person.getCurrentPosition().value);
         company.setText(person.getCompany().value);
         imageView.setImage(person.getProfilePicture().getImage());
-        initTags(person);
+        initSkills(person);
     }
 
     //@@author KevinCJH
     /**
-     * Returns the color style for {@code tagName}'s label.
+     * Returns the color style for {@code skillName}'s label.
      */
-    private String getTagColorStyleFor(String tagName) {
-        // we use the hash code of the tag name to generate a random color, so that the color remain consistent
-        // between different runs of the program while still making it random enough between tags.
-        return TAG_COLOR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOR_STYLES.length];
+    private String getSkillColorStyleFor(String skillName) {
+        // we use the hash code of the skill name to generate a random color, so that the color remain consistent
+        // between different runs of the program while still making it random enough between skills.
+        return SKILL_COLOR_STYLES[Math.abs(skillName.hashCode()) % SKILL_COLOR_STYLES.length];
     }
 
     //@@author
     /**
-     * Creates the tag labels for {@code person}.
+     * Creates the skill labels for {@code person}.
      */
-    private void initTags(Person person) {
-        person.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.getStyleClass().add(getTagColorStyleFor(tag.tagName));
-            tags.getChildren().add(tagLabel);
+    private void initSkills(Person person) {
+        person.getSkills().forEach(skill -> {
+            Label skillLabel = new Label(skill.skillName);
+            skillLabel.getStyleClass().add(getSkillColorStyleFor(skill.skillName));
+            skills.getChildren().add(skillLabel);
         });
     }
 

@@ -55,19 +55,19 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return companyLabel.getText();
     }
 
-    public List<String> getTags() {
+    public List<String> getSkills() {
         return tagLabels
                 .stream()
                 .map(Label::getText)
                 .collect(Collectors.toList());
     }
 
-    public List<String> getTagStyleClasses(String tag) {
+    public List<String> getSkillStyleClasses(String tag) {
         return tagLabels
                 .stream()
                 .filter(label -> label.getText().equals(tag))
                 .map(Label::getStyleClass)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No such tag."));
+                .orElseThrow(() -> new IllegalArgumentException("No such skill."));
     }
 }

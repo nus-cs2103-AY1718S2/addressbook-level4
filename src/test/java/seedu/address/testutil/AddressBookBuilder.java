@@ -6,7 +6,7 @@ import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.skill.Skill;
 
 /**
  * A utility class to help with building Addressbook objects.
@@ -50,13 +50,13 @@ public class AddressBookBuilder {
     }
 
     /**
-     * Parses {@code tagName} into a {@code Tag} and adds it to the {@code AddressBook} that we are building.
+     * Parses {@code skillName} into a {@code Skill} and adds it to the {@code AddressBook} that we are building.
      */
     public AddressBookBuilder withTag(String tagName) {
         try {
-            addressBook.addTag(new Tag(tagName));
+            addressBook.addSkill(new Skill(tagName));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("tagName is expected to be valid.");
+            throw new IllegalArgumentException("skillName is expected to be valid.");
         }
         return this;
     }

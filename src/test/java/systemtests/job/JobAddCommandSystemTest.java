@@ -5,7 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_LOCATION_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NUMBER_OF_POSITIONS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_POSITION_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_SKILL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TEAM_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.LOCATION_DESC_DEVELOPER_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.LOCATION_DESC_INTERN;
@@ -13,9 +13,9 @@ import static seedu.address.logic.commands.CommandTestUtil.NUMBER_OF_POSITIONS_D
 import static seedu.address.logic.commands.CommandTestUtil.NUMBER_OF_POSITIONS_DESC_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.POSITION_DESC_DEVELOPER_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.POSITION_DESC_INTERN;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_ALGORITHMS;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_EXCEL;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_JAVASCRIPT;
+import static seedu.address.logic.commands.CommandTestUtil.SKILL_DESC_ALGORITHMS;
+import static seedu.address.logic.commands.CommandTestUtil.SKILL_DESC_EXCEL;
+import static seedu.address.logic.commands.CommandTestUtil.SKILL_DESC_JAVASCRIPT;
 import static seedu.address.logic.commands.CommandTestUtil.TEAM_DESC_DEVELOPER_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.TEAM_DESC_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_DEVELOPER_INTERN;
@@ -24,8 +24,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NUMBER_OF_POSIT
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NUMBER_OF_POSITIONS_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_DEVELOPER_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_INTERN;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_ALGORITHMS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_JAVASCRIPT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SKILL_ALGORITHMS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SKILL_JAVASCRIPT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TEAM_DEVELOPER_INTERN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TEAM_INTERN;
 import static seedu.address.testutil.TypicalJobs.DEVELOPER_INTERN;
@@ -43,7 +43,7 @@ import seedu.address.model.job.NumberOfPositions;
 import seedu.address.model.job.Position;
 import seedu.address.model.job.Team;
 import seedu.address.model.job.exceptions.DuplicateJobException;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.skill.Skill;
 import seedu.address.testutil.JobBuilder;
 import seedu.address.testutil.JobUtil;
 import systemtests.AddressBookSystemTest;
@@ -62,7 +62,7 @@ public class JobAddCommandSystemTest extends AddressBookSystemTest {
         Job toAdd = DEVELOPER_INTERN;
         String command = "   " + JobAddCommand.COMMAND_WORD + "  " + POSITION_DESC_DEVELOPER_INTERN + " "
                 + TEAM_DESC_DEVELOPER_INTERN + " " + LOCATION_DESC_DEVELOPER_INTERN + " "
-                + NUMBER_OF_POSITIONS_DESC_DEVELOPER_INTERN + " " + TAG_DESC_JAVASCRIPT + " " + TAG_DESC_ALGORITHMS;
+                + NUMBER_OF_POSITIONS_DESC_DEVELOPER_INTERN + " " + SKILL_DESC_JAVASCRIPT + " " + SKILL_DESC_ALGORITHMS;
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Software Engineer to the list -> Software Engineer deleted */
@@ -80,38 +80,38 @@ public class JobAddCommandSystemTest extends AddressBookSystemTest {
         toAdd = new JobBuilder().withPosition(VALID_POSITION_INTERN).withTeam(VALID_TEAM_DEVELOPER_INTERN)
                 .withLocation(VALID_LOCATION_DEVELOPER_INTERN)
                 .withNumberOfPositions(VALID_NUMBER_OF_POSITIONS_DEVELOPER_INTERN)
-                .withTags(VALID_TAG_JAVASCRIPT, VALID_TAG_ALGORITHMS).build();
+                .withSkills(VALID_SKILL_JAVASCRIPT, VALID_SKILL_ALGORITHMS).build();
         command = JobAddCommand.COMMAND_WORD + POSITION_DESC_INTERN + TEAM_DESC_DEVELOPER_INTERN
                 + LOCATION_DESC_DEVELOPER_INTERN + NUMBER_OF_POSITIONS_DESC_DEVELOPER_INTERN
-                + TAG_DESC_JAVASCRIPT + TAG_DESC_ALGORITHMS;
+                + SKILL_DESC_JAVASCRIPT + SKILL_DESC_ALGORITHMS;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a job with all fields same as another job in the address book except team -> added */
         toAdd = new JobBuilder().withPosition(VALID_POSITION_DEVELOPER_INTERN).withTeam(VALID_TEAM_INTERN)
                 .withLocation(VALID_LOCATION_DEVELOPER_INTERN)
                 .withNumberOfPositions(VALID_NUMBER_OF_POSITIONS_DEVELOPER_INTERN)
-                .withTags(VALID_TAG_JAVASCRIPT, VALID_TAG_ALGORITHMS).build();
+                .withSkills(VALID_SKILL_JAVASCRIPT, VALID_SKILL_ALGORITHMS).build();
         command = JobAddCommand.COMMAND_WORD + POSITION_DESC_DEVELOPER_INTERN + TEAM_DESC_INTERN
                 + LOCATION_DESC_DEVELOPER_INTERN + NUMBER_OF_POSITIONS_DESC_DEVELOPER_INTERN
-                + TAG_DESC_JAVASCRIPT + TAG_DESC_ALGORITHMS;
+                + SKILL_DESC_JAVASCRIPT + SKILL_DESC_ALGORITHMS;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a job with all fields same as another job in the address book except location -> added */
         toAdd = new JobBuilder().withPosition(VALID_POSITION_DEVELOPER_INTERN).withTeam(VALID_TEAM_DEVELOPER_INTERN)
                 .withLocation(VALID_LOCATION_INTERN).withNumberOfPositions(VALID_NUMBER_OF_POSITIONS_DEVELOPER_INTERN)
-                .withTags(VALID_TAG_JAVASCRIPT, VALID_TAG_ALGORITHMS).build();
+                .withSkills(VALID_SKILL_JAVASCRIPT, VALID_SKILL_ALGORITHMS).build();
         command = JobAddCommand.COMMAND_WORD + POSITION_DESC_DEVELOPER_INTERN + TEAM_DESC_DEVELOPER_INTERN
                 + LOCATION_DESC_INTERN + NUMBER_OF_POSITIONS_DESC_DEVELOPER_INTERN
-                + TAG_DESC_JAVASCRIPT + TAG_DESC_ALGORITHMS;
+                + SKILL_DESC_JAVASCRIPT + SKILL_DESC_ALGORITHMS;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a job with all fields same as another job in the address book except numberOfPositions -> added */
         toAdd = new JobBuilder().withPosition(VALID_POSITION_DEVELOPER_INTERN).withTeam(VALID_TEAM_DEVELOPER_INTERN)
                 .withLocation(VALID_LOCATION_DEVELOPER_INTERN).withNumberOfPositions(VALID_NUMBER_OF_POSITIONS_INTERN)
-                .withTags(VALID_TAG_JAVASCRIPT, VALID_TAG_ALGORITHMS).build();
+                .withSkills(VALID_SKILL_JAVASCRIPT, VALID_SKILL_ALGORITHMS).build();
         command = JobAddCommand.COMMAND_WORD + POSITION_DESC_DEVELOPER_INTERN + TEAM_DESC_DEVELOPER_INTERN
-                + LOCATION_DESC_DEVELOPER_INTERN + NUMBER_OF_POSITIONS_DESC_INTERN + TAG_DESC_JAVASCRIPT
-                + TAG_DESC_ALGORITHMS;
+                + LOCATION_DESC_DEVELOPER_INTERN + NUMBER_OF_POSITIONS_DESC_INTERN + SKILL_DESC_JAVASCRIPT
+                + SKILL_DESC_ALGORITHMS;
         assertCommandSuccess(command, toAdd);
 
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
@@ -122,22 +122,22 @@ public class JobAddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: missing position -> rejected */
         command = JobAddCommand.COMMAND_WORD + TEAM_DESC_INTERN
-                + LOCATION_DESC_INTERN + NUMBER_OF_POSITIONS_DESC_INTERN + TAG_DESC_EXCEL;
+                + LOCATION_DESC_INTERN + NUMBER_OF_POSITIONS_DESC_INTERN + SKILL_DESC_EXCEL;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, JobAddCommand.MESSAGE_USAGE));
 
         /* Case: missing team -> rejected */
         command = JobAddCommand.COMMAND_WORD + POSITION_DESC_INTERN + LOCATION_DESC_INTERN
-                + NUMBER_OF_POSITIONS_DESC_INTERN + TAG_DESC_EXCEL;
+                + NUMBER_OF_POSITIONS_DESC_INTERN + SKILL_DESC_EXCEL;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, JobAddCommand.MESSAGE_USAGE));
 
         /* Case: missing location -> rejected */
         command = JobAddCommand.COMMAND_WORD + POSITION_DESC_INTERN + TEAM_DESC_INTERN
-                + NUMBER_OF_POSITIONS_DESC_INTERN + TAG_DESC_EXCEL;
+                + NUMBER_OF_POSITIONS_DESC_INTERN + SKILL_DESC_EXCEL;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, JobAddCommand.MESSAGE_USAGE));
 
         /* Case: missing numberOfPositions -> rejected */
         command = JobAddCommand.COMMAND_WORD + POSITION_DESC_INTERN + TEAM_DESC_INTERN + LOCATION_DESC_INTERN
-                + TAG_DESC_EXCEL;
+                + SKILL_DESC_EXCEL;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, JobAddCommand.MESSAGE_USAGE));
 
         /* Case: missing tags -> rejected */
@@ -151,28 +151,28 @@ public class JobAddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid position -> rejected */
         command = JobAddCommand.COMMAND_WORD + INVALID_POSITION_DESC + TEAM_DESC_INTERN
-                + LOCATION_DESC_INTERN + NUMBER_OF_POSITIONS_DESC_INTERN + TAG_DESC_EXCEL;
+                + LOCATION_DESC_INTERN + NUMBER_OF_POSITIONS_DESC_INTERN + SKILL_DESC_EXCEL;
         assertCommandFailure(command, Position.MESSAGE_POSITION_CONSTRAINTS);
 
         /* Case: invalid team -> rejected */
         command = JobAddCommand.COMMAND_WORD + POSITION_DESC_INTERN + INVALID_TEAM_DESC
-                + LOCATION_DESC_INTERN + NUMBER_OF_POSITIONS_DESC_INTERN + TAG_DESC_EXCEL;
+                + LOCATION_DESC_INTERN + NUMBER_OF_POSITIONS_DESC_INTERN + SKILL_DESC_EXCEL;
         assertCommandFailure(command, Team.MESSAGE_TEAM_CONSTRAINTS);
 
         /* Case: invalid location -> rejected */
         command = JobAddCommand.COMMAND_WORD + POSITION_DESC_INTERN + TEAM_DESC_INTERN
-                + INVALID_LOCATION_DESC + NUMBER_OF_POSITIONS_DESC_INTERN + TAG_DESC_EXCEL;
+                + INVALID_LOCATION_DESC + NUMBER_OF_POSITIONS_DESC_INTERN + SKILL_DESC_EXCEL;
         assertCommandFailure(command, Location.MESSAGE_LOCATION_CONSTRAINTS);
 
         /* Case: invalid numberOfPositions -> rejected */
         command = JobAddCommand.COMMAND_WORD + POSITION_DESC_INTERN + TEAM_DESC_INTERN
-                + LOCATION_DESC_INTERN + INVALID_NUMBER_OF_POSITIONS_DESC + TAG_DESC_EXCEL;
+                + LOCATION_DESC_INTERN + INVALID_NUMBER_OF_POSITIONS_DESC + SKILL_DESC_EXCEL;
         assertCommandFailure(command, NumberOfPositions.MESSAGE_NUMBER_OF_POSITIONS_CONSTRAINTS);
 
-        /* Case: invalid tag -> rejected */
+        /* Case: invalid skill -> rejected */
         command = JobAddCommand.COMMAND_WORD + POSITION_DESC_INTERN + TEAM_DESC_INTERN
-                + LOCATION_DESC_INTERN + NUMBER_OF_POSITIONS_DESC_INTERN + INVALID_TAG_DESC;
-        assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
+                + LOCATION_DESC_INTERN + NUMBER_OF_POSITIONS_DESC_INTERN + INVALID_SKILL_DESC;
+        assertCommandFailure(command, Skill.MESSAGE_SKILL_CONSTRAINTS);
     }
 
     /**

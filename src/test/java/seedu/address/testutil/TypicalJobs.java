@@ -16,29 +16,29 @@ public class TypicalJobs {
 
     public static final Job SOFTWARE_ENGINEER = new JobBuilder().withPosition("Software Engineer")
             .withTeam("Cloud Services").withLocation("Singapore").withNumberOfPositions("2")
-            .withTags("Java", "Algorithms").build();
+            .withSkills("Java", "Algorithms").build();
     public static final Job MARKETING_INTERN = new JobBuilder().withPosition("Marketing Intern")
             .withTeam("Marketing").withLocation("Kuala Lampur, Malaysia").withNumberOfPositions("1")
-            .withTags("Excel", "Writing").build();
+            .withSkills("Excel", "Writing").build();
     public static final Job DEVOPS_ENGINEER = new JobBuilder().withPosition("DevOps Engineer")
             .withTeam("DevOps").withLocation("Singapore").withNumberOfPositions("3")
-            .withTags("AWS", "SQL-Server").build();
+            .withSkills("AWS", "SQL-Server").build();
     public static final Job PRODUCT_MANAGER = new JobBuilder().withPosition("Product Manager")
             .withTeam("Mobile Products").withLocation("India").withNumberOfPositions("1")
-            .withTags("UI/UX", "Testing").build();
+            .withSkills("UI/UX", "Testing").build();
 
     // Manually added
     public static final Job ANALYST = new JobBuilder().withPosition("Analyst").withTeam("Data Science")
-            .withLocation("New Delhi, India").withNumberOfPositions("5").withTags("Excel").build();
+            .withLocation("New Delhi, India").withNumberOfPositions("5").withSkills("Excel").build();
     public static final Job DEVELOPER_INTERN = new JobBuilder().withPosition("Developer Intern")
             .withLocation("Jakarta, Indonesia").withTeam("Web Development").withNumberOfPositions("2")
-            .withTags("JavaScript", "Algorithms").build();
+            .withSkills("JavaScript", "Algorithms").build();
 
     // Manually added - Job's details found in {@code CommandTestUtil}
     public static final Job INTERN = new JobBuilder().withPosition("Intern").withTeam("HR")
-            .withLocation("Singapore").withNumberOfPositions("1").withTags("Word").build();
+            .withLocation("Singapore").withNumberOfPositions("1").withSkills("Word").build();
     public static final Job DATA_SCIENTIST = new JobBuilder().withPosition("Data Scientist").withTeam("Data Science")
-            .withLocation("Singapore").withNumberOfPositions("1").withTags("Analysis").build();
+            .withLocation("Singapore").withNumberOfPositions("1").withSkills("Analysis").build();
 
     private TypicalJobs() {} // prevents instantiation
 

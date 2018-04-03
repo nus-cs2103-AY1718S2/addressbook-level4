@@ -4,7 +4,7 @@ package seedu.address.testutil;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NUMBER_OF_POSITIONS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 
 import seedu.address.logic.commands.job.JobAddCommand;
@@ -31,7 +31,7 @@ public class JobUtil {
         sb.append(PREFIX_TEAM + job.getTeam().value + " ");
         sb.append(PREFIX_LOCATION + job.getLocation().value + " ");
         sb.append(PREFIX_NUMBER_OF_POSITIONS + job.getNumberOfPositions().value + " ");
-        job.getTags().stream().forEach(s -> sb.append(PREFIX_TAG + s.tagName + " "));
+        job.getSkills().stream().forEach(s -> sb.append(PREFIX_SKILL + s.skillName + " "));
         return sb.toString();
     }
 }

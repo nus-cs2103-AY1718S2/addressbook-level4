@@ -9,7 +9,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.job.Job;
-import seedu.address.model.tag.TagMatchesPredicate;
+import seedu.address.model.skill.TagMatchesPredicate;
 
 /**
  * Matches the job to potential employees.
@@ -40,7 +40,7 @@ public class JobMatchCommand extends Command {
 
         Job jobToMatch = lastShownList.get(targetIndex.getZeroBased());
 
-        model.updateFilteredPersonList(new TagMatchesPredicate(jobToMatch.getTags()));
+        model.updateFilteredPersonList(new TagMatchesPredicate(jobToMatch.getSkills()));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 

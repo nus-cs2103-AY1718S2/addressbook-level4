@@ -7,8 +7,8 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.skill.Skill;
+import seedu.address.model.skill.UniqueSkillList;
 
 /**
  * Represents a Job in the address book.
@@ -21,21 +21,21 @@ public class Job {
     private final Location location;
     private final NumberOfPositions numberOfPositions;
 
-    private final UniqueTagList tags;
+    private final UniqueSkillList skills;
 
     /**
      * Every field must be present and not null.
      */
     public Job(Position position, Team team, Location location, NumberOfPositions numberOfPositions,
-               Set<Tag> tags) {
+               Set<Skill> skills) {
         requireAllNonNull(position, team, location);
         this.position = position;
         this.team = team;
         this.location = location;
         this.numberOfPositions = numberOfPositions;
 
-        // protect internal tags from changes in the arg list
-        this.tags = new UniqueTagList(tags);
+        // protect internal skills from changes in the arg list
+        this.skills = new UniqueSkillList(skills);
     }
 
 
@@ -56,11 +56,11 @@ public class Job {
     }
 
     /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * Returns an immutable skill set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags.toSet());
+    public Set<Skill> getSkills() {
+        return Collections.unmodifiableSet(skills.toSet());
     }
 
     @Override
@@ -95,7 +95,7 @@ public class Job {
                 .append(" Number of Positions: ")
                 .append(getNumberOfPositions())
                 .append(" Tags: ");
-        getTags().forEach(builder::append);
+        getSkills().forEach(builder::append);
         return builder.toString();
     }
 }

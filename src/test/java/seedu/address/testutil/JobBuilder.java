@@ -9,7 +9,7 @@ import seedu.address.model.job.Location;
 import seedu.address.model.job.NumberOfPositions;
 import seedu.address.model.job.Position;
 import seedu.address.model.job.Team;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.skill.Skill;
 import seedu.address.model.util.SampleDataUtil;
 
 /**
@@ -27,14 +27,14 @@ public class JobBuilder {
     private Team team;
     private Location location;
     private NumberOfPositions numberOfPositions;
-    private Set<Tag> tags;
+    private Set<Skill> skills;
 
     public JobBuilder() {
         position = new Position(DEFAULT_POSITION);
         team = new Team(DEFAULT_TEAM);
         location = new Location(DEFAULT_LOCATION);
         numberOfPositions = new NumberOfPositions(DEFAULT_NUMBER_OF_POSITIONS);
-        tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+        skills = SampleDataUtil.getSkillSet(DEFAULT_TAGS);
     }
 
     /**
@@ -45,7 +45,7 @@ public class JobBuilder {
         team = jobToCopy.getTeam();
         location = jobToCopy.getLocation();
         numberOfPositions = jobToCopy.getNumberOfPositions();
-        tags = new HashSet<>(jobToCopy.getTags());
+        skills = new HashSet<>(jobToCopy.getSkills());
     }
 
     /**
@@ -81,14 +81,14 @@ public class JobBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Job} that we are building.
+     * Parses the {@code skills} into a {@code Set<Skill>} and set it to the {@code Job} that we are building.
      */
-    public JobBuilder withTags(String ... tags) {
-        this.tags = SampleDataUtil.getTagSet(tags);
+    public JobBuilder withSkills(String ... skills) {
+        this.skills = SampleDataUtil.getSkillSet(skills);
         return this;
     }
 
     public Job build() {
-        return new Job(position, team, location, numberOfPositions, tags);
+        return new Job(position, team, location, numberOfPositions, skills);
     }
 }

@@ -8,7 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROFILE_PICTURE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILL;
 
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.UndoableCommand;
@@ -31,7 +31,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_CURRENT_POSITION + " "
             + PREFIX_COMPANY + " "
             + "[" + PREFIX_PROFILE_PICTURE + "] "
-            + "[" + PREFIX_TAG + "TAG]...";
+            + "[" + PREFIX_SKILL + "TAG]...";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
             + "Parameters: "
@@ -42,7 +42,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_CURRENT_POSITION + "CURRENT_POSITION "
             + PREFIX_COMPANY + "COMPANY "
             + "[" + PREFIX_PROFILE_PICTURE + "PROFILE PICTURE NAME] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_SKILL + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
@@ -51,8 +51,8 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_CURRENT_POSITION + "Software Engineer "
             + PREFIX_COMPANY + "Google "
             + PREFIX_PROFILE_PICTURE + "/home/trafalgarandre/downloads/john.jpeg "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_SKILL + "friends "
+            + PREFIX_SKILL + "owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";

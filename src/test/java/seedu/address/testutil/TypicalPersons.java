@@ -14,8 +14,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PROFILE_PICTURE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PROFILE_PICTURE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SKILL_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SKILL_HUSBAND;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,12 +34,12 @@ public class TypicalPersons {
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("85355255").withCurrentPosition("Computer Science Student")
             .withCompany("NUS").withProfilePicture("./src/test/data/images/alice.jpeg")
-            .withTags("friends").build();
+            .withSkills("friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432").withCurrentPosition("Software Engineer")
             .withCompany("Google").withProfilePicture("./src/test/data/images/benson.jpeg")
-            .withTags("owesMoney", "friends").build();
+            .withSkills("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street").withCurrentPosition("Marketing Intern")
             .withCompany("Facebook").withProfilePicture("./src/test/data/images/carl.jpeg").build();
@@ -67,12 +67,12 @@ public class TypicalPersons {
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
             .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withCurrentPosition(VALID_CURRENT_POSITION_AMY)
-            .withCompany(VALID_COMPANY_AMY).withProfilePicture(VALID_PROFILE_PICTURE_AMY).withTags(VALID_TAG_FRIEND)
+            .withCompany(VALID_COMPANY_AMY).withProfilePicture(VALID_PROFILE_PICTURE_AMY).withSkills(VALID_SKILL_FRIEND)
             .build();
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withCurrentPosition(VALID_CURRENT_POSITION_BOB)
             .withCompany(VALID_COMPANY_BOB).withProfilePicture(VALID_PROFILE_PICTURE_BOB)
-            .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+            .withSkills(VALID_SKILL_HUSBAND, VALID_SKILL_FRIEND).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 

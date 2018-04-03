@@ -20,8 +20,8 @@ import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.skill.Skill;
+import seedu.address.model.skill.UniqueSkillList;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -94,9 +94,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteTag(Tag t) throws PersonNotFoundException, DuplicatePersonException,
-            UniqueTagList.DuplicateTagException {
-        addressBook.removeTag(t);
+    public void deleteSkill(Skill t) throws PersonNotFoundException, DuplicatePersonException,
+            UniqueSkillList.DuplicateSkillException {
+        addressBook.removeSkill(t);
         indicateAddressBookChanged();
     }
 

@@ -22,7 +22,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.skill.Skill;
 import seedu.address.testutil.Assert;
 
 public class ParserUtilTest {
@@ -30,14 +30,14 @@ public class ParserUtilTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
-    private static final String INVALID_TAG = "friend 1";
+    private static final String INVALID_SKILL = "friend 1";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
-    private static final String VALID_TAG_1 = "friend";
-    private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_SKILL_1 = "friend";
+    private static final String VALID_SKILL_2 = "neighbour";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -197,50 +197,50 @@ public class ParserUtilTest {
     @Test
     public void parseTag_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parseTag(null);
+        ParserUtil.parseSkill(null);
     }
 
     @Test
     public void parseTag_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseTag(INVALID_TAG);
+        ParserUtil.parseSkill(INVALID_SKILL);
     }
 
     @Test
     public void parseTag_validValueWithoutWhitespace_returnsTag() throws Exception {
-        Tag expectedTag = new Tag(VALID_TAG_1);
-        assertEquals(expectedTag, ParserUtil.parseTag(VALID_TAG_1));
+        Skill expectedSkill = new Skill(VALID_SKILL_1);
+        assertEquals(expectedSkill, ParserUtil.parseSkill(VALID_SKILL_1));
     }
 
     @Test
-    public void parseTag_validValueWithWhitespace_returnsTrimmedTag() throws Exception {
-        String tagWithWhitespace = WHITESPACE + VALID_TAG_1 + WHITESPACE;
-        Tag expectedTag = new Tag(VALID_TAG_1);
-        assertEquals(expectedTag, ParserUtil.parseTag(tagWithWhitespace));
+    public void parseSkills_validValueWithWhitespace_returnsTrimmedTag() throws Exception {
+        String tagWithWhitespace = WHITESPACE + VALID_SKILL_1 + WHITESPACE;
+        Skill expectedSkill = new Skill(VALID_SKILL_1);
+        assertEquals(expectedSkill, ParserUtil.parseSkill(tagWithWhitespace));
     }
 
     @Test
-    public void parseTags_null_throwsNullPointerException() throws Exception {
+    public void parseSkills_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parseTags(null);
+        ParserUtil.parseSkills(null);
     }
 
     @Test
-    public void parseTags_collectionWithInvalidTags_throwsIllegalValueException() throws Exception {
+    public void parseSkills_collectionWithInvalidSkills_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, INVALID_TAG));
+        ParserUtil.parseSkills(Arrays.asList(VALID_SKILL_1, INVALID_SKILL));
     }
 
     @Test
-    public void parseTags_emptyCollection_returnsEmptySet() throws Exception {
-        assertTrue(ParserUtil.parseTags(Collections.emptyList()).isEmpty());
+    public void parseSkills_emptyCollection_returnsEmptySet() throws Exception {
+        assertTrue(ParserUtil.parseSkills(Collections.emptyList()).isEmpty());
     }
 
     @Test
-    public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
-        Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
-        Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
+    public void parseSkills_collectionWithValidSkills_returnsSkillSet() throws Exception {
+        Set<Skill> actualSkillSet = ParserUtil.parseSkills(Arrays.asList(VALID_SKILL_1, VALID_SKILL_2));
+        Set<Skill> expectedSkillSet = new HashSet<Skill>(Arrays.asList(new Skill(VALID_SKILL_1), new Skill(VALID_SKILL_2)));
 
-        assertEquals(expectedTagSet, actualTagSet);
+        assertEquals(expectedSkillSet, actualSkillSet);
     }
 }

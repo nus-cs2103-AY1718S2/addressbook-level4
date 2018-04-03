@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NUMBER_OF_POSITIONS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TEAM;
 
 import seedu.address.logic.commands.CommandResult;
@@ -26,7 +26,7 @@ public class JobAddCommand extends UndoableCommand {
             + PREFIX_TEAM + " "
             + PREFIX_LOCATION + " "
             + PREFIX_NUMBER_OF_POSITIONS + " "
-            + PREFIX_TAG + "TAG...";
+            + PREFIX_SKILL + "TAG...";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a job opening to contactHeRo. "
             + "Parameters: "
@@ -34,14 +34,14 @@ public class JobAddCommand extends UndoableCommand {
             + PREFIX_TEAM + "TEAM "
             + PREFIX_LOCATION + "LOCATION "
             + PREFIX_NUMBER_OF_POSITIONS + "NUMBER OF POSITIONS "
-            + PREFIX_TAG + "TAG...\n"
+            + PREFIX_SKILL + "TAG...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_POSITION + "Software Engineer "
             + PREFIX_TEAM + "Cloud Services "
             + PREFIX_LOCATION + "Singapore, Singapore "
             + PREFIX_NUMBER_OF_POSITIONS + "5 "
-            + PREFIX_TAG + "Java "
-            + PREFIX_TAG + "Algorithms";
+            + PREFIX_SKILL + "Java "
+            + PREFIX_SKILL + "Algorithms";
 
     public static final String MESSAGE_SUCCESS = "New job opening added: %1$s";
     public static final String MESSAGE_DUPLICATE_JOB = "This job opening already exists in contactHeRo.";

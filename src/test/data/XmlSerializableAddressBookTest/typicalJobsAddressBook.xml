@@ -35,12 +35,12 @@
         <tagged>UI/UX</tagged>
         <tagged>Testing</tagged>
     </jobs>
-    <tags>Java</tags>
-    <tags>Algorithms</tags>
-    <tags>Excel</tags>
-    <tags>Writing</tags>
-    <tags>AWS</tags>
-    <tags>SQL-Server</tags>
-    <tags>UI/UX</tags>
-    <tags>Testing</tags>
+    <skills>Java</skills>
+    <skills>Algorithms</skills>
+    <skills>Excel</skills>
+    <skills>Writing</skills>
+    <skills>AWS</skills>
+    <skills>SQL-Server</skills>
+    <skills>UI/UX</skills>
+    <skills>Testing</skills>
 </addressbook>

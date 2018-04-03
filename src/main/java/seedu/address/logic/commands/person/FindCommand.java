@@ -19,10 +19,10 @@ public class FindCommand extends Command {
     public static final String COMMAND_SYNTAX = COMMAND_WORD + " " + PREFIX_NAME;
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose"
-            + " NAME or TAG "
+            + " NAME or SKILL "
             + "contains any of the specified keywords (case-insensitive) "
             + "and displays them as a list with index numbers.\n"
-            + "Parameters: n/NAME_KEYWORDS [MORE_NAME_KEYWORDS] or t/TAG_KEYWORDS [MORE_TAG_KEYWORDS]\n"
+            + "Parameters: n/NAME_KEYWORDS [MORE_NAME_KEYWORDS] or t/SKILL_KEYWORDS [MORE_SKILL_KEYWORDS]\n"
             + "Example: " + COMMAND_WORD + " n/Alice Bob\n"
             + "Example: " + COMMAND_WORD + " t/accountant manager";
 
@@ -35,6 +35,7 @@ public class FindCommand extends Command {
 
     @Override
     public CommandResult execute() {
+
         model.updateFilteredPersonList(predicate);
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }

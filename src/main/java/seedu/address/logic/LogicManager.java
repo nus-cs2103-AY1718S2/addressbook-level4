@@ -53,6 +53,7 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getFilteredPersonList();
     }
 
+    //@@author kush1509
     @Override
     public List<Appointment> getAppointmentList() {
         return model.getAppointmentList();
@@ -63,6 +64,7 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getFilteredJobList();
     }
 
+    //@@author
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());

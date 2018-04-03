@@ -4,14 +4,16 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.skill.Skill;
 
 /**
  * A utility class to help with building Addressbook objects.
  * Example usage: <br>
- *     {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").withTag("Friend").build();}
+ *     {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").withSkill("Friend").build();}
  */
 public class AddressBookBuilder {
 
@@ -38,13 +40,25 @@ public class AddressBookBuilder {
     }
 
     /**
-     * Parses {@code tagName} into a {@code Tag} and adds it to the {@code AddressBook} that we are building.
+     * Adds a new {@code Job} to the {@code AddressBook} that we are building.
      */
-    public AddressBookBuilder withTag(String tagName) {
+    public AddressBookBuilder withJob(Job job) {
         try {
-            addressBook.addTag(new Tag(tagName));
+            addressBook.addJob(job);
+        } catch (DuplicateJobException dpe) {
+            throw new IllegalArgumentException("job is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Parses {@code skillName} into a {@code Skill} and adds it to the {@code AddressBook} that we are building.
+     */
+    public AddressBookBuilder withSkill(String skillName) {
+        try {
+            addressBook.addSkill(new Skill(skillName));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("tagName is expected to be valid.");
+            throw new IllegalArgumentException("skillName is expected to be valid.");
         }
         return this;
     }

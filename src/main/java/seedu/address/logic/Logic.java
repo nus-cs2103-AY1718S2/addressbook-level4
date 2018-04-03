@@ -28,6 +28,7 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of appointments */
     List<Appointment> getAppointmentList();
+
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<Job> getFilteredJobList();
 

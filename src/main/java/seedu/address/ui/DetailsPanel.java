@@ -1,3 +1,4 @@
+//@@author kush1509
 package seedu.address.ui;
 
 import java.util.List;
@@ -75,6 +76,7 @@ public class DetailsPanel extends UiPart<Region> {
         CalendarPanel calendarPanel = new CalendarPanel(appointmentList);
         calendar.setContent(calendarPanel.getRoot());
     }
+
     //@@author KevinCJH
     /**
      * Adds the EmailPanel to the DetailsPanel
@@ -83,7 +85,8 @@ public class DetailsPanel extends UiPart<Region> {
         emailPanel = new EmailPanel();
         email.setContent(emailPanel.getRoot());
     }
-    //@@author
+
+    //@@author kush1509
     /**
      * Adds the ContactDetailsPanel to the DetailsPanel
      */

@@ -6,7 +6,7 @@ import java.util.Objects;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToPersonListRequestEvent;
 import seedu.address.commons.events.ui.SwitchTabRequestEvent;
 import seedu.address.logic.GmailClient;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -49,7 +49,7 @@ public class EmailCommand extends Command {
         personToEmail = lastShownList.get(targetIndex.getZeroBased());
 
         EventsCenter.getInstance().post(new SwitchTabRequestEvent(TAB_ID_EMAIL));
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+        EventsCenter.getInstance().post(new JumpToPersonListRequestEvent(targetIndex));
 
         GmailClient.getInstance();
 

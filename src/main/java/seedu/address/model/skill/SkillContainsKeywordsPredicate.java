@@ -1,4 +1,4 @@
-package seedu.address.model.tag;
+package seedu.address.model.skill;
 
 import java.util.Iterator;
 import java.util.List;
@@ -8,18 +8,18 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Person;
 //@@author KevinCJH
 /**
- * Tests that a {@code Person}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code Person}'s {@code Skill} matches any of the keywords given.
  */
-public class TagContainsKeywordsPredicate implements Predicate<Person> {
+public class SkillContainsKeywordsPredicate implements Predicate<Person> {
     private final List<String> keywords;
 
-    public TagContainsKeywordsPredicate(List<String> keywords) {
+    public SkillContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
     @Override
     public boolean test(Person person) {
-        Iterator tagsIterator = person.getTags().iterator();
+        Iterator tagsIterator = person.getSkills().iterator();
         StringBuilder sb = new StringBuilder();
         sb.append(tagsIterator.next());
         while (tagsIterator.hasNext()) {
@@ -35,8 +35,8 @@ public class TagContainsKeywordsPredicate implements Predicate<Person> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof TagContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
+                || (other instanceof SkillContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((SkillContainsKeywordsPredicate) other).keywords)); // state check
     }
 
 }

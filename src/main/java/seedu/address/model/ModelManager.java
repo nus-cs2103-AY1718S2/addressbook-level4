@@ -26,11 +26,12 @@ import seedu.address.model.exception.MultipleLoginException;
 import seedu.address.model.exception.UserLogoutException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
+import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.skill.Skill;
+import seedu.address.model.skill.UniqueSkillList;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -111,9 +112,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteTag(Tag t) throws PersonNotFoundException, DuplicatePersonException,
-            UniqueTagList.DuplicateTagException {
-        addressBook.removeTag(t);
+    public void deleteSkill(Skill t) throws PersonNotFoundException, DuplicatePersonException,
+            UniqueSkillList.DuplicateSkillException {
+        addressBook.removeSkill(t);
         indicateAddressBookChanged();
     }
     @Override
@@ -165,6 +166,13 @@ public class ModelManager extends ComponentManager implements Model {
         accountsManager.register(username, password);
     }
 
+    //@@author kush1509
+    @Override
+    public synchronized void deleteJob(Job target) throws JobNotFoundException {
+        addressBook.removeJob(target);
+        indicateAddressBookChanged();
+    }
+
     //@@author
     private void setUser(Account account) {
         user = user.ofNullable(account);
@@ -212,6 +220,26 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+
+    //@@author kush1509
+    //=========== Filtered Job List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Jobs} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<Job> getFilteredJobList() {
+        return FXCollections.unmodifiableObservableList(filteredJobs);
+    }
+
+    @Override
+    public void updateFilteredJobList(Predicate<Job> predicate) {
+        requireNonNull(predicate);
+        filteredJobs.setPredicate(predicate);
+    }
+
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -241,22 +269,5 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public List<Appointment> getAppointmentList() {
         return appointments;
-    }
-
-    //=========== Filtered Job List Accessors =============================================================
-
-    /**
-     * Returns an unmodifiable view of the list of {@code Jobs} backed by the internal list of
-     * {@code addressBook}
-     */
-    @Override
-    public ObservableList<Job> getFilteredJobList() {
-        return FXCollections.unmodifiableObservableList(filteredJobs);
-    }
-
-    @Override
-    public void updateFilteredJobList(Predicate<Job> predicate) {
-        requireNonNull(predicate);
-        filteredJobs.setPredicate(predicate);
     }
 }

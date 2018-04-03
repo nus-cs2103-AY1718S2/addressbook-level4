@@ -29,11 +29,12 @@ import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
+import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.skill.Skill;
+import seedu.address.model.skill.UniqueSkillList;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -133,14 +134,19 @@ public class AddCommandTest {
         }
 
         @Override
+        public void deleteJob(Job target) throws JobNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updatePerson(Person target, Person editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
         }
 
         @Override
-        public void deleteTag(Tag t)
-                throws PersonNotFoundException, DuplicatePersonException, UniqueTagList.DuplicateTagException {
+        public void deleteSkill(Skill t)
+                throws PersonNotFoundException, DuplicatePersonException, UniqueSkillList.DuplicateSkillException {
             fail("This method should not be called.");
         }
 
@@ -189,10 +195,14 @@ public class AddCommandTest {
         }
 
         @Override
-        public void login(String username, String password) { fail("This method should not be called."); }
+        public void login(String username, String password) {
+            fail("This method should not be called.");
+        }
 
         @Override
-        public void logout() { fail("This method should not be called."); }
+        public void logout() {
+            fail("This method should not be called.");
+        }
 
         @Override
         public void register(String username, String password) {

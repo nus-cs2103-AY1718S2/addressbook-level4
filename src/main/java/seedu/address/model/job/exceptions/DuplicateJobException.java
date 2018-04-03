@@ -1,3 +1,4 @@
+//@@author kush1509
 package seedu.address.model.job.exceptions;
 
 import seedu.address.commons.exceptions.DuplicateDataException;

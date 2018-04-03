@@ -1,5 +1,23 @@
 # KevinCJH
-###### \java\seedu\address\logic\commands\EmailCommand.java
+###### /java/seedu/address/logic/commands/person/FindCommand.java
+``` java
+    public static final String COMMAND_SYNTAX = COMMAND_WORD + " " + PREFIX_NAME;
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose"
+            + " NAME or SKILL "
+            + "contains any of the specified keywords (case-insensitive) "
+            + "and displays them as a list with index numbers.\n"
+            + "Parameters: n/NAME_KEYWORDS [MORE_NAME_KEYWORDS] or t/SKILL_KEYWORDS [MORE_SKILL_KEYWORDS]\n"
+            + "Example: " + COMMAND_WORD + " n/Alice Bob\n"
+            + "Example: " + COMMAND_WORD + " t/accountant manager";
+
+    private final Predicate<Person> predicate;
+
+    public FindCommand(Predicate<Person> predicate) {
+        this.predicate = predicate;
+    }
+```
+###### /java/seedu/address/logic/commands/EmailCommand.java
 ``` java
 /**
  * Send an email to the person identified using it's last displayed index from the address book.
@@ -54,36 +72,7 @@ public class EmailCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\person\FindCommand.java
-``` java
-    public static final String COMMAND_SYNTAX = COMMAND_WORD + " " + PREFIX_NAME;
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose"
-            + " NAME or TAG "
-            + "contains any of the specified keywords (case-insensitive) "
-            + "and displays them as a list with index numbers.\n"
-            + "Parameters: n/NAME_KEYWORDS [MORE_NAME_KEYWORDS] or t/TAG_KEYWORDS [MORE_TAG_KEYWORDS]\n"
-            + "Example: " + COMMAND_WORD + " n/Alice Bob\n"
-            + "Example: " + COMMAND_WORD + " t/accountant manager";
-
-    private final Predicate<Person> predicate;
-
-    public FindCommand(Predicate<Person> predicate) {
-        this.predicate = predicate;
-    }
-```
-###### \java\seedu\address\logic\GmailAuthentication.java
-``` java
-    public static HttpTransport getHttpTransport() {
-        return httpTransport;
-    }
-
-    public static JsonFactory getJsonFactory() {
-        return JSON_FACTORY;
-    }
-}
-```
-###### \java\seedu\address\logic\GmailClient.java
+###### /java/seedu/address/logic/GmailClient.java
 ``` java
 /**
  * Creates an authorized Gmail client for all services that uses Gmail API.
@@ -164,7 +153,61 @@ public class GmailClient {
 }
 
 ```
-###### \java\seedu\address\logic\parser\EmailCommandParser.java
+###### /java/seedu/address/logic/GmailAuthentication.java
+``` java
+    public static HttpTransport getHttpTransport() {
+        return httpTransport;
+    }
+
+    public static JsonFactory getJsonFactory() {
+        return JSON_FACTORY;
+    }
+}
+```
+###### /java/seedu/address/logic/parser/person/FindCommandParser.java
+``` java
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_SKILL);
+
+        if (!(arePrefixesPresent(argMultimap, PREFIX_NAME)
+                || arePrefixesPresent(argMultimap, PREFIX_SKILL))
+                || (arePrefixesPresent(argMultimap, PREFIX_NAME) && arePrefixesPresent(argMultimap, PREFIX_SKILL))
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
+
+
+        if (arePrefixesPresent(argMultimap, PREFIX_NAME)) {
+            List<String> testnovalue = argMultimap.getAllValues(PREFIX_NAME);
+            if (testnovalue.contains("")) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            }
+            String[] nameKeywords = argMultimap.getValue(PREFIX_NAME).get().split("\\W+");
+            return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        } else if (arePrefixesPresent(argMultimap, PREFIX_SKILL)) {
+            List<String> testnovalue = argMultimap.getAllValues(PREFIX_SKILL);
+            if (testnovalue.contains("")) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            }
+            String[] tagKeywords = argMultimap.getValue(PREFIX_SKILL).get().split("\\W+");
+            return new FindCommand(new SkillContainsKeywordsPredicate(Arrays.asList(tagKeywords)));
+        } else {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/EmailCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new EmailCommand object
@@ -187,50 +230,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\person\FindCommandParser.java
-``` java
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TAG);
-
-        if (!(arePrefixesPresent(argMultimap, PREFIX_NAME)
-                || arePrefixesPresent(argMultimap, PREFIX_TAG))
-                || (arePrefixesPresent(argMultimap, PREFIX_NAME) && arePrefixesPresent(argMultimap, PREFIX_TAG))
-                || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
-
-
-
-        if (arePrefixesPresent(argMultimap, PREFIX_NAME)) {
-            List<String> testnovalue = argMultimap.getAllValues(PREFIX_NAME);
-            if (testnovalue.contains("")) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-            }
-            String[] nameKeywords = argMultimap.getValue(PREFIX_NAME).get().split("\\W+");
-            return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
-        } else if (arePrefixesPresent(argMultimap, PREFIX_TAG)) {
-            List<String> testnovalue = argMultimap.getAllValues(PREFIX_TAG);
-            if (testnovalue.contains("")) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-            }
-            String[] tagKeywords = argMultimap.getValue(PREFIX_TAG).get().split("\\W+");
-            return new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList(tagKeywords)));
-        } else {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
-    }
-
-    /**
-     * Returns true if none of the prefixes contains empty values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-
-}
-```
-###### \java\seedu\address\model\GmailMessage.java
+###### /java/seedu/address/model/GmailMessage.java
 ``` java
 /**
  * Creates an email message containing contents to be sent via gmail
@@ -316,21 +316,21 @@ public class GmailMessage {
 }
 
 ```
-###### \java\seedu\address\model\tag\TagContainsKeywordsPredicate.java
+###### /java/seedu/address/model/skill/SkillContainsKeywordsPredicate.java
 ``` java
 /**
- * Tests that a {@code Person}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code Person}'s {@code Skill} matches any of the keywords given.
  */
-public class TagContainsKeywordsPredicate implements Predicate<Person> {
+public class SkillContainsKeywordsPredicate implements Predicate<Person> {
     private final List<String> keywords;
 
-    public TagContainsKeywordsPredicate(List<String> keywords) {
+    public SkillContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
     @Override
     public boolean test(Person person) {
-        Iterator tagsIterator = person.getTags().iterator();
+        Iterator tagsIterator = person.getSkills().iterator();
         StringBuilder sb = new StringBuilder();
         sb.append(tagsIterator.next());
         while (tagsIterator.hasNext()) {
@@ -346,23 +346,13 @@ public class TagContainsKeywordsPredicate implements Predicate<Person> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof TagContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
+                || (other instanceof SkillContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((SkillContainsKeywordsPredicate) other).keywords)); // state check
     }
 
 }
 ```
-###### \java\seedu\address\ui\DetailsPanel.java
-``` java
-    /**
-     * Adds the EmailPanel to the DetailsPanel
-     */
-    public void addEmailPanel() {
-        emailPanel = new EmailPanel();
-        email.setContent(emailPanel.getRoot());
-    }
-```
-###### \java\seedu\address\ui\EmailPanel.java
+###### /java/seedu/address/ui/EmailPanel.java
 ``` java
 /**
  * Shows the email drafting tab
@@ -467,95 +457,99 @@ public class EmailPanel extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/DetailsPanel.java
+``` java
+    /**
+     * Adds the EmailPanel to the DetailsPanel
+     */
+    public void addEmailPanel() {
+        emailPanel = new EmailPanel();
+        email.setContent(emailPanel.getRoot());
+    }
+
+```
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     private static final String[] TAG_COLOR_STYLES =
         { "teal", "red", "green", "blue", "orange", "brown",
             "yellow", "pink", "lightgreen", "grey", "purple" };
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
-        initTags(person);
+        initSkills(person);
     }
 
-    /**
-     * Returns the color style for {@code tagName}'s label.
-     */
-    private String getTagColorStyleFor(String tagName) {
-        // we use the hash code of the tag name to generate a random color, so that the color remain consistent
-        // between different runs of the program while still making it random enough between tags.
-        return TAG_COLOR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOR_STYLES.length];
-    }
-
-    /**
-     * Creates the tag labels for {@code person}.
-     */
-    private void initTags(Person person) {
-        person.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.getStyleClass().add(getTagColorStyleFor(tag.tagName));
-            tags.getChildren().add(tagLabel);
-        });
-    }
 ```
-###### \resources\view\DarkTheme.css
+###### /java/seedu/address/ui/PersonCard.java
+``` java
+    /**
+     * Returns the color style for {@code skillName}'s label.
+     */
+    private String getSkillColorStyleFor(String skillName) {
+        // we use the hash code of the skill name to generate a random color, so that the color remain consistent
+        // between different runs of the program while still making it random enough between skills.
+        return SKILL_COLOR_STYLES[Math.abs(skillName.hashCode()) % SKILL_COLOR_STYLES.length];
+    }
+
+```
+###### /resources/view/DarkTheme.css
 ``` css
-#tags .teal {
+#skills .teal {
     -fx-text-fill: white;
     -fx-background-color: #3e7b91;
 }
 
-#tags .red {
+#skills .red {
     -fx-text-fill: black;
     -fx-background-color: red;
 }
 
-#tags .yellow {
+#skills .yellow {
     -fx-text-fill: black;
     -fx-background-color: yellow;
 }
 
-+#tags .blue {
++#skills .blue {
     -fx-text-fill: white;
     -fx-background-color: blue;
 }
 
-#tags .orange {
+#skills .orange {
     -fx-text-fill: black;
     -fx-background-color: orange;
 }
 
-#tags .brown {
+#skills .brown {
     -fx-text-fill: white;
     -fx-background-color: brown;
 }
 
-#tags .green {
+#skills .green {
     -fx-text-fill: black;
     -fx-background-color: green;
 }
 
-#tags .pink {
+#skills .pink {
     -fx-text-fill: black;
     -fx-background-color: pink;
 }
 
-#tags .lightgreen {
+#skills .lightgreen {
     -fx-text-fill: black;
     -fx-background-color: lightgreen;
 }
 
-#tags .grey {
+#skills .grey {
     -fx-text-fill: black;
     -fx-background-color: grey;
 }
 
-#tags .purple {
+#skills .purple {
     -fx-text-fill: white;
     -fx-background-color: purple;
 }
 ```
-###### \resources\view\EmailPanel.fxml
+###### /resources/view/EmailPanel.fxml
 ``` fxml
 <AnchorPane prefHeight="478.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>

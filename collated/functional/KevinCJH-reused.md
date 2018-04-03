@@ -1,5 +1,5 @@
 # KevinCJH-reused
-###### \java\seedu\address\logic\GmailAuthentication.java
+###### /java/seedu/address/logic/GmailAuthentication.java
 ``` java
 /**
  * Creates a Gmail Authentication for user credential.
@@ -8,7 +8,7 @@ public class GmailAuthentication {
 
     /** Directory to store user credentials for this application. */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
-            System.getProperty("user.home"), ".credentials/gmail-contactHeRo");
+            "./src/main/resources/.credentials/gmail-contactHeRo");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
     private static FileDataStoreFactory dataStoreFactory;

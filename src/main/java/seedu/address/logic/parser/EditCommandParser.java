@@ -131,7 +131,11 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (!comment.isPresent()) {
             return Optional.empty();
         }
-        return ParserUtil.parseComment(comment);
+        if (comment.get().equals("")) {
+            return Optional.of(new Comment(null));
+        } else {
+            return ParserUtil.parseComment(comment);
+        }
     }
 
     /**

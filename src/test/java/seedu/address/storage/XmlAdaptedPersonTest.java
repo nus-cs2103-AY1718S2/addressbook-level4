@@ -15,7 +15,6 @@ import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.GradePointAverage;
@@ -43,8 +42,6 @@ public class XmlAdaptedPersonTest {
     private static final String INVALID_COMMUNICATION_SKILLS_SCORE = "-1.5";
     private static final String INVALID_PROBLEM_SOLVING_SKILLS_SCORE = "0";
     private static final String INVALID_EXPERIENCE_SCORE = "5.5";
-    private static final String INVALID_RESUME = "fileDoesNot.exist";
-    private static final String INVALID_COMMENT = "Comment\nComment";
     private static final String INVALID_INTERVIEW_DATE = "Tomorrow";
     private static final String INVALID_STATUS = "dead";
     private static final String INVALID_TAG = "#friend";
@@ -330,19 +327,6 @@ public class XmlAdaptedPersonTest {
                 VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
                 VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         String expectedMessage = Rating.MESSAGE_RATING_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
-    }
-
-    @Test
-    public void toModelType_invalidComment_throwsIllegalValueException() {
-        XmlAdaptedPerson person =
-                new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_UNIVERSITY,
-                        VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR,
-                        VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE,
-                        VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
-                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, INVALID_COMMENT,
-                        VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
-        String expectedMessage = Comment.MESSAGE_COMMENT_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 

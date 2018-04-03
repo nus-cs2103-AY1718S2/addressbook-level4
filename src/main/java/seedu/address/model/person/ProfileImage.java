@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.File;
+import java.util.Objects;
 
 /**
  * Represents a Person's profile image in the address book.
@@ -63,8 +64,7 @@ public class ProfileImage {
     public boolean equals(Object other) {
         return other == this // Short circuit if same object
                 || (other instanceof ProfileImage // instanceof handles nulls
-                && ((isNull(this.value) && isNull(((ProfileImage) other).value)) // Both value are null
-                || this.value.equals(((ProfileImage) other).value))); // State check
+                && Objects.equals(this.value, ((ProfileImage) other).value)); // State check
     }
 
     @Override

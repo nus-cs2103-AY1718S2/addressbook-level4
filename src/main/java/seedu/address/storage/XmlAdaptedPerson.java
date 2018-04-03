@@ -57,14 +57,14 @@ public class XmlAdaptedPerson {
     private String jobApplied;
     @XmlElement(required = true)
     private String status;
-    @XmlElement(required = true)
-    private String comment;
 
     // Optional fields
     @XmlElement(nillable = true)
     private String resume;
     @XmlElement(nillable = true)
     private String profileImage;
+    @XmlElement(nillable = true)
+    private String comment;
     @XmlElement(nillable = true)
     private String interviewDate;
 
@@ -272,13 +272,12 @@ public class XmlAdaptedPerson {
             profileImage = new ProfileImage(this.profileImage);
         }
 
-        if (this.comment == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Comment.class.getSimpleName()));
+        final Comment comment;
+        if (!isNull(this.comment) && !Comment.isValidComment(this.comment)) {
+            comment = new Comment(null);
+        } else {
+            comment = new Comment(this.comment);
         }
-        if (!Comment.isValidComment(this.comment)) {
-            throw new IllegalValueException(Comment.MESSAGE_COMMENT_CONSTRAINTS);
-        }
-        final Comment comment = new Comment(this.comment);
 
         InterviewDate interviewDate = new InterviewDate();
         if (!isNull(this.interviewDate)) {

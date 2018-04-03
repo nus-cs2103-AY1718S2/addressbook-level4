@@ -38,24 +38,24 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Adds an listevent to a person.
+ * Adds an event to a person.
  */
 public class TestAddEventCommand extends Command {
 
     public static final String COMMAND_WORD = "addEvent";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Add an listevent to the person identified by the index number used in the last person listing.\n"
+            + ": Add an event to the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + PREFIX_TITLE + "TITLE "
             + PREFIX_LOCATION + "LOCATION "
             + PREFIX_STARTTIME + "STARTTIME "
             + PREFIX_ENDTIME + "ENDTIME "
-            + "Example: " + COMMAND_WORD + " 1 title/test listevent loca/NUS, Singapore stime/2017-03-19T08:00:00"
-            + " etime/2017-03-19T10:00:00 descrip/this is a test listevent";
+            + "Example: " + COMMAND_WORD + " 1 title/test event loca/NUS, Singapore stime/2017-03-19T08:00:00"
+            + " etime/2017-03-19T10:00:00 descrip/this is a test event";
 
-    public static final String MESSAGE_SUCCESS = "ListEvent added!";
-    public static final String MESSAGE_FAILURE = "Unable to add listevent, please try again later.";
+    public static final String MESSAGE_SUCCESS = "event added!";
+    public static final String MESSAGE_FAILURE = "Unable to add event, please try again later.";
 
 
 
@@ -194,22 +194,22 @@ public class TestAddEventCommand extends Command {
         event.setEnd(end);
 
         String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=1"};
-        //listevent.setRecurrence(Arrays.asList(recurrence));
+        //event.setRecurrence(Arrays.asList(recurrence));
 
         /*EventAttendee[] attendees = new EventAttendee[] {
                 new EventAttendee().setEmail("jjjsss@example.com"),
                 new EventAttendee().setEmail("dzzzssss@example.com"),
         };
-        listevent.setAttendees(Arrays.asList(attendees));
+        event.setAttendees(Arrays.asList(attendees));
 
         EventReminder[] reminderOverrides = new EventReminder[] {
                 new EventReminder().setMethod("email").setMinutes(24 * 60),
                 new EventReminder().setMethod("popup").setMinutes(10),
         };
-        ListEvent.Reminders reminders = new ListEvent.Reminders()
+        event.Reminders reminders = new ListEvent.Reminders()
                 .setUseDefault(false)
                 .setOverrides(Arrays.asList(reminderOverrides));
-        listevent.setReminders(reminders);*/
+        event.setReminders(reminders);*/
 
         String calendarId = personToAddEvent.getCalendarId();
         Logger logger = LogsCenter.getLogger(TestAddEventCommand.class);
@@ -247,7 +247,7 @@ public class TestAddEventCommand extends Command {
             event = service.events().insert(calendarId, event).execute();
         } catch (IOException e) {
             e.printStackTrace();
-            logger.info("failed to add listevent to calendarId");
+            logger.info("failed to add event to calendarId");
             return new CommandResult(MESSAGE_FAILURE);
         }
 
@@ -256,9 +256,9 @@ public class TestAddEventCommand extends Command {
         try {
             model.addNotification(notification);
         } catch (DuplicateTimetableEntryException e) {
-            throw new CommandException("Duplicated listevent");
+            throw new CommandException("Duplicated event");
         }
-        System.out.printf("ListEvent created: %s\n", event.getHtmlLink());
+        System.out.printf("event created: %s\n", event.getHtmlLink());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

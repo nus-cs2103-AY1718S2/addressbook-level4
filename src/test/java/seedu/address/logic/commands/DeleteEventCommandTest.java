@@ -40,12 +40,12 @@ public class DeleteEventCommandTest {
 
     /*@Test
     public void execute_addEvent_success() throws Exception {
-        TestAddEventCommand addEventCommand = new TestAddEventCommand(INDEX_FIRST_PERSON, "Test ListEvent",
+        TestAddEventCommand addEventCommand = new TestAddEventCommand(INDEX_FIRST_PERSON, "Test Event",
                 "NUS", "2018-05-01T12:00:00", "2018-05-01T12:30:00",
                 "Test add listevent command");
         addEventCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         addEventCommand.execute();
-        DeleteEventCommand deleteEventCommand = new DeleteEventCommand(INDEX_FIRST_PERSON, "Test ListEvent");
+        DeleteEventCommand deleteEventCommand = new DeleteEventCommand(INDEX_FIRST_PERSON, "Test Event");
         deleteEventCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         String expectedMessage = DeleteEventCommand.MESSAGE_SUCCESS;
         CommandResult commandResult = deleteEventCommand.execute();

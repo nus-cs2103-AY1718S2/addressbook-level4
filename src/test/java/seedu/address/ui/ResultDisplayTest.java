@@ -50,9 +50,9 @@ public class ResultDisplayTest extends GuiUnitTest {
     }
 
     /**
-     * Posts the {@code listevent} to the {@code EventsCenter}, then verifies that <br>
-     *      - the text on the result display matches the {@code listevent}'s message <br>
-     *      - the result display's style is the same as {@code defaultStyleOfResultDisplay} if listevent is successful,
+     * Posts the {@code event} to the {@code EventsCenter}, then verifies that <br>
+     *      - the text on the result display matches the {@code event}'s message <br>
+     *      - the result display's style is the same as {@code defaultStyleOfResultDisplay} if event is successful,
      *        {@code errorStyleOfResultDisplay} otherwise.
      */
     private void assertResultDisplay(NewResultAvailableEvent event) {

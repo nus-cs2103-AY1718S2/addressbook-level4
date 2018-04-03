@@ -34,7 +34,7 @@ public class DeleteEventCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsDeleteEventCommand() {
-        assertParseSuccess(parser, " 1 listevent",
-                new DeleteEventCommand(INDEX_FIRST_PERSON, "listevent"));
+        assertParseSuccess(parser, " 1 event",
+                new DeleteEventCommand(INDEX_FIRST_PERSON, "event"));
     }
 }

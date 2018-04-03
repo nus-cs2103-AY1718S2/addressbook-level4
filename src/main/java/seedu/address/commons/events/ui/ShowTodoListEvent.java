@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.ui.TodoListWindow;
 
 /**
- * An listevent requesting to show to do list window.
+ * An event requesting to show to do list window.
  */
 public class ShowTodoListEvent extends BaseEvent {
 

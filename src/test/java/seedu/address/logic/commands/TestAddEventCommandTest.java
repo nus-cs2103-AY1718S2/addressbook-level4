@@ -40,9 +40,9 @@ public class TestAddEventCommandTest {
 
     /*@Test
     public void execute_addEvent_success() throws Exception {
-        TestAddEventCommand command = new TestAddEventCommand(INDEX_FIRST_PERSON, "Test ListEvent",
+        TestAddEventCommand command = new TestAddEventCommand(INDEX_FIRST_PERSON, "Test Event",
                 "NUS", "2018-05-01T12:00:00", "2018-05-01T12:30:00",
-                "Test add listevent command");
+                "Test add event command");
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         String expectedMessage = TestAddEventCommand.MESSAGE_SUCCESS;
         CommandResult commandResult = command.execute();

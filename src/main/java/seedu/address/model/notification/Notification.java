@@ -39,7 +39,7 @@ public class Notification {
     }
 
     public String toDisplayString() {
-        return "ListEvent " + getTitle() + " ended at " + getEndDateDisplay();
+        return "Event " + getTitle() + " ended at " + getEndDateDisplay();
     }
 
     public String getEndDateDisplay() {

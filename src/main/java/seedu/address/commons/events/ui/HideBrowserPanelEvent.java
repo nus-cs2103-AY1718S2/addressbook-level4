@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 
 
 /**
- * Represents an listevent to free resources in Browser Panel
+ * Represents an event to free resources in Browser Panel
  */
 public class HideBrowserPanelEvent extends BaseEvent {
 

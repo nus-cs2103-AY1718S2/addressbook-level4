@@ -3,7 +3,7 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * An listevent requesting to view the help page.
+ * An event requesting to view the help page.
  */
 public class ShowHelpRequestEvent extends BaseEvent {
 

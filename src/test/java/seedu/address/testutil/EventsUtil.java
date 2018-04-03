@@ -10,8 +10,7 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class EventsUtil {
     /**
-     * Posts {@code listevent} to all registered subscribers.
-     * This method will return successfully after the {@code listevent}
+     * Posts {@code event} to all registered subscribers. This method will return successfully after the {@code event}
      * has been posted to all subscribers.
      */
     public static void postNow(BaseEvent event) {
@@ -19,7 +18,7 @@ public class EventsUtil {
     }
 
     /**
-     * Posts {@code listevent} to all registered subscribers at some unspecified time in the future.
+     * Posts {@code event} to all registered subscribers at some unspecified time in the future.
      */
     public static void postLater(BaseEvent event) {
         Platform.runLater(() -> EventsCenter.getInstance().post(event));

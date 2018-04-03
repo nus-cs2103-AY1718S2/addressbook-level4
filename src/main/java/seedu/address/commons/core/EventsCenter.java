@@ -7,7 +7,7 @@ import com.google.common.eventbus.EventBus;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * Manages the listevent dispatching of the app.
+ * Manages the event dispatching of the app.
  */
 public class EventsCenter {
     private static final Logger logger = LogsCenter.getLogger(EventsCenter.class);
@@ -34,10 +34,10 @@ public class EventsCenter {
     }
 
     /**
-     * Posts an listevent to the listevent bus.
+     * Posts an event to the event bus.
      */
     public <E extends BaseEvent> EventsCenter post(E event) {
-        logger.info("------[ListEvent Posted] " + event.getClass().getCanonicalName() + ": " + event.toString());
+        logger.info("------[Event Posted] " + event.getClass().getCanonicalName() + ": " + event.toString());
         eventBus.post(event);
         return this;
     }

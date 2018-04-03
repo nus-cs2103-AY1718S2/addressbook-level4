@@ -89,6 +89,10 @@ public class RecordList {
         return true;
     }
 
+    public Record getRecord(int recordIndex) {
+        return recordList.get(recordIndex);
+    }
+
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();

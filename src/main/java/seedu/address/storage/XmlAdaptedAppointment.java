@@ -2,10 +2,8 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
 
@@ -13,14 +11,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentName;
 import seedu.address.model.appointment.AppointmentTime;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.CustTimeZone;
-import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
 import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.tag.Tag;
 
 /**
  * JAXB-friendly version of the Appointment.
@@ -87,7 +80,8 @@ public class XmlAdaptedAppointment {
         final AppointmentName name = new AppointmentName(this.name);
 
         if (this.time == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, AppointmentTime.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                        AppointmentTime.class.getSimpleName()));
         }
         if (!AppointmentTime.isValidTime(this.time)) {
             throw new IllegalValueException(AppointmentTime.MESSAGE_TIME_CONSTRAINTS);

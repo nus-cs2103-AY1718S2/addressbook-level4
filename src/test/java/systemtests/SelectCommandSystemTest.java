@@ -17,7 +17,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 
-public class SelectCommandSystemTest extends RemarkBookSystemTest {
+public class SelectCommandSystemTest extends DeskBoardSystemTest {
     //TODO: TEST
     /**
      * Test
@@ -111,9 +111,9 @@ public class SelectCommandSystemTest extends RemarkBookSystemTest {
      * 5. Selected card is at {@code expectedSelectedCardIndex} and the browser url is updated accordingly.<br>
      * 6. Status bar remains unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
-     * {@code RemarkBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see RemarkBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see RemarkBookSystemTest#assertSelectedCardChanged(Index)
+     * {@code DeskBoardSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see DeskBoardSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see DeskBoardSystemTest#assertSelectedCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
@@ -142,8 +142,8 @@ public class SelectCommandSystemTest extends RemarkBookSystemTest {
      * 4. {@code Model}, {@code Storage} and {@code ActivityListPanel} remain unchanged.<br>
      * 5. Browser url, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
-     * {@code RemarkBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see RemarkBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * {@code DeskBoardSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see DeskBoardSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();

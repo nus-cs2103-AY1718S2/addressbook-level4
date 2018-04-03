@@ -97,14 +97,9 @@ public class Event extends Activity {
         return otherEvent.getName().equals(this.getName())
                 && otherEvent.getStartDateTime().equals(this.getStartDateTime())
                 && otherEvent.getEndDateTime().equals(this.getEndDateTime())
-                && otherEvent.getLocation().equals(this.getLocation())
-                && otherEvent.getRemark().equals(this.getRemark());
-    }
-
-    @Override
-    public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return super.hashCode();
+                && (location == null ? otherEvent.location == null : location.equals(otherEvent.getLocation()))
+                && (getRemark() == null ? otherEvent.getRemark() == null : getRemark().equals(otherEvent.getRemark()))
+                && this.isCompleted() == otherEvent.isCompleted();
     }
 
     @Override
@@ -117,10 +112,11 @@ public class Event extends Activity {
                 .append(" End Date/Time")
                 .append(getEndDateTime())
                 .append(" Location: ")
-                .append(getLocation())
+                .append(getLocation() == null ? "" : getLocation())
                 .append(" Remark: ")
-                .append(getRemark())
-                .append(" Tags: ");
+                .append(getRemark() == null ? "" : getRemark())
+                .append(" Tags: ")
+                .append(isCompleted() ? "Uncompleted" : "Completed");
         getTags().forEach(builder::append);
         return builder.toString();
     }

@@ -78,7 +78,7 @@ public class XmlAdaptedTask extends XmlAdaptedActivity {
 
         final Set<Tag> tags = new HashSet<>(personTags);
 
-        return new Task(name, dateTime, remark, tags);
+        return new Task(name, dateTime, remark, tags, this.iscompleted);
     }
 
     @Override

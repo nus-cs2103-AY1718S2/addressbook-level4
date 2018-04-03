@@ -1,10 +1,9 @@
-package seedu.address.model.person;
+package seedu.address.model.activity;
 
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import seedu.address.model.activity.Remark;
 import seedu.address.testutil.Assert;
 
 public class RemarkTest {
@@ -14,22 +13,19 @@ public class RemarkTest {
         Assert.assertThrows(NullPointerException.class, () -> new Remark(null));
     }
 
-    //TODO: TEST
-    /**
-     * Test
-     */
-    public void constructor_invalidAddress_throwsIllegalArgumentException() {
-        String invalidAddress = "";
-        Assert.assertThrows(IllegalArgumentException.class, () -> new Remark(invalidAddress));
+    @Test
+    public void constructor_invalidRemark_throwsIllegalArgumentException() {
+        String invalidRemark = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Remark(invalidRemark));
     }
 
     @Test
-    public void isValidAddress() {
+    public void isValidRemark() {
         // null address
         Assert.assertThrows(NullPointerException.class, () -> Remark.isValidRemark(null));
 
         // invalid addresses
-        assertTrue(Remark.isValidRemark("")); // empty string
+        assertTrue(Remark.isValidRemark(" Hello")); // empty string
         assertTrue(Remark.isValidRemark(" ")); // spaces only
 
         // valid addresses

@@ -7,9 +7,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRATION_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ISSUE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Collections;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -45,11 +45,13 @@ public class EditPolicyCommandParser implements Parser<EditPolicyCommand> {
 
         EditPolicyDescriptor editPolicyDescriptor = new EditPolicyDescriptor();
         try {
-            ParserUtil.parsePolicyDate(argMultimap.getValue(PREFIX_BEGINNING_DATE)).ifPresent(editPolicyDescriptor::setBeginning);
-            ParserUtil.parsePolicyDate(argMultimap.getValue(PREFIX_EXPIRATION_DATE)).ifPresent(editPolicyDescriptor::setExpiration);
+            ParserUtil.parsePolicyDate(argMultimap.getValue(PREFIX_BEGINNING_DATE))
+                    .ifPresent(editPolicyDescriptor::setBeginning);
+            ParserUtil.parsePolicyDate(argMultimap.getValue(PREFIX_EXPIRATION_DATE))
+                    .ifPresent(editPolicyDescriptor::setExpiration);
             ParserUtil.parsePrice(argMultimap.getValue(PREFIX_PRICE)).ifPresent(editPolicyDescriptor::setPrice);
             Optional<List<Issue>> optIssues = parseIssuesForEditPolicy(argMultimap.getAllValues(PREFIX_ISSUE));
-            if(optIssues.isPresent()) {
+            if (optIssues.isPresent()) {
                 editPolicyDescriptor.setCoverage(new Coverage(optIssues.get()));
             }
         } catch (IllegalValueException ive) {

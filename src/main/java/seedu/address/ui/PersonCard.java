@@ -64,7 +64,7 @@ public class PersonCard extends UiPart<Region> {
         actualSpending.setText("Actual Spending: " + person.getActualSpending().toString());
         expectedSpending.setText("Predicted Spending: " + person.getExpectedSpending().toString());
         isNewClient.setText("New Client");
-        if(person.getPolicy().isPresent()) {
+        if (person.getPolicy().isPresent()) {
             policy.setText("Policy: " + person.getPolicy().get().toString());
         } else {
             policy.setText("Has not applied to any policy");

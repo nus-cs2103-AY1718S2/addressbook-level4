@@ -88,7 +88,7 @@ public class EditPolicyCommand extends UndoableCommand {
         }
 
         personToEnroll = lastShownList.get(index.getZeroBased());
-        if(!personToEnroll.getPolicy().isPresent()) {
+        if (!personToEnroll.getPolicy().isPresent()) {
             throw new CommandException(MESSAGE_PERSON_NOT_ENROLLED);
         }
 

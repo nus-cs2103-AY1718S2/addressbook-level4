@@ -2,13 +2,16 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -26,7 +29,6 @@ import seedu.address.model.policy.Date;
 import seedu.address.model.policy.Issue;
 import seedu.address.model.policy.Month;
 import seedu.address.model.policy.Price;
-
 import seedu.address.model.tag.Tag;
 
 /**
@@ -459,10 +461,7 @@ public class ParserUtil {
      * Parses {@code Collection<String> issues} into a {@code List<Issue>}.
      */
     public static List<Issue> parseIssues(Collection<String> issues) throws IllegalValueException {
-        requireNonNull(issues);/*
-        if (issues.size() == 1 && issues.toArray()[0].equals("")) {
-            return new ArrayList<>();
-        }*/
+        requireNonNull(issues);
         final List<Issue> issuesList = new ArrayList<>();
         for (String issueName : issues) {
             issuesList.add(parseIssue(issueName));

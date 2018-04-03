@@ -13,8 +13,8 @@ public enum Month {
     public static int toInt(Month month) {
         Month[] months = Month.values();
         for (int i = 0; i < months.length; i++) {
-            if(months[i] == month) {
-                return i+1;
+            if (months[i] == month) {
+                return i + 1;
             }
         }
         return 0;

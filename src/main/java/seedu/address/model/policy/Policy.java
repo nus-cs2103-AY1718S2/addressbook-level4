@@ -87,7 +87,7 @@ public class Policy {
                 .append("\n           Price: ")
                 .append(getPrice())
                 .append(" per month\n           Covers ");
-        if(coverage.getIssues().isEmpty()) {
+        if (coverage.getIssues().isEmpty()) {
             builder.append("nothing");
         } else {
             builder.append(getCoverage());

@@ -31,42 +31,28 @@ public class CompleteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
-        Activity activityToDelete = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_ACTIVITY);
+        Activity activityToComplete = model.getFilteredTaskList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
+        CompleteCommand completeCommand = prepareCommand(INDEX_FIRST_ACTIVITY);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, activityToDelete);
+        String expectedMessage = String.format(CompleteCommand.MESSAGE_COMPLETE_TASK_SUCCESS, activityToComplete);
 
         ModelManager expectedModel = new ModelManager(model.getDeskBoard(), new UserPrefs());
-        expectedModel.deleteActivity(activityToDelete);
+        Activity completedActivity = activityToComplete.getCompletedCopy();
+        expectedModel.updateActivity(activityToComplete, completedActivity);
 
-        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(completeCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredActivityList().size() + 1);
-        DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
+        CompleteCommand completeCommand = prepareCommand(outOfBoundIndex);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
+        assertCommandFailure(completeCommand, model, Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
     }
 
     @Test
-    public void execute_validIndexFilteredList_success() throws Exception {
-        showPersonAtIndex(model, INDEX_FIRST_ACTIVITY);
-
-        Activity activityToDelete = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_ACTIVITY);
-
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, activityToDelete);
-
-        Model expectedModel = new ModelManager(model.getDeskBoard(), new UserPrefs());
-        expectedModel.deleteActivity(activityToDelete);
-        showNoPerson(expectedModel);
-
-        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
+    //TODO
     public void execute_invalidIndexFilteredList_throwsCommandException() {
         showPersonAtIndex(model, INDEX_FIRST_ACTIVITY);
 
@@ -74,18 +60,19 @@ public class CompleteCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getDeskBoard().getActivityList().size());
 
-        DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
+        CompleteCommand completeCommand = prepareCommand(outOfBoundIndex);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
+        assertCommandFailure(completeCommand, model, Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
     }
 
     @Test
+    //TODO
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Activity activityToDelete = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_ACTIVITY);
+        Activity activityToComplete = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
+        CompleteCommand deleteCommand = prepareCommand(INDEX_FIRST_ACTIVITY);
         Model expectedModel = new ModelManager(model.getDeskBoard(), new UserPrefs());
 
         // delete -> first activity deleted
@@ -96,7 +83,9 @@ public class CompleteCommandTest {
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> same first activity deleted again
-        expectedModel.deleteActivity(activityToDelete);
+
+        Activity completedActivity = activityToComplete.getCompletedCopy();
+        expectedModel.updateActivity(activityToComplete, completedActivity);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -106,7 +95,7 @@ public class CompleteCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredActivityList().size() + 1);
-        DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
+        CompleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 
         // execution failed -> deleteCommand not pushed into undoRedoStack
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
@@ -128,57 +117,58 @@ public class CompleteCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_ACTIVITY);
+        CompleteCommand completeCommand = prepareCommand(INDEX_FIRST_ACTIVITY);
         Model expectedModel = new ModelManager(model.getDeskBoard(), new UserPrefs());
 
         showPersonAtIndex(model, INDEX_SECOND_ACTIVITY);
-        Activity activityToDelete = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
+        Activity activityToComplete = model.getFilteredTaskList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
         // delete -> deletes second activity in unfiltered activity list / first activity in filtered activity list
-        deleteCommand.execute();
-        undoRedoStack.push(deleteCommand);
+        completeCommand.execute();
+        undoRedoStack.push(completeCommand);
 
         // undo -> reverts addressbook back to previous state and filtered activity list to show all persons
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
-        expectedModel.deleteActivity(activityToDelete);
-        assertNotEquals(activityToDelete, model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased()));
+        Activity completedActivity = activityToComplete.getCompletedCopy();
+        expectedModel.updateActivity(activityToComplete, completedActivity);
+        assertNotEquals(activityToComplete, model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased()));
         // redo -> deletes same second activity in unfiltered activity list
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void equals() throws Exception {
-        DeleteCommand deleteFirstCommand = prepareCommand(INDEX_FIRST_ACTIVITY);
-        DeleteCommand deleteSecondCommand = prepareCommand(INDEX_SECOND_ACTIVITY);
+        CompleteCommand completeFirstCommand = prepareCommand(INDEX_FIRST_ACTIVITY);
+        CompleteCommand completeSecondCommand = prepareCommand(INDEX_SECOND_ACTIVITY);
 
         // same object -> returns true
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
+        assertTrue(completeFirstCommand.equals(completeFirstCommand));
 
         // same values -> returns true
-        DeleteCommand deleteFirstCommandCopy = prepareCommand(INDEX_FIRST_ACTIVITY);
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
+        CompleteCommand completeFirstCommandCopy = prepareCommand(INDEX_FIRST_ACTIVITY);
+        assertTrue(completeFirstCommand.equals(completeFirstCommandCopy));
 
         // one command preprocessed when previously equal -> returns false
-        deleteFirstCommandCopy.preprocessUndoableCommand();
-        assertFalse(deleteFirstCommand.equals(deleteFirstCommandCopy));
+        completeFirstCommandCopy.preprocessUndoableCommand();
+        assertFalse(completeFirstCommand.equals(completeFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(deleteFirstCommand.equals(1));
+        assertFalse(completeFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(deleteFirstCommand.equals(null));
+        assertFalse(completeFirstCommand.equals(null));
 
         // different activity -> returns false
-        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+        assertFalse(completeFirstCommand.equals(completeSecondCommand));
     }
 
     /**
      * Returns a {@code DeleteCommand} with the parameter {@code index}.
      */
-    private DeleteCommand prepareCommand(Index index) {
-        DeleteCommand deleteCommand = new DeleteCommand(index);
-        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return deleteCommand;
+    private CompleteCommand prepareCommand(Index index) {
+        CompleteCommand completeCommand = new CompleteCommand(index);
+        completeCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return completeCommand;
     }
 
     /**

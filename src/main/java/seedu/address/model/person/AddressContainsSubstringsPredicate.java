@@ -3,13 +3,14 @@ package seedu.address.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
+import seedu.address.model.FindResults;
 
 /**
  * Tests that a {@code Person}'s {@code Address} matches the substring given.
  */
 public class AddressContainsSubstringsPredicate implements Predicate<Person> {
     private final List<String> substringKeywords;
+    private final String commandPrefix = "a/";
 
     public AddressContainsSubstringsPredicate(List<String> substringKeywords) {
         this.substringKeywords = substringKeywords;
@@ -18,8 +19,8 @@ public class AddressContainsSubstringsPredicate implements Predicate<Person> {
     @Override
     public boolean test(Person person) {
         return substringKeywords.stream()
-                .anyMatch(substring -> StringUtil.containsSubstringIgnoreCase(
-                        person.getAddress().value, substring));
+                .anyMatch(substring -> FindResults.getInstance().containsSubstringIgnoreCase(
+                        person.getAddress().value, substring, commandPrefix));
     }
 
     @Override

@@ -3,13 +3,14 @@ package seedu.address.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
+import seedu.address.model.FindResults;
 
 /**
  * Tests that a {@code Person}'s {@code Phone} matches the suffix string given.
  */
 public class PhoneContainsSuffixesPredicate implements Predicate<Person> {
     private final List<String> suffixKeywords;
+    private final String commandPrefix = "p/";
 
     public PhoneContainsSuffixesPredicate(List<String> suffixKeywords) {
         this.suffixKeywords = suffixKeywords;
@@ -18,8 +19,8 @@ public class PhoneContainsSuffixesPredicate implements Predicate<Person> {
     @Override
     public boolean test(Person person) {
         return suffixKeywords.stream()
-                .anyMatch(suffix -> StringUtil.containsSuffixIgnoreCase(
-                        person.getPhone().value, suffix));
+                .anyMatch(suffix -> FindResults.getInstance().containsSuffixIgnoreCase(
+                        person.getPhone().value, suffix, commandPrefix));
     }
 
     @Override

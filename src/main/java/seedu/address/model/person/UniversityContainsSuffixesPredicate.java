@@ -6,13 +6,13 @@ import java.util.function.Predicate;
 import seedu.address.model.FindResults;
 
 /**
- * Tests that a {@code Person}'s {@code Address} matches the suffix string given.
+ * Tests that a {@code Person}'s {@code University} matches the suffix string given.
  */
-public class AddressContainsSuffixesPredicate implements Predicate<Person> {
+public class UniversityContainsSuffixesPredicate implements Predicate<Person> {
     private final List<String> suffixKeywords;
-    private final String commandPrefix = "a/";
+    private final String commandPrefix = "u/";
 
-    public AddressContainsSuffixesPredicate(List<String> suffixKeywords) {
+    public UniversityContainsSuffixesPredicate(List<String> suffixKeywords) {
         this.suffixKeywords = suffixKeywords;
     }
 
@@ -20,15 +20,15 @@ public class AddressContainsSuffixesPredicate implements Predicate<Person> {
     public boolean test(Person person) {
         return suffixKeywords.stream()
                 .anyMatch(suffix -> FindResults.getInstance().containsSuffixIgnoreCase(
-                        person.getAddress().value, suffix, commandPrefix));
+                        person.getUniversity().value, suffix, commandPrefix));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddressContainsSuffixesPredicate // instanceof handles nulls
+                || (other instanceof UniversityContainsSuffixesPredicate // instanceof handles nulls
                 && this.suffixKeywords.equals((
-                        (AddressContainsSuffixesPredicate) other).suffixKeywords)); // state check
+                (UniversityContainsSuffixesPredicate) other).suffixKeywords)); // state check
     }
 
 }

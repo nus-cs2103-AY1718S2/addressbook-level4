@@ -7,13 +7,13 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.FindResults;
 
 /**
- * Tests that a {@code Person}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code Person}'s {@code University} matches any of the keywords given.
  */
-public class NameContainsKeywordsPredicate implements Predicate<Person> {
+public class UniversityContainsKeywordsPredicate implements Predicate<Person> {
     private final List<String> keywords;
-    private final String commandPrefix = "n/";
+    private final String commandPrefix = "u/";
 
-    public NameContainsKeywordsPredicate(List<String> keywords) {
+    public UniversityContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
@@ -21,18 +21,18 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
     public boolean test(Person person) {
         return keywords.stream()
                 .anyMatch(keyword -> FindResults.getInstance()
-                        .containsWordIgnoreCase(person.getName().fullName, keyword, commandPrefix)
-                    || keywords.stream()
+                        .containsWordIgnoreCase(person.getUniversity().value, keyword, commandPrefix)
+                        || keywords.stream()
                         .anyMatch(fuzzyKeyword -> FindResults.getInstance().containsFuzzyMatchIgnoreCase(
-                                person.getName().fullName, fuzzyKeyword, commandPrefix,
+                                person.getUniversity().value, fuzzyKeyword, commandPrefix,
                                 FindCommand.LEVENSHTEIN_DISTANCE_THRESHOLD)));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof NameContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((NameContainsKeywordsPredicate) other).keywords)); // state check
+                || (other instanceof UniversityContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((UniversityContainsKeywordsPredicate) other).keywords)); // state check
     }
 
 }

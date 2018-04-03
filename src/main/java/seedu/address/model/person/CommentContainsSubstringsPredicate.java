@@ -6,13 +6,13 @@ import java.util.function.Predicate;
 import seedu.address.model.FindResults;
 
 /**
- * Tests that a {@code Person}'s {@code Major} matches the substring given.
+ * Tests that a {@code Person}'s {@code Comment} matches the substring given.
  */
-public class MajorContainsSubstringsPredicate implements Predicate<Person> {
+public class CommentContainsSubstringsPredicate implements Predicate<Person> {
     private final List<String> substringKeywords;
-    private final String commandPrefix = "m/";
+    private final String commandPrefix = "c/";
 
-    public MajorContainsSubstringsPredicate(List<String> substringKeywords) {
+    public CommentContainsSubstringsPredicate(List<String> substringKeywords) {
         this.substringKeywords = substringKeywords;
     }
 
@@ -20,15 +20,15 @@ public class MajorContainsSubstringsPredicate implements Predicate<Person> {
     public boolean test(Person person) {
         return substringKeywords.stream()
                 .anyMatch(substring -> FindResults.getInstance().containsSubstringIgnoreCase(
-                        person.getMajor().value, substring, commandPrefix));
+                        person.getComment().value, substring, commandPrefix));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof MajorContainsSubstringsPredicate // instanceof handles nulls
+                || (other instanceof CommentContainsSubstringsPredicate // instanceof handles nulls
                 && this.substringKeywords.equals((
-                        (MajorContainsSubstringsPredicate) other).substringKeywords)); // state check
+                (CommentContainsSubstringsPredicate) other).substringKeywords)); // state check
     }
 
 }

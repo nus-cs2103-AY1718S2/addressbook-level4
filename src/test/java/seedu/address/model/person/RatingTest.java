@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import seedu.address.testutil.Assert;
 
+//@@author kexiaowen
 public class RatingTest {
 
     private final Rating rating = new Rating(3, 3,

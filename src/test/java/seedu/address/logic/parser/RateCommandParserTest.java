@@ -14,6 +14,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.RateCommand;
 import seedu.address.model.person.Rating;
 
+//@@author kexiaowen
 public class RateCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =

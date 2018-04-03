@@ -16,7 +16,11 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-HR+ offers an open source solution to the recruiting process. Our software allows campus recruiters to identify the best-fitting candidates easily. At the same time, HR+ allows campus recruiters to manage student contacts faster than a typical mouse/GUI driven app.
+
+Welcome to Human Resources Plus (HR+)! HR+ is a free recruiting and talent management software designed for campus recruiters to achieve hiring success. HR+ streamlines your recruiting process, increases your productivity and helps you make more consistent and informed hiring decisions.
+To enjoy the full benefits of HR+, you should be comfortable using desktop applications and working with a Command Line Interface (CLI). If you can type fast, HR+ can get your talent management tasks done faster than traditional Graphical User Interface (GUI) applications.
+
+Start optimising your hiring process today with HR+ to hire the right ones!
 
 == Site Map
 

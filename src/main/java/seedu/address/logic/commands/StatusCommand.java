@@ -43,7 +43,7 @@ public class StatusCommand extends UndoableCommand {
 
     private Person personToUpdateStatus;
     private Person updatedPerson;
-
+    //@@author mhq199657
     /**
      * @param index of the person in the filtered person list to update status
      * @param updatedStatus updatedStatus

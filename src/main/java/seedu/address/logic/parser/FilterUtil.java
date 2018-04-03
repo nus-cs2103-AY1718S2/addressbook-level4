@@ -28,6 +28,7 @@ import seedu.address.model.util.InterviewDateUtil;
  * A utility class for parsing FilterCommand
  */
 public class FilterUtil {
+    //@@author mhq199657
     /**
      * Parses a Optional of  predicateString to a Predicate used to filter Person
      * @param predicateString a predicate string read from user input

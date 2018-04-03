@@ -23,7 +23,7 @@ public class FilterCommand extends Command {
             + PREFIX_EXPECTED_GRADUATION_YEAR + " 2020, 2021-2024";
 
     private final Predicate<Person> predicate;
-
+    //@@author mhq199657
     public FilterCommand(Predicate<Person> predicate) {
         this.predicate = predicate;
     }

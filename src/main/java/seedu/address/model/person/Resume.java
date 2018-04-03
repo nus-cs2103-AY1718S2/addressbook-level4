@@ -19,7 +19,7 @@ public class Resume {
     private static final int ONEMEGABYTE = 1 * 1024 * 1024;
     private static final String RESUME_VALIDATION_REGEX = ".*\\S.*";
     public final String value;
-
+    //@@author mhq199657
     /**
      * Constructs a {@code Resume}.
      *

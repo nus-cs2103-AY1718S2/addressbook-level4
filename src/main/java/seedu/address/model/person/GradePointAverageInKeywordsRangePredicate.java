@@ -10,6 +10,7 @@ import seedu.address.logic.parser.FilterRange;
 public class GradePointAverageInKeywordsRangePredicate implements Predicate<Person> {
     private final String low;
     private final String high;
+    //@@author mhq199657
     public GradePointAverageInKeywordsRangePredicate(GradePointAverage low, GradePointAverage high) {
         this.low = low.value;
         this.high = high.value;

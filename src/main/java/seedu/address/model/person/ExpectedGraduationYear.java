@@ -13,7 +13,7 @@ public class ExpectedGraduationYear {
     private static final int YEAR_LOWER_BOUND = 2017;
     private static final int YEAR_UPPER_BOUND = 2025;
     public final String value;
-
+    //@@author mhq199657
     /**
      * Constructs a {@code expectedGraduationYear}.
      *

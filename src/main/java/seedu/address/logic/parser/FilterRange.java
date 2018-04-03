@@ -9,7 +9,7 @@ public class FilterRange<E> {
     private E lowValue;
     private E highValue;
     private E exactValue;
-
+    //@@author mhq199657
     public FilterRange(E exactValue) {
         this.isRange = false;
         this.lowValue = null;

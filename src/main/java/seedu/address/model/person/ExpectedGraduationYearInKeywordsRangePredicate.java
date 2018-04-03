@@ -10,6 +10,7 @@ import seedu.address.logic.parser.FilterRange;
 public class ExpectedGraduationYearInKeywordsRangePredicate implements Predicate<Person> {
     private final String low;
     private final String high;
+    //@@author mhq199657
     public ExpectedGraduationYearInKeywordsRangePredicate(ExpectedGraduationYear low, ExpectedGraduationYear high) {
         this.low = low.value;
         this.high = high.value;

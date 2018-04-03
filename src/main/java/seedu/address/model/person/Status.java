@@ -13,7 +13,6 @@ import javafx.scene.paint.Color;
  * Guarantees: Status value is one of the seven predefined values.
  */
 public class Status {
-
     public static final String MESSAGE_STATUS_CONSTRAINTS =
             "Person status should only be specified by one of the predefined status indices.";
     public static final String STATUS_NEW = "New";
@@ -73,7 +72,7 @@ public class Status {
     }
     public final String value;
     public final Color color;
-
+    //@@author mhq199657
     /**
      * Constructs a {@code Status}.
      *

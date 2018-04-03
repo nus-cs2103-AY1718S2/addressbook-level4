@@ -10,6 +10,7 @@ import seedu.address.logic.parser.FilterRange;
 public class RatingInKeywordsRangePredicate implements Predicate<Person> {
     private final double low;
     private final double high;
+    //@@author mhq199657
     public RatingInKeywordsRangePredicate(Rating low, Rating high) {
         this.low = low.getOverallScore();
         this.high = high.getOverallScore();

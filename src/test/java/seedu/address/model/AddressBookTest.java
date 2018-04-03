@@ -81,6 +81,7 @@ public class AddressBookTest {
         addressBook.getTagList().remove(0);
     }
 
+    //@@author Caijun7-reused
     @Test
     public void updatePerson_detailsChanged_personsAndTagsListUpdated() throws Exception {
         AddressBook addressBookUpdatedToAmy = new AddressBookBuilder().withPerson(BOB).build();
@@ -107,7 +108,9 @@ public class AddressBookTest {
 
         assertEquals(expectedAddressBook, addressBookWithAmyAndBob);
     }
+    //@@author
 
+    //@@author yeggasd
     @Test
     public void createdWithPassword_passwordChanged_passwordChanged() throws Exception {
         AddressBook addressBookUpdatedPassword = new AddressBook("new");
@@ -131,6 +134,7 @@ public class AddressBookTest {
         AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BOB).withPassword("new").build();
         assertEquals(expectedAddressBook, addressBookUpdatedPassword);
     }
+    //@@author
 
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
@@ -138,7 +142,9 @@ public class AddressBookTest {
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        //@@author jingyinno
         private final ObservableList<Alias> aliases = FXCollections.observableArrayList();
+        //@@author
         private final Password password = new Password("test");
 
         AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
@@ -156,6 +162,7 @@ public class AddressBookTest {
             return tags;
         }
 
+        //@@author jingyinno
         @Override
         public ObservableList<Alias> getAliasList() {
             return aliases;
@@ -165,11 +172,14 @@ public class AddressBookTest {
         public void resetAliasList() {
             fail("This method should not be called.");
         }
+        //@@author
 
+        //@@author yeggasd
         @Override
         public Password getPassword() {
             return password;
         }
+        //@@author
     }
 
 }

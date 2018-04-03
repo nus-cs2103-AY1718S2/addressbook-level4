@@ -8,6 +8,7 @@ import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.building.Building;
 import seedu.address.model.building.Room;
 
+//@@author Caijun7
 /**
  * A class to access VenueInformation stored in the hard disk as a json file
  */
@@ -35,7 +36,7 @@ public class ReadOnlyJsonVenueInformation implements ReadOnlyVenueInformation {
      * @throws DataConversionException if the file format is not as expected.
      */
     public Optional<Room> readVenueInformation(String venueInformationFilePath) throws DataConversionException {
-        return JsonUtil.readJsonFile(venueInformationFilePath, Room.class);
+        return JsonUtil.readJsonFileFromResource(venueInformationFilePath, Room.class);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class ReadOnlyJsonVenueInformation implements ReadOnlyVenueInformation {
      */
     public Optional<Building> readBuildingsAndRoomsInformation(String buildingsAndRoomsInformationFilePath)
             throws DataConversionException {
-        return JsonUtil.readJsonFile(buildingsAndRoomsInformationFilePath, Building.class);
+        return JsonUtil.readJsonFileFromResource(buildingsAndRoomsInformationFilePath, Building.class);
     }
 
 }

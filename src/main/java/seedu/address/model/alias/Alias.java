@@ -3,6 +3,7 @@ package seedu.address.model.alias;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author jingyinno
 /**
  * Represents a Alias in the address book.
  * Guarantees: immutable; name is valid as declared in {@link #isValidAliasName(String)}

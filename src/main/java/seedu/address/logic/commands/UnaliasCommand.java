@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.alias.exceptions.AliasNotFoundException;
 
+//@@author jingyinno
 /**
  * Removes an alias pair from the address book.
  */

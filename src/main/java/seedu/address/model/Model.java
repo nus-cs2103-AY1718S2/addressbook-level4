@@ -12,6 +12,7 @@ import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.building.Building;
 import seedu.address.model.building.exceptions.BuildingNotFoundException;
+import seedu.address.model.building.exceptions.CorruptedVenueInformationException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -36,11 +37,10 @@ public interface Model {
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
 
+    //@@author jingyinno
     /** Adds the given alias */
     void addAlias(Alias alias) throws DuplicateAliasException;
-
-    /** Returns rooms for the given building */
-    ArrayList<ArrayList<String>> getAllRoomsSchedule(Building building) throws BuildingNotFoundException;
+    //@@author
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -61,12 +61,15 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    //@@author Caijun7-reused
     /**
      * Remove {@code tag} from all {@code person}s in the {@code AddressBook}.
      * @param tag
      */
     void deleteTag(Tag tag);
+    //@@author
 
+    //@@author Caijun7
     /**
      * Imports specified {@code AddressBook} from filepath to current {@code AddressBook}
      */
@@ -74,12 +77,30 @@ public interface Model {
             WrongPasswordException;
 
     /**
+     * Exports the current view of {@code AddressBook} to the filepath.
+     * @param filepath
+     */
+    void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
+                                                                        DuplicatePersonException;
+    //@@author
+
+    //@@author yeggasd
+    /**
      * Updates the password with the given password.
      */
     void updatePassword(byte[] password);
+    //@@author
 
+    //@@author jingyinno
     /**
      * Removes alias given the alias string to remove.
      */
     void removeAlias(String toRemove) throws AliasNotFoundException;
+    //@@author
+
+    //@@author Caijun7
+    /** Returns rooms for the given building */
+    ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
+                                                                                    CorruptedVenueInformationException;
+    //@@author
 }

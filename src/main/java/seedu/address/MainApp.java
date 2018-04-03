@@ -70,9 +70,10 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
+        UserPrefs.setUserAddressBookFilePath(userPrefs.getAddressBookFilePath());
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         ReadOnlyVenueInformation venueInformationStorage =
-                new ReadOnlyJsonVenueInformation(config.getVenueInformationFilePath());
+                new ReadOnlyJsonVenueInformation(config.DEFAULT_VENUEINFORMATION_FILE);
         initVenueInformation(venueInformationStorage);
         storage = new StorageManager(addressBookStorage, userPrefsStorage, venueInformationStorage);
 
@@ -192,6 +193,7 @@ public class MainApp extends Application {
         return initializedPrefs;
     }
 
+    //@@author Caijun7
     /**
      * Initialize {@code nusVenues} and {@code nusBuildingsAndRooms} using the file at
      * {@code storage}'s venue information file path
@@ -202,18 +204,19 @@ public class MainApp extends Application {
 
         try {
             Optional<Building> buildingOptional = storage.readBuildingsAndRoomsInformation();
-            Building building = buildingOptional.orElse(new Building("Test"));
+            Building building = buildingOptional.orElseThrow(() -> new DataConversionException(new IOException()));
             Building.setNusBuildingsAndRooms(building.getBuildingsAndRooms());
             Optional<Room> roomOptional = storage.readVenueInformation();
-            Room room = roomOptional.orElse(new Room("Test"));
+            Room room = roomOptional.orElseThrow(() -> new DataConversionException(new IOException()));
             Room.setNusVenues(room.getNusRooms());
         } catch (DataConversionException de) {
-            logger.warning("UserPrefs file at " + venueInformationFilePath + " is not in the correct format.");
+            logger.warning("VenueInformation file at " + venueInformationFilePath + " is not in the correct format.");
         } catch (IOException ioe) {
             logger.warning("Problem while reading from the file at " + venueInformationFilePath);
         }
 
     }
+    //@@author
 
     private void initEventsCenter() {
         EventsCenter.getInstance().registerHandler(this);

@@ -87,6 +87,7 @@ public class InfoPanel extends UiPart<Region> {
         birthdayPlaceholder.toFront();
     }
 
+    //@@author jingyinno
     @Subscribe
     private void handleVenueTableEvent(VenueTableEvent event) {
         venuePlaceholder.getChildren().removeAll();
@@ -110,4 +111,5 @@ public class InfoPanel extends UiPart<Region> {
         }
         mapsPlaceholder.toFront();
     }
+    //@@author
 }

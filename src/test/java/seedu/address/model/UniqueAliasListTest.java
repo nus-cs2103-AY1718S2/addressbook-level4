@@ -19,6 +19,7 @@ import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.testutil.AliasBuilder;
 
+//@@author jingyinno
 public class UniqueAliasListTest {
 
     @Rule

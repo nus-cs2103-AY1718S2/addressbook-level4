@@ -20,6 +20,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.Password;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.AliasNotFoundException;
@@ -150,7 +151,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public ArrayList<ArrayList<String>> getAllRoomsSchedule(Building building) throws BuildingNotFoundException {
+        public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building)
+                throws BuildingNotFoundException {
             fail("This method should not be called.");
             return null;
         }
@@ -167,6 +169,11 @@ public class AddCommandTest {
 
         @Override
         public void importAddressBook(String filepath, byte[] password) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void exportAddressBook(String filepath, Password password) {
             fail("This method should not be called.");
         }
     }

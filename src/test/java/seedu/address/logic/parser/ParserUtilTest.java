@@ -40,9 +40,11 @@ public class ParserUtilTest {
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
+    //@@author jingyinno
     private static final String VALID_BUILDING = "COM1";
 
     private static final String INVALID_BUILDING = "COM*";
+    //@@author
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -249,6 +251,7 @@ public class ParserUtilTest {
         assertEquals(expectedTagSet, actualTagSet);
     }
 
+    //@@author jingyinno
     @Test
     public void parseBuilding_validBuilding() throws Exception {
         Building building = new Building(VALID_BUILDING);
@@ -256,7 +259,8 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parsePhone_invalidBuilding_throwsIllegalValueException() {
+    public void parseBuilding_invalidBuilding_throwsIllegalValueException() {
         Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseBuilding(INVALID_BUILDING));
     }
+    //@@author
 }

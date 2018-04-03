@@ -44,9 +44,11 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, ReadOnlyV
      */
     void handleAddressBookChangedEvent(AddressBookChangedEvent abce);
 
+    //@@author Caijun7
     @Override
     Optional<Room> readVenueInformation() throws DataConversionException, IOException;
 
     @Override
     Optional<Building> readBuildingsAndRoomsInformation() throws DataConversionException, IOException;
+    //@@author
 }

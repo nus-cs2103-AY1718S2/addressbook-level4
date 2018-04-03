@@ -8,24 +8,30 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.ImportCommand;
 
+//@@author Caijun7
 public class ImportCommandParserTest {
     private static final String TEST_PASSWORD = "test";
 
     private ImportCommandParser parser = new ImportCommandParser();
 
     @Test
-    public void parse_validArgs_returnsImportCommand() {
+    public void parse_validOneArgs_returnsImportCommand() {
+        assertParseSuccess(parser, "validString", new ImportCommand("validString", TEST_PASSWORD));
+    }
+
+    @Test
+    public void parse_validTwoArgs_returnsImportCommand() {
         assertParseSuccess(parser, "validString test", new ImportCommand("validString", TEST_PASSWORD));
     }
 
     @Test
-    public void parse_oneArg_throwsParseException() {
-        assertParseFailure(parser, "validString", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+    public void parse_invalidThreeArg_throwsParseException() {
+        assertParseFailure(parser, "invalidString is invalid", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 ImportCommand.MESSAGE_USAGE));
     }
 
     @Test
-    public void parse_invalidArgs_throwsParseException() {
+    public void parse_invalidZeroArgs_throwsParseException() {
         assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
     }
 }

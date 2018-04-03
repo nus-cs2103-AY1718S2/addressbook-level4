@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.model.Password;
 
+//@@author yeggasd
 /**
  * JAXB-friendly version of the Password.
  */

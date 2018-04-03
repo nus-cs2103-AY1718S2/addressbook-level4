@@ -2,6 +2,7 @@ package seedu.address.testutil;
 
 import seedu.address.model.alias.Alias;
 
+//@@author jingyinno
 /**
  * A utility class to help with building Alias objects.
  */

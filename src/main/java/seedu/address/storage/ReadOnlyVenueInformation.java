@@ -7,6 +7,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.building.Building;
 import seedu.address.model.building.Room;
 
+//@@author Caijun7
 /**
  * Represents a storage for {@link seedu.address.model.building.Room}.
  */

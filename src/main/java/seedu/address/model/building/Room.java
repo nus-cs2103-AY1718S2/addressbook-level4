@@ -5,7 +5,12 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.building.exceptions.CorruptedVenueInformationException;
+
+//@@author Caijun7
 /**
  * Represents a Room in National University of Singapore.
  * Guarantees: immutable; is valid as declared in {@link #isValidRoom(String)}
@@ -17,15 +22,17 @@ public class Room {
 
     public static final String ROOM_VALIDATION_REGEX = "[^\\s].*";
 
+    private static final Logger logger = LogsCenter.getLogger(Room.class);
+
     /**
      * Represents all rooms in National University of Singapore
      */
-    private static HashMap<String, Week> nusVenues;
+    private static HashMap<String, Week> nusVenues = null;
 
     private final String roomName;
 
-    private HashMap<String, Week> nusRooms;
-    private Week week;
+    private HashMap<String, Week> nusRooms = null;
+    private Week week = null;
 
     /**
      * Uses a private {@code Room} constructor for Jackson JSON API to instantiate an object
@@ -52,6 +59,14 @@ public class Room {
         return test.matches(ROOM_VALIDATION_REGEX);
     }
 
+    public static HashMap<String, Week> getNusVenues() {
+        return nusVenues;
+    }
+
+    public static void setNusVenues(HashMap<String, Week> nusVenues) {
+        Room.nusVenues = nusVenues;
+    }
+
     public HashMap<String, Week> getNusRooms() {
         return nusRooms;
     }
@@ -64,26 +79,42 @@ public class Room {
         return roomName;
     }
 
-    public static HashMap<String, Week> getNusVenues() {
-        return nusVenues;
+    public Week getWeek() {
+        return week;
     }
 
-    public static void setNusVenues(HashMap<String, Week> nusVenues) {
-        Room.nusVenues = nusVenues;
+    public void setWeek(Week week) {
+        this.week = week;
     }
 
     /**
      * Retrieves the {@code Room}'s weekday schedule in an ArrayList
+     *
+     * @throws CorruptedVenueInformationException if the room schedule format is not as expected.
      */
-    public ArrayList<String> getWeekDaySchedule() {
+    public ArrayList<String> retrieveWeekDaySchedule() throws CorruptedVenueInformationException {
         initializeWeek();
-        ArrayList<String> schedules = week.getWeekDaySchedule();
+        ArrayList<String> schedules = week.retrieveWeekDaySchedule();
         schedules.add(0, roomName);
         return schedules;
     }
 
-    public void initializeWeek() {
+    /**
+     * Initialize the {@code Week} schedule of the room
+     *
+     * @throws CorruptedVenueInformationException if the NUS Venues format is not as expected.
+     */
+    public void initializeWeek() throws CorruptedVenueInformationException {
+        if (nusVenues == null) {
+            logger.warning("NUS Venues is null, venueinformation.json file is corrupted.");
+            throw new CorruptedVenueInformationException();
+        }
         week = nusVenues.get(roomName);
+        if (week == null) {
+            logger.warning(roomName + " data is null, venueinformation.json file is corrupted.");
+            throw new CorruptedVenueInformationException();
+        }
+        week.setRoomName(roomName);
     }
 
     @Override

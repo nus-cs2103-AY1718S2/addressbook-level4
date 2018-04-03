@@ -21,6 +21,7 @@ import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.building.Building;
 import seedu.address.model.building.exceptions.BuildingNotFoundException;
+import seedu.address.model.building.exceptions.CorruptedVenueInformationException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -88,19 +89,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author jingyinno
     @Override
     public synchronized void addAlias(Alias alias) throws DuplicateAliasException {
         addressBook.addAlias(alias);
         indicateAddressBookChanged();
     }
-
-    @Override
-    public ArrayList<ArrayList<String>> getAllRoomsSchedule(Building building) throws BuildingNotFoundException {
-        if (!Building.isValidBuilding(building)) {
-            throw new BuildingNotFoundException();
-        }
-        return building.getAllRoomsSchedule();
-    }
+    //@@author
 
     @Override
     public void updatePerson(Person target, Person editedPerson)
@@ -111,23 +106,30 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author yeggasd
     @Override
     public void updatePassword(byte[] password) {
         addressBook.updatePassword(password);
         indicateAddressBookChanged();
     }
+    //@@author
 
+    //@@author jingyinno
     @Override
     public void removeAlias(String toRemove) throws AliasNotFoundException {
         addressBook.removeAlias(toRemove);
         indicateAddressBookChanged();
     }
+    //@@author
 
+    //@@author Caijun7-reused
     @Override
     public void deleteTag(Tag tag) {
         addressBook.removeTag(tag);
     }
+    //@@author
 
+    //@@author Caijun7
     /**
      * Imports the specified {@code AddressBook} from the filepath to the current {@code AddressBook}.
      * @param filepath
@@ -136,12 +138,26 @@ public class ModelManager extends ComponentManager implements Model {
     public void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
                                                                             WrongPasswordException {
         requireNonNull(filepath);
-        requireNonNull(password);
 
         XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
         xmlAddressBook.importAddressBook(filepath, this.addressBook, password);
         indicateAddressBookChanged();
     }
+
+    /**
+     * Exports the current view of {@code AddressBook} to the filepath.
+     * @param filepath
+     */
+    @Override
+    public void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
+                                                                                DuplicatePersonException {
+        requireNonNull(filepath);
+
+        XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
+        xmlAddressBook.exportAddressBook(filepath, password, filteredPersons);
+        indicateAddressBookChanged();
+    }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -159,6 +175,19 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+
+    //=========== Vacant Room Finder ==========================================================================
+
+    //@@author Caijun7
+    @Override
+    public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
+            CorruptedVenueInformationException {
+        if (!Building.isValidBuilding(building)) {
+            throw new BuildingNotFoundException();
+        }
+        return building.retrieveAllRoomsSchedule();
+    }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {

@@ -25,6 +25,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.Password;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.AliasNotFoundException;
@@ -37,6 +38,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AliasBuilder;
 
+//@@author jingyinno
 public class UnaliasCommandTest {
 
     @Rule
@@ -173,12 +175,18 @@ public class UnaliasCommandTest {
         }
 
         @Override
+        public void exportAddressBook(String filepath, Password password) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void addAlias(Alias alias) throws DuplicateAliasException {
             fail("This method should not be called.");
         }
 
         @Override
-        public ArrayList<ArrayList<String>> getAllRoomsSchedule(Building building) throws BuildingNotFoundException {
+        public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building)
+                throws BuildingNotFoundException {
             fail("This method should not be called.");
             return null;
         }

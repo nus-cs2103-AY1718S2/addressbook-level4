@@ -12,6 +12,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.TimeTableEvent;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.timetable.Timetable;
@@ -30,12 +31,12 @@ public class TimeTableCommand extends Command {
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "%1$s Week Timetable of selected Person: %1$s";
 
     private final Index targetIndex;
-    private final int oddEven;
+    private final String oddEven;
     private Person personToShow;
     /**
      * Creates a Timetable to retrieve the timetable of the given index
      */
-    public TimeTableCommand(Index targetIndex, int oddEven) {
+    public TimeTableCommand(Index targetIndex, String oddEven) {
         requireNonNull(targetIndex);
         requireNonNull(oddEven);
         this.targetIndex = targetIndex;
@@ -49,10 +50,12 @@ public class TimeTableCommand extends Command {
         preprocess();
 
         Timetable timeTable = personToShow.getTimetable();
-        ArrayList<ArrayList<String>> personTimeTable = timeTable.getTimetable().get(oddEven);
+        int oddEvenIndex = StringUtil.getOddEven(oddEven);
+        ArrayList<ArrayList<String>> personTimeTable = timeTable.getTimetable().get(oddEvenIndex);
         ObservableList<ArrayList<String>> timeTableList = FXCollections.observableArrayList(personTimeTable);
         EventsCenter.getInstance().post(new TimeTableEvent(timeTableList));
-        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, oddEven, personToShow));
+        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, StringUtil.capitalize(oddEven),
+                personToShow));
     }
 
     /**
@@ -67,32 +70,18 @@ public class TimeTableCommand extends Command {
         personToShow = lastShownList.get(targetIndex.getZeroBased());
     }
 
-    /**
-     *  Tem Po La Ly
-     * @return
-     */
-    public ArrayList<ArrayList<String>> gd () {
-        ArrayList<ArrayList<String>> d = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            ArrayList<String> e = new ArrayList<>();
-            for (int j = 0; j < 10; j++) {
-                if ((i + j) % 2 == 0) {
-                    e.add(new Integer(i + j).toString());
-                } else {
-                    e.add(null);
-                }
-            }
-            d.add(e);
-        }
-        return  d;
-    }
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof TimeTableCommand // instanceof handles nulls
                 && this.targetIndex.equals(((TimeTableCommand) other).targetIndex) // state check
-                && this.oddEven == ((TimeTableCommand) other).oddEven
+                && this.oddEven.equalsIgnoreCase(((TimeTableCommand) other).oddEven)
                 && Objects.equals(this.personToShow, ((TimeTableCommand) other).personToShow));
 
+    }
+
+    @Override
+    public String toString() {
+        return targetIndex.toString() + " " + oddEven + " " + personToShow;
     }
 }

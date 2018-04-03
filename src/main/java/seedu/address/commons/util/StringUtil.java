@@ -82,6 +82,19 @@ public class StringUtil {
     }
 
     /**
+     * @param s The string to be checked
+     * @return 0 is string is even else 1.
+     */
+    public static int getOddEven(String s) {
+        requireNonNull(s);
+        if (s.equalsIgnoreCase("even")) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
+    /**
      * Returns true if (@code text) represents a day in the week
      * e.g. Monday
      * Will return false for any other non-null string input
@@ -94,6 +107,17 @@ public class StringUtil {
                 || s.equalsIgnoreCase("Wednesday") || s.equalsIgnoreCase("Thursday")
                 || s.equalsIgnoreCase("Friday") || s.equalsIgnoreCase("Saturday")
                 || s.equalsIgnoreCase("Sunday");
+    }
+
+    /**
+     * Capitalizes the given (@code s)
+     * @param s String to be capitalized
+     * @return Capitalized String
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static String capitalize(String s) {
+        requireNonNull(s);
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
     //@@author
 }

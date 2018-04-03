@@ -8,8 +8,8 @@ import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
-import static seedu.address.testutil.TypicalOddEven.EVEN_INDEX;
-import static seedu.address.testutil.TypicalOddEven.ODD_INDEX;
+import static seedu.address.testutil.TypicalOddEven.EVEN;
+import static seedu.address.testutil.TypicalOddEven.ODD;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -21,6 +21,7 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.TimeTableEvent;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -49,26 +50,26 @@ public class TimeTableCommandTest {
     public void execute_validIndexUnfilteredList_success() {
         Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON, ODD_INDEX);
-        assertExecutionSuccess(INDEX_THIRD_PERSON, ODD_INDEX);
-        assertExecutionSuccess(lastPersonIndex, ODD_INDEX);
-        assertExecutionSuccess(INDEX_FIRST_PERSON, EVEN_INDEX);
-        assertExecutionSuccess(INDEX_THIRD_PERSON, EVEN_INDEX);
-        assertExecutionSuccess(lastPersonIndex, EVEN_INDEX);
+        assertExecutionSuccess(INDEX_FIRST_PERSON, ODD);
+        assertExecutionSuccess(INDEX_THIRD_PERSON, ODD);
+        assertExecutionSuccess(lastPersonIndex, ODD);
+        assertExecutionSuccess(INDEX_FIRST_PERSON, EVEN);
+        assertExecutionSuccess(INDEX_THIRD_PERSON, EVEN);
+        assertExecutionSuccess(lastPersonIndex, EVEN);
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_failure() {
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
 
-        assertExecutionFailure(outOfBoundsIndex, EVEN_INDEX, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertExecutionFailure(outOfBoundsIndex, EVEN, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_validIndexFilteredList_success() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON, EVEN_INDEX);
+        assertExecutionSuccess(INDEX_FIRST_PERSON, EVEN);
     }
 
     @Test
@@ -79,20 +80,20 @@ public class TimeTableCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        assertExecutionFailure(outOfBoundsIndex, EVEN_INDEX, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertExecutionFailure(outOfBoundsIndex, EVEN, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
-        TimeTableCommand timeTableFirstCommand = new TimeTableCommand(INDEX_FIRST_PERSON, EVEN_INDEX);
-        TimeTableCommand timeTableSecondCommand = new TimeTableCommand(INDEX_SECOND_PERSON, EVEN_INDEX);
-        TimeTableCommand timeTableThirdCommand = new TimeTableCommand(INDEX_FIRST_PERSON, ODD_INDEX);
+        TimeTableCommand timeTableFirstCommand = new TimeTableCommand(INDEX_FIRST_PERSON, EVEN);
+        TimeTableCommand timeTableSecondCommand = new TimeTableCommand(INDEX_SECOND_PERSON, EVEN);
+        TimeTableCommand timeTableThirdCommand = new TimeTableCommand(INDEX_FIRST_PERSON, ODD);
 
         // same object -> returns true
         assertTrue(timeTableFirstCommand.equals(timeTableFirstCommand));
 
         // same values -> returns true
-        TimeTableCommand timeTableFirstCommandCopy = new TimeTableCommand(INDEX_FIRST_PERSON, EVEN_INDEX);
+        TimeTableCommand timeTableFirstCommandCopy = new TimeTableCommand(INDEX_FIRST_PERSON, EVEN);
         assertTrue(timeTableFirstCommand.equals(timeTableFirstCommandCopy));
 
         // different types -> returns false
@@ -113,10 +114,11 @@ public class TimeTableCommandTest {
      * and checks that {@code JumpToListRequestEvent}
      * is raised with the correct index and oddEven.
      */
-    private void assertExecutionSuccess(Index index, int oddEven) {
+    private void assertExecutionSuccess(Index index, String oddEven) {
         TimeTableCommand timeTableCommand = prepareCommand(index, oddEven);
         Person target = model.getFilteredPersonList().get(index.getZeroBased());
         ArrayList<ArrayList<ArrayList<String>>> targetList = target.getTimetable().getTimetable();
+        int oddEvenIndex = StringUtil.getOddEven(oddEven);
         try {
             CommandResult commandResult = timeTableCommand.execute();
             assertEquals(String.format(TimeTableCommand.MESSAGE_SELECT_PERSON_SUCCESS, oddEven, index.getOneBased()),
@@ -126,7 +128,7 @@ public class TimeTableCommandTest {
         }
 
         TimeTableEvent lastEvent = (TimeTableEvent) eventsCollectorRule.eventsCollector.getMostRecent();
-        assertEquals(targetList.get(oddEven), lastEvent.getTimeTable());
+        assertEquals(targetList.get(oddEvenIndex), lastEvent.getTimeTable());
     }
 
     /**
@@ -134,7 +136,7 @@ public class TimeTableCommandTest {
      * and checks that a {@code CommandException}
      * is thrown with the {@code expectedMessage}.
      */
-    private void assertExecutionFailure(Index index, int oddEven, String expectedMessage) {
+    private void assertExecutionFailure(Index index, String oddEven, String expectedMessage) {
         TimeTableCommand timeTableCommand = prepareCommand(index, oddEven);
 
         try {
@@ -149,7 +151,7 @@ public class TimeTableCommandTest {
     /**
      * Returns a {@code SelectCommand} with parameters {@code index}.
      */
-    private TimeTableCommand prepareCommand(Index index, int oddEven) {
+    private TimeTableCommand prepareCommand(Index index, String oddEven) {
         TimeTableCommand timeTableCommand = new TimeTableCommand(index, oddEven);
         timeTableCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return timeTableCommand;

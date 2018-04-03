@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -45,10 +46,12 @@ public class XmlAddressBookStorageTest {
         return new XmlAddressBookStorage(filePath).readAddressBook(addToTestDataPathIfNotNull(filePath));
     }
 
+    //@@author yeggasd
     private java.util.Optional<ReadOnlyAddressBook> readAddressBook(String filePath, Password password)
                                                                             throws Exception {
         return new XmlAddressBookStorage(filePath).readAddressBook(addToTestDataPathIfNotNull(filePath), password);
     }
+    //@@author
 
     private String addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
         return prefsFileInTestDataFolder != null
@@ -84,6 +87,7 @@ public class XmlAddressBookStorageTest {
         readAddressBook("invalidAndValidPersonAddressBook.xml");
     }
 
+    //@@author yeggasd
     @Test
     public void readAddressBookWithPassword_invalidAndValidPersonAddressBook_throwDataConversionException()
             throws Exception {
@@ -99,6 +103,7 @@ public class XmlAddressBookStorageTest {
         thrown.expect(WrongPasswordException.class);
         readAddressBook(filePath, new Password("test"));
     }
+    //@@author
 
     @Test
     public void readAndSaveAddressBook_allInOrder_success() throws Exception {
@@ -126,6 +131,7 @@ public class XmlAddressBookStorageTest {
 
     }
 
+    //@@author yeggasd
     @Test
     public void readAndSaveEncryptedAddressBook_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
@@ -167,6 +173,7 @@ public class XmlAddressBookStorageTest {
                                         SecurityUtil.hashPassword(TEST_PASSWORD))).get();
         assertEquals(original, new AddressBook(readBack));
     }
+    //@@author
 
     //@@author Caijun7
     @Test
@@ -227,5 +234,10 @@ public class XmlAddressBookStorageTest {
         saveAddressBook(new AddressBook(), null);
     }
 
-
+    @After
+    public void reset() throws Exception {
+        String filePath = "TempEncryptedAddressBook.xml";
+        File file = new File(TEST_DATA_FOLDER + filePath);
+        SecurityUtil.decrypt(file, SecurityUtil.hashPassword("wrongPassword"));
+    }
 }

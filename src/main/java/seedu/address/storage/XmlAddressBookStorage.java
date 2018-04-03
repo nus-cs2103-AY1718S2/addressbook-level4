@@ -45,11 +45,13 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         return readAddressBook(filePath);
     }
 
+    //@@author yeggasd
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook(Password password) throws DataConversionException, IOException,
             WrongPasswordException {
         return readAddressBook(filePath, password);
     }
+    //@@author
 
     /**
      * Similar to {@link #readAddressBook()}
@@ -69,7 +71,6 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         File file = new File(filePath);
         SecurityUtil.decrypt(file);
         XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(file);
-        SecurityUtil.encrypt(file);
         try {
             return Optional.of(xmlAddressBook.toModelType());
         } catch (IllegalValueException ive) {
@@ -78,6 +79,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         }
     }
 
+    //@@author yeggasd
     /**
      * Similar to {@link #readAddressBook()}
      * @param filePath location of the data. Cannot be null
@@ -95,14 +97,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             return Optional.empty();
         }
         File file = new File(filePath);
-        if (password.getPassword() != null) {
-            try {
-                SecurityUtil.decrypt(file, password.getPassword());
-            } catch (WrongPasswordException e) {
-                logger.info("Current Password don't work, trying previous password.");
-                SecurityUtil.decrypt(file, password.getPrevPassword());
-            }
-        }
+        SecurityUtil.decryptFile(file, password);
         XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(file);
         if (password.getPassword() != null) {
             SecurityUtil.encrypt(file, password.getPassword());
@@ -114,6 +109,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             throw new DataConversionException(ive);
         }
     }
+    //@@author
 
     //@@author Caijun7
     /**
@@ -190,18 +186,9 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
         Password password = addressBook.getPassword();
-        if (password.getPassword() != null) {
-            try {
-                SecurityUtil.decrypt(file, password.getPassword());
-            } catch (WrongPasswordException e) {
-                logger.info("Current Password don't work, trying previous password.");
-                SecurityUtil.decrypt(file, password.getPrevPassword());
-            }
-        }
+        SecurityUtil.decryptFile(file, password);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
-        if (password.getPassword() != null) {
-            SecurityUtil.encrypt(file, password.getPassword());
-        }
+        SecurityUtil.encryptFile(file, password);
     }
 
     @Override

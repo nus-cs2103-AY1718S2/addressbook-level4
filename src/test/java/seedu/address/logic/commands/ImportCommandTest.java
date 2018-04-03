@@ -69,7 +69,9 @@ public class ImportCommandTest {
         expectedModel.importAddressBook(filepath, SecurityUtil.hashPassword(""));
         assertCommandSuccess(importCommand, model, ImportCommand.MESSAGE_SUCCESS, expectedModel);
     }
+    //@@author
 
+    //@@author yeggasd
     @Test
     public void execute_encryptedAddressBook_success() throws Exception {
         String encryptedFile = TEST_DATA_FOLDER + "encryptedAliceBensonAddressBook.xml";
@@ -87,7 +89,9 @@ public class ImportCommandTest {
         thrown.expect(CommandException.class);
         importCommand.executeUndoableCommand();
     }
+    //@@author
 
+    //@@author Caijun7
     @Test
     public void execute_nonExistentFileImportIntoAddressBook_throwsCommandException() throws Exception {
         String nonExistentFile = TEST_DATA_FOLDER + "nonExistentFile.xml";

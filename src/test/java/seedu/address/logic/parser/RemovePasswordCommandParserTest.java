@@ -7,6 +7,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.RemovePasswordCommand;
 
+//@@author yeggasd
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
  * outside of the RemovePasswordCommand code. For example, inputs "1" and "1 abc" take the

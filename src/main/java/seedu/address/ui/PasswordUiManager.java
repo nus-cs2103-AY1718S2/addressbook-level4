@@ -15,8 +15,9 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.Model;
 import seedu.address.storage.Storage;
 
+//@@author yeggasd
 /**
- * The manager of the UI component.
+ * The manager of the Password UI component.
  */
 public class PasswordUiManager extends ComponentManager implements Ui {
 

@@ -139,25 +139,9 @@ public class ImportCommandTest {
         expectedModel.importAddressBook(filepath, SecurityUtil.hashPassword(""));
         assertCommandSuccess(importCommand, model, ImportCommand.MESSAGE_SUCCESS, expectedModel);
     }
-
-    @Test
-    public void execute_encryptedAddressBook_success() throws Exception {
-        String encryptedFile = TEST_DATA_FOLDER + "encryptedAliceBensonAddressBook.xml";
-
-        ImportCommand importCommand = prepareCommand(encryptedFile, model, TEST_PASSWORD);
-        importCommand.executeUndoableCommand();
-        SecurityUtil.encrypt(encryptedFile, TEST_PASSWORD);
-        assertEquals(model.getAddressBook(), addressBookWithAliceAndBenson);
-    }
-
-    @Test
-    public void execute_wrongPasswordEncryptedAddressBook_throwsCommandException() throws Exception {
-        String encryptedFile = TEST_DATA_FOLDER + "encryptedAliceBensonAddressBook.xml";
-        ImportCommand importCommand = prepareCommand(encryptedFile, model, TEST_PASSWORD + "1");
-        thrown.expect(CommandException.class);
-        importCommand.executeUndoableCommand();
-    }
-
+```
+###### \java\seedu\address\logic\commands\ImportCommandTest.java
+``` java
     @Test
     public void execute_nonExistentFileImportIntoAddressBook_throwsCommandException() throws Exception {
         String nonExistentFile = TEST_DATA_FOLDER + "nonExistentFile.xml";

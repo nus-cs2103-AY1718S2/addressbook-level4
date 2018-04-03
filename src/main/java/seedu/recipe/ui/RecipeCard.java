@@ -1,7 +1,12 @@
 package seedu.recipe.ui;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -40,6 +45,8 @@ public class RecipeCard extends UiPart<Region> {
     private Label url;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView imageView;
 
     public RecipeCard(Recipe recipe, int displayedIndex) {
         super(FXML);
@@ -50,10 +57,27 @@ public class RecipeCard extends UiPart<Region> {
         instruction.setText(recipe.getInstruction().value);
         ingredient.setText(recipe.getIngredient().value);
         url.setText(recipe.getUrl().value);
+        setImageView(imageView);
         initTags(recipe);
     }
 
     //@@author RyanAngJY
+    /**
+     * Sets the image for {@code imageView}.
+     */
+    private void setImageView(ImageView imageView) {
+        if (recipe.isNullImage()) {
+            return;
+        }
+        try {
+            FileInputStream input = new FileInputStream(recipe.getImage().toString());
+            Image image = new Image(input);
+            imageView.setImage(image);
+        } catch (IOException exception) {
+            System.out.println("File not found");
+        }
+    }
+
     /**
      * Returns the color style for {@code tagName}'s label.
      */

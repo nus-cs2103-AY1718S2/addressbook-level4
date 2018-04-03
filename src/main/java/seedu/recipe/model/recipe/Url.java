@@ -41,7 +41,6 @@ public class Url {
         } catch (Exception e) {
             return false;
         }
-
     }
 
     @Override

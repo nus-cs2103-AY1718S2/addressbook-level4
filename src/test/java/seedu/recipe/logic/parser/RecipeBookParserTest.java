@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.recipe.logic.commands.AddCommand;
+import seedu.recipe.logic.commands.ChangeThemeCommand;
 import seedu.recipe.logic.commands.ClearCommand;
 import seedu.recipe.logic.commands.DeleteCommand;
 import seedu.recipe.logic.commands.EditCommand;
@@ -26,6 +27,7 @@ import seedu.recipe.logic.commands.HelpCommand;
 import seedu.recipe.logic.commands.HistoryCommand;
 import seedu.recipe.logic.commands.ListCommand;
 import seedu.recipe.logic.commands.RedoCommand;
+import seedu.recipe.logic.commands.SearchCommand;
 import seedu.recipe.logic.commands.SelectCommand;
 import seedu.recipe.logic.commands.ShareCommand;
 import seedu.recipe.logic.commands.TagCommand;
@@ -145,6 +147,27 @@ public class RecipeBookParserTest {
         UploadCommand command = (UploadCommand) parser.parseCommand(
                 UploadCommand.COMMAND_WORD + " " + filename);
         assertEquals(new UploadCommand(filename + ".xml"), command);
+    }
+    //@@author
+
+    //@@author kokonguyen191
+    @Test
+    public void parseCommand_changeTheme() throws Exception {
+        assertTrue(parser.parseCommand(ChangeThemeCommand.COMMAND_WORD) instanceof ChangeThemeCommand);
+        assertTrue(parser.parseCommand(ChangeThemeCommand.COMMAND_WORD + " 3") instanceof ChangeThemeCommand);
+    }
+
+    @Test
+    public void parseCommand_search() throws Exception {
+        assertTrue(parser.parseCommand(SearchCommand.COMMAND_WORD + " chicken rice") instanceof SearchCommand);
+
+        String keywords = "chicken rice";
+        SearchCommand command = (SearchCommand) parser.parseCommand(SearchCommand.COMMAND_WORD + " " + keywords);
+        assertEquals(new SearchCommand(keywords.replaceAll("\\s+", "+")), command);
+
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
+        parser.parseCommand(SearchCommand.COMMAND_WORD);
     }
     //@@author
 

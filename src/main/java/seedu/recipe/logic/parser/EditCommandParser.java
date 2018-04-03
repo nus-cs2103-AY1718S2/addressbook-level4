@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_CALORIES;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_COOKING_TIME;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_IMG;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INGREDIENT;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
@@ -32,13 +33,15 @@ public class EditCommandParser implements Parser<EditCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
      * and returns an EditCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer
                 .tokenize(args, PREFIX_NAME, PREFIX_INGREDIENT, PREFIX_INSTRUCTION, PREFIX_COOKING_TIME,
-                        PREFIX_PREPARATION_TIME, PREFIX_CALORIES, PREFIX_SERVINGS, PREFIX_TAG, PREFIX_URL);
+                        PREFIX_PREPARATION_TIME, PREFIX_CALORIES, PREFIX_SERVINGS, PREFIX_TAG, PREFIX_URL,
+                        PREFIX_IMG);
 
         Index index;
 
@@ -64,6 +67,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseServings(argMultimap.getValue(PREFIX_SERVINGS))
                     .ifPresent(editRecipeDescriptor::setServings);
             ParserUtil.parseUrl(argMultimap.getValue(PREFIX_URL)).ifPresent(editRecipeDescriptor::setUrl);
+            ParserUtil.parseImage(argMultimap.getValue(PREFIX_IMG)).ifPresent(editRecipeDescriptor::setImage);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editRecipeDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

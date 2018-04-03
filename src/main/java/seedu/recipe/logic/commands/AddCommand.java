@@ -3,6 +3,7 @@ package seedu.recipe.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_CALORIES;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_COOKING_TIME;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_IMG;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INGREDIENT;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
@@ -32,16 +33,18 @@ public class AddCommand extends UndoableCommand {
             + "[" + PREFIX_CALORIES + "CALORIES] "
             + "[" + PREFIX_SERVINGS + "SERVINGS] "
             + "[" + PREFIX_URL + "URL]\n"
+            + "[" + PREFIX_IMG + "IMAGE_PATH_NAME]\n"
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example:\n" + COMMAND_WORD + " "
-            + PREFIX_NAME + "Chicken Rice\n"
-            + PREFIX_INGREDIENT + "chicken, rice\n"
-            + PREFIX_INSTRUCTION + "Cook rice\nCook chicken\nEnjoy\n"
-            + PREFIX_COOKING_TIME + "15 mins\n"
-            + PREFIX_PREPARATION_TIME + "5 mins\n"
-            + PREFIX_CALORIES + "500\n"
-            + PREFIX_SERVINGS + "2\n"
-            + PREFIX_URL + "http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice\n"
+            + "Example:\n" + COMMAND_WORD + "\n"
+            + PREFIX_NAME + " Chicken Rice\n"
+            + PREFIX_INGREDIENT + " chicken, rice\n"
+            + PREFIX_INSTRUCTION + "\nCook rice\nCook chicken\nEnjoy\n"
+            + PREFIX_COOKING_TIME + " 15 mins\n"
+            + PREFIX_PREPARATION_TIME + " 5 mins\n"
+            + PREFIX_CALORIES + " 500\n"
+            + PREFIX_SERVINGS + " 2\n"
+            + PREFIX_URL + " http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice\n"
+            + PREFIX_IMG + " /Users/administrator/Desktop/myImage.jpg\n"
             + PREFIX_TAG + "yummy "
             + PREFIX_TAG + "best";
 

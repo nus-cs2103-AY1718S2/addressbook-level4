@@ -123,7 +123,7 @@ The *.pptx* files used to create diagrams in this document can be found in the l
 
 Given below is a quick overview of each component:
 
-. <<Design-Main,*`Main`*>>: Contains the app in overall.
+. <<Design-Main,*`Main`*>>: Contains the app.
 . <<Design-Commons,*`Commons`*>>: Contains classes that are used by multiple components.
 . <<Design-Ui,*`UI`*>>: Contains the UI of the app.
 . <<Design-Logic,*`Logic`*>>: Contains the commands of the app.
@@ -225,6 +225,7 @@ Refer to the Sequence Diagram for the example of interactions within the <<Desig
 
 .Interactions Inside the Logic Component for the *`delete 1`* Command
 image::DeleteRecipeSdForLogic.png[width="800"]
+{nbsp} +
 
 [[Design-Model]]
 === Model component
@@ -260,13 +261,528 @@ Refer to diagram below <<fig-StorageClassDiagram>>.
 [[fig-StorageClassDiagram]]
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
-{nbsp} +
 
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
 
-// tag::undoredo[]
+[[Implementation-Configuration]]
+// tag::auto-compeltion[]
+=== Auto-completion
+==== Current implementation
+
+Formerly, users need to type all application keywords and their inputs to the command line. Auto-completion feature is implemented to help users shorten the commands they need to type, by giving suggestions of words based on current input of users and automatically filling chosen words into input field.
+
+Currently, a class called `_SuggestionsPopUp_`, which inherits from `_ContextMenu_`, is created to handle all operations relating to auto-completion. The operations include displaying a pop-up menu consisting of suggestions for user’s input, automatically completing input field when a word is chosen and hiding the pop-up menu.
+
+Key combination kbd:[Shift]+kbd:[Space] is used to show suggestion pop-up. For other keys and key combinations, the pop-up is hidden. The code to handle these key and key combination actions is shown as below:
+
+[source,java]
+----
+private void handleKeyPress(KeyEvent keyEvent) {
+    suggestionsPopUp.hideSuggestions();
+    if (SHOW_SUGGESTIONS_COMMAND.match(keyEvent)) {
+        keyEvent.consume();
+        suggestionsPopUp.showSuggestions();
+    }
+    // Other key combinations
+}
+----
+
+To display suggestions, first, a suggestion list is built, then position of pop-up menu is calculated for display.
+
+Suggestion list is built with a given list as a dictionary and last word in user input as a word that needs to be looked up. All words in the dictionary that take given word as prefix are valid suggestions and added to the list. However, since `_CommandBox_` is limited, only a small number of words are added to the pop-up menu. The code for compiling suggestion list is given below:
+
+[source,java]
+----
+for (String suggestion : dictionary) {
+    if (suggestion.startsWith(prefix)) {
+        addSuggestion(suggestion);
+    }
+
+    if (getItems().size() == MAX_SUGGESTIONS) {
+        break;
+    }
+}
+----
+
+The given dictionary and the constant `MAX_SUGGESTIONS` can be found in `_AutoCompletionUtil_` class. All operations with input text such as finding the last word of user's input are supported by `_TextInputProcessorUtil_` class.
+
+To calculate position to display pop-up menu, height and width of input text (in pixels) are computed and then used to determine display position in the main window. Height and width of input text are calculated in `_TextInputProcessorUtil_` class.
+
+Then, the suggestion list can be shown in main window.
+
+To hide suggestion list, a method called `hide()` is implemented as below:
+
+[source,java]
+----
+protected void hideSuggestions() {
+    if  (isShowing()) {
+        hide();
+    }
+}
+----
+
+To automatically fill input field with chosen word, an `EventListener` is attached to each item in the pop-up menu. When an item is chosen, it replaces the last word in input field with the word associated with the item. The code is shown below:
+
+[source,java]
+----
+item.setOnAction(event -> commandBox.replaceText(textInputProcessor.replaceLastWord(item.getText())));
+----
+
+`_TextInputProcessorUtil_` object `textInputProcessor` is used to handle an operation `replaceLastWord()` for the given text.
+
+==== Design considerations
+
+===== Aspect: Base class of SuggestionsPopUp.
+
+* **Alternative 1 (current choice):** `_ContextMenu_`.
+** Pros: Easy to use since `_ContextMenu_` and `_TextArea_` are in the same library `javafx.scene.control`.
+** Cons: Dependent on `_TextArea_` in `_CommandBox_` class.
+* **Alternative 2:** `_JPopupMenu_`
+** Pros: NA.
+** Cons: Need additional works to make `_JPopupMenu_` compatible with `_TextArea_`.
+
+===== Aspect: Abstraction of `_SuggestionsPopUp_`.
+
+* **Alternative 1 (current choice):** A separate class `_SuggestionsPopUp_`.
+** Pros: More intuitive approach since `_SuggestionsPopUp_` is a component in `UI`.
+** Cons: Need to take extra information from `_CommandBox_` class.
+* **Alternative 2:** An inner class of `_CommandBox_` class.
+** Pros: Easy to implement since it has access to all attributes and methods of `_CommandBox_`.
+** Cons: Limitations in reusability.
+
+===== Aspect: Abstraction of `_TextInputProcessorUtil_`.
+
+* **Alternative 1 (current choice):** A separate class `_TextInputProcessorUtil_`.
+** Pros: Common functions can be easily used by other classes if needed.
+** Cons: NA.
+* **Alternative 2:** An inner class of `_SuggestionsPopUp_` class.
+** Pros: Convenient to use inside the containing class.
+** Cons: Limitations in reusability.
+// end::auto-completion[]
+
+=== Changing theme
+// tag::change-theme[]
+==== Current implementation
+
+The command is implemented in `_ChangeThemeCommand_`. When user submits the command to the *`UI`* component, it passes on the command to the *`Logic`* component, which posts a `_ChangeThemeRequestEvent_` to the `_EventsCenter_`. Refer to <<fig-ChangeThemeSD>>.
+
+[[fig-ChangeThemeSD]]
+.Component interactions for *`theme`* command (part 1)
+image::SDforChangeTheme.png[width="800"]
+{nbsp} +
+
+The event is then propagated through the `_EventsCenter_` to the `*UI*`. The `*UI*` will call `handleChangeThemeRequestEvent()` to update the theme accordingly. Refer to <<fig-ChangeThemeEventSD>>.
+
+[[fig-ChangeThemeEventSD]]
+.Component interactions for *`theme`* command (part 2)
+image::SDforChangeThemeEventHandling.png[width="800"]
+{nbsp} +
+
+`handleChangeThemeRequestEvent()` will then log the event trigger and call `handleChangeTheme()`.
+
+[NOTE]
+If the command is called directly from the menu bar, `handleChangeTheme()` will be called instead of `handleChangeThemeRequestEvent()`.
+
+`handleChangeTheme()` gets the current theme from `_UserPref_` then:
+
+. Changes the main page loaded on the `_BrowserPanel_`.
+. Changes the style using on the `_Stage_`.
+
+Refer to <<fig-ChangeThemeDetailsSD>>
+
+[[fig-ChangeThemeDetailsSD]]
+.Component interactions for `handleChangeTheme()`
+image::SDforChangeThemeDetails.png[width="800"]
+{nbsp} +
+
+Below is the implementation for the two operations:
+
+[source,java]
+----
+public void loadDefaultPage(boolean isDarkTheme) {
+    URL defaultPage;
+    if (isDarkTheme) {
+        defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_DARK);
+    } else {
+        defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_LIGHT);
+    }
+    loadPage(defaultPage.toExternalForm());
+}
+
+private void loadStyle(boolean darkTheme) {
+    Scene scene = primaryStage.getScene();
+    scene.getStylesheets().clear();
+    if (darkTheme) {
+        scene.getStylesheets().add(MainApp.class.getResource(FXML_FILE_FOLDER + DARK_THEME_CSS).toExternalForm());
+    } else {
+        scene.getStylesheets().add(MainApp.class.getResource(FXML_FILE_FOLDER + LIGHT_THEME_CSS).toExternalForm());
+    }
+    scene.getStylesheets().add(MainApp.class.getResource(FXML_FILE_FOLDER + EXTENSIONS_CSS).toExternalForm());
+    primaryStage.setScene(scene);
+    primaryStage.show();
+}
+----
+
+[NOTE]
+Currently the implementation of `loadDefaultPage()` reloads the `_BrowserPanel_` so if any page is loaded on the `_BrowserPanel_`, it will be lost during changing theme.
+
+==== Design considerations
+
+===== Aspect: Handling of default page in `_BrowserPanel_`.
+
+* **Alternative 1 (current choice):** Reload the default page.
+** Pros: It is easy to implement.
+** Cons: Any page loaded on `_BrowserPanel_` will be lost during the operation.
+* **Alternative 2:** Reload the style for the default page.
+** Pros: It is possible to keep the status of the `_BrowserPanel_`, in other words, any page loaded may still retain.
+** Cons: It is not entirely sure if this implementation is possible.
+* **Alternative 3:** Reload the default page *and* reload any page currently loaded on `_BrowserPanel_`.
+** Pros: It is possible to keep the status of the `_BrowserPanel_`, in other words, any page loaded may still retain.
+** Cons: This approach is obviously harder to implement, also it will sends an additional request to the server of the website.
+* **Alternative 4:** Save any page currently loaded on `_BrowserPanel_`, reload the default page then load the saved page.
+** Pros: This is the ideal output.
+** Cons: This is the ideal output, thus very hard to implement.
+* **Alternative 5:** Stop using the default page.
+** Pros: It is somewhat easy to implement.
+** Cons: Obviously there is no default page to display so we have to find another approach to make `_BrowserPanel_` display something as a placeholder, *without* using a default page.
+// end::change-theme[]
+
+// tag::cloud-storage[]
+=== Cloud storage support
+==== Current implementation
+
+Formerly, there was no function to upload the data in the recipe book on to the cloud. All these data were only stored locally in a specific file on the user's computer.
+
+Currently, a new command `_UploadCommand_` has been added. `_UploadCommandParser_` takes in a `_String_` filename, adds an XML extension to it before parsing it to `_UploadCommand_` which then uploads the data within the application to Dropbox using the specified filename.
+Adding the XML extension is to make the command more user-friendly and to maintain integrity of the data since the application can only read data from files in an XML format.
+
+`_UploadCommandParser_` parses the user-input as shown below:
+
+[source,java]
+----
+String XmlExtensionFilename = ParserUtil.parseFilename(filename);
+----
+Because the file is being uploaded to the user's Dropbox account, their Dropbox account access token is needed and is stored in the variable `ACCESS_TOKEN`. This token is then used together
+with `_String_` `XmlExtensionFilename`, which was obtained from `_UploadCommandParser_`, in the `upload()` method as shown below:
+
+[source,java]
+----
+private CommandResult upload() throws DbxException {
+    // Create Dropbox client
+    DbxRequestConfig config = DbxRequestConfig.newBuilder("dropbox/recirecipe").build();
+    DbxClientV2 client = new DbxClientV2(config, ACCESS_TOKEN);
+
+    // Upload RECIPE_BOOK_FILE which contains all the data on recipes to Dropbox
+    try (InputStream in = new FileInputStream(RECIPE_BOOK_FILE)) {
+        client.files().uploadBuilder("/" + XmlExtensionFilename).uploadAndFinish(in);
+    } catch (IOException IOE) {
+        return new CommandResult(MESSAGE_FAILURE);
+    }
+
+    return new CommandResult(MESSAGE_SUCCESS);
+}
+----
+The `ACCESS_TOKEN` is currently hardcoded in, as shown below, but will be improved upon soon.
+
+[source,java]
+----
+private static final String ACCESS_TOKEN = "example_of_legit_token_taken_from_dropbox";
+----
+
+==== Design considerations
+
+===== Aspect: Handling of the access token.
+* **Alternative 1 (current choice):** Save the access token within the application for future use.
+** Pros: Convenience. User does not have to keep logging into their Dropbox account every time they want to upload. Since our application does not support multiple users, keeping them "logged in" is acceptable.
+** Cons: Security concerns. Since the access token is meant to be a secret and there is no security aspect to our application at all, it is possible for a someone malicious to obtain this access token.
+* **Alternative 2:** One-time usage of the access token. Delete after using.
+** Pros: Less security issues/concerns.
+** Cons: Very inconvenient. Requires user to keep logging in to their Dropbox account every time they want to upload. This is redundant as our application only supports one user anyway.
+// end::cloud-storage[]
+
+=== Configuration
+
+Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: *config.json*).
+
+// tag::embedded-url[]
+=== Embedded URL
+
+==== Current Implementation
+
+The URL field is an optional field in the *`add`* command and can be omitted. In the case when a URL is embedded to a recipe, the `_BrowserPanel_` will load the given URL.
+
+As seen below, the URL is not a required parameter during the checking of prefixes in an *`add`* command.
+
+[source,java]
+----
+if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_INSTRUCTION, PREFIX_PREPARATION_TIME,
+    PREFIX_INGREDIENT) || !argMultimap.getPreamble().isEmpty()) {
+    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+}
+----
+
+In the case when a URL is not added to a recipe, a null reference '-' is put as a placeholder when parsing the URL field, unlike tag labels. This helps with identifying recipes that do not have embedded URLs.
+
+[source,java]
+----
+public static Optional<Url> parseUrlOnInitialAdd(Optional<String> url) throws IllegalValueException {
+    requireNonNull(url);
+    return url.isPresent() ? Optional.of(parseUrl(url.get())) : Optional.of(getNullReferenceUrl());
+}
+----
+
+==== Design considerations
+
+===== Aspect: Implementation of optional property.
+
+* **Alternative 1 (current choice):** Add a placeholder for omitted URL.
+** Pros: Simple implementation can be used as a reference by new developers for creating optional fields. Interaction with `_BrowserPanel_` requires more control over the status of a recipe's URL property.
+** Cons: `_Recipe_` class may contain unnecessary variables.
+* **Alternative 2:** Store URL property in the same fashion as tag labels.
+** Pros: `_Recipe_` class has better separation of optional and compulsory properties.
+** Cons: Complex implementation may confuse new developers. Interaction with other components may become needlessly complex.
+// end::embedded-url[]
+
+// tag::facebook-compatibility[]
+=== Facebook compatibility
+==== Current Implementation
+
+The *`share`* command is implemented in the `_ShareCommand_` class. On command execution, a new `_ShareRecipeEvent_` is created (with parameters index and recipe) and posted to the `_EventsCenter_`.
+
+The event is then propagated through the `_EventsCenter_` to the `_BrowserPanel_`, which is supported by the `_FacebookHandler_` class (contains methods for Facebook integration and authentication).
+
+The `_BrowserPanel_` will call `handleShareRecipeEvent()` and update the web view to show the Facebook authentication page. The recipe name, ingredients, and instructions, are also formatted and copied to the clipboard.
+
+The `_recipe_` class handles the formatting of the recipe text before it is copied to the clipboard:
+
+[source,java]
+----
+public String getTextFormattedRecipe() {
+    return NAME_HEADER + getName() + LINE_BREAK
+            + INGREDIENTS_HEADER + getIngredient() + LINE_BREAK
+            + INSTRUCTIONS_HEADER + getInstruction() + LINE_BREAK;
+}
+----
+
+The method for copying a string to the clipboard is implemented in the `_UiUtil_` class. This makes the method reusable by other UI classes.
+
+[source,java]
+----
+public static void copyToClipboard(String string) {
+    Toolkit toolkit = Toolkit.getDefaultToolkit();
+    Clipboard clipboard = toolkit.getSystemClipboard();
+    StringSelection stringSelection = new StringSelection(string);
+    clipboard.setContents(stringSelection, null);
+}
+----
+
+Upon logging in, the User will be shown a feed dialog with the embedded URL of the recipe. The user may choose to input any text into the post (eg. pasting the copied recipe from clipboard). The User then has to manually click "post" before an actual Facebook post is made.
+
+The `_BrowserPanel_` will be updated to show the Facebook feed of the User.
+
+==== Design considerations
+
+===== Aspect: Implementation of Facebook sharing
+
+* **Alternative 1 (current choice):** Use a feed dialog
+** Pros: User has more control over what is posted on their Facebook wall. Implementation is easier to maintain.
+** Cons: User has to take more steps to successfully make a post (paste recipe onto post, click "post").
+* **Alternative 2:** Use RestFB API
+** Pros: Recipe is posted immediately on the User's Facebook wall using the *`share`* command. User need not manually paste the recipe from the clipboard onto the post.
+** Cons: User *must* manually obtain their Facebook access key and input it into the application - this may raise security concerns (Facebook does not allow automatic posting of text even if permission is given by the User upon log in).
+// end::facebook-compatibility[]
+
+=== Keyboard shortcuts
+// tag::keyboard-shortcut[]
+==== Current implementation
+
+Currently, only `_CommandBox_` accepts keyboard shortcuts. All shortcuts are stored in the `_KeyboardShortcutsMapping_` class inside the `UI` component. `_CommandBox_` listens for key combinations and executes actions mapped to these key presses, which are defined in the `handleKeyPress()` method as shown below:
+
+[source,java]
+----
+private void handleKeyPress(KeyEvent keyEvent) {
+    if (COMMAND_SUBMISSION.match(keyEvent)) {
+        keyEvent.consume();
+        submitCommand();
+    } else if (LAST_COMMAND.match(keyEvent)) {
+        keyEvent.consume();
+        navigateToPreviousInput();
+    } else if (NEXT_COMMAND.match(keyEvent)) {
+        keyEvent.consume();
+        navigateToNextInput();
+    } else if (NEW_LINE_IN_COMMAND.match(keyEvent)) {
+        keyEvent.consume();
+        createNewLine();
+    }
+    // Can have more mappings
+}
+----
+
+As seen from above, all key combinations implemented consume the default effect of the combinations. However, this is not a must as there may be future mappings that do not require consuming the `KeyEvent`.
+
+==== Design considerations
+
+===== Aspect: Location of the shortcuts.
+
+* **Alternative 1 (current choice):** Store in the `_KeyboardShortcutsMapping_` class.
+** Pros: Good modularity, easier to keep track of the mappings.
+** Cons: The shortcuts have to be imported to be used.
+* **Alternative 2:** Store in the `_CommandBox_` class.
+** Pros: No needs for imports. Also, it is possible to declare new mappings on the run and use it directly in the `_CommandBox_`.
+** Cons: Impossible to use them if we want to implement shortcuts for other UI components or globally.
+// end::keyboard-shortcut[]
+
+=== Logging
+
+We are using `java.util.logging` package for logging. The `_LogsCenter_` class is used to manage the logging levels and logging destinations.
+
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* Currently log messages are output through the console and to a *.log* file.
+
+*Logging Levels*
+
+* *SEVERE* : Critical problem detected which may possibly cause the termination of the application.
+* *WARNING* : Can continue, but with caution.
+* *INFO* : Information showing the noteworthy actions by the App.
+* *FINE* : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size.
+
+=== Multiple lines input support
+// tag::multiple-lines[]
+==== Current implementation
+
+Former implementation of the `_CommandBox_` used `_TextField_`, which only allows single-line inputs but supports automatic handler of kbd:[Enter]. To support commands with multiple lines, another class has to be used for `_CommandBox_`. The current implementation of `_CommandBox_`
+uses `_TextArea_`, a class which has fewer restrictions on the number of input lines allowed. However, the trade off for `_TextArea_` is that it does not support automatic handler of kbd:[Enter].
+
+Currently, the solution for this is to consume the use of kbd:[Enter] and invoke the function `submitCommand()` whenever RecipeBook receives a keyboard combination that is assigned to command submission (default is kbd:[Enter]).
+
+[source,java]
+----
+private void handleKeyPress(KeyEvent keyEvent) {
+    // COMMAND_SUBMISSION default is KeyCode.ENTER
+    if (COMMAND_SUBMISSION.match(keyEvent)) {
+        keyEvent.consume();
+        submitCommand();
+    }
+    // Other keyboard combinations
+}
+----
+
+Because the default use of kbd:[Enter] has been replaced by command submission, another key combination is used for line breaks. The default combination for line breaks is kbd:[Shift]+kbd:[Enter] (like in Facebook). Note that these two combinations, line breaks and command submission, are interchangeable according to how the user setups *ReciRecipé* preferences.
+
+When RecipeBook receives a keyboard combination that is assigned to line breaks (default is kbd:[Shift]+kbd:[Enter]), `_CommandBox_` generates a `_StringBuilder_` from current text inside `_CommandBox_`, gets the caret location. The `_StringBuilder_` then inserts a new line at the given caret location, returns a `_String_` and `_CommandBox_` replaces its entire body with the new `_String_`.
+
+The implementation of line breaks is below:
+[source,java]
+----
+private void handleKeyPress(KeyEvent keyEvent) {
+    // NEW_LINE_IN_COMMAND default is KeyCodeCombination(KeyCode.SHIFT, KeyCode.ENTER)
+    if (NEW_LINE_IN_COMMAND.match(keyEvent)) {
+        keyEvent.consume();
+        createNewLine();
+    }
+    // Other keyboard combinations
+}
+
+private void createNewLine() {
+    int caretPosition = commandTextArea.getCaretPosition();
+    StringBuilder commandTextStringBuilder = new StringBuilder(commandTextArea.getText());
+    commandTextStringBuilder.insert(caretPosition, LF);
+    String newCommandText = commandTextStringBuilder.toString();
+    commandTextArea.setText(newCommandText);
+    commandTextArea.positionCaret(caretPosition + 1);
+}
+----
+
+==== Design considerations
+
+===== Aspect: Usage of a component that support multiple lines input.
+
+* **Alternative 1 (current choice):** `_TextArea_`.
+** Pros: Easy to use, intuitive.
+** Cons: No default handler for kbd:[Enter]. Furthermore, the <<CSS,CSS>> is particularly hard to handle due to the way `_TextArea_` and its body function separately.
+* **Alternative 2:** `_TextField_` with support for `\n`.
+** Pros: Hardly needs any change in the codes.
+** Cons: Unintuitive and ugly inputs. Also, a long line with hundreds of characters is unavoidable. And once the line gets too long, it is near impossible to make changes to the input.
+* **Alternative 3:** `HTMLEditor`.
+** Pros: Abundant formatting features.
+** Cons: Too complex to implement, unintuitive inputs.
+// end::multiple-lines[]
+
+=== Searching on the internet
+// tag::internet-search[]
+==== Current implementation
+
+The command is implemented in `_SearchCommand_`. When user submits the command to the *`UI`* component, it passes on the command to the *`Logic`* component, which creates a `_WikiaQueryHandler_` and posts a `_InternetSearchRequestEvent_` to the `_EventsCenter_`. Refer to <<fig-InternetSearchSD>>.
+
+[[fig-InternetSearchSD]]
+.Component interactions for *`search chicken rice`* command (part 1)
+image::SDforInternetSearch.png[width="800"]
+{nbsp} +
+
+The event is then propagated through the `_EventsCenter_` to the `*UI*`. The `*UI*` will call `handleInternetSearchRequestEvent()` to update the theme accordingly. Refer to <<fig-InternetSearchEventSD>>.
+
+[[fig-InternetSearchEventSD]]
+.Component interactions for *`search chicken rice`* command (part 2)
+image::SDforInternetSearchEventHandling.png[width="800"]
+{nbsp} +
+
+This command deals with a class called `_WikiaQueryHandler_`. `_WikiaQueryHandler_` is a class that resolves a query to http://recipes.wikia.com[the recipe repo] we are using for ReciRecipé.
+
+`_WikiaQueryHandler_` takes in the argument of `_SearchCommand_`, makes a query (after going through many steps) to the server. Refer to <<fig-InternetSearchDetailsSD>> for the details.
+
+[[fig-InternetSearchDetailsSD]]
+.Component interactions for `_WikiaQueryHandler_`
+image::SDforInternetSearchDetails.png[width="800"]
+{nbsp} +
+
+After `_WikiaQueryHandler_` is created, we can call `getRecipeQueryUrl()` and `getQueryNumberOfResults()` to get the URL for the `_BrowserPanel_` and the number of results returned by the query.
+
+Refer to <<fig-InternetSearchCD>> for the interaction between relevant classes.
+
+[[fig-InternetSearchCD]]
+.Classes interactions for `_SearchCommand_`
+image::InternetSearchClassDiagram.png[width="800"]
+{nbsp} +
+
+When `execute()` is called, `_SearchCommand_` passes its `_WikiaQueryHandler_` as an argument to `_InternetSearchRequestEvent_`. `_BrowserPanel_` will then call `getQueryNumberOfResults()` to see if the query returns any results. If there is no result, then `_BrowserPanel_` won't load the page to reduce needless requests to the server, else `_BrowserPanel_` will load the URL given by `getRecipeQueryUrl()`. Refer to the code snippet below to see the implementation for `execute()` and the handler.
+
+[source,java]
+----
+public CommandResult execute() throws CommandException {
+    int noOfResult = wikiaQueryHandler.getQueryNumberOfResults();
+
+    EventsCenter.getInstance().post(new InternetSearchRequestEvent(wikiaQueryHandler));
+
+    if (noOfResult == 0) {
+        return new CommandResult(MESSAGE_FAILURE);
+    } else {
+        return new CommandResult(String.format(MESSAGE_SUCCESS, noOfResult));
+    }
+}
+
+private void handleInternetSearchRequestEvent(InternetSearchRequestEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    if (event.wikiaQueryHandler.getQueryNumberOfResults() != 0) {
+        loadPage(event.wikiaQueryHandler.getRecipeQueryUrl());
+    }
+}
+----
+
+==== Design considerations
+
+===== Aspect: Usage of `_WikiaQueryHandler_`.
+
+* **Alternative 1 (current choice):** Use `_WikiaQueryHandler_`.
+** Pros: This approach allows more data to be processed separately from the page handling by `_BrowserPanel_`.
+** Cons: In return, using a separate class makes the implementation a lot harder to manage.
+* **Alternative 2:** Do not use `_WikiaQueryHandler_` and let `_BrowserPanel_` directly load the query URL.
+** Pros: This approach is significantly easier to implement, requiring only 3-4 lines in `_BrowserPanel_`.
+** Cons: However, we don't get any extra information for pre-processing and this could lead to redundant requests.
+// end::internet-search[]
+
 === Undo/Redo feature
 ==== Current Implementation
 
@@ -424,324 +940,6 @@ image::UndoRedoActivityDiagram.png[width="650"]
 * **Alternative 2:** Use `HistoryManager` for undo/redo.
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
-// end::undoredo[]
-
-// tag::multiple-lines[]
-=== Multiple lines input support
-==== Current implementation
-
-Former implementation of the `_CommandBox_` used `_TextField_`, which only allows single-line inputs but supports automatic handler of kbd:[Enter]. To support commands with multiple lines, another class has to be used for `_CommandBox_`. The current implementation of `_CommandBox_`
-uses `_TextArea_`, a class which has fewer restrictions on the number of input lines allowed. However, the trade off for `_TextArea_` is that it does not support automatic handler of kbd:[Enter].
-
-Currently, the solution for this is to consume the use of kbd:[Enter] and invoke the function `submitCommand()` whenever RecipeBook receives a keyboard combination that is assigned to command submission (default is kbd:[Enter]).
-
-[source,java]
-----
-private void handleKeyPress(KeyEvent keyEvent) {
-    // COMMAND_SUBMISSION default is KeyCode.ENTER
-    if (COMMAND_SUBMISSION.match(keyEvent)) {
-        keyEvent.consume();
-        submitCommand();
-    }
-    // Other keyboard combinations
-}
-----
-
-Because the default use of kbd:[Enter] has been replaced by command submission, another key combination is used for line breaks. The default combination for line breaks is kbd:[Shift]+kbd:[Enter] (like in Facebook). Note that these two combinations, line breaks and command submission, are interchangeable according to how the user setups *ReciRecipé* preferences.
-
-When RecipeBook receives a keyboard combination that is assigned to line breaks (default is kbd:[Shift]+kbd:[Enter]), `_CommandBox_` generates a `_StringBuilder_` from current text inside `_CommandBox_`, gets the caret location. The `_StringBuilder_` then inserts a new line at the given caret location, returns a `_String_` and `_CommandBox_` replaces its entire body with the new `_String_`.
-
-The implementation of line breaks is below:
-[source,java]
-----
-private void handleKeyPress(KeyEvent keyEvent) {
-    // NEW_LINE_IN_COMMAND default is KeyCodeCombination(KeyCode.SHIFT, KeyCode.ENTER)
-    if (NEW_LINE_IN_COMMAND.match(keyEvent)) {
-        keyEvent.consume();
-        createNewLine();
-    }
-    // Other keyboard combinations
-}
-
-private void createNewLine() {
-    int caretPosition = commandTextArea.getCaretPosition();
-    StringBuilder commandTextStringBuilder = new StringBuilder(commandTextArea.getText());
-    commandTextStringBuilder.insert(caretPosition, LF);
-    String newCommandText = commandTextStringBuilder.toString();
-    commandTextArea.setText(newCommandText);
-    commandTextArea.positionCaret(caretPosition + 1);
-}
-----
-
-==== Design considerations
-
-===== Aspect: Usage of a component that support multiple lines input.
-
-* **Alternative 1 (current choice):** `_TextArea_`.
-** Pros: Easy to use, intuitive.
-** Cons: No default handler for kbd:[Enter]. Furthermore, the <<CSS,CSS>> is particularly hard to handle due to the way `_TextArea_` and its body function separately.
-* **Alternative 2:** `_TextField_` with support for `\n`.
-** Pros: Hardly needs any change in the codes.
-** Cons: Unintuitive and ugly inputs. Also, a long line with hundreds of characters is unavoidable. And once the line gets too long, it is near impossible to make changes to the input.
-* **Alternative 3:** `HTMLEditor`.
-** Pros: Abundant formatting features.
-** Cons: Too complex to implement, unintuitive inputs.
-// end::multiple-lines[]
-
-// tag::keyboard-shortcut[]
-=== Keyboard shortcuts
-==== Current implementation
-
-Currently, only `_CommandBox_` accepts keyboard shortcuts. All shortcuts are stored in the `_KeyboardShortcutsMapping_` class inside the `UI` component. `_CommandBox_` listens for key combinations and executes actions mapped to these key presses, which are defined in the `handleKeyPress()` method as shown below:
-
-[source,java]
-----
-private void handleKeyPress(KeyEvent keyEvent) {
-    if (COMMAND_SUBMISSION.match(keyEvent)) {
-        keyEvent.consume();
-        submitCommand();
-    } else if (LAST_COMMAND.match(keyEvent)) {
-        keyEvent.consume();
-        navigateToPreviousInput();
-    } else if (NEXT_COMMAND.match(keyEvent)) {
-        keyEvent.consume();
-        navigateToNextInput();
-    } else if (NEW_LINE_IN_COMMAND.match(keyEvent)) {
-        keyEvent.consume();
-        createNewLine();
-    }
-    // Can have more mappings
-}
-----
-
-As seen from above, all key combinations implemented consume the default effect of the combinations. However, this is not a must as there may be future mappings that do not require consuming the `KeyEvent`.
-
-==== Design considerations
-
-===== Aspect: Location of the shortcuts.
-
-* **Alternative 1 (current choice):** Store in the `_KeyboardShortcutsMapping_` class.
-** Pros: Good modularity, easier to keep track of the mappings.
-** Cons: The shortcuts have to be imported to be used.
-* **Alternative 2:** Store in the `_CommandBox_` class.
-** Pros: No needs for imports. Also, it is possible to declare new mappings on the run and use it directly in the `_CommandBox_`.
-** Cons: Impossible to use them if we want to implement shortcuts for other UI components or globally.
-// end::keyboard-shortcut[]
-
-// tag::auto-compeltion[]
-=== Auto-completion
-==== Current implementation
-
-Formerly, users need to type all application keywords and their inputs to the command line. Auto-completion feature is implemented to help users shorten the commands they need to type, by giving suggestions of words based on current input of users and automatically filling chosen words into input field.
-
-Currently, a class called `_SuggestionsPopUp_`, which inherits from `_ContextMenu_`, is created to handle all operations relating to auto-completion. The operations include displaying a pop-up menu consisting of suggestions for user’s input, automatically completing input field when a word is chosen and hiding the pop-up menu.
-
-Key combination kbd:[Shift]+kbd:[Space] is used to show suggestion pop-up. For other keys and key combinations, the pop-up is hidden. The code to handle these key and key combination actions is shown as below:
-
-[source,java]
-----
-private void handleKeyPress(KeyEvent keyEvent) {
-    suggestionsPopUp.hideSuggestions();
-    if (SHOW_SUGGESTIONS_COMMAND.match(keyEvent)) {
-        keyEvent.consume();
-        suggestionsPopUp.showSuggestions();
-    }
-    // Other key combinations
-}
-----
-
-To display suggestions, first, a suggestion list is built, then position of pop-up menu is calculated for display.
-
-Suggestion list is built with a given list as a dictionary and last word in user input as a word that needs to be looked up. All words in the dictionary that take given word as prefix are valid suggestions and added to the list. However, since `_CommandBox_` is limited, only a small number of words are added to the pop-up menu. The code for compiling suggestion list is given below:
-
-[source,java]
-----
-for (String suggestion : dictionary) {
-    if (suggestion.startsWith(prefix)) {
-        addSuggestion(suggestion);
-    }
-
-    if (getItems().size() == MAX_SUGGESTIONS) {
-        break;
-    }
-}
-----
-
-The given dictionary and the constant `MAX_SUGGESTIONS` can be found in `_AutoCompletionUtil_` class. All operations with input text such as finding the last word of user's input are supported by `_TextInputProcessorUtil_` class.
-
-To calculate position to display pop-up menu, height and width of input text (in pixels) are computed and then used to determine display position in the main window. Height and width of input text are calculated in `_TextInputProcessorUtil_` class.
-
-Then, the suggestion list can be shown in main window.
-
-To hide suggestion list, a method called `hide()` is implemented as below:
-
-[source,java]
-----
-protected void hideSuggestions() {
-    if  (isShowing()) {
-        hide();
-    }
-}
-----
-
-To automatically fill input field with chosen word, an `EventListener` is attached to each item in the pop-up menu. When an item is chosen, it replaces the last word in input field with the word associated with the item. The code is shown below:
-
-[source,java]
-----
-item.setOnAction(event -> commandBox.replaceText(textInputProcessor.replaceLastWord(item.getText())));
-----
-
-`_TextInputProcessorUtil_` object `textInputProcessor` is used to handle an operation `replaceLastWord()` for the given text.
-
-==== Design considerations
-
-===== Aspect: Base class of SuggestionsPopUp.
-
-* **Alternative 1 (current choice):** `_ContextMenu_`.
-** Pros: Easy to use since `_ContextMenu_` and `_TextArea_` are in the same library `javafx.scene.control`.
-** Cons: Dependent on `_TextArea_` in `_CommandBox_` class.
-* **Alternative 2:** `_JPopupMenu_`
-** Pros: NA.
-** Cons: Need additional works to make `_JPopupMenu_` compatible with `_TextArea_`.
-
-===== Aspect: Abstraction of `_SuggestionsPopUp_`.
-
-* **Alternative 1 (current choice):** A separate class `_SuggestionsPopUp_`.
-** Pros: More intuitive approach since `_SuggestionsPopUp_` is a component in `UI`.
-** Cons: Need to take extra information from `_CommandBox_` class.
-* **Alternative 2:** An inner class of `_CommandBox_` class.
-** Pros: Easy to implement since it has access to all attributes and methods of `_CommandBox_`.
-** Cons: Limitations in reusability.
-
-===== Aspect: Abstraction of `_TextInputProcessorUtil_`.
-
-* **Alternative 1 (current choice):** A separate class `_TextInputProcessorUtil_`.
-** Pros: Common functions can be easily used by other classes if needed.
-** Cons: NA.
-* **Alternative 2:** An inner class of `_SuggestionsPopUp_` class.
-** Pros: Convenient to use inside the containing class.
-** Cons: Limitations in reusability.
-// end::auto-completion[]
-
-// tag::cloud-storage[]
-=== Cloud storage support
-==== Current implementation
-
-Formerly, there was no function to upload the data in the recipe book on to the cloud. All these data were only stored locally in a specific file on the user's computer.
-
-Currently, a new command `_UploadCommand_` has been added. `_UploadCommandParser_` takes in a `_String_` filename, adds an XML extension to it before parsing it to `_UploadCommand_` which then uploads the data within the application to Dropbox using the specified filename.
-Adding the XML extension is to make the command more user-friendly and to maintain integrity of the data since the application can only read data from files in an XML format.
-
-`_UploadCommandParser_` parses the user-input as shown below:
-
-[source,java]
-----
-String XmlExtensionFilename = ParserUtil.parseFilename(filename);
-----
-Because the file is being uploaded to the user's Dropbox account, their Dropbox account access token is needed and is stored in the variable `ACCESS_TOKEN`. This token is then used together
-with `_String_` `XmlExtensionFilename`, which was obtained from `_UploadCommandParser_`, in the `upload()` method as shown below:
-
-[source,java]
-----
-private CommandResult upload() throws DbxException {
-    // Create Dropbox client
-    DbxRequestConfig config = DbxRequestConfig.newBuilder("dropbox/recirecipe").build();
-    DbxClientV2 client = new DbxClientV2(config, ACCESS_TOKEN);
-
-    // Upload RECIPE_BOOK_FILE which contains all the data on recipes to Dropbox
-    try (InputStream in = new FileInputStream(RECIPE_BOOK_FILE)) {
-        client.files().uploadBuilder("/" + XmlExtensionFilename).uploadAndFinish(in);
-    } catch (IOException IOE) {
-        return new CommandResult(MESSAGE_FAILURE);
-    }
-
-    return new CommandResult(MESSAGE_SUCCESS);
-}
-----
-The `ACCESS_TOKEN` is currently hardcoded in, as shown below, but will be improved upon soon.
-
-[source,java]
-----
-private static final String ACCESS_TOKEN = "example_of_legit_token_taken_from_dropbox";
-----
-
-==== Design considerations
-
-===== Aspect: Handling of the access token.
-* **Alternative 1 (current choice):** Save the access token within the application for future use.
-** Pros: Convenience. User does not have to keep logging into their Dropbox account every time they want to upload. Since our application does not support multiple users, keeping them "logged in" is acceptable.
-** Cons: Security concerns. Since the access token is meant to be a secret and there is no security aspect to our application at all, it is possible for a someone malicious to obtain this access token.
-* **Alternative 2:** One-time usage of the access token. Delete after using.
-** Pros: Less security issues/concerns.
-** Cons: Very inconvenient. Requires user to keep logging in to their Dropbox account every time they want to upload. This is redundant as our application only supports one user anyway.
-// end::cloud-storage[]
-
-// tag::embedded-url[]
-=== Embedded URL
-
-==== Current Implementation
-
-The URL field is an optional field in the *`add`* command and can be omitted. In the case when a URL is embedded to a recipe, the `_BrowserPanel_` will load the given URL.
-
-As seen below, the URL is not a required parameter during the checking of prefixes in an *`add`* command.
-
-[source,java]
-----
-if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_INSTRUCTION, PREFIX_PREPARATION_TIME,
-    PREFIX_INGREDIENT) || !argMultimap.getPreamble().isEmpty()) {
-    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-}
-----
-
-In the case when a URL is not added to a recipe, a null reference '-' is put as a placeholder when parsing the URL field, unlike tag labels. This helps with identifying recipes that do not have embedded URLs.
-
-[source,java]
-----
-public static Optional<Url> parseUrlOnInitialAdd(Optional<String> url) throws IllegalValueException {
-    requireNonNull(url);
-    return url.isPresent() ? Optional.of(parseUrl(url.get())) : Optional.of(getNullReferenceUrl());
-}
-----
-
-==== Design considerations
-
-===== Aspect: Implementation of optional property.
-
-* **Alternative 1 (current choice):** Add a placeholder for omitted URL.
-** Pros: Simple implementation can be used as a reference by new developers for creating optional fields. Interaction with `_BrowserPanel_` requires more control over the status of a recipe's URL property.
-** Cons: `_Recipe_` class may contain unnecessary variables.
-* **Alternative 2:** Store URL property in the same fashion as tag labels.
-** Pros: `_Recipe_` class has better separation of optional and compulsory properties.
-** Cons: Complex implementation may confuse new developers. Interaction with other components may become needlessly complex.
-// end::embedded-url[]
-
-
-// tag::dataencryption[]
-=== [Proposed] Data encryption
-
-_{Explain here how the data encryption feature will be implemented}_
-
-// end::dataencryption[]
-
-=== Logging
-
-We are using `java.util.logging` package for logging. The `_LogsCenter_` class is used to manage the logging levels and logging destinations.
-
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
-* Currently log messages are output through the console and to a *.log* file.
-
-*Logging Levels*
-
-* *SEVERE* : Critical problem detected which may possibly cause the termination of the application.
-* *WARNING* : Can continue, but with caution.
-* *INFO* : Information showing the noteworthy actions by the App.
-* *FINE* : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size.
-
-[[Implementation-Configuration]]
-=== Configuration
-
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: *config.json*).
 
 == Documentation
 
@@ -750,16 +948,16 @@ We use asciidoc for writing documentation.
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
-=== Editing Documentation
+=== Editing documentation
 
 See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render *.adoc* files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your *.adoc* files in real-time.
 
-=== Publishing Documentation
+=== Publishing documentation
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting documentation to PDF format
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in web pages.
 
@@ -776,7 +974,7 @@ image::chrome_save_as_pdf.png[width="300"]
 [[Testing]]
 == Testing
 
-=== Running Tests
+=== Running tests
 
 There are three ways to run tests.
 
@@ -817,7 +1015,7 @@ e.g. `seedu.recipe.storage.StorageManagerTest`
 e.g. `seedu.recipe.logic.LogicManagerTest`
 
 
-=== Troubleshooting Testing
+=== Troubleshooting testing
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, *UserGuide.html* in *src/main/resources/docs* is missing.
@@ -825,22 +1023,22 @@ e.g. `seedu.recipe.logic.LogicManagerTest`
 
 == Dev Ops
 
-=== Build Automation
+=== Build automation
 
 See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
 
-=== Continuous Integration
+=== Continuous integration
 
 We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
-=== Coverage Reporting
+=== Coverage reporting
 
 We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
 
-=== Documentation Previews
+=== Documentation previews
 When a pull request has changes to asciidoc files, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
-=== Making a Release
+=== Making a release
 
 Here are the steps to create a new release.
 
@@ -849,7 +1047,7 @@ Here are the steps to create a new release.
 .  Tag the repo with the version number. e.g. *v0.1*
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
-=== Managing Dependencies
+=== Managing dependencies
 
 A project often depends on third-party libraries. For example, Recipe Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size). +
@@ -857,7 +1055,7 @@ b. Require developers to download those libraries manually (this creates extra w
 
 [[GetStartedProgramming]]
 [appendix]
-== Suggested Programming Tasks to Get Started
+== Suggested programming tasks to get started
 
 Suggested path for new programmers:
 
@@ -1136,7 +1334,7 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
 [appendix]
-== Product Scope
+== Product scope
 
 *Target user profile*:
 
@@ -1176,7 +1374,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * search and import recipes from internet. *`major`*
 
 [appendix]
-== User Stories
+== User stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
@@ -1241,7 +1439,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 _{More to be added}_
 
 [appendix]
-== Use Cases
+== Use cases
 
 (For all use cases below, the *System* is the *RecipeBook* and the *Actor* is the *user*, unless specified otherwise).
 
@@ -1375,7 +1573,7 @@ Use case ends.
 _{More to be added}_
 
 [appendix]
-== Non Functional Requirements
+== Non functional requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java 1.8.0_60 or higher installed.
 .  Should be able to hold up to 1000 recipes without a noticeable sluggishness in performance for typical usage.
@@ -1394,3 +1592,7 @@ _{More to be added}_
 == Glossary
 
 include::./Glossary.adoc[]
+
+ifndef::env-github[]
+include::./NavBar.adoc[]
+endif::[]

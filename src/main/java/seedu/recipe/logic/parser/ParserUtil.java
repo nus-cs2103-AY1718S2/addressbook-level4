@@ -12,6 +12,7 @@ import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.commons.util.StringUtil;
 import seedu.recipe.model.recipe.Calories;
 import seedu.recipe.model.recipe.CookingTime;
+import seedu.recipe.model.recipe.Image;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
@@ -19,6 +20,7 @@ import seedu.recipe.model.recipe.PreparationTime;
 import seedu.recipe.model.recipe.Servings;
 import seedu.recipe.model.recipe.Url;
 import seedu.recipe.model.tag.Tag;
+import seedu.recipe.storage.model.Filename;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -71,7 +73,7 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
 
-    //@@Author kokonguyen191
+    //@@author kokonguyen191
     /**
      * Returns a null {@code Ingredient} object to use as the default value if no value is given.
      */
@@ -363,7 +365,7 @@ public class ParserUtil {
         return url.isPresent() ? Optional.of(parseUrl(url.get())) : Optional.empty();
     }
 
-    public static Url getNullReferenceUrl() throws IllegalValueException {
+    public static Url getNullReferenceUrl() {
         return new Url(Url.NULL_URL_REFERENCE);
     }
 
@@ -374,6 +376,43 @@ public class ParserUtil {
     public static Optional<Url> parseUrlOnInitialAdd(Optional<String> url) throws IllegalValueException {
         requireNonNull(url);
         return url.isPresent() ? Optional.of(parseUrl(url.get())) : Optional.of(getNullReferenceUrl());
+    }
+
+    /**
+     * Parses a {@code String image} into an {@code image}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code image} is invalid.
+     */
+    public static Image parseImage(String image) throws IllegalValueException {
+        requireNonNull(image);
+        String trimmedImage = image.trim();
+        if (!Image.isValidImage(trimmedImage)) {
+            throw new IllegalValueException(Image.MESSAGE_IMAGE_CONSTRAINTS);
+        }
+        return new Image(trimmedImage);
+    }
+
+    /**
+     * Parses a {@code Optional<String> url} into an {@code Optional<Url>} if {@code url} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Image> parseImage(Optional<String> image) throws IllegalValueException {
+        requireNonNull(image);
+        return image.isPresent() ? Optional.of(parseImage(image.get())) : Optional.empty();
+    }
+
+    public static Image getNullReferenceImage() {
+        return new Image(Image.NULL_IMAGE_REFERENCE);
+    }
+
+    /**
+     * Parses a {@code Optional<String> image} into an {@code Optional<Image>} if {@code image} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Image> parseImageOnInitialAdd(Optional<String> image) throws IllegalValueException {
+        requireNonNull(image);
+        return image.isPresent() ? Optional.of(parseImage(image.get())) : Optional.of(getNullReferenceImage());
     }
     //@@author
 
@@ -403,14 +442,20 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
     //@@author nicholasangcx
     /**
      * Parses {@code String filename} into a {@code String XmlExtensionFilename}.
      * A .xml extension will be added to the original filename.
+     *
+     * @throws IllegalValueException if the give {@code filename} is invalid.
      */
-    public static String parseFilename(String filename) {
-        String xmlExtensionFilename = filename + ".xml";
-        return xmlExtensionFilename;
+    public static String parseFilename(String filename) throws IllegalValueException {
+        requireNonNull(filename);
+        if (!Filename.isValidFilename(filename)) {
+            throw new IllegalValueException(Filename.MESSAGE_FILENAME_CONSTRAINTS);
+        }
+        return filename + ".xml";
     }
     //@@author
 }

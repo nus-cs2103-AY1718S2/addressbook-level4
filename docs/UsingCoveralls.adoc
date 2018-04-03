@@ -51,3 +51,7 @@ Coveralls automatically comments on the coverage status of the pull requests in 
 .  Uncheck the `LEAVE COMMENTS?` checkbox. Then click `SAVE CHANGES`.
 +
 image:coveralls/disable_comments.png[Disable comments, width = 942]
+
+ifndef::env-github[]
+include::./NavBar.adoc[]
+endif::[]

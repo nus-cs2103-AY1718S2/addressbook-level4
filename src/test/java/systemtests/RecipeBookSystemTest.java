@@ -4,7 +4,7 @@ import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.recipe.ui.BrowserPanel.DEFAULT_PAGE;
+import static seedu.recipe.ui.BrowserPanel.DEFAULT_PAGE_LIGHT;
 import static seedu.recipe.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.recipe.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.recipe.ui.UiPart.FXML_FILE_FOLDER;
@@ -275,7 +275,8 @@ public abstract class RecipeBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getRecipeListPanel(), getModel().getFilteredRecipeList());
-            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
+            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_LIGHT),
+                    getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {

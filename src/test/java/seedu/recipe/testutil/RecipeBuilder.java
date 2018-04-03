@@ -5,6 +5,7 @@ import java.util.Set;
 
 import seedu.recipe.model.recipe.Calories;
 import seedu.recipe.model.recipe.CookingTime;
+import seedu.recipe.model.recipe.Image;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
@@ -37,6 +38,7 @@ public class RecipeBuilder {
     public static final String DEFAULT_CALORIES = "5000";
     public static final String DEFAULT_SERVINGS = "2";
     public static final String DEFAULT_URL = "https://www.jamieoliver.com/recipes/rice-recipes/a-basic-risotto-recipe/";
+    public static final String DEFAULT_IMAGE = Image.VALID_IMAGE_PATH;
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
@@ -47,6 +49,7 @@ public class RecipeBuilder {
     private Calories calories;
     private Servings servings;
     private Url url;
+    private Image image;
     private Set<Tag> tags;
 
     public RecipeBuilder() {
@@ -58,6 +61,7 @@ public class RecipeBuilder {
         calories = new Calories(DEFAULT_CALORIES);
         servings = new Servings(DEFAULT_SERVINGS);
         url = new Url(DEFAULT_URL);
+        image = new Image(DEFAULT_IMAGE);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -73,6 +77,7 @@ public class RecipeBuilder {
         calories = recipeToCopy.getCalories();
         servings = recipeToCopy.getServings();
         url = recipeToCopy.getUrl();
+        image = recipeToCopy.getImage();
         tags = new HashSet<>(recipeToCopy.getTags());
     }
 
@@ -84,7 +89,7 @@ public class RecipeBuilder {
         return this;
     }
 
-    //@@Author kokonguyen191
+    //@@author kokonguyen191
     /**
      * Sets the {@code Instruction} of the {@code Recipe} that we are building.
      */
@@ -141,6 +146,14 @@ public class RecipeBuilder {
         this.url = new Url(url);
         return this;
     }
+
+    /**
+     * Sets the {@code Url} of the {@code Recipe} that we are building.
+     */
+    public RecipeBuilder withImage(String image) {
+        this.image = new Image(image);
+        return this;
+    }
     //@@author
 
     /**
@@ -151,7 +164,11 @@ public class RecipeBuilder {
         return this;
     }
 
+    /**
+     * Builds the Recipe.
+     */
     public Recipe build() {
-        return new Recipe(name, ingredient, instruction, cookingTime, preparationTime, calories, servings, url, tags);
+        return new Recipe(name, ingredient, instruction, cookingTime, preparationTime, calories, servings,
+                url, image, tags);
     }
 }

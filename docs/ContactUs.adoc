@@ -3,3 +3,7 @@
 
 * *Bug reports, Suggestions* : Post in our https://github.com/CS2103JAN2018-F09-B2/main/issues[issue tracker] if you noticed bugs or have suggestions on how to improve.
 * *Contributing* : We welcome pull requests. Follow the process described https://github.com/oss-generic/process[here]
+
+ifndef::env-github[]
+include::./NavBar.adoc[]
+endif::[]

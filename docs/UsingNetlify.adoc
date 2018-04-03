@@ -47,3 +47,7 @@ If you don't like the site name given by Netlify, you can change it as follows:
 . Then click `Change site name` and fill in your desired site name.
 +
 image:netlify/change_site_name.png[Change site name, width = 630]
+
+ifndef::env-github[]
+include::./NavBar.adoc[]
+endif::[]

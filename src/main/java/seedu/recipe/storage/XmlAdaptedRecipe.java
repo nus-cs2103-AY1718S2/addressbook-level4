@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.model.recipe.Calories;
 import seedu.recipe.model.recipe.CookingTime;
+import seedu.recipe.model.recipe.Image;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
@@ -43,6 +44,8 @@ public class XmlAdaptedRecipe {
     private String servings;
     @XmlElement(required = true)
     private String url;
+    @XmlElement(required = true)
+    private String image;
 
 
     @XmlElement
@@ -58,7 +61,7 @@ public class XmlAdaptedRecipe {
      * Constructs an {@code XmlAdaptedRecipe} with the given recipe details.
      */
     public XmlAdaptedRecipe(String name, String ingredient, String instruction, String cookingTime,
-                            String preparationTime, String calories, String servings, String url,
+                            String preparationTime, String calories, String servings, String url, String image,
                             List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.ingredient = ingredient;
@@ -68,6 +71,7 @@ public class XmlAdaptedRecipe {
         this.calories = calories;
         this.servings = servings;
         this.url = url;
+        this.image = image;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -87,6 +91,7 @@ public class XmlAdaptedRecipe {
         calories = source.getCalories().value;
         servings = source.getServings().value;
         url = source.getUrl().value;
+        image = source.getImage().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -112,7 +117,7 @@ public class XmlAdaptedRecipe {
         }
         final Name name = new Name(this.name);
 
-        //@@Author kokonguyen191
+        //@@author kokonguyen191
         if (this.ingredient == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Ingredient.class.getSimpleName()));
@@ -175,10 +180,19 @@ public class XmlAdaptedRecipe {
             throw new IllegalValueException(Url.MESSAGE_URL_CONSTRAINTS);
         }
         final Url url = new Url(this.url);
+
+        if (this.image == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Image.class.getSimpleName()));
+        }
+        if (!Image.isValidImage(this.image)) {
+            throw new IllegalValueException(Image.MESSAGE_IMAGE_CONSTRAINTS);
+        }
+        final Image image = new Image(this.image);
         //@@author
 
         final Set<Tag> tags = new HashSet<>(recipeTags);
-        return new Recipe(name, ingredient, instruction, cookingTime, preparationTime, calories, servings, url, tags);
+        return new Recipe(name, ingredient, instruction, cookingTime, preparationTime, calories, servings, url,
+                image, tags);
     }
 
     @Override
@@ -200,6 +214,7 @@ public class XmlAdaptedRecipe {
                 && Objects.equals(calories, otherRecipe.calories)
                 && Objects.equals(servings, otherRecipe.servings)
                 && Objects.equals(url, otherRecipe.url)
+                && Objects.equals(image, otherRecipe.image)
                 && tagged.equals(otherRecipe.tagged);
     }
 }

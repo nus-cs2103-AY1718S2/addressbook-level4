@@ -72,6 +72,8 @@ public class StringUtil {
     //@@author yeggasd
     /**
      * Returns true if {@code s} represents odd or even
+     ** Will return false for any other non-null string input
+     * e.g. empty string, "-1", "0", "+1", and " 2 " (untrimmed), "3 0" (contains whitespace), "1 a" (contains letters)
      * @throws NullPointerException if {@code s} is null.
      */
     public static boolean isOddEven(String s) {
@@ -81,6 +83,23 @@ public class StringUtil {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Returns true if (@code text) represents a day in the week
+     * e.g. Monday
+     * Will return false for any other non-null string input
+     * e.g. empty string, "-1", "0", "+1", and " 2 " (untrimmed), "3 0" (contains whitespace), "1 a" (contains letters)
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static boolean isDay(String s) {
+        if (s.equalsIgnoreCase("Monday") || s.equalsIgnoreCase("Tuesday")
+                || s.equalsIgnoreCase("Wednesday") || s.equalsIgnoreCase("Thursday")
+                || s.equalsIgnoreCase("Friday") || s.equalsIgnoreCase("Saturday")
+                || s.equalsIgnoreCase("Sunday")) {
+            return true;
+        }
+        return false;
     }
     //@@author
 }

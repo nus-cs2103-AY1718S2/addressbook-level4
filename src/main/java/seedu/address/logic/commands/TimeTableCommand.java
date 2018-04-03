@@ -14,6 +14,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.TimeTableEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.timetable.Timetable;
 
 //@@author yeggasd
 /**
@@ -29,12 +30,12 @@ public class TimeTableCommand extends Command {
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "%1$s Week Timetable of selected Person: %1$s";
 
     private final Index targetIndex;
-    private final String oddEven;
+    private final int oddEven;
     private Person personToShow;
     /**
      * Creates a Timetable to retrieve the timetable of the given index
      */
-    public TimeTableCommand(Index targetIndex, String oddEven) {
+    public TimeTableCommand(Index targetIndex, int oddEven) {
         requireNonNull(targetIndex);
         requireNonNull(oddEven);
         this.targetIndex = targetIndex;
@@ -47,10 +48,10 @@ public class TimeTableCommand extends Command {
 
         preprocess();
 
-        //ArrayList<ArrayList<String>> personTimeTable = personToShow.getTimetable(oddEven);
-        ArrayList<ArrayList<String>> personTimeTable = gd();
-        ObservableList<ArrayList<String>> timeTable = FXCollections.observableArrayList(personTimeTable);
-        EventsCenter.getInstance().post(new TimeTableEvent(timeTable));
+        Timetable timeTable = personToShow.getTimetable();
+        ArrayList<ArrayList<String>> personTimeTable = timeTable.getTimetable().get(oddEven);
+        ObservableList<ArrayList<String>> timeTableList = FXCollections.observableArrayList(personTimeTable);
+        EventsCenter.getInstance().post(new TimeTableEvent(timeTableList));
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, oddEven, personToShow));
     }
 
@@ -90,7 +91,7 @@ public class TimeTableCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof TimeTableCommand // instanceof handles nulls
                 && this.targetIndex.equals(((TimeTableCommand) other).targetIndex) // state check
-                && this.oddEven.equals(((TimeTableCommand) other).oddEven)
+                && this.oddEven == ((TimeTableCommand) other).oddEven
                 && Objects.equals(this.personToShow, ((TimeTableCommand) other).personToShow));
 
     }

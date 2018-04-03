@@ -54,8 +54,8 @@ public class AddMembersToGroupCommand extends UndoableCommand {
         List<Group> groupList = model.getFilteredGroupList();
         List<Person> personList = model.getFilteredPersonList();
         for (int i = 0; i < personList.size(); i++) {
-            if (personList.get(i).getName().equals(personToAdd.getName()) ) {
-                personToAdd=personList.get(i);
+            if (personList.get(i).getName().equals(personToAdd.getName())) {
+                personToAdd = personList.get(i);
             }
         }
         if (!groupList.contains(groupToAdd)) {
@@ -63,16 +63,15 @@ public class AddMembersToGroupCommand extends UndoableCommand {
         }
         if (!personList.contains(personToAdd)) {
             throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
-        }
-        else {
+        } else {
             for (Group group : groupList) {
-                if  (groupToAdd.getInformation().equals(group.getInformation())){
+                if  (groupToAdd.getInformation().equals(group.getInformation())) {
                     groupToAdd = group;
                     try {
                         groupAdded = group;
                         groupAdded.getPersonList().add(personToAdd);
-                        model.updateGroup(groupToAdd,groupAdded);
-                    } catch (DuplicatePersonException e){
+                        model.updateGroup(groupToAdd, groupAdded);
+                    } catch (DuplicatePersonException e) {
                         throw new CommandException(MESSAGE_DUPLICATE_PERSON);
                     } catch (DuplicateGroupException e) {
                         throw new CommandException(MESSAGE_DUPLICATE_GROUP);

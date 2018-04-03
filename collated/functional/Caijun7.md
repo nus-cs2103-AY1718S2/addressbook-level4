@@ -1,5 +1,5 @@
 # Caijun7
-###### \java\seedu\address\commons\util\JsonUtil.java
+###### /java/seedu/address/commons/util/JsonUtil.java
 ``` java
     /**
      * Returns the Json object from the given file or {@code Optional.empty()} object if the file is not found.
@@ -36,7 +36,139 @@
         }
     }
 ```
-###### \java\seedu\address\logic\commands\ImportCommand.java
+###### /java/seedu/address/logic/parser/ImportCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ImportCommand object
+ */
+public class ImportCommandParser implements Parser<ImportCommand> {
+    private static final String SPLIT_TOKEN = " ";
+    /**
+     * Parses the given {@code String} of arguments in the context of the ImportCommand
+     * and returns an ImportCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ImportCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+        }
+        String[] splitArgs = trimmedArgs.split(SPLIT_TOKEN);
+        if (splitArgs.length == 1) {
+            return new ImportCommand(splitArgs[0]);
+        } else if (splitArgs.length == 2) {
+            return new ImportCommand(splitArgs[0], splitArgs[1]);
+        } else {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+        }
+
+    }
+}
+```
+###### /java/seedu/address/logic/parser/ExportCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ExportCommand object
+ */
+public class ExportCommandParser implements Parser<ExportCommand> {
+    private static final String SPLIT_TOKEN = " ";
+    /**
+     * Parses the given {@code String} of arguments in the context of the ExportCommand
+     * and returns an ExportCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ExportCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
+        }
+        String[] splitArgs = trimmedArgs.split(SPLIT_TOKEN);
+        if (splitArgs.length == 1) {
+            return new ExportCommand(splitArgs[0]);
+        } else if (splitArgs.length == 2) {
+            return new ExportCommand(splitArgs[0], splitArgs[1]);
+        } else {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
+        }
+
+    }
+}
+```
+###### /java/seedu/address/logic/commands/ExportCommand.java
+``` java
+/**
+ * Exports an address book to the existing address book.
+ */
+public class ExportCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "export";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports an address book "
+            + "from filepath to the existing address book. "
+            + "Parameters: FILEPATH PASSWORD\n"
+            + "Example: " + COMMAND_WORD + " "
+            + "data/addressbookbackup.xml "
+            + "testpassword";
+
+    public static final String MESSAGE_SUCCESS = "Current list of Persons, tags, or aliases from "
+            + "Addressbook are successfully exported.";
+    public static final String MESSAGE_FILE_UNABLE_TO_SAVE = "Unable to save or overwrite to given filepath. "
+            + "Please give another filepath.";
+    public static final String MESSAGE_INVALID_PASSWORD = "Password is in invalid format for Addressbook file.";
+    public static final String MESSAGE_IMPOSSIBLE_ERROR = "Unexpected error has occurred.";
+
+    private final String filepath;
+    private final Password password;
+
+    /**
+     * Creates an ExportCommand to export the current view of {@code AddressBook} to the filepath without a password
+     */
+    public ExportCommand(String filepath) {
+        requireNonNull(filepath);
+
+        this.filepath = filepath;
+        password = null;
+    }
+
+    /**
+     * Creates an ExportCommand to export the current view of {@code AddressBook} to the filepath with a password
+     */
+    public ExportCommand(String filepath, String password) {
+        requireNonNull(filepath);
+        requireNonNull(password);
+
+        this.filepath = filepath;
+        this.password = new Password(password);
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.exportAddressBook(filepath, password);
+            return new CommandResult(String.format(MESSAGE_SUCCESS));
+        } catch (IOException ioe) {
+            throw new CommandException(MESSAGE_FILE_UNABLE_TO_SAVE);
+        } catch (WrongPasswordException e) {
+            throw new CommandException(MESSAGE_INVALID_PASSWORD);
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_IMPOSSIBLE_ERROR);
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ExportCommand // instanceof handles nulls
+                && filepath.equals(((ExportCommand) other).filepath));
+    }
+}
+```
+###### /java/seedu/address/logic/commands/ImportCommand.java
 ``` java
 /**
  * Imports an address book to the existing address book.
@@ -49,13 +181,14 @@ public class ImportCommand extends UndoableCommand {
             + "from filepath to the existing address book. "
             + "Parameters: FILEPATH PASSWORD\n"
             + "Example: " + COMMAND_WORD + " "
-            + "FILEPATH "
-            + "PASSWORD";
+            + "data/addressbook.xml "
+            + "testpassword";
 
-    public static final String MESSAGE_SUCCESS = "Persons and tags from Addressbook file successfully imported.";
+    public static final String MESSAGE_SUCCESS = "Persons, tags, and aliases from "
+            + "Addressbook file successfully imported.";
     public static final String MESSAGE_FILE_NOT_FOUND = "Addressbook file is not found.";
     public static final String MESSAGE_DATA_CONVERSION_ERROR = "Addressbook file found is not in correct "
-            + "format.";
+            + "format or wrong password.";
     public static final String MESSAGE_PASSWORD_WRONG = "Password wrong for Addressbook file.";
 
     private final String filepath;
@@ -63,7 +196,18 @@ public class ImportCommand extends UndoableCommand {
 
     /**
      * Creates an ImportCommand to import the specified {@code AddressBook} from filepath to
-     * current {@code AddressBook}
+     * current {@code AddressBook} and decrypt without password
+     */
+    public ImportCommand(String filepath) {
+        requireNonNull(filepath);
+
+        this.filepath = filepath;
+        password = null;
+    }
+
+    /**
+     * Creates an ImportCommand to import the specified {@code AddressBook} from filepath to
+     * current {@code AddressBook} and decrypt with password
      */
     public ImportCommand(String filepath, String password) {
         requireNonNull(filepath);
@@ -96,35 +240,183 @@ public class ImportCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ImportCommandParser.java
+###### /java/seedu/address/storage/Storage.java
+``` java
+    @Override
+    Optional<Room> readVenueInformation() throws DataConversionException, IOException;
+
+    @Override
+    Optional<Building> readBuildingsAndRoomsInformation() throws DataConversionException, IOException;
+```
+###### /java/seedu/address/storage/ReadOnlyVenueInformation.java
 ``` java
 /**
- * Parses input arguments and creates a new ImportCommand object
+ * Represents a storage for {@link seedu.address.model.building.Room}.
  */
-public class ImportCommandParser implements Parser<ImportCommand> {
-    private static final String SPLIT_TOKEN = " ";
-    /**
-     * Parses the given {@code String} of arguments in the context of the ImportCommand
-     * and returns an ImportCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public ImportCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
-        }
-        String[] splitArgs = trimmedArgs.split(SPLIT_TOKEN);
-        if (splitArgs.length != 2) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
-        }
+public interface ReadOnlyVenueInformation {
 
-        return new ImportCommand(splitArgs[0], splitArgs[1]);
-    }
+    /**
+     * Returns the file path of the VenueInformation data file.
+     */
+    String getVenueInformationFilePath();
+
+    /**
+     * Returns VenueInformation data from storage.
+     *   Returns {@code Optional.empty()} if storage file is not found.
+     * @throws DataConversionException if the data in storage is not in the expected format.
+     * @throws IOException if there was any problem when reading from the storage.
+     */
+    Optional<Room> readVenueInformation() throws DataConversionException, IOException;
+
+    Optional<Building> readBuildingsAndRoomsInformation() throws DataConversionException, IOException;
 }
 ```
-###### \java\seedu\address\MainApp.java
+###### /java/seedu/address/storage/StorageManager.java
+``` java
+    @Override
+    public String getVenueInformationFilePath() {
+        return venueInformationStorage.getVenueInformationFilePath();
+    }
+
+    @Override
+    public Optional<Room> readVenueInformation() throws DataConversionException, IOException {
+        return venueInformationStorage.readVenueInformation();
+    }
+
+    @Override
+    public Optional<Building> readBuildingsAndRoomsInformation() throws DataConversionException, IOException {
+        return venueInformationStorage.readBuildingsAndRoomsInformation();
+    }
+```
+###### /java/seedu/address/storage/ReadOnlyJsonVenueInformation.java
+``` java
+/**
+ * A class to access VenueInformation stored in the hard disk as a json file
+ */
+public class ReadOnlyJsonVenueInformation implements ReadOnlyVenueInformation {
+
+    private String filePath;
+
+    public ReadOnlyJsonVenueInformation(String filePath) {
+        this.filePath = filePath;
+    }
+
+    @Override
+    public String getVenueInformationFilePath() {
+        return filePath;
+    }
+
+    @Override
+    public Optional<Room> readVenueInformation() throws DataConversionException, IOException {
+        return readVenueInformation(filePath);
+    }
+
+    /**
+     * Converts Json file into HashMap of NUS Rooms
+     * @param venueInformationFilePath location of the data. Cannot be null.
+     * @throws DataConversionException if the file format is not as expected.
+     */
+    public Optional<Room> readVenueInformation(String venueInformationFilePath) throws DataConversionException {
+        return JsonUtil.readJsonFileFromResource(venueInformationFilePath, Room.class);
+    }
+
+    @Override
+    public Optional<Building> readBuildingsAndRoomsInformation() throws DataConversionException, IOException {
+        return readBuildingsAndRoomsInformation(filePath);
+    }
+
+    /**
+     * Converts Json file into HashMap of NUS Buildings and Rooms
+     * @param buildingsAndRoomsInformationFilePath location of the data. Cannot be null.
+     * @throws DataConversionException if the file format is not as expected.
+     */
+    public Optional<Building> readBuildingsAndRoomsInformation(String buildingsAndRoomsInformationFilePath)
+            throws DataConversionException {
+        return JsonUtil.readJsonFileFromResource(buildingsAndRoomsInformationFilePath, Building.class);
+    }
+
+}
+```
+###### /java/seedu/address/storage/XmlAddressBookStorage.java
+``` java
+    /**
+     * Imports the specified {@code AddressBook} from the filepath to the current {@code AddressBook}.
+     *
+     * @param filePath      location of the specified AddressBook. Cannot be null
+     * @param addressBook   current existing AddressBook
+     * @return              modified AddressBook
+     * @throws DataConversionException if the file is not in the correct format.
+     */
+    public AddressBook importAddressBook(String filePath, AddressBook addressBook, byte[] password)
+            throws DataConversionException, IOException, WrongPasswordException {
+        requireNonNull(filePath);
+
+        File addressBookFile = new File(filePath);
+
+        if (!addressBookFile.exists()) {
+            logger.info("AddressBook file "  + addressBookFile + " not found");
+            throw new FileNotFoundException();
+        }
+        if (password != null) {
+            SecurityUtil.decrypt(new File(filePath), password);
+        }
+        XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
+        try {
+            return xmlAddressBook.addToAddressBook(addressBook);
+        } catch (IllegalValueException ive) {
+            logger.info("Illegal values found in " + addressBookFile + ": " + ive.getMessage());
+            throw new DataConversionException(ive);
+        }
+    }
+
+    /**
+     * Exports the current view of {@code AddressBook} to the given filepath.
+     *
+     * @param filePath                  location of the exported data. Cannot be null
+     * @throws IOException              If the file cannot be overwritten or opened.
+     * @throws WrongPasswordException   If password is in wrong format
+     * @throws DuplicatePersonException Impossible since AddressBook is newly created
+     */
+    public void exportAddressBook(String filePath, Password password, ObservableList<Person> filteredPersons)
+            throws IOException, WrongPasswordException, DuplicatePersonException {
+        requireNonNull(filePath);
+
+        if (UserPrefs.getUserAddressBookFilePath().equals(filePath)) {
+            logger.warning("Filepath is same as AddressBook storage filepath, storage file should not be overwritten!");
+            throw new IOException();
+        }
+        File file = new File(filePath);
+        FileUtil.createIfMissing(file);
+        AddressBook addressBook = new AddressBook();
+        addressBook.setPersons(filteredPersons);
+        XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
+        if (password != null) {
+            SecurityUtil.encrypt(file, password.getPassword());
+        }
+    }
+```
+###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+``` java
+    /**
+     * Adds {@code person}s and {@code tag}s from this addressbook into the existing {@code AddressBook}.
+     *
+     * @throws IllegalValueException if there were any data constraints violated or duplicates in the
+     * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag}.
+     */
+    public AddressBook addToAddressBook(AddressBook addressBook) throws IllegalValueException {
+        for (XmlAdaptedTag t : tags) {
+            addressBook.importTag(t.toModelType());
+        }
+        for (XmlAdaptedPerson p : persons) {
+            addressBook.importPerson(p.toModelType());
+        }
+        for (XmlAdaptedAlias a : aliases) {
+            addressBook.importAlias(a.toModelType());
+        }
+        return addressBook;
+    }
+```
+###### /java/seedu/address/MainApp.java
 ``` java
     /**
      * Initialize {@code nusVenues} and {@code nusBuildingsAndRooms} using the file at
@@ -149,7 +441,29 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
     }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/person/UniquePersonList.java
+``` java
+    /**
+     * Adds a person to the list if the person is not a duplicate of an existing person in the list
+     */
+    public void importPerson(Person toAdd) {
+        requireNonNull(toAdd);
+        if (!contains(toAdd)) {
+            internalList.add(toAdd);
+        }
+    }
+```
+###### /java/seedu/address/model/UserPrefs.java
+``` java
+    public static String getUserAddressBookFilePath() {
+        return UserPrefs.userAddressBookFilePath;
+    }
+
+    public static void setUserAddressBookFilePath(String userAddressBookFilePath) {
+        UserPrefs.userAddressBookFilePath = userAddressBookFilePath;
+    }
+```
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
      * Imports a person to the address book.
@@ -164,204 +478,95 @@ public class ImportCommandParser implements Parser<ImportCommand> {
         persons.importPerson(person);
     }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     public void importAlias(Alias alias) {
         aliases.importAlias(alias);
     }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     public void importTag(Tag t) {
         tags.importTag(t);
     }
 ```
-###### \java\seedu\address\model\building\Building.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
-/**
- * Represents a Building in National University of Singapore.
- * Guarantees: immutable; is valid as declared in {@link #isValidBuilding(String)}
- */
-public class Building {
-
-    public static final String MESSAGE_BUILDING_CONSTRAINTS =
-            "Building names should only contain alphanumeric characters and it should not be blank";
-
-    public static final String BUILDING_VALIDATION_REGEX = "\\p{Alnum}+";
-
     /**
-     * Represents an array of Buildings in National University of Singapore
+     * Imports the specified {@code AddressBook} from the filepath to the current {@code AddressBook}.
+     * @param filepath
      */
-    public static final String[] NUS_BUILDINGS = {
-        "AS1", "AS2", "AS3", "AS4", "AS5", "AS6", "AS7", "AS8", "COM1", "COM2", "I3", "BIZ1", "BIZ2",
-        "SDE", "S1", "S1A", "S2", "S3", "S4", "S4A", "S5", "S8", "S11", "S12", "S13", "S14", "S16",
-        "S17", "E1", "E2", "E2A", "E3", "E3A", "E4", "E4A", "E5", "EA", "ERC", "UTSRC", "LT"
-    };
-
-    private static final Logger logger = LogsCenter.getLogger(Building.class);
-
-    private static HashMap<String, ArrayList<String>> nusBuildingsAndRooms = null;
-
-    private final String buildingName;
-
-    private HashMap<String, ArrayList<String>> buildingsAndRooms = null;
-
-    /**
-     * Uses a private {@code Building} constructor for Jackson JSON API to instantiate an object
-     */
-    private Building() {
-        buildingName = "";
-    }
-
-    /**
-     * Constructs a {@code Building}.
-     *
-     * @param buildingName A valid building name.
-     */
-    public Building(String buildingName) {
-        requireNonNull(buildingName);
-        checkArgument(isValidBuilding(buildingName), MESSAGE_BUILDING_CONSTRAINTS);
-        this.buildingName = buildingName;
-    }
-
-    /**
-     * Returns true if a given string is a valid building name.
-     */
-    public static boolean isValidBuilding(String test) {
-        return test.matches(BUILDING_VALIDATION_REGEX);
-    }
-
-    /**
-     * Returns true if a given string is a valid building name.
-     */
-    public static boolean isValidBuilding(Building test) {
-        for (String building : NUS_BUILDINGS) {
-            if (building.equals(test.buildingName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static HashMap<String, ArrayList<String>> getNusBuildingsAndRooms() {
-        return nusBuildingsAndRooms;
-    }
-
-    public static void setNusBuildingsAndRooms(HashMap<String, ArrayList<String>> nusBuildingsAndRooms) {
-        Building.nusBuildingsAndRooms = nusBuildingsAndRooms;
-    }
-
-    public String getBuildingName() {
-        return buildingName;
-    }
-
-    public HashMap<String, ArrayList<String>> getBuildingsAndRooms() {
-        return buildingsAndRooms;
-    }
-
-    public void setBuildingsAndRooms(HashMap<String, ArrayList<String>> buildingsAndRooms) {
-        this.buildingsAndRooms = buildingsAndRooms;
-    }
-
-    /**
-     * Retrieves weekday schedule of all {@code Room}s in the {@code Building} in an ArrayList of ArrayList
-     *
-     * @throws CorruptedVenueInformationException if the room schedule format is not as expected.
-     */
-    public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule() throws CorruptedVenueInformationException {
-        ArrayList<ArrayList<String>> allRoomsSchedule = new ArrayList<>();
-        ArrayList<String> allRoomsInBuilding = retrieveAllRoomsInBuilding();
-        for (String roomName : allRoomsInBuilding) {
-            Room room = new Room(roomName);
-            ArrayList<String> weekDayRoomSchedule = room.retrieveWeekDaySchedule();
-            allRoomsSchedule.add(weekDayRoomSchedule);
-        }
-        return allRoomsSchedule;
-    }
-
-    /**
-     * Retrieves all {@code Room}s in the {@code Building} in an ArrayList
-     *
-     * @throws CorruptedVenueInformationException if the NUS Buildings and Rooms format is not as expected.
-     */
-    public ArrayList<String> retrieveAllRoomsInBuilding() throws CorruptedVenueInformationException {
-        checkArgument(isValidBuilding(this));
-        if (nusBuildingsAndRooms == null) {
-            logger.warning("NUS buildings and rooms is null, venueinformation.json file is corrupted.");
-            throw new CorruptedVenueInformationException();
-        }
-        if (nusBuildingsAndRooms.get(buildingName) == null) {
-            logger.warning("NUS buildings and rooms has some null data, venueinformation.json file is corrupted.");
-            throw new CorruptedVenueInformationException();
-        }
-        return nusBuildingsAndRooms.get(buildingName);
-    }
-
     @Override
-    public String toString() {
-        return buildingName;
+    public void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
+                                                                            WrongPasswordException {
+        requireNonNull(filepath);
+
+        XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
+        xmlAddressBook.importAddressBook(filepath, this.addressBook, password);
+        indicateAddressBookChanged();
     }
 
+    /**
+     * Exports the current view of {@code AddressBook} to the filepath.
+     * @param filepath
+     */
     @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Building // instanceof handles nulls
-                && buildingName.equals(((Building) other).buildingName)); // state check
-    }
+    public void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
+                                                                                DuplicatePersonException {
+        requireNonNull(filepath);
 
+        XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
+        xmlAddressBook.exportAddressBook(filepath, password, filteredPersons);
+        indicateAddressBookChanged();
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
     @Override
-    public int hashCode() {
-        return buildingName.hashCode();
+    public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
+            CorruptedVenueInformationException {
+        if (!Building.isValidBuilding(building)) {
+            throw new BuildingNotFoundException();
+        }
+        return building.retrieveAllRoomsSchedule();
     }
+```
+###### /java/seedu/address/model/tag/UniqueTagList.java
+``` java
+    /**
+     * Adds a Tag to the list if the Tag is not a duplicate of an existing Tag in the list
+     */
+    public void importTag(Tag toAdd) {
+        requireNonNull(toAdd);
+        if (!contains(toAdd)) {
+            internalList.add(toAdd);
+        }
 
-}
-```
-###### \java\seedu\address\model\building\exceptions\BuildingNotFoundException.java
-``` java
-/**
- * Signals that the operation is unable to find the specified building.
- */
-public class BuildingNotFoundException extends CommandException {
-    public BuildingNotFoundException() {
-        super("Building is not in the list of NUS Buildings given below: \n"
-                + Arrays.toString(Building.NUS_BUILDINGS));
+        assert CollectionUtil.elementsAreUnique(internalList);
     }
-}
 ```
-###### \java\seedu\address\model\building\exceptions\CorruptedVenueInformationException.java
+###### /java/seedu/address/model/Model.java
 ``` java
-/**
- * Signals that some data in venueinformation.json file is corrupted
- */
-public class CorruptedVenueInformationException extends Exception {
-    public CorruptedVenueInformationException() {
-        super("Unable to read from venueinformation.json, file is corrupted. Please re-download the file.");
-    }
-}
+    /**
+     * Imports specified {@code AddressBook} from filepath to current {@code AddressBook}
+     */
+    void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
+            WrongPasswordException;
+
+    /**
+     * Exports the current view of {@code AddressBook} to the filepath.
+     * @param filepath
+     */
+    void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
+                                                                        DuplicatePersonException;
 ```
-###### \java\seedu\address\model\building\exceptions\InvalidWeekDayScheduleException.java
+###### /java/seedu/address/model/Model.java
 ``` java
-/**
- * Signals that weekday schedule is in incorrect format
- */
-public class InvalidWeekDayScheduleException extends Exception {
-    public InvalidWeekDayScheduleException() {
-        super("Weekday Schedule is in incorrect format, venueinformation.json file is corrupted.");
-    }
-}
+    /** Returns rooms for the given building */
+    ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
+                                                                                    CorruptedVenueInformationException;
 ```
-###### \java\seedu\address\model\building\exceptions\InvalidWeekScheduleException.java
-``` java
-/**
- * Signals that week schedule is in incorrect format
- */
-public class InvalidWeekScheduleException extends Exception {
-    public InvalidWeekScheduleException() {
-        super("Week Schedule is in incorrect format, venueinformation.json file is corrupted.");
-    }
-}
-```
-###### \java\seedu\address\model\building\Room.java
+###### /java/seedu/address/model/building/Room.java
 ``` java
 /**
  * Represents a Room in National University of Singapore.
@@ -488,7 +693,7 @@ public class Room {
 
 }
 ```
-###### \java\seedu\address\model\building\Week.java
+###### /java/seedu/address/model/building/Week.java
 ``` java
 /**
  * Represents a Week schedule of a Room in National University of Singapore.
@@ -609,7 +814,52 @@ public class Week {
 
 }
 ```
-###### \java\seedu\address\model\building\WeekDay.java
+###### /java/seedu/address/model/building/exceptions/CorruptedVenueInformationException.java
+``` java
+/**
+ * Signals that some data in venueinformation.json file is corrupted
+ */
+public class CorruptedVenueInformationException extends Exception {
+    public CorruptedVenueInformationException() {
+        super("Unable to read from venueinformation.json, file is corrupted. Please re-download the file.");
+    }
+}
+```
+###### /java/seedu/address/model/building/exceptions/InvalidWeekScheduleException.java
+``` java
+/**
+ * Signals that week schedule is in incorrect format
+ */
+public class InvalidWeekScheduleException extends Exception {
+    public InvalidWeekScheduleException() {
+        super("Week Schedule is in incorrect format, venueinformation.json file is corrupted.");
+    }
+}
+```
+###### /java/seedu/address/model/building/exceptions/InvalidWeekDayScheduleException.java
+``` java
+/**
+ * Signals that weekday schedule is in incorrect format
+ */
+public class InvalidWeekDayScheduleException extends Exception {
+    public InvalidWeekDayScheduleException() {
+        super("Weekday Schedule is in incorrect format, venueinformation.json file is corrupted.");
+    }
+}
+```
+###### /java/seedu/address/model/building/exceptions/BuildingNotFoundException.java
+``` java
+/**
+ * Signals that the operation is unable to find the specified building.
+ */
+public class BuildingNotFoundException extends CommandException {
+    public BuildingNotFoundException() {
+        super("Building is not in the list of NUS Buildings given below: \n"
+                + Arrays.toString(Building.NUS_BUILDINGS));
+    }
+}
+```
+###### /java/seedu/address/model/building/WeekDay.java
 ``` java
 /**
  * Represents a WeekDay schedule of a Room in National University of Singapore.
@@ -737,226 +987,163 @@ public class WeekDay {
 
 }
 ```
-###### \java\seedu\address\model\Model.java
-``` java
-    /**
-     * Imports specified {@code AddressBook} from filepath to current {@code AddressBook}
-     */
-    void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
-            WrongPasswordException;
-```
-###### \java\seedu\address\model\Model.java
-``` java
-    /** Returns rooms for the given building */
-    ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
-            CorruptedVenueInformationException;
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    @Override
-    public void deleteTag(Tag tag) {
-        addressBook.removeTag(tag);
-    }
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    /**
-     * Imports the specified {@code AddressBook} from the filepath to the current {@code AddressBook}.
-     * @param filepath
-     */
-    @Override
-    public void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
-                                                                            WrongPasswordException {
-        requireNonNull(filepath);
-        requireNonNull(password);
-
-        XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
-        xmlAddressBook.importAddressBook(filepath, this.addressBook, password);
-        indicateAddressBookChanged();
-    }
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    @Override
-    public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
-            CorruptedVenueInformationException {
-        if (!Building.isValidBuilding(building)) {
-            throw new BuildingNotFoundException();
-        }
-        return building.retrieveAllRoomsSchedule();
-    }
-```
-###### \java\seedu\address\model\person\UniquePersonList.java
-``` java
-    /**
-     * Adds a person to the list if the person is not a duplicate of an existing person in the list
-     */
-    public void importPerson(Person toAdd) {
-        requireNonNull(toAdd);
-        if (!contains(toAdd)) {
-            internalList.add(toAdd);
-        }
-    }
-```
-###### \java\seedu\address\model\tag\UniqueTagList.java
-``` java
-    /**
-     * Adds a Tag to the list if the Tag is not a duplicate of an existing Tag in the list
-     */
-    public void importTag(Tag toAdd) {
-        requireNonNull(toAdd);
-        if (!contains(toAdd)) {
-            internalList.add(toAdd);
-        }
-
-        assert CollectionUtil.elementsAreUnique(internalList);
-    }
-```
-###### \java\seedu\address\storage\ReadOnlyJsonVenueInformation.java
+###### /java/seedu/address/model/building/Building.java
 ``` java
 /**
- * A class to access VenueInformation stored in the hard disk as a json file
+ * Represents a Building in National University of Singapore.
+ * Guarantees: immutable; is valid as declared in {@link #isValidBuilding(String)}
  */
-public class ReadOnlyJsonVenueInformation implements ReadOnlyVenueInformation {
+public class Building {
 
-    private String filePath;
+    public static final String MESSAGE_BUILDING_CONSTRAINTS =
+            "Building names should only contain alphanumeric characters and it should not be blank";
 
-    public ReadOnlyJsonVenueInformation(String filePath) {
-        this.filePath = filePath;
-    }
+    public static final String BUILDING_VALIDATION_REGEX = "\\p{Alnum}+";
 
-    @Override
-    public String getVenueInformationFilePath() {
-        return filePath;
-    }
+    /**
+     * Represents an array of Buildings in National University of Singapore
+     */
+    public static final String[] NUS_BUILDINGS = {
+        "AS1", "AS2", "AS3", "AS4", "AS5", "AS6", "AS7", "AS8", "COM1", "COM2", "I3", "BIZ1", "BIZ2",
+        "SDE", "S1", "S1A", "S2", "S3", "S4", "S4A", "S5", "S8", "S10", "S11", "S12", "S13", "S14", "S15",
+        "S16", "S17", "E1", "E1A", "E2", "E2A", "E3", "E3A", "E4", "E4A", "E5", "E6", "EA", "ERC", "UTSRC"
+    };
 
-    @Override
-    public Optional<Room> readVenueInformation() throws DataConversionException, IOException {
-        return readVenueInformation(filePath);
+    public static final String[] NUS_BUILDINGS_ADDRESSES = {
+        "117570", "117570", "117570", "117570", "117570", "117416", "117570", "119260", "117417", "117417",
+        "119613", "119245", "119245", "117592", "117546", "117546", "117546", "117558", "117543", "117543",
+        "117543", "117548", "117546", "117553", "117550", "117550", "117542", "117541", "117546", "119076 S17",
+        "117575", "117575", "117575", "117361", "117581", "117574", "117583", "117583", "117583", "117608",
+        "117575", "139599", "138607"
+    };
+
+    private static final Logger logger = LogsCenter.getLogger(Building.class);
+
+    private static HashMap<String, ArrayList<String>> nusBuildingsAndRooms = null;
+
+    private final String buildingName;
+
+    private HashMap<String, ArrayList<String>> buildingsAndRooms = null;
+
+    /**
+     * Uses a private {@code Building} constructor for Jackson JSON API to instantiate an object
+     */
+    private Building() {
+        buildingName = "";
     }
 
     /**
-     * Converts Json file into HashMap of NUS Rooms
-     * @param venueInformationFilePath location of the data. Cannot be null.
-     * @throws DataConversionException if the file format is not as expected.
+     * Constructs a {@code Building}.
+     *
+     * @param buildingName A valid building name.
      */
-    public Optional<Room> readVenueInformation(String venueInformationFilePath) throws DataConversionException {
-        return JsonUtil.readJsonFileFromResource(venueInformationFilePath, Room.class);
-    }
-
-    @Override
-    public Optional<Building> readBuildingsAndRoomsInformation() throws DataConversionException, IOException {
-        return readBuildingsAndRoomsInformation(filePath);
+    public Building(String buildingName) {
+        requireNonNull(buildingName);
+        checkArgument(isValidBuilding(buildingName), MESSAGE_BUILDING_CONSTRAINTS);
+        this.buildingName = buildingName;
     }
 
     /**
-     * Converts Json file into HashMap of NUS Buildings and Rooms
-     * @param buildingsAndRoomsInformationFilePath location of the data. Cannot be null.
-     * @throws DataConversionException if the file format is not as expected.
+     * Returns true if a given string is a valid building name.
      */
-    public Optional<Building> readBuildingsAndRoomsInformation(String buildingsAndRoomsInformationFilePath)
-            throws DataConversionException {
-        return JsonUtil.readJsonFileFromResource(buildingsAndRoomsInformationFilePath, Building.class);
+    public static boolean isValidBuilding(String test) {
+        return test.matches(BUILDING_VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns true if a given string is a valid building name.
+     */
+    public static boolean isValidBuilding(Building test) {
+        for (String building : NUS_BUILDINGS) {
+            if (building.equals(test.buildingName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns the postal code if building is an NUS building.
+     */
+    public static String retrieveNusBuildingIfExist(String test) {
+        for (int i = 0; i < NUS_BUILDINGS.length; i++) {
+            if (NUS_BUILDINGS[i].equalsIgnoreCase(test)) {
+                return NUS_BUILDINGS_ADDRESSES[i];
+            }
+        }
+        return test;
+    }
+
+    public static HashMap<String, ArrayList<String>> getNusBuildingsAndRooms() {
+        return nusBuildingsAndRooms;
+    }
+
+    public static void setNusBuildingsAndRooms(HashMap<String, ArrayList<String>> nusBuildingsAndRooms) {
+        Building.nusBuildingsAndRooms = nusBuildingsAndRooms;
+    }
+
+    public String getBuildingName() {
+        return buildingName;
+    }
+
+    public HashMap<String, ArrayList<String>> getBuildingsAndRooms() {
+        return buildingsAndRooms;
+    }
+
+    public void setBuildingsAndRooms(HashMap<String, ArrayList<String>> buildingsAndRooms) {
+        this.buildingsAndRooms = buildingsAndRooms;
+    }
+
+    /**
+     * Retrieves weekday schedule of all {@code Room}s in the {@code Building} in an ArrayList of ArrayList
+     *
+     * @throws CorruptedVenueInformationException if the room schedule format is not as expected.
+     */
+    public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule() throws CorruptedVenueInformationException {
+        ArrayList<ArrayList<String>> allRoomsSchedule = new ArrayList<>();
+        ArrayList<String> allRoomsInBuilding = retrieveAllRoomsInBuilding();
+        for (String roomName : allRoomsInBuilding) {
+            Room room = new Room(roomName);
+            ArrayList<String> weekDayRoomSchedule = room.retrieveWeekDaySchedule();
+            allRoomsSchedule.add(weekDayRoomSchedule);
+        }
+        return allRoomsSchedule;
+    }
+
+    /**
+     * Retrieves all {@code Room}s in the {@code Building} in an ArrayList
+     *
+     * @throws CorruptedVenueInformationException if the NUS Buildings and Rooms format is not as expected.
+     */
+    public ArrayList<String> retrieveAllRoomsInBuilding() throws CorruptedVenueInformationException {
+        checkArgument(isValidBuilding(this));
+        if (nusBuildingsAndRooms == null) {
+            logger.warning("NUS buildings and rooms is null, venueinformation.json file is corrupted.");
+            throw new CorruptedVenueInformationException();
+        }
+        if (nusBuildingsAndRooms.get(buildingName) == null) {
+            logger.warning("NUS buildings and rooms has some null data, venueinformation.json file is corrupted.");
+            throw new CorruptedVenueInformationException();
+        }
+        return nusBuildingsAndRooms.get(buildingName);
+    }
+
+    @Override
+    public String toString() {
+        return buildingName;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Building // instanceof handles nulls
+                && buildingName.equals(((Building) other).buildingName)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return buildingName.hashCode();
     }
 
 }
-```
-###### \java\seedu\address\storage\ReadOnlyVenueInformation.java
-``` java
-/**
- * Represents a storage for {@link seedu.address.model.building.Room}.
- */
-public interface ReadOnlyVenueInformation {
-
-    /**
-     * Returns the file path of the VenueInformation data file.
-     */
-    String getVenueInformationFilePath();
-
-    /**
-     * Returns VenueInformation data from storage.
-     *   Returns {@code Optional.empty()} if storage file is not found.
-     * @throws DataConversionException if the data in storage is not in the expected format.
-     * @throws IOException if there was any problem when reading from the storage.
-     */
-    Optional<Room> readVenueInformation() throws DataConversionException, IOException;
-
-    Optional<Building> readBuildingsAndRoomsInformation() throws DataConversionException, IOException;
-}
-```
-###### \java\seedu\address\storage\Storage.java
-``` java
-    @Override
-    Optional<Room> readVenueInformation() throws DataConversionException, IOException;
-
-    @Override
-    Optional<Building> readBuildingsAndRoomsInformation() throws DataConversionException, IOException;
-```
-###### \java\seedu\address\storage\StorageManager.java
-``` java
-    @Override
-    public String getVenueInformationFilePath() {
-        return venueInformationStorage.getVenueInformationFilePath();
-    }
-
-    @Override
-    public Optional<Room> readVenueInformation() throws DataConversionException, IOException {
-        return venueInformationStorage.readVenueInformation();
-    }
-
-    @Override
-    public Optional<Building> readBuildingsAndRoomsInformation() throws DataConversionException, IOException {
-        return venueInformationStorage.readBuildingsAndRoomsInformation();
-    }
-```
-###### \java\seedu\address\storage\XmlAddressBookStorage.java
-``` java
-    /**
-     * Imports the specified {@code AddressBook} from the filepath to the current {@code AddressBook}.
-     *
-     * @param filePath      location of the specified AddressBook. Cannot be null
-     * @param addressBook   current existing AddressBook
-     * @return              modified AddressBook
-     * @throws DataConversionException if the file is not in the correct format.
-     */
-    public AddressBook importAddressBook(String filePath, AddressBook addressBook, byte[] password)
-            throws DataConversionException, IOException, WrongPasswordException {
-        requireNonNull(filePath);
-
-        File addressBookFile = new File(filePath);
-
-        if (!addressBookFile.exists()) {
-            logger.info("AddressBook file "  + addressBookFile + " not found");
-            throw new FileNotFoundException();
-        }
-        SecurityUtil.decrypt(new File(filePath), password);
-        XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
-        try {
-            return xmlAddressBook.addToAddressBook(addressBook);
-        } catch (IllegalValueException ive) {
-            logger.info("Illegal values found in " + addressBookFile + ": " + ive.getMessage());
-            throw new DataConversionException(ive);
-        }
-    }
-```
-###### \java\seedu\address\storage\XmlSerializableAddressBook.java
-``` java
-    /**
-     * Adds {@code person}s and {@code tag}s from this addressbook into the existing {@code AddressBook}.
-     *
-     * @throws IllegalValueException if there were any data constraints violated or duplicates in the
-     * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag}.
-     */
-    public AddressBook addToAddressBook(AddressBook addressBook) throws IllegalValueException {
-        for (XmlAdaptedTag t : tags) {
-            addressBook.importTag(t.toModelType());
-        }
-        for (XmlAdaptedPerson p : persons) {
-            addressBook.importPerson(p.toModelType());
-        }
-        for (XmlAdaptedAlias a : aliases) {
-            addressBook.importAlias(a.toModelType());
-        }
-        return addressBook;
-    }
 ```

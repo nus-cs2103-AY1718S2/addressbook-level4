@@ -9,6 +9,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 
+//@@author jingyinno
 /**
  * A ui for the info panel that is displayed when the map command is called.
  */

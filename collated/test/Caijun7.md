@@ -1,102 +1,34 @@
 # Caijun7
-###### \data\ImportCommandTest\aliceAddressBook.xml
-``` xml
-<addressbook>
-    <persons>
-        <name>Alice Pauline</name>
-        <phone isPrivate="false">85355255</phone>
-        <email isPrivate="false">alice@example.com</email>
-        <address isPrivate="false">123, Jurong West Ave 6, #08-111</address>
-        <birthday>01011995</birthday>
-        <tagged>friends</tagged>
-    </persons>
-    <tags>friends</tags>
-</addressbook>
+###### /java/seedu/address/logic/parser/ImportCommandParserTest.java
+``` java
+public class ImportCommandParserTest {
+    private static final String TEST_PASSWORD = "test";
+
+    private ImportCommandParser parser = new ImportCommandParser();
+
+    @Test
+    public void parse_validOneArgs_returnsImportCommand() {
+        assertParseSuccess(parser, "validString", new ImportCommand("validString", TEST_PASSWORD));
+    }
+
+    @Test
+    public void parse_validTwoArgs_returnsImportCommand() {
+        assertParseSuccess(parser, "validString test", new ImportCommand("validString", TEST_PASSWORD));
+    }
+
+    @Test
+    public void parse_invalidThreeArg_throwsParseException() {
+        assertParseFailure(parser, "invalidString is invalid", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ImportCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidZeroArgs_throwsParseException() {
+        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+    }
+}
 ```
-###### \data\ImportCommandTest\aliceBensonAddressBook.xml
-``` xml
-<addressbook>
-    <persons>
-        <name>Alice Pauline</name>
-        <phone isPrivate="false">85355255</phone>
-        <email isPrivate="false">alice@example.com</email>
-        <address isPrivate="false">123, Jurong West Ave 6, #08-111</address>
-        <birthday>01011995</birthday>
-        <tagged>friends</tagged>
-    </persons>
-    <persons>
-        <name>Benson Meier</name>
-        <phone isPrivate="false">98765432</phone>
-        <email isPrivate="false">johnd@example.com</email>
-        <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
-        <birthday>02011989</birthday>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
-    </persons>
-    <tags>owesMoney</tags>
-    <tags>friends</tags>
-</addressbook>
-```
-###### \data\ImportCommandTest\bensonAddressBook.xml
-``` xml
-<addressbook>
-    <persons>
-        <name>Benson Meier</name>
-        <phone isPrivate="false">98765432</phone>
-        <email isPrivate="false">johnd@example.com</email>
-        <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
-        <birthday>01021989</birthday>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
-    </persons>
-</addressbook>
-```
-###### \data\ImportCommandTest\invalidFileFormatAddressBook.xml
-``` xml
-<addressbook>
-    <persons>
-        <name>Alice Pauline</name>
-        <phone isPrivate="false">85355255</phone>
-        <email isPrivate="false">alice@example.com</email>
-        <birthday>01011995</birthday>
-        <tagged>friends</tagged>
-    </persons>
-    <persons>
-        <name>Benson Meier</name>
-        <phone isPrivate="false">98765432</phone>
-        <email isPrivate="false">johnd@example.com</email>
-        <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
-        <birthday>01021998</birthday>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
-    </persons>
-</addressbook>
-```
-###### \data\XmlAddressBookStorageTest\validAddressBook.xml
-``` xml
-<addressbook>
-    <persons>
-        <name>Alice Pauline</name>
-        <phone isPrivate="false">85355255</phone>
-        <email isPrivate="false">alice@example.com</email>
-        <address isPrivate="false">123, Jurong West Ave 6, #08-111</address>
-        <birthday>01011995</birthday>
-        <tagged>friends</tagged>
-    </persons>
-    <persons>
-        <name>Benson Meier</name>
-        <phone isPrivate="false">98765432</phone>
-        <email isPrivate="false">johnd@example.com</email>
-        <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
-        <birthday>01011995</birthday>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
-    </persons>
-    <tags>owesMoney</tags>
-    <tags>friends</tags>
-</addressbook>
-```
-###### \java\seedu\address\logic\commands\ImportCommandTest.java
+###### /java/seedu/address/logic/commands/ImportCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
@@ -140,7 +72,7 @@ public class ImportCommandTest {
         assertCommandSuccess(importCommand, model, ImportCommand.MESSAGE_SUCCESS, expectedModel);
     }
 ```
-###### \java\seedu\address\logic\commands\ImportCommandTest.java
+###### /java/seedu/address/logic/commands/ImportCommandTest.java
 ``` java
     @Test
     public void execute_nonExistentFileImportIntoAddressBook_throwsCommandException() throws Exception {
@@ -282,31 +214,162 @@ public class ImportCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\ImportCommandParserTest.java
+###### /java/seedu/address/storage/ReadOnlyJsonVenueInformationTest.java
 ``` java
-public class ImportCommandParserTest {
-    private static final String TEST_PASSWORD = "test";
+public class ReadOnlyJsonVenueInformationTest {
 
-    private ImportCommandParser parser = new ImportCommandParser();
+    private static final String TEST_DATA_FOLDER = "/ReadOnlyJsonVenueInformationTest/";
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void parse_validArgs_returnsImportCommand() {
-        assertParseSuccess(parser, "validString test", new ImportCommand("validString", TEST_PASSWORD));
+    public void readVenueInformation_nullFilePath_throwsNullPointerException() throws DataConversionException {
+        thrown.expect(NullPointerException.class);
+        readVenueInformation(null);
     }
 
     @Test
-    public void parse_oneArg_throwsParseException() {
-        assertParseFailure(parser, "validString", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                ImportCommand.MESSAGE_USAGE));
+    public void readVenueInformation_missingFile_emptyResult() throws DataConversionException {
+        assertFalse(readVenueInformation("NonExistentFile.json").isPresent());
     }
 
     @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+    public void readVenueInformation_notJsonFormat_exceptionThrown() throws DataConversionException {
+        thrown.expect(DataConversionException.class);
+        readVenueInformation("NotJsonFormatVenueInformation.json");
     }
+
+    @Test
+    public void readVenueInformation_fileInOrder_successfullyRead() throws DataConversionException {
+        HashMap<String, Week> expected = getTypicalVenueInformation().getNusRooms();
+        HashMap<String, Week> actual = readVenueInformation("TypicalVenueInformation.json").get().getNusRooms();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void readVenueInformation_valuesMissingFromFile_defaultValueUsed() throws DataConversionException {
+        HashMap<String, Week> actual = readVenueInformation("EmptyVenueInformation.json").get().getNusRooms();
+        assertEquals(null, actual);
+    }
+
+    @Test
+    public void readVenueInformation_extraValuesInFile_extraValuesIgnored() throws DataConversionException {
+        HashMap<String, Week> expected = getTypicalVenueInformation().getNusRooms();
+        HashMap<String, Week> actual = readVenueInformation("ExtraValuesVenueInformation.json").get().getNusRooms();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void readBuildingsAndRoomsInformation_nullFilePath_throwsNullPointerException()
+            throws DataConversionException {
+        thrown.expect(NullPointerException.class);
+        readBuildingsAndRoomsInformation(null);
+    }
+
+    @Test
+    public void readBuildingsAndRoomsInformation_missingFile_emptyResult() throws DataConversionException {
+        assertFalse(readBuildingsAndRoomsInformation("NonExistentFile.json").isPresent());
+    }
+
+    @Test
+    public void readBuildingsAndRoomsInformation_notJsonFormat_exceptionThrown() throws DataConversionException {
+        thrown.expect(DataConversionException.class);
+        readBuildingsAndRoomsInformation("NotJsonFormatVenueInformation.json");
+    }
+
+    @Test
+    public void readBuildingsAndRoomsInformation_fileInOrder_successfullyRead() throws DataConversionException {
+        HashMap<String, ArrayList<String>> expected = getTypicalBuildingsAndRoomsInformation().getBuildingsAndRooms();
+        HashMap<String, ArrayList<String>> actual =
+                readBuildingsAndRoomsInformation("TypicalVenueInformation.json").get().getBuildingsAndRooms();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void readBuildingsAndRoomsInformation_valuesMissingFromFile_defaultValueUsed()
+            throws DataConversionException {
+        HashMap<String, ArrayList<String>> actual =
+                readBuildingsAndRoomsInformation("EmptyVenueInformation.json").get().getBuildingsAndRooms();
+        assertEquals(null, actual);
+    }
+
+    @Test
+    public void readBuildingsAndRoomsInformation_extraValuesInFile_extraValuesIgnored()
+            throws DataConversionException {
+        HashMap<String, ArrayList<String>> expected = getTypicalBuildingsAndRoomsInformation().getBuildingsAndRooms();
+        HashMap<String, ArrayList<String>> actual =
+                readBuildingsAndRoomsInformation("ExtraValuesVenueInformation.json").get().getBuildingsAndRooms();
+        assertEquals(expected, actual);
+    }
+
+    private Optional<Room> readVenueInformation(String venueInformationFileInTestDataFolder)
+            throws DataConversionException {
+        String venueInformationFilePath = addToTestDataPathIfNotNull(venueInformationFileInTestDataFolder);
+        return new ReadOnlyJsonVenueInformation(venueInformationFilePath)
+                .readVenueInformation(venueInformationFilePath);
+    }
+
+    private Optional<Building> readBuildingsAndRoomsInformation(String venueInformationFileInTestDataFolder)
+            throws DataConversionException {
+        String venueInformationFilePath = addToTestDataPathIfNotNull(venueInformationFileInTestDataFolder);
+        return new ReadOnlyJsonVenueInformation(venueInformationFilePath)
+                .readBuildingsAndRoomsInformation(venueInformationFilePath);
+    }
+
+    private String addToTestDataPathIfNotNull(String venueInformationFileInTestDataFolder) {
+        return venueInformationFileInTestDataFolder != null
+                ? TEST_DATA_FOLDER + venueInformationFileInTestDataFolder
+                : null;
+    }
+
+    private Room getTypicalVenueInformation() {
+        Room venueInformation = new RoomBuilder().build();
+        return venueInformation;
+    }
+
+    private Building getTypicalBuildingsAndRoomsInformation() {
+        Building buildingsAndRoomsInformation = new BuildingBuilder().build();
+        return buildingsAndRoomsInformation;
+    }
+
 }
 ```
-###### \java\seedu\address\model\building\BuildingTest.java
+###### /java/seedu/address/storage/XmlAddressBookStorageTest.java
+``` java
+    @Test
+    public void importAddressBook_invalidFileFormat_throwDataConversionException() throws Exception {
+        thrown.expect(DataConversionException.class);
+        String filePath = TEST_DATA_FOLDER + "invalidFileFormatAddressBook.xml";
+        AddressBook original = new AddressBook();
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+        xmlAddressBookStorage.importAddressBook(filePath, original, SecurityUtil.hashPassword(TEST_PASSWORD));
+    }
+
+    @Test
+    public void importAddressBook_nonExistentFile_fileNotFoundException() throws Exception {
+        thrown.expect(FileNotFoundException.class);
+        String filePath = TEST_DATA_FOLDER + "nonExistentAddressBook.xml";
+        AddressBook original = new AddressBook();
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+        xmlAddressBookStorage.importAddressBook(filePath, original, SecurityUtil.hashPassword(TEST_PASSWORD));
+    }
+
+    @Test
+    public void importAddressBook_validFile_success() throws Exception {
+        String filePath = TEST_DATA_FOLDER + "validAddressBook.xml";
+        AddressBook original = new AddressBook();
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+
+        // Import file into existing address book
+        xmlAddressBookStorage.importAddressBook(filePath, original, SecurityUtil.hashPassword(TEST_PASSWORD));
+        AddressBook expected = original;
+        expected.importPerson(ALICE);
+        expected.importPerson(BENSON);
+        assertEquals(original, expected);
+    }
+```
+###### /java/seedu/address/model/building/BuildingTest.java
 ``` java
 public class BuildingTest {
 
@@ -421,91 +484,7 @@ public class BuildingTest {
 
 }
 ```
-###### \java\seedu\address\model\building\RoomTest.java
-``` java
-public class RoomTest {
-
-    private Room room = new Room("COM2-0108");
-    private final Room validRoom = new RoomBuilder().build();
-    private final Room standardRoom = new RoomBuilder().withRoomName("COM2-0108").build();
-
-    @Test
-    public void retrieveWeekDaySchedule_nullNusVenues_throwsCorruptedVenueInformationException() {
-        Room.setNusVenues(null);
-        assertThrows(CorruptedVenueInformationException.class, () -> room.retrieveWeekDaySchedule());
-    }
-
-    @Test
-    public void retrieveWeekDaySchedule_nonNullInvalidNusVenues_throwsCorruptedVenueInformationException() {
-        HashMap<String, Week> invalidNusVenues = new HashMap<>();
-        invalidNusVenues.put("COM2-0108", null);
-        Room.setNusVenues(invalidNusVenues);
-        assertThrows(CorruptedVenueInformationException.class, () -> room.retrieveWeekDaySchedule());
-    }
-
-    @Test
-    public void retrieveWeekDaySchedule_validNusVenues_success() throws Exception {
-        ArrayList<String> expectedList = new ArrayList<>();
-        expectedList.add(room.getRoomName());
-        for (int i = 0; i < WeekDay.NUMBER_OF_CLASSES; i++) {
-            expectedList.add("vacant");
-        }
-        assertEquals(expectedList, validRoom.retrieveWeekDaySchedule());
-    }
-
-    @Test
-    public void initializeWeek_nullNusVenues_throwsCorruptedVenueInformationException() {
-        Room.setNusVenues(null);
-        assertThrows(CorruptedVenueInformationException.class, () -> room.initializeWeek());
-    }
-
-    @Test
-    public void initializeWeek_nonNullInvalidNusVenues_throwsCorruptedVenueInformationException() {
-        HashMap<String, Week> invalidNusVenues = new HashMap<>();
-        invalidNusVenues.put("COM2-0108", null);
-        Room.setNusVenues(invalidNusVenues);
-        assertThrows(CorruptedVenueInformationException.class, () -> room.initializeWeek());
-    }
-
-    @Test
-    public void initializeWeek_validNusVenues_success() throws Exception {
-        validRoom.initializeWeek();
-
-        Week expectedWeek = new WeekBuilder().build();
-        assertEquals(expectedWeek, validRoom.getWeek());
-    }
-
-    @Test
-    public void equals_sameValues_true() {
-        Room roomWithSameValues = new RoomBuilder(standardRoom).build();
-        assertTrue(standardRoom.equals(roomWithSameValues));
-    }
-
-    @Test
-    public void equals_sameObject_true() {
-        assertTrue(standardRoom.equals(standardRoom));
-    }
-
-    @Test
-    public void equals_sameType_true() {
-        Room room = new Room("COM2-0108");
-        Room sameTypeRoom = new Room("COM2-0108");
-        assertTrue(room.equals(sameTypeRoom));
-    }
-
-    @Test
-    public void equals_nullInstance_false() {
-        assertFalse(standardRoom.equals(null));
-    }
-
-    @Test
-    public void equals_differentTypes_false() {
-        assertFalse(standardRoom.equals(new Week()));
-    }
-
-}
-```
-###### \java\seedu\address\model\building\WeekDayTest.java
+###### /java/seedu/address/model/building/WeekDayTest.java
 ``` java
 public class WeekDayTest {
 
@@ -630,7 +609,91 @@ public class WeekDayTest {
 
 }
 ```
-###### \java\seedu\address\model\building\WeekTest.java
+###### /java/seedu/address/model/building/RoomTest.java
+``` java
+public class RoomTest {
+
+    private Room room = new Room("COM2-0108");
+    private final Room validRoom = new RoomBuilder().build();
+    private final Room standardRoom = new RoomBuilder().withRoomName("COM2-0108").build();
+
+    @Test
+    public void retrieveWeekDaySchedule_nullNusVenues_throwsCorruptedVenueInformationException() {
+        Room.setNusVenues(null);
+        assertThrows(CorruptedVenueInformationException.class, () -> room.retrieveWeekDaySchedule());
+    }
+
+    @Test
+    public void retrieveWeekDaySchedule_nonNullInvalidNusVenues_throwsCorruptedVenueInformationException() {
+        HashMap<String, Week> invalidNusVenues = new HashMap<>();
+        invalidNusVenues.put("COM2-0108", null);
+        Room.setNusVenues(invalidNusVenues);
+        assertThrows(CorruptedVenueInformationException.class, () -> room.retrieveWeekDaySchedule());
+    }
+
+    @Test
+    public void retrieveWeekDaySchedule_validNusVenues_success() throws Exception {
+        ArrayList<String> expectedList = new ArrayList<>();
+        expectedList.add(room.getRoomName());
+        for (int i = 0; i < WeekDay.NUMBER_OF_CLASSES; i++) {
+            expectedList.add("vacant");
+        }
+        assertEquals(expectedList, validRoom.retrieveWeekDaySchedule());
+    }
+
+    @Test
+    public void initializeWeek_nullNusVenues_throwsCorruptedVenueInformationException() {
+        Room.setNusVenues(null);
+        assertThrows(CorruptedVenueInformationException.class, () -> room.initializeWeek());
+    }
+
+    @Test
+    public void initializeWeek_nonNullInvalidNusVenues_throwsCorruptedVenueInformationException() {
+        HashMap<String, Week> invalidNusVenues = new HashMap<>();
+        invalidNusVenues.put("COM2-0108", null);
+        Room.setNusVenues(invalidNusVenues);
+        assertThrows(CorruptedVenueInformationException.class, () -> room.initializeWeek());
+    }
+
+    @Test
+    public void initializeWeek_validNusVenues_success() throws Exception {
+        validRoom.initializeWeek();
+
+        Week expectedWeek = new WeekBuilder().build();
+        assertEquals(expectedWeek, validRoom.getWeek());
+    }
+
+    @Test
+    public void equals_sameValues_true() {
+        Room roomWithSameValues = new RoomBuilder(standardRoom).build();
+        assertTrue(standardRoom.equals(roomWithSameValues));
+    }
+
+    @Test
+    public void equals_sameObject_true() {
+        assertTrue(standardRoom.equals(standardRoom));
+    }
+
+    @Test
+    public void equals_sameType_true() {
+        Room room = new Room("COM2-0108");
+        Room sameTypeRoom = new Room("COM2-0108");
+        assertTrue(room.equals(sameTypeRoom));
+    }
+
+    @Test
+    public void equals_nullInstance_false() {
+        assertFalse(standardRoom.equals(null));
+    }
+
+    @Test
+    public void equals_differentTypes_false() {
+        assertFalse(standardRoom.equals(new Week()));
+    }
+
+}
+```
+###### /java/seedu/address/model/building/WeekTest.java
 ``` java
 public class WeekTest {
 
@@ -724,162 +787,7 @@ public class WeekTest {
 
 }
 ```
-###### \java\seedu\address\storage\ReadOnlyJsonVenueInformationTest.java
-``` java
-public class ReadOnlyJsonVenueInformationTest {
-
-    private static final String TEST_DATA_FOLDER = "/ReadOnlyJsonVenueInformationTest/";
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @Test
-    public void readVenueInformation_nullFilePath_throwsNullPointerException() throws DataConversionException {
-        thrown.expect(NullPointerException.class);
-        readVenueInformation(null);
-    }
-
-    @Test
-    public void readVenueInformation_missingFile_emptyResult() throws DataConversionException {
-        assertFalse(readVenueInformation("NonExistentFile.json").isPresent());
-    }
-
-    @Test
-    public void readVenueInformation_notJsonFormat_exceptionThrown() throws DataConversionException {
-        thrown.expect(DataConversionException.class);
-        readVenueInformation("NotJsonFormatVenueInformation.json");
-    }
-
-    @Test
-    public void readVenueInformation_fileInOrder_successfullyRead() throws DataConversionException {
-        HashMap<String, Week> expected = getTypicalVenueInformation().getNusRooms();
-        HashMap<String, Week> actual = readVenueInformation("TypicalVenueInformation.json").get().getNusRooms();
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void readVenueInformation_valuesMissingFromFile_defaultValueUsed() throws DataConversionException {
-        HashMap<String, Week> actual = readVenueInformation("EmptyVenueInformation.json").get().getNusRooms();
-        assertEquals(null, actual);
-    }
-
-    @Test
-    public void readVenueInformation_extraValuesInFile_extraValuesIgnored() throws DataConversionException {
-        HashMap<String, Week> expected = getTypicalVenueInformation().getNusRooms();
-        HashMap<String, Week> actual = readVenueInformation("ExtraValuesVenueInformation.json").get().getNusRooms();
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void readBuildingsAndRoomsInformation_nullFilePath_throwsNullPointerException()
-            throws DataConversionException {
-        thrown.expect(NullPointerException.class);
-        readBuildingsAndRoomsInformation(null);
-    }
-
-    @Test
-    public void readBuildingsAndRoomsInformation_missingFile_emptyResult() throws DataConversionException {
-        assertFalse(readBuildingsAndRoomsInformation("NonExistentFile.json").isPresent());
-    }
-
-    @Test
-    public void readBuildingsAndRoomsInformation_notJsonFormat_exceptionThrown() throws DataConversionException {
-        thrown.expect(DataConversionException.class);
-        readBuildingsAndRoomsInformation("NotJsonFormatVenueInformation.json");
-    }
-
-    @Test
-    public void readBuildingsAndRoomsInformation_fileInOrder_successfullyRead() throws DataConversionException {
-        HashMap<String, ArrayList<String>> expected = getTypicalBuildingsAndRoomsInformation().getBuildingsAndRooms();
-        HashMap<String, ArrayList<String>> actual =
-                readBuildingsAndRoomsInformation("TypicalVenueInformation.json").get().getBuildingsAndRooms();
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void readBuildingsAndRoomsInformation_valuesMissingFromFile_defaultValueUsed()
-            throws DataConversionException {
-        HashMap<String, ArrayList<String>> actual =
-                readBuildingsAndRoomsInformation("EmptyVenueInformation.json").get().getBuildingsAndRooms();
-        assertEquals(null, actual);
-    }
-
-    @Test
-    public void readBuildingsAndRoomsInformation_extraValuesInFile_extraValuesIgnored()
-            throws DataConversionException {
-        HashMap<String, ArrayList<String>> expected = getTypicalBuildingsAndRoomsInformation().getBuildingsAndRooms();
-        HashMap<String, ArrayList<String>> actual =
-                readBuildingsAndRoomsInformation("ExtraValuesVenueInformation.json").get().getBuildingsAndRooms();
-        assertEquals(expected, actual);
-    }
-
-    private Optional<Room> readVenueInformation(String venueInformationFileInTestDataFolder)
-            throws DataConversionException {
-        String venueInformationFilePath = addToTestDataPathIfNotNull(venueInformationFileInTestDataFolder);
-        return new ReadOnlyJsonVenueInformation(venueInformationFilePath)
-                .readVenueInformation(venueInformationFilePath);
-    }
-
-    private Optional<Building> readBuildingsAndRoomsInformation(String venueInformationFileInTestDataFolder)
-            throws DataConversionException {
-        String venueInformationFilePath = addToTestDataPathIfNotNull(venueInformationFileInTestDataFolder);
-        return new ReadOnlyJsonVenueInformation(venueInformationFilePath)
-                .readBuildingsAndRoomsInformation(venueInformationFilePath);
-    }
-
-    private String addToTestDataPathIfNotNull(String venueInformationFileInTestDataFolder) {
-        return venueInformationFileInTestDataFolder != null
-                ? TEST_DATA_FOLDER + venueInformationFileInTestDataFolder
-                : null;
-    }
-
-    private Room getTypicalVenueInformation() {
-        Room venueInformation = new RoomBuilder().build();
-        return venueInformation;
-    }
-
-    private Building getTypicalBuildingsAndRoomsInformation() {
-        Building buildingsAndRoomsInformation = new BuildingBuilder().build();
-        return buildingsAndRoomsInformation;
-    }
-
-}
-```
-###### \java\seedu\address\storage\XmlAddressBookStorageTest.java
-``` java
-    @Test
-    public void importAddressBook_invalidFileFormat_throwDataConversionException() throws Exception {
-        thrown.expect(DataConversionException.class);
-        String filePath = TEST_DATA_FOLDER + "invalidFileFormatAddressBook.xml";
-        AddressBook original = new AddressBook();
-        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
-        xmlAddressBookStorage.importAddressBook(filePath, original, SecurityUtil.hashPassword(TEST_PASSWORD));
-    }
-
-    @Test
-    public void importAddressBook_nonExistentFile_fileNotFoundException() throws Exception {
-        thrown.expect(FileNotFoundException.class);
-        String filePath = TEST_DATA_FOLDER + "nonExistentAddressBook.xml";
-        AddressBook original = new AddressBook();
-        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
-        xmlAddressBookStorage.importAddressBook(filePath, original, SecurityUtil.hashPassword(TEST_PASSWORD));
-    }
-
-    @Test
-    public void importAddressBook_validFile_success() throws Exception {
-        String filePath = TEST_DATA_FOLDER + "validAddressBook.xml";
-        AddressBook original = new AddressBook();
-        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
-
-        // Import file into existing address book
-        xmlAddressBookStorage.importAddressBook(filePath, original, SecurityUtil.hashPassword(TEST_PASSWORD));
-        AddressBook expected = original;
-        expected.importPerson(ALICE);
-        expected.importPerson(BENSON);
-        assertEquals(original, expected);
-    }
-```
-###### \java\seedu\address\testutil\BuildingBuilder.java
+###### /java/seedu/address/testutil/BuildingBuilder.java
 ``` java
 /**
  * A utility class to help with building {@code Building} objects
@@ -954,7 +862,7 @@ public class BuildingBuilder {
     }
 }
 ```
-###### \java\seedu\address\testutil\RoomBuilder.java
+###### /java/seedu/address/testutil/RoomBuilder.java
 ``` java
 /**
  * A utility class to help with building {@code Room} objects
@@ -1040,7 +948,7 @@ public class RoomBuilder {
     }
 }
 ```
-###### \java\seedu\address\testutil\WeekBuilder.java
+###### /java/seedu/address/testutil/WeekBuilder.java
 ``` java
 /**
  * A utility class to help with building {@code Week} objects
@@ -1116,7 +1024,7 @@ public class WeekBuilder {
     }
 }
 ```
-###### \java\seedu\address\testutil\WeekDayBuilder.java
+###### /java/seedu/address/testutil/WeekDayBuilder.java
 ``` java
 /**
  * A utility class to help with building {@code WeekDay} objects
@@ -1201,4 +1109,109 @@ public class WeekDayBuilder {
         return weekDay;
     }
 }
+```
+###### /data/XmlAddressBookStorageTest/validAddressBook.xml
+``` xml
+<addressbook>
+    <persons>
+        <name>Alice Pauline</name>
+        <phone isPrivate="false">85355255</phone>
+        <email isPrivate="false">alice@example.com</email>
+        <address isPrivate="false">123, Jurong West Ave 6, #08-111</address>
+        <birthday>01011995</birthday>
+        <timetable isPrivate="false">http://modsn.us/oNZLY</timetable>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Benson Meier</name>
+        <phone isPrivate="false">98765432</phone>
+        <email isPrivate="false">johnd@example.com</email>
+        <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
+        <birthday>01011995</birthday>
+        <timetable isPrivate="false">http://modsn.us/ojGeu</timetable>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <tags>owesMoney</tags>
+    <tags>friends</tags>
+</addressbook>
+```
+###### /data/ImportCommandTest/invalidFileFormatAddressBook.xml
+``` xml
+<addressbook>
+    <persons>
+        <name>Alice Pauline</name>
+        <phone isPrivate="false">85355255</phone>
+        <email isPrivate="false">alice@example.com</email>
+        <birthday>01011995</birthday>
+        <timetable isPrivate="false">http://modsn.us/aaaaa</timetable>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Benson Meier</name>
+        <phone isPrivate="false">98765432</phone>
+        <email isPrivate="false">johnd@example.com</email>
+        <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
+        <birthday>01021998</birthday>
+        <timetable isPrivate="false">http://modsn.us/bbbbb</timetable>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </persons>
+</addressbook>
+```
+###### /data/ImportCommandTest/aliceAddressBook.xml
+``` xml
+<addressbook>
+    <persons>
+        <name>Alice Pauline</name>
+        <phone isPrivate="false">85355255</phone>
+        <email isPrivate="false">alice@example.com</email>
+        <address isPrivate="false">123, Jurong West Ave 6, #08-111</address>
+        <birthday>01011995</birthday>
+        <timetable isPrivate="false">http://modsn.us/aaaaa</timetable>
+        <tagged>friends</tagged>
+    </persons>
+    <tags>friends</tags>
+</addressbook>
+```
+###### /data/ImportCommandTest/bensonAddressBook.xml
+``` xml
+<addressbook>
+    <persons>
+        <name>Benson Meier</name>
+        <phone isPrivate="false">98765432</phone>
+        <email isPrivate="false">johnd@example.com</email>
+        <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
+        <birthday>01021989</birthday>
+        <timetable isPrivate="false">http://modsn.us/bbbbb</timetable>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </persons>
+</addressbook>
+```
+###### /data/ImportCommandTest/aliceBensonAddressBook.xml
+``` xml
+<addressbook>
+    <persons>
+        <name>Alice Pauline</name>
+        <phone isPrivate="false">85355255</phone>
+        <email isPrivate="false">alice@example.com</email>
+        <address isPrivate="false">123, Jurong West Ave 6, #08-111</address>
+        <birthday>01011995</birthday>
+        <timetable isPrivate="false">http://modsn.us/aaaaa</timetable>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Benson Meier</name>
+        <phone isPrivate="false">98765432</phone>
+        <email isPrivate="false">johnd@example.com</email>
+        <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
+        <birthday>02011989</birthday>
+        <timetable isPrivate="false">http://modsn.us/bbbbb</timetable>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <tags>owesMoney</tags>
+    <tags>friends</tags>
+</addressbook>
 ```

@@ -1,26 +1,5 @@
 # yeggasd-reused
-###### \java\seedu\address\ui\PersonCard.java
-``` java
-    /**
-     * Initializes the tag labels for {@code person}.
-     */
-    private void initializeTags(Person person) {
-        for (Tag tag : person.getTags()) {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.getStyleClass().add(getColorStyleFor(tag.tagName));
-            tags.getChildren().add(tagLabel);
-        }
-    }
-
-    /**
-     * @param tagName
-     * @return colorStyle for {@code tagName}'s label.
-     */
-    public static String getColorStyleFor(String tagName) {
-        return TAG_COLOR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOR_STYLES.length];
-    }
-```
-###### \resources\view\DarkTheme.css
+###### /resources/view/DarkTheme.css
 ``` css
 #tags .teal {
     -fx-text-fill: white;
@@ -54,4 +33,25 @@
     -fx-text-fill: black;
     -fx-background-color: #FFEB3B;
 }
+```
+###### /java/seedu/address/ui/PersonCard.java
+``` java
+    /**
+     * Initializes the tag labels for {@code person}.
+     */
+    private void initializeTags(Person person) {
+        for (Tag tag : person.getTags()) {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.getStyleClass().add(getColorStyleFor(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        }
+    }
+
+    /**
+     * @param tagName
+     * @return colorStyle for {@code tagName}'s label.
+     */
+    public static String getColorStyleFor(String tagName) {
+        return TAG_COLOR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOR_STYLES.length];
+    }
 ```

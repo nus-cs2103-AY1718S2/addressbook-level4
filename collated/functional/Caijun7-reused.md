@@ -1,5 +1,5 @@
 # Caijun7-reused
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
      * Removes all {@code tag}s that are not used by any {@code person} in this {@code AddressBook}.
@@ -12,7 +12,7 @@
         tags.setTags(tagsInPersons);
     }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
     * Removes {@code tag} from {@code person} in this {@code AddressBook}.
@@ -25,7 +25,7 @@
         }
         Person newPerson =
                 new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
-                        person.getBirthday(), newTags);
+                        person.getBirthday(), person.getTimetable(), newTags);
         try {
             updatePerson(person, newPerson);
         } catch (DuplicatePersonException dpe) {
@@ -47,7 +47,14 @@
         }
     }
 ```
-###### \java\seedu\address\model\Model.java
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public void deleteTag(Tag tag) {
+        addressBook.removeTag(tag);
+    }
+```
+###### /java/seedu/address/model/Model.java
 ``` java
     /**
      * Remove {@code tag} from all {@code person}s in the {@code AddressBook}.

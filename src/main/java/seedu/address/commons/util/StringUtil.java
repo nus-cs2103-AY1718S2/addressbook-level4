@@ -68,4 +68,56 @@ public class StringUtil {
             return false;
         }
     }
+
+    //@@author yeggasd
+    /**
+     * Returns true if {@code s} represents odd or even
+     ** Will return false for any other non-null string input
+     * e.g. empty string, "-1", "0", "+1", and " 2 " (untrimmed), "3 0" (contains whitespace), "1 a" (contains letters)
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static boolean isOddEven(String s) {
+        requireNonNull(s);
+        return s.equalsIgnoreCase("even") || s.equalsIgnoreCase("odd");
+    }
+
+    /**
+     * @param s The string to be checked
+     * @return 0 is string is even else 1.
+     */
+    public static int getOddEven(String s) {
+        requireNonNull(s);
+        if (s.equalsIgnoreCase("even")) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
+    /**
+     * Returns true if (@code text) represents a day in the week
+     * e.g. Monday
+     * Will return false for any other non-null string input
+     * e.g. empty string, "-1", "0", "+1", and " 2 " (untrimmed), "3 0" (contains whitespace), "1 a" (contains letters)
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static boolean isDay(String s) {
+        requireNonNull(s);
+        return s.equalsIgnoreCase("Monday") || s.equalsIgnoreCase("Tuesday")
+                || s.equalsIgnoreCase("Wednesday") || s.equalsIgnoreCase("Thursday")
+                || s.equalsIgnoreCase("Friday") || s.equalsIgnoreCase("Saturday")
+                || s.equalsIgnoreCase("Sunday");
+    }
+
+    /**
+     * Capitalizes the given (@code s)
+     * @param s String to be capitalized
+     * @return Capitalized String
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static String capitalize(String s) {
+        requireNonNull(s);
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
+    }
+    //@@author
 }

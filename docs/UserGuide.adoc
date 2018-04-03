@@ -148,21 +148,19 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Locating persons taking that module: `module` (coming in v1.4)
+=== Viewing timetable of a person: `timetable` (since in v1.4)
 
-Finds persons who is taking the module as specified. +
-Format: `module MODULE_CODE`
+Displays the timetable of a person for Odd or Even Week. +
+Format: `timetable INDEX ODD/EVEN`
 
 ****
-* The search is case insensitive. e.g `CS2010` will match `cs2010`
-* Only full module codes will be matched e.g. `2010` will not match `CS2010`
-* Persons taking the module will be returned.
+* The Odd or Even is case insensitive. e.g `odd` or `Odd` gets the same output
 ****
 
 Examples:
 
-* `module CS2010` +
-Returns all persons having CS2010 in their modules
+* `timetable 1 odd` +
+Displays combined timetable of the 1st person.
 
 === Removal of password: `nopassword` (since v1.3)
 

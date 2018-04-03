@@ -1,5 +1,7 @@
 package seedu.address.model.person.timetable;
 
+import java.util.ArrayList;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.timetable.Lesson;
 
@@ -72,5 +74,18 @@ public class TimetableDay {
      */
     private boolean isValidTimeSlot(int index) {
         return (index < NUM_OF_SLOTS && index >= 0);
+    }
+
+    /**
+     * Returns the Time Table for the day
+     * @return ArrayList with the  Time Table
+     */
+    public ArrayList<String> getDailyTimeTable() {
+        ArrayList<String> timetable = new ArrayList<>();
+        for (int i = 8; i < 22; i++) {
+            TimetableSlot t = timetableSlots[i];
+            timetable.add(t.toString());
+        }
+        return timetable;
     }
 }

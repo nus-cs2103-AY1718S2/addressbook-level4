@@ -22,13 +22,18 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<Tag> getTagList();
 
+    //@@author jingyinno
     /**
      * Returns an unmodifiable view of the aliases list.
      * This list will not contain any duplicate aliases.
      */
     ObservableList<Alias> getAliasList();
 
+    /**
+     * Resets the alias list to an empty list
+     */
     void resetAliasList();
+    //@@author
 
     //@@author yeggasd
     /**

@@ -1,69 +1,80 @@
 # AzuraAiR
-###### \java\seedu\address\commons\events\ui\BirthdayListEvent.java
+###### /resources/view/BirthdayList.fxml
+``` fxml
+<StackPane fx:id="birthdayPlaceholder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextArea fx:id="birthdayList" editable="false" />
+   </children>
+</StackPane>
+```
+###### /java/seedu/address/ui/BirthdayNotification.java
 ``` java
 /**
- * Represents a selection change in the Person List Panel
+ * A ui for the notification dialog that is displayed at the start of the application and
+ * after `birthdays today` is called.
  */
-public class BirthdayListEvent extends BaseEvent {
+public class BirthdayNotification extends UiPart<Region> {
 
-    private final String birthdayList;
+    private static final String FXML = "BirthdayList.fxml";
 
-    public BirthdayListEvent(String newList) {
-        this.birthdayList = newList;
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    public BirthdayNotification() {
+        super(FXML);
+        registerAsAnEventHandler(this);
     }
 
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
+    @Subscribe
+    private void handleBirthdayNotificationEvent(BirthdayNotificationEvent event) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public String getBirthdayList() {
-        return birthdayList;
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
+        alert.setTitle("Birthdays Today");
+        alert.setHeaderText("It's their birthdays today (" + dtf.format(event.getCurrentDate()) + ")\n");
+        alert.setContentText(event.getBirthdayList());
+        alert.getDialogPane().setId("birthdayDialogPane");
+        alert.showAndWait();
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\BirthdayNotificationEvent.java
+###### /java/seedu/address/ui/BirthdayList.java
 ``` java
 /**
- * Represents a call for the Birthday Notification
+ * A ui for the status bar that is displayed at the header of the application.
  */
-public class BirthdayNotificationEvent extends BaseEvent {
+public class BirthdayList extends UiPart<Region> {
 
-    private final String birthdayList;
-    private final LocalDate currentDate;
+    private static final String FXML = "BirthdayList.fxml";
 
-    public BirthdayNotificationEvent(String newList, LocalDate today) {
-        this.birthdayList = newList;
-        this.currentDate = today;
+    private final StringProperty displayed = new SimpleStringProperty("");
+
+    @FXML
+    private TextArea birthdayList;
+
+    public BirthdayList() {
+        super(FXML);
+        birthdayList.textProperty().bind(displayed);
     }
 
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-
-    public String getBirthdayList() {
-        return birthdayList;
-    }
-
-    public LocalDate getCurrentDate() {
-        return currentDate;
+    public void loadList(String list) {
+        Platform.runLater(() -> displayed.setValue(list));
     }
 
 }
 ```
-###### \java\seedu\address\commons\exceptions\NoInternetConnectionException.java
+###### /java/seedu/address/ui/InfoPanel.java
 ``` java
-/**
- * Represents an error in trying to obtain the long url from the shortened Timetable URL
- */
-public class NoInternetConnectionException extends Exception {
-    public NoInternetConnectionException(String message) {
-        super(message);
+    @Subscribe
+    private void handleBirthdayListEvent(BirthdayListEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        birthdayList.loadList(event.getBirthdayList());
+        birthdayPlaceholder.toFront();
     }
-}
 ```
-###### \java\seedu\address\commons\util\timetable\Lesson.java
+###### /java/seedu/address/commons/util/timetable/Lesson.java
 ``` java
 /**
  * Represents a lesson that a module has
@@ -118,7 +129,7 @@ public class Lesson {
     }
 }
 ```
-###### \java\seedu\address\commons\util\timetable\TimetableParserUtil.java
+###### /java/seedu/address/commons/util/timetable/TimetableParserUtil.java
 ``` java
 /**
  * Utility functions to parse a shortened NUSMods url to create TimetableData
@@ -317,7 +328,104 @@ public class TimetableParserUtil {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\BirthdaysCommand.java
+###### /java/seedu/address/commons/exceptions/NoInternetConnectionException.java
+``` java
+/**
+ * Represents an error in trying to obtain the long url from the shortened Timetable URL
+ */
+public class NoInternetConnectionException extends Exception {
+    public NoInternetConnectionException(String message) {
+        super(message);
+    }
+}
+```
+###### /java/seedu/address/commons/events/ui/BirthdayNotificationEvent.java
+``` java
+/**
+ * Represents a call for the Birthday Notification
+ */
+public class BirthdayNotificationEvent extends BaseEvent {
+
+    private final String birthdayList;
+    private final LocalDate currentDate;
+
+    public BirthdayNotificationEvent(String newList, LocalDate today) {
+        this.birthdayList = newList;
+        this.currentDate = today;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public String getBirthdayList() {
+        return birthdayList;
+    }
+
+    public LocalDate getCurrentDate() {
+        return currentDate;
+    }
+
+}
+```
+###### /java/seedu/address/commons/events/ui/BirthdayListEvent.java
+``` java
+/**
+ * Represents a selection change in the Person List Panel
+ */
+public class BirthdayListEvent extends BaseEvent {
+
+    private final String birthdayList;
+
+    public BirthdayListEvent(String newList) {
+        this.birthdayList = newList;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public String getBirthdayList() {
+        return birthdayList;
+    }
+}
+```
+###### /java/seedu/address/logic/parser/BirthdaysCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new BirthdaysCommand object
+ */
+public class BirthdaysCommandParser implements Parser<BirthdaysCommand> {
+
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the BirthdaysCommand
+     * and returns an BirthdaysCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public BirthdaysCommand parse(String args) throws ParseException {
+        args = args.trim();
+        String[] trimmedArgs = args.split("\\s+");
+
+        if (trimmedArgs.length == 1) {   // Only birthdays alone is called
+            if (trimmedArgs[0].equalsIgnoreCase(BirthdaysCommand.ADDITIONAL_COMMAND_PARAMETER)) {  // Check if valid
+                return new BirthdaysCommand(true);
+            } else if (trimmedArgs[0].equalsIgnoreCase("")) {
+                return new BirthdaysCommand(false);
+            }
+        } else {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, BirthdaysCommand.MESSAGE_USAGE));
+        }
+
+        return new BirthdaysCommand(false);
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/BirthdaysCommand.java
 ``` java
 /**
  * Shows either the birthday list or notification of Persons in StardyTogether
@@ -455,40 +563,7 @@ public class BirthdaysCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\BirthdaysCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new BirthdaysCommand object
- */
-public class BirthdaysCommandParser implements Parser<BirthdaysCommand> {
-
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the BirthdaysCommand
-     * and returns an BirthdaysCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public BirthdaysCommand parse(String args) throws ParseException {
-        args = args.trim();
-        String[] trimmedArgs = args.split("\\s+");
-
-        if (trimmedArgs.length == 1) {   // Only birthdays alone is called
-            if (trimmedArgs[0].equalsIgnoreCase(BirthdaysCommand.ADDITIONAL_COMMAND_PARAMETER)) {  // Check if valid
-                return new BirthdaysCommand(true);
-            } else if (trimmedArgs[0].equalsIgnoreCase("")) {
-                return new BirthdaysCommand(false);
-            }
-        } else {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, BirthdaysCommand.MESSAGE_USAGE));
-        }
-
-        return new BirthdaysCommand(false);
-    }
-
-}
-```
-###### \java\seedu\address\model\person\Birthday.java
+###### /java/seedu/address/model/person/Birthday.java
 ``` java
 /**
  * Represents a Person's birthday in the address book.
@@ -600,101 +675,7 @@ public class Birthday {
 }
 
 ```
-###### \java\seedu\address\model\person\timetable\Timetable.java
-``` java
-/**
- * Represents a Person's timetable in the address book
- */
-public class Timetable {
-
-    public static final String DUMMY_LINK_ONE = "http://modsn.us/aaaaa";
-    public static final String DUMMY_LINK_TWO = "http://modsn.us/bbbbb";
-    public static final String NUSMODS_SHORT = "modsn.us";
-    public static final String URL_HOST_REGEX = "\\/\\/.*?\\/";
-    public static final String MESSAGE_URL_CONSTRAINTS =
-            "Timetable URL should only be NUSMods shortened URLs";
-    public static final String MESSAGE_INVALID_URL =
-            "The given NUSMods URL is invalid";
-
-    public final String value;
-
-    private TimetableData data;
-
-    public Timetable(String url) {
-        requireNonNull(url);
-        this.value = url;
-        // Create new empty timetable if url is empty or a dummy link
-        if (url.equals("") || url.equals(DUMMY_LINK_ONE) || url.equals(DUMMY_LINK_TWO)) {
-            this.data = new TimetableData();
-            return;
-        }
-
-        checkArgument(isValidUrl(url), MESSAGE_URL_CONSTRAINTS);
-
-        try {
-            this.data = parseUrl(url);
-        } catch (ParseException pe) {
-            this.data = new TimetableData(); // Create new empty timetable if url fails
-        }
-    }
-
-    /**
-     * Checks if string is a valid shortened NUSMods url
-     * @param test
-     * @return
-     */
-    public static boolean isValidUrl(String test) {
-        Matcher matcher = Pattern.compile(URL_HOST_REGEX).matcher(test);
-        if (!matcher.find()) {
-            return false;
-        }
-
-        String hostName = matcher.group()
-                .substring(2, matcher.group().length() - 1);
-        return hostName.equals(NUSMODS_SHORT);
-    }
-
-    /**
-     * Returns the lesson at the specified slot, null if empty
-     * @param week the week the lesson is found at
-     * @param day the day the lesson is found at
-     * @param timeSlot the timeslot the lesson is found at
-     * @return Lesson found at that slot, null if slot is empty
-     * @throws IllegalValueException when week,day,timeslot are invalid values
-     */
-    public Lesson getLessonFromSlot(String week, String day, int timeSlot) throws IllegalValueException {
-        return data.getLessonFromSlot(week, day, timeSlot);
-    }
-
-    /**
-     * Adds a lesson to the timetable
-     * @param lessonToAdd lesson to be added
-     * @throws IllegalValueException when week,day,timeslot are invalid values
-     */
-    public void addLessonToSlot(Lesson lessonToAdd) throws IllegalValueException {
-        data.addLessonToSlot(lessonToAdd);
-    }
-
-    @Override
-    public String toString() {
-        return value;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Timetable // instanceof handles nulls
-                && this.value.equals(((Timetable) other).value)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return value.hashCode();
-    }
-
-}
-```
-###### \java\seedu\address\model\person\timetable\TimetableData.java
+###### /java/seedu/address/model/person/timetable/TimetableData.java
 ``` java
 /**
  * Represents the data of the timetable
@@ -781,103 +762,7 @@ public class TimetableData {
 
 }
 ```
-###### \java\seedu\address\model\person\timetable\TimetableDay.java
-``` java
-/**
- * Represents a day in the timetable
- */
-public class TimetableDay {
-
-    public static final int NUM_OF_SLOTS = 24;
-    public static final String MESSAGE_INVALID_TIMESLOT = "Time slot is invalid";
-
-    // Cut into 24-h slots. 0000 being timetableSlots[0] and 2300 being timetableSlots[23]
-    private TimetableSlot[] timetableSlots;
-
-    public TimetableDay() {
-        timetableSlots = new TimetableSlot[NUM_OF_SLOTS];
-        for (int i = 0; i < NUM_OF_SLOTS; i++) {
-            timetableSlots[i] = new TimetableSlot();
-        }
-    }
-
-    /**
-     * Adds a lesson at its respective slot
-     * @param lessonToAdd lesson to be added
-     * @throws IllegalValueException when slot is invalid
-     */
-    public void addLessonToDay(Lesson lessonToAdd) throws IllegalValueException {
-        int startTimeIndex = parseStartEndTime(lessonToAdd.getStartTime());
-        int endTimeIndex = parseStartEndTime(lessonToAdd.getEndTime());
-
-        for (int i = startTimeIndex; i < endTimeIndex; i++) {
-            timetableSlots[i].addLessonToSlot(lessonToAdd);
-        }
-    }
-
-    /**
-     * Parses the start and time parsed from NUSMods to a index to be used for array of slots
-     * @param time timing from NUSMods
-     * @return index for slot array
-     */
-    private int parseStartEndTime(String time) throws IllegalValueException {
-        int value = Integer.parseInt(time) / 100;
-
-        if (isValidTimeSlot(value)) {
-            return value;
-        } else {
-            throw new IllegalValueException(MESSAGE_INVALID_TIMESLOT);
-        }
-    }
-
-    /**
-     * Returns the lesson at the specified slot, null if slot is empty
-     * @param timeSlot
-     * @return Lesson at the specified slot, null if slot is empty
-     * @throws IllegalValueException when timeslot is invalid value
-     */
-    public Lesson getLessonFromSlot(int timeSlot) throws IllegalValueException {
-        if (timeSlot > 0 && timeSlot <= 23) {
-            return timetableSlots[timeSlot].getLesson();
-        } else {
-            throw new IllegalValueException(MESSAGE_INVALID_TIMESLOT);
-        }
-    }
-
-    /**
-     * Checks if the given index is valid
-     * @param index
-     * @return true or false
-     */
-    private boolean isValidTimeSlot(int index) {
-        return (index < NUM_OF_SLOTS && index >= 0);
-    }
-}
-```
-###### \java\seedu\address\model\person\timetable\TimetableSlot.java
-``` java
-/**
- * Represents a slot in the timetable
- */
-public class TimetableSlot {
-
-    private Lesson lesson;
-
-    /**
-     * Fills up the slot with the given lesson
-     * @param lesson
-     */
-    public void addLessonToSlot(Lesson lesson) {
-        requireNonNull(lesson);
-        this.lesson = lesson;
-    }
-
-    public Lesson getLesson() {
-        return lesson;
-    }
-}
-```
-###### \java\seedu\address\model\person\timetable\TimetableWeek.java
+###### /java/seedu/address/model/person/timetable/TimetableWeek.java
 ``` java
 /**
  * Represents a week in the timetable
@@ -973,78 +858,193 @@ public class TimetableWeek {
     }
 }
 ```
-###### \java\seedu\address\ui\BirthdayList.java
+###### /java/seedu/address/model/person/timetable/TimetableDay.java
 ``` java
 /**
- * A ui for the status bar that is displayed at the header of the application.
+ * Represents a day in the timetable
  */
-public class BirthdayList extends UiPart<Region> {
+public class TimetableDay {
 
-    private static final String FXML = "BirthdayList.fxml";
+    public static final int NUM_OF_SLOTS = 24;
+    public static final String MESSAGE_INVALID_TIMESLOT = "Time slot is invalid";
 
-    private final StringProperty displayed = new SimpleStringProperty("");
+    // Cut into 24-h slots. 0000 being timetableSlots[0] and 2300 being timetableSlots[23]
+    private TimetableSlot[] timetableSlots;
 
-    @FXML
-    private TextArea birthdayList;
-
-    public BirthdayList() {
-        super(FXML);
-        birthdayList.textProperty().bind(displayed);
+    public TimetableDay() {
+        timetableSlots = new TimetableSlot[NUM_OF_SLOTS];
+        for (int i = 0; i < NUM_OF_SLOTS; i++) {
+            timetableSlots[i] = new TimetableSlot();
+        }
     }
 
-    public void loadList(String list) {
-        Platform.runLater(() -> displayed.setValue(list));
+    /**
+     * Adds a lesson at its respective slot
+     * @param lessonToAdd lesson to be added
+     * @throws IllegalValueException when slot is invalid
+     */
+    public void addLessonToDay(Lesson lessonToAdd) throws IllegalValueException {
+        int startTimeIndex = parseStartEndTime(lessonToAdd.getStartTime());
+        int endTimeIndex = parseStartEndTime(lessonToAdd.getEndTime());
+
+        for (int i = startTimeIndex; i < endTimeIndex; i++) {
+            timetableSlots[i].addLessonToSlot(lessonToAdd);
+        }
+    }
+
+    /**
+     * Parses the start and time parsed from NUSMods to a index to be used for array of slots
+     * @param time timing from NUSMods
+     * @return index for slot array
+     */
+    private int parseStartEndTime(String time) throws IllegalValueException {
+        int value = Integer.parseInt(time) / 100;
+
+        if (isValidTimeSlot(value)) {
+            return value;
+        } else {
+            throw new IllegalValueException(MESSAGE_INVALID_TIMESLOT);
+        }
+    }
+
+    /**
+     * Returns the lesson at the specified slot, null if slot is empty
+     * @param timeSlot
+     * @return Lesson at the specified slot, null if slot is empty
+     * @throws IllegalValueException when timeslot is invalid value
+     */
+    public Lesson getLessonFromSlot(int timeSlot) throws IllegalValueException {
+        if (timeSlot > 0 && timeSlot <= 23) {
+            return timetableSlots[timeSlot].getLesson();
+        } else {
+            throw new IllegalValueException(MESSAGE_INVALID_TIMESLOT);
+        }
+    }
+
+    /**
+     * Checks if the given index is valid
+     * @param index
+     * @return true or false
+     */
+    private boolean isValidTimeSlot(int index) {
+        return (index < NUM_OF_SLOTS && index >= 0);
+    }
+}
+```
+###### /java/seedu/address/model/person/timetable/Timetable.java
+``` java
+/**
+ * Represents a Person's timetable in the address book
+ */
+public class Timetable {
+
+    public static final String DUMMY_LINK_ONE = "http://modsn.us/aaaaa";
+    public static final String DUMMY_LINK_TWO = "http://modsn.us/bbbbb";
+    public static final String NUSMODS_SHORT = "modsn.us";
+    public static final String URL_HOST_REGEX = "\\/\\/.*?\\/";
+    public static final String MESSAGE_URL_CONSTRAINTS =
+            "Timetable URL should only be NUSMods shortened URLs";
+    public static final String MESSAGE_INVALID_URL =
+            "The given NUSMods URL is invalid";
+
+    public final String value;
+
+    private TimetableData data;
+
+    public Timetable(String url) {
+        requireNonNull(url);
+        this.value = url;
+        // Create new empty timetable if url is empty or a dummy link
+        if (url.equals("") || url.equals(DUMMY_LINK_ONE) || url.equals(DUMMY_LINK_TWO)) {
+            this.data = new TimetableData();
+            return;
+        }
+
+        checkArgument(isValidUrl(url), MESSAGE_URL_CONSTRAINTS);
+
+        try {
+            this.data = parseUrl(url);
+        } catch (ParseException pe) {
+            this.data = new TimetableData(); // Create new empty timetable if url fails
+        }
+    }
+
+    /**
+     * Checks if string is a valid shortened NUSMods url
+     * @param test
+     * @return
+     */
+    public static boolean isValidUrl(String test) {
+        Matcher matcher = Pattern.compile(URL_HOST_REGEX).matcher(test);
+        if (!matcher.find()) {
+            return false;
+        }
+
+        String hostName = matcher.group()
+                .substring(2, matcher.group().length() - 1);
+        return hostName.equals(NUSMODS_SHORT);
+    }
+
+    /**
+     * Returns the lesson at the specified slot, null if empty
+     * @param week the week the lesson is found at
+     * @param day the day the lesson is found at
+     * @param timeSlot the timeslot the lesson is found at
+     * @return Lesson found at that slot, null if slot is empty
+     * @throws IllegalValueException when week,day,timeslot are invalid values
+     */
+    public Lesson getLessonFromSlot(String week, String day, int timeSlot) throws IllegalValueException {
+        return data.getLessonFromSlot(week, day, timeSlot);
+    }
+
+    /**
+     * Adds a lesson to the timetable
+     * @param lessonToAdd lesson to be added
+     * @throws IllegalValueException when week,day,timeslot are invalid values
+     */
+    public void addLessonToSlot(Lesson lessonToAdd) throws IllegalValueException {
+        data.addLessonToSlot(lessonToAdd);
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Timetable // instanceof handles nulls
+                && this.value.equals(((Timetable) other).value)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
     }
 
 }
 ```
-###### \java\seedu\address\ui\BirthdayNotification.java
+###### /java/seedu/address/model/person/timetable/TimetableSlot.java
 ``` java
 /**
- * A ui for the notification dialog that is displayed at the start of the application and
- * after `birthdays today` is called.
+ * Represents a slot in the timetable
  */
-public class BirthdayNotification extends UiPart<Region> {
+public class TimetableSlot {
 
-    private static final String FXML = "BirthdayList.fxml";
+    private Lesson lesson;
 
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
-
-    public BirthdayNotification() {
-        super(FXML);
-        registerAsAnEventHandler(this);
+    /**
+     * Fills up the slot with the given lesson
+     * @param lesson
+     */
+    public void addLessonToSlot(Lesson lesson) {
+        requireNonNull(lesson);
+        this.lesson = lesson;
     }
 
-    @Subscribe
-    private void handleBirthdayNotificationEvent(BirthdayNotificationEvent event) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
-        alert.setTitle("Birthdays Today");
-        alert.setHeaderText("It's their birthdays today (" + dtf.format(event.getCurrentDate()) + ")\n");
-        alert.setContentText(event.getBirthdayList());
-        alert.getDialogPane().setId("birthdayDialogPane");
-        alert.showAndWait();
+    public Lesson getLesson() {
+        return lesson;
     }
 }
-```
-###### \java\seedu\address\ui\InfoPanel.java
-``` java
-    @Subscribe
-    private void handleBirthdayListEvent(BirthdayListEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-
-        birthdayList.loadList(event.getBirthdayList());
-        birthdayPlaceholder.toFront();
-    }
-```
-###### \resources\view\BirthdayList.fxml
-``` fxml
-<StackPane fx:id="birthdayPlaceholder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <TextArea fx:id="birthdayList" editable="false" />
-   </children>
-</StackPane>
 ```

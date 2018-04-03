@@ -11,7 +11,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.appointment.WeekCommand;
 import seedu.address.logic.parser.appointment.WeekCommandParser;
 
-//@@trafalgarandre
+//@@author trafalgarandre
 public class WeekCommandParserTest {
 
     private WeekCommandParser parser = new WeekCommandParser();

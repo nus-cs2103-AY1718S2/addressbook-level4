@@ -10,6 +10,7 @@ import java.util.List;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 
+//@@author trafalgarandre
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
  *

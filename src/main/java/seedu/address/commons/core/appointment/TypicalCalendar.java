@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.Year;
 import java.time.YearMonth;
 
-//@@trafalgarandre
+//@@author trafalgarandre
 /**
  * A utility class containing a list of calendars's component objects to be used in tests.
  */

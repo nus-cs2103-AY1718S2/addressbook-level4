@@ -3,6 +3,7 @@ package seedu.address.model.appointment;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author trafalgarandre
 /**
  * Represents an Appointment's title in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidTitle(String)}

@@ -10,6 +10,7 @@ import seedu.address.model.appointment.EndDateTime;
 import seedu.address.model.appointment.StartDateTime;
 import seedu.address.model.appointment.Title;
 
+//@@author trafalgarandre
 /**
  * JAXB-friendly version of the Appointment.
  */

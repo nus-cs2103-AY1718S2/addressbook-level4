@@ -63,6 +63,7 @@ public class DetailsPanel extends UiPart<Region> {
         linkedIn.setContent(browserPanel.getRoot());
     }
 
+    //@@author trafalgarandre
     /**
      * Adds the CalendarView to the DetailsPanel
      */
@@ -79,7 +80,6 @@ public class DetailsPanel extends UiPart<Region> {
         profile.setContent(contactDetailsDisplay.getRoot());
     }
 
-    //@@author trafalgarandre
     @Subscribe
     private void handleReloadCalendarEvent(ReloadCalendarEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

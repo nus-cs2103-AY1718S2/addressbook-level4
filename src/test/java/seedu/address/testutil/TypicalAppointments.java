@@ -8,6 +8,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 
+//@@author trafalgarandre
 /**
  * A utility class containing a list of {@code Appointment} objects to be used in tests.
  */

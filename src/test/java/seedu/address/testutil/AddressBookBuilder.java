@@ -49,6 +49,7 @@ public class AddressBookBuilder {
         return this;
     }
 
+    //@@author trafalgarandre
     /**
      * Parses {@code Appointment} to the {@code AddressBook} that we are building.
      */

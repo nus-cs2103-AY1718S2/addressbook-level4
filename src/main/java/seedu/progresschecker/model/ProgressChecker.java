@@ -64,11 +64,8 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
-<<<<<<< HEAD
         photos = new UniquePhotoList();
-=======
         exercises = new UniqueExerciseList();
->>>>>>> Read exercises from data/progresschecker.xml if exist, otherwise read from sample data (#153)
     }
 
     public ProgressChecker() {}

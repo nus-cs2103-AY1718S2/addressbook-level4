@@ -111,6 +111,14 @@ public class ImdbTest {
     }
 
     @Test
+    public void getAppointmentEntryList_modifyList_throwsUnsupportedOperationException() {
+        AppointmentEntry entry = new AppointmentEntry(new Appointment("3/4/2017 1030"),
+                "test");
+        thrown.expect(UnsupportedOperationException.class);
+        imdb.getAppointmentEntryList().add(entry);
+    }
+
+    @Test
     public void addPatientToQueue_queueUpdate() throws DuplicatePatientException {
         imdbWithAmyAndBob.addPatientToQueue(1);
         Imdb expectedImdb = new ImdbBuilder().withPerson(AMY).withPerson(BOB).build();
@@ -160,7 +168,6 @@ public class ImdbTest {
         ImdbStub(Collection<Patient> patients, Collection<? extends Tag> tags, Collection<Integer> queue) {
             this.patients.setAll(patients);
             this.tags.setAll(tags);
-//            this.appointments.setAll(appointments);
             this.visitingQueue.setAll(queue);
         }
 

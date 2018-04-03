@@ -87,7 +87,6 @@ public class Imdb implements ReadOnlyImdb {
         List<Patient> syncedPatientList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
-//        setAppointments(new HashSet<>(newData.getAppointmentList()));
 
         setQueue(new LinkedHashSet<>(newData.getUniquePatientQueueNo()));
 

@@ -20,10 +20,11 @@ By: `Team W15-B1`      Since: `Feb 2018`      Licence: `MIT`
 
 This user guide serves to guide you so that you are able to use utilize Employees Tracker to its fullest extent.
 
-Employees Tracker (E.T.) is a *Human Resource Manager* application for managers who *prefer to use a desktop app for managing his/her subordinates*.
-E.T. is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, E.T. can get your employees management tasks done faster than traditional GUI apps.
+Employees Tracker (E.T.) is a *Human Resource Manager* application that helps managers to manage their subordinates. Its has 2 main functionalities: providing information about employees, as well as helping in tracking the tasks assigned to each employee.
 
-Jump to the <<Quick Start>> to get started.
+Its User Interface (UI) is a hybrid of Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). That said, ET will suit you better if you can type fast and are familiar with CLI.
+
+Without further ado, let's see what ET can do!  Jump to the <<Quick Start>> to get started.
 
 == Quick Start
 This section is to help you to start using Employees Tracker quickly.
@@ -43,7 +44,8 @@ This app will not work with earlier versions of Java 8.
 .Graphical User Interface (GUI)
 image::Ui.png[width="790"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
+. To use ET, you have to unlock it with the default password "admin". Type `unlock admin` and press kbd:[Enter].
+.  After logging in, you can use ET by typing the commands kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 ****
@@ -58,7 +60,7 @@ deletes the 3rd contact shown in the current list.
 * `exit` +
 exits the app.
 
-Refer to <<Features>> for details of each command.
+Refer to <<Commands>> for details of each command.
 ****
 
 == Features
@@ -68,14 +70,13 @@ This section outlines all of Employees Tracker's features in detail.
 
 ==== Knowing the components
 
-_Figure 2_ shows the 6 major components of the user interface of Employees Tracker:
+_Figure 2_ shows the 5 major components of the user interface of Employees Tracker (ET):
 
-. Command Box:where you type in commands
-. Result Display Box: where Employees Tracker shows text result to you
-. Employees List Panel: where the list of all employees is shown
-. Employee's Profile Panel: where the details of the selected employee is shown
-. Notification cards: where Employees Tracker reminds you about ended events
-. Notification center: where hidden notification cards are stored
+* Command Box:where you type in commands
+* Result Display Box: where ET shows text result to you
+* Employees List Panel: where the list of all employees is shown
+* Employee's Profile Panel: where the details of the selected employee is shown
+* Notification cards: where ET reminds you about ended events
 
 .User Interface
 image::UiLabelled.jpg[width="790"]
@@ -84,33 +85,58 @@ image::UiLabelled.jpg[width="790"]
 
 The result display box shows 3 types of information:
 
-* Error messages, if the command you entered does not exists or does not match the pre-defined format.
-* Hints about the format and usage of the command, if you entered a command in the wrong format.
-* Statuses of the Employee Tracker, if your command is processed successfully.
+* Error messages in [red]#red#, if the command you entered does not exists or does not match the pre-defined format.
+* Hints about the format and usage of the command in [green]#green#.
+* Statuses of the Employee Tracker in [white]#white#, if your command is processed successfully.
 
 [NOTE]
-If the result display box shows text in red, it means that you have entered an non-existing command or a command that does not follow its pre-defined format.
-
-Different tags will perform different colours for clarification
+ET will intelligently provide [green]#hints# according to the words you type in the `Command Box`.
 
 ==== Understanding the notification system
 
-===== Timing of notifications
+====== Notification cards
 
-There will be 2 notifications for each event, which are:
+_Figure 3_ shows a notification card of ET. Each notification card contains 4 information, which are index, event name, name of person in-charge and expiry date and time.
 
-* notification on the day of expiry
-* notification at the time of expiry.
+.A notification card
+image::card_labelled.jpg[width=""]
 
-For example, suppose you have assigned a task to Alex which will due on 27th May 2018 4:00 pm. When you open ET for the first time at 8:00 am on 27th May 2018, you will be notified that Alex has a task that will due on *today* . Later at 4:00 pm of 27th May 2018, you will receive another notification, informing you that Alex should have finished the task by *now* .
+===== Two Phase notification
 
-===== Notification cards and the Notification Center
+ET has a 2 phase notification system, i.e. there will be 2 notification cards popping up to remind you of each event.
 
-Notifications are shown in notification cards in ET. Each notification card contains 3 information about the expiring event: title, name of employee in-charge, time of expiry. +
+* The first phase notification will pop out in a [blue]#blue# notification card, on the day of expiry, as shown in _Figure 4_.
+* The second phase notification will pop out in a [red]#red# notification card, at the exact time of expiry, as shown in _Figure 5_.
 
-Notification cards will pop into the User Interface of ET from the bottom right corner, and waits 5 seconds before exitting the screen. However, the notification cards aren't dismissed. You can still revisit them in the notification center. +
+.First phase notification card
+image::card_blue.png[width=""]
 
-In the notification center, you can either dismiss a notification, email to remind, and/or whatsapp to remind.
+.Second phase notification card
+image::card_red.png[width=""]
+
+For example, suppose you have assigned a task to Alex which will due on 27th May 2018 4:00 pm. When you open ET for the first time in the morning of 27th May 2018, you will be notified that Alex has a task that will due on *today* in a [blue]#blue# notification card. Later at 4:00 pm of 27th May 2018, you will receive the second phase notification in [red]#red#, informing you that Alex should have finished the task by *now* .
+
+===== Notification card in Operating System
+
+We understand that you as a manager lead a busy life, so we don't expect you to stare at ET at all times to catch the notification cards. Instead, ET is capable of showing notification cards in your computer's system (e.g. Windows, Mac, Linux, etc.) while you are using other software, as shown in _Figure 6_. Thus, you can feel free to minimize ET and continue working on your computer.
+
+.ET shows notification card about event expiry even if you are using other programs.
+image::card_windows.png[width=""]
+
+[NOTE]
+This feature may not work on some computer systems.
+
+===== The Notification Center
+
+To prevent notification cards from flooding the screen, notification cards in Employees Tracker (ET) will be hidden after 5 seconds.
+
+However, fret not, you can still find them in the notification center. To open the `Notification Center`, please refer to <<Toggling the notification center : `noti`>>, or *double press* kbd:[SHIFT]. After that, you will be greeted by the `Notification Center` as shown in _Figure 7_. In the `Notification Center`, you will see a list of all un-dismissed notification cards.
+
+.The Notification Center
+image::notification_center.png[width=""]
+
+[NOTE]
+Notification cards will always stay in the notification center. Even if you close ET, the notification card will re-appear when you open ET again. To dismiss a notification card, please refer to <<Dismissing a notification card : `dismiss`>>.
 
 === Data storage
 
@@ -344,6 +370,13 @@ Selects the 2nd employee in the Employees Tracker.
 `select 1` +
 Selects the 1st employee in the results of the `find` command.
 
+[NOTE]
+If the `Calendar row` of the `Employee's Profile Panel` looks something similar to _Figure 8_, it means you will have to sign in to your *Google work account* from there. This is because for security purposes, you will be required to sign in once for every time you close Employees Tracker and open it again,
+
+.Signing in to Google account at the Calendar row
+image::sign_in.png[width="790"][height="200"]
+
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -482,6 +515,16 @@ Examples:
 `addEvent 2 title/Test Event loca/NUS, Singapore stime/2017-04-09T19:00:00 etime/2018-04-09T21:00:00 descrip/A Test Event` +
 Adds the event to 2nd employee's timetable in the list.
 
+[NOTE]
+If you are using Employees Tracker (ET) for the first time, you will be directed to a web page that requires you to sign in to Google account. Please sign in to your *Google work account*. Then, you will be directed to a web page similar to _Figure 9_. Please click `allow`. You can return to ET once you see a message as shown in _Figure 10_.
+
+.Process of signing in to Google account for the first time
+image::login_prompt.png[width="790"][height="200"]
+
+.Done signing in
+image::login_done.png[width="790"][height="200"]
+
+
 === Deleting an event in one employee's timetable: `deleteEvent`
 
 Deletes an event with specified title in the timetable of employee identified by the index number used in the last employees listing. +
@@ -509,15 +552,18 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
-=== Dismissing a notification : `dismiss`
+=== Dismissing a notification card : `dismiss`
 
-Dismisses thea notification identified by the index number used in notification cards. +
+Dismisses the notification card identified by the index number. +
 Format: `dismiss INDEX`
 
-=== Toggling the notification panel : `noti`
+=== Toggling the notification center : `noti`
 
 Shows the notification panel if it is hidden; hides the notification center if it is shown. +
 Format: `noti`
+
+[TIP]
+Alternatively, you can *double press* kbd:[SHIFT] to toggle the notification center.
 
 === Reminding an employee through email : `email`
 

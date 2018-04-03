@@ -53,22 +53,22 @@ public class AddMembersToGroupCommand extends UndoableCommand {
         requireNonNull(model);
         List<Group> groupList = model.getFilteredGroupList();
         List<Person> personList = model.getFilteredPersonList();
-        for( int i = 0; i < personList.size() ; i++ ) {
-            if( personList.get(i).getName().equals(personToAdd.getName()) ) {
+        for (int i = 0; i < personList.size(); i++) {
+            if (personList.get(i).getName().equals(personToAdd.getName()) ) {
                 personToAdd=personList.get(i);
             }
         }
-        if( !groupList.contains(groupToAdd)) {
+        if (!groupList.contains(groupToAdd)) {
             throw new CommandException(MESSAGE_NO_SUCH_GROUP);
         }
-        if( !personList.contains(personToAdd)) {
+        if (!personList.contains(personToAdd)) {
             throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
         }
-        else{
-            for( Group group : groupList) {
-                if( groupToAdd.getInformation().equals(group.getInformation())){
+        else {
+            for (Group group : groupList) {
+                if (groupToAdd.getInformation().equals(group.getInformation())){
                     groupToAdd= group;
-                    try{
+                    try {
                         groupAdded = group;
                         groupAdded.getPersonList().add(personToAdd);
                         model.updateGroup(groupToAdd,groupAdded);

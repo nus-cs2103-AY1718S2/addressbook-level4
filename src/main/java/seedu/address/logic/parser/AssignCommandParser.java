@@ -2,93 +2,60 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INTEREST;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEYOWED;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_OWEDUEDATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_OWESTARTDATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CUSTOMERS;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.AssignCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.customer.MoneyBorrowed;
-import seedu.address.model.person.customer.StandardInterest;
 import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new EditCommand object
  */
-public class AssignCommandParser implements Parser<EditCommand> {
+public class AssignCommandParser implements Parser<AssignCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
      * and returns an EditCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
-    public EditCommand parse(String args) throws ParseException {
+    public AssignCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_CUSTOMERS);
 
-        Index index;
+        Index runnerIndex; //parameter for AssignCommand
+        Index[] customerIndex; //parameter for AssignCommand
 
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            runnerIndex = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignCommand.MESSAGE_USAGE));
         }
 
-        EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
         try {
-            ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editPersonDescriptor::setName);
-            ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
-            ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
-            ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
-            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
-
-            if (argMultimap.getValue(PREFIX_OWESTARTDATE).isPresent()) {
-                Date oweStartDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_OWESTARTDATE).get());
-                editPersonDescriptor.setOweStartDate(oweStartDate);
+            List<String> customerIndices = argMultimap.getAllValues(PREFIX_CUSTOMERS);
+            List<Index> customerIndexAsList = new ArrayList<>();
+            for (String index : customerIndices) {
+                customerIndexAsList.add(ParserUtil.parseIndex(index));
             }
-            if (argMultimap.getValue(PREFIX_OWEDUEDATE).isPresent()) {
-                Date oweDueDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_OWEDUEDATE).get());
-                editPersonDescriptor.setOweDueDate(oweDueDate);
-            }
+            customerIndex = customerIndexAsList.toArray(new Index[customerIndexAsList.size()]);
 
-            if (argMultimap.getValue(PREFIX_MONEYOWED).isPresent()) {
-                MoneyBorrowed moneyBorrowed = ParserUtil.parseMoneyBorrowed(argMultimap.getValue(PREFIX_MONEYOWED)
-                        .get());
-                editPersonDescriptor.setMoneyBorrowed(moneyBorrowed);
-            }
-
-            if (argMultimap.getValue(PREFIX_INTEREST).isPresent()) {
-                StandardInterest standardInterest = ParserUtil.parseStandardInterest(argMultimap.getValue
-                        (PREFIX_INTEREST).get());
-                editPersonDescriptor.setStandardInterest(standardInterest);
-            }
-
-            //TODO: add more ParserUtil methods for Customer and Runner fields
         } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignCommand.MESSAGE_USAGE));
         }
 
-        if (!editPersonDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
-        }
 
-        return new EditCommand(index, editPersonDescriptor);
+        return new AssignCommand(runnerIndex, customerIndex);
     }
 
     /**

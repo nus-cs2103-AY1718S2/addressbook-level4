@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CUSTOMERS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -44,20 +45,19 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
     public static final String COMMAND_WORD = "assign";
     public static final String COMMAND_ALIAS = "as";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": assigns customers to runner "
-            + "by the index number used in the last person listing. "
-            + "Existing values will be overwritten by the input values.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": assigns customers to a runner "
+            + "by the index number used in the last person listing.\n"
             + "Parameters: RUNNER-INDEX (must be a positive integer) "
-            + "CUSTOMER INDEX "
-            + "[ CUSTOMER INDEX...]\n "
+            + PREFIX_CUSTOMERS + " CUSTOMER INDEX "
+            + "[ CUSTOMER INDEX...]\n"
             + "Example: " + COMMAND_WORD + " 5 2 ";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Assigned: %1$s";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Assigned: %1$s"; //TODO: implement correct message
 
     private final Index runnerIndex;
     private final Index[] customerIndex;
 
-    private EditPersonDescriptor editPersonDescriptor;
+    private EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
     private Person personToEdit;
     private Person editedPerson;
 
@@ -85,6 +85,9 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
             model.updatePerson(personToEdit, editedPerson);
+            //TODO: model currently updates runners but does not update relevant customers with new change
+            //notable case when updating customer: if customer already has an assigned runner --> override old runner w
+            //new?
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
@@ -104,8 +107,11 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
 
         personToEdit = lastShownList.get(runnerIndex.getZeroBased());
 
-        //TODO: insert code to generate editPersonDescriptor based on runner's current customer list and the customers
-        //to be added (customerIndex... provided)
+        if (!(personToEdit instanceof Runner)) {
+            throw new CommandException(String.format("Person at index %d is not a Runner", runnerIndex.getOneBased()));
+        }
+
+        makeEditRunnerDescriptorFromCustIndices(); //modifies editPersonDescriptor
 
         editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
     }
@@ -117,7 +123,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
     private void makeEditRunnerDescriptorFromCustIndices() throws CommandException {
         List<Person> lastShownList = model.getFilteredPersonList();
         Person runnerToBeEdited = lastShownList.get(runnerIndex.getZeroBased());
-        assert runnerToBeEdited instanceof Runner;
+        assert (runnerToBeEdited instanceof Runner);
 
         editPersonDescriptor.setName(runnerToBeEdited.getName());
         editPersonDescriptor.setPhone(runnerToBeEdited.getPhone());

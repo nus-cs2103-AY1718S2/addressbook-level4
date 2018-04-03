@@ -17,4 +17,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_OWEDUEDATE = new Prefix("d:");
     public static final Prefix PREFIX_INTEREST = new Prefix("i:");
 
+    public static final Prefix PREFIX_CUSTOMERS = new Prefix("c:");
+
 }

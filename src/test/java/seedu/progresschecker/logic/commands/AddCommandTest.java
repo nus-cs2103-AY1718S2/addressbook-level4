@@ -28,6 +28,8 @@ import seedu.progresschecker.model.issues.Issue;
 import seedu.progresschecker.model.person.Person;
 import seedu.progresschecker.model.person.exceptions.DuplicatePersonException;
 import seedu.progresschecker.model.person.exceptions.PersonNotFoundException;
+import seedu.progresschecker.model.photo.PhotoPath;
+import seedu.progresschecker.model.photo.exceptions.DuplicatePhotoException;
 import seedu.progresschecker.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -116,6 +118,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void reopenIssueOnGithub(Index index) throws IOException, CommandException {
+            fail("This method should not be called");
+        }
+
+        @Override
         public void sort() {
             fail("This method should not be called.");
         }
@@ -155,7 +162,12 @@ public class AddCommandTest {
 
         @Override
         public void uploadPhoto(Person target, String path)
-                throws DuplicatePersonException, PersonNotFoundException, IOException {
+                throws DuplicatePersonException, PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addPhoto(PhotoPath photoPath) throws DuplicatePhotoException {
             fail("This method should not be called.");
         }
 

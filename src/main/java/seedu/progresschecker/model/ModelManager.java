@@ -14,6 +14,7 @@ import seedu.progresschecker.commons.core.ComponentManager;
 import seedu.progresschecker.commons.core.LogsCenter;
 import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.commons.events.model.ProgressCheckerChangedEvent;
+import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.exercise.Exercise;
 import seedu.progresschecker.model.issues.Issue;
 import seedu.progresschecker.model.person.Person;
@@ -81,7 +82,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void closeIssueOnGithub(Index index) throws IOException {
+    public synchronized void closeIssueOnGithub(Index index) throws IOException, CommandException {
         progressChecker.closeIssueOnGithub(index);
         indicateProgressCheckerChanged();
     }
@@ -94,6 +95,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void sort() {
         progressChecker.sort();
+        indicateProgressCheckerChanged();
+    }
+
+    @Override
+    public synchronized void reopenIssueOnGithub(Index index) throws IOException, CommandException {
+        progressChecker.reopenIssueOnGithub(index);
         indicateProgressCheckerChanged();
     }
 

@@ -94,7 +94,7 @@ public class FileUtil {
     public static boolean copyFile(String oriPath, String destPath) throws IOException {
 
         //create a buffer to store content
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[3072];
 
         //bufferedInputStream
         FileInputStream fis = new FileInputStream(oriPath);

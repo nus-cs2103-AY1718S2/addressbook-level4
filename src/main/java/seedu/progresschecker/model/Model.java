@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.progresschecker.commons.core.index.Index;
+import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.exercise.Exercise;
 import seedu.progresschecker.model.issues.Issue;
 import seedu.progresschecker.model.person.Person;
@@ -38,8 +39,11 @@ public interface Model {
     /** creates an issue on github */
     void createIssueOnGitHub(Issue issue) throws IOException;
 
+    /** reopen issue on github */
+    void reopenIssueOnGithub(Index index) throws IOException, CommandException;
+
     /** closes an issue issue on github */
-    void closeIssueOnGithub(Index index) throws IOException;
+    void closeIssueOnGithub(Index index) throws IOException, CommandException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

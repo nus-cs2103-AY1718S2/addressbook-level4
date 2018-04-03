@@ -57,7 +57,6 @@ public class UploadCommand extends UndoableCommand {
     private final Index targetIndex;
 
     private Person personToUpdate;
-    private Person personUpdated;
     private PhotoPath photoPath;
     private String localPath;
     private String savePath;

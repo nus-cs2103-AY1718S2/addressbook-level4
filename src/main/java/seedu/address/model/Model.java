@@ -75,6 +75,13 @@ public interface Model {
      */
     void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
             WrongPasswordException;
+
+    /**
+     * Exports the current view of {@code AddressBook} to the filepath.
+     * @param filepath
+     */
+    void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
+                                                                        DuplicatePersonException;
     //@@author
 
     //@@author yeggasd
@@ -94,6 +101,6 @@ public interface Model {
     //@@author Caijun7
     /** Returns rooms for the given building */
     ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
-            CorruptedVenueInformationException;
+                                                                                    CorruptedVenueInformationException;
     //@@author
 }

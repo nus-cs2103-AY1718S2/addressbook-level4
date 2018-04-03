@@ -19,16 +19,14 @@ public class GoogleMapsDisplay extends UiPart<Region> {
     public static final String MAP_DIRECTIONS_URL_PREFIX = "https://www.google.com/maps/dir/";
     private static final String FXML = "GoogleMapsDisplay.fxml";
     private String locations;
-    private boolean isOneLocation;
 
     @FXML
     private WebView maps;
 
-    public GoogleMapsDisplay(String locations, boolean isOneLocation) {
+    public GoogleMapsDisplay(String locations) {
         super(FXML);
 
         this.locations = locations;
-        this.isOneLocation = isOneLocation;
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 

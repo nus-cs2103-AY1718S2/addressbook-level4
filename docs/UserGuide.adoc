@@ -175,7 +175,7 @@ Format: `addplatform INDEX [l/LINK]...`
 [NOTE]
 =======================================================================
 *Accepted Facebook links may take the form:* +
-- {\https://www.facebook.com/<profile} username> +
+- [https://www.facebook.com/<profile] username> +
 - {\https://facebook.com/<profile} username> +
 - {\http://www.facebook.com/<profile} username> +
 - {\http://facebook.com/<profile} username> +

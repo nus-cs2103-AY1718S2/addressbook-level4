@@ -1,5 +1,7 @@
 package seedu.address.model.appointment;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import com.calendarfx.model.Entry;
 
 /**
@@ -11,6 +13,7 @@ public class AppointmentEntry {
     private Entry<String> appointmentEntry;
 
     public AppointmentEntry(Appointment appointment, String patientName) {
+        requireAllNonNull(appointment, patientName);
         appointmentEntry = new Entry(patientName);
         appointmentEntry.setTitle(patientName);
         appointmentEntry.changeStartDate(appointment.getAppointmentDateTime().getLocalDate());

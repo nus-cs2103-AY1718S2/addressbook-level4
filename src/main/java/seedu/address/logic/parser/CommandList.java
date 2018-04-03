@@ -55,7 +55,7 @@ public class CommandList {
         commandList.add(RedoCommand.COMMAND_WORD);
         commandList.add(SelectCommand.COMMAND_WORD);
         commandList.add(UndoCommand.COMMAND_WORD);
-        
+
         //sort
         commandList.sort(String::compareToIgnoreCase);
     }

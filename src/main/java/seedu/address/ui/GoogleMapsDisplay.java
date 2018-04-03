@@ -1,39 +1,46 @@
 package seedu.address.ui;
 
+import java.net.URL;
+
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 
-import java.net.URL;
+/**
+ * A ui for the info panel that is displayed when the map command is called.
+ */
 
 public class GoogleMapsDisplay extends UiPart<Region> {
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String MAP_URL_PREFIX = "https://www.google.com/maps/dir/";
+    public static final String MAP_SEARCH_URL_PREFIX = "https://www.google.com/maps/search/";
+    public static final String MAP_DIRECTIONS_URL_PREFIX = "https://www.google.com/maps/dir/";
     private static final String FXML = "GoogleMapsDisplay.fxml";
+    private String locations;
+    private boolean isOneLocation;
 
     @FXML
     private WebView maps;
 
-    public GoogleMapsDisplay() {
+    public GoogleMapsDisplay(String locations, boolean isOneLocation) {
         super(FXML);
 
+        this.locations = locations;
+        this.isOneLocation = isOneLocation;
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
         loadDefaultPage();
     }
 
-    public void loadMapPage(String locations) {
-        loadPage(MAP_URL_PREFIX + locations);
+    public void loadMapPage() {
+        loadPage(MAP_SEARCH_URL_PREFIX + locations);
+    }
+
+    public void loadMapDirections() {
+        loadPage(MAP_DIRECTIONS_URL_PREFIX + locations);
     }
 
     public void loadPage(String url) {

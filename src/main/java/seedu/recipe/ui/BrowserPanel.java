@@ -162,9 +162,8 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleUploadRecipesEvent(UploadRecipesEvent event) {
         loadPageExternalBrowser(CloudStorageUtil.getAppropriateUrl());
         uploadFilename = event.getUploadFilename();
-        EventsCenter.getInstance().post(new NewResultAvailableEvent(UploadCommand.MESSAGE_ACCESS_TOKEN));
 
-        CloudStorageUtil.upload(uploadFilename);
+        CloudStorageUtil.setUploadFilename(uploadFilename);
 
     }
     //@@author

@@ -37,11 +37,12 @@ public class UploadCommand extends Command {
      */
     public UploadCommand(String xmlExtensionFilename) {
         this.xmlExtensionFilename = xmlExtensionFilename;
+        CloudStorageUtil.setUploadFilename(xmlExtensionFilename);
     }
 
     @Override
     public CommandResult execute() {
-        EventsCenter.getInstance().post(new UploadRecipesEvent(xmlExtensionFilename));
+        EventsCenter.getInstance().post(new UploadRecipesEvent());
         if (CloudStorageUtil.hasAccessToken()) {
             EventsCenter.getInstance().post(new JumpToListRequestEvent(FIRST_INDEX));
             return new CommandResult(MESSAGE_SUCCESS);

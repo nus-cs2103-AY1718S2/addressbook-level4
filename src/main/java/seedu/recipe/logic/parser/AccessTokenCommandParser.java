@@ -23,6 +23,7 @@ public class AccessTokenCommandParser {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AccessTokenCommand.MESSAGE_USAGE));
         }
         // Check if access token is valid here also in the future
+        // Can reset access token if exception is thrown
         return new AccessTokenCommand(trimmedArgs);
     }
 }

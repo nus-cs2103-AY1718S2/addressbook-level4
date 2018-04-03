@@ -28,7 +28,6 @@ public class CloudStorageUtil {
     public static final String ACCESS_TOKEN_IDENTIFIER = "#access_token=";
 
     private static final String APP_KEY = "0kj3cb9w27d66n8";
-    private static final String APP_SECRET = "7stnncfsyvgim60";
     private static final String REDIRECT_DOMAIN = "https://www.dropbox.com/h";
     private static final String AUTHORIZATION_DOMAIN = "https://www.dropbox.com/1/oauth2/authorize?";
     private static final String AUTHORIZATION_URL = AUTHORIZATION_DOMAIN + "response_type=token&client_id="
@@ -38,6 +37,7 @@ public class CloudStorageUtil {
     private static final String EXTRACT_PORTION = "$1";
 
     private static String accessToken = null;
+    private static String uploadFilename = null;
 
     /**
      * Returns true if CloudStorageUtil already has an access token.
@@ -80,7 +80,7 @@ public class CloudStorageUtil {
      *
      * @throws DbxException
      */
-    public static void upload(String uploadFilename) {
+    public static void upload() {
         // Ensures access token has been obtained
         requireNonNull(CloudStorageUtil.getAccessToken());
 
@@ -95,7 +95,7 @@ public class CloudStorageUtil {
                     .uploadAndFinish(in);
             System.out.println("File has been uploaded");
         } catch (IOException | DbxException e) {
-            throw new AssertionError(UploadCommand.MESSAGE_FAILURE + " Filename in wrong format.");
+            throw new AssertionError(UploadCommand.MESSAGE_FAILURE + " Invalid access token.");
         }
     }
 
@@ -115,12 +115,12 @@ public class CloudStorageUtil {
         accessToken = token;
     }
 
-    public static String getAccessToken() {
+    private static String getAccessToken() {
         return accessToken;
     }
 
-    public static String getAuthorizationDomain() {
-        return AUTHORIZATION_DOMAIN;
+    public static void setUploadFilename(String uploadFilename) {
+        CloudStorageUtil.uploadFilename = uploadFilename;
     }
 
     public static String getRedirectDomain() {

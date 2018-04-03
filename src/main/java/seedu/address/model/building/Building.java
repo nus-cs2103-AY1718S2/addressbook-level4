@@ -82,7 +82,7 @@ public class Building {
      */
     public static String retrieveNusBuildingIfExist(String test) {
         for (int i = 0; i < NUS_BUILDINGS.length; i++) {
-            if (NUS_BUILDINGS[i].equals(test)) {
+            if (NUS_BUILDINGS[i].equalsIgnoreCase(test)) {
                 return NUS_BUILDINGS_ADDRESSES[i];
             }
         }

@@ -198,6 +198,8 @@ Examples:
 * `tagreplace t/Class1A t/Class2A` or `tr t/Class1A t/Class2A` +
 Replaces the 'Class 1A' tag from every student in the EduBuddy with 'Class 2A'.
 
+image::TagReplaceCommand.png[width="650"]
+
 === Adding a remark : `addremark`
 
 Adds a remark to a specified student in EduBuddy.
@@ -215,6 +217,8 @@ Examples:
 `addremark 2 r/Class Monitor` +
 Adds a remark to the 2nd student in EduBuddy.
 
+image::AddRemarkCommand.png[width="650"]
+
 === Deleting a remark : `deleteremark`
 
 Delete a remark to a specified student in EduBuddy.
@@ -231,6 +235,8 @@ Examples:
 * `list` +
 `deleteremark 2 r/Class Monitor` +
 Deletes the remark, Class Monitor, from the 2nd student in EduBuddy.
+
+image::DeleteRemarkCommand.png[width="650"]
 
 === Selecting a person : `select` or `s`
 

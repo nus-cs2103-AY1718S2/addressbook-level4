@@ -73,9 +73,9 @@ public class CommandTestUtil {
     public static final String VALID_RESUME_AMY = RESUME_PATH + "amy.pdf";
     public static final String VALID_RESUME_BOB = null;
     public static final String VALID_PROFILE_IMAGE_AMY = IMAGE_PATH + "jobs.jpg";
-    public static final String VALID_PROFILE_IMAGE_BOB = null;
+    public static final String VALID_PROFILE_IMAGE_BOB = IMAGE_PATH + "gates.jpg";
     public static final String VALID_COMMENT_AMY = "Good interaction skill";
-    public static final String VALID_COMMENT_BOB = "";
+    public static final String VALID_COMMENT_BOB = "Great team player";
 
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
@@ -105,9 +105,9 @@ public class CommandTestUtil {
     public static final String RESUME_DESC_AMY = " " + PREFIX_RESUME + VALID_RESUME_AMY;
     public static final String RESUME_DESC_BOB = "";
     public static final String PROFILE_IMAGE_DESC_AMY = " " + PREFIX_IMAGE + VALID_PROFILE_IMAGE_AMY;
-    public static final String PROFILE_IMAGE_DESC_BOB = "";
+    public static final String PROFILE_IMAGE_DESC_BOB = " " + PREFIX_IMAGE + VALID_PROFILE_IMAGE_BOB;
     public static final String COMMENT_DESC_AMY = " " + PREFIX_COMMENT + VALID_COMMENT_AMY;
-    public static final String COMMENT_DESC_BOB = "";
+    public static final String COMMENT_DESC_BOB = " " + PREFIX_COMMENT + VALID_COMMENT_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
@@ -130,7 +130,6 @@ public class CommandTestUtil {
             + " " + PREFIX_EXPERIENCE_SCORE + "0.5"; // scores should be between 1 and 5 or equal to default value -1
     public static final String INVALID_RESUME_DESC = " " + PREFIX_RESUME + "fileDoesNot.exist";
     public static final String INVALID_PROFILE_IMAGE_DESC = " " + PREFIX_IMAGE + "fileNotFound.jpg";
-    public static final String INVALID_COMMENT_DESC = " " + PREFIX_COMMENT + "Comment\nwith newline";
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";

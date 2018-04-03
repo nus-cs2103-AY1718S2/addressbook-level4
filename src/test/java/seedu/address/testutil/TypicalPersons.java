@@ -73,8 +73,8 @@ public class TypicalPersons {
             .withRating("4", "4.5",
                     "3", "3.5")
             .withProfileImage(formImagePathFromFileName("gates.jpg"))
-            .withInterviewDate(LocalDateTime.of(2018, Month.APRIL, 6, 16, 0, 0))
             .withComment("Benson!")
+            .withInterviewDate(LocalDateTime.of(2018, Month.APRIL, 6, 16, 0, 0))
             .withStatus(2).withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street").withUniversity("SMU")
@@ -83,7 +83,8 @@ public class TypicalPersons {
             .withGradePointAverage("4.92")
             .withJobApplied("Front-end Developer")
             .withRating("-1", "-1",
-                    "-1", "-1").build();
+                    "-1", "-1")
+            .withProfileImage(null).withComment(null).build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street").withUniversity("SUTD")
             .withExpectedGraduationYear("2020")
@@ -123,7 +124,8 @@ public class TypicalPersons {
             .withJobApplied("Software Engineer")
             .withRating("-1", "-1",
                     "-1", "-1")
-            .withResume(formPathFromFileName("george.pdf")).withStatus(6).build();
+            .withResume(formPathFromFileName("george.pdf")).withStatus(6)
+            .withProfileImage(null).withComment(null).build();
     public static final Person ALICE_WITHOUT_TAG = new PersonBuilder(ALICE).withTags().build();
     public static final Person BENSON_WITH_FRIENDS_TAG_REMOVED = new PersonBuilder(BENSON)
             .withTags("owesMoney").build();
@@ -137,14 +139,16 @@ public class TypicalPersons {
             .withGradePointAverage("3.75")
             .withRating("-1", "-1",
                     "-1", "-1")
-            .withResume(formPathFromFileName("hoon.pdf")).build();
+            .withResume(formPathFromFileName("hoon.pdf"))
+            .withProfileImage(null).withComment(null).build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
             .withEmail("hans@example.com").withAddress("chicago ave").withUniversity("NUS")
             .withExpectedGraduationYear("2018")
             .withMajor("Computer Science")
             .withGradePointAverage("3.11")
             .withRating("-1", "-1",
-                    "-1", "-1").build();
+                    "-1", "-1")
+            .withProfileImage(null).withComment(null).build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)

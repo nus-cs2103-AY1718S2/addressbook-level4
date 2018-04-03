@@ -15,7 +15,6 @@
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
         <experienceScore isPrivate="false">-1</experienceScore>
-        <comment/>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
@@ -32,7 +31,6 @@
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
         <experienceScore isPrivate="false">-1</experienceScore>
-        <comment/>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
@@ -49,7 +47,6 @@
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
         <experienceScore isPrivate="false">-1</experienceScore>
-        <comment/>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
@@ -66,7 +63,6 @@
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
         <experienceScore isPrivate="false">-1</experienceScore>
-        <comment/>
     </persons>
     <persons>
         <name>Werner Meyer</name>
@@ -83,7 +79,6 @@
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
         <experienceScore isPrivate="false">-1</experienceScore>
-        <comment/>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
@@ -100,7 +95,6 @@
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
         <experienceScore isPrivate="false">-1</experienceScore>
-        <comment/>
     </persons>
     <persons>
         <name>Anna Best</name>
@@ -117,7 +111,6 @@
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
         <experienceScore isPrivate="false">-1</experienceScore>
-        <comment/>
     </persons>
     <persons>
         <name>Stefan Meier</name>
@@ -134,7 +127,6 @@
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
         <experienceScore isPrivate="false">-1</experienceScore>
-        <comment/>
     </persons>
     <persons>
         <name>Martin Mueller</name>
@@ -151,6 +143,5 @@
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
         <experienceScore isPrivate="false">-1</experienceScore>
-        <comment/>
     </persons>
 </addressbook>

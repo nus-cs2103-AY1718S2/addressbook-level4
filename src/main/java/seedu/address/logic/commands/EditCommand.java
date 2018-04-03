@@ -141,14 +141,13 @@ public class EditCommand extends UndoableCommand {
         GradePointAverage updatedGradePointAverage = editPersonDescriptor.getGradePointAverage()
                 .orElse(personToEdit.getGradePointAverage());
         JobApplied updatedJobApplied = editPersonDescriptor.getJobApplied().orElse(personToEdit.getJobApplied());
-
-        // Doesn't allow editing of rating
-        Rating rating = personToEdit.getRating();
-
         Resume updatedResume = editPersonDescriptor.getResume().orElse(personToEdit.getResume());
         ProfileImage updatedProfileImage = editPersonDescriptor.getProfileImage()
                 .orElse(personToEdit.getProfileImage());
         Comment updatedComment = editPersonDescriptor.getComment().orElse(personToEdit.getComment());
+
+        // Doesn't allow editing of rating
+        Rating rating = personToEdit.getRating();
 
         // Doesn't allow editing of interview date
         InterviewDate interviewDate = personToEdit.getInterviewDate();

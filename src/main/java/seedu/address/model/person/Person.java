@@ -204,4 +204,29 @@ public class Person {
         return Double.compare(p1.getRating().getOverallScore(),
                 p2.getRating().getOverallScore());
     }
+
+    /**
+     * Compares the GPAs of two {@code Person} objects.
+     * @param p1
+     * @param p2
+     * @return 1 if p1 has a higher GPA, 0 if p1 and p2 have equal GPA and -1 otherwise.
+     */
+    public static int compareByGradePointAverage(Person p1, Person p2) {
+        double gpa1 = Double.parseDouble(p1.getGradePointAverage().value);
+        double gpa2 = Double.parseDouble(p2.getGradePointAverage().value);
+        return Double.compare(gpa1, gpa2);
+    }
+
+    /**
+     * Compares the names of two {@code Person} objects lexicographically, ignoring case differences.
+     * @param p1
+     * @param p2
+     * @return 1 if p1's name lexicographically precedes p2's name, 0 if p1 and p2 have the same name,
+     *         and -1 otherwise.
+     */
+    public static int compareByName(Person p1, Person p2) {
+        String name1 = p1.getName().fullName;
+        String name2 = p2.getName().fullName;
+        return name1.compareToIgnoreCase(name2);
+    }
 }

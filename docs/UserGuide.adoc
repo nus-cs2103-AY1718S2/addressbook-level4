@@ -264,22 +264,24 @@ Rates the 1st person to have technical skills score of 4.5, communication skills
 * `rate 2 t/3 c/5 p/3.5 e/2` +
 Rates the 2nd person to have technical skills score of 3, communication skills score of 5, problem solving skills of 3.5, experience score of 2.
 
-=== Sorting the list of students based on overall rating score : `rating-sort` `[since v1.3]`
+=== Sorting the list of students based on different fields : `sort` `[since v1.3]`
 
-Sorts the current list of students in HR+ based on overall rating score in descending or ascending order. +
-Format: `rating-sort o/SORT ORDER`
+Sorts the current list of students in HR+ based on gpa, name or overall rating in descending or ascending order. +
+Format: `sort FIELD o/SORT ORDER`
 
 ****
+* The field to be sorted by must be either `gpa`, `name` or `rating`.
 * The sort order can only be `asc` (ascending order) or `desc` (descending order).
+* When sorting the students based on name, cases are ignored when doing comparison.
 * If the list has been filtered, only current students on the list will be sorted instead of all students in HR+.
 ****
 
 Examples:
 
-* `rating-sort o/acs` +
+* `sort rating o/acs` +
 Sorts the current list of students according to their overall rating in ascending order.
-* `rating-sort o/desc` +
-Sorts the current list of students according to their overall rating in descending order.
+* `sort gpa o/desc` +
+Sorts the current list of students according to their grade point average in descending order.
 
 === Deleting the rating given to an applicant : `rating-delete` `[since v1.2]`
 
@@ -420,8 +422,8 @@ e.g. `filter y/2019`
 e.g.`select 2`
 * *Rate* : `rate INDEX t/TECHNICAL_SKILLS_SCORE c/COMMUNICATION_SKILLS_SCORE p/PROBLEM_SOLVING_SKILLS_SCORE e/EXPERIENCE_SKILLS_SCORE` +
 e.g. `rate 1 t/4.5 c/3 p/4 e/3.5`
-* *Sort by Rating* : `rating-sort o/SORT ORDER` +
-e.g. `rating-sort o/asc`
+* *Sort* : `sort FIELD o/SORT ORDER` +
+e.g. `sort gpa o/asc`
 * *Delete Rating* : `rating-delete INDEX` +
 e.g. `rating-delete 1`
 * *History* : `history`

@@ -33,6 +33,7 @@ import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PROFILE_IMAGE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.PROFILE_IMAGE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.RESUME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
@@ -275,7 +276,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person with tags, command with parameters in random order -> added */
         toAdd = BOB;
         command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + PHONE_DESC_BOB + ADDRESS_DESC_BOB + NAME_DESC_BOB
-                + TAG_DESC_HUSBAND + EMAIL_DESC_BOB + EXPECTED_GRADUATION_YEAR_DESC_BOB + UNIVERSITY_DESC_BOB
+                + TAG_DESC_HUSBAND + EMAIL_DESC_BOB + PROFILE_IMAGE_DESC_BOB + COMMENT_DESC_BOB
+                + EXPECTED_GRADUATION_YEAR_DESC_BOB + UNIVERSITY_DESC_BOB
                 + MAJOR_DESC_BOB + GRADE_POINT_AVERAGE_DESC_BOB + JOB_APPLIED_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 

@@ -52,8 +52,9 @@ public class PersonUtil {
         if (!isNull(person.getProfileImage().value)) {
             sb.append(PREFIX_IMAGE + person.getProfileImage().value + " ");
         }
-
-        sb.append(PREFIX_COMMENT + person.getComment().value + " ");
+        if (!isNull(person.getComment().value)) {
+            sb.append(PREFIX_COMMENT + person.getComment().value + " ");
+        }
 
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")

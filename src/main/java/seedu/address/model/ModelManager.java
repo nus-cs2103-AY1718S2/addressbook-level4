@@ -13,6 +13,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -115,15 +116,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void sortPersonListAscOrder() {
-        addressBook.sortAsc();
+    public void sortPersonListAscOrder(SortCommand.SortField sortField) {
+        addressBook.sortAsc(sortField);
         Predicate<? super Person> currPredicate = filteredPersons.getPredicate();
         filteredPersons.setPredicate(currPredicate);
     }
 
     @Override
-    public void sortPersonListDescOrder() {
-        addressBook.sortDesc();
+    public void sortPersonListDescOrder(SortCommand.SortField sortField) {
+        addressBook.sortDesc(sortField);
         Predicate<? super Person> currPredicate = filteredPersons.getPredicate();
         filteredPersons.setPredicate(currPredicate);
     }

@@ -1,7 +1,5 @@
 package seedu.address.model.util;
 
-import static java.util.Objects.isNull;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,8 +28,6 @@ import seedu.address.model.tag.Tag;
  * Contains utility methods for populating {@code AddressBook} with sample data.
  */
 public class SampleDataUtil {
-    private static final String resumePath = "src/main/resources/resume/";
-    private static final String imagePath = "src/main/resources/photos/";
 
     public static Person[] getSamplePersons() {
 
@@ -47,7 +43,7 @@ public class SampleDataUtil {
                 new Rating(4.3, 4.8,
                             4.0, 4.1),
                 new Resume(null),
-                new ProfileImage(formImagePathFromFileName("elon.jpg")),
+                new ProfileImage(null),
                 new Comment("Alex is great"), new InterviewDate(1540814400L),
                 new Status(), getTagSet("friends")),
 
@@ -60,7 +56,7 @@ public class SampleDataUtil {
                 new JobApplied("Data Analyst"),
                 new Rating(-1, -1,
                         -1, -1),
-                new Resume(null), new ProfileImage(formImagePathFromFileName("gates.jpg")),
+                new Resume(null), new ProfileImage(null),
                 new Comment(null), new InterviewDate(),
                 new Status(1), getTagSet("colleagues", "friends")),
 
@@ -72,8 +68,8 @@ public class SampleDataUtil {
                 new JobApplied("Software Tester"),
                 new Rating(4.5, 3,
                         4.5, 2.5),
-                new Resume(formPathFromFileName(null)),
-                new ProfileImage(formImagePathFromFileName("jobs.jpg")),
+                new Resume(null),
+                new ProfileImage(null),
                 new Comment(null), new InterviewDate(),
                 new Status(5), getTagSet("neighbours")),
 
@@ -86,7 +82,7 @@ public class SampleDataUtil {
                 new JobApplied("Network Administrator"),
                 new Rating(-1, -1,
                         -1, -1),
-                new Resume(null), new ProfileImage(formImagePathFromFileName("larry.jpg")),
+                new Resume(null), new ProfileImage(null),
                 new Comment(null), new InterviewDate(),
                 new Status(3), getTagSet("family")),
 
@@ -97,7 +93,7 @@ public class SampleDataUtil {
                 new Major("Computer Science"), new GradePointAverage("4.33"),
                 new JobApplied("Database Administrator"),
                 new Rating(3, 5, 3.5, 3),
-                new Resume(null), new ProfileImage(formImagePathFromFileName("mark.jpg")),
+                new Resume(null), new ProfileImage(null),
                 new Comment(null), new InterviewDate(),
                 new Status(4), getTagSet("classmates")),
 
@@ -137,25 +133,4 @@ public class SampleDataUtil {
 
         return tags;
     }
-
-    /**
-     * Forms the resume path from resume file name
-     */
-    private static String formPathFromFileName(String fileName) {
-        if (isNull(fileName)) {
-            return null;
-        }
-        return resumePath + fileName;
-    }
-
-    /**
-     * Forms the image path from image file name
-     */
-    private static String formImagePathFromFileName(String fileName) {
-        if (isNull(fileName)) {
-            return null;
-        }
-        return imagePath + fileName;
-    }
-
 }

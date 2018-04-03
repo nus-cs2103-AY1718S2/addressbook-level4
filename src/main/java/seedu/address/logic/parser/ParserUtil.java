@@ -11,7 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.DoubleUtil;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.logic.commands.RatingSortCommand;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
@@ -52,6 +52,25 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Parses {@code sortField} into a {@code SortCommand.SortField} and returns it.
+     * Leading and trailing whitespaces will be trimmed.
+     * @throws IllegalValueException if the specified sort field is invalid (not gpa, name or rating).
+     */
+    public static SortCommand.SortField parseSortField(String sortField) throws IllegalValueException {
+        String trimmedSortField = sortField.trim();
+        if (!SortCommand.isValidSortField(trimmedSortField)) {
+            throw new IllegalValueException(SortCommand.MESSAGE_INVALID_SORT_FIELD);
+        }
+        if (trimmedSortField.equals(SortCommand.SORT_FIELD_GPA)) {
+            return SortCommand.SortField.GPA;
+        } else if (trimmedSortField.equals(SortCommand.SORT_FIELD_RATING)) {
+            return SortCommand.SortField.RATING;
+        } else {
+            return SortCommand.SortField.NAME;
+        }
     }
 
     /**
@@ -408,31 +427,31 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String sortOrder} into a {@code RatingSortCommand.SortOrder}.
+     * Parses a {@code String sortOrder} into a {@code SortCommand.SortOrder}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws IllegalValueException if given {@code sortOrder} is invalid.
      */
-    public static RatingSortCommand.SortOrder parseSortOrder(String sortOrder)
+    public static SortCommand.SortOrder parseSortOrder(String sortOrder)
             throws IllegalValueException {
         requireNonNull(sortOrder);
         String trimmedSortOrder = sortOrder.trim();
-        if (!RatingSortCommand.isValidSortOrder(trimmedSortOrder)) {
-            throw new IllegalValueException(RatingSortCommand.MESSAGE_INVALID_SORT_ORDER);
+        if (!SortCommand.isValidSortOrder(trimmedSortOrder)) {
+            throw new IllegalValueException(SortCommand.MESSAGE_INVALID_SORT_ORDER);
         }
-        if (trimmedSortOrder.equals(RatingSortCommand.SORT_ORDER_ASC)) {
-            return RatingSortCommand.SortOrder.ASC;
+        if (trimmedSortOrder.equals(SortCommand.SORT_ORDER_ASC)) {
+            return SortCommand.SortOrder.ASC;
         } else {
-            return RatingSortCommand.SortOrder.DESC;
+            return SortCommand.SortOrder.DESC;
         }
     }
 
     /**
-     * Parses a {@code Optional<String> sortOrder} into an {@code Optional<RatingSortCommand.SortOrder>}
+     * Parses a {@code Optional<String> sortOrder} into an {@code Optional<SortCommand.SortOrder>}
      * if {@code sortOrder} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<RatingSortCommand.SortOrder> parseSortOrder(Optional<String> sortOrder)
+    public static Optional<SortCommand.SortOrder> parseSortOrder(Optional<String> sortOrder)
             throws IllegalValueException {
         requireNonNull(sortOrder);
         return sortOrder.isPresent() ? Optional.of(parseSortOrder(sortOrder.get())) : Optional.empty();

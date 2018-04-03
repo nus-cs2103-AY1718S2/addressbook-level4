@@ -4,7 +4,6 @@ import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
 
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
@@ -46,16 +45,6 @@ public class ToDoListPanel extends UiPart<Region> {
                         raise(new ToDoPanelSelectionChangedEvent(newValue));
                     }
                 });
-    }
-
-    /**
-     * Scrolls to the {@code ToDoCard} at the {@code index} and selects it.
-     */
-    private void scrollTo(int index) {
-        Platform.runLater(() -> {
-            todoListView.scrollTo(index);
-            todoListView.getSelectionModel().clearAndSelect(index);
-        });
     }
 
     /**

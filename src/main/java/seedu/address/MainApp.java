@@ -226,7 +226,7 @@ public class MainApp extends Application {
         ui.start(primaryStage);
     }
 
-    //@@author
+    //@@author ncaminh
     /**
      * read welcome "username" message
      */
@@ -237,6 +237,7 @@ public class MainApp extends Application {
             System.out.println("Unable to load welcome message.");
         }
     }
+    //@@author
 
     @Override
     public void stop() {

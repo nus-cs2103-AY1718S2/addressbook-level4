@@ -1,6 +1,7 @@
 package seedu.recipe.ui;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -72,8 +73,8 @@ public class RecipeCard extends UiPart<Region> {
             FileInputStream input = new FileInputStream(recipe.getImage().toString());
             Image image = new Image(input);
             imageView.setImage(image);
-        } catch (Exception e) {
-            System.out.println("Image cannot be set");
+        } catch (IOException exception) {
+            System.out.println("File not found");
         }
     }
 

@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import guitests.guihandles.RecipeCardHandle;
 import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.testutil.Assert;
 import seedu.recipe.testutil.RecipeBuilder;
 
 public class RecipeCardTest extends GuiUnitTest {
@@ -56,7 +57,7 @@ public class RecipeCardTest extends GuiUnitTest {
 
     @Test
     public void setImageView() {
-
+        Assert.assertThrows(IllegalArgumentException.class, () -> new RecipeBuilder().withImage("as").build());
     }
 
     /**

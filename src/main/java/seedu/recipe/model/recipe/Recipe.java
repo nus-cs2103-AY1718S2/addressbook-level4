@@ -100,7 +100,7 @@ public class Recipe {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
-    public String getRecipeInHtmlFormat() {
+    public String getHtmlFormattedRecipe() {
         return HtmlFormatter.getHtmlFormat(this);
     }
 
@@ -133,7 +133,7 @@ public class Recipe {
                 && otherRecipe.getUrl().equals(this.getUrl())
                 && otherRecipe.getImage().equals(this.getImage())
                 && otherRecipe.getTextFormattedRecipe().equals(this.getTextFormattedRecipe())
-                && otherRecipe.getRecipeInHtmlFormat().equals(this.getRecipeInHtmlFormat());
+                && otherRecipe.getHtmlFormattedRecipe().equals(this.getHtmlFormattedRecipe());
     }
 
     @Override

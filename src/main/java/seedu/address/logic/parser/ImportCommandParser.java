@@ -23,11 +23,14 @@ public class ImportCommandParser implements Parser<ImportCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
         }
         String[] splitArgs = trimmedArgs.split(SPLIT_TOKEN);
-        if (splitArgs.length != 2) {
+        if (splitArgs.length == 1) {
+            return new ImportCommand(splitArgs[0]);
+        } else if (splitArgs.length == 2) {
+            return new ImportCommand(splitArgs[0], splitArgs[1]);
+        } else {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
         }
 
-        return new ImportCommand(splitArgs[0], splitArgs[1]);
     }
 }

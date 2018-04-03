@@ -122,7 +122,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
-    //@@author Caijun7
+    //@@author Caijun7-reused
     @Override
     public void deleteTag(Tag tag) {
         addressBook.removeTag(tag);
@@ -138,10 +138,23 @@ public class ModelManager extends ComponentManager implements Model {
     public void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
                                                                             WrongPasswordException {
         requireNonNull(filepath);
-        requireNonNull(password);
 
         XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
         xmlAddressBook.importAddressBook(filepath, this.addressBook, password);
+        indicateAddressBookChanged();
+    }
+
+    /**
+     * Exports the current view of {@code AddressBook} to the filepath.
+     * @param filepath
+     */
+    @Override
+    public void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
+                                                                                DuplicatePersonException {
+        requireNonNull(filepath);
+
+        XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
+        xmlAddressBook.exportAddressBook(filepath, password, filteredPersons);
         indicateAddressBookChanged();
     }
     //@@author

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -17,6 +18,9 @@ import seedu.address.commons.util.SecurityUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Password;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.
@@ -126,13 +130,41 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             logger.info("AddressBook file "  + addressBookFile + " not found");
             throw new FileNotFoundException();
         }
-        SecurityUtil.decrypt(new File(filePath), password);
+        if (password != null) {
+            SecurityUtil.decrypt(new File(filePath), password);
+        }
         XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
         try {
             return xmlAddressBook.addToAddressBook(addressBook);
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + addressBookFile + ": " + ive.getMessage());
             throw new DataConversionException(ive);
+        }
+    }
+
+    /**
+     * Exports the current view of {@code AddressBook} to the given filepath.
+     *
+     * @param filePath                  location of the exported data. Cannot be null
+     * @throws IOException              If the file cannot be overwritten or opened.
+     * @throws WrongPasswordException   If password is in wrong format
+     * @throws DuplicatePersonException Impossible since AddressBook is newly created
+     */
+    public void exportAddressBook(String filePath, Password password, ObservableList<Person> filteredPersons)
+            throws IOException, WrongPasswordException, DuplicatePersonException {
+        requireNonNull(filePath);
+
+        if (UserPrefs.getUserAddressBookFilePath().equals(filePath)) {
+            logger.warning("Filepath is same as AddressBook storage filepath, storage file should not be overwritten!");
+            throw new IOException();
+        }
+        File file = new File(filePath);
+        FileUtil.createIfMissing(file);
+        AddressBook addressBook = new AddressBook();
+        addressBook.setPersons(filteredPersons);
+        XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
+        if (password != null) {
+            SecurityUtil.encrypt(file, password.getPassword());
         }
     }
     //@@author

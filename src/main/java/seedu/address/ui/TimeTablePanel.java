@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
 
 //@@author yeggasd
 /**
- * A ui for the info panal that is displayed when the vacant command is called.
+ * A ui for the info panel that is displayed when the timetable command is called.
  */
 public class TimeTablePanel extends UiPart<Region> {
     private static final String OCCUPIED_STYLE_CLASS = "occupied";
@@ -80,7 +80,7 @@ public class TimeTablePanel extends UiPart<Region> {
     }
 
     /**
-     * Sets the command box style to indicate a vacant or occupied room.
+     * Sets the command box style to indicate free or having lesson
      */
     public void setStyle() {
         for (int i = 0; i < columns.size(); i++) {

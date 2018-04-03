@@ -17,7 +17,7 @@ import seedu.address.model.person.Person;
 
 //@@author yeggasd
 /**
- * Retrieves all vacant rooms in a given building
+ * Retrieves the timetable of a person identified using it's last displayed index from the address book.
  */
 public class TimeTableCommand extends Command {
     public static final String COMMAND_WORD = "timetable";

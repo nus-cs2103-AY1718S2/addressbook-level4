@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
 
 //@@author jingyinno
 /**
- * A ui for the info panal that is displayed when the vacant command is called.
+ * A ui for the info panel that is displayed when the vacant command is called.
  */
 public class VenueTable extends UiPart<Region> {
     private static final String OCCUPIED_STYLE_CLASS = "occupied";

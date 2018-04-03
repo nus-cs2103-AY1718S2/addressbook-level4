@@ -2,6 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -29,11 +31,53 @@ m/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
         </Label>
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
       </HBox>
-      <FlowPane fx:id="tags" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-      <Label fx:id="rating" styleClass="cell_small_label_rating" text="\$rating" />
+        <FlowPane fx:id="tags" />
+        <Label fx:id="rating" styleClass="cell_small_label_rating" text="\$rating" />
+        <HBox alignment="CENTER_LEFT" spacing="5.0">
+            <ImageView fx:id="imagePhone" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="/images/phone2.png" />
+                </image>
+            </ImageView>
+            <Label fx:id="phone" styleClass="cell_small_label" text="\$phone">
+                <padding>
+                    <Insets top="5.0" />
+                </padding>
+            </Label>
+            <padding>
+                <Insets top="5.0" />
+            </padding>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="5">
+            <ImageView fx:id="imageAddress" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="/images/address2.png" />
+                </image>
+            </ImageView>
+            <Label fx:id="address" styleClass="cell_small_label" text="\$address">
+                <padding>
+                    <Insets top="5.0" />
+                </padding>
+            </Label>
+            <padding>
+                <Insets top="5.0" />
+            </padding>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="5">
+            <ImageView fx:id="imageEmail" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="/images/email2.png" />
+                </image>
+            </ImageView>
+            <Label fx:id="email" styleClass="cell_small_label" text="\$email">
+                <padding>
+                    <Insets top="5.0" />
+                </padding>
+            </Label>
+            <padding>
+                <Insets top="5.0" />
+            </padding>
+        </HBox>
     </VBox>
   </GridPane>
 </HBox>

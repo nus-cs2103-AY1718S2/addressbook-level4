@@ -37,7 +37,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Edits the details of an existing person in the address book.
  */
-public class EditCommand extends UndoableCommand {
+public class EditCommand extends UndoableCommand implements PopulatableCommand {
 
     public static final String COMMAND_WORD = "edit";
     public static final String COMMAND_ALIAS = "e";
@@ -76,6 +76,15 @@ public class EditCommand extends UndoableCommand {
         this.index = index;
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
+
+    /**
+     * For call in PopulatePrefixRequestEvent class, to assign string values.
+     */
+    public EditCommand() {
+        index = null;
+        editPersonDescriptor = null;
+    }
+
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
@@ -165,6 +174,27 @@ public class EditCommand extends UndoableCommand {
         return index.equals(e.index)
                 && editPersonDescriptor.equals(e.editPersonDescriptor)
                 && Objects.equals(personToEdit, e.personToEdit);
+    }
+
+    @Override
+    public String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
+    @Override
+    public String getTemplate() {
+        return COMMAND_WORD + "  " + PREFIX_NAME + "  " + PREFIX_PHONE + "  "
+                + PREFIX_EMAIL + "  " + PREFIX_ADDRESS + "  " + PREFIX_TAG + " ";
+    }
+
+    @Override
+    public int getCaretIndex() {
+        return (COMMAND_WORD + " ").length();
+    }
+
+    @Override
+    public String getUsageMessage() {
+        return MESSAGE_USAGE;
     }
 
     /**

@@ -10,7 +10,7 @@ import seedu.address.model.Model;
 /**
  * Undo the previous {@code UndoableCommand}.
  */
-public class UndoCommand extends Command {
+public class UndoCommand extends Command implements ImmediatelyExecutableCommand {
 
     public static final String COMMAND_WORD = "undo";
     public static final String COMMAND_ALIAS = "u";
@@ -33,5 +33,10 @@ public class UndoCommand extends Command {
     public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack) {
         this.model = model;
         this.undoRedoStack = undoRedoStack;
+    }
+
+    @Override
+    public String getCommandWord() {
+        return COMMAND_WORD;
     }
 }

@@ -15,26 +15,26 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 /**
  * Adds a person to the address book.
  */
-public class AddCommand extends UndoableCommand {
+public class AddCommand extends UndoableCommand implements PopulatableCommand {
 
     public static final String COMMAND_WORD = "add";
     public static final String COMMAND_ALIAS = "a";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
             + "Parameters: "
-            + PREFIX_NAME + "NAME "
-            + PREFIX_TYPE + "r(or c) "
-            + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + PREFIX_TYPE + " r(or c) "
+            + PREFIX_NAME + " NAME "
+            + "[" + PREFIX_PHONE + " PHONE] "
+            + "[" + PREFIX_EMAIL + " EMAIL] "
+            + "[" + PREFIX_ADDRESS + " ADDRESS] "
+            + "[" + PREFIX_TAG + " TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_TYPE + "c "
-            + PREFIX_NAME + "John Doe "
-            + PREFIX_PHONE + "98765432 "
-            + PREFIX_EMAIL + "johnd@example.com "
-            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_TYPE + " c "
+            + PREFIX_NAME + " John Doe "
+            + PREFIX_PHONE + " 98765432 "
+            + PREFIX_EMAIL + " johnd@example.com "
+            + PREFIX_ADDRESS + " 311, Clementi Ave 2, #02-25 "
+            + PREFIX_TAG + " owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
@@ -47,6 +47,13 @@ public class AddCommand extends UndoableCommand {
     public AddCommand(Person person) {
         requireNonNull(person);
         toAdd = person;
+    }
+
+    /**
+     * For call in PopulatePrefixRequestEvent class, to assign string values.
+     */
+    public AddCommand() {
+        toAdd = null;
     }
 
     @Override
@@ -66,5 +73,27 @@ public class AddCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof AddCommand // instanceof handles nulls
                 && toAdd.equals(((AddCommand) other).toAdd));
+    }
+
+    @Override
+    public String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
+    @Override
+    public String getTemplate() {
+        return COMMAND_WORD + " " + PREFIX_TYPE + "  " + PREFIX_NAME + "  "
+                + PREFIX_PHONE + "  " + PREFIX_EMAIL + "  " + PREFIX_ADDRESS + "  "
+                + PREFIX_TAG + " ";
+    }
+
+    @Override
+    public int getCaretIndex() {
+        return (COMMAND_WORD + " " + PREFIX_TYPE + " ").length();
+    }
+
+    @Override
+    public String getUsageMessage() {
+        return MESSAGE_USAGE;
     }
 }

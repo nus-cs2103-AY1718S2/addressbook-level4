@@ -13,7 +13,7 @@ import seedu.address.ui.MainWindow;
 /**
  * Display the place identified using its las displayed index from the address book
  */
-public class LocateCommand extends Command {
+public class LocateCommand extends Command implements PopulatableCommand {
     public static final String COMMAND_WORD = "locate";
     public static final String COMMAND_ALIAS = "lo";
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -27,8 +27,15 @@ public class LocateCommand extends Command {
 
     public LocateCommand (Index targetIndex) {
         this.targetIndex = targetIndex;
-
     }
+
+    /**
+     * For call in PopulatePrefixRequestEvent class, to assign string values.
+     */
+    public LocateCommand() {
+        targetIndex = null;
+    }
+
 
     @Override
     public CommandResult execute() throws CommandException {
@@ -56,5 +63,25 @@ public class LocateCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof LocateCommand // instanceof handles nulls
                 && this.targetIndex.equals(((LocateCommand) other).targetIndex)); //start check
+    }
+
+    @Override
+    public String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
+    @Override
+    public String getTemplate() {
+        return COMMAND_WORD + " ";
+    }
+
+    @Override
+    public int getCaretIndex() {
+        return getTemplate().length();
+    }
+
+    @Override
+    public String getUsageMessage() {
+        return MESSAGE_USAGE;
     }
 }

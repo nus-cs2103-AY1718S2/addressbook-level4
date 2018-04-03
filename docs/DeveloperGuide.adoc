@@ -534,10 +534,13 @@ The following sequence diagram shows how the vacant command is parsed:
 
 `ModelManager` will checks if the building is in the list of NUS Buildings, and will throw `BuildingNotFoundException` if the building is not in the list of NUS Buildings.
 
-We have created `Building`, `Room`, `Week`, and `WeekDay` to read and store all weekday schedule of all NUS Rooms.
+We have created `Building`, `Room`, `Week`, and `WeekDay` in `Model` to read and store all weekday schedule of all NUS Rooms.
 
-The following architecture diagram shows the logic and storage component:
+The following architecture diagram shows the model and storage component:
 
+image::ModelClassDiagram.png[width="800"]
+
+image::StorageClassDiagram.png[width="800"]
 
 The following sequence diagram shows how the logic component of Vacant Room Finder works:
 

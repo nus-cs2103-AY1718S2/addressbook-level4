@@ -221,7 +221,7 @@ public class MainWindow extends UiPart<Stage> {
     @Subscribe
     private void handleShowCalendarAppointment(ShowCalendarViewRequestEvent scvre) {
         logger.info(LogsCenter.getEventHandlingLogMessage(scvre));
-        calendarPanel = new CalendarPanel();
+        calendarPanel = new CalendarPanel(scvre.appointmentEntries);
         browserPlaceholder.getChildren().add(calendarPanel.getRoot());
     }
 }

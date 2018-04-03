@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.calendarfx.view.page.DayPage?>
+<?import com.calendarfx.view.page.MonthPage?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="calendarView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+
+<StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <DayPage dayPageLayout="DAY_ONLY" prefHeight="200.0" prefWidth="200.0" />
+      <MonthPage fx:id="calendarView" prefHeight="200.0" prefWidth="200.0" />
    </children>
 </StackPane>

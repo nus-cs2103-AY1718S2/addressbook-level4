@@ -8,12 +8,13 @@ import com.calendarfx.model.Entry;
  */
 public class AppointmentEntry {
     private static final int TIME_INTERVAL = 1800;
-    private Entry appointmentEntry;
+    private Entry<String> appointmentEntry;
 
     public AppointmentEntry(Appointment appointment, String patientName) {
-        appointmentEntry = new Entry();
+        appointmentEntry = new Entry(patientName);
         appointmentEntry.setTitle(patientName);
         appointmentEntry.changeStartDate(appointment.getAppointmentDateTime().getLocalDate());
+        appointmentEntry.changeEndDate(appointment.getAppointmentDateTime().getLocalDate());
         appointmentEntry.changeStartTime(appointment.getAppointmentDateTime().getLocalTime());
         appointmentEntry.changeEndTime(appointment.getAppointmentDateTime().getEndLocalTime(TIME_INTERVAL));
     }

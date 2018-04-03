@@ -14,6 +14,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AppointmentChangedEvent;
 import seedu.address.commons.events.model.ImdbChangedEvent;
+import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
@@ -31,6 +32,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final Imdb imdb;
     private final FilteredList<Patient> filteredPatients;
     private final FilteredList<Integer> patientVisitingQueue;
+    private final FilteredList<AppointmentEntry> appointmentEntries;
 
     /**
      * Initializes a ModelManager with the given Imdb and userPrefs.
@@ -44,6 +46,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.imdb = new Imdb(addressBook);
         filteredPatients = new FilteredList<>(this.imdb.getPersonList());
         patientVisitingQueue = new FilteredList<>(this.imdb.getUniquePatientQueueNo());
+        appointmentEntries = new FilteredList<>(this.imdb.getAppointmentEntryList());
     }
 
     public ModelManager() {
@@ -148,8 +151,9 @@ public class ModelManager extends ComponentManager implements Model {
         return isDeleteSuccess;
     }
 
-    public UniqueAppointmentList getPatientAppointments(Patient patient) {
-        return null;
+    @Override
+    public ObservableList<AppointmentEntry> getAppointmentEntryList() {
+        return imdb.getAppointmentEntryList();
     }
 
     @Override

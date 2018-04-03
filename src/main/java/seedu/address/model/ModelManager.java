@@ -141,6 +141,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deleteAppointment(Appointment target) throws AppointmentNotFoundException {
         addressBook.removeAppointment(target);
         indicateAddressBookChanged();
+        indicateCalendarChanged();
     }
 
     @Override

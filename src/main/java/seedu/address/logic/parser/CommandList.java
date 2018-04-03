@@ -12,6 +12,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.appointment.AddAppointmentCommand;
 import seedu.address.logic.commands.appointment.CalendarCommand;
 import seedu.address.logic.commands.appointment.DateCommand;
+import seedu.address.logic.commands.appointment.DeleteAppointmentCommand;
 import seedu.address.logic.commands.appointment.MonthCommand;
 import seedu.address.logic.commands.appointment.WeekCommand;
 import seedu.address.logic.commands.appointment.YearCommand;
@@ -42,6 +43,7 @@ public class CommandList {
         commandList.add(ClearCommand.COMMAND_WORD);
         commandList.add(ClearHistoryCommand.COMMAND_WORD);
         commandList.add(DateCommand.COMMAND_WORD);
+        commandList.add(DeleteAppointmentCommand.COMMAND_WORD);
         commandList.add(DeleteCommand.COMMAND_WORD);
         commandList.add(EditCommand.COMMAND_WORD);
         commandList.add(EmailCommand.COMMAND_WORD);

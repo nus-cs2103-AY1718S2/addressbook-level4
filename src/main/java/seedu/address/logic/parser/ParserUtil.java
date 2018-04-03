@@ -2,15 +2,13 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -25,6 +23,7 @@ import seedu.address.model.person.Income;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.policy.Date;
+import seedu.address.model.policy.Issue;
 import seedu.address.model.policy.Month;
 import seedu.address.model.policy.Price;
 
@@ -378,7 +377,7 @@ public class ParserUtil {
      * Parses a {@code String value} into a {@code Price}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code value} is invalid.
+     * @throws IllegalValueException if the given {@code price} is invalid.
      */
     public static Price parsePrice(String price) throws IllegalValueException {
         requireNonNull(price);
@@ -389,6 +388,14 @@ public class ParserUtil {
         return new Price(trimmedPrice);
     }
 
+    /**
+     * Parses a {@code Optional<String> price} into an {@code Optional<Price>} if {@code price} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Price> parsePrice(Optional<String> price) throws IllegalValueException {
+        requireNonNull(price);
+        return price.isPresent() ? Optional.of(parsePrice(price.get())) : Optional.empty();
+    }
 
     /**
      * Parses a {@code String date} into a {@code Date}.
@@ -420,5 +427,46 @@ public class ParserUtil {
         }
 
         return new Date(day, month, year);
+    }
+
+    /**
+     * Parses a {@code Optional<String> date} into an {@code Optional<Date>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Date> parsePolicyDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(parsePolicyDate(date.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String issue} into a {@code Issue}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code issue} is invalid.
+     */
+    public static Issue parseIssue(String issue) throws IllegalValueException {
+        requireNonNull(issue);
+        String trimmedUppercaseIssue = issue.trim().toUpperCase();
+
+        if (!Issue.isValidIssueName(trimmedUppercaseIssue)) {
+            throw new IllegalValueException(Issue.ISSUE_CONSTRAINTS);
+        }
+
+        return Issue.valueOf(trimmedUppercaseIssue);
+    }
+
+    /**
+     * Parses {@code Collection<String> issues} into a {@code List<Issue>}.
+     */
+    public static List<Issue> parseIssues(Collection<String> issues) throws IllegalValueException {
+        requireNonNull(issues);/*
+        if (issues.size() == 1 && issues.toArray()[0].equals("")) {
+            return new ArrayList<>();
+        }*/
+        final List<Issue> issuesList = new ArrayList<>();
+        for (String issueName : issues) {
+            issuesList.add(parseIssue(issueName));
+        }
+        return issuesList;
     }
 }

@@ -80,14 +80,19 @@ public class Policy {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(" Price: ")
-                .append(getPrice())
-                .append(" Covering: ")
-                .append(getCoverage())
-                .append(" Starting: ")
+        builder.append("From ")
                 .append(getBeginning())
-                .append(" Ending: ")
-                .append(getExpiration());
+                .append(" to ")
+                .append(getExpiration())
+                .append("\n           Price: ")
+                .append(getPrice())
+                .append(" per month\n           Covers ");
+        if(coverage.getIssues().isEmpty()) {
+            builder.append("nothing");
+        } else {
+            builder.append(getCoverage());
+        }
+
         return builder.toString();
     }
 

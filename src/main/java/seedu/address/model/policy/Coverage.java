@@ -25,15 +25,15 @@ public class Coverage {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         if (coverage.size() >= 1) {
-            builder.append(coverage.get(0).name());
+            builder.append(coverage.get(0).name().toLowerCase().replaceAll("_", " "));
         }
         for (int i = 1; i < coverage.size(); ++i) {
-            builder.append(", ").append(coverage.get(i).name());
+            builder.append(", ").append(coverage.get(i).name().toLowerCase().replaceAll("_", " "));
         }
         return builder.toString();
     }
 
-    public List<Issue> getCoverage() {
+    public List<Issue> getIssues() {
         return Collections.unmodifiableList(coverage);
     }
 

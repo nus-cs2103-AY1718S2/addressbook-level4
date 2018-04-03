@@ -1,6 +1,8 @@
 //@@author jasmoon
 package seedu.address.ui;
 
+import static seedu.address.ui.util.DateTimeUtil.getDisplayedDateTime;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -38,7 +40,7 @@ public class TaskCard extends UiPart<Region> {
         this.task = (Task) task;
         id.setText(displayedIndex + ". ");
         name.setText(this.task.getName().fullName);
-        dateTime.setText(this.task.getDateTime().toString());
+        dateTime.setText(getDisplayedDateTime(this.task));
         remark.setText(this.task.getRemark().value);
         task.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         if (task.isCompleted()) {

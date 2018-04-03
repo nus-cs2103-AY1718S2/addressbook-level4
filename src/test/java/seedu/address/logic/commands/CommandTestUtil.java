@@ -30,7 +30,6 @@ import seedu.address.testutil.EditActivityDescriptorBuilder;
 public class CommandTestUtil {
 
     // ============================= TASK =============================================
-    // TODO: Add in Event constants at a later date
     public static final String VALID_NAME_MA2108_HOMEWORK = "MA2108 Homework 3";
     public static final String VALID_NAME_CS2010_QUIZ = "CS2010 Online Quiz 2";
     public static final String VALID_DATE_TIME_MA2108_HOMEWORK = "11/11/1111 11:11";
@@ -59,6 +58,9 @@ public class CommandTestUtil {
     public static final String INVALID_TASK_DATE_TIME_DESC = " " + PREFIX_DATE_TIME + "2018-03-04 17:00";
     public static final String INVALID_TASK_REMARK_DESC = " " + PREFIX_REMARK + "$"; // '$' not allowed
     public static final String INVALID_TASK_TAG_DESC = " " + PREFIX_TAG + "CS2106*"; // '*' not allowed in tags
+
+    // ============================= EVENT =============================================
+    //TODO: Tedious
 
     //@@author
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
@@ -116,9 +118,9 @@ public class CommandTestUtil {
 
     /**
      * Updates {@code model}'s filtered list to show only the activity at the given {@code targetIndex} in the
-     * {@code model}'s address book.
+     * {@code model}'s desk board.
      */
-    public static void showPersonAtIndex(Model model, Index targetIndex) {
+    public static void showActivityAtIndex(Model model, Index targetIndex) {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredActivityList().size());
 
         Activity activity = model.getFilteredActivityList().get(targetIndex.getZeroBased());
@@ -128,10 +130,11 @@ public class CommandTestUtil {
         assertEquals(1, model.getFilteredActivityList().size());
     }
 
+    //@@author Kyomian
     /**
-     * Deletes the first activity in {@code model}'s filtered list from {@code model}'s address book.
+     * Removes the first activity in {@code model}'s filtered list from {@code model}'s desk board.
      */
-    public static void deleteFirstPerson(Model model) {
+    public static void removeFirstActivity(Model model) {
         Activity firstActivity = model.getFilteredActivityList().get(0);
         try {
             model.deleteActivity(firstActivity);
@@ -140,6 +143,7 @@ public class CommandTestUtil {
         }
     }
 
+    //@@author
     /**
      * Returns an {@code UndoCommand} with the given {@code model} and {@code undoRedoStack} set.
      */

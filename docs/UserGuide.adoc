@@ -31,8 +31,8 @@ To start using CLIndar, follow the instructions below.
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-//TODO make sure that the jar file is renamed to deskboard.jar instead of addressbook.jar
-.  Download the latest `deskboard.jar` link:{repoURL}/releases[here].
+
+.  Download the latest `CLIndar.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for CLIndar.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +

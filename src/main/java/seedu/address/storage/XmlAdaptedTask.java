@@ -66,7 +66,7 @@ public class XmlAdaptedTask extends XmlAdaptedActivity {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     getActivityType(), "due date/time"));
         }
-        if (!DateTime.isValidDateAndTime(this.dateTime)) {
+        if (!DateTime.isValidDateTime(this.dateTime)) {
             throw new IllegalValueException(DateTime.MESSAGE_DATETIME_CONSTRAINTS);
         }
         final DateTime dateTime = new DateTime(this.dateTime);

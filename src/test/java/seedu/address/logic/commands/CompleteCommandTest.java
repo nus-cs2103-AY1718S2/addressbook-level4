@@ -8,7 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.commands.CommandTestUtil.showActivityAtIndex;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ACTIVITY;
@@ -54,7 +54,7 @@ public class CompleteCommandTest {
     @Test
     //TODO
     public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showPersonAtIndex(model, INDEX_FIRST_ACTIVITY);
+        showActivityAtIndex(model, INDEX_FIRST_ACTIVITY);
 
         Index outOfBoundIndex = INDEX_SECOND_ACTIVITY;
         // ensures that outOfBoundIndex is still in bounds of address book list
@@ -120,7 +120,7 @@ public class CompleteCommandTest {
         CompleteCommand completeCommand = prepareCommand(INDEX_FIRST_ACTIVITY);
         Model expectedModel = new ModelManager(model.getDeskBoard(), new UserPrefs());
 
-        showPersonAtIndex(model, INDEX_SECOND_ACTIVITY);
+        showActivityAtIndex(model, INDEX_SECOND_ACTIVITY);
         Activity activityToComplete = model.getFilteredTaskList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
         // delete -> deletes second activity in unfiltered activity list / first activity in filtered activity list
         completeCommand.execute();

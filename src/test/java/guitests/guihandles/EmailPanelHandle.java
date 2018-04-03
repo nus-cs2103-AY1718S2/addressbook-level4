@@ -9,8 +9,8 @@ import javafx.scene.web.HTMLEditor;
  */
 public class EmailPanelHandle extends NodeHandle<Node> {
 
-    private static final String RECIPIENT_ID = "#to";
-    private static final String BODY_ID = "#body";
+    private static final String RECIPIENT_ID = "#toTxtField";
+    private static final String BODY_ID = "#bodyTxtField";
 
     private final TextField to;
     private final HTMLEditor body;

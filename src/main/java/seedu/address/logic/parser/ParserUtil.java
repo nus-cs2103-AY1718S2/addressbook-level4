@@ -226,6 +226,7 @@ public class ParserUtil {
                 expectedGraduationYear.get())) : Optional.empty();
     }
 
+    //@@author tanhengyeow
     /**
      * Parses a {@code String major} into a {@code Major}.
      * Leading and trailing whitespaces will be trimmed.

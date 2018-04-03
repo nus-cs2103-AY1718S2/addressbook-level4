@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import seedu.address.logic.parser.PredicateUtil;
 
+//@@author tanhengyeow
 /**
  * Represents a JobApplied predicate
  */

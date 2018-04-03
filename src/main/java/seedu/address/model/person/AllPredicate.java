@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import java.util.ArrayList;
 import java.util.Objects;
+
+//@@author tanhengyeow
 /**
  * Represents all predicates to form {@code Predicate<Person>}
  */

@@ -12,6 +12,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.AllPredicate;
 import seedu.address.model.person.Person;
 
+//@@author tanhengyeow
 /**
  * Contains utility methods used for parsing predicates in FindUtil
  */

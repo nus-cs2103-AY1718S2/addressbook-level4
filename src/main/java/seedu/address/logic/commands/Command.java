@@ -25,6 +25,7 @@ public abstract class Command {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
     }
 
+    //@@author tanhengyeow
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons after finding.
      *
@@ -36,6 +37,7 @@ public abstract class Command {
         return FindResults.getInstance().getTextResults();
     }
 
+    //@@author
     /**
      * Executes the command and returns the result message.
      *

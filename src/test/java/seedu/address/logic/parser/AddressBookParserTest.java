@@ -101,6 +101,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
     }
 
+    //@@author tanhengyeow
     @Test
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
@@ -110,6 +111,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(FindCommand.COMMAND_WORD + " n/foo") instanceof FindCommand);
     }
 
+    //@@author
     @Test
     public void parseCommand_filter() throws Exception {
         Person person = new PersonBuilder().build();

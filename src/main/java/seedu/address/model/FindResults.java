@@ -8,8 +8,10 @@ import java.util.HashSet;
 
 import org.apache.commons.lang.StringUtils;
 
+//@@author tanhengyeow
 /**
  * Singleton pattern class that stores the find results of exact, fuzzy and wildcard matches.
+ * The class also provides string utility functions for predicates
  */
 public class FindResults {
     private static FindResults instance;

@@ -170,6 +170,12 @@ public class AddToDoCommandTest {
         }
 
         @Override
+        public void updateGroup(Group target, Group editedGroup)
+                throws DuplicateGroupException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
@@ -188,6 +194,12 @@ public class AddToDoCommandTest {
         }
 
         @Override
+        public ObservableList<Group> getFilteredGroupList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }
@@ -199,6 +211,11 @@ public class AddToDoCommandTest {
 
         @Override
         public void updateFilteredEventList(Predicate<Event> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredGroupList(Predicate<Group> predicate) {
             fail("This method should not be called.");
         }
     }

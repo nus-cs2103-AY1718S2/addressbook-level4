@@ -43,6 +43,6 @@ public class AddMembersToGroupCommandParserTest {
         assertParseFailure(parser, INVALID_DESC_NO_NAME, expectedMessage);
 
         //missing field
-        assertParseFailure(parser ," ", expectedMessage);
+        assertParseFailure(parser , " ", expectedMessage);
     }
 }

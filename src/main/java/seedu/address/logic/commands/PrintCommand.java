@@ -20,8 +20,9 @@ public class PrintCommand extends Command {
             + "medical records.\n"
             + "Example: " + COMMAND_WORD + " INDEX";
 
-    private final Index targetIndex;
     private static PrintFormatter printFormatter;
+
+    private final Index targetIndex;
 
     private Patient patient;
 

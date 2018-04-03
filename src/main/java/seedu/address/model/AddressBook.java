@@ -18,6 +18,7 @@ import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.person.Person;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -166,6 +167,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedToDo);
 
         todos.setToDo(target, editedToDo);
+    }
+
+    /**
+     * Replaces the given Group {@code target} in the list with {@code editedGroup}.
+     *
+     * @throws DuplicateGroupException if updating the Group's details causes the Group to be equivalent to
+     *                                  another existing Group in the list.
+     * @throws GroupNotFoundException  if {@code target} could not be found in the list.
+     */
+    public void updateGroup(Group target, Group editedGroup)
+            throws DuplicateGroupException, GroupNotFoundException {
+        requireNonNull(editedGroup);
+
+        groups.setGroup(target, editedGroup);
     }
 
     /**

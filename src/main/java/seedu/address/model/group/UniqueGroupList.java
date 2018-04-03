@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 
 /**
  * A list of to-dos that enforces uniqueness between its elements and does not allow nulls.
@@ -46,6 +47,28 @@ public class UniqueGroupList implements Iterable<Group> {
 
     public void setGroups(UniqueGroupList replacement) {
         this.internalList.setAll(replacement.internalList);
+    }
+
+    /**
+     * Replaces the group {@code target} in the list with {@code editedGroup}.
+     *
+     * @throws DuplicateGroupException if the replacement is equivalent to another existing to-do in the list.
+     * @throws GroupNotFoundException if {@code target} could not be found in the list.
+     */
+    public void setGroup(Group target, Group editedGroup)
+            throws DuplicateGroupException, GroupNotFoundException {
+        requireNonNull(editedGroup);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new GroupNotFoundException();
+        }
+
+        if (!target.equals(editedGroup) && internalList.contains(editedGroup)) {
+            throw new DuplicateGroupException();
+        }
+
+        internalList.set(index, editedGroup);
     }
 
     public void setGroups(List<Group> groups) throws DuplicateGroupException {

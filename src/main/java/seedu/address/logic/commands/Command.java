@@ -4,6 +4,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.FindResults;
 import seedu.address.model.Model;
 
 /**
@@ -22,6 +23,17 @@ public abstract class Command {
      */
     public static String getMessageForPersonListShownSummary(int displaySize) {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
+    }
+
+    /**
+     * Constructs a feedback message to summarise an operation that displayed a listing of persons after finding.
+     *
+     * @return summary find message for searches
+     */
+    public static String getFindMessageForPersonListShownSummary() {
+        FindResults.getInstance().formTextResults();
+        FindResults.getInstance().clearResults();
+        return FindResults.getInstance().getTextResults();
     }
 
     /**

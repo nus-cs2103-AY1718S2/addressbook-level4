@@ -13,6 +13,7 @@ import seedu.address.model.calendar.exceptions.EditApointmentFailException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.policy.Policy;
 
 /**
  * The API of the Model component.

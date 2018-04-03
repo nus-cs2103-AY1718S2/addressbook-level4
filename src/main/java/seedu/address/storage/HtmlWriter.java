@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import seedu.address.model.person.Person;
 import seedu.address.model.person.customer.Customer;
 import seedu.address.model.person.runner.Runner;
 
@@ -33,6 +32,10 @@ public class HtmlWriter {
         this.customerList = null;
     }
 
+    /**
+     * Constructs HtmlWriter with Customer's details
+     * @param customer
+     */
     public HtmlWriter(Customer customer) {
         this.name = customer.getName().fullName;
         this.amountOwed = String.format("%,.2f", customer.getMoneyCurrentlyOwed());
@@ -41,6 +44,10 @@ public class HtmlWriter {
         this.customerList = null;
     }
 
+    /**
+     * Constructs HtmlWriter with Runner's Details
+     * @param runner
+     */
     public HtmlWriter(Runner runner) {
         this.name = runner.getName().fullName;
         this.amountOwed = "test";
@@ -50,10 +57,10 @@ public class HtmlWriter {
     }
 
     /**
-     * Writes person's data to a HTML file and returns the file location
+     * Writes Customer's data to a HTML file and returns the file location
      * @return
      */
-    public String writePerson() {
+    public String writeCustomer() {
         String filepath = System.getProperty("user.dir") + File.separator + "PersonPage.html";
         String absoluteFilepath;
         File file = new File(filepath);
@@ -65,6 +72,32 @@ public class HtmlWriter {
             printWriter.println("<p>Due Date: " + dueDate + "</p>");
             printWriter.println("<p>Status: VIP</p>");
             printWriter.println("<p>Runner Assigned: " + runnerAssigned + "</p>");
+            printWriter.println("</body></html>");
+            printWriter.close();
+        } catch (FileNotFoundException e) {
+            return "";
+        }
+        absoluteFilepath = file.getAbsolutePath();
+        absoluteFilepath = absoluteFilepath.replaceAll("\"", "/");
+        return absoluteFilepath;
+    }
+
+    /**
+     * Writes Runner's data to HTML file and returns the file location
+     * @return
+     */
+    public String writeRunner() {
+        String filepath = System.getProperty("user.dir") + File.separator + "PersonPage.html";
+        String absoluteFilepath;
+        File file = new File(filepath);
+        try {
+            PrintWriter printWriter = new PrintWriter(file);
+            printWriter.print(OPENING_LINE);
+            printWriter.println("<p>Name: " + name + "</p>");
+            printWriter.println("<p>Customers Assigned: dummy list </p>");
+            for (Customer eachCustomer: customerList) {
+                printWriter.println("<p>Customers Assigned: " + eachCustomer.getName().fullName + " </p>");
+            }
             printWriter.println("</body></html>");
             printWriter.close();
         } catch (FileNotFoundException e) {

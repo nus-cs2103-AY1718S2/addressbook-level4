@@ -52,9 +52,17 @@ public class BrowserPanel extends UiPart<Region> {
      * @param person
      */
     private void loadPersonPage(Person person) {
-        if (person instanceof Customer) { htmlWriter = new HtmlWriter((Customer) person); }
-        else if (person instanceof Runner) { htmlWriter = new HtmlWriter((Runner) person); }
-        String personfilepath = htmlWriter.writePerson();
+        String personfilepath;
+        if (person instanceof Customer) {
+            htmlWriter = new HtmlWriter((Customer) person);
+            personfilepath = htmlWriter.writeCustomer();
+        }
+        else if (person instanceof Runner) {
+            htmlWriter = new HtmlWriter((Runner) person);
+            personfilepath = htmlWriter.writeRunner();
+        } else {
+            personfilepath = "";
+        }
         loadPage("file:///" + personfilepath);
     }
 

@@ -1,335 +1,294 @@
 # ncaminh
-###### \java\seedu\address\commons\events\ui\ShowDefaultPageEvent.java
+###### \java\seedu\address\logic\commands\DistanceCommandTest.java
 ``` java
 /**
- * Show default page
+ * Contains integration tests (interaction with the Model) for {@code DistanceCommand}.
  */
-public class ShowDefaultPageEvent extends BaseEvent {
+public class DistanceCommandTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-}
-```
-###### \java\seedu\address\commons\events\ui\ShowMultiLocationFromHeadQuarterEvent.java
-``` java
-/**
- * Show Google map route from HQ to many locations
- */
-public class ShowMultiLocationFromHeadQuarterEvent extends BaseEvent {
+    private Model model;
 
-    public final List<String> sortedList;
-
-    public ShowMultiLocationFromHeadQuarterEvent(List<String> sortedList) {
-        this.sortedList = sortedList;
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     }
 
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-}
-```
-###### \java\seedu\address\commons\events\ui\ShowRouteFromOneToAnotherEvent.java
-``` java
-/**
- * Show Google map route from HQ to many locations
- */
-public class ShowRouteFromOneToAnotherEvent extends BaseEvent {
-
-    public final List<String> sortedList;
-
-    public ShowRouteFromOneToAnotherEvent(List<String> sortedList) {
-        this.sortedList = sortedList;
-    }
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-}
-```
-###### \java\seedu\address\logic\commands\DistanceCommand.java
-``` java
-/**
- * Finds the distance from the headquarter to a person address
- * using his or her last displayed index from the address book.
- */
-public class DistanceCommand extends Command {
-
-    public static final String COMMAND_WORD = "distance";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Finds the distance from the headquarter to a person address "
-            + "or the distance from a person address to another person address "
-            + "by the index number(s) used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1\n"
-            + "Example: " + COMMAND_WORD + " 1 2";
-
-    public static final String MESSAGE_DISTANCE_FROM_HQ_SUCCESS = "Distance from Head quarter to this Person: %1$s km";
-    public static final String MESSAGE_DISTANCE_FROM_PERSON_SUCCESS = "Distance from %1$s to %2$s: %3$s km";
-
-    private Index targetIndexOrigin = null;
-    private Index targetIndexDestination;
-
-    /**
-     * constructor for DistanceCommand calculating distance from HQ to a person
-     * @param targetIndex
-     */
-    public DistanceCommand(Index targetIndex) {
-        this.targetIndexDestination = targetIndex;
-    }
-
-    /**
-     * constructor for DistanceCommand calculating distance from a person to another person
-     * @param targetIndexOrigin
-     * @param targetIndexDestination
-     */
-    public DistanceCommand(Index targetIndexOrigin, Index targetIndexDestination) {
-        this.targetIndexOrigin = targetIndexOrigin;
-        this.targetIndexDestination = targetIndexDestination;
-    }
-
-    @Override
-    public CommandResult execute() throws CommandException {
-
+    @Test
+    public void execute_validIndexUnfilteredList_success() {
         List<Person> lastShownList = model.getFilteredPersonList();
-        String origin;
-        String destination;
-        String personNameOrigin = "";
-        String personNameDestination = "";
+        Index lastPersonIndex = Index.fromOneBased(lastShownList.size());
 
-        //case 1: get distance from HQ to a person address
-        if (targetIndexOrigin == null) {
-            if (targetIndexDestination.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
+        Person firstPerson = lastShownList.get(0);
+        Person secondPerson = lastShownList.get(1);
+        Person lastPerson = lastShownList.get(lastPersonIndex.getZeroBased());
 
-            int indexZeroBasedDestination = targetIndexDestination.getZeroBased();
-            Person person = lastShownList.get(indexZeroBasedDestination);
-            origin = "Kent Ridge MRT";
-            destination = person.getAddress().toString();
-        } else {
-            //case 2: get distance from a person address to another person address
-            if (targetIndexOrigin.getZeroBased() >= lastShownList.size()
-                    || targetIndexDestination.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
+        assertOnePersonExecutionSuccess(firstPerson, INDEX_FIRST_PERSON);
+        assertOnePersonExecutionSuccess(secondPerson, INDEX_SECOND_PERSON);
+        assertOnePersonExecutionSuccess(lastPerson, lastPersonIndex);
 
-            int indexZeroBasedOrigin = targetIndexOrigin.getZeroBased();
-            int indexZeroBasedDestination = targetIndexDestination.getZeroBased();
-            Person personOrigin = lastShownList.get(indexZeroBasedOrigin);
-            Person personDestination = lastShownList.get(indexZeroBasedDestination);
-            origin = personOrigin.getAddress().toString();
-            destination = personDestination.getAddress().toString();
-            personNameOrigin = personOrigin.getName().toString();
-            personNameDestination = personDestination.getName().toString();
+        assertTwoPersonExecutionSuccess(firstPerson, INDEX_FIRST_PERSON, secondPerson, INDEX_SECOND_PERSON);
+    }
 
-        }
+    @Test
+    public void execute_invalidIndexUnfilteredList_failure() {
+        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_validIndexFilteredList_success() {
+        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        List<Person> lastShownList = model.getFilteredPersonList();
+
+        assertOnePersonExecutionSuccess(lastShownList.get(0), INDEX_FIRST_PERSON);
+    }
+
+    @Test
+    public void execute_invalidIndexFilteredList_failure() {
+        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+
+        Index outOfBoundsIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_PERSON);
+        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_PERSON);
+
+        // same object -> returns true
+        assertTrue(selectFirstCommand.equals(selectFirstCommand));
+
+        // same values -> returns true
+        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_PERSON);
+        assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(selectFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(selectFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(selectFirstCommand.equals(selectSecondCommand));
+    }
+
+    /**
+     * Executes a {@code DistanceCommand} with the given {@code person and index}
+     */
+    private void assertOnePersonExecutionSuccess(Person person, Index index) {
+        DistanceCommand distanceCommand = prepareOnePersonCommand(index);
 
         try {
+            CommandResult commandResult = distanceCommand.execute();
+            String address = person.getAddress().toString();
+            String headQuarterAddress = "Kent Ridge MRT";
             GetDistance route = new GetDistance();
-            Double distance = route.getDistance(origin, destination);
+            Double distance = route.getDistance(headQuarterAddress, address);
 
-            //case 1: get distance from HQ to a person address
-            if (targetIndexOrigin == null) {
-                EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndexDestination));
-                return new CommandResult(String.format
-                        (MESSAGE_DISTANCE_FROM_HQ_SUCCESS, distance));
-            } else {
-                //case 2: get distance from a person address to another person address
-                List<String> addressesList = new ArrayList<>();
-                addressesList.add(origin);
-                addressesList.add(destination);
-                EventsCenter.getInstance().post(new ShowRouteFromOneToAnotherEvent(addressesList));
-                return new CommandResult(String.format(
-                        MESSAGE_DISTANCE_FROM_PERSON_SUCCESS, personNameOrigin, personNameDestination, distance));
-            }
-        } catch (Exception e) {
-            throw new CommandException(Messages.MESSAGE_PERSON_ADDRESS_CANNOT_FIND);
+            JumpToListRequestEvent lastEvent =
+                    (JumpToListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+            assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
+            assertEquals(String.format(DistanceCommand.MESSAGE_DISTANCE_FROM_HQ_SUCCESS, distance),
+                    commandResult.feedbackToUser);
+        } catch (Exception ce) {
+            System.out.println(ce.getMessage());
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof DistanceCommand // instanceof handles nulls
-                && this.targetIndexDestination.equals(((DistanceCommand) other).targetIndexDestination)); // state check
+    /**
+     * Executes a {@code DistanceCommand} with the given {@code persons and indexes}
+     */
+    private void assertTwoPersonExecutionSuccess(Person personAtOrigin, Index originIndex,
+                                                 Person personAtDestination, Index destinationIndex) {
+        DistanceCommand distanceCommand = prepareTwoPersonsCommand(originIndex, destinationIndex);
+
+        try {
+            CommandResult commandResult = distanceCommand.execute();
+            String addressOrigin = personAtOrigin.getAddress().toString();
+            String addressDestination = personAtDestination.getAddress().toString();
+            String nameOrigin = personAtOrigin.getName().fullName;
+            String nameDestination = personAtDestination.getName().fullName;
+            GetDistance route = new GetDistance();
+            Double distance = route.getDistance(addressOrigin, addressDestination);
+            List<String> addressesList = new ArrayList<>();
+            addressesList.add(addressOrigin);
+            addressesList.add(addressDestination);
+
+            ShowRouteFromOneToAnotherEvent lastEvent =
+                    (ShowRouteFromOneToAnotherEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+            assertEquals(addressesList, lastEvent.sortedList);
+            assertEquals(String.format(DistanceCommand.MESSAGE_DISTANCE_FROM_PERSON_SUCCESS,
+                    nameOrigin, nameDestination, distance),
+                    commandResult.feedbackToUser);
+        } catch (Exception ce) {
+            System.out.println(ce.getMessage());
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+    }
+
+    /**
+     * Executes a {@code DistanceCommand} with the given {@code index}, and checks that a {@code CommandException}
+     * is thrown with the {@code expectedMessage}.
+     */
+    private void assertExecutionFailure(Index index, String expectedMessage) {
+        DistanceCommand distanceCommand = prepareOnePersonCommand(index);
+
+        try {
+            distanceCommand.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException ce) {
+            assertEquals(expectedMessage, ce.getMessage());
+            assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
+        }
+    }
+
+    /**
+     * Returns a {@code DistanceCommand} with one parameter {@code index}.
+     */
+    private DistanceCommand prepareOnePersonCommand(Index index) {
+        DistanceCommand distanceCommand = new DistanceCommand(index);
+        distanceCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return distanceCommand;
+    }
+
+    /**
+     * Returns a {@code DistanceCommand} with two parameters {@code index}.
+     */
+    private DistanceCommand prepareTwoPersonsCommand(Index originIndex, Index destinationIndex) {
+        DistanceCommand distanceCommand = new DistanceCommand(originIndex, destinationIndex);
+        distanceCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return distanceCommand;
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FilterCommand.java
+###### \java\seedu\address\logic\commands\FilterCommandTest.java
 ``` java
+    @Test
+    public void execute_noPersonMatchesDate() {
+        DatePredicate datePredicate =
+                new DatePredicate(Collections.singletonList("2019-03-23"));
+        FilterCommand filterCommand = prepareFilterCommand(datePredicate);
+
+        try {
+            CommandResult actualCommandResult = filterCommand.execute();
+            CommandResult expectedCommandResult =
+                    new CommandResult(getMessageForPersonListShownSummary(0));
+            assertEquals(actualCommandResult.feedbackToUser, expectedCommandResult.feedbackToUser);
+
+        } catch (CommandException | IOException ce) {
+            ce.printStackTrace();
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+    }
+
+    @Test
+    public void execute_allAddressesCannotBeFound() {
+        DatePredicate datePredicate =
+                new DatePredicate(Collections.singletonList("2018-03-25"));
+        FilterCommand filterCommand = prepareFilterCommand(datePredicate);
+        model.updateFilteredPersonList(datePredicate);
         int numberOfPersonsListed = model.getFilteredPersonList().size();
 
-        //no person matches date
-        if (numberOfPersonsListed == 0) {
-            EventsCenter.getInstance().post(new ShowDefaultPageEvent());
-            return new CommandResult(getMessageForPersonListShownSummary(numberOfPersonsListed));
-        }
-
-        //all addresses cannot be found
-        if (optimizedRoute.size() == 0) {
-            EventsCenter.getInstance().post(new ShowDefaultPageEvent());
+        try {
+            CommandResult actualCommandResult = filterCommand.execute();
             String shown = getMessageForPersonListShownSummary(numberOfPersonsListed)
                     + "\nAll the addresses on "
                     + model.getFilteredPersonList().get(0).getDate().toString()
                     + " cannot be found.";
-            return new CommandResult(shown);
-        }
+            CommandResult expectedCommandResult =
+                    new CommandResult(shown);
+            assertEquals(actualCommandResult.feedbackToUser, expectedCommandResult.feedbackToUser);
 
-        EventsCenter.getInstance().post(new ShowMultiLocationFromHeadQuarterEvent(optimizedRoute));
-        //some addresses are invalid
-        if (optimizedRoute.size() < numberOfPersonsListed) {
+        } catch (CommandException | IOException ce) {
+            ce.printStackTrace();
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+    }
+
+    @Test
+    public void execute_someAddressesCannotBeFound() {
+        DatePredicate datePredicate =
+                new DatePredicate(Collections.singletonList("2018-03-23"));
+        FilterCommand filterCommand = prepareFilterCommand(datePredicate);
+        model.updateFilteredPersonList(datePredicate);
+        int numberOfPersonsListed = model.getFilteredPersonList().size();
+
+        try {
+            CommandResult actualCommandResult = filterCommand.execute();
             String shown = getMessageForPersonListShownSummary(numberOfPersonsListed)
                     + "\nAt least one address on "
                     + model.getFilteredPersonList().get(0).getDate().toString()
                     + " cannot be found.";
-            return new CommandResult(shown);
+            CommandResult expectedCommandResult =
+                    new CommandResult(shown);
+            assertEquals(actualCommandResult.feedbackToUser, expectedCommandResult.feedbackToUser);
+
+        } catch (CommandException | IOException ce) {
+            ce.printStackTrace();
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
-
-        //all addresses can be found
-        return new CommandResult(getMessageForPersonListShownSummary(numberOfPersonsListed));
-```
-###### \java\seedu\address\logic\GetDistance.java
-``` java
-    public DistanceMatrix getMatrix(String origin, String destination) {
-        GeoApiContext context = new GeoApiContext.Builder()
-                .apiKey("AIzaSyBWyCJkCym1dSouzHX_FxLk6Tj11C7F0Ao")
-                .build();
-
-        String[] origins = {origin};
-        String[] destinations = {destination};
-
-        DistanceMatrix matrix = null;
-        try {
-            matrix = DistanceMatrixApi.getDistanceMatrix(context, origins, destinations).await();
-        } catch (ApiException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return matrix;
     }
 
-    /**
-     * get driving distance from origin to destination
-     */
-    public double getDistance(String origin, String destination) {
-        String distanceWithoutUnit = "";
-        DistanceMatrix matrix = null;
-        matrix = getMatrix(origin, destination);
-        String distance;
+    @Test
+    public void execute_allAddressesCanBeFound() {
+        DatePredicate datePredicate =
+                new DatePredicate(Collections.singletonList("2018-03-28"));
+        FilterCommand filterCommand = prepareFilterCommand(datePredicate);
+        model.updateFilteredPersonList(datePredicate);
+        int numberOfPersonsListed = model.getFilteredPersonList().size();
 
         try {
-            distance = matrix.rows[0].elements[0].distance.toString();
-        } catch (NullPointerException e) {
-            return -1.0;
-        }
+            CommandResult actualCommandResult = filterCommand.execute();
+            CommandResult expectedCommandResult =
+                    new CommandResult(getMessageForPersonListShownSummary(numberOfPersonsListed));
+            assertEquals(actualCommandResult.feedbackToUser, expectedCommandResult.feedbackToUser);
 
-        int space = distance.indexOf(" ");
-        String units = distance.substring(space + 1, distance.length());
-        double metres;
-        distanceWithoutUnit = distance.substring(0, space);
-        if (units.equals("m")) {
-            metres = Double.parseDouble(distanceWithoutUnit) / 1000.0;
-            return metres;
-        } else {
-            return Double.parseDouble(distanceWithoutUnit);
+        } catch (CommandException | IOException ce) {
+            ce.printStackTrace();
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
     }
 
-```
-###### \java\seedu\address\logic\RouteOptimization.java
-``` java
-    /**
-     * Check whether the address can be found by Google Map API or not
-     * @param address
-     * @return
-     */
-    private boolean isFindableAddress(Address address) {
-        String addressUnderCheck = address.toString();
-        GetDistance distance = new GetDistance();
-        if (distance.getDistance(HQ_ADDRESS, addressUnderCheck) == -1.0) {
-            return false;
-        }
-        return true;
-    }
-
-```
-###### \java\seedu\address\ui\BrowserPanel.java
-``` java
-    /**
-     * Show direction from Kent Ridge MRT to the person address
-     */
-    private void loadPersonDirection(Person person) {
-        String addressValue = person.getAddress().value.trim();
-        int stringCutIndex;
-        String addressWithoutUnit;
-
-        if (addressValue.indexOf('#') > 2) {
-            stringCutIndex = addressValue.indexOf('#') - 2;
-            addressWithoutUnit = addressValue.substring(0, stringCutIndex);
-        } else {
-            addressWithoutUnit = addressValue;
-        }
-
-        readPersonName(person);
-        loadPage(SEARCH_PAGE_URL + addressWithoutUnit + "?dg=dbrw&newdg=1");
-    }
-
-    /**
-     * Run script that read person name
-     * @param person
-     */
-    private void readPersonName(Person person) {
-        try {
-            Runtime.getRuntime().exec("wscript src\\main\\resources\\scripts\\ClickOnNameCard.vbs"
-                    + " " + person.getName().fullName);
-        } catch (IOException e) {
-            System.out.println("Unable to read person name");
-        }
-    }
-```
-###### \java\seedu\address\ui\BrowserPanel.java
-``` java
-    @Subscribe
-    public void handleShowMultiLocationEvent(ShowMultiLocationFromHeadQuarterEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        StringBuilder url = new StringBuilder(SEARCH_PAGE_URL);
-        for (String address: event.sortedList) {
-            url.append(address);
-            url.append("/");
-        }
-
-        List<String> temp = event.sortedList;
-        temp.add(0, HQ_ADDRESS);
-        additionalInfo.setText("Estimated Required Time for Deliveries: "
-                + FilterCommand.getDuration(event.sortedList));
-        loadPage(url.toString());
-    }
-
-    @Subscribe
-    public void handleShowDefaultPageEvent(ShowDefaultPageEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadDefaultPage();
-    }
-
-    @Subscribe
-    public void handleShowFromOneToAnotherEvent(ShowRouteFromOneToAnotherEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        StringBuilder url = new StringBuilder("https://www.google.com.sg/maps/dir/");
-        for (String address: event.sortedList) {
-            url.append(address);
-            url.append("/");
-        }
-        additionalInfo.setText("Estimated Required Time for Deliveries: "
-                + FilterCommand.getDuration(event.sortedList));
-        loadPage(url.toString());
+    private FilterCommand prepareFilterCommand(DatePredicate datePredicate) {
+        FilterCommand filterCommand = new FilterCommand(datePredicate);
+        filterCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return filterCommand;
     }
 }
+```
+###### \java\seedu\address\logic\parser\DistanceCommandParserTest.java
+``` java
+/**
+ * Test scope: similar to {@code DeleteCommandParserTest}.
+ * @see DeleteCommandParserTest
+ */
+public class DistanceCommandParserTest {
+
+    private DistanceCommandParser parser = new DistanceCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsDistanceCommand() {
+        assertParseSuccess(parser, "1", new DistanceCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DistanceCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\ui\BrowserPanelTest.java
+``` java
+        String addressValue = ALICE.getAddress().value;
+        String addressWithoutUnit = addressValue.substring(0, addressValue.indexOf('#') - 2);
+        URL expectedPersonUrl = new URL(BrowserPanel.SEARCH_PAGE_URL
+                + addressWithoutUnit.replaceAll(" ", "%20") + "?dg=dbrw&newdg=1");
 ```

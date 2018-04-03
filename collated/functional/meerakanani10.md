@@ -61,6 +61,19 @@ public class FilterCommand extends Command {
 ```
 ###### \java\seedu\address\logic\GetDistance.java
 ``` java
+        int space = distance.indexOf(" ");
+        String units = distance.substring(space + 1, distance.length());
+        double metres;
+        distanceWithoutUnit = distance.substring(0, space);
+        if (units.equals("m")) {
+            metres = Double.parseDouble(distanceWithoutUnit) / 1000.0;
+            return metres;
+        } else {
+            return Double.parseDouble(distanceWithoutUnit);
+        }
+    }
+
+
     public double getTime(String origin, String destination) {
         String durationWithoutUnit = "";
         DistanceMatrix matrix = null;

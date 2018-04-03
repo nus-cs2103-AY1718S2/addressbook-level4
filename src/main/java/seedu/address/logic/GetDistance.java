@@ -48,7 +48,7 @@ public class GetDistance {
         } catch (NullPointerException e) {
             return -1.0;
         }
-
+        //@@author meerakanani10
         int space = distance.indexOf(" ");
         String units = distance.substring(space + 1, distance.length());
         double metres;
@@ -61,7 +61,7 @@ public class GetDistance {
         }
     }
 
-    //@@author meerakanani10
+
     public double getTime(String origin, String destination) {
         String durationWithoutUnit = "";
         DistanceMatrix matrix = null;

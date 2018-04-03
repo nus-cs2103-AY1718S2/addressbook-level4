@@ -230,19 +230,36 @@ public class DistanceCommand extends Command {
         } catch (NullPointerException e) {
             return -1.0;
         }
+```
+###### \java\seedu\address\logic\parser\DistanceCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new SelectCommand object
+ */
+public class DistanceCommandParser implements Parser<DistanceCommand> {
 
-        int space = distance.indexOf(" ");
-        String units = distance.substring(space + 1, distance.length());
-        double metres;
-        distanceWithoutUnit = distance.substring(0, space);
-        if (units.equals("m")) {
-            metres = Double.parseDouble(distanceWithoutUnit) / 1000.0;
-            return metres;
-        } else {
-            return Double.parseDouble(distanceWithoutUnit);
+    /**
+     * Parses the given {@code String} of arguments in the context of the DistanceCommand
+     * and returns an DistanceCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public DistanceCommand parse(String args) throws ParseException {
+        String[] selectedIndexes = args.split(" ");
+        try {
+            if (selectedIndexes.length == 3) {
+                Index firstIndex = ParserUtil.parseIndex(selectedIndexes[1].trim());
+                Index secondIndex = ParserUtil.parseIndex(selectedIndexes[2].trim());
+                return new DistanceCommand(firstIndex, secondIndex);
+            } else {
+                Index index = ParserUtil.parseIndex(args);
+                return new DistanceCommand(index);
+            }
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DistanceCommand.MESSAGE_USAGE));
         }
     }
-
+}
 ```
 ###### \java\seedu\address\logic\RouteOptimization.java
 ``` java
@@ -332,4 +349,50 @@ public class DistanceCommand extends Command {
         loadPage(url.toString());
     }
 }
+```
+###### \resources\view\DarkTheme.css
+``` css
+.context-menu {
+    -fx-background-color: white;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0 0 0 0, 0 0 0 0, 0 0 0 0;
+    -fx-padding: 0.5em 0em 0.5em 0em; /* 6 0 6 0 */
+
+    -fx-border-color: #212121;
+    -fx-border-style: solid;
+}
+
+.context-menu .separator {
+    -fx-padding: 0.58333275em 1.333332em 0.58333275em 1.333332em;  /*7 16 7 16 */
+}
+
+
+.menu-item {
+    -fx-background-color: transparent;
+    -fx-padding: 0.666666em 1.333332em 0.666666em 1.333332em;   /*8 16 8 16 */
+}
+
+.menu-item .label {
+    -fx-padding: 0em 1.333332em 0em 0em;
+    -fx-text-fill: #212121;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+}
+
+.menu-item:focused {
+     -fx-background: -fx-accent;
+     -fx-background-color: #dedede;
+}
+
+.menu-item:pressed
+{
+    -fx-background-color: #212121;
+    -fx-text-fill: white;
+}
+
+.menu-item:pressed .label
+{
+    -fx-text-fill: white;
+}
+
 ```

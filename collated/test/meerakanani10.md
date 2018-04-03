@@ -1,329 +1,206 @@
 # meerakanani10
-###### \java\seedu\address\logic\commands\FilterCommand.java
+###### \java\seedu\address\logic\commands\FilterCommandTest.java
 ``` java
 /**
- * Filters and lists all persons in address book whose date contains any of the argument dates.
- * Keyword matching is case sensitive.
+ * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
-public class FilterCommand extends Command {
+public class FilterCommandTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
-    public static final String COMMAND_WORD = "filter";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Filters the list based on the specifed field and given value.";
-
-    private static String stringDuration;
-
-    private final DatePredicate predicate;
-
-    public FilterCommand(DatePredicate predicate) {
-        this.predicate = predicate;
+    private Model model;
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     }
 
-    @Override
-    public CommandResult execute() throws CommandException, IOException {
+    @Test
+    public void equals() {
+        DatePredicate firstPredicate =
+                new DatePredicate(Collections.singletonList("2018-03-23"));
+        DatePredicate secondPredicate =
+                new DatePredicate(Collections.singletonList("2018-03-24"));
 
-        RouteOptimization route = new RouteOptimization();
-        List<String> optimizedRoute;
+        FilterCommand filterFirstCommand = new FilterCommand(firstPredicate);
+        FilterCommand filterSecondCommand = new FilterCommand(secondPredicate);
 
-        model.updateFilteredPersonList(predicate);
-        optimizedRoute = route.getAddresses(model);
-        stringDuration = getDuration(optimizedRoute);
+        // same object -> returns true
+        assertTrue(filterFirstCommand.equals(filterFirstCommand));
+
+        // same values -> returns true
+        FilterCommand filterFirstCommandCopy = new FilterCommand(firstPredicate);
+        assertTrue(filterFirstCommand.equals(filterFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(filterFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(filterFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(filterFirstCommand.equals(filterSecondCommand));
+    }
 
 ```
-###### \java\seedu\address\logic\commands\FilterCommand.java
-``` java
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof FilterCommand // instanceof handles nulls
-                && this.predicate.equals(((FilterCommand) other).predicate)); // state check
-    }
-
-    public static String getDuration(List<String> route) {
-        Double duration;
-        GetDistance distance = new GetDistance();
-        Double totalDuration = 0.0;
-        for (int  i = 0; i < route.size() - 1; i++) {
-            duration = distance.getTime(route.get(i), route.get(i + 1));
-            totalDuration = totalDuration + duration;
-        }
-        String stringDuration = totalDuration.toString() + " mins";
-        return stringDuration;
-    }
-
-    public static String getStringDuration() {
-        return stringDuration;
-    }
-}
-```
-###### \java\seedu\address\logic\GetDistance.java
-``` java
-    public double getTime(String origin, String destination) {
-        String durationWithoutUnit = "";
-        DistanceMatrix matrix = null;
-        matrix = getMatrix(origin, destination);
-        String duration = matrix.rows[0].elements[0].duration.toString();
-        System.out.println(matrix);
-        System.out.println(duration);
-        int space = duration.indexOf(" ");
-        String units = duration.substring(space + 1, duration.length());
-        double metres;
-        durationWithoutUnit = duration.substring(0, space);
-        return Double.parseDouble(durationWithoutUnit);
-    }
-}
-```
-###### \java\seedu\address\logic\parser\FilterCommandParser.java
+###### \java\seedu\address\logic\parser\FilterCommandParserTest.java
 ``` java
 /**
- * Parses input arguments and creates a new FindCommand object
+ * Filter Command Parser Tests
  */
-public class FilterCommandParser implements Parser<FilterCommand> {
+public class FilterCommandParserTest {
 
-    /**
-     * Parses the given {@code String} of arguments in the context of the FilterCommand
-     * and returns an FilterCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public FilterCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
-        }
+    private FilterCommandParser parser = new FilterCommandParser();
 
-        String[] nameKeywords = trimmedArgs.split("\\s+");
+    @Test
+    public void parse_emptyArg_throwsParseException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+    }
 
-        return new FilterCommand(new DatePredicate(Arrays.asList(nameKeywords)));
+    @Test
+    public void parse_validArgs_returnsFindCommand() {
+        // no leading and trailing whitespaces
+        FilterCommand expectedFilterCommand =
+                new FilterCommand(new DatePredicate(Arrays.asList("2018-03-23", "2018-03-24")));
+        assertParseSuccess(parser, "2018-03-23 2018-03-24", expectedFilterCommand);
+
+        // multiple whitespaces between keywords
+        assertParseSuccess(parser, " \n 2018-03-23 \n \t 2018-03-24  \t", expectedFilterCommand);
     }
 
 }
 ```
-###### \java\seedu\address\logic\RouteOptimization.java
+###### \java\seedu\address\logic\SortAddressesTest.java
 ``` java
 /**
- * logic for the shortest delivery route
+ * Test for the SortAddresses Class
  */
-public class RouteOptimization {
-    public static final String HQ_ADDRESS = "Kent Ridge MRT";
+public class SortAddressesTest {
 
-    /**
-     *
-     * @param model
-     * @return
-     */
-    public List<String> getAddresses(Model model) {
-        List<Person> lastShownList = model.getFilteredPersonList();
-        List<String> filteredAddresses = new ArrayList<>();
-        List<String> optimizedRoute = new ArrayList<>();
-        String addressWithoutUnit;
-        String startingPoint;
+    private Map<String, Double> unsortMap = new HashMap<String, Double>();
+    private Map<String, Double> sortMap = new HashMap<String, Double>();
 
-        if (lastShownList.size() == 1) {
-            Address address = lastShownList.get(0).getAddress();
-            if (isFindableAddress(address)) {
-                String name = lastShownList.get(0).getName().toString();
-                addressWithoutUnit = removeUnit(address);
-                optimizedRoute.add(addressWithoutUnit);
-            }
-        } else {
-            //need to figure out what the key should be to make sure we know what the hashmap is storing
-            for (int i = 0; i < lastShownList.size(); i++) {
-                Address address = lastShownList.get(i).getAddress();
-                if (isFindableAddress(address)) {
-                    addressWithoutUnit = removeUnit(address);
-                    filteredAddresses.add(addressWithoutUnit);
-                }
-            }
-            if (!filteredAddresses.isEmpty()) {
-                optimizedRoute = getStartingAddress(filteredAddresses, optimizedRoute);
-                filteredAddresses = removeAddress(optimizedRoute.get(0), filteredAddresses);
-                if (!filteredAddresses.isEmpty()) {
-                    optimizedRoute = getDistances(filteredAddresses, optimizedRoute.get(0), optimizedRoute);
-                }
-            }
-        }
-        return optimizedRoute;
+    @Before
+    public void setUp() {
+        unsortMap.put("27 Prince George's Park", 3.0);
+        unsortMap.put("Blk 30 Geylang Street 29", 5.0);
+        unsortMap.put("Blk 436 Serangoon Gardens Street 26", 6.0);
+        unsortMap.put("Blk 45 Aljunied Street 85", 2.0);
+
+        sortMap.put("Blk 45 Aljunied Street 85", 2.0);
+        sortMap.put("27 Prince George's Park", 3.0);
+        sortMap.put("Blk 30 Geylang Street 29", 5.0);
+        sortMap.put("Blk 436 Serangoon Gardens Street 26", 6.0);
     }
 
-```
-###### \java\seedu\address\logic\RouteOptimization.java
-``` java
-    public List<String> getStartingAddress(List<String> filteredAddresses, List<String> optimizedRoute) {
-        Map<String, Double> startingRoute = new LinkedHashMap<>();
-        GetDistance distance = new GetDistance();
-        SortAddresses sort = new SortAddresses();
-        Map<String, Double> dummy = new LinkedHashMap<>();
-        String first;
-
-
-        for (int i = 0; i < filteredAddresses.size(); i++) {
-            String destination = filteredAddresses.get(i);
-            String origin = HQ_ADDRESS;
-            startingRoute.put(labelRoutes(origin, destination), distance.getDistance(origin, destination));
-        }
-        dummy = sort.cleanSorted(sort.sortByComparator(startingRoute));
-        sort.printMap(dummy);
-        Map.Entry<String, Double> entry = dummy.entrySet().iterator().next();
-        first = entry.getKey().split("_")[1];
-        optimizedRoute.add(first);
-        return optimizedRoute;
+    @Test
+    public void execute_sorting() {
+        SortAddresses sortAddresses = new SortAddresses();
+        Map<String, Double> sorted = new HashMap<>();
+        sorted = sortAddresses.sortByComparator(unsortMap);
+        sortAddresses.printMap(sorted);
 
     }
 
     /**
      *
-     * @param address
-     * @param filteredAddresses
-     * @return
+     * @param sorted
      */
-    public List<String> removeAddress(String address, List<String> filteredAddresses) {
-        for (int i = 0; i < filteredAddresses.size(); i++) {
-            if (filteredAddresses.get(i).equals(address)) {
-                filteredAddresses.remove(i);
-                break;
-            }
-        }
-        return filteredAddresses;
+    public void assertCorrectlySorted(Map<String, Double> sorted) {
+        Assert.assertTrue(sorted.equals(sortMap));
     }
 
-    public List<String> getDistances(List<String> filteredAddresses, String origin, List<String> optimizedRoute) {
-        Map<String, Double> paths = new LinkedHashMap<>();
-        Map<String, Double> dummy = new HashMap<>();
-        SortAddresses sort = new SortAddresses();
-        String next;
-        GetDistance distance = new GetDistance();
-        for (int i = 0; i < filteredAddresses.size(); i++) {
-            String destination = filteredAddresses.get(i);
-            paths.put(labelRoutes(origin, destination), distance.getDistance(origin, destination));
-        }
-        dummy = sort.cleanSorted(sort.sortByComparator(paths));
-        Map.Entry<String, Double> entry = dummy.entrySet().iterator().next();
-        next = entry.getKey().split("_")[1];
-        optimizedRoute.add(next);
-        filteredAddresses = removeAddress(next, filteredAddresses);
-        if (filteredAddresses.size() != 0) {
-            optimizedRoute = getDistances(filteredAddresses, next, optimizedRoute);
-        }
-        return optimizedRoute;
-    }
-
-    /**
-     *
-     * @param origin - starting point
-     * @param destination - ending point
-     * @return
-     */
-    public String labelRoutes(String origin, String destination) {
-        String routeKey;
-        routeKey = origin + "_" + destination;
-        return routeKey;
-    }
-
-    /**
-     *
-     * @param combinedAddresses - the key from the hashmaps
-     * @return the addresses split, in an array.
-     */
-    public String[] splitLabel(String combinedAddresses) {
-        String[] addresses = combinedAddresses.split("_");
-        return addresses;
-    }
-
-    /**
-     *
-     * @param address address to be edited
-     * @return
-     */
-    public String removeUnit(Address address) {
-        String addressValue = address.value.trim();
-        int stringCutIndex;
-        String addressWithoutUnit;
-        if (addressValue.indexOf('#') > 2) {
-            stringCutIndex = addressValue.indexOf('#') - 2;
-            addressWithoutUnit = addressValue.substring(0, stringCutIndex);
-        } else {
-            addressWithoutUnit = addressValue;
-        }
-        return addressWithoutUnit;
-    }
 }
-
 ```
-###### \java\seedu\address\logic\SortAddresses.java
+###### \java\systemtests\FilterCommandSystemTest.java
 ``` java
-/**
- * Sorts a hashmap of addresses and distances based on the distances
- */
-public class SortAddresses {
+public class FilterCommandSystemTest extends AddressBookSystemTest {
 
-    /**
-     *
-     * @param unsortMap
-     * @return
-     */
-    public Map<String, Double> sortByComparator(Map<String, Double> unsortMap) {
-        List<Entry<String, Double>> list = new LinkedList<Entry<String, Double>>(unsortMap.entrySet());
-        boolean order = true;
-        // Sorting the list based on values
-        Collections.sort(list, new Comparator<Entry<String, Double>>() {
-            public int compare(Entry<String, Double> val1, Entry<String, Double> val2) {
-                if (order) {
-                    return val1.getValue().compareTo(val2.getValue());
-                } else {
-                    return val2.getValue().compareTo(val1.getValue());
+    @Test
+    public void filter() {
+        /* Case: find multiple persons in address book, command with leading spaces and trailing spaces
+         * -> 2 persons found
+         */
+        String command = "   " + FilterCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER + "   ";
+        Model expectedModel = getModel();
 
-                }
-            }
-        });
 
-        // Maintaining insertion order with the help of LinkedList
-        Map<String, Double> sortedMap = new LinkedHashMap<String, Double>();
-        Map<String, Double> cleanSortedMap = new LinkedHashMap<String, Double>();
-        for (Entry<String, Double> entry : list) {
-            sortedMap.put(entry.getKey(), entry.getValue());
-        }
+        /* Case: filter person where person list is not displaying the person we are finding -> 1 person found */
+        command = FilterCommand.COMMAND_WORD + " 2018-03-29";
+        ModelHelper.setFilteredList(expectedModel, BENSON);
+        assertCommandSuccess(command, expectedModel);
 
-        cleanSortedMap = cleanSorted(sortedMap);
-        return cleanSortedMap;
+        /* Case: filter multiple persons in address book, 1 keywords -> 2 persons found */
+        command = FilterCommand.COMMAND_WORD + " 2018-03-24";
+        ModelHelper.setFilteredList(expectedModel, FIONA, ELLE);
+        assertCommandSuccess(command, expectedModel);
+
+        /* Case: filter multiple persons in address book 1 non-matching keyword
+         * -> 0 persons found
+         */
+        command = FilterCommand.COMMAND_WORD + " 2017-03-23";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: undo previous filter command -> rejected */
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: redo previous filter command -> rejected */
+        command = RedoCommand.COMMAND_WORD;
+        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: filter person in address book, keyword is substring of date -> 0 persons found */
+        command = FilterCommand.COMMAND_WORD + " 2018";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: filter person in address book, date is substring of keyword -> 0 persons found */
+        command = FilterCommand.COMMAND_WORD + " 03-23";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
     }
 
     /**
-     *
-     * @param map
+     * Executes {@code command} and verifies that the command box displays an empty string, the result display
+     * box displays {@code Messages#MESSAGE_PERSONS_LISTED_OVERVIEW} with the number of people in the filtered list,
+     * and the model related components equal to {@code expectedModel}.
+     * These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the status bar remains unchanged, and the command box has the default style class, and the
+     * selected card updated accordingly, depending on {@code cardStatus}.
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
-    public void printMap(Map<String, Double> map) {
-        for (Entry<String, Double> entry : map.entrySet()) {
-            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
-        }
+    private void assertCommandSuccess(String command, Model expectedModel) {
+        String expectedResultMessage = String.format(
+                MESSAGE_PERSONS_LISTED_OVERVIEW, expectedModel.getFilteredPersonList().size());
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertStatusBarUnchanged();
     }
 
     /**
-     *
+     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
+     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
+     * These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
+     * error style.
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
-    public Map<String, Double> cleanSorted(Map<String, Double> sortedMap) {
-        for (Entry<String, Double> entry : sortedMap.entrySet()) {
-            String pairAddresses = entry.getKey();
-            String[] addresses = pairAddresses.split("_");
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
 
-            if (addresses.length > 1 && addresses[0].equals(addresses[1])) {
-                sortedMap.remove(entry.getKey());
-            }
-        }
-        for (Entry<String, Double> entry : sortedMap.entrySet()) {
-
-
-
-            /*TODO: WANT TO PUT SOME LOGIC HERE SO THAT THE DISTANCES ARE RANKED IN ORDER OF SHORTEST DISTANCE BUT ALSO
-             * THE ADDRESSES MAKE SENSE SO IF SHORTEST IS A - B THE NEXT SHOULD BE THE SHORTEST DISTANCE FROM B - X
-             * WHERE X IS UNKNOWN
-             */
-
-        }
-        return sortedMap;
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
     }
 }
 ```

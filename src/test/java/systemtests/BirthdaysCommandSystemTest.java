@@ -19,6 +19,7 @@ import guitests.guihandles.BirthdayNotificationHandle;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BirthdaysCommand;
 
+//@@author AzuraAiR
 /**
  * A system test class for the help window, which contains interaction with other UI components.
  */
@@ -87,7 +88,7 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Helper method to build a birthday desc for the add command
+     * Builds a birthday desc for the add command
      * @param isTodayABirthday if the person is having a person today, her birthday will be set to today
      *                         Otherwise, it will be set +/- 1 day
      * @return String for " b/" portion of AddCommand
@@ -123,7 +124,7 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Helper method to create the stub for the testing of Birthdays
+     * Creates the stub for the testing of Birthdays
      * @return Amy with her current age
      */
     private String buildExpectedBirthday() {

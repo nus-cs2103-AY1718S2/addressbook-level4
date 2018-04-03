@@ -20,6 +20,7 @@ import seedu.address.commons.exceptions.NoInternetConnectionException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.timetable.TimetableData;
 
+//@@author AzuraAiR
 /**
  * Utility functions to parse a shortened NUSMods url to create TimetableData
  */
@@ -80,15 +81,15 @@ public class TimetableParserUtil {
      * @throws ParseException
      */
     public static TimetableData parseLongUrl(String url) throws ParseException {
-
-        String[] urlParts = url.split("/");
+        String[] urlParts = url.split("/"); // Obtain the last part of url
         ArrayList<Lesson> totalLessonList = new ArrayList<Lesson>();
         ArrayList<Lesson> lessonsToAddFromModule;
 
-        String semNum = urlParts[4];
-        String[] toParse = urlParts[5].split("\\?");
-        String[] modules = toParse[1].split("&");
+        String semNum = urlParts[4];    // Normally found at the fifth part
+        String[] toParse = urlParts[5].split("\\?");    // Seperate "share" out of last part of url
+        String[] modules = toParse[1].split("&");   // Seperate the modules in last part of url
 
+        // Loop to find the modules taken and create the Lessons taken to add into Timetable
         for (String module: modules) {
             lessonsToAddFromModule = parseModule(module, semNum);
             for (Lesson lessonToAdd: lessonsToAddFromModule) {
@@ -151,6 +152,7 @@ public class TimetableParserUtil {
             acadYear = currentDate.getYear() + "-" + (currentDate.getYear() + 1);
         }
 
+        // Link format is correct as of 3/4/2018
         String link = "http://api.nusmods.com/" + acadYear + "/" + semNum + "/modules/" + moduleCode + ".json";
         ObjectMapper mapper = new ObjectMapper();
 
@@ -163,7 +165,7 @@ public class TimetableParserUtil {
             ArrayList<HashMap<String, String>> lessonInfo = (ArrayList<HashMap<String, String>>)
                     mappedJson.get("Timetable");
 
-            // Parse info from API and creates an Arraylist of all lessons
+            // Parse the information from API and creates an Arraylist of all possible lessons
             ArrayList<Lesson> lessons = new ArrayList<>();
             for (HashMap<String, String> lesson : lessonInfo) {
                 Lesson lessonToAdd = new Lesson(moduleCode, lesson.get("ClassNo"), lesson.get("LessonType"),

@@ -6,6 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.timetable.Lesson;
 import seedu.address.model.person.timetable.Timetable;
 
+//@@author AzuraAiR
 /**
  * A utility class to help build dummy timetables for Persons
  * This is to prevent the tests from trying to retrieve information from NUSMods API too many times

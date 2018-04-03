@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.BirthdayListEvent;
 import seedu.address.model.person.Person;
 
+//@@author AzuraAiR
 public class BirthdayListTest extends GuiUnitTest {
 
     private List<Person> personListStub;

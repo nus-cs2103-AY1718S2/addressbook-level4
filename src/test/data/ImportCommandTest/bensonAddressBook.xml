@@ -7,6 +7,7 @@
         <email isPrivate="false">johnd@example.com</email>
         <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
         <birthday>01021989</birthday>
+        <timetable isPrivate="false">http://modsn.us/bbbbb</timetable>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </persons>

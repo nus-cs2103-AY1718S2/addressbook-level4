@@ -113,8 +113,10 @@ public class SelectCommandSystemTest extends RecipeBookSystemTest {
      */
     private void assertCommandSuccess(String command, Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
-        String expectedResultMessage = String.format(
-                MESSAGE_SELECT_RECIPE_SUCCESS, expectedSelectedCardIndex.getOneBased());
+        String expectedResultMessage = String.format(MESSAGE_SELECT_RECIPE_SUCCESS,
+                expectedModel.getFilteredRecipeList().get(expectedSelectedCardIndex.getZeroBased())
+                        .getTextFormattedRecipe());
+
         int preExecutionSelectedCardIndex = getRecipeListPanel().getSelectedCardIndex();
 
         executeCommand(command);

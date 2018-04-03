@@ -13,6 +13,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteConditionCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -29,9 +30,7 @@ import seedu.address.logic.commands.RemoveRecordCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAppointmentCommand;
-
 import seedu.address.logic.login.LoginManager;
-
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -220,6 +219,14 @@ public class ImdbParser {
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
                         LoginCommand.MESSAGE_USAGE));
 
+            case DeleteConditionCommand.COMMAND_WORD:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        DeleteConditionCommand.MESSAGE_USAGE));
+
+            case DeleteConditionCommand.COMMAND_ALIAS:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        DeleteConditionCommand.MESSAGE_USAGE));
+
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
             }
@@ -341,6 +348,12 @@ public class ImdbParser {
 
             case AddConditionCommand.COMMAND_ALIAS:
                 return new AddConditionCommandParser().parse(arguments);
+
+            case DeleteConditionCommand.COMMAND_WORD:
+                return new DeleteConditionCommandParser().parse(arguments);
+
+            case DeleteConditionCommand.COMMAND_ALIAS:
+                return new DeleteConditionCommandParser().parse(arguments);
 
             case PrintCommand.COMMAND_WORD:
                 return new PrintCommandParser().parse(arguments);
@@ -475,6 +488,12 @@ public class ImdbParser {
 
             case AddConditionCommand.COMMAND_ALIAS:
                 return new AddConditionCommandParser().parse(arguments);
+
+            case DeleteConditionCommand.COMMAND_WORD:
+                return new DeleteConditionCommandParser().parse(arguments);
+
+            case DeleteConditionCommand.COMMAND_ALIAS:
+                return new DeleteConditionCommandParser().parse(arguments);
 
             case PrintCommand.COMMAND_WORD:
                 return new PrintCommandParser().parse(arguments);

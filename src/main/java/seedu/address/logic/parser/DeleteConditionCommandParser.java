@@ -12,22 +12,22 @@ import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddConditionCommand;
-import seedu.address.logic.commands.AddConditionCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.DeleteConditionCommand;
+import seedu.address.logic.commands.DeleteConditionCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new EditCommand object
  */
-public class AddConditionCommandParser implements Parser<AddConditionCommand> {
+public class DeleteConditionCommandParser implements Parser<DeleteConditionCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
      * and returns an EditCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public AddConditionCommand parse(String args) throws ParseException {
+    public DeleteConditionCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_TAG);
@@ -37,7 +37,8 @@ public class AddConditionCommandParser implements Parser<AddConditionCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddConditionCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    DeleteConditionCommand.MESSAGE_USAGE));
         }
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
@@ -48,10 +49,10 @@ public class AddConditionCommandParser implements Parser<AddConditionCommand> {
         }
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(AddConditionCommand.MESSAGE_NOT_EDITED);
+            throw new ParseException(DeleteConditionCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new AddConditionCommand(index, editPersonDescriptor);
+        return new DeleteConditionCommand(index, editPersonDescriptor);
     }
 
     /**

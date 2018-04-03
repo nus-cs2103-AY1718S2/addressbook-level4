@@ -70,6 +70,7 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
 
+    //@@author ktingit
     /**
      * Parses a {@code String nric} into a {@code Nric}.
      * Leading and trailing whitespaces will be trimmed.
@@ -94,6 +95,7 @@ public class ParserUtil {
         return nric.isPresent() ? Optional.of(parseNric(nric.get())) : Optional.empty();
     }
 
+    //@@author
     /**
      * Parses a {@code String phone} into a {@code Phone}.
      * Leading and trailing whitespaces will be trimmed.
@@ -142,6 +144,7 @@ public class ParserUtil {
         return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
     }
 
+    //@@author ktingit
     /**
      * Parses a {@code String dob} into an {@code Dob}.
      * Leading and trailing whitespaces will be trimmed.
@@ -190,6 +193,7 @@ public class ParserUtil {
         return bloodType.isPresent() ? Optional.of(parseBloodType(bloodType.get())) : Optional.empty();
     }
 
+    //@@author
     /**
      * Parses a {@code String remark}.
      * Leading and trailing whitespaces will be trimmed.

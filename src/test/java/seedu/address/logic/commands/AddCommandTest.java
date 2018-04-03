@@ -192,7 +192,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public ObservableList<Event> getFilteredGroupList() {
+        public ObservableList<Group> getFilteredGroupList() {
             fail("This method should not be called.");
             return null;
         }

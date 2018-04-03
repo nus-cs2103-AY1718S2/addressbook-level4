@@ -6,15 +6,19 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
+
+import com.google.gdata.util.ServiceException;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -170,6 +174,22 @@ public class AddCommandTest {
 
         @Override
         public void printSchedule() {
+            fail("This method should not be called");
+        }
+
+
+        @Override
+        public void loginGoogleAccount() throws CredentialsException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void logoutGoogleAccount() throws CredentialsException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void synchronize() throws ServiceException, IOException {
             fail("This method should not be called");
         }
     }

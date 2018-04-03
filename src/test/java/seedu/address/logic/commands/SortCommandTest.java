@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import javafx.collections.ObservableList;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
@@ -33,7 +34,11 @@ public class SortCommandTest {
     public void setupModelWithImportedContacts() throws Exception {
         ImportContactsCommand icc = new ImportContactsCommand("data/Test_contacts_unsorted.csv");
         icc.model = new ModelManager();
-        icc.executeUndoableCommand();
+        try {
+            icc.executeUndoableCommand();
+        } catch (CommandException cr) {
+            throw new CommandException("Errored in setupModelWithImportedContacts\n" + cr.getStackTrace());
+        }
         testModel = icc.model;
     }
 

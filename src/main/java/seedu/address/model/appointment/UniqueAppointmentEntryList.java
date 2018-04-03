@@ -92,6 +92,16 @@ public class UniqueAppointmentEntryList implements Iterable<AppointmentEntry> {
                 && this.internalList.equals(((UniqueAppointmentEntryList) other).internalList));
     }
 
+    /**
+     * Returns true if the element in this list or equal to the elements in {@code other}.
+     * The elements do not have to be in the same order.
+     */
+    public boolean equalsOrderInsensitive(UniqueAppointmentEntryList other) {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        assert CollectionUtil.elementsAreUnique(other.internalList);
+        return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
+    }
+
     @Override
     public int hashCode() {
         assert CollectionUtil.elementsAreUnique(internalList);

@@ -22,6 +22,7 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -153,13 +154,13 @@ public class ImdbTest {
     private static class ImdbStub implements ReadOnlyImdb {
         private final ObservableList<Patient> patients = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
-        private final ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        private final ObservableList<AppointmentEntry> appointments = FXCollections.observableArrayList();
         private final ObservableList<Integer> visitingQueue = FXCollections.observableArrayList();
 
         ImdbStub(Collection<Patient> patients, Collection<? extends Tag> tags, Collection<Integer> queue) {
             this.patients.setAll(patients);
             this.tags.setAll(tags);
-            this.appointments.setAll(appointments);
+//            this.appointments.setAll(appointments);
             this.visitingQueue.setAll(queue);
         }
 
@@ -174,7 +175,7 @@ public class ImdbTest {
         }
 
         @Override
-        public ObservableList<Appointment> getAppointmentList() {
+        public ObservableList<AppointmentEntry> getAppointmentEntryList() {
             return appointments;
         }
 

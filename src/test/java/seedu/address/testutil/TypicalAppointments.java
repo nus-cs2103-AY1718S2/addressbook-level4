@@ -36,13 +36,13 @@ public class TypicalAppointments {
     public static Imdb getTypicalAddressBook() {
         Imdb ab = new Imdb();
 
-        for (Appointment appointment : getTypicalAppointment()) {
-            try {
-                ab.addAppointment(appointment);
-            } catch (UniqueAppointmentList.DuplicatedAppointmentException e) {
-                throw new AssertionError("not possible");
-            }
-        }
+//        for (Appointment appointment : getTypicalAppointment()) {
+//            try {
+//                ab.addAppointment(appointment);
+//            } catch (UniqueAppointmentList.DuplicatedAppointmentException e) {
+//                throw new AssertionError("not possible");
+//            }
+//        }
 
         return ab;
     }

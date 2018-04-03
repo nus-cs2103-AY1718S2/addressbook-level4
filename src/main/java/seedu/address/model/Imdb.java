@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.AppointmentEntry;
+import seedu.address.model.appointment.UniqueAppointmentEntryList;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.UniquePatientList;
@@ -31,7 +33,7 @@ public class Imdb implements ReadOnlyImdb {
 
     private final UniquePatientList persons;
     private final UniqueTagList tags;
-    private final UniqueAppointmentList appointments;
+    private final UniqueAppointmentEntryList appointments;
     private final UniquePatientVisitingQueue visitingQueue;
 
     /*
@@ -44,7 +46,7 @@ public class Imdb implements ReadOnlyImdb {
     {
         persons = new UniquePatientList();
         tags = new UniqueTagList();
-        appointments = new UniqueAppointmentList();
+        appointments = new UniqueAppointmentEntryList();
         visitingQueue = new UniquePatientVisitingQueue();
     }
 
@@ -68,9 +70,9 @@ public class Imdb implements ReadOnlyImdb {
         this.tags.setTags(tags);
     }
 
-    public void setAppointments(Set<Appointment> appointments) {
-        this.appointments.setAppointment(appointments);
-    }
+//    public void setAppointments(Set<Appointment> appointments) {
+//        this.appointments.setAppointment(appointments);
+//    }
 
     public void setQueue(Set<Integer> queueNos) {
         this.visitingQueue.setVisitingQueue(queueNos);
@@ -85,7 +87,7 @@ public class Imdb implements ReadOnlyImdb {
         List<Patient> syncedPatientList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
-        setAppointments(new HashSet<>(newData.getAppointmentList()));
+//        setAppointments(new HashSet<>(newData.getAppointmentList()));
         setQueue(new LinkedHashSet<>(newData.getUniquePatientQueueNo()));
 
         try {
@@ -173,7 +175,7 @@ public class Imdb implements ReadOnlyImdb {
         tags.add(t);
     }
 
-    public void addAppointment(Appointment appt) throws UniqueAppointmentList.DuplicatedAppointmentException {
+    public void addAppointment(AppointmentEntry appt) throws UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
         appointments.add(appt);
     }
 
@@ -243,7 +245,7 @@ public class Imdb implements ReadOnlyImdb {
     }
 
     @Override
-    public ObservableList<Appointment> getAppointmentList() {
+    public ObservableList<AppointmentEntry> getAppointmentEntryList() {
         return appointments.asObservableList();
     }
 

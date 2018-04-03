@@ -1,13 +1,17 @@
 package seedu.address.ui;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+//import java.time.ZoneId;
+
+import java.util.List;
 
 import com.calendarfx.model.Calendar;
 //import com.calendarfx.model.CalendarEvent;
 import com.calendarfx.model.CalendarSource;
-//import com.calendarfx.model.Entry;
-//import com.calendarfx.model.Interval;
+import com.calendarfx.model.Entry;
+import com.calendarfx.model.Interval;
 import com.calendarfx.view.CalendarView;
 
 import javafx.application.Platform;
@@ -15,7 +19,10 @@ import javafx.collections.ObservableList;
 //import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Person;
+
+
 //import javafx.application.Application;
 //import javafx.application.Platform;
 //import javafx.scene.Scene;
@@ -26,7 +33,7 @@ import seedu.address.model.person.Person;
 //import java.time.LocalDateTime;
 
 //import java.time.ZoneId;
-//import java.util.List;
+
 
 //import seedu.address.MainApp;
 //import seedu.address.commons.core.LogsCenter;
@@ -43,6 +50,7 @@ public class CalendarWindow extends UiPart<Region> {
     public static final String DEFAULT_PAGE = "CalendarPanel.fxml";
 
     private ObservableList<Person> ownerList;
+    private  ObservableList<Appointment> appointmentList;
     private Calendar calendar;
 
     @FXML
@@ -52,9 +60,10 @@ public class CalendarWindow extends UiPart<Region> {
      *
      * @param OwnerList
      */
-    public CalendarWindow(ObservableList<Person> ownerList) {
+    public CalendarWindow(ObservableList<Person> ownerList, ObservableList<Appointment> appointmentList) {
         super(DEFAULT_PAGE);
         this.ownerList = ownerList;
+        this.appointmentList = appointmentList;
         calendarView = new CalendarView();
 
         CalendarSource newCalendarSource = new CalendarSource("My Calendars");
@@ -94,12 +103,44 @@ public class CalendarWindow extends UiPart<Region> {
         updateTimeThread.setPriority(Thread.MIN_PRIORITY);
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
+        disableViews();
+        setAppointments();
+    }
 
+    /**
+     * close unwanted UI components
+     */
+
+    private void disableViews() {
+        calendarView.setShowAddCalendarButton(false);
+        calendarView.setShowSearchField(false);
+        calendarView.setShowSearchResultsTray(false);
+        calendarView.setShowPrintButton(false);
+        calendarView.showDayPage();
     }
 
     public CalendarView getRoot() {
         return this.calendarView;
     }
+
+    public void setAppointments() {
+        for (Appointment appointment : appointmentList) {
+            if (appointment.getDateTime() == null) {
+                continue;
+            }
+
+            LocalDateTime ldt = appointment.getDateTime();
+
+            Entry entry = new Entry (appointment.getPetPatientName().toString());
+            entry.setInterval(new Interval(ldt, ldt.plusHours(1)));
+            List<Entry<?>> result = calendar.findEntries(appointment.getPetPatientName().toString());
+            calendar.removeEntries(result);
+            calendar.addEntry(entry);
+
+        }
+
+    }
+
 
 }
 

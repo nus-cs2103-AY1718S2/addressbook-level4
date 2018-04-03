@@ -133,7 +133,8 @@ Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* All fields are searched if no prefix is supplied.
+* All fields are searched if no prefix is supplied
+* Different keywords should be **comma separated**, if not it will be treated as one keyword
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 * If the first keyword is not a prefix, this command would assume a global search for **all** fields.
@@ -145,21 +146,24 @@ Examples:
 
 * `find John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `find Betsy, Tim, John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
-* `find p/999 555` +
+* `find p/999, 555` +
 Returns any person having phone number `999` or `555`
-* `find p/999 e/test@example.com`
+* `find p/999 e/test@example.com` +
 Returns any person having phone number `999` **AND** email `test@example.com`
-* `find John Mary e/johndoe@example.com`
+* `find John, Mary, e/johndoe@example.com` +
 Returns any person with any of their fields matching the keyword `John`, `Mary` **OR** `e/johndoe@example.com`. Prefix is ignored in this case because the command did not start with a valid prefix.
-* `find alex lidavid@example.com 87438807`
+* `find alex, lidavid@example.com, 87438807` +
 Returns any person with any of their fields matching the keyword `alex`, `lidavid@example.com` **OR** `87438807`.
-* `find n/alex bernice e/alexyeoh@example.com p/87438807` - Returns any person whose `name` contains keyword `alex` **OR** `bernice` **AND** `email` contains keyword `alexyeoh@example.com` **AND** `phone` contains keyword `87438807`
+* `find alex bernice david` +
+Returns any person with any of their fields matching the keyword `alex bernice david` (They are treated as one keyword since they are not comma separated).
+* `find n/alex, bernice e/alexyeoh@example.com p/87438807` +
+Returns any person whose `name` contains keyword `alex` **OR** `bernice` **AND** `email` contains keyword `alexyeoh@example.com` **AND** `phone` contains keyword `87438807`
 
 === Locating persons by wildcard search: `find` `[since v1.3]`
 
-Finds persons whose fields contain any of the given keywords. +
+Finds persons whose fields contain any of the given keywords with wildcard support. +
 
 Option 1: `find KEYWORD [MORE_KEYWORDS]`
 
@@ -169,8 +173,9 @@ Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * All fields are searched if no prefix is supplied.
+* Different keywords should be **comma separated**, if not it will be treated as one keyword
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-* Wildcard `*example*` searches for field that **contains** keyword `example`
+* Wildcard `"example"` searches for field that **contains** keyword `example`
 * Wildcard `*example` searches for field that **ends** with keyword `example`
 * Wildcard `example*` searches for field that **starts** with keyword `example`
 * If the first keyword is not a prefix, this command would assume a global search for **all** fields.
@@ -178,13 +183,13 @@ Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
 * A prefix search does an **OR** search between keywords in the same prefix and an **AND** search between different prefixes.
 ****
 
-* `find alex &ast;yu&ast; ir&ast; &ast;li` - displays a list of people with **any** of their fields that matches the following:
+* `find alex "yu" ir&ast; &ast;li` - displays a list of people with **any** of their fields that matches the following:
    1. Exact keyword `alex`
    2. Contains keyword `yu`
    3. Start with keyword `ir`
    4. End with keyword `li`
 
-* `find ir&ast; &ast;li n/&ast;example&ast;` - displays a list of people with **any** of their fields that matches the following:
+* `find ir&ast; &ast;li n/"example"` - displays a list of people with **any** of their fields that matches the following:
    1. Start with keyword `ir`
    2. End with keyword `li`
    3. Start with keyword `n/*example` (Prefix is ignored in this case similar to <<Locating persons by exact keyword search: `find` [Since v1.2]>>
@@ -194,6 +199,113 @@ Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
    2. Email field that ends with keyword `example.com` **AND**
    3. Phone field that contains keyword `8` **AND**
    4. Major field that starts with keyword `Computer`
+
+=== Locating persons by fuzzy keyword search: `find` `[since v1.4]`
+
+Finds persons whose fields contain any of the given keywords with fuzzy match support. +
+
+Option 1: `find KEYWORD [MORE_KEYWORDS]`
+
+Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* All fields are searched if no prefix is supplied
+* Different keywords should be **comma separated**, if not it will be treated as one keyword
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* If the first keyword is not a prefix, this command would assume a global search for **all** fields.
+* A global search does an **OR** search between keywords
+* A prefix search does an **OR** search between keywords in the same prefix and an **AND** search between different prefixes.
+* The fuzzy matching algorithm is based on the Levenshtein distance (LD), which is a measure of the similarity between two strings. The threshold is set to `2` in HR+.
+****
+
+Examples:
+
+* `find Bet, T, Jo` +
+Possible names that are searched include `Betsy`, `Tim`, or `John`
+* `find p/9, 5` +
+Possible phone numbers that are searched include `999` or `555`
+* `find p/999 e/test@e23mple.com` +
+Returns any person having phone number `999` **AND** email `test@example.com` (`test@e23mple.com` is a fuzzy match of `test@example.com`
+
+=== Display of search results in application console: `find` `[since v1.4]`
+
+Finds persons whose fields contain any of the given keywords with different search patterns supported. +
+
+Option 1: `find KEYWORD [MORE_KEYWORDS]`
+
+Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
+
+****
+* When a search keyword matches a person first, subsequent search keywords that matches the same person would be reflected in the display as `-` (refer to Example 3)
+* (PREFIX) - represents which field the matched keyword was in.
+****
+With reference to the data provided in the sample addressbook, below is a list of search results when a particular command is executed. +
+
+The format is `KEYWORD: (PREFIX)MATCHED KEYWORD` +
+
+
+Example 1:
+
+* `find alex, berni, "id li"` +
+Returns list of `Alex`, `Bernice` and `David`
+
+****
+Exact word search matches: +
+alex: (n/)Alex +
+berni: -
+
+Fuzzy search matches: +
+alex: - +
+berni: (n/)Bernice
+
+Wildcard search matches: +
+"id li": (n/)David Li
+
+****
+
+Example 2:
+
+* `find n/&ast;fan, "char", al&ast; m/Computer p/&ast;7` +
+Returns list of `Alex` only
+
+****
+Exact word search matches: +
+Computer: (m/)Computer
+
+Fuzzy search matches:
+
+Wildcard search matches: +
+"char": (n/)Charlotte Oliveiro +
+&ast;7: (p/)87438807 +
+&ast;fan: - +
+al&ast;: (n/)Alex Yeoh
+
+****
+
+Example 3:
+
+* `find berni, davi, bernice, david` +
+Returns list of `Bernice` and `David`
+
+****
+Exact word search matches: +
+bernice: - +
+david: - +
+berni: - +
+davi: - +
+
+Fuzzy search matches: +
+bernice: - +
+david: - +
+berni: (n/)Bernice +
+davi: (n/)David +
+
+Wildcard search matches:
+
+****
 
 === Filter persons by multiple fields: `filter` `[since v1.3]`
 
@@ -406,20 +518,20 @@ Format: `exit`
 Data in HR+ are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-=== Locating persons by wildcard search: `find` `[coming in v1.4]`
-
-Searches all fields that has a fuzzy match with user input.
-
-=== Provide a list of search results in text `[coming in v1.4]`
-
-Text summary of the search results after user executes the `find` command.
-
 === Add more field support in `filter` command `[coming in v1.4]`
 Fields like interview date, status and maybe else will be supported.
 
 === Highlights search results in user interface `[coming in v2.0]`
 
 Highlights search results after user executes the `find` command.
+
+=== User specified Levenshtein distance `[coming in v2.0]`
+
+Allows user to set the threshold used in the fuzzy match.
+
+=== Displays suggested searches for user before executing find command `[coming in v2.0]`
+
+Allows user to view a list of suggested searches on the fly when typing in their search keywords.
 
 === Customising rating criteria `[coming in v2.0]`
 Specifies the criteria that candidates will be rated against.

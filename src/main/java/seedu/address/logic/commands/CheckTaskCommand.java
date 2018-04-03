@@ -9,23 +9,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MILESTONE_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK_INDEX;
 
 import java.util.List;
-import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.programminglanguage.ProgrammingLanguage;
-import seedu.address.model.student.Address;
-import seedu.address.model.student.Email;
-import seedu.address.model.student.Favourite;
-import seedu.address.model.student.Name;
-import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
-import seedu.address.model.student.dashboard.Dashboard;
-import seedu.address.model.student.dashboard.Milestone;
-import seedu.address.model.student.dashboard.Progress;
-import seedu.address.model.student.dashboard.Task;
-import seedu.address.model.student.dashboard.UniqueHomeworkList;
 import seedu.address.model.student.dashboard.UniqueMilestoneList;
 import seedu.address.model.student.dashboard.UniqueTaskList;
 import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneException;
@@ -34,8 +22,8 @@ import seedu.address.model.student.dashboard.exceptions.MilestoneNotFoundExcepti
 import seedu.address.model.student.dashboard.exceptions.TaskNotFoundException;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
-import seedu.address.model.tag.Tag;
 
+//@@author yapni
 /**
  * Mark a task as completed
  */
@@ -89,7 +77,6 @@ public class CheckTaskCommand extends UndoableCommand {
         } else {
             return new CommandResult(MESSAGE_TASK_ALREADY_COMPLETED);
         }
-
     }
 
     @Override
@@ -130,36 +117,7 @@ public class CheckTaskCommand extends UndoableCommand {
             DuplicateMilestoneException, MilestoneNotFoundException {
         requireAllNonNull(studentToEdit, milestoneIndex, taskIndex);
 
-        /* Get all the original attributes of the student */
-        Name name = studentToEdit.getName();
-        Phone phone = studentToEdit.getPhone();
-        Email email = studentToEdit.getEmail();
-        Address address = studentToEdit.getAddress();
-        Set<Tag> tags = studentToEdit.getTags();
-        ProgrammingLanguage programmingLanguage = studentToEdit.getProgrammingLanguage();
-        Favourite fav = studentToEdit.getFavourite();
-        UniqueMilestoneList milestoneList = studentToEdit.getDashboard().getMilestoneList();
-        UniqueHomeworkList homeworkList = studentToEdit.getDashboard().getHomeworkList();
-
-        /* Get the components that needs to be modified */
-        Milestone targetMilestone = milestoneList.get(milestoneIndex);
-        UniqueTaskList targetTaskList = targetMilestone.getTaskList();
-        Task targetTask = targetTaskList.get(taskIndex);
-
-        /* Create new Task and Progress to reflect the completed task */
-        Task targetTaskCompleted = new Task(targetTask.getName(), targetTask.getDescription(), true);
-        Progress newProgress = new Progress(targetMilestone.getProgress().getTotalTasks(),
-                targetMilestone.getProgress().getNumCompletedTasks() + 1);
-
-        /* Update the task list and milestone list with the new task and milestone*/
-        targetTaskList.setTask(targetTask, targetTaskCompleted);
-        Milestone updatedMilestone = new Milestone(
-                targetMilestone.getDueDate(), targetTaskList, newProgress, targetMilestone.getDescription());
-        milestoneList.setMilestone(targetMilestone, updatedMilestone);
-
-        Dashboard newDashboard = new Dashboard(milestoneList, homeworkList);
-
-        return new Student(name, phone, email, address, programmingLanguage, tags, fav, newDashboard);
+        return new StudentBuilder(studentToEdit).withTaskCompleted(milestoneIndex, taskIndex).build();
     }
 
     /**
@@ -167,23 +125,34 @@ public class CheckTaskCommand extends UndoableCommand {
      * @throws IllegalValueException if any of the indexes are invalid
      */
     private void checkIfIndexesAreValid() throws IllegalValueException {
-        List<Student> lastShownList = model.getFilteredStudentList();
+        requireAllNonNull(targetStudentIndex, targetMilestoneIndex, targetTaskIndex);
 
+        /* Check if student index is valid */
+        List<Student> lastShownList = model.getFilteredStudentList();
         if (targetStudentIndex.getZeroBased() < 0 || targetStudentIndex.getZeroBased() >= lastShownList.size()) {
             throw new IllegalValueException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
         }
 
+        /* Check if milestone index is valid */
         Student student = lastShownList.get(targetStudentIndex.getZeroBased());
         UniqueMilestoneList milestoneList = student.getDashboard().getMilestoneList();
-
         if (targetMilestoneIndex.getZeroBased() < 0 || targetMilestoneIndex.getZeroBased() >= milestoneList.size()) {
-            throw new IllegalValueException((MESSAGE_INVALID_MILESTONE_DISPLAYED_INDEX));
+            throw new IllegalValueException(MESSAGE_INVALID_MILESTONE_DISPLAYED_INDEX);
         }
 
+        /*  Check if task index is valid */
         UniqueTaskList taskList = milestoneList.get(targetMilestoneIndex).getTaskList();
-
         if (targetTaskIndex.getZeroBased() < 0 || targetTaskIndex.getZeroBased() >= taskList.size()) {
-            throw new IllegalValueException((MESSAGE_INVALID_TASK_DISPLAYED_INDEX));
+            throw new IllegalValueException(MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CheckTaskCommand // instanceof handles null
+                && ((CheckTaskCommand) other).targetStudentIndex == this.targetStudentIndex
+                && ((CheckTaskCommand) other).targetMilestoneIndex == this.targetMilestoneIndex
+                && ((CheckTaskCommand) other).targetTaskIndex == this.targetTaskIndex);
     }
 }

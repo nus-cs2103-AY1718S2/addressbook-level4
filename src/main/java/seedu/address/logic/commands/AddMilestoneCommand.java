@@ -7,26 +7,17 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 
 import java.util.List;
-import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.programminglanguage.ProgrammingLanguage;
-import seedu.address.model.student.Address;
-import seedu.address.model.student.Email;
-import seedu.address.model.student.Favourite;
-import seedu.address.model.student.Name;
-import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
-import seedu.address.model.student.dashboard.Dashboard;
 import seedu.address.model.student.dashboard.Milestone;
-import seedu.address.model.student.dashboard.UniqueHomeworkList;
-import seedu.address.model.student.dashboard.UniqueMilestoneList;
 import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneException;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
-import seedu.address.model.tag.Tag;
 
+//@@author yapni
 /**
  * Adds a Milestone to a Student's Dashboard
  */
@@ -47,25 +38,25 @@ public class AddMilestoneCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_MILESTONE = "Milestone already exists in the student's Dashboard";
     public static final String MESSAGE_SUCCESS = "Milestone added to Student's Dashboard: %1$s";
 
-    private final Index index;
+    private final Index studentIndex;
     private final Milestone newMilestone;
 
-    private Student studentToEdit;
+    private Student targetStudent;
     private Student editedStudent;
 
     public AddMilestoneCommand(Index index, Milestone newMilestone) {
         requireAllNonNull(index, newMilestone);
 
         this.newMilestone = newMilestone;
-        this.index = index;
+        this.studentIndex = index;
     }
 
     @Override
     public CommandResult executeUndoableCommand() {
-        requireAllNonNull(studentToEdit, editedStudent);
+        requireAllNonNull(targetStudent, editedStudent);
 
         try {
-            model.updateStudent(studentToEdit, editedStudent);
+            model.updateStudent(targetStudent, editedStudent);
         } catch (DuplicateStudentException e) {
             /* DuplicateStudentException caught will mean that the milestone list is the same as before */
             throw new AssertionError("New milestone cannot be missing");
@@ -78,18 +69,14 @@ public class AddMilestoneCommand extends UndoableCommand {
 
     @Override
     public void preprocessUndoableCommand() throws CommandException {
-        List<Student> lastShownList = model.getFilteredStudentList();
-
-        if (index.getZeroBased() >= lastShownList.size() || index.getZeroBased() < 0) {
-            throw new CommandException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
-        }
-
-        studentToEdit = lastShownList.get(index.getZeroBased());
 
         try {
-            editedStudent = createEditedStudent(studentToEdit, newMilestone);
+            setTargetStudent();
+            editedStudent = createEditedStudent(targetStudent, newMilestone);
         } catch (DuplicateMilestoneException e) {
             throw new CommandException(MESSAGE_DUPLICATE_MILESTONE);
+        } catch (IllegalValueException e) {
+            throw new CommandException(e.getMessage());
         }
     }
 
@@ -100,26 +87,28 @@ public class AddMilestoneCommand extends UndoableCommand {
             throws DuplicateMilestoneException {
         requireAllNonNull(studentToEdit, newMilestone);
 
-        /* Get all the attributes of the student */
-        Name name = studentToEdit.getName();
-        Phone phone = studentToEdit.getPhone();
-        Email email = studentToEdit.getEmail();
-        Address address = studentToEdit.getAddress();
-        Set<Tag> tags = studentToEdit.getTags();
-        ProgrammingLanguage programmingLanguage = studentToEdit.getProgrammingLanguage();
-        Favourite fav = studentToEdit.getFavourite();
-        UniqueMilestoneList milestoneList = studentToEdit.getDashboard().getMilestoneList();
-        UniqueHomeworkList homeworkList = studentToEdit.getDashboard().getHomeworkList();
+        return new StudentBuilder(studentToEdit).withNewMilestone(newMilestone).build();
+    }
 
-        milestoneList.add(newMilestone);
+    /**
+     * Sets the {@code targetStudent} object
+     * @throws IllegalValueException if the studentIndex is invalid
+     */
+    private void setTargetStudent() throws IllegalValueException {
+        List<Student> lastShownList = model.getFilteredStudentList();
 
-        Dashboard dashboard = new Dashboard(milestoneList, homeworkList);
+        if (studentIndex.getZeroBased() >= lastShownList.size() || studentIndex.getZeroBased() < 0) {
+            throw new IllegalValueException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+        }
 
-        return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard);
+        targetStudent = lastShownList.get(studentIndex.getZeroBased());
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddMilestoneCommand // instanceof handles null
+                && ((AddMilestoneCommand) other).studentIndex == this.studentIndex
+                && ((AddMilestoneCommand) other).newMilestone == this.newMilestone);
     }
 }

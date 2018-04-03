@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!-- Student with an invalid phone field -->
 <student>
+    <key>ab1cd2</key>
     <name>Hans Muster</name>
     <phone>9482asf424</phone>
     <email>hans@example</email>
     <address>4th street</address>
+    <programmingLanguage>English</programmingLanguage>
     <tagged>friends</tagged>
+    <favourite>false</favourite>
+    <dashboard/>
 </student>

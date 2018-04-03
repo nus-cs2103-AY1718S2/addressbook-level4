@@ -12,7 +12,7 @@ public class Priority {
 
     public static final String MESSAGE_PRIORITY_CONSTRAINTS =
             "Priority value input can only contain numbers from 0 - 50.";
-    public static final String PRIORITY_VALIDATION_REGEX = "\\d{1,2}";
+    public static final String PRIORITY_VALIDATION_REGEX = "[1-3]";
     public final String priority;
     public final int value;
 

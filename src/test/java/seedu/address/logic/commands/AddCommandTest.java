@@ -145,6 +145,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Task>[][] getCalendarTaskLists() {
+            return new ObservableList[0][];
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }

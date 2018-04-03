@@ -12,7 +12,6 @@ import static seedu.address.commons.core.appointment.TypicalCalendar.FIRST_YEAR_
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 

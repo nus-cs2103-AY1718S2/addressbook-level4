@@ -121,6 +121,7 @@ public class Calendar extends UiPart<Region> {
         for (CalendarDate date : allCalendarDays) {
             date.setDate(calendarDate, yearMonth);
             calendarDate = calendarDate.plusDays(1);
+            date.setEventText("");
         }
         // Change the header of the calendar
         calendarHeader.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
@@ -135,9 +136,12 @@ public class Calendar extends UiPart<Region> {
             int day = Integer.parseInt(dayMonthYear[0]);
             int month = Integer.parseInt(dayMonthYear[1]);
             int year = Integer.parseInt(dayMonthYear[2]);
+            if (month != currentYearMonth.getMonthValue()) {
+                continue;
+            }
             LocalDate date = LocalDate.of(year, month, day);
             CalendarDate node = getDateNode(date);
-            node.getEventText().setText(e.getName());
+            node.setEventText(e.getName());
         }
     }
 
@@ -147,6 +151,7 @@ public class Calendar extends UiPart<Region> {
     private void previousMonth() {
         currentYearMonth = currentYearMonth.minusMonths(1);
         fillCalendar(currentYearMonth);
+        showEvents();
     }
 
     /**
@@ -155,6 +160,7 @@ public class Calendar extends UiPart<Region> {
     private void nextMonth() {
         currentYearMonth = currentYearMonth.plusMonths(1);
         fillCalendar(currentYearMonth);
+        showEvents();
     }
 
     /**

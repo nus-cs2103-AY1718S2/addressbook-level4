@@ -5,19 +5,26 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <AnchorPane fx:id="top" maxHeight="-Infinity" maxWidth="200.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
-   <GridPane fx:id="box" HBox.hgrow="NEVER" maxWidth="200.0">
+   <GridPane fx:id="box" maxWidth="200.0" HBox.hgrow="NEVER">
       <columnConstraints>
          <ColumnConstraints minWidth="10" prefWidth="160" />
       </columnConstraints>
       <VBox fx:id="node" alignment="CENTER_LEFT" minHeight="80" GridPane.columnIndex="0">
          <padding>
-            <Insets top="5" right="5" bottom="5" left="5" />
+            <Insets bottom="5" left="5" right="5" top="-20" />
          </padding>
-         <Text fx:id="day" text="\$day" styleClass="thisMonthDate"/>
-         <Text fx:id="eventText" text="\$event1"/>
+         <Text fx:id="day" styleClass="thisMonthDate" text="\$day" />
+         <Text fx:id="eventText" text="\$event1">
+            <VBox.margin>
+               <Insets left="10.0" />
+            </VBox.margin></Text>
       </VBox>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
    </GridPane>
 </AnchorPane>

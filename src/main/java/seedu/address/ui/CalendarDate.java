@@ -71,7 +71,7 @@ public class CalendarDate extends UiPart<Region> {
         //node = new VBox();
         node.setPrefSize(200, 50);
         day.setText("" + date.getDayOfMonth());
-        eventText.setText("");
+        setEventText("");
     }
 
     /**
@@ -113,6 +113,14 @@ public class CalendarDate extends UiPart<Region> {
 
     public Text getEventText() {
         return eventText;
+    }
+
+    public void setEventText(String text) {
+        if (text.length() > 1) {
+            eventText.setText("- " + text);
+        } else {
+            eventText.setText(text);
+        }
     }
 
     @Override

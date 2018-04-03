@@ -17,7 +17,10 @@ By: `Team W14-B3`      Since: `Jan 2018`      Licence: `MIT`
 
 == Introduction
 
-HR+ is for those who *prefer to use a desktop app for managing contacts*. More importantly, HR+ is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, HR+ can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Welcome to *Human Resources Plus* (*HR+*)! HR+ is a free recruiting and talent management software designed for *campus recruiters* to achieve hiring success. HR+ streamlines your recruiting process, increases your productivity and helps you make more consistent and informed hiring decisions.
+This guide provides you with everything you need to know about setting up and using various features of HR+ effectively as a campus recruiter. To enjoy the full benefits of HR+, you should be *comfortable using desktop applications* and *working with a Command Line Interface (CLI)*. If you can type fast, HR+ can get your talent management tasks done faster than traditional Graphical User Interface (GUI) applications.
+
+Interested? Navigate to <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -56,6 +59,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+[TIP]
+The command keywords and parameters are *case sensitive*.
+
 === Viewing help : `help`
 
 Format: `help`
@@ -75,7 +81,7 @@ Examples:
 * Resume to be added is specified by the relative path to the jar file. It also must be valid PDF, and smaller than 1MB.
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in HR+. +
 Format: `list`
 
 === Editing a person : `edit`
@@ -101,7 +107,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 
 === Schedule interview for a person : `interview`
 
-Schedule interview of an existing person in the address book. +
+Schedule interview of an existing person in HR+. +
 Format: `interview INDEX DATETIME`
 
 ****
@@ -252,21 +258,25 @@ Selects the 1st person in the results of the `find` command.
 
 === Rating a student : `rate` `[since v1.1]`
 
-Rates the student identified by the index number used in the last person listing. +
+Rates the student identified by the index number used in the last person listing based on technical, communication, problem solving skills and experience. +
 Format: `rate INDEX t/TECHNICAL_SKILLS_SCORE c/COMMUNICATION_SKILLS_SCORE p/PROBLEM_SOLVING_SKILLS_SCORE e/EXPERIENCE_SKILLS_SCORE`
 
 ****
-* Rates the student at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* The scores should be a number in the range of 1 to 5 (inclusive). Scores with more than two decimal places are rounded to two decimal places.
-* If you have rated the student, existing scores will be overwritten.
+* Rates the student at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* such as 1, 2, 3, ...
+* All four rating scores need to be supplied.
+* The scores should be a number in the range of *1 to 5* (inclusive). Scores with more than two decimal places are rounded to *two decimal places*.
+* The overall rating of a student is computed as the average of the four rating scores, rounded to two decimal places.
 ****
+
+[TIP]
+If you have rated the student, existing scores will be overwritten when you use the `rate` command again.
 
 Examples:
 
 * `rate 1 t/4.5 c/3 p/4 e/3.5` +
-Rates the 1st person to have technical skills score of 4.5, communication skills score of 3, problem solving skills of 4, experience score of 3.5.
+Rates the 1st person to have technical skills score of 4.5, communication skills score of 3, problem solving skills of 4, experience score of 3.5. The overall rating is computed to be 3.75.
 * `rate 2 t/3 c/5 p/3.5 e/2` +
-Rates the 2nd person to have technical skills score of 3, communication skills score of 5, problem solving skills of 3.5, experience score of 2.
+Rates the 2nd person to have technical skills score of 3, communication skills score of 5, problem solving skills of 3.5, experience score of 2. The overall rating is computed to be 3.38.
 
 === Sorting the list of students based on different fields : `sort` `[since v1.3]`
 
@@ -274,28 +284,28 @@ Sorts the current list of students in HR+ based on gpa, name or overall rating i
 Format: `sort FIELD o/SORT ORDER`
 
 ****
-* The field to be sorted by must be either `gpa`, `name` or `rating`.
+* The field to be sorted by, `FIELD`, must be either `gpa`, `name` or `rating`.
 * The sort order can only be `asc` (ascending order) or `desc` (descending order).
-* When sorting the students based on name, cases are ignored when doing comparison.
-* If the list has been filtered, only current students on the list will be sorted instead of all students in HR+.
+* When sorting the students based on name, cases are ignored when doing comparisons.
+* If the list has been filtered, only current students on the list will be sorted instead of all students in HR+. If you intend to sort all the students in HR+, you may run the `list` command first.
 ****
 
 Examples:
 
-* `sort rating o/acs` +
+* `sort rating o/asc` +
 Sorts the current list of students according to their overall rating in ascending order.
 * `sort gpa o/desc` +
 Sorts the current list of students according to their grade point average in descending order.
 
 === Deleting the rating given to an applicant : `rating-delete` `[since v1.2]`
 
-Deletes the rating given to the applicant identified by the index number used in the last person listing. +
+Deletes the rating given to the student identified by the index number used in the last person listing. +
 Format: `rating-delete INDEX`
 
 ****
 * Deletes the rating of the applicant at the specified `INDEX`.
 * The index refers to the index number shown in the last person listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* such as 1, 2, 3, ...
 ****
 
 Examples:

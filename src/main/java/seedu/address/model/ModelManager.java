@@ -115,6 +115,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(isNull(currPredicate) ? predicate : predicate.and(currPredicate));
     }
 
+    //@@author kexiaowen
     @Override
     public void sortPersonListAscOrder(SortCommand.SortField sortField) {
         addressBook.sortAsc(sortField);
@@ -129,6 +130,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(currPredicate);
     }
 
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

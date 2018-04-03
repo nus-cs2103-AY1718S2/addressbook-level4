@@ -156,7 +156,6 @@ public class ModelManager extends ComponentManager implements Model {
         user = user.ofNullable(account);
     }
 
-    
 
     //=========== Filtered Person List Accessors =============================================================
 

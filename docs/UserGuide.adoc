@@ -193,6 +193,23 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+=== Deleting a person : `deleteappointment` `Since v1.4`
+
+Deletes the specified appointment from the address book. +
+Format: `deleteappointment INDEX`
+Alias: `da`
+
+****
+* Deletes the appointment at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `delete 2` +
+Deletes the 2nd appointment in the address book.
+
 === Deleting a tag : `deletetag`
 
 Deletes the specified tag from everyone in the address book. +
@@ -333,6 +350,7 @@ e.g. `add 1 2 n/Meeting d/2018-06-13 13:25 tz/America/New_York`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Delete appointment* : `deleteappointment INDEX` +
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [ti/TIMEZONE] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Note* : `note INDEX`

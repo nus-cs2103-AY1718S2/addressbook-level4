@@ -2,6 +2,8 @@ package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
@@ -43,6 +45,19 @@ public class AddressBookBuilder {
             addressBook.addTag(new Tag(tagName));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tagName is expected to be valid.");
+        }
+        return this;
+    }
+
+    //@@author trafalgarandre
+    /**
+     * Parses {@code Appointment} to the {@code AddressBook} that we are building.
+     */
+    public AddressBookBuilder withAppointment(Appointment appointment) {
+        try {
+            addressBook.addAppointment(appointment);
+        } catch (DuplicateAppointmentException dae) {
+            throw new IllegalArgumentException("Appointment is expected to be unique");
         }
         return this;
     }

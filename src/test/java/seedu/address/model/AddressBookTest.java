@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.TypicalAppointments.MEETING;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -17,6 +18,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.job.Job;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -55,7 +57,9 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        List<Appointment> newAppointments = new ArrayList<>();
+        newAppointments.add(MEETING);
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newAppointments);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -89,11 +93,14 @@ public class AddressBookTest {
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final List<Appointment> appointments = new ArrayList<Appointment>();
         private final ObservableList<Job> jobs = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags,
+                        Collection<? extends Appointment> appointments) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
+            this.appointments.addAll(appointments);
         }
 
         @Override
@@ -107,6 +114,10 @@ public class AddressBookTest {
         }
 
         @Override
+        public List<Appointment> getAppointmentList() {
+            return appointments;
+        }
+
         public ObservableList<Job> getJobList() {
             return jobs;
         }

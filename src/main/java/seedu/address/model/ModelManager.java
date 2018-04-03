@@ -3,6 +3,8 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -13,6 +15,10 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.ReloadCalendarEvent;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.exception.DuplicateUsernameException;
 import seedu.address.model.exception.InvalidPasswordException;
 import seedu.address.model.exception.InvalidUsernameException;
@@ -35,7 +41,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
+    private final List<Appointment> appointments;
     private final FilteredList<Job> filteredJobs;
+
     private AccountsManager accountsManager;
     private Optional<Account> user;
 
@@ -50,6 +58,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        appointments = new ArrayList<Appointment>(this.addressBook.getAppointmentList());
         filteredJobs = new FilteredList<>(this.addressBook.getJobList());
         this.accountsManager = new AccountsManager();
         this.user = Optional.empty();
@@ -73,6 +82,11 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
+    }
+
+    /** Raises an event to indicate the Calendar has changed */
+    private void indicateCalendarChanged() {
+        raise(new ReloadCalendarEvent(addressBook.getAppointmentList()));
     }
 
     @Override
@@ -156,6 +170,30 @@ public class ModelManager extends ComponentManager implements Model {
         user = user.ofNullable(account);
     }
 
+    //@@author trafalgarandre
+    @Override
+    public synchronized void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+        addressBook.addAppointment(appointment);
+        indicateAddressBookChanged();
+        indicateCalendarChanged();
+    }
+
+    @Override
+    public synchronized void deleteAppointment(Appointment target) throws AppointmentNotFoundException {
+        addressBook.removeAppointment(target);
+        indicateAddressBookChanged();
+        indicateCalendarChanged();
+    }
+
+    @Override
+    public void updateAppointment(Appointment target, Appointment editedAppointment)
+            throws DuplicateAppointmentException, AppointmentNotFoundException {
+        requireAllNonNull(target, editedAppointment);
+        addressBook.updateAppointment(target, editedAppointment);
+        indicateAddressBookChanged();
+    }
+
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -190,7 +228,19 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons)
-                && filteredJobs.equals(other.filteredJobs);
+                && filteredJobs.equals(other.filteredJobs)
+                && appointments.equals(other.appointments);
+    }
+
+    //=========== Filtered Appointment List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Appointment} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public List<Appointment> getAppointmentList() {
+        return appointments;
     }
 
     //=========== Filtered Job List Accessors =============================================================

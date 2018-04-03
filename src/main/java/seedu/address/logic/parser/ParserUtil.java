@@ -1,7 +1,18 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.appointment.DateCommand.DATE_VALIDATION_REGEX;
+import static seedu.address.logic.commands.appointment.DateCommand.MESSAGE_DATE_CONSTRAINTS;
+import static seedu.address.logic.commands.appointment.MonthCommand.MESSAGE_YEAR_MONTH_CONSTRAINTS;
+import static seedu.address.logic.commands.appointment.MonthCommand.YEAR_MONTH_VALIDATION_REGEX;
+import static seedu.address.logic.commands.appointment.WeekCommand.MESSAGE_WEEK_CONSTRAINTS;
+import static seedu.address.logic.commands.appointment.WeekCommand.WEEK_VALIDATION_REGEX;
+import static seedu.address.logic.commands.appointment.YearCommand.MESSAGE_YEAR_CONSTRAINTS;
+import static seedu.address.logic.commands.appointment.YearCommand.YEAR_VALIDATION_REGEX;
 
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.YearMonth;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -10,6 +21,9 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.appointment.EndDateTime;
+import seedu.address.model.appointment.StartDateTime;
+import seedu.address.model.appointment.Title;
 import seedu.address.model.job.Location;
 import seedu.address.model.job.NumberOfPositions;
 import seedu.address.model.job.Position;
@@ -251,6 +265,80 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String title} into a {@code Title}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code title} is invalid.
+     */
+    public static Title parseTitle(String title) throws IllegalValueException {
+        requireNonNull(title);
+        String trimmedTitle = title.trim();
+        if (!Title.isValidTitle(trimmedTitle)) {
+            throw new IllegalValueException(Title.MESSAGE_TITLE_CONSTRAINTS);
+        }
+        return new Title(trimmedTitle);
+    }
+
+    /**
+     * Parses a {@code Optional<String> title} into an {@code Optional<Title>} if {@code title} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Title> parseTitle(Optional<String> title) throws IllegalValueException {
+        requireNonNull(title);
+        return title.isPresent() ? Optional.of(parseTitle(title.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String startDateTime} into a {@code StartDateTime}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code startDateTime} is invalid.
+     */
+    public static StartDateTime parseStartDateTime(String startDateTime) throws IllegalValueException {
+        requireNonNull(startDateTime);
+        String trimmedStartDateTime = startDateTime.trim();
+        if (!StartDateTime.isValidStartDateTime(trimmedStartDateTime)) {
+            throw new IllegalValueException(StartDateTime.MESSAGE_START_DATE_TIME_CONSTRAINTS);
+        }
+        return new StartDateTime(trimmedStartDateTime);
+    }
+
+    /**
+     * Parses a {@code Optional<String> startDateTime} into an {@code Optional<StartDateTime>}
+     * if {@code startDateTime} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<StartDateTime> parseStartDateTime(Optional<String> startDateTime)
+            throws IllegalValueException {
+        requireNonNull(startDateTime);
+        return startDateTime.isPresent() ? Optional.of(parseStartDateTime(startDateTime.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String endDateTime} into a {@code EndDateTime}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code endDateTime} is invalid.
+     */
+    public static EndDateTime parseEndDateTime(String endDateTime) throws IllegalValueException {
+        requireNonNull(endDateTime);
+        String trimmedEndDateTime = endDateTime.trim();
+        if (!EndDateTime.isValidEndDateTime(trimmedEndDateTime)) {
+            throw new IllegalValueException(EndDateTime.MESSAGE_END_DATE_TIME_CONSTRAINTS);
+        }
+        return new EndDateTime(trimmedEndDateTime);
+    }
+
+    /**
+     * Parses a {@code Optional<String> endDateTime} into an {@code Optional<EndDateTime>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EndDateTime> parseEndDateTime(Optional<String> endDateTime) throws IllegalValueException {
+        requireNonNull(endDateTime);
+        return endDateTime.isPresent() ? Optional.of(parseEndDateTime(endDateTime.get())) : Optional.empty();
+    }
+
+    /**
      * Parses a {@code String position} into a {@code Position}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -337,6 +425,7 @@ public class ParserUtil {
         return new NumberOfPositions(trimmedNumberOfPositions);
     }
 
+    //@@author trafalgarandre
     /**
      * Parses a {@code Optional<String> numberOfPositions} into an {@code Optional<String>}
      * if {@code numberOfPositions} is present.
@@ -347,5 +436,95 @@ public class ParserUtil {
         requireNonNull(numberOfPositions);
         return numberOfPositions.isPresent() ? Optional.of(parseNumberOfPositions(numberOfPositions.get()))
                 : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String yearMonth} into a {@code yearMonth}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code yearMonth} is invalid.
+     */
+    public static YearMonth parseYearMonth(String yearMonth) throws IllegalValueException {
+        String trimmedYearMonth = yearMonth.trim();
+        if (!trimmedYearMonth.matches(YEAR_MONTH_VALIDATION_REGEX)) {
+            throw new IllegalValueException(MESSAGE_YEAR_MONTH_CONSTRAINTS);
+        }
+        if (trimmedYearMonth.length() == 0) {
+            return null;
+        } else {
+            return YearMonth.parse(trimmedYearMonth);
+        }
+    }
+
+    /**
+     * Parses a {@code String date} into a {@code date}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code date} is invalid.
+     */
+    public static LocalDate parseDate(String date) throws IllegalValueException {
+        String trimmedDate = date.trim();
+        if (!trimmedDate.matches(DATE_VALIDATION_REGEX)) {
+            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
+        }
+        if (trimmedDate.length() == 0) {
+            return null;
+        } else {
+            return LocalDate.parse(trimmedDate);
+        }
+    }
+
+    /**
+     * Parses a {@code String date} into a {@code year}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code year} is invalid.
+     */
+    public static Year parseYear(String year) throws IllegalValueException {
+        String trimmedYear = year.trim();
+        if (!trimmedYear.matches(YEAR_VALIDATION_REGEX)) {
+            throw new IllegalValueException(MESSAGE_YEAR_CONSTRAINTS);
+        }
+        if (trimmedYear.length() == 0) {
+            return null;
+        } else {
+            return Year.parse(trimmedYear);
+        }
+    }
+
+    /**
+     * Parses a {@code String args} into a {@code year}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code args} is invalid.
+     */
+    public static Year parseYearOfWeek(String args) throws IllegalValueException {
+        String trimmedArgs = args.trim();
+        if (!trimmedArgs.matches(WEEK_VALIDATION_REGEX)) {
+            throw new IllegalValueException(MESSAGE_WEEK_CONSTRAINTS);
+        }
+        if (trimmedArgs.length() == 0) {
+            return null;
+        } else {
+            return Year.parse(trimmedArgs.substring(0, 4));
+        }
+    }
+
+    /**
+     * Parses a {@code String args} into a {@code week}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code args} is invalid.
+     */
+    public static int parseWeek(String args) throws IllegalValueException {
+        String trimmedArgs = args.trim();
+        if (!trimmedArgs.matches(WEEK_VALIDATION_REGEX)) {
+            throw new IllegalValueException(MESSAGE_YEAR_CONSTRAINTS);
+        }
+        if (trimmedArgs.length() == 0) {
+            return 0;
+        } else {
+            return Integer.parseInt(trimmedArgs.substring(5));
+        }
     }
 }

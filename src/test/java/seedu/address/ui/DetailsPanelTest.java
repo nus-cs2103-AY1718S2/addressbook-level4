@@ -30,7 +30,7 @@ public class DetailsPanelTest extends GuiUnitTest {
         assertEquals(1, detailsPanelHandle.getCurrentTab());
         postNow(new SwitchTabRequestEvent(0));
         assertEquals(0, detailsPanelHandle.getCurrentTab());
-        postNow(new SwitchTabRequestEvent(0));
-        assertEquals(0, detailsPanelHandle.getCurrentTab());
+        postNow(new SwitchTabRequestEvent(2));
+        assertEquals(2, detailsPanelHandle.getCurrentTab());
     }
 }

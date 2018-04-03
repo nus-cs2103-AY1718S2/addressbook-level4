@@ -1,7 +1,6 @@
 package seedu.address.model;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.tag.Tag;

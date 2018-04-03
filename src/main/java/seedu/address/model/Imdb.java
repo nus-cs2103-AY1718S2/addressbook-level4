@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
-import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.appointment.UniqueAppointmentEntryList;
 import seedu.address.model.appointment.UniqueAppointmentList;
@@ -69,10 +68,6 @@ public class Imdb implements ReadOnlyImdb {
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
-
-//    public void setAppointments(Set<Appointment> appointments) {
-//        this.appointments.setAppointment(appointments);
-//    }
 
     public void setQueue(Set<Integer> queueNos) {
         this.visitingQueue.setVisitingQueue(queueNos);
@@ -164,11 +159,10 @@ public class Imdb implements ReadOnlyImdb {
     }
 
     /**
-     *  Updates the master appointment list to include appointment in {@code patient} that are not in the list.
-     *  @return a copy of this {@code patient} such that every appointment in this patient points to a AppointmentEntry
-     *  object in the master list.
+     *  Updates the master appointment list to include appointment in all patients.
      */
-    private void syncWithMasterAppointment(List<Patient> patientList) throws UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
+    private void syncWithMasterAppointment(List<Patient> patientList) throws
+            UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
 
         for (Patient p :patientList) {
             final UniqueAppointmentList patientAppt = new UniqueAppointmentList(p.getAppointments());
@@ -195,7 +189,8 @@ public class Imdb implements ReadOnlyImdb {
         tags.add(t);
     }
 
-    public void addAppointment(AppointmentEntry appt) throws UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
+    public void addAppointment(AppointmentEntry appt) throws
+            UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
         appointments.add(appt);
     }
 

@@ -17,7 +17,7 @@ endif::[]
 
 * CLindar is a desktop application that intends to help university computing students to manage their tasks and events.
 ** Computing student may have a tight schedule hence required to keep track of various events and deadlines
-** Computing student would be more familiar with the command used in this application, hence would be easy to use.
+** Computing student would be more familiar with the commands used in this application, hence would be easy to use.
 * It is a GUI app but most of its user interaction is CLI (Command Line Interface)-based.
 ** This would allow fast input for users who can type fast, such as computing students.
 * You would need to have *Java Runtime Environment*(JRE) installed to run this application.

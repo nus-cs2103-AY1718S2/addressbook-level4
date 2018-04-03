@@ -18,7 +18,7 @@ By: `Team W15-B3`      Since: `February 2018`      Licence: `MIT`
 == Introduction
 
 image:FASTIS.png[ align="center"] +
-Fastis is a desktop Event Manager application. It has a GUI but most of the user interactions happen + using a CLI (Command Line Interface). This application is for students with group projects to keep track of their teammates' + timetable, in order to schedule the most suitable meetup time. Users can store person's timetables, arrange persons in groups and  + generate a suitable meetup time.
+Fastis is a desktop application that aims to help students who are studying at National University of Singapore (NUS) manage their group projects effectively. The application enables students to keep track of group members’ timetables, information, meetups agendas, to-dos and schedule suitable meetup time.
 
 == Quick Start
 
@@ -281,6 +281,39 @@ Examples:
 
 * `uncheck 1`
 
+=== Editing a to-do's content : `editToDo`
+
+Edits an existing to-do's content in the address book. +
+Alias: `eTD` +
+Format: `editToDo INDEX [c/CONTENT]`
+
+****
+* Edits the to-do's content at the specified `INDEX`. The index refers to the index number shown in the last to-do listing. The index *must be a positive integer* 1, 2, 3, ...
+* Existing content will be updated to the input values.
+****
+
+Examples:
+
+* `editToDo 1 c/Swim like a fish` +
+Edits the content of the 1st to-do to be `Swim like a fish`.
+
+=== Deleting a to-do : `deleteToDo`
+
+Deletes the specified to-do from the address book. +
+Alias: `dTD` +
+Format: `deleteToDo INDEX`
+
+****
+* Deletes the to-do at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+`deleteToDo 2` +
+Deletes the 2nd to-do in the address book.
+
 === List Group Members: `ListGroupMembers`
 
 List out all persons with the given keywords(group tags). +
@@ -396,6 +429,10 @@ e.g. `addToDo Do home work`
 e.g. `check 3`
 * *UnCheckToDo* : `uncheck INDEX` +
 e.g. `uncheck 3`
+* *EditToDo* : `editToDo INDEX [c/CONTENT]` +
+e.g. `editToDo 2 c/Swim like a fish`
+* *DeleteToDo* : `deleteToDo INDEX` +
+e.g. `deleteToDo 3`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`

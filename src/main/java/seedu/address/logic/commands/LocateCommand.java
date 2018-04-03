@@ -33,7 +33,9 @@ public class LocateCommand extends Command implements PopulatableCommand {
 
     public LocateCommand(Predicate<Person> predicate) {
         this.predicate = predicate;
-
+    }
+    
+    @Override
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Display the place on Google Map identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
@@ -53,7 +55,6 @@ public class LocateCommand extends Command implements PopulatableCommand {
     public LocateCommand() {
         targetIndex = null;
     }
-
 
     @Override
     public CommandResult execute() {

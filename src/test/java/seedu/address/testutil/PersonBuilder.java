@@ -47,7 +47,7 @@ public class PersonBuilder {
     private static final String DEFAULT_EXPERIENCE_SCORE = "-1";
     private static final String DEFAULT_RESUME = "alice.pdf";
     private static final String DEFAULT_PROFILE_IMAGE = "gates.jpg";
-    private static final String DEFAULT_COMMENT = "";
+    private static final String DEFAULT_COMMENT = "Some comments";
     private static final String DEFAULT_TAGS = "friends";
 
     private Name name;

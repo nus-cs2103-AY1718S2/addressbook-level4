@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import static java.util.Objects.isNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.util.Objects;
+
 /**
  * Represents a Person's comment in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidComment(String)}
@@ -21,7 +23,7 @@ public class Comment {
      */
     public Comment(String comment) {
         if (isNull(comment)) {
-            this.value = "";
+            this.value = null;
         } else {
             checkArgument(isValidComment(comment), MESSAGE_COMMENT_CONSTRAINTS);
             this.value = comment;
@@ -30,6 +32,7 @@ public class Comment {
 
     /**
      * Returns true if a given string is a valid comment.
+     * By default any string are valid
      */
     public static boolean isValidComment(String test) {
         return test.matches(COMMENT_VALIDATION_REGEX);
@@ -44,7 +47,7 @@ public class Comment {
     public boolean equals(Object other) {
         return other == this // Short circuit if same object
                 || (other instanceof Comment // instanceof handles nulls
-                && this.value.equals(((Comment) other).value)); // State check
+                && Objects.equals(this.value, ((Comment) other).value)); // State check
     }
 
     @Override

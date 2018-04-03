@@ -56,7 +56,6 @@
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
         <experienceScore isPrivate="false">-1</experienceScore>
-        <comment/>
     </persons>
     <persons>
         <name>Daniel Meier</name>
@@ -124,7 +123,6 @@
         <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
         <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
         <experienceScore isPrivate="false">-1</experienceScore>
-        <comment/>
     </persons>
     <tags>friends</tags>
     <tags>owesMoney</tags>

@@ -11,6 +11,7 @@
     <jobApplied>Software Engineer</jobApplied>
     <status>offer accepted</status>
     <tagged>friends</tagged>
-    <comment/>
+    <profileImage>src/test/data/XmlUtilTest/gates.jpg</profileImage>
+    <comment>Competitive programmer</comment>
     <interviewDate>1540814400</interviewDate>
 </person>

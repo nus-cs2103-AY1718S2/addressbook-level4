@@ -13,7 +13,6 @@ import static seedu.address.logic.commands.CommandTestUtil.EXPECTED_GRADUATION_Y
 import static seedu.address.logic.commands.CommandTestUtil.GRADE_POINT_AVERAGE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.GRADE_POINT_AVERAGE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMENT_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EXPECTED_GRADUATION_YEAR_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_GRADE_POINT_AVERAGE_DESC;
@@ -77,7 +76,6 @@ import org.junit.Test;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CommandTestUtil;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExpectedGraduationYear;
 import seedu.address.model.person.GradePointAverage;
@@ -192,6 +190,13 @@ public class AddCommandParserTest {
                 + PROFILE_IMAGE_DESC_AMY + PROFILE_IMAGE_DESC_BOB + COMMENT_DESC_BOB + TAG_DESC_FRIEND,
                 new AddCommand(expectedPerson));
 
+        // multiple comment - last comment accepted
+        assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+                + UNIVERSITY_DESC_BOB + EXPECTED_GRADUATION_YEAR_DESC_BOB + MAJOR_DESC_BOB
+                + GRADE_POINT_AVERAGE_DESC_BOB + JOB_APPLIED_DESC_BOB + RESUME_DESC_BOB
+                + PROFILE_IMAGE_DESC_BOB + COMMENT_DESC_AMY + COMMENT_DESC_BOB + TAG_DESC_FRIEND,
+                new AddCommand(expectedPerson));
+
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
@@ -239,7 +244,7 @@ public class AddCommandParserTest {
                 .withMajor(VALID_MAJOR_AMY)
                 .withGradePointAverage(VALID_GRADE_POINT_AVERAGE_AMY)
                 .withJobApplied(VALID_JOB_APPLIED_AMY).withStatus(1)
-                .withComment(VALID_COMMENT_AMY)
+                .withProfileImage(null).withComment(VALID_COMMENT_AMY)
                 .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
 
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
@@ -256,7 +261,7 @@ public class AddCommandParserTest {
                 .withMajor(VALID_MAJOR_AMY)
                 .withGradePointAverage(VALID_GRADE_POINT_AVERAGE_AMY)
                 .withJobApplied(VALID_JOB_APPLIED_AMY).withStatus(1)
-                .withProfileImage(VALID_PROFILE_IMAGE_AMY)
+                .withProfileImage(VALID_PROFILE_IMAGE_AMY).withComment(null)
                 .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
 
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
@@ -284,7 +289,6 @@ public class AddCommandParserTest {
                 + PROFILE_IMAGE_DESC_AMY + COMMENT_DESC_AMY,
                 new AddCommand(expectedPerson));
     }
-
 
     @Test
     public void parse_compulsoryFieldMissing_failure() {
@@ -440,13 +444,6 @@ public class AddCommandParserTest {
                 + GRADE_POINT_AVERAGE_DESC_BOB
                 + JOB_APPLIED_DESC_BOB + INVALID_PROFILE_IMAGE_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 ProfileImage.MESSAGE_IMAGE_CONSTRAINTS);
-
-        // invalid comment
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + UNIVERSITY_DESC_BOB + EXPECTED_GRADUATION_YEAR_DESC_BOB + MAJOR_DESC_BOB
-                + GRADE_POINT_AVERAGE_DESC_BOB
-                + JOB_APPLIED_DESC_BOB + INVALID_COMMENT_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                Comment.MESSAGE_COMMENT_CONSTRAINTS);
 
         // invalid tag
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB

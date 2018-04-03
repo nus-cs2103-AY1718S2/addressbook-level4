@@ -9,6 +9,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.GoogleMapsEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author jingyinno
 /**
  * Launches Google Maps with specified location(s)
  */

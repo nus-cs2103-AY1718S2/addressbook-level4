@@ -74,9 +74,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    //@@author jingyinno
     public void setAliases(Set<Alias> aliases) {
         this.aliases.setAliases(aliases);
     }
+    //@@author
 
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
@@ -130,6 +132,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// command-level operations
 
+    //@@author jingyinno
     /**
      * Adds an alias to the address book.
      *
@@ -138,6 +141,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addAlias(Alias alias) throws DuplicateAliasException {
         aliases.add(alias);
     }
+    //@@author
 
     //@@author Caijun7
     public void importAlias(Alias alias) {
@@ -280,6 +284,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    //@@author jingyinno
     @Override
     public ObservableList<Alias> getAliasList() {
         return aliases.getAliasObservableList();
@@ -289,6 +294,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void resetAliasList() {
         aliases.resetHashmap();
     }
+
+    public void removeAlias(String toRemove) throws AliasNotFoundException {
+        aliases.remove(toRemove);
+    }
+    //@@author
 
     //@@author yeggasd
     @Override
@@ -326,9 +336,5 @@ public class AddressBook implements ReadOnlyAddressBook {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(persons, tags);
-    }
-
-    public void removeAlias(String toRemove) throws AliasNotFoundException {
-        aliases.remove(toRemove);
     }
 }

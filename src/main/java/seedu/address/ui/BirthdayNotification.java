@@ -11,6 +11,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BirthdayNotificationEvent;
 
+//@@author AzuraAiR
 /**
  * A ui for the notification dialog that is displayed at the start of the application and
  * after `birthdays today` is called.

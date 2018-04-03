@@ -1,5 +1,6 @@
 package seedu.address.commons.util.timetable;
 
+//@@author AzuraAiR
 /**
  * Represents a lesson that a module has
  */

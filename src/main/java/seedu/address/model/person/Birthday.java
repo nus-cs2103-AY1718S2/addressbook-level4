@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author AzuraAiR
 /**
  * Represents a Person's birthday in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidBirthday(String)}
@@ -11,7 +12,7 @@ public class Birthday {
 
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Birthday date can only contain numbers, and should follow the DDMMYY format";
+            "Birthday date can only contain numbers, and should follow the DDMMYYYY format";
     public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{8,8}";
     public final String value;
 
@@ -82,7 +83,7 @@ public class Birthday {
     /**
      * Static method to parse Month from Birthday string
      * isValidBirthday() should be called before this method
-     * @param birthday assumed to be of format DDMMYY
+     * @param birthday assumed to be of format DDMMYYYY
      * @return integer Month
      */
     private static int parseMonth(String birthday) {
@@ -92,7 +93,7 @@ public class Birthday {
     /**
      * Static method to parse Year from Birthday string
      * isValidBirthday() should be called before this method
-     * @param birthday assumed to be of format DDMMYY
+     * @param birthday assumed to be of format DDMMYYYY
      * @return integer Year
      */
     private static int parseYear(String birthday) {

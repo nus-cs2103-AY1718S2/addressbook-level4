@@ -64,20 +64,21 @@ Format: `help`
 === Adding a person: `add` or `a`
 
 Adds a person to EduBuddy +
-Format: `add n/NAME p/PHONE_NUMBER ic/NRIC  t/CLASS t/CLASS_REGISTER sub/SUBJECT_NAME SUBJECT_GRADE`
-Abbreviation Format: `a n/NAME p/PHONE_NUMBER ic/NRIC  t/CLASS t/CLASS_REGISTER sub/SUBJECT_NAME SUBJECT_GRADE`
+Format: `add n/NAME p/PHONE_NUMBER ic/NRIC  t/CLASS t/CLASS_REGISTER sub/SUBJECT_NAME SUBJECT_GRADE SUBJECT_NAME2 SUBJECT_GRADE2...`
+Abbreviation Format: `a n/NAME p/PHONE_NUMBER ic/NRIC t/CLASS t/CLASS_REGISTER sub/SUBJECT_NAME SUBJECT_GRADE SUBJECT_NAME2 SUBJECT_GRADE2...`
 
 ****
 * At least 1 subject from each L1R5 category should be assigned to a student.
-* For example: English, Mathematics, History, Chinese, Physics, Music.
-* For more examples on what subjects can be added, please refer to the FAQ section below.
+* For example: English, EMath(Elementary Mathematics), Hist(History), Chinese, Phy(Physics), Music.
+* A `SPACE` should be inserted between each `SUBJECT_NAME` and `SUBJECT_GRADE`.
+* For more examples on what subjects and subject grades can be added, please refer to the <<FAQ>> section below.
 ****
 
 Examples:
 
-* `add n/John Doe p/91234567 ic/S9500186H t/1A t/20 sub/English B3 sub/Mathematics A2`
+* `add n/John Doe p/91234567 ic/S9500186H t/1A t/20 sub/English B3 EMath A2`
 * `add n/Betsy Crowe p/91234567 t/2B t/21 ic/S9511111I`
-* `a n/John Doe p/91234567 ic/S9500186H t/1A t/2 sub/English B3 sub/Mathematics A2`
+* `a n/John Doe p/91234567 ic/S9500186H t/1A t/2 sub/English B3 EMath A2`
 * `a n/Betsy Crowe p/91234567 t/2B t/21 ic/S9511111I`
 
 === Listing all student : `list` or `l`
@@ -124,6 +125,8 @@ Edits the nric number of the 1st student to be `S9123456A` respectively.
 * `e 2 n/Betsy Crower` +
 Edits the name of the 2nd student to be `Betsy Crower`.
 
+*_return to <<toc,Table of Contents>>_*
+
 === Locating students by name: `find` or `f`
 
 Finds persons whose names contain any of the given keywords. +
@@ -144,6 +147,8 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` or `f Betsy Tim John` +
 Returns any student having names `Betsy`, `Tim`, or `John`
+
+*_return to <<toc,Table of Contents>>_*
 
 === Deleting a student : `delete` or `d`
 
@@ -166,6 +171,8 @@ Deletes the 2nd student in EduBuddy.
 `delete 1` +
 Deletes the 1st student in the results of the `find` command.
 
+*_return to <<toc,Table of Contents>>_*
+
 === Deleting a tag : `tagdelete` or `td [since v1.1]`
 
 Deletes the specified tag from every student in EduBuddy. +
@@ -176,11 +183,16 @@ Abbreviation Format: `td TAGNAME`
 * Deletes the specified tag from every student in Edubuddy.
 * The tag must be a valid tag name that is assigned to at least one student in Edubuddy.
 ****
+If successful, you will see the following result:
+
+image::TagDeleteResult.png[width="800"]
 
 Examples:
 
 * `tagdelete Class1A` or `td Class1A` +
 Deletes the 'Class 1A' tag from every student in the EduBuddy.
+
+*_return to <<toc,Table of Contents>>_*
 
 === Replacing a tag : `tagreplace` or `tr [since v1.2]`
 
@@ -190,7 +202,6 @@ Abbreviation Format: `tr t/TAGNAME t/TAGNAME`
 
 ****
 * Replaces the specified tag from every student in Edubuddy with a specific tag.
-* The tag refers to the index number shown in the most recent listing.
 * The tag must be a valid tag name that is assigned to at least one student in the Edubuddy.
 ****
 
@@ -198,6 +209,8 @@ Examples:
 
 * `tagreplace t/Class1A t/Class2A` or `tr t/Class1A t/Class2A` +
 Replaces the 'Class 1A' tag from every student in the EduBuddy with 'Class 2A'.
+
+*_return to <<toc,Table of Contents>>_*
 
 === Selecting a person : `select` or `s`
 
@@ -221,6 +234,8 @@ Selects the 2nd student in EduBuddy.
 `s 1` +
 Selects the 1st student in the results of the `find` command.
 
+*_return to <<toc,Table of Contents>>_*
+
 === Listing entered commands : `history` or `h`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -231,6 +246,8 @@ Abbreviation Format: `h`
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+*_return to <<toc,Table of Contents>>_*
 
 // tag::undoredo[]
 === Undoing previous command : `undo` or `u`
@@ -260,6 +277,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 `u` (reverses the `clear` command) +
 `u` (reverses the `delete 1` command) +
 
+*_return to <<toc,Table of Contents>>_*
+
 === Redoing the previously undone command : `redo` or `r`
 
 Reverses the most recent `undo` command. +
@@ -283,6 +302,8 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `r` (reapplies the `delete 1` command) +
 `r` (reapplies the `clear` command) +
 // end::undoredo[]
+
+*_return to <<toc,Table of Contents>>_*
 
 === Clearing all entries : `clear` or `c`
 
@@ -312,6 +333,8 @@ Examples:
 
 * `create 1 date/01022018 time/1500` +
 Creates an appointment with the 1st student on `01022018` at `1500`
+
+*_return to <<toc,Table of Contents>>_*
 
 // tag::remarks Command[]
 === Remarks Command `[coming in v2.0]`
@@ -345,15 +368,23 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
+*_return to <<toc,Table of Contents>>_*
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous EduBuddy folder.
 
+*Q*: What is L1B4? +
+*A*: A grading system for Secondary School students taking "O Level Examination" at the end of their four years of studies in Secondary School.
+     The score obtained from the grading system will be used to determine the eligibility of the students to enter the next level of education, Polytechnic.
+     `L1` represents the First language subject and `B4` represents 2 relevant subjects, according to the polytechnic course applied, and 2 other best subjects.
+     The score will be calculated by considering the subjects' grades. Each subject can only be considered once.
+
 *Q*: What is L1R5? +
 *A*: L1R5 is a grading system used in Singapore to determine the secondary school students' proficiency in the subjects taken for the O'Level Examinations.
 The score is used for the students to enroll into Junior Colleges, which is the next higher level of education. "L1" refers to the first language subject taken by the student, while "R5" refers to the 5 relevant subjects that are examinable by the students.
-The grade of L1R5 is then determined by taking the best grades of each category and summing them up, for example, if a student scores A1 for all 6 subjects are from each category, the score will be 6.
+The grade of L1R5 is then determined by taking the best grades of each category and summing them up, for example, if a student scores A1 for all 6 subjects are from each category, the score will be 6. Each subject can only be considered once.
 
 *Q*: How are the grades for the subjects determined? +
 *A*: The level of achievement in each subject is indicated by the grade obtained, with A1 being the highest achievable grade and F9 the lowest:
@@ -373,7 +404,7 @@ The grade of L1R5 is then determined by taking the best grades of each category 
 |=======================================================================
 
 *Q*: What are the subjects are in the L1R5 category? +
-*A*: These are the following subjects that are examinable in O level Examinations in Singapore (as of Year 2018).
+*A*: These are the following subjects that are examinable in O-level Examinations in Singapore (as of Year 2018).
 [NOTE]
 The subjects in the brackets are not to be used as input. The subjects not in brackets are preferred for better efficiency in typing.
 [width="85%",cols="22%,<23%",options="header",]
@@ -391,11 +422,15 @@ The subjects in the brackets are not to be used as input. The subjects not in br
 |R5| Consist of R4 subjects
 |=======================================================================
 
+* The following subjects can be assigned to students but are not considered as O-Level subjects: ChiB (Chinese B), MalayB (Malay B), TamilB(Tamil B).
+
+*_return to <<toc,Table of Contents>>_*
+
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER ic/NRIC t/CLASS t/CLASS_REGISTER sub/SUBJECT_NAME SUBJECT_GRADE` +
-e.g. `add n/James Ho p/22224444 ic/S9500186H t/1A t/20 sub/English A2` +
-e.g. `a n/James Ho p/22224444 ic/S9500186H t/1A t/20 sub/English A2` +
+e.g. `add n/James Ho p/22224444 ic/S9500186H t/1A t/20 sub/English A2 Phy A1` +
+e.g. `a n/James Ho p/22224444 ic/S9500186H t/1A t/20 sub/English A2 Phy A1` +
 
 * *Clear* : `clear` or `c`
 
@@ -437,3 +472,5 @@ e.g.`s 2`
 * *Undo* : `undo` or `u`
 
 * *Redo* : `redo` or `r`
+
+*_return to <<toc,Table of Contents>>_*

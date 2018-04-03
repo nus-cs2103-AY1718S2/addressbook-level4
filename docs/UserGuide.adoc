@@ -190,8 +190,10 @@ edit an existing appointment in the address book calendar +
 Format: `edit_appointment ST/SEARCH TEXT n/NEW NAME S/NEW START DATE TIME E/NEW END DATE TIME`
 
 [TIP]
-Make sure the search text matches the title of an existing appointment and the new title do not duplicates
-with other existing appointments
+ST/SEARCH TEXT is a mandatory field that must be specified.
+Make sure the search text matches the title of an existing appointment.
+At least one of the other field must be specified. If changing the title, ensure the new title
+do not duplicates with other existing appointments
 
 Examples:
 

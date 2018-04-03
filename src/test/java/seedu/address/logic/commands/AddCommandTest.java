@@ -26,7 +26,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.calendar.AppointmentEntry;
 import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
 import seedu.address.model.calendar.exceptions.DuplicateAppointmentException;
-import seedu.address.model.calendar.exceptions.EditApointmentFailException;
+import seedu.address.model.calendar.exceptions.EditAppointmentFailException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -118,7 +118,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void editAppointment(String searchText, AppointmentEntry reference) throws EditApointmentFailException {
+        public void editAppointment(String searchText, AppointmentEntry reference) throws EditAppointmentFailException {
             fail("This method should not be called.");
         }
 

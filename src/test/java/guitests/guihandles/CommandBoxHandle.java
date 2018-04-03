@@ -43,7 +43,7 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
      */
     public boolean clear() {
         click();
-        guiRobot.interact(() -> getRootNode().setText(""));
+        guiRobot.interact(() -> getRootNode().clear());
         return getRootNode().getText().equals("");
     }
 

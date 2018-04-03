@@ -12,9 +12,10 @@ import seedu.address.ui.MainWindow;
  * Locate the address of a person by keywords on Google Map.
  * Keyword matching is case sensitive.
  */
-public class LocateCommand extends Command {
+public class LocateCommand extends Command implements PopulatableCommand {
     public static final String COMMAND_WORD = "locate";
     public static final String COMMAND_ALIAS = "lo";
+  
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Locate person whose fields contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Valid specifiers are -n, -p, -e, -a, -t, for NAME, PHONE, EMAIL, ADDRESS and TAGS"
@@ -32,7 +33,27 @@ public class LocateCommand extends Command {
 
     public LocateCommand(Predicate<Person> predicate) {
         this.predicate = predicate;
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Display the place on Google Map identified by the index number used in the last person listing.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+
+    public static final String MESSAGE_LOCATE_SUCCESS = "Locate: %1$s";
+
+    private final Index targetIndex;
+
+    public LocateCommand (Index targetIndex) {
+        this.targetIndex = targetIndex;
     }
+
+    /**
+     * For call in PopulatePrefixRequestEvent class, to assign string values.
+     */
+    public LocateCommand() {
+        targetIndex = null;
+    }
+
 
     @Override
     public CommandResult execute() {
@@ -57,5 +78,25 @@ public class LocateCommand extends Command {
                 || (other instanceof FindCommand // instanceof handles nulls
                 && this.predicate.equals(((LocateCommand) other).predicate));
         // state check
+    }
+
+    @Override
+    public String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
+    @Override
+    public String getTemplate() {
+        return COMMAND_WORD + " ";
+    }
+
+    @Override
+    public int getCaretIndex() {
+        return getTemplate().length();
+    }
+
+    @Override
+    public String getUsageMessage() {
+        return MESSAGE_USAGE;
     }
 }

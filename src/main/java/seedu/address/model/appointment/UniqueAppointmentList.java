@@ -12,6 +12,7 @@ import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
 
+//@@author wynonaK
 /**
  * A list of appointments that enforces uniqueness between its elements and does not allow nulls.
  *

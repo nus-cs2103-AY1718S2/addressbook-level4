@@ -18,6 +18,7 @@ import seedu.address.model.person.Nric;
 import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.tag.Tag;
 
+//@@author wynonaK
 /**
  * JAXB-friendly version of an Appointment.
  */

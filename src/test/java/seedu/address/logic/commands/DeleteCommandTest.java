@@ -81,7 +81,7 @@ public class DeleteCommandTest {
     public void executeDeleteForcePetPatient_validIndexUnfilteredList_success() throws Exception {
         model.addPetPatient(TypicalPetPatients.JEWEL);
         model.addPetPatient(TypicalPetPatients.JOKER);
-        model.addAppointment(TypicalAppointments.BOB_APP);
+        model.addAppointment(TypicalAppointments.BENSON_APP);
         PetPatient petPatientToDelete = model.getFilteredPetPatientList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = prepareDeleteForcePetPatientCommand(INDEX_FIRST_PERSON);
 
@@ -98,7 +98,7 @@ public class DeleteCommandTest {
         model.addPetPatient(TypicalPetPatients.JEWEL);
         model.addPetPatient(TypicalPetPatients.JOKER);
         model.addAppointment(TypicalAppointments.ALICE_APP);
-        model.addAppointment(TypicalAppointments.BOB_APP);
+        model.addAppointment(TypicalAppointments.BENSON_APP);
         Appointment appointmentToDelete = model.getFilteredAppointmentList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = prepareDeleteAppointmentCommand(INDEX_FIRST_PERSON);
 

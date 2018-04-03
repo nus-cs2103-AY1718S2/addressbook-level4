@@ -17,7 +17,7 @@ import seedu.address.model.person.Nric;
 import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.testutil.Assert;
 
-
+//@@author wynonaK
 public class XmlAdaptedAppointmentTest {
 
     private static final String INVALID_OWNER_NRIC = "S012345AB";

@@ -48,7 +48,7 @@ public class CalendarWindow extends UiPart<Stage> {
             engine.setUserAgent(engine.getUserAgent().replace("Macintosh; ", ""));
             engine.load(googleCalendarLink);
         } else {
-            browser.getEngine().loadContent("<html>You must be logged in to view the calendar.</html>",
+            browser.getEngine().loadContent("<html>You must be logged in to use the calendar feature.</html>",
                     "text/Html");
         }
 

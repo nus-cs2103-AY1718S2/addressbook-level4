@@ -3,8 +3,6 @@
 package seedu.address.logic.commands;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
 
 import seedu.address.logic.OAuthManager;
 
@@ -24,6 +22,7 @@ public class OAuthTestCommand extends Command {
     public CommandResult execute() {
         try {
             OAuthManager.authorize();
+            OAuthManager.addEvent();
         } catch (IOException e) {
             // Do nothing for now
         }

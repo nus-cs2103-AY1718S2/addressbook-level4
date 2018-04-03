@@ -34,7 +34,6 @@ public class CalendarAddCommand extends Command {
             + PREFIX_CAL_LOCATION + "UTown Residence";
 
 
-    public static final String MESSAGE_SUCCESS = "New event added: %s";
     public static final String MESSAGE_ERROR = "Unable to add new event. Please try again later.";
     private final Event event;
 
@@ -47,8 +46,8 @@ public class CalendarAddCommand extends Command {
     public CommandResult execute() throws CommandException {
 
         try {
-            String eventUrl = OAuthManager.addEvent(event);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, eventUrl));
+            String apiResponse = OAuthManager.addEvent(event);
+            return new CommandResult(apiResponse);
 
         } catch (IOException e) {
             return new CommandResult(MESSAGE_ERROR);

@@ -6,6 +6,8 @@ package seedu.address.logic;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -129,15 +131,19 @@ public class OAuthManager {
             System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s): ");
             for (Event event : upcomingEvents) {
                 String title = event.getSummary();
-                DateTime start = event.getStart().getDateTime();
-                DateTime end = event.getEnd().getDateTime();
+                DateTime startAsDateTime = event.getStart().getDateTime();
+                DateTime endAsDateTime = event.getEnd().getDateTime();
                 String location = event.getLocation();
                 String personUniqueId = event.getDescription();
+
+                String start = getDateTimeAsHumanReadable(startAsDateTime);
+                String end = getDateTimeAsHumanReadable(endAsDateTime);
+
                 if (start == null) {
-                    start = event.getStart().getDate();
+                    start = "Unable to retrieve start time";
                 }
                 if (end == null) {
-                    end = event.getEnd().getDate();
+                    end = "Unable to retrieve end time";
                 }
                 if (location == null) {
                     location = "No Location Specified";
@@ -145,13 +151,22 @@ public class OAuthManager {
                 if (personUniqueId == null) {
                     personUniqueId = "No Person Specified";
                 }
-                System.out.printf("%s From: %s To: %s) @ %s [%s]\n", title, start, end, location, personUniqueId);
-                eventListAsString.add(title + "From: " + start + " To: " + end + ") @ "
+                System.out.printf("%s From: %s To: %s @ %s [%s]\n", title, start, end, location, personUniqueId);
+                eventListAsString.add(title + " From: " + start + " To: " + end + " @ "
                         + location + " [" + personUniqueId + "]");
             }
         }
 
         return eventListAsString;
+    }
+
+    private static String getDateTimeAsHumanReadable(DateTime inputDateTime) {
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        System.out.println(inputDateTime.toString());
+        LocalDateTime dateTime = LocalDateTime.parse(inputDateTime.toString(), inputFormatter);
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a");
+        String formattedDateTime = dateTime.format(outputFormatter);
+        return formattedDateTime;
     }
 
     private static List<Event> getNextXEvents(int x) throws IOException {
@@ -174,10 +189,11 @@ public class OAuthManager {
     }
 
     /**
-     * Hardcoded example of adding event to Google Calendar via API
+     * Add event test example of adding event to Google Calendar via API
+     * Used as part of the oauth verification process.
      * @throws IOException
      */
-    public static String addEvent() throws IOException {
+    public static void addEvent() throws IOException {
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
@@ -185,7 +201,7 @@ public class OAuthManager {
                 getCalendarService();
 
         Event event = new Event()
-                .setSummary("Google I/O 2018")
+                .setSummary("Test Calendar Event")
                 .setLocation("800 Howard St., San Francisco, CA 94103")
                 .setDescription("A chance to hear more about Google's developer products.");
 
@@ -202,15 +218,30 @@ public class OAuthManager {
         event.setEnd(end);
 
         String calendarId = "primary";
+        Boolean successfulAddDelete = true;
+
         try {
+            // Add the test event
             event = service.events().insert(calendarId, event).execute();
         } catch (IOException e) {
             e.printStackTrace();
+            successfulAddDelete = false;
         }
         String eventUrl = event.getHtmlLink();
         System.out.printf("Event created: %s\n", event.getHtmlLink());
 
-        return eventUrl;
+
+        try {
+            // Delete the test event
+            service.events().delete(calendarId, event.getId()).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+            successfulAddDelete = false;
+        }
+
+        if (successfulAddDelete) {
+            System.out.println("Successfully interacted with user's calendar over Oauth.");
+        }
     }
 
     /**
@@ -233,13 +264,14 @@ public class OAuthManager {
             e.printStackTrace();
         }
         String eventUrl = event.getHtmlLink();
-        if (eventUrl == null) {
-            System.out.printf("Something went wrong. No event was added.");
-        } else {
-            System.out.printf("Event created: %s\n", event.getHtmlLink());
+        String apiResponse = "Something went wrong. No event was added.";
+
+        if (eventUrl != null) {
+            apiResponse = "Event created: " + eventUrl;
         }
 
-        return eventUrl;
+        System.out.printf(apiResponse + "\n");
+        return apiResponse;
     }
 }
 

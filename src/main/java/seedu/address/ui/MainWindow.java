@@ -157,7 +157,7 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Fills up all the placeholders of this window.
      */
-    void fillInnerParts() {
+    void fillInnerParts() throws IOException {
 
         loginStatusBar = new LoginStatusBar();
         loginStatusbarPlaceholder.getChildren().add(loginStatusBar.getRoot());

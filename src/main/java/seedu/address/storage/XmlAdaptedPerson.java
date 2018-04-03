@@ -102,7 +102,7 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         rating = source.getRating().value.toString();
-        review = source.getReview().value;
+        review = source.getReview().toString();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -166,7 +166,7 @@ public class XmlAdaptedPerson {
         if (this.review == null) {
             this.review = (new Review()).toString();
         }
-        if (!Review.isValidReview(this.review)) {
+        if (!Review.isValidCombined(this.review)) {
             throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
         }
         final Review review = new Review(this.review);

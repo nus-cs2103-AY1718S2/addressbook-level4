@@ -81,7 +81,7 @@ public class ReviewDialog {
         Optional <Pair<String, String>> result = dialog.showAndWait();
 
         result.ifPresent(input -> {
-            EventsCenter.getInstance().post(new ReviewInputEvent(input.getValue()));
+            EventsCenter.getInstance().post(new ReviewInputEvent(input.getKey(), input.getValue()));
         });
     }
 }

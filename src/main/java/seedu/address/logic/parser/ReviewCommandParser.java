@@ -26,6 +26,7 @@ public class ReviewCommandParser implements Parser<ReviewCommand> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
+    private String reviewerInput;
     private String reviewInput;
 
     /**
@@ -49,15 +50,24 @@ public class ReviewCommandParser implements Parser<ReviewCommand> {
         EventsCenter.getInstance().registerHandler(this);
         EventsCenter.getInstance().post(new ShowReviewDialogEvent());
 
+        if (reviewerInput == null) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReviewCommand.MESSAGE_USAGE));
+        } else if (reviewerInput.isEmpty()) {
+            reviewerInput = "-";
+        }
+        String reviewer = reviewerInput.trim();
+
         if (reviewInput == null) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReviewCommand.MESSAGE_USAGE));
         } else if (reviewInput.isEmpty()) {
             reviewInput = "-";
         }
-        String review = reviewInput;
+        String review = reviewInput.trim();
+
+        String combined = reviewer + "\n" + review;
 
         EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
-        editPersonDescriptor.setReview(new Review(review));
+        editPersonDescriptor.setReview(new Review(combined));
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(ReviewCommand.MESSAGE_NOT_EDITED);
         }
@@ -68,6 +78,7 @@ public class ReviewCommandParser implements Parser<ReviewCommand> {
     @Subscribe
     private void getReviewInput(ReviewInputEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        reviewerInput = event.getReviewerInput();
         reviewInput = event.getReviewInput();
     }
 }

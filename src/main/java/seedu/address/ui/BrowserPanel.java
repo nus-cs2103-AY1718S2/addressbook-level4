@@ -122,7 +122,7 @@ public class BrowserPanel extends UiPart<Region> {
         email.setText(person.getEmail().value);
         rating.setText(person.getRatingDisplay());
         rating.setTextFill(Color.RED);
-        review.setText(person.getReview().value);
+        review.setText(person.getReview().toString());
         review.setWrapText(true);
         tags.getChildren().clear();
         //person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));

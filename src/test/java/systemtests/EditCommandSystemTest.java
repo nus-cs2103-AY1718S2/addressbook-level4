@@ -193,6 +193,30 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
+    @Test
+    public void populateEditCommandTemplate() {
+        //use accelerator
+        getCommandBox().click();
+        getMainMenu().populateEditCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        getResultDisplay().click();
+        getMainMenu().populateEditCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        getPersonListPanel().click();
+        getMainMenu().populateEditCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        getBrowserPanel().click();
+        getMainMenu().populateEditCommandUsingAccelerator();
+        assertPopulationFailure();
+
+        //use menu button
+        getMainMenu().populateEditCommandUsingMenu();
+        assertPopulationSuccess();
+    }
+
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, Index, Person, Index)} except that
      * the browser url and selected card remain unchanged.

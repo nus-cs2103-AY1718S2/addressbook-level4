@@ -35,6 +35,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowMyCalendarEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;
 import seedu.address.commons.events.ui.ShowReviewDialogEvent;
 import seedu.address.logic.Logic;
@@ -211,6 +212,14 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
+     * Opens calendar web page window.
+     */
+    public void handleShowMyCalendar() {
+        MyCalendarView myCalendarView = new MyCalendarView();
+        myCalendarView.start(new Stage());
+    }
+
+    /**
      * Opens the help window.
      */
     @FXML
@@ -253,6 +262,12 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleShowMyCalendarEvent(ShowMyCalendarEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleShowMyCalendar();
     }
 
     @Subscribe

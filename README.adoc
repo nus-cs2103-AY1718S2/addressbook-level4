@@ -8,19 +8,19 @@ https://www.codacy.com/app/damith/addressbook-level4?utm_source=github.com&utm_m
 https://gitter.im/se-edu/Lobby[image:https://badges.gitter.im/se-edu/Lobby.svg[Gitter chat]]
 
 ifdef::env-github[]
-image::docs/images/Uiv1.4.png[width="600"]
+image::docs/images/App Interface.png[width="600"]
 endif::[]
 
 ifndef::env-github[]
-image::docs/images/Uiv1.4.png[width="600"]
+image::docs/images/App Interface.png[width="600"]
 endif::[]
 
-* CLindar is a desktop application that intends to help university computing students to manage their tasks and events.
-** Computing student may have a tight schedule hence required to keep track of various events and deadlines
-** Computing student would be more familiar with the commands used in this application, hence would be easy to use.
-* It is a GUI app but most of its user interaction is CLI (Command Line Interface)-based.
-** This would allow fast input for users who can type fast, such as computing students.
-* You would need to have *Java Runtime Environment*(JRE) installed to run this application.
+* CLIndar is a desktop application that helps university computing students to *manage their tasks and events*.
+* It is a *Command Line Interface (CLI)-based* app that has a *Graphic User Interface (GUI)* and *Linux-style commands*.
+** The CLI system would allow fast input for users who can type fast, which most computing students are expected to do.
+** The GUI is easy on the eye and makes the chores of managing commitments more enjoyable.
+** The Linux-style commands are more familiar to computing students. Thus, they can use this application more conveniently.
+* You would need to have *Java Runtime Environment (JRE)* installed to run this application.
 
 == Site Map
 

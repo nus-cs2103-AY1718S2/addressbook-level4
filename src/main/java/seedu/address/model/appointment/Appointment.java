@@ -19,4 +19,16 @@ public class Appointment {
     public String getAppointmentDateTimeString() {
         return this.appointmentDateTime.toString();
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Appointment // instanceof handles nulls
+                && this.appointmentDateTime.equals(((Appointment) other).appointmentDateTime)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return appointmentDateTime.hashCode();
+    }
 }

@@ -310,8 +310,7 @@ public class Imdb implements ReadOnlyImdb {
         return other == this // short circuit if same object
                 || (other instanceof Imdb // instanceof handles nulls
                 && this.persons.equals(((Imdb) other).persons)
-                && this.tags.equalsOrderInsensitive(((Imdb) other).tags)
-                && this.appointments.equalsOrderInsensitive(((Imdb) other).appointments));
+                && this.tags.equalsOrderInsensitive(((Imdb) other).tags));
     }
 
     @Override

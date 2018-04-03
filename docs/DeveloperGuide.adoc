@@ -404,7 +404,6 @@ Following is a sequence diagram describing how the delete dated persons function
 
 image::DeleteBeforeSequenceDiagram.png[width="900"]
 
-
 ==== Design Considerations
 ===== Aspect: Implementation of `DeleteBeforeCommand`
 * **Alternative 1 (current choice):** Follows the general design of the `delete` command
@@ -640,8 +639,59 @@ raising functionality
 * **Alternative 2:** Implement event raising in a specially created subclass of `Command`, which is in turn inherited by `ZoomInCommand` and `ZooOutCommand`
 ** Pros: Commands that do not need to raise event do not need to inherit the event raising function
 ** Cons: Might over complicate things for these simple commands.
-
 // end::scheduling[]
+
+
+=== Import Contacts from CSV file
+
+==== Current Implementation
+The Import Contacts mechanism allows users to import contacts from a .csv file. The file should contain the headers _Name_, _Email_, _Phone_, and _Address_ with a separate contact in each row. This functionality is implemented in with classes `ImportContactsCommand` and `ImportContactsCommandParser`. Functionality is tested in `ImportContactsCommandTest`.
+
+The core functionality of the mechanism is in the `executeUndoableCommand()` function of the `ImportContactsCommand` class.
+
+The `ImportContactsCommand` borrows code from _https://github.com/callicoder/java-read-write-csv-file_ for reading the CSV file
+
+The architecture of the mechanism is specified in the below diagram:
+
+image::ImportContactDiagram.png[width="900"]
+
+
+==== Design Consideration
+
+===== Aspect: Implementation of `ImportContactsCommand`
+* **Alternative 1 (current choice):** `ImportContactsCommand`   extends `UndoableCommand` class and calls `model.addPerson`.
+
+* **Alternative 2:** Instead of extending `UndoableCommand` it would be possible to extend `AddCommand` class, and overwrite it to add a while loop to loop over the contacts imported from the CSV and add them to the model
+
+* **Alternative 3:** Instead of extending `UndoableCommand` it would be possible to extend the base class `Command`. Although this solution may be simpler at face value, it would limit the scope of `ImportContactsCommand` and may in fact not be much simpler to impliment.
+
+===== Aspect: Implementation of `ImportContactsCommandParser`
+* **Alternative 1 (current choice):** Parses the argument and creates a new `ImportContactsCommand` passing it a file path if there is any
+
+* **Alternative 2:** Because we know there can only be 1 valid argument, we could check for validity and correctness in the `ImportContactsCommand` class and not implement a parser. This could simplify the overall architecture, but it would increase coupling and decrease cohesion, which is against modern software design principles.
+
+=== Exporting Persons Command
+The exporting persons mechanism allows the user to write the current `Person` list from the `ReadOnlyAddressBook` to a .csv file. The core functionality of this mechanism is contained in the `ExportContactsCommand` class, with a parser written in `ExportContactsCommandParser`.
+
+If the user does not specify a file path, `ExportContactsCommand` will be default write to _data/exportToExisting.csv_. If the user specifies a path to a file that doesn't exist, `CSVPrinter` will create the .csv file and write to it.
+
+`ExportContactsCommand` borrows code from _https://github.com/callicoder/java-read-write-csv-file_ for creating and writing to a .csv file
+
+A diagram of the architecture is displayed below:
+
+image::ExportContactDiagram.png[width="900"]
+
+===== Aspect: Implementation of `ImportContactsCommand.getCsvToWriteTo()`
+* **Alternative 1 (current choice):** Put the logic for `getCsvToWriteTo()` in a separate function that creates and returns a local `CSVPrinter` object.
+
+* **Alternative 2:** An alternative would be to make the `CSVPrinter` object global, instead of returning a local one. This may be slightly more efficient, but it creates inherent risk in that the global variable ma ybe unintentionally modified by another class before writing. Therefore it makes sense to pass it as a local variable.
+
+* **Alternative 3:** Another option would be to simply combin the functionality of `getCsvToWriteTo()` with `executeUndoableCommand()` because they are naturally called together. Although `executeUndoableCommand()` depends on `getCsvToWriteTo()`, the reverse dependency does not hold so in order to increase coupling and decrease cohesion it's better to create a separate function for `getCsvToWriteTo()`.
+
+===== Aspect: Implementation of `ExportContactsCommandParser`
+* **Alternative 1 (current choice):** The `ExportContactsCommandParser.parse(String args)` function uses the condition `if(args.length() < 1)` to check whether the String, `args` is _null_.
+
+* **Alternative 2:** An alternative would be to simply check `if(args == null)` the problem with this approach is that it does not function correctly. The the user inputs `ec`, args is not returned as null, nor is it returned as an empty string. Instead it's returned as a _non-null string_ with `agrs.length() = 0`. Therefore the best way to check whether the user entered a file path is simply check the length of the String *args*.
 
 == Documentation
 

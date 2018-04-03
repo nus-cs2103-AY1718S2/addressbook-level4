@@ -337,14 +337,14 @@ This section describes some noteworthy details on how certain features are imple
 === Undo/Redo feature
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the organizer (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the organizer (e.g. `add`, `edit`). Such commands inherit from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 .Reference from Figure 7.
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+`UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the organizer before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while child classes implement the details of how to execute the class-specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -409,7 +409,7 @@ The following sequence diagram shows how the undo operation works:
 .UndeRedoStack sequence diagram
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the organizer to the state after the command is executed).
+Redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the organizer to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
@@ -424,7 +424,7 @@ Commands that are not undoable are not added into the `undoStack`. For example, 
 .UndoRedoStack `list` command execution
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
-The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
+The following activity diagram summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
 
 .UndoRedoStack activity diagram
 image::UndoRedoActivityDiagram.png[width="650"]
@@ -434,7 +434,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ===== Aspect: Implementation of `UndoableCommand`
 
 * **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`
-** Pros: We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
+** Pros: Any undone/redone functionality is not lost as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
 ** Cons: Hard for new developers to understand the template pattern.
 * **Alternative 2:** Just override `execute()`
 ** Pros: Does not involve the template pattern, easier for new developers to understand.
@@ -447,13 +447,13 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
 ** Pros: Will use less memory (e.g. for `delete`, just save the task being deleted).
-** Cons: We must ensure that the implementation of each individual command are correct.
+** Cons: Need to ensure that the implementation of the counter to each command is correct.
 
 
 ===== Aspect: Type of commands that can be undone/redone
 
 * **Alternative 1 (current choice):** Only include commands that modifies the organizer (`add`, `clear`, `edit`).
-** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
+** Pros: Only reverts changes that are hard to change back (the view can easily be re-modified as no data are * lost).
 ** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
 * **Alternative 2:** Include all commands.
 ** Pros: Might be more intuitive for the user.
@@ -464,15 +464,15 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ===== Aspect: Data structure to support the undo/redo commands
 
 * **Alternative 1 (current choice):** Use separate stack for undo and redo
-** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
-** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
+** Pros: Easy to understand for new Computer Science student undergraduates, who are likely to be * the new incoming developers of our project.
+** Cons: Logic is duplicated twice. For each new command executed, both `HistoryManager` and `UndoRedoStack` must be updated.
 * **Alternative 2:** Use `HistoryManager` for undo/redo
-** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
-** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
+** Pros: Do not need to maintain a separate stack, and just reuse what is already in the codebase.
+** Cons: Requires dealing with commands that have already been undone: Must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
 // tag::taskpriority[]
-=== Task's Priority Autoupdating and AutoSorting feature
+=== Task's Priority Auto-updating and Auto-sorting feature
 ==== Current Implementation
 
 The autoupdating and autosorting mechanism resides inside `UniqueTaskList`. The `UniqueTaskList` is responsible for updating each Task’s priority level and sorting the `ObservableList<Task>` whenever a new `Task` is added. In addition, whenever a `Task` is edited, the `ObservableList<Task>` is sorted again.
@@ -491,16 +491,18 @@ public void add(Task toAdd) throws DuplicateTaskException {
 }
 ----
 
+===== Priority Auto-updating feature
+
 The `updatePriority` method returns a new `Task` with a new `Priority` based on the current date, `AddedDate`, and `Deadline`.
 
 The new `Priority` level will remain within the range of 0 - 9. The new `Priority` is calculated as such :
 
-* If the current date is equal to `AddedDate`
+* If the current date is equal to the `AddedDate`
 ** `Priority` remains the same.
-* If the current date is past `Deadline`
+* If the current date is past the `Deadline`
 ** `Priority` is set to the `HIGHEST_SETTABLE_PRIORITY_LEVEL` : 9
-* If the current date is before `Deadline` and not equal to `AddedDate`
-** `Priority is calculated via the following formula :
+* If the current date is before the `Deadline` and not equal to the `AddedDate`
+** `Priority` is calculated via the following formula :
 
 [source,java]
 ----
@@ -524,11 +526,13 @@ private void sortTasks() {
 }
 ----
 
-The `sortTasks` method makes use of the `ObservableList` class’s `sort` method and `Task`’s `priorityComparator` method. The `priorityComparator` method returns a `Comparator` that sorts `Task`’s based on descending `Priority` levels. The `internalList` is sorted with respect to the comparator.
+===== Task Auto-sorting feature
+
+The `sortTasks` method makes use of the `ObservableList` class’s `sort` method and `Task`’s `priorityComparator` method. The `priorityComparator` method returns a `Comparator` that sorts `Task` s based on descending `Priority` levels. The `internalList` is sorted with respect to the comparator.
 
 ===== Scenario
 
-Consider a `addTask` method call by the `Organizer`. The current date is 2018-03-19.
+Consider an `addTask` method call by the `Organizer`. The current date is 2018-03-19.
 
 The following is a sequence diagram which represents the `Organizer` adding a Study `Task`.
 
@@ -538,12 +542,12 @@ image::OrganizerAddTaskSequenceDiagram.png[width="800"]
 Suppose the `tasks` currently contains the following two `Task` s.
 
 .`tasks` 's initial `Task` s
-image::OrganizerAddTaskDiagram1.png[width="800"]
+image::OrganizerAddTaskDiagram1.png[width="600"]
 
 The following figure represents the "Study" `Task`.
 
 ."Study" `Task`
-image::OrganizerAddTaskDiagram2.png[width="300"]
+image::OrganizerAddTaskDiagram2.png[width="200"]
 
 When `tasks` calls `updatePriority(Study)`, the new priority level is calculated as such :
 
@@ -563,12 +567,12 @@ newPriority = 0 + 4 = 4
 A new "Study" `Task` is created and added to the `internalList`.
 
 .`internalList` after "Study" `Task` is added
-image::OrganizerAddTaskDiagram3.png[width="800"]
+image::OrganizerAddTaskDiagram3.png[width="600"]
 
 The `sortTasks` method is then called, which calls the `priorityCompartor` method, and uses the `Comparator` returned to sort the `Task` s. This results in the following `UniqueTaskList`.
 
 .`internalList` after `sortTasks` is called
-image::OrganizerAddTaskDiagram4.png[width="800"]
+image::OrganizerAddTaskDiagram4.png[width="600"]
 
 ==== Design Considerations
 ===== Aspect : Implementation of `updatePriority`
@@ -586,7 +590,7 @@ image::OrganizerAddTaskDiagram4.png[width="800"]
 ** Pros : Easy to implement.
 ** Cons : A new object is created twice during every addition, even if `Priority` is not updated; Hence slightly inefficient.
 * Alternative 2 : Edit the `Priority` parameter of the `Task`
-** Pros : No new objects need to be created.
+** Pros : No new objects are created.
 ** Cons : Requires major overhaul of `Task` and it’s parameters to be mutable.
 
 ===== Aspect : Scope of `updatePriority` and `sortTasks`
@@ -609,12 +613,16 @@ The calendar feature is facilitated by the `Calendar` class, which supports the 
 .UML Class Diagram for Calendar
 image::CalendarComponentClassDiagram.png[width="800"]
 
-As you can see from the diagram, `MonthView` facilitates the drawing of the calendar, while `Calendar` supports the display of the calendar onto the `CalendarPanel`. The `MonthView` interacts very closely with the corresponding FXML file, and the following diagram shows the basic layout of the calendar:
+As you can see from the diagram, `MonthView` facilitates the drawing of the calendar, while `Calendar` supports the display of the calendar onto the `CalendarPanel`. The `MonthView` interacts very closely with the corresponding FXML file.
+
+The following diagram shows the basic layout of the calendar:
 
 .Basic Calendar Layout
-image::MonthViewLayoutDiagram.png[width="800"]
+image::MonthViewLayoutDiagram.png[width="700"]
 
-The basic calendar layout (refer to Figure 25) is reflected in the `MonthView.fxml` file, and is loaded by `MonthView`. `MonthView` uses the JavaFX layout objects extensively when drawing the calendar. An example would be the `addMonthDate` method, which adds a particular date to the exact `column` and `row` in the `taskCalendar`. The `addMonthDate` method is implemented as such:
+The basic calendar layout (refer to Figure 25) is reflected in `MonthView.fxml`. It is loaded by `MonthView` which uses the JavaFX layout objects extensively when drawing the calendar. An example would be the `addMonthDate` method, which adds a particular date to the exact `column` and `row` of the `taskCalendar`.
+
+The `addMonthDate` method is implemented as such:
 
 [source,java]
 ----
@@ -650,35 +658,33 @@ Subtask feature allows user to split their tasks into multiple subtasks. This fe
 manage their task. It is implemented using `Subtask` class and `UniqueSubtaskList` class as shown by the diagram below:
 
 .Subtask UML Class Diagram
-image::SubtaskComponentDiagram.png[width="800"]
+image::SubtaskComponentDiagram.png[width="500"]
 
-`UniqueSubtaskList` is created to ensure that no task have a duplicated subtask.
+`UniqueSubtaskList` is created to ensure that no task has a duplicated subtask.
 
 *Subtask management*
 
-To manage the subtasks (Add, edit, etc), the task should be copied since `Task` is immutable.
+To manage the subtasks (Add, edit, etc), a copy of the `Task` object is created, since `Task` is immutable.
 
 ==== Design Consideration
 ===== Aspect: Implementation of `Subtask`
 * **Alternative 1 (current implementation):** Add a new class `Subtask`
 ** Pros: Better isolation and easier modification to `Subtask` if needed.
-** Cons: Restricted the possibility of having a subtask that have subtasks.
+** Cons: Restricts the possibility of having a subtask that has subtasks.
 
 * **Alternative 2:** Use current `Task` class
 ** Pros: Easier to implement and subtask will share the same properties with `Task`.
-** Cons: Possibility of having a cyclic subtask (a task that also a subtask of it self) if not handled carefully.
+** Cons: Possibility of having a cyclic subtask (a task that is also a subtask of it self) if not handled carefully.
 
 ===== Aspect: Implementation of `UniqueSubtaskList`
 * **Alternative 1 (current implementation):** Use `List` to store subtasks.
-** Pros: Easier to implement
-** Cons: Performance issue will appear when that data is large. Since any operation in `UniqueSubtaskList` except lookup
-is `O(n)`
+** Pros: Easier to implement.
+** Cons: Performance issues when data is large, since most operations in `UniqueSubtaskList`
+is `O(n)`.
 
-* **Alternative 2:** Use a combination of BBST and LinkedList to store subtasks.
-** Pros: Faster that the first alternative since it only took `O(log n)` to do every operation.
-** Cons: Harder to implement and more robust testing is required since it is more bug prone than the first alternative.
-
-The second alternative is planned to be implemented in the near future.
+* **Alternative 2 (Planned for implementation):** Use a combination of BBST and LinkedList to store subtasks.
+** Pros: Faster than the first alternative since each operation is `O(log n)`.
+** Cons: Harder to implement and more robust testing is required since it is more bug prone.
 
 // end::subtask[]
 
@@ -686,33 +692,34 @@ The second alternative is planned to be implemented in the near future.
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
 
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
-* Currently log messages are output through: `Console` and to a `.log` file.
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>).
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level.
+* Currently log messages are output through the `Console` and to a `.log` file.
 
 *Logging Levels*
 
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+* `SEVERE` : A message level indicating a _serious_ failure (e.g. failure resulting in application termination).
+* `WARNING` : A message level indicating a _potential_ problem (e.g. application can still continue, but do so with caution).
+* `INFO` : A message level for _informational_ messages (e.g. noteworthy actions by the application).
+* `FINE` : A message level providing _tracing_ information (e.g. print the actual list of an array instead of its size).
 
 [[Implementation-Configuration]]
 === Configuration
 
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+Certain properties of the application (e.g App name, logging level) can be controlled through the configuration file (default: `config.json`).
 
 == Documentation
 
-We use asciidoc for writing documentation.
+Asciidoc is used for writing documentation.
 
 [NOTE]
-We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+Asciidoc was chosen over Markdown as asciidoc provides more flexibility in formatting.
 
 === Editing Documentation
 
-See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
-Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
+See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of edits.
+
+Alternatively, the AsciiDoc plugin for IntelliJ provides a real-time view of `.adoc` file edits .
 
 === Publishing Documentation
 
@@ -720,14 +727,14 @@ See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to dep
 
 === Converting Documentation to PDF format
 
-We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
+https://www.google.com/chrome/browser/desktop/[Google Chrome] can be used for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
-Here are the steps to convert the project documentation files to PDF format.
+The following are the steps to convert the project documentation files to PDF format:
 
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
-.  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
+.  Access the generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
 .  Within Chrome, click on the `Print` option in Chrome's menu.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
+.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For the best results, use the settings indicated in the screenshot below.
 
 .Saving documentation as PDF files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
@@ -740,46 +747,46 @@ image::chrome_save_as_pdf.png[width="300"]
 There are three ways to run tests.
 
 [TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+The most reliable way to run tests is the third method. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
 *Method 1: Using IntelliJ JUnit test runner*
 
-* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`.
+* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`.
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`).
 
 [NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
 
 *Method 3: Using Gradle (headless)*
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
+Thanks to the https://github.com/TestFX/TestFX[TestFX] library, GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. This means that the developer is free to do something else while the tests are running.
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+To run the tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`).
 
 === Types of tests
 
-We have two types of tests:
+There are two types of tests:
 
-.  *GUI Tests* - These are tests involving the GUI. They include:
-.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
-.. _Unit tests_ that test the individual components. These are in `seedu.organizer.ui` package.
-.  *Non-GUI Tests* - These are tests not involving the GUI. They include:
+.  *GUI Tests* - Tests involving the GUI. They include:
+.. _System Tests_ that tests the entire App by simulating user actions on the GUI. These are found in the `systemtests` package.
+.. _Unit tests_ that test individual components. These are found in `seedu.organizer.ui` package.
+.  *Non-GUI Tests* - Tests not involving the GUI. They include:
 ..  _Unit tests_ targeting the lowest level methods/classes. +
 e.g. `seedu.organizer.commons.StringUtilTest`
-..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
+..  _Integration tests_ that check the integration of multiple code units (these code units are assumed to be working). +
 e.g. `seedu.organizer.storage.StorageManagerTest`
-..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
+..  Hybrids of _unit_ and _integration_ tests. These tests check multiple code units as well as how they are connected together. +
 e.g. `seedu.organizer.logic.LogicManagerTest`
 
 
 === Troubleshooting Testing
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
-* Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
+* Reason: `UserGuide.html`, a dependency which should be found in `src/main/resources/docs`, is missing.
 * Solution: Execute Gradle task `processResources`.
 
 == Dev Ops
@@ -790,18 +797,18 @@ See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build auto
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] are used to perform _Continuous Integration_ on the project. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Coverage Reporting
 
-We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
+https://coveralls.io/[Coveralls] is used to track the code coverage of the project. See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
 
 === Documentation Previews
-When a pull request has changes to asciidoc files, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
+When a pull request contains changes to asciidoc files, https://www.netlify.com/[Netlify] can be used to preview a HTML version of the edited asciidoc files. See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
 === Making a Release
 
-Here are the steps to create a new release:
+The following are steps to create a new release:
 
 .  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
@@ -810,7 +817,7 @@ Here are the steps to create a new release:
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, PrioriTask depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than the following alternatives: +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
@@ -819,42 +826,43 @@ b. Require developers to download those libraries manually (this creates extra w
 
 *Target user profile*:
 
-* busy university students who has many tasks to keep track of, and are reasonably comfortable using CLI apps
-* is taking many modules, and is part of various student organizations and activities
-* prefers a digital organizer over a physical organizer
-* requires help in monitoring the numerous tasks and their levels of importance
-* would like assistance for the planning of tasks
-* is forgetful, and requires constant reminders
-* prefers desktop apps over other types
-* can type fast
-* prefers typing over mouse input
+* Busy university students who have many tasks to keep track of.
+* Takes many modules, is part of various student organizations, and has many activities.
+* Prefers a digital organizer over a physical organizer.
+* Requires help in monitoring numerous tasks and their levels of importance.
+* Would like assistance in task planning.
+* Is forgetful, and requires constant reminders.
+* Prefers desktop apps over other types.
+* Is reasonably comfortable with CLI apps.
+* Can type fast.
+* Prefers typing over mouse input.
 
 *Value proposition*:
 
-Helps busy university students keep track of their tasks and priorities
+Help busy university students keep track of their tasks and priorities.
 
 *Feature contribution*:
 
 * Agus Sentosa Hermawan
 ** Major : Subtasks parameter
-*** Allows tasks to be split into subtasks for better management
+*** Allows tasks to be split into subtasks for better management.
 ** Minor : Toggle command
-*** Allows tasks to be marked as completed
+*** Allows tasks to be marked as completed.
 * Dominic Kenn Lim
 ** Major : User login
-*** Allows multiple users to access their private tasks within the same machine
+*** Allows multiple users to access their private tasks within the same machine.
 ** Minor : Priority autosorting and autoupdate
-*** Allows application to automatically manage task priority levels so that the user does not have to
+*** Allows application to automatically manage task priority levels so that the user does not have to.
 * Natania Djohaari
 ** Major : Recurring Tasks
-*** Helps users automatically create tasks that are recurring
-** Minor : RemoveTag method
-*** Allows application to remove a specific tag from all tasks
+*** Helps users automatically create tasks that are recurring.
+** Minor : Date completed parameter
+*** Allows users to view what date the task has been completed on.
 * Yeo Guek Ling
 ** Major : Calendar
-*** Allows users to be able to have a more concise view of task deadlines
+*** Allows users to be able to have a more concise view of task deadlines.
 ** Minor : Find deadline / description command
-*** Allows users to be able to search the organizer for tasks even when they have forgotten the task's name
+*** Allows users to be able to search the organizer for tasks even when they have forgotten the task's name.
 
 [appendix]
 == User Stories
@@ -953,40 +961,70 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *`|user who has a user account |retrieve my password |login to my account if I forget my password
 |=======================================================================
 
-_{More to be added}_
-
 [appendix]
 == Use Cases
 
 (For all use cases below, the *System* is the `Organizer` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete task
+=== Use case: Add task
 
 *MSS*
 
-1.  User requests to list tasks
-2.  Organizer shows a list of tasks
-3.  User requests to delete a specific task in the list
-4.  Organizer deletes the task
+1.  User creates an account.
+2.  User logs into PrioriTask.
+3.  User requests to add a task.
+4.  Organizer shows the newly added task as part of a list of all tasks.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 1a. User already exists.
 +
-Use case ends.
+** 1a1. Organizer shows an error message.
++
+Use case resumes at step 1.
 
-* 3a. The given index is invalid.
+* 2a. User does not exist.
 +
-[none]
-** 3a1. Organizer shows an error message.
+** 2a1. Organizer shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+* 3a. Invalid parameters given.
++
+** 3a1. Organizer shows an error message.
++
+Use case resumes at step 3.
+
+[discrete]
+=== Use case: Delete task
+
+*MSS*
+
+1.  User logs into PrioriTask.
+2.  User requests to delete a task.
+3.  Organizer shows a list of tasks without the deleted task.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User does not exist.
++
+** 1a1. Organizer shows an error message.
++
+Use case resumes at step 1.
+
+* 2a. Invalid index is given.
++
+** 2a1. Organizer shows an error message.
++
+Use case resumes at step 2.
+
 
 [appendix]
 == Non Functional Requirements
@@ -1021,7 +1059,7 @@ These instructions only provide a starting point for testers to work on; testers
 
 .. Download the jar file and copy into an empty folder.
 .. Double-click the jar file. +
-   Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   Expected: Shows the GUI with an empty task list. The window size may not be optimum.
 
 . Saving window preferences
 

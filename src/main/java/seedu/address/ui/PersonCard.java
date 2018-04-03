@@ -58,7 +58,7 @@ public class PersonCard extends UiPart<Region> {
 
         if (person.getProfilePicture().filePath != null) {
             imageView.setImage(person.getProfilePicture().getImage());
-         }
+        }
         //@@author KevinCJH
         initTags(person);
     }

@@ -3,18 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTENT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMETABLE_LINK;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
+import static seedu.address.logic.parser.CliSyntax.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -129,6 +118,10 @@ public class CommandTestUtil {
     public static final String INFORMATION_A = "Group A";
     public static final String VALID_INFORMATION = "GROUP A";
     public static final String INVALID_INFORMATION = "Group! A"; //'!' not supported in information
+
+    public static final String VALID_DESC_GROUP = " " + PREFIX_GROUP + VALID_INFORMATION + " " + PREFIX_NAME + VALID_NAME_BOB;
+    public static final String INVALID_DESC_NO_GROUP = " " + PREFIX_NAME + VALID_NAME_BOB;
+    public static final String INVALID_DESC_NO_NAME = " " + PREFIX_GROUP + "Group A" ;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)

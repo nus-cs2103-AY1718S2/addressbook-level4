@@ -145,6 +145,7 @@ public class AddressBookParserTest {
         assertEquals(new AddGroupCommand(group), command);
     }
 
+
     @Test
     public void parseCommand_addGroupAlias() throws Exception {
         Group group = new GroupBuilder().build();
@@ -286,8 +287,6 @@ public class AddressBookParserTest {
                 ListGroupMembersCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new ListGroupMembersCommand(new TagContainKeywordsPredicate(keywords)), command);
     }
-
-
 
     @Test
     public void parseCommand_select() throws Exception {

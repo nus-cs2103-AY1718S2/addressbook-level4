@@ -54,6 +54,7 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author kexiaowen
     /**
      * Parses {@code sortField} into a {@code SortCommand.SortField} and returns it.
      * Leading and trailing whitespaces will be trimmed.
@@ -73,6 +74,7 @@ public class ParserUtil {
         }
     }
 
+    //@@author
     /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
@@ -169,6 +171,7 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
     }
 
+    //@@author kexiaowen
     /**
      * Parses a {@code String university} into an {@code University}.
      * Leading and trailing whitespaces will be trimmed.
@@ -195,6 +198,7 @@ public class ParserUtil {
                 university.get())) : Optional.empty();
     }
 
+    //@@author mhq199657
     /**
      * Parses a {@code String expectedGraduationYear} into an {@code ExpectedGraduationYear}.
      * Leading and trailing whitespaces will be trimmed.
@@ -273,6 +277,7 @@ public class ParserUtil {
                 gradePointAverage.get())) : Optional.empty();
     }
 
+    //@@author kexiaowen
     /**
      * Parses a {@code String jobApplied} into a {@code JobApplied}.
      * Leading and trailing whitespaces will be trimmed.
@@ -457,6 +462,7 @@ public class ParserUtil {
         return sortOrder.isPresent() ? Optional.of(parseSortOrder(sortOrder.get())) : Optional.empty();
     }
 
+    //@@author
     /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
@@ -483,7 +489,7 @@ public class ParserUtil {
         }
         return tagSet;
     }
-
+    //@@author mhq199657
     /**
      * Parses a {@code String resume} into an {@code Resume}.
      * Leading and trailing whitespaces will be trimmed.

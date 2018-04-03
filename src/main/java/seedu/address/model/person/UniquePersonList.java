@@ -95,6 +95,7 @@ public class UniquePersonList implements Iterable<Person> {
         setPersons(replacement);
     }
 
+    //@@author kexiaowen
     /**
      * Sorts the list based on overall rating in ascending order
      */
@@ -140,6 +141,7 @@ public class UniquePersonList implements Iterable<Person> {
         Collections.reverse(internalList);
     }
 
+    //@@author
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */

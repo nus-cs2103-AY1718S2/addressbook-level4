@@ -13,7 +13,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Status;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-
+//@@author mhq199657
 /**
  * Update status of an existing person in HR+.
  */
@@ -43,7 +43,6 @@ public class StatusCommand extends UndoableCommand {
 
     private Person personToUpdateStatus;
     private Person updatedPerson;
-
     /**
      * @param index of the person in the filtered person list to update status
      * @param updatedStatus updatedStatus

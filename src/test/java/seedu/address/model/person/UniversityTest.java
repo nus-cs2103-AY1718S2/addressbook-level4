@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import seedu.address.testutil.Assert;
 
+//@@author kexiaowen
 public class UniversityTest {
     @Test
     public void constructor_null_throwsNullPointerException() {

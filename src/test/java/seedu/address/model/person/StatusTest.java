@@ -9,6 +9,7 @@ import org.junit.Test;
 import seedu.address.testutil.Assert;
 
 public class StatusTest {
+    //@@author mhq199657
     @Test
     public void constructor_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> new Status(null));

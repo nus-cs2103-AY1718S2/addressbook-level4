@@ -17,6 +17,7 @@ import seedu.address.model.person.Rating;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author kexiaowen
 /**
  * Rates a candidate after an interview.
  */

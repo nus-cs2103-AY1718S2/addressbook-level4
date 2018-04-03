@@ -16,6 +16,7 @@ import seedu.address.logic.commands.RateCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Rating;
 
+//@@author kexiaowen
 /**
  * Parses input arguments and creates a new RateCommand object
  */

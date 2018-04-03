@@ -446,7 +446,7 @@ image::FilterCommandSequenceDiagram.png[width="800"]
 *** creating `Predicate` from `FilterRange`
 *** unioning these `Predicate`
 
-===== Ascpect: Implementation of range tracker: `FilterRange<E>`
+===== Aspect: Implementation of range tracker: `FilterRange<E>`
 * *Alternative 1 (current choice)*: All user input will either be in form of `ToBeFilteredClassPrefix/singletonValue, lowerRange - higherRange`. Both singleton value and range will be parsed into a `FilterRange<ToBeFilteredClass>`.
 ** Pros: It ensures the user input is valid since `FilterRange<E>` can call `E.isValid()` to check. This ensures the integrity of `Predicate` later.
 

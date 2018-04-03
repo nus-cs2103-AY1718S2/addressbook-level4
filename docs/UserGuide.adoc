@@ -176,13 +176,13 @@ Format: `addplatform INDEX [l/LINK]...`
 ========================================================================
 [halign="left",valign="top",options="header"]
 |=======================================================================
-|Accepted Facebook links may take the form: |Accepted Twitter links may take the form:
+|Valid Facebook Link Forms |Valid Twitter Link Forms
 a|
 * `\https://www.facebook.com/<profile username>`
 * `\https://facebook.com/<profile username>`
 * `\http://www.facebook.com/<profile username>`
 * `\http://facebook.com/<profile username>`
-* `\www.facebook.com/<profile username>`
+* `www.facebook.com/<profile username>`
 * `facebook.com/<profile username>`
 * `facebook.com/profile.php?id=<user profile id>`
 a|
@@ -190,7 +190,7 @@ a|
 * `\https://twitter.com/<username handle>`
 * `\http://www.twitter.com/<username handle>`
 * `\http://twitter.com/<username handle>`
-* `\www.twitter.com/<username handle>`
+* `www.twitter.com/<username handle>`
 * `twitter.com/<username handle>`
 |=======================================================================
 ========================================================================

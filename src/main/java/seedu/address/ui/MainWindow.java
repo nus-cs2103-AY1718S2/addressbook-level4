@@ -167,6 +167,7 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    //@@author ongkuanyang
     /**
      * Sets the default theme based on UserPrefs
      */
@@ -175,6 +176,7 @@ public class MainWindow extends UiPart<Stage> {
         String fullPath = getClass().getResource(this.theme).toExternalForm();
         primaryStage.getScene().getStylesheets().add(fullPath);
     }
+    //@@author
 
     /**
      * Returns the current size and the position of the main Window.
@@ -193,6 +195,7 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    //@@author ongkuanyang
     /**
      * Switches the current theme
      */
@@ -210,7 +213,7 @@ public class MainWindow extends UiPart<Stage> {
         fullPath = getClass().getResource(this.theme).toExternalForm();
         primaryStage.getScene().getStylesheets().add(fullPath);
     }
-
+    //@@author
 
     void show() {
         primaryStage.show();

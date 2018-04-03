@@ -37,6 +37,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;
 import seedu.address.commons.events.ui.ShowReviewDialogEvent;
+import seedu.address.commons.events.ui.ShowTodoListEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.theme.Theme;
@@ -218,6 +219,15 @@ public class MainWindow extends UiPart<Stage> {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
+
+    /**
+     * Opens the todolist window.
+     */
+    @FXML
+    public void handleTodoList(TodoListWindow todoListWindow) {
+        todoListWindow.show();
+    }
+
     @FXML
     private void handleChangeDarkTheme() {
         EventsCenter.getInstance().post(new ChangeThemeEvent("dark"));
@@ -252,6 +262,12 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleShowTodoListEvent(ShowTodoListEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleTodoList(event.getTodoListWindow());
     }
 
     @Subscribe

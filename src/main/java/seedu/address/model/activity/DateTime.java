@@ -3,90 +3,69 @@ package seedu.address.model.activity;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
-//@@author YuanQQLer
+//@@author Kyomian
 /**
- * Represents a Activity's date and time in the desk board.
- * Guarantees: immutable; is valid as declared in {@link #isValidDateAndTime(String)}
+ * Represents an Activity's datetime in the desk board.
+ * Guarantees: immutable; is valid as declared in {@link #isValidDateTime(String)}
  */
 public class DateTime {
 
-    public static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy hh:mm";
+    public static final String DEFAULT_DATETIME_FORMAT = "d/M/y H:m";
     public static final String MESSAGE_DATETIME_CONSTRAINTS =
-            "Date and  Time numbers should be a date and should be in the format of "
-                    + DEFAULT_DATE_FORMAT;
-    // TODO : FIND A REGEX TO VALIDATE THE DATE AND TIME.
-    public static final String DATETIME_VALIDATION_REGEX = ".*";
+            "Date and Time should be in the format of " + DEFAULT_DATETIME_FORMAT;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DEFAULT_DATETIME_FORMAT);
 
-    private final String value;
-    private Date date;
+    private final LocalDateTime dateTime;
+    private final String dateTimeString;
+
     /**
      * Constructs a {@code DateTime}.
      *
-     * @param dateAndTime A valid phone number.
+     * @param value A valid datetime.
      */
-    public DateTime(String dateAndTime) {
-        requireNonNull(dateAndTime);
-        checkArgument(isValidDateAndTime(dateAndTime), MESSAGE_DATETIME_CONSTRAINTS);
-        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
-        try {
-            date = sdf.parse(dateAndTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        this.value = dateAndTime;
+    public DateTime(String value) {
+        requireNonNull(value);
+        checkArgument(isValidDateTime(value), MESSAGE_DATETIME_CONSTRAINTS);
+        this.dateTime = LocalDateTime.parse(value, formatter);
+        this.dateTimeString = value;
     }
 
     /**
-     * Returns true if a given string is a valid activity phone number.
+     * Returns true if a given string is a valid datetime.
      */
-    public static boolean isValidDateAndTime(String test) {
-        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
+    public static boolean isValidDateTime(String value) {
         try {
-            sdf.parse(test);
+            LocalDateTime.parse(value, formatter);
             return true;
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (DateTimeParseException dtpe) {
+            dtpe.printStackTrace();
             return false;
         }
-        //return test.matches(DATETIME_VALIDATION_REGEX);
     }
 
-    /**
-     * Get the date time as java.util.Date
-     * @return date and time infor.
-     */
-    public Date getDate() {
-        return this.date;
+    public LocalDateTime getLocalDateTime() {
+        return this.dateTime;
     }
-
 
     @Override
     public String toString() {
-        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
-        String result = value;
-        try {
-            result = sdf.format(date);
-        } catch (Exception e) {
-            e.printStackTrace();
-            result = value;
-        }
-        return result;
+        return this.dateTimeString;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DateTime // instanceof handles nulls
-                && this.value.equals(((DateTime) other).value)); // state check
+                && this.dateTime.equals(((DateTime) other).dateTime)); // state check
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return dateTime.hashCode();
     }
 
 }

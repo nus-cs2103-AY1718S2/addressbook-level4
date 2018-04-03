@@ -31,7 +31,7 @@ public class Location {
     }
 
     /**
-     * Returns true if a given string is a valid activity name.
+     * Returns true if a given string is a valid location.
      */
     public static boolean isValidLocation(String test) {
         return test.matches(LOCATION_VALIDATION_REGEX);

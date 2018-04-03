@@ -24,6 +24,10 @@ import seedu.address.model.person.Expenditure;
 import seedu.address.model.person.Income;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.policy.Date;
+import seedu.address.model.policy.Month;
+import seedu.address.model.policy.Price;
+
 import seedu.address.model.tag.Tag;
 
 /**
@@ -342,5 +346,53 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String value} into a {@code Price}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code value} is invalid.
+     */
+    public static Price parsePrice(String price) throws IllegalValueException {
+        requireNonNull(price);
+        Double trimmedPrice = Double.parseDouble(price.trim());
+        if (!Price.isValidPrice(trimmedPrice)) {
+            throw new IllegalValueException(Price.PRICE_CONSTRAINTS);
+        }
+        return new Price(trimmedPrice);
+    }
+
+
+    /**
+     * Parses a {@code String date} into a {@code Date}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code date} is invalid.
+     */
+    public static Date parsePolicyDate(String date) throws  IllegalValueException {
+        requireNonNull(date);
+        String trimmedInput = date.trim();
+
+        String[] parts = trimmedInput.split("/");
+        if (parts.length != 3) {
+            throw new IllegalValueException(Date.DATE_CONSTRAINTS);
+        }
+
+        Integer day = Integer.parseInt(parts[0]);
+        Integer monthValue = Integer.parseInt(parts[1]) - 1;    //month value is from 0 to 11 if the input is valid
+        Integer year = Integer.parseInt(parts[2]);
+
+        if (monthValue < 0 || monthValue >= Month.values().length) {
+            throw new IllegalValueException(Date.DATE_CONSTRAINTS);
+        }
+
+        Month month = Month.values()[monthValue];
+
+        if (!Date.isValidDate(day, month, year)) {
+            throw new IllegalValueException(Date.DATE_CONSTRAINTS);
+        }
+
+        return new Date(day, month, year);
     }
 }

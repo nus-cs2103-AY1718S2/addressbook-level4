@@ -8,8 +8,8 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
  * Guarantees: immutable; is valid as declared in {@link #isValidDate(Integer, Month, Integer)}
  */
 public class Date implements Comparable<Date> {
-    public static final String DATE_CONSTRAINTS =
-            "Day must be from 1 to 28, 29, 30 or 31 depending on the month and year. Year must be from 1950 to 2150.";
+    public static final String DATE_CONSTRAINTS = " Format must be DD/MM/YYYY (leading 0 can be omitted). "
+            + "Day must be from 1 to 28, 29, 30 or 31 depending on the month and year. Year must be from 1950 to 2150.";
 
     public final Integer day;
     public final Month month;

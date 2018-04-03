@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddPolicyCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -25,6 +26,7 @@ import seedu.address.logic.commands.RemoveAppointmentsCommand;
 import seedu.address.logic.commands.ReturnMonthViewCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -106,7 +108,10 @@ public class AddressBookParser {
             return new LookDateCommandParser().parse(arguments);
 
         case ReturnMonthViewCommand.COMMAND_WORD:
-            return  new ReturnMonthViewCommand();
+            return new ReturnMonthViewCommand();
+
+        case AddPolicyCommand.COMMAND_WORD:
+            return new AddPolicyCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

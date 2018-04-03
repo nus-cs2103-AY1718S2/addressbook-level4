@@ -1,13 +1,11 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.TagNotFoundException;
-import seedu.address.model.tag.UniqueTagList;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Delete certain tags in the address book.

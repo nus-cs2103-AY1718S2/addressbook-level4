@@ -12,7 +12,7 @@ import seedu.address.ui.MainWindow;
  * Locate the address of a person by keywords on Google Map.
  * Keyword matching is case sensitive.
  */
-public class LocateCommand extends Command {
+public class LocateCommand extends Command implements PopulatableCommand{
     public static final String COMMAND_WORD = "locate";
     public static final String COMMAND_ALIAS = "lo";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Locate person whose fields contain any of "
@@ -30,6 +30,13 @@ public class LocateCommand extends Command {
 
     public LocateCommand(Predicate<Person> predicate) {
         this.predicate = predicate;
+    }
+
+    /**
+     * For call in PopulatePrefixRequestEvent class, to assign string values.
+     */
+    public LocateCommand() {
+        predicate = null;
     }
 
     @Override
@@ -52,5 +59,25 @@ public class LocateCommand extends Command {
                 || (other instanceof FindCommand // instanceof handles nulls
                 && this.predicate.equals(((LocateCommand) other).predicate));
         // state check
+    }
+
+    @Override
+    public String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
+    @Override
+    public String getTemplate() {
+        return COMMAND_WORD + "-";
+    }
+
+    @Override
+    public int getCaretIndex() {
+        return getTemplate().length();
+    }
+
+    @Override
+    public String getUsageMessage() {
+        return MESSAGE_USAGE;
     }
 }

@@ -102,6 +102,23 @@ public class UniqueAppointmentEntryList implements Iterable<AppointmentEntry> {
         return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
     }
 
+    /**
+     * Ensures every appointment entry in the argument list exists in this object.
+     */
+    public void mergeFrom(UniqueAppointmentList from, String patientName) throws DuplicatedAppointmentEntryException {
+        final Set<Appointment> alreadyInside = from.toSet();
+
+        for (Appointment appt : alreadyInside) {
+            AppointmentEntry newEntry = new AppointmentEntry(appt, patientName);
+
+            if (!contains(newEntry)) {
+                add(newEntry);
+            }
+        }
+
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+    
     @Override
     public int hashCode() {
         assert CollectionUtil.elementsAreUnique(internalList);

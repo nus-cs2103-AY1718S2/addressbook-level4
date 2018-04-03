@@ -88,12 +88,19 @@ public class Imdb implements ReadOnlyImdb {
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
 //        setAppointments(new HashSet<>(newData.getAppointmentList()));
+
         setQueue(new LinkedHashSet<>(newData.getUniquePatientQueueNo()));
 
         try {
             setPersons(syncedPatientList);
         } catch (DuplicatePatientException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
+        }
+
+        try {
+            syncWithMasterAppointment(newData.getPersonList());
+        } catch (UniqueAppointmentEntryList.DuplicatedAppointmentEntryException e) {
+            throw new AssertionError("IMDB should not have duplicate appointment");
         }
     }
 
@@ -155,6 +162,20 @@ public class Imdb implements ReadOnlyImdb {
         return new Patient(patient.getName(), patient.getNric(), patient.getPhone(), patient.getEmail(),
                 patient.getAddress(), patient.getDob(), patient.getBloodType(),
                 patient.getRemark(), patient.getRecordList(), correctTagReferences, patient.getAppointments());
+    }
+
+    /**
+     *  Updates the master appointment list to include appointment in {@code patient} that are not in the list.
+     *  @return a copy of this {@code patient} such that every appointment in this patient points to a AppointmentEntry
+     *  object in the master list.
+     */
+    private void syncWithMasterAppointment(List<Patient> patientList) throws UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
+
+        for (Patient p :patientList) {
+            final UniqueAppointmentList patientAppt = new UniqueAppointmentList(p.getAppointments());
+
+            appointments.mergeFrom(patientAppt, p.getName().fullName);
+        }
     }
 
     /**

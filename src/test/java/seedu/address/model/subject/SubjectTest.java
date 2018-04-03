@@ -44,14 +44,11 @@ public class SubjectTest {
         Assert.assertThrows(NullPointerException.class, () -> Subject.isValidSubjectName(null));
         // invalid subject name
         assertFalse(Subject.isValidSubjectName("")); // empty string
-        assertFalse(Subject.isValidSubjectName(" ")); // spaces only
-        assertFalse(Subject.isValidSubjectName("^")); // only non-alphanumeric characters
         assertFalse(Subject.isValidSubjectName("English*")); // contains non-alphanumeric characters
         assertFalse(Subject.isValidSubjectName("2djs22")); //contains alphanumeric characters
 
         // valid name
         assertTrue(Subject.isValidSubjectName("English")); // alphabets only
-        assertTrue(Subject.isValidSubjectName("Mathematics")); // numbers only
     }
 
     @Test
@@ -73,7 +70,7 @@ public class SubjectTest {
     @Test
     public void equals_compareTwoDifferentObjects_notEquals() {
         Subject subject1 = new Subject("English A1");
-        Subject subject3  = new Subject("Mathematics A2");
+        Subject subject3  = new Subject("EMath A2");
 
         //Compare two different subjects
         assertNotEquals(subject1, subject3);

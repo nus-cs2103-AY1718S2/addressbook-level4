@@ -37,12 +37,12 @@ public class CommandTestUtil {
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_TAG_REMOVE = "remove";
-    public static final String VALID_SUBJECT_MATHEMATICS = "Mathematics A1";
+    public static final String VALID_SUBJECT_MATHEMATICS = "EMath A1";
     public static final String VALID_SUBJECT_ENGLISH = "English A1";
-    public static final String VALID_SUBJECT_PHYSICS = "Physics A1";
+    public static final String VALID_SUBJECT_PHYSICS = "Phy A1";
     public static final String VALID_SUBJECT_MALAY = "Malay A1";
-    public static final String VALID_SUBJECT_BIOLOGY = "Biology A1";
-    public static final String VALID_SUBJECT_HISTORY = "History A1";
+    public static final String VALID_SUBJECT_BIOLOGY = "Bio A1";
+    public static final String VALID_SUBJECT_HISTORY = "Hist A1";
     public static final String VALID_REMARK = " ";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;

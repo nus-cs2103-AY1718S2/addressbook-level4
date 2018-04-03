@@ -30,6 +30,11 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
         }
 
         String[] argsArray = trimmedArgs.split("\\s");
+
+        if (argsArray.length < 3) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AddAppointmentCommand.MESSAGE_USAGE));
+        }
         return new AddAppointmentCommand(new NameContainsKeywordsPredicate(Arrays.asList(argsArray)), argsArray[1],
                 argsArray[2]);
     }

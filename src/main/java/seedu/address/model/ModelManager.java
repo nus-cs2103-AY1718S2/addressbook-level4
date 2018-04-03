@@ -14,6 +14,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AppointmentChangedEvent;
 import seedu.address.commons.events.model.ImdbChangedEvent;
+import seedu.address.commons.events.ui.ShowCalendarViewRequestEvent;
 import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.appointment.UniqueAppointmentEntryList;
 import seedu.address.model.appointment.UniqueAppointmentList;
@@ -72,6 +73,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void indicateAppointmentChanged(Patient patient) {
         raise(new AppointmentChangedEvent(patient, imdb));
+    }
+
+    private void indicateCalendarChanged() {
+        raise(new ShowCalendarViewRequestEvent(imdb.getAppointmentEntryList()));
     }
 
     @Override
@@ -158,12 +163,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void addPatientAppointment(Patient patient, String dateTimeString) throws
+    public synchronized void addPatientAppointment(Patient patient, String dateTimeString) throws
             UniqueAppointmentList.DuplicatedAppointmentException,
             UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
         requireNonNull(patient, dateTimeString);
         imdb.addAppointment(patient, dateTimeString);
         indicateAddressBookChanged();
+        indicateCalendarChanged();
     }
 
     @Override

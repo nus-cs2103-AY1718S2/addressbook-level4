@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -20,6 +21,8 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.SwitchThemeRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+
+import javax.mail.MessagingException;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -45,6 +48,7 @@ public class MainWindow extends UiPart<Stage> {
     private AppointmentListPanel appointmentListPanel;
     private Config config;
     private UserPrefs prefs;
+    private MailPanel mailPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -66,6 +70,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane emailPanelPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
@@ -145,6 +152,15 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        try {
+            mailPanel = new MailPanel();
+            emailPanelPlaceholder.getChildren().add(mailPanel.getRoot());
+        } catch (IOException e){
+            System.out.println("Caught IOException");
+        } catch (MessagingException e){
+            System.out.println("Caught MessagingException @ Main");
+        }
     }
 
     void hide() {

@@ -233,7 +233,11 @@ public class OAuthManager {
             e.printStackTrace();
         }
         String eventUrl = event.getHtmlLink();
-        System.out.printf("Event created: %s\n", event.getHtmlLink());
+        if (eventUrl == null) {
+            System.out.printf("Something went wrong. No event was added.");
+        } else {
+            System.out.printf("Event created: %s\n", event.getHtmlLink());
+        }
 
         return eventUrl;
     }

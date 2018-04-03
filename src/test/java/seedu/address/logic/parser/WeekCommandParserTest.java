@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import java.time.Year;
 
@@ -19,9 +20,6 @@ public class WeekCommandParserTest {
     public void parse_validArgs_returnsDateCommand() {
         assertParseSuccess(parser, "", new WeekCommand(null, 0));
         assertParseSuccess(parser, "2018 03", new WeekCommand(Year.parse("2018"), 3));
-    }
-
-    private void assertParseSuccess(WeekCommandParser parser, String s, WeekCommand weekCommand) {
     }
 
     @Test

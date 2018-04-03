@@ -62,7 +62,7 @@ public class Calendar {
      * @return an authorized Credential object.
      * @throws IOException
      */
-    public static Credential authorize() throws IOException {
+    private static Credential authorize() throws IOException {
         // Load client secrets.
         InputStream in =
                 Calendar.class.getResourceAsStream("/client_secret.json");
@@ -85,7 +85,7 @@ public class Calendar {
      * @return an authorized Calendar client service
      * @throws IOException
      */
-    public static com.google.api.services.calendar.Calendar getCalendarService() throws IOException {
+    private static com.google.api.services.calendar.Calendar getCalendarService() throws IOException {
         Credential credential = authorize();
         return new com.google.api.services.calendar.Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
@@ -99,23 +99,35 @@ public class Calendar {
     public static void createEvent(Appointment toAdd, Person selectedPerson) throws IOException {
         com.google.api.services.calendar.Calendar service = getCalendarService();
 
-        String date = toAdd.getDate();
-        String startTime = toAdd.getStartTime();
-        String endTime = toAdd.getEndTime();
         Name name = selectedPerson.getName();
 
-        Event event = new Event()
-                .setSummary(name.toString());
+        Event event = new Event().setSummary(name.toString());
 
-        DateTime startDateTime = new DateTime("2018-04-03T09:00:00+08:00");
+        DateTime startDateTime = new DateTime(formattedStartDateTime(toAdd));
         EventDateTime start = new EventDateTime().setDateTime(startDateTime);
         event.setStart(start);
 
-        DateTime endDateTime = new DateTime("2018-04-03T17:00:00+08:00");
+        DateTime endDateTime = new DateTime(formattedEndDateTime(toAdd));
         EventDateTime end = new EventDateTime().setDateTime(endDateTime);
         event.setEnd(end);
 
         String calendarId = "primary";
         service.events().insert(calendarId, event).execute();
+    }
+
+    private static String formattedStartDateTime(Appointment toAdd) {
+        String date = toAdd.getDate();
+        String startTime = toAdd.getStartTime();
+        return (date.substring(4,8)).concat("-").concat(date.substring(2,4)).concat("-")
+                .concat(date.substring(0,2)).concat("T").concat(startTime.substring(0,2))
+                .concat(":").concat(startTime.substring(2,4)).concat(":00+08:00");
+    }
+
+    private static String formattedEndDateTime(Appointment toAdd) {
+        String date = toAdd.getDate();
+        String endTime = toAdd.getEndTime();
+        return (date.substring(4,8)).concat("-").concat(date.substring(2,4)).concat("-")
+                .concat(date.substring(0,2)).concat("T").concat(endTime.substring(0,2))
+                .concat(":").concat(endTime.substring(2,4)).concat(":00+08:00");
     }
 }

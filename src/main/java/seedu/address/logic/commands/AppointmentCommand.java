@@ -13,12 +13,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
-import seedu.address.ui.Calendar;
 
 /**
  * Creates an appointment for the student at the specified index.
  */
-public class AppointmentCommand extends UndoableCommand {
+public class AppointmentCommand extends Command{
 
     public static final String COMMAND_WORD = "appointment";
     public static final String COMMAND_ALIAS = "appt";
@@ -44,7 +43,6 @@ public class AppointmentCommand extends UndoableCommand {
     private final Appointment toAdd;
 
     private Person selectedPerson;
-    private Calendar calendar;
 
     /**
      * Creates an AppointmentCommand to add the specified {@code Appointment}
@@ -58,19 +56,27 @@ public class AppointmentCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException, IOException {
+    public CommandResult execute() throws CommandException, IOException {
         requireNonNull(model);
         try {
             model.addAppointment(toAdd);
-            List<Person> lastShownList = model.getFilteredPersonList();
-            selectedPerson = lastShownList.get(index.getZeroBased());
-            calendar.createEvent(toAdd, selectedPerson);
-            String appointmentDetails = toAdd.getStartTime() + " to " + toAdd.getEndTime() + " on " + toAdd.getDate()
-                    + " with " + selectedPerson.getName();
-            return new CommandResult(String.format(MESSAGE_SUCCESS, appointmentDetails));
+            getDetails();
+            showEventOnCalendar();
+            return new CommandResult(String.format(MESSAGE_SUCCESS, getDetails()));
         } catch (DuplicateAppointmentException e) {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
         }
+    }
+
+    public String getDetails() {
+        List<Person> lastShownList = model.getFilteredPersonList();
+        selectedPerson = lastShownList.get(index.getZeroBased());
+        return toAdd.getStartTime() + " to " + toAdd.getEndTime() + " on " + toAdd.getDate()
+                + " with " + selectedPerson.getName();
+    }
+
+    public void showEventOnCalendar() throws IOException {
+        calendar.createEvent(toAdd, selectedPerson);
     }
 
     @Override

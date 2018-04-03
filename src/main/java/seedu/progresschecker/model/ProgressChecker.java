@@ -205,10 +205,13 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
      *
      * @throws IOException if the index mentioned is not valid or he's closed
      */
-    public void closeIssueOnGithub(Index index) throws IOException {
+    public void closeIssueOnGithub(Index index) throws IOException, CommandException {
         GitHub github = GitHub.connectUsingPassword(userLogin, userAuthentication);
         GHRepository repository = github.getRepository(repoName);
         GHIssue issue = repository.getIssue(index.getOneBased());
+        if (issue.getState() == GHIssueState.CLOSED) {
+            throw new CommandException("This issue is already closed");
+        }
         issue.close();
     }
 

@@ -82,7 +82,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void closeIssueOnGithub(Index index) throws IOException {
+    public synchronized void closeIssueOnGithub(Index index) throws IOException, CommandException {
         progressChecker.closeIssueOnGithub(index);
         indicateProgressCheckerChanged();
     }

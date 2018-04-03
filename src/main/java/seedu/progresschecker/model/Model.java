@@ -43,7 +43,7 @@ public interface Model {
     void reopenIssueOnGithub(Index index) throws IOException, CommandException;
 
     /** closes an issue issue on github */
-    void closeIssueOnGithub(Index index) throws IOException;
+    void closeIssueOnGithub(Index index) throws IOException, CommandException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

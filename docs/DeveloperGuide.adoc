@@ -448,6 +448,11 @@ image::TagReplaceCommand.png[width="650"]
 
 // end::TagReplace[]
 
+// tag::Remark[]
+=== Remark feature
+==== Current Implementation
+
+// end::Remark[]
 // tag::subject[]
 === Subject streaming calculation feature (work in progress)
 ==== Current Implementation

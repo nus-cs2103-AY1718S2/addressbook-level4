@@ -198,37 +198,39 @@ Examples:
 * `tagreplace t/Class1A t/Class2A` or `tr t/Class1A t/Class2A` +
 Replaces the 'Class 1A' tag from every student in the EduBuddy with 'Class 2A'.
 
-=== Adding a remark : `remark`
+=== Adding a remark : `addremark`
 
 Adds a remark to a specified student in EduBuddy.
-Format: `remark INDEX r/REMARK`
+Format: `addremark INDEX r/REMARK`
 
 ****
 * Adds a remark to the the student at the specified `INDEX`.
+* The remark refers to anything that the teachers wants to comment
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...`
 ****
 
 Examples:
 * `list` +
-`remark 2 r/Class Monitor` +
+`addremark 2 r/Class Monitor` +
 Adds a remark to the 2nd student in EduBuddy.
 
-=== Adding a remark : `remark`
+=== Deleting a remark : `deleteremark`
 
-Adds a remark to a specified student in EduBuddy.
-Format: `remark INDEX r/REMARK`
+Delete a remark to a specified student in EduBuddy.
+Format: `deleteremark INDEX r/REMARK`
 
 ****
-* Adds a remark to the the student at the specified `INDEX`.
+* Deletes a remark from the the student at the specified `INDEX`.
+* The remark refers to any part of the existing remark that is in the student profile for the student that you want.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...`
 ****
 
 Examples:
 * `list` +
-`remark 2 r/Class Monitor` +
-Adds a remark to the 2nd student in EduBuddy.
+`deleteremark 2 r/Class Monitor` +
+Deletes the remark, Class Monitor, from the 2nd student in EduBuddy.
 
 === Selecting a person : `select` or `s`
 
@@ -458,6 +460,12 @@ e.g. `td CLASS2A`
 * *TagReplace* : `tagreplace t/TAGNAME t/TAGNAME` or `tr t/TAGNAME t/TAGNAME` +
 e.g. `tagreplace t/CLASS2A t/CLASS3A` +
 e.g. `tr t/CLASS2A t/CLASS3A`
+
+* *Add Remark* : `addremark INDEX r/REMARKK` +
+e.g. `addremark 1 r/Class Monitor
+
+* *Delete Remark* : `deleteremark INDEX r/REMARK` +
+e.g. `deleteremark 1 r/Class Monitor
 
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
 `e INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]` +

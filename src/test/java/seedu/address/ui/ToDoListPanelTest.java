@@ -1,11 +1,8 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.EventsUtil.postNow;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TODO;
 import static seedu.address.testutil.TypicalToDos.getTypicalToDos;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysToDo;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,14 +11,11 @@ import guitests.guihandles.ToDoCardHandle;
 import guitests.guihandles.ToDoListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.todo.ToDo;
 
 public class ToDoListPanelTest extends GuiUnitTest {
     private static final ObservableList<ToDo> TYPICAL_TODOS =
             FXCollections.observableList(getTypicalToDos());
-
-    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_TODO);
 
     private ToDoListPanelHandle toDoListPanelHandle;
 

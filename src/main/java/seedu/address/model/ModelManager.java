@@ -152,7 +152,6 @@ public class ModelManager extends ComponentManager implements Model {
         accountsManager.register(username, password);
     }
 
-
     //@@author kush1509
     @Override
     public synchronized void deleteJob(Job target) throws JobNotFoundException {

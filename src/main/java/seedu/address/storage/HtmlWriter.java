@@ -29,10 +29,10 @@ public class HtmlWriter {
     }
 
     public HtmlWriter(Customer customer) {
-        this.name = "wala";
+        this.name = customer.getName().fullName;
         this.amountOwed = "walamala";
-        this.dueDate = "walamajulahSINGAPURA";
-        this.runnerAssigned = "walamakachitayasamasama";
+        this.dueDate = customer.getOweDueDate().toString();
+        this.runnerAssigned = customer.getRunner().getName().fullName;
     }
 
     /**

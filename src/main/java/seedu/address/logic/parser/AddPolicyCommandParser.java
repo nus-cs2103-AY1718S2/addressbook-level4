@@ -4,8 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BEGINNING_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRATION_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ISSUE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 
 import java.util.ArrayList;
 

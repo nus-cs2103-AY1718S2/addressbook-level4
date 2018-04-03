@@ -1,7 +1,10 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BEGINNING_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRATION_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ISSUE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;

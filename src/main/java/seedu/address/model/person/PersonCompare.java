@@ -4,6 +4,9 @@ package seedu.address.model.person;
 
 import java.util.Comparator;
 
+/**
+ * PersonCompare class to compare Persons by first name
+ */
 public class PersonCompare implements Comparator<Person> {
 
     /**

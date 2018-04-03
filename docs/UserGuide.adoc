@@ -172,6 +172,25 @@ Format: `addplatform INDEX [l/LINK]...`
 * You can remove all the person's social media platforms by typing `l/` without specifying any links after it.
 ****
 
+[NOTE]
+Accepted Facebook links may take the form: +
+* https://www.facebook.com/<profile username> +
+* https://facebook.com/<profile username> +
+* http://www.facebook.com/<profile username> +
+* http://facebook.com/<profile username> +
+* www.facebook.com/<profile username> +
+* facebook.com/<profile username> +
+* facebook.com/profile.php?id=<user profile id> +
+{empty} +
+Accepted Twitter links may take the form: +
+* https://www.twitter.com/<username handle> +
+* https://twitter.com/<username handle> +
+* http://www.twitter.com/<username handle> +
+* http://twitter.com/<username handle> +
+* www.twitter.com/<username handle> +
+* twitter.com/<username handle> +
++
+
 Examples:
 
 * `addplatform 1 l/www.facebook.com/johndoe` +
@@ -225,7 +244,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `sort` and `clear`).
+Undoable commands: those commands that modify the address book's content (`addplatform`, `add`, `delete`, `edit`, `sort` and `clear`).
 ====
 
 Examples:
@@ -407,6 +426,8 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Add Platform* : `addplatform INDEX [l/LINK]...` +
+e.g. `addplatform 1 l/www.facebook.com/james.ho`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

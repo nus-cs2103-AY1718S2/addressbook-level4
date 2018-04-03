@@ -1,0 +1,5 @@
+{
+  "appTitle" : "Media Socializer",
+  "logLevel" : "INFO",
+  "userPrefsFilePath" : "preferences.json"
+}

@@ -71,10 +71,10 @@ public class Date implements Comparable<Date> {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(month.name().charAt(0) + month.name().substring(1).toLowerCase())
-                .append(" ")
-                .append(day)
-                .append(", ")
+        builder.append(String.format("%02d", day))
+                .append("/")
+                .append(String.format("%02d", Month.toInt(month)))
+                .append("/")
                 .append(year);
         return builder.toString();
     }

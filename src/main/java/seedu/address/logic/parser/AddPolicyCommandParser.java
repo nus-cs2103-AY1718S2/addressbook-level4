@@ -7,7 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRATION_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ISSUE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 
-import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -42,15 +42,20 @@ public class AddPolicyCommandParser implements Parser<AddPolicyCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPolicyCommand.MESSAGE_USAGE));
         }
 
+        if (!arePrefixesPresent(argMultimap, PREFIX_BEGINNING_DATE, PREFIX_EXPIRATION_DATE, PREFIX_PRICE)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPolicyCommand.MESSAGE_USAGE));
+        }
+
         Price price;
         Date beginningDate;
         Date expirationDate;
-        Coverage coverage = new Coverage(new ArrayList<>());
+        Coverage coverage;
 
         try {
             price = ParserUtil.parsePrice(argMultimap.getValue(PREFIX_PRICE).get());
             beginningDate = ParserUtil.parsePolicyDate(argMultimap.getValue(PREFIX_BEGINNING_DATE).get());
             expirationDate = ParserUtil.parsePolicyDate(argMultimap.getValue(PREFIX_EXPIRATION_DATE).get());
+            coverage = new Coverage(ParserUtil.parseIssues(argMultimap.getAllValues(PREFIX_ISSUE)));
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -65,18 +70,11 @@ public class AddPolicyCommandParser implements Parser<AddPolicyCommand> {
     }
 
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
-     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Tag>} containing zero tags.
-     *//*
-    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws IllegalValueException {
-        assert tags != null;
-
-        if (tags.isEmpty()) {
-            return Optional.empty();
-        }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return Optional.of(ParserUtil.parseTags(tagSet));
-    }*/
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
 
 }

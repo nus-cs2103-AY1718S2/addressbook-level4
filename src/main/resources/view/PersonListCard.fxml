@@ -36,6 +36,7 @@
       <Label fx:id="actualSpending" styleClass="cell_small_label" text="\$actualSpending" />
       <Label fx:id="isNewClient" styleClass="cell_small_label" text="\$isNewClient" />
       <Label fx:id="expectedSpending" styleClass="cell_small_label" text="\$expectedSpending" />
+      <Label fx:id="policy" styleClass="cell_small_label" text="\$policy" />
 
     </VBox>
   </GridPane>

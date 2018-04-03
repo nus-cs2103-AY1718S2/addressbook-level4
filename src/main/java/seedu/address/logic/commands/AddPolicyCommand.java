@@ -101,7 +101,7 @@ public class AddPolicyCommand extends UndoableCommand {
                 personToEdit.getActualSpending(),
                 personToEdit.getExpectedSpending(),
                 personToEdit.getAge(),
-                Optional.empty().of(policyToAdd));
+                Optional.of(policyToAdd));
     }
 
     @Override

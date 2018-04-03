@@ -14,6 +14,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditAppointmentCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditPolicyCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -23,6 +24,7 @@ import seedu.address.logic.commands.LookDateCommand;
 import seedu.address.logic.commands.PredictCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveAppointmentsCommand;
+import seedu.address.logic.commands.RemovePolicyCommand;
 import seedu.address.logic.commands.ReturnMonthViewCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -112,6 +114,12 @@ public class AddressBookParser {
 
         case AddPolicyCommand.COMMAND_WORD:
             return new AddPolicyCommandParser().parse(arguments);
+
+        case RemovePolicyCommand.COMMAND_WORD:
+            return new RemovePolicyCommandParser().parse(arguments);
+
+        case EditPolicyCommand.COMMAND_WORD:
+            return new EditPolicyCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

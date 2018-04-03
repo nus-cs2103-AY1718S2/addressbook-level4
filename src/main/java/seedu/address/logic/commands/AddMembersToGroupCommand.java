@@ -66,17 +66,17 @@ public class AddMembersToGroupCommand extends UndoableCommand {
         }
         else {
             for (Group group : groupList) {
-                if (groupToAdd.getInformation().equals(group.getInformation())){
-                    groupToAdd= group;
+                if  (groupToAdd.getInformation().equals(group.getInformation())){
+                    groupToAdd = group;
                     try {
                         groupAdded = group;
                         groupAdded.getPersonList().add(personToAdd);
                         model.updateGroup(groupToAdd,groupAdded);
-                    } catch(DuplicatePersonException e){
+                    } catch (DuplicatePersonException e){
                         throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-                    } catch(DuplicateGroupException e) {
+                    } catch (DuplicateGroupException e) {
                         throw new CommandException(MESSAGE_DUPLICATE_GROUP);
-                    } catch(GroupNotFoundException e) {
+                    } catch (GroupNotFoundException e) {
                         throw new CommandException(MESSAGE_GROUP_NOT_FOUND);
                     }
                 }

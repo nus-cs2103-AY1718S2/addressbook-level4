@@ -49,6 +49,15 @@ public class UniqueGroupList implements Iterable<Group> {
         this.internalList.setAll(replacement.internalList);
     }
 
+    public void setGroups(List<Group> groups) throws DuplicateGroupException {
+        requireAllNonNull(groups);
+        final UniqueGroupList replacement = new UniqueGroupList();
+        for (final Group group : groups) {
+            replacement.add(group);
+        }
+        setGroups(replacement);
+    }
+
     /**
      * Replaces the group {@code target} in the list with {@code editedGroup}.
      *
@@ -69,15 +78,6 @@ public class UniqueGroupList implements Iterable<Group> {
         }
 
         internalList.set(index, editedGroup);
-    }
-
-    public void setGroups(List<Group> groups) throws DuplicateGroupException {
-        requireAllNonNull(groups);
-        final UniqueGroupList replacement = new UniqueGroupList();
-        for (final Group group : groups) {
-            replacement.add(group);
-        }
-        setGroups(replacement);
     }
 
     /**

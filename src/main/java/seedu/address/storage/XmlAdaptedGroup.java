@@ -68,12 +68,12 @@ public class XmlAdaptedGroup {
         }
         final Information information = new Information(this.information);
         final UniquePersonList uniquePersonList = new UniquePersonList();
-        for(XmlAdaptedPerson adaptedPerson : personList) {
+        for (XmlAdaptedPerson adaptedPerson : personList) {
             Person personToAdd = adaptedPerson.toModelType();
             uniquePersonList.add(personToAdd);
         }
 
-        return new Group(information,uniquePersonList);
+        return new Group(information, uniquePersonList);
 
     }
 

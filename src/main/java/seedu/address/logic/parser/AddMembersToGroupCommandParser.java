@@ -1,8 +1,8 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,6 +22,9 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.TimeTableLink;
 import seedu.address.model.tag.Tag;
 
+/**
+ * Parses input arguments and creates a new AddMembersToGroupCommand object
+ */
 public class AddMembersToGroupCommandParser implements Parser<AddMembersToGroupCommand> {
 
     /**
@@ -37,7 +40,8 @@ public class AddMembersToGroupCommandParser implements Parser<AddMembersToGroupC
 
         if (!arePrefixesPresent(argMultimap, PREFIX_GROUP, PREFIX_NAME)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMembersToGroupCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AddMembersToGroupCommand.MESSAGE_USAGE));
         }
         try {
             Information information = ParserUtil.parseInformation(argMultimap.getValue(PREFIX_GROUP).get());
@@ -50,7 +54,7 @@ public class AddMembersToGroupCommandParser implements Parser<AddMembersToGroupC
             Set<Tag> tags = new HashSet<Tag>();
 
             Group group = new Group(information);
-            Person person = new Person(name,phone,email,address,link,detail,tags);
+            Person person = new Person(name, phone, email, address, link, detail, tags);
             return new AddMembersToGroupCommand(person,group);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

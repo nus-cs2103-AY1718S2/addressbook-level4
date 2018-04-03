@@ -174,21 +174,23 @@ Format: `addplatform INDEX [l/LINK]...`
 
 [NOTE]
 =======================================================================
-*Accepted Facebook links may take the form:* +
-- [https://www.facebook.com/<profile] username> +
-- {\https://facebook.com/<profile} username> +
-- {\http://www.facebook.com/<profile} username> +
-- {\http://facebook.com/<profile} username> +
-- {\www.facebook.com/<profile} username> +
-- facebook.com/<profile username> +
-- facebook.com/profile.php?id=<user profile id> +
-{empty} +
-*Accepted Twitter links may take the form:* +
-- {\https://www.twitter.com/<username} handle> +
-- {\https://twitter.com/<username} handle> +
-- {\http://www.twitter.com/<username} handle> +
-- {\http://twitter.com/<username} handle> +
-- {\www.twitter.com/<username} handle> +
+*Accepted Facebook links may take the form:*
+- htt{empty}ps://w{empty}ww.facebook.com/<profile username>
+- https://facebook.com/<profile} username>
+- {\http://www.facebook.com/<profile} username>
+- {\http://facebook.com/<profile} username>
+- {\www.facebook.com/<profile} username>
+- facebook.com/<profile username>
+- facebook.com/profile.php?id=<user profile id>
+
+{empty}
+
+*Accepted Twitter links may take the form:*
+- {\https://www.twitter.com/<username} handle>
+- {\https://twitter.com/<username} handle>
+- {\http://www.twitter.com/<username} handle>
+- {\http://twitter.com/<username} handle>
+- {\www.twitter.com/<username} handle>
 - twitter.com/<username handle>
 =======================================================================
 

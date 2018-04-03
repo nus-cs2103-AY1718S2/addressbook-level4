@@ -55,7 +55,7 @@ public class AddMembersToGroupCommandParser implements Parser<AddMembersToGroupC
 
             Group group = new Group(information);
             Person person = new Person(name, phone, email, address, link, detail, tags);
-            return new AddMembersToGroupCommand(person,group);
+            return new AddMembersToGroupCommand(person, group);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

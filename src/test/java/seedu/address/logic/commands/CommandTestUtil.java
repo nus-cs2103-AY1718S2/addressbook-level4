@@ -131,8 +131,8 @@ public class CommandTestUtil {
     public static final String VALID_INFORMATION = "GROUP A";
     public static final String INVALID_INFORMATION = "Group! A"; //'!' not supported in information
 
-    public static final String VALID_DESC_GROUP = " " + PREFIX_GROUP + VALID_INFORMATION + " " +
-            PREFIX_NAME + VALID_NAME_BOB;
+    public static final String VALID_DESC_GROUP = " " + PREFIX_GROUP + VALID_INFORMATION + " "
+            + PREFIX_NAME + VALID_NAME_BOB;
     public static final String INVALID_DESC_NO_GROUP = " " + PREFIX_NAME + VALID_NAME_BOB;
     public static final String INVALID_DESC_NO_NAME = " " + PREFIX_GROUP + "Group A";
 

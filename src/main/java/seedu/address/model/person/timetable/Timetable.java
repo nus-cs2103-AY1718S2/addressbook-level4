@@ -11,6 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.timetable.Lesson;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author AzuraAiR
 /**
  * Represents a Person's timetable in the address book
  */

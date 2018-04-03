@@ -3,6 +3,7 @@ package seedu.address.model.person.timetable;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.timetable.Lesson;
 
+//@@author AzuraAiR
 /**
  * Represents a day in the timetable
  */

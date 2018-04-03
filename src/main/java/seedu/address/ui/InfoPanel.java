@@ -72,20 +72,18 @@ public class InfoPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         browserPanel.loadPersonPage(event.getNewSelection().person);
 
-        //birthdayPlaceholder.getChildren().removeAll();
         browserPlaceholder.toFront();
     }
 
+    //@@author AzuraAiR
     @Subscribe
     private void handleBirthdayListEvent(BirthdayListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
-        //birthdayPlaceholder.getChildren().removeAll();
-        //birthdayList = new BirthdayList();
         birthdayList.loadList(event.getBirthdayList());
-        //birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
         birthdayPlaceholder.toFront();
     }
+    //@@author
 
     //@@author jingyinno
     @Subscribe

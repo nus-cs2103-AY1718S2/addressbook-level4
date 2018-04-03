@@ -265,7 +265,7 @@ Examples:
 * `da n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate` +
 Deletes the appointment previously arranged with Betsy on 12/12/2017 from 12:30pm to 1:30pm at Gold Park Estate.
 
-=== Zooming in calendar view : `zoomin` or `zi` `[Coming in v1.5]`
+=== Zooming in calendar view : `zoomin` or `zi`
 
 Zooms in the calendar panel to show a more detailed calendar view  +
 Format: `zoomin` or `zi`
@@ -279,7 +279,7 @@ Examples:
 * `zi` +
 If the calendar panel is previously showing the Year View, it will now be showing the Month View.
 
-=== Zooming out calendar view : `zoomout` or `zo` `[Coming in v1.5]`
+=== Zooming out calendar view : `zoomout` or `zo`
 
 Zooms out the calendar panel to show a wider calendar view  +
 Format: `zoomout` or `zo`
@@ -292,6 +292,26 @@ Examples:
 
 * `zo` +
 If the calendar panel is previously showing the Day View, it will now be showing the Week View.
+
+=== Going back on calendar view : `goback` or `gb` `[Coming in v1.5]`
+
+Makes the calendar view go back in time from the currently displaying date. +
+Format: `goback` or `gb`
+
+Examples:
+
+* `gb` +
+If the calendar panel is currently displaying Day View for 02/02/2018, it will change the Day View to 01/02/2018
+
+=== Going forward on calendar view : `goforward` or `gf` `[Coming in v1.5]`
+
+Makes the calendar view go forward in time from the currently displaying date. +
+Format: `goforward` or `gf`
+
+Examples:
+
+* `gf` +
+If the calendar panel is currently displaying Day View for 02/02/2018, it will change the Day View to 03/02/2018
 
 === Finding an appointment : `findappointment` or `fa` `[Coming in v2.0]`
 
@@ -451,6 +471,8 @@ e.g. `addappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate`
 e.g. `deleteappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate`
 * *Zoom In* : `zoomin`
 * *Zoom Out* : `zoomout`
+* *Calendar Go Back* : `goback`
+* *Calendar Go Forward* : `goforward`
 * *Find Appointment*: `findappointment KEYWORD...` +
 e.g. `findappointment 12/12/2018`
 * *Edit Appointment*: `editappointment INDEX [n/NAME] [d/DATE] [st/STARTTIME] [et/ENDTIME] [l/LOCATION]` +

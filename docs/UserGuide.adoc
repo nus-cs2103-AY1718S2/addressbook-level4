@@ -199,6 +199,38 @@ Examples:
 * `tagreplace t/Class1A t/Class2A` or `tr t/Class1A t/Class2A` +
 Replaces the 'Class 1A' tag from every student in the EduBuddy with 'Class 2A'.
 
+=== Adding a remark : `remark`
+
+Adds a remark to a specified student in EduBuddy.
+Format: `remark INDEX r/REMARK`
+
+****
+* Adds a remark to the the student at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...`
+****
+
+Examples:
+* `list` +
+`remark 2 r/Class Monitor` +
+Adds a remark to the 2nd student in EduBuddy.
+
+=== Adding a remark : `remark`
+
+Adds a remark to a specified student in EduBuddy.
+Format: `remark INDEX r/REMARK`
+
+****
+* Adds a remark to the the student at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...`
+****
+
+Examples:
+* `list` +
+`remark 2 r/Class Monitor` +
+Adds a remark to the 2nd student in EduBuddy.
+
 === Selecting a person : `select` or `s`
 
 Selects the student identified by the index number used in the last student listing. +

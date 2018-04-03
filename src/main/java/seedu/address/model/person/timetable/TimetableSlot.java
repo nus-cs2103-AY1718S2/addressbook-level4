@@ -26,7 +26,7 @@ public class TimetableSlot {
 
     @Override
     public String toString() {
-        if (lesson == null ) {
+        if (lesson == null) {
             return "";
         }
         return lesson.toString();

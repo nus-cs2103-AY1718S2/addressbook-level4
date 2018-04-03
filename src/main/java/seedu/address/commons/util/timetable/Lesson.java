@@ -51,4 +51,9 @@ public class Lesson {
     public String getEndTime() {
         return endTime;
     }
+
+    @Override
+    public String toString() {
+        return moduleCode + "\n" + lessonType.substring(0, 3).toUpperCase() + "[" + classNo + "]\n";
+    }
 }

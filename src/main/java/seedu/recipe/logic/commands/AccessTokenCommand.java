@@ -16,16 +16,15 @@ public class AccessTokenCommand extends Command {
             + "Parameters: TOKEN\n"
             + "Example: " + COMMAND_WORD + "VALID_ACCESS_TOKEN";
 
-    private final String accessToken;
+    private final String accessCode;
 
-    public AccessTokenCommand(String token) {
-        this.accessToken = token;
-        CloudStorageUtil.setAccessToken(token);
+    public AccessTokenCommand(String code) {
+        this.accessCode = code;
     }
 
     @Override
     public CommandResult execute() {
-        CloudStorageUtil.upload();
+        CloudStorageUtil.processAuthorizationCode(accessCode);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
@@ -33,7 +32,7 @@ public class AccessTokenCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AccessTokenCommand // instanceof handles nulls
-                && accessToken.equals(((AccessTokenCommand) other).accessToken));
+                && accessCode.equals(((AccessTokenCommand) other).accessCode));
     }
 }
 //@@author

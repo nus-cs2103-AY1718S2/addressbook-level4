@@ -62,6 +62,10 @@ public class BrowserPanel extends UiPart<Region> {
         setUpBrowserUrlListener();
     }
 
+    public WebView getBrowser() {
+        return browser;
+    }
+
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
@@ -75,7 +79,7 @@ public class BrowserPanel extends UiPart<Region> {
      * Loads the text recipe onto the browser
      */
     private void loadLocalRecipe(Recipe recipe) {
-        browser.getEngine().loadContent(recipe.getRecipeInHtmlFormat());
+        browser.getEngine().loadContent(recipe.getHtmlFormattedRecipe());
     }
     //@@author
 

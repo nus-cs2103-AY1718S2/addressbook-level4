@@ -139,6 +139,16 @@ public class TypicalRecipes {
             .withServings("2")
             .withUrl("https://www.google.com")
             .withImage("-").build();
+    public static final Recipe NOURL = new RecipeBuilder()
+            .withName("Ida Mueller")
+            .withIngredient("just,example")
+            .withInstruction("chicago ave")
+            .withCookingTime("5555")
+            .withPreparationTime("420m")
+            .withCalories("15000")
+            .withServings("2")
+            .withUrl("-")
+            .withImage("-").build();
 
     // Manually added - Recipe's details found in {@code CommandTestUtil}
     public static final Recipe AMY = new RecipeBuilder()

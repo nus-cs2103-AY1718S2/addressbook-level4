@@ -118,7 +118,6 @@ public class UniqueAppointmentEntryList implements Iterable<AppointmentEntry> {
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
-    
     @Override
     public int hashCode() {
         assert CollectionUtil.elementsAreUnique(internalList);

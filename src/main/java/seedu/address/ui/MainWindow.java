@@ -227,6 +227,7 @@ public class MainWindow extends UiPart<Stage> {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
+
     @FXML
     private void handleChangeDarkTheme() {
         EventsCenter.getInstance().post(new ChangeThemeEvent("dark"));

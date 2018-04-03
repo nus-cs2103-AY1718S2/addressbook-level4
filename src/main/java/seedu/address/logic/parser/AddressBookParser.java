@@ -28,6 +28,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetPasswordCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.TestAddEventCommand;
+import seedu.address.logic.commands.TodoListCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -128,8 +129,12 @@ public class AddressBookParser {
         case NotiCommand.COMMAND_WORD:
             return new NotiCommand();
 
+        case TodoListCommand.COMMAND_WORD:
+            return new TodoListCommand();
+
         case MyCalendarCommand.COMMAND_WORD:
             return new MyCalendarCommand();
+
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

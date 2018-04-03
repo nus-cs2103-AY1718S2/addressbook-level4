@@ -1,9 +1,13 @@
 package seedu.address.ui;
 
+import static java.util.Objects.requireNonNull;
+
 import java.awt.AWTException;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
+import java.io.IOException;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.logging.Logger;
@@ -13,6 +17,9 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -24,6 +31,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.logic.AddressBookUnlockedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;
+import seedu.address.commons.events.ui.ShowTodoListEvent;
 import seedu.address.commons.events.ui.ToggleNotificationCenterEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
@@ -35,6 +43,8 @@ import seedu.address.model.UserPrefs;
  */
 public class UiManager extends ComponentManager implements Ui {
 
+    /** Resource folder where FXML files are stored. */
+    public static final String FXML_FILE_FOLDER = "/view/";
     public static final String ALERT_DIALOG_PANE_FIELD_ID = "alertDialogPane";
 
     public static final String FILE_OPS_ERROR_DIALOG_STAGE_TITLE = "File Op Error";
@@ -137,6 +147,16 @@ public class UiManager extends ComponentManager implements Ui {
         System.exit(1);
     }
 
+    /**
+     * Returns the FXML file URL for the specified FXML file name within {@link #FXML_FILE_FOLDER}.
+     */
+    private static URL getFxmlFileUrl(String fxmlFileName) {
+        requireNonNull(fxmlFileName);
+        String fxmlFileNameWithFolder = FXML_FILE_FOLDER + fxmlFileName;
+        URL fxmlFileUrl = MainApp.class.getResource(fxmlFileNameWithFolder);
+        return requireNonNull(fxmlFileUrl);
+    }
+
     //==================== Event Handling Code ===============================================================
 
     @Subscribe
@@ -181,6 +201,26 @@ public class UiManager extends ComponentManager implements Ui {
     private void showDelayedNotifications() {
         for (ShowNotificationEvent e: delayedNotifications) {
             showNotificationInApp(e);
+        }
+    }
+
+    @Subscribe
+    private void handleShowTodoListEvent(ShowTodoListEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TodoListWindow.fxml"));
+            fxmlLoader.setLocation(getFxmlFileUrl("TodoListWindow.fxml"));
+            try {
+                Parent root1 = (Parent) fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root1));
+                stage.show();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        } catch (Exception e2) {
+            System.out.println(e2.getMessage());
         }
     }
 

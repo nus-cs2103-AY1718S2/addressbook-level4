@@ -30,7 +30,7 @@ public class HtmlWriter {
 
     public HtmlWriter(Customer customer) {
         this.name = customer.getName().fullName;
-        this.amountOwed = "walamala";
+        this.amountOwed = String.format("%,.2f", customer.getMoneyCurrentlyOwed());
         this.dueDate = customer.getOweDueDate().toString();
         this.runnerAssigned = customer.getRunner().getName().fullName;
     }
@@ -47,7 +47,7 @@ public class HtmlWriter {
             PrintWriter printWriter = new PrintWriter(file);
             printWriter.print(OPENING_LINE);
             printWriter.println("<p>Name: " + name + "</p>");
-            printWriter.println("<p>Amount Owed: " + amountOwed + "</p>");
+            printWriter.println("<p>Amount Owed: $" + amountOwed + "</p>");
             printWriter.println("<p>Due Date: " + dueDate + "</p>");
             printWriter.println("<p>Status: VIP</p>");
             printWriter.println("<p>Runner Assigned: " + runnerAssigned + "</p>");

@@ -106,11 +106,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author yeggasd
     @Override
     public void updatePassword(byte[] password) {
         addressBook.updatePassword(password);
         indicateAddressBookChanged();
     }
+    //@@author
 
     //@@author jingyinno
     @Override

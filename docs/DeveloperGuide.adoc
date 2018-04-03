@@ -689,6 +689,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |student with friends |search friends who have taken or are taking similar modules |know who I can group with or approach for help
 
+|`* * *` |student |keep track of my timetable |go to classes punctually
+
 |`* * *` |student with friends |find my friend’s timetables |find common studying time with them
 
 |`* * *` |student with friends |list my friends' birthdays |plan ahead in time for their birthdays

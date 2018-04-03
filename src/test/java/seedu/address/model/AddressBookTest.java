@@ -110,6 +110,7 @@ public class AddressBookTest {
     }
     //@@author
 
+    //@@author yeggasd
     @Test
     public void createdWithPassword_passwordChanged_passwordChanged() throws Exception {
         AddressBook addressBookUpdatedPassword = new AddressBook("new");
@@ -133,6 +134,7 @@ public class AddressBookTest {
         AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BOB).withPassword("new").build();
         assertEquals(expectedAddressBook, addressBookUpdatedPassword);
     }
+    //@@author
 
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
@@ -172,10 +174,12 @@ public class AddressBookTest {
         }
         //@@author
 
+        //@@author yeggasd
         @Override
         public Password getPassword() {
             return password;
         }
+        //@@author
     }
 
 }

@@ -71,7 +71,7 @@ public class Person {
     public String getPhotoPath() {
         return photoPath;
     }
-
+    
     public String getDefaultPath() {
         return defaultPath;
     }

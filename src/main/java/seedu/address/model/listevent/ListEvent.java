@@ -1,12 +1,21 @@
-package seedu.address.model.listEvent;
+package seedu.address.model.listevent;
 
 import com.google.api.client.util.DateTime;
 
+/**
+ * Represents a event that is to be loaded in to do list window.
+ */
 public class ListEvent {
 
     private String title;
     private String location;
     private DateTime endTime;
+
+    public ListEvent(String title, String location, DateTime endTime) {
+        this.setTitle(title);
+        this.setLocation(location);
+        this.setEndTime(endTime);
+    }
 
     public String getTitle() {
         return title;
@@ -30,12 +39,6 @@ public class ListEvent {
 
     public void setEndTime(DateTime endTime) {
         this.endTime = endTime;
-    }
-
-    public ListEvent(String title, String location, DateTime endTime) {
-        this.setTitle(title);
-        this.setLocation(location);
-        this.setEndTime(endTime);
     }
 
     @Override

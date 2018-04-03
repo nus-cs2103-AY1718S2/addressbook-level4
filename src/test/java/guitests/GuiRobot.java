@@ -40,7 +40,7 @@ public class GuiRobot extends FxRobot {
     }
 
     /**
-     * Waits for {@code listEvent} to be true by {@code DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS} milliseconds.
+     * Waits for {@code listevent} to be true by {@code DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS} milliseconds.
      *
      * @throws EventTimeoutException if the time taken exceeds {@code DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS}
      * milliseconds.
@@ -50,7 +50,7 @@ public class GuiRobot extends FxRobot {
     }
 
     /**
-     * Waits for {@code listEvent} to be true.
+     * Waits for {@code listevent} to be true.
      *
      * @param timeOut in milliseconds
      * @throws EventTimeoutException if the time taken exceeds {@code timeOut}.
@@ -98,7 +98,7 @@ public class GuiRobot extends FxRobot {
     }
 
     /**
-     * Represents an error which occurs when a timeout occurs when waiting for an listEvent.
+     * Represents an error which occurs when a timeout occurs when waiting for an listevent.
      */
     private class EventTimeoutException extends RuntimeException {
     }

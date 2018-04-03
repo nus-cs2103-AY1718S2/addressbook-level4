@@ -31,7 +31,6 @@ import seedu.address.logic.commands.TodoListCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.ui.TodoListWindow;
 
 /**
  * Parses user input.

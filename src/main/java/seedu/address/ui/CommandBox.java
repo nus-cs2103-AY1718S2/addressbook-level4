@@ -104,7 +104,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Handles the key press listEvent, {@code keyEvent}.
+     * Handles the key press listevent, {@code keyEvent}.
      */
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
@@ -192,7 +192,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Handles the Enter button pressed listEvent.
+     * Handles the Enter button pressed listevent.
      */
     @FXML
     private void handleCommandInputChanged() {

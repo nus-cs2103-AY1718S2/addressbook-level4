@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static java.util.Objects.requireNonNull;
+
 import java.awt.AWTException;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
@@ -36,13 +38,13 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.UserPrefs;
 
-import static java.util.Objects.requireNonNull;
-
 /**
  * The manager of the UI component.
  */
 public class UiManager extends ComponentManager implements Ui {
 
+    /** Resource folder where FXML files are stored. */
+    public static final String FXML_FILE_FOLDER = "/view/";
     public static final String ALERT_DIALOG_PANE_FIELD_ID = "alertDialogPane";
 
     public static final String FILE_OPS_ERROR_DIALOG_STAGE_TITLE = "File Op Error";
@@ -51,9 +53,6 @@ public class UiManager extends ComponentManager implements Ui {
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
     private static final String ICON_APPLICATION = "/images/address_book_32.png";
-
-    /** Resource folder where FXML files are stored. */
-    public static final String FXML_FILE_FOLDER = "/view/";
 
     private Logic logic;
     private Config config;

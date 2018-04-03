@@ -37,7 +37,6 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;
 import seedu.address.commons.events.ui.ShowReviewDialogEvent;
-import seedu.address.commons.events.ui.ShowTodoListEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.theme.Theme;
@@ -148,10 +147,10 @@ public class MainWindow extends UiPart<Stage> {
          * According to the bug report, TextInputControl (TextField, TextArea) will
          * consume function-key events. Because CommandBox contains a TextField, and
          * ResultDisplay contains a TextArea, thus some accelerators (e.g F1) will
-         * not work when the focus is in them because the key listEvent is consumed by
+         * not work when the focus is in them because the key listevent is consumed by
          * the TextInputControl(s).
          *
-         * For now, we add following listEvent filter to capture such key events and open
+         * For now, we add following listevent filter to capture such key events and open
          * help window purposely so to support accelerators even when focus is
          * in CommandBox or ResultDisplay.
          */

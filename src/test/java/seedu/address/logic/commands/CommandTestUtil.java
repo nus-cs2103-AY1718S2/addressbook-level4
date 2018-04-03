@@ -51,7 +51,7 @@ public class CommandTestUtil {
     public static final String VALID_EVENT_LOCATION = "NUS";
     public static final String VALID_EVENT_STARTTIME = "2018-05-15T10:00:00";
     public static final String VALID_EVENT_ENDTIME = "2018-05-15T12:00:00";
-    public static final String VALID_EVENT_DESCRIPTION = "A test listEvent.";
+    public static final String VALID_EVENT_DESCRIPTION = "A test listevent.";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;

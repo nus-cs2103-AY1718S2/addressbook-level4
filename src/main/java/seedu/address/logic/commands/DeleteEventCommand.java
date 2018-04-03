@@ -25,22 +25,22 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 
 /**
- * Deletes an listEvent with specified title in a person's calendar.
+ * Deletes an listevent with specified title in a person's calendar.
  */
 public class DeleteEventCommand extends Command {
 
     public static final String COMMAND_WORD = "deleteEvent";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Delete an listEvent specified by title of the person identified by the index number used "
+            + ": Delete an listevent specified by title of the person identified by the index number used "
             + "in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "TITLE (listEvent tilte)"
-            + "Example: " + COMMAND_WORD + " 1 test listEvent";
+            + "TITLE (listevent tilte)"
+            + "Example: " + COMMAND_WORD + " 1 test listevent";
 
     public static final String MESSAGE_SUCCESS = "ListEvent deleted!";
-    public static final String MESSAGE_NO_SUCH_EVENT = "There is no such listEvent!";
-    public static final String MESSAGE_FAILURE = "Unable to delete listEvent, please try again later.";
+    public static final String MESSAGE_NO_SUCH_EVENT = "There is no such listevent!";
+    public static final String MESSAGE_FAILURE = "Unable to delete listevent, please try again later.";
 
     /** Directory to store user credentials for this application. */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(

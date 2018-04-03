@@ -1,10 +1,5 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.ShowTodoListDisplayContentEvent;
-import seedu.address.commons.events.ui.ShowTodoListEvent;
-import seedu.address.model.listEvent.ListEvent;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -21,12 +16,15 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.DateTime;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ShowTodoListDisplayContentEvent;
+import seedu.address.commons.events.ui.ShowTodoListEvent;
+import seedu.address.model.listevent.ListEvent;
 
 /**
  * Show to do list window.
@@ -115,7 +113,7 @@ public class TodoListCommand extends Command {
      * @throws IOException
      */
     public static com.google.api.services.calendar.Calendar
-    getCalendarService() throws IOException {
+        getCalendarService() throws IOException {
         Credential credential = authorize();
         return new com.google.api.services.calendar.Calendar.Builder(
                 httpTransport, JSON_FACTORY, credential)

@@ -115,7 +115,7 @@ public class LogsCenter {
     }
 
     /**
-     * Decorates the given string to create a log message suitable for logging listEvent handling methods.
+     * Decorates the given string to create a log message suitable for logging listevent handling methods.
      */
     public static String getEventHandlingLogMessage(BaseEvent e, String message) {
         return "---[ListEvent handled][" + e + "]" + message;

@@ -34,7 +34,7 @@ public class TestAddEventCommandParserTest {
         final String expectedLocation = "NUS";
         final String expectedStarttime = "2018-05-15T10:00:00";
         final String expectedEndtime = "2018-05-15T12:00:00";
-        final String expectedDescription = "A test listEvent.";
+        final String expectedDescription = "A test listevent.";
 
         assertParseSuccess(parser, "1" + EVENT_TITLE + EVENT_LOCATION + EVENT_STARTTIME
                 + EVENT_ENDTIME + EVENT_DESCRIPTION, new TestAddEventCommand(INDEX_FIRST_PERSON, expectedTitle,

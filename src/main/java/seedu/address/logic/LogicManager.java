@@ -138,10 +138,11 @@ public class LogicManager extends ComponentManager implements Logic {
             @Override
             public void run() {
                 if (timetableEntriesStatus.get(this)) {
-                    System.out.println("An listEvent ended at: " + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format
+                    System.out.println("An listevent ended at: " + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format
                             (Calendar.getInstance().getTimeInMillis()));
                 } else {
-                    System.out.println("A cancelled listEvent ended at: " + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
+                    System.out.println("A cancelled listevent ended at: "
+                            + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
                             .format(Calendar.getInstance().getTimeInMillis()));
                 }
                 Notification notification = timerTaskToTimetableEntryMap.get(this);
@@ -153,7 +154,7 @@ public class LogicManager extends ComponentManager implements Logic {
         timetableEntriesStatus.put(task, true);
         scheduledTimerTasks.put(event.notification.getId(), task);
         timerTaskToTimetableEntryMap.put(task, event.notification);
-        System.out.println("An listEvent scheduled at " + c.getTime() + " " + (c.getTimeInMillis() - System
+        System.out.println("An listevent scheduled at " + c.getTime() + " " + (c.getTimeInMillis() - System
                 .currentTimeMillis()));
         long duration = c.getTimeInMillis() - System.currentTimeMillis();
         if (duration >= 0) {

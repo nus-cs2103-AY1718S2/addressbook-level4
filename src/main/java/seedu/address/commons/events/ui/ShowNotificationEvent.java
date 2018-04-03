@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.notification.Notification;
 
 /**
- * This listEvent is raised when we need to display notification in Windows 10 notification tray
+ * This listevent is raised when we need to display notification in Windows 10 notification tray
  */
 public class ShowNotificationEvent extends BaseEvent {
     private String ownerName;

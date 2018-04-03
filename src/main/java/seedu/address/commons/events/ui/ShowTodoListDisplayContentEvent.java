@@ -1,10 +1,13 @@
 package seedu.address.commons.events.ui;
 
-import seedu.address.commons.events.BaseEvent;
-import seedu.address.model.listEvent.ListEvent;
-
 import java.util.ArrayList;
 
+import seedu.address.commons.events.BaseEvent;
+import seedu.address.model.listevent.ListEvent;
+
+/**
+ * Indicates a request to load calendar events to to do list window.
+ */
 public class ShowTodoListDisplayContentEvent extends BaseEvent {
 
     private final ArrayList<ListEvent> eventList;

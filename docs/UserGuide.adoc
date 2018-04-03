@@ -267,6 +267,37 @@ On running the above command, you should see the following success message: +
 
  New job opening added: Marketing Intern Team: Social Media Marketing Location: Singapore Number of Positions: 1
 
+ === Deleting a job opening 
+
+You can delete a specified job opening from contactHeRo using the following format. +
+Format: `deletejob INDEX`
+
+****
+* Deletes the job opening at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`deletejob 2` +
+This deletes the 2nd job opening in contactHeRo and on running the above command, you should see the following success message: +
+
+ Deleted Job: Marketing Intern Team: Social Media Marketing Location: Kuala Lampur, Malaysia Number of Positions: 1 Skills: [Excel][Writing]
+
+=== Matching a job opening to a person
+
+You can see potential candidates for a specified job opening in contactHeRo using the following format. +
+Format: `matchjob INDEX`
+
+****
+* Matches the job opening at the specified `INDEX` to .
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -367,17 +398,9 @@ You do not need to save manually. contactHeRo saves the data into the hard disk 
 
 // tag::dataencryption[]
 
-=== Editing a job opening `[coming in v1.4]`
+=== Editing a job opening `[coming in v1.5]`
 
 You will soon be able to edit a job opening in contactHeRo.
-
-=== Deleting a job opening `[coming in v1.4]`
-
-You will soon be able to delete a job opening in contactHeRo.
-
-=== Matching a job opening to a person `[coming in v1.4]`
-
-You will soon be able to match job openings to people in contactHeRo.
 
 === Arranging meetings with Gmail calendar `[coming in v1.5]`
 

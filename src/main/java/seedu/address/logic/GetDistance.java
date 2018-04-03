@@ -11,12 +11,9 @@ import com.google.maps.model.DistanceMatrix;
  * Testing retrieve distance data
  */
 public class GetDistance {
-    /**
-     * get driving distance from origin to destination
-     */
 
-    public double getDistance(String origin, String destination) {
-        String distanceWithoutUnit = "";
+    //@@author
+    public DistanceMatrix getMatrix(String origin, String destination) {
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey("AIzaSyBWyCJkCym1dSouzHX_FxLk6Tj11C7F0Ao")
                 .build();
@@ -34,7 +31,25 @@ public class GetDistance {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String distance = matrix.rows[0].elements[0].distance.toString();
+        return matrix;
+    }
+
+    //@@author
+    /**
+     * get driving distance from origin to destination
+     */
+    public double getDistance(String origin, String destination) {
+        String distanceWithoutUnit = "";
+        DistanceMatrix matrix = null;
+        matrix = getMatrix(origin, destination);
+        String distance;
+
+        try {
+            distance = matrix.rows[0].elements[0].distance.toString();
+        } catch (NullPointerException e) {
+            return -1.0;
+        }
+
         int space = distance.indexOf(" ");
         String units = distance.substring(space + 1, distance.length());
         double metres;
@@ -47,4 +62,18 @@ public class GetDistance {
         }
     }
 
+    //@@author meerakanani10
+    public double getTime(String origin, String destination) {
+        String durationWithoutUnit = "";
+        DistanceMatrix matrix = null;
+        matrix = getMatrix(origin, destination);
+        String duration = matrix.rows[0].elements[0].duration.toString();
+        System.out.println(matrix);
+        System.out.println(duration);
+        int space = duration.indexOf(" ");
+        String units = duration.substring(space + 1, duration.length());
+        double metres;
+        durationWithoutUnit = duration.substring(0, space);
+        return Double.parseDouble(durationWithoutUnit);
+    }
 }

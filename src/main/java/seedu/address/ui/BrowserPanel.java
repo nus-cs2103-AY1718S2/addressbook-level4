@@ -10,14 +10,18 @@ import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.ShowMultiLocationEvent;
+import seedu.address.commons.events.ui.ShowDefaultPageEvent;
+import seedu.address.commons.events.ui.ShowMultiLocationFromHeadQuarterEvent;
+import seedu.address.commons.events.ui.ShowRouteFromOneToAnotherEvent;
 import seedu.address.logic.GetDistance;
 
+import seedu.address.logic.commands.FilterCommand;
 import seedu.address.model.person.Person;
 
 /**
@@ -32,6 +36,9 @@ public class BrowserPanel extends UiPart<Region> {
     private static final String FXML = "BrowserPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    @FXML
+    private Text additionalInfo;
 
     @FXML
     private WebView browser;
@@ -78,8 +85,13 @@ public class BrowserPanel extends UiPart<Region> {
         }
     }
 
+    /**
+     * Loads a HTML file based on given URL.
+     * @param url
+     */
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
+        additionalInfo.setText("Estimated Required Time for Deliveries: " + FilterCommand.getStringDuration());
     }
 
     /**
@@ -88,6 +100,7 @@ public class BrowserPanel extends UiPart<Region> {
     private void loadDefaultPage() {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         loadPage(defaultPage.toExternalForm());
+        additionalInfo.setText("+ Additional information will be displayed here.");
     }
 
     /**
@@ -97,11 +110,6 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
-    /**
-     * Get controller
-     */
-
-
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -110,9 +118,26 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    public void handleShowMultiLocationEvent(ShowMultiLocationEvent event) {
+    public void handleShowMultiLocationEvent(ShowMultiLocationFromHeadQuarterEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         StringBuilder url = new StringBuilder(SEARCH_PAGE_URL);
+        for (String address: event.sortedList) {
+            url.append(address);
+            url.append("/");
+        }
+        loadPage(url.toString());
+    }
+
+    @Subscribe
+    public void handleShowDefaultPageEvent(ShowDefaultPageEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadDefaultPage();
+    }
+
+    @Subscribe
+    public void handleShowFromOneToAnotherEvent(ShowRouteFromOneToAnotherEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        StringBuilder url = new StringBuilder("https://www.google.com.sg/maps/dir/");
         for (String address: event.sortedList) {
             url.append(address);
             url.append("/");

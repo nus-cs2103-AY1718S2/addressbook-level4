@@ -1,6 +1,6 @@
 package seedu.address.login;
 
-
+//@@author ngshikang
 /**
  * API of the Login component
  */

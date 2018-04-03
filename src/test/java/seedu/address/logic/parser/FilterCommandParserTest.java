@@ -11,6 +11,10 @@ import org.junit.Test;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.model.person.DatePredicate;
 
+//@@author meerakanani10
+/**
+ * Filter Command Parser Tests
+ */
 public class FilterCommandParserTest {
 
     private FilterCommandParser parser = new FilterCommandParser();

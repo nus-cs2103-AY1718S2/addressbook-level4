@@ -7,6 +7,7 @@ import org.junit.rules.TemporaryFolder;
 
 import seedu.address.storage.JsonUserPassStorage;
 
+//@@author ngshikang
 public class UserPassStorageTest {
 
     @Rule

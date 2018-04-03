@@ -13,7 +13,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-T16-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `T16-B2`
 
 == Introduction
 
@@ -132,6 +132,8 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 Filers the list of people by date (only one date)
 Format: `filter DATE`
 
+When you filter by date the back end of the program will create an optimized route
+for all the people on that date and display the route on the map.
 ****
 * The search can only look for one date
 * Persons with the delivery date matching the argument will be returned
@@ -269,6 +271,11 @@ Return the distance from the headquarter to the 1st person name Betsy in the add
 
 Sends an email to the current list of customers to remind them when their delivery is coming. +
 Format: `email`
+
+This command will email every user listed on the UI screen when the email command is fun
+
+If you want to email a specific person or specific set of people first run the find/filter commands to limit the
+displayed list
 
 === Exiting the program : `exit`
 

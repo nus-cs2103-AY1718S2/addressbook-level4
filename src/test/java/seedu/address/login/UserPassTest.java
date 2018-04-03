@@ -3,6 +3,7 @@ package seedu.address.login;
 import org.junit.Assert;
 import org.junit.Test;
 
+//@@author ngshikang
 public class UserPassTest {
 
     @Test

@@ -87,6 +87,7 @@ public class MainApp extends Application {
         initEventsCenter();
     }
 
+    //@@author ngshikang
     /**
      * Reinitialises components to match previous state of specific user profile
      */
@@ -101,6 +102,7 @@ public class MainApp extends Application {
         ui = new UiManager(logic, config, userPrefs, login);
     }
 
+    //@@author
     private String getApplicationParameter(String parameterName) {
         Map<String, String> applicationParameters = getParameters().getNamed();
         return applicationParameters.get(parameterName);
@@ -207,6 +209,7 @@ public class MainApp extends Application {
         EventsCenter.getInstance().registerHandler(this);
     }
 
+    //@@author ngshikang
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting Login to Pigeons AddressBook " + MainApp.VERSION);
@@ -223,6 +226,7 @@ public class MainApp extends Application {
         ui.start(primaryStage);
     }
 
+    //@@author
     /**
      * read welcome "username" message
      */
@@ -253,6 +257,7 @@ public class MainApp extends Application {
         this.stop();
     }
 
+    //@@author ngshikang
     @Subscribe
     public void handleExitLoginRequestEvent(ExitLoginRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -267,6 +272,7 @@ public class MainApp extends Application {
         this.startApp(new Stage());
     }
 
+    //@@author
     public static void main(String[] args) {
         launch(args);
     }

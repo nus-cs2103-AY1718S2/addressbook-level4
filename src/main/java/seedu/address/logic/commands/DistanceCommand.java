@@ -7,7 +7,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.ShowMultiLocationEvent;
+import seedu.address.commons.events.ui.ShowMultiLocationFromHeadQuarterEvent;
 import seedu.address.logic.GetDistance;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
@@ -22,9 +22,11 @@ public class DistanceCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Finds the distance from the headquarter to a person address "
-            + "by the index number used in the last person listing.\n"
+            + "or the distance from a person address to another person address "
+            + "by the index number(s) used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Example: " + COMMAND_WORD + " 1\n"
+            + "Example: " + COMMAND_WORD + " 1 2";
 
     public static final String MESSAGE_DISTANCE_FROM_HQ_SUCCESS = "Distance from Head quarter to this Person: %1$s km";
     public static final String MESSAGE_DISTANCE_FROM_PERSON_SUCCESS = "Distance from %1$s to %2$s: %3$s km";
@@ -96,7 +98,7 @@ public class DistanceCommand extends Command {
                 List<String> addressesList = new ArrayList<>();
                 addressesList.add(origin);
                 addressesList.add(destination);
-                EventsCenter.getInstance().post(new ShowMultiLocationEvent(addressesList));
+                EventsCenter.getInstance().post(new ShowMultiLocationFromHeadQuarterEvent(addressesList));
                 return new CommandResult(String.format(
                         MESSAGE_DISTANCE_FROM_PERSON_SUCCESS, personNameOrigin, personNameDestination, distance));
             }

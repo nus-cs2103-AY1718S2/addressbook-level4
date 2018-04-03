@@ -17,6 +17,7 @@ import seedu.recipe.logic.commands.FindCommand;
 import seedu.recipe.logic.commands.HelpCommand;
 import seedu.recipe.logic.commands.HistoryCommand;
 import seedu.recipe.logic.commands.ListCommand;
+import seedu.recipe.logic.commands.ParseCommand;
 import seedu.recipe.logic.commands.RedoCommand;
 import seedu.recipe.logic.commands.SearchCommand;
 import seedu.recipe.logic.commands.SelectCommand;
@@ -103,6 +104,9 @@ public class RecipeBookParser {
 
         case SearchCommand.COMMAND_WORD:
             return new SearchCommandParser().parse(arguments);
+
+        case ParseCommand.COMMAND_WORD:
+            return new ParseCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

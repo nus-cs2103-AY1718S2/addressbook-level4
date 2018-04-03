@@ -64,7 +64,6 @@ public class BrowserPanel extends UiPart<Region> {
         loadDefaultPage(isDarkTheme);
         registerAsAnEventHandler(this);
 
-        setUpBrowserUrlListener();
     }
 
     public void loadPage(String url) {
@@ -134,10 +133,10 @@ public class BrowserPanel extends UiPart<Region> {
             loadPage(FacebookHandler.REDIRECT_DOMAIN);
         }
     }
-
+/*
     /**
      * Sets up a URL listener on the browser to watch for access token.
-     */
+
     private void setUpBrowserUrlListener() {
         WebEngine browserEngine = browser.getEngine();
         browserEngine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
@@ -157,16 +156,16 @@ public class BrowserPanel extends UiPart<Region> {
         });
     }
     //@@author
-
+*/
     //@@author nicholasangcx
     @Subscribe
     private void handleUploadRecipesEvent(UploadRecipesEvent event) {
         loadPageExternalBrowser(CloudStorageUtil.getAppropriateUrl());
-        System.out.println("1");
         uploadFilename = event.getUploadFilename();
-        if (CloudStorageUtil.hasAccessToken()) {
-            CloudStorageUtil.upload(uploadFilename);
-        }
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(UploadCommand.MESSAGE_ACCESS_TOKEN));
+
+        CloudStorageUtil.upload(uploadFilename);
+
     }
     //@@author
 }

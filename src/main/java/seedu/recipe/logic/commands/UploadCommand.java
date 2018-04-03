@@ -19,6 +19,7 @@ public class UploadCommand extends Command {
     public static final String MESSAGE_FAILURE = "Failed to upload!";
     public static final String MESSAGE_UPLOAD = "Connecting to Dropbox......";
     public static final String MESSAGE_WRONG_URL = "The entered URL has the wrong format";
+    public static final String MESSAGE_ACCESS_TOKEN = "Copy and paste the code given by dropbox";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Uploads all recipes to your Dropbox with the "
             + "specified filename, with no spaces. It will only take in the first parameter. "
@@ -28,7 +29,7 @@ public class UploadCommand extends Command {
 
     private static final Index FIRST_INDEX = Index.fromOneBased(1);
 
-    public final String xmlExtensionFilename;
+    private final String xmlExtensionFilename;
 
     /**
      * Creates an UploadCommand to upload recipebook.xml to Dropbox with the

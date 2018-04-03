@@ -42,9 +42,9 @@ public class CalendarPanel extends UiPart<Region> {
         super(FXML);
         calendarSource = new CalendarSource("calendar");
         calendar = new Calendar("calendar");
+        calendar.setReadOnly(true);
         calendar.setStyle(Calendar.Style.STYLE2);
         calendarSource.getCalendars().add(calendar);
-        calendarView.setDisable(true);
         setConnections(entries);
         registerAsAnEventHandler(this);
     }
@@ -59,6 +59,7 @@ public class CalendarPanel extends UiPart<Region> {
             calendar.addEntry(entry.getAppointmentEntry());
         }
         calendarView.getCalendarSources().add(calendarSource);
+
     }
 
     @Subscribe

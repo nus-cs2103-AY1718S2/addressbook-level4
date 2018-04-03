@@ -26,7 +26,7 @@ public class PetPatientListPanelTest extends GuiUnitTest {
 
         petPatientListPanelHandle = new PetPatientListPanelHandle(getChildNode(petPatientListPanel.getRoot(),
             PetPatientListPanelHandle.PETPATIENT_LIST_VIEW_ID));
-            }
+    }
 
     @Test
     public void display_cardMatches_returnTrue() {
@@ -37,7 +37,7 @@ public class PetPatientListPanelTest extends GuiUnitTest {
 
             assertCardDisplaysPetPatient(expectedPetPatient, actualCard);
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
-                    }
-            }
+        }
+    }
 
 }

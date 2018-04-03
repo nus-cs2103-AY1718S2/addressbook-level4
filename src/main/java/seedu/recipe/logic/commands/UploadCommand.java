@@ -4,8 +4,6 @@ package seedu.recipe.logic.commands;
 import static seedu.recipe.storage.model.Filename.MESSAGE_FILENAME_CONSTRAINTS;
 
 import seedu.recipe.commons.core.EventsCenter;
-import seedu.recipe.commons.core.index.Index;
-import seedu.recipe.commons.events.ui.JumpToListRequestEvent;
 import seedu.recipe.commons.events.ui.UploadRecipesEvent;
 import seedu.recipe.ui.util.CloudStorageUtil;
 
@@ -19,7 +17,7 @@ public class UploadCommand extends Command {
     public static final String MESSAGE_FAILURE = "Failed to upload!";
     public static final String MESSAGE_WRONG_URL = "The entered URL has the wrong format";
     public static final String MESSAGE_ACCESS_TOKEN = "Copy and paste the code given by dropbox.\n"
-            + "Example: " + COMMAND_WORD + " VALID_ACCESS_TOKEN";
+            + "Example: token VALID_ACCESS_TOKEN";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Uploads all recipes to your Dropbox with the "
             + "specified filename, with no spaces. It will only take in the first parameter. "

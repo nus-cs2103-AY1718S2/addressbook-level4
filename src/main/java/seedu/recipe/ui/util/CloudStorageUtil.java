@@ -29,7 +29,7 @@ public class CloudStorageUtil {
     private static final String APP_KEY = "0kj3cb9w27d66n8";
     private static final String AUTHORIZATION_DOMAIN = "https://www.dropbox.com/1/oauth2/authorize?";
     private static final String AUTHORIZATION_URL = AUTHORIZATION_DOMAIN + "response_type=code&client_id="
-                                                    + APP_KEY + "&redirect_uri=";
+                                                    + APP_KEY;
 
     private static String accessToken = null;
     private static String uploadFilename = null;

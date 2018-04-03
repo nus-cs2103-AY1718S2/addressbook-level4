@@ -3,6 +3,7 @@ package seedu.address.model.activity;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -47,6 +48,8 @@ public class UniqueActivityList implements Iterable<Activity> {
             throw new DuplicateActivityException();
         }
         internalList.add(toAdd);
+        //@@author karenfrilya97
+        Collections.sort(internalList, Activity.DateTimeComparator);
     }
 
     /**

@@ -31,7 +31,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_CURRENT_POSITION + " "
             + PREFIX_COMPANY + " "
             + "[" + PREFIX_PROFILE_PICTURE + "] "
-            + "[" + PREFIX_SKILL + "TAG]...";
+            + "[" + PREFIX_SKILL + "SKILL]...";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
             + "Parameters: "
@@ -42,7 +42,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_CURRENT_POSITION + "CURRENT_POSITION "
             + PREFIX_COMPANY + "COMPANY "
             + "[" + PREFIX_PROFILE_PICTURE + "PROFILE PICTURE NAME] "
-            + "[" + PREFIX_SKILL + "TAG]...\n"
+            + "[" + PREFIX_SKILL + "SKILL]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "

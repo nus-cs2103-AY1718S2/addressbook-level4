@@ -52,7 +52,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_CURRENT_POSITION + "] "
             + "[" + PREFIX_COMPANY + "] "
             + "[" + PREFIX_PROFILE_PICTURE + "] "
-            + "[" + PREFIX_SKILL + "TAG]...";
+            + "[" + PREFIX_SKILL + "SKILL]...";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
@@ -65,7 +65,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_CURRENT_POSITION + "CURRENT_POSITION] "
             + "[" + PREFIX_COMPANY + "COMPANY] "
             + "[" + PREFIX_PROFILE_PICTURE + "PROFILE PICTURE NAME] "
-            + "[" + PREFIX_SKILL + "TAG]...\n"
+            + "[" + PREFIX_SKILL + "SKILL]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";

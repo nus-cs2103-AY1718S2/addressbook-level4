@@ -190,7 +190,9 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertEquals(selectCommand.getUsageMessage(), getResultDisplay().getText());
         guiRobot.pauseForHuman();
 
+        executeCommand("invalid command");
         assertTrue(getCommandBox().clear());
+        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
         guiRobot.pauseForHuman();
     }
 
@@ -199,10 +201,14 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
      * template was unsuccessful.
      */
     private void assertPopulationFailure() {
-        assertNotEquals((new SelectCommand()).getTemplate(), getCommandBox().getInput());
+        SelectCommand selectCommand = new SelectCommand();
+        assertNotEquals(selectCommand.getTemplate(), getCommandBox().getInput());
+        assertNotEquals(selectCommand.getUsageMessage(), getResultDisplay().getText());
         guiRobot.pauseForHuman();
 
+        executeCommand("invalid command");
         assertTrue(getCommandBox().clear());
+        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
         guiRobot.pauseForHuman();
     }
 }

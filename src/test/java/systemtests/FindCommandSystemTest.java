@@ -241,7 +241,9 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertEquals(findCommand.getUsageMessage(), getResultDisplay().getText());
         guiRobot.pauseForHuman();
 
+        executeCommand("invalid command");
         assertTrue(getCommandBox().clear());
+        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
         guiRobot.pauseForHuman();
     }
 
@@ -250,10 +252,14 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      * template was unsuccessful.
      */
     private void assertPopulationFailure() {
-        assertNotEquals((new FindCommand()).getTemplate(), getCommandBox().getInput());
+        FindCommand findCommand = new FindCommand();
+        assertNotEquals(findCommand.getTemplate(), getCommandBox().getInput());
+        assertNotEquals(findCommand.getUsageMessage(), getResultDisplay().getText());
         guiRobot.pauseForHuman();
 
+        executeCommand("invalid command");
         assertTrue(getCommandBox().clear());
+        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
         guiRobot.pauseForHuman();
     }
 }

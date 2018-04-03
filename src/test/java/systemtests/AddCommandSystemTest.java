@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
@@ -297,7 +298,9 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertEquals(addCommand.getUsageMessage(), getResultDisplay().getText());
         guiRobot.pauseForHuman();
 
+        executeCommand("invalid command");
         assertTrue(getCommandBox().clear());
+        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
         guiRobot.pauseForHuman();
     }
 
@@ -306,10 +309,14 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * template was unsuccessful.
      */
     private void assertPopulationFailure() {
-        assertNotEquals((new AddCommand()).getTemplate(), getCommandBox().getInput());
+        AddCommand addCommand = new AddCommand();
+        assertNotEquals(addCommand.getTemplate(), getCommandBox().getInput());
+        assertNotEquals(addCommand.getUsageMessage(), getResultDisplay().getText());
         guiRobot.pauseForHuman();
 
+        executeCommand("invalid command");
         assertTrue(getCommandBox().clear());
+        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
         guiRobot.pauseForHuman();
     }
 }

@@ -236,7 +236,9 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         assertEquals(deleteCommand.getUsageMessage(), getResultDisplay().getText());
         guiRobot.pauseForHuman();
 
+        executeCommand("invalid command");
         assertTrue(getCommandBox().clear());
+        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
         guiRobot.pauseForHuman();
     }
 
@@ -245,10 +247,14 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      * template was unsuccessful.
      */
     private void assertPopulationFailure() {
-        assertNotEquals((new DeleteCommand()).getTemplate(), getCommandBox().getInput());
+        DeleteCommand deleteCommand = new DeleteCommand();
+        assertNotEquals(deleteCommand.getTemplate(), getCommandBox().getInput());
+        assertNotEquals(deleteCommand.getUsageMessage(), getResultDisplay().getText());
         guiRobot.pauseForHuman();
 
+        executeCommand("invalid command");
         assertTrue(getCommandBox().clear());
+        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
         guiRobot.pauseForHuman();
     }
 }

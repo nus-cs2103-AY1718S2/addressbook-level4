@@ -68,7 +68,8 @@ The following steps are written for IntelliJ IDEA `2017.3.5` (Ultimate Edition).
 There may be slight variations in the steps if using other versions of IntelliJ.
 
 . Fork this repo, and clone the fork to your computer.
-. Open IntelliJ. You should see the welcome screen (refer to <<fig-GettingStarted1>>). If you do not see the welcome screen, select `File` > `Close Project` to close the existing project dialog first.
+. Open IntelliJ. You should see the welcome screen (refer to <<fig-GettingStarted1>>).
+.. If you do not see the welcome screen, select `File` > `Close Project` to close the existing project dialog first.
 
 [[fig-GettingStarted1]]
 .IntelliJ's Welcome Screen
@@ -98,7 +99,8 @@ image::DeveloperGettingStarted3.png[width="600"]
 image::DeveloperGettingStarted4.png[width="600"]
 
 [start=8]
-. Click on the JDK `1.8` folder in the left pane and click `Next`. If you do not see a JDK `1.8` folder, click on `+` > `JDK`, and find the directory of the JDK.
+. Click on the JDK `1.8` folder in the left pane and click `Next`.
+.. If you do not see a JDK `1.8` folder, click on `+` > `JDK`, and find the directory of the JDK.
 . Click `Next` until you reach the last window. Click `Finish` to complete the import of the project. The project will be loaded and you will be brought to the main project window (refer to <<fig-GettingStarted5>>).
 
 [[fig-GettingStarted5]]

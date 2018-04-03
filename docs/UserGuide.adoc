@@ -1,4 +1,6 @@
 = PrioriTask - User Guide
+:linkcss:
+:icons: font
 :toc:
 :toclevels: 5
 :toc-title:
@@ -20,35 +22,214 @@ By: `CS2103JAN2018-W13-B4`      Since: `March 2018`      Licence: `MIT`
 
 == Introduction
 
-PrioriTask is for those who *prefer to use a desktop application for keeping track of their tasks and priorities*. More importantly, PrioriTask is *optimized for those who prefer to work with a Command Line Interface (CLI)* while still having the benefits of a Graphical User Interface (GUI). If you can type fast, PrioriTask can get your tasks and priorities organised faster than traditional GUI apps. Interested? Jump to <<Quick Start>> to get started. Enjoy!
+PrioriTask is a desktop task management application. It is not just any task management application, but a combination of the to-do list, calendar and reminder features, with an added bonus of an automatic updating and sorting of your tasks based on priority levels. It helps you keep track of your tasks, while providing you with at-a-glance views of upcoming tasks by day, week or month. PrioriTask is optimized for those who prefer to work with a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI).
+
+With PrioriTask, you can:
+
+- Keep track of your tasks and their deadlines, with reminders of approaching deadlines and at-a-glance views of upcoming tasks by day, week or month.
+- Manage your tasks' priorities with our automatic updating and sorting feature, so that you will never have to worry about deciding which task to start working on.
+- Maintain your list of tasks effectively with our easy-to-remember and user-friendly commands, which can help you get your tasks organised faster than traditional GUI applications.
+
+Interested? Jump to <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+_{ Add a preface here }_
+
+=== Setting Up
+
+_{ Add a preface here }_
+
+.  Ensure that you have Java `1.8.0_60` or later installed in your computer. You may download the latest version of Java http://www.oracle.com/technetwork/java/javase/downloads/index.html[here].
+
 +
 [NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+PrioriTask works best on Java `1.8.0_60` or later. +
+It will not work with earlier versions of Java 8 (i.e. Java `1.8.0_51` and below).
 +
+
 .  Download the latest `organizer.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your PrioriTask.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+
 +
+.Downloading the latest `organizer.jar`
+image::UserGuideQuickStart1.png[width="600"]
++
+
+.  Copy the file to the folder you want to use as the home folder for PrioriTask.
+.  Double-click the file to start the application. The main page should appear in a few seconds (refer to <<fig-Ui>>).
+
++
+[[fig-Ui]]
+.PrioriTask's main page
 image::Ui.png[width="790"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
 
-* [example-no-box]#`list`# : lists all tasks
-* [example-no-box]#`add n/CS2103T Developer Guide p/10 d/2018-03-02`# : adds a task named `CS2103T Developer Guide` to the PrioriTask.
-* [example-no-box]#`delete 3`# : deletes the 3rd task shown in the current list
-* [example-no-box]#`exit`# : exits the application
+.. If the application is unable to start, refer to <<FAQ>> for the solution.
 
-.  Refer to <<Features>> for details of each command.
+. Proceed to <<Signing Up>> for instructions on creating an account on PrioriTask.
 
-[[Parameters]]
-== Task Parameters
+=== Signing Up
+
+_{ Add a preface here }_
+
+. Type the command [example-no-box]#`signup u/USERNAME p/PASSWORD`# in the command box, replacing the `USERNAME` and `PASSWORD` with your own.
+
++
+.Signing up for an account
+image::UserGuideQuickStart2.png[width="790"]
++
+
+. Press kbd:[Enter] to execute the command. Your sign up will be confirmed in the result display box upon a successful registration (refer to <<fig-QuickStart3>>).
+[NOTE]
+The [parameters]#`USERNAME`# and [parameters]#`PASSWORD`# parameters can only take in alphabetical and numerical values. They will not accept spaces and special symbols (e.g. %, $, etc.). +
+A warning message will be displayed in the result display box if your [parameters]#`USERNAME`# or [parameters]#`PASSWORD`# contains characters that are not allowed.
++
+[[fig-QuickStart3]]
+.Confirmation message upon successful sign up
+image::UserGuideQuickStart3.png[width="790"]
++
+
+. Proceed to <<Logging In>> for instructions on logging into your account on PrioriTask.
+
+=== Logging In
+
+_{ Add a preface here }_
+
+. Type the command [example-no-box]#`login u/USERNAME p/PASSWORD`# in the command box, replacing the `USERNAME` and `PASSWORD` with your own.
+
++
+.Logging into an account
+image::UserGuideQuickStart4.png[width="790"]
++
+
+. Press kbd:[Enter] to execute the command. Your login will be confirmed in the result display box (refer to <<fig-QuickStart6>>).
+
++
+[[fig-QuickStart6]]
+.Confirmation message upon successful login
+image::UserGuideQuickStart5.png[width="790"]
++
+
+. Proceed to <<Using PrioriTask>> to learn more about using the application, or head straight to <<Task Management Features>> to start managing your tasks.
+
+== Using PrioriTask
+
+_{ Add a preface here }_
+
+=== The Different Sections of PrioriTask
+
+The PrioriTask application consists of six different sections (refer to <<fig-DifferentComponents>>).
+
+[[fig-DifferentComponents]]
+.The Different Sections of PrioriTask
+image::UserGuideDifferentComponents.png[width="790"]
+
+Given below is a quick overview of each section.
+
+. `Menu Bar`, where you will be able to,
+.. Exit the application (`File` > `Exit`).
+.. Open the Help Window (`Help` > `Help  F1`).
+. `Command Box`, where you input the command to be executed. Press kbd:[Enter] to execute the command after you have finished typing.
+. `Result Display Box`, which displays a successful or warning message depending on the command you execute.
+. `Task List Panel`, which displays the tasks and their respective details. The tasks are organised by their priority levels, with the highest priority level at the top.
+. `Calendar Panel`, which displays the calendar a chronic overview of the deadlines of all your tasks. It will display the current month by default.
+. `Status Bar Footer`, which displays,
+.. The date and time of the last time you have made changes to the data.
+.. The total number of tasks being shown in the `Task List Panel`.
+.. The folder address of where your data file is being stored.
+
+=== Command Format
+
+PrioriTask is a CLI application. All features are executed primarily via the command box.
+
+In the following sections, you will be introduced to several commands and their command formats. Here are a few things to take note of:
+
+* The command word and alias are case-sensitive.
+** icon:check[] Typing `help` executes the command.
+** icon:times[] Typing `Help`, `heLp` or `HELP` does not execute the command.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user.
+** E.g. In `add n/NAME`, `NAME` is a parameter which can be used as `add n/CS2103T Developer Guide`.
+* Items in square brackets are optional.
+** E.g `n/NAME [t/TAG]` can be used as `n/CS2103T Developer Guide t/CS2103` or as `n/CS2103T Developer Guide`.
+* Items with `…`​ after them can be used multiple times including zero times.
+** E.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), or `t/CS2103`, `t/CS2103 t/CS2101` etc.
+* Parameters can be in any order.
+** E.g. If the command specifies `n/NAME p/PRIORITY_LEVEL`, `p/PRIORITY_LEVEL n/NAME` is also acceptable.
+
+== User Features
+
+_{ To explain what a user feature is. }_
+
+=== Viewing help : `help`
+
+[.format]
+====
+[format-title]#Format:# `help`
+====
+
+=== Signing up: `signup` or `su` `[since v1.3]`
+
+Sign up for a PrioriTask account +
+
+[.format]
+====
+[format-title]#Format:# `signup u/USERNAME p/PASSWORD`
+====
+
+[.example]
+====
+[example-title]#Examples:#
+
+* [example]#`signup u/patrick p/pat19503#
+* [example]#`signup u/mary p/m4ry`#
+====
+
+=== Logging in: `login` or `in` `[since v1.4]`
+
+Login to PrioriTask +
+
+[.format]
+====
+[format-title]#Format:# `login u/USERNAME p/PASSWORD`
+====
+
+[.example]
+====
+[example-title]#Examples:#
+
+* [example]#`login u/patrick p/pat19503#
+* [example]#`login u/mary p/m4ry`#
+====
+
+=== Logging out: `logout` or `out` `[since v1.4]`
+
+Logout of PrioriTask +
+
+[.format]
+====
+[format-title]#Format:# `logout`
+====
+
+=== Deleting an account `[coming in v2.0]`
+
+_{ Describe the command function }_
+
+=== Exiting the program : `exit`
+
+Exits the program. +
+
+[.format]
+====
+[format-title]#Format:# `exit`
+====
+
+== Task Management Features
+
+_{ To explain what a task management feature is. }_
+
+[.noteblock]
+====
+[noteblock-title]#*Task Parameters*#
 
 * [parameters]#`NAME`#
 * [parameters]#`PRIORITY LEVEL`#
@@ -68,82 +249,11 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ** A task can have any number of tags (including 0).
 * [parameters]#`SUBTASK`#
 ** A task can have any number of subtasks (including 0).
-** A subtask has the following parameters. Subtask parameters are similar to that of task parameters.
-*** [parameters]#`NAME`#
-*** [parameters]#`STATUS`#
+** More information about subtask parameters can be found in <<Subtask Management Features>>.
 
-[[Features]]
-== Features
-
-[.noteblock]
-====
-[noteblock-title]#*Command Format*#
-
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/CS2103T Developer Guide`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/CS2103T Developer Guide t/CS2103` or as `n/CS2103T Developer Guide`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `` (i.e. 0 times), or `t/CS2103`, `t/CS2103 t/CS2101` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PRIORITY_LEVEL`, `p/PRIORITY_LEVEL n/NAME` is also acceptable.
 ====
 
-=== User Features
-
-{ To explain what a user feature is. }_
-
-==== Viewing help : `help`
-
-[.format]
-====
-[format-title]#Format:# `help`
-====
-
-==== Signing up: `signup` or `su` `[since v1.3]`
-
-Sign up for a PrioriTask account +
-
-[.format]
-====
-[format-title]#Format:# `signup u/USERNAME p/PASSWORD`
-====
-
-[.example]
-====
-[example-title]#Examples:#
-
-* [example]#`signup u/patrick p/pat19503#
-* [example]#`signup u/mary p/m4ry`#
-====
-
-==== Logging in: `login` or `in` `[since v1.4]`
-
-Login to PrioriTask +
-
-[.format]
-====
-[format-title]#Format:# `login u/USERNAME p/PASSWORD`
-====
-
-[.example]
-====
-[example-title]#Examples:#
-
-* [example]#`login u/patrick p/pat19503#
-* [example]#`login u/mary p/m4ry`#
-====
-
-==== Logging out: `logout` or `out` `[since v1.4]`
-
-Logout of PrioriTask +
-
-[.format]
-====
-[format-title]#Format:# `logout`
-====
-
-=== Task Management Features
-
-_{ To explain what a task management feature is. }_
-
-==== Adding a task: `add` or `a`
+=== Adding a task: `add` or `a`
 
 Adds a task to the PrioriTask +
 
@@ -160,7 +270,7 @@ Adds a task to the PrioriTask +
 * [example]#`add n/CS2101 Script p/8 d/2018-03-05 des/Script should be 500 words long t/CS2101`#
 ====
 
-==== Listing all tasks : `list` or `l`
+=== Listing all tasks : `list` or `l`
 
 Shows a list of all tasks in the PrioriTask. +
 
@@ -171,7 +281,7 @@ Shows a list of all tasks in the PrioriTask. +
 
 * _[Coming in v2.0]_ Shows a list of all tasks (regardless of status), all completed tasks, or all uncompleted tasks.
 
-==== Editing a task : `edit` or `e`
+=== Editing a task : `edit` or `e`
 
 Edits an existing task in the PrioriTask. +
 
@@ -196,7 +306,7 @@ Edits the priority level and deadline of the 1st task to be `9` and `2018-12-30`
 Edits the name of the 2nd task to be `CS2101 Final Assignment` and clears all existing tags.
 ====
 
-==== Locating tasks `[since v1.2]`
+=== Locating tasks `[since v1.2]`
 
 Depending on the suffix (or lack of) at the end of the `find` command, you can find tasks whose names, descriptions and/or deadlines contain any of the given keywords. +
 
@@ -208,7 +318,7 @@ Depending on the suffix (or lack of) at the end of the `find` command, you can f
 * Tasks matching at least one keyword will be returned (i.e. `OR` search). e.g. `CS2101 Guide` will return `CS2101 Script`, `Developer Guide`.
 ****
 
-===== Locating tasks: `find` or `f`
+==== Locating tasks: `find` or `f`
 
 Finds tasks whose names, descriptions and deadlines contain any of the given keywords. +
 
@@ -229,7 +339,7 @@ Returns `User Guide` and `Developer Guide`
 Returns any task having names or descriptions `CS2101`, `Developer`, or `User`
 ====
 
-===== Locating tasks by name: `findn` or `fn`
+==== Locating tasks by name: `findn` or `fn`
 
 Finds tasks whose names contain any of the given keywords. +
 
@@ -250,7 +360,7 @@ Returns `User Guide` and `Developer Guide`
 Returns any task having names `CS2101`, `Developer`, or `User`
 ====
 
-===== Locating tasks by description: `finddes` or `fdes`
+==== Locating tasks by description: `finddes` or `fdes`
 
 Find tasks whose descriptions contain any of the given keywords. +
 
@@ -271,7 +381,7 @@ Returns tasks with descriptions `Study midterms` and `study chapter 2`.
 Returns any task having descriptions containing words `Study`, `Update`, or `Chapter`.
 ====
 
-===== Locating tasks by deadline: `findd` or `fd`
+==== Locating tasks by deadline: `findd` or `fd`
 
 Find tasks whose deadlines contain any of the given keywords. +
 
@@ -292,7 +402,11 @@ Returns tasks with deadlines `2018-03-17`.
 Returns any task having deadlines `2018-03-17`, `2018-09-04`, or `2018-03-21`.
 ====
 
-==== Deleting a task : `delete` or `d`
+==== Locating tasks by tag `[coming in v2.0]`
+
+_{ coming in v2.0 }_
+
+=== Deleting a task : `delete` or `d`
 
 Deletes the specified task from the PrioriTask. +
 
@@ -317,7 +431,7 @@ Deletes the 2nd task in the PrioriTask.
 Deletes the 1st task in the results of the `find` command.
 ====
 
-==== Selecting a task : `select` or `s`
+=== Selecting a task : `select` or `s`
 
 Selects the task identified by the index number used in the last task listing. +
 
@@ -342,7 +456,7 @@ Selects the 2nd task in the PrioriTask.
 Selects the 1st task in the results of the `find` command.
 ====
 
-==== Mark task as complete: `toggle` or `t` `[since v1.2]`
+=== Mark task as complete: `toggle` or `t` `[since v1.2]`
 
 Toggle the status of the task identified by the index number used in the last task listing
 between `Done` and `Not Done`. +
@@ -368,7 +482,156 @@ Toggle the first task in the PrioriTask.
 Toggle the first task in th result of `find homework` command.
 ====
 
-==== Listing entered commands : `history`
+=== Clearing all entries : `clear` or `c`
+
+Clears all entries from the PrioriTask. +
+
+[.format]
+====
+[format-title]#Format:# `clear`
+====
+
+== Subtask Management Features
+
+_{ To explain what a subtask feature is. }_
+
+[.noteblock]
+====
+[noteblock-title]#*Subtask Parameters*#
+
+* [parameters]#`NAME`#
+* [parameters]#`STATUS`#
+** A task can be in one of two states, "Done" or "Not Done".
+** By default, every new task is marked as "Not Done".
+
+====
+
+=== Adding a subtask to a task : `adds` or `as` `[since v1.2]`
+
+Add a subtask to an existing task. +
+
+[.format]
+====
+[format-title]#Format:# `adds INDEX [n/NAME]`
+====
+
+* Adds the subtask at the specified `INDEX`. The index refers to the index number shown in the last subtask listing. The index *must be a positive integer* (i.e. 1, 2, 3, ...).
+
+[.example]
+====
+[example-title]#Example:#
+
+* [example]#`adds 1 n/Submit report`# +
+Adds a subtask with name `Submit report` to the 1st task.
+====
+
+=== Mark subtask as complete: `toggle-subtask` or `ts` `[since v1.3]`
+
+Toggle the status of the subtask identified by the index number used in the last subtask listing
+between `Done` and `Not Done`. +
+
+[.format]
+====
+[format-title]#Format:# `toggle-subtask TASK_INDEX SUBTASK_INDEX`
+====
+
+* Toggle the status of the `SUBTASK_INDEX`-th subtask of task at the specified by `TASK_INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* (i.e. `1, 2, 3, ...`).
+
+[.example]
+====
+[example-title]#Examples:#
+
+* [example]#`list`# +
+[example]#`toggle-subtask 1 1`# +
+Toggles the first subtask of the first task in the PrioriTask.
+* [example]#`find homework`# +
+[example]#`toggle-subtask 2 4`# +
+Toggles the fourth subtask of the second task in th result of `find homework` command.
+====
+
+=== Deleting a subtask from a task: `delete-subtask` or `ds` `[since v1.3]`
+
+Deletes the specified subtask from the PrioriTask. +
+
+[.format]
+====
+[format-title]#Format:# `delete-subtask TASK_INDEX SUBTASK_INDEX`
+====
+
+* Delete the `SUBTASK_INDEX`-th subtask of task at the specified by `SUBTASK_INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* (i.e. `1, 2, 3, ...`).
+
+[.example]
+====
+[example-title]#Examples:#
+
+* [example]#`list`# +
+[example]#`delete-subtask 1 1`# +
+Deletes the first subtask of the first task in the PrioriTask.
+* [example]#`find cleaning`# +
+[example]#`delete-subtask 2 4`# +
+Deletes the fourth subtask of the second task in th result of `find cleaning` command.
+====
+
+=== Editing a subtask `[coming in v2.0]`
+
+_{ coming in v2.0 }_
+
+=== Reorder subtask `[coming in v2.0]`
+
+_{ coming in v2.0 }_
+
+== Calendar Features
+
+The `Calendar` allows you to have a chronic overview of the deadlines of all your tasks. Tasks on the calendar changes according to the last task listing. By default, you will view the current month when you first open PrioriTask.
+
+* _[coming in v2.0]_ To show only completed tasks on the calendar.
+* _[coming in v2.0]_ To support the viewing of the calendar by days, weeks and years.
+
+=== Go to previous month: `pmonth` or `pm` `[since v1.4]`
+
+Changes the view of the calendar to that of the previous month. +
+
+[.format]
+====
+[format-title]#Format:# `pmonth`
+====
+
+[.example]
+====
+[example-title]#Example:#
+
+* Views `March 2018` +
+[example]#`pmonth`# +
+Goes to `February 2018`
+====
+
+=== Go to next month: `nmonth` or `nm` `[since v1.4]`
+
+Changes the view of the calendar to that of the next month. +
+
+[.format]
+====
+[format-title]#Format:# `nmonth`
+====
+
+[.example]
+====
+[example-title]#Example:#
+
+* Views `March 2018` +
+[example]#`nmonth`# +
+Goes to `April 2018`
+====
+
+=== PrioriTask Features
+
+_{ To describe what this feature is about }_
+
+=== Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
 
@@ -382,7 +645,7 @@ Lists all the commands that you have entered in reverse chronological order. +
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-==== Undoing previous command : `undo`
+=== Undoing previous command : `undo`
 
 Restores the PrioriTask to the state before the previous _undoable_ command was executed. +
 
@@ -415,7 +678,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 [example]#`undo`# (reverses the `delete 1` command) +
 ====
 
-==== Redoing the previously undone command : `redo`
+=== Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
 
@@ -444,194 +707,54 @@ The `redo` command fails as there are no `undo` commands executed previously.
 [example]#`redo`# (reapplies the `clear` command) +
 ====
 
-==== Clearing all entries : `clear` or `c`
-
-Clears all entries from the PrioriTask. +
-
-[.format]
-====
-[format-title]#Format:# `clear`
-====
-
-==== Exiting the program : `exit`
-
-Exits the program. +
-
-[.format]
-====
-[format-title]#Format:# `exit`
-====
-
-==== Saving the data
+=== Saving the data
 
 PrioriTask data is saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-==== Deleting specific parameters from a task `[coming in v2.0]`
+=== Recover past data `[coming in v2.0]`
 
-_{ coming in v2.0 }_
+_{ To explain what this feature is about }_
 
-****
-* Delete either a tag, deadline, or description from a particular task.
-****
+== Reminders `[coming in v2.0]`
 
-==== Locating tasks by tag `[coming in v2.0]`
-
-_{ coming in v2.0 }_
-
-==== Reminders `[coming in v2.0]`
-
-_{ coming in v2.0 }_
-
-==== Recover past data `[coming in v2.0]`
-
-_{ coming in v2.0 }_
-
-=== Subtask Features
-
-_{ To explain what a subtask feature is. }_
-
-==== Adding a subtask to a task : `adds` or `as` `[since v1.2]`
-
-Add a subtask to an existing task. +
-
-[.format]
-====
-[format-title]#Format:# `adds INDEX [n/NAME]`
-====
-
-* Adds the subtask at the specified `INDEX`. The index refers to the index number shown in the last task listing. The index *must be a positive integer* (i.e. 1, 2, 3, ...).
-
-[.example]
-====
-[example-title]#Example:#
-
-* [example]#`adds 1 n/Submit report`# +
-Adds a subtask with name `Submit report` to the 1st task.
-====
-
-==== Mark subtask as complete: `toggle-subtask` or `ts` `[since v1.3]`
-
-Toggle the status of the subtask identified by the index number used in the last task listing
-between `Done` and `Not Done`. +
-
-[.format]
-====
-[format-title]#Format:# `toggle-subtask TASK_INDEX SUBTASK_INDEX`
-====
-
-* Toggle the status of the `SUBTASK_INDEX`-th subtask of task at the specified by `TASK_INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* (i.e. `1, 2, 3, ...`).
-
-[.example]
-====
-[example-title]#Examples:#
-
-* [example]#`list`# +
-[example]#`toggle-subtask 1 1`# +
-Toggles the first subtask of the first task in the PrioriTask.
-* [example]#`find homework`# +
-[example]#`toggle-subtask 2 4`# +
-Toggles the fourth subtask of the second task in th result of `find homework` command.
-====
-
-==== Deleting a subtask from a task: `delete-subtask` or `ds` `[since v1.3]`
-
-Deletes the specified subtask from the PrioriTask. +
-
-[.format]
-====
-[format-title]#Format:# `delete-subtask TASK_INDEX SUBTASK_INDEX`
-====
-
-* Delete the `SUBTASK_INDEX`-th subtask of task at the specified by `TASK_INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* (i.e. `1, 2, 3, ...`).
-
-[.example]
-====
-[example-title]#Examples:#
-
-* [example]#`list`# +
-[example]#`delete-subtask 1 1`# +
-Deletes the first subtask of the first task in the PrioriTask.
-* [example]#`find cleaning`# +
-[example]#`delete-subtask 2 4`# +
-Deletes the fourth subtask of the second task in th result of `find cleaning` command.
-====
-
-==== Editing a subtask `[coming in v2.0]`
-
-_{ coming in v2.0 }_
-
-==== Reorder subtask `[coming in v2.0]`
-
-_{ coming in v2.0 }_
-
-=== Calendar Features
-
-The `Calendar` allows you to have a chronic overview of the deadlines of all your tasks. Tasks on the calendar changes according to the last task listing. By default, you will view the current month when you first open PrioriTask.
-
-* _[coming in v2.0]_ To show only completed tasks on the calendar.
-* _[coming in v2.0]_ To support the viewing of the calendar by days, weeks and years.
-
-==== Go to previous month: `pmonth` or `pm` `[since v1.4]`
-
-Changes the view of the calendar to that of the previous month. +
-
-[.format]
-====
-[format-title]#Format:# `pmonth`
-====
-
-[.example]
-====
-[example-title]#Example:#
-
-* Views `March 2018` +
-[example]#`pmonth`# +
-Goes to `February 2018`
-====
-
-==== Go to next month: `nmonth` or `nm` `[since v1.4]`
-
-Changes the view of the calendar to that of the next month. +
-
-[.format]
-====
-[format-title]#Format:# `nmonth`
-====
-
-[.example]
-====
-[example-title]#Example:#
-
-* Views `March 2018` +
-[example]#`nmonth`# +
-Goes to `April 2018`
-====
+_{ To explain what this feature is about }_
 
 == FAQ
 
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+[qanda]
+I am unable to start the application. Double-clicking on the `jar` file doesn't work. What do I do?:::
+For Windows Users::
+. Find your Java JDK directory.
+. Open `Command Prompt`.
+. Change the directory to your Java JDK directory.
+. Execute the command `"JAVA_JDK_EXE_FILE_DIRECTORY_PATH" -jar YOUR_JAR_FILE_NAME.jar`.
+.. E.g. `"C:\Program Files\Java\jdk1.8.0_102\bin\javaw.exe" -jar YOUR_JAR_FILE_NAME.jar`
+
+For Mac/Linux Users::
+. Open `Terminal`.
+. Execute the command `java -jar YOUR_JAR_FILE_NAME.jar`.
+
+
+How do I transfer my data to another computer?:::
+Install the application in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous PrioriTask folder.
 
 == Command Summary
 
 === User Features
+* *Exit* : [format-no-box]#`exit`#
 * *Help* : [format-no-box]#`help`#
-* *Sign Up* : [format-no-box]#`signup u/USERNAME p/PASSWORD`#
-e.g. [example-no-box]#`signup u/patrick p/pat12351`#
 * *Login* : [format-no-box]#`login u/USERNAME p/PASSWORD`#
 e.g. [example-no-box]#`login u/patrick p/pat12351`#
 * *Logout* : [format-no-box]#`logout`#
+* *Sign Up* : [format-no-box]#`signup u/USERNAME p/PASSWORD`#
+e.g. [example-no-box]#`signup u/patrick p/pat12351`#
 
 === Task Management Features
 * *Add* : [format-no-box]#`add n/NAME [p/PRIORITY_LEVEL] d/DEADLINE [des/DESCRIPTION] [t/TAG]…`# +
 e.g. [example-no-box]#`add n/CS2101 Script p/8 d/2018-03-05 des/Script should be 500 words long t/CS2101 t/PhaseA`#
 * *Clear* : [format-no-box]#`clear`#
-* *Delete* : [format]#`delete INDEX`# +
+* *Delete* : [format-no-box]#`delete INDEX`# +
 e.g. [example-no-box]#`delete 3`#
 * *Edit* : [format-no-box]#`edit INDEX [n/NAME] [p/PRIORITY_LEVEL] [d/DEADLINE] [des/DESCRIPTION] [t/TAG]…​`# +
 e.g. [example-no-box]#`edit 1 p/9 d/2018-12-30`#
@@ -648,18 +771,21 @@ e.g. [example-no-box]#`findd 2018-03-17 2018-09-07`#
 e.g.[example-no-box]#`select 2`#
 * *Toggle* : [format-no-box]#`toggle INDEX`# +
 e.g.[example-no-box]#`toggle 3`#
+
+=== Subtask Management Features
+* *Add Subtask* : [format-no-box]#`adds INDEX n/NAME`# +
+e.g. [example-no-box]#`adds 1 n/Submit Report`#
+* *Delete Subtask* : [format-no-box]#`delete-subtask TASK_INDEX SUBTASK_INDEX`# +
+e.g. [example-no-box]#`delete-subtask 2 3`#
+* *Toggle Subtask* : [format-no-box]#`toggle-subtask TASK_INDEX SUBTASK_INDEX`# +
+e.g.[example-no-box]#`toggle-subtask 3 2`#
+
+=== Calendar Features
+* *Go To Next Month* : [format-no-box]#`nmonth`#
+* *Go To Previous Month* : [format-no-box]#`pmonth`#
+
+=== PrioriTask Features
 * *History* : [format-no-box]#`history`#
 * *Undo* : [format-no-box]#`undo`#
 * *Redo* : [format-no-box]#`redo`#
 
-=== Subtask Feature
-* *Add Subtask* : [format-no-box]#`adds INDEX n/NAME`# +
-e.g. [example-no-box]#`adds 1 n/Submit Report`#
-* *Toggle Subtask* : [format-no-box]#`toggle-subtask TASK_INDEX SUBTASK_INDEX`# +
-e.g.[example-no-box]#`toggle-subtask 3 2`#
-* *Delete Subtask* : [format]#`delete-subtask TASK_INDEX SUBTASK_INDEX`# +
-e.g. [example-no-box]#`delete-subtask 2 3`#
-
-=== Calendar Feature
-* *Go To Previous Month* : [format-no-box]#`pmonth`#
-* *Go To Next Month* : [format-no-box]#`nmonth`#

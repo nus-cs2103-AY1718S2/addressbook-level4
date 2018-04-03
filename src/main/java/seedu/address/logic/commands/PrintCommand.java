@@ -24,13 +24,12 @@ public class PrintCommand extends Command {
             + "Example: " + COMMAND_WORD + " INDEX";
 
     private final Index targetIndex;
-    private final PrintFormatter printFormatter;
+    private static PrintFormatter printFormatter;
 
     private Patient patient;
 
     public PrintCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
-        this.printFormatter = new PrintFormatter();
     }
 
     @Override
@@ -42,20 +41,9 @@ public class PrintCommand extends Command {
         }
 
         this.patient = lastShownList.get(targetIndex.getZeroBased());
-        formatRecords();
+        this.printFormatter = new PrintFormatter(this.patient);
 
-        return new CommandResult("Printed records of patient " + targetIndex.getOneBased());
-    }
-
-    private void formatRecords () {
-        RecordList recordList = patient.getRecordList();
-        int recordListSize = recordList.getNumberOfRecords();
-
-        for (int recordIndex = 0; recordIndex < recordListSize; recordIndex++) {
-            // pass record to printFormatter
-            // test
-            System.out.println(recordList.getRecord(recordIndex).toString());
-        }
+        return new CommandResult("Printed records of patient " + patient.getName().toString());
     }
 
     @Override

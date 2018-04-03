@@ -51,7 +51,7 @@ Not sure how to install Java? Visit the oracle website link below for more infor
 .  Download the latest `contactHeRo.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for contactHeRo.
 .  Double-click the file to start the app. The user interface should appear in a few seconds as shown below (Refer to figure 1).
-
++
 .contactHeRo on launch
 image::Ui.png[width="790", align="center"]
 
@@ -77,6 +77,7 @@ contactHeRo is a *Command Line Interface(CLI) application*. Hence you need to ty
 Below is the interface(refer to figure 2) that contactHeRo provides for you to type your command. +
 
 .Command Box in contactHeRo
+
 image::commandBox.png[width="790", align="center"]
 
 *Command Format* +
@@ -89,6 +90,7 @@ Here is the format for the commands that will enable you to make most of contact
 * Items with `…`​ after them can be used multiple times including zero times. For example, you can use `s/SKILL` as `{nbsp}` (i.e. 0 times), `s/Java`, `s/Java s/Designing` etc.
 
 * Parameters can be in any order. If the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+
 
 [NOTE]
 In case you make a mistake while typing the command, contactHeRo will show you the right format of the command. +
@@ -120,7 +122,7 @@ Profile Picture indicates the profile picture's file path
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 cp/Software Engineer cc/Google pp//home/john/Desktop/John.jpg` +
-
++
 On running the above command, you should see the following success message: +
 
  New person added: John Doe Phone: 98765432 Email: johnd@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Skills:
@@ -130,6 +132,7 @@ On running the above command, you should see the following success message: +
 On running the above command, you should see the following success message: +
 
  New person added: Betsy Crowe Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS  Skills: [C++]
+
 
 === Editing a person : `edit`
 
@@ -149,7 +152,7 @@ Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-
++
 On running the above command, you should see the following success message: +
 
  Edited Person: John Doe Phone: 91234567 Email: johndoe@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Skills:
@@ -201,6 +204,7 @@ Examples:
 This deletes the 2nd person in contactHeRo and on running the above command, you should see the following success message: +
 
  Deleted Person: John Doe Phone: 98765432 Email: johnd@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Skills:
+
 
 * `find Betsy` +
 `delete 1` +
@@ -437,6 +441,41 @@ On running the above command, you should see the following success message: +
 You can exit the program using the following format. +
 Format: `exit`
 
+=== Registering new account : `signup`
+
+You can create a new user account through the command line by using the following format. +
+Format: `signup u/USERNAME pw/PASSWORD`
+
+[NOTE]
+===
+* Username has to be at least 3 characters starting with a alphanumeric character. +
+* Password should be at least 4 characters long. +
+* Both username and password should not contain any whitespaces. +
+===
+Examples
+* signup u/JohnDoe pw/doe123
+
+On running the above command, you should see the following success message: +
+  `You have signup successfully!`
+
+=== Logging in : `login`
+You can login through the command line by using the following this format. +
+Format: `login u/USERNAME pw/PASSWORD`
+
+Examples
+* login u/JohnDoe pw/doe123
+
+On running the above command, you should see the following success message: +
+ `You have successfully login as JohnDoe`
+
+=== Logging out : `logout`
+You can logout through the command line by using the following this format. +
+Format: `logout`
+
+On running this command, you should see the following success message: +
+ `You have logout successfully!`
+
+Examples
 === Auto-complete command
 
 To save your time, after typing a partial command, you can press TAB for the command to be auto-completed.
@@ -568,15 +607,15 @@ You will soon be able to arrange meeting on Gmail calender using contactHero.
 
 You will soon be able to set reminders for meetings, appointments or any other event and contactHeRo will remind you of the event.
 
+=== Login system `[coming in v2.0]`
+
+The login system shall provide security to your data stored in contactHeRo.
+
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
-
-=== Login system `[coming in v2.0]`
-
-The login system shall provide security to your data stored in contactHeRo.
 
 == FAQ
 
@@ -630,3 +669,4 @@ e.g. `year` or `year 2018`
 e.g `addapp t/Meeting sdt/2018-04-05 14:00 edt/2018-04-05 15:00`
 * *<<deleting-appointment, Deleting appointment>>* : `delapp t/TITLE sdt/START_DATE_TIME edt/END_DATE_TIME` +
 e.g `delapp t/Meeting sdt/2018-04-05 14:00 edt/2018-04-05 15:00`
+

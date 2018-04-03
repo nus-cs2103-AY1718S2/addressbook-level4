@@ -42,8 +42,14 @@ public class GetDistance {
         String distanceWithoutUnit = "";
         DistanceMatrix matrix = null;
         matrix = getMatrix(origin, destination);
+        String distance;
 
-        String distance = matrix.rows[0].elements[0].distance.toString();
+        try {
+            distance = matrix.rows[0].elements[0].distance.toString();
+        } catch (NullPointerException e) {
+            return -1.0;
+        }
+
         int space = distance.indexOf(" ");
         String units = distance.substring(space + 1, distance.length());
         double metres;

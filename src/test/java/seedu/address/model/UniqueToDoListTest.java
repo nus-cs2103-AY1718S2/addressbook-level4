@@ -1,3 +1,4 @@
+//@@author nhatquang3112
 package seedu.address.model;
 
 import org.junit.Rule;

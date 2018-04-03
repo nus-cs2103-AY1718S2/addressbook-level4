@@ -92,7 +92,9 @@ public class SortCommandTest {
     @Test
     public void sortAddressBookCallingModel_functionCallWithImportedData_personsAreInCorrectOrder()
             throws Exception {
-        setupModelWithImportedContacts();
+        if (testModel == null) {
+            setupModelWithImportedContacts();
+        }
         assertFalse(checkSorted(testModel));
         testModel.sortAddressBookAlphabeticallyByName();
         assertTrue(checkSorted(testModel));
@@ -100,7 +102,9 @@ public class SortCommandTest {
 
     @Test
     public void executeUndoableCommand_sortImportedPersons_personsCorrectlySorted() throws Exception {
-        setupModelWithImportedContacts();
+        if (testModel == null) {
+            setupModelWithImportedContacts();
+        }
         SortCommand sc = new SortCommand();
         sc.model = testModel;
         assertFalse(checkSorted(sc.model));

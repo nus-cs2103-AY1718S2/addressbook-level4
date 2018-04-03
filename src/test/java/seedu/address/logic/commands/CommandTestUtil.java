@@ -41,8 +41,8 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_BIRTHDAY_AMY = "01011995";
     public static final String VALID_BIRTHDAY_BOB = "02021993";
-    public static final String VALID_TIMETABLE_AMY = "http://modsn.us/oNZLY";
-    public static final String VALID_TIMETABLE_BOB = "http://modsn.us/ojGeu";
+    public static final String VALID_TIMETABLE_AMY = "http://modsn.us/Zu75n";
+    public static final String VALID_TIMETABLE_BOB = "http://modsn.us/C4lZI";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_TAG_UNUSED = "unused"; // do not use this tag when creating a person
@@ -67,7 +67,7 @@ public class CommandTestUtil {
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_BIRTHDAY_DESC = " " + PREFIX_BIRTHDAY + "12345b"; // 'b' not allowed in birthday
-    public static final String INVALID_TIMETABLE_DESC = " " + PREFIX_TIMETABLE + "google.com"; // not NUSMods links
+    public static final String INVALID_TIMETABLE_DESC = " " + PREFIX_TIMETABLE + "http://google.com/"; // not NUSMods links
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";

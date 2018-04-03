@@ -1,5 +1,6 @@
 package seedu.address.model.building.exceptions;
 
+//@@author Caijun7
 /**
  * Signals that week schedule is in incorrect format
  */

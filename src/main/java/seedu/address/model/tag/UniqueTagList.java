@@ -92,6 +92,7 @@ public class UniqueTagList implements Iterable<Tag> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    //@@author Caijun7
     /**
      * Adds a Tag to the list if the Tag is not a duplicate of an existing Tag in the list
      */
@@ -103,6 +104,7 @@ public class UniqueTagList implements Iterable<Tag> {
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
+    //@@author
 
     @Override
     public Iterator<Tag> iterator() {

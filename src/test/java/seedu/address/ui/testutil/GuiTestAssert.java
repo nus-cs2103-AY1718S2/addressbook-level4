@@ -77,6 +77,7 @@ public class GuiTestAssert {
         assertEquals(expected, resultDisplayHandle.getText());
     }
 
+    //@@author yeggasd
     /**
      * Asserts that the tags in {@code actualCard} matches all the tags in {@code expectedPerson} with the correct
      * color.
@@ -89,4 +90,5 @@ public class GuiTestAssert {
                 assertEquals(Arrays.asList(LABEL_DEFAULT_STYLE, PersonCard.getColorStyleFor(tag)),
                         actualCard.getTagStyleClasses(tag)));
     }
+    //@@author
 }

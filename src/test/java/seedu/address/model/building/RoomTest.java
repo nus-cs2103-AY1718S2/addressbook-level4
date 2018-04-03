@@ -14,6 +14,7 @@ import seedu.address.model.building.exceptions.CorruptedVenueInformationExceptio
 import seedu.address.testutil.RoomBuilder;
 import seedu.address.testutil.WeekBuilder;
 
+//@@author Caijun7
 public class RoomTest {
 
     private Room room = new Room("COM2-0108");

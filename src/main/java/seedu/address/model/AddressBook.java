@@ -46,6 +46,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         aliases = new UniqueAliasList();
     }
 
+    //@@author yeggasd
     public AddressBook() {
         password = new Password();
     }
@@ -53,6 +54,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public AddressBook(String password) {
         this.password = new Password(password);
     }
+    //@@author
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -111,6 +113,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(person);
     }
 
+    //@@author Caijun7
     /**
      * Imports a person to the address book.
      * Also checks the new person's tags and updates {@link #tags} with any new tags found,
@@ -123,6 +126,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         // in the person list.
         persons.importPerson(person);
     }
+    //@@author
 
     //// command-level operations
 
@@ -135,9 +139,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         aliases.add(alias);
     }
 
+    //@@author Caijun7
     public void importAlias(Alias alias) {
         aliases.importAlias(alias);
     }
+    //@@author
 
     /**
      * Replaces the given person {@code target} in the list with {@code editedPerson}.
@@ -161,6 +167,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         removeUnusedTags();
     }
 
+    //@@author Caijun7-reused
     /**
      * Removes all {@code tag}s that are not used by any {@code person} in this {@code AddressBook}.
      */
@@ -171,6 +178,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 .collect(Collectors.toSet());
         tags.setTags(tagsInPersons);
     }
+    //@@author
 
     /**
      *  Updates the master tag list to include tags in {@code person} that are not in the list.
@@ -212,10 +220,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    //@@author Caijun7
     public void importTag(Tag t) {
         tags.importTag(t);
     }
+    //@@author
 
+    //@@author Caijun7-reused
     /**
     * Removes {@code tag} from {@code person} in this {@code AddressBook}.
     * @throws PersonNotFoundException if the {@code person} is not in this {@code AddressBook}.
@@ -248,6 +259,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new AssertionError("Impossible exception: person is obtained from the address book.");
         }
     }
+    //@@author
 
     //// util methods
 
@@ -278,6 +290,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         aliases.resetHashmap();
     }
 
+    //@@author yeggasd
     @Override
     public Password getPassword() {
         return password;
@@ -298,6 +311,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void updatePassword (Password newPassword) {
         password.updatePassword(newPassword);
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

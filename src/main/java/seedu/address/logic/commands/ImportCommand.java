@@ -9,6 +9,7 @@ import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.commons.util.SecurityUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author Caijun7
 /**
  * Imports an address book to the existing address book.
  */
@@ -20,13 +21,14 @@ public class ImportCommand extends UndoableCommand {
             + "from filepath to the existing address book. "
             + "Parameters: FILEPATH PASSWORD\n"
             + "Example: " + COMMAND_WORD + " "
-            + "FILEPATH "
-            + "PASSWORD";
+            + "data/addressbook.xml "
+            + "testpassword";
 
-    public static final String MESSAGE_SUCCESS = "Persons and tags from Addressbook file successfully imported.";
+    public static final String MESSAGE_SUCCESS = "Persons, tags, and aliases from "
+            + "Addressbook file successfully imported.";
     public static final String MESSAGE_FILE_NOT_FOUND = "Addressbook file is not found.";
     public static final String MESSAGE_DATA_CONVERSION_ERROR = "Addressbook file found is not in correct "
-            + "format.";
+            + "format or wrong password.";
     public static final String MESSAGE_PASSWORD_WRONG = "Password wrong for Addressbook file.";
 
     private final String filepath;
@@ -34,7 +36,18 @@ public class ImportCommand extends UndoableCommand {
 
     /**
      * Creates an ImportCommand to import the specified {@code AddressBook} from filepath to
-     * current {@code AddressBook}
+     * current {@code AddressBook} and decrypt without password
+     */
+    public ImportCommand(String filepath) {
+        requireNonNull(filepath);
+
+        this.filepath = filepath;
+        password = null;
+    }
+
+    /**
+     * Creates an ImportCommand to import the specified {@code AddressBook} from filepath to
+     * current {@code AddressBook} and decrypt with password
      */
     public ImportCommand(String filepath, String password) {
         requireNonNull(filepath);

@@ -70,6 +70,7 @@ public class StorageManagerTest {
         assertEquals(original, new AddressBook(retrieved));
     }
 
+    //@@author yeggasd
     @Test
     public void addressBookEncryptedReadSaveWithPassword() throws Exception {
         /*
@@ -100,6 +101,7 @@ public class StorageManagerTest {
                                                                         testPassword).get();
         assertEquals(original, new AddressBook(retrieved));
     }
+    //@@author
 
     @Test
     public void getAddressBookFilePath() {

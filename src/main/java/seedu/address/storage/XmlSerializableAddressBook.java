@@ -69,6 +69,7 @@ public class XmlSerializableAddressBook {
         return addressBook;
     }
 
+    //@@author Caijun7
     /**
      * Adds {@code person}s and {@code tag}s from this addressbook into the existing {@code AddressBook}.
      *
@@ -87,6 +88,7 @@ public class XmlSerializableAddressBook {
         }
         return addressBook;
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

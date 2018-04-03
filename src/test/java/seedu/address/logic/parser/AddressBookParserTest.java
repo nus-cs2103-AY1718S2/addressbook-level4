@@ -55,12 +55,14 @@ public class AddressBookParserTest {
         assertEquals(new AddCommand(person), command);
     }
 
+    //@@author jingyinno
     @Test
     public void parseCommand_alias() throws Exception {
         Alias alias = new AliasBuilder().build();
         AliasCommand command = (AliasCommand) parser.parseCommand(AliasUtil.getAliasCommand(alias));
         assertEquals(new AliasCommand(alias), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_clear() throws Exception {
@@ -75,6 +77,7 @@ public class AddressBookParserTest {
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
 
+    //@@author yeggasd
     @Test
     public void parseCommand_password() throws Exception {
         PasswordCommand command = (PasswordCommand) parser.parseCommand(
@@ -95,6 +98,7 @@ public class AddressBookParserTest {
                 ImportCommand.COMMAND_WORD + " /data/addressbook.xml test");
         assertEquals(new ImportCommand("/data/addressbook.xml", "test"), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_edit() throws Exception {

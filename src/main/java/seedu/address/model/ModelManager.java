@@ -106,11 +106,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author yeggasd
     @Override
     public void updatePassword(byte[] password) {
         addressBook.updatePassword(password);
         indicateAddressBookChanged();
     }
+    //@@author
 
     //@@author jingyinno
     @Override
@@ -120,11 +122,14 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
+    //@@author Caijun7-reused
     @Override
     public void deleteTag(Tag tag) {
         addressBook.removeTag(tag);
     }
+    //@@author
 
+    //@@author Caijun7
     /**
      * Imports the specified {@code AddressBook} from the filepath to the current {@code AddressBook}.
      * @param filepath
@@ -133,12 +138,26 @@ public class ModelManager extends ComponentManager implements Model {
     public void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
                                                                             WrongPasswordException {
         requireNonNull(filepath);
-        requireNonNull(password);
 
         XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
         xmlAddressBook.importAddressBook(filepath, this.addressBook, password);
         indicateAddressBookChanged();
     }
+
+    /**
+     * Exports the current view of {@code AddressBook} to the filepath.
+     * @param filepath
+     */
+    @Override
+    public void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
+                                                                                DuplicatePersonException {
+        requireNonNull(filepath);
+
+        XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
+        xmlAddressBook.exportAddressBook(filepath, password, filteredPersons);
+        indicateAddressBookChanged();
+    }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -159,6 +178,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Vacant Room Finder ==========================================================================
 
+    //@@author Caijun7
     @Override
     public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
             CorruptedVenueInformationException {
@@ -167,6 +187,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
         return building.retrieveAllRoomsSchedule();
     }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {

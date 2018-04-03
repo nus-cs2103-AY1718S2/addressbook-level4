@@ -70,6 +70,7 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
+        UserPrefs.setUserAddressBookFilePath(userPrefs.getAddressBookFilePath());
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         ReadOnlyVenueInformation venueInformationStorage =
                 new ReadOnlyJsonVenueInformation(config.DEFAULT_VENUEINFORMATION_FILE);
@@ -192,6 +193,7 @@ public class MainApp extends Application {
         return initializedPrefs;
     }
 
+    //@@author Caijun7
     /**
      * Initialize {@code nusVenues} and {@code nusBuildingsAndRooms} using the file at
      * {@code storage}'s venue information file path
@@ -214,6 +216,7 @@ public class MainApp extends Application {
         }
 
     }
+    //@@author
 
     private void initEventsCenter() {
         EventsCenter.getInstance().registerHandler(this);

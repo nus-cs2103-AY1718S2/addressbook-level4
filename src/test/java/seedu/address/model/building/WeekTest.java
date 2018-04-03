@@ -14,6 +14,7 @@ import seedu.address.model.building.exceptions.InvalidWeekScheduleException;
 import seedu.address.testutil.WeekBuilder;
 import seedu.address.testutil.WeekDayBuilder;
 
+//@@author Caijun7
 public class WeekTest {
 
     private Week week = new Week();

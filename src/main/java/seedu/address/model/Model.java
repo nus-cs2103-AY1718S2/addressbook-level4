@@ -42,10 +42,6 @@ public interface Model {
     void addAlias(Alias alias) throws DuplicateAliasException;
     //@@author
 
-    /** Returns rooms for the given building */
-    ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
-                                                                            CorruptedVenueInformationException;
-
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -65,12 +61,15 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    //@@author Caijun7-reused
     /**
      * Remove {@code tag} from all {@code person}s in the {@code AddressBook}.
      * @param tag
      */
     void deleteTag(Tag tag);
+    //@@author
 
+    //@@author Caijun7
     /**
      * Imports specified {@code AddressBook} from filepath to current {@code AddressBook}
      */
@@ -78,14 +77,30 @@ public interface Model {
             WrongPasswordException;
 
     /**
+     * Exports the current view of {@code AddressBook} to the filepath.
+     * @param filepath
+     */
+    void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
+                                                                        DuplicatePersonException;
+    //@@author
+
+    //@@author yeggasd
+    /**
      * Updates the password with the given password.
      */
     void updatePassword(byte[] password);
+    //@@author
 
     //@@author jingyinno
     /**
      * Removes alias given the alias string to remove.
      */
     void removeAlias(String toRemove) throws AliasNotFoundException;
+    //@@author
+
+    //@@author Caijun7
+    /** Returns rooms for the given building */
+    ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
+                                                                                    CorruptedVenueInformationException;
     //@@author
 }

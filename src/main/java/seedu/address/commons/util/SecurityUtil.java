@@ -21,7 +21,9 @@ import javax.crypto.spec.SecretKeySpec;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.WrongPasswordException;
+import seedu.address.model.Password;
 
+//@@author yeggasd
 /**
  * Contains utility methods used for encrypting and decrypting files for Storage
  */
@@ -31,17 +33,12 @@ public class SecurityUtil {
     private static final String XML = "xml";
 
     /**
-     * Don't encrypt if no password provided
-     */
-    public static void encrypt(File file) {
-
-    }
-
-    /**
      * Encrypts the given file using AES key created by DEFAULT_PASSWORD.
      *
      * @param file Points to a valid file containing data
-     * @throws IOException thrown if cannot open file
+     * @param password Used to decrypt file
+     * @throws IOException if file cannot be opened
+     * @throws WrongPasswordException if password used is wrong
      */
     public static void encrypt(String file, String password)throws IOException, WrongPasswordException {
         byte[] hashedPassword = hashPassword(password);
@@ -52,7 +49,9 @@ public class SecurityUtil {
      * Encrypts the given file using AES key created by DEFAULT_PASSWORD.
      *
      * @param file Points to a valid file containing data
-     * @throws IOException thrown if cannot open file
+     * @param password Used to decrypt file
+     * @throws IOException if file cannot be opened
+     * @throws WrongPasswordException if password used is wrong
      */
     public static void encrypt(File file, byte[] password)throws IOException, WrongPasswordException {
         try {
@@ -70,21 +69,25 @@ public class SecurityUtil {
     }
 
     /**
-     * Encrypts the given file using AES key created by DEFAULT_PASSWORD.
+     * Test to see if the given file is plaintext using AES key created by DEFAULT_PASSWORD.
      *
      * @param file Points to a valid file containing data
      * @throws IOException thrown if cannot open file
+     * @throws WrongPasswordException if password used is wrong
      */
     public static void decrypt(File file)throws IOException, WrongPasswordException {
-        byte[] hashedPassword = hashPassword(DEFAULT_PASSWORD);
-        decrypt(file, hashedPassword);
+        if (!checkPlainText(file)) {
+            throw new WrongPasswordException("File Encrypted!");
+        }
     }
 
     /**
      * Decrypts the given file using AES key created by DEFAULT_PASSWORD.
      *
-     * @param file Points to a valid file containing data
-     * @throws IOException thrown if cannot open file
+     * @param file Points to a file to be decrypted
+     * @param password Used to decrypt file
+     * @throws IOException if file cannot be opened
+     * @throws WrongPasswordException if password used is wrong
      */
     public static void decrypt(File file, byte[] password) throws IOException, WrongPasswordException {
         try {
@@ -107,6 +110,7 @@ public class SecurityUtil {
      * @param cipher Encrypts or Decrypts file given mode
      * @param file Points to a valid file containing data
      * @throws IOException if cannot open file
+     * @throws WrongPasswordException if password used is wrong
      */
     private static void fileProcessor(Cipher cipher, File file) throws IOException, WrongPasswordException {
         byte[] inputBytes = "Dummy".getBytes();
@@ -150,6 +154,38 @@ public class SecurityUtil {
     }
 
     /**
+     * Decrypt the given file with the current and if it fails the previous password
+     * if password is null, will not try to decrypt
+     * @param file Points to the file to be decrypted
+     * @param password Used to decrypt file
+     * @throws IOException if file cannot be opened
+     * @throws WrongPasswordException if password used is wrong
+     */
+    public static void decryptFile (File file, Password password) throws IOException, WrongPasswordException {
+        if (password.getPassword() != null) {
+            try {
+                decrypt(file, password.getPassword());
+            } catch (WrongPasswordException e) {
+                logger.info("Current Password don't work, trying previous password.");
+                decrypt(file, password.getPrevPassword());
+            }
+        }
+    }
+
+    /**
+     * Encrypt the given file with the current
+     * if password is null, will not try to encrypt
+     * @param file Points to the file to be decrypted
+     * @param password Used to decrypt file
+     * @throws IOException if file cannot be opened
+     * @throws WrongPasswordException if password used is wrong
+     */
+    public static void encryptFile (File file, Password password) throws IOException, WrongPasswordException {
+        if (password.getPassword() != null) {
+            encrypt(file, password.getPassword());
+        }
+    }
+    /**
      * Generates a key.
      */
     private static Key createKey(byte[] password) {
@@ -165,8 +201,8 @@ public class SecurityUtil {
     private static void  handleBadPaddingException(byte[] inputBytes, BadPaddingException e)
                                                                             throws WrongPasswordException {
         if (!checkPlainText(inputBytes)) {
-            logger.severe("ERROR: Wrong DEFAULT_PASSWORD length used " + StringUtil.getDetails(e));
-            throw new WrongPasswordException("Wrong DEFAULT_PASSWORD.");
+            logger.severe("ERROR: Wrong PASSWORD length used ");
+            throw new WrongPasswordException("Wrong PASSWORD.");
 
         } else {
             logger.info("Warning: Text already in plain text.");
@@ -182,5 +218,19 @@ public class SecurityUtil {
     private static boolean checkPlainText(byte[] data) {
         String string = new String(data);
         return string.contains(XML);
+    }
+
+    /**
+     * Checks whether it is plain text by checking whether it is in the range of characters commonly used for the
+     *  the whole data
+     * @param file Points to file path
+     * @return true if it is highly likely to be plain text
+     */
+    private static boolean checkPlainText(File file) throws IOException {
+        FileInputStream inputStream = new FileInputStream(file);
+        byte[] inputBytes = new byte[(int) file.length()];
+        inputStream.read(inputBytes);
+        inputStream.close();
+        return checkPlainText(inputBytes);
     }
 }

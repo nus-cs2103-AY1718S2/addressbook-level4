@@ -449,18 +449,6 @@ public class ImdbParser {
             case AddPatientQueueCommand.COMMAND_ALIAS:
                 return new AddPatientQueueCommandParser().parse(arguments);
 
-            case RecordCommand.COMMAND_WORD:
-                return new RecordCommandParser().parse(arguments);
-
-            case RecordCommand.COMMAND_ALIAS:
-                return new RecordCommandParser().parse(arguments);
-
-            case RemoveRecordCommand.COMMAND_WORD:
-                return new RemoveRecordCommandParser().parse(arguments);
-
-            case RemoveRecordCommand.COMMAND_ALIAS:
-                return new RemoveRecordCommandParser().parse(arguments);
-
             case RemovePatientQueueCommand.COMMAND_WORD:
                 return new RemovePatientQueueCommandParser().parse(arguments);
 

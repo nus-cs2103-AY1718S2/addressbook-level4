@@ -17,6 +17,7 @@ import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.timetable.Timetable;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -166,6 +167,32 @@ public class ParserUtil {
     public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
         requireNonNull(birthday);
         return birthday.isPresent() ? Optional.of(parseBirthday(birthday.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String timetableUrl} into a {@code Timetable}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code birthday} is invalid.
+     */
+    public static Timetable parseTimetable(String timetableUrl) throws IllegalValueException {
+        requireNonNull(timetableUrl);
+        String trimmedUrl = timetableUrl.trim();
+
+        if (!Timetable.isValidUrl(timetableUrl)) {
+            throw new IllegalValueException(Timetable.MESSAGE_URL_CONSTRAINTS);
+        }
+        return new Timetable(trimmedUrl);
+    }
+
+    /**
+     * Parses a {@code Optional<String> timetableUrl} into an {@code Optional<Timetable>}
+     * if {@code timetableUrl} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Timetable> parseTimetable(Optional<String> timetableUrl) throws IllegalValueException {
+        requireNonNull(timetableUrl);
+        return timetableUrl.isPresent() ? Optional.of(parseTimetable(timetableUrl.get())) : Optional.empty();
     }
 
     /**

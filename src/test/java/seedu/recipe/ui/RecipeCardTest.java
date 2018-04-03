@@ -55,12 +55,6 @@ public class RecipeCardTest extends GuiUnitTest {
         assertFalse(recipeCard.equals(new RecipeCard(recipe, 1)));
     }
 
-    @Test
-    public void setImageView() {
-        // invalid image path
-        Assert.assertThrows(IllegalArgumentException.class, () -> new RecipeBuilder().withImage("as").build());
-    }
-
     /**
      * Asserts that {@code recipeCard} displays the details of {@code expectedRecipe} correctly and matches
      * {@code expectedId}.

@@ -13,6 +13,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
+import seedu.address.ui.Calendar;
 
 /**
  * Creates an appointment for the student at the specified index.
@@ -76,7 +77,7 @@ public class AppointmentCommand extends Command{
     }
 
     public void showEventOnCalendar() throws IOException {
-        calendar.createEvent(toAdd, selectedPerson);
+        Calendar.createEvent(toAdd, selectedPerson);
     }
 
     @Override

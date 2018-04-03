@@ -20,6 +20,20 @@ By: `Team W09-B2`      Since: `Feb 2018`      Licence: `MIT`
 Welcome to *contactHeRo*! contactHeRo is the *perfect contact management solution for recruiters* across companies who need a *quick and efficient way* to manage the contact details and profiles of their potential recruits. It is a *Command Line Interface(CLI) application* with intuitive usage and effective features. You can manage details of prospective employees and job openings in your company through easy to use `add`, `delete` and `edit` features. Matching jobs to employees is also a great feature that makes the hiring process easy for you.
 Other than that, you can also view the linkedIn profiles of your potential employees, send emails and arrange meetings.
 
+== Before Reading This Guide
+
+This short guide will familiarize you with all of the features and functionality of contactHeRo. Given below is the legend for some symbols and markups used in this guide.
+
+
+[NOTE]
+This will represent something you should take a note of.
+
+[TIP]
+This will represent a useful tip.
+
+`This will represent an input/output statement in contactHeRo`
+
+
 == Quick Start
 
 You can begin using contactHeRo by following a few simple steps below.
@@ -115,7 +129,8 @@ On running the above command, you should see the following success message: +
 
 On running the above command, you should see the following success message: +
 
- New person added: Betsy Crowe Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS  Skills: C++
+ New person added: Betsy Crowe Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS  Skills: [C++]
+
 === Editing a person : `edit`
 
 You can edit an existing person in contactHero using this format. +
@@ -251,23 +266,23 @@ image::linkedInCommand.png[width="790", align="center"]
 === Adding a job opening
 
 You can add a job opening to contactHero using the following format. +
-Format: `addjob p/POSITION t/TEAM l/LOCATION n/NUMBER_OF_POSITIONS`
+Format: `addjob p/POSITION t/TEAM l/LOCATION n/NUMBER_OF_POSITIONS s/REQUIRED_SKILLS`
 
 Examples:
 
-* `addjob p/Software Engineer t/Cloud Services l/Singapore n/1`
+* `addjob p/Software Engineer t/Cloud Services l/Singapore n/1 s/Java`
 
 On running the above command, you should see the following success message: +
 
- New job opening added: Software Engineer Team: Cloud Services Location: Singapore Number of Positions: 1
+ New job opening added: Software Engineer Team: Cloud Services Location: Singapore Number of Positions: 1 Skills: [Java]
 
-* `addjob p/Marketing Intern t/Social Media Marketing l/Singapore n/1`
+* `addjob p/Marketing Intern t/Social Media Marketing l/Singapore n/1 s/Excel`
 
 On running the above command, you should see the following success message: +
 
- New job opening added: Marketing Intern Team: Social Media Marketing Location: Singapore Number of Positions: 1
+ New job opening added: Marketing Intern Team: Social Media Marketing Location: Singapore Number of Positions: 1 Skills: [Excel]
 
- === Deleting a job opening 
+=== Deleting a job opening 
 
 You can delete a specified job opening from contactHeRo using the following format. +
 Format: `deletejob INDEX`
@@ -292,11 +307,16 @@ You can see potential candidates for a specified job opening in contactHeRo usin
 Format: `matchjob INDEX`
 
 ****
-* Matches the job opening at the specified `INDEX` to .
+* Matches the job opening at the specified `INDEX` to potential candidates using skill-matching.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
+Examples:
+
+* `list` +
+`matchjob 1` +
+This will show any person whose skills match any of those required for the job at index 1.
 
 === Listing entered commands : `history`
 

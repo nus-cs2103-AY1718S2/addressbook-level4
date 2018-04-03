@@ -2,11 +2,10 @@
 
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
  * SortCommand is called from AddressBookParser and implements the a sorting mechanism

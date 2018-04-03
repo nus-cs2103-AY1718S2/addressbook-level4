@@ -4,6 +4,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -13,11 +14,12 @@ import org.junit.Test;
 
 import javafx.collections.ObservableList;
 
+import seedu.address.logic.parser.AddressBookParser;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 public class SortCommandTest {
 
@@ -57,10 +59,10 @@ public class SortCommandTest {
      * this function is contingent on importing "data/Test_contacts_unsorted.csv"
      * and not another file
      */
-    public boolean checkSorted() {
+    public boolean checkSorted(Model myModel) {
         boolean isSorted = true;
-        requireNonNull(testModel);
-        Object[] parray = testModel.getFilteredPersonList().toArray();
+        requireNonNull(myModel);
+        Object[] parray = myModel.getFilteredPersonList().toArray();
 
         if (!parray[0].toString().substring(0, 1).equals("A")) {
             isSorted = false;
@@ -88,12 +90,34 @@ public class SortCommandTest {
     }
 
     @Test
-    public void sortAddressBookInAddessBook_functionCallWithImportedData_personsAreInCorrectOrder()
-            throws DuplicatePersonException, Exception {
+    public void sortAddressBookCallingModel_functionCallWithImportedData_personsAreInCorrectOrder()
+            throws Exception {
         setupModelWithImportedContacts();
-        assertFalse(checkSorted());
+        assertFalse(checkSorted(testModel));
         testModel.sortAddressBookAlphabeticallyByName();
-        assertTrue(checkSorted());
+        assertTrue(checkSorted(testModel));
     }
+
+    @Test
+    public void executeUndoableCommand_sortImportedPersons_personsCorrectlySorted() throws Exception {
+        setupModelWithImportedContacts();
+        SortCommand sc = new SortCommand();
+        sc.model = testModel;
+        assertFalse(checkSorted(sc.model));
+        CommandResult cr = sc.executeUndoableCommand();
+        assertTrue(checkSorted(sc.model));
+        assertEquals(cr.feedbackToUser, "Contacts successfully sorted alphabetically by name.");
+    }
+
+    @Test
+    public void callSortParser_createAddressBookParser_returnSortCommand() throws ParseException {
+        AddressBookParser abp = new AddressBookParser();
+        Command sc1 = abp.parseCommand("sort");
+        Command sc2 = abp.parseCommand("sort_by_name");
+
+        requireNonNull(sc1);
+        requireNonNull(sc2);
+    }
+
 }
 //@@author

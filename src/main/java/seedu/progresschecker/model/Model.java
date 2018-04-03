@@ -10,6 +10,8 @@ import seedu.progresschecker.model.issues.Issue;
 import seedu.progresschecker.model.person.Person;
 import seedu.progresschecker.model.person.exceptions.DuplicatePersonException;
 import seedu.progresschecker.model.person.exceptions.PersonNotFoundException;
+import seedu.progresschecker.model.photo.PhotoPath;
+import seedu.progresschecker.model.photo.exceptions.DuplicatePhotoException;
 
 /**
  * The API of the Model component.
@@ -63,6 +65,8 @@ public interface Model {
 
     /** Uploads the given photo with given path */
     void uploadPhoto(Person target, String path)
-            throws DuplicatePersonException, PersonNotFoundException, IOException;
+            throws PersonNotFoundException, DuplicatePersonException;
 
+    /** Adds a new uploaded photo path */
+    void addPhoto(PhotoPath photoPath) throws DuplicatePhotoException;
 }

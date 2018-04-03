@@ -72,6 +72,10 @@ public class Person {
         return photoPath;
     }
 
+    public String getDefaultPath() {
+        return defaultPath;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

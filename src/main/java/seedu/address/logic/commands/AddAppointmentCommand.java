@@ -24,11 +24,11 @@ public class AddAppointmentCommand extends Command {
     private final NameContainsKeywordsPredicate predicate;
     private final String dateTimeString;
 
-    public AddAppointmentCommand(NameContainsKeywordsPredicate predicate, String dateTimeString) {
-        requireAllNonNull(predicate, dateTimeString);
+    public AddAppointmentCommand(NameContainsKeywordsPredicate predicate, String dateString, String timeString) {
+        requireAllNonNull(predicate, dateString, timeString);
         this.predicate = predicate;
 
-        this.dateTimeString = dateTimeString;
+        this.dateTimeString = dateString + " " + timeString;
     }
 
     @Override

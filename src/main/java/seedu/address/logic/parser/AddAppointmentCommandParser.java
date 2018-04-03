@@ -3,8 +3,11 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.Arrays;
+
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.patient.NameContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new AddAppointmentCommand object
@@ -27,6 +30,7 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
         }
 
         String[] argsArray = trimmedArgs.split("\\s");
-        return null;
+        return new AddAppointmentCommand(new NameContainsKeywordsPredicate(Arrays.asList(argsArray)), argsArray[1],
+                argsArray[2]);
     }
 }

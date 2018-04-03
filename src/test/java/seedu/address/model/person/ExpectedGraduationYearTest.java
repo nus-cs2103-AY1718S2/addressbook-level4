@@ -6,9 +6,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import seedu.address.testutil.Assert;
-
+//@@author mhq199657
 public class ExpectedGraduationYearTest {
-    //@@author mhq199657
     @Test
     public void constructor_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> new ExpectedGraduationYear(null));

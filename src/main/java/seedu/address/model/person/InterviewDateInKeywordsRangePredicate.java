@@ -6,14 +6,13 @@ import java.time.LocalDateTime;
 import java.util.function.Predicate;
 
 import seedu.address.logic.parser.FilterRange;
-
+//@@author mhq199657
 /**
  * A Predicate testing whether a person has his/her interview date in the keywords range
  */
 public class InterviewDateInKeywordsRangePredicate implements Predicate<Person> {
     private final LocalDateTime low;
     private final LocalDateTime high;
-    //@@author mhq199657
     public InterviewDateInKeywordsRangePredicate(InterviewDate low, InterviewDate high) {
         this.low = low.dateTime;
         this.high = high.dateTime;

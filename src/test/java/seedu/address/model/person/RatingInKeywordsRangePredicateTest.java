@@ -8,9 +8,8 @@ import org.junit.Test;
 import seedu.address.logic.parser.FilterRange;
 import seedu.address.testutil.Assert;
 import seedu.address.testutil.PersonBuilder;
-
+//@@author mhq199657
 public class RatingInKeywordsRangePredicateTest {
-    //@@author mhq199657
     @Test
     public void constructor_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> new RatingInKeywordsRangePredicate(null));

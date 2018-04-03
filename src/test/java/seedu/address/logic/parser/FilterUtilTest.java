@@ -16,11 +16,10 @@ import seedu.address.model.person.InterviewDateInKeywordsRangePredicate;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.RatingInKeywordsRangePredicate;
 import seedu.address.model.util.InterviewDateUtil;
-
+//@@author mhq199657
 public class FilterUtilTest {
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
-    //@@author mhq199657
     @Test
     public void parseExpectedGraduationYear_invalidCommandFormat_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);

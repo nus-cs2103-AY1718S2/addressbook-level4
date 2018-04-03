@@ -3,14 +3,13 @@ package seedu.address.model.person;
 import java.util.function.Predicate;
 
 import seedu.address.logic.parser.FilterRange;
-
+//@@author mhq199657
 /**
  * A Predicate testing whether a person has his/her grade point average in the keywords range
  */
 public class GradePointAverageInKeywordsRangePredicate implements Predicate<Person> {
     private final String low;
     private final String high;
-    //@@author mhq199657
     public GradePointAverageInKeywordsRangePredicate(GradePointAverage low, GradePointAverage high) {
         this.low = low.value;
         this.high = high.value;

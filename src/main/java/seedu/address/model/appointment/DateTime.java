@@ -1,5 +1,7 @@
 package seedu.address.model.appointment;
 
+import static java.util.Objects.requireNonNull;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -17,6 +19,7 @@ public class DateTime {
     private String timeString;
 
     public DateTime(String appointmentDateTime) {
+        requireNonNull(appointmentDateTime);
         String trimmedArgs = appointmentDateTime.trim();
 
         String[] dateTimeKeys = trimmedArgs.split("\\s");

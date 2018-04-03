@@ -82,7 +82,7 @@ public class XmlAdaptedEvent extends XmlAdaptedActivity {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     getActivityType(), "start date/time"));
         }
-        if (!DateTime.isValidDateAndTime(this.dateTime)) {
+        if (!DateTime.isValidDateTime(this.dateTime)) {
             throw new IllegalValueException(DateTime.MESSAGE_DATETIME_CONSTRAINTS);
         }
         final DateTime startDateTime = new DateTime(this.dateTime);
@@ -91,7 +91,7 @@ public class XmlAdaptedEvent extends XmlAdaptedActivity {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     getActivityType(), "end date/time"));
         }
-        if (!DateTime.isValidDateAndTime(this.endDateTime)) {
+        if (!DateTime.isValidDateTime(this.endDateTime)) {
             throw new IllegalValueException(DateTime.MESSAGE_DATETIME_CONSTRAINTS);
         }
         final DateTime endDateTime = new DateTime(this.endDateTime);

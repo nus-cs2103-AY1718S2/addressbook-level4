@@ -78,7 +78,7 @@ public class ParserUtil {
     public static DateTime parseDateTime(String datetime) throws IllegalValueException {
         requireNonNull(datetime);
         String trimmedDateTime = datetime.trim();
-        if (!DateTime.isValidDateAndTime(trimmedDateTime)) {
+        if (!DateTime.isValidDateTime(trimmedDateTime)) {
             throw new IllegalValueException(DateTime.MESSAGE_DATETIME_CONSTRAINTS);
         }
         return new DateTime(trimmedDateTime);

@@ -46,9 +46,15 @@ public class ListCommandTest {
         assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
+    /*    public void execute_listIsFiltered_showsEverything() {
+        showActivityAtIndex(model, INDEX_FIRST_ACTIVITY);
+        assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+
+    }*/
+
     //@@author jasmoon
     @Test
-    public void execute_helpForTask_success() {
+    public void execute_listForTask_success() {
         ListCommand command = new ListCommand("task");
         assertCommandSuccess(command, ListCommand.MESSAGE_SUCCESS_TASK);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ShowTaskOnlyRequestEvent);
@@ -56,7 +62,7 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_helpForEvent_success()    {
+    public void execute_listForEvent_success() {
         ListCommand command = new ListCommand("event");
         assertCommandSuccess(command, ListCommand.MESSAGE_SUCCESS_EVENT);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ShowEventOnlyRequestEvent);
@@ -64,7 +70,7 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_helpForActivity_success()    {
+    public void execute_listForActivity_success()    {
         ListCommand command = new ListCommand();
         assertCommandSuccess(command, ListCommand.MESSAGE_SUCCESS);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ShowActivityRequestEvent);

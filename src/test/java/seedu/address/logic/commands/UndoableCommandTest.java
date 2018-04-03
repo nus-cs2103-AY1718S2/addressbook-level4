@@ -2,8 +2,8 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.commands.CommandTestUtil.removeFirstActivity;
+import static seedu.address.logic.commands.CommandTestUtil.showActivityAtIndex;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 
@@ -25,10 +25,10 @@ public class UndoableCommandTest {
     @Test
     public void executeUndo() throws Exception {
         dummyCommand.execute();
-        deleteFirstPerson(expectedModel);
+        removeFirstActivity(expectedModel);
         assertEquals(expectedModel, model);
 
-        showPersonAtIndex(model, INDEX_FIRST_ACTIVITY);
+        showActivityAtIndex(model, INDEX_FIRST_ACTIVITY);
 
         // undo() should cause the model's filtered list to show all persons
         dummyCommand.undo();
@@ -38,11 +38,11 @@ public class UndoableCommandTest {
 
     @Test
     public void redo() {
-        showPersonAtIndex(model, INDEX_FIRST_ACTIVITY);
+        showActivityAtIndex(model, INDEX_FIRST_ACTIVITY);
 
         // redo() should cause the model's filtered list to show all persons
         dummyCommand.redo();
-        deleteFirstPerson(expectedModel);
+        removeFirstActivity(expectedModel);
         assertEquals(expectedModel, model);
     }
 

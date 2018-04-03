@@ -32,12 +32,14 @@ public class HelpCommand extends Command {
         if (commandRequest == null)   {
             EventsCenter.getInstance().post(new ShowHelpRequestEvent());
             return new CommandResult(SHOWING_HELP_MESSAGE);
-
         } else   {
             switch(commandRequest) {
 
             case TaskCommand.COMMAND_WORD:
                 return new CommandResult(TaskCommand.MESSAGE_USAGE);
+
+            case EventCommand.COMMAND_WORD:
+                return new CommandResult(EventCommand.MESSAGE_USAGE);
 
             case CompleteCommand.COMMAND_WORD:
                 return new CommandResult(CompleteCommand.MESSAGE_USAGE);
@@ -48,10 +50,8 @@ public class HelpCommand extends Command {
             //case SelectCommand.COMMAND_WORD:
                 //return new CommandResult(SelectCommand.MESSAGE_USAGE);
 
-            case DeleteCommand.ALIAS:
-                // Fallthrough
-            case DeleteCommand.COMMAND_WORD:
-                return new CommandResult(DeleteCommand.MESSAGE_USAGE);
+            case RemoveCommand.COMMAND_WORD:
+                return new CommandResult(RemoveCommand.MESSAGE_USAGE);
 
             //case FindCommand.COMMAND_WORD:
                 //return new CommandResult(FindCommand.MESSAGE_USAGE);

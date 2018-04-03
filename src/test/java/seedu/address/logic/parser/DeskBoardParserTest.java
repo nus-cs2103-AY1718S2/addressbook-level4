@@ -5,7 +5,6 @@ import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,7 +12,6 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EventCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -55,12 +53,12 @@ public class DeskBoardParserTest {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS + " 3") instanceof ClearCommand);
     }
 
-    @Test
-    public void parseCommand_delete() throws Exception {
-        DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_ACTIVITY.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_ACTIVITY), command);
-    }
+   /* @Test
+    public void parseCommand_remove() throws Exception {
+        RemoveCommand command = (RemoveCommand) parser.parseCommand(
+                RemoveCommand.COMMAND_WORD + " " + INDEX_FIRST_ACTIVITY.getOneBased());
+        assertEquals(new RemoveCommand("task", INDEX_FIRST_ACTIVITY), command);
+    }*/
 
 //
 //    public void parseCommand_edit() throws Exception {

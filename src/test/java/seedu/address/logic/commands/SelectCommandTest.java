@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.commands.CommandTestUtil.showActivityAtIndex;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
@@ -67,7 +67,7 @@ public class SelectCommandTest {
      * Test
      */
     public void execute_validIndexFilteredList_success() {
-        showPersonAtIndex(model, INDEX_FIRST_ACTIVITY);
+        showActivityAtIndex(model, INDEX_FIRST_ACTIVITY);
 
         assertExecutionSuccess(INDEX_FIRST_ACTIVITY);
     }
@@ -77,7 +77,7 @@ public class SelectCommandTest {
      * Test
      */
     public void execute_invalidIndexFilteredList_failure() {
-        showPersonAtIndex(model, INDEX_FIRST_ACTIVITY);
+        showActivityAtIndex(model, INDEX_FIRST_ACTIVITY);
 
         Index outOfBoundsIndex = INDEX_SECOND_ACTIVITY;
         // ensures that outOfBoundIndex is still in bounds of address book list

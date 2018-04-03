@@ -15,8 +15,6 @@ public class TimeTableCommandParser implements Parser<TimeTableCommand> {
     private static final String SPLIT_TOKEN = " ";
     private static final int PERSON_INDEX = 0;
     private static final int ODD_EVEN_INDEX = 1;
-    private static final String EVEN = "even";
-    private static final String ODD = "odd";
     /**
      * Parses the given {@code String} of arguments in the context of the TimeTableCommand
      * and returns an TimeTableCommand object for execution.
@@ -24,8 +22,8 @@ public class TimeTableCommandParser implements Parser<TimeTableCommand> {
      */
     public TimeTableCommand parse(String args) throws ParseException {
         try {
-            args = args.trim();
-            String[] splitArgs = args.split(SPLIT_TOKEN);
+            String trimmedArgs = args.trim();
+            String[] splitArgs = trimmedArgs.split(SPLIT_TOKEN);
             if (splitArgs.length != 2) {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, TimeTableCommand.MESSAGE_USAGE));

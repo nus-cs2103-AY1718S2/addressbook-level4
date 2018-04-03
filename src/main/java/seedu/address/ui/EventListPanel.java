@@ -10,13 +10,15 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
-
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.DeselectListCellEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.PanelSelectionChangedEvent;
 import seedu.address.model.activity.Activity;
 
 /**
@@ -29,18 +31,52 @@ public class EventListPanel extends UiPart<Region> {
     @FXML
     private ListView<EventCard> eventListView;
 
+    private Label emptyLabel = new Label("Event List is empty!");
+
     public EventListPanel(ObservableList<Activity> eventList) {
         super(FXML);
         setConnections(eventList);
         registerAsAnEventHandler(this);
+        setUpPlaceHolder();
+        //maybe do not need this
+        //eventListView.managedProperty().bind(eventListView.visibleProperty());
     }
 
     private void setConnections(ObservableList<Activity> eventList) {
         ObservableList<EventCard> mappedList = EasyBind.map(
                 eventList, (event) -> new EventCard(event, eventList.indexOf(event) + 1));
         eventListView.setItems(mappedList);
-        eventListView.setCellFactory(listView -> new EventListViewCell());
+        linkCell();
         setEventHandlerForSelectionChangeEvent();
+    }
+
+    private void setUpPlaceHolder()   {
+        eventListView.setPlaceholder(emptyLabel);
+        emptyLabel.setStyle("-fx-font-family: \"Open Sans\"; -fx-font-size: 25px; ");
+    }
+
+    /**
+     * Links eventListView to eventListViewCell as its custom ListCell
+     */
+    private void linkCell() {
+        eventListView.setCellFactory(listView -> {
+            EventListViewCell cell = new EventListViewCell();
+            cell.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+                eventListView.requestFocus();
+                if (!cell.isEmpty()) {
+                    int index = cell.getIndex();
+                    if (eventListView.getSelectionModel().getSelectedIndices().contains(index))  {
+                        logger.fine("Selection in event list panel with index '" + index
+                                + "' has been deselected");
+                        raise(new DeselectListCellEvent(eventListView, index));
+                    } else {
+                        eventListView.getSelectionModel().select(index);
+                    }
+                    event.consume();
+                }
+            });
+            return cell;
+        });
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
@@ -48,7 +84,7 @@ public class EventListPanel extends UiPart<Region> {
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in event list panel changed to : '" + newValue + "'");
-                        raise(new EventPanelSelectionChangedEvent(newValue));
+                        raise(new PanelSelectionChangedEvent(newValue));
                     }
                 });
     }
@@ -87,4 +123,12 @@ public class EventListPanel extends UiPart<Region> {
         }
     }
 
+    //@@author jasmoon
+    /**
+     * Getter method for eventListView
+     * @return eventListView
+     */
+    public ListView<EventCard> getEventListView()   {
+        return eventListView;
+    }
 }

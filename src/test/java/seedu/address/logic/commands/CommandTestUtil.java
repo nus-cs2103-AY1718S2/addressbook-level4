@@ -23,7 +23,6 @@ import seedu.address.model.activity.NameContainsKeywordsPredicate;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.testutil.EditActivityDescriptorBuilder;
 
-//@@author
 /**
  * Contains helper methods for testing commands.
  */
@@ -94,6 +93,35 @@ public class CommandTestUtil {
         }
     }
 
+    //@@author jasmoon
+    /**
+     * Executes the given {@code command}, confirms that <br>
+     * - the result message matches {@code expectedMessage} <br>
+     */
+    public static void assertCommandSuccess(Command command, String expectedMessage)   {
+        try {
+            CommandResult result = command.execute();
+            assertEquals(expectedMessage, result.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new AssertionError("Execution of command should not fail.", ce);
+        }
+    }
+
+    /**
+     * Executes the given {@code command}, confirms that <br>
+     * - a {@code CommandException} is thrown <br>
+     * - the CommandException message matches {@code expectedMessage} <br>
+     */
+    public static void assertCommandFailure(Command command, String expectedMessage) {
+        try {
+            command.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException e) {
+            assertEquals(expectedMessage, e.getMessage());
+        }
+    }
+
+    //@@author
     /**
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>

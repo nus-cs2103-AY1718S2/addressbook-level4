@@ -185,6 +185,7 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    //@@author amad-person
     /**
      * Changes the theme of the application.
      */
@@ -192,6 +193,7 @@ public class MainWindow extends UiPart<Stage> {
     public void handleChangeTheme(ChangeThemeEvent event) {
         Theme.changeTheme(primaryStage, event.getTheme());
     }
+    //@@author
 
     void show() {
         primaryStage.show();
@@ -223,9 +225,11 @@ public class MainWindow extends UiPart<Stage> {
         handleHelp();
     }
 
+    //@@author amad-person
     @Subscribe
     private void handleChangeThemeEvent(ChangeThemeEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleChangeTheme(event);
     }
+    //@@author
 }

@@ -1,3 +1,4 @@
+//@@author amad-person
 package guitests.guihandles;
 
 import java.util.List;

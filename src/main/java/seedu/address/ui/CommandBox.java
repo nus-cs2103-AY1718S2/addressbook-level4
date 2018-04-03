@@ -102,6 +102,7 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.positionCaret(commandTextField.getText().length());
     }
 
+    //@@author amad-person
     /**
      * Handles the Tab button pressed event by updating {@code CommandBox}'s text
      * field with the full command syntax based on {@code text} entered so far.
@@ -119,6 +120,7 @@ public class CommandBox extends UiPart<Region> {
             replaceText(autocompleteCommandList.get(0));
         }
     }
+    //@@author
 
     /**
      * Handles the Enter button pressed event.

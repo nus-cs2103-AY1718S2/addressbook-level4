@@ -106,6 +106,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author amad-person
     @Override
     public void addOrderToOrderList(Order orderToAdd) throws UniqueOrderList.DuplicateOrderException {
         addressBook.addOrderToOrderList(orderToAdd);
@@ -117,6 +118,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.deleteOrder(targetOrder);
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public void addCalendarEvent(CalendarEvent toAdd) throws UniqueCalendarEventList.DuplicateCalendarEventException {
@@ -124,6 +126,8 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_EVENTS);
         indicateAddressBookChanged();
     }
+
+    //@@author amad-person
     @Override
     public void updateOrder(Order target, Order editedOrder)
         throws UniqueOrderList.DuplicateOrderException, OrderNotFoundException {
@@ -132,6 +136,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updateOrder(target, editedOrder);
         indicateAddressBookChanged();
     }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -151,7 +156,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //=========== Filtered Order List Accessors =============================================================
-
+    //@@author amad-person
     /**
      * Returns an unmodifiable view of the list of {@code Order} backed by the internal list of
      * {@code addressBook}
@@ -172,6 +177,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredOrders.setPredicate(predicate);
     }
+    //@@author
 
     @Override
     public void updateFilteredCalendarEventList(Predicate<CalendarEvent> predicate) {

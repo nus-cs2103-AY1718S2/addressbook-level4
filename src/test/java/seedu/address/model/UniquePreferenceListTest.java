@@ -16,6 +16,7 @@ public class UniquePreferenceListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    //@@author amad-person
     @Test
     public void equals() throws UniquePreferenceList.DuplicatePreferenceException {
         UniquePreferenceList firstPrefList = new UniquePreferenceList();
@@ -32,6 +33,7 @@ public class UniquePreferenceListTest {
         // different objects, same type -> false
         assertFalse(firstPrefList.equals(secondPrefList));
     }
+    //@@author
 
     @Test
     public void asOrderInsensitiveList_compareListsWithSameItemsInDiffOrder_assertEqual()
@@ -46,6 +48,7 @@ public class UniquePreferenceListTest {
         assertTrue(firstPrefList.equalsOrderInsensitive(secondPrefList));
     }
 
+    //@@author amad-person
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
         UniquePreferenceList uniquePreferenceList = new UniquePreferenceList();
@@ -54,11 +57,12 @@ public class UniquePreferenceListTest {
     }
 
     @Test
-    public void asUniqueList_addDuplicateOrder_throwsDuplicateOrderException()
+    public void asUniqueList_addDuplicatePref_throwsDuplicatePreferenceException()
             throws UniquePreferenceList.DuplicatePreferenceException {
         UniquePreferenceList uniquePrefList = new UniquePreferenceList();
         thrown.expect(UniquePreferenceList.DuplicatePreferenceException.class);
         uniquePrefList.add(SHOES);
         uniquePrefList.add(SHOES);
     }
+    //@@author
 }

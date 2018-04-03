@@ -1,3 +1,4 @@
+//@@author amad-person
 package seedu.address.model.theme;
 
 import static java.util.Objects.requireNonNull;

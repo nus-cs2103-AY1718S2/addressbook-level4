@@ -140,6 +140,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         removeUnusedPreferences();
     }
 
+    //@@author amad-person
     /**
      * Replaces the given order {@code target} in the list with {@code editedOrder}.
      */
@@ -149,6 +150,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         orders.setOrder(target, editedOrder);
     }
+    //@@author
 
     /**
      *  Updates the master group list and master preference list to include groups and preferences
@@ -263,7 +265,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         setPreferenceTags(newList.toSet());
     }
-
+    //@@author amad-person
     //// order-level operations
 
     /**
@@ -279,6 +281,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void deleteOrder(Order targetOrder) throws OrderNotFoundException {
         orders.remove(targetOrder);
     }
+    //@@author
 
     /// calendar event operations
 
@@ -315,10 +318,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         return prefTags.asObservableList();
     }
 
+    //@@author amad-person
     @Override
     public ObservableList<Order> getOrderList() {
         return orders.asObservableList();
     }
+    //@@author
 
     @Override
     public ObservableList<CalendarEvent> getEventList() {

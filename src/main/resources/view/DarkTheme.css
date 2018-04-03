@@ -40,9 +40,9 @@
 }
 
 .table-view {
-    -fx-base: #1d1d1d;
-    -fx-control-inner-background: #424d5f;
-    -fx-background-color: #424d5f;
+    -fx-base: #383838;
+    -fx-control-inner-background: #383838;
+    -fx-background-color: #383838;
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-padding: 5;
@@ -54,7 +54,7 @@
 
 .table-cell {
     -fx-alignment: CENTER-LEFT;
-    -fx-background-color: #24363f;
+    -fx-background-color: #000000;
 }
 
 .table-view .column-header-background {
@@ -64,7 +64,7 @@
 .table-view .column-header, .table-view .filler {
     -fx-size: 35;
     -fx-border-width: 0 0 1 0;
-    -fx-background-color: transparent;
+    -fx-background-color: #000000;
     -fx-border-color:
         transparent
         transparent
@@ -402,4 +402,29 @@
 #tags .yellow {
     -fx-text-fill: black;
     -fx-background-color: #FFEB3B;
+}
+
+.modteal {
+    -fx-text-fill: black;
+    -fx-background-color: #009688;
+}
+
+.modyellow {
+    -fx-text-fill: black;
+    -fx-background-color: #FFEB3B;
+}
+
+.modyellow {
+    -fx-text-fill: black;
+    -fx-background-color: #FFEB3B;
+}
+
+.modplum {
+    -fx-text-fill: black;
+    -fx-background-color: #DDA0DD;
+}
+
+.modsandybrown {
+    -fx-text-fill: black;
+    -fx-background-color: #F4A460;
 }

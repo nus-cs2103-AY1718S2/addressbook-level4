@@ -33,6 +33,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_NOT_ODDEVEN = "String is not even or odd.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -221,6 +222,7 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author jingyinno
     /**
      * Parses a {@code String command} and {@code String alias} into {@code Alias}
      * Leading and trailing whitespaces will be trimmed.
@@ -265,4 +267,21 @@ public class ParserUtil {
         }
         return new Building(trimmedBuilding);
     }
+    //@@author
+
+    //@@author yeggasd
+    /**
+     * Parses a (@code String oddEven)
+     * Leading and trailing whitespaces will be trimmed.
+     * @throws IllegalValueException if not odd or even
+     */
+    public static String parseOddEven(String oddEven) throws IllegalValueException {
+        requireNonNull(oddEven);
+        String trimmedOddEven = oddEven.trim();
+        if (!StringUtil.isOddEven(trimmedOddEven)) {
+            throw new IllegalValueException(MESSAGE_NOT_ODDEVEN);
+        }
+        return trimmedOddEven;
+    }
+    //@@author
 }

@@ -231,7 +231,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 // tag::undoredo[]
-=== Undo/Redo feature
+=== Undo/Redo Feature
 ==== Current Implementation
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
@@ -359,19 +359,12 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // end::undoredo[]
 
 // tag::email[]
-=== Email feature
+=== Email Feature
 ==== Current Implementation
 The email mechanism is facilitated by the `GmailUtil` which resides under the `util` package. The implementation
 uses the Gmail API which exists as an imported library.
 
 // end::email[]
-
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
-
-_{Explain here how the data encryption feature will be implemented}_
-
-// end::dataencryption[]
 
 === Logging
 
@@ -394,8 +387,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 // tag::deletebefore[]
-=== Delete dated persons
-
+=== Delete Dated Persons Function
 ==== Current Implementation
 The delete dated persons mechanism supports deleting all persons added before a date who possess all the tags specified by the user.
 This function is facilitated by adding a `DateAdded` attribute whenever a `Person` is added to the address book. This
@@ -414,9 +406,7 @@ image::DeleteBeforeSequenceDiagram.png[width="900"]
 
 
 ==== Design Considerations
-
 ===== Aspect: Implementation of `DeleteBeforeCommand`
-
 * **Alternative 1 (current choice):** Follows the general design of the `delete` command
 ** Pros: Consistencies in implementation of commands and command parsers
 ** Cons: Requires additional methods for removing persons in the `AddressBook` and `UniquePersonList` classes
@@ -425,7 +415,6 @@ image::DeleteBeforeSequenceDiagram.png[width="900"]
 ** Cons: Needs to call the `delete` command multiple times to delete all targeted persons
 
 ===== Aspect: Implementation of `DateAdded`
-
 * **Alternative 1 (current choice):** Add `DateAdded` as an attribute of a `Person`
 ** Pros: Consistencies in implementation of the `Person` model that is in line with the OOP and Single Responsibility Principle
 ** Cons: Requires additional tests and overheads in maintaining an extra attribute
@@ -434,7 +423,6 @@ image::DeleteBeforeSequenceDiagram.png[width="900"]
 ** Cons: Reduces consistencies in the existing architecture and reduces coherence of the `Person` class
 
 ===== Aspect: Who adds the `DateAdded` attribute
-
 * **Alternative 1 (current choice):** The application automatically creates a `DateAdded` attribute for every `Person` added
 ** Pros: Avoids unnecessary errors in user-input date
 ** Cons: Additional stubs are needed to carry out tests in order to manually fix and manipulate `DateAdded`
@@ -442,6 +430,218 @@ image::DeleteBeforeSequenceDiagram.png[width="900"]
 ** Pros: The user might input the wrong date or date with invalid format
 ** Cons: Ease of implementation
 // end::deletebefore[]
+
+// tag::scheduling[]
+=== Scheduling and Calendar Module
+This entire section is dedicated to explaining the whole scheduling and calendar module in view of its scale and significance.
+
+In general, the implementation of this module follows closely to the current architecture of the system as shown in <<Design-Architecture, Section 2.1>>.
+This is to ensure consistency in the design of the system to keep it simple as _simplicity is consistency_.
+
+A number of Software Engineering Principles are used in the implementation of this module, namely *OOP*, *SOLID*, *YAGNI*, *DRY* principles.
+
+The following is the activity diagram that summarises the actions that can be taken by a user with regards to the scheduling function.
+
+=> Attach activity diagram
+
+==== Appointment Model
+===== Current Implementation
+The `Appointment` model is created to support the scheduling feature of the address book. It stores the information of appointments
+arranged by the user. The class diagram for the Appointment is as follows:
+
+=> Insert class diagram
+
+Similar to the `Person` model, the `Appointment` model consists of an `Appointment` class which has its attributes implemented as separate classes to
+observe the *Single Responsibility Principle*. The attributes include:
+
+i) `PersonName` => the name of the person the user is having appointment with
+ii) `Date` => the date of the appointment
+iii) `StartTime` => the start time of the appointment
+iv) `EndTime` => the end time of the appointment
+v) `Location` => the arranged location of the appointment
+
+The `Appointments` are stored in a `UniqueAppointmentList` in the `AddressBook`. The existing `Model` interface is extended
+with functionality to manage the filtered list of `Appointments`. The extension is kept as minimised as possible in light of
+the *YAGNI* Principle.
+
+===== Design Considerations
+====== Aspect: Model Manager for Appointment
+* **Alternative 1 (current choice):** The existing `ModelManager` is extended to handle the filtered list of `Appointments`
+** Pros: This design adheres to the *DRY* Principle as there will not be a duplicated `ModelManager` for the `Appointment` model
+with repeated functionality as the existing one.
+** Cons: Additional methods added to the `Model` interface might increase coupling for existing classes that are dependent on
+the `ModelManager`. For example, modifications made for `Appointment` in the `ModelManager` might now affect other commands unrelated
+to `Appointment` which call the `ModelManager`
+* **Alternative 2:** Create another `Model` interface implemented by another `ModelManager`
+** Pros: Ease of implementation and minimal impact on classes coupled with the existing `ModelManager`
+** Cons: Violates the *DRY* Principle and causes redundant codes
+
+====== Aspect: Creation of StartTime and EndTime attributes
+* **Alternative 1 (current choice):** `StartTime` and `EndTime` are created as separate classes which extends the `Time` class
+** Pros: This implementation adheres to the Polymorphism and Inheritance concepts in OOP. Both `StartTime` and `EndTime` has a
+_is a_ relationship with `Time`. The separation of `StartTime` and `EndTime` into two classes also support possible future extensions to
+these attribute classes. For example, it is possible to set different limits to the `StartTime` and `EndTime` with this implementation.
+** Cons: The `StartTime` and `EndTime` have to adhere to the Liskov Substitution Principle where `StartTime` and `EndTime` cannot be
+more restrictive than the parent `Time` class.
+* **Alternative 2:** Create `StartTime` and `EndTime` as separate unrelated classes
+** Pros: Avoids coupling between `StartTime` and `EndTime` due to an additional `Time` superclass
+** Cons: Violates the *DRY* Principle as `StartTime` and `EndTime` share some functionality, such as checking the validity
+of an input date
+
+==== Calendar UI
+===== Current Implementation
+The calendar is implemented using third party libraries provided by https://github.com/dlemmermann/CalendarFX[CalendarFX].
+The calendar panel view is shown below:
+
+image::CalendarView.png[width="900"]
+
+The setting up of the `CalendarView` is done by first creating a `Calendar` named _Appointments_ which is added to a `CalendarSource`.
+The `CalendarSource` is then added to the `CalendarView`. The implementation details are as shown in the following code snippet:
+[source,java]
+----
+CalendarView calendarView;
+Calendar calendar;
+
+calendar = new Calendar("Appointments");
+CalendarSource calendarSource = new CalendarSource("My Calendar");
+calendarSource.getCalendars().addAll(calendar);
+
+calendarView.getCalendarSources().addAll(calendarSource);
+
+calendarView.setRequestedTime(LocalTime.now());
+calendarView.showMonthPage();
+----
+
+The `Appointments` stored in the address book is loaded as `Entries` into the `Calendar` upon start up. The list of `Appointments`
+is passed into the `CalendarPanel` class. For each of these `Appointments`, the attributes are used to create an `Entry`, which is then
+added to the `Calendar`.
+
+When there are changes to the filtered list of `Appointments` due to addition or deletion of appointments, the `Calendar` is updated
+by using *Event Handlers*. An example of an event handler for the addition of a new appointment is shown below:
+[source,java]
+----
+@Subscribe
+private void handleNewAppointmentAddedEvent(NewAppointmentAddedEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    loadEntry(event.getAppointmentAdded());
+}
+----
+
+===== Design Considerations
+====== Aspect: Updating of Calendar due to addition or deletion of appointments
+* **Alternative 1 (current choice):** Use of Event Handling to update the `Calendar`
+** Pros: Event handling is suitable for UI purposes due to its flexibility
+** Cons: The flow of program is less logical and obvious
+* **Alternative 2:** The `DeleteAppointmentCommand` and `AddAppointmentCommand` call the `UIManager` to invoke the update
+** Pros: Associations between the `Logic` and `UI` components are clearer
+** Cons: This will introduce a two way dependency between the `Logic` and `UI` components which may lead to confusion and
+make the `Logic` component coupled to the `UI` component
+
+====== Aspect: Creation of Calendar
+* **Alternative 1 (current choice):** Use third party libraries
+** Pros: Readily available hence time saving
+** Cons: There might be possible bugs in the libraries provided by third parties
+
+[NOTE]
+There is an existing bug in the `YearPage` for the `Calendar`, which causes the `YearPage` to fail to scale its size according
+to the size of the container `Pane`
+
+* **Alternative 2:** Create our own `CalendarView`
+** Pros: More flexibility with the design of the `CalendarView`
+** Cons: Time consuming and manpower intensive
+
+==== Add Appointment Function
+===== Current Implementation
+The add Appointment function is implemented as the `AddAppointmentCommand` together
+with its associated `AddAppointmentCommandParser` class. This function supports the adding of an `Appointment` to the address book.
+The `AddAppointmentCommand` inherits from the `UndoableCommand` to allow user to undo the addition of an `Appointment`. The
+implementation of the `AddAppointmentCommand` is similar to that of the `AddCommand`.
+
+Following is a sequence diagram describing how the add appointment function works:
+
+image::AddAppointmentSequenceDiagram.png[width="900"]
+
+===== Design Considerations
+====== Aspect: What `Event` to raise when adding a new `Appointment`
+* **Alternative 1 (current choice):** Raise a specially created `NewAppointmentAddedEvent`
+** Pros: Do not have to respond to unrelated or unnecessary events
+** Cons: Overhead in maintaining the new `Event` class
+* **Alternative 2:** Raise the existing `AddressBookChangedEvent`
+** Pros: Do not have to implement a new `Event` class
+** Cons: The Calendar will refresh whenever `AddressBookChangedEvent` is raised, including when only the `Person` list is changed.
+
+==== Delete Appointment Function
+===== Current Implementation
+The delete Appointment function is implemented as the `DeleteAppointmentCommand` together
+with its associated `DeleteAppointmentCommandParser` class. This function supports the deletion of an `Appointment` from the address book.
+The `DeleteAppointmentCommand` inherits from the `UndoableCommand` to allow user to undo the deletion of an `Appointment`. The
+implementation of the `DeleteAppointmentCommand` is similar to that of the `DeleteCommand`.
+
+Following is a sequence diagram describing how the delete appointment function works:
+
+image::DeleteAppointmentSequenceDiagram.png[width="900"]
+
+===== Design Considerations
+====== Aspect: What fields to input when deleting an `Appointment`
+* **Alternative 1 (current choice):** Use all attributes of an `Appointment` as input fields to delete a matching `Appointment`
+** Pros: Certainty in deleting an `Appointment`
+** Cons: User has to input all fields which may be cumbersome
+* **Alternative 2:** Only input the `PersonName` and `Date` of the `Appointment` to be deleted
+** Pros: User does not have to input all the attributes of an `Appointment`
+** Cons: There may be more than one `Appointments` with the same `PersonName` and `Date`, which may cause unexpected behaviour by
+the `DeleteAppointmentCommand`
+
+==== Calendar Zooming Function
+===== Current Implementation
+The calendar zooming function is implemented by the `ZoomInCommand` and `ZoomOutCommand`. These `Command` classes are kept simple,
+only responsible for raising `ZoomInEvent` and `ZoomOutEvent`. The `ZoomInEvent` and `ZoomOutEvent` are created to support this function.
+
+The actual implementation of the `ZoomInCommand` is as follows:
+[source,java]
+----
+public class ZoomInCommand extends Command {
+    public static final String COMMAND_WORD = "zoomin";
+    public static final String COMMAND_ALIAS = "zi";
+
+    public static final String MESSAGE_SUCCESS = "Calendar zoomed in";
+
+    @Override
+    public CommandResult execute() {
+        raise(new ZoomInEvent());
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+----
+
+The actual implementation of the `ZoomOutCommand` is as follows:
+[source,java]
+----
+public class ZoomOutCommand extends Command {
+    public static final String COMMAND_WORD = "zoomout";
+    public static final String COMMAND_ALIAS = "zo";
+
+    public static final String MESSAGE_SUCCESS = "Calendar zoomed out";
+
+    @Override
+    public CommandResult execute() {
+        raise(new ZoomOutEvent());
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+----
+
+
+===== Design Considerations
+====== Aspect: Where should the event raising be implemented
+* **Alternative 1 (current choice):** Implement event raising in the `Command` superclass
+** Pros: Adheres to the *DRY* principle as `ZoomInCommand` and `ZoomOutCommand` do not have to implement a duplicated event
+raising functionality
+** Cons: All other command subclasses inherits the unnecessary event raising function
+* **Alternative 2:** Implement event raising in a specially created subclass of `Command`, which is in turn inherited by `ZoomInCommand` and `ZooOutCommand`
+** Pros: Commands that do not need to raise event do not need to inherit the event raising function
+** Cons: Might over complicate things for these simple commands.
+
+// end::scheduling[]
 
 == Documentation
 

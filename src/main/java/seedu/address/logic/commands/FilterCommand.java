@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.ShowMultiLocationEvent;
+import seedu.address.commons.events.ui.ShowDefaultPageEvent;
+import seedu.address.commons.events.ui.ShowMultiLocationFromHeadQuarterEvent;
 import seedu.address.logic.GetDistance;
 import seedu.address.logic.RouteOptimization;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -40,9 +41,36 @@ public class FilterCommand extends Command {
         optimizedRoute = route.getAddresses(model);
         stringDuration = getDuration(optimizedRoute);
 
-        EventsCenter.getInstance().post(new ShowMultiLocationEvent(optimizedRoute));
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        int numberOfPersonsListed = model.getFilteredPersonList().size();
 
+        //no person matches date
+        if (numberOfPersonsListed == 0) {
+            EventsCenter.getInstance().post(new ShowDefaultPageEvent());
+            return new CommandResult(getMessageForPersonListShownSummary(numberOfPersonsListed));
+        }
+
+        //all addresses cannot be found
+        if (optimizedRoute.size() == 0) {
+            EventsCenter.getInstance().post(new ShowDefaultPageEvent());
+            String shown = getMessageForPersonListShownSummary(numberOfPersonsListed)
+                    + "\nAll the addresses on "
+                    + model.getFilteredPersonList().get(0).getDate().toString()
+                    + " cannot be found.";
+            return new CommandResult(shown);
+        }
+
+        EventsCenter.getInstance().post(new ShowMultiLocationFromHeadQuarterEvent(optimizedRoute));
+        //some addresses are invalid
+        if (optimizedRoute.size() < numberOfPersonsListed) {
+            String shown = getMessageForPersonListShownSummary(numberOfPersonsListed)
+                    + "\nAt least one address on "
+                    + model.getFilteredPersonList().get(0).getDate().toString()
+                    + " cannot be found.";
+            return new CommandResult(shown);
+        }
+
+        //all addresses can be found
+        return new CommandResult(getMessageForPersonListShownSummary(numberOfPersonsListed));
     }
 
     @Override

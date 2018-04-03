@@ -65,7 +65,7 @@ Below is the interface(refer to figure 2) that contactHeRo provides for you to t
 
 .Command Box in contactHeRo
 image::commandBox.png[width="790"]
-+
+{zwsp} +
 *Command Format* +
 Here is the format for the commands that will enable you to make most of contactHeRo.
 

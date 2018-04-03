@@ -12,7 +12,7 @@ import seedu.address.ui.MainWindow;
  * Locate the address of a person by keywords on Google Map.
  * Keyword matching is case sensitive.
  */
-public class LocateCommand extends Command implements PopulatableCommand{
+public class LocateCommand extends Command implements PopulatableCommand {
     public static final String COMMAND_WORD = "locate";
     public static final String COMMAND_ALIAS = "lo";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Locate person whose fields contain any of "

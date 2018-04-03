@@ -138,6 +138,9 @@ image::notification_center.png[width=""]
 [NOTE]
 Notification cards will always stay in the notification center. Even if you close ET, the notification card will re-appear when you open ET again. To dismiss a notification card, please refer to <<Dismissing a notification card : `dismiss`>>.
 
+=== Locked-by-default system
+Employees Tracker (ET) is locked by default when it is opened in order to secure the data in ET. While ET is locked, all commands and the notification features will not work. To unlock ET, please refer to <<Logging in : `unlock`>>
+
 === Data storage
 
 Employees Tracker data are saved in the hard disk automatically after any command that changes the data. +

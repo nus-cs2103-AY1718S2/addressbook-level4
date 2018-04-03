@@ -11,6 +11,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.image.Image?>
+
 <HBox id="cardPane" fx:id="cardPane" style="-fx-background-radius: 40;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
@@ -38,5 +40,9 @@
          <RowConstraints />
       </rowConstraints>
   </GridPane>
-   <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+   <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+     <image>
+       <Image url="/images/default.png"/>
+     </image>
+   </ImageView>
 </HBox>

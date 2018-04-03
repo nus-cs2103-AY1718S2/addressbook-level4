@@ -33,7 +33,7 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     private void createProfilePicturesFolder() {
-        File dir = new File("src/main/resources/ProfilePictures");
+        File dir = new File("./ProfilePictures");
         dir.mkdir();
     }
 

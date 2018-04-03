@@ -23,9 +23,8 @@ public class ProfilePicture {
 
     // alphanumeric and special characters
     public static final String PROFILE_PICTURE_VALIDATION_REGEX = "^$|([^\\s]+(\\.(?i)(jpeg|jpg|png|gif|bmp))$)";
-    public static final String DEFAULT_IMG_URL = "file:src/test/data/images/default.png";
     public static final String PROFILE_PICTURE_FOLDER =
-            "./src/main/resources/ProfilePictures/";
+            "./ProfilePictures/";
 
     public final String filePath;
     public final String url;
@@ -40,15 +39,15 @@ public class ProfilePicture {
             checkArgument(isValidProfilePicture(profilePicture[0]), MESSAGE_PROFILEPICTURE_CONSTRAINTS);
             checkArgument(hasValidProfilePicture(profilePicture[0]), MESSAGE_PROFILEPICTURE_NOT_EXISTS);
             if (profilePicture[0].length() > 37
-                    && profilePicture[0].substring(0, 37).equals("./src/main/resources/ProfilePictures/")) {
+                    && profilePicture[0].substring(0, 37).equals("./ProfilePictures/")) {
                 this.filePath = profilePicture[0];
             } else {
                 this.filePath = copyImageToProfilePictureFolder(profilePicture[0]);
             }
             this.url = "file:".concat(this.filePath.substring(2));
         } else {
-            this.url = DEFAULT_IMG_URL;
-            this.filePath = DEFAULT_IMG_URL.replace("file:", "./");
+            this.url = null;
+            this.filePath = null;
         }
     }
 

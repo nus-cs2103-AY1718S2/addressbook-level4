@@ -28,6 +28,10 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.exception.DuplicateUsernameException;
+import seedu.address.model.exception.InvalidPasswordException;
+import seedu.address.model.exception.InvalidUsernameException;
+import seedu.address.model.exception.MultipleLoginException;
+import seedu.address.model.exception.UserLogoutException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.person.Person;
@@ -156,6 +160,19 @@ public class AddAppointmentCommandTest {
             fail("This method should not be called.");
             return null;
         }
+
+        @Override
+        public void login(String username, String password) throws InvalidUsernameException,
+                InvalidPasswordException, MultipleLoginException {
+            fail("This method should not be called.");
+        };
+
+        @Override
+        public void logout() throws UserLogoutException {
+            fail("This method should not be called.");
+        };
+
+
 
         @Override
         public void register(String username, String password) throws DuplicateUsernameException {

@@ -189,6 +189,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public void login(String username, String password) { fail("This method should not be called."); }
+
+        @Override
+        public void logout() { fail("This method should not be called."); }
+
+        @Override
         public void register(String username, String password) {
             fail("This method should not be called.");
         }

@@ -57,7 +57,7 @@ public class StorageManagerTest {
 
     @Test
     public void createProfilesPictureFolder() {
-        assertTrue(new File("./src/main/resources/ProfilePictures").exists());
+        assertTrue(new File("./ProfilePictures").exists());
     }
 
     @Test

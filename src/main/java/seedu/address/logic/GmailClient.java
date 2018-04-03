@@ -10,7 +10,7 @@ import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.util.Base64;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Message;
-
+//@@author KevinCJH
 /**
  * Creates an authorized Gmail client for all services that uses Gmail API.
  */

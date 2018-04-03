@@ -10,7 +10,7 @@ import guitests.guihandles.EmailPanelHandle;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
-
+//@@author KevinCJH
 public class EmailPanelTest extends GuiUnitTest {
 
     private EmailPanelHandle emailPanelHandle;

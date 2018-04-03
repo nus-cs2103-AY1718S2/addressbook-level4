@@ -3,7 +3,7 @@ package seedu.address.logic;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-
+//@@author KevinCJH
 public class GmailClientTest {
 
     @Test

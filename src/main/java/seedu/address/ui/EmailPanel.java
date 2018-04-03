@@ -20,7 +20,7 @@ import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.GmailClient;
 import seedu.address.model.GmailMessage;
 import seedu.address.model.person.Person;
-
+//@@author KevinCJH
 /**
  * Shows the email drafting tab
  */

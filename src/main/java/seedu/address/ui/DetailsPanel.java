@@ -71,15 +71,15 @@ public class DetailsPanel extends UiPart<Region> {
         CalendarPanel calendarPanel = new CalendarPanel();
         calendar.setContent(calendarPanel.getRoot());
     }
-
+    //@@author KevinCJH
     /**
-     * Adds the CalendarView to the DetailsPanel
+     * Adds the EmailPanel to the DetailsPanel
      */
     public void addEmailPanel() {
         emailPanel = new EmailPanel();
         email.setContent(emailPanel.getRoot());
     }
-
+    //@@author
     /**
      * Adds the ContactDetailsPanel to the DetailsPanel
      */

@@ -132,14 +132,14 @@ public class AddressBookParserTest {
                 LinkedInCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new LinkedInCommand(INDEX_FIRST_PERSON), command);
     }
-
+    //@@author KevinCJH
     @Test
     public void parseCommand_email() throws Exception {
         EmailCommand command = (EmailCommand) parser.parseCommand(
                 EmailCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new EmailCommand(INDEX_FIRST_PERSON), command);
     }
-
+    //@@author
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);

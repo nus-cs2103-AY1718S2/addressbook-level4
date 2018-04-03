@@ -28,6 +28,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
+//@@author KevinCJH
 public class EmailCommandTest {
 
     @Rule

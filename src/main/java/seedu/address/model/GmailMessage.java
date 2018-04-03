@@ -11,7 +11,7 @@ import javax.mail.internet.MimeMessage;
 import com.google.api.services.gmail.Gmail;
 
 import seedu.address.logic.GmailClient;
-
+//@@author KevinCJH
 /**
  * Creates an email message containing contents to be sent via gmail
  */
@@ -59,14 +59,14 @@ public class GmailMessage {
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);
 
-        MimeMessage email = new MimeMessage(session);
+        MimeMessage emailContent = new MimeMessage(session);
 
-        email.setFrom(new InternetAddress(from));
-        email.addRecipient(javax.mail.Message.RecipientType.TO,
+        emailContent.setFrom(new InternetAddress(from));
+        emailContent.addRecipient(javax.mail.Message.RecipientType.TO,
                 new InternetAddress(to));
-        email.setSubject(subject);
-        email.setContent(bodyText, "text/html; charset=utf-8");
-        return email;
+        emailContent.setSubject(subject);
+        emailContent.setContent(bodyText, "text/html; charset=utf-8");
+        return emailContent;
     }
 
     /**

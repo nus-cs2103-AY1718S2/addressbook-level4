@@ -12,6 +12,7 @@ import seedu.address.logic.GmailClient;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 
+//@@author KevinCJH
 /**
  * Send an email to the person identified using it's last displayed index from the address book.
  */

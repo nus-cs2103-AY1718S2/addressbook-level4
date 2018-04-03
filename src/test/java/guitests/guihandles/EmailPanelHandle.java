@@ -3,7 +3,7 @@ package guitests.guihandles;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.web.HTMLEditor;
-
+//@@author KevinCJH
 /**
  * A handle to the {@code EmailPanel} in the GUI.
  */

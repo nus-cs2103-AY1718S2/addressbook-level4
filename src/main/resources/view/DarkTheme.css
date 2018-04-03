@@ -306,11 +306,6 @@
     -fx-padding: 8 1 8 1;
 }
 
-#cardPane {
-    -fx-background-color: transparent;
-    -fx-border-width: 0;
-}
-
 #commandTypeLabel {
     -fx-font-size: 11px;
     -fx-text-fill: #F70D1A;
@@ -327,7 +322,7 @@
     -fx-text-fill: white;
 }
 
-#filterField, #personListPanel, #personWebpage {
+#filterField, #personListPanel {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
@@ -363,6 +358,37 @@
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+
+#cardPane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+#cardPane #name, #cardPane #id {
+    -fx-font-size: 15pt;
+}
+
+#personPanel #name {
+    -fx-font-size: 50pt;
+    -fx-text-fill: #FFFFFF;
+}
+
+#cardPane #tags .label {
+    -fx-font-size: 12pt;
+}
+
+#personPanel #tags .label {
+    -fx-font-size: 20pt;
+}
+
+#personPanel #address, #personPanel #email, #personPanel #phone {
++   -fx-font-size: 15pt;
+    -fx-text-fill: #FFFFFF;
+}
+
+#personPanel .split-pane-divider {
+    -fx-background-color: derive(#1d1d1d, 50%);
 }
 
 .cell-cal-label {

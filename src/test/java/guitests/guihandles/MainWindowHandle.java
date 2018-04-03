@@ -45,7 +45,7 @@ public class MainWindowHandle extends StageHandle {
         return mainMenu;
     }
 
-    public BrowserPanelHandle getBrowserPanel() {
-        return centrePanel.getBrowserPanelHandle();
+    public PersonPanelHandle getPersonPanel() {
+        return centrePanel.getPersonPanelHandle();
     }
 }

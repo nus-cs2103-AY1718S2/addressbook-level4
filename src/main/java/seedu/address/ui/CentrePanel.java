@@ -11,15 +11,14 @@ import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.event.CalendarEvent;
 
 /**
- * The Centre Panel of the App that can switch between Browser Panel and Calendar Panel
+ * The Centre Panel of the App that can switch between Person Panel and Calendar Panel
  */
 public class CentrePanel extends UiPart<Region> {
-
 
     private static final String FXML = "CentrePanel.fxml";
 
     private CalendarPanel calendarPanel;
-    private BrowserPanel browserPanel;
+    private PersonPanel personPanel;
     private ObservableList<CalendarEvent> calendarEvents;
 
     @FXML
@@ -29,24 +28,24 @@ public class CentrePanel extends UiPart<Region> {
         super(FXML);
 
         this.calendarEvents = calendarEvents;
-        // By default, display Browser Panel in Main Window.
-        displayBrowserPanel();
+
+        displayPersonPanel();
         registerAsAnEventHandler(this);
     }
 
     /**
-     * Displays the Browser Panel.
+     * Displays the Person Panel.
      */
-    public void displayBrowserPanel() {
-        browserPanel = new BrowserPanel();
-        centrePlaceholder.getChildren().add(browserPanel.getRoot());
+    public void displayPersonPanel() {
+        personPanel = new PersonPanel();
+        centrePlaceholder.getChildren().add(personPanel.getRoot());
     }
 
     /**
-     * Provides a method to access BrowserPanel's method.
+     * Provides a method to access PersonPanel's method.
      */
     public void freeResources() {
-        browserPanel.freeResources();
+        personPanel.freeResources();
     }
 
     /**
@@ -60,7 +59,6 @@ public class CentrePanel extends UiPart<Region> {
 
     @Subscribe
     private void handleDisplayCalendarRequestEvent(DisplayCalendarRequestEvent event) {
-
         calendarEvents = event.getCalendarEvents();
         displayCalendarPanel();
         calendarPanel.handleDisplayCalendarRequestEvent(event);
@@ -68,8 +66,7 @@ public class CentrePanel extends UiPart<Region> {
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-
-        displayBrowserPanel();
-        browserPanel.handlePersonPanelSelectionChangedEvent(event);
+        displayPersonPanel();
+        personPanel.handlePersonPanelSelectionChangedEvent(event);
     }
 }

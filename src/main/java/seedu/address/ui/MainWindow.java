@@ -37,7 +37,6 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private CentrePanel centrePanel;
-
     private PersonListPanel personListPanel;
     private OrderListPanel orderListPanel;
     private Config config;
@@ -124,7 +123,6 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-
         centrePanel = new CentrePanel(logic.getCalendarEventList());
         centrePlaceholder.getChildren().add(centrePanel.getRoot());
 

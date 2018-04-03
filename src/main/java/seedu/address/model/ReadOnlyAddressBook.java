@@ -28,9 +28,12 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate aliases.
      */
     ObservableList<Alias> getAliasList();
-    //@@author
 
+    /**
+     * Resets the alias list to an empty list
+     */
     void resetAliasList();
+    //@@author
 
     //@@author yeggasd
     /**

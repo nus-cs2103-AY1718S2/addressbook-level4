@@ -292,7 +292,9 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * template was successful.
      */
     private void assertPopulationSuccess() {
-        assertEquals((new AddCommand()).getTemplate(), getCommandBox().getInput());
+        AddCommand addCommand = new AddCommand();
+        assertEquals(addCommand.getTemplate(), getCommandBox().getInput());
+        assertEquals(addCommand.getUsageMessage(), getResultDisplay().getText());
         guiRobot.pauseForHuman();
 
         assertTrue(getCommandBox().clear());

@@ -236,7 +236,9 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      * template was successful.
      */
     private void assertPopulationSuccess() {
-        assertEquals((new FindCommand()).getTemplate(), getCommandBox().getInput());
+        FindCommand findCommand = new FindCommand();
+        assertEquals(findCommand.getTemplate(), getCommandBox().getInput());
+        assertEquals(findCommand.getUsageMessage(), getResultDisplay().getText());
         guiRobot.pauseForHuman();
 
         assertTrue(getCommandBox().clear());

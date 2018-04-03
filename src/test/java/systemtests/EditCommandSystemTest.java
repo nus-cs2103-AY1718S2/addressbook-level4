@@ -314,7 +314,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * template was successful.
      */
     private void assertPopulationSuccess() {
-        assertEquals((new EditCommand()).getTemplate(), getCommandBox().getInput());
+        EditCommand editCommand = new EditCommand();
+        assertEquals(editCommand.getTemplate(), getCommandBox().getInput());
+        assertEquals(editCommand.getUsageMessage(), getResultDisplay().getText());
         guiRobot.pauseForHuman();
 
         assertTrue(getCommandBox().clear());

@@ -231,7 +231,9 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      * template was successful.
      */
     private void assertPopulationSuccess() {
-        assertEquals((new DeleteCommand()).getTemplate(), getCommandBox().getInput());
+        DeleteCommand deleteCommand = new DeleteCommand();
+        assertEquals(deleteCommand.getTemplate(), getCommandBox().getInput());
+        assertEquals(deleteCommand.getUsageMessage(), getResultDisplay().getText());
         guiRobot.pauseForHuman();
 
         assertTrue(getCommandBox().clear());

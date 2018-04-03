@@ -353,6 +353,44 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Emailing your contact : `email`
+
+You can send email to any person you have saved in contactHeRo using the following format. +
+Format: `email INDEX`
+
+****
+* Opens up the Draft Email tab. This is an User Interface for you to draft your emails.
+* Collects the information of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The collected information will be used to help you fill up details in the draft like the person's email address.
+****
+
+Examples:
+
+* `list` +
+`email 2` +
+This will open up the Draft Email tab and then
+collect the information of the 2nd person in the list. On running the above command, you should see the following success message: +
+
+ Drafting email to: berniceyu@example.com
++
+The collected information will be used automatically to fill up details as shown below.
+
+.The User Interface to draft your email
+image::emailSS1.png[width="790"]
+
+[TIP]
+You can use keyboard short-cuts like `Ctrl-B` to *bold* your text while drafting
+your email.
+
+Finally, after you are done drafting up the email, simply hit the `Send`
+button to send your email. If the email is sent successfully, you should see
+a pop-up message as shown below.
+
+.Pop-up message
+image::emailSS2.png[width="400"]
+
 === Clearing all entries : `clear`
 
 You can clear all entries from contactHeRo using the following format. +
@@ -484,10 +522,6 @@ You will soon be able to delete a job opening in contactHeRo.
 === Matching a job opening to a person `[coming in v1.4]`
 
 You will soon be able to match job openings to people in contactHeRo.
-
-=== Emailing a person `[coming in v1.5]`
-
-You can send email to any person you have saved in contactHeRo, without having to leave the app!
 
 === Arranging meetings with Gmail calendar `[coming in v2.0]`
 

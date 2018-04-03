@@ -68,6 +68,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
         tags = new UniqueTagList();
         photos = new UniquePhotoList();
         exercises = new UniqueExerciseList();
+        photos = new UniquePhotoList();
     }
 
     public ProgressChecker() {}

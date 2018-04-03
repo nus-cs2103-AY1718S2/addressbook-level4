@@ -278,6 +278,19 @@ public class DistanceCommandParser implements Parser<DistanceCommand> {
     }
 
 ```
+###### \java\seedu\address\MainApp.java
+``` java
+    /**
+     * read welcome "username" message
+     */
+    private void readWelcomeMessage() {
+        try {
+            Runtime.getRuntime().exec("wscript src\\main\\resources\\scripts\\Welcome.vbs");
+        } catch (IOException e) {
+            System.out.println("Unable to load welcome message.");
+        }
+    }
+```
 ###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
     /**

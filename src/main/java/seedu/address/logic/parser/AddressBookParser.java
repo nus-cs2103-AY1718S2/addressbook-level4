@@ -3,10 +3,13 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
+import com.ibm.watson.developer_cloud.conversation.v1.model.RuntimeEntity;
+import com.ibm.watson.developer_cloud.conversation.v1.model.RuntimeIntent;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddLessonCommand;
@@ -129,23 +132,6 @@ public class AddressBookParser {
         case UnfavouriteCommand.COMMAND_WORD:
             return new UnfavouriteCommandParser().parse(arguments);
 
-        //@@ chweeee
-        case "assistant":
-            ConversationCommand.setUpAgent();
-            MessageResponse response = null;
-            String text;
-            Command command = new ConversationCommand(); //this is a dummy
-
-            //need to talk to the agent here
-            //the while loop needs to occur here
-            //initiate communication with agent
-            response = ConversationCommand.getMessageResponse("Hello");
-            text = ConversationCommand.getResponseText(response);
-
-            //has to return the appropriate command, to be decided by the agent
-            return command;
-
-        //@@
         case MoreInfoCommand.COMMAND_WORD:
             return new MoreInfoCommandParser().parse(arguments);
 
@@ -156,8 +142,60 @@ public class AddressBookParser {
             return new CheckTaskCommandParser().parse(arguments);
 
         default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            //@@chweeee
+            /**
+             * aims to decipher user intention and returns the command required
+             */
+            //initialises the agent
+            ConversationCommand.setUpAgent();
+            MessageResponse response = null;
+            List<RuntimeIntent> intents; //stores user intents
+            List<RuntimeEntity> entities; //stores entities identified in the user's input
+            String intention = "";
+            String entity = "";
 
+            //processes the userInput
+            response = ConversationCommand.getMessageResponse(userInput);
+            intents = response.getIntents();
+            entities = response.getEntities();
+            //System.out.println("list of entities: " + entities);
+
+            for (int i = 0; i < intents.size(); i++) {
+                intention = intents.get(i).getIntent();
+                //entity = entities.get(i).getValue();
+            }
+            System.out.println("this is the intention of the user: " + intention);
+            //System.out.println("this is the value of the entity " + entity);
+
+            switch (intention) {
+            case "Clear":
+                return new ClearCommand();
+
+            case "Undo":
+                return new UndoCommand();
+
+            case "Redo":
+                return new RedoCommand();
+
+            case "Help":
+                return new HelpCommand();
+
+            case "Exit":
+                return new ExitCommand();
+
+            case "History":
+                return new HistoryCommand();
+
+            case "List":
+                return new ListCommandParser().parse("");
+
+            case "Schedule":
+                return new ScheduleCommand();
+
+            default:
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
+            //@@
         }
     }
 }

@@ -40,6 +40,9 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
+    public static final String VALID_FACEBOOK_LINK_AMY = "www.facebook.com/a.my";
+    public static final String VALID_TWITTER_LINK_AMY = "www.twitter.com/amy";
+    public static final String VALID_TWITTER_LINK_BOB = "www.twitter.com/bob";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
@@ -77,8 +80,8 @@ public class CommandTestUtil {
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
 
-        SMP_MAP_AMY = SampleDataUtil.getSocialMediaPlatformMap("www.facebook.com/a.my", "www.twitter.com/amy");
-        SMP_MAP_BOB = SampleDataUtil.getSocialMediaPlatformMap("www.twitter.com/bob");
+        SMP_MAP_AMY = SampleDataUtil.getSocialMediaPlatformMap(VALID_FACEBOOK_LINK_AMY, VALID_TWITTER_LINK_AMY);
+        SMP_MAP_BOB = SampleDataUtil.getSocialMediaPlatformMap(VALID_TWITTER_LINK_BOB);
     }
 
     /**

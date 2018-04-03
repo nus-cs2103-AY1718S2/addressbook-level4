@@ -450,13 +450,15 @@ e.g.`import data/addressBook.xml testpassword`
 * *Export* : `Export FILEPATH PASSWORD` +
 e.g.`Export data/addressBook.xml testpassword`
 * *List* : `list`
+* *Map* : `map LOCATION` +
+e.g. `map S16`
 * *Password* : `password PASSWORD` +
 e.g. `password test`
 * *Remove Password* : `nopassword`
 * *Redo* : `redo`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *Unalias* `unalias [CURRENT_ALIAS]` +
+* *Unalias* `unalias CURRENT_ALIAS` +
 e.g. `unalias hist`
 * *Undo* : `undo`
 * *Vacant* : `vacant BUILDING` +

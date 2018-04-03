@@ -20,7 +20,17 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
-import seedu.address.logic.commands.*;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LocateCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.UserPrefs;
 
 /**

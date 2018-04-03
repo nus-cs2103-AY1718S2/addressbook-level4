@@ -206,6 +206,9 @@ Returns all persons whose graudation year that is exactly 2020
 * `filter y/2019-2021' r/4.3, 4.5-5.0
 Returns all persons whose graduation year between 2019 and 2021, and whose rating is either 4.3, or between 4.5 to 5.0
 
+Since v1.4, filter command supports filtering by cGPA and interview date. It now takes the format:
+`Format: `filter [y/KEYWORD_RANGE] [r/KEYWORD_RANGE] [g/CGPA_RANGE] [d/INTERVIEW_DATE_RANGE]`
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +

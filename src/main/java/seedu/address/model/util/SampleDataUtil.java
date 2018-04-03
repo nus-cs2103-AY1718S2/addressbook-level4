@@ -12,6 +12,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.timetable.Timetable;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -22,22 +23,23 @@ public class SampleDataUtil {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                 new Address("Blk 30 Geylang Street 29, #06-40"),
-                    new Birthday("01011995"), getTagSet("friends")),
+                    new Birthday("01011995"), new Timetable("http://modsn.us/phiZF"), getTagSet("friends")),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                 new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
-                    new Birthday("01011993"), getTagSet("colleagues", "friends")),
+                    new Birthday("01011993"), new Timetable("http://modsn.us/phiZF"),
+                    getTagSet("colleagues", "friends")),
             new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                 new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
-                    new Birthday("13121988"), getTagSet("neighbours")),
+                    new Birthday("13121988"), new Timetable("http://modsn.us/phiZF"), getTagSet("neighbours")),
             new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
                 new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
-                    new Birthday("02021993"), getTagSet("family")),
+                    new Birthday("02021993"), new Timetable("http://modsn.us/phiZF"), getTagSet("family")),
             new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                 new Address("Blk 47 Tampines Street 20, #17-35"),
-                    new Birthday("26031996"), getTagSet("classmates")),
+                    new Birthday("26031996"), new Timetable("http://modsn.us/phiZF"), getTagSet("classmates")),
             new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                 new Address("Blk 45 Aljunied Street 85, #11-31"),
-                    new Birthday("26032010"), getTagSet("colleagues"))
+                    new Birthday("26032010"), new Timetable("http://modsn.us/phiZF"), getTagSet("colleagues"))
         };
     }
 

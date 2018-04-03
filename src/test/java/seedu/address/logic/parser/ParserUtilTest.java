@@ -23,6 +23,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.timetable.Timetable;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.Assert;
 
@@ -31,12 +32,14 @@ public class ParserUtilTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_TIMETABLE = "http://google.com/";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_TIMETABLE = "http://modsn.us/oNZLY";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -199,6 +202,40 @@ public class ParserUtilTest {
         Email expectedEmail = new Email(VALID_EMAIL);
         assertEquals(expectedEmail, ParserUtil.parseEmail(emailWithWhitespace));
         assertEquals(Optional.of(expectedEmail), ParserUtil.parseEmail(Optional.of(emailWithWhitespace)));
+    }
+
+    @Test
+    public void parseTimetable_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseTimetable((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseTimetable((Optional<String>) null));
+    }
+
+    @Test
+    public void parseTimetable_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseTimetable(INVALID_TIMETABLE));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseEmail(Optional
+                .of(INVALID_TIMETABLE)));
+    }
+
+    @Test
+    public void parseTimetable_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseTimetable(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseTimetable_validValueWithoutWhitespace_returnsTimetable() throws Exception {
+        Timetable expectedTimetable = new Timetable(VALID_TIMETABLE);
+        assertEquals(expectedTimetable, ParserUtil.parseTimetable(VALID_TIMETABLE));
+        assertEquals(Optional.of(expectedTimetable), ParserUtil.parseTimetable(Optional.of(VALID_TIMETABLE)));
+    }
+
+    @Test
+    public void parseTimetable_validValueWithWhitespace_returnsTrimmedTimetable() throws Exception {
+        String timetableWithWhitespace = WHITESPACE + VALID_TIMETABLE + WHITESPACE;
+        Timetable expectedTimetable = new Timetable(VALID_TIMETABLE);
+        assertEquals(expectedTimetable, ParserUtil.parseTimetable(timetableWithWhitespace));
+        assertEquals(Optional.of(expectedTimetable), ParserUtil.parseTimetable(Optional
+                .of(timetableWithWhitespace)));
     }
 
     @Test

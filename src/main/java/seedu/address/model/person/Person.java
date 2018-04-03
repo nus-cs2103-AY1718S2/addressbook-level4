@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.person.timetable.Timetable;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -20,19 +21,22 @@ public class Person {
     private final Email email;
     private final Address address;
     private final Birthday birthday;
+    private final Timetable timetable;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday,
+                  Timetable timetable, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, birthday, timetable, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.birthday = birthday;
+        this.timetable = timetable;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -55,6 +59,10 @@ public class Person {
 
     public Birthday getBirthday() {
         return birthday;
+    }
+
+    public Timetable getTimetable() {
+        return timetable;
     }
 
     /**
@@ -80,13 +88,14 @@ public class Person {
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
                 && otherPerson.getAddress().equals(this.getAddress())
-                && otherPerson.getBirthday().equals(this.getBirthday());
+                && otherPerson.getBirthday().equals(this.getBirthday())
+                && otherPerson.getTimetable().equals(this.getTimetable());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, birthday, tags);
+        return Objects.hash(name, phone, email, address, birthday, timetable, tags);
     }
 
     @Override
@@ -101,6 +110,8 @@ public class Person {
                 .append(getAddress())
                 .append(" Birthday: ")
                 .append(getBirthday())
+                .append(" Timetable: ")
+                .append(getTimetable())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

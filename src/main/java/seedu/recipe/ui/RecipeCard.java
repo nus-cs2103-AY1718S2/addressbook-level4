@@ -1,7 +1,5 @@
 package seedu.recipe.ui;
 
-import static seedu.recipe.model.recipe.Image.NULL_IMAGE_REFERENCE;
-
 import java.io.FileInputStream;
 
 import javafx.fxml.FXML;

@@ -157,7 +157,7 @@ public class UiManager extends ComponentManager implements Ui {
         return requireNonNull(fxmlFileUrl);
     }
 
-    //==================== ListEvent Handling Code ===============================================================
+    //==================== Event Handling Code ===============================================================
 
     @Subscribe
     private void handleDataSavingExceptionEvent(DataSavingExceptionEvent event) {

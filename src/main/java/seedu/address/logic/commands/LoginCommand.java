@@ -1,9 +1,7 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.ModelManager;
 
 /**
  * Displays the user's schedule.

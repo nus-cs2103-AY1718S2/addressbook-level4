@@ -3,9 +3,11 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.io.IOException;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import com.google.gdata.util.ServiceException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -189,6 +191,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void logoutGoogleAccount() throws CredentialsException {
         this.gContactsManager.logout();
+    }
+
+    @Override
+    public void synchronize() throws ServiceException, IOException {
+        this.gContactsManager.createContact();
+        this.gContactsManager.printAllContacts();
     }
 
     @Override

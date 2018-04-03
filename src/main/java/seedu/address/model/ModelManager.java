@@ -195,8 +195,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void synchronize() throws ServiceException, IOException {
-        this.gContactsManager.createContact();
-        this.gContactsManager.printAllContacts();
+        this.gContactsManager.synchronize(addressBook);
     }
 
     @Override

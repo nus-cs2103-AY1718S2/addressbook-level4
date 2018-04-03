@@ -9,6 +9,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BirthdayListEvent;
+import seedu.address.commons.events.ui.GoogleMapsEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.VenueTableEvent;
 
@@ -24,6 +25,7 @@ public class InfoPanel extends UiPart<Region> {
     private BrowserPanel browserPanel;
     private BirthdayList birthdayList;
     private VenueTable venueTable;
+    private GoogleMapsDisplay mapsDisplay;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -34,13 +36,17 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private StackPane venuePlaceholder;
 
+    @FXML
+    private StackPane mapsPlaceholder;
+
     public InfoPanel() {
         super(FXML);
 
         fillInnerParts();
 
         venueTable = new VenueTable(null);
-        venuePlaceholder.getChildren().add(venueTable.getRoot());
+
+        mapsDisplay = new GoogleMapsDisplay(null);
 
         browserPlaceholder.toFront();
         registerAsAnEventHandler(this);
@@ -87,6 +93,20 @@ public class InfoPanel extends UiPart<Region> {
         venuePlaceholder.getChildren().add(venueTable.getRoot());
         venuePlaceholder.toFront();
         venueTable.setStyle();
+    }
+
+    @Subscribe
+    private void handleGoogleMapsDisplayEvent(GoogleMapsEvent event) {
+        mapsPlaceholder.getChildren().removeAll();
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mapsDisplay = new GoogleMapsDisplay(event.getLocations());
+        mapsPlaceholder.getChildren().add(mapsDisplay.getRoot());
+        if (event.getIsOneLocationEvent()) {
+            mapsDisplay.loadMapPage();
+        } else {
+            mapsDisplay.loadMapDirections();
+        }
+        mapsPlaceholder.toFront();
     }
     //@@author
 }

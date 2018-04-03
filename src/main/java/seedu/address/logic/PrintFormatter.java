@@ -17,6 +17,9 @@ import seedu.address.model.patient.Record;
 import seedu.address.model.patient.RecordList;
 
 
+/**
+ * Prints the records of given patient to pdf format
+ */
 public class PrintFormatter {
     private static Document document;
     private static String filePath;
@@ -38,6 +41,9 @@ public class PrintFormatter {
         document.close();
     }
 
+    /**
+     * Creates a new pdf document
+     */
     private void initDocument(Patient patient) {
         filePath = "record/" + patient.getName().toString() + " records.pdf";
         document = new Document();
@@ -48,6 +54,9 @@ public class PrintFormatter {
         }
     }
 
+    /**
+     * Adds title of pdf document
+     */
     private void addHeader() {
         Paragraph header = new Paragraph();
         header.setAlignment(Element.ALIGN_CENTER);
@@ -62,6 +71,9 @@ public class PrintFormatter {
         }
     }
 
+    /**
+     * Writes information of given patient at the top of the pdf document
+     */
     private void writePatientInfo(Patient patient) {
         Paragraph paragraph = new Paragraph();
         paragraph.setAlignment(Element.ALIGN_LEFT);
@@ -87,6 +99,9 @@ public class PrintFormatter {
         }
     }
 
+    /**
+     * Writes out records of given patient on the pdf document
+     */
     private void writeRecords(Patient patient) {
         Paragraph paragraph = new Paragraph();
         paragraph.setAlignment(Element.ALIGN_LEFT);
@@ -98,7 +113,7 @@ public class PrintFormatter {
             paragraph.add(Chunk.NEWLINE);
 
             Record record = recordList.getRecord(recordIndex);
-            paragraph.add(new Chunk("Record #" + (recordIndex+1), subFont));
+            paragraph.add(new Chunk("Record #" + (recordIndex + 1), subFont));
             paragraph.add(Chunk.NEWLINE);
 
             paragraph.add(new Chunk("Date recorded: ", smallBold));

@@ -1,5 +1,8 @@
 package systemtests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
@@ -38,6 +41,7 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
+import guitests.GuiRobot;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
@@ -54,6 +58,7 @@ import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
+    private final GuiRobot guiRobot = new GuiRobot();
 
     @Test
     public void add() throws Exception {
@@ -180,6 +185,34 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + TYPE_DESC_CUSTOMER + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
+    }
+
+    @Test
+    public void populateAddCommandTemplate() {
+        //use accelerator
+        getCommandBox().click();
+        getMainMenu().populateAddCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        getResultDisplay().click();
+        getMainMenu().populateAddCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        /**Unusual: Ctrl + Space does not work when focus is on PersonListPanel.
+         * Although most accelerators work fine when focus is on PersonListPanel,
+         * the Space key does not play nice with the PersonListPanel.
+         */
+        getPersonListPanel().click();
+        getMainMenu().populateAddCommandUsingAccelerator();
+        assertPopulationFailure();
+
+        getBrowserPanel().click();
+        getMainMenu().populateAddCommandUsingAccelerator();
+        assertPopulationFailure();
+
+        //use menu button
+        getMainMenu().populateAddCommandUsingMenu();
+        assertPopulationSuccess();
     }
 
     /**

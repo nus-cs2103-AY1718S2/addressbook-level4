@@ -12,7 +12,7 @@ import com.google.maps.model.DistanceMatrix;
  */
 public class GetDistance {
 
-    //@@author
+    //@@author ncaminh
     public DistanceMatrix getMatrix(String origin, String destination) {
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey("AIzaSyBWyCJkCym1dSouzHX_FxLk6Tj11C7F0Ao")
@@ -34,7 +34,6 @@ public class GetDistance {
         return matrix;
     }
 
-    //@@author
     /**
      * get driving distance from origin to destination
      */

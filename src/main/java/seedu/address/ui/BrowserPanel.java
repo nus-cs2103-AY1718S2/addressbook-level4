@@ -55,6 +55,7 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author ncaminh
     /**
      * Show direction from Kent Ridge MRT to the person address
      */
@@ -86,7 +87,7 @@ public class BrowserPanel extends UiPart<Region> {
             System.out.println("Unable to read person name");
         }
     }
-
+    //@@author
     /**
      * Loads a HTML file based on given URL.
      * @param url
@@ -127,6 +128,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadPersonDirection(event.getNewSelection().person);
     }
 
+    //@@author ncaminh
     @Subscribe
     public void handleShowMultiLocationEvent(ShowMultiLocationFromHeadQuarterEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

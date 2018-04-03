@@ -1,5 +1,7 @@
 package seedu.address.model.appointment;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Patient appointment in Imdb
  * Gurantees: details are present and not null, field values are validated, immutable
@@ -9,6 +11,7 @@ public class Appointment {
     private DateTime appointmentDateTime;
 
     public Appointment(String appointmentDateTime) {
+        requireNonNull(appointmentDateTime);
         this.appointmentDateTime = new DateTime(appointmentDateTime);
     }
 

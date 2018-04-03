@@ -16,6 +16,7 @@ import org.junit.Test;
 import guitests.guihandles.BrowserPanelHandle;
 import seedu.recipe.MainApp;
 import seedu.recipe.commons.events.ui.RecipePanelSelectionChangedEvent;
+import seedu.recipe.model.util.HtmlFormatter;
 
 public class BrowserPanelTest extends GuiUnitTest {
     private static final String EMPTY_STRING = "";
@@ -54,7 +55,8 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         // associated web page of a recipe
         postNow(selectionChangedEventStub);
-        String expectedHtmlContent = NOURL.getHtmlFormattedRecipe().replaceAll(HTML_TAG_REGEX, EMPTY_STRING);
+        String expectedHtmlContent = HtmlFormatter.getHtmlFormat(NOURL)
+                .replaceAll(HTML_TAG_REGEX, EMPTY_STRING);
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedHtmlContent, browserPanelHandle.getLoadedHtml());

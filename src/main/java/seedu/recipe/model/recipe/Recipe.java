@@ -8,7 +8,6 @@ import java.util.Set;
 
 import seedu.recipe.model.tag.Tag;
 import seedu.recipe.model.tag.UniqueTagList;
-import seedu.recipe.model.util.HtmlFormatter;
 
 /**
  * Represents a Recipe in the recipe book.
@@ -100,10 +99,6 @@ public class Recipe {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
-    public String getHtmlFormattedRecipe() {
-        return HtmlFormatter.getHtmlFormat(this);
-    }
-
     //@@author RyanAngJY
     public String getTextFormattedRecipe() {
         return NAME_HEADER + getName() + LINE_BREAK
@@ -132,8 +127,7 @@ public class Recipe {
                 && otherRecipe.getServings().equals(this.getServings())
                 && otherRecipe.getUrl().equals(this.getUrl())
                 && otherRecipe.getImage().equals(this.getImage())
-                && otherRecipe.getTextFormattedRecipe().equals(this.getTextFormattedRecipe())
-                && otherRecipe.getHtmlFormattedRecipe().equals(this.getHtmlFormattedRecipe());
+                && otherRecipe.getTextFormattedRecipe().equals(this.getTextFormattedRecipe());
     }
 
     @Override

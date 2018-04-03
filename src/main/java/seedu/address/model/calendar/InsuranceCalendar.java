@@ -96,8 +96,8 @@ public class InsuranceCalendar {
 
         String givenTitle = entryToCheck.getTitle();
         Interval givenInterval = entryToCheck.getInterval();
-        AppointmentEntry apppointmentEntryToCheck = new AppointmentEntry(givenTitle, givenInterval);
-        appointmentEntries.remove(apppointmentEntryToCheck);
+        AppointmentEntry appointmentEntryToCheck = new AppointmentEntry(givenTitle, givenInterval);
+        appointmentEntries.remove(appointmentEntryToCheck);
     }
 
     /**

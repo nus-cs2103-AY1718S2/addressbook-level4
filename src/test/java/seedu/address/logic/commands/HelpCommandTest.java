@@ -31,7 +31,13 @@ public class HelpCommandTest {
     }
 
     @Test
-    public void execute_helpForDelete_success()    {
+    public void execute_helpForEvent_success() {
+        HelpCommand command = new HelpCommand("event");
+        assertCommandSuccess(command, EventCommand.MESSAGE_USAGE);
+    }
+
+    @Test
+    public void execute_helpForRemove_success()    {
         HelpCommand command = new HelpCommand("rm");
         assertCommandSuccess(command, RemoveCommand.MESSAGE_USAGE);;
     }

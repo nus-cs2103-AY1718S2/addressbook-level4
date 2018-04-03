@@ -174,7 +174,7 @@ Format: `addplatform INDEX [l/LINK]...`
 
 [NOTE]
 ========================================================================
-[options="header"]
+[halign="left",valign="top",options="header"]
 |=======================================================================
 |Accepted Facebook links may take the form: |Accepted Twitter links may take the form:
 a|

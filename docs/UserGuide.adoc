@@ -288,7 +288,7 @@ Format: `sort FIELD o/SORT ORDER`
 
 Examples:
 
-* `sort rating o/acs` +
+* `sort rating o/asc` +
 Sorts the current list of students according to their overall rating in ascending order.
 * `sort gpa o/desc` +
 Sorts the current list of students according to their grade point average in descending order.

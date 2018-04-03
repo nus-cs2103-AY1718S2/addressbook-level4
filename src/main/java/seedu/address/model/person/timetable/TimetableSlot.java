@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.util.timetable.Lesson;
 
+//@@author AzuraAiR
 /**
  * Represents a slot in the timetable
  */

@@ -74,7 +74,7 @@ A person can have any number of tags (including 0)
 
 [NOTE]
 ====
-Birthday must be in DDMMYY format
+Birthday must be in DDMMYYYY format
 ====
 
 Examples:

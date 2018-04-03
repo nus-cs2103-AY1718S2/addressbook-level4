@@ -172,10 +172,12 @@ Format: `addplatform INDEX [l/LINK]...`
 * You can remove all the person's social media platforms by typing `l/` without specifying any links after it.
 ****
 
+:link: \https://www.facebook.com/
+
 [NOTE]
 =======================================================================
 .*Accepted Facebook links may take the form:*
-- ()[https://www.facebook.com/]<profile username>
+- {link}<profile username>
 - https://facebook.com/<profile username>
 - {\http://www.facebook.com/<profile} username>
 - {\http://facebook.com/<profile} username>

@@ -26,8 +26,6 @@ import seedu.address.model.activity.exceptions.DuplicateActivityException;
  */
 public class UniqueActivityList implements Iterable<Activity> {
 
-    private final ObservableList<Activity> internalList = FXCollections.observableArrayList();
-
     //@@author karenfrilya97
     private static Comparator<Activity> dateTimeComparator = new Comparator<Activity>() {
         public int compare (Activity o1, Activity o2) {
@@ -36,6 +34,8 @@ public class UniqueActivityList implements Iterable<Activity> {
             return dt1.getLocalDateTime().compareTo(dt2.getLocalDateTime());
         }
     };
+
+    private final ObservableList<Activity> internalList = FXCollections.observableArrayList();
 
     /**
      * Returns true if the list contains an equivalent activity as the given argument.

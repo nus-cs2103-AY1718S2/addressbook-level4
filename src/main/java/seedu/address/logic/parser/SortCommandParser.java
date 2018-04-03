@@ -8,20 +8,20 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.RatingSortCommand;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new RatingSortCommand object
+ * Parses input arguments and creates a new SortCommand object
  */
-public class RatingSortCommandParser {
+public class SortCommandParser {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the RatingSortCommand
-     * and returns an RatingSortCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the SortCommand
+     * and returns an SortCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public RatingSortCommand parse(String args) throws ParseException {
+    public SortCommand parse(String args) throws ParseException {
         requireNonNull(args);
 
         ArgumentMultimap argMultimap =
@@ -29,18 +29,24 @@ public class RatingSortCommandParser {
 
         if (!arePrefixesPresent(argMultimap, PREFIX_SORT_ORDER)
                 || !areAllFieldsSupplied(argMultimap, PREFIX_SORT_ORDER)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RatingSortCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
 
+        SortCommand.SortField sortField;
+        try {
+            sortField = ParserUtil.parseSortField(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
 
-        RatingSortCommand.SortOrder sortOrder;
+        SortCommand.SortOrder sortOrder;
         try {
             sortOrder = ParserUtil.parseSortOrder(
                     argMultimap.getValue(PREFIX_SORT_ORDER)).get();
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
-        return new RatingSortCommand(sortOrder);
+        return new SortCommand(sortOrder, sortField);
     }
 
     /**

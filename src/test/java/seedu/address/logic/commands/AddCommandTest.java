@@ -147,12 +147,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public void sortPersonListAscOrder() {
+        public void sortPersonListAscOrder(SortCommand.SortField sortField) {
             fail("This method should not be called.");
         }
 
         @Override
-        public void sortPersonListDescOrder() {
+        public void sortPersonListDescOrder(SortCommand.SortField sortField) {
             fail("This method should not be called.");
         }
     }

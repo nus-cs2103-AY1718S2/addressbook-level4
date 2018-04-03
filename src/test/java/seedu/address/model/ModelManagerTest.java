@@ -18,6 +18,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
@@ -104,7 +105,7 @@ public class ModelManagerTest {
                 .withPerson(ALICE).withPerson(BENSON).build();
 
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        modelManager.sortPersonListAscOrder();
+        modelManager.sortPersonListAscOrder(SortCommand.SortField.RATING);
         assertEquals(modelManager, new ModelManager(expectedAddressBook, userPrefs));
     }
 
@@ -117,7 +118,7 @@ public class ModelManagerTest {
                 .withPerson(ALICE).withPerson(GEORGE).build();
 
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        modelManager.sortPersonListDescOrder();
+        modelManager.sortPersonListDescOrder(SortCommand.SortField.RATING);
         assertEquals(modelManager, new ModelManager(expectedAddressBook, userPrefs));
     }
 }

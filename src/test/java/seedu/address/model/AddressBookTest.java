@@ -25,6 +25,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
@@ -68,9 +69,9 @@ public class AddressBookTest {
     }
 
     @Test
-    public void sortDesc() {
+    public void sortDesc_sortByRating_sortSuccessful() {
         AddressBook newData = getTypicalAddressBook();
-        newData.sortDesc();
+        newData.sortDesc(SortCommand.SortField.RATING);
 
         AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(BENSON).withPerson(ALICE)
                 .withPerson(GEORGE).withPerson(FIONA).withPerson(ELLE).withPerson(DANIEL).withPerson(CARL).build();
@@ -78,12 +79,52 @@ public class AddressBookTest {
     }
 
     @Test
-    public void sortAsc() {
+    public void sortAsc_sortByRating_sortSuccessful() {
         AddressBook newData = getTypicalAddressBook();
-        newData.sortAsc();
+        newData.sortAsc(SortCommand.SortField.RATING);
 
         AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(CARL).withPerson(DANIEL)
                 .withPerson(ELLE).withPerson(FIONA).withPerson(GEORGE).withPerson(ALICE).withPerson(BENSON).build();
+        assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
+    }
+
+    @Test
+    public void sortDesc_sortByGradePointAverage_sortSuccessful() {
+        AddressBook newData = getTypicalAddressBook();
+        newData.sortDesc(SortCommand.SortField.GPA);
+
+        AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(CARL).withPerson(ALICE)
+                .withPerson(FIONA).withPerson(BENSON).withPerson(ELLE).withPerson(DANIEL).withPerson(GEORGE).build();
+        assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
+    }
+
+    @Test
+    public void sortAsc_sortByGradePointAverage_sortSuccessful() {
+        AddressBook newData = getTypicalAddressBook();
+        newData.sortAsc(SortCommand.SortField.GPA);
+
+        AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(GEORGE).withPerson(DANIEL)
+                .withPerson(ELLE).withPerson(BENSON).withPerson(FIONA).withPerson(ALICE).withPerson(CARL).build();
+        assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
+    }
+
+    @Test
+    public void sortDesc_sortByName_sortSuccessful() {
+        AddressBook newData = getTypicalAddressBook();
+        newData.sortDesc(SortCommand.SortField.NAME);
+
+        AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(GEORGE).withPerson(FIONA)
+                .withPerson(ELLE).withPerson(DANIEL).withPerson(CARL).withPerson(BENSON).withPerson(ALICE).build();
+        assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
+    }
+
+    @Test
+    public void sortAsc_sortByName_sortSuccessful() {
+        AddressBook newData = getTypicalAddressBook();
+        newData.sortAsc(SortCommand.SortField.NAME);
+
+        AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON)
+                .withPerson(CARL).withPerson(DANIEL).withPerson(ELLE).withPerson(FIONA).withPerson(GEORGE).build();
         assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
     }
 

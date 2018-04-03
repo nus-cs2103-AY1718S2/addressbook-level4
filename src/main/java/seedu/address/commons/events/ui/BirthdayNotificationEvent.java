@@ -4,8 +4,9 @@ import java.time.LocalDate;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author AzuraAiR
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a call for the Birthday Notification
  */
 public class BirthdayNotificationEvent extends BaseEvent {
 

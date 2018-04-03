@@ -3,6 +3,7 @@ package guitests.guihandles;
 import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
 
+//@@author AzuraAiR
 /**
  * A handle for the {@code AlertDialog} of the UI.
  */

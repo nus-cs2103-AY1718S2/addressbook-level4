@@ -19,6 +19,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
+//@@author AzuraAiR
 public class BirthdaysCommandTest {
 
     @Rule

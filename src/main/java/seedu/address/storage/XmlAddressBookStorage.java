@@ -189,8 +189,10 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         SecurityUtil.encryptFile(file, password);
     }
 
+    //@@author AzuraAiR-reused
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException, WrongPasswordException {
         saveAddressBook(addressBook, filePath + ".backup");
     }
+    //@@author
 }

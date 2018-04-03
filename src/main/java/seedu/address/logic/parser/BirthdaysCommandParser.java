@@ -6,7 +6,7 @@ import seedu.address.logic.commands.BirthdaysCommand;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 
-
+//@@author AzuraAiR
 /**
  * Parses input arguments and creates a new BirthdaysCommand object
  */

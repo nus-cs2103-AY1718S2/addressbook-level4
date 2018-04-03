@@ -200,7 +200,7 @@ image::DeleteStudentSdForLogic.png[width="800"]
 image::ModelClassDiagram.png[width="800"]
 
 .Structure of the Dashboard Class. This diagram shows finer details about the Dashboard Class.
-image::ModelComponentDashboardClassDiagram.png[width="800]
+image::ModelComponentDashboardClassDiagram.png[width="400"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -387,23 +387,15 @@ To mark a `Student` object called "studentToFavourite" as favourite:
 [source, java]
 ----
     private static Student createEditedStudent(Student target) {
-        assert target != null;
+        requireNonNull(target);
 
-        Name name = target.getName();
-        Phone phone = target.getPhone();
-        // ... get the rest of the target's attributes ...
-        Favourite fav = new Favourite(true);
-
-        return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard);
+        return new StudentBuilder(target).withFavourite(true).build();
     }
 ----
 
 * editedStudent will have the attributes of studentToFavourite, except that its `Favourite` attribute will be set to "true"
 
 In the `FavouriteCommand.execute()` method, `Model.updateStudent(Student, Student)` is called to replace studentToFavourite with editedStudent in the Address Book in-memory.
-
-[NOTE]
-If you have a future implementation that requires the addition of a new attribute in the `Student` class, you must take note of updating the `FavouriteCommand.createEditedStudent(Student)` method to reflect the new attribute.
 
 ==== Design Considerations
 
@@ -572,9 +564,9 @@ If you have a future implementation that requires the addition of a new attribut
 To have a dashboard for each student, an association with a new `Dashboard` class is added to the `Student` class. We have also created new classes associated with the `Dashboard` class to facilitate the different capabilities of the dashboard.
 The following diagram shows the structure of the classes that facilitate the dashboard feature:
 
-image::ModelComponentDashboardClassDiagram.png[width="800"]
+image::ModelComponentDashboardClassDiagram.png[width="500"]
 
-`Dashboard` and `Milestone` are exposed to `ObservableList<Milestone>` and `ObservableList<Task>` respectively that can be 'observed'.
+`UniqueMilestoneList` and `UniqueTaskList` are associated to `ObservableList<Milestone>` and `ObservableList<Task>` respectively that can be 'observed'.
 This means that the UI can be bound to both of the lists so that the UI automatically updates when the data in both lists change.
 
 A new `Dashboard` object is created every time a new `Student` is being created. The `Dashboard` object will contain an empty milestone list until the user adds new milestones to the dashboard.
@@ -603,37 +595,21 @@ The constructor for `Dashboard` is implemented this way:
 The `AddMilestoneCommand`, `AddTaskCommand`, `CheckTaskCommand` and `ShowDashboardCommand` commands facilitate operations to the dashboard.
 A common implementation for commands that modify the dashboard (e.g. `AddMilestoneCommand`) is that a new copy of `Dashboard` is created with the new modification.
 
-For example, in the `AddMilestoneCommand`, to add a new milestone object to the dashboard of a `Student` Object called "studentToEdit":
+For example, in the `AddMilestoneCommand`, to add a new milestone object to the dashboard of a `Student` Object called "targetStudent":
 
 * A `Student` object called "editedStudent" will be returned by the `AddMilestoneCommand.createEditedStudent(Student, Milestone)` method to the `AddMilestoneCommand.preprocess()` method.
 `AddMilestoneCommand.createEditedStudent(Student, Milestone)` is implemented as such:
 [source, java]
 ----
-    private Student createEditedStudent(Student studentToEdit, Milestone newMilestone)
-            throws DuplicateMilestoneException {
+    private Student createEditedStudent(Student studentToEdit, Milestone newMilestone) throws DuplicateMilestoneException {
         requireAllNonNull(studentToEdit, newMilestone);
 
-        /* Get all the attributes of the student */
-        Name name = studentToEdit.getName();
-        Phone phone = studentToEdit.getPhone();
-        // ... get remaining attributes of the student ...
-        UniqueMilestoneList milestoneList = studentToEdit.getDashboard().getMilestoneList();
-
-        milestoneList.add(newMilestone);
-
-        Dashboard dashboard = new Dashboard(milestoneList, homeworkList);
-
-        return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard);
+        return new StudentBuilder(studentToEdit).withNewMilestone(newMilestone).build();
     }
 ----
-* The new `Milestone` object is added to the `UniqueMilestoneList` object that belongs to the `Dashboard` of "studentToEdit"
-* A new `Dashboard` object is created with the updated `UniqueMilestoneList` object
-* "editedStudent" is created with the same attributes of "targetStudent", but with the new `Dashboard` object
+* "editedStudent" is created with the same attributes of "targetStudent", but with a new `Dashboard` object containing the new milestone
 
 In the `AddMilestoneCommand.execute()` method, `Model.updateStudent(Student, Student)` is called to replace "targetStudent" with "editedStudent" in the Address Book in-memory
-
-[NOTE]
-If you have a future implementation that requires the addition of a new attribute in the `Student` class, you must take note of updating the `X.createEditedStudent(...)` method, where X is any command that modifies the dashboard, to reflect the new attribute.
 
 ==== Design Considerations
 

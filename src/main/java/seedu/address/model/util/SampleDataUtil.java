@@ -30,23 +30,22 @@ public class SampleDataUtil {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                 new Address("Blk 30 Geylang Street 29, #06-40"), new CurrentPosition("Software Engineer"),
-                new Company("Google"), new ProfilePicture(),
-                getSkillSet("friends")),
+                new Company("Google"), new ProfilePicture(), getSkillSet("Java")),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                 new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), new CurrentPosition("Student"),
-                new Company("NUS"), new ProfilePicture(), getSkillSet("colleagues", "friends")),
+                new Company("NUS"), new ProfilePicture(), getSkillSet("Python", "Java")),
             new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                 new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),  new CurrentPosition("Marketing Intern"),
-                new Company("Facebook"), new ProfilePicture(), getSkillSet("neighbours")),
+                new Company("Facebook"), new ProfilePicture(), getSkillSet("Designing", "Writing")),
             new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
                 new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), new CurrentPosition("Software Engineer"),
-                new Company("Facebook"), new ProfilePicture(), getSkillSet("family")),
+                new Company("Facebook"), new ProfilePicture(), getSkillSet("Algorithms")),
             new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                 new Address("Blk 47 Tampines Street 20, #17-35"), new CurrentPosition("Student"),
-                new Company("NTU"), new ProfilePicture(), getSkillSet("classmates")),
+                new Company("NTU"), new ProfilePicture(), getSkillSet("Excel")),
             new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                 new Address("Blk 45 Aljunied Street 85, #11-31"),  new CurrentPosition("Backend Engineer"),
-                new Company("Apple"), new ProfilePicture(), getSkillSet("colleagues"))
+                new Company("Apple"), new ProfilePicture(), getSkillSet("Python"))
         };
     }
 

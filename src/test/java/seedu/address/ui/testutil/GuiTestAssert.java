@@ -94,8 +94,14 @@ public class GuiTestAssert {
         case "colleagues":
             return "purple";
 
+        case "Python":
+            return "grey";
+
         case "neighbours":
             return "yellow";
+
+        case "Designing":
+            return "blue";
 
         case "family":
             return "lightgreen";

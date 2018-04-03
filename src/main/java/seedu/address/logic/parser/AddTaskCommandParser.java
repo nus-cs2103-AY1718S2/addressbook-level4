@@ -7,8 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MILESTONE_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
-import java.util.stream.Stream;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddTaskCommand;

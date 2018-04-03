@@ -38,24 +38,7 @@ public class TypicalStudents {
             .withPhone("85355255")
             .withTags("friends").withProgrammingLanguage("Java").build();
 
-    public static Student BENSON = null;
-    static {
-        try {
-            BENSON = new StudentBuilder().withKey("558a24").withName("Benson Meier")
-                    .withAddress("311, Clementi Ave 2, #02-25")
-                    .withEmail("johnd@example.com").withPhone("98765432")
-                    .withTags("owesMoney", "friends").withProgrammingLanguage("Java")
-                    .withNewMilestone(new Milestone(new Date("31/12/2018 23:59"), "Arrays"))
-                    .withNewTask(Index.fromOneBased(1), new Task("Learn Array syntax", "Refer to textbook"))
-                    .build();
-        } catch (DuplicateMilestoneException e) {
-            throw new AssertionError("Should not have duplicated milestone");
-        } catch (DuplicateTaskException e) {
-            throw new AssertionError("Should not have duplicated task");
-        } catch (MilestoneNotFoundException e) {
-            throw new AssertionError("Should not have missing milestone");
-        }
-    }
+    public static final Student BENSON = buildStudentWithFilledDashboard();
 
     public static final Student CARL = new StudentBuilder().withKey("8e90ba").withName("Carl Kurz")
             .withPhone("95352563").withEmail("heinz@example.com").withAddress("wall street")
@@ -113,5 +96,29 @@ public class TypicalStudents {
 
     public static List<Student> getTypicalStudents() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    /**
+     * Builds and return a student with 1 milestone and 1 task in the dashboard
+     */
+    private static Student buildStudentWithFilledDashboard() {
+        Student student;
+        try {
+            student = new StudentBuilder().withKey("558a24").withName("Benson Meier")
+                    .withAddress("311, Clementi Ave 2, #02-25")
+                    .withEmail("johnd@example.com").withPhone("98765432")
+                    .withTags("owesMoney", "friends").withProgrammingLanguage("Java")
+                    .withNewMilestone(new Milestone(new Date("31/12/2018 23:59"), "Arrays"))
+                    .withNewTask(Index.fromOneBased(1), new Task("Learn Array syntax", "Refer to textbook"))
+                    .build();
+        } catch (DuplicateMilestoneException e) {
+            throw new AssertionError("Should not have duplicated milestone");
+        } catch (DuplicateTaskException e) {
+            throw new AssertionError("Should not have duplicated task");
+        } catch (MilestoneNotFoundException e) {
+            throw new AssertionError("Should not have missing milestone");
+        }
+
+        return student;
     }
 }

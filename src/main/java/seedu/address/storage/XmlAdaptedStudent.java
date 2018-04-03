@@ -8,7 +8,6 @@ import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.programminglanguage.ProgrammingLanguage;
 import seedu.address.model.student.Address;
@@ -42,9 +41,9 @@ public class XmlAdaptedStudent {
     private String programmingLanguage;
     @XmlElement(required = true)
     private String favourite;
-
-    @XmlElement
+    @XmlElement(required = true)
     private XmlAdaptedDashboard dashboard = new XmlAdaptedDashboard();
+
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 

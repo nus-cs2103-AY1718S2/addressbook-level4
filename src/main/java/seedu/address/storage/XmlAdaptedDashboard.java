@@ -16,8 +16,8 @@ import seedu.address.model.student.dashboard.UniqueMilestoneList;
  */
 public class XmlAdaptedDashboard {
 
-    @XmlElement
-    private List<XmlAdaptedMilestone> milestoneList;
+    @XmlElement(required = true)
+    private List<XmlAdaptedMilestone> milestoneList = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedDashboard.
@@ -53,10 +53,8 @@ public class XmlAdaptedDashboard {
      */
     public Dashboard toModelType() throws IllegalValueException {
         final UniqueMilestoneList modelMilestoneList = new UniqueMilestoneList();
-        if (milestoneList != null) {
-            for (XmlAdaptedMilestone milestone : milestoneList) {
-                modelMilestoneList.add(milestone.toModelType());
-            }
+        for (XmlAdaptedMilestone milestone : milestoneList) {
+            modelMilestoneList.add(milestone.toModelType());
         }
 
         return new Dashboard(modelMilestoneList);

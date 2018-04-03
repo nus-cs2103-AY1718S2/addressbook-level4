@@ -147,7 +147,7 @@ public class CommandBox extends UiPart<Region> {
      */
     @Subscribe
     private void handleExecuteCommandRequestEvent(ExecuteCommandRequestEvent event) {
-        replaceText(event.commandPreamble);
+        replaceText(event.commandWord);
         handleCommandInputChanged();
     }
 

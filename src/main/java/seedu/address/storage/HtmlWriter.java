@@ -30,9 +30,9 @@ public class HtmlWriter {
 
     public HtmlWriter(Customer customer) {
         this.name = "wala";
-        this.amountOwed = "wala";
-        this.dueDate = "walala";
-        this.runnerAssigned = "walalalala";
+        this.amountOwed = "walamala";
+        this.dueDate = "walamajulahSINGAPURA";
+        this.runnerAssigned = "walamakachitayasamasama";
     }
 
     /**
@@ -46,11 +46,11 @@ public class HtmlWriter {
         try {
             PrintWriter printWriter = new PrintWriter(file);
             printWriter.print(OPENING_LINE);
-            printWriter.println("<p>Name: Malaku Kozinov</p>");
-            printWriter.println("<p>Amount Owed: $845000</p>");
-            printWriter.println("<p>Due Date: 12/10/2020</p>");
+            printWriter.println("<p>Name: " + name + "</p>");
+            printWriter.println("<p>Amount Owed: " + amountOwed + "</p>");
+            printWriter.println("<p>Due Date: " + dueDate + "</p>");
             printWriter.println("<p>Status: VIP</p>");
-            printWriter.println("<p>Runner Assigned: Johnnius Johnsohn</p>");
+            printWriter.println("<p>Runner Assigned: " + runnerAssigned + "</p>");
             printWriter.println("</body></html>");
             printWriter.close();
         } catch (FileNotFoundException e) {

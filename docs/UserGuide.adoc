@@ -70,9 +70,9 @@ Here is the format for the commands that will enable you to make most of contact
 
 * Words in `UPPER_CASE` are the parameters you are supposed to fill in. For example, in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
-* Items in square brackets are optional. You can choose to type them in or not. For example, you can type in `n/John Doe t/friend` or as `n/John Doe`.
+* Items in square brackets are optional. You can choose to type them in or not. For example, you can type in `n/John Doe s/Java` or as `n/John Doe`.
 
-* Items with `…`​ after them can be used multiple times including zero times. For example, you can use `t/TAG` as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Items with `…`​ after them can be used multiple times including zero times. For example, you can use `s/SKILL` as `{nbsp}` (i.e. 0 times), `s/Java`, `s/Java s/Designing` etc.
 
 * Parameters can be in any order. If the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
@@ -95,10 +95,10 @@ image::helpWindow.png[width="790", align="center"]
 
 You can add a person to contactHero using the following format. +
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS cp/CURRENT_POSITION cc/COMPANY [pp/PROFILE_PICTURE_PATH] [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS cp/CURRENT_POSITION cc/COMPANY [pp/PROFILE_PICTURE_PATH] [s/SKILL]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of skills (including 0)
 
 [TIP]
 Profile Picture indicates the profile picture's file path
@@ -109,31 +109,25 @@ Examples:
 
 On running the above command, you should see the following success message: +
 
- New person added: John Doe Phone: 98765432 Email: johnd@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Tags:
+ New person added: John Doe Phone: 98765432 Email: johnd@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Skills:
 
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 cp/Student cc/NUS t/Developer`
+* `add n/Betsy Crowe s/Java e/betsycrowe@example.com a/Newgate Prison p/1234567 cp/Student cc/NUS s/C++`
 
 On running the above command, you should see the following success message: +
 
- New person added: Betsy Crowe Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS  Tags: Developer
-
-=== Listing all persons : `list`
-
-You can see a list of all persons in contactHero using the following format. +
-Format: `list`
-
+ New person added: Betsy Crowe Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS  Skills: C++
 === Editing a person : `edit`
 
 You can edit an existing person in contactHero using this format. +
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [cp/CURRENT_POSITION] [cc/COMPANY] [pp/PROFILE_PICTURE_PATH][t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [cp/CURRENT_POSITION] [cc/COMPANY] [pp/PROFILE_PICTURE_PATH][s/SKILL]...`
 
 ****
 * Edits the person at the specified `INDEX`. Remember that the index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * You need to provide at least one of the optional.
 * Existing values will be updated to the input values.
-* When you edit tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When you edit skills, the existing skills of the person will be removed i.e adding of skills is not cumulative.
+* You can remove all the person's skills by typing `s/` without specifying any skills after it.
 ****
 
 Examples:
@@ -143,24 +137,24 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 
 On running the above command, you should see the following success message: +
 
- Edited Person: John Doe Phone: 91234567 Email: johndoe@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Tags:
+ Edited Person: John Doe Phone: 91234567 Email: johndoe@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Skills:
 
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 2 n/Betsy Crower s/` +
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing skills.
 
 On running the above command, you should see the following success message: +
 
- Edited Person: Betsy Crower Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS Tags:
+ Edited Person: Betsy Crower Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS Skills:
 
 === Locating persons by name : `find`
 
-You can find all the persons whose names or tags contain any of the given keywords using the following format. +
-Format: `find n/KEYWORD [MORE_KEYWORDS]` to find by name or `find t/KEYWORD [MORE_KEYWORDS]` to find by tag
+You can find all the persons whose names or skills contain any of the given keywords using the following format. +
+Format: `find n/KEYWORD [MORE_KEYWORDS]` to find by name or `find s/KEYWORD [MORE_KEYWORDS]` to find by skill
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name or tag is searched, depending on the prefix (n/ or t/)
+* Only the name or skill is searched, depending on the prefix (n/ or s/)
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
@@ -169,8 +163,8 @@ Examples:
 
 * `find n/John` +
 This will show any person having the name `john` or `John`.
-* `find t/designer` +
-This will show `Jane Doe` whose tag is `designer`.
+* `find s/designer` +
+This will show `Jane Doe` whose skill is `designer`.
 * `find n/Betsy Tim John` +
 This will show any person having any of the names `Betsy`, `Tim`, or `John`.
 
@@ -191,13 +185,13 @@ Examples:
 `delete 2` +
 This deletes the 2nd person in contactHeRo and on running the above command, you should see the following success message: +
 
- Deleted Person: John Doe Phone: 98765432 Email: johnd@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Tags:
+ Deleted Person: John Doe Phone: 98765432 Email: johnd@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Skills:
 
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command and on running the above command, you should see the following success message: +
 
-  Deleted Person: Betsy Crower Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS Tags:
+  Deleted Person: Betsy Crower Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS Skills:
 
 
 === Viewing the contact details of a person: `select`
@@ -362,7 +356,7 @@ The first lexicographically matched command is returned.
 Examples:
 
 * Typing `ad` and pressing `TAB` gives: +
-    `add n/ e/ a/ [t/]...`
+    `add n/ e/ a/ [s/]...`
 
 * Typing `h` and pressing `TAB` gives: +
      `help`
@@ -423,15 +417,15 @@ We are willing to help you. +
 These are all the commands that you can use for the latest version of contactHeRo:
 
 * *<<adding-a-person-code-add-code, Add>>* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [pp/PROFILE_PICTURE_PATH]
-[t/TAG]...` +
+[s/SKILL]...` +
 e.g. `add n/John Doe p/98765432 e/johnd@example.com a/Raffles Hall
-pp//home/trafalgarandre/downloads/john.jpeg t/friends t/owesMoney`
+pp//home/trafalgarandre/downloads/john.jpeg s/Java s/Designing`
 * *<<clearing-all-entries-code-clear-code, Clear>>* : `clear`
 * *<<clearing-list-of-entered-commands-code-clearhistory-code, ClearHistory>>* : `clearhistory`
 * *<<deleting-a-person-code-delete-code, Delete>>* : `delete INDEX` +
 e.g. `delete 3`
 * *<<editing-a-person-code-edit-code, Edit>>* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS]
-[pp/PROFILE_PICTURE_PATH] [t/TAG]...` +
+[pp/PROFILE_PICTURE_PATH] [s/SKILL]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *<<locating-persons-by-name-code-find-code, Find>>* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`

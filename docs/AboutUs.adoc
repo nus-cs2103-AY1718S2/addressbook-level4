@@ -12,7 +12,8 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::daviddalmaso.jpg[width="150", align="left"]
 {empty}[http://daviddalmaso.github.io/[homepage]] [https://github.com/daviddalmaso[github]]
 
-Role: Software Engineer
+Role: Software Engineer +
+Responsibilities: Storage
 
 '''
 

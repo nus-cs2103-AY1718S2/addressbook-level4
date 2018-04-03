@@ -146,7 +146,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
 
         } else if (personToEdit instanceof Runner) {
 
-            List<Customer> customers = editPersonDescriptor.getCustomers().orElse(((Runner) personToEdit)
+            List<Person> customers = editPersonDescriptor.getCustomers().orElse(((Runner) personToEdit)
                     .getCustomers());
 
             return new Runner(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, customers);
@@ -217,7 +217,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
         private Runner runner;
 
         //Runner fields
-        private List<Customer> customers;
+        private List<Person> customers;
 
         public EditPersonDescriptor() {}
 
@@ -321,10 +321,10 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
             return Optional.ofNullable(runner);
         }
 
-        public void setCustomers(List<Customer> customers) {
+        public void setCustomers(List<Person> customers) {
             this.customers = customers;
         }
-        public Optional<List<Customer>> getCustomers() {
+        public Optional<List<Person>> getCustomers() {
             return Optional.ofNullable(customers);
         }
 

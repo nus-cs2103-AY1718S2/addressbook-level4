@@ -9,7 +9,6 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.customer.Customer;
 import seedu.address.model.tag.Tag;
 
 
@@ -17,7 +16,7 @@ import seedu.address.model.tag.Tag;
  * Represents a runner in the address book.
  */
 public class Runner extends Person {
-    private final List<Customer> customers;
+    private final List<Person> customers;
 
     public Runner() {
         super();
@@ -25,13 +24,13 @@ public class Runner extends Person {
         this.setType(PersonType.RUNNER);
     }
 
-    public Runner(Name name, Phone phone, Email email, Address address, Set<Tag> tags, List<Customer> customers) {
+    public Runner(Name name, Phone phone, Email email, Address address, Set<Tag> tags, List<Person> customers) {
         super(name, phone, email, address, tags);
         this.setType(PersonType.RUNNER);
         this.customers = customers;
     }
 
-    public List<Customer> getCustomers() {
+    public List<Person> getCustomers() {
         return customers;
     }
 

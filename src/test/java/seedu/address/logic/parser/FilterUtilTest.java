@@ -20,7 +20,7 @@ import seedu.address.model.util.InterviewDateUtil;
 public class FilterUtilTest {
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
-
+    //@@author mhq199657
     @Test
     public void parseExpectedGraduationYear_invalidCommandFormat_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);

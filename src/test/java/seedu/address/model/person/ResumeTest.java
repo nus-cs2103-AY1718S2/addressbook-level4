@@ -10,6 +10,7 @@ import org.junit.Test;
 import seedu.address.testutil.Assert;
 
 public class ResumeTest {
+    //@@author mhq199657
     private static final String TEST_DATA_FOLDER = "src/test/data/ResumeTest/";
     @Test
     public void constructor_null_constructionSuccessValueNull() {

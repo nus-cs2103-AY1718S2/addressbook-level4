@@ -10,6 +10,7 @@ import seedu.address.testutil.Assert;
 import seedu.address.testutil.PersonBuilder;
 
 public class RatingInKeywordsRangePredicateTest {
+    //@@author mhq199657
     @Test
     public void constructor_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> new RatingInKeywordsRangePredicate(null));

@@ -174,10 +174,10 @@ Format: `addplatform INDEX [l/LINK]...`
 
 [NOTE]
 ========================================================================
-[frame="none",grid="none",cols="60%,40%"]
+[options="header"]
 |=======================================================================
-a|*Accepted Facebook links may take the form:*
-
+|Accepted Facebook links may take the form: |Accepted Twitter links may take the form:
+a|
 * `\https://www.facebook.com/<profile username>`
 * `\https://facebook.com/<profile username>`
 * `\http://www.facebook.com/<profile username>`
@@ -185,9 +185,7 @@ a|*Accepted Facebook links may take the form:*
 * `\www.facebook.com/<profile username>`
 * `facebook.com/<profile username>`
 * `facebook.com/profile.php?id=<user profile id>`
-
-a|*Accepted Twitter links may take the form:*
-
+a|
 * `\https://www.twitter.com/<username handle>`
 * `\https://twitter.com/<username handle>`
 * `\http://www.twitter.com/<username handle>`

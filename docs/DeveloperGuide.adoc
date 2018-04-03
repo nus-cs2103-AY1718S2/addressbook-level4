@@ -259,7 +259,7 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`, `EventListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
 
@@ -272,9 +272,14 @@ The `UI` component
 [[Design-Logic]]
 === Logic component
 
+*_Figure 6_* below shows the UML of the Logic component.
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
 image::LogicClassDiagram.png[width="800"]
+{empty} +
+{empty} +
+
+*_Figure 7_* below shows finer details of the Logic component.
 
 .Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
 image::LogicCommandClassDiagram.png[width="800"]
@@ -341,6 +346,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
+.Class Diagram of a Logic Command
 image::LogicCommandClassDiagram.png[width="800"]
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the desk board before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
@@ -393,6 +399,7 @@ The user now decides that adding the activity was a mistake, and decides to undo
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the desk board to the state before the `add` command executed.
 
+.'Undo' stack popping into the 'Redo' Stack
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
@@ -400,6 +407,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 
 The following sequence diagram shows how the undo operation works:
 
+.'Undo' and 'Redo' Stack Sequence Diagram
 image::UndoRedoSequenceDiagram.png[width="800"]
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the desk board to the state after the command is executed).
@@ -483,7 +491,38 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
-=== Overdue
+=== Task
+Task refer to a piece of work to be done that can be added by a student user using the application. After being added, tasks can be edited and deleted. When a task is not completed within the deadline
+, it will be automatically be marked as overdue.
+
+==== Current Implementation
+
+A `Task` is represented in the applicationas shown in ____ given below.
+
+.UML Diagram for Task
+image::UML diagram for task.png[width="450"]
+
+A brief description of each of the attributes of `Task`is given below:
+
+* Name: Represents the name of the task
+* DateTime: Represents the due date and time of the task.
+* Remark: Represents a short description or reminder pertaining to the task.
+* Tags: Groupings or representation for the task
+
+Operation that manipulates the `task` object can been done using `task`, `complete`, `delete`, `edit` commands.
+These commands are described in more detail below.
+
+===== Task
+
+===== Complete
+
+===== Delete
+
+===== Edit
+
+===== Find
+
+===== Overdue
 
 The user is able to list down overdue tasks by using the `overdue` command. Note that overdue only lists down overdue tasks; overdue events are marked as
 completed automatically.
@@ -984,7 +1023,7 @@ Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.jav
 
 **Tests:**
 
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
+. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysTask(...)`] so that it will compare the now-functioning remark label.
 
 ===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
 We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.

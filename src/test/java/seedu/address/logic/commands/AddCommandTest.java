@@ -135,6 +135,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateGroup(Group target, Group groupToEdit) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData
         ) {
             fail("This method should not be called.");
@@ -187,6 +192,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Event> getFilteredGroupList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }
@@ -198,6 +209,10 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredEventList(Predicate<Event> predicate) {
+            fail("This method should not be called.");
+        }
+        @Override
+        public void updateFilteredGroupList(Predicate<Group> predicate) {
             fail("This method should not be called.");
         }
     }

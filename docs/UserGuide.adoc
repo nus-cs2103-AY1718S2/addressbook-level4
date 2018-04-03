@@ -172,6 +172,22 @@ Format: `email KEYWORD TEMPLATE`
 * Persons matching at least one keyword will be emailed. eg. Hans Bo will email Hans Gruber, Bo Yang
 ****
 
+=== Sorting contacts in address book : `sort_by_name` or `sort`
+
+Sorts the contacts in the address book in alphabetical order by name. Sorting will not distinguish between first and last names, but will sort by the full text entered for a contacts name.
+
+Currently only sorting alphabeticall by name is supported.
+
+[NOTE]
+No arguments are necessary, can simply enter `sort` in CLI
+
+Format: `sort` or `sort_by_name`
+
+Examples:
+
+* `sort`
+* `sort_by_name`
+
 === Selecting a person : `select` or `s`
 
 Selects the person identified by the index number used in the last person listing. +

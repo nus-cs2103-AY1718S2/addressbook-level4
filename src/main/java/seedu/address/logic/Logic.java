@@ -10,6 +10,7 @@ import seedu.address.model.activity.Activity;
  * API of the Logic component
  */
 public interface Logic {
+
     /**
      * Executes the command and returns the result.
      * @param commandText The command as entered by the user.
@@ -29,6 +30,7 @@ public interface Logic {
     /** Returns an unmodifiable view of the filtered list of events*/
     public ObservableList<Activity> getFilteredEventList();
 
+    //@@author
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
 }

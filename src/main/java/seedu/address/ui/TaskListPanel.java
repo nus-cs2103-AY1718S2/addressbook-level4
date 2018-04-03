@@ -13,10 +13,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.DeselectListCellTask;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.TaskPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.PanelSelectionChangedEvent;
 import seedu.address.model.activity.Activity;
 
 /**
@@ -35,6 +37,10 @@ public class TaskListPanel extends UiPart<Region> {
         super(FXML);
         setConnections(taskList);
         registerAsAnEventHandler(this);
+        setUpPlaceholder();
+    }
+
+    private void setUpPlaceholder() {
         taskListView.setPlaceholder(emptyLabel);
         emptyLabel.setStyle("-fx-font-family: \"Open Sans\"; -fx-font-size: 25px; ");
     }
@@ -43,8 +49,32 @@ public class TaskListPanel extends UiPart<Region> {
         ObservableList<TaskCard> mappedList = EasyBind.map(
                 taskList, (activity) -> new TaskCard(activity, taskList.indexOf(activity) + 1));
         taskListView.setItems(mappedList);
-        taskListView.setCellFactory(listView -> new TaskListViewCell());
+        linkCell();
         setEventHandlerForSelectionChangeEvent();
+    }
+
+    /**
+     * Links taskListView to taskListViewCell as its custom ListCell
+     */
+    private void linkCell() {
+        taskListView.setCellFactory(listView -> {
+            TaskListViewCell cell = new TaskListViewCell();
+            cell.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+                taskListView.requestFocus();
+                if (!cell.isEmpty()) {
+                    int index = cell.getIndex();
+                    if (taskListView.getSelectionModel().getSelectedIndices().contains(index))  {
+                        logger.fine("Selection in task list panel with index '" + index
+                                + "' has been deselected");
+                        raise(new DeselectListCellTask(taskListView, index));
+                    } else {
+                        taskListView.getSelectionModel().select(index);
+                    }
+                    event.consume();
+                }
+            });
+            return cell;
+        });
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
@@ -52,7 +82,7 @@ public class TaskListPanel extends UiPart<Region> {
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in task list panel changed to : '" + newValue + "'");
-                        raise(new TaskPanelSelectionChangedEvent(newValue));
+                        raise(new PanelSelectionChangedEvent(newValue));
                     }
                 });
     }

@@ -1,3 +1,4 @@
+//@@author Jason1im
 package seedu.address.model;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;

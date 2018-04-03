@@ -110,6 +110,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author Jason1im
     @Override
     public ReadOnlyAccountsManager getAccountsManager() {
         return accountsManager;
@@ -146,14 +147,11 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
-    private void setUser(Account account) {
-        user = user.ofNullable(account);
-    }
-
     @Override
     public void register(String username, String password) throws DuplicateUsernameException {
         accountsManager.register(username, password);
     }
+
 
     //@@author kush1509
     @Override
@@ -163,6 +161,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author
+    private void setUser(Account account) {
+        user = user.ofNullable(account);
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**

@@ -133,7 +133,7 @@ public class Recipe {
                 + "</div>"
                 + "</div>"
                 + "<div class='col-sm-6'>"
-        //       + "<img src='" + image.getUsablePath() + "' />"
+                + "<img src='" + image.getUsablePath() + "' />"
                 + "</div>"
                 + "<div class='col-sm-12'>"
                 + "<div class='col-sm-12'>"

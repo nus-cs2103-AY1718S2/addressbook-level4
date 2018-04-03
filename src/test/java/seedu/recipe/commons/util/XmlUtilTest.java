@@ -15,7 +15,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.recipe.model.RecipeBook;
-import seedu.recipe.model.recipe.Image;
 import seedu.recipe.storage.XmlAdaptedRecipe;
 import seedu.recipe.storage.XmlAdaptedTag;
 import seedu.recipe.storage.XmlSerializableRecipeBook;

@@ -31,7 +31,6 @@ import static seedu.recipe.logic.commands.CommandTestUtil.URL_DESC_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_CALORIES_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_COOKING_TIME_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_IMG_AMY;
-import static seedu.recipe.logic.commands.CommandTestUtil.VALID_IMG_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INGREDIENT_AMY;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INGREDIENT_BOB;
 import static seedu.recipe.logic.commands.CommandTestUtil.VALID_INSTRUCTION_AMY;
@@ -87,7 +86,7 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + INGREDIENT_DESC_AMY + " "
                 + INSTRUCTION_DESC_AMY + "   " + PREPARATION_TIME_DESC_AMY + "   " + COOKING_TIME_DESC_AMY + "   "
                 + CALORIES_DESC_AMY + "   " + SERVINGS_DESC_AMY + "   " + URL_DESC_AMY + "   "
-                + IMG_DESC_AMY + "   "+ TAG_DESC_FRIEND + " ";
+                + IMG_DESC_AMY + "   " + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -200,7 +199,6 @@ public class AddCommandSystemTest extends RecipeBookSystemTest {
                 + IMG_DESC_AMY
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
-
 
         /* Case: add to empty recipe book -> added */
         deleteAllRecipes();

@@ -15,6 +15,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.petpatient.exceptions.PetDependencyNotEmptyException;
 
 public class UndoableCommandTest {
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -60,6 +61,8 @@ public class UndoableCommandTest {
             try {
                 model.deletePerson(personToDelete);
             } catch (PersonNotFoundException pnfe) {
+                fail("Impossible: personToDelete was retrieved from model.");
+            } catch (PetDependencyNotEmptyException e) {
                 fail("Impossible: personToDelete was retrieved from model.");
             }
             return new CommandResult("");

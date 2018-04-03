@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -13,13 +14,20 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.AppointmentDependencyNotEmptyException;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicateNricException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.petpatient.PetPatient;
+import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
+import seedu.address.model.petpatient.exceptions.PetDependencyNotEmptyException;
+import seedu.address.model.petpatient.exceptions.PetPatientNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -70,7 +78,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deletePerson(Person target) throws PersonNotFoundException {
+    public synchronized void deletePerson(Person target)
+            throws PersonNotFoundException, PetDependencyNotEmptyException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
     }
@@ -83,10 +92,51 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public Person getPersonWithNric(Nric ownerNric) {
+        for (Person p : addressBook.getPersonList()) {
+            if (p.getNric().equals(ownerNric)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public synchronized void deletePetPatient(PetPatient target)
+            throws PetPatientNotFoundException, AppointmentDependencyNotEmptyException {
+        addressBook.removePetPatient(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized List<PetPatient> deletePetPatientDependencies(Person target) {
+        List<PetPatient> petPatients = addressBook.removeAllPetPatientDependencies(target);
+        indicateAddressBookChanged();
+        return petPatients;
+    }
+
+    @Override
+    public synchronized List<Appointment> deleteAppointmentDependencies(PetPatient target) {
+        List<Appointment> dependenciesDeleted = addressBook.removeAllAppointmentDependencies(target);
+        indicateAddressBookChanged();
+        return dependenciesDeleted;
+    }
+
+    @Override
     public synchronized void addPetPatient(PetPatient petPatient) throws DuplicatePetPatientException {
         addressBook.addPetPatient(petPatient);
         updateFilteredPetPatientList(PREDICATE_SHOW_ALL_PET_PATIENTS);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public PetPatient getPetPatientWithNricAndName(Nric ownerNric, PetPatientName petPatientName) {
+        for (PetPatient p : addressBook.getPetPatientList()) {
+            if (p.getOwner().equals(ownerNric) && p.getName().equals(petPatientName)) {
+                return p;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -99,7 +149,14 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+    public synchronized void deleteAppointment(Appointment target) throws AppointmentNotFoundException {
+        addressBook.removeAppointment(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addAppointment(Appointment appointment)
+            throws DuplicateAppointmentException, DuplicateDateTimeException {
         addressBook.addAppointment(appointment);
         updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
         indicateAddressBookChanged();
@@ -142,6 +199,17 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredAppointmentList(Predicate<Appointment> predicate) {
         requireNonNull(predicate);
         filteredAppointments.setPredicate(predicate);
+    }
+
+    //=========== Filtered Pet Patient List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code PetPatient} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<PetPatient> getFilteredPetPatientList() {
+        return FXCollections.unmodifiableObservableList(filteredPetPatients);
     }
 
     @Override

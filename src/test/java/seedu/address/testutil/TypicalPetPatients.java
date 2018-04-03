@@ -1,5 +1,9 @@
 package seedu.address.testutil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import seedu.address.model.petpatient.PetPatient;
 
 //@@author chialejing
@@ -29,4 +33,8 @@ public class TypicalPetPatients {
             .withTags("Depression", "Test").build();
 
     private TypicalPetPatients() {}
+
+    public static List<PetPatient> getTypicalPetPatients() {
+        return new ArrayList<>(Arrays.asList(JOKER, JEWEL));
+    }
 }

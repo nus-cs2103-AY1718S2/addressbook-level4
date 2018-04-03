@@ -4,6 +4,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+//@@author wynonaK
 public class UniqueAppointmentListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

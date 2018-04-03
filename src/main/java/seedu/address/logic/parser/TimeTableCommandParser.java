@@ -24,6 +24,10 @@ public class TimeTableCommandParser implements Parser<TimeTableCommand> {
         try {
             args = args.trim();
             String[] splitArgs = args.split(SPLIT_TOKEN);
+            if (splitArgs.length != 2) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, TimeTableCommand.MESSAGE_USAGE));
+            }
             Index index = ParserUtil.parseIndex(splitArgs[PERSON_INDEX]);
             String oddEven = ParserUtil.parseOddEven(splitArgs[ODD_EVEN_INDEX]);
             return new TimeTableCommand(index, oddEven);

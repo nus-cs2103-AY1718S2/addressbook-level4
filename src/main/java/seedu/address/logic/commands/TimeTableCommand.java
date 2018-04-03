@@ -45,17 +45,25 @@ public class TimeTableCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
 
-        List<Person> lastShownList = model.getFilteredPersonList();
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-        personToShow = lastShownList.get(targetIndex.getZeroBased());
+        preprocess();
 
         //ArrayList<ArrayList<String>> personTimeTable = personToShow.getTimetable(oddEven);
         ArrayList<ArrayList<String>> personTimeTable = gd();
         ObservableList<ArrayList<String>> timeTable = FXCollections.observableArrayList(personTimeTable);
         EventsCenter.getInstance().post(new TimeTableEvent(timeTable));
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, oddEven, personToShow));
+    }
+
+    /**
+     * Preprocess the required data for execution.
+     * @throws CommandException when index out of bound
+     */
+    protected void preprocess() throws CommandException {
+        List<Person> lastShownList = model.getFilteredPersonList();
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+        personToShow = lastShownList.get(targetIndex.getZeroBased());
     }
 
     /**
@@ -80,8 +88,10 @@ public class TimeTableCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DeleteCommand // instanceof handles nulls
+                || (other instanceof TimeTableCommand // instanceof handles nulls
                 && this.targetIndex.equals(((TimeTableCommand) other).targetIndex) // state check
+                && this.oddEven.equals(((TimeTableCommand) other).oddEven)
                 && Objects.equals(this.personToShow, ((TimeTableCommand) other).personToShow));
+
     }
 }

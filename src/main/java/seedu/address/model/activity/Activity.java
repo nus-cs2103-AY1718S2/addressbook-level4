@@ -3,7 +3,6 @@ package seedu.address.model.activity;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Set;
 
 import seedu.address.model.tag.Tag;
@@ -16,13 +15,13 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public abstract class Activity {
 
-
     private final Name name;
     private final DateTime dateTime;
     private final Remark remark;
 
     private final UniqueTagList tags;
     private final boolean isCompleted;
+
     /**
      * Every field must be present and not null.
      */
@@ -75,13 +74,4 @@ public abstract class Activity {
     }
 
     public abstract Activity getCompletedCopy();
-
-    //@@author karenfrilya97
-    public static Comparator<Activity> DateTimeComparator = new Comparator<Activity>() {
-        public int compare (Activity o1, Activity o2) {
-            DateTime dt1 = o1.getDateTime();
-            DateTime dt2 = o2.getDateTime();
-            return dt1.getLocalDateTime().compareTo(dt2.getLocalDateTime());
-        }
-    };
 }

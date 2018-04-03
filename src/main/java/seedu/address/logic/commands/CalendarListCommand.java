@@ -17,7 +17,6 @@ public class CalendarListCommand extends Command {
     public static final String COMMAND_WORD = "calendar-list";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": List up to the next 10 calendar events.";
 
-    public static final String MESSAGE_SUCCESS = "Listed up to the next 10 calendar events.";
     public static final String MESSAGE_ERROR = "Unable to retrieve calendar events. Please try again later.";
 
     @Override
@@ -25,8 +24,7 @@ public class CalendarListCommand extends Command {
 
         try {
             List<Event> upcomingEvents = OAuthManager.getUpcomingEvents();
-            System.out.println(upcomingEvents.size());
-            return new CommandResult(MESSAGE_SUCCESS);
+            return new CommandResult(upcomingEvents.toString());
         } catch (IOException e) {
             return new CommandResult(MESSAGE_ERROR);
         }

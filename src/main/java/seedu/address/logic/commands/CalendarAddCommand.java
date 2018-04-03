@@ -26,8 +26,12 @@ public class CalendarAddCommand extends Command {
             + PREFIX_CAL_EVENT_NAME + "EVENT NAME "
             + PREFIX_CAL_START_DATE_TIME + "START DATE/TIME "
             + PREFIX_CAL_END_DATE_TIME + "END DATE/TIME "
-            + PREFIX_CAL_LOCATION + "LOCATION "
-            + PREFIX_CAL_LINK_PERSON + "SELECTED BENEFICIARY (optional)";
+            + PREFIX_CAL_LOCATION + "LOCATION\n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_CAL_EVENT_NAME + "Program CS2103 "
+            + PREFIX_CAL_START_DATE_TIME + "This Thursday at 10PM "
+            + PREFIX_CAL_END_DATE_TIME + "1AM on Friday "
+            + PREFIX_CAL_LOCATION + "UTown Residence";
 
 
     public static final String MESSAGE_SUCCESS = "New event added: %s";

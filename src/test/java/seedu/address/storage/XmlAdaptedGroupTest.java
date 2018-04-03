@@ -6,10 +6,6 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_INFORMATION;
 import static seedu.address.storage.XmlAdaptedGroup.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.TypicalGroups.GROUP_A;
-import static seedu.address.testutil.TypicalGroups.GROUP_B;
-import static seedu.address.testutil.TypicalPersons.BOB;
-
-import java.util.List;
 
 import org.junit.Test;
 

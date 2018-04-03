@@ -3,6 +3,7 @@ package seedu.address.model.appointment;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author wynonaK
 /**
  * Represents a Appointment's remarks.
  * Guarantees: is valid as declared in {@link #isValidRemark(String)}

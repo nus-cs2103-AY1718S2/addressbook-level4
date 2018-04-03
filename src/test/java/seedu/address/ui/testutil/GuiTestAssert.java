@@ -86,7 +86,7 @@ public class GuiTestAssert {
         case "family":
         case "friend":
             return "orange";
-
+        case "owner":
         case "friends":
             return "brown";
 
@@ -119,6 +119,17 @@ public class GuiTestAssert {
     public static void assertListMatching(PersonListPanelHandle personListPanelHandle, Person... persons) {
         for (int i = 0; i < persons.length; i++) {
             assertCardDisplaysPerson(persons[i], personListPanelHandle.getPersonCardHandle(i));
+        }
+    }
+
+    /**
+     * Asserts that the list in {@code petPatientListPanelHandle} displays the details of {@code petPatient} correctly
+     * and in the correct order.
+     */
+    public static void assertListMatching(PetPatientListPanelHandle petPatientListPanelHandle,
+                                          PetPatient... petPatient) {
+        for (int i = 0; i < petPatient.length; i++) {
+            assertCardDisplaysPetPatient(petPatient[i], petPatientListPanelHandle.getPetPatientCardHandle(i));
         }
     }
 

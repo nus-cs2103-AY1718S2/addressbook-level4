@@ -311,6 +311,15 @@
     -fx-border-width: 0;
 }
 
+#toDoCardPane {
+    -fx-background-color: #22A86D;
+    -fx-background-radius: 30px;
+
+    -fx-border-radius: 20px;
+    -fx-border-width: 5px;
+    -fx-border-color: #1B6041;
+}
+
 #commandTypeLabel {
     -fx-font-size: 11px;
     -fx-text-fill: #F70D1A;

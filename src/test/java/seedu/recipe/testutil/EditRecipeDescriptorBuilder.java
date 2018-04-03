@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import seedu.recipe.logic.commands.EditCommand.EditRecipeDescriptor;
 import seedu.recipe.model.recipe.Calories;
 import seedu.recipe.model.recipe.CookingTime;
+import seedu.recipe.model.recipe.Image;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
@@ -44,6 +45,7 @@ public class EditRecipeDescriptorBuilder {
         descriptor.setCalories(recipe.getCalories());
         descriptor.setServings(recipe.getServings());
         descriptor.setUrl(recipe.getUrl());
+        descriptor.setImage(recipe.getImage());
         descriptor.setTags(recipe.getTags());
     }
 
@@ -103,6 +105,7 @@ public class EditRecipeDescriptorBuilder {
         descriptor.setServings(new Servings(servings));
         return this;
     }
+    //@@author
 
     //@@author RyanAngJY
     /**
@@ -110,6 +113,14 @@ public class EditRecipeDescriptorBuilder {
      */
     public EditRecipeDescriptorBuilder withUrl(String url) {
         descriptor.setUrl(new Url(url));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Url} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditRecipeDescriptorBuilder withImage(String image) {
+        descriptor.setImage(new Image(image));
         return this;
     }
     //@@author

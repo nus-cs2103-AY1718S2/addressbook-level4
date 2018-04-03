@@ -3,6 +3,7 @@ package seedu.recipe.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_CALORIES;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_COOKING_TIME;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_IMG;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INGREDIENT;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
@@ -25,6 +26,7 @@ import seedu.recipe.commons.util.CollectionUtil;
 import seedu.recipe.logic.commands.exceptions.CommandException;
 import seedu.recipe.model.recipe.Calories;
 import seedu.recipe.model.recipe.CookingTime;
+import seedu.recipe.model.recipe.Image;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
@@ -55,10 +57,11 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_CALORIES + "PREFIX_CALORIES] "
             + "[" + PREFIX_SERVINGS + "PREFIX_SERVINGS] "
             + "[" + PREFIX_URL + "URL] "
+            + "[" + PREFIX_IMG + "IMAGE_FILE_PATH] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PREPARATION_TIME + "91234567 "
-            + PREFIX_INGREDIENT + "johndoe@example.com";
+            + PREFIX_PREPARATION_TIME + "5 mins "
+            + PREFIX_INGREDIENT + "chicken, rice";
 
     public static final String MESSAGE_EDIT_RECIPE_SUCCESS = "Edited Recipe: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -126,10 +129,11 @@ public class EditCommand extends UndoableCommand {
         Servings updatedServings =
                 editRecipeDescriptor.getServings().orElse(recipeToEdit.getServings());
         Url updatedUrl = editRecipeDescriptor.getUrl().orElse(recipeToEdit.getUrl());
+        Image updatedImage = editRecipeDescriptor.getImage().orElse(recipeToEdit.getImage());
         Set<Tag> updatedTags = editRecipeDescriptor.getTags().orElse(recipeToEdit.getTags());
 
         return new Recipe(updatedName, updatedIngredient, updatedInstruction, updatedCookingTime,
-                updatedPreparationTime, updatedCalories, updatedServings, updatedUrl, updatedTags);
+                updatedPreparationTime, updatedCalories, updatedServings, updatedUrl, updatedImage, updatedTags);
     }
 
     @Override
@@ -164,6 +168,7 @@ public class EditCommand extends UndoableCommand {
         private Calories calories;
         private Servings servings;
         private Url url;
+        private Image image;
         private Set<Tag> tags;
 
         public EditRecipeDescriptor() {}
@@ -181,6 +186,7 @@ public class EditCommand extends UndoableCommand {
             setCalories(toCopy.calories);
             setServings(toCopy.servings);
             setUrl(toCopy.url);
+            setImage(toCopy.image);
             setTags(toCopy.tags);
         }
 
@@ -189,7 +195,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.ingredient, this.instruction, this.cookingTime,
-                    this.preparationTime, this.calories, this.servings, this.url, this.tags);
+                    this.preparationTime, this.calories, this.servings, this.url, this.image, this.tags);
         }
 
         public void setName(Name name) {
@@ -224,7 +230,6 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(cookingTime);
         }
 
-
         public void setPreparationTime(PreparationTime preparationTime) {
             this.preparationTime = preparationTime;
         }
@@ -241,7 +246,6 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(calories);
         }
 
-
         public void setServings(Servings servings) {
             this.servings = servings;
         }
@@ -249,7 +253,6 @@ public class EditCommand extends UndoableCommand {
         public Optional<Servings> getServings() {
             return Optional.ofNullable(servings);
         }
-
 
         public void setUrl(Url url) {
             this.url = url;
@@ -259,7 +262,13 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(url);
         }
 
+        public void setImage(Image image) {
+            this.image = image;
+        }
 
+        public Optional<Image> getImage() {
+            return Optional.ofNullable(image);
+        }
 
         /**
          * Sets {@code tags} to this object's {@code tags}.
@@ -298,6 +307,7 @@ public class EditCommand extends UndoableCommand {
                     && getIngredient().equals(e.getIngredient())
                     && getInstruction().equals(e.getInstruction())
                     && getUrl().equals(e.getUrl())
+                    && getImage().equals(e.getImage())
                     && getTags().equals(e.getTags());
         }
     }

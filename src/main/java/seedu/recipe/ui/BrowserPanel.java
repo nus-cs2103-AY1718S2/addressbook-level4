@@ -62,6 +62,10 @@ public class BrowserPanel extends UiPart<Region> {
         setUpBrowserUrlListener();
     }
 
+    public WebView getBrowser() {
+        return browser;
+    }
+
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
@@ -69,6 +73,15 @@ public class BrowserPanel extends UiPart<Region> {
     private void loadRecipePage(Recipe recipe) {
         loadPage(recipe.getUrl().toString());
     }
+
+    //@@author RyanAngJY
+    /**
+     * Loads the text recipe onto the browser
+     */
+    private void loadLocalRecipe(Recipe recipe) {
+        browser.getEngine().loadContent(recipe.getHtmlFormattedRecipe());
+    }
+    //@@author
 
     /**
      * Loads a default HTML file with a background that matches the general theme.
@@ -94,7 +107,12 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleRecipePanelSelectionChangedEvent(RecipePanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadRecipePage(event.getNewSelection().recipe);
+        Recipe recipe = event.getNewSelection().recipe;
+        if (recipe.getUrl().toString().equals(Url.NULL_URL_REFERENCE)) {
+            loadLocalRecipe(recipe);
+        } else {
+            loadRecipePage(recipe);
+        }
     }
 
     //@@author kokonguyen191

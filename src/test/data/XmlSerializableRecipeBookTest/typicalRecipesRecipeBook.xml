@@ -16,6 +16,7 @@ Add salsa as desired.</instruction>
         <calories>5000</calories>
         <servings>4</servings>
         <url>https://www.bbcgoodfood.com/recipes/collection/baked-potato</url>
+        <image>-</image>
         <tagged>family</tagged>
     </recipes>
     <recipes>
@@ -27,6 +28,7 @@ Add salsa as desired.</instruction>
         <calories>5000</calories>
         <servings>4</servings>
         <url>https://www.bbcgoodfood.com/recipes/collection/burger</url>
+        <image>-</image>
         <tagged>owesMoney</tagged>
         <tagged>family</tagged>
     </recipes>
@@ -39,6 +41,7 @@ Add salsa as desired.</instruction>
         <calories>5000</calories>
         <servings>4</servings>
         <url>https://www.bbcgoodfood.com/recipes/collection/casserole</url>
+        <image>-</image>
         <tagged>owesMoney</tagged>
     </recipes>
     <recipes>
@@ -50,6 +53,7 @@ Add salsa as desired.</instruction>
         <calories>5000</calories>
         <servings>4</servings>
         <url>https://www.bbcgoodfood.com/recipes/collection/curry</url>
+        <image>-</image>
     </recipes>
     <recipes>
         <name>Elle Meyer</name>
@@ -60,6 +64,7 @@ Add salsa as desired.</instruction>
         <calories>5000</calories>
         <servings>4</servings>
         <url>https://www.bbcgoodfood.com/recipes/collection/fish-pie</url>
+        <image>-</image>
     </recipes>
     <recipes>
         <name>Fiona Kunz</name>
@@ -70,6 +75,7 @@ Add salsa as desired.</instruction>
         <calories>5000</calories>
         <servings>4</servings>
         <url>https://www.bbcgoodfood.com/recipes/collection/chicken-salad</url>
+        <image>-</image>
     </recipes>
     <recipes>
         <name>George Best</name>
@@ -80,6 +86,7 @@ Add salsa as desired.</instruction>
         <calories>5000</calories>
         <servings>4</servings>
         <url>https://www.bbcgoodfood.com/recipes/collection/crumble</url>
+        <image>-</image>
     </recipes>
     <tags>friends</tags>
     <tags>owesMoney</tags>

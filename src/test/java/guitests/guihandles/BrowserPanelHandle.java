@@ -41,6 +41,14 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
     }
 
     /**
+     * Returns the HTML of the currently loaded page.
+     */
+    public String getLoadedHtml() {
+        WebView webView = getChildNode(BROWSER_ID);
+        return webView.getEngine().getDocument().getDocumentElement().getTextContent();
+    }
+
+    /**
      * Remembers the {@code URL} of the currently loaded page.
      */
     public void rememberUrl() {

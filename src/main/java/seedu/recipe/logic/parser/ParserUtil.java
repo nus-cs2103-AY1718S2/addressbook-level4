@@ -12,6 +12,7 @@ import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.commons.util.StringUtil;
 import seedu.recipe.model.recipe.Calories;
 import seedu.recipe.model.recipe.CookingTime;
+import seedu.recipe.model.recipe.Image;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
 import seedu.recipe.model.recipe.Name;
@@ -364,7 +365,7 @@ public class ParserUtil {
         return url.isPresent() ? Optional.of(parseUrl(url.get())) : Optional.empty();
     }
 
-    public static Url getNullReferenceUrl() throws IllegalValueException {
+    public static Url getNullReferenceUrl() {
         return new Url(Url.NULL_URL_REFERENCE);
     }
 
@@ -375,6 +376,43 @@ public class ParserUtil {
     public static Optional<Url> parseUrlOnInitialAdd(Optional<String> url) throws IllegalValueException {
         requireNonNull(url);
         return url.isPresent() ? Optional.of(parseUrl(url.get())) : Optional.of(getNullReferenceUrl());
+    }
+
+    /**
+     * Parses a {@code String image} into an {@code image}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code image} is invalid.
+     */
+    public static Image parseImage(String image) throws IllegalValueException {
+        requireNonNull(image);
+        String trimmedImage = image.trim();
+        if (!Image.isValidImage(trimmedImage)) {
+            throw new IllegalValueException(Image.MESSAGE_IMAGE_CONSTRAINTS);
+        }
+        return new Image(trimmedImage);
+    }
+
+    /**
+     * Parses a {@code Optional<String> url} into an {@code Optional<Url>} if {@code url} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Image> parseImage(Optional<String> image) throws IllegalValueException {
+        requireNonNull(image);
+        return image.isPresent() ? Optional.of(parseImage(image.get())) : Optional.empty();
+    }
+
+    public static Image getNullReferenceImage() {
+        return new Image(Image.NULL_IMAGE_REFERENCE);
+    }
+
+    /**
+     * Parses a {@code Optional<String> image} into an {@code Optional<Image>} if {@code image} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Image> parseImageOnInitialAdd(Optional<String> image) throws IllegalValueException {
+        requireNonNull(image);
+        return image.isPresent() ? Optional.of(parseImage(image.get())) : Optional.of(getNullReferenceImage());
     }
     //@@author
 

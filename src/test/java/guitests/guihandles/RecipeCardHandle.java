@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 
 /**
@@ -17,6 +18,7 @@ public class RecipeCardHandle extends NodeHandle<Node> {
     private static final String PREPARATION_TIME_FIELD_ID = "#preparationTime";
     private static final String INGREDIENT_FIELD_ID = "#ingredient";
     private static final String URL_FIELD_ID = "#url";
+    private static final String IMAGE_FIELD_ID = "#imageView";
     private static final String TAGS_FIELD_ID = "#tags";
 
     private final Label idLabel;
@@ -26,6 +28,7 @@ public class RecipeCardHandle extends NodeHandle<Node> {
     private final Label ingredientLabel;
     private final Label urlLabel;
     private final List<Label> tagLabels;
+    private final ImageView imageView;
 
     public RecipeCardHandle(Node cardNode) {
         super(cardNode);
@@ -36,6 +39,7 @@ public class RecipeCardHandle extends NodeHandle<Node> {
         this.preparationTimeLabel = getChildNode(PREPARATION_TIME_FIELD_ID);
         this.ingredientLabel = getChildNode(INGREDIENT_FIELD_ID);
         this.urlLabel = getChildNode(URL_FIELD_ID);
+        this.imageView = getChildNode(IMAGE_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
         this.tagLabels = tagsContainer

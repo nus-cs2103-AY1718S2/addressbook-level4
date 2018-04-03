@@ -133,7 +133,7 @@ public class RecipeBook implements ReadOnlyRecipeBook {
         recipeTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Recipe(recipe.getName(), recipe.getIngredient(), recipe.getInstruction(), recipe.getCookingTime(),
                 recipe.getPreparationTime(), recipe.getCalories(), recipe.getServings(), recipe.getUrl(),
-                correctTagReferences);
+                recipe.getImage(), correctTagReferences);
     }
 
     /**

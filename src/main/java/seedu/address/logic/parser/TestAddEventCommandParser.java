@@ -11,9 +11,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
+import com.google.api.client.util.DateTime;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.TestAddEventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -48,7 +49,6 @@ public class TestAddEventCommandParser implements Parser<TestAddEventCommand> {
             }
         }
         String behindArgs = temp.substring(i);
-        System.out.println(behindArgs);
 
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(behindArgs, PREFIX_TITLE, PREFIX_LOCATION, PREFIX_STARTTIME,
@@ -57,7 +57,7 @@ public class TestAddEventCommandParser implements Parser<TestAddEventCommand> {
         if (!arePrefixesPresent(argMultimap, PREFIX_TITLE, PREFIX_LOCATION, PREFIX_STARTTIME, PREFIX_ENDTIME,
                 PREFIX_DESCCRIPTION)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TestAddEventCommand.MESSAGE_USAGE));
         }
 
 
@@ -65,6 +65,18 @@ public class TestAddEventCommandParser implements Parser<TestAddEventCommand> {
         String location = argMultimap.getValue(PREFIX_LOCATION).get();
         String stime = argMultimap.getValue(PREFIX_STARTTIME).get();
         String etime = argMultimap.getValue(PREFIX_ENDTIME).get();
+        try {
+            DateTime.parseRfc3339(stime);
+        } catch (NumberFormatException n) {
+            throw new ParseException("Invalid date/time format: " + stime);
+        }
+
+        try {
+            DateTime.parseRfc3339(etime);
+        } catch (NumberFormatException n) {
+            throw new ParseException("Invalid date/time format: " + etime);
+        }
+
         String decription = argMultimap.getValue(PREFIX_DESCCRIPTION).get();
 
         return new TestAddEventCommand(index, title, location, stime, etime, decription);

@@ -540,14 +540,14 @@ The implementation of `sort` command involves following objects: +
 
 . Command: SortCommand
 . Parser: SortCommandParser, AddressBookParser
-. AddressBook, UniquePersonList
+. AddressBook, UniqueEmployeeList
 
 The details of implementation of `sort` command are as follow:
 
 . `SortCommandParser` guarantees Employees Tracker to accept `sort` command.
 . `SortCommandParser` extracts the sorting field from user input.
-. `ModelManager` and `UniquePersonList` provide sorting algorithm, called by `AddressBook`.
-. `UniquePersonList` will sort the units by giving field
+. `ModelManager` and `UniqueEmployeeList` provide sorting algorithm, called by `AddressBook`.
+. `UniqueEmployeeList` will sort the units by giving field
 
 
 === Change theme of Employees Tracker

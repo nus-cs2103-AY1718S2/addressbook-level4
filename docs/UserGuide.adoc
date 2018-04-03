@@ -290,6 +290,26 @@ Examples:
 * `vacant COM1` +
 Finds the vacancy status of study rooms in COM1 building.
 
+=== Google maps display : `map` (coming in v1.4)
+
+Launches Google Maps with the specified location(s).
+Format: `map LOCATION` or `map LOCATION/LOCATION...`
+
+****
+* If only one location is provided, the location will be displayed on the map.
+* If more than one location is provided, directions to each location, starting from the first one, will be displayed.
+* Typing "map LOCATION_START to LOCATION_DESTINATION" can work as well only if neither locations specified are NUS buildings.
+****
+
+Examples:
+
+* `map BIZ1` +
+Displays the location of BIZ1 (which is an NUS building name).
+* `map Tampines Mall/COM1` +
+Displays the directions from `Tampines Mall` to `COM1`.
+* `map Tampines Mall/COM1/Airport Blvd` +
+Displays the directions from `Tampines Mall` to `COM1` to `Airport Blvd`.
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +

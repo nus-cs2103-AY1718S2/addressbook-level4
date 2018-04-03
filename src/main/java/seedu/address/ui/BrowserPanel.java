@@ -28,7 +28,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     private static final String FXML = "BrowserPanel.fxml";
 
-    private static final HtmlWriter htmlWriter = new HtmlWriter();
+    private static HtmlWriter htmlWriter;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -50,6 +50,7 @@ public class BrowserPanel extends UiPart<Region> {
      * @param person
      */
     private void loadPersonPage(Person person) {
+        htmlWriter = new HtmlWriter(person);
         String personfilepath = htmlWriter.writePerson();
         loadPage("file:///" + personfilepath);
     }

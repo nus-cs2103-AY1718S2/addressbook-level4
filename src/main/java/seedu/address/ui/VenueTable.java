@@ -57,6 +57,9 @@ public class VenueTable extends UiPart<Region> {
         venueTable.setItems(schedules);
         initializeColumns();
         initializeTableColumns();
+        roomId.setMinWidth(100);
+        roomId.setMaxWidth(100);
+        venueTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     /**
@@ -87,9 +90,14 @@ public class VenueTable extends UiPart<Region> {
         for (int i = 0; i < columns.size(); i++) {
             final int j = i;
             columns.get(i).setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(j)));
+            columns.get(i).impl_setReorderable(false);
+            if (j != 0) {
+                columns.get(i).setMinWidth(75);
+                columns.get(i).setMaxWidth(200);
+            }
+
         }
     }
-
     /**
      * Sets the command box style to indicate a vacant or occupied room.
      */

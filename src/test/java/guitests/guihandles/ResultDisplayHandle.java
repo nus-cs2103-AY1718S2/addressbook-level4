@@ -23,6 +23,16 @@ public class ResultDisplayHandle extends NodeHandle<TextArea> {
     }
 
     /**
+     * Clears all text in the Result Display.
+     * @return true if the command succeeded, false otherwise.
+     */
+    public boolean clear() {
+        click();
+        guiRobot.interact(() -> getRootNode().clear());
+        return getRootNode().getText().equals("");
+    }
+
+    /**
      * Returns the list of style clases in the result display.
      */
     public List<String> getStyleClass() {

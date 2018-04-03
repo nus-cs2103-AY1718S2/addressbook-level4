@@ -27,7 +27,7 @@ public class Person {
     private final Appointment appointment;
     private final Group group;
     private final Insurance insurance;
-    private final Commission commission;
+    private final String commission;
 
     private final UniqueTagList tags;
     private final UniqueGroupList groups;
@@ -36,7 +36,7 @@ public class Person {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Birthday birthday,
-            Appointment appointment, Group group, Insurance insurance, Commission commission) {
+            Appointment appointment, Group group, Insurance insurance) {
         requireAllNonNull(name, phone, email, address, tags, birthday);
         this.name = name;
         this.phone = phone;
@@ -46,7 +46,7 @@ public class Person {
         this.appointment = appointment;
         this.group = group;
         this.insurance = insurance;
-        this.commission = commission;
+        this.commission = new Commission(insurance).getCommission();
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.groups = new UniqueGroupList(group);
@@ -107,7 +107,7 @@ public class Person {
         return insurance;
     }
 
-    public Commission getCommission() {
+    public String getCommission() {
         return commission;
     }
 

@@ -6,4 +6,6 @@ package seedu.address.testutil;
 public class TypicalOddEven {
     public static final String ODD = "odd";
     public static final String EVEN = "even";
+    public static final int EVEN_INDEX = 0;
+    public static final int ODD_INDEX = 1;
 }

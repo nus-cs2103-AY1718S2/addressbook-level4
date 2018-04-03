@@ -2,6 +2,7 @@ package seedu.address.testutil;
 
 import seedu.address.logic.commands.AddGroupCommand;
 import seedu.address.model.group.Group;
+import seedu.address.model.person.UniquePersonList;
 
 /**
  * A utility class for Group.
@@ -23,4 +24,12 @@ public class GroupUtil {
         sb.append(group.getInformation().value);
         return sb.toString();
     }
+    /**
+     * Returns the list of persons the given {@code group}
+     */
+    public static UniquePersonList getPersonList(Group group) {
+        UniquePersonList personListToReturn = group.getPersonList();
+        return personListToReturn;
+    }
+
 }

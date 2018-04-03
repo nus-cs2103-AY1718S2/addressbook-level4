@@ -77,6 +77,10 @@ public class XmlAdaptedGroup {
 
     }
 
+    public List<XmlAdaptedPerson> getPersonList() {
+        return personList;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

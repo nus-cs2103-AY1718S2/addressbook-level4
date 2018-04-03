@@ -72,9 +72,7 @@ public class XmlDeskBoardStorageTest {
         readDeskBoard("invalidAndValidActivityDeskBoard.xml");
     }
 
-    /**
-     * Test
-     */
+    @Test
     public void readAndSaveDeskBoard_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempDeskBoard.xml";
         DeskBoard original = getTypicalDeskBoard();
@@ -87,7 +85,7 @@ public class XmlDeskBoardStorageTest {
 
         //Modify data, overwrite exiting file, and read back
         original.addActivity(ASSIGNMENT3);
-        original.removeActivity(ASSIGNMENT1);
+        original.removeActivity(ASSIGNMENT3);
         xmlDeskBoardStorage.saveDeskBoard(original, filePath);
         readBack = xmlDeskBoardStorage.readDeskBoard(filePath).get();
         assertEquals(original, new DeskBoard(readBack));

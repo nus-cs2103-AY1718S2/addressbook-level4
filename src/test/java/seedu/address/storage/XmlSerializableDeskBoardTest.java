@@ -24,14 +24,21 @@ public class XmlSerializableDeskBoardTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    /**
-     * Test
-     */
+    @Test
     public void toModelType_typicalActivitiesFile_success() throws Exception {
         XmlSerializableDeskBoard dataFromFile = XmlUtil.getDataFromFile(TYPICAL_ACTIVITIES_FILE,
                 XmlSerializableDeskBoard.class);
         DeskBoard deskBoardFromFile = dataFromFile.toModelType();
         DeskBoard typicalActivitiesDeskBoard = TypicalActivities.getTypicalDeskBoard();
+        boolean equals = deskBoardFromFile.getTagList().get(1).equals(
+                    typicalActivitiesDeskBoard.getTagList().get(1));
+        boolean equals2 = deskBoardFromFile.getTagList().get(2).equals(
+                typicalActivitiesDeskBoard.getTagList().get(2));
+        boolean equals3 = deskBoardFromFile.getTagList().get(3).equals(
+                typicalActivitiesDeskBoard.getTagList().get(3));
+        boolean equals4 = deskBoardFromFile.getTagList().get(4).equals(
+                typicalActivitiesDeskBoard.getTagList().get(4));
+
         assertEquals(deskBoardFromFile, typicalActivitiesDeskBoard);
     }
 

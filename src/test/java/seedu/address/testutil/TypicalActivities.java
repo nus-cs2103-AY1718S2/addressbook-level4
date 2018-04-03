@@ -45,16 +45,19 @@ public class TypicalActivities {
             .withStartDateTime("02/04/2018 08:00")
             .withEndDateTime("02/04/2018 12:00")
             .withLocation("michegan ave")
+            .withRemark("nil")
             .withTags("CIP").build();
     public static final Event EXAM1 = new EventBuilder().withName("CS2101Exam")
             .withStartDateTime("28/04/2018 09:00")
             .withEndDateTime("28/04/2018 11:00")
             .withLocation("MPSH")
+            .withRemark("nil")
             .withTags("CS2101").build();
     public static final Event IFG = new EventBuilder().withName("InterFacultyGame")
             .withStartDateTime("04/01/2018 20:00")
             .withEndDateTime("04/01/2018 22:00")
-            .withLocation("MPSH 1").build();
+            .withLocation("MPSH 1")
+            .withRemark("nil").build();
 
     // Manually added
     public static final Task ASSIGNMENT3 = new TaskBuilder().withName("CS2102Assignment")
@@ -64,15 +67,6 @@ public class TypicalActivities {
             .withStartDateTime("04/04/2018 09:00")
             .withEndDateTime("04/04/2018 10:00")
             .withRemark("FinalDemo").build();
-
-    // Manually added - Activity's details found in {@code CommandTestUtil}
-    public static final Task MA2108_HOMEWORK = new TaskBuilder().withName(VALID_NAME_MA2108_HOMEWORK)
-            .withDateTime(VALID_DATE_TIME_MA2108_HOMEWORK)
-            .withRemark(VALID_REMARK_MA2108_HOMEWORK).withTags(VALID_TAG_CS2010).build();
-    public static final Task CS2010_QUIZ = new TaskBuilder().withName(VALID_NAME_CS2010_QUIZ)
-            .withDateTime(VALID_DATE_TIME_CS2010_QUIZ)
-            .withRemark(VALID_REMARK_CS2010_QUIZ).withTags(VALID_TAG_MA2108, VALID_TAG_CS2010)
-            .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 

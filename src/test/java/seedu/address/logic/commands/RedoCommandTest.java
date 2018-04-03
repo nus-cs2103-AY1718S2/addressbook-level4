@@ -36,7 +36,9 @@ public class RedoCommandTest {
         removeCommandTwo.preprocessUndoableCommand();
     }
 
-    @Test
+    /**
+     * Test
+     */
     public void execute() {
         UndoRedoStack undoRedoStack = prepareStack(
                 Collections.emptyList(), Arrays.asList(removeCommandTwo, removeCommandOne));

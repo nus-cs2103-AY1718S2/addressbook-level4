@@ -33,7 +33,9 @@ public class UndoCommandTest {
         removeCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
     }
 
-    @Test
+    /**
+     * Test
+     */
     public void execute() throws Exception {
         UndoRedoStack undoRedoStack = prepareStack(
                 Arrays.asList(removeCommandOne, removeCommandTwo), Collections.emptyList());

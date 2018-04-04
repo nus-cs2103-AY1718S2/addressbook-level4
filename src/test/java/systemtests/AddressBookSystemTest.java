@@ -187,7 +187,7 @@ public abstract class AddressBookSystemTest {
      * {@code CommandBox} given the appropriate menu item.
      */
     protected void populateUsingMenu(String... menuItems) {
-        mainWindowHandle.getMainMenu().useAccelerator(menuItems);
+        mainWindowHandle.getMainMenu().clickOnMenuItemsSequentially(menuItems);
     }
     //@@author
 

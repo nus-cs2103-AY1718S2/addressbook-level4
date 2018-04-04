@@ -209,6 +209,7 @@ public class Imdb implements ReadOnlyImdb {
         appointments.add(appointmentEntry);
     }
 
+    //@@author Kai Yong
     /**
      * Adds a patient to the visiting queue.
      * Also checks the new patient's tags and updates {@link #tags} with any new tags found,
@@ -221,10 +222,12 @@ public class Imdb implements ReadOnlyImdb {
         visitingQueue.add(p);
     }
 
+    //@@author Kai Yong
     public int removePatientFromQueue() throws PatientNotFoundException {
         return visitingQueue.removePatient();
     }
 
+    //@@author
     /**
      * Remove {@code tag} from {@code patient}
      */

@@ -130,7 +130,7 @@ Do not leave REMARK empty. You can specify '-' or 'nil' if there is no remark fo
 
 {empty} +
 
-image::add_examples.PNG[width="800"]
+image::add_examples.PNG[width="700"]
 
 **Examples:**
 
@@ -139,6 +139,7 @@ image::add_examples.PNG[width="800"]
 * `add **-a** d/2018-05-27 14:30 r/had poor appetite the last 3 days t/vaccination t/checkup **-o** nr/F0012345Z **-p** n/Makkachin`
 * `add **-o** n/Jacqueline p/65123456 e/jacq@gmail.com a/96 Computing Drive, #02-03 nr/S1234567G **-p** n/jewel s/cat b/persian c/calico bt/AB **-a** d/2018-12-31 12:30 r/nil t/surgery t/sterilization`
 
+{empty} +
 
 === Listing all contacts : `list` or `ls`
 
@@ -232,31 +233,6 @@ Medeina will deletes the 2nd owner in Medeina's address book, and all pet patien
 * Type in `find -o Betsy` +
 `d -o 1` +
 Medeina will delete the 1st contact in the results of the `find` command.
-
-=== Selecting a contact : `select` or `s`
-
-To select the contact identified by the index number used in the last person listing. +
-The command format should be: `select INDEX` or `s INDEX`
-
-****
-* The command selects the contact and lists the appointments that she / he has made with the vet at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-****
-
-[IMPORTANT]
-====
-The index *must be a positive integer* `1, 2, 3, ...`
-====
-
-Examples:
-
-* Type in `list` +
-`select 2` +
-Medeina will select the 2nd contact in Medeina's address book.
-
-* Type in `find Betsy` +
-`s 1` +
-Medeina will select the 1st contact in the results of the `find` command.
 
 === Listing entered commands : `history` or `his`
 
@@ -415,7 +391,6 @@ The following is a summary of all commands available in Medeina:
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
 * *List* : `list` or `ls`
 * *Help* : `help` or `h`
-* *Select* : `select INDEX` or `s INDEX`
 * *History* : `history` or `his`
 * *Undo* : `undo` or `ud`
 * *Redo* : `redo` or `rd`

@@ -44,4 +44,5 @@ public class XmlAdaptedGroupTest {
         assertFalse(groupA.equals(1));
         assertTrue(groupA.equals(groupB));
     }
+
 }

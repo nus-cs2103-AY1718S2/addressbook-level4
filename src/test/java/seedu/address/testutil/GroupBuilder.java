@@ -2,6 +2,7 @@ package seedu.address.testutil;
 
 import seedu.address.model.group.Group;
 import seedu.address.model.group.Information;
+import seedu.address.model.person.UniquePersonList;
 
 /**
  * A utility class to help with building Group objects.
@@ -11,9 +12,11 @@ public class GroupBuilder {
     public static final String DEFAULT_INFORMATION = "Something to do";
 
     private Information information;
+    private UniquePersonList personList;
 
     public GroupBuilder() {
         information = new Information(DEFAULT_INFORMATION);
+        personList = new UniquePersonList();
     }
 
     /**
@@ -21,6 +24,7 @@ public class GroupBuilder {
      */
     public GroupBuilder(Group groupToCopy) {
         information = groupToCopy.getInformation();
+        this.personList = groupToCopy.getPersonList();
     }
 
     /**
@@ -32,7 +36,7 @@ public class GroupBuilder {
     }
 
     public Group build() {
-        return new Group(information);
+        return new Group(information, personList);
     }
 
 }

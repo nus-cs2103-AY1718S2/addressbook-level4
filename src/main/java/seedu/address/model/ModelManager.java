@@ -126,6 +126,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addAppointment(appointment);
     }
     //@@author
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**

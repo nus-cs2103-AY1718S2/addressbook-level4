@@ -11,14 +11,21 @@ import java.util.Objects;
  */
 public class User {
 
+    public static final String AB_FILEPATH_PREFIX = "data/addressbook-";
+    public static final String AB_FILEPATH_POSTFIX = ".xml";
+
     private Username username;
     private Password password;
     private String addressBookFilePath;
 
-    public User(){
+    public User() {
         this.username = new Username("default");
         this.password = new Password("password");
         this.addressBookFilePath = "data/addressbook-default.xml";
+    }
+
+    public User(Username username, Password password) {
+        this(username, password, AB_FILEPATH_PREFIX + username + AB_FILEPATH_POSTFIX);
     }
 
     public User(Username username, Password password, String addressBookFilePath) {

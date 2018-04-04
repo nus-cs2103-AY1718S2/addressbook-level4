@@ -14,7 +14,6 @@ import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
 import seedu.address.model.login.exceptions.DuplicateUserException;
 import seedu.address.model.login.exceptions.UserNotFoundException;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 //@@author kaisertanqr
 /**
@@ -53,15 +52,13 @@ public class UserDatabase implements ReadOnlyUserDatabase {
     }
 
     /**
-     * Creates an UserDatabase using the Persons and Tags in the {@code toBeLoaded} and logged-in status
+     * Creates an UserDatabase using the Users  in the {@code toBeLoaded} and logged-in status
      */
     public UserDatabase(ReadOnlyUserDatabase toBeLoaded, boolean loggedin) {
         this();
         resetData(toBeLoaded);
         hasLoggedIn = loggedin;
     }
-
-    //@@author kaisertanqr
 
 
     public User getUser(Username username) {
@@ -114,6 +111,24 @@ public class UserDatabase implements ReadOnlyUserDatabase {
         }
     }
 
+    /**
+     * Checks whether input credentials matches a valid user.
+     *
+     * @param username
+     * @param password
+     * @return
+     * @throws AlreadyLoggedInException
+     */
+    public boolean checkCredentials(Username username, Password password) throws AlreadyLoggedInException {
+        User toCheck = new User(username, password,
+                AB_FILEPATH_PREFIX + username + AB_FILEPATH_POSTFIX);
+        if (!hasLoggedIn) {
+            return users.contains(toCheck);
+        } else {
+            throw new AlreadyLoggedInException();
+        }
+    }
+
     //// list overwrite operations
 
     public void setUsers(List<User> users) throws DuplicateUserException {
@@ -126,7 +141,7 @@ public class UserDatabase implements ReadOnlyUserDatabase {
     /**
      * Adds a user to the User Database.
      *
-     * @throws DuplicatePersonException if an equivalent person already exists.
+     * @throws DuplicateUserException if an equivalent user already exists.
      */
     public void addUser(User user) throws DuplicateUserException {
         users.add(user);
@@ -134,16 +149,15 @@ public class UserDatabase implements ReadOnlyUserDatabase {
 
     /**
      * Replaces the given user {@code target} in the list with {@code editedUser}.
-     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedUser}.
      *
      * @throws DuplicateUserException if updating the user's details causes the user to be equivalent to
      *      another existing user in the list.
      * @throws UserNotFoundException if {@code target} could not be found in the list.
      */
-    public void updateUser(User target, User editedUser)
-            throws DuplicateUserException, UserNotFoundException {
-        requireNonNull(editedUser);
-        users.setUser(target, editedUser);
+    public void updateUserPassword(User target, User userWithNewPassword)
+            throws UserNotFoundException {
+        requireNonNull(userWithNewPassword);
+        users.setUser(target, userWithNewPassword);
     }
 
 
@@ -160,9 +174,9 @@ public class UserDatabase implements ReadOnlyUserDatabase {
     }
 
     /**
-     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * Resets the existing user list of this {@code UserDatabase} with {@code newData}.
      */
-    public void resetData(ReadOnlyUserDatabase newData) {
+    private void resetData(ReadOnlyUserDatabase newData) {
         requireNonNull(newData);
         List<User> userList = newData.getUsersList().stream().collect(Collectors.toList());
         try {

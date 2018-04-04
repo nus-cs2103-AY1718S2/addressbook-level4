@@ -51,5 +51,3 @@ public class CalendarAddCommand extends Command {
         }
     }
 }
-
-//@@author

@@ -25,7 +25,6 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.SwitchFeatureEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.login.User;
 
 /**
  * The Main Window. Provides the basic application layout containing

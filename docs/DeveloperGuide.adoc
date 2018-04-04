@@ -256,6 +256,7 @@ image::LoginFeatureUIComponent.png[width="800"]
 When the user is not logged in, commands that manipulate data in the application will be disabled. To avoid editing
 every single command, the invalidity of the command is handled in `LogicManager`.
 
+TODO: Add in design considerations
 
 ===== User Logout
 
@@ -997,18 +998,20 @@ route between addresses of the beneficiaries on the daily agenda to facilitate e
 
 **Kaiser Tan**
 
-`Major feature:` Export function with Secure Encryption
+`Major feature:` User Login
+
+* The application will support multiple users and each having their own addressbook.
+* User can login and logout safely, preventing external users from accessing the SLAP without authorisation
+* As a social worker, I want to secure my SLAP and only ensure that it is only accessible to me, hence a login function
+is needed to maintain the C-I-A security framework.
+
+`Minor feature:` Export function with Secure Encryption
 
 * The storage file of our application will always be encrypted when logged out. User can also export and transfer the
  storage file securely.
 * The social worker will have many sensitive data which needs to be kept confidential, hence a external user should not
 be able to see and read the storage file easily, especially when the user is logged out.
 
-`Minor feature:` User Login
-
-* User can login and logout safely, preventing external users from accessing the SLAP without authorisation
-* As a social worker, I want to secure my SLAP and only ensure that it is only accessible to me, hence a login function
-is needed to maintain the C-I-A security framework.
 
 **Clarissa Yong**
 

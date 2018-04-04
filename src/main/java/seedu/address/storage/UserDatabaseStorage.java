@@ -40,4 +40,5 @@ public interface UserDatabaseStorage {
      * @see #saveUserDatabase(ReadOnlyUserDatabase)
      */
     void saveUserDatabase(ReadOnlyUserDatabase userDatabase, String filePath) throws IOException;
+
 }

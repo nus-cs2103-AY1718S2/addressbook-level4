@@ -330,13 +330,16 @@ There is no need to save manually.
 
 // tag::dataencryption[]
 
-=== Login to your account:
+=== Login to your account: `login`
 
-SLAP will request for your login credentials (username and password) before allowing you to access it.
+Logs in to your application
+Format: `login u/USERNAME p/PASSWORD`
+
+Application will request for your login credentials (username and password) before allowing you to access it.
 
 === Logout from your account: `logout`
 
-SLAP allows to log out from your account so that you can ensure confidentiality of your data.
+Application allows to log out from your account so that you can ensure confidentiality of your data.
 
 
 === Encrypting data files `[coming in v2.0]`
@@ -374,5 +377,5 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Login* : `login u/USERNAME p/PASSWORD`
 * *Logout* : `logout`
-* *Login Status* : `login-status`

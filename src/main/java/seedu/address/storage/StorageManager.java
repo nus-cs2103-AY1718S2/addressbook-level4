@@ -9,6 +9,8 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.UserDatabaseChangedEvent;
+import seedu.address.commons.events.model.UserDeletedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -127,11 +129,36 @@ public class StorageManager extends ComponentManager implements Storage {
         userDatabaseStorage.saveUserDatabase(userDatabase, filePath);
     }
 
+    @Override
+    public void deleteAddressBook(User user) {
+        logger.fine("Attempting to delete to data file: " + user.getAddressBookFilePath());
+        addressBookStorage.deleteAddressBook(user);
+    }
+
+    @Override
+    @Subscribe
+    public void handleUserDatabaseChangedEvent(UserDatabaseChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local users data changed, saving to file"));
+        try {
+            saveUserDatabase(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
+    @Override
+    @Subscribe
+    public void handleUserDeletedEvent(UserDeletedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "User has been deleted, deleting files"));
+        deleteAddressBook(event.data);
+    }
+
     // ============== Storage updater =====================
 
     public void update(User user) {
         this.addressBookStorage = new XmlAddressBookStorage(user.getAddressBookFilePath());
     }
+
 
 
 }

@@ -14,11 +14,15 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.UserDatabaseChangedEvent;
+import seedu.address.commons.events.model.UserDeletedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.login.Password;
 import seedu.address.model.login.User;
 import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
+import seedu.address.model.login.exceptions.DuplicateUserException;
+import seedu.address.model.login.exceptions.UserNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -73,6 +77,9 @@ public class ModelManager extends ComponentManager implements Model {
         this(new AddressBook(), new UserPrefs(), new UserDatabase(), storage);
     }
 
+
+    // ============== AddressBook Modifiers =============================================================
+
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
@@ -110,21 +117,6 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    @Override
-    public boolean checkLoginCredentials(Username username, Password password) throws AlreadyLoggedInException {
-        boolean result = userDatabase.checkLoginCredentials(username, password);
-        if (result) {
-            reloadAddressBook(username);
-        }
-        return result;
-
-    }
-
-    @Override
-    public User getLoggedInUser(){
-        return userDatabase.getLoggedInUser();
-    }
-
     /**
      * Reloads and updates the addressBook and its storage path using the {@code username} provided.
      * @param username
@@ -150,6 +142,65 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.resetData(newData);
     }
 
+    // ============== UserDatabase Modifiers =============================================================
+
+    @Override
+    public ReadOnlyAddressBook getUserDatabase() {
+        return addressBook;
+    }
+
+    /** Raises an event to indicate the model has changed */
+    private void indicateUserDatabaseChanged() {
+        raise(new UserDatabaseChangedEvent(userDatabase));
+    }
+
+    /** Raises an event to indicate a user has been deleted */
+    private void indicateUserDeleted(User user) {
+        raise(new UserDeletedEvent(user));
+    }
+
+    @Override
+    public synchronized void deleteUser(User target) throws UserNotFoundException {
+        userDatabase.removeUser(target);
+        indicateUserDatabaseChanged();
+        indicateUserDeleted(target);
+    }
+
+    @Override
+    public synchronized void addUser(User person) throws DuplicateUserException {
+        userDatabase.addUser(person);
+        indicateUserDatabaseChanged();
+    }
+
+    @Override
+    public boolean checkLoginCredentials(Username username, Password password) throws AlreadyLoggedInException {
+        boolean result = userDatabase.checkLoginCredentials(username, password);
+        if (hasLoggedIn() && result) {
+            reloadAddressBook(username);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean checkCredentials(Username username, Password password) throws AlreadyLoggedInException {
+        boolean result = userDatabase.checkCredentials(username, password);
+        return result;
+    }
+
+    @Override
+    public void updateUserPassword(User target, User userWithNewPassword)
+            throws UserNotFoundException {
+        requireAllNonNull(target, userWithNewPassword);
+        userDatabase.updateUserPassword(target, userWithNewPassword);
+        indicateUserDatabaseChanged();
+    }
+
+    @Override
+    public User getLoggedInUser() {
+        return userDatabase.getLoggedInUser();
+    }
+
+
     @Override
     public boolean hasLoggedIn() {
         return userDatabase.hasLoggedIn();
@@ -159,6 +210,8 @@ public class ModelManager extends ComponentManager implements Model {
     public void setLoginStatus(boolean status) {
         userDatabase.setLoginStatus(status);
     }
+
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 

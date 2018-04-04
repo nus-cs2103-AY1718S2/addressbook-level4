@@ -1,7 +1,7 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-
+//@@author chuakunhong
 /**
  * Represents a remarks of the person in the address book.
  */
@@ -39,3 +39,4 @@ public class Remark {
     }
 
 }
+//@@author

@@ -19,7 +19,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.tag.Tag;
-
+//@@author TeyXinHui
 public class TagDeleteCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private Tag tagToDelete = new Tag("removeTag");
@@ -70,3 +70,4 @@ public class TagDeleteCommandTest {
     }
 
 }
+//@@author

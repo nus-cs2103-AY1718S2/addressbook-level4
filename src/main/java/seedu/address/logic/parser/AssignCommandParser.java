@@ -2,20 +2,18 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.index.Index.fromOneBased;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CUSTOMERS;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AssignCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.tag.Tag;
+
+//@@author melvintzw
 
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -34,7 +32,7 @@ public class AssignCommandParser implements Parser<AssignCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_CUSTOMERS);
 
         Index runnerIndex; //parameter for AssignCommand
-        Index[] customerIndex; //parameter for AssignCommand
+        Index[] customerIndexArray; //parameter for AssignCommand
 
         try {
             runnerIndex = ParserUtil.parseIndex(argMultimap.getPreamble());
@@ -43,34 +41,35 @@ public class AssignCommandParser implements Parser<AssignCommand> {
         }
 
         try {
-            List<String> customerIndices = argMultimap.getAllValues(PREFIX_CUSTOMERS);
-            List<Index> customerIndexAsList = new ArrayList<>();
-            for (String index : customerIndices) {
-                customerIndexAsList.add(ParserUtil.parseIndex(index));
-            }
-            customerIndex = customerIndexAsList.toArray(new Index[customerIndexAsList.size()]);
+            String customers = argMultimap.getValue(PREFIX_CUSTOMERS).get();
+            List<Index> customerIndexList = parseCustIndex(customers);
+            customerIndexArray = customerIndexList.toArray(new Index[customerIndexList.size()]);
 
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignCommand.MESSAGE_USAGE));
+        } catch (NumberFormatException nfe) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignCommand.MESSAGE_USAGE));
         }
 
-
-        return new AssignCommand(runnerIndex, customerIndex);
+        return new AssignCommand(runnerIndex, customerIndexArray);
     }
 
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
-     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Tag>} containing zero tags.
+     * Parses a string of customer numbers (representing indices) into a list of Index objects
+     *
+     * @param customers a string of numbers presenting indices
      */
-    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws IllegalValueException {
-        assert tags != null;
-
-        if (tags.isEmpty()) {
-            return Optional.empty();
+    private static List<Index> parseCustIndex(String customers) throws IllegalValueException, NumberFormatException {
+        String[] splitIndices = customers.split("\\s");
+        List<Index> indexList = new ArrayList<>();
+        for (String s : splitIndices) {
+            int index = Integer.parseInt(s);
+            indexList.add(fromOneBased(index));
         }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return Optional.of(ParserUtil.parseTags(tagSet));
+        if (indexList.size() < 1) {
+            throw new IllegalValueException("no customer index has been specified");
+        }
+        return indexList;
     }
 
 }

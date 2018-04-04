@@ -355,28 +355,29 @@ Figure 4. Example of add Group
 
 === Add Member To Group: `addGroupMember`
 
-Adds a person named `KEYWORD`  that exists in Fastis into a group `GROUP_NAME` that already exist in Fastis.
+Adds a person named `KEYWORD`  that exists in Fastis into a group `GROUP_NAME` that already exist in Fastis. +
 Alias: `aGM` +
 Format: `addGroupMember g/GROUP_NAME n/KEYWORD`
 
 [NOTE]
 ====
-GROUP_NAME cannot be an empty input.
-KEYWORD cannot be an empty input.
-KEYWORD must be the exact name of the person and it must be case-sensitive.
+GROUP_NAME cannot be an empty input. +
+KEYWORD cannot be an empty input. +
+KEYWORD must be the exact name of the person and it must be case-sensitive. +
+This command is undoable.
 ====
 
 Examples:
 
 * `addGroupMember g/CS2010 n/David Li` +
 Added person `David Li` into group `CS2010`  refer to Figure 5. +
-image:addGroupMembersToGroupExample.png[width ="500"] +
+image:addGroupMembersToGroupExample.png[width ="800"] +
 Figure 5. Example of addMembersToGroup +
 
 If person already added, Fastis will output already added person in group.
 * `addGroupMember g/CS2010 n/David Li` +
 Refer to Figure 6. +
-image:addGroupMembersToGroupFailExample.png[width ="500"] +
+image:addGroupMembersToGroupFailExample.png[width ="800"] +
 Figure 6. Example of addMembersToGroup +
 // end:AddGroup[]
 
@@ -443,7 +444,10 @@ Data files created by FASTIS will be encrypted using the `password` you have pro
 
 === Timetable Links
 
-Timetable links can be retrieved from the NUSmods website. To retrieve it simply go the the NUSMods website and click the *share* button.
+Timetable links can be retrieved from the NUSmods website. To retrieve it simply go the the NUSMods website `nusmods.com` and click the *share* button.
+image:nusModsShare.png[width ="500"]
+
+image:nusModsLinkResult.png[width ="500"]
 
 == Command Summary
 

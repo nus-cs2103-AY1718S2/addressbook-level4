@@ -26,6 +26,8 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
+    void deletePage(Person target);
+
     /** Deletes the given person. */
     void deletePerson(Person target) throws PersonNotFoundException;
 
@@ -34,6 +36,7 @@ public interface Model {
 
 
     void addPage(Person person) throws IOException;
+
 
     /** Adds the given appointment */
     void addAppointment(Appointment appointment) throws DuplicateAppointmentException;
@@ -51,9 +54,9 @@ public interface Model {
     void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    void updatePage(Person person) throws IOException;
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
-
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.

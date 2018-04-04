@@ -16,20 +16,6 @@ public class ExportCommandTest {
     public final UserPrefs userPrefs = new UserPrefs();
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-
-//    @Test
-//    public void execute_validExportCalendarCommand_success() {
-//        ExportType exportType = ExportType.CALENDAR;
-//        ExportCommand exportCommand = prepareCommand(exportType);
-//
-//        String expectedMessage = ExportCommand.CALENDAR_MESSAGE_SUCCESS;
-//
-//        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-//        expectedModel.export(exportType);
-//
-//        assertCommandSuccess(exportCommand, model, expectedMessage, expectedModel);
-//    }
-
     @Test
     public void execute_validExportPortfolioCommand_success() {
         ExportType exportType = ExportType.PORTFOLIO;

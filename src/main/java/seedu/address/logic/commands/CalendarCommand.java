@@ -9,7 +9,7 @@ import seedu.address.commons.events.ui.ShowCalendarRequestEvent;
  */
 public class CalendarCommand extends Command {
 
-    public static final String COMMAND_WORD = "calendar";
+    public static final String COMMAND_WORD = "calendar-launch";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Opens a calendar window.\n"
             + "Example: " + COMMAND_WORD;

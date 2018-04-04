@@ -20,7 +20,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.calendar.AppointmentEntry;
 import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
 import seedu.address.model.calendar.exceptions.DuplicateAppointmentException;
-import seedu.address.model.calendar.exceptions.EditApointmentFailException;
+import seedu.address.model.calendar.exceptions.EditAppointmentFailException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -99,10 +99,15 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
     }
 
     @Override
-    public void editAppointment(String searchText, AppointmentEntry reference) throws EditApointmentFailException {
+    public void editAppointment(String searchText, AppointmentEntry reference) throws EditAppointmentFailException {
         addressBook.editAppointment(searchText, reference);
         indicateAddressBookChanged();
 
+    }
+
+    @Override
+    public AppointmentEntry findAppointment(String searchText) throws AppointmentNotFoundException {
+        return addressBook.findAppointment(searchText);
     }
 
     @Override

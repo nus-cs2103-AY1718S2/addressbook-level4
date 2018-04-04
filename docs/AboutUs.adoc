@@ -15,7 +15,7 @@ image::yuxiangsg.png[width="150", align="left"]
 {empty}[https://github.com/yuxiangSg[github]] [<<yuxiang#, portfolio>>]
 
 Role: Developer
-Responsibilities: UI
+Responsibilities: UI and calendar implementation
 
 '''
 

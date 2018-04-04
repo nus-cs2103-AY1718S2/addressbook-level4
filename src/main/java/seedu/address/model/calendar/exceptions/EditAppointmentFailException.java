@@ -4,5 +4,5 @@ package seedu.address.model.calendar.exceptions;
  * or unable to find an specified appointment .
  */
 
-public class EditApointmentFailException extends Exception {
+public class EditAppointmentFailException extends Exception {
 }

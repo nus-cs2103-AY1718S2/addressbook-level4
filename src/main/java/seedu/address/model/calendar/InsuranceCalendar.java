@@ -12,7 +12,7 @@ import com.calendarfx.model.Interval;
 
 import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
 import seedu.address.model.calendar.exceptions.DuplicateAppointmentException;
-import seedu.address.model.calendar.exceptions.EditApointmentFailException;
+import seedu.address.model.calendar.exceptions.EditAppointmentFailException;
 
 
 /**
@@ -96,37 +96,64 @@ public class InsuranceCalendar {
 
         String givenTitle = entryToCheck.getTitle();
         Interval givenInterval = entryToCheck.getInterval();
-        AppointmentEntry apppointmentEntryToCheck = new AppointmentEntry(givenTitle, givenInterval);
-        appointmentEntries.remove(apppointmentEntryToCheck);
+        AppointmentEntry appointmentEntryToCheck = new AppointmentEntry(givenTitle, givenInterval);
+        appointmentEntries.remove(appointmentEntryToCheck);
     }
 
     /**
      * edit appointments found with the the given searchText
      *
-     * @throws EditApointmentFailException if the appointment to remove does not exist or duplicate appointment to add.
+     * @throws EditAppointmentFailException if the appointment to remove does not exist or duplicate appointment to add.
      */
     public void editAppointmentEntry(String searchText, AppointmentEntry referenceEntry)
-            throws EditApointmentFailException {
+            throws EditAppointmentFailException {
 
         try {
             removeAppointment(searchText);
         } catch (AppointmentNotFoundException e) {
-            throw new EditApointmentFailException();
+            throw new EditAppointmentFailException();
         }
 
         try {
             addAppointment(referenceEntry);
         } catch (DuplicateAppointmentException e) {
-            throw new EditApointmentFailException();
+            throw new EditAppointmentFailException();
         }
-
-
-
     }
 
+    /**
+     * return appointments found with the given keywords in the calendar.
+     *
+     * @throws AppointmentNotFoundException if the appointment to find does not exist.
+     */
+    public AppointmentEntry findAppointment(String searchText) throws AppointmentNotFoundException {
 
+        List<Entry<?>> foundEntires = calendar.findEntries(searchText);
 
+        if (foundEntires.isEmpty()) {
+            throw new AppointmentNotFoundException();
+        } else {
+            return findAppointmentEntry(foundEntires.get(0));
+        }
+    }
 
+    /**
+     * return a given entry in the appointmentEntries
+     *
+     */
+    public AppointmentEntry findAppointmentEntry(Entry entryToCheck) {
+
+        String givenTitle = entryToCheck.getTitle();
+        Interval givenInterval = entryToCheck.getInterval();
+        AppointmentEntry appointmentEntryToCheck = new AppointmentEntry(givenTitle, givenInterval);
+
+        for (AppointmentEntry entry : appointmentEntries) {
+            if (entry.equals(appointmentEntryToCheck)) {
+                return entry;
+            }
+        }
+        return null;
+    }
 
     /**
      * Returns true if the calender contains an equivalent appointment as the given argument.

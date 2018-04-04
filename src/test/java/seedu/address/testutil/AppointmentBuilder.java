@@ -1,5 +1,7 @@
 package seedu.address.testutil;
 
+import java.time.LocalDateTime;
+
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
 
@@ -10,7 +12,11 @@ import seedu.address.model.calendar.AppointmentEntry;
  */
 public class AppointmentBuilder {
     public static final String DEFAULT_TITLE = "Meet John";
-    public static final Interval DEFAULT_INTERVAL = new Interval();
+    public static final LocalDateTime DEFAULT_START_DATE_TIME = LocalDateTime.of
+            (2018, 04, 04, 12, 00);
+
+    public static final LocalDateTime DEFAULT_END_DATE_TIME = LocalDateTime.of
+            (2018, 04, 04, 13, 00);
 
     private Entry appointmentEntry;
     private Interval interval;
@@ -18,7 +24,7 @@ public class AppointmentBuilder {
 
     public AppointmentBuilder() {
         givenTitle = DEFAULT_TITLE;
-        interval = DEFAULT_INTERVAL;
+        interval = new Interval(DEFAULT_START_DATE_TIME, DEFAULT_END_DATE_TIME);
         appointmentEntry = new Entry(givenTitle, interval);
     }
 

@@ -22,7 +22,7 @@ public class CalendarPanel {
 
     public CalendarPanel(CalendarSource calendar) {
         calendarPage = new CalendarView();
-        calendarPage.getCalendarSources().setAll(calendar);
+        assignCalendar(calendar);
         configurCalendarPage();
         EventsCenter.getInstance().registerHandler(this);
     }
@@ -43,6 +43,13 @@ public class CalendarPanel {
         calendarPage.showMonthPage();
 
 
+    }
+
+    /**
+     * Assign calendar to Calendar GUI
+     */
+    void assignCalendar(CalendarSource calendar) {
+        calendarPage.getCalendarSources().setAll(calendar);
     }
 
     @Subscribe

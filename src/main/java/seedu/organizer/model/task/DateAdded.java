@@ -5,7 +5,7 @@ import static seedu.organizer.commons.util.AppUtil.checkArgument;
 
 import java.time.LocalDate;
 
-//@@author gdominickenn
+//@@author dominickenn
 /**
  * Represents a Task's dateAdded in the organizer book.
  * Guarantees: immutable; is valid as declared in {@link #isValidDeadline(String)}

@@ -26,7 +26,7 @@ public class UserDatabase implements ReadOnlyUserDatabase {
     private final UniqueUserList users;
 
     private boolean hasLoggedIn;
-    private User userLoggedIn;
+    private User loggedInUser;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -71,7 +71,7 @@ public class UserDatabase implements ReadOnlyUserDatabase {
      * Returns the User who is logged in.
      */
     public User getLoggedInUser() {
-        return userLoggedIn;
+        return loggedInUser;
     }
 
     /**
@@ -107,6 +107,7 @@ public class UserDatabase implements ReadOnlyUserDatabase {
             return hasLoggedIn;
         } else {
             hasLoggedIn = true;
+            loggedInUser = toCheck;
             return hasLoggedIn;
         }
     }

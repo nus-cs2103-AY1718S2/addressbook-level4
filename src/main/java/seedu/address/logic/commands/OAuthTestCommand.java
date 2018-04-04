@@ -5,6 +5,7 @@ package seedu.address.logic.commands;
 import java.io.IOException;
 
 import seedu.address.logic.OAuthManager;
+import seedu.address.model.login.User;
 
 /**
  * Opens a calendar window.
@@ -20,9 +21,11 @@ public class OAuthTestCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        User user = model.getLoggedInUser();
+
         try {
-            OAuthManager.authorize();
-            OAuthManager.addEvent();
+            OAuthManager.authorize(user);
+            OAuthManager.addEvent(user);
         } catch (IOException e) {
             // Do nothing for now
         }

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 import seedu.address.logic.OAuthManager;
+import seedu.address.model.login.User;
 
 /**
 * Lists up to the next 10 calendar events from their Google Calendar to the user.
@@ -19,9 +20,10 @@ public class CalendarListCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        User user = model.getLoggedInUser();
 
         try {
-            List<String> upcomingEvents = OAuthManager.getUpcomingEventsAsStringList();
+            List<String> upcomingEvents = OAuthManager.getUpcomingEventsAsStringList(user);
             String upcomingEventsAsString = String.join("\n", upcomingEvents);
 
             return new CommandResult(upcomingEventsAsString);

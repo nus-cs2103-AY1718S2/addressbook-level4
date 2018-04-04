@@ -4,7 +4,6 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CAL_END_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CAL_EVENT_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CAL_LINK_PERSON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CAL_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CAL_START_DATE_TIME;
 
@@ -14,6 +13,7 @@ import com.google.api.services.calendar.model.Event;
 
 import seedu.address.logic.OAuthManager;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.login.User;
 
 /**
 * Adds an event to the user's Google Calendar
@@ -44,9 +44,10 @@ public class CalendarAddCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+        User user = model.getLoggedInUser();
 
         try {
-            String apiResponse = OAuthManager.addEvent(event);
+            String apiResponse = OAuthManager.addEvent(user, event);
             return new CommandResult(apiResponse);
 
         } catch (IOException e) {

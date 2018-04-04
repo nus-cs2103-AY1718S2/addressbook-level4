@@ -444,18 +444,18 @@ List of medical appointments made by Betsy.
 * `va John` +
 List of medical appointments made by John.
 
-==== Viewing medical appointments by date: `viewappt` [coming in v1.4]
+==== Viewing medical appointments by month: `viewappt` [coming in v1.4]
 
-Shows a list of medical appointments of a particular date.
-Format: `viewappt DATE` or `va DATE`
+Shows a list of medical appointments in month view.
+Format: `viewappt` or `va`
 
 Examples:
 
-* `viewappt 19/3/2018` +
-List of medical appointments on 19/3/2018.
+* `viewappt` +
+List of medical appointments on current month. User can also navigate to other months to view medical appointments for the particular month.
 
-* `va 23/3/2019` +
-List of medical appointments on 23/3/2018.
+* `va` +
+List of medical appointments on current month. User can also navigate to other months to view medical appointments for the particular month.
 
 ==== Viewing the schedule for a patient across all specialists `[coming in v2.0]`
 

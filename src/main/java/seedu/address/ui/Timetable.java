@@ -1,3 +1,4 @@
+//@@author LeonidAgarth
 package seedu.address.ui;
 
 import java.util.ArrayList;
@@ -17,13 +18,13 @@ import javafx.scene.text.Text;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.WeeklyEvent;
 
-//@@author LeonidAgarth
 /**
  * The weekly Timetable of the App.
  */
 public class Timetable extends UiPart<Region> {
 
     private static final String FXML = "Timetable.fxml";
+    private static final int MAX_WIDTH = 1100;
 
     private ArrayList<TimetableSlot> allTimetableSlots = new ArrayList<>(72);
     private VBox timetableView;
@@ -53,8 +54,8 @@ public class Timetable extends UiPart<Region> {
     private void initTimetable() {
         // Create the timetable grid pane
         GridPane timetable = new GridPane();
-        timetable.setPrefSize(1250, 1000);
-        timetable.setMaxWidth(1400);
+        timetable.setPrefSize(MAX_WIDTH, 1000);
+        timetable.setMaxWidth(MAX_WIDTH);
         timetable.setGridLinesVisible(false);
         // Create rows and columns with anchor panes for the timetable
         for (int i = 0; i < 11; i++) {
@@ -69,12 +70,14 @@ public class Timetable extends UiPart<Region> {
             new Text("Wed"), new Text("Thu"), new Text("Fri")};
         GridPane dayLabels = new GridPane();
         dayLabels.setPrefWidth(600);
+        dayLabels.setMaxWidth(MAX_WIDTH);
         dayLabels.setGridLinesVisible(false);
         int col = 0;
         for (Text txt : dayNames) {
             txt.getStyleClass().add("dayName");
             HBox box = new HBox(txt);
             box.setPrefSize(200, 20);
+            box.setMaxWidth(MAX_WIDTH);
             box.setAlignment(Pos.BASELINE_CENTER);
             if (col == 0) {
                 box.getStyleClass().add("timecell");

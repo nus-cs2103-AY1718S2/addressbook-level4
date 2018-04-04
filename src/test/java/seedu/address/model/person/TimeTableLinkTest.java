@@ -23,17 +23,6 @@ public class TimeTableLinkTest {
     }
 
     @Test
-    public void hashCode_variousTest() {
-        TimeTableLink timeTableLink1 = new TimeTableLink("http://modsn.us/MYwiD");
-        TimeTableLink timeTableLink2 = new TimeTableLink("http://modsn.us/MYwiD");
-        TimeTableLink timeTableLink3 = new TimeTableLink("http://modsn.us/FumdA");
-
-        assertEquals(timeTableLink1.hashCode(), timeTableLink1.hashCode());
-        assertEquals(timeTableLink1.hashCode(), timeTableLink2.hashCode());
-        assertNotEquals(timeTableLink2.hashCode(), timeTableLink3.hashCode());
-    }
-
-    @Test
     public void isValidLink() {
         // null email
         Assert.assertThrows(NullPointerException.class, () -> TimeTableLink.isValidLink(null));
@@ -58,5 +47,17 @@ public class TimeTableLinkTest {
 
         // valid email
         assertTrue(TimeTableLink.isValidLink("http://modsn.us/MYwiD"));
+    }
+
+    //@@author LeonidAgarth
+    @Test
+    public void hashCode_variousTest() {
+        TimeTableLink timeTableLink1 = new TimeTableLink("http://modsn.us/MYwiD");
+        TimeTableLink timeTableLink2 = new TimeTableLink("http://modsn.us/MYwiD");
+        TimeTableLink timeTableLink3 = new TimeTableLink("http://modsn.us/FumdA");
+
+        assertEquals(timeTableLink1.hashCode(), timeTableLink1.hashCode());
+        assertEquals(timeTableLink1.hashCode(), timeTableLink2.hashCode());
+        assertNotEquals(timeTableLink2.hashCode(), timeTableLink3.hashCode());
     }
 }

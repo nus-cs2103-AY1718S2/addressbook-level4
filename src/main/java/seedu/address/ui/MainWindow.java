@@ -146,6 +146,7 @@ public class MainWindow extends UiPart<Stage> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
+    //@@author LeonidAgarth
     /**
      * Clears the old calendar and display an updated one
      */
@@ -164,6 +165,7 @@ public class MainWindow extends UiPart<Stage> {
         calendarPlaceholder.getChildren().add(timetable.getTimetableView());
     }
 
+    //@@author
     void hide() {
         primaryStage.hide();
     }

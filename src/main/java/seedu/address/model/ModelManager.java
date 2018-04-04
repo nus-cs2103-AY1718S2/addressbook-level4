@@ -14,8 +14,8 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.CalendarChangedEvent;
 import seedu.address.commons.events.ui.TimetableChangedEvent;
-import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
@@ -81,6 +81,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //@@author LeonidAgarth
     @Override
     public void indicateCalendarChanged() {
         raise(new CalendarChangedEvent());
@@ -91,6 +92,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new TimetableChangedEvent());
     }
 
+    //@@author
     @Override
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
         addressBook.removePerson(target);
@@ -160,6 +162,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author LeonidAgarth
     @Override
     public synchronized void addEvent(Event event) throws DuplicateEventException {
         addressBook.addEvent(event);
@@ -176,6 +179,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void switchView() {
         inCalendarView = !inCalendarView;
     }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -211,6 +215,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredToDos.setPredicate(predicate);
     }
 
+    //@@author LeonidAgarth
     //=========== Filtered Event List Accessors =============================================================
 
     /**
@@ -227,6 +232,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }
+    //@@author
     //=========== Filtered Group List Accessors =============================================================
 
     /**

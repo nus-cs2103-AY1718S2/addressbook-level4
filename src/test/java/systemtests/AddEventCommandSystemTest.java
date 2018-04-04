@@ -37,8 +37,8 @@ import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
-import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.testutil.EventBuilder;
 import seedu.address.testutil.EventUtil;
 

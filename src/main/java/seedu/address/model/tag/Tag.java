@@ -12,9 +12,9 @@ public class Tag {
     public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
     public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
+    //@@author LeonidAgarth
     public static final String MESSAGE_TAG_COLOR_CONSTRAINTS = "Colors available are: "
             + "teal, red, yellow, blue, orange, brown, green, pink, black, grey";
-    public static final String TAG_COLOR_FILE_PATH = "data/tagColors.txt";
     private static final String[] AVAILABLE_COLORS = new String[] {"teal", "red", "yellow", "blue", "orange", "brown",
         "green", "pink", "black", "grey", "undefined"};
 
@@ -42,13 +42,6 @@ public class Tag {
     }
 
     /**
-     * Returns true if a given string is a valid tag name.
-     */
-    public static boolean isValidTagName(String test) {
-        return test.matches(TAG_VALIDATION_REGEX);
-    }
-
-    /**
      * Returns true if a given string is a available tag color
      */
     public static boolean isValidTagColor(String color) {
@@ -59,6 +52,14 @@ public class Tag {
             }
         }
         return false;
+    }
+
+    //@@author
+    /**
+     * Returns true if a given string is a valid tag name.
+     */
+    public static boolean isValidTagName(String test) {
+        return test.matches(TAG_VALIDATION_REGEX);
     }
 
     @Override

@@ -245,6 +245,22 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String content} into a {@code Content}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code content} is invalid.
+     */
+    public static Information parseInformation(String information) throws IllegalValueException {
+        requireNonNull(information);
+        String trimmedInformation = information.trim();
+        if (!Content.isValidContent(trimmedInformation)) {
+            throw new IllegalValueException(Information.MESSAGE_INFORMATION_CONSTRAINTS);
+        }
+        return new Information(trimmedInformation);
+    }
+
+    //@@author LeonidAgarth
+    /**
      * Parses a {@code String phone} into a {@code Phone}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -259,20 +275,6 @@ public class ParserUtil {
         }
     }
 
-    /**
-     * Parses a {@code String content} into a {@code Content}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code content} is invalid.
-     */
-    public static Information parseInformation(String information) throws IllegalValueException {
-        requireNonNull(information);
-        String trimmedInformation = information.trim();
-        if (!Content.isValidContent(trimmedInformation)) {
-            throw new IllegalValueException(Information.MESSAGE_INFORMATION_CONSTRAINTS);
-        }
-        return new Information(trimmedInformation);
-    }
 
     /**
      * Parses a {@code String name} into a {@code String}.

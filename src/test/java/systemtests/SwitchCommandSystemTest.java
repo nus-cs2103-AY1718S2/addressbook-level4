@@ -1,3 +1,4 @@
+//@@author LeonidAgarth
 package systemtests;
 
 import org.junit.Assert;

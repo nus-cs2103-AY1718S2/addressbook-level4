@@ -1,3 +1,4 @@
+//@@author LeonidAgarth
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -9,7 +10,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagNotFoundException;
 
-//@@author LeonidAgarth
 /**
  * Edits the details of an existing person in the address book.
  */

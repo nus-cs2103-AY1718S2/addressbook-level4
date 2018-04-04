@@ -120,6 +120,7 @@ public class UiManager extends ComponentManager implements Ui {
                 event.exception);
     }
 
+    //@@author LeonidAgarth
     @Subscribe
     private void handleCalendarChangedEvent(CalendarChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

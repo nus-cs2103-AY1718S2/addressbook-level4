@@ -405,6 +405,7 @@
     -fx-text-fill: black;
     -fx-background-color: grey;
 }
+
 /* @@author LeonidAgarth */
 #calendarPlaceholder .yearMonth {
     -fx-font: 25px Tahoma;

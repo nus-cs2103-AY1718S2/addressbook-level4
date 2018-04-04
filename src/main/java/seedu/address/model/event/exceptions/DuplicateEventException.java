@@ -1,5 +1,5 @@
 //@@author LeonidAgarth
-package seedu.address.model.event;
+package seedu.address.model.event.exceptions;
 
 import seedu.address.commons.exceptions.DuplicateDataException;
 

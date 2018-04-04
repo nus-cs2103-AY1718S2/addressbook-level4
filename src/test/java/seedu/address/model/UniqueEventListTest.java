@@ -1,3 +1,4 @@
+//@@author LeonidAgarth
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
@@ -13,10 +14,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
-import seedu.address.model.event.EventNotFoundException;
 import seedu.address.model.event.UniqueEventList;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.testutil.EventBuilder;
 
 public class UniqueEventListTest {

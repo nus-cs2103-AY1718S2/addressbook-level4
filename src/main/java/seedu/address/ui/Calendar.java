@@ -1,3 +1,4 @@
+//@@author LeonidAgarth
 package seedu.address.ui;
 
 import java.time.LocalDate;
@@ -19,7 +20,6 @@ import javafx.scene.text.Text;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.Event;
 
-//@@author LeonidAgarth
 /**
  * The Calendar of the App.
  * <p>

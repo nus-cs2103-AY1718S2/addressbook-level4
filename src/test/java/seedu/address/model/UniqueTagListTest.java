@@ -24,6 +24,7 @@ public class UniqueTagListTest {
         uniqueTagList.asObservableList().remove(0);
     }
 
+    //@@author LeonidAgarth
     @Test
     public void equals_sameList_true() throws Exception {
         UniqueTagList uniqueTagList1 = new UniqueTagList();

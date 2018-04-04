@@ -1,3 +1,4 @@
+//@@author LeonidAgarth
 package seedu.address.ui;
 
 import java.time.LocalDate;
@@ -12,7 +13,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import seedu.address.model.event.Event;
 
-//@@author LeonidAgarth
 /**
  * Node to display each cell/day of the calendar
  */

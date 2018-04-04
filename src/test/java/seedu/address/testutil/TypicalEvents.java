@@ -1,3 +1,4 @@
+//@@author LeonidAgarth
 package seedu.address.testutil;
 
 import static seedu.address.testutil.TypicalToDos.getTypicalToDos;
@@ -7,8 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
-import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.todo.ToDo;

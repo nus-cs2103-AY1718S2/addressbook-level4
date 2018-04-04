@@ -3,8 +3,8 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
@@ -123,6 +123,7 @@ public interface Model {
     /** Adds the given Event */
     void addEvent(Event event) throws DuplicateEventException;
 
+    //@@author LeonidAgarth
     /** Checks whether application is in Calendar or Timetable view */
     boolean calendarIsViewed();
 

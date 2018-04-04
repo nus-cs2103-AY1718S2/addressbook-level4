@@ -62,7 +62,7 @@ public class ChangeTagColorCommandSystemTest extends AddressBookSystemTest {
     /**
      * Performs the verification: <br>
      * 1. Asserts that result display node displays the success message of executing {@code ChangeTagColorCommand}.<br>
-     * 2. Asserts that the model related components are updated to reflect the tag being updated to values 
+     * 2. Asserts that the model related components are updated to reflect the tag being updated to values
      * specified in {@code changeTagColoredTag}.<br>
      */
     private void assertCommandSuccess(String command, Tag changedTag) {

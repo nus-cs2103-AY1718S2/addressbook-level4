@@ -11,13 +11,14 @@ import seedu.address.model.tag.Tag;
 /**
  * Parses the given {@code String} of arguments in the context of the ChangeTagColorCommand
  * and returns an ChangeTagColorCommand object for execution.
+ *
  * @throws ParseException if the user input does not conform the expected format
  */
 public class ChangeTagColorCommandParser implements Parser<ChangeTagColorCommand> {
 
     @Override
     public ChangeTagColorCommand parse(String userInput) throws ParseException {
-        String trimmedInput = userInput.trim().replaceAll(" +", " ");;
+        String trimmedInput = userInput.trim().replaceAll(" +", " ");
         String[] args = trimmedInput.split(" ");
         if (args.length != 2) {
             throw new ParseException(

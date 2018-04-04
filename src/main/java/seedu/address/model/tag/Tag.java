@@ -55,6 +55,7 @@ public class Tag {
     }
 
     //@@author
+
     /**
      * Returns true if a given string is a valid tag name.
      */

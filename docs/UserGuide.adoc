@@ -361,9 +361,9 @@ Format: `addGroupMember g/GROUP_NAME n/KEYWORD`
 
 [NOTE]
 ====
-GROUP_NAME cannot be an empty input.
-KEYWORD cannot be an empty input.
-KEYWORD must be the exact name of the person and it must be case-sensitive.
+GROUP_NAME cannot be an empty input. +
+KEYWORD cannot be an empty input. +
+KEYWORD must be the exact name of the person and it must be case-sensitive. +
 This command is undoable.
 ====
 

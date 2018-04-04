@@ -15,7 +15,7 @@ import seedu.address.model.person.Person;
  * logic for the shortest delivery route
  */
 public class RouteOptimization {
-    public static final String HQ_ADDRESS = "301 South Buona Vista Road";
+    public static final String HQ_ADDRESS = "Kent Ridge MRT";
 
     /**
      *
@@ -56,6 +56,7 @@ public class RouteOptimization {
         return optimizedRoute;
     }
 
+    //@@author ncaminh
     /**
      * Check whether the address can be found by Google Map API or not
      * @param address
@@ -70,6 +71,7 @@ public class RouteOptimization {
         return true;
     }
 
+    //@@author meerakanani10
     public List<String> getStartingAddress(List<String> filteredAddresses, List<String> optimizedRoute) {
         Map<String, Double> startingRoute = new LinkedHashMap<>();
         GetDistance distance = new GetDistance();

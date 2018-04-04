@@ -47,10 +47,10 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": assigns customers to a runner "
             + "by the index number used in the last person listing.\n"
-            + "Parameters: RUNNER-INDEX (must be a positive integer) "
-            + PREFIX_CUSTOMERS + " CUSTOMER INDEX "
-            + "[ CUSTOMER INDEX...]\n"
-            + "Example: " + COMMAND_WORD + " 5 2 ";
+            + "Parameters: RUNNER-INDEX (positive integer) "
+            + PREFIX_CUSTOMERS + " CUSTOMER INDEX (positive integer) "
+            + "[ CUSTOMER 2 INDEX...]\n"
+            + "Example: " + COMMAND_WORD + " 5 " + PREFIX_CUSTOMERS + " 2 ";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Assigned: %1$s"; //TODO: implement correct message
 

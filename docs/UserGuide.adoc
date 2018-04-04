@@ -83,7 +83,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 |add (`a`)
 |kbd:[Ctrl+Space]
-|`add n:NAME type:r(or c) [p:PHONE_NUMBER] [e:EMAIL] [a:ADDRESS] [t:TAG] ...`
+|`add n:NAME ty:r(or c) [p:PHONE_NUMBER] [e:EMAIL] [a:ADDRESS] [t:TAG] ...`
 
 |edit (`e`)
 |kbd:[Ctrl+E]
@@ -136,11 +136,11 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 *Usage examples:*
 
 ====
- add n: John Doe type: c p: 98765432 e: johnd@example.com a: John street, block 123, #01-01
+ add n: John Doe ty: c p: 98765432 e: johnd@example.com a: John street, block 123, #01-01
 ====
 
 ====
- add n: Betsy Crowe type: r t: friend e: betsycrowe@example.com a: Newgate Prison p: 1234567 t: criminal
+ add n: Betsy Crowe ty: r t: friend e: betsycrowe@example.com a: Newgate Prison p: 1234567 t: criminal
 ====
 ***
 === Editing a person : `edit`

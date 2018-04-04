@@ -15,6 +15,7 @@ import seedu.progresschecker.logic.commands.Command;
 import seedu.progresschecker.logic.commands.CreateIssue;
 import seedu.progresschecker.logic.commands.DeleteCommand;
 import seedu.progresschecker.logic.commands.EditCommand;
+import seedu.progresschecker.logic.commands.EditIssueCommand;
 import seedu.progresschecker.logic.commands.ExitCommand;
 import seedu.progresschecker.logic.commands.FindCommand;
 import seedu.progresschecker.logic.commands.HelpCommand;
@@ -73,6 +74,10 @@ public class ProgressCheckerParser {
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
+
+        case EditIssueCommand.COMMAND_WORD:
+        case EditIssueCommand.COMMAND_ALIAS:
+            return new EditIssueCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:

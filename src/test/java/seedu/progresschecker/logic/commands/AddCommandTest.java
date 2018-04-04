@@ -167,6 +167,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateIssue(Index index, Issue editedIssue) throws IOException {
+            fail("This method should not be called");
+        }
+
+        @Override
         public void addPhoto(PhotoPath photoPath) throws DuplicatePhotoException {
             fail("This method should not be called.");
         }

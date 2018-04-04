@@ -5,6 +5,7 @@ import static seedu.progresschecker.commons.util.CollectionUtil.requireAllNonNul
 import java.util.List;
 import java.util.Objects;
 
+//@@author adityaa1998
 /**
  * Represents an Issue.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -21,7 +22,7 @@ public class Issue {
      * Every field must be present and not null.
      */
     public Issue(Title title, List<Assignees> assigneesList, Milestone milestone, Body body, List<Labels> labelsList) {
-        requireAllNonNull(title, assigneesList, milestone, body);
+        requireAllNonNull(title);
         this.title = title;
         this.assigneesList = assigneesList;
         this.milestone = milestone;

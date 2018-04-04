@@ -81,6 +81,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateProgressCheckerChanged();
     }
 
+    //@author adityaa1998
     @Override
     public synchronized void closeIssueOnGithub(Index index) throws IOException, CommandException {
         progressChecker.closeIssueOnGithub(index);
@@ -92,17 +93,21 @@ public class ModelManager extends ComponentManager implements Model {
         progressChecker.createIssueOnGitHub(issue);
         indicateProgressCheckerChanged();
     }
+    //@@author
+
     @Override
     public synchronized void sort() {
         progressChecker.sort();
         indicateProgressCheckerChanged();
     }
 
+    //@@author adityaa1998
     @Override
     public synchronized void reopenIssueOnGithub(Index index) throws IOException, CommandException {
         progressChecker.reopenIssueOnGithub(index);
         indicateProgressCheckerChanged();
     }
+    //@@author
 
     @Override
     public void updatePerson(Person target, Person editedPerson)
@@ -112,6 +117,16 @@ public class ModelManager extends ComponentManager implements Model {
         progressChecker.updatePerson(target, editedPerson);
         indicateProgressCheckerChanged();
     }
+
+    //@@author adityaa1998
+    @Override
+    public void updateIssue(Index index, Issue editedIssue) throws IOException {
+        requireAllNonNull(index, editedIssue);
+
+        progressChecker.updateIssue(index, editedIssue);
+        indicateProgressCheckerChanged();
+    }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 

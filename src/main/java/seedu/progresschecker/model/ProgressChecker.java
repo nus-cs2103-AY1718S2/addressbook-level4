@@ -152,6 +152,31 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     }
 
     /**
+     * Replaces the given person {@code target} in the list with {@code editedPerson}.
+     * {@code ProgressChecker}'s tag list will be updated with the tags of {@code editedPerson}.
+     *
+     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
+     *      another existing person in the list.
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     *
+     * @see #syncWithMasterTagList(Person)
+     */
+    public void updatePerson(Person target, Person editedPerson)
+            throws DuplicatePersonException, PersonNotFoundException {
+        requireNonNull(editedPerson);
+
+        Person syncedEditedPerson = syncWithMasterTagList(editedPerson);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the person list.
+        persons.setPerson(target, syncedEditedPerson);
+    }
+
+    //@@author adityaa1998
+
+    //issue-level operations
+
+    /**
      * Creates issue on github
      *
      * @throws IOException if theres any fault in the input values or the authentication fails due to wrong input
@@ -178,15 +203,18 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
             listOfLabels.add(labelsList.get(ct).toString());
         }
 
-        //GHMilestone check = repository.getMilestone(1);
-        GHMilestone check = repository.getMilestone(getMilestone.get(i.getMilestone()));
         GHIssue createdIssue = issueBuilder.create();
+        //GHMilestone check = repository.getMilestone(1);
+        if (i.getMilestone() != null) {
+            GHMilestone check = repository.getMilestone(getMilestone.get(i.getMilestone()));
+            createdIssue.setMilestone(check);
+        }
         createdIssue.setAssignees(listOfUsers);
         createdIssue.setLabels(listOfLabels.toArray(new String[0]));
-        createdIssue.setMilestone(check);
     }
 
     /**
+     * Replaces the given issue at {@code index} from github with {@code editedPerson}.
      * reopens an issue on github
      *
      * @throws IOException if the index mentioned is not valid or he's closed
@@ -219,22 +247,42 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
      * Replaces the given person {@code target} in the list with {@code editedPerson}.
      * {@code ProgressChecker}'s tag list will be updated with the tags of {@code editedPerson}.
      *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws IOException if there is any problem in git authentication or parameter
      *
-     * @see #syncWithMasterTagList(Person)
      */
-    public void updatePerson(Person target, Person editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireNonNull(editedPerson);
+    public void updateIssue(Index index, Issue editedIssue) throws IOException {
+        requireNonNull(editedIssue);
+        GitHub github = GitHub.connectUsingPassword(userLogin, userAuthentication);
+        GHRepository repository = github.getRepository(repoName);
+        GHIssue toEdit = repository.getIssue(index.getOneBased());
 
-        Person syncedEditedPerson = syncWithMasterTagList(editedPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
-        persons.setPerson(target, syncedEditedPerson);
+        List<Assignees> assigneesList = editedIssue.getAssignees();
+        List<Labels> labelsList = editedIssue.getLabelsList();
+
+        ArrayList<GHUser> listOfUsers = new ArrayList<>();
+        ArrayList<String> listOfLabels = new ArrayList<>();
+        MilestoneMap obj = new MilestoneMap();
+        HashMap<Milestone, Integer> getMilestone = obj.getMilestoneMap();
+
+        for (int ct = 0; ct < assigneesList.size(); ct++) {
+            listOfUsers.add(github.getUser(assigneesList.get(ct).toString()));
+        }
+
+        for (int ct = 0; ct < labelsList.size(); ct++) {
+            listOfLabels.add(labelsList.get(ct).toString());
+        }
+
+        if (editedIssue.getMilestone() != null) {
+            GHMilestone check = repository.getMilestone(getMilestone.get(editedIssue.getMilestone()));
+            toEdit.setMilestone(check);
+        }
+        toEdit.setTitle(editedIssue.getTitle().toString());
+        toEdit.setBody(editedIssue.getBody().toString());
+        toEdit.setAssignees(listOfUsers);
+        toEdit.setLabels(listOfLabels.toArray(new String[0]));
     }
+
+    //@@author
 
     /**
      *  Updates the master tag list to include tags in {@code person} that are not in the list.

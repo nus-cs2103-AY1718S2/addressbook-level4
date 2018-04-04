@@ -2,6 +2,7 @@ package seedu.progresschecker.model.issues;
 
 import java.util.HashMap;
 
+//@@author adityaa1998
 /**
  * Initialises and returns a Hashmap of milestones
  */

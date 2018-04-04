@@ -36,6 +36,8 @@ public interface Model {
     /** Sorts the persons in ProgressChecker according to their names in alphabetical order */
     void sort();
 
+    //@@author adityaa1998
+
     /** creates an issue on github */
     void createIssueOnGitHub(Issue issue) throws IOException;
 
@@ -44,6 +46,15 @@ public interface Model {
 
     /** closes an issue issue on github */
     void closeIssueOnGithub(Index index) throws IOException, CommandException;
+
+    /**
+     * Replaces the fields in Issue {@code index} with {@code editedIssue}.
+     *
+     * @throws IOException if while updating the issue there is some problem in authentication
+     */
+    void updateIssue(Index index, Issue editedIssue) throws IOException;
+
+    //@@author
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

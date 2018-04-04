@@ -88,6 +88,9 @@ public class ModelManager extends ComponentManager implements Model {
         if (typeToExport.equals(ExportType.PORTFOLIO)) {
             addressBook.exportPortfolio();
         }
+        if (typeToExport.equals(ExportType.CALENDAR)) {
+            addressBook.exportCalendar();
+        }
     }
 
     //=========== Filtered Person List Accessors =============================================================

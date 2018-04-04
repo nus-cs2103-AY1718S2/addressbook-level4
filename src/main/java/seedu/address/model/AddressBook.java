@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -14,14 +15,18 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+
 import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
+import seedu.address.model.person.Appointment;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.util.GoogleCalendarClient;
 
 /**
  * Wraps all data at the address-book level
@@ -175,8 +180,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    //// export-level operations
+
     /**
-     * export-level operations
+     * Exports the current address book to data/portfolio.csv
      */
     public void exportPortfolio() {
         try {
@@ -184,7 +191,6 @@ public class AddressBook implements ReadOnlyAddressBook {
             StringBuilder sb = new StringBuilder();
             sb.append("Name,Phone,Email,Address,Tags\n");
             for (Person person : persons) {
-                System.out.println(person);
                 sb.append("\"" + person.getName().toString() + "\"");
                 sb.append(",");
                 sb.append("\"" + person.getPhone().toString() + "\"");
@@ -203,6 +209,22 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Exports the calendar events to the user's Google Calendar
+     */
+    public void exportCalendar() {
+        List<Birthday> birthdays = new ArrayList<>();
+        List<Appointment> appointments = new ArrayList<>();
+        for (Person person : persons) {
+            birthdays.add(person.getBirthday());
+            appointments.add(person.getAppointment());
+        }
+        try {
+            GoogleCalendarClient.insertCalendar(persons);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
     //// util methods
 
     @Override

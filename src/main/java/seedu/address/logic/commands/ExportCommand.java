@@ -14,10 +14,14 @@ public class ExportCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Exports the specified type of content.\n"
-            + "Parameters: ExportType (must be one of the following - CALENDAR, PORTFOLIO)\n"
+            + "Parameters: ExportType (must be one of the following - calendar, portfolio)\n"
             + "Example: " + COMMAND_WORD + " portfolio";
 
-    public static final String MESSAGE_SUCCESS = "Successfully exported %1$s to %2$s";
+    public static final String PORTFOLIO_MESSAGE_SUCCESS =
+            "Successfully exported portfolio to %1$s";
+
+    public static final String CALENDAR_MESSAGE_SUCCESS =
+            "Successfully exported birthdays and appointments to Google Calendar";
 
     public final UserPrefs userPrefs = new UserPrefs();
 
@@ -31,7 +35,11 @@ public class ExportCommand extends UndoableCommand {
     protected CommandResult executeUndoableCommand() {
         requireNonNull(model);
         model.export(typeToExport);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, typeToExport.toString(),
-        userPrefs.getExportPortfolioFilePath()));
+        if (typeToExport.equals(ExportType.PORTFOLIO)) {
+            return new CommandResult(String.format(PORTFOLIO_MESSAGE_SUCCESS,
+                    userPrefs.getExportPortfolioFilePath()));
+        } else {
+            return new CommandResult(CALENDAR_MESSAGE_SUCCESS);
+        }
     }
 }

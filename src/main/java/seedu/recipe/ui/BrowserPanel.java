@@ -23,6 +23,7 @@ import seedu.recipe.commons.events.ui.ShareRecipeEvent;
 import seedu.recipe.commons.events.ui.UploadRecipesEvent;
 import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.recipe.Url;
+import seedu.recipe.model.util.HtmlFormatter;
 import seedu.recipe.ui.util.CloudStorageUtil;
 import seedu.recipe.ui.util.FacebookHandler;
 
@@ -56,6 +57,10 @@ public class BrowserPanel extends UiPart<Region> {
 
     }
 
+    public WebView getBrowser() {
+        return browser;
+    }
+
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
@@ -76,6 +81,15 @@ public class BrowserPanel extends UiPart<Region> {
     private void loadRecipePage(Recipe recipe) {
         loadPage(recipe.getUrl().toString());
     }
+
+    //@@author RyanAngJY
+    /**
+     * Loads the text recipe onto the browser
+     */
+    private void loadLocalRecipe(Recipe recipe) {
+        browser.getEngine().loadContent(HtmlFormatter.getHtmlFormat(recipe));
+    }
+    //@@author
 
     /**
      * Loads a default HTML file with a background that matches the general theme.
@@ -101,7 +115,12 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleRecipePanelSelectionChangedEvent(RecipePanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadRecipePage(event.getNewSelection().recipe);
+        Recipe recipe = event.getNewSelection().recipe;
+        if (recipe.getUrl().toString().equals(Url.NULL_URL_REFERENCE)) {
+            loadLocalRecipe(recipe);
+        } else {
+            loadRecipePage(recipe);
+        }
     }
 
     //@@author kokonguyen191

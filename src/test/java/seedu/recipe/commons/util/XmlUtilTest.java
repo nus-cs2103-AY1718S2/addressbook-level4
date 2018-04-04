@@ -51,8 +51,8 @@ public class XmlUtilTest {
     private static final String VALID_PREPARATION_TIME = "69 hours";
     private static final String VALID_CALORIES = "5000";
     private static final String VALID_SERVINGS = "2";
-
     private static final String VALID_URL = "https://www.google.com";
+    private static final String VALID_IMAGE = "-";
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("best"));
 
     @Rule
@@ -95,7 +95,8 @@ public class XmlUtilTest {
                 MISSING_RECIPE_FIELD_FILE, XmlAdaptedRecipeWithRootElement.class);
         XmlAdaptedRecipe expectedRecipe =
                 new XmlAdaptedRecipe(null, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_COOKING_TIME,
-                        VALID_PREPARATION_TIME, VALID_CALORIES, VALID_SERVINGS, VALID_URL, VALID_TAGS);
+                        VALID_PREPARATION_TIME, VALID_CALORIES, VALID_SERVINGS, VALID_URL,
+                        VALID_IMAGE, VALID_TAGS);
         assertEquals(expectedRecipe, actualRecipe);
     }
 
@@ -105,7 +106,8 @@ public class XmlUtilTest {
                 INVALID_RECIPE_FIELD_FILE, XmlAdaptedRecipeWithRootElement.class);
         XmlAdaptedRecipe expectedRecipe =
                 new XmlAdaptedRecipe(VALID_NAME, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_COOKING_TIME,
-                        INVALID_PREPARATION_TIME, VALID_CALORIES, VALID_SERVINGS, VALID_URL, VALID_TAGS);
+                        INVALID_PREPARATION_TIME, VALID_CALORIES, VALID_SERVINGS, VALID_URL,
+                        VALID_IMAGE, VALID_TAGS);
         assertEquals(expectedRecipe, actualRecipe);
     }
 
@@ -115,7 +117,8 @@ public class XmlUtilTest {
                 VALID_RECIPE_FILE, XmlAdaptedRecipeWithRootElement.class);
         XmlAdaptedRecipe expectedRecipe =
                 new XmlAdaptedRecipe(VALID_NAME, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_COOKING_TIME,
-                        VALID_PREPARATION_TIME, VALID_CALORIES, VALID_SERVINGS, VALID_URL, VALID_TAGS);
+                        VALID_PREPARATION_TIME, VALID_CALORIES, VALID_SERVINGS, VALID_URL,
+                        VALID_IMAGE, VALID_TAGS);
         assertEquals(expectedRecipe, actualRecipe);
     }
 

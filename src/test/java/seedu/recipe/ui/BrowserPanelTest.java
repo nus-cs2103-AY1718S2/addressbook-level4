@@ -4,6 +4,7 @@ import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static seedu.recipe.testutil.EventsUtil.postNow;
 import static seedu.recipe.testutil.TypicalRecipes.ALICE;
+import static seedu.recipe.testutil.TypicalRecipes.NOURL;
 import static seedu.recipe.ui.BrowserPanel.DEFAULT_PAGE_DARK;
 import static seedu.recipe.ui.UiPart.FXML_FILE_FOLDER;
 
@@ -15,8 +16,12 @@ import org.junit.Test;
 import guitests.guihandles.BrowserPanelHandle;
 import seedu.recipe.MainApp;
 import seedu.recipe.commons.events.ui.RecipePanelSelectionChangedEvent;
+import seedu.recipe.model.util.HtmlFormatter;
 
 public class BrowserPanelTest extends GuiUnitTest {
+    private static final String EMPTY_STRING = "";
+    private static final String HTML_TAG_REGEX = "\\<.*?>";
+
     private RecipePanelSelectionChangedEvent selectionChangedEventStub;
 
     private BrowserPanel browserPanel;
@@ -44,5 +49,17 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedRecipeUrl, browserPanelHandle.getLoadedUrl());
+
+
+        selectionChangedEventStub = new RecipePanelSelectionChangedEvent(new RecipeCard(NOURL, 1));
+
+        // associated web page of a recipe
+        postNow(selectionChangedEventStub);
+        String expectedHtmlContent = HtmlFormatter.getHtmlFormat(NOURL)
+                .replaceAll(HTML_TAG_REGEX, EMPTY_STRING);
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertEquals(expectedHtmlContent, browserPanelHandle.getLoadedHtml());
+
     }
 }

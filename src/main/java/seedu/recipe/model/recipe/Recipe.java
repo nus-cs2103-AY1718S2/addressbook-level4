@@ -28,6 +28,7 @@ public class Recipe {
     private final Calories calories;
     private final Servings servings;
     private final Url url;
+    private final Image image;
     private final UniqueTagList tags;
 
     /**
@@ -35,8 +36,8 @@ public class Recipe {
      */
     public Recipe(Name name, Ingredient ingredient, Instruction instruction,
                   CookingTime cookingTime, PreparationTime preparationTime,
-                  Calories calories, Servings servings, Url url, Set<Tag> tags) {
-        requireAllNonNull(name, preparationTime, ingredient, instruction, url, tags);
+                  Calories calories, Servings servings, Url url, Image image, Set<Tag> tags) {
+        requireAllNonNull(name, preparationTime, ingredient, instruction, url, image, tags);
         this.name = name;
         this.ingredient = ingredient;
         this.instruction = instruction;
@@ -45,6 +46,7 @@ public class Recipe {
         this.calories = calories;
         this.servings = servings;
         this.url = url;
+        this.image = image;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -79,6 +81,14 @@ public class Recipe {
 
     public Url getUrl() {
         return url;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public boolean isNullImage() {
+        return image.toString().equals(Image.NULL_IMAGE_REFERENCE);
     }
 
     /**
@@ -116,13 +126,14 @@ public class Recipe {
                 && otherRecipe.getCalories().equals(this.getCalories())
                 && otherRecipe.getServings().equals(this.getServings())
                 && otherRecipe.getUrl().equals(this.getUrl())
+                && otherRecipe.getImage().equals(this.getImage())
                 && otherRecipe.getTextFormattedRecipe().equals(this.getTextFormattedRecipe());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, preparationTime, ingredient, instruction, url, tags);
+        return Objects.hash(name, preparationTime, ingredient, instruction, url, image, tags);
     }
 
     @Override
@@ -137,6 +148,8 @@ public class Recipe {
                 .append(getInstruction())
                 .append(" Url: ")
                 .append(getUrl())
+                .append(" Image: ")
+                .append(getImage())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

@@ -397,23 +397,24 @@ A person can be assigned a `Review` through the command of `review`. `Review` do
 
 Currently `review` command and `rate` command are implemented in a similar manner, and hence `review` command and `edit` command are also implemented in a similar manner.
 
-The implementation basically mirrors what has already been documented in `3.3. Editing and rating a person`, so the implementation below is basically the iteration of the said part.
+The implementation basically mirrors what has already been documented in `3.3. Editing and rating a person`, so the implementation below is basically the iteration of the said part, with some modification.
 
 The implementation of `edit` and `review` command in the Logic component involves 4 objects: +
 
-. Person toEdit
-. Person edited
-. Parser: ReviewCommandParser
-. EditPersonDescriptor
+. `Person` personToEdit
+. `Person` editedPerson
+. `Parser` ReviewCommandParser
+. `EditPersonDescriptor`
 
-Since all fields of the `Person` class are immutable, we need to use `edited` Person to replace the `toEdit` Person
+Since all fields of the `Person` class are immutable, we need to use `Person` _editedPerson_ to replace the `Person` _personToEdit_
 
 The details of implementation are as follow:
 
 . `Parser` extracts the new information for each field from user input.
 . `EditPersonDescriptor` is used to record which field(s) will be changed and the respective new value.
-. `edited` Person will be created, by obtaining the new value for modified fields from `EditPersonDescriptor`. The value of unmodified field(s) are obtained from `toEdit` Person.
-. `edited` Person is used to replace `toEdit` Person in `AddressBook`
+. `Person` _editedPerson_ will be created, by obtaining the new `Review` value from `EditPersonDescriptor` together with the old `Review` value. +
+The old `Review` value is obtained from `Person` _personToEdit_.
+. `Person` _editedPerson_ is used to replace `Person` _personToEdit_ in `AddressBook`
 
 `Review` uses JavaFX's `Dialog` to get the review input from the user instead of from command box.
 

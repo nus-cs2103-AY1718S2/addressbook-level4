@@ -214,7 +214,7 @@ public class TestAddEventCommand extends Command {
         String calendarId = personToAddEvent.getCalendarId();
         Logger logger = LogsCenter.getLogger(TestAddEventCommand.class);
         //@@author IzHoBX
-        if (calendarId == null || calendarId.equals("")) {
+        if (calendarId == null || calendarId.equals("") || calendarId.equals("null")) {
             logger.info("calendarId null, attempting to create calendar");
             try {
                 calendarId = CreateNewCalendar.execute(personToAddEvent.getName().fullName);

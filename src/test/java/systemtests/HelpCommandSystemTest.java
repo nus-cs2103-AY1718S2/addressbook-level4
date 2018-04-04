@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
+import javafx.scene.input.KeyCode;
 import org.junit.Test;
 
 import guitests.GuiRobot;
@@ -32,23 +33,23 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
     public void openHelpWindow() {
         //use accelerator
         getCommandBox().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
+        executeHelpCommandUsingAccelerator();
         assertHelpWindowOpen();
 
         getResultDisplay().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
+        executeHelpCommandUsingAccelerator();
         assertHelpWindowOpen();
 
         getPersonListPanel().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
+        executeHelpCommandUsingAccelerator();
         assertHelpWindowOpen();
 
         getBrowserPanel().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
+        executeHelpCommandUsingAccelerator();
         assertHelpWindowNotOpen();
 
         //use menu button
-        getMainMenu().openHelpWindowUsingMenu();
+        executeHelpCommandUsingMenu();
         assertHelpWindowOpen();
 
         //use command box
@@ -91,4 +92,17 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
         assertFalse(ERROR_MESSAGE, HelpWindowHandle.isWindowPresent());
     }
 
+    /**
+     * Executes the HelpCommand using its accelerator in {@code MainMenu}
+     */
+    private void executeHelpCommandUsingAccelerator() {
+        executeUsingAccelerator(KeyCode.CONTROL, KeyCode.SPACE);
+    }
+
+    /**
+     * Executes the HelpCommand using its menu bar item in {@code MainMenu}.
+     */
+    private void executeHelpCommandUsingMenu() {
+        executeUsingMenuItem("Help", "Help");
+    }
 }

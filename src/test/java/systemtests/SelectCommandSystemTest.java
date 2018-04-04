@@ -11,6 +11,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
+import javafx.scene.input.KeyCode;
 import org.junit.Test;
 
 import guitests.GuiRobot;
@@ -102,29 +103,31 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
                 MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+    //@@author jonleeyz
     @Test
     public void populateSelectCommandTemplate() {
         //use accelerator
         getCommandBox().click();
-        getMainMenu().populateSelectCommandUsingAccelerator();
+        populateSelectCommandUsingAccelerator();
         assertPopulationSuccess();
 
         getResultDisplay().click();
-        getMainMenu().populateSelectCommandUsingAccelerator();
+        populateSelectCommandUsingAccelerator();
         assertPopulationSuccess();
 
         getPersonListPanel().click();
-        getMainMenu().populateSelectCommandUsingAccelerator();
+        populateSelectCommandUsingAccelerator();
         assertPopulationSuccess();
 
         getBrowserPanel().click();
-        getMainMenu().populateSelectCommandUsingAccelerator();
+        populateSelectCommandUsingAccelerator();
         assertPopulationFailure();
 
         //use menu button
-        getMainMenu().populateSelectCommandUsingMenu();
+        populateSelectCommandUsingMenu();
         assertPopulationSuccess();
     }
+    //@@author
 
     /**
      * Executes {@code command} and asserts that the,<br>
@@ -180,6 +183,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertStatusBarUnchanged();
     }
 
+    //@@author jonleeyz
     /**
      * Asserts that population of the {@code CommandBox} with the AddCommand
      * template was successful.
@@ -211,4 +215,21 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
         guiRobot.pauseForHuman();
     }
+
+    /**
+     * Populates the {@code CommandBox} with the SelectCommand template
+     * using the associated accelerator in {@code MainWindow}.
+     */
+    private void populateSelectCommandUsingAccelerator() {
+        populateUsingAccelerator(KeyCode.CONTROL, KeyCode.S);
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the SelectCommand template
+     * using the menu bar in {@code MainWindow}.
+     */
+    private void populateSelectCommandUsingMenu() {
+        populateUsingMenu("Actions", "Select a Person...");
+    }
+    //@@author
 }

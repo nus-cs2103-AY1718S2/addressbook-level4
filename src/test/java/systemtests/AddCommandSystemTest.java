@@ -40,6 +40,7 @@ import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
+import javafx.scene.input.KeyCode;
 import org.junit.Test;
 
 import guitests.GuiRobot;
@@ -188,15 +189,16 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
     }
 
+    //@@author jonleeyz
     @Test
     public void populateAddCommandTemplate() {
         //use accelerator
         getCommandBox().click();
-        getMainMenu().populateAddCommandUsingAccelerator();
+        populateAddCommandUsingAccelerator();
         assertPopulationSuccess();
 
         getResultDisplay().click();
-        getMainMenu().populateAddCommandUsingAccelerator();
+        populateAddCommandUsingAccelerator();
         assertPopulationSuccess();
 
         /**Unusual: Ctrl + Space does not work when focus is on PersonListPanel.
@@ -204,17 +206,18 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          * the Space key does not play nice with the PersonListPanel.
          */
         getPersonListPanel().click();
-        getMainMenu().populateAddCommandUsingAccelerator();
+        populateAddCommandUsingAccelerator();
         assertPopulationFailure();
 
         getBrowserPanel().click();
-        getMainMenu().populateAddCommandUsingAccelerator();
+        populateAddCommandUsingAccelerator();
         assertPopulationFailure();
 
         //use menu button
-        getMainMenu().populateAddCommandUsingMenu();
+        populateAddCommandUsingMenu();
         assertPopulationSuccess();
     }
+    //@@author
 
     /**
      * Executes the {@code AddCommand} that adds {@code toAdd} to the model and asserts that the,<br>
@@ -288,6 +291,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertStatusBarUnchanged();
     }
 
+    //@@author jonleeyz
     /**
      * Asserts that population of the {@code CommandBox} with the AddCommand
      * template was successful.
@@ -319,4 +323,21 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
         guiRobot.pauseForHuman();
     }
+
+    /**
+     * Populates the {@code CommandBox} with the AddCommand template
+     * using the associated accelerator in {@code MainWindow}.
+     */
+    private void populateAddCommandUsingAccelerator() {
+        populateUsingAccelerator(KeyCode.CONTROL, KeyCode.SPACE);
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the AddCommand template
+     * using the menu bar in {@code MainWindow}.
+     */
+    private void populateAddCommandUsingMenu() {
+        populateUsingMenu("Actions", "Add a Person...");
+    }
+    //@@author
 }

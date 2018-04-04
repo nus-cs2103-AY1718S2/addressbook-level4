@@ -18,6 +18,7 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.input.KeyCode;
 import org.junit.Test;
 
 import guitests.GuiRobot;
@@ -168,29 +169,31 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
 
+    //@@author jonleeyz
     @Test
     public void populateFindCommandTemplate() {
         //use accelerator
         getCommandBox().click();
-        getMainMenu().populateFindCommandUsingAccelerator();
+        populateFindCommandUsingAccelerator();
         assertPopulationSuccess();
 
         getResultDisplay().click();
-        getMainMenu().populateFindCommandUsingAccelerator();
+        populateFindCommandUsingAccelerator();
         assertPopulationSuccess();
 
         getPersonListPanel().click();
-        getMainMenu().populateFindCommandUsingAccelerator();
+        populateFindCommandUsingAccelerator();
         assertPopulationSuccess();
 
         getBrowserPanel().click();
-        getMainMenu().populateFindCommandUsingAccelerator();
+        populateFindCommandUsingAccelerator();
         assertPopulationFailure();
 
         //use menu button
-        getMainMenu().populateFindCommandUsingMenu();
+        populateFindCommandUsingMenu();
         assertPopulationSuccess();
     }
+    //@@author
 
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
@@ -231,6 +234,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertStatusBarUnchanged();
     }
 
+    //@@author jonleeyz
     /**
      * Asserts that population of the {@code CommandBox} with the AddCommand
      * template was successful.
@@ -262,4 +266,21 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
         guiRobot.pauseForHuman();
     }
+
+    /**
+     * Populates the {@code CommandBox} with the FindCommand template
+     * using the associated accelerator in {@code MainWindow}.
+     */
+    private void populateFindCommandUsingAccelerator() {
+        populateUsingAccelerator(KeyCode.CONTROL, KeyCode.F);
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the FindCommand template
+     * using the menu bar in {@code MainWindow}.
+     */
+    private void populateFindCommandUsingMenu() {
+        populateUsingMenu("View", "Find...");
+    }
+    //@@author
 }

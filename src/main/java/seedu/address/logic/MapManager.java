@@ -88,9 +88,6 @@ public class MapManager {
 
     public static class DirectionsUtil {
 
-        private static DirectionsService directionsService = new DirectionsService();
-        private static DirectionsRenderer directionsRenderer = null;
-
         public static class MyDirectionsServiceCallback implements DirectionsServiceCallback {
             private GoogleMap map;
             public MyDirectionsServiceCallback(GoogleMap map) {
@@ -103,8 +100,9 @@ public class MapManager {
 
         public static void setDirectionsOnMap(GoogleMap map, DirectionsPane directionsPane,
                 String addressOrigin, String addressDestination) {
+            DirectionsService directionsService = new DirectionsService();
             DirectionsRequest request = new DirectionsRequest(addressOrigin, addressDestination, TravelModes.DRIVING);
-            directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
+            DirectionsRenderer directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
             directionsService.getRoute(request, new MyDirectionsServiceCallback(map), directionsRenderer);
         }
     }

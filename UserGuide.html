@@ -44,6 +44,7 @@
 <li><a href="#locating-persons-by-name-code-find-code">4.2.2. Locating persons by name: <code>find</code></a></li>
 <li><a href="#viewing-a-person-code-view-code">4.2.3. Viewing a person: <code>view</code></a></li>
 <li><a href="#selecting-a-person-code-select-code">4.2.4. Selecting a person : <code>select</code></a></li>
+<li><a href="#auto-correct-and-auto-complete">4.2.5. Auto-correct and auto-complete</a></li>
 </ul>
 </li>
 <li><a href="#dashboard-reporting">4.3. Dashboard Reporting</a>
@@ -62,16 +63,27 @@
 <li><a href="#match-job-command">4.4.2. Match Job Command</a></li>
 </ul>
 </li>
-<li><a href="#social-media-fb-linkedin-integration-coming-in-v2-0">4.5. Social Media (FB, Linkedin) Integration [Coming in v2.0]</a></li>
-<li><a href="#miscellaneous">4.6. Miscellaneous</a>
+<li><a href="#managing-interview">4.5. Managing Interview</a>
 <ul class="sectlevel3">
-<li><a href="#change-theme-code-theme-code-since-v1-3">4.6.1. Change theme : <code>theme</code> [Since v1.3]</a></li>
-<li><a href="#viewing-help-code-help-code">4.6.2. Viewing help : <code>help</code></a></li>
-<li><a href="#listing-entered-commands-code-history-code">4.6.3. Listing entered commands : <code>history</code></a></li>
-<li><a href="#undoing-previous-command-code-undo-code">4.6.4. Undoing previous command : <code>undo</code></a></li>
-<li><a href="#redoing-the-previously-undone-command-code-redo-code">4.6.5. Redoing the previously undone command : <code>redo</code></a></li>
-<li><a href="#exiting-the-program-code-exit-code">4.6.6. Exiting the program : <code>exit</code></a></li>
-<li><a href="#saving-the-data">4.6.7. Saving the data</a></li>
+<li><a href="#add-interview-command">4.5.1. Add Interview Command</a></li>
+<li><a href="#list-interview-coming-in-v1-5">4.5.2. List Interview [Coming in v1.5]</a></li>
+<li><a href="#add-question-coming-in-v1-5">4.5.3. Add Question [Coming in v1.5]</a></li>
+</ul>
+</li>
+<li><a href="#social-media-fb-linkedin-integration-since-v1-4">4.6. Social Media (FB, Linkedin) Integration [Since v1.4]</a>
+<ul class="sectlevel3">
+<li><a href="#facebook-integration">4.6.1. Facebook integration</a></li>
+</ul>
+</li>
+<li><a href="#miscellaneous">4.7. Miscellaneous</a>
+<ul class="sectlevel3">
+<li><a href="#change-theme-code-theme-code-since-v1-3">4.7.1. Change theme : <code>theme</code> [Since v1.3]</a></li>
+<li><a href="#viewing-help-code-help-code">4.7.2. Viewing help : <code>help</code></a></li>
+<li><a href="#listing-entered-commands-code-history-code">4.7.3. Listing entered commands : <code>history</code></a></li>
+<li><a href="#undoing-previous-command-code-undo-code">4.7.4. Undoing previous command : <code>undo</code></a></li>
+<li><a href="#redoing-the-previously-undone-command-code-redo-code">4.7.5. Redoing the previously undone command : <code>redo</code></a></li>
+<li><a href="#exiting-the-program-code-exit-code">4.7.6. Exiting the program : <code>exit</code></a></li>
+<li><a href="#saving-the-data">4.7.7. Saving the data</a></li>
 </ul>
 </li>
 </ul>
@@ -242,17 +254,19 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <p><strong>Description:</strong> Adds a person to the address book<br></p>
 </li>
 <li>
-<p><strong>Format:</strong> <code>add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]&#8230;&#8203;</code></p>
+<p><strong>Format:</strong> <code>add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/LINK[t/TAG]&#8230;&#8203;</code></p>
 </li>
 <li>
 <p><strong>Examples:</strong><br></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01</code></p>
+<p><code>add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123,
+#01-01 l/https://nus-cs2103-ay1718s2.github.io/website/</code></p>
 </li>
 <li>
-<p><code>add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal</code></p>
+<p><code>add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate
+Prison p/1234567 l/https://nus-cs2103-ay1718s2.github.io/website/ t/criminal</code></p>
 </li>
 </ul>
 </div>
@@ -568,6 +582,48 @@ Selects the 1st person in the results of the <code>find</code> command.</p>
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="auto-correct-and-auto-complete"><a class="link" href="#auto-correct-and-auto-complete">4.2.5. Auto-correct and auto-complete</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Description:</strong> Spell corrects and completes command words being typed into Infinity Book<br></p>
+</li>
+<li>
+<p><strong>Format:</strong> <code>TAB</code> keypress auto-completes and <code>SPACE</code> autocorrects</p>
+</li>
+<li>
+<p><strong>Example:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>li</code> + <code>TAB</code> key press<br>
+Completes to command word to <code>list</code></p>
+</li>
+<li>
+<p><code>lsit</code> + <code>SPACE</code> key press<br>
+Corrects command word to <code>list</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Auto-correct only corrects one edit distance errors.</p>
+</li>
+<li>
+<p>When completions are available, use <code>TAB</code> to toggle through options.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="dashboard-reporting"><a class="link" href="#dashboard-reporting">4.3. Dashboard Reporting</a></h3>
@@ -738,13 +794,66 @@ number of candidates in each group.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="social-media-fb-linkedin-integration-coming-in-v2-0"><a class="link" href="#social-media-fb-linkedin-integration-coming-in-v2-0">4.5. Social Media (FB, Linkedin) Integration [Coming in v2.0]</a></h3>
+<h3 id="managing-interview"><a class="link" href="#managing-interview">4.5. Managing Interview</a></h3>
+<div class="paragraph">
+<p>This section describes command available for managing interview in the Infinity Book.</p>
+</div>
+<div class="sect3">
+<h4 id="add-interview-command"><a class="link" href="#add-interview-command">4.5.1. Add Interview Command</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Description:</strong> Add a Interview to Infinity Book.</p>
+</li>
+<li>
+<p><strong>Format:</strong> <code>addInterview n/Interviewee l/LOCATION d/DATE</code></p>
+</li>
+<li>
+<p><strong>Examples:</strong> <code>addInterview n/John l/One North d/30.1.2018</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="list-interview-coming-in-v1-5"><a class="link" href="#list-interview-coming-in-v1-5">4.5.2. List Interview [Coming in v1.5]</a></h4>
 
 </div>
-<div class="sect2">
-<h3 id="miscellaneous"><a class="link" href="#miscellaneous">4.6. Miscellaneous</a></h3>
 <div class="sect3">
-<h4 id="change-theme-code-theme-code-since-v1-3"><a class="link" href="#change-theme-code-theme-code-since-v1-3">4.6.1. Change theme : <code>theme</code> [Since v1.3]</a></h4>
+<h4 id="add-question-coming-in-v1-5"><a class="link" href="#add-question-coming-in-v1-5">4.5.3. Add Question [Coming in v1.5]</a></h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="social-media-fb-linkedin-integration-since-v1-4"><a class="link" href="#social-media-fb-linkedin-integration-since-v1-4">4.6. Social Media (FB, Linkedin) Integration [Since v1.4]</a></h3>
+<div class="sect3">
+<h4 id="facebook-integration"><a class="link" href="#facebook-integration">4.6.1. Facebook integration</a></h4>
+<div class="paragraph">
+<p>Connecting to Facebook [Since v1.4]: <code>facebooklogin</code></p>
+</div>
+<div class="paragraph">
+<p>To connect your Facebook account to Infinity Book, use the <code>facebooklogin</code> command.</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p><strong>Command format</strong>: <code><span class="red">facebooklogin</span></code><br>
+<strong>Alias</strong>: <code><span class="red">fb</span></code><br></p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>You will be prompted by a Facebook authorization page (displayed in the browser panel)</p>
+</div>
+<div class="paragraph">
+<p>You can key in your facebook credentials. Infinity Book is then connected to that facebook account and you can use other
+features that Infinity Book offers.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="miscellaneous"><a class="link" href="#miscellaneous">4.7. Miscellaneous</a></h3>
+<div class="sect3">
+<h4 id="change-theme-code-theme-code-since-v1-3"><a class="link" href="#change-theme-code-theme-code-since-v1-3">4.7.1. Change theme : <code>theme</code> [Since v1.3]</a></h4>
 <div class="paragraph">
 <p>To change the theme of InfinityBook, use the <code>theme</code> command.<br></p>
 </div>
@@ -789,7 +898,7 @@ number of candidates in each group.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="viewing-help-code-help-code"><a class="link" href="#viewing-help-code-help-code">4.6.2. Viewing help : <code>help</code></a></h4>
+<h4 id="viewing-help-code-help-code"><a class="link" href="#viewing-help-code-help-code">4.7.2. Viewing help : <code>help</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -802,7 +911,7 @@ number of candidates in each group.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">4.6.3. Listing entered commands : <code>history</code></a></h4>
+<h4 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">4.7.3. Listing entered commands : <code>history</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -826,7 +935,7 @@ number of candidates in each group.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">4.6.4. Undoing previous command : <code>undo</code></a></h4>
+<h4 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">4.7.4. Undoing previous command : <code>undo</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -877,7 +986,7 @@ The <code>undo</code> command fails as there are no undoable commands executed p
 </div>
 </div>
 <div class="sect3">
-<h4 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">4.6.5. Redoing the previously undone command : <code>redo</code></a></h4>
+<h4 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">4.7.5. Redoing the previously undone command : <code>redo</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -915,7 +1024,7 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 </div>
 </div>
 <div class="sect3">
-<h4 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">4.6.6. Exiting the program : <code>exit</code></a></h4>
+<h4 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">4.7.6. Exiting the program : <code>exit</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -928,7 +1037,7 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 </div>
 </div>
 <div class="sect3">
-<h4 id="saving-the-data"><a class="link" href="#saving-the-data">4.6.7. Saving the data</a></h4>
+<h4 id="saving-the-data"><a class="link" href="#saving-the-data">4.7.7. Saving the data</a></h4>
 <div class="paragraph">
 <p>Address book data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.</p>
@@ -1116,7 +1225,7 @@ There is no need to save manually.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-03 15:32:36 UTC
+Last updated 2018-04-04 08:50:29 UTC
 </div>
 </div>
 </body>

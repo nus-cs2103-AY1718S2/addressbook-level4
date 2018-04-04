@@ -13,7 +13,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 === Jarrett Choo
 
 image::kyomian.png[width="150", align="left"]
-{empty}[https://github.com/Kyomian[github]]
+{empty}[https://github.com/Kyomian[github]] [<<jarrett#, portfolio>>]
 
 Role: Team Lead, Testing, Deliverables and deadlines +
 Responsibilities: Logic
@@ -23,7 +23,7 @@ Responsibilities: Logic
 === Jasmund Toh
 
 image::jasmoon.png[width="150", align="left"]
-{empty}[http://github.com/jasmoon[github]]
+{empty}[http://github.com/jasmoon[github]] [<<jasmond#, portfolio>>]
 
 Role: Scheduling and tracking, JavaFX expert +
 Responsibilities: UI
@@ -33,7 +33,7 @@ Responsibilities: UI
 === Karen Frilya
 
 image::karenfrilya97.png[width="150", align="left"]
-{empty}[http://github.com/karenfrilya97[github]]
+{empty}[http://github.com/karenfrilya97[github]] [<<karen#, portfolio>>]
 
 Role: Documentation +
 Responsibilities: Storage
@@ -43,7 +43,7 @@ Responsibilities: Storage
 === Yuan Quan
 
 image::yuanqller.png[width="150", align="left"]
-{empty}[http://github.com/YuanQQLer[github]]
+{empty}[http://github.com/YuanQQLer[github]] [<<yuanquan#, portfolio>>]
 
 Role: Code Quality, Integration +
 Responsibilities: Model

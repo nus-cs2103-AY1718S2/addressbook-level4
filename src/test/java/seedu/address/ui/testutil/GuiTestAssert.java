@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import guitests.guihandles.BrowserPanelHandle;
+import guitests.guihandles.DetailPanelHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
@@ -43,7 +43,7 @@ public class GuiTestAssert {
     /**
      * Asserts that {@code actualPanel} displays the details of {@code expectedPerson}.
      */
-    public static void assertPanelDisplaysPerson(PersonCardHandle expectedPersonCard, BrowserPanelHandle actualPanel) {
+    public static void assertPanelDisplaysPerson(PersonCardHandle expectedPersonCard, DetailPanelHandle actualPanel) {
         assertEquals(expectedPersonCard.getName(), actualPanel.getName());
         assertEquals(expectedPersonCard.getPhone(), actualPanel.getPhone());
         assertEquals(expectedPersonCard.getEmail(), actualPanel.getEmail());

@@ -457,42 +457,45 @@ The following sequence diagram shows how the group feature is being implemented.
 // end::group[]
 
 // tag::dataencryption[]
-=== [Proposed] Top Insurance Commission tag
-==== Intro
+=== Insurance with information of commission
 
-Trying to create a case where the condition if a particular client's current insurance plan is within the top 5 position, it will be highlighted in read
+*Since V1.4*
 
-Suppose that a new client is added into the application, the commission that the agent is getting off that client will be stored and the top 5 commission will be re-evaluated.
-To do this, a commission storage will be created to store existing commission, a total commission method will also be created.
+* Insurance is tagged to a person with the format: "INSURANCE[COMMISSION]"
 
+* A particular client is tagged to 0 or more insurance plan, along with each insurance plan, user should input commission inside square bracket ("[]")
+
+* Total commission yield by a particular client is then caclulated and displayed in the personCard.
 
 ==== Design Considerations
 
 ===== Aspect: Implementation of Insurance tag
 
- *  **Alternative 1(current choice):** Create an Insurance class with 3 child classes, namely, Insurance name, Commission and Premium.
- ** Pros: Clearer and neater distinction between tags and insurance plan.
+image::InsuranceClassInModel.png[width="790"]
+
+ *  **Alternative 1(current choice):** Create an Insurance class
+ ** Pros: Distinction between insurance and person, Insurance can exist without person.
  ** Cons: Harder to implement and possibly of a overlapping test cases.
  *  **Alternative 2:** Let insurance be under a special tag class and create subsequent child classes.
- ** Pros: Easier to implement and direct.
+ ** Pros: Easier to implement and direct and not distinct objective of a tag/insurance.
  ** Cons: Harder to handle error (unsure of what cause the bug).
 
-===== Asepect: Calculating the top commission
+===== Asepect: Calculating the total commission per client
 
- * **Alternative 1(current choice):** Create a storage to store all current commission, and sort it, take note of the 5th position and save it, any client above this value will have commission highlighted then update 5th possible accordingly.
- ** Pros: Contained within storage, easier to update the top 5 commission.
- ** Cons: May have a case where there's more than 5 client that satisfy the condition (cases where multiple client of same commission)
- * **Alternative 2:** Same as alternative 1, but instead tag this commission to the client once it is sorted.
- ** Pros: Distinction of which client is top when display, reduce the calling of storage class.
- ** Cons: Changing the tag when client is no longer top 5 may require calling of multiple function, increasing dependency thus not as good.
+ * **Alternative 1(current choice):** Commission is tagged to person, everytime a insurance is added it will add to existing commission
+ ** Pros: Easier to calculate client based commission
+ ** Cons: May be difficult to get overall total commission
+ * **Alternative 2:**Create a storage to keep all commission
+ ** Pros: Easy to calculate overall total commission
+ ** Cons: Difficult to allocate commission to their respective client.
 
-===== Aspect: Way for UI to identify top 5 client.
- * **Alternative 1(current choice):** Extract requirement of commission amount to be top 5 from storage and highlight any int above that.
- ** Pros: TBC
- ** Cons: TBC
- * **Alternative 2:** give a hidden tag to client that is within top 5, highlight accordingly.
- ** Pros: TBC
- ** Cons: TBC
+===== Aspect: Identify top clients
+ * **Alternative 1(current choice):** Sort by commission
+ ** Pros: Easy to implement
+ ** Cons: Difficult to view ranking of individual insurance plan (e.g top Health plan client)
+ * **Alternative 2:** Colour code top few client
+ ** Pros: Can sort by insurance plan to know if client belong to that category
+ ** Cons: Difficult to implement
 
 // end::dataencryption[]
 

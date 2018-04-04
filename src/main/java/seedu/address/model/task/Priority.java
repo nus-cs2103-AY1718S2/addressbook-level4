@@ -11,8 +11,8 @@ public class Priority {
 
 
     public static final String MESSAGE_PRIORITY_CONSTRAINTS =
-            "Priority value input can only contain numbers from 0 - 50.";
-    public static final String PRIORITY_VALIDATION_REGEX = "[1-3]";
+            "Priority value input can only be a value from 1 to 3. 1 being highest priority and 3 being lowest.";
+    public static final String PRIORITY_VALIDATION_REGEX = "[1-3]{1}";
     public final String priority;
     public final int value;
 
@@ -32,8 +32,7 @@ public class Priority {
      * Returns true if a given string is a valid task priority.
      */
     public static boolean isValidPriority(String test) {
-        int size = Integer.parseInt(test);
-        return test.matches(PRIORITY_VALIDATION_REGEX) && size >= 0 && size <= 50;
+        return test.matches(PRIORITY_VALIDATION_REGEX);
     }
 
     @Override

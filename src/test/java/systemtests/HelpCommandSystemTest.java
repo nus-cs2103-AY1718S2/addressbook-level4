@@ -96,13 +96,13 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
      * Executes the HelpCommand using its accelerator in {@code MainMenu}
      */
     private void executeHelpCommandUsingAccelerator() {
-        executeUsingAccelerator(KeyCode.CONTROL, KeyCode.SPACE);
+        executeUsingAccelerator(KeyCode.F1);
     }
 
     /**
      * Executes the HelpCommand using its menu bar item in {@code MainMenu}.
      */
     private void executeHelpCommandUsingMenu() {
-        executeUsingMenuItem("Help", "Help");
+        executeUsingMenuItem("Help", "F1");
     }
 }

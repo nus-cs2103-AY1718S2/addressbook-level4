@@ -10,7 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
-
+//@@author kengsengg
 /**
  * A list of appointments that enforces uniqueness between its elements and does not allow nulls.
  *
@@ -65,3 +65,4 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 }
+//@@author

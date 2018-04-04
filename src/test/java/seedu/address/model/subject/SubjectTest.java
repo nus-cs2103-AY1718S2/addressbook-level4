@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import seedu.address.testutil.Assert;
-
+//@@author TeyXinHui
 public class SubjectTest {
 
     @Test
@@ -77,3 +77,4 @@ public class SubjectTest {
     }
 
 }
+//@@author

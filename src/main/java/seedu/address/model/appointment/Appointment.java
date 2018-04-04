@@ -1,7 +1,7 @@
 package seedu.address.model.appointment;
 
 import static java.util.Objects.requireNonNull;
-
+//@@author kengsengg
 /**
  * Represents an appointment in EduBuddy.
  */
@@ -63,3 +63,4 @@ public class Appointment {
         return endTime.matches(APPOINTMENT_END_TIME_VALIDATION_REGEX);
     }
 }
+//@@author

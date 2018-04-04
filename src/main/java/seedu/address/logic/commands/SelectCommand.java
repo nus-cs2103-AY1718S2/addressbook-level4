@@ -36,6 +36,7 @@ public class SelectCommand extends Command {
         this.score = 0;
     }
 
+    //@@author TeyXinHui
     @Override
     public CommandResult execute() throws CommandException {
 
@@ -64,6 +65,7 @@ public class SelectCommand extends Command {
 
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

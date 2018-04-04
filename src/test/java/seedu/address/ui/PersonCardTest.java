@@ -75,6 +75,7 @@ public class PersonCardTest extends GuiUnitTest {
         assertCardDisplaysPerson(expectedPerson, personCardHandle);
     }
 
+    //@@author kengsengg
     /**
      * Asserts that {@code personCard} matches the tag details and color of {@code expectedPerson} correctly
      */
@@ -83,4 +84,5 @@ public class PersonCardTest extends GuiUnitTest {
                 .map(tag -> tag.tagName).collect(Collectors.toList());
         assertEquals(expectedTags, personCard.getTags());
     }
+    //@@author
 }

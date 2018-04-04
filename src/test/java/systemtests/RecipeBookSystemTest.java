@@ -246,12 +246,14 @@ public abstract class RecipeBookSystemTest {
         assertEquals(COMMAND_BOX_ERROR_STYLE, getCommandBox().getStyleClass());
     }
 
+    //@@author kokonguyen191
     /**
      * Asserts that the command box is showing the {@code content}
      */
     protected void assertCommandBoxContent(String content) {
         assertEquals(content, getCommandBox().getInput());
     }
+    //@@author
 
     /**
      * Asserts that the entire status bar remains the same.

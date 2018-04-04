@@ -119,17 +119,18 @@ public class MainMenuHandle extends NodeHandle<Node> {
     }
 
     /**
-     * Populates the {@code CommandBox} with the SelectCommand template
-     * by pressing the shortcut key associated with the menu bar in {@code MainWindow}.
-     */
-    public void populateSelectCommandUsingAccelerator() {
-        guiRobot.push(KeyCode.CONTROL, KeyCode.S);
-    }
-
-    /**
      * Clicks on {@code menuItems} in order.
      */
-    private void clickOnMenuItemsSequentially(String... menuItems) {
+    public void clickOnMenuItemsSequentially(String... menuItems) {
         Arrays.stream(menuItems).forEach(guiRobot::clickOn);
     }
+
+    //@@author jonleeyz
+    /**
+     * Simulates press of given keyboard shortcut
+     */
+    public void useAccelerator(KeyCode... combination) {
+        guiRobot.push(combination);
+    }
+    //@@author
 }

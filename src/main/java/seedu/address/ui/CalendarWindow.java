@@ -4,10 +4,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-//import java.time.ZoneId;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import com.calendarfx.model.Calendar;
 //import com.calendarfx.model.CalendarEvent;
@@ -16,13 +12,11 @@ import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
 import com.calendarfx.view.CalendarView;
 
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 //import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.person.Person;
 
 
 //import javafx.application.Application;

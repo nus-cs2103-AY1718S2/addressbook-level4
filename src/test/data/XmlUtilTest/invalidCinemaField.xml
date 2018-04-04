@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Cinema with an invalid phone field -->
+<cinema>
+    <name>Hans Cinema</name>
+    <phone>9482asf424</phone>
+    <email>hans@example</email>
+    <address>4th street</address>
+    <theater number="1"/>
+</cinema>

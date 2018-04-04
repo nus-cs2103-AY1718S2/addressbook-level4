@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= MoVie Planner - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,23 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-W11-B2
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W11-B2`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+MoVie Planner is for cinema managers who *prefer to use a desktop application to manage cinemas' schedules*. More importantly, MVP is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, MVP can get your scheduling tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+
+<<UserGuide.adoc#, Back to top>>
+
+== About
+
+This User Guide provides an overview of available features, how to use them, and aims to help you get
+started in MVP. Features are explained in detail to demonstrate how you can use it efficiently.
+You will be able to understand this User Guide without the need to have any technical knowledge.
+
+<<UserGuide.adoc#, Back to top>>
 
 == Quick Start
 
@@ -27,104 +37,164 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `movieplanner.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your MoVie Planner (MVP).
+.  Double-click the file to start MVP. The GUI should appear in a few seconds.
 +
+.UI appearance of MVP
 image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* *`list`* : lists all cinemas
+* **`add`**`n/GV Paya Lebar p/66538100 e/customersvc@goldenvillage.com.sg a/SingPost Centre, 10 Eunos Road 8, #03-107, Singapore 408600 th/8` : adds a cinema named `GV Paya Lebar` to MVP.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+* *`exit`* : exits MVP
 
 .  Refer to <<Features>> for details of each command.
+
+<<UserGuide.adoc#, Back to top>>
 
 [[Features]]
 == Features
 
+Before proceeding on, you should take note of the following section:
+
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/Cathay`.
+* Items in square brackets are optional e.g n/NAME [p/PHONE] can be used as n/Cathay p/61231245 or as n/Cathay.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* You can also use an alias instead of typing the entire command word.
 ====
 
-=== Viewing help : `help`
+=== Viewing help : `help` | `h`
+
+Alias: `h`
 
 Format: `help`
 
-=== Adding a person: `add`
+Keyword appearance on Command Line: [purple-background white]`help`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+=== Adding a cinema: `add` | `a`
 
-[TIP]
-A person can have any number of tags (including 0)
+Alias: `a`
 
-Examples:
-
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-
-=== Listing all persons : `list`
-
-Shows a list of all persons in the address book. +
-Format: `list`
-
-=== Editing a person : `edit`
-
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+Adds a cinema to MVP. +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS th/NUMBER_OF_THEATER`
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `add n/Cathay West p/61283712 e/cathay@cathay.com a/50 Jurong Gateway Road th/3`
+* `add n/Shaws e/shaws@shaws.com a/2 Jurong East Central 1, 11 JCube p/6123122 th/2`
+* `a n/We Cinema p/62181251 e/wecinema@wecinema.com a/321 Clementi Avenue 3 th/3`
 
-=== Locating persons by name: `find`
+Keyword appearance on Command Line: [purple-background white]`add`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+=== Adding a movie: `addmovie` | `am`
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+Alias: `am`
+
+Adds a movie to MVP. +
+Format: `addmovie n/MOVIE_NAME d/DURATION r/RATING sd/START_DATE t/TAG`
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `addmovie n/The Incredibles d/115 r/PG sd/18/11/2014 t/Animation`
+* `am n/Spiderman 1 d/121 r/PG sd/04/29/2012 t/Superheroes t/Spiderman`
 
-=== Deleting a person : `delete`
+Keyword appearance on Command Line: [purple-background white]`addmovie`
 
-Deletes the specified person from the address book. +
+=== Adding a movie screening: `addscreening` | `as`
+
+`Available in v1.2`
+
+Alias: `as`
+
+Adds a screening of a movie to a cinema theater. +
+Format: `addscreening m/MOVIE_INDEX c/CINEMA_INDEX th/THEATER h/SCREEN_DATE_TIME`
+
+Examples:
+
+* `addscreening m/1 c/2 th/1 h/05/05/2015 13:30` +
+Adds a screening of the 1st movie to the 2nd cinema's 1st theater.
+* `as m/2 c/3 th/3 h/11/11/2011 14:15` +
+Adds a screening of the 2nd movie to the 3rd cinema's 3rd theater.
+
+[NOTE]
+====
+* `SCREEN_DATE_TIME` must not be before `START_DATE` of the movie
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The movie to be screened must already exist in MVP
+* The cinema theater that is screening the movie must exist in MVP
+* The minutes in `SCREEN_DATE_TIME` must be in 5 minutes interval.
+====
+
+Keyword appearance on Command Line: [purple-background white]`addscreening`
+
+=== Adding theaters: `addtheater` | `at`
+`Available in v1.2`
+
+Alias: `at`
+
+Adds theaters to a cinema. +
+Format: `addtheater n/CINEMA_NAME th/NUMBER_OF_THEATER`
+
+Examples:
+
+* `addtheater n/GV Bishan th/2`
+* `at n/Cathay th/5`
+
+[NOTE]
+Number of theater must be positive
+
+Keyword appearance on Command Line: [purple-background white]`addtheater`
+
+=== Clearing all entries : `clear` | `c`
+
+Alias: `c`
+
+Clears all entries from MVP. +
+Format: `clear`
+
+Keyword appearance on Command Line: [purple-background white]`clear`
+
+=== Copying schedule: `copy` | `cp`
+`Coming in v2.0`
+
+Alias: `cp`
+
+Copies a theater schedule to a target theater schedule
+Format: `copy c/CINEMA th/THEATER sd/SOURCE_DATE tc/TARGET_CINEMA tth/TARGET_THEATER td/TARGET_DATE`
+
+Examples:
+
+* `copy c/Cathay th/1 sd/14/03/2018 tc/Cathay tth/1 td/15/03/2018`
+* `cp c/Cathay Central th/1 sd/14/03/2018 tc/Cathay East tth/1 td/14/03/2018`
+
+[NOTE]
+====
+* In the first example, you copy the schedule of Cathay's theater 1 on 14/03/2018 to the
+next day 15/03/2018.
+* In the second example, you copy the schedule of Cathay Central's theater 1 to the schedule of
+Cathay East's theater 1.
+====
+
+Keyword appearance on Command Line: [purple-background white]`copy`
+
+=== Deleting a cinema : `delete` | `d`
+
+Alias: `d`
+
+Deletes the specified cinema from MVP. +
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the cinema at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -133,32 +203,192 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 2nd cinema in MVP.
+* `find Cathay` +
+`d 1` +
+Deletes the 1st cinema in the results of the `find` command.
 
-=== Selecting a person : `select`
+Keyword appearance on Command Line: [purple-background white]`delete`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+=== Deleting a movie : `deletemovie` | `dm`
+`Available in V1.2`
 
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+Alias: `dm`
+
+Deletes the specified movie from MVP. +
+Format: `delete INDEX`
+
+[NOTE]
+====
+* Deletes the movie at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
+* The index *must be a positive integer* 1, 2, 3, ...
+====
 
 Examples:
 
 * `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+`delete 2` +
+Deletes the 2nd movie in MVP.
+* `find Marvel` +
+`dm 1` +
+Deletes the 1st movie in the results of the `find` command.
 
-=== Listing entered commands : `history`
+Keyword appearance on Command Line: [purple-background white]`deletemovie`
+
+=== Deleting a screening: `deletescreening` | `ds`
+`Available in v1.4`
+
+Alias: `ds`
+
+Delete a screening from a cinema theater using the screening's start date and time. +
+Format: `deletescreening c/CINEMA_INDEX th/THEATER h/SCREEN_DATE_TIME`
+
+Examples:
+
+* `deletescreening c/2 th/1 h/05/05/2015 13:30` +
+Deletes a screening which screens on 05/05/2015 from the 2nd cinema's 1st theater.
+* `ds m/2 c/3 th/3 h/11/11/2011 14:15` +
+Deletes a screening which screens on 11/11/2011 from the 3rd cinema's 3rd theater.
+
+[NOTE]
+====
+* Screening must exist in the cinema theater
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The cinema theater that is holding the screening must exist in the MVP
+====
+
+Keyword appearance on Command Line: [purple-background white]`deletescreening`
+
+=== Deleting theaters: `deletetheater` | `dt`
+
+`Available in v1.2`
+
+Alias: `dt`
+
+Delete theaters from a cinema. +
+Format: `deletetheater n/CINEMA_NAME th/NUMBER_OF_THEATER`
+
+Examples:
+
+* `deletetheater n/Cathay th/9`
+* `dt n/GV Bishan th/2`
+
+[NOTE]
+Number of theater must be positive
+
+Keyword appearance on Command Line: [purple-background white]`deletetheater`
+
+=== Editing a cinema: `edit` | `e`
+
+Alias: `e`
+
+Edits an existing cinema in MVP. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]`
+
+[NOTE]
+====
+* Edits the cinema at the specified `INDEX`. The index refers to the index number shown in the last cinema listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+====
+
+Examples:
+
+* `edit 1 p/67124231 e/shaw@yahoo.com` +
+Edits the phone number and email address of the 1st cinema to be `91234567` and `shaw@yahoo.com` respectively.
+* `e 2 n/Golden Village` +
+Edits the name of the 2nd cinema to be `Golden Village`.
+
+Keyword appearance on Command Line: [purple-background white]`edit`
+
+=== Email schedule: `email` | `eml`
+
+Alias: `eml`
+
+Sends an email to target recipient. +
+Format: `email msg/MESSAGE subj/SUBJECT recp/RECIPIENT func/<SEND|CLEAR> lgn/EMAIL_USERNAME:EMAIL_PASSWORD [attc/RELATIVE_FILE_PATH]`
+
+[NOTE]
+====
+* Ensure that the message `msg`, subject `subj`, and recipient `recp` fields are filled before sending out email.
+* Ensure that in the `lgn` parameter, you provide the actual Gmail account that you use.
+* Individual parameters (e.g. `msg`) can be edited indepedent of other parameters.
+* Ensure that *"Allow less secure apps"* setting is enabled for the Gmail account.
+** Navigate to your Gmail account -> My Account -> Sign-in & Security -> Allow less secure apps: OFF
+** Toggle it to active "Allow less secure apps: ON"
+====
+
+Examples:
+
+* `email msg/Hi Bob, Here is the schedule. subj/Schedule lgn/cmanager@gmail.com:1I2h@la recp/gv.manager@gmail.com attc/docs/images/Architecture.png func/send` +
+Sends out an email to `gv.manager@gmail.com` with a message of the following details:
+
+** Recipient: `gv.manager@gmail.com`
+** Subject: `Schedule`
+** Message: `Hi Bob, Here is the schedule.`
+** Attachment: `Architecture.png`
+
+* `eml msg/This will be a very long message, so I hope that you are attentive when you read this.` +
+Edits the email message with `This will be a very long message, so I hope that you are attentive when you read this.`
+
+Keyword appearance on Command Line: [purple-background white]`email`
+
+=== Finding cinemas by name: `find` | `f`
+
+Alias: `f`
+
+Finds cinemas whose names contain any of the given keywords. +
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `cathay` will match `Cathay`
+* The order of the keywords does not matter. e.g. `Cathay West` will match `West Cathay`
+* Only the cinema is searched.
+* Only full words will be matched e.g. `Cathay` will not match `Cathays`
+* Cinemas matching at least one keyword will be returned (i.e. `OR` search). e.g. `Cathay West` will return `Cathay East`, `West Village`
+****
+
+Examples:
+
+* `find Cathay` +
+Returns `cathay` and `Cathay West`
+* `f Golden Village North` +
+Returns any cinema having names `Golden`, `Village`, or `North`
+
+Keyword appearance on Command Line: [purple-background white]`find`
+
+=== Finding movies by user input: `findmovie`
+`coming in V1.3`
+
+Alias: `fm`
+
+Finds movies based on the name, tag or start date. +
+Format: `findmovie [n/MOVIE_NAME] [t/TAG] [sd/START_DATE]`
+
+****
+* The order of the keywords does not matter. e.g. `Cathay West` will match `West Cathay`
+* Only the movie is searched.
+****
+
+Examples:
+
+* `findmovie n/zombie` +
+Returns all movies which name contains keyword `zombie` like `Zombie Graveyard` and `attack the zombie`
+* `fm cat/horror` +
+Returns all movies which belongs to the tag `horror` like `Insidious` and `Conjuring`
+* `findmovie sd/02/02/2018` +
+Returns all movies with `StartDate = 09/11/2017` like `Ah Boys to Men 4`
+* `findmovie n/Spiderman cat/superhero` +
+Returns all movies from tag `superhero` with name `Spiderman` like `Spiderman 1`, `Spiderman 2` and `Spiderman 3`
+
+
+Keyword appearance on Command Line: [purple-background white]`findmovie`
+
+=== Listing history of entered commands : `history` | `hist`
+
+Alias: `hist`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -168,34 +398,40 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-// tag::undoredo[]
-=== Undoing previous command : `undo`
+Keyword appearance on Command Line: [purple-background white]`history`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+=== Jump to a specified date : `jump` | `j`
+`Available in 1.3`
 
-[NOTE]
-====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
-====
+Alias: `j`
+
+Jumps to a specified date in the scheduler. +
+Format: `jump dd/mm/yyyy`
 
 Examples:
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+* `jump 28/03/2018` +
+You will be able to see the schedule of 28/03/2018
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+[NOTE]
+====
+Remember to select on a cinema before executing the jump command.
+====
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+Keyword appearance on Command Line: [purple-background white]`jump`
 
-=== Redoing the previously undone command : `redo`
+=== Listing all cinemas and movies : `list` | `l`
+
+Alias: `l`
+
+Shows a list of all cinemas and movies in MVP. +
+Format: `list`
+
+Keyword appearance on Command Line: [purple-background white]`list`
+
+=== Redoing the previously undone command : `redo` | `r`
+
+Alias: `r`
 
 Reverses the most recent `undo` command. +
 Format: `redo`
@@ -216,49 +452,190 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
-// end::undoredo[]
 
-=== Clearing all entries : `clear`
+Keyword appearance on Command Line: [purple-background white]`redo`
 
-Clears all entries from the address book. +
-Format: `clear`
+=== Selecting a cinema : `select` | `s`
+
+Alias: `s`
+
+Selects the cinema identified by the index number used in the last cinema listing. +
+Format: `select INDEX`
+
+****
+* Selects the cinema and loads all the theaters with their schedules at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd cinema in MVP.
+* `find Cathay` +
+`s 1` +
+Selects the 1st cinema in the results of the `find` command.
+
+Keyword appearance on Command Line: [purple-background white]`select`
+
+// tag::undoredo[]
+=== Undoing previous command : `undo` | `u`
+
+Alias: `u`
+
+Restores MVP to the state before the previous _undoable_ command was executed. +
+Format: `undo`
+
+[NOTE]
+====
+Undoable commands: those commands that modify MVP's content (`add`, `delete`, `edit` and `clear`).
+====
+
+Examples:
+
+* `delete 1` +
+`list` +
+`undo` (reverses the `delete 1` command) +
+
+* `select 1` +
+`list` +
+`undo` +
+The `undo` command fails as there are no undoable commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+
+Keyword appearance on Command Line: [purple-background white]`undo`
 
 === Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
 
+Keyword appearance on Command Line: [purple-background white]`exit`
+
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Movie planner data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+=== Encrypting data files : `encrypt` | `enc`
+`Available in v1.4`
 
-_{explain how the user can enable/disable data encryption}_
+Alias: `enc`
+
+Encrypts the `movieplanner.xml` using password provided by user.
+
+Format: `encrypt pw/PASSWORD`
+
+****
+* A `encryptedmovieplanner.xml` file is created/overwritten, upon the `encrypt` command.
+****
+
+Examples:
+
+* `encrypt pw/password` +
+You will be able to encrypt the `movieplanner.xml` and create a `encryptedmovieplanner.xml` using this password.
+
+=== Decrypting encrypted data files : `decrypt` | `dec`
+`Available in v1.4`
+
+Alias: `dec`
+
+Decrypts the `encryptedmovieplanner.xml` using password provided by user.
+
+Format: `decrypt pw/PASSWORD`
+
+****
+* A `movieplanner.xml` file is created/overwritten upon successful `decrypt` command. You will be prompt to restart the application to see changes.
+****
+
+Examples:
+
+* `decrypt pw/password` +
+You will be able to decrypt the `encryptedmovieplanner.xml` and obtain a `movieplanner.xml` if the password is the same as the one used for encryption.
+
+
 // end::dataencryption[]
+
+<<UserGuide.adoc#, Back to top>>
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Movie Planner folder.
+
+<<UserGuide.adoc#, Back to top>>
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+|===
+|Feature|Command|Alias|Example
+|*Add* |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... th/THEATER`|`a`
+|`add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague th/3`
+|*AddMovie* |`addmovie n/MOVIE_NAME d/DURATION r/RATING sd/START_DATE t/TAG`|`am`
+|`addmovie n/The Incredibles d/115 r/PG sd/18/11/2014 cat/Animation`
+|*AddScreening* |`addscreening m/MOVIE_INDEX c/CINEMA_INDEX th/THEATER h/SCREEN_DATE_TIME` |`as`
+|`addscreening m/1 c/2 th/1 h/05/05/2015 13:30`
+|*AddTheater* | `addtheater n/CINEMA_NAME th/NUMBER_OF_THEATER` |`at` |`addtheater n/GV Bishan th/2`
+|*Clear* |`clear`| `c`| `clear`
+|*Copy* |`copy c/CINEMA th/THEATER sd/SOURCE_DATE tc/TARGET_CINEMA tth/TARGET_THEATER td/TARGET_DATE`
+|`cp` |`copy c/Cathay th/1 sd/14/03/2018 tc/Cathay tth/1 td/15/03/2018`
+|*Decrypt* | `decrypt pw/PASSWORD` | `dec` | `decrypt pw/secured`
+|*Delete* |`delete INDEX` |`d`
+|`delete 3`
+|*DeleteMovie* |`delete INDEX` |`dm`
+|`list` +
+ `delete 2`
+|*DeleteScreening* |`deletescreening c/CINEMA_INDEX th/THEATER h/SCREEN_DATE_TIME` |`ds`
+|`deletescreening c/2 th/1 h/05/05/2015 13:30`
+|*DeleteTheater* |`deletetheater n/CINEMA_NAME th/NUMBER_OF_THEATER` |`dt` |`deletetheater n/Cathay th/9`
+|*Edit* |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` |`e`
+|`edit 2 n/GV Jurong Point e/contacts@gv.com`
+|*Encrypt* | `encrypt pw/PASSWORD` | `enc` | `encrypt pw/secured`
+|*Find* |`find KEYWORD [MORE_KEYWORDS]` |`f`
+|`find Cathay`
+|*jump* | `jump dd/mm/yyyy` | `j` | `jump 28/03/2018`
+|*FindMovie* |`findmovie [n/MOVIE_NAME] [t/TAG] [sd/START_DATE]` |`fm`
+|`findmovie n/zombie`
+|*List* |`list` |`l` |`list`
+|*Help* |`help` |`h` |`help`
+|*Select* |`select INDEX` |`s` |`select 2`
+|*History* |`history` |`hist` |`history`
+|*Undo* |`undo` |`u` |`undo`
+|*Redo* |`redo` |`r` |`redo`
+|*Exit* |`exit` |- |`exit`
+|===
+
+<<UserGuide.adoc#, Back to top>>
+
+== Key Shortcuts
+
+|===
+|Shortcut |Corresponding Function
+|*Alt + Shift + C* | Clear command
+|*Ctrl + L* | List command
+|*Ctrl + Y* | Redo command
+|*Ctrl + Z* | Undo command
+|===
+
+== Glossary
+
+[[application-programming-interface]]
+*Application Programming Interface*
+====
+A set of functions and procedures that allow the creation of applications which access the features or data
+of an operating system, application, or other service.
+====
+
+[[graphical-user-interface]] Graphical User Interface::
+====
+A type of user interface that allows users to interact with electronic devices through graphical icons and
+visual indicators.
+====
+
+<<UserGuide.adoc#, Back to top>>

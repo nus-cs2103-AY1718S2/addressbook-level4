@@ -12,21 +12,30 @@
 <?import javafx.scene.layout.VBox?>
 
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-         minWidth="450" minHeight="600">
+         minWidth="1200" minHeight="800">
   <icons>
-    <Image url="@/images/address_book_32.png" />
+    <Image url="@/images/calendar.png" />
   </icons>
   <scene>
     <Scene>
       <stylesheets>
-        <URL value="@DarkTheme.css" />
+        <URL value="@ModernTheme.css" />
         <URL value="@Extensions.css" />
       </stylesheets>
 
-      <VBox>
-        <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
+      <VBox styleClass="picture-as-background">
+        <MenuBar fx:id="menuBar" VBox.vgrow="NEVER" styleClass="transparent-background">
           <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <MenuItem fx:id="undoMenuItem" mnemonicParsing="false" onAction="#handleUndo" text="Undo" />
+            <MenuItem fx:id="redoMenuItem" mnemonicParsing="false" onAction="#handleRedo" text="Redo" />
+            <MenuItem fx:id="clearMenuItem" mnemonicParsing="false" onAction="#handleClear" text="Clear All" />
+            <MenuItem fx:id="listMenuItem" mnemonicParsing="false" onAction="#handleList" text="List" />
+          </Menu>
+          <Menu mnemonicParsing="false" text="Tabs">
+            <MenuItem fx:id="toggleTabMenuItem" mnemonicParsing="false" onAction="#handleToggleNextTab" text="Toggle Tab" />
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
@@ -46,22 +55,30 @@
           </padding>
         </StackPane>
 
-        <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-          <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+        <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS" styleClass="transparent-background">
+
+          <VBox fx:id="tabsPanel" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false" styleClass="transparent-background">
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>
-            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+            <StackPane fx:id="tabsPanelPlaceholder" VBox.vgrow="ALWAYS" styleClass="transparent-background"/>
           </VBox>
 
-          <StackPane fx:id="browserPlaceholder" prefWidth="340" >
+          <VBox fx:id="movieList" minWidth="250" prefWidth="250" SplitPane.resizableWithParent="false" styleClass="transparent-background">
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
+            </padding>
+            <StackPane fx:id="movieListPanelPlaceholder" VBox.vgrow="ALWAYS" styleClass="transparent-background"/>
+          </VBox>
+
+          <StackPane fx:id="browserPlaceholder" prefWidth="340" styleClass="transparent-background">
+            <padding>
+              <Insets top="0" right="10" bottom="10" left="10" />
             </padding>
           </StackPane>
         </SplitPane>
 
-        <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+        <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" styleClass="transparent-background"/>
       </VBox>
     </Scene>
   </scene>

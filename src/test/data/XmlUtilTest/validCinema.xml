@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cinema>
+    <name>Hans Cinema</name>
+    <phone>9482424</phone>
+    <email>hans@example</email>
+    <address>4th street</address>
+    <theater number="1"/>
+</cinema>

@@ -306,6 +306,14 @@
     -fx-padding: 8 1 8 1;
 }
 
+#browserPane .scroll-bar {
+    -fx-background-color: #ffffff;
+}
+
+#browserSplitPane .split-pane-divider {
+   -fx-background-color: transparent;
+}
+
 #cardPane {
     -fx-background-color: transparent;
     -fx-border-width: 0;
@@ -327,7 +335,7 @@
     -fx-text-fill: white;
 }
 
-#filterField, #personListPanel, #personWebpage {
+#filterField, #cinemaListPanel, #cinemaWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
@@ -348,4 +356,54 @@
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+
+#tags .red {
+    -fx-text-fill: black;
+    -fx-background-color: red;
+}
+
+#tags .blue {
+    -fx-text-fill: black;
+    -fx-background-color: blue;
+}
+
+#tags .orange {
+    -fx-text-fill: black;
+    -fx-background-color: orange;
+}
+
+#tags .green {
+    -fx-text-fill: black;
+    -fx-background-color: green;
+}
+
+#tags .yellow {
+    -fx-text-fill: black;
+    -fx-background-color: yellow;
+}
+
+#tags .grey {
+    -fx-text-fill: black;
+    -fx-background-color: grey;
+}
+
+#tags .white {
+    -fx-text-fill: black;
+    -fx-background-color: white;
+}
+
+#tags .black {
+    -fx-text-fill: white;
+    -fx-background-color: black;
+}
+
+#tags .pink {
+    -fx-text-fill: black;
+    -fx-background-color: pink;
+}
+
+#tags .brown {
+    -fx-text-fill: white;
+    -fx-background-color: brown;
 }

@@ -9,6 +9,7 @@ import seedu.address.model.person.Person;
 /**
  * Sorts all persons in the address book to the user.
  */
+//@@author limzk1994
 public class SortCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "sort";
@@ -28,3 +29,4 @@ public class SortCommand extends UndoableCommand {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
+//@@author limzk1994

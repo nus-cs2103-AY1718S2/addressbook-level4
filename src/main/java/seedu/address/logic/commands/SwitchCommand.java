@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import seedu.address.ui.Calendar;
-
 /**
  * Switches between Calendar view and Timetable view
  */

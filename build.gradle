@@ -202,8 +202,8 @@ task deployOfflineDocs(type: Copy) {
 }
 
 task copyDummySearchPage(type: Copy) {
-    from 'docs/DummySearchPage.html'
-    into "${buildDir}/docs/html5"
+    from '/docs/template.html'
+    into "${buildDir}/docs/StudentPage"
 }
 
 deployOfflineDocs.dependsOn asciidoctor

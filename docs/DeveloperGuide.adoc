@@ -231,13 +231,21 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-=== Authentication and Multi-user Feature
+=== Multi-User Feature
 
 ==== Current Implementation
 
-===== Authication
+To implement the multi-user feature, where each user has his/her own Address Book, we have added a `userDatabase` in Model
+to store all the available users in the application. The `userDatabase` is the same architectural level as the `addressBook`.
+A similar storing system used in `addressBook` is also used for `userDatabase` where the all the user data is stored in a
+single XML file.
 
-====== User Login
+
+=== Authentication
+
+==== Current Implementation
+
+===== User Login
 
 The Login feature involves UI, Logic and Model components. It allows the user to login and logout
 from the application. When the user is logged out, the user commands are limited, some panels are hidden
@@ -261,7 +269,7 @@ every single command, the invalidity of the command is handled in `LogicManager`
 
 TODO: Add in design considerations
 
-====== User Logout
+===== User Logout
 
 The logout feature similarly involves the UI, Logic and Model components. It allows the user to
 log out from the application, securing his data.

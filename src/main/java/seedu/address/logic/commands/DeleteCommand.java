@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -9,6 +7,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Student;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -24,10 +23,12 @@ public class DeleteCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_STUDENT_SUCCESS = "Deleted Student: %1$s";
 
     private final Index targetIndex;
 
     private Person personToDelete;
+    private Student studentToDelete;
 
     public DeleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
@@ -36,14 +37,23 @@ public class DeleteCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() {
-        requireNonNull(personToDelete);
-        try {
-            model.deletePerson(personToDelete);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+        if (personToDelete != null && studentToDelete == null) {
+            try {
+                model.deletePerson(personToDelete);
+                return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing");
+            }
+        } else if (personToDelete == null && studentToDelete != null) {
+            try {
+                model.deleteStudent(studentToDelete);
+                return new CommandResult(String.format(MESSAGE_DELETE_STUDENT_SUCCESS, studentToDelete));
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target student cannot be missing");
+            }
+        } else {
+            throw new NullPointerException();
         }
-
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
     }
 
     @Override
@@ -54,7 +64,13 @@ public class DeleteCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        personToDelete = lastShownList.get(targetIndex.getZeroBased());
+        if (lastShownList.get(targetIndex.getZeroBased()) instanceof Student) {
+            studentToDelete = (Student) lastShownList.get(targetIndex.getZeroBased());
+            personToDelete = null;
+        } else {
+            personToDelete = lastShownList.get(targetIndex.getZeroBased());
+            studentToDelete = null;
+        }
     }
 
     @Override

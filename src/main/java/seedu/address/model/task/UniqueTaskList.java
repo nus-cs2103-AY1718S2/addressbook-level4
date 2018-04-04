@@ -56,11 +56,11 @@ public class UniqueTaskList implements Iterable<Task> {
             throws TaskNotFoundException {
         requireNonNull(editedTask);
 
-        int index = internalList.indexOf(target);
-        if (index == -1) {
+        boolean taskFoundAndDeleted = internalList.remove(target);
+        if (!taskFoundAndDeleted) {
             throw new TaskNotFoundException();
         }
-        internalList.set(index, editedTask);
+        internalList.add(editedTask);
     }
 
     /**
@@ -70,11 +70,11 @@ public class UniqueTaskList implements Iterable<Task> {
      */
     public boolean remove(Task toRemove) throws TaskNotFoundException {
         requireNonNull(toRemove);
-        final boolean personFoundAndDeleted = internalList.remove(toRemove);
-        if (!personFoundAndDeleted) {
+        final boolean taskFoundAndDeleted = internalList.remove(toRemove);
+        if (!taskFoundAndDeleted) {
             throw new TaskNotFoundException();
         }
-        return personFoundAndDeleted;
+        return taskFoundAndDeleted;
     }
 
     public void setTasks(UniqueTaskList replacement) {

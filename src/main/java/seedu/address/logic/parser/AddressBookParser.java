@@ -11,7 +11,9 @@ import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteTaskCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditTaskCommand;
 import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -24,6 +26,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import sun.security.x509.CertAttrSet;
 
 /**
  * Parses user input.
@@ -65,6 +68,10 @@ public class AddressBookParser {
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
+        case EditTaskCommand.COMMAND_WORD:
+        case EditTaskCommand.COMMAND_ALIAS:
+            return new EditTaskCommandParser().parse(arguments);
+
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
             return new SelectCommandParser().parse(arguments);
@@ -73,6 +80,11 @@ public class AddressBookParser {
         case DeleteCommand.COMMAND_ALIAS:
         case DeleteCommand.COMMAND_SIGN:
             return new DeleteCommandParser().parse(arguments);
+
+        case DeleteTaskCommand.COMMAND_WORD:
+        case DeleteTaskCommand.COMMAND_ALIAS:
+        case DeleteTaskCommand.COMMAND_SIGN:
+            return new DeleteTaskCommandParser().parse(arguments);
 
         case EmailCommand.COMMAND_WORD:
             return new EmailCommandParser().parse(arguments);

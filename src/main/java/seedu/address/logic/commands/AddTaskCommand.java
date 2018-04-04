@@ -46,7 +46,6 @@ public class AddTaskCommand extends UndoableCommand {
         model.addTask(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
 
-
     }
 
     @Override
@@ -56,4 +55,3 @@ public class AddTaskCommand extends UndoableCommand {
                 && toAdd.equals(((AddTaskCommand) other).toAdd));
     }
 }
-

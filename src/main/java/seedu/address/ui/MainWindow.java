@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -20,6 +21,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.task.Task;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -124,14 +126,16 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        calender = new CalendarView(logic.getFilteredTaskList());
+        ObservableList<Task> taskList = logic.getFilteredTaskList();
+
+        calender = new CalendarView(taskList);
         calendarPlaceholder.getChildren().add(calender.getRoot());
+
+        todoListPanel = new TodoListPanel(taskList);
+        todoListPanelPlaceholder.getChildren().add(todoListPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-
-        todoListPanel = new TodoListPanel(logic.getFilteredTaskList());
-        todoListPanelPlaceholder.getChildren().add(todoListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());

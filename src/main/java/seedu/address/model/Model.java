@@ -10,6 +10,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.task.DeadlineIsCurrentMonthPredicate;
 import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * The API of the Model component.
@@ -35,6 +36,9 @@ public interface Model {
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
 
+    /** Deletes the given task. */
+    void deleteTask(Task target) throws TaskNotFoundException;
+
     /** Adds the given task */
     void addTask(Task task);
 
@@ -47,6 +51,14 @@ public interface Model {
      */
     void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
+
+    /**
+     * Replaces the given task {@code target} with {@code editedTask}.
+     *
+     * @throws TaskNotFoundException if {@code target} could not be found in the list.
+     */
+    void updateTask(Task target, Task editedTask)
+            throws  TaskNotFoundException;
 
     void sortPersons();
 

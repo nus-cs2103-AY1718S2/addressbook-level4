@@ -18,7 +18,7 @@ import seedu.address.commons.events.ui.TodoPanelSelectionChangedEvent;
 import seedu.address.model.task.Task;
 
 /**
- * Panel containing the list of tasks in TodoList.
+ * Panel containing the list of tasks shown in TodoList.
  */
 public class  TodoListPanel extends UiPart<Region> {
     private static final String FXML = "TodoListPanel.fxml";
@@ -27,15 +27,15 @@ public class  TodoListPanel extends UiPart<Region> {
     @FXML
     private ListView<TodoCard> todoListView;
 
-    public TodoListPanel(ObservableList<Task> todoList) {
+    public TodoListPanel(ObservableList<Task> taskList) {
         super(FXML);
-        setConnections(todoList);
+        setConnections(taskList);
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<Task> todoList) {
+    private void setConnections(ObservableList<Task> taskList) {
         ObservableList<TodoCard> mappedList = EasyBind.map(
-                todoList, (task) -> new TodoCard(task, todoList.indexOf(task) + 1));
+                taskList, (task) -> new TodoCard(task, taskList.indexOf(task) + 1));
         todoListView.setItems(mappedList);
         todoListView.setCellFactory(listView -> new todoListViewCell());
         setEventHandlerForSelectionChangeEvent();

@@ -443,7 +443,10 @@ Data files created by FASTIS will be encrypted using the `password` you have pro
 
 === Timetable Links
 
-Timetable links can be retrieved from the NUSmods website. To retrieve it simply go the the NUSMods website and click the *share* button.
+Timetable links can be retrieved from the NUSmods website. To retrieve it simply go the the NUSMods website `nusmods.com` and click the *share* button.
+image:nusModsShare.png[width ="500"]
+
+image:nusModsLinkResult.png[width ="500"]
 
 == Command Summary
 

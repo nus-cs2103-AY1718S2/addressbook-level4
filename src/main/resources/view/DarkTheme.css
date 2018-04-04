@@ -116,6 +116,10 @@
     -fx-border-width: 1;
 }
 
+.list-cell:empty {
+    -fx-background-color: transparent;
+}
+
 .list-cell .label {
     -fx-text-fill: white;
 }

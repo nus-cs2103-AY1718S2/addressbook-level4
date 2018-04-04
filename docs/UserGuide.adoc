@@ -94,7 +94,7 @@ ET will intelligently provide [green]#hints# according to the words you type in 
 
 ==== Understanding the notification system
 
-====== Notification cards
+===== Notification cards
 
 _Figure 3_ shows a notification card of ET. Each notification card contains 4 information, which are index, event name, name of person in-charge and expiry date and time.
 

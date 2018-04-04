@@ -161,7 +161,7 @@ This section lists all Employees Tracker's command.
 ====
 
 === Logging in : `unlock`
-Unlocks the Employee Tracker. +
+Unlocks the Employees Tracker. +
 Format: `unlock PASSWORD`
 
 [NOTE]
@@ -180,7 +180,7 @@ Format: `unlock PASSWORD`
 Examples:
 
 * `unlock 123` +
-Unlock the Employees Tracker with password: 123 (which is also the application's unlock password)
+Unlocks the Employees Tracker with password: 123 (which is also the application's unlock password)
 
 === Viewing help : `help`
 
@@ -456,17 +456,23 @@ Format: `lock`
 Examples:
 
 * `lock` +
-Lock the Employees Tracker.
+Locks the Employees Tracker.
+
+[NOTE]
+After you locked Employees Tracker, you won't see any information on the User Interface. All information will be hiding when Employees Tracker is locked. Refer to Figure 10 below.
+
+.Hididng information when Employees Tracker is locked
+image::lock_screen.png[width="300"][height="400"]
 
 === Viewing my own calendar: `myCalendar`
 
-Views my own calendar in a seperate pop-up web page window. +
+Views my own calendar in a separate pop-up web page window. +
 Format: `myCalendar`
 
 Examples:
 
 * `myCalendar` +
-view my own calendar in a pop-up window.
+views my own calendar in a pop-up window.
 
 === Viewing my to-do-list: `todoList`
 
@@ -476,11 +482,14 @@ Format: `todoList`
 Examples:
 
 * `todoList` +
-show the to-do-list in  a pop-up window.
+shows the to-do-list in  a pop-up window. Refer to Figure 11 below.
+
+.Hididng information when Employees Tracker is locked
+image::todolist.png[width="300"][height="400"]
 
 === Setting the application unlock password: `setPassword`
 
-Sets Employees Tracker's password. +
+Sets Employees Tracker's unlock password. +
 Format: `setPassword OLD_PASSWORD NEW_PASSWORD`
 
 ****
@@ -493,7 +502,7 @@ Format: `setPassword OLD_PASSWORD NEW_PASSWORD`
 Examples:
 
 * `setPassword 123 qwe` +
-Set Employees Tracker's password from '123' (current application password) to 'qwe'.
+Sets Employees Tracker's password from '123' (current application password) to 'qwe'.
 
 === Sorting the employees by any existing field: `sort`
 
@@ -556,7 +565,7 @@ Examples:
 
 * `list` +
 `deleteEvent 2 some event` +
-Deletes the event with title "some event" in 2^nd^ employee's timetable in the list.
+Deletes the event with title "some event" in 2^nd^ employee's timetable.
 
 === Clearing all entries : `clear`
 
@@ -647,6 +656,7 @@ e.g. `find n/James n/Jake Black t/Sales t/Marketing Senior r/3`
 e.g.`select 2`
 * *SetPassword* : `setPassword OLD_PASSWORD NEW_PASSWORD ` +
 e.g.`setPassword admin 12345`
+* *TodoList* : `todoList`
 * *History* : `history`
 * *Undo* : `undo`
 * *Unlock* : `unlock PASSWORD` +

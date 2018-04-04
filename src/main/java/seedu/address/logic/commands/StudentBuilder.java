@@ -216,6 +216,9 @@ public class StudentBuilder {
         return this;
     }
 
+    /**
+     * Builds a student with default properties
+     */
     public Student build() {
         return new Student(uniqueKey, name, phone, email, address, programmingLanguage, tags,
                 favourite, dashboard, profilePicturePath);

@@ -34,7 +34,7 @@ public class XmlRequiredIndexStorage {
      */
     private static void createViewResourceFile(String requiredIndexStorageFilePath) throws IOException {
         FileUtil.createIfMissing(new File(requiredIndexStorageFilePath));
-        FileUtil.createIfMissing(new File("data/view/" + STUDENT_MISC_INFO_PAGE ));
+        FileUtil.createIfMissing(new File("data/view/" + STUDENT_MISC_INFO_PAGE));
         FileUtil.createIfMissing(new File("data/view/" + STUDENT_INFO_PAGE_STYLESHEET));
         FileUtil.createIfMissing(new File("data/view/profile_photo_placeholder.png"));
     }

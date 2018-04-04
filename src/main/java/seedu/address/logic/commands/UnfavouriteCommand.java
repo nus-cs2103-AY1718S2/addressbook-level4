@@ -75,5 +75,6 @@ public class UnfavouriteCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof UnfavouriteCommand // instanceof handles null
                 && ((UnfavouriteCommand) other).targetIndex == this.targetIndex);
+
     }
 }

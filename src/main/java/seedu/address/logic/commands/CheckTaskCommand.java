@@ -23,6 +23,7 @@ import seedu.address.model.student.dashboard.exceptions.TaskNotFoundException;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 
+
 //@@author yapni
 /**
  * Mark a task as completed
@@ -116,6 +117,7 @@ public class CheckTaskCommand extends UndoableCommand {
             throws DuplicateTaskException, TaskNotFoundException,
             DuplicateMilestoneException, MilestoneNotFoundException {
         requireAllNonNull(studentToEdit, milestoneIndex, taskIndex);
+
 
         return new StudentBuilder(studentToEdit).withTaskCompleted(milestoneIndex, taskIndex).build();
     }

@@ -12,6 +12,7 @@ import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 
+
 //@@author yapni
 /**
  * Add a student to favourites
@@ -66,6 +67,9 @@ public class FavouriteCommand extends UndoableCommand {
      * Create and return a copy of the target {@Code Student} to favourite with its' Favourite attribute set to true.
      */
     private static Student createEditedStudent(Student target) {
+
+        assert target != null;
+
         requireNonNull(target);
 
         return new StudentBuilder(target).withFavourite(true).build();
@@ -76,5 +80,6 @@ public class FavouriteCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof FavouriteCommand // instanceof handles null
                 && ((FavouriteCommand) other).targetIndex == this.targetIndex);
+
     }
 }

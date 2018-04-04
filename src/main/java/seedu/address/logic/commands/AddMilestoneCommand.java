@@ -17,6 +17,8 @@ import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneExcept
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 
+
+
 //@@author yapni
 /**
  * Adds a Milestone to a Student's Dashboard
@@ -90,6 +92,7 @@ public class AddMilestoneCommand extends UndoableCommand {
         return new StudentBuilder(studentToEdit).withNewMilestone(newMilestone).build();
     }
 
+
     /**
      * Sets the {@code targetStudent} object
      * @throws IllegalValueException if the studentIndex is invalid
@@ -101,7 +104,9 @@ public class AddMilestoneCommand extends UndoableCommand {
             throw new IllegalValueException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
         }
 
+
         targetStudent = lastShownList.get(studentIndex.getZeroBased());
+
     }
 
     @Override

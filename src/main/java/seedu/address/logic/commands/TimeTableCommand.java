@@ -28,7 +28,7 @@ public class TimeTableCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "%1$s Week Timetable of selected Person: %1$s";
+    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "%1$s Week Timetable of selected Person: %2$s";
 
     private final Index targetIndex;
     private final String oddEven;
@@ -55,7 +55,7 @@ public class TimeTableCommand extends Command {
         ObservableList<ArrayList<String>> timeTableList = FXCollections.observableArrayList(personTimeTable);
         EventsCenter.getInstance().post(new TimeTableEvent(timeTableList));
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, StringUtil.capitalize(oddEven),
-                personToShow));
+                personToShow.getName()));
     }
 
     /**

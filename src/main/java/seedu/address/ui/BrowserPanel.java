@@ -21,7 +21,9 @@ import seedu.address.model.person.Person;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String SEARCH_PAGE_URL =
+    public static final String FACEBOOK_SEARCH_PAGE_URL =
+            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+    public static final String TWITTER_SEARCH_PAGE_URL =
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
 
     private static final String FXML = "BrowserPanel.fxml";
@@ -30,6 +32,9 @@ public class BrowserPanel extends UiPart<Region> {
 
     @FXML
     private WebView browser;
+
+    @FXML
+    private WebView browser1;
 
     public BrowserPanel() {
         super(FXML);
@@ -41,12 +46,18 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
+    private void loadBrowserPersonPage(Person person) {
+        loadBrowserPage(FACEBOOK_SEARCH_PAGE_URL + person.getName().fullName);
+    }
+    private void loadBrowser1PersonPage(Person person) {
+        loadBrowser1Page(TWITTER_SEARCH_PAGE_URL + person.getName().fullName);
     }
 
-    public void loadPage(String url) {
+    public void loadBrowserPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
+    }
+    public void loadBrowser1Page(String url) {
+        Platform.runLater(() -> browser1.getEngine().load(url));
     }
 
     /**
@@ -54,7 +65,8 @@ public class BrowserPanel extends UiPart<Region> {
      */
     private void loadDefaultPage() {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
+        loadBrowserPage(defaultPage.toExternalForm());
+        loadBrowser1Page(defaultPage.toExternalForm());
     }
 
     /**
@@ -62,11 +74,13 @@ public class BrowserPanel extends UiPart<Region> {
      */
     public void freeResources() {
         browser = null;
+        browser1 = null;
     }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        loadBrowserPersonPage(event.getNewSelection().person);
+        loadBrowser1PersonPage(event.getNewSelection().person);
     }
 }

@@ -608,7 +608,7 @@ Format: `whatsapp INDEX`
 Features yet to be implemented. Coming in `v2.0`.
 
 * Editing an event. +
-As a manager, you will be able to edit an event at any time
+You will be able to edit an event at any time.
 * Adding an event in mass to many employees' timetable at once. +
 You will be able to add an event to many employee's timetable at once for maximum convenience.
 * Jumping to email composing with a command. +

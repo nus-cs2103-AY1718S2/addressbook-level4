@@ -13,13 +13,13 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 /**
- * A handler for the {@code BrowserPanel} of the UI.
+ * A handler for the {@code DetailPanel} of the UI.
  */
-public class BrowserPanelHandle extends NodeHandle<Node> {
+public class DetailPanelHandle extends NodeHandle<Node> {
 
     public static final String BROWSER_ID = "#browser";
 
-    public static final String BROWSER_PANEL_ID = "#browserPanel";
+    public static final String BROWSER_PANEL_ID = "#detailPanel";
     private static final String NAME_FIELD_ID = "#name";
     private static final String ADDRESS_FIELD_ID = "#address";
     private static final String PHONE_FIELD_ID = "#phone";
@@ -41,8 +41,8 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
     private Label oldEmailLabel;
     private List<Label> oldTagLabels;
 
-    public BrowserPanelHandle(Node browserPanelNode) {
-        super(browserPanelNode);
+    public DetailPanelHandle(Node detailPanelNode) {
+        super(detailPanelNode);
 
         WebView webView = getChildNode(BROWSER_ID);
         WebEngine engine = webView.getEngine();

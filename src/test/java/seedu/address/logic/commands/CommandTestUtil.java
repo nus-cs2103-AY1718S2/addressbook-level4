@@ -56,7 +56,7 @@ public class CommandTestUtil {
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
-    public static final String TITLE_DESC_MEET_John = " " + PREFIX_NAME + VALID_TITLE_JOHN;
+    public static final String TITLE_DESC_MEET_JOHN = " " + PREFIX_NAME + VALID_TITLE_JOHN;
     public static final String START_DATE_DESC = " " + PREFIX_START_INTERVAL + VALID_DATE_TIME_START;
     public static final String END_DATE_DESC = " " + PREFIX_END_INTERVAL + VALID_DATE_TIME_END;
     public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;

@@ -6,7 +6,7 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_TIME_END
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_TIME_START_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
 import static seedu.address.logic.commands.CommandTestUtil.START_DATE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_MEET_John;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_MEET_JOHN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_TIME_END;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_TIME_START;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_JOHN;
@@ -27,7 +27,7 @@ public class AddAppointmentParserTest {
         AppointmentEntry expectedEntry = TypicalAppointmentEntires.MEET_JOHN;
 
         // whitespace only preamble
-        assertParseSuccess(parser, PREAMBLE_WHITESPACE + TITLE_DESC_MEET_John + START_DATE_DESC
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + TITLE_DESC_MEET_JOHN + START_DATE_DESC
                 + END_DATE_DESC, new AddAppointmentCommand(expectedEntry));
     }
 
@@ -39,10 +39,10 @@ public class AddAppointmentParserTest {
         assertParseFailure(parser, START_DATE_DESC + END_DATE_DESC, expectedMessage);
 
         // missing start interval prefix
-        assertParseFailure(parser, TITLE_DESC_MEET_John + END_DATE_DESC, expectedMessage);
+        assertParseFailure(parser, TITLE_DESC_MEET_JOHN + END_DATE_DESC, expectedMessage);
 
         // missing end interval prefix
-        assertParseFailure(parser, TITLE_DESC_MEET_John + START_DATE_DESC,
+        assertParseFailure(parser, TITLE_DESC_MEET_JOHN + START_DATE_DESC,
                 expectedMessage);
 
         // all prefixes missing
@@ -53,7 +53,7 @@ public class AddAppointmentParserTest {
     @Test
     public void parse_invalidDateFormat_failure() {
 
-        assertParseFailure(parser, TITLE_DESC_MEET_John + INVALID_DATE_TIME_START_DESC
+        assertParseFailure(parser, TITLE_DESC_MEET_JOHN + INVALID_DATE_TIME_START_DESC
                 + INVALID_DATE_TIME_END_DESC, AppointmentEntry.MESSAGE_DATE_TIME_CONSTRAINTS);
     }
 }

@@ -11,6 +11,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import seedu.address.model.person.Person;
 
+//@@author jstarw
 /**
  * An UI component that displays information of a {@code Person}.
  */

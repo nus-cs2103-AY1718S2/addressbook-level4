@@ -41,6 +41,7 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author jstarw
     private void loadPersonDetail(Person person) {
         PersonDetail personDetail = new PersonDetail(person, 1);
         personDetail.show();

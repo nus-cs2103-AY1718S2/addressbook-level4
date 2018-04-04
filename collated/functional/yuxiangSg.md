@@ -1,5 +1,89 @@
 # yuxiangSg
-###### \java\seedu\address\commons\events\ui\CalendarFocusEvent.java
+###### /java/seedu/address/ui/CalendarPanel.java
+``` java
+/**
+ * The Calendar Panel of the App.
+ */
+public class CalendarPanel {
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private CalendarView calendarPage;
+
+    public CalendarPanel(CalendarSource calendar) {
+        calendarPage = new CalendarView();
+        assignCalendar(calendar);
+        configurCalendarPage();
+        EventsCenter.getInstance().registerHandler(this);
+    }
+
+    /**
+     * Configure the calendarView to fit the browser panel.
+     */
+    void configurCalendarPage() {
+        calendarPage.setShowAddCalendarButton(false);
+        calendarPage.setShowDeveloperConsole(false);
+        calendarPage.setShowPageSwitcher(true);
+        calendarPage.setShowPageToolBarControls(true);
+        calendarPage.setShowPrintButton(false);
+        calendarPage.setShowSearchField(false);
+        calendarPage.setShowSearchResultsTray(false);
+        calendarPage.setShowSourceTray(false);
+        calendarPage.setShowToolBar(false);
+        calendarPage.showMonthPage();
+
+
+    }
+
+    /**
+     * Assign calendar to Calendar GUI
+     */
+    void assignCalendar(CalendarSource calendar) {
+        calendarPage.getCalendarSources().setAll(calendar);
+    }
+
+    @Subscribe
+    private void handleCalendarFocusEvent(CalendarFocusEvent event) {
+        calendarPage.showDate(event.dateToLook);
+    }
+
+    @Subscribe
+    private void handleCalendarUnFocusEvent(CalendarUnfocusEvent event) {
+        calendarPage.showMonthPage();
+    }
+
+    public CalendarView getCalendarPage() {
+        return calendarPage;
+    }
+}
+```
+###### /java/seedu/address/ui/AgendaPanel.java
+``` java
+/**
+ * The Agenda Panel of the App.
+ */
+public class AgendaPanel {
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private AgendaView agendaView;
+
+    public AgendaPanel(CalendarSource calendar) {
+        agendaView = new AgendaView();
+        assignCalendar(calendar);
+        EventsCenter.getInstance().registerHandler(this);
+    }
+
+    /**
+     * Assign ca to Agenda panel GUI
+     */
+    void assignCalendar(CalendarSource calendar) {
+        agendaView.getCalendarSources().setAll(calendar);
+    }
+
+    public AgendaView getAgendaView() {
+        return agendaView;
+    }
+}
+```
+###### /java/seedu/address/commons/events/ui/CalendarFocusEvent.java
 ``` java
 /**
  * Represents a calendar GUI focus date request
@@ -17,7 +101,7 @@ public class CalendarFocusEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\CalendarUnfocusEvent.java
+###### /java/seedu/address/commons/events/ui/CalendarUnfocusEvent.java
 ``` java
 /**
  * Represents a calendar GUI unfocus date request
@@ -29,7 +113,361 @@ public class CalendarUnfocusEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\AddAppointmentCommand.java
+###### /java/seedu/address/logic/parser/AddAppointmentCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new AddAppointmentCommand object
+ */
+public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the AddAppointmentCommand
+     * and returns an AddAppointCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public AddAppointmentCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_START_INTERVAL, PREFIX_END_INTERVAL);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_START_INTERVAL, PREFIX_END_INTERVAL)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        AddAppointmentCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            String appointmentTitle = ParserUtil.parseString(argMultimap.getValue(PREFIX_NAME)).get();
+            LocalDateTime startDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_START_INTERVAL)).get();
+            LocalDateTime endDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_END_INTERVAL)).get();
+            Interval interval = new Interval(startDateTime, endDateTime);
+
+
+            AppointmentEntry appointmentEntry = new AppointmentEntry(appointmentTitle, interval);
+
+            return new AddAppointmentCommand(appointmentEntry);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+}
+```
+###### /java/seedu/address/logic/parser/RemoveAppointmentCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new RemoveAppointmentsCommand object
+ */
+public class RemoveAppointmentCommandParser implements Parser<RemoveAppointmentsCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the RemoveAppointmentsCommand
+     * and returns a RemoveAppointsCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    @Override
+    public RemoveAppointmentsCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_SEARCH_TEXT);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_SEARCH_TEXT)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    RemoveAppointmentsCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            String searchText = ParserUtil.parseString(argMultimap.getValue(PREFIX_SEARCH_TEXT)).get();
+            return new RemoveAppointmentsCommand(searchText);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+}
+```
+###### /java/seedu/address/logic/parser/ParserUtil.java
+``` java
+    /**
+     * Parses a {@code String input} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     */
+    static String parseString(String input) {
+        requireNonNull(input);
+        String trimmedInput = input.trim();
+
+        return trimmedInput;
+    }
+
+    /**
+     * Parses a {@code Optional<String> input} into an {@code Optional<String>} if {@code input} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseString(Optional<String> input) throws IllegalValueException {
+        requireNonNull(input);
+        return input.isPresent() ? Optional.of(parseString(input.get())) : Optional.empty();
+    }
+
+
+    /**
+     * Parses a {@code String input} into a {@code LocalDateTime}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    static LocalDateTime parseDateTime(String input) throws  IllegalValueException {
+        requireNonNull(input);
+        String trimmedInput = input.trim();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppointmentEntry.DATE_VALIDATION);
+
+        try {
+
+            LocalDateTime dateTime = LocalDateTime.parse(trimmedInput, formatter);
+            return dateTime;
+
+        } catch (DateTimeParseException e) {
+            throw new IllegalValueException(AppointmentEntry.MESSAGE_DATE_TIME_CONSTRAINTS);
+        }
+
+
+
+    }
+
+    /**
+     * Parses a {@code Optional<String> input} into an {@code Optional<LocalDateTime>} if {@code input} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<LocalDateTime> parseDateTime(Optional<String> input) throws IllegalValueException {
+        requireNonNull(input);
+        return input.isPresent() ? Optional.of(parseDateTime(input.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String input} into a {@code LocalDate}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    static LocalDate parseDate(String input) throws  IllegalValueException {
+        requireNonNull(input);
+        String trimmedInput = input.trim();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(LookDateCommand.DATE_VALIDATION);
+
+        try {
+
+            LocalDate date = LocalDate.parse(trimmedInput, formatter);
+            return date;
+
+        } catch (DateTimeParseException e) {
+            throw new IllegalValueException(LookDateCommand.MESSAGE_DATE_CONSTRAINTS);
+        }
+
+
+
+    }
+
+    /**
+     * Parses a {@code Optional<String> input} into an {@code Optional<LocalDate>} if {@code input} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<LocalDate> parseDate(Optional<String> input) throws IllegalValueException {
+        requireNonNull(input);
+        return input.isPresent() ? Optional.of(parseDate(input.get())) : Optional.empty();
+    }
+```
+###### /java/seedu/address/logic/parser/LookDateCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new LookDateCommand object
+ */
+public class LookDateCommandParser implements Parser<LookDateCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the LookDateCommand
+     * and returns anLookDateCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public LookDateCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_DATE_FOCUS);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_DATE_FOCUS)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    LookDateCommand.MESSAGE_USAGE));
+        }
+
+        try {
+
+            LocalDate date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE_FOCUS)).get();
+
+            return new LookDateCommand(date);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+}
+```
+###### /java/seedu/address/logic/parser/EditAppointmentCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new EditAppointmentCommand object
+ */
+public class EditAppointmentCommandParser implements Parser<EditAppointmentCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the EditAppointCommand
+     * and returns an ditAppointCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public EditAppointmentCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_SEARCH_TEXT, PREFIX_NAME,
+                        PREFIX_START_INTERVAL, PREFIX_END_INTERVAL);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_SEARCH_TEXT)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    EditAppointmentCommand.MESSAGE_USAGE));
+        }
+
+        EditAppointmentDescriptor editAppointmentDescriptor = new EditAppointmentDescriptor();
+        String searchText;
+
+        try {
+            searchText = ParserUtil.parseString(argMultimap.getValue(PREFIX_SEARCH_TEXT)).get();
+
+            ParserUtil.parseString(argMultimap.getValue(PREFIX_NAME))
+                    .ifPresent(editAppointmentDescriptor::setGivenTitle);
+            ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_START_INTERVAL))
+                    .ifPresent(editAppointmentDescriptor::setStartDateTime);
+            ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_END_INTERVAL))
+                    .ifPresent(editAppointmentDescriptor::setEndDateTime);
+
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+
+        if (!editAppointmentDescriptor.isAnyFieldEdited()) {
+            throw new ParseException(EditAppointmentCommand.MESSAGE_NOT_EDITED);
+        }
+
+        return new EditAppointmentCommand(searchText, editAppointmentDescriptor);
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+}
+```
+###### /java/seedu/address/logic/commands/RemoveAppointmentsCommand.java
+``` java
+/**
+ * removes appointment whose title match with the searchText in the address book's calendar.
+ */
+
+public class RemoveAppointmentsCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "remove_appointment";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": remove appointment whose title match with the search text in the calendar. "
+            + "Parameters: "
+            + PREFIX_SEARCH_TEXT + "SEARCH TEXT "
+            + "\nExample: " + COMMAND_WORD + " "
+            + PREFIX_SEARCH_TEXT + "title of the appointment ";
+
+    public static final String MESSAGE_SUCCESS = "Appointment with title %1$s removed";
+    public static final String MESSAGE_NO_SUCH_APPOINTMENT = "No such appointment exists in the calendar";
+
+    private final String searchText;
+
+    /**
+     * Creates an RemoveAppointmentCommand to remove the specified {@code searchText}
+     */
+    public RemoveAppointmentsCommand(String searchText) {
+        requireNonNull(searchText);
+        this.searchText = searchText;
+    }
+
+    @Override
+    protected CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            model.removeAppointment(searchText);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, searchText));
+        } catch (AppointmentNotFoundException e) {
+            throw new CommandException(MESSAGE_NO_SUCH_APPOINTMENT);
+        }
+    }
+}
+```
+###### /java/seedu/address/logic/commands/LookDateCommand.java
+``` java
+/**
+ * Look at a specific date give the date to look
+ */
+public class LookDateCommand extends Command {
+    public static final String COMMAND_WORD = "look";
+
+    public static final String DATE_VALIDATION = "d/MM/yyyy";
+
+    public static final String MESSAGE_DATE_CONSTRAINTS =
+            "Date should be in the format of dd/MM/yyyy";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Focus on a given date ."
+            + "Parameters: "
+            + PREFIX_DATE_FOCUS + "DATE TO FOCUS "
+            + "\nExample: " + COMMAND_WORD + " "
+            + PREFIX_DATE_FOCUS + "11/03/2018";
+
+    public static final String FOCUS_DATE_MESSAGE = "FOCUS ON DATE";
+
+    /**
+     * Creates an RemoveAppointmentCommand to remove the specified {@code searchText}
+     */
+    final LocalDate dateToLook;
+
+    public LookDateCommand(LocalDate dateToLook) {
+        requireNonNull(dateToLook);
+        this.dateToLook = dateToLook;
+    }
+
+    @Override
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new CalendarFocusEvent(dateToLook));
+        return new CommandResult(FOCUS_DATE_MESSAGE);
+    }
+}
+```
+###### /java/seedu/address/logic/commands/AddAppointmentCommand.java
 ``` java
 /**
  * Adds a appointment to the address book's calendar.
@@ -83,7 +521,27 @@ public class AddAppointmentCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\EditAppointmentCommand.java
+###### /java/seedu/address/logic/commands/ReturnMonthViewCommand.java
+``` java
+/**
+ * return to month view for the calendar GUI.
+ */
+public class ReturnMonthViewCommand extends Command {
+    public static final String COMMAND_WORD = "back";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unfocus the Calendar to Month view.\n"
+            + "Example: " + COMMAND_WORD;
+
+    public static final String RETURN_MONTH_VIEW_MESSAGE = "Calendar back to Month view";
+
+    @Override
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new CalendarUnfocusEvent());
+        return new CommandResult(RETURN_MONTH_VIEW_MESSAGE);
+    }
+}
+```
+###### /java/seedu/address/logic/commands/EditAppointmentCommand.java
 ``` java
 /**
  * Edit an appointment in the address book's calendar.
@@ -241,435 +699,118 @@ public class EditAppointmentCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\LookDateCommand.java
+###### /java/seedu/address/storage/XmlAdptedAppointmentEntry.java
 ``` java
 /**
- * Look at a specific date give the date to look
+ * JAXB-friendly version of the Appointment Entry.
  */
-public class LookDateCommand extends Command {
-    public static final String COMMAND_WORD = "look";
+public class XmlAdptedAppointmentEntry {
 
-    public static final String DATE_VALIDATION = "d/MM/yyyy";
-
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Appointment Entry's %s field is missing!";
+    public static final String MISSING_FIELD_TITLE = "[TITLE]";
+    public static final String MISSING_FIELD_START_DATE = "[START_DATE]";
+    public static final String MISSING_FIELD_END_DATE = "[END_DATE]";
+    public static final String DATE_VALIDATION = "yyyy-MM-d'T'HH:mm";
     public static final String MESSAGE_DATE_CONSTRAINTS =
-            "Date should be in the format of dd/MM/yyyy";
+            "Dates should be in the format of yyyy-MM-d'T'HH:mm";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Focus on a given date ."
-            + "Parameters: "
-            + PREFIX_DATE_FOCUS + "DATE TO FOCUS "
-            + "\nExample: " + COMMAND_WORD + " "
-            + PREFIX_DATE_FOCUS + "11/03/2018";
-
-    public static final String FOCUS_DATE_MESSAGE = "FOCUS ON DATE";
+    @XmlElement(required = true)
+    private String title;
+    @XmlElement(required = true)
+    private String startDate;
+    @XmlElement(required = true)
+    private String endDate;
 
     /**
-     * Creates an RemoveAppointmentCommand to remove the specified {@code searchText}
+     * Constructs an XmlAdaptedCalendarEntry.
+     * This is the no-arg constructor that is required by JAXB.
      */
-    final LocalDate dateToLook;
-
-    public LookDateCommand(LocalDate dateToLook) {
-        requireNonNull(dateToLook);
-        this.dateToLook = dateToLook;
+    public XmlAdptedAppointmentEntry() {
     }
-
-    @Override
-    public CommandResult execute() {
-        EventsCenter.getInstance().post(new CalendarFocusEvent(dateToLook));
-        return new CommandResult(FOCUS_DATE_MESSAGE);
-    }
-}
-```
-###### \java\seedu\address\logic\commands\RemoveAppointmentsCommand.java
-``` java
-/**
- * removes appointment whose title match with the searchText in the address book's calendar.
- */
-
-public class RemoveAppointmentsCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "remove_appointment";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": remove appointment whose title match with the search text in the calendar. "
-            + "Parameters: "
-            + PREFIX_SEARCH_TEXT + "SEARCH TEXT "
-            + "\nExample: " + COMMAND_WORD + " "
-            + PREFIX_SEARCH_TEXT + "title of the appointment ";
-
-    public static final String MESSAGE_SUCCESS = "Appointment with title %1$s removed";
-    public static final String MESSAGE_NO_SUCH_APPOINTMENT = "No such appointment exists in the calendar";
-
-    private final String searchText;
 
     /**
-     * Creates an RemoveAppointmentCommand to remove the specified {@code searchText}
+     * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public RemoveAppointmentsCommand(String searchText) {
-        requireNonNull(searchText);
-        this.searchText = searchText;
-    }
+    public XmlAdptedAppointmentEntry(String title, String startDate, String endDate) {
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
 
-    @Override
-    protected CommandResult executeUndoableCommand() throws CommandException {
-        try {
-            model.removeAppointment(searchText);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, searchText));
-        } catch (AppointmentNotFoundException e) {
-            throw new CommandException(MESSAGE_NO_SUCH_APPOINTMENT);
-        }
-    }
-}
-```
-###### \java\seedu\address\logic\commands\ReturnMonthViewCommand.java
-``` java
-/**
- * return to month view for the calendar GUI.
- */
-public class ReturnMonthViewCommand extends Command {
-    public static final String COMMAND_WORD = "back";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unfocus the Calendar to Month view.\n"
-            + "Example: " + COMMAND_WORD;
-
-    public static final String RETURN_MONTH_VIEW_MESSAGE = "Calendar back to Month view";
-
-    @Override
-    public CommandResult execute() {
-        EventsCenter.getInstance().post(new CalendarUnfocusEvent());
-        return new CommandResult(RETURN_MONTH_VIEW_MESSAGE);
-    }
-}
-```
-###### \java\seedu\address\logic\parser\AddAppointmentCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new AddAppointmentCommand object
- */
-public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the AddAppointmentCommand
-     * and returns an AddAppointCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public AddAppointmentCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_START_INTERVAL, PREFIX_END_INTERVAL);
-
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_START_INTERVAL, PREFIX_END_INTERVAL)
-                || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        AddAppointmentCommand.MESSAGE_USAGE));
-        }
-
-        try {
-            String appointmentTitle = ParserUtil.parseString(argMultimap.getValue(PREFIX_NAME)).get();
-            LocalDateTime startDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_START_INTERVAL)).get();
-            LocalDateTime endDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_END_INTERVAL)).get();
-            Interval interval = new Interval(startDateTime, endDateTime);
-
-
-            AppointmentEntry appointmentEntry = new AppointmentEntry(appointmentTitle, interval);
-
-            return new AddAppointmentCommand(appointmentEntry);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        }
     }
 
     /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-}
-```
-###### \java\seedu\address\logic\parser\EditAppointmentCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new EditAppointmentCommand object
- */
-public class EditAppointmentCommandParser implements Parser<EditAppointmentCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the EditAppointCommand
-     * and returns an ditAppointCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public EditAppointmentCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_SEARCH_TEXT, PREFIX_NAME,
-                        PREFIX_START_INTERVAL, PREFIX_END_INTERVAL);
-
-        if (!arePrefixesPresent(argMultimap, PREFIX_SEARCH_TEXT)
-                || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EditAppointmentCommand.MESSAGE_USAGE));
-        }
-
-        EditAppointmentDescriptor editAppointmentDescriptor = new EditAppointmentDescriptor();
-        String searchText;
-
-        try {
-            searchText = ParserUtil.parseString(argMultimap.getValue(PREFIX_SEARCH_TEXT)).get();
-
-            ParserUtil.parseString(argMultimap.getValue(PREFIX_NAME))
-                    .ifPresent(editAppointmentDescriptor::setGivenTitle);
-            ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_START_INTERVAL))
-                    .ifPresent(editAppointmentDescriptor::setStartDateTime);
-            ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_END_INTERVAL))
-                    .ifPresent(editAppointmentDescriptor::setEndDateTime);
-
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        }
-
-        if (!editAppointmentDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditAppointmentCommand.MESSAGE_NOT_EDITED);
-        }
-
-        return new EditAppointmentCommand(searchText, editAppointmentDescriptor);
-    }
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-}
-```
-###### \java\seedu\address\logic\parser\LookDateCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new LookDateCommand object
- */
-public class LookDateCommandParser implements Parser<LookDateCommand> {
-    /**
-     * Parses the given {@code String} of arguments in the context of the LookDateCommand
-     * and returns anLookDateCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public LookDateCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_DATE_FOCUS);
-
-        if (!arePrefixesPresent(argMultimap, PREFIX_DATE_FOCUS)
-                || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    LookDateCommand.MESSAGE_USAGE));
-        }
-
-        try {
-
-            LocalDate date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE_FOCUS)).get();
-
-            return new LookDateCommand(date);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        }
-    }
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-}
-```
-###### \java\seedu\address\logic\parser\ParserUtil.java
-``` java
-    /**
-     * Parses a {@code String input} into a {@code String}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Converts a given appoinmentEntry into this class for JAXB use.
      *
+     * @param source future changes to this will not affect the created XmlAdaptedAppointmentEntry
      */
-    static String parseString(String input) {
-        requireNonNull(input);
-        String trimmedInput = input.trim();
-
-        return trimmedInput;
+    public XmlAdptedAppointmentEntry(AppointmentEntry source) {
+        title = source.getGivenTitle();
+        startDate = source.getStartDateTime().toString();
+        endDate = source.getEndDateTime().toString();
     }
 
     /**
-     * Parses a {@code Optional<String> input} into an {@code Optional<String>} if {@code input} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<String> parseString(Optional<String> input) throws IllegalValueException {
-        requireNonNull(input);
-        return input.isPresent() ? Optional.of(parseString(input.get())) : Optional.empty();
-    }
-
-
-    /**
-     * Parses a {@code String input} into a {@code LocalDateTime}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Converts this jaxb-friendly adapted calendarEntry object into the model's AppointmentEntry object.
      *
-     * @throws IllegalValueException if the given {@code name} is invalid.
+     * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
-    static LocalDateTime parseDateTime(String input) throws  IllegalValueException {
-        requireNonNull(input);
-        String trimmedInput = input.trim();
+    public AppointmentEntry toModelType() throws IllegalValueException {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppointmentEntry.DATE_VALIDATION);
+        if (this.title == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, MISSING_FIELD_TITLE));
+        }
+
+        final String title = this.title;
+
+        if (this.startDate == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, MISSING_FIELD_START_DATE));
+        }
+
+        final String newStartDate = this.startDate;
+
+        if (this.endDate == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, MISSING_FIELD_END_DATE));
+        }
+
+        final String newEndDate = this.endDate;
+
+        final Interval interval = new Interval(getLocatDateTime(newStartDate), getLocatDateTime(newEndDate));
+
+        return new AppointmentEntry(title, interval);
+    }
+
+    LocalDateTime getLocatDateTime(String date) throws IllegalValueException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_VALIDATION);
 
         try {
 
-            LocalDateTime dateTime = LocalDateTime.parse(trimmedInput, formatter);
-            return dateTime;
+            LocalDateTime localDatetime = LocalDateTime.parse(date, formatter);
+            return localDatetime;
 
         } catch (DateTimeParseException e) {
-            throw new IllegalValueException(AppointmentEntry.MESSAGE_DATE_TIME_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
         }
 
-
-
     }
 
-    /**
-     * Parses a {@code Optional<String> input} into an {@code Optional<LocalDateTime>} if {@code input} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<LocalDateTime> parseDateTime(Optional<String> input) throws IllegalValueException {
-        requireNonNull(input);
-        return input.isPresent() ? Optional.of(parseDateTime(input.get())) : Optional.empty();
-    }
-
-    /**
-     * Parses a {@code String input} into a {@code LocalDate}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code name} is invalid.
-     */
-    static LocalDate parseDate(String input) throws  IllegalValueException {
-        requireNonNull(input);
-        String trimmedInput = input.trim();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(LookDateCommand.DATE_VALIDATION);
-
-        try {
-
-            LocalDate date = LocalDate.parse(trimmedInput, formatter);
-            return date;
-
-        } catch (DateTimeParseException e) {
-            throw new IllegalValueException(LookDateCommand.MESSAGE_DATE_CONSTRAINTS);
-        }
-
-
-
-    }
-
-    /**
-     * Parses a {@code Optional<String> input} into an {@code Optional<LocalDate>} if {@code input} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<LocalDate> parseDate(Optional<String> input) throws IllegalValueException {
-        requireNonNull(input);
-        return input.isPresent() ? Optional.of(parseDate(input.get())) : Optional.empty();
-    }
-```
-###### \java\seedu\address\logic\parser\RemoveAppointmentCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new RemoveAppointmentsCommand object
- */
-public class RemoveAppointmentCommandParser implements Parser<RemoveAppointmentsCommand> {
-    /**
-     * Parses the given {@code String} of arguments in the context of the RemoveAppointmentsCommand
-     * and returns a RemoveAppointsCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
     @Override
-    public RemoveAppointmentsCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_SEARCH_TEXT);
-
-        if (!arePrefixesPresent(argMultimap, PREFIX_SEARCH_TEXT)
-                || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    RemoveAppointmentsCommand.MESSAGE_USAGE));
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
         }
 
-        try {
-            String searchText = ParserUtil.parseString(argMultimap.getValue(PREFIX_SEARCH_TEXT)).get();
-            return new RemoveAppointmentsCommand(searchText);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
+        if (!(other instanceof XmlAdaptedPerson)) {
+            return false;
         }
-    }
 
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+        XmlAdptedAppointmentEntry otherEntry = (XmlAdptedAppointmentEntry) other;
+        return Objects.equals(title, otherEntry.title)
+                && Objects.equals(startDate, otherEntry.startDate)
+                && Objects.equals(endDate, otherEntry.endDate);
     }
 }
 ```
-###### \java\seedu\address\model\AddressBook.java
-``` java
-    public void setCalendar(InsuranceCalendar calendar) {
-        this.calendar.clearAppointments();
-        this.calendar.copyAppointments(calendar);
-    }
-```
-###### \java\seedu\address\model\AddressBook.java
-``` java
-    //// calendar-level operations
-
-    /**
-     * Adds a appointment entry to the calendar.
-     *
-     * @throws DuplicateAppointmentException if an equivalent appointment already exists.
-     */
-    public void addAppointment(AppointmentEntry entry) throws DuplicateAppointmentException {
-        calendar.addAppointment(entry);
-    }
-
-    /**
-     * remove appointment entries related to the searchText in the calendar.
-     *
-     * @throws AppointmentNotFoundException if an equivalent appointment already exists.
-     */
-    public void removeAppointment(String searchText) throws AppointmentNotFoundException {
-        calendar.removeAppointment(searchText);
-    }
-
-    /**
-     * edit an existing appointment entry in the calendar.
-     *
-     * @throws EditAppointmentFailException if an equivalent appointment already exists.
-     */
-    public void editAppointment(String searchText, AppointmentEntry referenceEntry)
-            throws EditAppointmentFailException {
-        calendar.editAppointmentEntry(searchText, referenceEntry);
-    }
-
-    /**
-     * find an existing appointment entry in the calendar given the searchText.
-     *
-     * @throws AppointmentNotFoundException if an equivalent appointment already exists.
-     */
-    public AppointmentEntry findAppointment(String searchText) throws AppointmentNotFoundException {
-        return calendar.findAppointment(searchText);
-    }
-```
-###### \java\seedu\address\model\AddressBook.java
-``` java
-    CalendarSource getCalendar() {
-        return calendar.getCalendar();
-    }
-```
-###### \java\seedu\address\model\calendar\AppointmentEntry.java
+###### /java/seedu/address/model/calendar/AppointmentEntry.java
 ``` java
 /**
  * Represents a appointment in the calendar.
@@ -747,15 +888,17 @@ public class AppointmentEntry {
     }
 }
 ```
-###### \java\seedu\address\model\calendar\exceptions\AppointmentNotFoundException.java
+###### /java/seedu/address/model/calendar/exceptions/EditAppointmentFailException.java
 ``` java
 /**
- * Signals that the operation is unable to find the specified appointment.
+ * Signals that the operation will result in either a duplicate AppointmentEntry objects
+ * or unable to find an specified appointment .
  */
-public class AppointmentNotFoundException extends Exception {
+
+public class EditAppointmentFailException extends Exception {
 }
 ```
-###### \java\seedu\address\model\calendar\exceptions\DuplicateAppointmentException.java
+###### /java/seedu/address/model/calendar/exceptions/DuplicateAppointmentException.java
 ``` java
 /**
  * Signals that the operation will result in duplicate AppointmentEntry objects.
@@ -767,17 +910,15 @@ public class DuplicateAppointmentException extends DuplicateDataException {
     }
 }
 ```
-###### \java\seedu\address\model\calendar\exceptions\EditAppointmentFailException.java
+###### /java/seedu/address/model/calendar/exceptions/AppointmentNotFoundException.java
 ``` java
 /**
- * Signals that the operation will result in either a duplicate AppointmentEntry objects
- * or unable to find an specified appointment .
+ * Signals that the operation is unable to find the specified appointment.
  */
-
-public class EditAppointmentFailException extends Exception {
+public class AppointmentNotFoundException extends Exception {
 }
 ```
-###### \java\seedu\address\model\calendar\InsuranceCalendar.java
+###### /java/seedu/address/model/calendar/InsuranceCalendar.java
 ``` java
 /**
  * The calendar in the address book.
@@ -936,24 +1077,61 @@ public class InsuranceCalendar {
     }
 }
 ```
-###### \java\seedu\address\model\Model.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
-    /** Adds the given appointment entry */
-    void addAppointment(AppointmentEntry appointmentEntry) throws DuplicateAppointmentException;
-
-    /** remove appointments associated with the given searchText */
-    void removeAppointment(String searchText) throws AppointmentNotFoundException;
-
-    /** edit appointment associated with the given searchText */
-    void editAppointment(String searchText, AppointmentEntry reference) throws EditAppointmentFailException;
-
-    /** find an appointment associated with the given searchText */
-    AppointmentEntry findAppointment(String searchText) throws AppointmentNotFoundException;
-
-    /** returns the calendar in the addressbook */
-    CalendarSource getCalendar();
+    public void setCalendar(InsuranceCalendar calendar) {
+        this.calendar.clearAppointments();
+        this.calendar.copyAppointments(calendar);
+    }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    //// calendar-level operations
+
+    /**
+     * Adds a appointment entry to the calendar.
+     *
+     * @throws DuplicateAppointmentException if an equivalent appointment already exists.
+     */
+    public void addAppointment(AppointmentEntry entry) throws DuplicateAppointmentException {
+        calendar.addAppointment(entry);
+    }
+
+    /**
+     * remove appointment entries related to the searchText in the calendar.
+     *
+     * @throws AppointmentNotFoundException if an equivalent appointment already exists.
+     */
+    public void removeAppointment(String searchText) throws AppointmentNotFoundException {
+        calendar.removeAppointment(searchText);
+    }
+
+    /**
+     * edit an existing appointment entry in the calendar.
+     *
+     * @throws EditAppointmentFailException if an equivalent appointment already exists.
+     */
+    public void editAppointment(String searchText, AppointmentEntry referenceEntry)
+            throws EditAppointmentFailException {
+        calendar.editAppointmentEntry(searchText, referenceEntry);
+    }
+
+    /**
+     * find an existing appointment entry in the calendar given the searchText.
+     *
+     * @throws AppointmentNotFoundException if an equivalent appointment already exists.
+     */
+    public AppointmentEntry findAppointment(String searchText) throws AppointmentNotFoundException {
+        return calendar.findAppointment(searchText);
+    }
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    CalendarSource getCalendar() {
+        return calendar.getCalendar();
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public void addAppointment(AppointmentEntry appointmentEntry) throws DuplicateAppointmentException {
@@ -975,291 +1153,20 @@ public class InsuranceCalendar {
 
     }
 ```
-###### \java\seedu\address\storage\XmlAdptedAppointmentEntry.java
+###### /java/seedu/address/model/Model.java
 ``` java
-/**
- * JAXB-friendly version of the Appointment Entry.
- */
-public class XmlAdptedAppointmentEntry {
+    /** Adds the given appointment entry */
+    void addAppointment(AppointmentEntry appointmentEntry) throws DuplicateAppointmentException;
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Appointment Entry's %s field is missing!";
-    public static final String MISSING_FIELD_TITLE = "[TITLE]";
-    public static final String MISSING_FIELD_START_DATE = "[START_DATE]";
-    public static final String MISSING_FIELD_END_DATE = "[END_DATE]";
-    public static final String DATE_VALIDATION = "yyyy-MM-d'T'HH:mm";
-    public static final String MESSAGE_DATE_CONSTRAINTS =
-            "Dates should be in the format of yyyy-MM-d'T'HH:mm";
+    /** remove appointments associated with the given searchText */
+    void removeAppointment(String searchText) throws AppointmentNotFoundException;
 
-    @XmlElement(required = true)
-    private String title;
-    @XmlElement(required = true)
-    private String startDate;
-    @XmlElement(required = true)
-    private String endDate;
+    /** edit appointment associated with the given searchText */
+    void editAppointment(String searchText, AppointmentEntry reference) throws EditAppointmentFailException;
 
-    /**
-     * Constructs an XmlAdaptedCalendarEntry.
-     * This is the no-arg constructor that is required by JAXB.
-     */
-    public XmlAdptedAppointmentEntry() {
-    }
+    /** find an appointment associated with the given searchText */
+    AppointmentEntry findAppointment(String searchText) throws AppointmentNotFoundException;
 
-    /**
-     * Constructs an {@code XmlAdaptedPerson} with the given person details.
-     */
-    public XmlAdptedAppointmentEntry(String title, String startDate, String endDate) {
-        this.title = title;
-        this.startDate = startDate;
-        this.endDate = endDate;
-
-    }
-
-    /**
-     * Converts a given appoinmentEntry into this class for JAXB use.
-     *
-     * @param source future changes to this will not affect the created XmlAdaptedAppointmentEntry
-     */
-    public XmlAdptedAppointmentEntry(AppointmentEntry source) {
-        title = source.getGivenTitle();
-        startDate = source.getStartDateTime().toString();
-        endDate = source.getEndDateTime().toString();
-    }
-
-    /**
-     * Converts this jaxb-friendly adapted calendarEntry object into the model's AppointmentEntry object.
-     *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
-     */
-    public AppointmentEntry toModelType() throws IllegalValueException {
-
-        if (this.title == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, MISSING_FIELD_TITLE));
-        }
-
-        final String title = this.title;
-
-        if (this.startDate == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, MISSING_FIELD_START_DATE));
-        }
-
-        final String newStartDate = this.startDate;
-
-        if (this.endDate == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, MISSING_FIELD_END_DATE));
-        }
-
-        final String newEndDate = this.endDate;
-
-        final Interval interval = new Interval(getLocatDateTime(newStartDate), getLocatDateTime(newEndDate));
-
-        return new AppointmentEntry(title, interval);
-    }
-
-    LocalDateTime getLocatDateTime(String date) throws IllegalValueException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_VALIDATION);
-
-        try {
-
-            LocalDateTime localDatetime = LocalDateTime.parse(date, formatter);
-            return localDatetime;
-
-        } catch (DateTimeParseException e) {
-            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
-        }
-
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-
-        if (!(other instanceof XmlAdaptedPerson)) {
-            return false;
-        }
-
-        XmlAdptedAppointmentEntry otherEntry = (XmlAdptedAppointmentEntry) other;
-        return Objects.equals(title, otherEntry.title)
-                && Objects.equals(startDate, otherEntry.startDate)
-                && Objects.equals(endDate, otherEntry.endDate);
-    }
-}
-```
-###### \java\seedu\address\ui\AgendaPanel.java
-``` java
-/**
- * The Agenda Panel of the App.
- */
-public class AgendaPanel {
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
-    private AgendaView agendaView;
-
-    public AgendaPanel(CalendarSource calendar) {
-        agendaView = new AgendaView();
-        assignCalendar(calendar);
-        EventsCenter.getInstance().registerHandler(this);
-    }
-
-    /**
-     * Assign ca to Agenda panel GUI
-     */
-    void assignCalendar(CalendarSource calendar) {
-        agendaView.getCalendarSources().setAll(calendar);
-    }
-
-    public AgendaView getAgendaView() {
-        return agendaView;
-    }
-}
-```
-###### \java\seedu\address\ui\CalendarPanel.java
-``` java
-/**
- * The Calendar Panel of the App.
- */
-public class CalendarPanel {
-
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
-    private CalendarView calendarPage;
-
-    public CalendarPanel(CalendarSource calendar) {
-        calendarPage = new CalendarView();
-        assignCalendar(calendar);
-        configurCalendarPage();
-        EventsCenter.getInstance().registerHandler(this);
-    }
-
-    /**
-     * Configure the calendarView to fit the browser panel.
-     */
-    void configurCalendarPage() {
-        calendarPage.setShowAddCalendarButton(false);
-        calendarPage.setShowDeveloperConsole(false);
-        calendarPage.setShowPageSwitcher(true);
-        calendarPage.setShowPageToolBarControls(true);
-        calendarPage.setShowPrintButton(false);
-        calendarPage.setShowSearchField(false);
-        calendarPage.setShowSearchResultsTray(false);
-        calendarPage.setShowSourceTray(false);
-        calendarPage.setShowToolBar(false);
-        calendarPage.showMonthPage();
-
-
-    }
-
-    /**
-     * Assign calendar to Calendar GUI
-     */
-    void assignCalendar(CalendarSource calendar) {
-        calendarPage.getCalendarSources().setAll(calendar);
-    }
-
-    @Subscribe
-    private void handleCalendarFocusEvent(CalendarFocusEvent event) {
-        calendarPage.showDate(event.dateToLook);
-    }
-
-    @Subscribe
-    private void handleCalendarUnFocusEvent(CalendarUnfocusEvent event) {
-        calendarPage.showMonthPage();
-    }
-
-    public CalendarView getCalendarPage() {
-        return calendarPage;
-    }
-}
-```
-###### \resources\view\NewMainWindow.fxml
-``` fxml
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.image.Image?>
-<?import java.net.URL?>
-<fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-         minWidth="450" minHeight="600">
-    <icons>
-        <Image url="@/images/address_book_32.png"/>
-    </icons>
-    <scene>
-        <Scene>
-            <AnchorPane prefHeight="704.0" prefWidth="1155.0" styleClass="background" xmlns="http://javafx.com/javafx/8"
-                        xmlns:fx="http://javafx.com/fxml/1">
-                <children>
-
-                    <MenuBar fx:id="menuBar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                             AnchorPane.topAnchor="0.0">
-                        <menus>
-                            <Menu mnemonicParsing="false" text="File">
-                                <items>
-                                    <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit"/>
-                                </items>
-                            </Menu>
-                            <Menu mnemonicParsing="false" text="Help">
-                                <items>
-                                    <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp"
-                                              text="Help"/>
-                                </items>
-                            </Menu>
-                        </menus>
-                    </MenuBar>
-
-                    <StackPane fx:id="commandBoxPlaceholder" layoutX="634.0" layoutY="574.0" prefHeight="40.0"
-                               prefWidth="643.0"
-                               styleClass="pane-with-border" AnchorPane.bottomAnchor="180.0"
-                               AnchorPane.leftAnchor="512.0"
-                               AnchorPane.rightAnchor="0.0">
-                        <padding>
-                            <Insets bottom="5" left="10" right="10" top="5"/>
-                        </padding>
-                    </StackPane>
-
-                    <StackPane fx:id="resultDisplayPlaceholder" layoutX="654.0" layoutY="580.0" prefHeight="137.0"
-                               prefWidth="643.0"
-                               styleClass="pane-with-border" AnchorPane.bottomAnchor="40.0"
-                               AnchorPane.leftAnchor="512.0"
-                               AnchorPane.rightAnchor="0.0" VBox.vgrow="NEVER">
-                        <padding>
-                            <Insets bottom="5" left="10" right="10" top="5"/>
-                        </padding>
-                    </StackPane>
-
-                    <SplitPane id="splitPane" dividerPositions="0.2966175195143105" layoutX="6.0" layoutY="6.0"
-                               prefHeight="453.0"
-                               prefWidth="1155.0" AnchorPane.bottomAnchor="226.0" AnchorPane.leftAnchor="0.0"
-                               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
-                        <items>
-                            <VBox fx:id="personList" minWidth="336.0" prefHeight="392.0" prefWidth="336.0"
-                                  SplitPane.resizableWithParent="false">
-                                <padding>
-                                    <Insets bottom="10" left="10" right="10" top="10"/>
-                                </padding>
-                                <children>
-                                    <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-                                </children>
-                            </VBox>
-
-                            <StackPane fx:id="browserPlaceholder" prefHeight="434.0" prefWidth="809.0">
-                                <padding>
-                                    <Insets bottom="10" left="10" right="10" top="10"/>
-                                </padding>
-                            </StackPane>
-                        </items>
-                    </SplitPane>
-
-                    <StackPane fx:id="statusbarPlaceholder" layoutX="116.0" layoutY="761.0" prefHeight="33.0"
-                               prefWidth="1155.0"
-                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
-                    <StackPane fx:id="agendaPanelPlaceholer" layoutY="478.0" prefHeight="195.0" prefWidth="500.0" AnchorPane.bottomAnchor="31.0"
-                               AnchorPane.leftAnchor="0.0" />
-                </children>
-            </AnchorPane>
-        </Scene>
-    </scene>
-</fx:root>
+    /** returns the calendar in the addressbook */
+    CalendarSource getCalendar();
 ```

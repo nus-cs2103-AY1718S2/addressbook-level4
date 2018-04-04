@@ -1,5 +1,5 @@
 # SoilChang
-###### \java\seedu\address\logic\GradientDescent.java
+###### /java/seedu/address/logic/GradientDescent.java
 ``` java
 public class GradientDescent {
     public static final String MESSAGE_PREDICTION_SUCCESS = "Prediction success";
@@ -43,7 +43,7 @@ public class GradientDescent {
     }
 
 ```
-###### \java\seedu\address\logic\GradientDescent.java
+###### /java/seedu/address/logic/GradientDescent.java
 ``` java
     public static GradientDescent getInstance(PredictionModel model) {
         if (instance == null) {
@@ -55,7 +55,7 @@ public class GradientDescent {
 
 
 ```
-###### \java\seedu\address\logic\GradientDescent.java
+###### /java/seedu/address/logic/GradientDescent.java
 ``` java
 
     /**
@@ -93,7 +93,7 @@ public class GradientDescent {
         }
     }
 ```
-###### \java\seedu\address\logic\GradientDescent.java
+###### /java/seedu/address/logic/GradientDescent.java
 ``` java
 
     /**
@@ -139,7 +139,7 @@ public class GradientDescent {
     }
 
 ```
-###### \java\seedu\address\logic\GradientDescent.java
+###### /java/seedu/address/logic/GradientDescent.java
 ``` java
 
     /**
@@ -178,7 +178,7 @@ public class GradientDescent {
     }
 }
 ```
-###### \java\seedu\address\model\PredictionModel.java
+###### /java/seedu/address/model/PredictionModel.java
 ``` java
 public interface PredictionModel extends Model {
     void preparePredictionData(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> targets,

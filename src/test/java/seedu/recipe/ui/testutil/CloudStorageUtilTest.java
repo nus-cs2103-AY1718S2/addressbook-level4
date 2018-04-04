@@ -31,6 +31,7 @@ public class CloudStorageUtilTest {
     public void processInvalidAuthorizationCode() {
         thrown.expect(AssertionError.class);
         CloudStorageUtil.processAuthorizationCode(WRONG_AUTHORIZATION_CODE);
+        assertFalse(CloudStorageUtil.hasAccessToken());
     }
 }
 //@@author

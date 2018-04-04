@@ -8,7 +8,7 @@ import seedu.recipe.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new AccessTokenCommand object
  */
-public class AccessTokenCommandParser {
+public class AccessTokenCommandParser implements Parser<AccessTokenCommand>{
 
     /**
      * Parses the given {@code String} of arguments in the context of the AccessTokenCommand
@@ -22,8 +22,6 @@ public class AccessTokenCommandParser {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AccessTokenCommand.MESSAGE_USAGE));
         }
-        // Check if access token is valid here also in the future
-        // Can reset access token if exception is thrown
         return new AccessTokenCommand(trimmedArgs);
     }
 }

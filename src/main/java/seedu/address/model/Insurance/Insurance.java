@@ -2,6 +2,7 @@ package seedu.address.model.Insurance;
 
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author Sebry9
 /**
  * Represents a Insurance plan in reInsurance.
  * Guarantees: immutable;

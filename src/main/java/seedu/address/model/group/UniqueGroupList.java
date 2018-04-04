@@ -17,7 +17,9 @@ import seedu.address.commons.util.CollectionUtil;
  * Supports minimal set of list operations for the app's features.
  *
  * @see Group#equals(Object)
+ *
  */
+//@@author limzk1994
 public class UniqueGroupList implements Iterable<Group> {
 
     private final ObservableList<Group> internalList = FXCollections.observableArrayList();

@@ -16,6 +16,7 @@
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <VBox prefHeight="200.0" prefWidth="100.0">
       <children>
+          <!-- @@author Sebry9 -->
          <Label prefHeight="134.0" prefWidth="131.0" text="Client Image">
             <graphic>
                <ImageView fitHeight="150.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
@@ -59,6 +60,7 @@
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
       <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday" />
       <Label fx:id="appointment" styleClass="cell_small_label" text="\$appointment" />
+        <Label fx:id="group" styleClass="cell_small_label" text="\$group" />
     </VBox>
       <rowConstraints>
          <RowConstraints />

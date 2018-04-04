@@ -21,31 +21,37 @@ public class WebParserHandler {
     }
 
     /**
-     * Returns the according WebParser to the currently loaded page in the BrowserPanel.
+     * Returns the according WebParser to the currently loaded page in the BrowserPanel
      */
     public WebParser getWebParser() {
         String url = browser.getEngine().getLocation();
+        Document document = browser.getEngine().getDocument();
         if (browser.getEngine().getTitle() != null) {
-            try {
-                URI uri = new URI(url);
-                String domain = uri.getHost();
-                Document document = browser.getEngine().getDocument();
-                W3CDom w3CDom = new W3CDom();
-                String documentString = w3CDom.asString(document);
-
-                switch (domain) {
-
-                case WikiaParser.DOMAIN:
-                    return new WikiaParser(documentString);
-
-                default:
-                    return null;
-
-                }
-            } catch (URISyntaxException e) {
-                return null;
-            }
+            return WebParserHandler.getWebParser(url, document);
         } else {
+            return null;
+        }
+    }
+
+    /**
+     * Reads the {@code url}, returns the according WebParser loaded with {@code document}
+     */
+    public static WebParser getWebParser(String url, Document document) {
+        try {
+            URI uri = new URI(url);
+            String domain = uri.getHost();
+            W3CDom w3CDom = new W3CDom();
+            String documentString = w3CDom.asString(document);
+            switch (domain) {
+
+            case WikiaParser.DOMAIN:
+                return new WikiaParser(documentString);
+
+            default:
+                return null;
+
+            }
+        } catch (URISyntaxException e) {
             return null;
         }
     }

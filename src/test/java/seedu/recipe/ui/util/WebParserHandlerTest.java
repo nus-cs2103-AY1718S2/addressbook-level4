@@ -1,7 +1,9 @@
 package seedu.recipe.ui.util;
 
-import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.jsoup.nodes.Document;
 import org.junit.Before;
@@ -44,24 +46,25 @@ public class WebParserHandlerTest extends GuiUnitTest {
     }
 
     /**
+     * Creates a blank w3c Document
+     */
+    private org.w3c.dom.Document getDummyDocument() throws ParserConfigurationException {
+        return DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+    }
+
+    /**
      * Asserts that the created WebParser from the {@code url} matches the {@code expectedWebParser}
      */
-    private void assertWebParser(String url, WebParser expectedWebParser) {
-        browserPanel.loadPage(url);
-        waitUntilBrowserLoaded(browserPanelHandle);
-        webParserHandler = new WebParserHandler(browserPanel.getBrowser());
-        WebParser actualWebParser = webParserHandler.getWebParser();
+    private void assertWebParser(String url, WebParser expectedWebParser) throws ParserConfigurationException {
+        WebParser actualWebParser = WebParserHandler.getWebParser(url, getDummyDocument());
         assertEquals(expectedWebParser.getClass(), actualWebParser.getClass());
     }
 
     /**
      * Asserts that the created WebParser from the {@code url} doesn't exist
      */
-    private void assertNullWebParser(String url) {
-        browserPanel.loadPage(url);
-        waitUntilBrowserLoaded(browserPanelHandle);
-        webParserHandler = new WebParserHandler(browserPanel.getBrowser());
-        WebParser actualWebParser = webParserHandler.getWebParser();
+    private void assertNullWebParser(String url) throws ParserConfigurationException {
+        WebParser actualWebParser = WebParserHandler.getWebParser(url, getDummyDocument());
         assertEquals(null, actualWebParser);
     }
 }

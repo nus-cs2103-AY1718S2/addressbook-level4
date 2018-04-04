@@ -574,6 +574,29 @@ html file called by the function.
 
 *_return to <<toc,Table of Contents>>_*
 
+// tag::Remark Feature[]
+=== Remark Feature
+==== Current Implementation
+
+A new remark component is added to the person model.
+
+image::ModelClassDiagram.png[width="800"]
+
+This remark feature allows the user to add remarks to the student profile of the specified student.
+
+image::RemarkClassSequenceDiagram.png[width="800"]
+
+Figure 15. Sequence Diagram of AddRemarkCommand
+
+==== Design Considerations
+===== Aspect: Implementation of the `Remark` feature
+* ** Alternative 1:** Using just one method to add and delete the remark.
+** Pros: Need not create 2 command just to add and delete the remarks.
+** Cons: The remark attached to the student in our student profile would not be able to exceed one line.
+
+*_return to <<toc,Table of Contents>>_*
+// end::Remark Feature[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

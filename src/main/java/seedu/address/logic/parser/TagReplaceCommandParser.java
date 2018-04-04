@@ -12,7 +12,7 @@ import seedu.address.logic.commands.TagReplaceCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
-//@@author TeyXinHui
+//@@author chuakunhong
 /**
  * Parses input arguments and creates a new FindCommand object
  */

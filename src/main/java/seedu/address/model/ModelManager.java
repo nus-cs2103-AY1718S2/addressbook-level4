@@ -168,8 +168,7 @@ public class ModelManager extends ComponentManager implements Model {
             UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
         requireNonNull(patient, dateTimeString);
         imdb.addAppointment(patient, dateTimeString);
-        indicateAddressBookChanged();
-        indicateCalendarChanged();
+        indicateAppointmentChanged(patient);
     }
 
     @Override

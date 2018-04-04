@@ -36,14 +36,14 @@ public class Status {
     public static final int INDEX_STATUS_ACCEPTED = 7;
     public static final int INDEX_STATUS_WITHDRAWN = 8;
 
-    public static final Color COLOR_NEW = Color.GREY;
-    public static final Color COLOR_INTERVIEW_FIRST_ROUND = Color.YELLOW;
-    public static final Color COLOR_INTERVIEW_SECOND_ROUND = Color.ORANGE;
-    public static final Color COLOR_REJECTED = Color.RED;
-    public static final Color COLOR_WAITLIST = Color.BROWN;
-    public static final Color COLOR_OFFERED = Color.CYAN;
-    public static final Color COLOR_ACCEPTED = Color.GREEN;
-    public static final Color COLOR_WITHDRAWN = Color.PURPLE;
+    public static final Color COLOR_NEW = Color.web("#795548");
+    public static final Color COLOR_INTERVIEW_FIRST_ROUND = Color.web("#AB47BC");
+    public static final Color COLOR_INTERVIEW_SECOND_ROUND = Color.web("#7E57C2");
+    public static final Color COLOR_REJECTED = Color.web("#EF5350");
+    public static final Color COLOR_WAITLIST = Color.web("#FFA726");
+    public static final Color COLOR_OFFERED = Color.web("#42A5F5");
+    public static final Color COLOR_ACCEPTED = Color.web("#8BC34A");
+    public static final Color COLOR_WITHDRAWN = Color.web("#9E9E9E");
 
     private static final HashMap<Integer, String> STATUS_MAP;
     static {

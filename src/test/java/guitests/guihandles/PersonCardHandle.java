@@ -61,6 +61,10 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return statusLabel.getText();
     }
 
+    public String getStatusColor() {
+        return statusLabel.getStyle().replace("-fx-background-color:", "").trim();
+    }
+
     public String getId() {
         return idLabel.getText();
     }

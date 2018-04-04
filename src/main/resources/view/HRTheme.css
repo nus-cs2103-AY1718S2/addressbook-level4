@@ -235,7 +235,7 @@
 
 /* Bottom */
 
-#welcomePane, #bottomPaneSplit, #infoCalendarPane {
+#welcomePane, #bottomPaneSplit, #resumePane {
     -fx-background-color: white;
 }
 
@@ -264,7 +264,7 @@
     -fx-background-color: white;
     -fx-border-color: white;
     -fx-border-width: 1;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 12, 0, 0, 0);
 }
 
 #cardPerson > * {
@@ -280,11 +280,11 @@
 }
 
 #listPersons:focused #cardPerson {
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 12, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 14, 0, 0, 0);
 }
 
 #listPersons:focused .list-cell:selected #cardPerson {
-    -fx-effect: dropshadow(gaussian, #42A5F5, 12, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian, #64B5F6, 14, 0, 0, 0);
 }
 
 #cardPhotoPane {
@@ -393,18 +393,48 @@
     -fx-opacity: 0.8;
 }
 
-/* Info */
 
-#infoMainPane {
+
+/* Resume */
+
+#resumePanePages {
     -fx-background-color: white;
 }
 
-#infoSplitPane {
+.pdf-page {
+    -fx-background-color: white;
+    -fx-border-width: 1;
+    -fx-border-color: #ccc;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0, 0, 3);
+}
+
+#resumePageLabel {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+    -fx-background-radius: 100;
+    -fx-opacity: 0.6;
+}
+
+#resumeLoading {
+    -fx-background-color: white;
+}
+
+
+
+/* Info */
+
+#infoMain, #infoMainPane, #infoSplitPane, #infoSplitMainPane {
     -fx-background-color: white;
 }
 
 #infoMain {
-    -fx-background-color: white;
+    -fx-border-width: 1 0 1 1;
+    -fx-border-color: white;
+}
+
+#infoMainPane:focused #infoMain,
+#infoSplitMainPane:focused #infoMain {
+    -fx-border-color: #90CAF9;
 }
 
 #infoMainName {
@@ -517,14 +547,14 @@
     -fx-font-size: 11;
 }
 
-.rating-progress-bar > .bar {
+.hr-progress-bar > .bar {
     -fx-background-color: #2196F3;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
     -fx-padding: 2;
 }
 
-.rating-progress-bar > .track {
+.hr-progress-bar > .track {
     -fx-background-color: #BBDEFB;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
@@ -604,6 +634,10 @@
 
 .style-upper-triangle {
     -fx-shape: "M0,1V0h1L0,1z";
+}
+
+.style-circle {
+    -fx-shape: "M2,1c0,0.6-0.4,1-1,1S0,1.6,0,1s0.4-1,1-1S2,0.4,2,1z";
 }
 
 .style-mask-circle {

@@ -7,6 +7,7 @@ import java.util.List;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import seedu.address.commons.util.UiUtil;
 import seedu.address.model.person.Person;
 
 /**
@@ -31,11 +32,17 @@ public class GuiTestAssert {
      */
     public static void assertCardDisplaysPerson(Person expectedPerson, PersonCardHandle actualCard) {
         assertEquals(expectedPerson.getName().fullName, actualCard.getName());
-        assertEquals("-", actualCard.getUniversity());
+        assertEquals(expectedPerson.getUniversity().value, actualCard.getUniversity());
         assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
         assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
-        assertEquals("-", actualCard.getRating());
-        assertEquals("-", actualCard.getStatus());
+        assertEquals(expectedPerson.getStatus().value, actualCard.getStatus());
+
+        // TODO: Fix all floating point issues
+        /* double personRating = expectedPerson.getRating().overallScore;
+        String rating = (personRating < 1e-3) ? "" : UiUtil.toFixed(personRating, 2);
+        assertEquals(rating, actualCard.getRating()); */
+
+        assertEquals(UiUtil.colorToHex(expectedPerson.getStatus().color), actualCard.getStatusColor());
     }
 
     /**

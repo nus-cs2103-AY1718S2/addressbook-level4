@@ -14,10 +14,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.control.ProgressBar?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:id="infoPaneWrapper" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-    <ScrollPane fx:id="infoMainPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" pannable="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:id="infoPaneWrapper" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <ScrollPane fx:id="infoMainPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" pannable="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" focusTraversable="true" />
     <SplitPane fx:id="infoSplitPane" dividerPositions="0.5" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <ScrollPane fx:id="infoSplitMainPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" pannable="true">
+        <ScrollPane fx:id="infoSplitMainPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" pannable="true" focusTraversable="true">
             <VBox fx:id="infoMain">
                 <AnchorPane fx:id="infoMainTop">
                     <VBox fx:id="infoMainTopLeft" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -190,7 +190,7 @@
                                 <Insets bottom="5.0" />
                             </padding>
                         </Label>
-                        <ProgressBar fx:id="infoRatingTechnical" styleClass="rating-progress-bar" focusTraversable="false" maxWidth="Infinity" progress="0.0" GridPane.columnIndex="1" />
+                        <ProgressBar fx:id="infoRatingTechnical" styleClass="hr-progress-bar" focusTraversable="false" maxWidth="Infinity" progress="0.0" GridPane.columnIndex="1" />
                         <Label fx:id="infoRatingCommunicationLabel" text="Communication" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                             <GridPane.margin>
                                 <Insets right="5.0" />
@@ -199,7 +199,7 @@
                                 <Insets bottom="5.0" />
                             </padding>
                         </Label>
-                        <ProgressBar fx:id="infoRatingCommunication" styleClass="rating-progress-bar" focusTraversable="false" maxWidth="Infinity" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ProgressBar fx:id="infoRatingCommunication" styleClass="hr-progress-bar" focusTraversable="false" maxWidth="Infinity" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label fx:id="infoRatingProblemSolvingLabel" text="Problem Solving" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                             <GridPane.margin>
                                 <Insets right="5.0" />
@@ -208,20 +208,20 @@
                                 <Insets bottom="5.0" />
                             </padding>
                         </Label>
-                        <ProgressBar fx:id="infoRatingProblemSolving" styleClass="rating-progress-bar" focusTraversable="false" maxWidth="Infinity" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ProgressBar fx:id="infoRatingProblemSolving" styleClass="hr-progress-bar" focusTraversable="false" maxWidth="Infinity" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label fx:id="infoRatingExperienceLabel" text="Experience" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                             <GridPane.margin>
                                 <Insets right="5.0" />
                             </GridPane.margin>
                         </Label>
-                        <ProgressBar fx:id="infoRatingExperience" styleClass="rating-progress-bar" focusTraversable="false" maxWidth="Infinity" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ProgressBar fx:id="infoRatingExperience" styleClass="hr-progress-bar" focusTraversable="false" maxWidth="Infinity" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <padding>
                             <Insets bottom="8.0" top="8.0" />
                         </padding>
                     </GridPane>
                 </VBox>
                 <VBox fx:id="infoSideButtons" alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
-                    <Button fx:id="infoSideButtonResume" maxWidth="Infinity" mnemonicParsing="false" text="View Resume">
+                    <Button fx:id="infoSideButtonResume" onAction="#showResume" maxWidth="Infinity" mnemonicParsing="false" text="View Resume">
                         <padding>
                             <Insets bottom="6.0" left="8.0" right="8.0" top="6.0" />
                         </padding>

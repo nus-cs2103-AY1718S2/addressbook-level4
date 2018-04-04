@@ -12,6 +12,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.login.exceptions.DuplicateUserException;
 import seedu.address.model.login.exceptions.UserNotFoundException;
 
+//@@author kaisertanqr
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
  *

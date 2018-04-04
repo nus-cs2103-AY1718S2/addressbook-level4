@@ -7,6 +7,7 @@ import seedu.address.model.login.User;
 import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.DuplicateUserException;
 
+//@@author kaisertanqr
 /**
  * Contains utility methods for populating {@code UserDatabase} with one default user.
  */

@@ -20,7 +20,7 @@ public class DeleteUserCommand extends Command {
             + "\nEXAMPLE: delete-user u/user p/123456"
             + "\nNote: You must be logged out before executing this command and username and password must be valid";
 
-    public static final String MESSAGE_SUCCESS = "Delete successful!";
+    public static final String MESSAGE_SUCCESS = "User successfully deleted: %1$s";
     public static final String MESSAGE_DELETE_FAILURE = "Delete failed. " + "Username or password is incorrect.";
     public static final String MESSAGE_NOT_LOGGED_OUT = "You are not logged out. Please logout to execute this command";
 
@@ -39,7 +39,7 @@ public class DeleteUserCommand extends Command {
             if (model.checkCredentials(this.username, this.password) && !model.hasLoggedIn()) {
                 User toDelete = new User(username, password);
                 model.deleteUser(toDelete);
-                return new CommandResult(MESSAGE_SUCCESS);
+                return new CommandResult(String.format(MESSAGE_SUCCESS, toDelete.getUsername().toString()));
             } else {
                 return new CommandResult(MESSAGE_DELETE_FAILURE);
             }

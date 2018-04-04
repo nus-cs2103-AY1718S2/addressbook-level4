@@ -19,6 +19,7 @@ import seedu.address.model.tag.UniqueTagList;
 public class Person {
 
     public static final int UNINITIALISED_ID = -1;
+    public static final String DEFAULT_PHOTO = "DefaultPerson.png";
 
     private final Name name;
     private final Phone phone;
@@ -26,6 +27,7 @@ public class Person {
     private final Address address;
     private Rating rating;
     private int id;
+    private Photo photo;
 
     private UniqueReviewList reviews;
     private final UniqueTagList tags;
@@ -46,6 +48,7 @@ public class Person {
 
         this.calendarId = calendarId;
         this.rating = new Rating();
+        this.photo = new Photo(DEFAULT_PHOTO);
         this.id = UNINITIALISED_ID;
     }
 
@@ -106,6 +109,13 @@ public class Person {
     public String getPersonUrl() {
         return "https://calendar.google.com/calendar/embed?src="
                 + calendarId.replaceAll("@", "%40") + "&ctz=Asia%2FSingapore";
+    }
+
+    /**
+     * Set the photo field which is the path to the photo.
+     */
+    public void setPhoto(String photoName) {
+        this.photo = DEFAULT_PHOTO_FOLDER + photoName;
     }
 
     public void setRating(Rating rating) {

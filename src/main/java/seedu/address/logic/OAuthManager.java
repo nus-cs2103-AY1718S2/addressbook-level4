@@ -6,10 +6,13 @@ package seedu.address.logic;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import com.google.api.client.auth.oauth2.Credential;
@@ -236,6 +239,36 @@ public class OAuthManager {
     }
 
     /**
+     * Gets a list of events for a particular date from Google Calendar
+     * @param date must in RFC 3339 format
+     * @throws IOException
+     */
+    public static List<Event> getEventsByDay(User user, String date) throws IOException {
+        com.google.api.services.calendar.Calendar service =
+                getCalendarService(user);
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate parsedDate = LocalDate.parse(date, dtf);
+        Date startDateAsDateType =
+                Date.from(parsedDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date endDateAsDateType =
+                Date.from(parsedDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1).minusSeconds(1).toInstant());
+
+        DateTime desiredDateMidnightBefore = new DateTime(startDateAsDateType);
+        DateTime desiredDateMidnightAfter = new DateTime(endDateAsDateType);
+
+        Events events = service.events().list("primary")
+                .setTimeMin(desiredDateMidnightBefore)
+                .setTimeMax(desiredDateMidnightAfter)
+                .setOrderBy("startTime")
+                .setSingleEvents(true)
+                .execute();
+        List<Event> upcomingEvents = events.getItems();
+
+        return upcomingEvents;
+    }
+
+    /**
      * Add event test example of adding event to Google Calendar via API
      * Used as part of the oauth verification process.
      * @throws IOException
@@ -287,7 +320,7 @@ public class OAuthManager {
         }
 
         if (successfulAddDelete) {
-            System.out.println("Successfully interacted with user's calendar over Oauth.");
+            System.out.println("Successfully interacted with user's calendar via Oauth.");
         }
     }
 
@@ -321,6 +354,7 @@ public class OAuthManager {
         System.out.printf(apiResponse + "\n");
         return apiResponse;
     }
+
 }
 
 //@@author

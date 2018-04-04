@@ -8,13 +8,13 @@ import java.time.format.DateTimeFormatter;
 
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.model.calendar.AppointmentEntry;
-
+//@@author yuxiangSg
 /**
  * A utility class for AppointmentEntry.
  */
 public class AppointmentUtil {
     /**
-     * Returns an add command string for adding the {@code person}.
+     * Returns an addAppointment command string for adding the {@code entry}.
      */
     public static String getAddAppointmentCommand(AppointmentEntry entry) {
         return AddAppointmentCommand.COMMAND_WORD + " " + geEntryDetails(entry);

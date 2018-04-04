@@ -18,7 +18,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.model.calendar.AppointmentEntry;
 import seedu.address.testutil.TypicalAppointmentEntires;
-
+//@@author yuxiangSg
 public class AddAppointmentParserTest {
     private AddAppointmentCommandParser parser = new AddAppointmentCommandParser();
 

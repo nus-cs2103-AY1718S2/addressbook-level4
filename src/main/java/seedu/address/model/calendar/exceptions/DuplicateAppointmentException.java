@@ -1,7 +1,7 @@
 package seedu.address.model.calendar.exceptions;
 
 import seedu.address.commons.exceptions.DuplicateDataException;
-
+//@@author yuxiangSg
 /**
  * Signals that the operation will result in duplicate AppointmentEntry objects.
  */

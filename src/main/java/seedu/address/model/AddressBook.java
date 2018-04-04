@@ -70,10 +70,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    //@@author yuxiangSg
     public void setCalendar(InsuranceCalendar calendar) {
         this.calendar.clearAppointments();
         this.calendar.copyAppointments(calendar);
     }
+    //@@author
 
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
@@ -91,6 +93,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         }
     }
+    //@@author yuxiangSg
     //// calendar-level operations
 
     /**
@@ -129,7 +132,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public AppointmentEntry findAppointment(String searchText) throws AppointmentNotFoundException {
         return calendar.findAppointment(searchText);
     }
-
+    //@@author
     //// person-level operations
 
     /**
@@ -212,10 +215,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// util methods
-
+    //@@author yuxiangSg
     CalendarSource getCalendar() {
         return calendar.getCalendar();
     }
+    //@@author
 
     @Override
     public String toString() {

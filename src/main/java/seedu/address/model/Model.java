@@ -32,7 +32,7 @@ public interface Model {
 
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
-
+    //@@author yuxiangSg
     /** Adds the given appointment entry */
     void addAppointment(AppointmentEntry appointmentEntry) throws DuplicateAppointmentException;
 
@@ -45,6 +45,9 @@ public interface Model {
     /** find an appointment associated with the given searchText */
     AppointmentEntry findAppointment(String searchText) throws AppointmentNotFoundException;
 
+    /** returns the calendar in the addressbook */
+    CalendarSource getCalendar();
+    //@@author
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -64,8 +67,7 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
-    /** returns the calendar in the addressbook */
-    CalendarSource getCalendar();
+
 
 
 

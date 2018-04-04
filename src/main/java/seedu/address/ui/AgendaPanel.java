@@ -8,6 +8,7 @@ import com.calendarfx.view.AgendaView;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 
+//@@author yuxiangSg
 /**
  * The Agenda Panel of the App.
  */
@@ -22,7 +23,7 @@ public class AgendaPanel {
     }
 
     /**
-     * Assign calendar to Calendar GUI
+     * Assign ca to Agenda panel GUI
      */
     void assignCalendar(CalendarSource calendar) {
         agendaView.getCalendarSources().setAll(calendar);

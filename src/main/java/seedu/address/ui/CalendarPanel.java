@@ -12,6 +12,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.CalendarFocusEvent;
 import seedu.address.commons.events.ui.CalendarUnfocusEvent;
 
+//@@author yuxiangSg
 /**
  * The Calendar Panel of the App.
  */

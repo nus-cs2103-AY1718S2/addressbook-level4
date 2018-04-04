@@ -84,7 +84,7 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
         indicateAddressBookChanged();
     }
 
-
+    //@@author yuxiangSg
     @Override
     public void addAppointment(AppointmentEntry appointmentEntry) throws DuplicateAppointmentException {
         addressBook.addAppointment(appointmentEntry);
@@ -104,7 +104,7 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
         indicateAddressBookChanged();
 
     }
-
+    //@@author
     @Override
     public AppointmentEntry findAppointment(String searchText) throws AppointmentNotFoundException {
         return addressBook.findAppointment(searchText);

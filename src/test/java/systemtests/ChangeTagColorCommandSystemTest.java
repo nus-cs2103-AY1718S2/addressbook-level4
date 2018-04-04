@@ -2,12 +2,10 @@
 package systemtests;
 
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_COLOR;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLOR_BROWN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLOR_RED;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
 

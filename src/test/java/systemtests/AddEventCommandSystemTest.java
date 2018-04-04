@@ -26,7 +26,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_START_TIM
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_START_TIME_NDP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_VENUE_F1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_VENUE_NDP;
-import static seedu.address.testutil.TypicalEvents.F1RACE;
 import static seedu.address.testutil.TypicalEvents.GSS;
 import static seedu.address.testutil.TypicalEvents.HARIRAYA;
 

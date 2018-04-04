@@ -25,14 +25,12 @@ public class Commission {
         this.insurance = insurance;
         String insuranceName = insurance.toString();
         String commission = new String("0");
-        Pattern p = Pattern.compile("\\[(.*?)\\]");
+        Pattern p = Pattern.compile("\\{(.*?)\\}");
         Matcher m = p.matcher(insuranceName);
 
         while (m.find()) {
             if (commission.equals("0")) {
-                commission = m.group();
-            } else {
-                commission += m.group();
+                    commission = m.group().substring(1,m.group().length()-1);
             }
         }
         this.commission = commission;

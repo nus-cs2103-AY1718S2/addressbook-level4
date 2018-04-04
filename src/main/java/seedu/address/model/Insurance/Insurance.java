@@ -8,14 +8,16 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Insurance {
 
-
+    private static final String SPECIAL_CHARACTERS = "!#$%&'*+/=?`{|}~^.-";
+    private static final String INSURANCE_NAME = "[\\p{Alnum} ]*";
+    private static final String COMMISSION_FORMAT = "^[\\w" + SPECIAL_CHARACTERS + "]+";
     public static final String MESSAGE_INSURANCE_CONSTRAINTS =
         "Insurance should only contain alphanumeric characters";
 
     /*
      * The first character of the address must not be a whitespace,
      */
-    public static final String INSURANCE_VALIDATION_REGEX = "[\\p{Alnum} ]*";
+    public static final String INSURANCE_VALIDATION_REGEX =  INSURANCE_NAME + COMMISSION_FORMAT;
 
 
     public final String insuranceName;

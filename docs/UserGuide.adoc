@@ -265,41 +265,41 @@ eg. `task n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/urgent`
 * *Add event*: `event n/NAME s/START_TIME e/END_TIME [l/LOCATION] [r/REMARK]` +
 eg. `event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`
 
-* *Listing uncompleted tasks and upcoming events*: `ls` +
+* *List uncompleted tasks and upcoming events*: `ls` +
 eg. `ls` or `ls task` or `ls event`
 
-* *Removing task or event*: `rm` +
+* *Remove task or event*: `rm` +
 eg. `rm task 1` or `rm event 2`
 
-* *Completing a task*: `complete task` or `com task` +
+* *Complete a task*: `complete task` or `com task` +
 eg. `complete task 1` or `com task 2`
 
-* *Listing completed tasks*: `ls complete task` or `ls com task` +
+* *List completed tasks*: `ls complete task` or `ls com task` +
 eg. `ls complete task` or `ls com task`
 
-* *Shows overdue tasks*: `overdue` +
+* *Show overdue tasks*: `overdue` +
 eg. `overdue`
 
-* *Listing entered commands*: `history` +
+* *List entered commands*: `history` +
 eg. `history`
 
-* *Undoing previous command*: `undo` or `u` +
+* *Undo previous command*: `undo` or `u` +
 eg. `undo` or `u`
 
-* *Redoing previously undone command*: `redo` or `r` +
+* *Redo previously undone command*: `redo` or `r` +
 eg. `redo` or `r`
 
-* *Clearing all entries*: `clear` or `c` +
+* *Clear all entries*: `clear` or `c` +
 eg. `clear` or `c`
 
-* *Exiting the program*: `exit` +
+* *Exit the program*: `exit` +
 eg. `exit`
 
-* *Editing a task*: `edit task` +
+* *Edit a task*: `edit task` +
 eg. `edit task 1`
 
-* *Locating a task by name*: `find task` +
+* *Locate a task by name*: `find task` +
 eg. `find task CS2106 Assignment`
 
-* *Listing all past events*: `ls past event` +
+* *List all past events*: `ls past event` +
 eg. `ls past event`

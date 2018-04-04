@@ -4,6 +4,7 @@ import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,7 +41,7 @@ public class WebParserHandlerTest extends GuiUnitTest {
 
     @Test
     public void getWebParser_wikiaLoaded_returnWikiaParser() throws Exception {
-        assertWebParser(WIKIA_RECIPE_URL, new WikiaParser(Jsoup.connect(WIKIA_RECIPE_URL).get()));
+        assertWebParser(WIKIA_RECIPE_URL, new WikiaParser(new Document("")));
     }
 
     /**

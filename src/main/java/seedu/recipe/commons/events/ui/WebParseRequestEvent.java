@@ -2,7 +2,6 @@
 package seedu.recipe.commons.events.ui;
 
 import seedu.recipe.commons.events.BaseEvent;
-import seedu.recipe.logic.commands.util.WikiaQueryHandler;
 
 /**
  * Indicates a request to parse the page loaded in BrowserPanel.

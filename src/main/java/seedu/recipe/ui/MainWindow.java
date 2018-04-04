@@ -19,12 +19,10 @@ import seedu.recipe.commons.core.GuiSettings;
 import seedu.recipe.commons.core.LogsCenter;
 import seedu.recipe.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.recipe.commons.events.ui.ExitAppRequestEvent;
-import seedu.recipe.commons.events.ui.NewResultAvailableEvent;
 import seedu.recipe.commons.events.ui.ShowHelpRequestEvent;
 import seedu.recipe.commons.events.ui.WebParseRequestEvent;
 import seedu.recipe.logic.Logic;
 import seedu.recipe.model.UserPrefs;
-import seedu.recipe.model.recipe.Recipe;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -200,7 +198,7 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         String parsedRecipe = browserPanel.parseRecipe();
         if (parsedRecipe != null) {
-            commandBox.replaceText("parsedRecipe");
+            commandBox.replaceText(parsedRecipe);
         } else {
             commandBox.replaceText("");
         }

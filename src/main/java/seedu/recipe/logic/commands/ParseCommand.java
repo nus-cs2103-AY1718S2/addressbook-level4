@@ -1,16 +1,8 @@
 //@@author kokonguyen191
 package seedu.recipe.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-
-import java.util.Collections;
-import java.util.List;
-
 import seedu.recipe.commons.core.EventsCenter;
 import seedu.recipe.commons.events.ui.WebParseRequestEvent;
-import seedu.recipe.model.recipe.Recipe;
-import seedu.recipe.ui.util.WebParser;
-import seedu.recipe.ui.util.WebParserHandler;
 
 /**
  * Parse the current page loaded in the BrowserPanel.

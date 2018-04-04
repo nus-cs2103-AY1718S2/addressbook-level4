@@ -50,7 +50,7 @@ public class SearchCommandTest {
     }
 
     @Test
-    public void execute_nullInput_throwsNullPointerException() {
+    public void constructor_nullInput_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         SearchCommand searchCommand = new SearchCommand(null);
     }

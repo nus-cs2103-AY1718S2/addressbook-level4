@@ -39,6 +39,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ToDo> filteredToDos;
     private final FilteredList<Event> filteredEvents;
 
+    private boolean inCalendarView = true;
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -151,6 +153,16 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addEvent(event);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public boolean calendarIsViewed() {
+        return inCalendarView;
+    }
+
+    @Override
+    public void switchView() {
+        inCalendarView = !inCalendarView;
     }
 
     //=========== Filtered Person List Accessors =============================================================

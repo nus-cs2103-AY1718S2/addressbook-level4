@@ -27,7 +27,6 @@ import seedu.address.model.event.Event;
  */
 public class Calendar extends UiPart<Region> {
 
-    public static boolean isViewed = true;
     private static final String FXML = "Calendar.fxml";
 
     private ArrayList<CalendarDate> allCalendarDays = new ArrayList<>(42);

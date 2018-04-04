@@ -22,7 +22,6 @@ import seedu.address.model.event.WeeklyEvent;
  */
 public class Timetable extends UiPart<Region> {
 
-    public static boolean isViewed = false;
     private static final String FXML = "Timetable.fxml";
 
     private ArrayList<TimetableSlot> allTimetableSlots = new ArrayList<>(72);
@@ -66,7 +65,7 @@ public class Timetable extends UiPart<Region> {
         }
         // Slots of the week
         Text[] dayNames = new Text[]{new Text(""), new Text("Mon"), new Text("Tue"),
-                new Text("Wed"), new Text("Thu"), new Text("Fri")};
+            new Text("Wed"), new Text("Thu"), new Text("Fri")};
         GridPane dayLabels = new GridPane();
         dayLabels.setPrefWidth(600);
         dayLabels.setGridLinesVisible(false);
@@ -187,6 +186,7 @@ public class Timetable extends UiPart<Region> {
         case "Friday":
             column = 5;
             break;
+        default:
         }
         int row = hour / 100 - 8;
         return allTimetableSlots.get(row * 6 + column);

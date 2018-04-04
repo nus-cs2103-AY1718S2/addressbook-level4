@@ -2,6 +2,9 @@ package seedu.address.logic.commands;
 
 import seedu.address.ui.Calendar;
 
+/**
+ * Switches between Calendar view and Timetable view
+ */
 public class SwitchCommand extends Command {
 
     public static final String COMMAND_WORD = "switch";
@@ -13,11 +16,13 @@ public class SwitchCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        if (Calendar.isViewed) {
+        if (model.calendarIsViewed()) {
             model.indicateTimetableChanged();
+            model.switchView();
             return new CommandResult(MESSAGE_SUCCESS_TIMETABLE);
         }
         model.indicateCalendarChanged();
+        model.switchView();
         return new CommandResult(MESSAGE_SUCCESS_CALENDAR);
     }
 }

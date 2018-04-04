@@ -146,17 +146,19 @@ public class MainWindow extends UiPart<Stage> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
+    /**
+     * Clears the old calendar and display an updated one
+     */
     void redisplayCalendar() {
-        Calendar.isViewed = true;
-        Timetable.isViewed = false;
         calendarPlaceholder.getChildren().clear();
         calendar = new Calendar(logic.getFilteredEventList());
         calendarPlaceholder.getChildren().add(calendar.getCalendarView());
     }
 
+    /**
+     * Clears the old timetable and display an updated one
+     */
     void redisplayTimetable(ObservableList<WeeklyEvent> modules) {
-        Calendar.isViewed = false;
-        Timetable.isViewed = true;
         calendarPlaceholder.getChildren().clear();
         timetable = new Timetable(modules);
         calendarPlaceholder.getChildren().add(timetable.getTimetableView());

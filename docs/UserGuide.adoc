@@ -255,17 +255,17 @@ Examples:
 * `ac 2 asthma` +
 `asthma` will be added to the list of conditions that the patient at index `2` has.
 
-==== Removing the condition of an existing patient: `removec` [coming in v1.4]
+==== Removing the condition of an existing patient: `delc` [since in v1.4]
 
-Adds a medical condition to an existing patient.
-Format: `removec` or `rc`
+Removes a medical condition to an existing patient.
+Format: `delc` or `dc`
 
 Examples:
 
-* `removec 1 aspirin` +
+* `delc 1 aspirin` +
 `aspirin` will be removed from the list of conditions that the patient at index `1` has.
 
-* `rc 2 asthma` +
+* `dc 2 asthma` +
 `asthma` will be removed from the list of conditions that the patient at index `2` has.
 
 ==== Listing all patients : `list` or `ls`
@@ -273,7 +273,7 @@ Examples:
 Shows a list of all patients in the IMDB. +
 Format: `list` or `ls`
 
-==== Viewing certain details only: `filter` [coming in v1.4]
+==== Viewing certain details only: `filter` [coming in v1.5]
 
 Switches between showing personal details only, medical information only.
 Format: `filter` or `fil`

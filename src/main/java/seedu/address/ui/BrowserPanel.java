@@ -29,7 +29,7 @@ public class BrowserPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
-    private WebView browser;
+    private WebView browser, browser1;
 
     public BrowserPanel() {
         super(FXML);
@@ -41,12 +41,18 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
+    private void loadBrowserPersonPage(Person person) {
+        loadBrowserPage(SEARCH_PAGE_URL + person.getName().fullName);
+    }
+    private void loadBrowser1PersonPage(Person person) {
+        loadBrowser1Page(SEARCH_PAGE_URL + person.getName().fullName);
     }
 
-    public void loadPage(String url) {
+    public void loadBrowserPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
+    }
+    public void loadBrowser1Page(String url) {
+        Platform.runLater(() -> browser1.getEngine().load(url));
     }
 
     /**
@@ -54,7 +60,8 @@ public class BrowserPanel extends UiPart<Region> {
      */
     private void loadDefaultPage() {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
+        loadBrowserPage(defaultPage.toExternalForm());
+        loadBrowser1Page(defaultPage.toExternalForm());
     }
 
     /**
@@ -62,11 +69,13 @@ public class BrowserPanel extends UiPart<Region> {
      */
     public void freeResources() {
         browser = null;
+        browser1 = null;
     }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        loadBrowserPersonPage(event.getNewSelection().person);
+        loadBrowser1PersonPage(event.getNewSelection().person);
     }
 }

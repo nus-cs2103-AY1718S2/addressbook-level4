@@ -276,7 +276,7 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5^th^ person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
@@ -387,9 +387,11 @@ The details of implementation are as follow:
 
 === Review system
 
-A person by default upon creation will have a null `Review` field, indicated to be `-` by default. This indicate that the person is yet to be reviewed.
+A `Review` consists of the _review_ content itself and the _reviewer_. _Review_ and _reviewer_ are separated by a single newline character.
 
-A person can be assigned a `Review` through the command of `Review`. `Review` does not have any restriction on the content (alphanumeric and symbols without any length restriction).
+A person by default upon creation will have a list of `Review`-s with one null `Review` indicated to be `-` for both _reviewer_ and _review_ by default. This indicate that the person is yet to be reviewed.
+
+A person can be assigned a `Review` through the command of `review`. `Review` does not have any restriction on the _review_ content (alphanumeric and symbols without any length restriction).
 
 === Review a person
 
@@ -401,7 +403,7 @@ The implementation of `edit` and `review` command in the Logic component involve
 
 . Person toEdit
 . Person edited
-. Parser: EditCommandParser or ReviewCommandParser
+. Parser: ReviewCommandParser
 . EditPersonDescriptor
 
 Since all fields of the `Person` class are immutable, we need to use `edited` Person to replace the `toEdit` Person
@@ -413,7 +415,7 @@ The details of implementation are as follow:
 . `edited` Person will be created, by obtaining the new value for modified fields from `EditPersonDescriptor`. The value of unmodified field(s) are obtained from `toEdit` Person.
 . `edited` Person is used to replace `toEdit` Person in `AddressBook`
 
-`Review` uses JavaFX's TextInputDialog to get the review input from the user instead of from command box.
+`Review` uses JavaFX's `Dialog` to get the review input from the user instead of from command box.
 
 === Lock and unlock the application
 
@@ -615,7 +617,7 @@ image::chrome_save_as_pdf.png[width="300"]
 There are three ways to run tests.
 
 [TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+The most reliable way to run tests is the 3^rd^ one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
 *Method 1: Using IntelliJ JUnit test runner*
 

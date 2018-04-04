@@ -16,21 +16,22 @@ import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.HideBrowserPanelEvent;
+import seedu.address.commons.events.ui.HideDetailPanelEvent;
+import seedu.address.commons.events.ui.PersonEditedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
 
 /**
  * The Browser Panel of the App.
  */
-public class BrowserPanel extends UiPart<Region> {
+public class DetailPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     //default dummy page.
     private static final String SEARCH_PAGE_URL =
             "https://calendar.google.com/calendar/embed?src=ck6s71ditb731dfepeporbnfb0@group.calendar"
                     + ".google.com&ctz=Asia%2FSingapore";
-    private static final String FXML = "BrowserPanel.fxml";
+    private static final String FXML = "DetailPanel.fxml";
     private static final String[] TAG_COLOR_STYLES = {"red", "yellow", "blue", "orange", "brown", "green"};
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -38,7 +39,7 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private WebView browser;
     @FXML
-    private GridPane browserPanel;
+    private GridPane detailPanel;
     @FXML
     private Label name;
     @FXML
@@ -50,11 +51,11 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private Label rating;
     @FXML
-    private Label review;
+    private FlowPane reviews;
     @FXML
     private FlowPane tags;
 
-    public BrowserPanel() {
+    public DetailPanel() {
         super(FXML);
 
         // To prevent triggering events for typing inside the loaded Web page.
@@ -95,19 +96,19 @@ public class BrowserPanel extends UiPart<Region> {
         address = null;
         email = null;
         rating = null;
-        review = null;
+        reviews = null;
         tags = null;
     }
 
     @Subscribe
-    private void handleHideBrowserPanelEvent(HideBrowserPanelEvent event) {
+    private void handleHideDetailPanelEvent(HideDetailPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         name.setText("");
         phone.setText("");
         address.setText("");
         email.setText("");
         rating.setText("");
-        review.setText("");
+        reviews.getChildren().clear();
         tags.getChildren().clear();
         loadDefaultPage();
     }
@@ -122,12 +123,28 @@ public class BrowserPanel extends UiPart<Region> {
         email.setText(person.getEmail().value);
         rating.setText(person.getRatingDisplay());
         rating.setTextFill(Color.RED);
-        review.setText(person.getReview().value);
-        review.setWrapText(true);
+        reviews.getChildren().clear();
+        person.getReviews().forEach(review -> reviews.getChildren().add(new Label(review.toString())));
         tags.getChildren().clear();
-        //person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         initTags(person);
         loadPersonPage(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    public void handlePersonEditedEvent(PersonEditedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Person newPerson = event.getNewPerson();
+        name.setText(newPerson.getName().fullName);
+        phone.setText(newPerson.getPhone().value);
+        address.setText(newPerson.getAddress().value);
+        email.setText(newPerson.getEmail().value);
+        rating.setText(newPerson.getRatingDisplay());
+        rating.setTextFill(Color.RED);
+        reviews.getChildren().clear();
+        newPerson.getReviews().forEach(review -> reviews.getChildren().add(new Label(review.toString())));
+        tags.getChildren().clear();
+        initTags(newPerson);
+        loadPersonPage(event.getNewPerson());
     }
 
     /**

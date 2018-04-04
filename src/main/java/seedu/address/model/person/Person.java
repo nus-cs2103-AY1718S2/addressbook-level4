@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.review.Review;
+import seedu.address.model.review.UniqueReviewList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -23,9 +25,9 @@ public class Person {
     private final Email email;
     private final Address address;
     private Rating rating;
-    private Review review;
     private int id;
 
+    private UniqueReviewList reviews;
     private final UniqueTagList tags;
     private final String calendarId;
 
@@ -40,10 +42,10 @@ public class Person {
         this.address = address;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+        this.reviews = new UniqueReviewList();
 
         this.calendarId = calendarId;
         this.rating = new Rating();
-        this.review = new Review();
         this.id = UNINITIALISED_ID;
     }
 
@@ -61,10 +63,6 @@ public class Person {
 
     public Rating getRating() {
         return rating;
-    }
-
-    public Review getReview() {
-        return review;
     }
 
     public String getRatingDisplay() {
@@ -91,6 +89,18 @@ public class Person {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
+    /**
+     * Returns an immutable review set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Review> getReviews() {
+        return Collections.unmodifiableSet(reviews.toSet());
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = new UniqueReviewList(reviews);
+    }
+
     public String getPersonUrl() {
         return "https://calendar.google.com/calendar/embed?src="
                 + calendarId.replaceAll("@", "%40") + "&ctz=Asia%2FSingapore";
@@ -98,10 +108,6 @@ public class Person {
 
     public void setRating(Rating rating) {
         this.rating = rating;
-    }
-
-    public void setReview(Review review) {
-        this.review = review;
     }
 
     public void setId(int id) {
@@ -143,9 +149,9 @@ public class Person {
                 .append(getAddress())
                 .append(" Rating: ")
                 .append(getRatingDisplay())
-                .append(" Review: ")
-                .append(getReview())
-                .append(" Tags: ");
+                .append(" Reviews: ");
+        getReviews().forEach(builder::append);
+        builder.append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

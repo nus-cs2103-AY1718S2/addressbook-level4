@@ -6,9 +6,9 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * Represents an event to free resources in Browser Panel
  */
-public class HideBrowserPanelEvent extends BaseEvent {
+public class HideDetailPanelEvent extends BaseEvent {
 
-    public HideBrowserPanelEvent() { }
+    public HideDetailPanelEvent() { }
 
     @Override
     public String toString() {

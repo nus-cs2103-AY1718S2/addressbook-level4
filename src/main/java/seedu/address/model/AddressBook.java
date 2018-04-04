@@ -155,7 +155,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
                 correctTagReferences, person.getCalendarId());
         toReturn.setRating(person.getRating());
-        toReturn.setReview(person.getReview());
+        toReturn.setReviews(person.getReviews());
         toReturn.setId(person.getId());
         return toReturn;
 

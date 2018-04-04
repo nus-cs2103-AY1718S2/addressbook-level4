@@ -12,7 +12,7 @@
 
 <StackPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane fx:id="browserPanel" gridLinesVisible="true" maxWidth="1.7976931348623157E308" style="-fx-background-color: white;">
+      <GridPane fx:id="detailPanel" gridLinesVisible="true" maxWidth="1.7976931348623157E308" style="-fx-background-color: white;">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="132.40000610351564" minWidth="10.0" prefWidth="99.99998168945312" />
           <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="101.60001831054687" />
@@ -68,7 +68,7 @@
                   <Insets left="5.0" />
                </padding>
             </Label>
-            <Label text="Review" GridPane.rowIndex="6">
+            <Label text="Reviews" GridPane.rowIndex="6">
                <font>
                   <Font size="15.0" />
                </font>
@@ -112,10 +112,7 @@
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Label>
-            <Label fx:id="review" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="6">
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin></Label>
+            <FlowPane fx:id="reviews" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <FlowPane fx:id="tags" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="5.0" />

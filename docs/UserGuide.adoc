@@ -56,7 +56,7 @@ lists all employees.
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` +
 adds an employee named `John Doe` to the Employees Tracker.
 * `delete 3` +
-deletes the 3rd contact shown in the current list.
+deletes the 3^rd^ contact shown in the current list.
 * `exit` +
 exits the app.
 
@@ -114,7 +114,7 @@ image::card_blue.png[width=""]
 .Second phase notification card
 image::card_red.png[width=""]
 
-For example, suppose you have assigned a task to Alex which will due on 27th May 2018 4:00 pm. When you open ET for the first time in the morning of 27th May 2018, you will be notified that Alex has a task that will due on *today* in a [blue]#blue# notification card. Later at 4:00 pm of 27th May 2018, you will receive the second phase notification in [red]#red#, informing you that Alex should have finished the task by *now* .
+For example, suppose you have assigned a task to Alex which will due on 27^th^ May 2018 4:00 pm. When you open ET for the first time in the morning of 27^th^ May 2018, you will be notified that Alex has a task that will due on *today* in a [blue]#blue# notification card. Later at 4:00 pm of 27^th^ May 2018, you will receive the second phase notification in [red]#red#, informing you that Alex should have finished the task by *now* .
 
 ===== Notification card in Operating System
 
@@ -236,9 +236,9 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/RATING] [t/TAG].
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st employee to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1^st^ employee to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd employee to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2^nd^ employee to be `Betsy Crower` and clears all existing tags.
 
 === Rating an employee : `rate`
 
@@ -263,10 +263,10 @@ Examples:
 
 * `list` +
 `rate 1 5` +
-Gives the 1st employee in the last employees listing a 5-stars rating.
+Gives the 1^st^ employee in the last employees listing a 5-stars rating.
 * `find Alex` +
 `rate 2 2` +
-Gives the 2nd employee in the list of Alex(s) a 2-star rating.
+Gives the 2^nd^ employee in the list of Alex(s) a 2-star rating.
 
 === Reviewing an employee : `review`
 
@@ -277,11 +277,14 @@ Format: `review INDEX`
 * Rate the employee at the specified `INDEX`. +
 The index refers to the index number shown in the last employees listing. +
 The index *must be a positive integer*, i.e. 1, 2, 3, ...
-* A pop-up dialog box will appear after user executes the command. +
-The dialog box will prompt the user to enter the review.
+* A pop-up dialog box will appear after user executes the command as shown in _Figure 8_ below. +
+The dialog box will prompt the user to enter the user's credential (as a reviewer) and the review.
 * The review can contain any character without length limitation.
 * A review will be tied to a single reviewer. [Implemented in V1.4]
 ****
+
+.A pop-up dialog box
+image::review_dialog.png[width=""]
 
 [NOTE]
 ====
@@ -293,11 +296,11 @@ Examples:
 
 * `list` +
 `review 1` +
-Gives the 1st employee in the last employees listing a review. +
+Gives the 1^st^ employee in the last employees listing a review. +
 The review will be based on the input in the pop-up dialog box.
 * `find n/Alex` +
 `rate 2` +
-Gives the 2nd employee in the list of Alex(s) a review. +
+Gives the 2^nd^ employee in the list of Alex(s) a review. +
 The review will be based on the input in the pop-up dialog box.
 
 === Searching for employees: `find`
@@ -335,7 +338,7 @@ e.g. `John Doe | Friends`, `John Dick| Colleagues`, `John | Friends, Colleagues`
 
 === Deleting an employee : `delete`
 
-Deletes the specified employee from the Employees Tracker. +
+Deletes the specified employee from the Employees Tracker whose calendar will also be deleted. +
 Format: `delete INDEX`
 
 ****
@@ -348,10 +351,10 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd employee in the Employees Tracker.
+Deletes the 2^nd^ employee and his calendar in the Employees Tracker.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st employee in the results of the `find` command.
+Deletes the 1^st^ employee and his calendar in the results of the `find` command.
 
 === Selecting an employee : `select`
 
@@ -368,10 +371,10 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd employee in the Employees Tracker.
+Selects the 2^nd^ employee in the Employees Tracker.
 * `find Betsy` +
 `select 1` +
-Selects the 1st employee in the results of the `find` command.
+Selects the 1^st^ employee in the results of the `find` command.
 
 [NOTE]
 If the `Calendar row` of the `Employee's Profile Panel` looks something similar to _Figure 8_, it means you will have to sign in to your *Google work account* from there. This is because for security purposes, you will be required to sign in once for every time you close Employees Tracker and open it again,
@@ -457,13 +460,23 @@ Lock the Employees Tracker.
 
 === Viewing my own calendar: `myCalendar`
 
-Views my own calendar in a seperate pop-up web page window.
+Views my own calendar in a seperate pop-up web page window. +
 Format: `myCalendar`
 
 Examples:
 
 * `myCalendar` +
 view my own calendar in a pop-up window.
+
+=== Viewing my to-do-list: `todoList`
+
+Views the upcoming events on my google account main calendar in to-do-list manner in a separate window. +
+Format: `todoList`
+
+Examples:
+
+* `todoList` +
+show the to-do-list in  a pop-up window.
 
 === Setting the application unlock password: `setPassword`
 
@@ -516,7 +529,7 @@ Examples:
 
 * `list` +
 `addEvent 2 title/Test Event loca/NUS, Singapore stime/2017-04-09T19:00:00 etime/2018-04-09T21:00:00 descrip/A Test Event` +
-Adds the event to 2nd employee's timetable in the list.
+Adds the event to 2^nd^ employee's timetable in the list.
 
 [NOTE]
 If you are using Employees Tracker (ET) for the first time, you will be directed to a web page that requires you to sign in to Google account. Please sign in to your *Google work account*. Then, you will be directed to a web page similar to _Figure 9_. Please click `allow`. You can return to ET once you see a message as shown in _Figure 10_.
@@ -530,7 +543,7 @@ image::login_done.png[width="790"][height="200"]
 
 === Deleting an event in one employee's timetable: `deleteEvent`
 
-Deletes an event with specified title in the timetable of employee identified by the index number used in the last employees listing. +
+Deletes an event with specified title which is the first occurrence in the timetable of employee identified by the index number used in the last employees listing. +
 Format: `deleteEvent INDEX TITLE`
 
 ****
@@ -542,8 +555,8 @@ Format: `deleteEvent INDEX TITLE`
 Examples:
 
 * `list` +
-`deleteEvent 1 some event` +
-Deletes the event with title "some event" in 2nd employee's timetable in the list.
+`deleteEvent 2 some event` +
+Deletes the event with title "some event" in 2^nd^ employee's timetable in the list.
 
 === Clearing all entries : `clear`
 
@@ -597,7 +610,6 @@ Features yet to be implemented. Coming in `v2.0`.
 * Editing a event.
 * Deleting a event.
 * Adding an event in mass to many employees' timetable at once.
-* Having my own timetable.
 * Jumping to email composing with a command.
 * Viewing my to-do-list.
 * Changing the window scheme/theme/skin.

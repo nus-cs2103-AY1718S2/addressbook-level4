@@ -6,8 +6,10 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import java.util.List;
 import java.util.Objects;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.PersonEditedEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Rating;
@@ -73,6 +75,7 @@ public class RateCommand extends UndoableCommand {
 
         personToEdit = lastShownList.get(index.getZeroBased());
         editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        EventsCenter.getInstance().post(new PersonEditedEvent(editedPerson));
     }
 
     /**
@@ -88,7 +91,7 @@ public class RateCommand extends UndoableCommand {
         Person toReturn = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getTags(), personToEdit.getCalendarId());
         toReturn.setRating(updatedRating);
-        toReturn.setReview(personToEdit.getReview());
+        toReturn.setReviews(personToEdit.getReviews());
         toReturn.setId(personToEdit.getId());
 
         return toReturn;

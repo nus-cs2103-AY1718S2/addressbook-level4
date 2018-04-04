@@ -22,7 +22,8 @@ public class RateCommandTest {
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Person editedPerson = new PersonBuilder().withRating("1").withEmail("alice@example.com").withReview("Lazy")
+        Person editedPerson = new PersonBuilder().withRating("1").withEmail("alice@example.com")
+                .withReviews("supervisor@example.com\nLazy")
                 .build();
         EditCommand.EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withRating("1").build();
 

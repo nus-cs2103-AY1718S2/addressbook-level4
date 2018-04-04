@@ -3,16 +3,20 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.PersonEditedEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Review;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.review.Review;
 
 /**
  * Updates the review of an existing person in the address book.
@@ -73,6 +77,7 @@ public class ReviewCommand extends UndoableCommand {
 
         personToEdit = lastShownList.get(index.getZeroBased());
         editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        EventsCenter.getInstance().post(new PersonEditedEvent(editedPerson));
     }
 
     /**
@@ -83,12 +88,12 @@ public class ReviewCommand extends UndoableCommand {
                                              EditCommand.EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
-        Review updatedReview = editPersonDescriptor.getReview().orElse(new Review());
+        Set<Review> updatedReviews = editPersonDescriptor.getReviews().orElse(new HashSet<Review>());
 
         Person toReturn = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getTags(), personToEdit.getCalendarId());
         toReturn.setRating(personToEdit.getRating());
-        toReturn.setReview(updatedReview);
+        toReturn.setReviews(updatedReviews);
         toReturn.setId(personToEdit.getId());
 
         return toReturn;

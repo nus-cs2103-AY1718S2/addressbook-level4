@@ -69,6 +69,10 @@ public class OAuthManager {
     /** Most recent list of retrieved events */
     private static List<Event> mostRecentEventList = new ArrayList<>();
 
+    /** List of events for the day */
+    private static List<Event> dailyEventsList = new ArrayList<>();
+
+
     static {
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
@@ -178,6 +182,51 @@ public class OAuthManager {
     }
 
     /**
+     * Get a list of events for the day as a list of event objects.
+     * @throws IOException
+     */
+    public static List<Event> getDailyEvents(User user) throws IOException {
+        List<Event> dailyEvents = getNextXEvents(user, 250);
+        int numberOfEventsRetrieved = dailyEvents.size();
+
+        if (numberOfEventsRetrieved == 0) {
+            System.out.println("No events found for today.");
+        } else {
+            System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s).");
+        }
+
+        return dailyEvents;
+    }
+
+    /**
+     * Get a list of events for the day as a list of strings.
+     * @throws IOException
+     */
+    public static List<String> getDailyEventsAsStringList(User user) throws IOException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String currentDate = LocalDate.now().format(formatter);
+
+        List<Event> dailyEvents = getEventsByDay(user, currentDate);
+        int numberOfEventsRetrieved = dailyEvents.size();
+        List<String> eventListAsString = new ArrayList<>();
+
+        if (numberOfEventsRetrieved == 0) {
+            System.out.println("No events found for today.");
+        } else {
+            System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s): ");
+            int eventIndex = 1;
+            for (Event event : dailyEvents) {
+                String eventAsString = formatEventDetailsAsString(event);
+                eventListAsString.add(String.valueOf(eventIndex++) + ". " + eventAsString);
+            }
+        }
+
+        dailyEventsList = getDailyEvents(user);
+
+        return eventListAsString;
+    }
+
+    /**
      * Formats an event object as a human-readable string.
      */
     public static String formatEventDetailsAsString(Event event) {
@@ -246,7 +295,7 @@ public class OAuthManager {
 
     /**
      * Gets a list of events for a particular date from Google Calendar
-     * @param date must in RFC 3339 format
+     * @param date must in yyyy-MM-dd format
      * @throws IOException
      */
     public static List<Event> getEventsByDay(User user, String date) throws IOException {
@@ -269,6 +318,9 @@ public class OAuthManager {
                 .setOrderBy("startTime")
                 .setSingleEvents(true)
                 .execute();
+
+
+
         List<Event> upcomingEvents = events.getItems();
 
         return upcomingEvents;

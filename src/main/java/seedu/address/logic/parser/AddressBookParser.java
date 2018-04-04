@@ -31,6 +31,7 @@ import seedu.address.logic.commands.NavigateCommand;
 import seedu.address.logic.commands.OAuthTestCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ShowScheduleCommand;
 import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.UndoCommand;
 
@@ -104,6 +105,9 @@ public class AddressBookParser {
 
         case CalendarListCommand.COMMAND_WORD:
             return new CalendarListCommand();
+
+        case ShowScheduleCommand.COMMAND_WORD:
+            return new ShowScheduleCommand();
 
         case ErrorLogCommand.COMMAND_WORD:
             return new ErrorLogCommand();

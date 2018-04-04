@@ -14,7 +14,7 @@ import seedu.address.model.login.User;
 public class CalendarListCommand extends Command {
 
     public static final String COMMAND_WORD = "calendar-list";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": List up to the next 10 calendar events.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": List up to the next 250 calendar events.";
 
     public static final String MESSAGE_NO_EVENTS = "No upcoming events found.";
     public static final String MESSAGE_ERROR = "Unable to retrieve calendar events. Please try again later.";

@@ -63,6 +63,11 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    /** Raises an event to indicate customer stats has changed */
+    private void indicateCustomerStatsChanged() {
+        raise(new CustomerStatsChangedEvent(customerStats));
+    }
+
     @Override
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
         addressBook.removePerson(target);

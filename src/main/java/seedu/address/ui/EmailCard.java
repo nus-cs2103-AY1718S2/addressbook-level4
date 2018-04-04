@@ -12,6 +12,7 @@ import javafx.scene.layout.Region;
 /**
  * the card for the email panel
  */
+//@@author glorialaw
 public class EmailCard extends UiPart<Region> {
     private static final String FXML = "EmailCard.fxml";
 

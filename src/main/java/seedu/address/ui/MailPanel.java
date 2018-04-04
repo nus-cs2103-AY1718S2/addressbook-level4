@@ -20,7 +20,7 @@ import org.fxmisc.easybind.EasyBind;
 /**
  * Mail panel
  */
-
+//@@author glorialaw
 public class MailPanel extends UiPart<Region> {
     private static final String FXML = "EmailPanel.fxml";
 

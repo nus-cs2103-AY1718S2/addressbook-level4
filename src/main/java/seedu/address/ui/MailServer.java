@@ -11,6 +11,7 @@ import java.util.Properties;
 /**
  * Mail Server activities
  */
+//@@author glorialaw
 public class MailServer {
     private static String USERNAME = "sell.it.sg";
     private static String PASSWORD = "gloriacs2103";

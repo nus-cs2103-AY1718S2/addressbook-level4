@@ -67,11 +67,8 @@ public class GetDistance {
         DistanceMatrix matrix = null;
         matrix = getMatrix(origin, destination);
         String duration = matrix.rows[0].elements[0].duration.toString();
-        System.out.println(matrix);
-        System.out.println(duration);
         int space = duration.indexOf(" ");
         String units = duration.substring(space + 1, duration.length());
-        double metres;
         durationWithoutUnit = duration.substring(0, space);
         return Double.parseDouble(durationWithoutUnit);
     }

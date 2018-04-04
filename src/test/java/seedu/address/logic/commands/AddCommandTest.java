@@ -104,7 +104,7 @@ public class AddCommandTest {
         //add new person, new pet patient and new appointment
         Person newPerson = TypicalPersons.BENSON;
         PetPatient newPetPatient = TypicalPetPatients.JEWEL;
-        Appointment newAppt = TypicalAppointments.BOB_APP;
+        Appointment newAppt = TypicalAppointments.BENSON_APP;
         CommandResult resultToAddAll = getAddCommandForNewPersonPetPatientAppointment(newPerson, newPetPatient, newAppt,
                 modelStub).execute();
         assertEquals(String.format(messageAddall, newPerson, newPetPatient, newAppt), resultToAddAll.feedbackToUser);

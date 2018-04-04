@@ -108,6 +108,7 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getPersonListPanel();
     }
 
+    //@@author Robert-Peng
     public PetPatientListPanelHandle getPetPatientListPanel() {
         return mainWindowHandle.getPetPatientListPanel();
     }
@@ -120,6 +121,7 @@ public abstract class AddressBookSystemTest {
     //        return mainWindowHandle.getBrowserPanel();
     //    }
 
+    //@@author Robert-Peng
     public CalendarPanelHandle getCalendarPanel() {
         return mainWindowHandle.getCalendarPanel();
     }
@@ -159,7 +161,7 @@ public abstract class AddressBookSystemTest {
      * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
      */
     protected void showPersonsWithName(String keyword) {
-        executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
+        executeCommand(FindCommand.COMMAND_WORD + " -o n/" + keyword);
         assertTrue(getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size());
     }
 
@@ -191,6 +193,7 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
+        //assertListMatching(getPetPatientListPanel(), expectedModel.getFilteredPetPatientList());
     }
 
     /**

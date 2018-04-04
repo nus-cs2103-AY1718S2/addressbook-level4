@@ -61,9 +61,19 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String NRIC_DESC_BOB = " " + PREFIX_NRIC + VALID_NRIC_BOB;
 
-    // More Nrics
+    // Person: Charlie
+    public static final String VALID_NAME_CHARLIE = "Charlie Brown";
+    public static final String VALID_PHONE_CHARLIE = "94127890";
+    public static final String VALID_EMAIL_CHARLIE = "charliebrown@gmail.com";
+    public static final String VALID_ADDRESS_CHARLIE = "Chocolate Factory Avenue";
     public static final String VALID_NRIC_CHARLIE = "S1078899P";
+    public static final String NAME_DESC_CHARLIE = " " + PREFIX_NAME + VALID_NAME_CHARLIE;
+    public static final String PHONE_DESC_CHARLIE = " " + PREFIX_PHONE + VALID_PHONE_CHARLIE;
+    public static final String EMAIL_DESC_CHARLIE = " " + PREFIX_EMAIL + VALID_EMAIL_CHARLIE;
+    public static final String ADDRESS_DESC_CHARLIE = " " + PREFIX_ADDRESS + VALID_ADDRESS_CHARLIE;
     public static final String NRIC_DESC_CHARLIE = " " + PREFIX_NRIC + VALID_NRIC_CHARLIE;
+
+    // More Nrics
     public static final String VALID_NRIC_DION = "T1115666G";
     public static final String NRIC_DESC_DION = " " + PREFIX_NRIC + VALID_NRIC_DION;
     public static final String VALID_NRIC_ELIAS = "G3338999P";
@@ -91,15 +101,15 @@ public class CommandTestUtil {
     public static final String TAG_DESC_VACCINATION = " " + PREFIX_TAG + VALID_TAG_VACCINATION;
 
     // Remarks
-    public static final String VALID_REMARK_ONE = "Requires homevisit";
+    public static final String VALID_REMARK_ONE = "Persistent diarrhoea";
     public static final String REMARK_DESC_ONE = " " + PREFIX_REMARK + VALID_REMARK_ONE;
     public static final String VALID_REMARK_TWO = "old age";
     public static final String REMARK_DESC_TWO = " " + PREFIX_REMARK + VALID_REMARK_TWO;
 
     // Date Time for appointments
-    public static final String VALID_DATE_ONE = "2018-12-31 12:30";
+    public static final String VALID_DATE_ONE = "2018-06-17 11:30";
     public static final String DATE_DESC_ONE = " " + PREFIX_DATE + VALID_DATE_ONE;
-    public static final String VALID_DATE_TWO = "2018-10-12 12:15";
+    public static final String VALID_DATE_TWO = "2018-07-05 16:30";
     public static final String DATE_DESC_TWO = " " + PREFIX_DATE + VALID_DATE_TWO;
 
 
@@ -141,6 +151,7 @@ public class CommandTestUtil {
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
+    public static final String INVALID_NRIC = "&2345678M"; // '&' not allowed in NRIC
     public static final String INVALID_NRIC_DESC = " " + PREFIX_NRIC + "&2345678M"; // '&' not allowed in NRIC
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_OWNER_DESC = " " + PREFIX_NRIC + "S000000000T"; // invalid Nric

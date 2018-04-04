@@ -15,18 +15,18 @@ public class TypicalAppointments {
             .withOwnerNric(TypicalPersons.ALICE.getNric().toString())
             .withPetPatientName(TypicalPetPatients.JEWEL.getName().toString())
             .withRemark("Requires Home Visit")
-            .withDateTime("2018-12-31 12:30")
+            .withDateTime("2018-05-28 12:30")
             .withAppointmentTags("checkup").build();
-    public static final Appointment BOB_APP = new AppointmentBuilder()
-            .withOwnerNric(TypicalPersons.BOB.getNric().toString())
+    public static final Appointment BENSON_APP = new AppointmentBuilder()
+            .withOwnerNric(TypicalPersons.BENSON.getNric().toString())
             .withPetPatientName(TypicalPetPatients.JOKER.getName().toString())
             .withRemark("May require isolation")
-            .withDateTime("2018-12-31 14:30")
+            .withDateTime("2018-04-22 14:30")
             .withAppointmentTags("vaccination").build();
 
     private TypicalAppointments() {} // prevents instantiation
 
     public static List<Appointment> getTypicalAppointments() {
-        return new ArrayList<>(Arrays.asList(ALICE_APP, BOB_APP));
+        return new ArrayList<>(Arrays.asList(ALICE_APP, BENSON_APP));
     }
 }

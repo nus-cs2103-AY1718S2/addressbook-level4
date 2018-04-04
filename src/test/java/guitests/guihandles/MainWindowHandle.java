@@ -51,10 +51,12 @@ public class MainWindowHandle extends StageHandle {
         return mainMenu;
     }
 
+    //@@author Robert-Peng
     public CalendarPanelHandle getCalendarPanel() {
         return calendarPanel;
     }
 
+    //@@author Robert-Peng
     public PetPatientListPanelHandle getPetPatientListPanel() {
         return petPatientListPanel;
     }

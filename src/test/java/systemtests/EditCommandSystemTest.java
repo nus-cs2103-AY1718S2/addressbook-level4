@@ -191,6 +191,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 + INDEX_FIRST_PERSON.getOneBased() + INVALID_ADDRESS_DESC,
                 Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
+        //@@author Robert-Peng
         /* Case: invalid nric -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + OPTION_OWNER + " "
                 + INDEX_FIRST_PERSON.getOneBased() + INVALID_NRIC_DESC,

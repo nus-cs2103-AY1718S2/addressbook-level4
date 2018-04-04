@@ -12,6 +12,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.CalendarChangedEvent;
+import seedu.address.commons.events.ui.TimetableChangedEvent;
 import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
@@ -72,6 +74,16 @@ public class ModelManager extends ComponentManager implements Model {
      */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
+    }
+
+    @Override
+    public void indicateCalendarChanged() {
+        raise(new CalendarChangedEvent());
+    }
+
+    @Override
+    public void indicateTimetableChanged() {
+        raise(new TimetableChangedEvent());
     }
 
     @Override

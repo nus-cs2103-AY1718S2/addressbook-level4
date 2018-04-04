@@ -3,6 +3,8 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.events.ui.CalendarChangedEvent;
+import seedu.address.commons.events.ui.TimetableChangedEvent;
 import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
@@ -101,4 +103,10 @@ public interface Model {
 
     /** Adds the given Event */
     void addEvent(Event event) throws DuplicateEventException;
+
+    /** Raises an event to indicate the calendar has changed */
+    void indicateCalendarChanged();
+
+    /** Raises an event to indicate the timetable has changed */
+    void indicateTimetableChanged();
 }

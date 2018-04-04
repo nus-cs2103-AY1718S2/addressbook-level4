@@ -15,6 +15,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.events.ui.CalendarChangedEvent;
+import seedu.address.commons.events.ui.TimetableChangedEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -123,5 +124,11 @@ public class UiManager extends ComponentManager implements Ui {
     private void handleCalendarChangedEvent(CalendarChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.redisplayCalendar();
+    }
+
+    @Subscribe
+    private void handleTimetableChangedEvent(TimetableChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.redisplayTimetable(event.timetable);
     }
 }

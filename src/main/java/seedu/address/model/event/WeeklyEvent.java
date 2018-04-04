@@ -30,7 +30,7 @@ public class WeeklyEvent extends Event {
         this.startTime = schedule.getStartTime();
         this.endTime = schedule.getEndTime();
         this.day = schedule.getDayText();
-        this.details = null;
+        this.details = new String[]{};
     }
 
     public String getDay() {

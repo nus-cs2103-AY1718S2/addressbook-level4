@@ -4,6 +4,8 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -19,6 +21,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.event.WeeklyEvent;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -36,6 +39,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private Calendar calendar;
+    private Timetable timetable;
     private PersonListPanel personListPanel;
     private ToDoListPanel todoListPanel;
     private Config config;
@@ -123,6 +127,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         calendar = new Calendar(logic.getFilteredEventList());
+        timetable = new Timetable();
         calendarPlaceholder.getChildren().add(calendar.getCalendarView());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
@@ -143,9 +148,19 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     void redisplayCalendar() {
+        Calendar.isViewed = true;
+        Timetable.isViewed = false;
         calendarPlaceholder.getChildren().clear();
         calendar = new Calendar(logic.getFilteredEventList());
         calendarPlaceholder.getChildren().add(calendar.getCalendarView());
+    }
+
+    void redisplayTimetable(ObservableList<WeeklyEvent> modules) {
+        Calendar.isViewed = false;
+        Timetable.isViewed = true;
+        calendarPlaceholder.getChildren().clear();
+        timetable = new Timetable(modules);
+        calendarPlaceholder.getChildren().add(timetable.getTimetableView());
     }
 
     void hide() {

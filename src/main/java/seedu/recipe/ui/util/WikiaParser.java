@@ -86,8 +86,9 @@ public class WikiaParser implements WebParser {
         Elements elements = contentText.select("h2,ul");
         Iterator<Element> eleIte = elements.iterator();
         while (eleIte.hasNext() && !eleIte.next().text().startsWith("Ingredient")) {
-            // Do nothing
+            // Do nothing and just go to the line that starts with "Ingredient"
         }
+
         Elements elementsWithIngredientWithLink = new Elements();
         Elements elementsWithIngredient = new Elements();
         while (eleIte.hasNext()) {
@@ -98,6 +99,7 @@ public class WikiaParser implements WebParser {
             elementsWithIngredient.addAll(nextElement.select("li"));
             elementsWithIngredientWithLink.addAll(nextElement.select("a"));
         }
+
         List<String> ingredientList;
         if (elementsWithIngredientWithLink.isEmpty()) {
             ingredientList = elementsWithIngredient.eachText();

@@ -711,6 +711,132 @@ private void createNewLine() {
 ** Cons: Too complex to implement, unintuitive inputs.
 // end::multiple-lines[]
 
+=== Parsing a recipe from BrowserPanel
+// tag::web-parse[]
+==== Current implementation
+
+The command is implemented in `_ParseCommand_`. When user submits the command to the *`UI`* component, it passes on the command to the *`Logic`* component, which posts a `_WebParseRequestEvent_` to the `_EventsCenter_`. Refer to <<fig-ParseCommandSD>>.
+
+[[fig-ParseCommandSD]]
+.Component interactions for *`parse`* command (part 1)
+image::SDforParseCommand.png[width="800"]
+{nbsp} +
+
+The event is then propagated through the `_EventsCenter_` to the `*UI*`. The `*UI*` will call `handleWebParseRequestEvent()`. Refer to <<fig-ParseCommandEventSD>>.
+
+[[fig-ParseCommandEventSD]]
+.Component interactions for *`parse`* command (part 2)
+image::SDforParseCommandEventHandling.png[width="800"]
+{nbsp} +
+
+This event needs to deal with two `UiPart`: `BrowserPanel` to parse the recipe, and `CommandBox` to automatically put in an `AddCommand` with the parsed recipe. +
+Therefore, `handleWebParseRequestEvent()` is implemented in `MainWindow` class. Below is the implementation:
+[source,java]
+----
+@Subscribe
+private void handleWebParseRequestEvent(WebParseRequestEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    String parsedRecipe = browserPanel.parseRecipe();
+    if (parsedRecipe != null) {
+        commandBox.replaceText(parsedRecipe);
+    } else {
+        commandBox.replaceText("");
+    }
+}
+----
+
+As seen from the implementation above, the `BrowserPanel` creates a `WebParser` according to the webpage loaded. It does so by calling its `WebParserHandler` and makes the `WebParserHandler` create the according `WebParser`. For example, if the URL is recipes.wikia.com/wiki/Hainanese_Chicken_Rice, then `WebParserHandler` will return `WikiaParser`. which is a class implementing the interface `WebParser`. Below is the implementation for this method:
+[source,java]
+----
+public String parseRecipe() {
+    WebParser webParser = webParserHandler.getWebParser();
+    if (webParser != null) {
+        return webParser.parseRecipe();
+    } else {
+        return null;
+    }
+}
+----
+
+Refer to <<fig-WebParserCD>> for the interactions between the three classes mentioned above. +
+{nbsp} +
+
+[[fig-WebParserCD]]
+.Class diagram for `_WebParser_`
+image::WebParserClassDiagram.png[width="800"]
+{nbsp} +
+
+From the figure above, we see `WebParserHandler` takes in a `WebView`, which is the main part of the `BrowserPanel` and returns the corresponding `WebParser`. See implementation below:
+[source,java]
+----
+public WebParser getWebParser() {
+    String url = browser.getEngine().getLocation();
+    if (browser.getEngine().getTitle() != null) {
+        try {
+            URI uri = new URI(url);
+            String domain = uri.getHost();
+            Document document = browser.getEngine().getDocument();
+            W3CDom w3CDom = new W3CDom();
+            String documentString = w3CDom.asString(document);
+
+            switch (domain) {
+
+            case WikiaParser.DOMAIN:
+                return new WikiaParser(documentString);
+
+            default:
+                return null;
+
+            }
+        } catch (URISyntaxException e) {
+            return null;
+        }
+    } else {
+        return null;
+    }
+}
+----
+
+The `WebParser` in turn takes a string value of the HTML of the page loaded in the `WebView`, parses it then returns the parsed recipe. An example of how a `WebParser` works can be found at link:{repoURL}/src/main/java/seedu/recipe/ui/util/WikiaParser.java[`WikiaParser.java`].
+
+After we get a recipe, or to be exact, a string that contains the `add` command with the recipe, `MainWindow` passes `parsedRecipe`, which is now the string of an `add` command to the `CommandBox`. Then the `CommandBox` just replaces its body with the given string. See <<fig-ParseCommandDetailsSD>> for an example when a `parse` command is submitted with a wikia page loaded in the `Browserpanel`. +
+{nbsp} +
+
+[[fig-ParseCommandDetailsSD]]
+.Sequence diagram for `handleWebParseRequestEvent()`
+image::SDforParseCommandDetails.png[width="800"]
+{nbsp} +
+
+==== Design considerations
+
+===== Aspect: How to extract data from `WebView`.
+
+* **Alternative 1 (current choice):** Use Jsoup.
+** Pros: It returns a Jsoup supported string, which will make parsing *significantly less painful* later.
+** Cons: This approach uses a 3rd-party library.
+* **Alternative 2:** Use a w3c.dom Document directly.
+** Pros: This approach requires only one line of code.
+** Cons: However, as we are going to see below, this method makes parsing almost impossible without a lot of trial-and-error
+
+===== Aspect: How to parse data from `WebView`.
+
+* **Alternative 1 (current choice):** Create a Jsoup Document from a HTML string, then parse on it.
+** Pros: This approach is the easiest to do as Jsoup is a very robust HTML parsing library, especially when you are familiar with the way JQuery selects elements.
+** Cons: This approach uses a 3rd-party library.
+* **Alternative 2:** Do DOM query on a w3c.dom Document directly.
+** Pros: This approach uses the built-in Java codes.
+** Cons: DOM queries are very expensive. Furthermore, IntelliJ does not support variable debugging on w3c.dom Document, which, as a result, makes parsing for the correct elements a game of lottery.
+
+===== Aspect: Testing.
+
+* **Alternative 1 (current choice):** Create a dummy Document object for `WebParserHandler`.
+** Pros: This is currently the only working approach.
+** Cons: This approach does not fully test for the correctness of `WebParserHandler` constructor. And usually the tests fail even though they should pass.
+* **Alternative 2:** Do a correct test by using a long waiting time.
+** Pros: This approach works.
+** Cons: But it makes testing a lot slower due to the long waiting time.
+// end::web-parse[]
+
 === Searching on the internet
 // tag::internet-search[]
 ==== Current implementation
@@ -722,7 +848,7 @@ The command is implemented in `_SearchCommand_`. When user submits the command t
 image::SDforInternetSearch.png[width="800"]
 {nbsp} +
 
-The event is then propagated through the `_EventsCenter_` to the `*UI*`. The `*UI*` will call `handleInternetSearchRequestEvent()` to update the theme accordingly. Refer to <<fig-InternetSearchEventSD>>.
+The event is then propagated through the `_EventsCenter_` to the `*UI*`. The `*UI*` will call `handleInternetSearchRequestEvent()` to search for the recipe. Refer to <<fig-InternetSearchEventSD>>.
 
 [[fig-InternetSearchEventSD]]
 .Component interactions for *`search chicken rice`* command (part 2)

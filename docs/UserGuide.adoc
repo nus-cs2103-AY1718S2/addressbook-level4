@@ -101,6 +101,8 @@ _Figure 3_ shows a notification card of ET. Each notification card contains 4 in
 .A notification card
 image::card_labelled.jpg[width=""]
 
+{nbsp} +
+
 ===== Two Phase notification
 
 ET has a 2 phase notification system, i.e. there will be 2 notification cards popping up to remind you of each event.
@@ -116,6 +118,8 @@ image::card_red.png[width=""]
 
 For example, suppose you have assigned a task to Alex which will due on 27^th^ May 2018 4:00 pm. When you open ET for the first time in the morning of 27^th^ May 2018, you will be notified that Alex has a task that will due on *today* in a [blue]#blue# notification card. Later at 4:00 pm of 27^th^ May 2018, you will receive the second phase notification in [red]#red#, informing you that Alex should have finished the task by *now* .
 
+{nbsp} +
+
 ===== Notification card in Operating System
 
 We understand that you as a manager lead a busy life, so we don't expect you to stare at ET at all times to catch the notification cards. Instead, ET is capable of showing notification cards in your computer's system (e.g. Windows, Mac, Linux, etc.) while you are using other software, as shown in _Figure 6_. Thus, you can feel free to minimize ET and continue working on your computer.
@@ -125,6 +129,8 @@ image::card_windows.png[width=""]
 
 [NOTE]
 This feature may not work on some computer systems.
+
+{nbsp} +
 
 ===== The Notification Center
 
@@ -142,7 +148,6 @@ Notification cards will always stay in the notification center. Even if you clos
 Employees Tracker (ET) is locked by default when it is opened in order to secure the data in ET. While ET is locked, all commands and the notification features will not work. To unlock ET, please refer to <<Logging in : `unlock`>>
 
 === Data storage
-
 Employees Tracker data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 

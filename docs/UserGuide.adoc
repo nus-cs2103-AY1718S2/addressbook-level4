@@ -371,13 +371,13 @@ Examples:
 
 * `addGroupMember g/CS2010 n/David Li` +
 Added person `David Li` into group `CS2010`  refer to Figure 5. +
-image:addGroupMembersToGroupExample.png[width ="500"] +
+image:addGroupMembersToGroupExample.png[width ="800"] +
 Figure 5. Example of addMembersToGroup +
 
 If person already added, Fastis will output already added person in group.
 * `addGroupMember g/CS2010 n/David Li` +
 Refer to Figure 6. +
-image:addGroupMembersToGroupFailExample.png[width ="500"] +
+image:addGroupMembersToGroupFailExample.png[width ="800"] +
 Figure 6. Example of addMembersToGroup +
 // end:AddGroup[]
 

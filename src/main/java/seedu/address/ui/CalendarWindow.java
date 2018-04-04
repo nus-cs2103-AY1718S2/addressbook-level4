@@ -124,6 +124,7 @@ public class CalendarWindow extends UiPart<Region> {
     }
 
     public void setAppointments() {
+        int i = 0;
         for (Appointment appointment : appointmentList) {
             if (appointment.getDateTime() == null) {
                 continue;
@@ -131,8 +132,8 @@ public class CalendarWindow extends UiPart<Region> {
 
             LocalDateTime ldt = appointment.getDateTime();
 
-            Entry entry = new Entry (appointment.getPetPatientName().toString());
-            entry.setInterval(new Interval(ldt, ldt.plusHours(1)));
+            Entry entry = new Entry (++i + ". " + appointment.getPetPatientName().toString());
+            entry.setInterval(new Interval(ldt, ldt.plusMinutes(30)));
             List<Entry<?>> result = calendar.findEntries(appointment.getPetPatientName().toString());
             calendar.removeEntries(result);
             calendar.addEntry(entry);

@@ -213,6 +213,7 @@ public class TestAddEventCommand extends Command {
 
         String calendarId = personToAddEvent.getCalendarId();
         Logger logger = LogsCenter.getLogger(TestAddEventCommand.class);
+        //@@author IzHoBX
         if (calendarId == null || calendarId.equals("")) {
             logger.info("calendarId null, attempting to create calendar");
             try {
@@ -242,6 +243,7 @@ public class TestAddEventCommand extends Command {
                 return new CommandResult(MESSAGE_FAILURE);
             }
         }
+        //@@author
 
         try {
             event = service.events().insert(calendarId, event).execute();
@@ -251,6 +253,7 @@ public class TestAddEventCommand extends Command {
             return new CommandResult(MESSAGE_FAILURE);
         }
 
+        //@@author IzHoBX
         Notification notification = new Notification(title, calendarId, event.getId(), event.getEnd().toString(),
                 model.getPerson(targetIndex.getZeroBased()).getId().toString());
         try {
@@ -258,6 +261,8 @@ public class TestAddEventCommand extends Command {
         } catch (DuplicateTimetableEntryException e) {
             throw new CommandException("Duplicated event");
         }
+        //@@author
+
         System.out.printf("Event created: %s\n", event.getHtmlLink());
         return new CommandResult(MESSAGE_SUCCESS);
     }

@@ -74,6 +74,7 @@ public class CommandBox extends UiPart<Region> {
         historySnapshot = logic.getHistorySnapshot();
         consecutiveShiftPressed = new LinkedList<>();
 
+        //@@author IzHoBX
         commandTextField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -108,6 +109,7 @@ public class CommandBox extends UiPart<Region> {
             raise(new ShowSuggestionEvent(""));
         }
     }
+    //@@author
 
     /**
      * Handles the key press event, {@code keyEvent}.
@@ -126,6 +128,7 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        //@@author IzHoBX
         case SHIFT:
             registerShiftPressed(keyEvent);
             if (consecutiveShiftPressed.size() == 2) {
@@ -133,11 +136,13 @@ public class CommandBox extends UiPart<Region> {
                 raise(new ToggleNotificationCenterEvent());
             }
             break;
+        //@@author
         default:
-            // let JavaFx handle the keypress
+        // let JavaFx handle the keypress
         }
     }
 
+    //@@author IzHoBX
     /**
      * Records SHIFT key has been registered and waits for the next SHIFT.
      */
@@ -161,6 +166,7 @@ public class CommandBox extends UiPart<Region> {
         }
         consecutiveShiftPressed.clear();
     }
+    //@@author
 
     /**
      * Updates the text field with the previous input in {@code historySnapshot},

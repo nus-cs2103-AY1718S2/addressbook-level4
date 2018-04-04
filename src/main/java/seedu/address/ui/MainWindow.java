@@ -118,11 +118,13 @@ public class MainWindow extends UiPart<Stage> {
         registerAsAnEventHandler(this);
 
 
+        //@@author IzHoBX
         shownNotificationCards = new LinkedList<>();
         notificationCenter = new NotificationCenter(notificationCardsBox, notificationCenterPlaceHolder);
         mainStage.getChildren().remove(notificationCenterPlaceHolder);
         notificationCenterStatus = HIDE;
         semaphore = new Semaphore(1);
+        //@@author IzHoBX
     }
 
     public Stage getPrimaryStage() {
@@ -296,6 +298,7 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.setScene(scene);
     }
 
+    //@@author IzHoBX
     /**
      * Show in-app notification
      */
@@ -390,13 +393,6 @@ public class MainWindow extends UiPart<Stage> {
         enterAnimation2.play();
     }
 
-    @Subscribe
-    private void showDialogPane(ShowReviewDialogEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        ReviewDialog reviewDialog = new ReviewDialog();
-        reviewDialog.show();
-    }
-
     /**
      * Show the notification panel with an animation
      */
@@ -412,5 +408,13 @@ public class MainWindow extends UiPart<Stage> {
             animateHorizontally(notificationCenterPlaceHolder, NOTIFICATION_PANEL_WIDTH, ENTER);
             notificationCenterStatus = SHOW;
         }
+    }
+    //@@author
+
+    @Subscribe
+    private void showDialogPane(ShowReviewDialogEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ReviewDialog reviewDialog = new ReviewDialog();
+        reviewDialog.show();
     }
 }

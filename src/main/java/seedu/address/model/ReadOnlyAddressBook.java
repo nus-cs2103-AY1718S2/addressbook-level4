@@ -25,12 +25,14 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<Tag> getTagList();
 
+    //@@author IzHoBX
     /**
-     * Returns an unmodifiable view of the timetable entry list.
+     * Returns an unmodifiable view of the notification list.
      */
     LinkedList<Notification> getNotificationsList();
 
     int getNextId();
+    //@@author
 
     String getPassword();
 

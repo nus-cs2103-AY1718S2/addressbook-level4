@@ -32,7 +32,9 @@ m/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
       </HBox>
         <FlowPane fx:id="tags" />
+        <!-- @@author IzHoBX -->
         <Label fx:id="rating" styleClass="cell_small_label_rating" text="\$rating" />
+        <!-- @@author -->
         <HBox alignment="CENTER_LEFT" spacing="5.0">
             <ImageView fx:id="imagePhone" pickOnBounds="true" preserveRatio="true">
                 <image>

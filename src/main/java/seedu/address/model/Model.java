@@ -32,11 +32,14 @@ public interface Model {
     /** Returns a person given an index*/
     Person getPerson(int index) throws IndexOutOfBoundsException;
 
+    //@@author IzHoBX
     /** Deletes a timetable entry given its id. */
     void deleteNotification(String id) throws TimetableEntryNotFoundException;
 
     /** Adds the given person */
     void addNotification(Notification e) throws DuplicateTimetableEntryException;
+    //@@author IzHoBX
+
 
     /** Adds the given password */
     void setPassword(String e);

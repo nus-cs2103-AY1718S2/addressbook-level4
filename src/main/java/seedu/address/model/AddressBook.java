@@ -69,9 +69,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
-    public void setTimetableEntriesList(LinkedList<Notification> notifications) {
+    //@@author IzHoBX
+    public void setNotificationsList(LinkedList<Notification> notifications) {
         this.notifications = notifications;
     }
+    //@@author
 
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
@@ -82,7 +84,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
-        setTimetableEntriesList(newData.getNotificationsList());
+        setNotificationsList(newData.getNotificationsList());
         this.nextId = newData.getNextId();
         this.password = newData.getPassword();
 
@@ -106,10 +108,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
+        //@@author IzHoBX
         if (!person.isInitialized()) {
             person.setId(nextId);
             nextId++;
         }
+        //@@author
         persons.add(person);
     }
 
@@ -179,7 +183,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
-    //// timetable entry level operations
+    //@@author IzHoBX
+    // timetable entry level operations
     /**
      * Adds a notification to the address book.
      */
@@ -205,14 +210,15 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new TimetableEntryNotFoundException();
         }
     }
+    //@@author
+
 
     //// util methods
 
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags, "
-                + notifications.size() + " timetable entries";
-        // TODO: refine later
+                + notifications.size() + " notifications";
     }
 
     @Override
@@ -245,18 +251,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         return Objects.hash(persons, tags);
     }
 
+    //@@author IzHoBX
     @Override
     public int getNextId() {
         return nextId;
     }
 
+    public void setNextId(int nextId) {
+        this.nextId = nextId;
+    }
+    //@@author
+
     @Override
     public String getPassword() {
         return password;
-    }
-
-    public void setNextId(int nextId) {
-        this.nextId = nextId;
     }
 
     public void setPassword(String password) {
@@ -269,6 +277,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.sort(field);
     }
 
+    //@@author IzHoBX
     /**
      * Returns a person with the given id.
      *
@@ -282,4 +291,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         return null;
     }
+    //@@author IzHoBX
+
 }

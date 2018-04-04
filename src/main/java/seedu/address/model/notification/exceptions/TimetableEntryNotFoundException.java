@@ -1,3 +1,4 @@
+//@@author IzHoBX
 package seedu.address.model.notification.exceptions;
 
 /**

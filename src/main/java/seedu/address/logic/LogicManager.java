@@ -126,6 +126,7 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
 
+    //@@author IzHoBX
     @Subscribe
     private void handleTimetableEntryAddedEvent(NotificationAddedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -173,4 +174,5 @@ public class LogicManager extends ComponentManager implements Logic {
         timetableEntriesStatus.put(associatedTimerTask, false);
         scheduledTimerTasks.remove(event.id);
     }
+    //@@author
 }

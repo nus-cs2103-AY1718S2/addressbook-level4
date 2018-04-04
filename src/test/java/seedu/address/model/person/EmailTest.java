@@ -1,6 +1,8 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -20,6 +22,17 @@ public class EmailTest {
         Assert.assertThrows(IllegalArgumentException.class, () -> new Email(invalidEmail));
     }
 
+    @Test
+    public void hashCode_variousTest() {
+        Email email1 = new Email("PeterJack_1190@example.com");
+        Email email2 = new Email("PeterJack_1190@example.com");
+        Email email3 = new Email("a@bc");
+
+        assertEquals(email1.hashCode(), email1.hashCode());
+        assertEquals(email1.hashCode(), email2.hashCode());
+        assertNotEquals(email2.hashCode(), email3.hashCode());
+    }
+    
     @Test
     public void isValidEmail() {
         // null email

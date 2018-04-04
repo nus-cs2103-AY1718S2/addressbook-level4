@@ -1,6 +1,8 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -20,6 +22,17 @@ public class DetailTest {
         Assert.assertThrows(IllegalArgumentException.class, () -> new Detail(invalidDetail));
     }
 
+    @Test
+    public void hashCode_variousTest() {
+        Detail detail1 = new Detail("Likes tennis");
+        Detail detail2 = new Detail("Likes tennis");
+        Detail detail3 = new Detail("Has 3 dogs");
+
+        assertEquals(detail1.hashCode(), detail1.hashCode());
+        assertEquals(detail1.hashCode(), detail2.hashCode());
+        assertNotEquals(detail2.hashCode(), detail3.hashCode());
+    }
+    
     @Test
     public void isValidDetail() {
         // null detail

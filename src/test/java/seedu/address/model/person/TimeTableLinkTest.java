@@ -1,6 +1,8 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -20,6 +22,17 @@ public class TimeTableLinkTest {
         Assert.assertThrows(IllegalArgumentException.class, () -> new TimeTableLink(invalidLink));
     }
 
+    @Test
+    public void hashCode_variousTest() {
+        TimeTableLink timeTableLink1 = new TimeTableLink("http://modsn.us/MYwiD");
+        TimeTableLink timeTableLink2 = new TimeTableLink("http://modsn.us/MYwiD");
+        TimeTableLink timeTableLink3 = new TimeTableLink("http://modsn.us/FumdA");
+
+        assertEquals(timeTableLink1.hashCode(), timeTableLink1.hashCode());
+        assertEquals(timeTableLink1.hashCode(), timeTableLink2.hashCode());
+        assertNotEquals(timeTableLink2.hashCode(), timeTableLink3.hashCode());
+    }
+    
     @Test
     public void isValidLink() {
         // null email

@@ -6,6 +6,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_NAME_NDP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_VENUE_NDP;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Rule;
@@ -110,6 +111,27 @@ public class UniqueEventListTest {
     }
 
     @Test
+    public void setEvent_wrongEvent_throwsEventNotFoundException() throws Exception {
+        UniqueEventList uniqueEventList = new UniqueEventList();
+        Event ndp = new EventBuilder().withName(VALID_EVENT_NAME_NDP).build();
+        Event f1 = new EventBuilder().build();
+        uniqueEventList.add(ndp);
+        thrown.expect(EventNotFoundException.class);
+        uniqueEventList.setEvent(f1, ndp);
+    }
+
+    @Test
+    public void setEvent_duplicateEvent_throwsDuplicateEventException() throws Exception {
+        UniqueEventList uniqueEventList = new UniqueEventList();
+        Event ndp = new EventBuilder().withName(VALID_EVENT_NAME_NDP).build();
+        Event f1 = new EventBuilder().build();
+        uniqueEventList.add(ndp);
+        uniqueEventList.add(f1);
+        thrown.expect(DuplicateEventException.class);
+        uniqueEventList.setEvent(f1, ndp);
+    }
+
+    @Test
     public void removeEvent_wrongEvent_throwsEventNotFoundException() throws Exception {
         UniqueEventList uniqueEventList = new UniqueEventList();
         Event ndp = new EventBuilder().withName(VALID_EVENT_NAME_NDP).build();
@@ -153,5 +175,22 @@ public class UniqueEventListTest {
         UniqueEventList uniqueEventList = new UniqueEventList();
         thrown.expect(NullPointerException.class);
         uniqueEventList.setEvents((List<Event>) null);
+    }
+
+    @Test
+    public void iterator() throws Exception {
+        UniqueEventList uniqueEventList1 = new UniqueEventList();
+        UniqueEventList uniqueEventList2 = new UniqueEventList();
+
+        uniqueEventList1.add(new EventBuilder().build());
+        uniqueEventList1.add(new EventBuilder().withName(VALID_EVENT_NAME_NDP).build());
+        uniqueEventList1.add(new EventBuilder().withVenue(VALID_EVENT_VENUE_NDP).build());
+
+        Iterator<Event> iter = uniqueEventList1.iterator();
+        while (iter.hasNext()) {
+            uniqueEventList2.add(iter.next());
+        }
+
+        assertEquals(uniqueEventList1, uniqueEventList2);
     }
 }

@@ -54,7 +54,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
             + "[ CUSTOMER 2 INDEX...]\n"
             + "Example: " + COMMAND_WORD + " 5 " + PREFIX_CUSTOMERS + " 2 ";
 
-    public static final String MESSAGE_ASSIGN_PERSON_SUCCESS = "Updated %1$s";
+    public static final String MESSAGE_ASSIGN_PERSON_SUCCESS = "Successfully assigned!\nUpdated Runner Info:\n%1$s";
     // message
 
     private final Index runnerIndex;

@@ -9,6 +9,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.customer.Customer;
 import seedu.address.model.tag.Tag;
 
 
@@ -55,17 +56,22 @@ public class Runner extends Person {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
+        builder.append("Name: ")
+                .append(getName())
                 .append(" Phone: ")
                 .append(getPhone())
                 .append(" Email: ")
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Customers: ")
-                .append(customers.toString())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
+        builder.append("\n");
+        builder.append("Customers:\n");
+        for (Person customer : customers) {
+            builder.append(customer.getName());
+            builder.append(" ");
+        }
         return builder.toString();
     }
 }

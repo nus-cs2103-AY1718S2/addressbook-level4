@@ -117,6 +117,7 @@
     -fx-border-width: 1;
 }
 
+/* @@author IzHoBX*/
 .notification-scroll-pane > .viewport {
     -fx-background-color: #3366cc;
 }
@@ -148,6 +149,7 @@
     -fx-text-fill: #000000;
     -fx-opacity: 1;
 }
+/* @@author */
 
 .cell_big_label {
     -fx-font-family: "Segoe UI Semibold";
@@ -161,11 +163,13 @@
     -fx-text-fill: white;
 }
 
+/* @@author IzHoBX*/
 .cell_small_label_rating {
     -fx-font-family: "Segoe UI";
     -fx-font-size: 13px;
     -fx-text-fill: #FFFF00;
 }
+/* @@author */
 
 .anchor-pane {
     -fx-background-color: derive(#1d1d1d, 20%);

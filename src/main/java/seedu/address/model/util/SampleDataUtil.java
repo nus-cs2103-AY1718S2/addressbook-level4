@@ -58,6 +58,7 @@ public class SampleDataUtil {
         return tags;
     }
 
+    //@@author TeyXinHui
     /**
      * Returns a subject set containing the list of strings given.
      */
@@ -69,5 +70,5 @@ public class SampleDataUtil {
 
         return subjects;
     }
-
+    //@@author
 }

@@ -121,10 +121,11 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author kengsengg
     public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
         addressBook.addAppointment(appointment);
     }
-
+    //@@author
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -142,12 +143,13 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
-
+    //@@author kengsengg
     @Override
     public void sortPersonList(String parameter) {
         addressBook.sort(parameter);
     }
 
+    //@@author TeyXinHui
     @Override
     public void deleteTag(Tag tag) {
         try {
@@ -157,6 +159,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //@@author chuakunhong
     @Override
     public void replaceTag(List<Tag> tagSet) {
         Tag[] tagArray = new Tag[2];
@@ -169,7 +172,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
-
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

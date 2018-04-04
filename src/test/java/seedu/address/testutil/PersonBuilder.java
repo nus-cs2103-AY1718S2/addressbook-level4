@@ -19,8 +19,8 @@ public class PersonBuilder {
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_NRIC = "S8535525Z";
     public static final String DEFAULT_TAGS = "friends";
-    public static final String[] DEFAULT_SUBJECTS = {"English A1",  "Mathematics A1", "History A1", "H.Tamil A1",
-                                                     "Chemistry A1", "Physics A1"};
+    public static final String[] DEFAULT_SUBJECTS = {"English A1",  "EMath A1", "Hist A1", "HTamil A1",
+                                                     "Chem A1", "Phy A1"};
     public static final String DEFAULT_REMARK = " ";
 
     private Name name;

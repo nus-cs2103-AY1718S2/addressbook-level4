@@ -3,11 +3,8 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-<<<<<<< HEAD
 import java.util.Comparator;
-=======
 import java.util.Collection;
->>>>>>> 6758a87121bd5511c523e8b94ca5aec8d89cf023
 import java.util.Iterator;
 import java.util.List;
 
@@ -105,10 +102,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<Person> asObservableList() {
-<<<<<<< HEAD
         sort();
-=======
->>>>>>> 6758a87121bd5511c523e8b94ca5aec8d89cf023
         return FXCollections.unmodifiableObservableList(internalList);
     }
 
@@ -125,6 +119,7 @@ public class UniquePersonList implements Iterable<Person> {
             }
         });
     }
+    //@@author
 
     @Override
     public Iterator<Person> iterator() {
@@ -143,7 +138,6 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.hashCode();
     }
 
-<<<<<<< HEAD
     public void sort() {
         internalList.sort(new Comparator<Person>() {
             @Override
@@ -156,6 +150,4 @@ public class UniquePersonList implements Iterable<Person> {
 
 
     }
-=======
->>>>>>> 6758a87121bd5511c523e8b94ca5aec8d89cf023
 }

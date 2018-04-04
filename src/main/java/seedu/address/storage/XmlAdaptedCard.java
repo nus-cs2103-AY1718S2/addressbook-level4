@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.card.Card;
+import seedu.address.model.card.FillBlanksCard;
 
 /**
  * JAXB-friendly version of the Card.
@@ -70,6 +71,12 @@ public class XmlAdaptedCard {
         }
         if (!Card.isValidCard(this.back)) {
             throw new IllegalValueException(Card.MESSAGE_CARD_CONSTRAINTS);
+        }
+        if (FillBlanksCard.containsBlanks(this.front)) {
+            if (!FillBlanksCard.isValidFillBlanksCard(this.front, this.back)) {
+                throw new IllegalValueException(FillBlanksCard.MESSAGE_FILLBLANKS_CARD_ANSWER_CONSTRAINTS);
+            }
+            return new FillBlanksCard(UUID.fromString(id), this.front, this.back);
         }
         return new Card(UUID.fromString(id), front, back);
     }

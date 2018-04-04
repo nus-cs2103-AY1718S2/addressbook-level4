@@ -6,6 +6,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Objects;
 import java.util.UUID;
 
+
 /**
  * Represents a Flashcard.
  * Guarantees: Front and Back must not be null.
@@ -14,6 +15,7 @@ import java.util.UUID;
  */
 public class Card {
 
+    //@@author shawnclq
     public static final String MESSAGE_CARD_CONSTRAINTS =
             "Card front and back can take any values, and it should not be blank";
 
@@ -56,11 +58,13 @@ public class Card {
     public String getBack() {
         return back;
     }
+    //@@author
 
     public Schedule getSchedule() {
         return schedule;
     }
 
+    //@@author shawnclq
     public String getType() {
         return this.type;
     }
@@ -113,4 +117,5 @@ public class Card {
                 .append(getBack());
         return builder.toString();
     }
+    //@@author
 }

@@ -13,9 +13,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
@@ -69,19 +67,26 @@ public class CommandTestUtil {
     public static final String VALID_MCQ_OPTION_1 = "10th August";
     public static final String VALID_MCQ_OPTION_2 = "11th August";
     public static final String VALID_MCQ_OPTION_3 = "9th August";
-    public static final Set<String> VALID_MCQ_OPTION_SET =
-            new HashSet<>(Arrays.asList(new String[]{VALID_MCQ_OPTION_1, VALID_MCQ_OPTION_2, VALID_MCQ_OPTION_3}));
+    public static final List<String> VALID_MCQ_OPTION_SET = Arrays.asList(
+                    new String[]{VALID_MCQ_OPTION_1, VALID_MCQ_OPTION_2, VALID_MCQ_OPTION_3});
+    public static final String VALID_FILLBLANKS_BACK = "square";
+    public static final String VALID_FILLBLANKS_FRONT = "A __ is a four sided polygon with equal sides meeting"
+            + "at right angles.";
 
     public static final String FRONT_DESC_MCQ_CARD = " " + PREFIX_FRONT + VALID_MCQ_FRONT;
     public static final String BACK_DESC_MCQ_CARD = " " + PREFIX_BACK + VALID_MCQ_BACK;
     public static final String OPTION_1_DESC_MCQ_CARD = " " + PREFIX_OPTION + VALID_MCQ_OPTION_1;
     public static final String OPTION_2_DESC_MCQ_CARD = " " + PREFIX_OPTION + VALID_MCQ_OPTION_2;
     public static final String OPTION_3_DESC_MCQ_CARD = " " + PREFIX_OPTION + VALID_MCQ_OPTION_3;
+    public static final String BACK_DESC_FILLBLANKS_CARD = " " + PREFIX_BACK + VALID_FILLBLANKS_BACK;
+    public static final String FRONT_DESC_FILLBLANKS_CARD = " " + PREFIX_FRONT + VALID_FILLBLANKS_FRONT;
 
     public static final String INVALID_FRONT_CARD = " " + PREFIX_FRONT; // empty string not allowed
     public static final String INVALID_BACK_CARD = " " + PREFIX_BACK; // empty string not allowed
     public static final String INVALID_MCQ_CARD_BACK = " " + PREFIX_BACK + "Hello World"; // empty string not allowed
     public static final String INVALID_MCQ_CARD_OPTION = " " + PREFIX_OPTION; // empty string not allowed
+    public static final String INVALID_FILLBLANKS_CARD_BACK = " " + PREFIX_BACK + VALID_FILLBLANKS_BACK
+            + ", Extra answer"; // empty string not allowed
 
     public static final String FRONT_DESC_CS2103T_CARD = " " + PREFIX_FRONT + VALID_FRONT_CS2103T_CARD;
     public static final String FRONT_DESC_CS2101_CARD = " " + PREFIX_FRONT + VALID_FRONT_CS2101_CARD;

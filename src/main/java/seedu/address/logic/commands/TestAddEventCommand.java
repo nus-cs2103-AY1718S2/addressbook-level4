@@ -46,13 +46,13 @@ public class TestAddEventCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Add an event to the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Parameters: INDEX (must be a positive integer)"
             + PREFIX_TITLE + "TITLE "
             + PREFIX_LOCATION + "LOCATION "
-            + PREFIX_STARTTIME + "STARTTIME "
-            + PREFIX_ENDTIME + "ENDTIME "
-            + "Example: " + COMMAND_WORD + " 1 title/test event loca/NUS, Singapore stime/2017-03-19T08:00:00"
-            + " etime/2017-03-19T10:00:00 descrip/this is a test event";
+            + PREFIX_STARTTIME + "STARTTIME (must follow given format) "
+            + PREFIX_ENDTIME + "ENDTIME (must follow given format)\n"
+            + "Example: " + COMMAND_WORD + " 1 title/Project Meeting loca/NUS, Singapore stime/2017-03-19T08:00:00"
+            + " etime/2017-03-19T10:00:00 descrip/discuss about v1.4 milestone";
 
     public static final String MESSAGE_SUCCESS = "Event added!";
     public static final String MESSAGE_FAILURE = "Unable to add event, please try again later.";

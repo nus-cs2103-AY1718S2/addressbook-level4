@@ -54,7 +54,8 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
             + "[ CUSTOMER 2 INDEX...]\n"
             + "Example: " + COMMAND_WORD + " 5 " + PREFIX_CUSTOMERS + " 2 ";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Assigned: %1$s"; //TODO: implement correct message
+    public static final String MESSAGE_ASSIGN_PERSON_SUCCESS = "Updated %1$s";
+    // message
 
     private final Index runnerIndex;
     private final Index[] customerIndex;
@@ -96,7 +97,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
+        return new CommandResult(String.format(MESSAGE_ASSIGN_PERSON_SUCCESS, editedPerson));
     }
 
     @Override

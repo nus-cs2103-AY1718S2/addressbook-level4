@@ -15,6 +15,10 @@ endif::[]
 
 By: `Team W15-B1`      Since: `Feb 2018`      Licence: `MIT`
 
+== Introduction
+
+This developer guide serves to guide you so that you are able to develop Employees Tracker further and contribute to it.
+
 == Setting up
 
 Make sure you follow this section carefully so that you get to work on Employees Tracker right away!

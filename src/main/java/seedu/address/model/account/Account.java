@@ -58,7 +58,10 @@ public class Account {
         client = new DefaultFacebookClient(Version.VERSION_2_12);
     }
 
-    public void login() {
+    /**
+     * Puts the access token in {@link #client}.
+     */
+    public void putAccessToken() {
         client.getLoginDialogUrl(APP_ID, REDIRECT_URL, scopeBuilder);
     }
 

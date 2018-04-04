@@ -247,6 +247,13 @@ public abstract class RecipeBookSystemTest {
     }
 
     /**
+     * Asserts that the command box is showing the {@code content}
+     */
+    protected void assertCommandBoxContent(String content) {
+        assertEquals(content, getCommandBox().getInput());
+    }
+
+    /**
      * Asserts that the entire status bar remains the same.
      */
     protected void assertStatusBarUnchanged() {

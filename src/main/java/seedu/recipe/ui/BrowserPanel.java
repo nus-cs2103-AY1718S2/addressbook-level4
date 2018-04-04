@@ -141,7 +141,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     /**
-     * Parses the BrowserPanel, gets a Recipe object.
+     * Parses the BrowserPanel, gets an AddCommand string.
      */
     public String parseRecipe() {
         WebParser webParser = webParserHandler.getWebParser();

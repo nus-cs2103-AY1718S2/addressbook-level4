@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import seedu.address.model.student.dashboard.Milestone;
 import seedu.address.model.student.dashboard.Task;
 
+//@@author yapni
 /**
  * An UI component that displays information of a {@code Milestone}.
  */

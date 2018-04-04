@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+//@@author daviddalmaso
 /**
  * Return a count of all persons in the ClientBook
  */

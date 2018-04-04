@@ -585,6 +585,7 @@ You will be able to decrypt the `encryptedmovieplanner.xml` and obtain a `moviep
 |*Clear* |`clear`| `c`| `clear`
 |*Copy* |`copy c/CINEMA th/THEATER sd/SOURCE_DATE tc/TARGET_CINEMA tth/TARGET_THEATER td/TARGET_DATE`
 |`cp` |`copy c/Cathay th/1 sd/14/03/2018 tc/Cathay tth/1 td/15/03/2018`
+|*Decrypt* | `decrypt pw/PASSWORD` | `dec` | `decrypt pw/secured`
 |*Delete* |`delete INDEX` |`d`
 |`delete 3`
 |*DeleteMovie* |`delete INDEX` |`dm`
@@ -595,6 +596,7 @@ You will be able to decrypt the `encryptedmovieplanner.xml` and obtain a `moviep
 |*DeleteTheater* |`deletetheater n/CINEMA_NAME th/NUMBER_OF_THEATER` |`dt` |`deletetheater n/Cathay th/9`
 |*Edit* |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` |`e`
 |`edit 2 n/GV Jurong Point e/contacts@gv.com`
+|*Encrypt* | `encrypt pw/PASSWORD` | `enc` | `encrypt pw/secured`
 |*Find* |`find KEYWORD [MORE_KEYWORDS]` |`f`
 |`find Cathay`
 |*jump* | `jump dd/mm/yyyy` | `j` | `jump 28/03/2018`

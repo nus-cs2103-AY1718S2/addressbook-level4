@@ -61,6 +61,10 @@ public class DailySchedulerPanel extends UiPart<Region> {
         }
     }
 
+
+    /**
+     * Updates the directions on the map.
+     */
     public void updateDirections(String addressOrigin, String addressDestination) {
         if (directionPanel != null && directionPanelPlaceholder.getChildren().contains(directionPanel.getRoot())) {
             directionPanel.loadDirections(addressOrigin, addressDestination);

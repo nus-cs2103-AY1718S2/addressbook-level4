@@ -2,9 +2,10 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 
+/**
+ * An event requesting to load the direction between two addresses.
+ */
 public class LoadDirectionsEvent extends BaseEvent {
-
-//    private final String ;
 
     @Override
     public String toString() {

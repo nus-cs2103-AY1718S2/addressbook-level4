@@ -85,9 +85,13 @@ public class MapManager {
             geocodingService.geocode(address, new MyGeocodingServiceCallback(map));
         }
     }
-
+    /**
+     * Helps with retrieving the directions between two given addresses.
+     */
     public static class DirectionsUtil {
-
+        /**
+         *  Creates the required DirectionsServiceCallback by passing specified {@GoogleMap map}.
+         */
         public static class MyDirectionsServiceCallback implements DirectionsServiceCallback {
             private GoogleMap map;
             public MyDirectionsServiceCallback(GoogleMap map) {
@@ -97,7 +101,9 @@ public class MapManager {
             public void directionsReceived(DirectionsResult results, DirectionStatus status) {
             }
         }
-
+        /**
+         *  Sets the directions between addresses on the map.
+         */
         public static void setDirectionsOnMap(GoogleMap map, DirectionsPane directionsPane,
                 String addressOrigin, String addressDestination) {
             DirectionsService directionsService = new DirectionsService();

@@ -32,7 +32,7 @@ public class DetailTest {
         assertEquals(detail1.hashCode(), detail2.hashCode());
         assertNotEquals(detail2.hashCode(), detail3.hashCode());
     }
-    
+
     @Test
     public void isValidDetail() {
         // null detail

@@ -54,7 +54,7 @@ public class AddEventCommandSystemTest extends AddressBookSystemTest {
          * -> added
          */
         Event toAdd = F1RACE;
-        String command = "   " + AddEventCommand.COMMAND_WORD + "  " + EVENT_NAME_DESC_F1 + "  " + EVENT_VENUE_DESC_F1 
+        String command = "   " + AddEventCommand.COMMAND_WORD + "  " + EVENT_NAME_DESC_F1 + "  " + EVENT_VENUE_DESC_F1
                 + " " + EVENT_DATE_DESC_F1 + "   " + EVENT_START_TIME_DESC_F1 + "   " + EVENT_END_TIME_DESC_F1;
         assertCommandSuccess(command, toAdd);
 
@@ -187,6 +187,7 @@ public class AddEventCommandSystemTest extends AddressBookSystemTest {
      * 6. Status bar's sync status changes.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(Event toAdd) {
@@ -196,6 +197,7 @@ public class AddEventCommandSystemTest extends AddressBookSystemTest {
     /**
      * Performs the same verification as {@code assertCommandSuccess(Event)}. Executes {@code command}
      * instead.
+     *
      * @see AddEventCommandSystemTest#assertCommandSuccess(Event)
      */
     private void assertCommandSuccess(String command, Event toAdd) {
@@ -216,6 +218,7 @@ public class AddEventCommandSystemTest extends AddressBookSystemTest {
      * 1. Result display node displays {@code expectedResultMessage}.<br>
      * 2. {@code Model}, {@code Storage} and {@code EventListPanel} equal to the corresponding components in
      * {@code expectedModel}.<br>
+     *
      * @see AddEventCommandSystemTest#assertCommandSuccess(String, Event)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
@@ -235,6 +238,7 @@ public class AddEventCommandSystemTest extends AddressBookSystemTest {
      * 5. Browser url, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {

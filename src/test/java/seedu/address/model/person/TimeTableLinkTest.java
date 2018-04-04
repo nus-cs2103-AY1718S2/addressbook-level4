@@ -32,7 +32,7 @@ public class TimeTableLinkTest {
         assertEquals(timeTableLink1.hashCode(), timeTableLink2.hashCode());
         assertNotEquals(timeTableLink2.hashCode(), timeTableLink3.hashCode());
     }
-    
+
     @Test
     public void isValidLink() {
         // null email

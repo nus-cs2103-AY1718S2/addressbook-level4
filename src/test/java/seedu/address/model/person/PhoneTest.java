@@ -32,7 +32,7 @@ public class PhoneTest {
         assertEquals(phone1.hashCode(), phone2.hashCode());
         assertNotEquals(phone2.hashCode(), phone3.hashCode());
     }
-    
+
     @Test
     public void isValidPhone() {
         // null phone number

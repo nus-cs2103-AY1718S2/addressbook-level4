@@ -32,7 +32,7 @@ public class EmailTest {
         assertEquals(email1.hashCode(), email2.hashCode());
         assertNotEquals(email2.hashCode(), email3.hashCode());
     }
-    
+
     @Test
     public void isValidEmail() {
         // null email

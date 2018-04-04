@@ -607,14 +607,16 @@ Format: `whatsapp INDEX`
 
 Features yet to be implemented. Coming in `v2.0`.
 
-* Editing a event.
-* Deleting a event.
-* Adding an event in mass to many employees' timetable at once.
-* Jumping to email composing with a command.
-* Viewing my to-do-list.
-* Changing the window scheme/theme/skin.
+* Editing an event. +
+As a manager, you will be able to edit an event at any time
+* Adding an event in mass to many employees' timetable at once. +
+You will be able to add an event to many employee's timetable at once for maximum convenience.
+* Jumping to email composing with a command. +
+You will be able to jump to email with a command
 // tag::dataencryption[]
-* Encrypting data files.
+* Encrypting data files. +
+Employee Tracker will ensure data security by encrypting data files.
+
 
 == Frequently Asked Questions (FAQ)
 

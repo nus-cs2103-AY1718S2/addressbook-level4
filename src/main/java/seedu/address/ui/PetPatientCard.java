@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.petpatient.PetPatient;
 
+//@@author Robert-Peng
 /**
  * AN UI component that displays the information of a {@code PetPatient}
  */

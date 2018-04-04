@@ -57,6 +57,7 @@ public class PersonCard extends UiPart<Region> {
         createTags(person);
     }
 
+    //@@author Robert-Peng
     /**
      * Returns the color style for {@code tagName}'s label.
      * Solution below adopted from :

@@ -40,7 +40,7 @@ This app will not work with earlier versions of Java 8.
 .  Double-click the file to start the app. The GUI should appear in a few seconds (refer to Figure 1).
 +
 .GUI for ReciRecipe
-image::UI.png[width="790"]
+image::Ui.png[width="790"]
 {nbsp} +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 E.g. typing `help` and pressing kbd:[Enter] will open the help window.

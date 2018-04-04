@@ -2,28 +2,16 @@
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Scene?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-         minWidth="450" minHeight="600">
-  <icons>
-    <Image url="@/images/progress_checker_32.png" />
-  </icons>
-  <scene>
-    <Scene>
-      <stylesheets>
-        <URL value="@DarkTheme.css" />
-        <URL value="@Extensions.css" />
-      </stylesheets>
-
-      <VBox>
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
         <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
           <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
@@ -31,49 +19,46 @@
           <Menu mnemonicParsing="false" text="Help">
             <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
           </Menu>
+            <!-- @@author Livian1107 -->
+            <Menu mnemonicParsing="false" text="Theme">
+                <MenuItem fx:id="nightTheme" mnemonicParsing="false" onAction="#handleNightTheme" text="NightTheme" />
+                <MenuItem fx:id="dayTheme" mnemonicParsing="false" onAction="#handleDayTheme" text="DayTheme" />
+            </Menu>
+            <!-- @@author -->
         </MenuBar>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
+        <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
           <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
+            <Insets bottom="5" left="10" right="10" top="5" />
           </padding>
         </StackPane>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                   minHeight="100" prefHeight="100" maxHeight="100">
+        <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
           <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
+            <Insets bottom="5" left="10" right="10" top="5" />
           </padding>
         </StackPane>
 
         <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
           <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
             <padding>
-              <Insets top="10" right="10" bottom="10" left="10" />
+              <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
-            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
           </VBox>
-
-          <VBox>
-            <StackPane fx:id="browserPlaceholder" prefWidth="340"
-                       minHeight="200" prefHeight="1000">
-              <padding>
-                <Insets top="10" right="10" bottom="10" left="10" />
-              </padding>
-            </StackPane>
-
-            <VBox fx:id="exerciseList" minWidth="340" prefWidth="340"
-                  minHeight="200" prefHeight="1000" SplitPane.resizableWithParent="false">
-              <padding>
-                <Insets top="10" right="10" bottom="10" left="10" />
-              </padding>
-              <StackPane fx:id="exerciseListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-            </VBox>
-          </VBox>
+            <!-- @@author Livian1107 -->
+         <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+           <tabs>
+             <Tab text="Profile" />
+             <Tab text="Task">
+                 <StackPane fx:id="browserPlaceholder"/>
+             </Tab>
+               <Tab text="Exercise">
+                   <StackPane fx:id="exerciseListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+               </Tab>
+           </tabs>
+         </TabPane>
+            <!-- @@author -->
         </SplitPane>
-
-        <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
-      </VBox>
-    </Scene>
-  </scene>
-</fx:root>
+          <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+</VBox>

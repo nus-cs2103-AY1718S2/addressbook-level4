@@ -6,6 +6,7 @@ import static seedu.progresschecker.commons.util.FileUtil.isValidImageFile;
 
 import seedu.progresschecker.commons.exceptions.IllegalValueException;
 
+//@@author Livian1107
 /**
  * Represents a Path of Photo in ProgressChecker
  */

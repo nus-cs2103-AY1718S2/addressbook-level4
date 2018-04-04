@@ -116,6 +116,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
         }
     }
 
+    //@@author Livian1107
     /**
      * Sorts the existing {@code UniquePersonList} of this {@code ProgressChecker}
      * with their names in alphabetical order.
@@ -133,6 +134,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     public void addPhotoPath(PhotoPath photoPath) throws DuplicatePhotoException {
         photos.add(photoPath);
     }
+    //@@author
 
     //// person-level operations
 
@@ -318,6 +320,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
         }
     }
 
+    //@@author Livian1107
     /**
      * Uploads the profile photo path of target person
      * @param target
@@ -330,6 +333,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
         target.updatePhoto(path);
         persons.setPerson(tempPerson, target);
     }
+    //@@author
 
     //// tag-level operations
 

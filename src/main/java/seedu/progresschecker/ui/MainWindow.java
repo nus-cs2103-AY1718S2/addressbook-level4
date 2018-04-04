@@ -6,10 +6,12 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.progresschecker.commons.core.Config;
@@ -17,6 +19,7 @@ import seedu.progresschecker.commons.core.GuiSettings;
 import seedu.progresschecker.commons.core.LogsCenter;
 import seedu.progresschecker.commons.events.ui.ExitAppRequestEvent;
 import seedu.progresschecker.commons.events.ui.ShowHelpRequestEvent;
+import seedu.progresschecker.commons.util.AppUtil;
 import seedu.progresschecker.logic.Logic;
 import seedu.progresschecker.model.UserPrefs;
 
@@ -24,9 +27,12 @@ import seedu.progresschecker.model.UserPrefs;
  * The Main Window. Provides the basic application layout containing
  * a menu bar and space where other JavaFX elements can be placed.
  */
-public class MainWindow extends UiPart<Stage> {
+public class MainWindow extends UiPart<Region> {
 
     private static final String FXML = "MainWindow.fxml";
+    private static final String ICON = "/images/progress_checker_32.png";
+    private static final int MIN_HEIGHT = 600;
+    private static final int MIN_WIDTH = 450;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -62,7 +68,7 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane statusbarPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
-        super(FXML, primaryStage);
+        super(FXML);
 
         // Set dependencies
         this.primaryStage = primaryStage;
@@ -72,7 +78,11 @@ public class MainWindow extends UiPart<Stage> {
 
         // Configure the UI
         setTitle(config.getAppTitle());
+        setIcon(ICON);
+        setWindowMinSize();
         setWindowDefaultSize(prefs);
+        Scene scene = new Scene(getRoot());
+        primaryStage.setScene(scene);
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -176,6 +186,30 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    //@@author: Livian1107
+    /**
+     * Switches to the Night Theme.
+     */
+    @FXML
+    public void handleNightTheme() {
+        Scene scene = primaryStage.getScene();
+        scene.getStylesheets().setAll("view/DarkTheme.css");
+        primaryStage.setScene(scene);
+        show();
+    }
+
+    /**
+     * Switches to the Day Theme.
+     */
+    @FXML
+    public void handleDayTheme() {
+        Scene scene = primaryStage.getScene();
+        scene.getStylesheets().setAll("view/DayTheme.css");
+        primaryStage.setScene(scene);
+        show();
+    }
+    //@@author
+
     void show() {
         primaryStage.show();
     }
@@ -201,4 +235,22 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author Livian1107
+    /**
+     * Sets the icon of Main Window
+     * @param icon with given path
+     */
+    private void setIcon(String icon) {
+        primaryStage.getIcons().setAll(AppUtil.getImage(icon));
+    }
+
+    /**
+     * Sets the minimum size of the main window
+     */
+    private void setWindowMinSize() {
+        primaryStage.setMinHeight(MIN_HEIGHT);
+        primaryStage.setMinWidth(MIN_WIDTH);
+    }
+    //@@author
 }

@@ -159,6 +159,7 @@ public class ModelManager extends ComponentManager implements Model {
         progressChecker.addPhotoPath(photoPath);
         indicateProgressCheckerChanged();
     }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {

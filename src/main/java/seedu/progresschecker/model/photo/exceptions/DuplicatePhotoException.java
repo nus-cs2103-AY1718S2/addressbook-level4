@@ -1,7 +1,7 @@
 package seedu.progresschecker.model.photo.exceptions;
 
 import seedu.progresschecker.commons.exceptions.DuplicateDataException;
-
+//@@author Livian1107
 /**
  * Signals that the operation will result in duplicate PhotoPath objects.
  */

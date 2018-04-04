@@ -18,6 +18,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
 import com.google.api.client.util.store.FileDataStoreFactory;
 
+import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
@@ -29,7 +30,7 @@ import seedu.address.model.person.Person;
 /**
  * Calendar of the App
  */
-public class Calendar {
+public class CalendarDisplay {
 
     private static final String APPLICATION_NAME =  "Google Calendar API Java Quickstart";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -41,7 +42,6 @@ public class Calendar {
             System.getProperty("user.home"), ".credentials/calendar-java-quickstart");
 
     /** Global instance of the scopes required by this quickstart.
-     *
      * If modifying these scopes, delete your previously saved credentials
      * at ~/.credentials/calendar-java-quickstart
      */
@@ -62,19 +62,17 @@ public class Calendar {
      * @return an authorized Credential object.
      * @throws IOException
      */
-    private static Credential authorize() throws IOException {
+    private Credential authorize() throws IOException {
         // Load client secrets.
-        InputStream in =
-                Calendar.class.getResourceAsStream("/client_secret.json");
-        GoogleClientSecrets clientSecrets =
-                GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+        InputStream in = Calendar.class.getResourceAsStream("/client_secret.json");
+        GoogleClientSecrets clientSecrets =  GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                        .setDataStoreFactory(DATA_STORE_FACTORY)
-                        .setAccessType("offline")
-                        .build();
+                .setDataStoreFactory(DATA_STORE_FACTORY)
+                .setAccessType("offline")
+                .build();
         Credential credential = new AuthorizationCodeInstalledApp(
                 flow, new LocalServerReceiver()).authorize("user");
         return credential;
@@ -85,9 +83,9 @@ public class Calendar {
      * @return an authorized Calendar client service
      * @throws IOException
      */
-    private static com.google.api.services.calendar.Calendar getCalendarService() throws IOException {
+    private Calendar getCalendarService() throws IOException {
         Credential credential = authorize();
-        return new com.google.api.services.calendar.Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+        return new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }
@@ -96,8 +94,8 @@ public class Calendar {
      * Creates an event on the Google Calendar
      * @throws IOException
      */
-    public static void createEvent(Appointment toAdd, Person selectedPerson) throws IOException {
-        com.google.api.services.calendar.Calendar service = getCalendarService();
+    public void createEvent(Appointment toAdd, Person selectedPerson) throws IOException {
+        Calendar service = getCalendarService();
 
         Name name = selectedPerson.getName();
 
@@ -115,19 +113,29 @@ public class Calendar {
         service.events().insert(calendarId, event).execute();
     }
 
-    private static String formattedStartDateTime(Appointment toAdd) {
+    /**
+     * Sets the required format for start time
+     * @param toAdd appointment details provided by the user
+     * @return the start time in the required format
+     */
+    private String formattedStartDateTime(Appointment toAdd) {
         String date = toAdd.getDate();
         String startTime = toAdd.getStartTime();
-        return (date.substring(4,8)).concat("-").concat(date.substring(2,4)).concat("-")
-                .concat(date.substring(0,2)).concat("T").concat(startTime.substring(0,2))
-                .concat(":").concat(startTime.substring(2,4)).concat(":00+08:00");
+        return (date.substring(4, 8)).concat("-").concat(date.substring(2, 4)).concat("-")
+                .concat(date.substring(0, 2)).concat("T").concat(startTime.substring(0, 2))
+                .concat(":").concat(startTime.substring(2, 4)).concat(":00+08:00");
     }
 
-    private static String formattedEndDateTime(Appointment toAdd) {
+    /**
+     * Sets the required format for end time
+     * @param toAdd appointment details provided by the user
+     * @return the end time in the required format
+     */
+    private String formattedEndDateTime(Appointment toAdd) {
         String date = toAdd.getDate();
         String endTime = toAdd.getEndTime();
-        return (date.substring(4,8)).concat("-").concat(date.substring(2,4)).concat("-")
-                .concat(date.substring(0,2)).concat("T").concat(endTime.substring(0,2))
-                .concat(":").concat(endTime.substring(2,4)).concat(":00+08:00");
+        return (date.substring(4, 8)).concat("-").concat(date.substring(2, 4)).concat("-")
+                .concat(date.substring(0, 2)).concat("T").concat(endTime.substring(0, 2))
+                .concat(":").concat(endTime.substring(2, 4)).concat(":00+08:00");
     }
 }

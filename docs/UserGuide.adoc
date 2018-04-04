@@ -355,7 +355,7 @@ Figure 4. Example of add Group
 
 === Add Member To Group: `addGroupMember`
 
-Adds a person named `KEYWORD`  that exists in Fastis into a group `GROUP_NAME` that already exist in Fastis.
+Adds a person named `KEYWORD`  that exists in Fastis into a group `GROUP_NAME` that already exist in Fastis. +
 Alias: `aGM` +
 Format: `addGroupMember g/GROUP_NAME n/KEYWORD`
 
@@ -364,6 +364,7 @@ Format: `addGroupMember g/GROUP_NAME n/KEYWORD`
 GROUP_NAME cannot be an empty input.
 KEYWORD cannot be an empty input.
 KEYWORD must be the exact name of the person and it must be case-sensitive.
+This command is undoable.
 ====
 
 Examples:

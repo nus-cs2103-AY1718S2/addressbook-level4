@@ -1,47 +1,35 @@
 package seedu.address.logic.commands;
 
-//import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
-import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import java.io.IOException;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
-//import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.AddRemarkCommand.EditPersonDescriptor;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.model.person.Remark;
+import seedu.address.model.subject.Subject;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
-
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for EditCommand.
  */
-public class EditCommandTest {
+public class AddRemarkCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -49,16 +37,18 @@ public class EditCommandTest {
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
         Person editedPerson = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
+        AddRemarkCommand addRemarkCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+        String expectedMessage = String.format(addRemarkCommand.MESSAGE_REMARK_PERSON_SUCCESS, editedPerson.getRemark(),
+                                                editedPerson.getName());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(addRemarkCommand, model, expectedMessage, expectedModel);
     }
 
+    /*
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
         Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
@@ -143,6 +133,8 @@ public class EditCommandTest {
      * Edit filtered list where index is larger than size of filtered list,
      * but smaller than size of address book
      */
+
+    /*
     @Test
     public void execute_invalidPersonIndexFilteredList_failure() throws IOException {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
@@ -220,7 +212,7 @@ public class EditCommandTest {
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
     */
-
+    /*
     @Test
     public void equals() throws Exception {
         final EditCommand standardCommand = prepareCommand(INDEX_FIRST_PERSON, DESC_AMY);
@@ -249,13 +241,89 @@ public class EditCommandTest {
         // different descriptor -> returns false
         assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_PERSON, DESC_BOB)));
     }
-
+    */
     /**
      * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
      */
-    private EditCommand prepareCommand(Index index, EditPersonDescriptor descriptor) {
-        EditCommand editCommand = new EditCommand(index, descriptor);
-        editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return editCommand;
+    private AddRemarkCommand prepareCommand(Index index, EditPersonDescriptor descriptor) {
+        AddRemarkCommand addRemarkCommand = new AddRemarkCommand(index, descriptor);
+        addRemarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return addRemarkCommand;
+    }
+
+    /**
+     * A utility class to help with building EditPersonDescriptor objects.
+     */
+    public class EditPersonDescriptorBuilder {
+
+        private EditPersonDescriptor descriptor;
+
+        public EditPersonDescriptorBuilder() {
+            descriptor = new EditPersonDescriptor();
+        }
+
+        public EditPersonDescriptorBuilder(EditPersonDescriptor descriptor) {
+            this.descriptor = new EditPersonDescriptor(descriptor);
+        }
+
+        /**
+         * Returns an {@code EditPersonDescriptor} with fields containing {@code person}'s details
+         */
+        public EditPersonDescriptorBuilder(Person person) {
+            descriptor = new EditPersonDescriptor();
+            descriptor.setName(person.getName());
+            descriptor.setNric(person.getNric());
+            descriptor.setTags(person.getTags());
+            descriptor.setSubjects(person.getSubjects());
+            descriptor.setRemark(person.getRemark());
+        }
+
+        /**
+         * Sets the {@code Name} of the {@code EditPersonDescriptor} that we are building.
+         */
+        public EditPersonDescriptorBuilder withName(String name) {
+            descriptor.setName(new Name(name));
+            return this;
+        }
+
+        /**
+         * Sets the {@code Nric} of the {@code EditPersonDescriptor} that we are building.
+         */
+        public EditPersonDescriptorBuilder withNric(String nric) {
+            descriptor.setNric(new Nric(nric));
+            return this;
+        }
+
+        /**
+         * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+         * that we are building.
+         */
+        public EditPersonDescriptorBuilder withTags(String... tags) {
+            Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
+            descriptor.setTags(tagSet);
+            return this;
+        }
+
+        /**
+         * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+         * that we are building.
+         */
+        public EditPersonDescriptorBuilder withSubjects(String... subjects) {
+            Set<Subject> subjectSet = Stream.of(subjects).map(Subject::new).collect(Collectors.toSet());
+            descriptor.setSubjects(subjectSet);
+            return this;
+        }
+
+        /**
+         * Sets the {@code Remark} of the {@code EditPersonDescriptor} that we are building.
+         */
+        public EditPersonDescriptorBuilder withRemark(String remark) {
+            descriptor.setRemark(new Remark(remark));
+            return this;
+        }
+
+        public EditPersonDescriptor build() {
+            return descriptor;
+        }
     }
 }

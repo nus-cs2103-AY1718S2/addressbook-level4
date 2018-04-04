@@ -72,8 +72,6 @@ public interface Model {
     /**
      * Replaces a specific tag for everyone in the address book.
      * @param tagSet
-     * @throws TagNotFoundException
      */
-    void replaceTag(List<Tag> tagSet) throws TagNotFoundException;
-    //@@author
+    void replaceTag(List<Tag> tagSet);
 }

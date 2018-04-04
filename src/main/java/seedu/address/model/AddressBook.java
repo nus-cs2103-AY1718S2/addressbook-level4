@@ -236,7 +236,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @param tagSet
      * @throws TagNotFoundException
      */
-    public void replaceTag(List<Tag> tagSet) throws TagNotFoundException {
+    public void replaceTag(List<Tag> tagSet) {
         Tag[] tagArray = new Tag[2];
         tagSet.toArray(tagArray);
         Tag tagToBeReplaced = tagArray[0];
@@ -246,7 +246,6 @@ public class AddressBook implements ReadOnlyAddressBook {
                 replaceTagForPerson(tagToBeReplaced, tagToBePlaced, person);
             }
         } else {
-            throw new TagNotFoundException("Specific tag is not used in the address book.");
         }
     }
 

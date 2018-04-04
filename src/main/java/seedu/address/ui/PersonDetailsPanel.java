@@ -52,7 +52,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
 
     public PersonDetailsPanel() {
         super(FXML);
-
+        registerAsAnEventHandler(this);
         showSelectedPersonDetails(null);
         loadMapPanel();
     }
@@ -68,6 +68,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
             // Fill the labels with info from the person object.
             nameLabel.setText(person.getName().toString());
             phoneNumberLabel.setText(person.getPhone().toString());
+            emailLabel.setText(person.getEmail().toString());
             addressLabel.setText(person.getAddress().toString());
             conditionLabel.setText("TO BE IMPLEMENTED IN 2.0");
             priorityLabel.setText("TO BE IMPLEMENTED IN 2.0");
@@ -117,6 +118,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mapPanel.loadAddress(event.getNewSelection().person.getAddress().toString());
+        showSelectedPersonDetails(event.getNewSelection().person);
     }
 
     @Subscribe

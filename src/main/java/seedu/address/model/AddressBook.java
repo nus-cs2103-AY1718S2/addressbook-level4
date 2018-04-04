@@ -14,8 +14,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.google.api.client.auth.oauth2.Credential;
 import javafx.collections.ObservableList;
+
 import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.person.Appointment;

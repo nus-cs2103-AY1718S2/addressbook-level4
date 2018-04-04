@@ -17,9 +17,11 @@ public class ExportCommand extends UndoableCommand {
             + "Parameters: ExportType (must be one of the following - calendar, portfolio)\n"
             + "Example: " + COMMAND_WORD + " portfolio";
 
-    public static final String PORTFOLIO_MESSAGE_SUCCESS = "Successfully exported portfolio to %1$s";
+    public static final String PORTFOLIO_MESSAGE_SUCCESS =
+            "Successfully exported portfolio to %1$s";
 
-    public static final String CALENDAR_MESSAGE_SUCCESS = "Successfully exported birthdays and appointments to Google Calendar";
+    public static final String CALENDAR_MESSAGE_SUCCESS =
+            "Successfully exported birthdays and appointments to Google Calendar";
 
     public final UserPrefs userPrefs = new UserPrefs();
 

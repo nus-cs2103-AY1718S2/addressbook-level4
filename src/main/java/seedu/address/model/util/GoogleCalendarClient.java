@@ -1,5 +1,11 @@
 package seedu.address.model.util;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -7,51 +13,41 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
 import com.google.api.client.util.store.FileDataStoreFactory;
-
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.calendar.model.CalendarList;
 import com.google.api.services.calendar.model.CalendarListEntry;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
-import seedu.address.model.person.Appointment;
-import seedu.address.model.person.Birthday;
+
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Client for the Google Calendar API
  */
 public class GoogleCalendarClient {
     /** Application name. */
-    private static final String APPLICATION_NAME =
+    private static final String applicationName =
             "reInsurance Events";
 
     /** Directory to store user credentials for this application. */
-    private static final java.io.File DATA_STORE_DIR = new java.io.File(
+    private static final java.io.File dataStoreDir = new java.io.File(
             System.getProperty("user.home"), ".credentials/calendar-java-quickstart");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
-    private static FileDataStoreFactory DATA_STORE_FACTORY;
+    private static FileDataStoreFactory dataStoreFactory;
 
     /** Global instance of the JSON factory. */
-    private static final JsonFactory JSON_FACTORY =
+    private static final JsonFactory jsonFactory =
             JacksonFactory.getDefaultInstance();
 
     /** Global instance of the HTTP transport. */
-    private static HttpTransport HTTP_TRANSPORT;
+    private static HttpTransport httpTransport;
 
     /** Global instance of the scopes required by this quickstart.
      *
@@ -63,23 +59,27 @@ public class GoogleCalendarClient {
 
     static {
         try {
-            HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-            DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
+            httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+            dataStoreFactory = new FileDataStoreFactory(dataStoreDir);
         } catch (Throwable t) {
             t.printStackTrace();
             System.exit(1);
         }
     }
 
+    /**
+     *
+     * @return a Credential object
+     */
     public static Credential authorize() {
         try {
             InputStream in = GoogleCalendarClient.class.getResourceAsStream("/client_secret.json");
             InputStreamReader inputStreamReader = new InputStreamReader(in);
-            GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
+            GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory,
                     inputStreamReader);
             GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                    HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES
-            ).setDataStoreFactory(DATA_STORE_FACTORY).build();
+                    httpTransport, jsonFactory, clientSecrets, SCOPES
+            ).setDataStoreFactory(dataStoreFactory).build();
 
             return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
         } catch (Exception e) {
@@ -103,6 +103,11 @@ public class GoogleCalendarClient {
         event.setStart(startEventDateTime).setEnd(endEventDateTime);
     }
 
+    /**
+     *
+     * @param persons UniquePersonList: all Person objects in the address book
+     * @return returns a list of events, being the birthdays and appointments of each person
+     */
     private static List<Event> createEvents(UniquePersonList persons) {
         List<Event> events = new ArrayList<>();
 
@@ -133,11 +138,15 @@ public class GoogleCalendarClient {
         return events;
     }
 
+    /**
+     * @param persons UniquePersonList to make the Calendar out of
+     * @throws Exception if the Google API Client fails
+     */
     public static void insertCalendar(UniquePersonList persons) throws Exception {
         Credential credentials = GoogleCalendarClient.authorize();
 
-        Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credentials)
-                .setApplicationName(APPLICATION_NAME).build();
+        Calendar service = new Calendar.Builder(httpTransport, jsonFactory, credentials)
+                .setApplicationName(applicationName).build();
 
         String existingCalendarId = getExistingCalendarId(service, "reInsurance Events");
 
@@ -147,12 +156,14 @@ public class GoogleCalendarClient {
         }
 
         // Create a new calendar
-        com.google.api.services.calendar.model.Calendar calendar = new com.google.api.services.calendar.model.Calendar();
+        com.google.api.services.calendar.model.Calendar calendar =
+                new com.google.api.services.calendar.model.Calendar();
         calendar.setSummary("reInsurance Events");
         calendar.setTimeZone("Asia/Singapore");
 
         // Insert the new calendar
-        com.google.api.services.calendar.model.Calendar createdCalendar = service.calendars().insert(calendar).execute();
+        com.google.api.services.calendar.model.Calendar createdCalendar =
+                service.calendars().insert(calendar).execute();
 
         // Get created calendar Id
         String calendarId = createdCalendar.getId();

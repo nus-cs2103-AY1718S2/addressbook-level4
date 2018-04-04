@@ -22,8 +22,7 @@ public class ExportCommandTest {
         ExportType exportType = ExportType.CALENDAR;
         ExportCommand exportCommand = prepareCommand(exportType);
 
-        String expectedMessage = String.format(ExportCommand.PORTFOLIO_MESSAGE_SUCCESS,
-                userPrefs.getExportPortfolioFilePath());
+        String expectedMessage = ExportCommand.CALENDAR_MESSAGE_SUCCESS;
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.export(exportType);

@@ -11,6 +11,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.review.Review;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -62,6 +63,18 @@ public class SampleDataUtil {
         }
 
         return tags;
+    }
+
+    /**
+     * Returns a tag set containing the list of strings given.
+     */
+    public static Set<Review> getReviewSet(String... strings) {
+        HashSet<Review> reviews = new HashSet<>();
+        for (String s : strings) {
+            reviews.add(new Review(s));
+        }
+
+        return reviews;
     }
 
 }

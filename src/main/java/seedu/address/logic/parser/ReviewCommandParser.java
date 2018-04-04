@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.HashSet;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -17,7 +18,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ReviewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Review;
+import seedu.address.model.review.Review;
 
 /**
  * Parses input arguments and creates a new Review object
@@ -26,6 +27,7 @@ public class ReviewCommandParser implements Parser<ReviewCommand> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
+    private String reviewerInput;
     private String reviewInput;
 
     /**
@@ -49,15 +51,26 @@ public class ReviewCommandParser implements Parser<ReviewCommand> {
         EventsCenter.getInstance().registerHandler(this);
         EventsCenter.getInstance().post(new ShowReviewDialogEvent());
 
+        if (reviewerInput == null) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReviewCommand.MESSAGE_USAGE));
+        } else if (reviewerInput.isEmpty()) {
+            reviewerInput = "-";
+        }
+        String reviewer = reviewerInput.trim();
+
         if (reviewInput == null) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReviewCommand.MESSAGE_USAGE));
         } else if (reviewInput.isEmpty()) {
             reviewInput = "-";
         }
-        String review = reviewInput;
+        String review = reviewInput.trim();
+
+        String combined = reviewer + "\n" + review;
+        HashSet<Review> combinedSet = new HashSet<Review>();
+        combinedSet.add(new Review(combined));
 
         EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
-        editPersonDescriptor.setReview(new Review(review));
+        editPersonDescriptor.setReviews(combinedSet);
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(ReviewCommand.MESSAGE_NOT_EDITED);
         }
@@ -68,6 +81,7 @@ public class ReviewCommandParser implements Parser<ReviewCommand> {
     @Subscribe
     private void getReviewInput(ReviewInputEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        reviewerInput = event.getReviewerInput();
         reviewInput = event.getReviewInput();
     }
 }

@@ -7,10 +7,16 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class ReviewInputEvent extends BaseEvent {
 
+    private String reviewerInput;
     private String reviewInput;
 
-    public ReviewInputEvent(String reviewInput) {
+    public ReviewInputEvent(String reviewerInput, String reviewInput) {
+        this.reviewerInput = reviewerInput;
         this.reviewInput = reviewInput;
+    }
+
+    public String getReviewerInput() {
+        return reviewerInput;
     }
 
     public String getReviewInput() {

@@ -26,9 +26,9 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Rating;
-import seedu.address.model.person.Review;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.review.Review;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -111,14 +111,14 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Rating updatedRating = editPersonDescriptor.getRating().orElse(personToEdit.getRating());
-        Review updatedReview = editPersonDescriptor.getReview().orElse(personToEdit.getReview());
+        Set<Review> updatedReviews = editPersonDescriptor.getReviews().orElse(personToEdit.getReviews());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
 
         Person toReturn = new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
                 personToEdit.getCalendarId());
         toReturn.setRating(updatedRating);
-        toReturn.setReview(updatedReview);
+        toReturn.setReviews(updatedReviews);
         toReturn.setId(personToEdit.getId());
 
         return toReturn;
@@ -153,8 +153,8 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private Set<Review> reviews;
         private Rating rating;
-        private Review review;
 
         public EditPersonDescriptor() {}
 
@@ -168,8 +168,8 @@ public class EditCommand extends UndoableCommand {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setRating(toCopy.rating);
-            setReview(toCopy.review);
             setTags(toCopy.tags);
+            setReviews(toCopy.reviews);
         }
 
         /**
@@ -177,7 +177,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.rating,
-                    this.review, this.tags);
+                    this.reviews, this.tags);
         }
 
         public void setName(Name name) {
@@ -220,14 +220,6 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(rating);
         }
 
-        public void setReview(Review review) {
-            this.review = review;
-        }
-
-        public Optional<Review> getReview() {
-            return Optional.ofNullable(review);
-        }
-
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -244,6 +236,25 @@ public class EditCommand extends UndoableCommand {
         public Optional<Set<Tag>> getTags() {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
+
+        /**
+         * Sets {@code reviews} to this object's {@code reviews}.
+         * A defensive copy of {@code reviews} is used internally.
+         */
+        public void setReviews(Set<Review> reviews) {
+            this.reviews = (reviews != null) ? new HashSet<>(reviews) : null;
+        }
+
+        /**
+         * Returns an unmodifiable review set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code reviews} is null.
+         */
+        public Optional<Set<Review>> getReviews() {
+            return (reviews != null) ? Optional.of(Collections.unmodifiableSet(reviews)) : Optional.empty();
+        }
+
+
 
         @Override
         public boolean equals(Object other) {
@@ -264,8 +275,6 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
-                    && getRating().equals(e.getRating())
-                    && getReview().equals(e.getReview())
                     && getTags().equals(e.getTags());
         }
     }

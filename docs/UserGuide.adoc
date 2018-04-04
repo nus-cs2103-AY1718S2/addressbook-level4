@@ -269,31 +269,43 @@ the calendar in the build-in scene switcher.
 === Adding and event to the calendar : `calendar-add`
 
 Allows a user to add an event directly to their calendar.
+
 Format: `calendar-add title/<eventname> start/<startdatetime> end/<enddatetime> loc/<location> lp/<linkedperson>(optional)`
 
 === List upcoming events in the command line: `calendar-list`
 
-Allows a user to view their upcoming calendar events
+Allows a user to view their upcoming calendar events.
+
 Format: `calendar-list`
 
 === Deleting an event from the calendar : `calendar-delete`
 
-Displays a list of upcoming events to the user and lets them select one to delete.
-Format: `calendar-delete`
+Allows the user to delete an event based on the index listed from the `calendar-list` command.
+
+Format: `calendar-delete INDEX`
 
 === Editing an event in the calendar : `calendar-edit`
 
 Displays a list of upcoming events to the user and lets them select one to edit.
+
 Format: `calendar-edit`
 
 === Reauthenticate Google Oauth : `reauthenticate`
 
-Allows a user to manually reauthenticate their Google Oauth credentials/permissions for SLAP
+Allows a user to manually reauthenticate their Google Oauth credentials/permissions for SLAP.
+
 Format: `reauthenticate`
+
+=== List upcoming events in the command line: `show-schedule`
+
+Allows a user to view their calendar events for the current day.
+
+Format: `show-schdeule`
 
 === Opening the Error Log : `errorlog`
 
 Opens the error log in a new window.
+
 Format: `errorlog`
 
 [NOTE]
@@ -397,7 +409,9 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Calendar Launch* : `calendar-launch` `[Since v1.1] [Updated v1.4]`
 * *Calendar List* : `calendar-list` `[Since v1.2]`
-* *Calendar Add* : `calendar-add` `[Since v1.3]`
+* *Calendar Add* : `calendar-add title/<eventname> start/<startdatetime> end/<enddatetime> loc/<location> lp/<linkedperson>(optional)` `[Since v1.3] [Updated v1.4]`
+* *Calendar Delete* : `calendar-delete INDEX` `[Since v1.4]`
+* *Show Schedule* : `show-schedule` `[Since v1.4]`
 * *Error* : `errorlog` `[Since v1.2]`
 * *Switch* : `switch FEATURE` +
 e.g.`switch scheduler`

@@ -67,12 +67,14 @@ public class UserDatabase implements ReadOnlyUserDatabase {
 
     /// login authentication operations
 
+    //@@author ifalluphill
     /**
      * Returns the User who is logged in.
      */
     public User getLoggedInUser() {
         return loggedInUser;
     }
+    //@@author kaisertanqr
 
     /**
      * Returns the login status of the user.

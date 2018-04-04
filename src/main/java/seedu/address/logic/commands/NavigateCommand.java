@@ -1,8 +1,13 @@
-//@@author jaronchan
+//@@author ifalluphill
 package seedu.address.logic.commands;
+
+import java.util.List;
+
+import com.google.api.services.calendar.model.Event;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.LoadDirectionsEvent;
+
 
 /**
  * Displays directions between locations scheduled for the day based on specified events of the day.
@@ -17,13 +22,23 @@ public class NavigateCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "Displaying directions between...";
+    private final List<Event> eventPair;
+
+    public NavigateCommand(List<Event> eventPair) {
+        this.eventPair = eventPair;
+    };
 
     @Override
     public CommandResult execute() {
+        System.out.print("Retrieved: ");
+        System.out.print(this.eventPair.size());
+        System.out.println(" events.");
+        System.out.println(this.eventPair.toString());
         EventsCenter.getInstance().post(new LoadDirectionsEvent());
         return new CommandResult(String.format(MESSAGE_SUCCESS));
     }
 
+    //@@author jaronchan
     //    @Override
     //    public boolean equals(Object other) {
     //        return other == this // short circuit if same object
@@ -31,3 +46,5 @@ public class NavigateCommand extends Command {
     //                && this.featureTarget.equals(((SwitchCommand) other).featureTarget)); // state check
     //    }
 }
+
+//@@author

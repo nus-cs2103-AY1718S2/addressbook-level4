@@ -31,6 +31,7 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_EVENT_INDEX = "Index is must be an integer greater than 0.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
 
@@ -46,6 +47,21 @@ public class ParserUtil {
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
+
+    //@@author ifalluphill
+    /**
+     * Parses {@code oneBasedIndex} into an {@code Int} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static int parseCalendarDeleteIndex(String oneBasedIndex) throws IllegalValueException {
+        String trimmedIndex = oneBasedIndex.trim();
+        if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
+            throw new IllegalValueException(MESSAGE_INVALID_EVENT_INDEX);
+        }
+        return Integer.parseInt(trimmedIndex);
+    }
+    //@@author
 
     /**
      * Parses a {@code String name} into a {@code Name}.

@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CalendarAddCommand;
 import seedu.address.logic.commands.CalendarCommand;
+import seedu.address.logic.commands.CalendarDeleteCommand;
 import seedu.address.logic.commands.CalendarListCommand;
 import seedu.address.logic.commands.ChangeUserPasswordCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -30,6 +31,7 @@ import seedu.address.logic.commands.NavigateCommand;
 import seedu.address.logic.commands.OAuthTestCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ShowScheduleCommand;
 import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.UndoCommand;
 
@@ -98,8 +100,14 @@ public class AddressBookParser {
         case CalendarAddCommand.COMMAND_WORD:
             return new CalendarAddCommandParser().parse(arguments);
 
+        case CalendarDeleteCommand.COMMAND_WORD:
+            return new CalendarDeleteCommandParser().parse(arguments);
+
         case CalendarListCommand.COMMAND_WORD:
             return new CalendarListCommand();
+
+        case ShowScheduleCommand.COMMAND_WORD:
+            return new ShowScheduleCommand();
 
         case ErrorLogCommand.COMMAND_WORD:
             return new ErrorLogCommand();
@@ -120,7 +128,7 @@ public class AddressBookParser {
             return new SwitchCommandParser().parse(arguments);
 
         case NavigateCommand.COMMAND_WORD:
-            return new NavigateCommand();
+            return new NavigateCommandParser().parse(arguments);
 
         case LoginCommand.COMMAND_WORD:
             return new LoginCommandParser().parse(arguments);

@@ -66,6 +66,13 @@ public class OAuthManager {
     private static final List<String> SCOPES =
         Arrays.asList(CalendarScopes.CALENDAR);
 
+    /** Most recent list of retrieved events */
+    private static List<Event> mostRecentEventList = new ArrayList<>();
+
+    /** List of events for the day */
+    private static List<Event> dailyEventsList = new ArrayList<>();
+
+
     static {
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
@@ -137,7 +144,7 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<Event> getUpcomingEvents(User user) throws IOException {
-        List<Event> upcomingEvents = getNextXEvents(user, 10);
+        List<Event> upcomingEvents = getNextXEvents(user, 250);
         int numberOfEventsRetrieved = upcomingEvents.size();
 
         if (numberOfEventsRetrieved == 0) {
@@ -154,7 +161,7 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<String> getUpcomingEventsAsStringList(User user) throws IOException {
-        List<Event> upcomingEvents = getNextXEvents(user, 10);
+        List<Event> upcomingEvents = getUpcomingEvents(user);
         int numberOfEventsRetrieved = upcomingEvents.size();
         List<String> eventListAsString = new ArrayList<>();
 
@@ -162,11 +169,59 @@ public class OAuthManager {
             System.out.println("No upcoming events found.");
         } else {
             System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s): ");
+            int eventIndex = 1;
             for (Event event : upcomingEvents) {
                 String eventAsString = formatEventDetailsAsString(event);
-                eventListAsString.add(eventAsString);
+                eventListAsString.add(String.valueOf(eventIndex++) + ". " + eventAsString);
             }
         }
+
+        mostRecentEventList = upcomingEvents;
+
+        return eventListAsString;
+    }
+
+    /**
+     * Get a list of events for the day as a list of event objects.
+     * @throws IOException
+     */
+    public static List<Event> getDailyEvents(User user) throws IOException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String currentDate = LocalDate.now().format(formatter);
+
+        List<Event> dailyEvents = getEventsByDay(user, currentDate);
+        int numberOfEventsRetrieved = dailyEvents.size();
+
+        if (numberOfEventsRetrieved == 0) {
+            System.out.println("No events found for today.");
+        } else {
+            System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s).");
+        }
+
+        return dailyEvents;
+    }
+
+    /**
+     * Get a list of events for the day as a list of strings.
+     * @throws IOException
+     */
+    public static List<String> getDailyEventsAsStringList(User user) throws IOException {
+        List<Event> dailyEvents = getDailyEvents(user);
+        int numberOfEventsRetrieved = dailyEvents.size();
+        List<String> eventListAsString = new ArrayList<>();
+
+        if (numberOfEventsRetrieved == 0) {
+            System.out.println("No events found for today.");
+        } else {
+            System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s): ");
+            int eventIndex = 1;
+            for (Event event : dailyEvents) {
+                String eventAsString = formatEventDetailsAsString(event);
+                eventListAsString.add(String.valueOf(eventIndex++) + ". " + eventAsString);
+            }
+        }
+
+        dailyEventsList = dailyEvents;
 
         return eventListAsString;
     }
@@ -174,7 +229,7 @@ public class OAuthManager {
     /**
      * Formats an event object as a human-readable string.
      */
-    private static String formatEventDetailsAsString(Event event) {
+    public static String formatEventDetailsAsString(Event event) {
         String title = event.getSummary();
         DateTime startAsDateTime = event.getStart().getDateTime();
         DateTime endAsDateTime = event.getEnd().getDateTime();
@@ -240,7 +295,7 @@ public class OAuthManager {
 
     /**
      * Gets a list of events for a particular date from Google Calendar
-     * @param date must in RFC 3339 format
+     * @param date must in yyyy-MM-dd format
      * @throws IOException
      */
     public static List<Event> getEventsByDay(User user, String date) throws IOException {
@@ -263,6 +318,9 @@ public class OAuthManager {
                 .setOrderBy("startTime")
                 .setSingleEvents(true)
                 .execute();
+
+
+
         List<Event> upcomingEvents = events.getItems();
 
         return upcomingEvents;
@@ -355,6 +413,56 @@ public class OAuthManager {
         return apiResponse;
     }
 
+    /**
+     * Gets the most recent event list shown to the user.
+     * @return List
+     */
+    public static List<Event> getMostRecentEventList() {
+        return mostRecentEventList;
+    }
+
+    /**
+     * Gets the specified event by index (offset by 1 due to array indexing) according to a user's input.
+     * @param index
+     * @return Event
+     */
+    public static Event getEventByIndexFromLastList(int index) {
+        return mostRecentEventList.get(index - 1);
+    }
+
+    /**
+     * Gets the specified event pair by index (offset by 1 due to array indexing) according to a user's input.
+     * @param index
+     * @return List
+     */
+    public static List<Event> getEventByIndexPairFromDailyList(int index) {
+        List<Event> eventPair = new ArrayList<>();
+        eventPair.add(dailyEventsList.get(index - 1));
+        eventPair.add(dailyEventsList.get(index));
+
+        return eventPair;
+    }
+
+
+    /**
+     * A wrapper of the Google Calendar Event: delete API endpoint to remove a calendar event
+     * from a user's Google Calendar.
+     * @throws IOException
+     */
+    public static void deleteEvent(User user, Event event) throws IOException {
+        // Build a new authorized API client service.
+        // Note: Do not confuse this class with the
+        //   com.google.api.services.calendar.model.Calendar class.
+
+        com.google.api.services.calendar.Calendar service =
+                getCalendarService(user);
+        String calendarId = "primary";
+        try {
+            service.events().delete(calendarId, event.getId()).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 //@@author

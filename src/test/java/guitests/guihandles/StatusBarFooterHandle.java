@@ -37,8 +37,6 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
         return syncStatusNode.getText();
     }
 
-    //@@author guekling-reused
-    //Reused from https://github.com/se-edu/addressbook-level4/pull/803/files with minor modifications
     /**
      * Returns the text of the 'total tasks' portion of the status bar.
      */
@@ -67,8 +65,6 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
     public boolean isSyncStatusChanged() {
         return !lastRememberedSyncStatus.equals(getSyncStatus());
     }
-    //@@author guekling-reused
-    //Reused from https://github.com/se-edu/addressbook-level4/pull/803/files with minor modifications
     /**
      * Remembers the content of the 'total persons' portion of the status bar.
      */

@@ -83,8 +83,6 @@ public class TaskCardHandle extends NodeHandle<Node> {
                 .collect(Collectors.toList());
     }
 
-    // @@author guekling-reused
-    // Reused from https://github.com/se-edu/descriptionbook-level4/pull/798/files with minor modifications
     public List<String> getTagStyleClasses(String tag) {
         return tagLabels
                 .stream()

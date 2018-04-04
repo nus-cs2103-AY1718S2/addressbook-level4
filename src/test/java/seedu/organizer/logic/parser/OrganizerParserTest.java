@@ -21,6 +21,7 @@ import org.junit.rules.ExpectedException;
 import seedu.organizer.logic.commands.AddCommand;
 import seedu.organizer.logic.commands.AddSubtaskCommand;
 import seedu.organizer.logic.commands.ClearCommand;
+import seedu.organizer.logic.commands.CurrentMonthCommand;
 import seedu.organizer.logic.commands.DeleteCommand;
 import seedu.organizer.logic.commands.DeleteSubtaskCommand;
 import seedu.organizer.logic.commands.EditCommand;
@@ -283,6 +284,16 @@ public class OrganizerParserTest {
         assertTrue(parser.parseCommand(NextMonthCommand.COMMAND_ALIAS) instanceof NextMonthCommand);
         assertTrue(parser.parseCommand(NextMonthCommand.COMMAND_ALIAS + " 3")
                 instanceof NextMonthCommand);
+    }
+
+    @Test
+    public void parseCommand_currentMonthCommand() throws Exception {
+        assertTrue(parser.parseCommand(CurrentMonthCommand.COMMAND_WORD) instanceof CurrentMonthCommand);
+        assertTrue(parser.parseCommand(CurrentMonthCommand.COMMAND_WORD + " 3")
+                instanceof CurrentMonthCommand);
+        assertTrue(parser.parseCommand(CurrentMonthCommand.COMMAND_ALIAS) instanceof CurrentMonthCommand);
+        assertTrue(parser.parseCommand(CurrentMonthCommand.COMMAND_ALIAS + " 3")
+                instanceof CurrentMonthCommand);
     }
     //@@author
 

@@ -23,6 +23,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+import seedu.organizer.logic.commands.CurrentMonthCommand;
 import seedu.organizer.logic.commands.NextMonthCommand;
 import seedu.organizer.logic.commands.PreviousMonthCommand;
 import seedu.organizer.model.task.Task;
@@ -146,6 +147,14 @@ public class MonthView extends UiPart<Region> {
     //====================================== Interacting with Command ==============================================
 
     /**
+     * Shows the view of the current month.
+     */
+    private void goToCurrentMonth() {
+        clearCalendar();
+        getMonthView(currentYearMonth);
+    }
+
+    /**
      * Shows the view of the month before the currently viewed month.
      */
     private void goToPreviousMonth() {
@@ -177,6 +186,11 @@ public class MonthView extends UiPart<Region> {
                 while (change.next()) {
                     int size = executedCommandsList.size();
                     String executedCommand = executedCommandsList.get(size - 1);
+
+                    if ((executedCommand.equals(CurrentMonthCommand.COMMAND_WORD)) || (
+                            executedCommand.equals(CurrentMonthCommand.COMMAND_ALIAS))) {
+                        goToCurrentMonth();
+                    }
 
                     if ((executedCommand.equals(PreviousMonthCommand.COMMAND_WORD)) || (
                         executedCommand.equals(PreviousMonthCommand.COMMAND_ALIAS))) {

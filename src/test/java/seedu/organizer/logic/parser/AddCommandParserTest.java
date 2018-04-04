@@ -91,14 +91,13 @@ public class AddCommandParserTest {
                 .withDescription(VALID_DESCRIPTION_EXAM).withTags(VALID_TAG_HUSBAND).build();
         assertParseSuccess(parser, NAME_DESC_EXAM + DEADLINE_DESC_EXAM + DESCRIPTION_DESC_EXAM + TAG_DESC_HUSBAND,
                 new AddCommand(expectedNoPriorityTask));
-        //@@guekling
+        //@@author
         // no description
         Task expectedNoDescriptionTask = new TaskBuilder().withName(VALID_NAME_EXAM)
                 .withPriority(VALID_PRIORITY_EXAM).withDeadline(VALID_DEADLINE_EXAM)
                 .withDescription("").withTags(VALID_TAG_HUSBAND).build();
         assertParseSuccess(parser, NAME_DESC_EXAM + PRIORITY_DESC_EXAM + DEADLINE_DESC_EXAM
                 + TAG_DESC_HUSBAND, new AddCommand(expectedNoDescriptionTask));
-        //@@author
     }
 
     @Test

@@ -3,6 +3,8 @@ package seedu.organizer.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.organizer.testutil.TypicalExecutedCommands.CURRENT_MONTH_COMMAND_ALIAS;
+import static seedu.organizer.testutil.TypicalExecutedCommands.CURRENT_MONTH_COMMAND_WORD;
 import static seedu.organizer.testutil.TypicalExecutedCommands.NEXT_MONTH_COMMAND_ALIAS;
 import static seedu.organizer.testutil.TypicalExecutedCommands.NEXT_MONTH_COMMAND_WORD;
 import static seedu.organizer.testutil.TypicalExecutedCommands.PREVIOUS_MONTH_COMMAND_ALIAS;
@@ -33,6 +35,11 @@ public class MonthViewTest extends GuiUnitTest {
     private static final ObservableList<Task> TYPICAL_TASKS = FXCollections.observableList(getTypicalTasks());
     private static final ObservableList<String> TYPICAL_EXECUTED_COMMANDS = FXCollections.observableList
         (getTypicalExecutedCommands());
+
+    private static final int SUNDAY = 7;
+    private static final int FIRST_ROW = 0;
+    private static final int MAX_NUM_OF_DAYS = 35;
+    private static final double DAYS_IN_WEEK = 7.0;
 
     private static final YearMonth MAY_2018 = YearMonth.of(2018, 5);
     private static final YearMonth DEC_2018 = YearMonth.of(2018, 12);
@@ -293,6 +300,89 @@ public class MonthViewTest extends GuiUnitTest {
     }
 
     @Test
+    public void goToCurrentMonth_commandsSuccessful() {
+        monthView.getMonthView(DEC_2018);
+
+        // using command word to go to next month
+        addCommandToExecutedCommandsList(CURRENT_MONTH_COMMAND_WORD);
+
+        MonthView expectedMonthView = new MonthView(TYPICAL_TASKS, TYPICAL_EXECUTED_COMMANDS);
+        expectedMonthView.getMonthView(YearMonth.now());
+        guiRobot.pause();
+        monthView.equals(expectedMonthView);
+
+        // using command alias to go to previous month
+        monthView.getMonthView(DEC_2018);
+        guiRobot.pause();
+
+        addCommandToExecutedCommandsList(CURRENT_MONTH_COMMAND_ALIAS);
+        expectedMonthView.getMonthView(YearMonth.now());
+        guiRobot.pause();
+        monthView.equals(expectedMonthView);
+    }
+
+    @Test
+    public void goToCurrentMonth_titleDatesAndEntriesPrintedSuccessfully() {
+        monthView.getMonthView(DEC_2018);
+        YearMonth currentYearMonth = YearMonth.now();
+
+        Task toAddTaskOne = new TaskBuilder().withName("GER1000").withDeadline(currentYearMonth.toString()
+            + "-12").build();
+        addTaskToTaskList(toAddTaskOne);
+
+        Task toAddTaskTwo = new TaskBuilder().withName("CS2010").withDeadline(currentYearMonth.toString()
+            + "-25").build();
+        addTaskToTaskList(toAddTaskTwo);
+
+        addCommandToExecutedCommandsList(CURRENT_MONTH_COMMAND_WORD);
+        guiRobot.pause();
+
+        // verify that calendar title is displayed correctly
+        monthViewHandle.getCalendarTitleText();
+        String expectedTitle = currentYearMonth.getMonth().toString() + " " + currentYearMonth.getYear();
+        assertEquals(expectedTitle, monthViewHandle.getCalendarTitleText());
+
+        // verify that grid lines are visible after clearCalendar() is called
+        assertEquals(true, monthViewHandle.isGridLinesVisible());
+
+        // verify that the first date of the month is displayed in the correct row and column
+        Node startDateNode = monthViewHandle.getPrintedDateNode(1);
+        int startDateRow = monthViewHandle.getRowIndex(startDateNode);
+        int startDateColumn = monthViewHandle.getColumnIndex(startDateNode);
+        int expectedStartDateColumn = getExpectedDateColumn(currentYearMonth, 1);
+
+        assertEquals(FIRST_ROW, startDateRow);
+        assertEquals(expectedStartDateColumn, startDateColumn);
+
+        // verify that the last date of the month is displayed in the correct row and column
+        int lastDate = currentYearMonth.lengthOfMonth();
+        Node lastDateNode = monthViewHandle.getPrintedDateNode(lastDate);
+        int lastDateRow = monthViewHandle.getRowIndex(lastDateNode);
+        int lastDateColumn = monthViewHandle.getColumnIndex(lastDateNode);
+        int expectedLastDateColumn = getExpectedDateColumn(currentYearMonth, lastDate);
+        int expectedLastDateRow = getExpectedDateRow(currentYearMonth, lastDate);
+
+        assertEquals(expectedLastDateColumn, lastDateColumn);
+        assertEquals(expectedLastDateRow, lastDateRow);
+
+        // verify that entries are displayed
+        int expectedDateColumn = getExpectedDateColumn(currentYearMonth, 12);
+        int expectedDateRow = getExpectedDateRow(currentYearMonth, 12);
+        ListView<EntryCard> entriesListView = (ListView) monthViewHandle.getListViewEntriesNode(expectedDateRow,
+            expectedDateColumn);
+        EntryCard actualEntryCard = entriesListView.getItems().get(0);
+        EntryCard expectedEntryCard = new EntryCard(toAddTaskOne);
+        assertEquals(expectedEntryCard, actualEntryCard);
+
+        expectedDateColumn = getExpectedDateColumn(currentYearMonth, 25);
+        expectedDateRow = getExpectedDateRow(currentYearMonth, 25);
+        entriesListView = (ListView) monthViewHandle.getListViewEntriesNode(expectedDateRow, expectedDateColumn);
+        actualEntryCard = entriesListView.getItems().get(0);
+        expectedEntryCard = new EntryCard(toAddTaskTwo);
+        assertEquals(expectedEntryCard, actualEntryCard);
+    }
+
+    @Test
     public void equals() {
         monthView.getMonthView(MAY_2018);
 
@@ -331,7 +421,6 @@ public class MonthViewTest extends GuiUnitTest {
         newMonthView.setMonthCalendarTitle(2018, "MAY");
         guiRobot.pause();
         assertFalse(monthView.dateIsEqual(otherMonthView));
-
     }
 
     /**
@@ -346,5 +435,37 @@ public class MonthViewTest extends GuiUnitTest {
      */
     private void addTaskToTaskList(Task task) {
         TYPICAL_TASKS.add(task);
+    }
+
+    /**
+     * Retrieves the expected column index of a {@code date}.
+     */
+    private int getExpectedDateColumn(YearMonth yearMonth, int date) {
+        int expectedDateColumn = yearMonth.atDay(date).getDayOfWeek().getValue();
+
+        if (expectedDateColumn == SUNDAY) {
+            expectedDateColumn = 0;
+        }
+
+        return expectedDateColumn;
+    }
+
+    /**
+     * Retrieves the expected row index of a {@code date}.
+     */
+    private int getExpectedDateRow(YearMonth yearMonth, int date) {
+        int startDay = yearMonth.atDay(1).getDayOfWeek().getValue();
+
+        if (startDay == SUNDAY) {
+            startDay = 0;
+        }
+
+        int totalDays = startDay + date;
+
+        if (totalDays <= MAX_NUM_OF_DAYS) {
+            return (int) (date / DAYS_IN_WEEK);
+        } else {
+            return FIRST_ROW;
+        }
     }
 }

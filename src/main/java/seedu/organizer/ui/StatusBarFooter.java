@@ -74,12 +74,10 @@ public class StatusBarFooter extends UiPart<Region> {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
 
-    //@@author guekling-reused
-    //Reused from https://github.com/se-edu/addressbook-level4/pull/803/files with minor modifications
     private void setTotalTasks(int totalTasks) {
         Platform.runLater(() -> this.totalTasksStatus.setText(String.format(TOTAL_TASKS_STATUS, totalTasks)));
     }
-    //@@author
+
     @Subscribe
     public void handleOrganizerChangedEvent(OrganizerChangedEvent oce) {
         long now = clock.millis();

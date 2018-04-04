@@ -591,6 +591,25 @@ The `Calendar` allows you to have a chronic overview of the deadlines of all you
 * _[coming in v2.0]_ To show only completed tasks on the calendar.
 * _[coming in v2.0]_ To support the viewing of the calendar by days, weeks and years.
 
+=== Go to current month: `cmonth` or `cm` `[since v1.4]`
+
+Changes the view of the calendar to that of the current month. +
+
+[.format]
+====
+[format-title]#Format:# `cmonth`
+====
+
+[.example]
+====
+[example-title]#Example:#
+
+* Current month is `April 2018` +
+Views `December 2018` +
+[example]#`cmonth`# +
+Goes to `April 2018`
+====
+
 === Go to previous month: `pmonth` or `pm` `[since v1.4]`
 
 Changes the view of the calendar to that of the previous month. +
@@ -781,6 +800,7 @@ e.g. [example-no-box]#`delete-subtask 2 3`#
 e.g.[example-no-box]#`toggle-subtask 3 2`#
 
 === Calendar Features
+* *Go To Current Month* : [format-no-box]#`cmonth`#
 * *Go To Next Month* : [format-no-box]#`nmonth`#
 * *Go To Previous Month* : [format-no-box]#`pmonth`#
 

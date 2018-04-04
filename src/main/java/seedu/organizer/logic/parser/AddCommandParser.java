@@ -52,14 +52,13 @@ public class AddCommandParser implements Parser<AddCommand> {
                 priority = ParserUtil.parsePriority(Priority.LOWEST_PRIORITY_LEVEL);
             }
             Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE)).get();
-            //@@author guekling
+            //@@author
             Description description;
             if (arePrefixesPresent(argMultimap, PREFIX_DESCRIPTION)) {
                 description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION)).get();
             } else {
                 description = ParserUtil.parseDescription("");
             }
-            //@@author
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             Task task = new Task(name, priority, deadline, description, tagList);

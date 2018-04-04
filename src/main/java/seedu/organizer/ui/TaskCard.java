@@ -66,8 +66,6 @@ public class TaskCard extends UiPart<Region> {
         initTags(task);
     }
 
-    // @@author guekling-reused
-    // Reused from https://github.com/se-edu/addressbook-level4/pull/798/files with minor modifications
     /**
      * Returns the color style for {@code tagName}'s label.
      */

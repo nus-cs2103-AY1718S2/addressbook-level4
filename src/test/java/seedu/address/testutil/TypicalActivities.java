@@ -96,4 +96,8 @@ public class TypicalActivities {
     public static List<Activity> getTypicalActivities() {
         return new ArrayList<>(Arrays.asList(ASSIGNMENT1, ASSIGNMENT2, QUIZ, CCA, CIP, EXAM1, IFG));
     }
+
+    public static List<Activity> getTypicalTask() {
+        return new ArrayList<>(Arrays.asList(ASSIGNMENT1, ASSIGNMENT2, QUIZ));
+    }
 }

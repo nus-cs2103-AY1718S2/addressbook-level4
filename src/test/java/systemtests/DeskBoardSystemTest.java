@@ -46,7 +46,7 @@ import seedu.address.ui.CommandBox;
  * A system test class for DeskBoard, which provides access to handles of GUI components and helper methods
  * for test verification.
  */
-public abstract class RemarkBookSystemTest {
+public abstract class DeskBoardSystemTest {
     @ClassRule
     public static ClockRule clockRule = new ClockRule();
 

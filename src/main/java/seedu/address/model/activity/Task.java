@@ -74,13 +74,8 @@ public class Task extends Activity {
         Task otherTask = (Task) other;
         return otherTask.getName().equals(this.getName())
                 && otherTask.getDueDateTime().equals(this.getDueDateTime())
-                && otherTask.getRemark().equals(this.getRemark());
-    }
-
-    @Override
-    public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return super.hashCode();
+                && (getRemark() == null ? otherTask.getRemark() == null : getRemark().equals(otherTask.getRemark()))
+                && this.isCompleted() == otherTask.isCompleted();
     }
 
     @Override
@@ -91,8 +86,9 @@ public class Task extends Activity {
                 .append(" Due Date/Time: ")
                 .append(getDateTime())
                 .append(" Remark: ")
-                .append(getRemark())
-                .append(" Tags: ");
+                .append(getRemark() == null ? "" : getRemark())
+                .append(" Tags: ")
+                .append(isCompleted() ? "Uncompleted" : "Completed");
         getTags().forEach(builder::append);
         return builder.toString();
     }

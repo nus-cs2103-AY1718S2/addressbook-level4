@@ -24,7 +24,8 @@ public abstract class XmlAdaptedActivity {
     protected String dateTime;
     @XmlElement(required = true)
     protected String remark;
-
+    @XmlElement
+    protected boolean iscompleted;
     @XmlElement
     protected List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -44,6 +45,7 @@ public abstract class XmlAdaptedActivity {
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
+        iscompleted = false;
     }
 
     /**
@@ -59,6 +61,7 @@ public abstract class XmlAdaptedActivity {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        iscompleted = source.isCompleted();
     }
 
     /**
@@ -84,6 +87,7 @@ public abstract class XmlAdaptedActivity {
         return Objects.equals(name, otherActivity.name)
                 && Objects.equals(dateTime, otherActivity.dateTime)
                 && Objects.equals(remark, otherActivity.remark)
-                && tagged.equals(otherActivity.tagged);
+                && tagged.equals(otherActivity.tagged)
+                && this.iscompleted == otherActivity.iscompleted;
     }
 }

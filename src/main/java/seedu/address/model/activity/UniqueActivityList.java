@@ -34,6 +34,7 @@ public class UniqueActivityList implements Iterable<Activity> {
         return internalList.contains(toCheck);
     }
 
+
     /**
      * Adds a activity to the list.
      * If activity is a task or an event, is added to its respective list.

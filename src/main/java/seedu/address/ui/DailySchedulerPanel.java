@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.LoadDirectionsEvent;
 import seedu.address.commons.events.ui.LoadMapPanelEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.RemoveMapPanelEvent;
@@ -88,5 +89,11 @@ public class DailySchedulerPanel extends UiPart<Region> {
         if (!event.getFeatureTarget().equals("scheduler")) {
             removeDirectionPanel();
         }
+    }
+
+    @Subscribe
+    private void handleLoadDirectionsEvent(LoadDirectionsEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        directionPanel.loadDirections("Blk 138, Potong Pasir Ave 3", "342 Pasir Panjang");
     }
 }

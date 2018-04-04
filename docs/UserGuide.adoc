@@ -329,6 +329,7 @@ Selects the 1st patient in the results of the `find` command.
 ==== Viewing and editing the medical records for a patient : `record` [since in v1.4]
 
 Views all the medical records for a patient specified by the index number used in the last patient listing. +
+*This command is only accessible to doctors.* +
 Format: `record INDEX in/[RECORD INDEX]` or `rec INDEX in/[RECORD INDEX]`
 
 ****

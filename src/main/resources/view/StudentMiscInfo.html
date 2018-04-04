@@ -105,13 +105,13 @@ function loadAddressBook() {
 
 	var profilePicturePath = x[index].getElementsByTagName("profilePicturePath")[0].childNodes[0].nodeValue;
 	var imageSourcePart1;
-	
+
 	if (profilePicturePath == "profile_photo_placeholder.png") {
 		imageSourcePart1 = "<img src='";
 	} else {
 		imageSourcePart1 = "<img src='../../";
 	}
-	
+
 	var imageSourcePart2 = "' style='width:100%; height:100%'>";
 	var finalImageSource = imageSourcePart1 + profilePicturePath + "?" + new Date().getTime() + imageSourcePart2;
 	document.getElementById("profilePicture").innerHTML = finalImageSource;

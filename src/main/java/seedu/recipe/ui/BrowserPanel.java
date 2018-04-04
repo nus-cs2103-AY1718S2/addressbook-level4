@@ -30,6 +30,8 @@ import seedu.recipe.model.recipe.Url;
 import seedu.recipe.model.util.HtmlFormatter;
 import seedu.recipe.ui.util.CloudStorageUtil;
 import seedu.recipe.ui.util.FacebookHandler;
+import seedu.recipe.ui.util.WebParser;
+import seedu.recipe.ui.util.WebParserHandler;
 
 /**
  * The Browser Panel of the App.
@@ -44,6 +46,7 @@ public class BrowserPanel extends UiPart<Region> {
     private static final Index FIRST_INDEX = Index.fromOneBased(1);
 
     private Recipe recipeToShare;
+    private WebParserHandler webParserHandler;
     private String uploadFilename;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -57,6 +60,7 @@ public class BrowserPanel extends UiPart<Region> {
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
+        initializeWebParserHandler();
         loadDefaultPage(isDarkTheme);
         registerAsAnEventHandler(this);
 
@@ -125,6 +129,22 @@ public class BrowserPanel extends UiPart<Region> {
         }
     }
 
+    private void initializeWebParserHandler() {
+        webParserHandler = new WebParserHandler(browser);
+    }
+
+    /**
+     * Parses the BrowserPanel, gets a Recipe object.
+     */
+    public String parseRecipe() {
+        WebParser webParser = webParserHandler.getWebParser();
+        if (webParser != null) {
+            return webParser.parseRecipe();
+        } else {
+            return null;
+        }
+    }
+
     //@@author RyanAngJY
     @Subscribe
     private void handleShareRecipeEvent(ShareRecipeEvent event) {
@@ -150,7 +170,6 @@ public class BrowserPanel extends UiPart<Region> {
             public void changed(ObservableValue ov, Worker.State oldState, Worker.State newState) {
                 if (newState == Worker.State.SUCCEEDED) {
                     String url = browserEngine.getLocation();
-                    System.out.println("passing by");
                     if (CloudStorageUtil.checkAndSetAccessToken(url)) {
                         CloudStorageUtil.upload(uploadFilename);
                         System.out.println("a");

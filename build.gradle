@@ -57,6 +57,7 @@ dependencies {
     testCompile group: 'org.testfx', name: 'openjfx-monocle', version: '1.8.0_20'
     testCompile group: 'com.restfb', name: 'restfb', version: '2.3.0'
     compile 'com.dropbox.core:dropbox-core-sdk:3.0.6'
+    compile 'org.jsoup:jsoup:1.11.2'
 }
 
 shadowJar {

@@ -6,10 +6,11 @@ import static java.util.Objects.requireNonNull;
 import java.util.Collections;
 import java.util.List;
 
-import seedu.recipe.logic.CommandHistory;
-import seedu.recipe.logic.UndoRedoStack;
-import seedu.recipe.model.Model;
+import seedu.recipe.commons.core.EventsCenter;
+import seedu.recipe.commons.events.ui.WebParseRequestEvent;
 import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.ui.util.WebParser;
+import seedu.recipe.ui.util.WebParserHandler;
 
 /**
  * Parse the current page loaded in the BrowserPanel.
@@ -17,29 +18,17 @@ import seedu.recipe.model.recipe.Recipe;
 public class ParseCommand extends Command {
 
     public static final String COMMAND_WORD = "parse";
-    public static final String MESSAGE_SUCCESS = "Recipe parsed.";
-    public static final String MESSAGE_NO_PAGE_LOADED = "No page loaded in the BrowserPanel.";
-    public static final String MESSAGE_CANNOT_PARSE = "Cannot parse recipe from webpage.";
-
-//    private final Recipe parsedRecipe;
+    public static final String MESSAGE_SUCCESS = "ReciRecipe tried to parse the web page.";
 
     @Override
     public CommandResult execute() {
-//        List<String> previousCommands = history.getHistory();
-//
-//        if (previousCommands.isEmpty()) {
-//            return new CommandResult(MESSAGE_NO_HISTORY);
-//        }
-//
-//        Collections.reverse(previousCommands);
-//        return new CommandResult(String.format(MESSAGE_SUCCESS, String.join("\n", previousCommands)));
-        throw new AssertionError("DAH");
+        EventsCenter.getInstance().post(new WebParseRequestEvent());
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ParseCommand); // instanceof handles nulls
-//                && this.parsedRecipe.equals(((ParseCommand) other).parsedRecipe)); // state check
     }
 }

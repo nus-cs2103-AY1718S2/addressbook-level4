@@ -22,6 +22,7 @@ public class ResultDisplayHandle extends NodeHandle<TextArea> {
         return getRootNode().getText();
     }
 
+    //@@author Yoochard
     /**
      * Returns the list of style classes present in the result display.
      */

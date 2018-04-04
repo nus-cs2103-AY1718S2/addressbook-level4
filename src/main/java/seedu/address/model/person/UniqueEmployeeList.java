@@ -113,6 +113,8 @@ public class UniqueEmployeeList implements Iterable<Person> {
                 || (other instanceof UniqueEmployeeList // instanceof handles nulls
                         && this.internalList.equals(((UniqueEmployeeList) other).internalList));
     }
+
+    //@@author Yoochard
     /**
      * Sorts existing persons, check sort field here
      */

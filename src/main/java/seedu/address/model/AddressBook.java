@@ -271,8 +271,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.password = password;
     }
 
-
-    /** sort the existing persons in specific field*/
+    //@@author Yoochard
+    /** sort the existing persons in specific field
+     *
+     * @param field must be String and not null
+     *
+     * */
     public void sort(String field) {
         persons.sort(field);
     }

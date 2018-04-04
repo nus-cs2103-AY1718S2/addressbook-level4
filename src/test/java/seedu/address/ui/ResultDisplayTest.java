@@ -13,7 +13,7 @@ import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 public class ResultDisplayTest extends GuiUnitTest {
-
+    //@@author Yoochard
     private static final NewResultAvailableEvent NEW_RESULT_SUCCESS_EVENT_STUB =
             new NewResultAvailableEvent("success", true);
     private static final NewResultAvailableEvent NEW_RESULT_FAILURE_EVENT_STUB =
@@ -22,7 +22,7 @@ public class ResultDisplayTest extends GuiUnitTest {
     private List<String> errorStyleOfResultDisplay;
 
     private ResultDisplayHandle resultDisplayHandle;
-
+    //@@author Yoochard
     @Before
     public void setUp() {
         ResultDisplay resultDisplay = new ResultDisplay();

@@ -230,6 +230,7 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    //@@author Yoochard
     @FXML
     private void handleChangeDarkTheme() {
         EventsCenter.getInstance().post(new ChangeThemeEvent("dark"));
@@ -244,6 +245,7 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.show();
     }
 
+    //@@author
     /**
      * Closes the application.
      */
@@ -272,6 +274,7 @@ public class MainWindow extends UiPart<Stage> {
         handleShowMyCalendar();
     }
 
+    //@@author Yoochard
     @Subscribe
     private void handleChangeThemeEvent (ChangeThemeEvent changeThemeEvent) {
         Scene scene = primaryStage.getScene();

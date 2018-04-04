@@ -21,9 +21,11 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.AddressBook;
+import seedu.address.model.CustomerStats;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyCustomerStats;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
@@ -90,7 +92,9 @@ public class MainApp extends Application {
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
+        Optional<ReadOnlyCustomerStats> customerStatsOptional;
         ReadOnlyAddressBook initialData;
+        ReadOnlyCustomerStats initialCustomerStats;
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
@@ -105,7 +109,21 @@ public class MainApp extends Application {
             initialData = new AddressBook();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        try {
+            customerStatsOptional = storage.readCustomerStats();
+            if (!customerStatsOptional.isPresent()) {
+                logger.info("Data file for customer stats not found. Will be starting with an empty file");
+            }
+            initialCustomerStats = new CustomerStats();
+        } catch (DataConversionException e) {
+            logger.warning("Data file for customer stats not in the correct format. Will be starting with an empty file");
+            initialCustomerStats = new CustomerStats();
+        }  catch (IOException e) {
+            logger.warning("Problem while reading from the customer stats file. Will be starting with an empty file");
+            initialCustomerStats = new CustomerStats();
+        }
+
+        return new ModelManager(initialData, userPrefs, initialCustomerStats);
     }
 
     private void initLogging(Config config) {

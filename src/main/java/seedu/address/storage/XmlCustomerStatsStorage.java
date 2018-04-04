@@ -3,11 +3,16 @@ package seedu.address.storage;
 import static java.util.Objects.requireNonNull;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
+import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyCustomerStats;
 
 /**
@@ -25,6 +30,31 @@ public class XmlCustomerStatsStorage implements CustomerStatsStorage {
 
     public String getCustomerStatsFilePath() {
         return filePath;
+    }
+
+    @Override
+    public Optional<ReadOnlyCustomerStats> readCustomerStats() throws DataConversionException, IOException {
+        return readCustomerStats(filePath);
+    }
+
+    /**
+     * Similar to {@link #readCustomerStats()}
+     * @param filePath location of the data. Cannot be null
+     * @throws DataConversionException if the file is not in the correct format.
+     */
+    public Optional<ReadOnlyCustomerStats> readCustomerStats(String filePath) throws DataConversionException,
+            FileNotFoundException {
+        requireNonNull(filePath);
+
+        File customerStatsFile = new File(filePath);
+
+        if (!customerStatsFile.exists()) {
+            logger.info("CustomerStats file "  + customerStatsFile + " not found");
+            return Optional.empty();
+        }
+
+        XmlSerializableCustomerStats xmlCustomerStats = XmlFileStorage.loadCustomerDataFromSaveFile(new File(filePath));
+        return Optional.of(xmlCustomerStats.toModelType());
     }
 
     @Override

@@ -117,10 +117,10 @@ public class Person {
         int commission = 0;
         Insurance[] insuranceList = insurances.toArray(new Insurance[insurances.size()]);
 
-        for(int i = 0; i < insurances.size(); i++) {
+        for (int i = 0; i < insurances.size(); i++) {
             Commission plans = new Commission(insuranceList[i]);
             commission += parseInt(plans.getCommission());
-      }
+        }
         return Integer.toString(commission);
     }
 

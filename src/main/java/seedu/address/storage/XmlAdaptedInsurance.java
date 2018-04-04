@@ -1,9 +1,9 @@
 package seedu.address.storage;
 
+import javax.xml.bind.annotation.XmlValue;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Insurance.Insurance;
-
-import javax.xml.bind.annotation.XmlValue;
 
 //@@author Sebry9
 /**

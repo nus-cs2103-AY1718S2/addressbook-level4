@@ -43,7 +43,7 @@ public class EventCommandIntegrationTest {
     @Test
     // Questionable - does the app check for duplicate?
     public void execute_duplicateEvent_throwsCommandException() {
-        Activity activityInList = model.getDeskBoard().getActivityList().get(3);
+        Activity activityInList = model.getDeskBoard().getActivityList().get(0);
         assertCommandFailure(prepareCommand((Event) activityInList, model), model,
                 EventCommand.MESSAGE_DUPLICATE_EVENT);
     }

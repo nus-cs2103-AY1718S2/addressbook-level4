@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -33,7 +32,9 @@ public class UndoCommandTest {
         removeCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
     }
 
-    @Test
+    /**
+     * Test
+     */
     public void execute() throws Exception {
         UndoRedoStack undoRedoStack = prepareStack(
                 Arrays.asList(removeCommandOne, removeCommandTwo), Collections.emptyList());

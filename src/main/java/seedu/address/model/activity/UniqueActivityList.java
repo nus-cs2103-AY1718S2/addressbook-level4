@@ -3,6 +3,8 @@ package seedu.address.model.activity;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,6 +25,15 @@ import seedu.address.model.activity.exceptions.DuplicateActivityException;
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class UniqueActivityList implements Iterable<Activity> {
+
+    //@@author karenfrilya97
+    private static Comparator<Activity> dateTimeComparator = new Comparator<Activity>() {
+        public int compare (Activity o1, Activity o2) {
+            DateTime dt1 = o1.getDateTime();
+            DateTime dt2 = o2.getDateTime();
+            return dt1.getLocalDateTime().compareTo(dt2.getLocalDateTime());
+        }
+    };
 
     private final ObservableList<Activity> internalList = FXCollections.observableArrayList();
 
@@ -47,6 +58,8 @@ public class UniqueActivityList implements Iterable<Activity> {
             throw new DuplicateActivityException();
         }
         internalList.add(toAdd);
+        //@@author karenfrilya97
+        Collections.sort(internalList, dateTimeComparator);
     }
 
     /**

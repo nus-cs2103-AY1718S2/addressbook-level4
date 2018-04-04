@@ -2,7 +2,6 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.testutil.TypicalActivities.ASSIGNMENT1;
 import static seedu.address.testutil.TypicalActivities.ASSIGNMENT3;
 import static seedu.address.testutil.TypicalActivities.DEMO1;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
@@ -72,9 +71,7 @@ public class XmlDeskBoardStorageTest {
         readDeskBoard("invalidAndValidActivityDeskBoard.xml");
     }
 
-    /**
-     * Test
-     */
+    @Test
     public void readAndSaveDeskBoard_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempDeskBoard.xml";
         DeskBoard original = getTypicalDeskBoard();
@@ -87,7 +84,7 @@ public class XmlDeskBoardStorageTest {
 
         //Modify data, overwrite exiting file, and read back
         original.addActivity(ASSIGNMENT3);
-        original.removeActivity(ASSIGNMENT1);
+        original.removeActivity(ASSIGNMENT3);
         xmlDeskBoardStorage.saveDeskBoard(original, filePath);
         readBack = xmlDeskBoardStorage.readDeskBoard(filePath).get();
         assertEquals(original, new DeskBoard(readBack));

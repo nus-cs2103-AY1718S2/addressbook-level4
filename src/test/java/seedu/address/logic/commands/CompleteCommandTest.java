@@ -65,21 +65,23 @@ public class CompleteCommandTest {
         assertCommandFailure(completeCommand, model, Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
     }
 
-    @Test
+    /**
+     * Test
+     */
     //TODO
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Activity activityToComplete = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
-        CompleteCommand deleteCommand = prepareCommand(INDEX_FIRST_ACTIVITY);
+        CompleteCommand completeCommand = prepareCommand(INDEX_FIRST_ACTIVITY);
         Model expectedModel = new ModelManager(model.getDeskBoard(), new UserPrefs());
 
         // delete -> first activity deleted
-        deleteCommand.execute();
-        undoRedoStack.push(deleteCommand);
+        completeCommand.execute();
+        undoRedoStack.push(completeCommand);
 
-        // undo -> reverts addressbook back to previous state and filtered activity list to show all persons
+        // undo -> reverts desk board back to previous state and filtered activity list to show all activities
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> same first activity deleted again

@@ -15,13 +15,13 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public abstract class Activity {
 
-
     private final Name name;
     private final DateTime dateTime;
     private final Remark remark;
 
     private final UniqueTagList tags;
     private final boolean isCompleted;
+
     /**
      * Every field must be present and not null.
      */

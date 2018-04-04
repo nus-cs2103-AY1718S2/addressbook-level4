@@ -40,17 +40,17 @@
                       </padding>
                       <children>
                         <Label text="Name" />
+                        <Label fx:id="nameLabel" GridPane.columnIndex="1" />
                         <Label text="Phone Number" GridPane.rowIndex="1" />
+                        <Label fx:id="phoneNumberLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="Email" GridPane.rowIndex="2" />
-                        <Label text="Label" GridPane.columnIndex="1" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="emailLabel" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label text="Address" GridPane.rowIndex="3" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="addressLabel" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text="Condition" GridPane.rowIndex="4" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label fx:id="conditionLabel" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <Label text="Priority" GridPane.rowIndex="5" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label fx:id="priorityLabel" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                       </children>
                     </GridPane>
                   </children>
@@ -59,7 +59,7 @@
                   <children>
                     <StackPane fx:id="mapPanelPlaceholder" prefWidth="-1.0">
                       <padding>
-                        <Insets right="10" left="10"/>
+                        <Insets left="10" right="10" />
                       </padding>
                     </StackPane>
                   </children>
@@ -83,7 +83,7 @@
                     <Insets bottom="5.0" left="5.0" top="5.0" />
                   </padding>
                 </Label>
-                <ListView prefHeight="200.0" prefWidth="200.0">
+                <ListView prefHeight="-1.0" prefWidth="-1.0">
                   <VBox.margin>
                     <Insets bottom="5.0" right="5.0" />
                   </VBox.margin>

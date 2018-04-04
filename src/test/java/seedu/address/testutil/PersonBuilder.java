@@ -3,7 +3,6 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.model.Insurance.Commission;
 import seedu.address.model.Insurance.Insurance;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Address;

@@ -9,6 +9,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_CAL_LINK_PERSON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CAL_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CAL_START_DATE_TIME;
 
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Stream;
 
 import com.google.api.client.util.DateTime;
@@ -18,8 +20,9 @@ import com.google.api.services.calendar.model.EventDateTime;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.CalendarAddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+
 /**
- * Parses input arguments and creates a new AddCommand object
+ * Parses input arguments and creates a new CalendarAddCommand object
  */
 public class CalendarAddCommandParser implements Parser<CalendarAddCommand> {
 
@@ -39,22 +42,22 @@ public class CalendarAddCommandParser implements Parser<CalendarAddCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CalendarAddCommand.MESSAGE_USAGE));
         }
 
+
         try {
             String eventName = ParserUtil.parseEventName(
                     argMultimap.getValue(PREFIX_CAL_EVENT_NAME).orElse(""));
-            DateTime startDateTime = ParserUtil.parseDateTime(
+            String startDateTime = ParserUtil.parseDateTime(
                     argMultimap.getValue(PREFIX_CAL_START_DATE_TIME).orElse(""));
-            DateTime endDateTime = ParserUtil.parseDateTime(
+            String endDateTime = ParserUtil.parseDateTime(
                     argMultimap.getValue(PREFIX_CAL_END_DATE_TIME).orElse(""));
             String location = ParserUtil.parseLocation(
                     argMultimap.getValue(PREFIX_CAL_LOCATION).orElse(""));
 
-
             Event newEvent = new Event();
             newEvent.setSummary(eventName);
-            EventDateTime start = new EventDateTime().setDateTime(startDateTime);
+            EventDateTime start = new EventDateTime().setDateTime(convertFriendlyDateTimeToDateTime(startDateTime));
             newEvent.setStart(start);
-            EventDateTime end = new EventDateTime().setDateTime(endDateTime);
+            EventDateTime end = new EventDateTime().setDateTime(convertFriendlyDateTimeToDateTime(endDateTime));
             newEvent.setEnd(end);
 
             if (location != null) {
@@ -65,6 +68,14 @@ public class CalendarAddCommandParser implements Parser<CalendarAddCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
+    }
+
+    /**
+     * Converts a human-readable date time string into a usable date time string
+     */
+    private DateTime convertFriendlyDateTimeToDateTime(String datetime) {
+        List<Date> dates = new com.joestelmach.natty.Parser().parse(datetime).get(0).getDates();
+        return new DateTime(dates.get(0));
     }
 
     /**

@@ -43,6 +43,16 @@ public class ListEvent {
 
     @Override
     public String toString() {
-        return "Event: " + title + "  Location: " + location + "   End at: " + endTime.toString();
+        String toReturn = "";
+        if (title != null) {
+            toReturn += "Event: " + title;
+        }
+        if (location != null) {
+            toReturn += " Location: " + location;
+        }
+        if (endTime != null) {
+            toReturn += " End at: " + endTime.toString();
+        }
+        return toReturn;
     }
 }

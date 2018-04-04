@@ -62,8 +62,7 @@ public class PersonCard extends UiPart<Region> {
         }
         if (person.getInsurance() == null) {
             insurance.setText("Potential Client");
-        }
-        else {
+        } else {
             insurance.setText(person.getInsurance().insuranceName);
         }
         startTag(person);

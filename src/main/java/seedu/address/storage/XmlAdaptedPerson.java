@@ -92,8 +92,7 @@ public class XmlAdaptedPerson {
         group = source.getGroup().groupName;
         if (source.getAppointment() == null || source.getAppointment().equals("")) {
             appointment = null;
-        }
-        else {
+        } else {
             appointment = source.getAppointment().value;
         }
         tagged = new ArrayList<>();
@@ -102,8 +101,7 @@ public class XmlAdaptedPerson {
         }
         if (source.getInsurance() == null) {
             insurance = null;
-        }
-        else {
+        } else {
             insurance = source.getInsurance().insuranceName;
         }
     }

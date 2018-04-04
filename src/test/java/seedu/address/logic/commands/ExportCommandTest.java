@@ -18,11 +18,11 @@ public class ExportCommandTest {
 
 
     @Test
-    public void execute_validExportCalendarCommand_success() throws Exception {
+    public void execute_validExportCalendarCommand_success() {
         ExportType exportType = ExportType.CALENDAR;
         ExportCommand exportCommand = prepareCommand(exportType);
 
-        String expectedMessage = String.format(ExportCommand.MESSAGE_SUCCESS, exportType.toString(),
+        String expectedMessage = String.format(ExportCommand.PORTFOLIO_MESSAGE_SUCCESS,
                 userPrefs.getExportPortfolioFilePath());
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
@@ -32,11 +32,11 @@ public class ExportCommandTest {
     }
 
     @Test
-    public void execute_validExportPortfolioCommand_success() throws Exception {
+    public void execute_validExportPortfolioCommand_success() {
         ExportType exportType = ExportType.PORTFOLIO;
         ExportCommand exportCommand = prepareCommand(exportType);
 
-        String expectedMessage = String.format(ExportCommand.MESSAGE_SUCCESS, exportType.toString(),
+        String expectedMessage = String.format(ExportCommand.PORTFOLIO_MESSAGE_SUCCESS,
                 userPrefs.getExportPortfolioFilePath());
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());

@@ -13,6 +13,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.petpatient.PetPatient;
 
+//@@author Robert-Peng
+/**
+ * Test class for PetPatientListPanel
+ */
 public class PetPatientListPanelTest extends GuiUnitTest {
     private static final ObservableList<PetPatient> TYPICAL_PETPATIENTS =
                     FXCollections.observableList(getTypicalPetPatients());

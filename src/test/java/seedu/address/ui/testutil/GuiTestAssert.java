@@ -49,6 +49,7 @@ public class GuiTestAssert {
         assertTagsEqual(expectedPerson, actualCard);
     }
 
+    //@@author Robert-Peng
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPetPatient}.
      */
@@ -60,6 +61,7 @@ public class GuiTestAssert {
         assertEquals(expectedPetPatient.getBloodType(), actualCard.getBloodType());
         assertEquals(expectedPetPatient.getOwner().toString(), actualCard.getOwnerNric());
 
+        //assertTagsEqual(expectedPetPatient, actualCard);
     }
 
 
@@ -111,6 +113,20 @@ public class GuiTestAssert {
                         actualCard.getTagStyleClasses(tag)));
     }
 
+    //@@author Robert-Peng
+    /**
+     * Asserts that the tags in {@code actualCard} matches all the tags in {@code expectedPerson} with the correct
+     * color.
+     */
+    private static void assertTagsEqual(PetPatient expectedPetPatient, PetPatientCardHandle actualCard) {
+        List<String> expectedTags = expectedPetPatient.getTags().stream()
+            .map(tag -> tag.tagName).collect(Collectors.toList());
+        assertEquals(expectedTags, actualCard.getTags());
+        expectedTags.forEach(tag ->
+            assertEquals(Arrays.asList(LABEL_DEFAULT_STYLE, getTagColorStyleFor(tag)),
+                actualCard.getTagStyleClasses(tag)));
+    }
+
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
      * in the correct order.
@@ -121,6 +137,7 @@ public class GuiTestAssert {
         }
     }
 
+    //@@author Robert-Peng
     /**
      * Asserts that the list in {@code petPatientListPanelHandle} displays the details of {@code petPatient} correctly
      * and in the correct order.

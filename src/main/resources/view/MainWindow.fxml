@@ -53,14 +53,14 @@
             </padding>
             <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
           </VBox>
-
+          <!-- @author Robert-Peng -->
           <VBox fx:id="petPatientList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>
             <StackPane fx:id="petPatientListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
           </VBox>
-
+          <!-- @@author Robert-Peng -->
           <StackPane fx:id="calendarPlaceholder" prefWidth="200" >
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />

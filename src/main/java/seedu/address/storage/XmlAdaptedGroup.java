@@ -1,5 +1,8 @@
 package seedu.address.storage;
 
+//@@author jas5469
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -7,6 +10,8 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.Information;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.UniquePersonList;
 
 /**
  * JAXB-friendly version of the Group.
@@ -17,6 +22,9 @@ public class XmlAdaptedGroup {
 
     @XmlElement(required = true)
     private String information;
+
+    @XmlElement(required = true)
+    private List<XmlAdaptedPerson> personList = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedGroup.
@@ -30,6 +38,7 @@ public class XmlAdaptedGroup {
      */
     public XmlAdaptedGroup(String information) {
         this.information = information;
+        this.personList = new ArrayList<>();
     }
 
     /**
@@ -39,6 +48,10 @@ public class XmlAdaptedGroup {
      */
     public XmlAdaptedGroup(Group source) {
         information = source.getInformation().value;
+        UniquePersonList persons = source.getPersonList();
+        for (Person person : persons) {
+            personList.add(new XmlAdaptedPerson(person));
+        }
     }
 
     /**
@@ -55,8 +68,18 @@ public class XmlAdaptedGroup {
             throw new IllegalValueException(Information.MESSAGE_INFORMATION_CONSTRAINTS);
         }
         final Information information = new Information(this.information);
+        final UniquePersonList uniquePersonList = new UniquePersonList();
+        for (XmlAdaptedPerson adaptedPerson : personList) {
+            Person personToAdd = adaptedPerson.toModelType();
+            uniquePersonList.add(personToAdd);
+        }
 
-        return new Group(information);
+        return new Group(information, uniquePersonList);
+
+    }
+
+    public List<XmlAdaptedPerson> getPersonList() {
+        return personList;
     }
 
     @Override

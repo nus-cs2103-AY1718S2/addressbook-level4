@@ -25,6 +25,7 @@ import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -128,7 +129,6 @@ public class AddEventCommandTest {
         public void updateTag(Tag target, Tag editedTag) throws TagNotFoundException {
             fail("This method should not be called.");
         }
-
         @Override
         public void removeTag(Tag tag) {
             fail("This method should not be called.");
@@ -168,6 +168,13 @@ public class AddEventCommandTest {
         }
 
         @Override
+        public void updateGroup(Group target, Group editedGroup) throws DuplicateGroupException,
+                GroupNotFoundException {
+            fail("This method should not be called.");
+        }
+
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
@@ -175,6 +182,12 @@ public class AddEventCommandTest {
 
         @Override
         public ObservableList<ToDo> getFilteredToDoList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ObservableList<Group> getFilteredGroupList() {
             fail("This method should not be called.");
             return null;
         }
@@ -200,6 +213,11 @@ public class AddEventCommandTest {
             fail("This method should not be called.");
         }
 
+        @Override
+        public void updateFilteredGroupList(Predicate<Group> predicate) {
+            fail("This method should not be called.");
+        }
+      
         @Override
         public void indicateCalendarChanged() {
             fail("This method should not be called.");

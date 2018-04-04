@@ -314,11 +314,11 @@ Examples:
 `deleteToDo 2` +
 Deletes the 2nd to-do in the address book.
 
-=== List Group Members: `ListGroupMembers`
+=== List Group Members: `listGroupMembers`
 
 List out all persons with the given keywords(group tags). +
 Alias: `lgm` +
-Format: `ListGroupMembers INPUT`
+Format: `listGroupMembers INPUT`
 
 ****
 * The search is case insensitive. e.g `cs1010` will match `CS1010`
@@ -329,16 +329,16 @@ Examples:
 
 * `ListGroupMembers CS3230 CS1010` +
 Returns any person having group tags `CS3230`, `CS1010`
-Refer to Figure 2 for example.
+Refer to Figure 3 for example.
 
 image:lgmExample.png[width="500"] +
-Figure 2. Example of ListGroupMembers
+Figure 3. Example of ListGroupMembers
 
-=== Add Group: `AddGroup`
+=== Add Group: `addGroup`
 
 Creates a group named `KEYWORD` +
 Alias: `aG` +
-Format: `aG KEYWORD[KEYWORDS]`
+Format: `addGroup KEYWORD[KEYWORDS]`
 
 [NOTE]
 ====
@@ -348,11 +348,37 @@ Keyword cannot be an empty input.
 Examples:
 
 * `addGroups CS2101 Oral Presentation` +
-New Group `CS2101 Oral Presentation` added, refer to Figure 3. +
+New Group `CS2101 Oral Presentation` added, refer to Figure 4. +
 image:addGroupExample.png[width ="500"] +
-Figure 3. Example of add Group
+Figure 4. Example of add Group
 // end:AddGroup[]
 
+=== Add Member To Group: `addGroupMember`
+
+Adds a person named `KEYWORD`  that exists in Fastis into a group `GROUP_NAME` that already exist in Fastis.
+Alias: `aGM` +
+Format: `addGroupMember g/GROUP_NAME n/KEYWORD`
+
+[NOTE]
+====
+GROUP_NAME cannot be an empty input.
+KEYWORD cannot be an empty input.
+KEYWORD must be the exact name of the person and it must be case-sensitive.
+====
+
+Examples:
+
+* `addGroupMember g/CS2010 n/David Li` +
+Added person `David Li` into group `CS2010`  refer to Figure 5. +
+image:addGroupMembersToGroupExample.png[width ="500"] +
+Figure 5. Example of addMembersToGroup +
+
+If person already added, Fastis will output already added person in group.
+* `addGroupMember g/CS2010 n/David Li` +
+Refer to Figure 6. +
+image:addGroupMembersToGroupFailExample.png[width ="500"] +
+Figure 6. Example of addMembersToGroup +
+// end:AddGroup[]
 
 === Display Calendar : `display` `[coming in v2.0]`
 

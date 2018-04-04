@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.AddGroupCommand;
+import seedu.address.logic.commands.AddMembersToGroupCommand;
 import seedu.address.logic.commands.AddToDoCommand;
 import seedu.address.logic.commands.ChangeTagColorCommand;
 import seedu.address.logic.commands.CheckToDoCommand;
@@ -34,7 +35,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses user input.
  */
-public class AddressBookParser {
+public class    AddressBookParser {
 
     /**
      * Used for initial separation of command word and args.
@@ -65,6 +66,10 @@ public class AddressBookParser {
         case AddGroupCommand.COMMAND_WORD:
         case AddGroupCommand.COMMAND_ALIAS:
             return new AddGroupCommandParser().parse(arguments);
+
+        case AddMembersToGroupCommand.COMMAND_WORD:
+        case AddMembersToGroupCommand.COMMAND_ALIAS:
+            return new AddMembersToGroupCommandParser().parse(arguments);
 
         case AddToDoCommand.COMMAND_WORD:
         case AddToDoCommand.COMMAND_ALIAS:

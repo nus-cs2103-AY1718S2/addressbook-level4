@@ -17,6 +17,7 @@ import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -169,11 +170,26 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the given Group {@code target} in the list with {@code editedGroup}.
+     *
+     * @throws DuplicateGroupException if updating the Group's details causes the Group to be equivalent to
+     *                                  another existing Group in the list.
+     * @throws GroupNotFoundException  if {@code target} could not be found in the list.
+     */
+    public void updateGroup(Group target, Group editedGroup)
+            throws DuplicateGroupException, GroupNotFoundException {
+        requireNonNull(editedGroup);
+
+        groups.setGroup(target, editedGroup);
+    }
+
+    /**
      * Updates the master tag list to include tags in {@code person} that are not in the list.
      *
      * @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
      * list.
      */
+
     private Person syncWithMasterTagList(Person person) {
         final UniqueTagList personTags = new UniqueTagList(person.getTags());
         tags.mergeFrom(personTags);

@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -17,8 +16,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.WeeklyEvent;
-import seedu.address.model.module.Module;
-import seedu.address.model.module.Schedule;
 
 /**
  * The weekly Timetable of the App.

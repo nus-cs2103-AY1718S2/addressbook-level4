@@ -1,8 +1,6 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.events.ui.TimetableChangedEvent;
 import seedu.address.ui.Calendar;
-import seedu.address.ui.Timetable;
 
 public class SwitchCommand extends Command {
 

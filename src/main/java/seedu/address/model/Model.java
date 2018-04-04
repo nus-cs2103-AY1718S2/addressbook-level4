@@ -3,8 +3,6 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.events.ui.CalendarChangedEvent;
-import seedu.address.commons.events.ui.TimetableChangedEvent;
 import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;

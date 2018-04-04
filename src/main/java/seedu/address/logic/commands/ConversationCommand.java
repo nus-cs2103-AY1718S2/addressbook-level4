@@ -25,7 +25,7 @@ public class ConversationCommand extends Command {
         MessageResponse response = null;
 
         InputData input = new InputData.Builder(userInput).build();
-        MessageOptions option = new MessageOptions.Builder("c2e2ef32-b020-40f3-88aa-1c7c40afb1e0").input(input).build();
+        MessageOptions option = new MessageOptions.Builder("19f7b6f4-7944-419d-83a0-6bf9837ec333").input(input).build();
         response = service.message(option).execute();
 
         return response;
@@ -42,4 +42,4 @@ public class ConversationCommand extends Command {
         return new CommandResult("Bye!");
     }
 }
-
+//@@

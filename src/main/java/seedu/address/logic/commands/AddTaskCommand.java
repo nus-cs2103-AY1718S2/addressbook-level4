@@ -9,24 +9,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MILESTONE_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import java.util.List;
-import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.programminglanguage.ProgrammingLanguage;
-import seedu.address.model.student.Address;
-import seedu.address.model.student.Email;
-import seedu.address.model.student.Favourite;
-import seedu.address.model.student.Name;
-import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
-import seedu.address.model.student.dashboard.Dashboard;
-import seedu.address.model.student.dashboard.Milestone;
-import seedu.address.model.student.dashboard.Progress;
 import seedu.address.model.student.dashboard.Task;
-import seedu.address.model.student.dashboard.UniqueHomeworkList;
 import seedu.address.model.student.dashboard.UniqueMilestoneList;
-import seedu.address.model.student.dashboard.UniqueTaskList;
 import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneException;
 import seedu.address.model.student.dashboard.exceptions.DuplicateTaskException;
 import seedu.address.model.student.dashboard.exceptions.MilestoneNotFoundException;
@@ -35,6 +23,8 @@ import seedu.address.model.student.exceptions.StudentNotFoundException;
 import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 import seedu.address.model.tag.Tag;
 
+
+//@@author yapni
 /**
  * Adds a Task to a Milestone
  */
@@ -61,7 +51,7 @@ public class AddTaskCommand extends UndoableCommand {
     private final Index milestoneIndex;
     private final Task newTask;
 
-    private Student studentToEdit;
+    private Student targetStudent;
     private Student editedStudent;
 
     public AddTaskCommand(Index studentIndex, Index milestoneIndex, Task newTask) {
@@ -74,10 +64,10 @@ public class AddTaskCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() {
-        requireAllNonNull(studentToEdit, editedStudent);
+        requireAllNonNull(targetStudent, editedStudent);
 
         try {
-            model.updateStudent(studentToEdit, editedStudent);
+            model.updateStudent(targetStudent, editedStudent);
         } catch (DuplicateStudentException e) {
             /* DuplicateStudentException caught will mean that the task list is the same as before */
             throw new AssertionError("New task cannot be missing");
@@ -96,15 +86,15 @@ public class AddTaskCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
         }
 
-        studentToEdit = lastShownList.get(studentIndex.getZeroBased());
-        UniqueMilestoneList milestoneList = studentToEdit.getDashboard().getMilestoneList();
+        targetStudent = lastShownList.get(studentIndex.getZeroBased());
+        UniqueMilestoneList milestoneList = targetStudent.getDashboard().getMilestoneList();
 
         if (milestoneIndex.getZeroBased() >= milestoneList.size() || milestoneIndex.getZeroBased() < 0) {
             throw new CommandException(MESSAGE_INVALID_MILESTONE_DISPLAYED_INDEX);
         }
 
         try {
-            editedStudent = createEditedStudent(studentToEdit, newTask);
+            editedStudent = createEditedStudent(targetStudent, newTask, milestoneIndex);
         } catch (DuplicateTaskException e) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         } catch (DuplicateMilestoneException e) {
@@ -117,7 +107,7 @@ public class AddTaskCommand extends UndoableCommand {
     /**
      * Creates and return a copy of {@code Student} with the new task added to its targeted milestone in the Dashboard.
      */
-    private Student createEditedStudent(Student studentToEdit, Task newTask)
+    private Student createEditedStudent(Student studentToEdit, Task newTask, Index targetMilestoneIndex)
             throws DuplicateTaskException, DuplicateMilestoneException, MilestoneNotFoundException {
         requireAllNonNull(studentToEdit, newTask);
 
@@ -148,11 +138,16 @@ public class AddTaskCommand extends UndoableCommand {
 
         Dashboard dashboard = new Dashboard(milestoneList, homeworkList);
 
-        return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard, profilePicturePath);
+        return new StudentBuilder(studentToEdit).withNewTask(targetMilestoneIndex, newTask).build();
+
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddTaskCommand // instanceof handles null
+                && ((AddTaskCommand) other).studentIndex == this.studentIndex
+                && ((AddTaskCommand) other).milestoneIndex  == this.milestoneIndex
+                && ((AddTaskCommand) other).newTask == this.newTask);
     }
 }

@@ -3,8 +3,11 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.io.IOException;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import com.google.gdata.util.ServiceException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,6 +20,8 @@ import seedu.address.commons.events.model.StudentInfoChangedEvent;
 import seedu.address.commons.events.model.StudentInfoDisplayEvent;
 import seedu.address.commons.events.storage.ProfilePictureChangeEvent;
 import seedu.address.commons.events.storage.RequiredStudentIndexChangeEvent;
+import seedu.address.external.GContactsManager;
+import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.Time;
@@ -39,7 +44,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final Schedule schedule;
     private final FilteredList<Student> filteredStudents;
-
+    private final GContactsManager gContactsManager;
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -51,6 +56,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.schedule = new Schedule(schedule);
+        this.gContactsManager = new GContactsManager();
         filteredStudents = new FilteredList<>(this.addressBook.getStudentList());
     }
 
@@ -197,6 +203,21 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredStudentList(Predicate<Student> predicate) {
         requireNonNull(predicate);
         filteredStudents.setPredicate(predicate);
+    }
+
+    @Override
+    public void loginGoogleAccount() throws CredentialsException {
+        this.gContactsManager.login();
+    }
+
+    @Override
+    public void logoutGoogleAccount() throws CredentialsException {
+        this.gContactsManager.logout();
+    }
+
+    @Override
+    public void synchronize() throws ServiceException, IOException {
+        this.gContactsManager.synchronize(addressBook);
     }
 
     @Override

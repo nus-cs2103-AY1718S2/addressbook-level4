@@ -1,26 +1,21 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
-import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.programminglanguage.ProgrammingLanguage;
-import seedu.address.model.student.Address;
-import seedu.address.model.student.Email;
-import seedu.address.model.student.Favourite;
-import seedu.address.model.student.Name;
-import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
-import seedu.address.model.student.dashboard.Dashboard;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 import seedu.address.model.tag.Tag;
 
+
+//@@author yapni
 /**
  * Add a student to favourites
  */
@@ -74,6 +69,7 @@ public class FavouriteCommand extends UndoableCommand {
      * Create and return a copy of the target {@Code Student} to favourite with its' Favourite attribute set to true.
      */
     private static Student createEditedStudent(Student target) {
+
         assert target != null;
 
         Name name = target.getName();
@@ -86,6 +82,16 @@ public class FavouriteCommand extends UndoableCommand {
         Dashboard dashboard = target.getDashboard();
         ProfilePicturePath profilePicturePath = target.getProfilePicturePath();
 
-        return new Student(name, phone, email, address, programmingLanguage, tags, fav, dashboard, profilePicturePath);
+        requireNonNull(target);
+
+        return new StudentBuilder(target).withFavourite(true).build();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FavouriteCommand // instanceof handles null
+                && ((FavouriteCommand) other).targetIndex == this.targetIndex);
+
     }
 }

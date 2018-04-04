@@ -200,6 +200,9 @@ Format: `showDB INDEX`
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
+[TIP]
+A dashboard provides at-a-glance view of your student's progress. Each dashboard contains a list of milestones and tasks that you can set for your student.
+
 Examples:
 
 * `list` +
@@ -215,7 +218,7 @@ Adds a milestone to the dashboard of an existing student in the address book. +
 Format: `addMS i/STUDENT_INDEX d/DUE_DATE o/DESCRIPTION`
 
 ****
-* Adds a milestone to a dashboard of a student at the specified `STUDENT_INDEX`.
+* Adds a milestone to the dashboard of a student at the specified `STUDENT_INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 * The due date must be in this format: *DD/MM/YYYY HH:MM* where HH:MM is in 24-hour time notation
@@ -233,14 +236,35 @@ Adds a milestone to the dashboard of the 1st student in the address book. The mi
 `addMS i/2 d/03/04/2019 10:30 o/Learn Recursion` +
 Adds a milestone to the dashboard of the 2nd person in the results of the `find` command. The milestone is due on 03/04/2019 10:30 and the objective is "Learn Recursion".
 
+=== Delete a milestone from a student's dashboard: `deleteMS`
+
+Deletes a milestone from the dashboard of an existing student in the address book. +
+Format: `deleteMS i/STUDENT_INDEX m/MILESTONE_INDEX`
+
+****
+* Deletes the milestone at the specified `MILESTONE_INDEX`
+* The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
+* Both indexes refer to the index number shown in the most recent listing.
+* Both indexes *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`deleteMS i/1 m/2` +
+Deletes the 2nd milestone from the dashboard of the 1st student in the address book.
+* `find Betsey` +
+`deleteMS i/3 m/4` +
+Deletes the 4th milestone from the dashboard of the 3rd student in the results of the `find` command.
+
 === Add a task to a milestone: `addTask`
 
 Adds a task to an existing milestone in a dashboard. +
 Format: `addTask i/STUDENT_INDEX m/MILESTONE_INDEX n/NAME o/DESCRIPTION`
 
 ****
-* Adds a task to a milestone at the specified `MILESTONE_INDEX`
-* The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
+* Adds a task to the milestone at the specified `MILESTONE_INDEX`
+* The milestone is in the dashboard of the student at the specified `STUDENT_INDEX`
 * Both indexes refers to the index number shown in the most recent listing.
 * Both indexes *must be a positive integer* 1, 2, 3, ...
 ****
@@ -263,8 +287,8 @@ Marks a task in an existing milestone as completed. +
 Format: `checkTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX`
 
 ****
-* Marks a task at the specified `TASK_INDEX` as completed
-* The task is in a milestone at the specified `MILESTONE_INDEX`
+* Marks the task at the specified `TASK_INDEX` as completed
+* The task is in the milestone at the specified `MILESTONE_INDEX`
 * The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
 * All indexes refers to the index number shown in the most recent listing.
 * All indexes *must be a positive integer* 1, 2, 3, ...

@@ -130,7 +130,7 @@ Do not leave REMARK empty. You can specify '-' or 'nil' if there is no remark fo
 
 {empty} +
 
-image::add_examples.png[width="800"]
+image::add_examples.PNG[width="800"]
 
 **Examples:**
 

@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import seedu.address.testutil.Assert;
 
+//@@author Ang-YC
 public class CommentTest {
 
     @Test

@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 
 import javafx.scene.paint.Color;
 
+//@@author Ang-YC
 /**
  * Helper functions for handling UI information
  */

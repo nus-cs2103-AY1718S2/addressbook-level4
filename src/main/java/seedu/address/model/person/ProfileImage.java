@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import javafx.scene.image.Image;
 
+//@@author Ang-YC
 /**
  * Represents a Person's profile image in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidFile(String)}

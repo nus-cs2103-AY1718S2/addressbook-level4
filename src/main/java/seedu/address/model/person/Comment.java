@@ -5,6 +5,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.util.Objects;
 
+//@@author Ang-YC
 /**
  * Represents a Person's comment in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidComment(String)}

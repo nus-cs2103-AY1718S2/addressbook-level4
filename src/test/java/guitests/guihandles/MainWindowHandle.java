@@ -63,6 +63,7 @@ public class MainWindowHandle extends StageHandle {
         return infoPanel;
     }
 
+    //@@author Ang-YC
     public Point2D getTitleBarPosition() {
         Bounds bounds = topPane.localToScreen(topPane.getBoundsInLocal());
         return new Point2D((bounds.getMinX() + bounds.getMaxX()) / 2, (

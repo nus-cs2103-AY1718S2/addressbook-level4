@@ -88,6 +88,7 @@ public class TitleBar extends UiPart<Region> {
         return controlHelp;
     }
 
+    //@@author Ang-YC
     /**
      * Opens the help window.
      */

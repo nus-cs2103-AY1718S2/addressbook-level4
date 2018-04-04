@@ -212,6 +212,7 @@ public class TypicalPersons {
         }
     }
 
+    //@@author Ang-YC
     /**
      * Forms the image path from image file name
      */
@@ -221,6 +222,7 @@ public class TypicalPersons {
         }
         return IMAGE_PATH + fileName;
     }
+    //@@author
 
     public static void main(String[] args) {
         System.out.println(ALICE);

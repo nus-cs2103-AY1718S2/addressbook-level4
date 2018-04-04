@@ -10,6 +10,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import seedu.address.commons.core.GuiSettings;
 
+//@@author Ang-YC
 /**
  * Ui Resizer, a utility to manage resize event of Stage such as resizable window
  */

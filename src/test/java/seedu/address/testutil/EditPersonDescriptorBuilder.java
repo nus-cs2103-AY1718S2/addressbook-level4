@@ -135,6 +135,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author Ang-YC
     /**
      * Sets the {@code ProfileImage} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -150,6 +151,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setComment(new Comment(comment));
         return this;
     }
+    //@@author
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}

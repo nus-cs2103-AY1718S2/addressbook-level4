@@ -4,6 +4,7 @@ import javafx.collections.ListChangeListener.Change;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.Person;
 
+//@@author Ang-YC
 /**
  * Indicates a person change in address book
  */

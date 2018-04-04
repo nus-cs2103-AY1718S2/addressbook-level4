@@ -247,6 +247,9 @@ Type in *`parse`*, press kbd:[Enter] and you have <<fig-ParseCommand>>. +
 image::ParsedResult.png[width="750"]
 [TIP]
 After that, you can add more fields if you want, or you can just press kbd:[Enter] to submit an `add` command!
+
+[NOTE]
+Currently only http://recipes.wikia.com/ is supported!
 //end::web-parse[]
 
 === *`redo`* : Redoing the previously undone command

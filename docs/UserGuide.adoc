@@ -19,7 +19,14 @@ By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 
 CLIndar is a desktop application that helps university computing students to manage their tasks and events.
 CLIndar is *Common-Line Interface (CLI) based and uses Linux-style commands*, which computing students are familiar with.
-Thus, compared to traditional Graphical User Interface (GUI) applications, CLIndar is faster and provides more convenience for its target audience.
+Thus, compared to traditional Graphical User Interface (GUI) applications, CLIndar is faster and provides more convenience for computing students.
+
+With CLIndar, you can:
+
+* Keep track of your tasks and events and be reminded of their due dates
+* Record all completed tasks and events, so that you know what you have done
+
+The current version of CLIndar is 1.4 and is available on Windows and Linux Operating Systems.
 
 == Get Started
 
@@ -37,7 +44,7 @@ This app will not work with earlier versions of Java 8.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 
-image::jasmund_ui.png[width="790"]
+image::Ui.png[width="790"]
 
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
@@ -46,7 +53,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * *`task`* `n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/Enhance major component`: Adds Software Engineering task to the desk board in CLIndar
 * *`event`* `n/Software Project s/01/05/2018 8:00 e/01/08/2018 8:00 l/School of Computing`: Adds Software Project event to the desk board
-* *`list task`* : list all uncompleted tasks
+* *`ls task`* : list all uncompleted tasks
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
@@ -68,8 +75,7 @@ For example,  `n/NAME [r/REMARK]` can be used as `n/Software Engineering Milesto
 For example, if the command specifies `n/NAME d/DATETIME`, `d/DATETIME n/NAME` is also acceptable.
 
 
-=== Viewing help : `help` or `man`
-*`As of  v1.1`*
+=== Viewing help : `help` or `man` `[As of  v1.1]`
 
 Shows the help menu for all of the commands or only the `COMMAND_WORD` requested.
 
@@ -78,12 +84,12 @@ Shows the help menu for all of the commands or only the `COMMAND_WORD` requested
 *Examples:*
 
 * `help`
-* `help task`
 * `man`
+* `help task`
 * `man task`
+* `help man`
 
-=== Adding a task: `task`
-*`As of  v1.2`*
+=== Adding a task: `task` `[As of  v1.2]`
 
 Adds a task to the desk board.
 
@@ -95,8 +101,7 @@ Adds a task to the desk board.
 * `task n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/urgent`
 * `task n/Programming Methodology Assignment 2 d/16/03/2018 23:59`
 
-=== Adding an event: `event`
-*`As of  v1.3`*
+=== Adding an event: `event` `[As of  v1.3]`
 
 Adds an event to the desk board. +
 
@@ -107,8 +112,7 @@ Adds an event to the desk board. +
 * `event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`
 * `event n/Blockchain Talk s/16/3/2018 16:00 e/16/03/2018 18:00`
 
-=== Listing uncompleted tasks and upcoming events: `ls`
-*`As of  v1.5`*
+=== Listing uncompleted tasks and upcoming events: `ls` `[As of  v1.4]`
 
 Shows one or two lists of tasks and events in the desk board as described below.
 
@@ -116,10 +120,9 @@ Shows one or two lists of tasks and events in the desk board as described below.
 
 * `ls task`: shows only uncompleted tasks.
 * `ls event`: shows only upcoming events.
-* `ls`: shows both uncompleted tasks upcoming events in 2 separate lists.
+* `ls`: shows both uncompleted tasks and upcoming events in 2 separate lists.
 
-=== Removing a task or event: `rm`
-*`As of  v1.5`*
+=== Removing a task or event: `rm` `[As of  v1.4]`
 
 Removes a task or event from the desk board according to the following conditions.
 
@@ -139,8 +142,7 @@ Removes a task or event from the desk board according to the following condition
 `rm task 2` +
 Removes the 2nd task in the desk board.
 
-=== Completing a task: `complete task` or `com task`
-*`As of  v1.5`*
+=== Completing a task: `complete task` or `com task` `[Coming Soon in  v1.5]`
 
 Completes the task at the specified `INDEX` based on the most recent listing.
 
@@ -156,22 +158,19 @@ Completes the 3rd task in the desk board.
 `com task 2` +
 Completes the 2nd task in the desk board.
 
-=== Listing all completed tasks: `ls complete task` or `ls com task`
-*`As of  v1.5`*
+=== Listing all completed tasks: `ls complete task` or `ls com task` `[Coming Soon in  v1.5]`
 
 Shows a list of all completed tasks in the desk board. +
 
 *Format:* `ls complete task` or `ls com task`
 
-=== Shows overdue tasks: `overdue`
-*`As of  v1.5`*
+=== Shows overdue tasks: `overdue` `[Coming Soon in  v1.5]`
 
 Shows a list of tasks that remain uncompleted after their respective due dates.
 
 *Format:* `overdue`
 
-=== Listing entered commands : `history`
-*`As of  v1.5`*
+=== Listing entered commands : `history` `[Coming Soon in  v1.5]`
 
 Lists all the commands that you have entered in reverse chronological order.
 
@@ -230,29 +229,23 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `r` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear` or `c`
+=== Clearing all entries : `clear` or `c` `[Coming Soon in  v1.5]`
 
 Clears all entries from the desk board.
 
 *Format:* `clear` or `c`
 
-=== Exiting the program : `exit`
+=== Exiting the program : `exit` `[Coming Soon in  v1.5]`
 
 Exits the program.
 
 *Format:* `exit`
 
-=== Editing a person : `edit task`
+=== Editing a task : `edit task` `[Coming Soon in v2.0]`
 
-*`Coming Soon in v2.0`*
+=== Locating task by name: `find task` `[Coming Soon in v2.0]`
 
-=== Locating task by name: `find task`
-
-*`Coming Soon in v2.0`*
-
-=== Listing all past events: `ls past event`
-
-*`Coming Soon in v2.0`*
+=== Listing all past events: `ls past event` `[Coming Soon in v2.0]`
 
 === Saving the data
 
@@ -263,3 +256,50 @@ There is no need to save manually.
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous CLIndar folder.
+
+== Command Summary
+
+* *Add task*: `task n/NAME d/DUE_DATE_TIME [r/REMARK] [t/TAGS]` +
+eg. `task n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/urgent`
+
+* *Add event*: `event n/NAME s/START_TIME e/END_TIME [l/LOCATION] [r/REMARK]` +
+eg. `event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`
+
+* *List uncompleted tasks and upcoming events*: `ls` +
+eg. `ls` or `ls task` or `ls event`
+
+* *Remove task or event*: `rm` +
+eg. `rm task 1` or `rm event 2`
+
+* *Complete a task*: `complete task` or `com task` +
+eg. `complete task 1` or `com task 2`
+
+* *List completed tasks*: `ls complete task` or `ls com task` +
+eg. `ls complete task` or `ls com task`
+
+* *Show overdue tasks*: `overdue` +
+eg. `overdue`
+
+* *List entered commands*: `history` +
+eg. `history`
+
+* *Undo previous command*: `undo` or `u` +
+eg. `undo` or `u`
+
+* *Redo previously undone command*: `redo` or `r` +
+eg. `redo` or `r`
+
+* *Clear all entries*: `clear` or `c` +
+eg. `clear` or `c`
+
+* *Exit the program*: `exit` +
+eg. `exit`
+
+* *Edit a task*: `edit task` +
+eg. `edit task 1`
+
+* *Locate a task by name*: `find task` +
+eg. `find task CS2106 Assignment`
+
+* *List all past events*: `ls past event` +
+eg. `ls past event`

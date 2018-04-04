@@ -10,7 +10,7 @@ import seedu.address.model.activity.Event;
 import seedu.address.model.activity.Task;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 
-//@@author YuanQQLer
+//@@author YuanQLLer
 /**
  * A utility class containing a list of {@code Activity} objects to be used in tests.
  */

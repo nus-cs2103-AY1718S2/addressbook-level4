@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.removeFirstActivity;
+import static seedu.address.logic.commands.CommandTestUtil.removeFirstTask;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ACTIVITY;
@@ -13,6 +13,7 @@ import java.util.Collections;
 
 import org.junit.Before;
 
+import org.junit.Test;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
@@ -35,9 +36,7 @@ public class RedoCommandTest {
         removeCommandTwo.preprocessUndoableCommand();
     }
 
-    /**
-     * Test
-     */
+    @Test
     public void execute() {
         UndoRedoStack undoRedoStack = prepareStack(
                 Collections.emptyList(), Arrays.asList(removeCommandTwo, removeCommandOne));
@@ -46,11 +45,11 @@ public class RedoCommandTest {
         Model expectedModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
 
         // multiple commands in redoStack
-        removeFirstActivity(expectedModel);
+        removeFirstTask(expectedModel);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // single command in redoStack
-        removeFirstActivity(expectedModel);
+        removeFirstTask(expectedModel);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // no command in redoStack

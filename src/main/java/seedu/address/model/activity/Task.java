@@ -4,7 +4,7 @@ import java.util.Set;
 
 import seedu.address.model.tag.Tag;
 
-//@@author YuanQQLer
+//@@author YuanQLLer
 /**
  * Represents a Task in the desk board.
  * The field contains 3 field, name, due date and (Optional)remark.

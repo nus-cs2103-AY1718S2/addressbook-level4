@@ -39,6 +39,7 @@ public class MainWindow extends UiPart<Stage> {
     private Config config;
     private UserPrefs prefs;
     private CalendarPanel calendarPanel;
+    private AgendaPanel agendaPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -57,6 +58,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane agendaPanelPlaceholer;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
@@ -133,6 +137,11 @@ public class MainWindow extends UiPart<Stage> {
 
         calendarPanel = new CalendarPanel(logic.getCalendar());
         browserPlaceholder.getChildren().add(calendarPanel.getCalendarPage());
+
+        agendaPanel = new AgendaPanel(logic.getCalendar());
+        agendaPanelPlaceholer.getChildren().add(agendaPanel.getAgendaView());
+
+
     }
 
     void hide() {

@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+//@@author Sebry9
 /**
  * Represents the commission recieved from a insurance plan in reInsurance.
  * Guarantees: immutable;
@@ -23,14 +23,22 @@ public class Commission {
         Insurance insurance1 = insurance;
         String insuranceName = insurance.toString();
         String commission = new String("0");
-        Pattern p = Pattern.compile("\\{(.*?)\\}");
-        Matcher m = p.matcher(insuranceName);
+        Pattern p1 = Pattern.compile("\\{(.*?)\\}");
+        Matcher m1 = p1.matcher(insuranceName);
+        Pattern p2 = Pattern.compile("\\[(.*?)\\]");
+        Matcher m2 = p2.matcher(insuranceName);
 
-        while (m.find()) {
+        while (m1.find()) {
         if (commission.equals("0")) {
-                commission = m.group().substring(1, m.group().length() - 1);
+                commission = m1.group().substring(1, m1.group().length() - 1);
             }
         }
+        while (m2.find()) {
+            if (commission.equals("0")) {
+                commission = m2.group().substring(1, m2.group().length() - 1);
+            }
+        }
+
         this.commission = commission;
 
     }

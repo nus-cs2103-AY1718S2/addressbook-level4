@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import static java.lang.Integer.parseInt;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
@@ -14,6 +15,7 @@ import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
+//@@author Sebry9
 /**
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -27,7 +29,7 @@ public class Person {
     private final Birthday birthday;
     private final Appointment appointment;
     private final Group group;
-   //private final String commission;
+    private final String totalCommission;
 
     private final UniqueInsuranceList insurance;
     private final UniqueTagList tags;
@@ -47,8 +49,7 @@ public class Person {
         this.appointment = appointment;
         this.group = group;
         this.insurance = new UniqueInsuranceList(insurance);
-        //this.commission = new Commission(insurance).getCommission();
-        // protect internal tags from changes in the arg list
+        this.totalCommission = calculateTotalCommission(insurance);
         this.tags = new UniqueTagList(tags);
         this.groups = new UniqueGroupList(group);
 
@@ -69,7 +70,7 @@ public class Person {
         this.appointment = appointment;
         this.group = group;
         this.insurance = null;
-       // this.commission = null;
+        this.totalCommission = null;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.groups = new UniqueGroupList(group);
@@ -102,6 +103,25 @@ public class Person {
 
     public Group getGroup() {
         return group;
+    }
+
+    public String getTotalCommission(){
+        return totalCommission;
+    }
+
+    //@@author Sebry9
+    /**
+     * Calculate the total commission based on the number of plan this person/client have.
+     */
+    public String calculateTotalCommission(Set<Insurance> insurances){
+      int commission = 0;
+      Insurance[] insuranceList = insurances.toArray(new Insurance[insurances.size()]);
+
+      for(int i=0; i<insurances.size(); i++) {
+          Commission plans = new Commission(insuranceList[i]);
+          commission += parseInt(plans.getCommission());
+      }
+        return Integer.toString(commission);
     }
 
     public Set<Insurance> getInsurance() {

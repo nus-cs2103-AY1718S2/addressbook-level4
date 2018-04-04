@@ -62,56 +62,45 @@ public class PersonCard extends UiPart<Region> {
         } else {
             appointment.setText(person.getAppointment().value);
         }
-
-        startInsurance(person);
+        person.getInsurance().forEach(insurance -> insurances.getChildren().add(new Label(insurance.insuranceName)));
+        commission.setText(person.getTotalCommission());
         startTag(person);
     }
 
+    //@@author Sebry9
     private String getTagColorStyleFor(String tag) {
-
-        if (tag.equals("Life")) {
-            return TAG_COLOR_STYLES[0]; //yellow
-        }
-
-        if (tag.equals("Saving")) {
-            return TAG_COLOR_STYLES[1]; //blue
-        }
-
-        if (tag.equals("Health")) {
-            return TAG_COLOR_STYLES[2]; //red
-        }
-
-        if (tag.equals("General")) {
-            return TAG_COLOR_STYLES[4]; //orange
-        }
 
         switch(tag) {
         case "friends":
         case "friend":
-            return TAG_COLOR_STYLES[0];
+        case "Life":
+            return TAG_COLOR_STYLES[0];//yellow
 
         case "teacher":
         case "classmates":
-            return TAG_COLOR_STYLES[1];
+        case "Saving":
+            return TAG_COLOR_STYLES[1];//blue
 
         case "family":
         case "husband":
-            return TAG_COLOR_STYLES[3];
+            return TAG_COLOR_STYLES[3];//green
 
         case "enemy":
         case "owesMoney":
-            return TAG_COLOR_STYLES[2];
+        case "Health":
+            return TAG_COLOR_STYLES[2];//red
 
         case "boyfriend":
         case "girlfriend":
-            return TAG_COLOR_STYLES[5];
+            return TAG_COLOR_STYLES[5];//purple
 
         case "grandparent":
         case "neighbours":
-            return TAG_COLOR_STYLES[6];
+            return TAG_COLOR_STYLES[6];//grey
 
         case "colleagues":
-            return TAG_COLOR_STYLES[4];
+        case "General":
+            return TAG_COLOR_STYLES[4];//orange
 
         default:
             return "";
@@ -130,15 +119,6 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
-    /**
-     * Creates the insurance labels for {@code person}.
-     */
-    private void startInsurance(Person person) {
-        person.getInsurance().forEach(insurance -> {
-            Label insuranceLabel = new Label(insurance.insuranceName);
-            insurances.getChildren().add(insuranceLabel);
-        });
-    }
 
     @Override
     public boolean equals(Object other) {

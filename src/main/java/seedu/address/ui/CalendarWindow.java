@@ -1,10 +1,12 @@
 package seedu.address.ui;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 //import java.time.ZoneId;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.calendarfx.model.Calendar;
@@ -49,7 +51,6 @@ public class CalendarWindow extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "CalendarPanel.fxml";
 
-    private ObservableList<Person> ownerList;
     private  ObservableList<Appointment> appointmentList;
     private Calendar calendar;
 
@@ -60,51 +61,63 @@ public class CalendarWindow extends UiPart<Region> {
      *
      * @param OwnerList
      */
-    public CalendarWindow(ObservableList<Person> ownerList, ObservableList<Appointment> appointmentList) {
+    public CalendarWindow(ObservableList<Appointment> appointmentList) {
         super(DEFAULT_PAGE);
-        this.ownerList = ownerList;
+
         this.appointmentList = appointmentList;
+
         calendarView = new CalendarView();
 
-        CalendarSource newCalendarSource = new CalendarSource("My Calendars");
-
-        calendarView.getCalendarSources().add(newCalendarSource);
-
-        calendarView.setRequestedTime(LocalTime.now());
-
-        calendar = new Calendar("Appointments");
-
-
-        CalendarSource mycalendarSource = new CalendarSource("My Appointments");
-        mycalendarSource.getCalendars().addAll(calendar);
-
-        calendarView.getCalendarSources().add(mycalendarSource);
-
-        Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
-            @Override
-            public void run() {
-                while (true) {
-                    Platform.runLater(() -> {
-                        calendarView.setToday(LocalDate.now());
-                        calendarView.setTime(LocalTime.now());
-                    });
-
-                    try {
-                        // update every 10 seconds
-                        sleep(10000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            };
-        };
-
-        updateTimeThread.setPriority(Thread.MIN_PRIORITY);
-        updateTimeThread.setDaemon(true);
-        updateTimeThread.start();
+        setTime();
+        setCalendar();
         disableViews();
-        setAppointments();
+        registerAsAnEventHandler(this);
+    }
+
+    private void setTime() {
+        calendarView.setRequestedTime(LocalTime.now());
+        calendarView.setToday(LocalDate.now());
+        calendarView.setTime(LocalTime.now());
+    }
+
+    /**
+     * Creates a new a calendar
+     */
+    private void setCalendar() {
+        setTime();
+        calendarView.getCalendarSources().clear();
+        CalendarSource calendarSource = new CalendarSource("Appointments");
+        int styleNumber = 0;
+        int appointmentCounter = 0;
+        for (Appointment appointment : appointmentList) {
+            Calendar calendar = createCalendar(styleNumber, appointment);
+            calendarSource.getCalendars().add(calendar);
+
+            LocalDateTime ldt = appointment.getDateTime();
+            Entry entry = new Entry (++appointmentCounter + ". " + appointment.getPetPatientName().toString());
+            entry.setInterval(new Interval(ldt, ldt.plusMinutes(30)));
+
+            styleNumber++;
+            styleNumber = styleNumber % 7;
+
+            calendar.addEntry(entry);
+
+        }
+        calendarView.getCalendarSources().add(calendarSource);
+    }
+
+    /**
+     *
+     * @param styleNumber
+     * @param appointment
+     * @return a calendar with given info and corresponding style
+     */
+    private Calendar createCalendar(int styleNumber, Appointment appointment) {
+        Calendar calendar = new Calendar(appointment.getPetPatientName().toString());
+        calendar.setStyle(Calendar.Style.getStyle(styleNumber));
+        calendar.setLookAheadDuration(Duration.ofDays(365));
+        calendar.setLookBackDuration(Duration.ofDays(365));
+        return calendar;
     }
 
     /**
@@ -116,6 +129,7 @@ public class CalendarWindow extends UiPart<Region> {
         calendarView.setShowSearchField(false);
         calendarView.setShowSearchResultsTray(false);
         calendarView.setShowPrintButton(false);
+        calendarView.setShowSourceTrayButton(false);
         calendarView.showDayPage();
     }
 
@@ -123,24 +137,6 @@ public class CalendarWindow extends UiPart<Region> {
         return this.calendarView;
     }
 
-    public void setAppointments() {
-        int i = 0;
-        for (Appointment appointment : appointmentList) {
-            if (appointment.getDateTime() == null) {
-                continue;
-            }
-
-            LocalDateTime ldt = appointment.getDateTime();
-
-            Entry entry = new Entry (++i + ". " + appointment.getPetPatientName().toString());
-            entry.setInterval(new Interval(ldt, ldt.plusMinutes(30)));
-            List<Entry<?>> result = calendar.findEntries(appointment.getPetPatientName().toString());
-            calendar.removeEntries(result);
-            calendar.addEntry(entry);
-
-        }
-
-    }
 
 
 }

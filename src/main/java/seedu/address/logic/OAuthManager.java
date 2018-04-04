@@ -6,6 +6,7 @@ package seedu.address.logic;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -65,6 +66,9 @@ public class OAuthManager {
      */
     private static final List<String> SCOPES =
         Arrays.asList(CalendarScopes.CALENDAR);
+
+    /** Most recent list of retrieved events */
+    private static List<Event> mostRecentEventList = new ArrayList<>();
 
     static {
         try {
@@ -137,7 +141,7 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<Event> getUpcomingEvents(User user) throws IOException {
-        List<Event> upcomingEvents = getNextXEvents(user, 10);
+        List<Event> upcomingEvents = getNextXEvents(user, 250);
         int numberOfEventsRetrieved = upcomingEvents.size();
 
         if (numberOfEventsRetrieved == 0) {
@@ -154,7 +158,7 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<String> getUpcomingEventsAsStringList(User user) throws IOException {
-        List<Event> upcomingEvents = getNextXEvents(user, 10);
+        List<Event> upcomingEvents = getNextXEvents(user, 250);
         int numberOfEventsRetrieved = upcomingEvents.size();
         List<String> eventListAsString = new ArrayList<>();
 
@@ -162,11 +166,14 @@ public class OAuthManager {
             System.out.println("No upcoming events found.");
         } else {
             System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s): ");
+            int eventIndex = 1;
             for (Event event : upcomingEvents) {
                 String eventAsString = formatEventDetailsAsString(event);
-                eventListAsString.add(eventAsString);
+                eventListAsString.add(String.valueOf(eventIndex++) + ". " + eventAsString);
             }
         }
+
+        mostRecentEventList = getUpcomingEvents(user);
 
         return eventListAsString;
     }
@@ -174,7 +181,7 @@ public class OAuthManager {
     /**
      * Formats an event object as a human-readable string.
      */
-    private static String formatEventDetailsAsString(Event event) {
+    public static String formatEventDetailsAsString(Event event) {
         String title = event.getSummary();
         DateTime startAsDateTime = event.getStart().getDateTime();
         DateTime endAsDateTime = event.getEnd().getDateTime();
@@ -355,6 +362,42 @@ public class OAuthManager {
         return apiResponse;
     }
 
+    /**
+     * Gets the most recent event list shown to the user.
+     * @return List<Event>
+     */
+    public static List<Event> getMostRecentEventList() {
+        return mostRecentEventList;
+    }
+
+    /**
+     * Gets the specified event by index (offset by 1 due to array indexing) according to a user's input.
+     * @param index
+     * @return Event
+     */
+    public static Event getEventByIndexFromLastList(int index) {
+        return mostRecentEventList.get(index - 1);
+    }
+
+    /**
+     * A wrapper of the Google Calendar Event: delete API endpoint to remove a calendar event
+     * from a user's Google Calendar.
+     * @throws IOException
+     */
+    public static void deleteEvent(User user, Event event) throws IOException {
+        // Build a new authorized API client service.
+        // Note: Do not confuse this class with the
+        //   com.google.api.services.calendar.model.Calendar class.
+
+        com.google.api.services.calendar.Calendar service =
+                getCalendarService(user);
+        String calendarId = "primary";
+        try {
+            service.events().delete(calendarId, event.getId()).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 //@@author

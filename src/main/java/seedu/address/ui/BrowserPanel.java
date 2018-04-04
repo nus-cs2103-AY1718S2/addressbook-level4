@@ -22,9 +22,10 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+            "https://calendar.google.com/calendar/embed?src=etcshadowgame%40gmail.com&ctz=Asia%2FSingapore";
 
-    private static final String FXML = "BrowserPanel.fxml";
+    private static final String FXML =
+            "BrowserPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -53,8 +54,11 @@ public class BrowserPanel extends UiPart<Region> {
      * Loads a default HTML file with a background that matches the general theme.
      */
     private void loadDefaultPage() {
+        loadPage(SEARCH_PAGE_URL);
+        /*
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         loadPage(defaultPage.toExternalForm());
+        */
     }
 
     /**

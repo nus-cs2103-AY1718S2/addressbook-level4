@@ -9,8 +9,10 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.Rule;
@@ -30,6 +32,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemovePlatformCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -143,6 +146,18 @@ public class AddressBookParserTest {
                 + " " + CliSyntax.PREFIX_LINK + testLink);
 
         assertEquals(new AddPlatformCommand(INDEX_FIRST_PERSON, linkMap), command);
+    }
+
+    @Test
+    public void parseCommand_removePlatform() throws Exception {
+        String platform = "facebook";
+        Set<String> platformSet = new HashSet<>();
+        platformSet.add(platform);
+        RemovePlatformCommand command = (RemovePlatformCommand) parser.parseCommand(RemovePlatformCommand.COMMAND_WORD
+                + " " + INDEX_FIRST_PERSON.getOneBased()
+                + " " + CliSyntax.PREFIX_SOCIAL_MEDIA_PLATFORM + platform);
+
+        assertEquals(new RemovePlatformCommand(INDEX_FIRST_PERSON, platformSet), command);
     }
 
     //@@author

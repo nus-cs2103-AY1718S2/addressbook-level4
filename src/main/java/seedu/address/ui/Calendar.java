@@ -172,49 +172,10 @@ public class Calendar extends UiPart<Region> {
         return calendarView;
     }
 
-    /**
-     * Return the header of the Calendar
-     */
-    public Text getCalendarHeader() {
-        return calendarHeader;
-    }
-
-    /**
-     * Return the list of all visible day in the current month
-     */
-    public ArrayList<CalendarDate> getAllCalendarDays() {
-        return allCalendarDays;
-    }
-
-    /**
-     * Set all currently visible days to {@code allCalendarDays}
-     */
-    public void setAllCalendarDays(ArrayList<CalendarDate> allCalendarDays) {
-        this.allCalendarDays = allCalendarDays;
-    }
-
     public CalendarDate getDateNode(LocalDate date) {
         LocalDate firstDay = LocalDate.of(currentYearMonth.getYear(), currentYearMonth.getMonthValue(), 1);
         int firstDayIndex = firstDay.getDayOfWeek().getValue() - 1;
         int gap = date.getDayOfMonth() - firstDay.getDayOfMonth();
         return allCalendarDays.get(firstDayIndex + gap);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof Calendar)) {
-            return false;
-        }
-
-        // state check
-        Calendar theOther = (Calendar) other;
-        return calendarHeader.getText().equals(theOther.getCalendarHeader().getText())
-                && allCalendarDays.equals(theOther.getAllCalendarDays());
     }
 }

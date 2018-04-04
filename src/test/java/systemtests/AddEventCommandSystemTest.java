@@ -30,6 +30,9 @@ import static seedu.address.testutil.TypicalEvents.F1RACE;
 import static seedu.address.testutil.TypicalEvents.GSS;
 import static seedu.address.testutil.TypicalEvents.HARIRAYA;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -53,9 +56,12 @@ public class AddEventCommandSystemTest extends AddressBookSystemTest {
         /* Case: add an event to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
          */
-        Event toAdd = F1RACE;
+        LocalDate localDate = LocalDate.now();//For reference
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String today = localDate.format(formatter);
+        Event toAdd = new EventBuilder().withDate(today).build();
         String command = "   " + AddEventCommand.COMMAND_WORD + "  " + EVENT_NAME_DESC_F1 + "  " + EVENT_VENUE_DESC_F1
-                + " " + EVENT_DATE_DESC_F1 + "   " + EVENT_START_TIME_DESC_F1 + "   " + EVENT_END_TIME_DESC_F1;
+                + " d/" + today + "   " + EVENT_START_TIME_DESC_F1 + "   " + EVENT_END_TIME_DESC_F1;
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding F1 to the list -> F1 deleted */

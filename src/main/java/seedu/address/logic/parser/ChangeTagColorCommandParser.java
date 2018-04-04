@@ -17,7 +17,8 @@ public class ChangeTagColorCommandParser implements Parser<ChangeTagColorCommand
 
     @Override
     public ChangeTagColorCommand parse(String userInput) throws ParseException {
-        String[] args = userInput.trim().split(" ");
+        String trimmedInput = userInput.trim().replaceAll(" +", " ");;
+        String[] args = trimmedInput.split(" ");
         if (args.length != 2) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeTagColorCommand.MESSAGE_USAGE));

@@ -11,8 +11,10 @@ import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.ToDoCardHandle;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 import seedu.address.model.todo.ToDo;
+import seedu.address.ui.CalendarDate;
 import seedu.address.ui.PersonCard;
 
 /**
@@ -65,6 +67,14 @@ public class GuiTestAssert {
     public static void assertCardDisplaysToDo(ToDo expectedToDo, ToDoCardHandle actualCard) {
         assertEquals(expectedToDo.getContent().value, actualCard.getContent());
         assertEquals(expectedToDo.getStatus().value, actualCard.getStatus());
+    }
+
+    /**
+     * Asserts that {@code actualDate} displays the details of {@code expectedEvent}.
+     */
+    public static void assertDateDisplaysEvent(Event expectedEvent, CalendarDate actualDate) {
+        assertEquals(expectedEvent.getName(), actualDate.getEventText().getText());
+        assertEquals(expectedEvent.getDate(), actualDate.getDate());
     }
 
     /**

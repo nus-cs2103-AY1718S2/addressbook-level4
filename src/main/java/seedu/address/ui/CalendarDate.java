@@ -3,6 +3,7 @@ package seedu.address.ui;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -32,8 +33,7 @@ public class CalendarDate extends UiPart<Region> {
     private Text eventText;
 
     /**
-     * Create a anchor pane node containing all of the {@code children}.
-     * The date of the node is not set in the constructor
+     * Create a calendar date for today on the calendar
      */
     public CalendarDate() {
         super(FXML);
@@ -42,27 +42,13 @@ public class CalendarDate extends UiPart<Region> {
     }
 
     /**
-     * Create a anchor pane node containing all of the {@code children}.
-     * The date of the node is not set in the constructor
+     * Create a calendar date for an event on the calendar
      */
-    public CalendarDate(LocalDate date) {
+    public CalendarDate(Event event) {
         super(FXML);
-        this.date = date;
+        this.date = LocalDate.parse(event.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         initStyle();
-    }
-
-    public CalendarDate(LocalDate date, Event event) {
-        super(FXML);
-        this.date = date;
-        initStyle();
-        String[] dayMonthYear = event.getDate().split("/");
-        int day = Integer.parseInt(dayMonthYear[0]);
-        int month = Integer.parseInt(dayMonthYear[1]);
-        int year = Integer.parseInt(dayMonthYear[2]);
-        LocalDate eventDate = LocalDate.of(year, month, day);
-        if (date.equals(eventDate)) {
-            eventText.setText(event.getName());
-        }
+        eventText.setText(event.getName());
     }
 
     /**
@@ -98,6 +84,11 @@ public class CalendarDate extends UiPart<Region> {
         for (String style : styles) {
             styleClass.add(style);
         }
+    }
+
+    public String getDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return date.format(formatter);
     }
 
     public GridPane getBox() {
@@ -138,6 +129,6 @@ public class CalendarDate extends UiPart<Region> {
 
         // state check
         CalendarDate theOther = (CalendarDate) other;
-        return node.equals(theOther.node);
+        return date.equals(theOther.date) && eventText.getText().equals(theOther.getEventText().getText());
     }
 }

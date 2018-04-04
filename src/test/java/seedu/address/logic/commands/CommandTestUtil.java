@@ -52,6 +52,7 @@ public class CommandTestUtil {
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friends";
     public static final String VALID_TAG_COLOR_RED = "red";
+    public static final String VALID_TAG_COLOR_BROWN = "brown";
     public static final String VALID_TAG_UNUSED = "UNUSED"; //for testing only, do not use to build person
 
     public static final String VALID_EVENT_NAME_F1 = "F1 Race";

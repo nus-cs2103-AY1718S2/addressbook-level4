@@ -116,7 +116,7 @@ public class MainApp extends Application {
             }
             initialCustomerStats = new CustomerStats();
         } catch (DataConversionException e) {
-            logger.warning("Data file for customer stats not in the correct format. Will be starting with an empty file");
+            logger.warning("Data file for customer stats in wrong format. Will be starting with an empty file");
             initialCustomerStats = new CustomerStats();
         }  catch (IOException e) {
             logger.warning("Problem while reading from the customer stats file. Will be starting with an empty file");

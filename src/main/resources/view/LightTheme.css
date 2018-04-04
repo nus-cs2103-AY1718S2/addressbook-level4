@@ -394,6 +394,10 @@ body {
     -fx-text-fill: #222;
 }
 
+#commandTextField:readonly {
+    -fx-opacity: 0.8;
+}
+
 #resultDisplay .content {
     -fx-background-color: transparent, #ECEFF1, transparent, #ECEFF1;
     -fx-background-radius: 0;

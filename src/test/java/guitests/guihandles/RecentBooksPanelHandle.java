@@ -115,6 +115,10 @@ public class RecentBooksPanelHandle extends NodeHandle<ListView<Book>> {
         getRootNode().getSelectionModel().select(index);
     }
 
+    public boolean isVisible() {
+        return getRootNode().getParent().isVisible();
+    }
+
     /**
      * Remembers the selected {@code Book} in the list.
      */

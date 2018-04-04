@@ -74,7 +74,9 @@ public class SearchCommandSystemTest extends BibliotekSystemTest {
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchanged();
 
-        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(SearchCommand.MESSAGE_SEARCHING));
+        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(SearchCommand.MESSAGE_SEARCHING),
+                GuiRobot.NETWORK_ACTION_TIMEOUT_MILLISECONDS);
+        new GuiRobot().waitForEvent(() -> getCommandBox().isEnabled(), GuiRobot.NETWORK_ACTION_TIMEOUT_MILLISECONDS);
 
         BookShelf searchResults = new BookShelf();
         searchResults.setBooks(getModel().getSearchResultsList());
@@ -83,6 +85,7 @@ public class SearchCommandSystemTest extends BibliotekSystemTest {
         assertApplicationDisplaysExpected("",
                 String.format(SearchCommand.MESSAGE_SEARCH_SUCCESS, searchResults.size()), expectedModel);
         assertCommandBoxShowsDefaultStyle();
+        assertCommandBoxEnabled();
         assertStatusBarUnchanged();
     }
 

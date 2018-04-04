@@ -43,4 +43,8 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     public ObservableList<String> getStyleClass() {
         return getRootNode().getStyleClass();
     }
+
+    public boolean isEnabled() {
+        return getRootNode().isEditable();
+    }
 }

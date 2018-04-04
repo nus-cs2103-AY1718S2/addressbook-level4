@@ -10,6 +10,8 @@ import java.util.Optional;
 
 import javafx.application.Platform;
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.DisableCommandBoxRequestEvent;
+import seedu.address.commons.events.ui.EnableCommandBoxRequestEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.SwitchToSearchResultsRequestEvent;
 import seedu.address.commons.util.CollectionUtil;
@@ -60,6 +62,7 @@ public class SearchCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        EventsCenter.getInstance().post(new DisableCommandBoxRequestEvent());
         makeAsyncSearchRequest();
         return new CommandResult(MESSAGE_SEARCHING);
     }
@@ -72,6 +75,7 @@ public class SearchCommand extends Command {
                 .thenAccept(this::onSuccessfulRequest)
                 .exceptionally(e -> {
                     EventsCenter.getInstance().post(new NewResultAvailableEvent(SearchCommand.MESSAGE_SEARCH_FAIL));
+                    EventsCenter.getInstance().post(new EnableCommandBoxRequestEvent());
                     return null;
                 });
     }
@@ -95,6 +99,7 @@ public class SearchCommand extends Command {
         EventsCenter.getInstance().post(new SwitchToSearchResultsRequestEvent());
         EventsCenter.getInstance().post(new NewResultAvailableEvent(
                 String.format(SearchCommand.MESSAGE_SEARCH_SUCCESS, bookShelf.size())));
+        EventsCenter.getInstance().post(new EnableCommandBoxRequestEvent());
     }
 
     @Override

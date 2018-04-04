@@ -9,6 +9,8 @@ import javafx.application.Platform;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.DisableCommandBoxRequestEvent;
+import seedu.address.commons.events.ui.EnableCommandBoxRequestEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.book.Book;
@@ -56,6 +58,7 @@ public class AddCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() {
         requireNonNull(toAdd);
 
+        EventsCenter.getInstance().post(new DisableCommandBoxRequestEvent());
         makeAsyncBookDetailsRequest();
         return new CommandResult(MESSAGE_ADDING);
     }
@@ -68,6 +71,7 @@ public class AddCommand extends UndoableCommand {
                 .thenAccept(this::onSuccessfulRequest)
                 .exceptionally(e -> {
                     EventsCenter.getInstance().post(new NewResultAvailableEvent(AddCommand.MESSAGE_ADD_FAIL));
+                    EventsCenter.getInstance().post(new EnableCommandBoxRequestEvent());
                     return null;
                 });
     }
@@ -94,6 +98,7 @@ public class AddCommand extends UndoableCommand {
         } catch (DuplicateBookException e) {
             EventsCenter.getInstance().post(new NewResultAvailableEvent(AddCommand.MESSAGE_DUPLICATE_BOOK));
         }
+        EventsCenter.getInstance().post(new EnableCommandBoxRequestEvent());
     }
 
     @Override

@@ -146,10 +146,7 @@ public class StudentBuilder {
         return this;
     }
 
-    public Student build() {
-        return new Student(name, phone, email, address, programmingLanguage, tags, favourite, profilePicturePath);
-    }
-
+    /**
      * Sets the {@code dashboard} of the {@code Student} that we are building.
      */
     public StudentBuilder withDashboard(Dashboard dashboard) {
@@ -220,7 +217,8 @@ public class StudentBuilder {
     }
 
     public Student build() {
-        return new Student(uniqueKey, name, phone, email, address, programmingLanguage, tags, favourite, dashboard);
+        return new Student(uniqueKey, name, phone, email, address, programmingLanguage, tags,
+                favourite, dashboard, profilePicturePath);
     }
 
 }

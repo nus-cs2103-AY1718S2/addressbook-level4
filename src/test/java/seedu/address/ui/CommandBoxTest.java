@@ -159,114 +159,81 @@ public class CommandBoxTest extends GuiUnitTest {
     @Test
     public void commandBox_autocompleteCommandWord() {
         //add command
-        commandBoxHandle.setText("a");
-        selectFromContextMenu();
-        assertEquals("add", commandBoxHandle.getInput());
-
-        commandBoxHandle.setText(" ");
-        selectFromContextMenu();
-        assertEquals(" add", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("a", 1, "add");
+        testAutocompleteForUserInput(" ", 1, " add");
 
         //clear command
-        commandBoxHandle.setText("cl");
-        selectFromContextMenu();
-        assertEquals("clear", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("cl", 1, "clear");
 
         //delete command
-        commandBoxHandle.setText("d");
-        selectFromContextMenu();
-        assertEquals("delete", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("d", 1, "delete");
 
         //edit command
-        commandBoxHandle.setText("ed");
-        selectFromContextMenu();
-        assertEquals("edit", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("ed", 1, "edit");
 
         //exit command
-        commandBoxHandle.setText("ex");
-        selectFromContextMenu();
-        assertEquals("exit", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("ex", 1, "exit");
 
         //help command
-        commandBoxHandle.setText("h");
-        selectFromContextMenu();
-        assertEquals("help", commandBoxHandle.getInput());
-
-        commandBoxHandle.setText("he");
-        selectFromContextMenu();
-        assertEquals("help", commandBoxHandle.getInput());
-
-        commandBoxHandle.setText("hel");
-        selectFromContextMenu();
-        assertEquals("help", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("h", 1, "help");
+        testAutocompleteForUserInput("he", 1, "help");
+        testAutocompleteForUserInput("hel", 1, "help");
 
         //history command
-        commandBoxHandle.setText("h");
-        guiRobot.push(KeyCode.TAB);
-        selectFromContextMenu();
-        assertEquals("history", commandBoxHandle.getInput());
-
-        commandBoxHandle.setText("hi");
-        selectFromContextMenu();
-        assertEquals("history", commandBoxHandle.getInput());
-
-        commandBoxHandle.setText("hist");
-        selectFromContextMenu();
-        assertEquals("history", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("h", 2, "history");
+        testAutocompleteForUserInput("hi", 1, "history");
+        testAutocompleteForUserInput("hist", 1, "history");
 
         //list command
-        commandBoxHandle.setText("l");
-        selectFromContextMenu();
-        assertEquals("list", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("l", 1, "list");
 
         //theme command
-        commandBoxHandle.setText("t");
-        selectFromContextMenu();
-        assertEquals("theme", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("t", 1, "theme");
 
         //undo
-        commandBoxHandle.setText("u");
-        selectFromContextMenu();
-        assertEquals("undo", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("u", 1, "undo");
 
         //redo
-        commandBoxHandle.setText("r");
-        selectFromContextMenu();
-        assertEquals("redo", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("r", 1, "redo");
     }
 
     @Test
     public void commandBox_autocompleteOption() {
-        //add command with -o
-        commandBoxHandle.setText("add");
-        commandBoxHandle.insertText(" -");
-        selectFromContextMenu();
-        assertEquals("add -o", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("add -", 1, "add -o");
+        testAutocompleteForUserInput("find -", 2, "find -p");
+        testAutocompleteForUserInput("delete -", 3, "delete -a");
     }
 
     @Test
     public void commandBox_autocompletePrefix() {
-        //prefix n/
-        commandBoxHandle.setText("add");
-        commandBoxHandle.insertText(" n");
-        selectFromContextMenu();
-        assertEquals("add n/", commandBoxHandle.getInput());
+        // prefix n/
+        testAutocompleteForUserInput("add -o n", 1, "add -o n/");
 
-        //prefix nr/
-        commandBoxHandle.setText("add");
-        commandBoxHandle.insertText(" n");
-        guiRobot.push(KeyCode.TAB);
-        selectFromContextMenu();
-        assertEquals("add nr/", commandBoxHandle.getInput());
+        // prefix nr/
+        testAutocompleteForUserInput("add -o n", 2, "add -o nr/");
+        testAutocompleteForUserInput("add -o nr", 1, "add -o nr/");
 
-        commandBoxHandle.setText("add");
-        commandBoxHandle.insertText(" nr");
-        selectFromContextMenu();
-        assertEquals("add nr/", commandBoxHandle.getInput());
+        //prefix b/
+        testAutocompleteForUserInput("add -p b", 2, "add -p b/");
+
+        //prefix bt/
+        testAutocompleteForUserInput("add -p b", 1, "add -p bt/");
     }
 
-    private void selectFromContextMenu() {
-        guiRobot.push(KeyCode.TAB);
+    /**
+     * Checks that {@code userInput} with the {@code numOfTabs} to select an option on autocomplete's context menu
+     * will result in {@code actualCommand}.
+     */
+    private void testAutocompleteForUserInput(String userInput, int numOfTabs, String actualCommand) {
+        commandBoxHandle.setText(userInput);
+
+        while (numOfTabs > 0) {
+            guiRobot.push(KeyCode.TAB);
+            numOfTabs--;
+        }
         guiRobot.push(KeyCode.ENTER);
+
+        assertEquals(actualCommand, commandBoxHandle.getInput());
     }
+
 }

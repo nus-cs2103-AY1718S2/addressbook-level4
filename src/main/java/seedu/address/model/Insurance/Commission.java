@@ -13,8 +13,6 @@ import static java.util.Objects.requireNonNull;
  */
 public class Commission {
 
-    private final Insurance insurance;
-
     private final String commission;
 
     /**
@@ -22,7 +20,7 @@ public class Commission {
      */
     public Commission(Insurance insurance) {
         requireNonNull(insurance);
-        this.insurance = insurance;
+        Insurance insurance1 = insurance;
         String insuranceName = insurance.toString();
         String commission = new String("0");
         Pattern p = Pattern.compile("\\{(.*?)\\}");

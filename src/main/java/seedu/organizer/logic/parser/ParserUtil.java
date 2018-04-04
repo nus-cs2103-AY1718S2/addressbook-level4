@@ -16,6 +16,7 @@ import seedu.organizer.model.task.Description;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
 import seedu.organizer.model.user.User;
+import seedu.organizer.model.user.UserWithQuestionAnswer;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -128,6 +129,54 @@ public class ParserUtil {
     public static Optional<String> parsePassword(Optional<String> password) throws IllegalValueException {
         requireNonNull(password);
         return password.isPresent() ? Optional.of(parsePassword(password.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String question} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code question} is invalid.
+     */
+    public static String parseQuestion(String question) throws IllegalValueException {
+        requireNonNull(question);
+        String trimmedQuestion = question.trim();
+        if (!UserWithQuestionAnswer.isValidQuestion(trimmedQuestion)) {
+            throw new IllegalValueException(UserWithQuestionAnswer.MESSAGE_QUESTION_ANSWER_CONSTRAINTS);
+        }
+        return question;
+    }
+
+    /**
+     * Parses a {@code Optional<String> question} into an {@code Optional<String>} if {@code question} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseQuestion(Optional<String> question) throws IllegalValueException {
+        requireNonNull(question);
+        return question.isPresent() ? Optional.of(parseQuestion(question.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String answer} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code answer} is invalid.
+     */
+    public static String parseAnswer(String answer) throws IllegalValueException {
+        requireNonNull(answer);
+        String trimmedAnswer = answer.trim();
+        if (!UserWithQuestionAnswer.isValidAnswer(trimmedAnswer)) {
+            throw new IllegalValueException(UserWithQuestionAnswer.MESSAGE_QUESTION_ANSWER_CONSTRAINTS);
+        }
+        return answer;
+    }
+
+    /**
+     * Parses a {@code Optional<String> answer} into an {@code Optional<String>} if {@code answer} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseAnswer(Optional<String> answer) throws IllegalValueException {
+        requireNonNull(answer);
+        return answer.isPresent() ? Optional.of(parseAnswer(answer.get())) : Optional.empty();
     }
     //@@author
 

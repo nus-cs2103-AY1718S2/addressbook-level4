@@ -1,3 +1,4 @@
+
 = PrioriTask - User Guide
 :linkcss:
 :icons: font
@@ -210,6 +211,41 @@ Logout of PrioriTask +
 [format-title]#Format:# `logout`
 ====
 
+==== Retrieving question for user's password: `forgotpassword` or `fp` `[since v1.4]`
+
+Retrieve question for user's password +
+
+[.format]
+====
+[format-title]#Format:# `forgotpassword u/USERNAME `
+====
+
+[.example]
+====
+[example-title]#Examples:#
+
+* [example]#`forgotpassword u/patrick`#
+* [example]#`forgotpassword u/mary`#
+====
+
+==== Answering question: `answer` or `ans` `[since v1.4]`
+
+Answer a user's question to retrieve the password +
+
+[.format]
+====
+[format-title]#Format:# `answer u/USERNAME a/ANSWER`
+====
+
+[.example]
+====
+[example-title]#Examples:#
+
+* [example]#`answer u/patrick a/yes`#
+* [example]#`answer u/mary a/no`#
+====
+
+=== Task Management Features
 === Deleting an account `[coming in v2.0]`
 
 _{ Describe the command function }_

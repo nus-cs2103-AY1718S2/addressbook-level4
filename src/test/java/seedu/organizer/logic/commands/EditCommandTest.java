@@ -138,7 +138,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_duplicatePersonFilteredList_failure() {
+    public void execute_duplicateTaskFilteredList_failure() {
         showPersonAtIndex(model, INDEX_FIRST_TASK);
 
         // edit task in filtered list into a duplicate in organizer book
@@ -150,7 +150,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_invalidPersonIndexUnfilteredList_failure() {
+    public void execute_invalidTaskIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
         EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withName(VALID_NAME_STUDY).build();
         EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor);
@@ -163,7 +163,7 @@ public class EditCommandTest {
      * but smaller than size of organizer book
      */
     @Test
-    public void execute_invalidPersonIndexFilteredList_failure() {
+    public void execute_invalidTaskIndexFilteredList_failure() {
         showPersonAtIndex(model, INDEX_FIRST_TASK);
         Index outOfBoundIndex = INDEX_SECOND_TASK;
         // ensures that outOfBoundIndex is still in bounds of organizer book list
@@ -224,7 +224,7 @@ public class EditCommandTest {
      * 4. Redo the edit. This ensures {@code RedoCommand} edits the task object regardless of indexing.
      */
     @Test
-    public void executeUndoRedo_validIndexFilteredList_samePersonEdited() throws Exception {
+    public void executeUndoRedo_validIndexFilteredList_sameTaskEdited() throws Exception {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);

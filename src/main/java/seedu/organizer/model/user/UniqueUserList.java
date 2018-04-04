@@ -121,6 +121,36 @@ public class UniqueUserList implements Iterable<User> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    /**
+     * Replaces a user with another user in internalList
+     */
+    public void updateUserToUserWithQuestionAnswer(
+            User toRemove, UserWithQuestionAnswer toAdd) throws UserNotFoundException {
+
+        requireAllNonNull(toRemove, toAdd);
+        if (!internalList.contains(toRemove)) {
+            throw new UserNotFoundException();
+        }
+        internalList.remove(toRemove);
+        internalList.add(toAdd);
+
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    public User getUserByUsername(String username) throws UserNotFoundException {
+        requireNonNull(username);
+        User userWithUsername = null;
+        for (User u : internalList) {
+            if (u.username.equals(username)) {
+                userWithUsername = u;
+            }
+        }
+        if (userWithUsername == null) {
+            throw new UserNotFoundException();
+        }
+        return userWithUsername;
+    }
+
     @Override
     public Iterator<User> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);

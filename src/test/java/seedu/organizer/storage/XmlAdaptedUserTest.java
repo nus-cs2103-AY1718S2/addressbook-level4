@@ -38,14 +38,14 @@ public class XmlAdaptedUserTest {
     @Test
     public void toModel_invalidUsername() {
         Assert.assertThrows(
-                IllegalValueException.class, () -> new XmlAdaptedUser("", "validpassword").toModelType()
+                IllegalValueException.class, () -> new XmlAdaptedUser("", "validpassword").toUserModelType()
         );
     }
 
     @Test
     public void toModel_invalidPassword() {
         Assert.assertThrows(
-                IllegalValueException.class, () -> new XmlAdaptedUser("validusername", "").toModelType()
+                IllegalValueException.class, () -> new XmlAdaptedUser("validusername", "").toUserModelType()
         );
     }
 }

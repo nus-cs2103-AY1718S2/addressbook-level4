@@ -45,38 +45,38 @@ public class XmlOrganizerStorage implements OrganizerStorage {
                                                                                  FileNotFoundException {
         requireNonNull(filePath);
 
-        File addressBookFile = new File(filePath);
+        File organizerFile = new File(filePath);
 
-        if (!addressBookFile.exists()) {
-            logger.info("Organizer file "  + addressBookFile + " not found");
+        if (!organizerFile.exists()) {
+            logger.info("Organizer file "  + organizerFile + " not found");
             return Optional.empty();
         }
 
-        XmlSerializableOrganizer xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
+        XmlSerializableOrganizer xmlOrganizer = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
         try {
-            return Optional.of(xmlAddressBook.toModelType());
+            return Optional.of(xmlOrganizer.toModelType());
         } catch (IllegalValueException ive) {
-            logger.info("Illegal values found in " + addressBookFile + ": " + ive.getMessage());
+            logger.info("Illegal values found in " + organizerFile + ": " + ive.getMessage());
             throw new DataConversionException(ive);
         }
     }
 
     @Override
-    public void saveOrganizer(ReadOnlyOrganizer addressBook) throws IOException {
-        saveOrganizer(addressBook, filePath);
+    public void saveOrganizer(ReadOnlyOrganizer organizer) throws IOException {
+        saveOrganizer(organizer, filePath);
     }
 
     /**
      * Similar to {@link #saveOrganizer(ReadOnlyOrganizer)}
      * @param filePath location of the data. Cannot be null
      */
-    public void saveOrganizer(ReadOnlyOrganizer addressBook, String filePath) throws IOException {
-        requireNonNull(addressBook);
+    public void saveOrganizer(ReadOnlyOrganizer organizer, String filePath) throws IOException {
+        requireNonNull(organizer);
         requireNonNull(filePath);
 
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
-        XmlFileStorage.saveDataToFile(file, new XmlSerializableOrganizer(addressBook));
+        XmlFileStorage.saveDataToFile(file, new XmlSerializableOrganizer(organizer));
     }
 
 }

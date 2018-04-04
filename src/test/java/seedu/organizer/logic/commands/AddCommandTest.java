@@ -26,6 +26,7 @@ import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
 import seedu.organizer.model.user.User;
+import seedu.organizer.model.user.UserWithQuestionAnswer;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.DuplicateUserException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
@@ -119,6 +120,17 @@ public class AddCommandTest {
         @Override
         public void deleteCurrentUserTasks() {
             fail("This method should not be called");
+        }
+
+        @Override
+        public void addQuestionAnswerToUser(User toRemove, UserWithQuestionAnswer toAdd) {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public User getUserByUsername(String username) throws UserNotFoundException {
+            fail("This method should not be called");
+            return null;
         }
 
         @Override

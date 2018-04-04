@@ -92,7 +92,7 @@ public class StorageManagerTest {
         }
 
         @Override
-        public void saveOrganizer(ReadOnlyOrganizer addressBook, String filePath) throws IOException {
+        public void saveOrganizer(ReadOnlyOrganizer organizer, String filePath) throws IOException {
             throw new IOException("dummy exception");
         }
     }

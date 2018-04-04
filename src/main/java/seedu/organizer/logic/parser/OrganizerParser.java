@@ -9,7 +9,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.organizer.logic.commands.AddCommand;
+import seedu.organizer.logic.commands.AddQuestionAnswerCommand;
 import seedu.organizer.logic.commands.AddSubtaskCommand;
+import seedu.organizer.logic.commands.AnswerCommand;
 import seedu.organizer.logic.commands.ClearCommand;
 import seedu.organizer.logic.commands.Command;
 import seedu.organizer.logic.commands.CurrentMonthCommand;
@@ -21,6 +23,7 @@ import seedu.organizer.logic.commands.FindDeadlineCommand;
 import seedu.organizer.logic.commands.FindDescriptionCommand;
 import seedu.organizer.logic.commands.FindMultipleFieldsCommand;
 import seedu.organizer.logic.commands.FindNameCommand;
+import seedu.organizer.logic.commands.ForgotPasswordCommand;
 import seedu.organizer.logic.commands.HelpCommand;
 import seedu.organizer.logic.commands.HistoryCommand;
 import seedu.organizer.logic.commands.ListCommand;
@@ -76,6 +79,18 @@ public class OrganizerParser {
 
             case LoginCommand.COMMAND_ALIAS:
                 return new LoginCommandParser().parse(arguments);
+
+            case ForgotPasswordCommand.COMMAND_WORD:
+                return new ForgotPasswordCommandParser().parse(arguments);
+
+            case ForgotPasswordCommand.COMMAND_ALIAS:
+                return new ForgotPasswordCommandParser().parse(arguments);
+
+            case AnswerCommand.COMMAND_WORD:
+                return new AnswerCommandParser().parse(arguments);
+
+            case AnswerCommand.COMMAND_ALIAS:
+                return new AnswerCommandParser().parse(arguments);
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
@@ -203,6 +218,9 @@ public class OrganizerParser {
 
         case NextMonthCommand.COMMAND_ALIAS:
             return new NextMonthCommand();
+
+        case AddQuestionAnswerCommand.COMMAND_WORD:
+            return new AddQuestionAnswerCommandParser().parse(arguments);
 
         case CurrentMonthCommand.COMMAND_WORD:
             return new CurrentMonthCommand();

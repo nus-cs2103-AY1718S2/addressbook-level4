@@ -12,7 +12,8 @@ import static seedu.organizer.commons.util.AppUtil.checkArgument;
  */
 public class User {
 
-    public static final String MESSAGE_USER_CONSTRAINTS = "Username and password should be alphanumeric";
+    public static final String MESSAGE_USER_CONSTRAINTS = "Username and password should be alphanumeric"
+                                                            + " and must not contain spaces";
     public static final String USERNAME_VALIDATION_REGEX = "\\p{Alnum}+";
     public static final String PASSWORD_VALIDATION_REGEX = "\\p{Alnum}+";
 
@@ -51,8 +52,7 @@ public class User {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof User // instanceof handles nulls
-                && this.username.equals(((User) other).username) // state check
-                && this.password.equals(((User) other).username));
+                && this.username.equals(((User) other).username)); // state check
     }
 
     @Override

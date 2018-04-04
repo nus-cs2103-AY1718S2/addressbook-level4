@@ -12,16 +12,16 @@ import seedu.organizer.model.ReadOnlyOrganizer;
  * Represents a command which can be undone and redone.
  */
 public abstract class UndoableCommand extends Command {
-    private ReadOnlyOrganizer previousAddressBook;
+    private ReadOnlyOrganizer previousOrganizer;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
     /**
      * Stores the current state of {@code model#addressBook}.
      */
-    private void saveAddressBookSnapshot() {
+    private void saveOrganizerSnapshot() {
         requireNonNull(model);
-        this.previousAddressBook = new Organizer(model.getOrganizer());
+        this.previousOrganizer = new Organizer(model.getOrganizer());
     }
 
     /**
@@ -36,8 +36,8 @@ public abstract class UndoableCommand extends Command {
      * show all persons.
      */
     protected final void undo() {
-        requireAllNonNull(model, previousAddressBook);
-        model.resetData(previousAddressBook);
+        requireAllNonNull(model, previousOrganizer);
+        model.resetData(previousOrganizer);
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
     }
 
@@ -58,7 +58,7 @@ public abstract class UndoableCommand extends Command {
 
     @Override
     public final CommandResult execute() throws CommandException {
-        saveAddressBookSnapshot();
+        saveOrganizerSnapshot();
         preprocessUndoableCommand();
         return executeUndoableCommand();
     }

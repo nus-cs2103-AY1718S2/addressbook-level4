@@ -59,7 +59,7 @@
 //    public void edit_unfilteredList() throws Exception {
 //        Model model = getModel();
 //
-        /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
+/* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
 //        /* Case: edit all fields, command with leading spaces, trailing spaces and multiple spaces between each field
 //         * -> edited
 //         */
@@ -112,7 +112,7 @@
 //        Task taskToEdit;
 //        Task editedTask;
 //
-        /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
+/* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 //        /* Case: filtered task list, edit index within bounds of organizer book and task list -> edited */
 //        showTasksWithName(KEYWORD_MATCHING_SPRING);
 //        index = INDEX_FIRST_TASK;
@@ -157,7 +157,7 @@
 //        String command;
 //        int invalidIndex;
 //
-        /* --------------------------------- Performing invalid edit operation -------------------------------------- */
+/* --------------------------------- Performing invalid edit operation -------------------------------------- */
 //        /* Case: invalid index (0) -> rejected */
 //        assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + NAME_DESC_STUDY,
 //                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
@@ -224,15 +224,15 @@
 //        assertCommandSuccess(command, toEdit, editedTask, null);
 //    }
 //
-    /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>
-     * 1. Asserts that result display box displays the success message of executing {@code EditCommand}.<br>
-     * 2. Asserts that the model related components are updated to reflect the task at index {@code toEdit} being
-     * updated to values specified {@code editedTask}.<br>
-     *
-     * @param toEdit the index of the current model's filtered list.
-     * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
-     */
+/**
+ * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>
+ * 1. Asserts that result display box displays the success message of executing {@code EditCommand}.<br>
+ * 2. Asserts that the model related components are updated to reflect the task at index {@code toEdit} being
+ * updated to values specified {@code editedTask}.<br>
+ *
+ * @param toEdit the index of the current model's filtered list.
+ * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
+ */
 //    private void assertCommandSuccess(String command, Index toEdit, Task editedTask,
 //                                      Index expectedSelectedCardIndex) {
 //        Model expectedModel = getModel();

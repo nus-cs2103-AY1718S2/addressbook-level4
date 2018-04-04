@@ -1,6 +1,6 @@
 = E.T. (Employees Tracker) - User Guide
 :toc:
-:toc-title:
+:toc-title: Table of Contents
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images

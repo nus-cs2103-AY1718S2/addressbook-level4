@@ -134,10 +134,6 @@ public class CommandBox extends UiPart<Region> {
                 raise(new ToggleNotificationCenterEvent());
             }
             break;
-        case F1:
-            keyEvent.consume();
-            new HelpCommand().execute();
-            break;
         default:
             // let JavaFx handle the keypress
         }

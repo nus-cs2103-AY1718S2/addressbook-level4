@@ -36,5 +36,5 @@ public class TagReplaceCommandParserTest {
         assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                                                                 TagReplaceCommand.MESSAGE_USAGE));
     }
-}
 //@@author
+}

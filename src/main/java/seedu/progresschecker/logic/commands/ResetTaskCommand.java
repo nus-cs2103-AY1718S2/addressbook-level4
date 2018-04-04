@@ -45,7 +45,8 @@ public class ResetTaskCommand extends Command {
         try {
             String title = undoTask(index, DEFAULT_LIST_ID);
 
-            ViewTaskListCommand.updateView();
+            ViewTaskListCommand view = new ViewTaskListCommand();
+            view.updateView();
 
             return new CommandResult(String.format(MESSAGE_SUCCESS, index + ". " + title));
         } catch (CommandException ce) {

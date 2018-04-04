@@ -52,6 +52,15 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * *`exit`* : exits the app
 
+* *`nl`* : adds the default TODO list
+
+* *`vt`* : views the TODO list
+
+* *`ct 3`* : mark task No.3 as completed
+
+* *`rt 3`* : reset task No.3 as incompleted
+
+
 .  Refer to <<Features>> for details of each command.
 
 [[Features]]
@@ -163,15 +172,81 @@ Examples:
 * `clear`
 * `c`
 
-=== Completing a learning outcome and marking it as completed : `complete` `[coming in v2.0]`
+=== Adding the default TODO list: `newtasklist OR nl`
 
-Check a learning outcome as completed based on the given task index.
-Format: `complete INDEX`
+Adds the default TODO list to the ProgressChecker and your Google Tasks+
+Format: `newtasklist` +
+`OR` +
+`nl`
 
-Example:
+[TIP]
+The command requires Internet connection. You may be brought to a login page in your browser. Please do not close the tab without accepting/declining request,
+otherwise the application will hang.
 
-* `complete 2.1`
-* `complete 3.2`
+Examples:
+
+* `newtasklist`
+* `nl`
+
+=== Viewing the default TODO list: `viewtask OR vt`
+
+Dispays the current default TODO list to the browser panel in ProgressChecker+
+Format: `viewtask` +
+`OR` +
+`vt`
+
+[TIP]
+The command requires Internet connection. You may be brought to a login page in your browser. Please do not close the tab without accepting/declining request,
+otherwise the application will hang.
+
+Examples:
+
+* `viewtask`
+* `vt`
+
+=== Marking a task as completed: `complete OR ct`
+
+Mark a task as completed+
+Format: `complete INDEX` +
+`OR` +
+`ct INDEX`
+
+****
+* Mark the task with index number `INDEX` as completed.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+[TIP]
+The command requires Internet connection. You may be brought to a login page in your browser. Please do not close the tab without accepting/declining request,
+otherwise the application will hang.
+
+Examples:
+
+* `complete 3`
+* `ct 3`
+
+=== Resetting a task as incompleted: `reset OR rt`
+
+Reset a task as incompleted+
+Format: `reset INDEX` +
+`OR` +
+`rt INDEX`
+
+****
+* Reset the task with index number `INDEX` as incompleted.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+[TIP]
+The command requires Internet connection. You may be brought to a login page in your browser. Please do not close the tab without accepting/declining request,
+otherwise the application will hang.
+
+Examples:
+
+* `reset 3`
+* `rt 3`
 
 === Deleting a teammate : `delete or d`
 

@@ -59,7 +59,7 @@ public class ViewTaskListCommand extends Command {
      * Updates the HTML file and refresh the browser panel
      * @throws CommandException
      */
-    public static void updateView() throws CommandException {
+    public void updateView() throws CommandException {
         List<Task> list = MyTaskList.searchTaskListById(DEFAULT_LIST_ID);
         File htmlFile = new File(DATA_FOLDER + TASK_PAGE);
         writeToHtml(list, htmlFile);
@@ -78,7 +78,10 @@ public class ViewTaskListCommand extends Command {
      * @param list task list serialized in a java List.
      * @param file File object of the html file.
      */
-    public static void writeToHtml(List<Task> list, File file) throws CommandException {
+    void writeToHtml(List<Task> list, File file) throws CommandException {
+        double countCompleted = 0;
+        double countIncomp = 0;
+
         int size = list.size();
 
         try {
@@ -96,33 +99,44 @@ public class ViewTaskListCommand extends Command {
 
             out.print("<!DOCTYPE html>\n" + "<html>\n"
                     + "<body style=\"background-color:grey;\">\n");
-            out.print("<h1 style=\"font-family:verdana; color:white\">"
-                    + DEFAULT_LIST_TITLE + "</h1>\n" + "<hr />\n" + "<dl>\n");
+            out.print("<h1 style=\"font-family:verdana; color:white\">&#9764;"
+                    + DEFAULT_LIST_TITLE + "&#9764;</h1>\n" + "<hr />\n" + "<dl>\n");
 
             for (int i = 0; i < size; i++) {
                 Task task = list.get(i);
                 out.print("    <dt style=\"font-family:verdana; color:antiquewhite;\">"
                         + (i + 1) + ". " + task.getTitle() + "</dt>\n");
-                out.print("    <dd style=\"font-family:verdana; color:white;\">Due: &nbsp;&nbsp;&nbsp;"
+                out.print("    <dd style=\"font-family:verdana; color:white;\">&#9888; &nbsp;"
                         + task.getDue().toString().substring(0, 10) + "</dd>\n");
                 String status = task.getStatus();
                 if (status.length() >= 11) {
-                    out.print("    <dd style=\"font-family:verdana; color:red;\">Status:   "
-                            + task.getStatus() + "</dd>\n");
+                    out.print("    <dd style=\"font-family:verdana; color:red;\">&#9873; &nbsp;"
+                            + "Please work on it! " + "&#9744;</dd>\n");
+                    countIncomp++;
                 } else {
-                    out.print("    <dd style=\"font-family:verdana; color:darkseagreen;\">Status: "
-                            + task.getStatus() + "</dd>\n");
+                    out.print("    <dd style=\"font-family:verdana; color:darkseagreen;\">&#9873; &nbsp;"
+                            + "Completed! " + "&#9745;</dd>\n");
+                    countCompleted++;
                 }
 
-                out.print("    <dd style=\"font-family:verdana; color:white;\">Notes: &nbsp;&nbsp;"
+                out.print("    <dd style=\"font-family:verdana; color:white;\">&#9998; &nbsp;"
                         + task.getNotes() + "</dd>\n");
                 out.print("    <hr />\n");
 
             }
 
-            out.print("</dl>\n" + "</body>\n" + "</html>\n");
+            double percent = countCompleted / (countCompleted + countIncomp);
+            String progress = (int) (percent * 100) + "%";
+
+            out.print("</dl>\n");
+
+            out.print("<h2 style=\"font-family:verdana; color:white\">" + "You have completed " + progress
+                    + " !" + "</h2>");
+
+            out.print("</body>\n" + "</html>\n");
 
             out.close();
+
 
         } catch (IOException e) {
             throw new CommandException(FILE_FAILURE);

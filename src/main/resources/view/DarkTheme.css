@@ -365,7 +365,7 @@
     -fx-border-width: 0;
 }
 
-#cardPane #name, #cardPane #id {
+#cardPane #name, #cardPane #id, #cardPane #orderInformation {
     -fx-font-size: 15pt;
 }
 

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--@@author amad-person-->
 
 <?import javafx.geometry.Insets?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane HBox.hgrow="ALWAYS">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
@@ -26,15 +27,21 @@
                         <Region fx:constant="USE_PREF_SIZE" />
                     </minWidth>
                 </Label>
-                <Label fx:id="orderInformation" styleClass="cell_big_label" text="\$first" />
+                <Label fx:id="orderInformation" styleClass="cell_big_label" text="\$orderInformation" />
             </HBox>
             <Label fx:id="orderStatus" styleClass="cell_small_label" text="\$orderStatus" />
             <Label fx:id="priceAndQuantity" styleClass="cell_small_label" text="\$priceAndQuantity" />
             <Label fx:id="totalPrice" styleClass="cell_small_label" text="\$totalPrice" />
             <Label fx:id="deliveryDate" styleClass="cell_small_label" text="\$deliveryDate" />
+            <padding>
+                <Insets bottom="5" left="15" right="5" top="5" />
+            </padding>
         </VBox>
         <rowConstraints>
             <RowConstraints />
         </rowConstraints>
     </GridPane>
+    <padding>
+        <Insets bottom="5" left="15" right="5" top="5" />
+    </padding>
 </HBox>

@@ -17,6 +17,8 @@ By: `Team W15-B1`      Since: `Feb 2018`      Licence: `MIT`
 
 == Setting up
 
+Make sure you follow this section carefully so that you get to work on Employees Tracker right away!
+
 === Prerequisites
 
 . *JDK `1.8.0_60`* or later
@@ -93,6 +95,8 @@ When you are ready to start coding,
 2. Take a look at <<GetStartedProgramming>>.
 
 == Design
+
+This section outlines the design of Employees Tracker.
 
 [[Design-Architecture]]
 === Architecture
@@ -582,6 +586,8 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 == Documentation
 
+This section outlines how to do the documentation for Employees Tracker.
+
 We use asciidoc for writing documentation.
 
 [NOTE]
@@ -612,6 +618,8 @@ image::chrome_save_as_pdf.png[width="300"]
 
 [[Testing]]
 == Testing
+
+This section outlines the testing procedure of Employees Tracker.
 
 === Running Tests
 
@@ -661,6 +669,8 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Solution: Execute Gradle task `processResources`.
 
 == Dev Ops
+
+This section outlines the development and operation of Employees Tracker.
 
 === Build Automation
 

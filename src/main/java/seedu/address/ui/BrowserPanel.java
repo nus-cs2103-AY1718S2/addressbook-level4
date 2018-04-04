@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
+
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -53,6 +54,9 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(SEARCH_PAGE_URL + append);
     }
 
+    /**
+     * Loads the student's full information page on the browser including his/her profile picture if it exists
+     */
     private void loadStudentInfoPage() {
         String jarFolder = new File(MainApp.class.getProtectionDomain().getCodeSource().getLocation()
                 .getPath()).getParentFile().getPath().replace('\\', '/');

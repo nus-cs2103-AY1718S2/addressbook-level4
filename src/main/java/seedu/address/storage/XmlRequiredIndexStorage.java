@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import javax.swing.*;
 import javax.xml.bind.JAXBException;
 
 import seedu.address.MainApp;
@@ -52,11 +51,11 @@ public class XmlRequiredIndexStorage {
      */
     public static void updateData(int newIndex, String filePath) throws IOException {
         File file = new File(filePath);
-        if(!file.exists()) {
+        if (!file.exists()) {
             createViewResourceFile(filePath);
-            ExportResource("data/view/" + STUDENT_MISC_INFO_PAGE);
-            ExportResource("data/view/" + STUDENT_INFO_PAGE_STYLESHEET);
-            ExportResource("data/view/" + "profile_photo_placeholder.png");
+            exportResource("data/view/" + STUDENT_MISC_INFO_PAGE);
+            exportResource("data/view/" + STUDENT_INFO_PAGE_STYLESHEET);
+            exportResource("data/view/" + "profile_photo_placeholder.png");
 
         }
         RequiredStudentIndex ris = new RequiredStudentIndex(newIndex);
@@ -71,14 +70,14 @@ public class XmlRequiredIndexStorage {
     /**
      * Exports the resources from the jar file to the directory of the  addressBook data
      */
-    private static void ExportResource(String resourceName) throws IOException {
+    private static void exportResource(String resourceName) throws IOException {
         InputStream stream = null;
         OutputStream resStreamOut = null;
         String jarFolder;
         String resourcePage = resourceName.substring(10);
         try {
             stream = MainApp.class.getResourceAsStream(FXML_FILE_FOLDER + resourcePage);
-            if(stream == null) {
+            if (stream == null) {
                 throw new Exception("Cannot get resource \"" + resourceName + "\" from Jar file.");
             }
 
@@ -92,7 +91,6 @@ public class XmlRequiredIndexStorage {
                 resStreamOut.write(buffer, 0, readBytes);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,e.getMessage() );
             throw new IOException(e.getMessage());
         } finally {
             stream.close();

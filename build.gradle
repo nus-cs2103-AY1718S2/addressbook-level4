@@ -48,10 +48,15 @@ dependencies {
     compile group: 'com.google.guava', name: 'guava', version: '24.1-android'
     compile 'com.google.apis:google-api-services-language:v1-rev419-1.23.0'
     compile 'com.google.cloud:google-cloud-language:1.14.0'
+    compile 'com.google.api-client:google-api-client:1.23.0'
+    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+    compile 'com.google.apis:google-api-services-oauth2:v1-rev139-1.23.0'
+    compile group: 'com.google.gdata', name: 'core', version: '1.47.1'
     compile 'com.ibm.watson.developer_cloud:java-sdk:5.1.1'
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'org.testfx', name: 'testfx-core', version: testFxVersion
+    testCompile group: 'org.testfx', name: 'testfx-core', version:
+            testFxVersion
     testCompile group: 'org.testfx', name: 'testfx-junit', version: testFxVersion
     testCompile group: 'org.testfx', name: 'testfx-legacy', version: testFxVersion, {
         exclude group: 'junit', module: 'junit'

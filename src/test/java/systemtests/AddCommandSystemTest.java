@@ -200,6 +200,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + NRIC_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PERSON));
 
+        //@@author Robert-Peng
         /* Case: missing nric -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY;
@@ -229,6 +230,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
             + EMAIL_DESC_AMY + INVALID_ADDRESS_DESC + NRIC_DESC_AMY;
         assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
+        //@@author Robert-Peng
         /* Case: invalid nric -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + PHONE_DESC_AMY
             + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + INVALID_NRIC_DESC;

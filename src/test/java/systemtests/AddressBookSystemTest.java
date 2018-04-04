@@ -108,6 +108,7 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getPersonListPanel();
     }
 
+    //@@author Robert-Peng
     public PetPatientListPanelHandle getPetPatientListPanel() {
         return mainWindowHandle.getPetPatientListPanel();
     }
@@ -120,6 +121,7 @@ public abstract class AddressBookSystemTest {
     //        return mainWindowHandle.getBrowserPanel();
     //    }
 
+    //@@author Robert-Peng
     public CalendarPanelHandle getCalendarPanel() {
         return mainWindowHandle.getCalendarPanel();
     }

@@ -50,6 +50,7 @@ public class GuiTestAssert {
         assertTagsEqual(expectedPerson, actualCard);
     }
 
+    //@@author Robert-Peng
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPetPatient}.
      */

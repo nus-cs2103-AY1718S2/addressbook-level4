@@ -41,9 +41,9 @@ import seedu.address.model.person.Person;
 
 
 
-
+//@@author Robert-Peng
 /**
- *
+ * Implement CalendarView from CalendarFX to show appointments
  */
 public class CalendarWindow extends UiPart<Region> {
 

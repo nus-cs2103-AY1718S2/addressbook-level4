@@ -78,8 +78,8 @@ public class DeleteSubtaskCommand extends UndoableCommand {
         if (subtaskIndex.getZeroBased() >= taskToEdit.getSubtasks().size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_SUBTASK_DISPLAYED_INDEX);
         }
+        deletedSubtask = taskToEdit.getSubtasks().get(subtaskIndex.getZeroBased());
         editedTask = createEditedTask(taskToEdit, subtaskIndex);
-        deletedSubtask = editedTask.getSubtasks().get(subtaskIndex.getZeroBased());
     }
 
     /**

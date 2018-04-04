@@ -52,7 +52,7 @@ public class DeleteSubtaskCommandTest {
     public void execute_unfilteredList_success() throws Exception {
         Task originalTask = model.getFilteredTaskList().get(0);
         Task toggledTask = toggleTask(originalTask, INDEX_FIRST_TASK);
-        Subtask toggledSubtask = toggledTask.getSubtasks().get(INDEX_FIRST_TASK.getZeroBased());
+        Subtask toggledSubtask = originalTask.getSubtasks().get(INDEX_FIRST_TASK.getZeroBased());
 
         DeleteSubtaskCommand deleteSubtaskCommand = prepareCommand(INDEX_FIRST_TASK, INDEX_FIRST_TASK);
 

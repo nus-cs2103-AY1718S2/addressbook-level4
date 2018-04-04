@@ -59,6 +59,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label cardPersonNumber;
 
+    //@@author Ang-YC
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
 
@@ -145,6 +146,7 @@ public class PersonCard extends UiPart<Region> {
             }
         }
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

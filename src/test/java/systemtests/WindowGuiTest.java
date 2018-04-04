@@ -12,6 +12,7 @@ import javafx.scene.input.MouseButton;
 import seedu.address.commons.events.ui.MaximizeAppRequestEvent;
 import seedu.address.testutil.EventsUtil;
 
+//@@author Ang-YC
 public class WindowGuiTest extends AddressBookSystemTest {
 
     private final GuiRobot guiRobot = new GuiRobot();

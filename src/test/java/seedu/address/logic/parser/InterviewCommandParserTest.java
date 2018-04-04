@@ -11,6 +11,7 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.InterviewCommand;
 
+//@@author Ang-YC
 public class InterviewCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =

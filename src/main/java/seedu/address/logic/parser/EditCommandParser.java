@@ -105,6 +105,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
     }
 
+    //@@author Ang-YC
     /**
      * Parses {@code Optional<ProfileImage> profileImage} into a {@code Optional<ProfileImage>}
      * if {@code profileImage} is non-empty.
@@ -138,6 +139,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             return ParserUtil.parseComment(comment);
         }
     }
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.

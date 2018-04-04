@@ -27,10 +27,10 @@ public class TitleBarHandle extends NodeHandle<Node> {
     private final Pane controlMaximize;
     private final Pane controlClose;
 
-
     private String lastRememberedSyncStatus;
     private String lastRememberedSaveLocation;
 
+    //@@author Ang-YC
     public TitleBarHandle(Node statusBarFooterNode) {
         super(statusBarFooterNode);
 
@@ -76,6 +76,7 @@ public class TitleBarHandle extends NodeHandle<Node> {
     public void closeWindow() {
         new GuiRobot().clickOn(controlClose, MouseButton.PRIMARY);
     }
+    //@@author
 
     /**
      * Returns the text of the sync status portion of the status bar.

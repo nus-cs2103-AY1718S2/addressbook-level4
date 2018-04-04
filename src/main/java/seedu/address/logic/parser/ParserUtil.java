@@ -515,6 +515,7 @@ public class ParserUtil {
         return resume.isPresent() ? Optional.of(parseResume(resume.get())) : Optional.empty();
     }
 
+    //@@author Ang-YC
     /**
      * Parses a {@code String profileImage} into a {@code ProfileImage}.
      * Leading and trailing whitespaces will be trimmed.

@@ -122,6 +122,7 @@ public abstract class AddressBookSystemTest {
         mainWindowHandle.getCommandBox().run(command);
     }
 
+    //@@author Ang-YC
     /**
      * Executes {@code command} in the application's {@code CommandBox}.
      * Method returns after UI components have been updated.
@@ -131,6 +132,7 @@ public abstract class AddressBookSystemTest {
         executeCommand(command);
         waitUntilInfoPanelLoaded(getInfoPanel());
     }
+    //@@author
 
     /**
      * Displays all persons in the address book.

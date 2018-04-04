@@ -62,6 +62,7 @@ public class TitleBarTest extends GuiUnitTest {
         titleBarHandle = new TitleBarHandle(titleBar.getRoot());
     }
 
+    //@@author Ang-YC
     @Test
     public void controlHelp() {
         titleBarHandle.openHelpWindowUsingControl();
@@ -88,6 +89,7 @@ public class TitleBarTest extends GuiUnitTest {
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ExitAppRequestEvent);
         assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
     }
+    //@@author
 
     @Test
     public void display() {

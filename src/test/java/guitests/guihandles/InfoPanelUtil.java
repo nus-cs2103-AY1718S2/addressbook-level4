@@ -2,6 +2,7 @@ package guitests.guihandles;
 
 import guitests.GuiRobot;
 
+//@@author Ang-YC
 /**
  * Helper methods for dealing with {@code InfoPanel}.
  */

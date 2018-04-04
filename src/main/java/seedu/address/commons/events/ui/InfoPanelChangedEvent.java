@@ -3,6 +3,7 @@ package seedu.address.commons.events.ui;
 import javafx.event.Event;
 import javafx.event.EventType;
 
+//@@author Ang-YC
 /**
  * Indicates a change in Info Panel (Used for automated testing purpose)
  */

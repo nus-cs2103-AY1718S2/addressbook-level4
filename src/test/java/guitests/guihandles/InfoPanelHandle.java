@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import seedu.address.commons.events.ui.InfoPanelChangedEvent;
 import seedu.address.model.person.Person;
 
+//@@author Ang-YC
 /**
  * A handler for the {@code InfoPanel} of the UI.
  */

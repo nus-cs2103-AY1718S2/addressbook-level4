@@ -13,6 +13,7 @@ import org.junit.Test;
 import guitests.guihandles.InfoPanelHandle;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 
+//@@author Ang-YC
 public class InfoPanelTest extends GuiUnitTest {
     private PersonPanelSelectionChangedEvent selectionChangedEventStub;
 

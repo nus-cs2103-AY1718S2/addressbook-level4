@@ -86,6 +86,7 @@ public class AddressBookParserTest {
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
+    //@@author Ang-YC
     @Test
     public void parseCommand_interview() throws Exception {
         LocalDateTime dateTime = LocalDateTime.ofEpochSecond(1521036000, 0, ZoneOffset.UTC);
@@ -94,6 +95,7 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " Mar 14 2018 2pm");
         assertEquals(new InterviewCommand(INDEX_FIRST_PERSON, dateTime), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_exit() throws Exception {

@@ -181,6 +181,7 @@ public class MainWindow extends UiPart<Stage> {
         return this.personListPanel;
     }
 
+    //@@author Ang-YC
     public void requestFocus() {
         primaryStage.requestFocus();
     }

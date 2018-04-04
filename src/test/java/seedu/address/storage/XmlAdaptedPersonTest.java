@@ -330,6 +330,7 @@ public class XmlAdaptedPersonTest {
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
+    //@@author Ang-YC
     @Test
     public void toModelType_invalidInterviewDate_throwsIllegalValueException() {
         XmlAdaptedPerson person =
@@ -342,6 +343,7 @@ public class XmlAdaptedPersonTest {
         String expectedMessage = InterviewDate.MESSAGE_INTERVIEW_DATE_XML_ERROR;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
+    //@@author
 
     @Test
     public void toModelType_nullStatus_throwsIllegalValueException() {
@@ -383,6 +385,7 @@ public class XmlAdaptedPersonTest {
         Assert.assertThrows(IllegalValueException.class, person::toModelType);
     }
 
+    //@@author Ang-YC
     @Test
     public void equals_sameObject_returnsTrue() {
         XmlAdaptedPerson person = new XmlAdaptedPerson(BENSON);
@@ -395,4 +398,5 @@ public class XmlAdaptedPersonTest {
         XmlAdaptedPerson benson = new XmlAdaptedPerson(BENSON);
         assertFalse(alice.equals(benson));
     }
+    //@@author
 }

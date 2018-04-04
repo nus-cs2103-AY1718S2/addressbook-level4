@@ -27,6 +27,7 @@ import seedu.address.commons.util.UiUtil;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Rating;
 
+//@@author Ang-YC
 /**
  * The Info Panel of the App.
  */

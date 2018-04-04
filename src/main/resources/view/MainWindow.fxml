@@ -9,6 +9,7 @@
 <?import javafx.scene.Scene?>
 <?import java.net.URL?>
 
+<!-- @@author Ang-YC -->
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" minWidth="800" minHeight="600">
     <scene>
         <Scene>

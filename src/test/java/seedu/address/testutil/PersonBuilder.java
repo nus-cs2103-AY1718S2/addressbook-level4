@@ -212,6 +212,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author Ang-YC
     /**
      * Sets the {@code ProfileImage} of the {@code Person} that we are building.
      */
@@ -235,6 +236,7 @@ public class PersonBuilder {
         this.interviewDate = new InterviewDate(interviewDate);
         return this;
     }
+    //@@author
 
     /**
      * Sets the {@code Status} of the {@code Person} that we are building.

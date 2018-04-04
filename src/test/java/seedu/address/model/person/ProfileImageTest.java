@@ -8,6 +8,7 @@ import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.Test;
 
+//@@author Ang-YC
 public class ProfileImageTest {
     private static final String TEST_DATA_FOLDER = "src/test/data/ProfileImageTest/";
 

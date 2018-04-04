@@ -7,6 +7,7 @@ import seedu.address.logic.commands.ChangeTagColorCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
+//@@author LeonidAgarth
 /**
  * Parses the given {@code String} of arguments in the context of the ChangeTagColorCommand
  * and returns an ChangeTagColorCommand object for execution.

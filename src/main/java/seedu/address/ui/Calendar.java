@@ -19,6 +19,7 @@ import javafx.scene.text.Text;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.Event;
 
+//@@author LeonidAgarth
 /**
  * The Calendar of the App.
  * <p>

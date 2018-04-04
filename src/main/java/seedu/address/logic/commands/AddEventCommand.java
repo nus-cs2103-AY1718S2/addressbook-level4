@@ -11,6 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
 
+//@@author LeonidAgarth
 /**
  * Adds an event to the address book.
  */
@@ -36,7 +37,7 @@ public class AddEventCommand extends UndoableCommand {
             + "      TIME must be in the format of HHmm\n";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
-    public static final String MESSAGE_DUPLICATE_EVENT = "This person already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the address book";
 
     private final Event toAdd;
 

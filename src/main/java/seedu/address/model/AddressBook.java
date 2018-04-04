@@ -337,7 +337,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             tags.setTags(editedTagList);
         }
     }
-
+    //@@author LeonidAgarth
     /**
      * Replaces the old {@code target} tag with the new {@code editedTag}
      */
@@ -379,7 +379,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                     + "a PersonNotFoundException. See Person#equals(Object).");
         }
     }
-
+    //@@author
     /**
      * Removes {@code tag} from all {@code persons} in the {@code AddressBook}.
      */

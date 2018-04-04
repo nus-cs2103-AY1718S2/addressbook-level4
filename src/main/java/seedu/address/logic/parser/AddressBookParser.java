@@ -97,7 +97,7 @@ public class AddressBookParser {
             return new CalendarCommand();
 
         case CalendarAddCommand.COMMAND_WORD:
-                return new CalendarAddCommandParser().parse(arguments);
+            return new CalendarAddCommandParser().parse(arguments);
 
         case CalendarDeleteCommand.COMMAND_WORD:
             return new CalendarDeleteCommandParser().parse(arguments);

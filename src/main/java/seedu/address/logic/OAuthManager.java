@@ -6,7 +6,6 @@ package seedu.address.logic;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -364,7 +363,7 @@ public class OAuthManager {
 
     /**
      * Gets the most recent event list shown to the user.
-     * @return List<Event>
+     * @return List
      */
     public static List<Event> getMostRecentEventList() {
         return mostRecentEventList;

@@ -5,6 +5,7 @@ import org.controlsfx.control.StatusBar;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
+import seedu.address.model.login.User;
 
 //@@author kaisertanqr
 /**
@@ -13,7 +14,7 @@ import javafx.scene.layout.Region;
 public class LoginStatusBar extends UiPart<Region> {
 
     public static final String LOGIN_STATUS_PREFIX = "Status: ";
-    public static final String LOGIN_STATUS_TRUE = "Logged In";
+    public static final String LOGIN_STATUS_TRUE = "Logged in as ";
     public static final String LOGIN_STATUS_FALSE = "Not Logged In";
 
     private static final String FXML = "LoginStatusBar.fxml";
@@ -23,7 +24,7 @@ public class LoginStatusBar extends UiPart<Region> {
 
     public LoginStatusBar() {
         super(FXML);
-        updateLoginStatus(false);
+        updateLoginStatus(false, null);
         registerAsAnEventHandler(this);
     }
 
@@ -31,9 +32,12 @@ public class LoginStatusBar extends UiPart<Region> {
      * Updates the UI with the login status, {@code status}.
      * @param status
      */
-    public void updateLoginStatus(boolean status) {
+    public void updateLoginStatus(boolean status, User user) {
         if (status) {
-            Platform.runLater(() -> this.loginStatus.setText(LOGIN_STATUS_PREFIX + LOGIN_STATUS_TRUE));
+            //@@author ifalluphill
+            Platform.runLater(() ->
+                    this.loginStatus.setText(LOGIN_STATUS_PREFIX + LOGIN_STATUS_TRUE + user.getUsername()));
+            //@@author kaisertanqr
             loginStatus.setStyle("-fx-background-color: rgb(0, 77, 26, 0.5)");
         } else {
             Platform.runLater(() -> this.loginStatus.setText(LOGIN_STATUS_PREFIX + LOGIN_STATUS_FALSE));

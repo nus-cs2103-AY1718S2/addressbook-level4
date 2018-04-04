@@ -199,7 +199,7 @@ public class MainWindow extends UiPart<Stage> {
      * Hides browser and person list panel.
      */
     void hideBeforeLogin() {
-        loginStatusBar.updateLoginStatus(false);
+        loginStatusBar.updateLoginStatus(false, null);
         featuresTabPane.setVisible(false);
         personDetailsPlaceholder.setVisible(false);
         calendarPlaceholder.setVisible(false);
@@ -211,7 +211,7 @@ public class MainWindow extends UiPart<Stage> {
      * Unhide browser and person list panel.
      */
     public void showAfterLogin() {
-        loginStatusBar.updateLoginStatus(true);
+        loginStatusBar.updateLoginStatus(true, logic.getLoggedInUser());
         featuresTabPane.setVisible(true);
         personDetailsPlaceholder.setVisible(true);
         calendarPlaceholder.setVisible(true);

@@ -8,7 +8,7 @@ import seedu.recipe.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new AccessTokenCommand object
  */
-public class AccessTokenCommandParser implements Parser<AccessTokenCommand>{
+public class AccessTokenCommandParser implements Parser<AccessTokenCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the AccessTokenCommand

@@ -12,11 +12,11 @@ import seedu.recipe.ui.util.CloudStorageUtil;
 
 public class CloudStorageUtilTest {
 
+    private static final String WRONG_AUTHORIZATION_CODE = "abcdefg";
+    private static final String ACCESS_TOKEN_STUB = "adjhsj";
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
-    private static final String ACCESS_TOKEN_STUB = "adjhsj";
-    private static final String WRONG_AUTHORIZATION_CODE = "abcdefg";
 
     @Test
     public void hasAccessToken() {

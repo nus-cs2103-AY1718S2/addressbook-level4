@@ -10,10 +10,10 @@ import org.junit.rules.ExpectedException;
 
 public class AccessTokenCommandTest {
 
+    private static final String INVALID_AUTHORIZATION_CODE = "wrong_format";
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
-    private static final String INVALID_AUTHORIZATION_CODE = "wrong_format";
 
     @Test
     public void equals() {

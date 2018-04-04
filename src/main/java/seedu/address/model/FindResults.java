@@ -92,7 +92,7 @@ public class FindResults {
      */
     public boolean containsWordIgnoreCase(String sentence, String word, String commandPrefix) {
         //requireNonNull(sentence);
-        if (sentence == null ) {
+        if (sentence == null) {
             sentence = ""; //quick fix for test first, fix later
         }
         requireNonNull(word);
@@ -131,7 +131,7 @@ public class FindResults {
                                                 String commandPrefix,
                                                 int threshold) {
         //requireNonNull(sentence);
-        if (sentence == null ) {
+        if (sentence == null) {
             sentence = ""; //quick fix for test first, fix later
         }
         requireNonNull(word);
@@ -172,7 +172,7 @@ public class FindResults {
      */
     public boolean containsSubstringIgnoreCase(String sentence, String substring, String commandPrefix) {
         //requireNonNull(sentence);
-        if (sentence == null ) {
+        if (sentence == null) {
             sentence = ""; //quick fix for test first, fix later
         }
         requireNonNull(substring);
@@ -204,7 +204,7 @@ public class FindResults {
      */
     public boolean containsPrefixIgnoreCase(String sentence, String prefix, String commandPrefix) {
         //requireNonNull(sentence);
-        if (sentence == null ) {
+        if (sentence == null) {
             sentence = ""; //quick fix for test first, fix later
         }
         requireNonNull(prefix);
@@ -236,7 +236,7 @@ public class FindResults {
      */
     public boolean containsSuffixIgnoreCase(String sentence, String suffix, String commandPrefix) {
         //requireNonNull(sentence);
-        if (sentence == null ) {
+        if (sentence == null) {
             sentence = ""; //quick fix for test first, fix later
         }
         requireNonNull(suffix);

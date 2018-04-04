@@ -41,11 +41,11 @@ public class GContactsManager {
 
     private static final String APPLICATION_NAME = "codeducator/v1.4";
 
-
     private static final String[] scopesArray = new String[]{
         "https://www.googleapis.com/auth/userinfo.profile",
         "https://www.googleapis.com/auth/userinfo.email",
         "https://www.google.com/m8/feeds/"};
+
     /** OAuth 2.0 scopes. */
     public final List<String> scopes = Arrays.asList(scopesArray);
     static {

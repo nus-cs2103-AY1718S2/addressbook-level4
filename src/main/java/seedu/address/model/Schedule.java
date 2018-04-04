@@ -73,15 +73,19 @@ public class Schedule implements ReadOnlySchedule {
     /**
      * Prints the schedule as a list
      */
-    public void print(AddressBook addressBook) {
+    public String print(AddressBook addressBook) {
         addressBook.printAll();
         int index = 1;
         Student student;
+        String finalMessage = "\n" + this.toString();
         System.out.println(this.toString());
         for (Lesson l : lessons) {
             student = addressBook.findStudentByKey(l.getUniqueKey());
-            System.out.println(index++ + " " + student.getName() +  ": " + l.toString());
+            String message = index++ + " " + student.getName() +  "` " + l.toString();
+            finalMessage = finalMessage + "\n" + message;
+            System.out.println(message);
         }
+        return finalMessage;
     }
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.

@@ -176,8 +176,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public void printSchedule() {
+        public String printSchedule() {
             fail("This method should not be called");
+            return null;
         }
 
 

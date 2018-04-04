@@ -121,6 +121,7 @@ public class XmlAddressBookStorageTest {
         saveAddressBook(new AddressBook(), null);
     }
 
+    //@@author tanhengyeow
     @Test
     public void backupAddressBook_nullAddressBook_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);

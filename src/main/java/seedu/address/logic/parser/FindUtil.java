@@ -3,10 +3,13 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_APPLIED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_UNIVERSITY;
 
 import java.util.function.Predicate;
 
@@ -16,6 +19,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.AllPredicate;
 import seedu.address.model.person.Person;
 
+//@@author tanhengyeow
 /**
  * Contains utility methods used for FindCommandParser
  */
@@ -34,7 +38,7 @@ public class FindUtil {
 
         // no prefix used, search for all fields (global search)
         if (!startWithPrefix(trimmedArgs)) {
-            String[] keywords = trimmedArgs.split("\\s+");
+            String[] keywords = trimmedArgs.split(",");
 
             try {
                 AllPredicate allPredicate = PredicateUtil.parseAllPredicates(keywords);
@@ -42,7 +46,10 @@ public class FindUtil {
                         allPredicate.getPhonePredicate().getPredicate(),
                         allPredicate.getEmailPredicate().getPredicate(),
                         allPredicate.getAddressPredicate().getPredicate(),
-                        allPredicate.getMajorPredicate().getPredicate());
+                        allPredicate.getUniversityPredicate().getPredicate(),
+                        allPredicate.getMajorPredicate().getPredicate(),
+                        allPredicate.getJobAppliedPredicate().getPredicate(),
+                        allPredicate.getCommentPredicate().getPredicate());
                 return finalPredicate;
             } catch (ParseException pe) {
                 throw new ParseException(pe.getMessage(), pe);
@@ -60,7 +67,10 @@ public class FindUtil {
                         allPredicate.getPhonePredicate().getPredicate(),
                         allPredicate.getEmailPredicate().getPredicate(),
                         allPredicate.getAddressPredicate().getPredicate(),
-                        allPredicate.getMajorPredicate().getPredicate());
+                        allPredicate.getUniversityPredicate().getPredicate(),
+                        allPredicate.getMajorPredicate().getPredicate(),
+                        allPredicate.getJobAppliedPredicate().getPredicate(),
+                        allPredicate.getCommentPredicate().getPredicate());
                 return finalPredicate;
             } catch (ParseException pe) {
                 throw new ParseException(pe.getMessage(), pe);
@@ -81,6 +91,9 @@ public class FindUtil {
                 || args[0].contains(PREFIX_PHONE.toString())
                 || args[0].contains(PREFIX_EMAIL.toString())
                 || args[0].contains(PREFIX_ADDRESS.toString())
-                || args[0].contains(PREFIX_MAJOR.toString())); // more fields to be added if necessary
+                || args[0].contains(PREFIX_UNIVERSITY.toString())
+                || args[0].contains(PREFIX_MAJOR.toString())
+                || args[0].contains(PREFIX_JOB_APPLIED.toString())
+                || args[0].contains(PREFIX_COMMENT.toString())); // more fields to be added if necessary
     }
 }

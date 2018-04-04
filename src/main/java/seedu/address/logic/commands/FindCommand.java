@@ -2,8 +2,10 @@ package seedu.address.logic.commands;
 
 import java.util.function.Predicate;
 
+import seedu.address.model.FindResults;
 import seedu.address.model.person.Person;
 
+//@@author tanhengyeow
 /**
  * Finds and lists all persons in address book whose field contains any of the argument keywords.
  * Keyword matching is case sensitive.
@@ -19,6 +21,8 @@ public class FindCommand extends Command {
             + "Option 2 (Search by prefix): /n[KEYWORD] [MORE_KEYWORDS] /p...\n"
             + "Example: " + COMMAND_WORD + " n/Alex Bernice p/999 555";
 
+    public static final int LEVENSHTEIN_DISTANCE_THRESHOLD = 2;
+
     private final Predicate<Person> predicate;
 
     public FindCommand(Predicate<Person> predicate) {
@@ -27,8 +31,9 @@ public class FindCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        FindResults.getInstance().clearResults(); // clear existing results if any (e.g. when undo command is executed)
         model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        return new CommandResult(getFindMessageForPersonListShownSummary());
     }
 
     @Override

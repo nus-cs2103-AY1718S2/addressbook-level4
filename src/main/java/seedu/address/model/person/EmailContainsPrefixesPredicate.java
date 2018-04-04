@@ -3,13 +3,15 @@ package seedu.address.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
+import seedu.address.model.FindResults;
 
+//@@author tanhengyeow
 /**
  * Tests that a {@code Person}'s {@code Email} matches the prefix string given.
  */
 public class EmailContainsPrefixesPredicate implements Predicate<Person> {
     private final List<String> prefixKeywords;
+    private final String commandPrefix = "e/";
 
     public EmailContainsPrefixesPredicate(List<String> prefixKeywords) {
         this.prefixKeywords = prefixKeywords;
@@ -18,8 +20,8 @@ public class EmailContainsPrefixesPredicate implements Predicate<Person> {
     @Override
     public boolean test(Person person) {
         return prefixKeywords.stream()
-                .anyMatch(prefix -> StringUtil.containsPrefixIgnoreCase(
-                        person.getEmail().value, prefix));
+                .anyMatch(prefix -> FindResults.getInstance().containsPrefixIgnoreCase(
+                        person.getEmail().value, prefix, commandPrefix));
     }
 
     @Override

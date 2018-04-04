@@ -2,10 +2,13 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_APPLIED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_UNIVERSITY;
 
 import java.util.function.Predicate;
 
@@ -18,6 +21,7 @@ import seedu.address.model.person.Person;
  */
 public class FindCommandParser implements Parser<FindCommand> {
 
+    //@@author tanhengyeow
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindCommand object for execution.
@@ -34,7 +38,8 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_MAJOR); // more fields to be added if necessary
+                        PREFIX_ADDRESS, PREFIX_UNIVERSITY, PREFIX_MAJOR,
+                        PREFIX_JOB_APPLIED, PREFIX_COMMENT); // more fields to be added if necessary
         try {
             Predicate<Person> finalPredicate = FindUtil.parseFindArgs(trimmedArgs, argMultimap);
             return new FindCommand(finalPredicate);

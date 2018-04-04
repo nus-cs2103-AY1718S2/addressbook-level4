@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import seedu.address.testutil.Assert;
 
+//@@author tanhengyeow
 public class MajorTest {
 
     @Test

@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import seedu.address.testutil.PersonBuilder;
 
+//@@author tanhengyeow
 public class AddressContainsKeywordsPredicateTest {
 
     @Test
@@ -69,8 +70,8 @@ public class AddressContainsKeywordsPredicateTest {
         assertFalse(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
 
         // Non-matching keyword
-        predicate = new AddressContainsKeywordsPredicate(Arrays.asList("Compting"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Computing Drive").build()));
+        predicate = new AddressContainsKeywordsPredicate(Arrays.asList("Com"));
+        assertFalse(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
 
         // Keywords match phone, email, expected graduation year and name, but does not match address
         predicate = new AddressContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Alice", "2020"));

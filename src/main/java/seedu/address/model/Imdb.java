@@ -190,6 +190,11 @@ public class Imdb implements ReadOnlyImdb {
         tags.add(t);
     }
 
+    /**
+     * remove a patient appointment
+     * @throws UniqueAppointmentList.DuplicatedAppointmentException
+     * @throws UniqueAppointmentEntryList.DuplicatedAppointmentEntryException
+     */
     public void addAppointment(Patient patient, String dateTimeString) throws
             UniqueAppointmentList.DuplicatedAppointmentException,
             UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {

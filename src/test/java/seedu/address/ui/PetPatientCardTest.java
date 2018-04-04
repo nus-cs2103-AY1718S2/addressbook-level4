@@ -12,6 +12,10 @@ import guitests.guihandles.PetPatientCardHandle;
 import seedu.address.model.petpatient.PetPatient;
 import seedu.address.testutil.PetPatientBuilder;
 
+//@@author Robert-Peng
+/**
+ * Test class for PetPatientCard
+ */
 public class PetPatientCardTest extends GuiUnitTest {
 
     private PetPatient petPatient;

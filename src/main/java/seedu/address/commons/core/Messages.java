@@ -16,4 +16,5 @@ public class Messages {
             + "provided is invalid";
 
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
+    public static final String MESSAGE_PET_PATIENTS_LISTED_OVERVIEW = "%1$d pet patients listed!";
 }

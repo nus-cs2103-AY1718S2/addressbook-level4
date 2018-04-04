@@ -12,6 +12,7 @@ import seedu.address.logic.commands.AddRemarkCommand;
 import seedu.address.logic.commands.AddRemarkCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author chuakunhong
 /**
  * Parses input arguments and creates a new EditCommand object
  */
@@ -50,3 +51,4 @@ public class AddRemarkCommandParser implements Parser<AddRemarkCommand> {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }
+//@@author

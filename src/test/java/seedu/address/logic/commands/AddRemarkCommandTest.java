@@ -25,7 +25,7 @@ import seedu.address.model.person.Remark;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
-
+//@@author chuakunhong
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for EditCommand.
  */
@@ -327,3 +327,4 @@ public class AddRemarkCommandTest {
         }
     }
 }
+//@@author

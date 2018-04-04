@@ -67,6 +67,7 @@ public interface Model {
      * @throws TagNotFoundException
      */
     void deleteTag(Tag tag) throws TagNotFoundException;
+    //@@author
 
     //@@author chuakunhong
     /**
@@ -74,4 +75,5 @@ public interface Model {
      * @param tagSet
      */
     void replaceTag(List<Tag> tagSet);
+    //@@author
 }

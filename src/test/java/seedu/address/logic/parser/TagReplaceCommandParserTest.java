@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.TagReplaceCommand;
 import seedu.address.model.tag.Tag;
-
+//@@author chuakunhong
 public class TagReplaceCommandParserTest {
 
     private TagReplaceCommandParser parser = new TagReplaceCommandParser();
@@ -37,3 +37,4 @@ public class TagReplaceCommandParserTest {
                                                                 TagReplaceCommand.MESSAGE_USAGE));
     }
 }
+//@@author

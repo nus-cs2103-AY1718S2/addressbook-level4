@@ -128,15 +128,17 @@ a|
 image::add_examples.PNG[width="700"]
 {empty} +
 
-.Copy & paste to try out
+.**Copy & paste to try out**
 ----
 add -o n/Viktor Nikiforov p/91237890 e/v_nikiforov@gmail.com a/27 Skating Place nr/F0012345Z
 
 add n/Makkachin s/dog b/poodle c/brown bt/DEA-1.1 -o nr/F0012345Z
 
-add -a d/2018-05-27 14:30 r/had poor appetite the last 3 days t/vaccination t/checkup -o nr/F0012345Z -p n/Makkachin
+add -a d/2018-05-27 14:30 r/had poor appetite the last 3 days t/vaccination t/checkup -o nr/F0012345Z
+-p n/Makkachin
 
-add -o n/Jacqueline p/65123456 e/jacq@gmail.com a/96 Computing Drive, #02-03 nr/S1234567G -p n/jewel s/cat b/persian c/calico bt/AB -a d/2018-12-31 12:30 r/nil t/surgery t/sterilization
+add -o n/Jacqueline p/65123456 e/jacq@gmail.com a/96 Computing Drive, #02-03 nr/S1234567G -p n/jewel
+s/cat b/persian c/calico bt/AB -a d/2018-12-31 12:30 r/nil t/surgery t/sterilization
 ----
 
 {empty} +

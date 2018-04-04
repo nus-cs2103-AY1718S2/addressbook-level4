@@ -11,7 +11,7 @@ public class Config {
     public static final String DEFAULT_CONFIG_FILE = "config.json";
 
     // Config values customizable through config file
-    private String appTitle = "E.T.";
+    private static String appTitle = "ET - Employees Tracker";
     private Level logLevel = Level.INFO;
     private String userPrefsFilePath = "preferences.json";
 

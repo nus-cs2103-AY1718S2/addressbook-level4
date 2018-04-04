@@ -565,11 +565,6 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
-=== Dismissing a notification card : `dismiss`
-
-Dismisses the notification card identified by the index number. +
-Format: `dismiss INDEX`
-
 === Toggling the notification center : `noti`
 
 Shows the notification panel if it is hidden; hides the notification center if it is shown. +
@@ -578,7 +573,12 @@ Format: `noti`
 [TIP]
 Alternatively, you can *double press* kbd:[SHIFT] to toggle the notification center.
 
-=== Reminding an employee through email : `email`
+=== Dismissing a notification card : `dismiss` _[Coming in v1.5]_
+
+Dismisses the notification card identified by the index number. +
+Format: `dismiss INDEX`
+
+=== Reminding an employee through email : `email` _[Coming in v1.5]_
 
 Opens up the email app of the computer to send a reminder email about the notification identified by the index number used in notification cards. +
 Format: `email INDEX`
@@ -589,7 +589,7 @@ Format: `email INDEX`
 * The recipient of the email will be set to the email address of the employee who was assigned the event.
 =====
 
-=== Reminding an employee through WhatsApp : `whatsapp`
+=== Reminding an employee through WhatsApp : `whatsapp` _[Coming in v1.5]_
 
 Opens up the WhatsApp webpage to send a reminder message about the notification identified by the index number used in notification cards. +
 Format: `whatsapp INDEX`

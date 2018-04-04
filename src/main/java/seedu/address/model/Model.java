@@ -82,6 +82,8 @@ public interface Model {
     /** Returns the item type of the curent active list being shown in the GUI */
     String getCurrentActiveListType();
 
+    void sortFilteredPersonList();
+
     /** Deletes the given command shortcut */
     void deleteCommandShortcut(ShortcutDoubles commandShortcut)
             throws UniqueShortcutDoublesList.CommandShortcutNotFoundException;

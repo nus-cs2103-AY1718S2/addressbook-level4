@@ -76,6 +76,7 @@ public class Calendar extends UiPart<Region> {
             new Text("Thu"), new Text("Fri"), new Text("Sat"), new Text("Sun")};
         GridPane dayLabels = new GridPane();
         dayLabels.setPrefWidth(600);
+        dayLabels.setMaxWidth(1120);
         dayLabels.setGridLinesVisible(true);
         int col = 0;
         for (Text txt : dayNames) {

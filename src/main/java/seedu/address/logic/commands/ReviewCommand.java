@@ -6,7 +6,6 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
@@ -88,7 +87,10 @@ public class ReviewCommand extends UndoableCommand {
                                              EditCommand.EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
-        Set<Review> updatedReviews = editPersonDescriptor.getReviews().orElse(new HashSet<Review>());
+        HashSet<Review> updatedReviews = new HashSet<Review>();
+
+        updatedReviews.addAll(editPersonDescriptor.getReviews().orElse(new HashSet<Review>()));
+        updatedReviews.addAll(personToEdit.getReviews());
 
         Person toReturn = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getTags(), personToEdit.getCalendarId());

@@ -164,12 +164,8 @@ public class ModelManager extends ComponentManager implements Model {
     public void replaceTag(List<Tag> tagSet) {
         Tag[] tagArray = new Tag[2];
         tagSet.toArray(tagArray);
-        try {
-            addressBook.replaceTag(tagSet);
-            indicateAddressBookChanged();
-        } catch (TagNotFoundException error) {
-            throw new AssertionError();
-        }
+        addressBook.replaceTag(tagSet);
+        indicateAddressBookChanged();
     }
 
     //@@author

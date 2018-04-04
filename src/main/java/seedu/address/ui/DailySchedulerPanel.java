@@ -7,8 +7,10 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.LoadDirectionsEvent;
 import seedu.address.commons.events.ui.LoadMapPanelEvent;
@@ -29,14 +31,24 @@ public class DailySchedulerPanel extends UiPart<Region> {
     @FXML
     private StackPane directionPanelPlaceholder;
 
+    @FXML
+    private VBox buttonStack;
 
+    @FXML
+    private ToggleButton button;
 
     public DailySchedulerPanel() {
         super(FXML);
-
-        // To prevent triggering events for typing inside the loaded Web page.
-        getRoot().setOnKeyPressed(Event::consume);
         registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Buttons depending on how many trips to be made.
+     */
+    public void addButtons(int numOfInstances) {
+        for (int i = 0; i < numOfInstances; i++) {
+            buttonStack.getChildren().add(new ToggleButton(" "));
+        }
     }
 
     /**
@@ -47,6 +59,7 @@ public class DailySchedulerPanel extends UiPart<Region> {
             directionPanel = new MapPanel("MapPanel.fxml");
             directionPanelPlaceholder.getChildren().add(directionPanel.getRoot());
         }
+        addButtons(5);
     }
 
     /**
@@ -60,7 +73,6 @@ public class DailySchedulerPanel extends UiPart<Region> {
             directionPanel = null;
         }
     }
-
 
     /**
      * Updates the directions on the map.

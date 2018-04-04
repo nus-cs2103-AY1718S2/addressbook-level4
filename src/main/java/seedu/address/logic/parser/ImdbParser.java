@@ -6,6 +6,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddConditionCommand;
 import seedu.address.logic.commands.AddPatientQueueCommand;
@@ -470,6 +471,10 @@ public class ImdbParser {
 
             case DeleteAppointmentCommand.COMMAND_ALIAS:
                 return new DeleteAppointmentCommandParser().parse(arguments);
+            case AddAppointmentCommand.COMMAND_WORD:
+                return new AddAppointmentCommandParser().parse(arguments);
+            case AddAppointmentCommand.COMMAND_ALIAS:
+                return new AddAppointmentCommandParser().parse(arguments);
 
             case AddPatientQueueCommand.COMMAND_WORD:
                 return new AddPatientQueueCommandParser().parse(arguments);

@@ -174,6 +174,11 @@ public class AddCommandTest {
         public ObservableList<AppointmentEntry> getAppointmentEntryList() {
             return null;
         }
+
+        @Override
+        public void addPatientAppointment(Patient patient, String dateTimeString) {
+
+        }
     }
 
     /**

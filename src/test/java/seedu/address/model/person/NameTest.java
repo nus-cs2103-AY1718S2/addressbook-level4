@@ -23,17 +23,6 @@ public class NameTest {
     }
 
     @Test
-    public void hashCode_variousTest() {
-        Name name1 = new Name("Peter Jack");
-        Name name2 = new Name("Peter Jack");
-        Name name3 = new Name("Capital Tan");
-
-        assertEquals(name1.hashCode(), name1.hashCode());
-        assertEquals(name1.hashCode(), name2.hashCode());
-        assertNotEquals(name2.hashCode(), name3.hashCode());
-    }
-
-    @Test
     public void isValidName() {
         // null name
         Assert.assertThrows(NullPointerException.class, () -> Name.isValidName(null));
@@ -50,5 +39,17 @@ public class NameTest {
         assertTrue(Name.isValidName("peter the 2nd")); // alphanumeric characters
         assertTrue(Name.isValidName("Capital Tan")); // with capital letters
         assertTrue(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
+    }
+
+    //@@author LeonidAgarth
+    @Test
+    public void hashCode_variousTest() {
+        Name name1 = new Name("Peter Jack");
+        Name name2 = new Name("Peter Jack");
+        Name name3 = new Name("Capital Tan");
+
+        assertEquals(name1.hashCode(), name1.hashCode());
+        assertEquals(name1.hashCode(), name2.hashCode());
+        assertNotEquals(name2.hashCode(), name3.hashCode());
     }
 }

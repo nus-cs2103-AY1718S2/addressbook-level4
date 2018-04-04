@@ -1,3 +1,4 @@
+//@@author LeonidAgarth
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -14,7 +15,6 @@ import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
 
-//@@author LeonidAgarth
 /**
  * Parses input arguments and creates a new AddEventCommand object
  */

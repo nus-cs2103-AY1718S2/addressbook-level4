@@ -1,3 +1,4 @@
+//@@author LeonidAgarth
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -8,10 +9,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 
-//@@author LeonidAgarth
 /**
  * Adds an event to the address book.
  */

@@ -1,3 +1,4 @@
+//@@author LeonidAgarth
 package seedu.address.storage;
 
 import java.util.Objects;
@@ -7,7 +8,6 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Event;
 
-//@@author LeonidAgarth
 /**
  * JAXB-friendly version of the Event.
  */

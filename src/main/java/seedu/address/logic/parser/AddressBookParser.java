@@ -135,6 +135,7 @@ public class    AddressBookParser {
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
 
+        //@@author LeonidAgarth
         case ChangeTagColorCommand.COMMAND_WORD:
         case ChangeTagColorCommand.COMMAND_ALIAS:
             return new ChangeTagColorCommandParser().parse(arguments);
@@ -146,7 +147,7 @@ public class    AddressBookParser {
         case SwitchCommand.COMMAND_WORD:
         case SwitchCommand.COMMAND_ALIAS:
             return new SwitchCommand();
-
+        //@@author
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }

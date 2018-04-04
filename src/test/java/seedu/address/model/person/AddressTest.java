@@ -23,17 +23,6 @@ public class AddressTest {
     }
 
     @Test
-    public void hashCode_variousTest() {
-        Address address1 = new Address("Blk 456, Den Road, #01-355");
-        Address address2 = new Address("Blk 456, Den Road, #01-355");
-        Address address3 = new Address("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA");
-
-        assertEquals(address1.hashCode(), address1.hashCode());
-        assertEquals(address1.hashCode(), address2.hashCode());
-        assertNotEquals(address2.hashCode(), address3.hashCode());
-    }
-
-    @Test
     public void isValidAddress() {
         // null address
         Assert.assertThrows(NullPointerException.class, () -> Address.isValidAddress(null));
@@ -46,5 +35,17 @@ public class AddressTest {
         assertTrue(Address.isValidAddress("Blk 456, Den Road, #01-355"));
         assertTrue(Address.isValidAddress("-")); // one character
         assertTrue(Address.isValidAddress("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long address
+    }
+
+    //@@author LeonidAgarth
+    @Test
+    public void hashCode_variousTest() {
+        Address address1 = new Address("Blk 456, Den Road, #01-355");
+        Address address2 = new Address("Blk 456, Den Road, #01-355");
+        Address address3 = new Address("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA");
+
+        assertEquals(address1.hashCode(), address1.hashCode());
+        assertEquals(address1.hashCode(), address2.hashCode());
+        assertNotEquals(address2.hashCode(), address3.hashCode());
     }
 }

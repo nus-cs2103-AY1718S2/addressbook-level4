@@ -157,6 +157,7 @@ public class XmlAdaptedPersonTest {
         Assert.assertThrows(IllegalValueException.class, person::toModelType);
     }
 
+    //@@author LeonidAgarth
     @Test
     public void xmlAdaptedTagEqual() {
         XmlAdaptedTag tag1 = new XmlAdaptedTag("friends");

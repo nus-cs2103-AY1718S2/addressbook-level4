@@ -1,3 +1,4 @@
+//@@author LeonidAgarth
 package seedu.address.testutil;
 
 import seedu.address.model.event.Event;

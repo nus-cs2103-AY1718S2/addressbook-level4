@@ -156,6 +156,7 @@ public class AddressBookParserTest {
         assertEquals(new AddGroupCommand(group), command);
     }
 
+    //@@author LeonidAgarth
     @Test
     public void parseCommand_addEvent() throws Exception {
         Event event = new EventBuilder().build();
@@ -180,6 +181,28 @@ public class AddressBookParserTest {
         assertEquals(new ChangeTagColorCommand(tagName, tagColor), command);
     }
 
+    @Test
+    public void parseCommand_changeTagColorAlias() throws Exception {
+        String tagName = "friends";
+        String tagColor = "red";
+        ChangeTagColorCommand command = (ChangeTagColorCommand) parser.parseCommand(ChangeTagColorCommand.COMMAND_ALIAS
+                + " " + tagName + " " + tagColor);
+        assertEquals(new ChangeTagColorCommand(tagName, tagColor), command);
+    }
+
+    @Test
+    public void parseCommand_switch() throws Exception {
+        assertTrue(parser.parseCommand(SwitchCommand.COMMAND_WORD) instanceof SwitchCommand);
+        assertTrue(parser.parseCommand(SwitchCommand.COMMAND_WORD + " view") instanceof SwitchCommand);
+    }
+
+    @Test
+    public void parseCommand_switchAlias() throws Exception {
+        assertTrue(parser.parseCommand(SwitchCommand.COMMAND_ALIAS) instanceof SwitchCommand);
+        assertTrue(parser.parseCommand(SwitchCommand.COMMAND_ALIAS + " view") instanceof SwitchCommand);
+    }
+
+    //@@author
     @Test
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
@@ -311,18 +334,6 @@ public class AddressBookParserTest {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
-    }
-
-    @Test
-    public void parseCommand_switch() throws Exception {
-        assertTrue(parser.parseCommand(SwitchCommand.COMMAND_WORD) instanceof SwitchCommand);
-        assertTrue(parser.parseCommand(SwitchCommand.COMMAND_WORD + " view") instanceof SwitchCommand);
-    }
-
-    @Test
-    public void parseCommand_switchAlias() throws Exception {
-        assertTrue(parser.parseCommand(SwitchCommand.COMMAND_ALIAS) instanceof SwitchCommand);
-        assertTrue(parser.parseCommand(SwitchCommand.COMMAND_ALIAS + " view") instanceof SwitchCommand);
     }
 
     @Test

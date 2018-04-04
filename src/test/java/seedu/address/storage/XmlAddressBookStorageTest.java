@@ -36,18 +36,8 @@ public class XmlAddressBookStorageTest {
         readAddressBook(null);
     }
 
-    @Test
-    public void readAddressBookBackup_nullFilePath_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        readAddressBookBackup(null);
-    }
-
     private java.util.Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws Exception {
         return new XmlAddressBookStorage(filePath).readAddressBook(addToTestDataPathIfNotNull(filePath));
-    }
-
-    private java.util.Optional<ReadOnlyAddressBook> readAddressBookBackup(String filePath) throws Exception {
-        return new XmlAddressBookStorage(filePath).readAddressBookBackup(addToTestDataPathIfNotNull(filePath));
     }
 
     private String addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
@@ -61,11 +51,23 @@ public class XmlAddressBookStorageTest {
         assertFalse(readAddressBook("NonExistentFile.xml").isPresent());
     }
 
+    //@@author LeonidAgarth
+    private java.util.Optional<ReadOnlyAddressBook> readAddressBookBackup(String filePath) throws Exception {
+        return new XmlAddressBookStorage(filePath).readAddressBookBackup(addToTestDataPathIfNotNull(filePath));
+    }
+
+    @Test
+    public void readAddressBookBackup_nullFilePath_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        readAddressBookBackup(null);
+    }
+
     @Test
     public void readAddressBookBackup_missingFile_emptyResult() throws Exception {
         assertFalse(readAddressBookBackup("NonExistentFile.xml.backup").isPresent());
     }
 
+    //@@author
     @Test
     public void read_notXmlFormat_exceptionThrown() throws Exception {
 
@@ -118,6 +120,30 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
+    public void saveAddressBook_nullAddressBook_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        saveAddressBook(null, "SomeFile.xml");
+    }
+
+    /**
+     * Saves {@code addressBook} at the specified {@code filePath}.
+     */
+    private void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) {
+        try {
+            new XmlAddressBookStorage(filePath).saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath));
+        } catch (IOException ioe) {
+            throw new AssertionError("There should not be an error writing to the file.", ioe);
+        }
+    }
+
+    @Test
+    public void saveAddressBook_nullFilePath_throwsNullPointerException() throws IOException {
+        thrown.expect(NullPointerException.class);
+        saveAddressBook(new AddressBook(), null);
+    }
+
+    //@@author LeonidAgarth
+    @Test
     public void readAndBackupAddressBook_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
         AddressBook original = getTypicalAddressBook();
@@ -145,26 +171,9 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
-    public void saveAddressBook_nullAddressBook_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
-        saveAddressBook(null, "SomeFile.xml");
-    }
-
-    @Test
     public void backupAddressBook_nullAddressBook_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         backupAddressBook(null, "SomeFile.xml");
-    }
-
-    /**
-     * Saves {@code addressBook} at the specified {@code filePath}.
-     */
-    private void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) {
-        try {
-            new XmlAddressBookStorage(filePath).saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath));
-        } catch (IOException ioe) {
-            throw new AssertionError("There should not be an error writing to the file.", ioe);
-        }
     }
 
     /**
@@ -179,15 +188,8 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
-    public void saveAddressBook_nullFilePath_throwsNullPointerException() throws IOException {
-        thrown.expect(NullPointerException.class);
-        saveAddressBook(new AddressBook(), null);
-    }
-
-    @Test
     public void backupAddressBook_nullFilePath_throwsNullPointerException() throws IOException {
         thrown.expect(NullPointerException.class);
         backupAddressBook(new AddressBook(), null);
     }
-
 }

@@ -43,7 +43,7 @@ public class AddMembersToGroupCommand extends UndoableCommand {
     private Group groupToAdd;
     private Group groupAdded;
 
-    public AddMembersToGroupCommand (Person personToAdd , Group groupToAdd) {
+    public AddMembersToGroupCommand(Person personToAdd, Group groupToAdd) {
         this.personToAdd = personToAdd;
         this.groupToAdd = groupToAdd;
     }
@@ -66,7 +66,7 @@ public class AddMembersToGroupCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
         } else {
             for (Group group : groupList) {
-                if  (groupToAdd.getInformation().equals(group.getInformation())) {
+                if (groupToAdd.getInformation().equals(group.getInformation())) {
                     groupToAdd = group;
                     try {
                         groupAdded = group;
@@ -92,7 +92,6 @@ public class AddMembersToGroupCommand extends UndoableCommand {
                 || (other instanceof AddMembersToGroupCommand // instanceof handles nulls
                 && personToAdd.equals(((AddMembersToGroupCommand) other).personToAdd));
     }
-
 
 
 }

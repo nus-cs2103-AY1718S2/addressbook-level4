@@ -60,7 +60,7 @@
             </padding>
           </StackPane>
 
-          <VBox fx:id="todoList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+          <VBox fx:id="todoList" minWidth="100" prefWidth="100" SplitPane.resizableWithParent="false">
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>

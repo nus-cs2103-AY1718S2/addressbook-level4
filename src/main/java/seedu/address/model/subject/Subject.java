@@ -49,21 +49,6 @@ public class Subject {
                                                   "HArt", "DnT", "Comp", "FnN", "PoA", "Econs", "Drama", "PE",
                                                   "Biz", "Biotech", "Design"};
 
-    public static final String[] L1_SUBJECT = {"English", "HChi", "HTamil", "HMalay"};
-    public static final String[] R1_SUBJECT = {"Hist", "Geog", "Com.Hum",  "ELit", "CLit", "MLit", "TLit", "HArt",
-                                               "HMusic", "BIndo", "CSP", "MSP"};
-    public static final String[] R2_SUBJECT = {"EMath", "AMath", "Phy", "Chem", "Bio", "Sci"};
-    public static final String[] R3_SUBJECT = {"Hist", "Geog", "ComHum",  "ELit", "CLit", "MLit", "TLit", "HArt",
-                                               "H.Music", "BIndo", "CSP", "MSP", "EMath", "AMath", "Phy", "Chem",
-                                               "Bio", "Sci"};
-    public static final String[] R4_R5_SUBJECT = {"English", "Chinese", "HChi", "CSP", "French", "German", "Spanish",
-                                                  "Hindi", "Urdu", "Gujarati", "Panjabi", "Bengali", "Burmese",
-                                                  "Thai", "Jap", "BIndo", "Tamil", "HTamil", "Malay", "HMalay",
-                                                  "MSP", "EMath", "AMath", "Phy", "Chem", "Bio", "Sci", "Hist", "Geog",
-                                                  "ComHum", "ELit", "CLit", "MLit", "TLit", "Music", "HMusic", "Art",
-                                                  "HArt", "DnT", "Comp", "FnN", "PoA", "Econs", "Drama", "PE",
-                                                  "Biz", "Biotech", "Design"};
-
 
     public final String subjectName;
     public final String subjectGrade;
@@ -164,16 +149,19 @@ public class Subject {
     public String toString() {
         return '[' + subjectName + ' ' + subjectGrade + ']';
     }
+    //@@author
 
+    //@@ author Johnny Chan
     public String nameToString() {
         return subjectName;
     }
-
+    //@@author Johnny Chan
     public String gradeToString() {
         return subjectGrade;
     }
 
     /**
+     * @@ author Johnny Chan
      * Returns grade in number form for html bar
      */
     public String gradeToPercent() {
@@ -206,4 +194,4 @@ public class Subject {
         return percentString;
     }
 }
-//@@author
+

@@ -140,8 +140,8 @@ public class BrowserPanel extends UiPart<Region> {
         email.setText(newPerson.getEmail().value);
         rating.setText(newPerson.getRatingDisplay());
         rating.setTextFill(Color.RED);
-        review.setText(newPerson.getReview().value);
-        review.setWrapText(true);
+        reviews.getChildren().clear();
+        newPerson.getReviews().forEach(review -> reviews.getChildren().add(new Label(review.toString())));
         tags.getChildren().clear();
         initTags(newPerson);
         loadPersonPage(event.getNewPerson());

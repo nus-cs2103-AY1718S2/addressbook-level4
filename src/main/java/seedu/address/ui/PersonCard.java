@@ -44,6 +44,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label commission;
     @FXML
+    private Label group;
+    @FXML
     private FlowPane tags;
     @FXML
     private FlowPane insurances;
@@ -63,7 +65,7 @@ public class PersonCard extends UiPart<Region> {
             appointment.setText(person.getAppointment().value);
         }
         commission.setText(person.getTotalCommission());
-
+        group.setText(person.getGroup().groupName);
         person.getInsurance().forEach(insurance -> insurances.getChildren().add(new Label(insurance.insuranceName)));
 
         startTag(person);

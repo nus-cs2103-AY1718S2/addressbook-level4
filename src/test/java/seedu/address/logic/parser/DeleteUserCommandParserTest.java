@@ -5,7 +5,6 @@ import static seedu.address.logic.commands.CommandTestUtil.LOGIN_INVALID_DESC_PA
 import static seedu.address.logic.commands.CommandTestUtil.LOGIN_INVALID_DESC_USERNAME;
 import static seedu.address.logic.commands.CommandTestUtil.LOGIN_VALID_DESC_PASSWORD;
 import static seedu.address.logic.commands.CommandTestUtil.LOGIN_VALID_DESC_USERNAME;
-import static seedu.address.logic.commands.CommandTestUtil.NEWPASS_VALID_DESC_PASSWORD;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LOGIN_PASSWORD;

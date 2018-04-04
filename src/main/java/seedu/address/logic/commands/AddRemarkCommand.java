@@ -241,5 +241,5 @@ public class AddRemarkCommand extends UndoableCommand {
                     && getSubjects().equals(e.getSubjects());
         }
     }
-//@@author
+    //@@author
 }

@@ -250,5 +250,5 @@ public class DeleteRemarkCommand extends UndoableCommand {
                     && getSubjects().equals(e.getSubjects());
         }
     }
-//@@author
+    //@@author
 }

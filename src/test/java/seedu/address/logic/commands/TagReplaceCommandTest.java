@@ -74,5 +74,5 @@ public class TagReplaceCommandTest {
         tagReplaceCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return tagReplaceCommand;
     }
-//@@author
+    //@@author
 }

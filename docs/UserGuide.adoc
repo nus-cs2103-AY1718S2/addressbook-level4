@@ -253,20 +253,23 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-=== Opening a calendar : `calendar`
+=== Opening a calendar : `calendar-launch`
 
-Opens a calendar in a webview. Will eventually have the option to be opened in the in application scene switcher.
-Format: `calendar`
+Opens a calendar in a webview.
+Format: `calendar-launch`
 
 [NOTE]
 ====
-The user can also open the calendar by pressing the `F8` function key, or by pressing `View > Open Calendar`
+The user can also open the calendar by pressing the `F8` function key, or by pressing `View > Open Calendar`.
+
+The previous `calendar` command has been depricated since v1.4 in favour of the `switch calendar` command that properly opens
+the calendar in the build-in scene switcher.
 ====
 
 === Adding and event to the calendar : `calendar-add`
 
 Allows a user to add an event directly to their calendar.
-Format: `calendar-add en/<eventname> std/<startdatetime> etd/<enddatetime> loc/<location> lp/<linkedperson>(optional)`
+Format: `calendar-add title/<eventname> start/<startdatetime> end/<enddatetime> loc/<location> lp/<linkedperson>(optional)`
 
 === List upcoming events in the command line: `calendar-list`
 
@@ -403,7 +406,9 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `find James Jake`
 * *List* : `list`
 * *Help* : `help`
-* *Calendar* : `calendar` `[Since v1.1]`
+* *Calendar Launch* : `calendar-launch` `[Since v1.1] [Updated v1.4]`
+* *Calendar List* : `calendar-list` `[Since v1.2]`
+* *Calendar Add* : `calendar-add` `[Since v1.3]`
 * *Error* : `errorlog` `[Since v1.2]`
 * *Switch* : `switch FEATURE` +
 e.g.`switch scheduler`

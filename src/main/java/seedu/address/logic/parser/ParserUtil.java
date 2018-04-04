@@ -7,8 +7,6 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import com.google.api.client.util.DateTime;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
@@ -91,10 +89,9 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the given {@code eventName} is invalid.
      */
-    public static DateTime parseDateTime(String dateTime) throws IllegalValueException {
+    public static String parseDateTime(String dateTime) throws IllegalValueException {
         requireNonNull(dateTime);
-        String trimmedDateTime = dateTime.trim();
-        return new DateTime(trimmedDateTime);
+        return dateTime.trim();
     }
 
     /**

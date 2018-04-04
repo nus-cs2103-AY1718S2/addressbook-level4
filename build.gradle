@@ -47,9 +47,11 @@ dependencies {
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.7.4'
     compile group: 'com.google.guava', name: 'guava', version: '19.0'
     compile group: 'com.lynden', name: 'GMapsFX', version: '2.12.0'
+    compile group: 'com.joestelmach', name: 'natty', version: '0.13'
     compile 'com.google.api-client:google-api-client:1.23.0'
     compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
     compile 'com.google.apis:google-api-services-calendar:v3-rev301-1.23.0'
+
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.testfx', name: 'testfx-core', version: testFxVersion
@@ -61,7 +63,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveName = "addressbook.jar"
+    archiveName = "slap-app.jar"
 
     destinationDir = file("${buildDir}/jar/")
 }

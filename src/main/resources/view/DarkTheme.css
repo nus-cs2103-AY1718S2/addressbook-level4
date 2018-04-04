@@ -112,6 +112,7 @@
     -fx-background-color: #515658;
 }
 
+
 .list-cell:filled:selected {
     -fx-background-color: #424d5f;
 }

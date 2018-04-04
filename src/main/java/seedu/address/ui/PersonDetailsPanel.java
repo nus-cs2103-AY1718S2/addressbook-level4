@@ -1,47 +1,35 @@
 //@@author jaronchan
 package seedu.address.ui;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
-import com.lynden.gmapsfx.GoogleMapView;
-import com.lynden.gmapsfx.MapComponentInitializedListener;
-import com.lynden.gmapsfx.javascript.object.GoogleMap;
-import com.lynden.gmapsfx.javascript.object.LatLong;
-import com.lynden.gmapsfx.javascript.object.MapOptions;
-import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.LoadMapPanelEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.RemoveMapPanelEvent;
 import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
-import seedu.address.logic.MapManager;
-import seedu.address.model.person.Person;
 
 /**
- * The Person Details Panel of the App.
- * To be UPDATED
+ * The UI component that handles the display of beneficiary details, location on map
+ * and session reports.
  */
-public class PersonDetailsPanel extends UiPart<Region>
-        implements Initializable, MapComponentInitializedListener {
+public class PersonDetailsPanel extends UiPart<Region> {
 
     private static final String FXML = "PersonDetailsPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    @FXML
-    private GoogleMapView mapView;
+    private MapPanel mapPanel;
 
     @FXML
-    private Pane invalidAddressOverlay;
+    private StackPane mapPanelPlaceholder;
 
-    private GoogleMap map;
 
     public PersonDetailsPanel() {
         super(FXML);
@@ -50,64 +38,65 @@ public class PersonDetailsPanel extends UiPart<Region>
 
         getRoot().setOnKeyPressed(Event::consume);
         registerAsAnEventHandler(this);
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        mapView.addMapInializedListener(this);
-
+        loadMapPanel();
     }
 
     /**
-     * Update the map based on new selection event.
-     * Default view is shown if no address is invalid.
+     * Loads a map to the allocated stack pane.
      */
-
-    private void loadPersonMapAddress(Person person) {
-
-        MapManager.GeocodeUtil.setMapMarkerFromAddress(map, person.getAddress().toString());
+    public void loadMapPanel() {
+        if (mapPanel == null) {
+            mapPanel = new MapPanel("MapPanel.fxml");
+            mapPanelPlaceholder.getChildren().add(mapPanel.getRoot());
+        }
     }
 
     /**
-     * Set the initial properties of the map.
+     * Removes a map from the allocated stack pane.
      */
+    public void removeMapPanel() {
 
-    @Override
-    public void mapInitialized() {
-
-        MapOptions mapOptions = new MapOptions();
-
-        mapOptions.center(new LatLong(1.3521, 103.8198))
-                .mapType(MapTypeIdEnum.ROADMAP)
-                .mapTypeControl(false)
-                .overviewMapControl(false)
-                .panControl(false)
-                .rotateControl(false)
-                .scaleControl(false)
-                .streetViewControl(false)
-                .zoom(10);
-
-        map = mapView.createMap(mapOptions);
-        invalidAddressOverlay.setVisible(false);
-
+        if (mapPanel != null && mapPanelPlaceholder.getChildren().contains(mapPanel.getRoot())) {
+            mapPanel.resetMap();
+            mapPanelPlaceholder.getChildren().remove(mapPanel.getRoot());
+            mapPanel = null;
+        }
     }
 
     /**
-     * Frees resources allocated to the browser.
+     * Frees resources allocated to the map panel if map panel is not empty.
      */
     public void freeResources() {
-        map = null;
+        if (mapPanel != null && mapPanelPlaceholder.getChildren().contains(mapPanel.getRoot())) {
+            mapPanel.freeResources();
+        }
     }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonMapAddress(event.getNewSelection().person);
+        mapPanel.loadAddress(event.getNewSelection().person.getAddress().toString());
     }
 
     @Subscribe
     private void handleShowInvalidAddressOverlayEvent(ShowInvalidAddressOverlayEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        invalidAddressOverlay.setVisible(event.getAddressValidity());
+        mapPanel.showInvalidAddressOverlay(event.getAddressValidity());
+    }
+
+    @Subscribe
+    private void handleLoadMapPanelEvent(LoadMapPanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (event.getFeatureTarget().equals("details")) {
+            loadMapPanel();
+        }
+    }
+
+    @Subscribe
+    private void handleRemoveMapPanelEvent(RemoveMapPanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (!event.getFeatureTarget().equals("details")) {
+            removeMapPanel();
+        }
     }
 }

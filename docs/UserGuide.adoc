@@ -364,7 +364,7 @@ Deletes the first medical record for the first person in the result of the list 
 
 ==== Printing a patient's formatted medical records : `print` [coming in v1.4]
 
-Formats and prints out a patient's medical records. +
+Formats and prints a patient's medical records into a pdf, which will be stored in the "record" folder. +
 Format: `print INDEX`
 
 ==== Attaching and viewing the X-ray scans for a patient `[coming in v2.0]`

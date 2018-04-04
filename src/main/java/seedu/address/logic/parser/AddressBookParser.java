@@ -149,23 +149,7 @@ public class AddressBookParser {
         //@@ samuelloh
         case EditPictureCommand.COMMAND_WORD:
             return new EditPictureCommandParser().parse(arguments);
-
-        //@@ chweeee
-        case "assistant":
-            ConversationCommand.setUpAgent();
-            MessageResponse response = null;
-            String text;
-            Command command = new ConversationCommand(); //this is a dummy
-
-            //need to talk to the agent here
-            //the while loop needs to occur here
-            //initiate communication with agent
-            response = ConversationCommand.getMessageResponse("Hello");
-            text = ConversationCommand.getResponseText(response);
-
-            //has to return the appropriate command, to be decided by the agent
-            return command;
-
+            
         //@@ samuelloh
         case MoreInfoCommand.COMMAND_WORD:
             return new MoreInfoCommandParser().parse(arguments);

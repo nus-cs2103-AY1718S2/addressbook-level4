@@ -22,8 +22,6 @@ import seedu.address.model.student.dashboard.exceptions.MilestoneNotFoundExcepti
 import seedu.address.model.student.dashboard.exceptions.TaskNotFoundException;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
-import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
-import seedu.address.model.tag.Tag;
 
 
 //@@author yapni
@@ -120,35 +118,6 @@ public class CheckTaskCommand extends UndoableCommand {
             DuplicateMilestoneException, MilestoneNotFoundException {
         requireAllNonNull(studentToEdit, milestoneIndex, taskIndex);
 
-        /* Get all the original attributes of the student */
-        Name name = studentToEdit.getName();
-        Phone phone = studentToEdit.getPhone();
-        Email email = studentToEdit.getEmail();
-        Address address = studentToEdit.getAddress();
-        Set<Tag> tags = studentToEdit.getTags();
-        ProgrammingLanguage programmingLanguage = studentToEdit.getProgrammingLanguage();
-        Favourite fav = studentToEdit.getFavourite();
-        ProfilePicturePath profilePicturePath = studentToEdit.getProfilePicturePath();
-        UniqueMilestoneList milestoneList = studentToEdit.getDashboard().getMilestoneList();
-        UniqueHomeworkList homeworkList = studentToEdit.getDashboard().getHomeworkList();
-
-        /* Get the components that needs to be modified */
-        Milestone targetMilestone = milestoneList.get(milestoneIndex);
-        UniqueTaskList targetTaskList = targetMilestone.getTaskList();
-        Task targetTask = targetTaskList.get(taskIndex);
-
-        /* Create new Task and Progress to reflect the completed task */
-        Task targetTaskCompleted = new Task(targetTask.getName(), targetTask.getDescription(), true);
-        Progress newProgress = new Progress(targetMilestone.getProgress().getTotalTasks(),
-                targetMilestone.getProgress().getNumCompletedTasks() + 1);
-
-        /* Update the task list and milestone list with the new task and milestone*/
-        targetTaskList.setTask(targetTask, targetTaskCompleted);
-        Milestone updatedMilestone = new Milestone(
-                targetMilestone.getDueDate(), targetTaskList, newProgress, targetMilestone.getDescription());
-        milestoneList.setMilestone(targetMilestone, updatedMilestone);
-
-        Dashboard newDashboard = new Dashboard(milestoneList, homeworkList);
 
         return new StudentBuilder(studentToEdit).withTaskCompleted(milestoneIndex, taskIndex).build();
     }

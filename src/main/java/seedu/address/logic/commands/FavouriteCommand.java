@@ -11,8 +11,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
-import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
-import seedu.address.model.tag.Tag;
 
 
 //@@author yapni
@@ -71,16 +69,6 @@ public class FavouriteCommand extends UndoableCommand {
     private static Student createEditedStudent(Student target) {
 
         assert target != null;
-
-        Name name = target.getName();
-        Phone phone = target.getPhone();
-        Email email = target.getEmail();
-        Address address = target.getAddress();
-        Set<Tag> tags = target.getTags();
-        ProgrammingLanguage programmingLanguage = target.getProgrammingLanguage();
-        Favourite fav = new Favourite(true);
-        Dashboard dashboard = target.getDashboard();
-        ProfilePicturePath profilePicturePath = target.getProfilePicturePath();
 
         requireNonNull(target);
 

@@ -21,7 +21,9 @@ import seedu.address.model.person.Person;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String SEARCH_PAGE_URL =
+    public static final String FACEBOOK_SEARCH_PAGE_URL =
+            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+    public static final String TWITTER_SEARCH_PAGE_URL =
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
 
     private static final String FXML = "BrowserPanel.fxml";
@@ -42,10 +44,10 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void loadBrowserPersonPage(Person person) {
-        loadBrowserPage(SEARCH_PAGE_URL + person.getName().fullName);
+        loadBrowserPage(FACEBOOK_SEARCH_PAGE_URL + person.getName().fullName);
     }
     private void loadBrowser1PersonPage(Person person) {
-        loadBrowser1Page(SEARCH_PAGE_URL + person.getName().fullName);
+        loadBrowser1Page(TWITTER_SEARCH_PAGE_URL + person.getName().fullName);
     }
 
     public void loadBrowserPage(String url) {

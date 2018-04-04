@@ -203,6 +203,26 @@ Adds the Facebook platform with the link `www.facebook.com/johndoe` to the 1st p
 Clears all existing social media platforms of the 2nd person.
 // end::addplatform[]
 
+// tag::removeplatform[]
+=== Removing stored platforms of a person : `removeplatform` `[Since v1.4]`
+
+Removes the specified social media platforms of the stated person. +
+Format: `removeplatform INDEX [smp/PLATFORM]...`
+
+****
+* Removes the social media platforms by editing the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* You can remove all the social media platforms of a person by not specifying any platform fields.
+* Unrecognised platforms will be ignored during execution.
+****
+
+Examples:
+
+* `removeplatform 1` +
+Removes all social media platforms tied to the 1st person.
+* `removeplatform 2 smp/twitter` +
+Removes the Twitter platform from the 2nd person.
+// end::removeplatform[]
+
 // tag::sort[]
 === Sorting all persons : `sort` `[Since v1.2]`
 
@@ -391,11 +411,6 @@ Search with keyword "John" on facebook and display the search result in the brow
 
 Logout from all the social media platform that the user has logged in. +
 Format: `logoutall`
-
-=== Remove link to stored platform : `removeplatform` `[Coming in v2.0]`
-
-Remove a link to profile of specified social media platform of a specified person. +
-Format: `removeplatform INDEX SOCIALMEDIA`
 
 ****
 * After this command, when the person is selected, the tab for the removed platform will not be shown.

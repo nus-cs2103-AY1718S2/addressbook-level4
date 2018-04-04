@@ -179,62 +179,105 @@ Medeina will edit the name of the 2nd pet patient to be `jewel baby` and clears 
 * `edit **-a** 3 d/2018-06-04` +
 Medeina will edit the date and time of the 3rd appointment to be `2018-06-04`.
 
-=== Finding contacts by name: `find` or `f`
+=== Find contacts or pet patients: `find` or `f`
 
-To retrieve contacts with names that contain any of the specified keywords, enter `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]` in the command box.
+You can use `find` or `f` to do the following :
+
+[width="100%", cols="15%,<45%a,<40%", options="header"]
+|=====
+| To find
+| Command syntax
+| Notes
+
+.^a|Person
+| `find **-o** PREFIX/KEYWORD [MORE KEYWORDS] [MORE PREFIX/MORE KEYWORDS]`
+a| * Currently accepted individual `PREFIX` finding are `n/NAME`, `nr/NRIC`, `t/TAGS`.
+* Accepted combinations are `nr/NRIC t/TAGS` and `n/NAME t/TAGS`.
+* Pets of displayed contacts will also be displayed.
+
+.^| Pet patient
+| `find **-p** PREFIX/KEYWORD [MORE KEYWORDS] [MORE PREFIX/MORE KEYWORDS]`
+a| * Currently accepted individual `PREFIX` finding are `n/PET_NAME`, `s/SPECIES`, `b/BREED`, `c/COLOR`, `bt/BLOOD_TYPE`, `t/PET_TAGS`.
+* Accepted combinations are `n/PET_NAME s/SPECIES`, `s/SPECIES bt/BLOOD TYPE`, `s/SPECIES c/COLOR`, `s/SPECIES b/BREED c/COLOR`, `s/SPECIES b/BREED c/COLOR bt/BLOODTYPE t/TAGS` and `n/PET_NAME s/SPECIES b/BREED c/COLOR bt/BLOODTYPE t/TAGS`.
+* Contacts of displayed pets will also be displayed.
+
+|=====
+{empty} +
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Contacts matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is case insensitive. e.g `alex` will match `Alex`.
+* The order of the keywords does not matter. e.g. `Yeoh Alex` will match `Alex Yeoh`.
+* Only full words will be matched e.g. `Al` will not match `Alex`.
+* Data matching at least one keyword within a prefix will be returned (i.e. `OR` search). e.g. `Alex Yu` will return `Alex Yeoh`, `Bernice Yu`.
 ****
+{empty} +
 
-Examples:
+image::find_examples.PNG[width="800"]
+{empty} +
 
-* Type in `f John` +
-Medeina will return `john` and `John Doe`
+.**Copy & paste to try out**
+----
+find -o n/Alex Bernice Charlotte t/Owner
 
-* Type in `find Betsy Tim John` +
-Medeina will return any person having names `Betsy`, `Tim`, or `John`
+find -o nr/S0123456B T0123456C t/Owner
+
+find -p n/Bei Nei s/Cat
+
+find -p s/Dog Cat bt/DEA 4
+
+find -p s/Dog c/White Golden
+
+find -p s/Dog b/Pug c/Golden Brown
+
+find -p s/Cat b/Maine Coon c/Black bt/AB t/Aggressive
+
+find -p n/Chae s/Cat b/Russian Blue c/Grey bt/A t/Naive
+----
+
 
 === Deleting a owner, pet patient or appointment : `delete` or `d` `[Since v1.3]`
 
-Use the following command format to:
+You can use `delete` or `d` to do the following :
 
-Delete an existing owner:: `delete **-o** INDEX`
-Forcefully deleting an existing owner:: `delete **-fo** INDEX`
-Delete an existing pet patient:: `delete **-p** INDEX`
-Forcefully deleting an existing pet patient:: `delete **-fp** INDEX`
-Delete an existing appointment:: `delete **-a** INDEX`
+[width="100%", cols="15%,<45%a,<40%", options="header"]
+|=====
+| To delete
+| Command syntax
+| Notes
 
-****
-* The command deletes the contact, pet patient or appointment at the specified `INDEX`.
-* The commands -o and -p will not run if there are dependencies that rely on it. To forcefully delete, use the -fo and -fp options.
-* Upon a forceful delete of an owner, all appointments and pet patients binded to the owner are automatically deleted as well.
-* Upon a forceful delete of a pet patient, all appointments binded to the pet patient are automatically deleted as well.
-* The index refers to the index number shown in the most recent listing, provided by the `list` command.
-****
+.^a|Person
+| `delete **-[f]o** INDEX`
+a| * The command will delete the contact at the specified `INDEX` listed by the `list` or `find` command.
+* The command prefix `-o` will not delete a contact if there are still pet and appointment dependencies that rely on it. Use `-fo` to forcefully delete a contact and its relevant dependencies.
 
-[IMPORTANT]
-====
-The index *must be a positive integer* and should not be *invalid* `1, 2, 3, ...`
-====
+.^| Pet patient
+| `delete **-[f]p** INDEX`
+a| * The command will delete the pet patient at the specified `INDEX` listed by the `list` or `find` command.
+* The command prefix `-p` will not delete a pet patient if there are still appointment dependencies that rely on it. Use `-fp` to forcefully delete a pet patient and its relevant dependencies.
 
-Examples:
+.^| Appointment
+| `delete **-a** INDEX`
+a| * The command will delete the appointment at the specified `INDEX` listed by the `list` or `find` command.
 
-* Type in `list -o` +
-`delete -o 2` +
-Medeina will deletes the 2nd owner in Medeina's address book only if there are no pet patients and appointments binded to that owner.
+|=====
+{empty} +
 
-* Type in `list -o` +
-`delete -fo 2` +
-Medeina will deletes the 2nd owner in Medeina's address book, and all pet patients and appointments binded to that owner
+image::delete_examples.PNG[width="800"]
+{empty} +
 
-* Type in `find -o Betsy` +
-`d -o 1` +
-Medeina will delete the 1st contact in the results of the `find` command.
+.**Copy & paste to try out**
+----
+delete -a 1
+
+delete -p 1
+
+delete -o 1
+
+delete -fp 1
+
+delete -fo 1
+
+----
 
 === Listing entered commands : `history` or `his`
 

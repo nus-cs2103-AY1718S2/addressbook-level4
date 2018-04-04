@@ -24,7 +24,7 @@ image::Profilepic_Kaiser.jpg[width="150", align="left"]
 {empty}[https://github.com/kaisertanqr[github]]
 
 +Role: Project Developer
-+Responsibilities: Storage enhancements and Security
++Responsibilities: Authentication, security and User Storage
 
 '''
 

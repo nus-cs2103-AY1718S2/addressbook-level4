@@ -106,6 +106,53 @@ Examples:
 
 * `answer 2.1.1 Procedural languages work at simple data structures and functions level`
 
+=== Creating an issue on Github: `+issue OR ci`
+
+Creates an issue on github in the team repo +
+Format: `+issue ti/TITLE [a/ASSIGNEES]... [ms/MILESTONE] [b/BODY] [l/LABELS]...` +
+OR +
+`ci ti/TITLE [a/ASSIGNEES]... [ms/MILESTONE] [b/BODY] [l/LABELS]...`
+
+[TIP]
+An issue has only 'title' field as compulsory. Rest are all optional. +
+An issue can have more than one assignees and labels.
+
+Examples:
+
+* `+issue ti/complete issue a/johndoe ms/v1.1 b/CS2103T is a software engineering module l/type.task l/CS2103T`
+* `+issue ti/TestIssue`
+* `ci ti/Issue with only body b/test body l/type.test`
+
+=== Closing an issue on Github: `-issue OR cli`
+
+Closes an issue on github +
+Format: `-issue INDEX` +
+`OR` +
+`cli INDEX`
+
+[TIP]
+`INDEX` refers to the #INDEX of an issue on github
+
+Examples:
+
+* `-issue 1`
+* `cli 3`
+
+=== Reopening an issue on Github: `reopenissue OR ri`
+
+Reopens an issue on github +
+Format: `reopenissue INDEX` +
+`OR` +
+`ri INDEX`
+
+[TIP]
+`INDEX` refers to the #INDEX of an issue on github
+
+Examples:
+
+* `reopenissue 1`
+* `reopenissue 3`
+
 === Clearing all entries : `clear OR c`
 
 Clear all information inside the ProgressChecker. +
@@ -391,6 +438,16 @@ OR `a n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com m/Computer Science y/2 t/friend t/colleague`
 * *Answer* : `answer INDEX ANSWER` +
 e.g. `answer 2.1.1`
+* *Create issue* : `+issue ti/TITLE [a/ASSIGNEES]... [ms/MILESTONE] [b/BODY] [l/LABELS]...` +
+                   OR +
+                   `ci ti/TITLE [a/ASSIGNEES]... [ms/MILESTONE] [b/BODY] [l/LABELS]...` +
+e.g. `+issue ti/complete issue a/johndoe ms/v1.1 b/CS2103T is a software engineering module l/type.task l/CS2103T`
+* *Close issue* : `-issue INDEX` OR `cli INDEX` +
+e.g. `-issue 3` +
+OR `cli 1`
+* *Reopen issue* : `reopenissue INDEX` OR `ri INDEX` +
+e.g. `reopenissue 3` +
+OR `ri 1`
 * *Clear* : `clear` OR `c`
 * *Complete* : `complete INDEX` +
 e.g. `complete 2.1`

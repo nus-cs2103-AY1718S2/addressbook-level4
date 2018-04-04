@@ -29,6 +29,7 @@ public class Subject {
             + Arrays.toString(Arrays.copyOfRange(SUBJECT_NAME, 30, 39)) + "\n"
             + Arrays.toString(Arrays.copyOfRange(SUBJECT_NAME, 40, SUBJECT_NAME.length)) + ".";
     public static final String[] SUBJECT_GRADE = new String[] {"A1", "A2", "B3", "B4", "C5", "C6", "D7", "E8", "F9"};
+
     public static final String MESSAGE_SUBJECT_GRADE_CONSTRAINTS = "Subject grade should be alphanumeric and should be"
             + " one of the following: \n" + Arrays.deepToString(SUBJECT_GRADE) + ".";
 
@@ -48,6 +49,7 @@ public class Subject {
                                                   "HArt", "DnT", "Comp", "FnN", "PoA", "Econs", "Drama", "PE",
                                                   "Biz", "Biotech", "Design"};
 
+
     public final String subjectName;
     public final String subjectGrade;
 
@@ -58,10 +60,11 @@ public class Subject {
         this.subjectName = "";
         this.subjectGrade = "";
     }
+
     /**
      * Constructs a {@code Subject}.
      *
-     * @param subjectName A valid subject name.
+     * @param subjectName  A valid subject name.
      * @param subjectGrade A valid subject grade.
      */
     public Subject(String subjectName, String subjectGrade) {
@@ -92,7 +95,7 @@ public class Subject {
      * Returns true if a given string is a valid subject name.
      */
     public static boolean isValidSubjectName(String test) {
-        for (String validSubjectName: SUBJECT_NAME) {
+        for (String validSubjectName : SUBJECT_NAME) {
             if (test.equals(validSubjectName)) {
                 return true;
             }
@@ -105,7 +108,7 @@ public class Subject {
      */
 
     public static boolean isValidSubjectGrade(String test) {
-        for (String validSubjectGrade: SUBJECT_GRADE) {
+        for (String validSubjectGrade : SUBJECT_GRADE) {
             if (test.equals(validSubjectGrade)) {
                 return true;
             }
@@ -146,6 +149,49 @@ public class Subject {
     public String toString() {
         return '[' + subjectName + ' ' + subjectGrade + ']';
     }
+    //@@author
 
+    //@@ author Johnny Chan
+    public String nameToString() {
+        return subjectName;
+    }
+    //@@author Johnny Chan
+    public String gradeToString() {
+        return subjectGrade;
+    }
+
+    /**
+     * @@ author Johnny Chan
+     * Returns grade in number form for html bar
+     */
+    public String gradeToPercent() {
+        int percent;
+
+        switch (subjectGrade) {
+        case "A1": percent = 100;
+                break;
+        case "A2": percent = 90;
+                break;
+        case "B3": percent = 80;
+                break;
+        case "B4": percent = 70;
+                break;
+        case "C5": percent = 60;
+                break;
+        case "C6": percent = 50;
+                break;
+        case "D7": percent = 40;
+                break;
+        case "E8": percent = 30;
+                break;
+        case "F9": percent = 10;
+                break;
+        default: percent = 0;
+                break;
+        }
+
+        String percentString = Integer.toString(percent);
+        return percentString;
+    }
 }
-//@@author
+

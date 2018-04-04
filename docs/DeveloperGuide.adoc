@@ -432,7 +432,7 @@ Then the Addressbook would proceed to look for the persons with the unwanted tag
 tag and to add the new tag to the person.
 
 The figure below shows the Sequence Diagram for the interactions within the `Logic`
-component when "tag replace t/TAGNAME t/TAGNAME" is typed into the `CommandBox` by the user.
+component when "tagreplace t/TAGNAME t/TAGNAME" is typed into the `CommandBox` by the user.
 
 image::TagReplaceCommandSequenceDiagram.png[width="650"]
 
@@ -538,6 +538,7 @@ image::TagDeleteSequenceDiagram.png[width="800"]
 *_return to <<toc,Table of Contents>>_*
 
 // tag::dataencryption[]
+
 === [Proposed] Data Encryption
 
 _{Explain here how the data encryption feature will be implemented}_
@@ -572,6 +573,29 @@ html file called by the function.
 // end::browserpanel[]
 
 *_return to <<toc,Table of Contents>>_*
+
+// tag::Remark Feature[]
+=== Remark Feature
+==== Current Implementation
+
+A new remark component is added to the person model.
+
+image::ModelClassDiagram.png[width="800"]
+
+This remark feature allows the user to add remarks to the student profile of the specified student.
+
+image::RemarkClassSequenceDiagram.png[width="800"]
+
+Figure 15. Sequence Diagram of AddRemarkCommand
+
+==== Design Considerations
+===== Aspect: Implementation of the `Remark` feature
+* ** Alternative 1:** Using just one method to add and delete the remark.
+** Pros: Need not create 2 command just to add and delete the remarks.
+** Cons: The remark attached to the student in our student profile would not be able to exceed one line.
+
+*_return to <<toc,Table of Contents>>_*
+// end::Remark Feature[]
 
 === Logging
 
@@ -1265,7 +1289,7 @@ Use case resumes at step 2.
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 450,000 students
+.  Should be able to hold up to 1,200 students
  without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 

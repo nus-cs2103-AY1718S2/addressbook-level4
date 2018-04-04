@@ -13,12 +13,13 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
-import seedu.address.ui.Calendar;
+import seedu.address.ui.BrowserPanel;
+import seedu.address.ui.CalendarDisplay;
 
 /**
  * Creates an appointment for the student at the specified index.
  */
-public class AppointmentCommand extends Command{
+public class AppointmentCommand extends Command {
 
     public static final String COMMAND_WORD = "appointment";
     public static final String COMMAND_ALIAS = "appt";
@@ -43,6 +44,8 @@ public class AppointmentCommand extends Command{
     private final Index index;
     private final Appointment toAdd;
 
+    private BrowserPanel browserPanel = new BrowserPanel();
+    private CalendarDisplay calendarDisplay = new CalendarDisplay();
     private Person selectedPerson;
 
     /**
@@ -63,6 +66,7 @@ public class AppointmentCommand extends Command{
             model.addAppointment(toAdd);
             getDetails();
             showEventOnCalendar();
+            refreshCalendarView();
             return new CommandResult(String.format(MESSAGE_SUCCESS, getDetails()));
         } catch (DuplicateAppointmentException e) {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
@@ -76,8 +80,12 @@ public class AppointmentCommand extends Command{
                 + " with " + selectedPerson.getName();
     }
 
-    public void showEventOnCalendar() throws IOException {
-        Calendar.createEvent(toAdd, selectedPerson);
+    private void showEventOnCalendar() throws IOException {
+        calendarDisplay.createEvent(toAdd, selectedPerson);
+    }
+
+    private void refreshCalendarView() {
+        browserPanel.loadDefaultPage();
     }
 
     @Override

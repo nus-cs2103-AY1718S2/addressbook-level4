@@ -61,6 +61,12 @@ public class DailySchedulerPanel extends UiPart<Region> {
         }
     }
 
+    public void updateDirections(String addressOrigin, String addressDestination) {
+        if (directionPanel != null && directionPanelPlaceholder.getChildren().contains(directionPanel.getRoot())) {
+            directionPanel.loadDirections(addressOrigin, addressDestination);
+        }
+    }
+
     /**
      * Frees resources allocated to the direction panel if direction panel is not empty.
      */
@@ -94,6 +100,6 @@ public class DailySchedulerPanel extends UiPart<Region> {
     @Subscribe
     private void handleLoadDirectionsEvent(LoadDirectionsEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        directionPanel.loadDirections("Blk 138, Potong Pasir Ave 3", "342 Pasir Panjang");
+        updateDirections("Blk 138, Potong Pasir Ave 3", "342 Pasir Panjang");
     }
 }

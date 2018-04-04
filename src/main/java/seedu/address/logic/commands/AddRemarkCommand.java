@@ -24,7 +24,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
-
+//@@author chuakunhong
 /**
  * Edits the details of an existing person in the address book.
  */
@@ -242,3 +242,4 @@ public class AddRemarkCommand extends UndoableCommand {
         }
     }
 }
+//@@author

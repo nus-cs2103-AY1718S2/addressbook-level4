@@ -7,9 +7,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ACTUALSPENDING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_INTERVAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INCOME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_INTERVAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -35,6 +37,8 @@ public class CommandTestUtil {
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
     public static final String VALID_TITLE_JOHN = "meet john";
+    public static final String VALID_DATE_TIME_START = "04/04/2018 12:00";
+    public static final String VALID_DATE_TIME_END = "04/04/2018 13:00";
     public static final String VALID_PHONE_AMY = "11111111";
     public static final String VALID_PHONE_BOB = "22222222";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
@@ -53,6 +57,8 @@ public class CommandTestUtil {
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
     public static final String TITLE_DESC_MEET_John = " " + PREFIX_NAME + VALID_TITLE_JOHN;
+    public static final String START_DATE_DESC = " " + PREFIX_START_INTERVAL + VALID_DATE_TIME_START;
+    public static final String END_DATE_DESC = " " + PREFIX_END_INTERVAL + VALID_DATE_TIME_END;
     public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;
     public static final String PHONE_DESC_BOB = " " + PREFIX_PHONE + VALID_PHONE_BOB;
     public static final String EMAIL_DESC_AMY = " " + PREFIX_EMAIL + VALID_EMAIL_AMY;
@@ -75,6 +81,8 @@ public class CommandTestUtil {
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_INCOME_DESC = " " + PREFIX_INCOME + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_AGE_DESC = " " + PREFIX_AGE + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_DATE_TIME_START_DESC = " " + PREFIX_START_INTERVAL + "04-04-2018 12:00";
+    public static final String INVALID_DATE_TIME_END_DESC =  " " + PREFIX_END_INTERVAL + "04-04-2018 13:00";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

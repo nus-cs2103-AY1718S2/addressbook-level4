@@ -46,7 +46,7 @@ public class EditAppointmentCommand extends UndoableCommand {
 
 
     /**
-     * Creates an AddCommand to add the specified {@code AppointmentEntry}
+     * Creates an EditAppointmentCommand to Edit the specified {@code AppointmentEntry}
      */
     public EditAppointmentCommand(String searchText, EditAppointmentDescriptor editAppointmentDescriptor) {
         requireNonNull(searchText);

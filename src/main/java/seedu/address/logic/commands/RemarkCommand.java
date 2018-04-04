@@ -23,7 +23,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
-
+//@@author chuakunhong
 /**
  * Edits the details of an existing person in the address book.
  */
@@ -31,7 +31,7 @@ public class RemarkCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "remark";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": You can put anything, even nothing.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": You can put anything, even nothing. "
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_REMARK + "REMARKS...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -138,6 +138,7 @@ public class RemarkCommand extends UndoableCommand {
          * Copy constructor.
          * A defensive copy of {@code tags} is used internally.
          */
+
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
             setNric(toCopy.nric);
@@ -233,3 +234,4 @@ public class RemarkCommand extends UndoableCommand {
         }
     }
 }
+//@@author

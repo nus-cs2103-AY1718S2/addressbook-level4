@@ -63,18 +63,20 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
-
+    //@@author TeyXinHui
     /**
      * Removes a specific tag from everyone in the address book.
      * @param tag
      * @throws TagNotFoundException
      */
     void deleteTag(Tag tag) throws TagNotFoundException;
+    //@@author
 
+    //@@author chuakunhong
     /**
      * Replaces a specific tag for everyone in the address book.
      * @param tagSet
-     * @throws TagNotFoundException
      */
-    void replaceTag(List<Tag> tagSet) throws TagNotFoundException;
+    void replaceTag(List<Tag> tagSet);
+    //@@author
 }

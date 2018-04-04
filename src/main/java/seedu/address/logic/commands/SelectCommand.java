@@ -36,6 +36,7 @@ public class SelectCommand extends Command {
         this.score = 0;
     }
 
+    //@@author TeyXinHui
     @Override
     public CommandResult execute() throws CommandException {
 
@@ -53,8 +54,9 @@ public class SelectCommand extends Command {
         }
         try {
             score = selectedPerson.calculateL1R5();
-        } catch (InvalidSubjectCombinationException error) {
-            return new CommandResult("Please check that you have at least 1 subject in each category.");
+        } catch (InvalidSubjectCombinationException isce) {
+            return new CommandResult("Please check that you have at least 1 subject in each L1R5 "
+                    + "category.\n"  + "Please use edit to change subjects allocated to student.");
         }
 
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
@@ -63,6 +65,7 @@ public class SelectCommand extends Command {
 
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

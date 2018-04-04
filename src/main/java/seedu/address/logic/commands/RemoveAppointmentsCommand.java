@@ -5,7 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SEARCH_TEXT;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
-
+//@@author yuxiangSg
 /**
  * removes appointment whose title match with the searchText in the address book's calendar.
  */

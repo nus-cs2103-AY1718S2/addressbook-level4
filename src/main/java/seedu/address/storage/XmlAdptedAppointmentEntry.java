@@ -13,6 +13,7 @@ import com.calendarfx.model.Interval;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.calendar.AppointmentEntry;
 
+//@@author yuxiangSg
 /**
  * JAXB-friendly version of the Appointment Entry.
  */

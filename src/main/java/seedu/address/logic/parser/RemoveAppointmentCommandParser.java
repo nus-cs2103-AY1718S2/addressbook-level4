@@ -9,7 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.RemoveAppointmentsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-
+//@@author yuxiangSg
 /**
  * Parses input arguments and creates a new RemoveAppointmentsCommand object
  */

@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
-
+//@@author yuxiangSg
 /**
  * Represents a appointment in the calendar.
  * Guarantees: details are present and not null, field values are validated, immutable.

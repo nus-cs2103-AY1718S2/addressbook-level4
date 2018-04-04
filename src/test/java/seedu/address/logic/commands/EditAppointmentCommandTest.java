@@ -17,7 +17,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.calendar.AppointmentEntry;
 import seedu.address.testutil.AppointmentBuilder;
-
+//@@author yuxiangSg
 public class EditAppointmentCommandTest {
     private Model model = new ModelManager(getTypicalAppointmentAddressBook(), new UserPrefs());
 

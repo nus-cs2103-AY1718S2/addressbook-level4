@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalAppointmentEntires.MEET_JAMES;
 
 import org.junit.Test;
-
+//@@author yuxiangSg
 public class XmlAdaptedAppointmentEntryTest {
 
     @Test

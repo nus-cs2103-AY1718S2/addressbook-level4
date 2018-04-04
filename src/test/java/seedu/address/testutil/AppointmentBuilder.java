@@ -6,7 +6,7 @@ import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
 
 import seedu.address.model.calendar.AppointmentEntry;
-
+//@@author yuxiangSg
 /**
  * A utility class to help with building AppointmentEntry objects.
  */

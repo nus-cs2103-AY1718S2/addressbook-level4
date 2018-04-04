@@ -114,8 +114,8 @@ public class Person {
     /**
      * Set the photo field which is the path to the photo.
      */
-    public void setPhoto(String photoName) {
-        this.photo = DEFAULT_PHOTO_FOLDER + photoName;
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
     }
 
     public void setRating(Rating rating) {

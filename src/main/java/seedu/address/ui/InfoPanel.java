@@ -13,6 +13,8 @@ import seedu.address.commons.events.ui.GoogleMapsEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.TimeTableEvent;
 import seedu.address.commons.events.ui.VenueTableEvent;
+import seedu.address.logic.Logic;
+import seedu.address.model.person.Person;
 
 /**
  * Container for both browser panel and person information panel
@@ -22,12 +24,15 @@ public class InfoPanel extends UiPart<Region> {
     private static final String FXML = "InfoPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private Logic logic;
+
 
     private BrowserPanel browserPanel;
     private BirthdayList birthdayList;
     private VenueTable venueTable;
     private TimeTablePanel timeTablePanel;
     private GoogleMapsDisplay mapsDisplay;
+    private PersonDetailsCard personDetailsCard;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -36,14 +41,15 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private StackPane venuePlaceholder;
     @FXML
-    private StackPane timetablePlaceholder;
+    private StackPane userDetailsPlaceholder;
     @FXML
     private StackPane mapsPlaceholder;
 
 
-    public InfoPanel() {
+    public InfoPanel(Logic logic) {
         super(FXML);
 
+        this.logic = logic;
         fillInnerParts();
 
         venueTable = new VenueTable(null);
@@ -62,22 +68,15 @@ public class InfoPanel extends UiPart<Region> {
      * Helper method to fill UI placeholders
      */
     public void fillInnerParts() {
+        personDetailsCard = new PersonDetailsCard();
+        userDetailsPlaceholder.getChildren().add(personDetailsCard.getRoot());
+
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         birthdayList = new BirthdayList();
         birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
 
-        timeTablePanel = new TimeTablePanel();
-        timetablePlaceholder.getChildren().add(timeTablePanel.getRoot());
-    }
-
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        browserPanel.loadPersonPage(event.getNewSelection().person);
-
-        browserPlaceholder.toFront();
     }
 
     //@@author AzuraAiR
@@ -117,11 +116,20 @@ public class InfoPanel extends UiPart<Region> {
 
     //@@author yeggasd
     @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Person person = event.getNewSelection().person;
+
+        personDetailsCard.update(person);
+        userDetailsPlaceholder.toFront();
+    }
+
+    @Subscribe
     private void handleTimeTableEvent(TimeTableEvent event) {
-        timetablePlaceholder.getChildren().removeAll();
+        userDetailsPlaceholder.getChildren().removeAll();
         timeTablePanel = new TimeTablePanel(event.getTimeTable());
-        timetablePlaceholder.getChildren().add(timeTablePanel.getRoot());
-        timetablePlaceholder.toFront();
+        userDetailsPlaceholder.getChildren().add(timeTablePanel.getRoot());
+        userDetailsPlaceholder.toFront();
         timeTablePanel.setStyle();
     }
     //@@author

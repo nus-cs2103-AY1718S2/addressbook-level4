@@ -9,6 +9,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
+
 import seedu.address.commons.util.StringUtil;
 
 //@@author yeggasd
@@ -123,6 +124,7 @@ public class TimeTablePanel extends UiPart<Region> {
                             setText(null);
                             setStyle("");
                         } else {
+
                             setText(item);
                             removeAllStyle(this);
                             if ("".equals(getItem())) {
@@ -137,6 +139,8 @@ public class TimeTablePanel extends UiPart<Region> {
                 };
             });
         }
+        TableColumn pos = (TableColumn) timeTable.getColumns().get(3);
+        System.out.println(pos.getCellObservableValue(0).getValue());
     }
 
     /**

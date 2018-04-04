@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="329.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="378.0" prefWidth="372.0">
+         <children>
+            <HBox prefHeight="174.0" prefWidth="173.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="106.0" prefWidth="94.0" spacing="5" />
+                  <VBox prefHeight="166.0" prefWidth="482.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="60.0" prefWidth="366.0">
+                           <children>
+                              <Label fx:id="name" prefHeight="27.0" prefWidth="458.0" styleClass="display_big_label" text="\$first" />
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <HBox prefHeight="8.0" prefWidth="16.0" />
+                                    <FlowPane fx:id="tags" prefHeight="9.0" prefWidth="451.0" rowValignment="TOP" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <VBox alignment="CENTER_LEFT" minHeight="105.0" prefHeight="106.0" prefWidth="210.0">
+                                 <padding>
+                                    <Insets bottom="5" left="15" right="5" top="5" />
+                                 </padding>
+                                 <children>
+                                    <Label styleClass="display_small_label" text="Phone" />
+                                    <Label styleClass="display_small_label" text="Address" />
+                                    <Label styleClass="display_small_label" text="Email" />
+                                    <Label styleClass="display_small_label" text="Birthday" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER_LEFT" minHeight="105" prefHeight="106.0" prefWidth="484.0">
+                                 <padding>
+                                    <Insets bottom="5" left="15" right="5" top="5" />
+                                 </padding>
+                                 <children>
+                                    <Label fx:id="phone" prefHeight="27.0" prefWidth="347.0" styleClass="display_small_label" text="\$phone" />
+                                    <Label fx:id="address" prefHeight="27.0" prefWidth="370.0" styleClass="display_small_label" text="\$address" wrapText="true" />
+                                    <Label fx:id="email" prefHeight="27.0" prefWidth="362.0" styleClass="display_small_label" text="\$email" wrapText="true" />
+                                    <Label fx:id="birthday" prefHeight="27.0" prefWidth="368.0" styleClass="display_small_label" text="\$birthday" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <StackPane fx:id="timetablePlaceholder" prefHeight="430.0" prefWidth="724.0" VBox.vgrow="ALWAYS" />
+   </children>
+   <stylesheets>
+      <URL value="@DarkTheme.css" />
+      <URL value="@Extensions.css" />
+   </stylesheets>
+</VBox>

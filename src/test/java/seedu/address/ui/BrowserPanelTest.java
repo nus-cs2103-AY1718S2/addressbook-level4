@@ -31,6 +31,7 @@ public class BrowserPanelTest extends GuiUnitTest {
         browserPanelHandle = new BrowserPanelHandle(browserPanel.getRoot());
     }
 
+
     /**
      * Test remaining unused until fix
      * @throws Exception
@@ -47,4 +48,5 @@ public class BrowserPanelTest extends GuiUnitTest {
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
     }
+    */
 }

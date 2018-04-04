@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.input.KeyCode;
+
 import org.junit.Test;
 
 import guitests.GuiRobot;

@@ -13,6 +13,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import javafx.scene.input.KeyCode;
+
 import org.junit.Test;
 
 import guitests.GuiRobot;

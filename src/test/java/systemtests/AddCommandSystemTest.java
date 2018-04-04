@@ -41,6 +41,7 @@ import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import javafx.scene.input.KeyCode;
+
 import org.junit.Test;
 
 import guitests.GuiRobot;

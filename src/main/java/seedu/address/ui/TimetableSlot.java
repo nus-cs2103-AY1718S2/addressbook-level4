@@ -16,7 +16,7 @@ public class TimetableSlot extends UiPart<Region> {
     private static final String FXML = "TimetableSlot.fxml";
 
     private static final String[] AVAILABLE_COLORS = new String[] {"red", "orange", "yellow", "blue", "teal",
-            "green", "purple", "pink", "brown"};
+        "green", "purple", "pink", "brown"};
 
     @FXML
     private GridPane box;
@@ -72,7 +72,7 @@ public class TimetableSlot extends UiPart<Region> {
     public void setModule(String style, WeeklyEvent mod) {
         setStyleClass(style, AVAILABLE_COLORS[Math.abs(mod.getName().hashCode()) % AVAILABLE_COLORS.length]);
         module.setText(mod.getName());
-        if (!mod.getDetails().isEmpty() && mod.getDetails().size() >=2) {
+        if (!mod.getDetails().isEmpty() && mod.getDetails().size() >= 2) {
             lectureType.setText(mod.getDetails().get(1));
         }
         venue.setText(mod.getVenue());

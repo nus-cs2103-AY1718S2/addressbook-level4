@@ -200,6 +200,27 @@ public class AddCommandTest {
         public void updateFilteredEventList(Predicate<Event> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void indicateCalendarChanged() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void indicateTimetableChanged() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public boolean calendarIsViewed() {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public void switchView() {
+            fail("This method should not be called.");
+        }
     }
 
     /**

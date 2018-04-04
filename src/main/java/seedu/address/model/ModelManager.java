@@ -64,7 +64,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     *
+     * @@ author Johnny Chan
      * @param person
      * @throws IOException
      * Adds a BrowserPanel html Page into StudentPage
@@ -89,7 +89,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     *
+     * @@ author Johnny Chan
      * @param person
      * @throws IOException
      * Updates BrowserPanel html
@@ -121,6 +121,7 @@ public class ModelManager extends ComponentManager implements Model {
 
 
     /**
+     * @@author Johnny chan
      * Deletes BrowserPanel html
      */
     public void deletePage(Person person) {

@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.account.Account;
 
 /**
@@ -23,6 +22,8 @@ public class LoginCommand extends Command {
             + PREFIX_USERNAME + "johndoe "
             + PREFIX_PASSWORD + "jd9876";
 
+    public static final String MESSAGE_SUCCESS = "Logged in account: %1$s";
+
     private final Account accountToLogin;
 
     public LoginCommand(Account account) {
@@ -31,8 +32,10 @@ public class LoginCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
-        throw new CommandException("Test");
+    public CommandResult execute() {
+        requireNonNull(model);
+        model.loginAccount(accountToLogin);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, accountToLogin));
     }
 
     @Override

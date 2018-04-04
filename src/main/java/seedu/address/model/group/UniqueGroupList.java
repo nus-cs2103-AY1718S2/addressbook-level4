@@ -130,4 +130,3 @@ public class UniqueGroupList implements Iterable<Group> {
         }
     }
 }
-//@@author limzk1994

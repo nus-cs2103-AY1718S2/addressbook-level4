@@ -126,7 +126,7 @@ public class EditOrderCommand extends UndoableCommand {
             return false;
         }
 
-        // statc check
+        // state check
         EditOrderCommand eo = (EditOrderCommand) other;
         return index.equals(eo.index)
                 && editOrderDescriptor.equals(eo.editOrderDescriptor)

@@ -36,6 +36,7 @@ public class DeliveryDate {
      * Returns true if a given string is a valid date.
      */
     public static boolean isValidDeliveryDate(String test) {
+        requireNonNull(test);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DELIVERY_DATE_VALIDATION_DATE_FORMAT);
         simpleDateFormat.setLenient(false);
 

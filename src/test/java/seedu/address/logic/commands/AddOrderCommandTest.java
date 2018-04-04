@@ -159,6 +159,12 @@ public class AddOrderCommandTest {
         }
 
         @Override
+        public void updateOrderStatus(Order target, String orderStatus)
+                throws UniqueOrderList.DuplicateOrderException, OrderNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             return model.getFilteredPersonList();
         }

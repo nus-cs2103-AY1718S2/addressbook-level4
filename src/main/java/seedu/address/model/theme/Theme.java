@@ -21,7 +21,7 @@ public class Theme {
             Arrays.asList(DARK_THEME_KEYWORD, LIGHT_THEME_KEYWORD));
 
     public static final String MESSAGE_THEME_CONSTRAINTS = "Theme can only be "
-            + DARK_THEME_KEYWORD + " or " + LIGHT_THEME_KEYWORD;
+            + DARK_THEME_KEYWORD + " or " + LIGHT_THEME_KEYWORD + ".";
 
     public static final String DARK_THEME_CSS_FILE_PATH = "view/DarkTheme.css";
     public static final String LIGHT_THEME_CSS_FILE_PATH = "view/LightTheme.css";

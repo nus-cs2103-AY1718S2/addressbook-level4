@@ -13,6 +13,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_GROUP = new Prefix("g/");
     public static final Prefix PREFIX_PREFERENCE = new Prefix("pr/");
     public static final Prefix PREFIX_ORDER_INFORMATION = new Prefix("i/");
+    public static final Prefix PREFIX_ORDER_STATUS = new Prefix("os/");
     public static final Prefix PREFIX_PRICE = new Prefix("pr/");
     public static final Prefix PREFIX_QUANTITY = new Prefix("q/");
     public static final Prefix PREFIX_DELIVERY_DATE = new Prefix("d/");

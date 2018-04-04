@@ -138,6 +138,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
+    @Override
+    public void updateOrderStatus(Order target, String orderStatus)
+            throws UniqueOrderList.DuplicateOrderException, OrderNotFoundException {
+        addressBook.updateOrderStatus(target, orderStatus);
+        indicateAddressBookChanged();
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**

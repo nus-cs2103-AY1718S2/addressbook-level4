@@ -23,7 +23,7 @@ import seedu.address.model.person.NricContainsKeywordsPredicate;
  */
 public class FindCommandParser implements Parser<FindCommand> {
 
-    private static final Pattern FIND_COMMAND_FORMAT_OWNER= Pattern.compile("-(o)+(?<personInfo>.*)");
+    private static final Pattern FIND_COMMAND_FORMAT_OWNER = Pattern.compile("-(o)+(?<personInfo>.*)");
     private static final Pattern FIND_COMMAND_FORMAT_PET_PATIENT = Pattern.compile("-(p)+(?<petPatientInfo>.*)");
 
     /**
@@ -45,22 +45,23 @@ public class FindCommandParser implements Parser<FindCommand> {
         final Matcher matcherForPerson = FIND_COMMAND_FORMAT_OWNER.matcher(trimmedArgs);
         final Matcher matcherForPetPatient = FIND_COMMAND_FORMAT_PET_PATIENT.matcher(trimmedArgs);
 
-        // Eind-owner related
+        // Eind-owner related, else find-pet related, else error
         if (matcherForPerson.matches()) {
             String personInfo = matcherForPerson.group("personInfo");
             return parsePerson(personInfo);
-        }
-        // Find-petpatient related
-        else if (matcherForPetPatient.matches()) {
+        } else if (matcherForPetPatient.matches()) {
             String petPatientInfo = matcherForPetPatient.group("petPatientInfo");
             return parsePetPatient(petPatientInfo);
-        }
-        else {
+        } else {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
     }
 
+    /**
+     * Parses {@code personInfo} to find out what the user is parsing to find.
+     * @throws ParseException if the {@code personInfo} cannot be identified to a known prefix.
+     */
     private FindCommand parsePerson(String personInfo) throws ParseException {
         ArgumentMultimap argMultimapOwner = ArgumentTokenizer.tokenize(personInfo, PREFIX_NAME, PREFIX_NRIC);
         if ((!arePrefixesPresent(argMultimapOwner, PREFIX_NAME)
@@ -84,31 +85,40 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
     }
 
+    /**
+     * Gets the nric keywords from {@code argMultimapOwner}.
+     * @throws ParseException if there is an illegal value found.
+     */
     private String[] getNricKeyword(ArgumentMultimap argMultimapOwner) throws ParseException {
         try {
             String nricWithoutPrefix = argMultimapOwner.getAllValues(PREFIX_NRIC).get(0);
             String[] nricKeywords = nricWithoutPrefix.trim().split("\\s+");
-            for (String nricKeyword : nricKeywords){
+            for (String nricKeyword : nricKeywords) {
                 Nric nric = ParserUtil.parseNric(nricKeyword);
             }
             return nricKeywords;
-        } catch (IllegalValueException ive){
+        } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
     }
 
+    /**
+     * Gets the nric keywords from {@code argMultimapOwner}.
+     * @throws ParseException if there is an illegal value found.
+     */
     private String[] getNameKeyword(ArgumentMultimap argMultimapOwner) throws ParseException {
         try {
             String nameWithoutPrefix = argMultimapOwner.getAllValues(PREFIX_NAME).get(0);
             String[] nameKeywords = nameWithoutPrefix.trim().split("\\s+");
-            for (String nameKeyword : nameKeywords){
+            for (String nameKeyword : nameKeywords) {
                 Name name = ParserUtil.parseName(nameKeyword);
             }
             return nameKeywords;
-        } catch (IllegalValueException ive){
+        } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
     }
+
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
      * {@code ArgumentMultimap}.
@@ -117,6 +127,9 @@ public class FindCommandParser implements Parser<FindCommand> {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
+    /**
+     * Parses {@code petPatientInfo} to find out what the user is parsing to find.
+     */
     private FindCommand parsePetPatient(String petPatientInfo) {
 
         String[] nameKeywords = petPatientInfo.split("\\s+");

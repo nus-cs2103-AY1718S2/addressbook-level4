@@ -59,6 +59,9 @@ public class FindCommand extends Command {
         }
     }
 
+    /**
+     * Finds owners with given {@code nameNricPredicate} in this {@code addressbook}.
+     */
     private CommandResult findOwnerByNameNric() {
         model.updateFilteredPersonList(nameNricPredicate);
         updatePetListForOwner();
@@ -67,6 +70,9 @@ public class FindCommand extends Command {
                 + getMessageForPetPatientListShownSummary(model.getFilteredPetPatientList().size()));
     }
 
+    /**
+     * Finds owners with given {@code nricPredicate} in this {@code addressbook}.
+     */
     private CommandResult findOwnerByNric() {
         model.updateFilteredPersonList(nricPredicate);
         updatePetListForOwner();
@@ -75,6 +81,9 @@ public class FindCommand extends Command {
                 + getMessageForPetPatientListShownSummary(model.getFilteredPetPatientList().size()));
     }
 
+    /**
+     * Finds owners with given {@code namePredicate} in this {@code addressbook}.
+     */
     private CommandResult findOwnerByName() {
         model.updateFilteredPersonList(namePredicate);
         updatePetListForOwner();
@@ -83,9 +92,12 @@ public class FindCommand extends Command {
                 + getMessageForPetPatientListShownSummary(model.getFilteredPetPatientList().size()));
     }
 
+    /**
+     * Updates the filtered pet list with the changed owners in this {@code addressbook}.
+     */
     private void updatePetListForOwner() {
         List<String> nricKeywordsForPets = new ArrayList<>();
-        for (Person person : model.getFilteredPersonList()){
+        for (Person person : model.getFilteredPersonList()) {
             nricKeywordsForPets.add(person.getNric().toString());
         }
         PetPatientOwnerNricContainsKeywordsPredicate petPatientOwnerNricPredicate =

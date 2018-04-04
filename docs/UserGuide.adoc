@@ -113,6 +113,10 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |redo (`r`)
 |kbd:[Ctrl+Y]
 |`redo`
+
+|assign (`as`)
+|(To be added)
+|`assign RUNNER-INDEX c: CUSTOMER-INDEX`
 |===
 
 == Feature details
@@ -326,6 +330,17 @@ _The `redo` command fails as there are no `undo` commands executed previously._
  undo (reverses the "delete 1" command)
  redo (reapplies the "delete 1" command)
  redo (reapplies the "clear" command)
+====
+
+***
+=== Assigning Customer to a Runner : `assign`
+
+*Usage examples:*
+
+====
+`assign 1 c: 2`
+
+_Assigns customer at Index 2 to Runner at Index 1 based on the last shown listing_
 ====
 
 === Saving the data

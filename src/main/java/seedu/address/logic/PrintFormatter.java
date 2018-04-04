@@ -45,7 +45,7 @@ public class PrintFormatter {
      * Creates a new pdf document
      */
     private void initDocument(Patient patient) {
-        filePath = "record/" + patient.getName().toString() + " records.pdf";
+        filePath = patient.getName().toString() + " records.pdf";
         document = new Document();
         try {
             PdfWriter.getInstance(document, new FileOutputStream(filePath));

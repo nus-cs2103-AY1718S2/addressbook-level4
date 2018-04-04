@@ -12,6 +12,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.export.ExportType;
 
+//@@author daviddalmaso
 public class ExportCommandTest {
     public final UserPrefs userPrefs = new UserPrefs();
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());

@@ -182,6 +182,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// export-level operations
 
+    //@@author daviddalmaso
     /**
      * Exports the current address book to data/portfolio.csv
      */
@@ -225,6 +226,8 @@ public class AddressBook implements ReadOnlyAddressBook {
             System.out.println(e);
         }
     }
+    //@@author
+
     //// util methods
 
     @Override

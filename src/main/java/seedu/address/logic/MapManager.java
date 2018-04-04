@@ -1,10 +1,18 @@
 //@@author jaronchan
 package seedu.address.logic;
 
+import com.lynden.gmapsfx.javascript.object.DirectionsPane;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
+import com.lynden.gmapsfx.service.directions.DirectionStatus;
+import com.lynden.gmapsfx.service.directions.DirectionsRenderer;
+import com.lynden.gmapsfx.service.directions.DirectionsRequest;
+import com.lynden.gmapsfx.service.directions.DirectionsResult;
+import com.lynden.gmapsfx.service.directions.DirectionsService;
+import com.lynden.gmapsfx.service.directions.DirectionsServiceCallback;
+import com.lynden.gmapsfx.service.directions.TravelModes;
 import com.lynden.gmapsfx.service.geocoding.GeocoderStatus;
 import com.lynden.gmapsfx.service.geocoding.GeocodingResult;
 import com.lynden.gmapsfx.service.geocoding.GeocodingService;
@@ -75,6 +83,29 @@ public class MapManager {
          */
         public static void setMapMarkerFromAddress(GoogleMap map, String address) {
             geocodingService.geocode(address, new MyGeocodingServiceCallback(map));
+        }
+    }
+
+    public static class DirectionsUtil {
+
+        private static DirectionsService directionsService = new DirectionsService();
+        private static DirectionsRenderer directionsRenderer = null;
+
+        public static class MyDirectionsServiceCallback implements DirectionsServiceCallback {
+            private GoogleMap map;
+            public MyDirectionsServiceCallback(GoogleMap map) {
+                this.map = map;
+            }
+            @Override
+            public void directionsReceived(DirectionsResult results, DirectionStatus status) {
+            }
+        }
+
+        public static void setDirectionsOnMap(GoogleMap map, DirectionsPane directionsPane,
+                String addressOrigin, String addressDestination) {
+            DirectionsRequest request = new DirectionsRequest(addressOrigin, addressDestination, TravelModes.DRIVING);
+            directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
+            directionsService.getRoute(request, new MyDirectionsServiceCallback(map), directionsRenderer);
         }
     }
 }

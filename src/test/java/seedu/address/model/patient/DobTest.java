@@ -1,3 +1,4 @@
+//@@author ktingit
 package seedu.address.model.patient;
 
 import static org.junit.Assert.assertFalse;

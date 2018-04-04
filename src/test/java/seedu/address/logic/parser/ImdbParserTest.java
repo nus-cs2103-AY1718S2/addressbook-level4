@@ -29,6 +29,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.PrintCommand;
 import seedu.address.logic.commands.RecordCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
@@ -391,6 +392,22 @@ public class ImdbParserTest {
         RemovePatientQueueCommand command = (RemovePatientQueueCommand) parser.parseCommand(
                 RemovePatientQueueCommand.COMMAND_ALIAS);
         assertEquals(new RemovePatientQueueCommand(), command);
+    }
+
+    @Test
+    public void parseCommand_printCommand() throws Exception {
+        LoginManager.authenticate("bob", "password456");
+        PrintCommand command = (PrintCommand) parser.parseCommand(
+                PrintCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new PrintCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_printCommandAlias() throws Exception {
+        LoginManager.authenticate("bob", "password456");
+        PrintCommand command = (PrintCommand) parser.parseCommand(
+                PrintCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new PrintCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test

@@ -33,14 +33,14 @@ import seedu.address.model.tag.Tag;
 /**
  * Adds conditions to the list of conditions that an existing patient in the address book already has.
  */
-public class AddConditionCommand extends UndoableCommand {
+public class DeleteConditionCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "addc";
-    public static final String COMMAND_ALIAS = "ac";
+    public static final String COMMAND_WORD = "delc";
+    public static final String COMMAND_ALIAS = "dc";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds conditions to the list of conditions of the "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes conditions from the list of conditions of the "
             + "patient identified by the index number used in the last patient listing. "
-            + "If a condition already exists, it will be ignored. \n"
+            + "If a condition does not exist, it will be ignored. \n"
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_TAG + "CONDITION...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -60,7 +60,7 @@ public class AddConditionCommand extends UndoableCommand {
      * @param index of the patient in the filtered patient list to edit
      * @param editPersonDescriptor details to edit the patient with
      */
-    public AddConditionCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public DeleteConditionCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(index);
         requireNonNull(editPersonDescriptor);
 
@@ -113,7 +113,7 @@ public class AddConditionCommand extends UndoableCommand {
         if (patientToEdit.getTags() != null) {
             updatedTags = new HashSet<>();
             updatedTags.addAll(patientToEdit.getTags());
-            updatedTags.addAll(editPersonDescriptor.getModifiableTags());
+            updatedTags.removeAll(editPersonDescriptor.getModifiableTags());
         }
 
         return new Patient(updatedName, updatedNric, updatedPhone, updatedEmail, updatedAddress, updatedDob,
@@ -128,12 +128,12 @@ public class AddConditionCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddConditionCommand)) {
+        if (!(other instanceof DeleteConditionCommand)) {
             return false;
         }
 
         // state check
-        AddConditionCommand e = (AddConditionCommand) other;
+        DeleteConditionCommand e = (DeleteConditionCommand) other;
         return index.equals(e.index)
                 && editPersonDescriptor.equals(e.editPersonDescriptor)
                 && Objects.equals(patientToEdit, e.patientToEdit);

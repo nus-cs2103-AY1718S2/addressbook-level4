@@ -414,10 +414,12 @@ public class MainWindow extends UiPart<Stage> {
     }
     //@@author
 
+    //@@author emer7
     @Subscribe
     private void showDialogPane(ShowReviewDialogEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         ReviewDialog reviewDialog = new ReviewDialog();
         reviewDialog.show();
     }
+    //@@author
 }

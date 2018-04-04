@@ -175,16 +175,20 @@ public class XmlAdaptedPerson {
         final Rating rating = new Rating(this.rating);
         //@@author
 
+        //@@author emer7
         final Set<Review> reviews = new HashSet<>(personReviews);
+        //@@author
 
         final Set<Tag> tags = new HashSet<>(personTags);
 
+        //@@author emer7
         Person toReturn = new Person(name, phone, email, address, tags, calendarId);
         toReturn.setRating(rating);
         toReturn.setReviews(reviews);
         toReturn.setId(id);
 
         return toReturn;
+        //@@author
     }
 
     @Override

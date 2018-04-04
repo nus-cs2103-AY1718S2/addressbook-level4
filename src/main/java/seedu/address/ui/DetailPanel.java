@@ -38,6 +38,7 @@ public class DetailPanel extends UiPart<Region> {
 
     @FXML
     private WebView browser;
+    //@@author emer7
     @FXML
     private GridPane detailPanel;
     @FXML
@@ -54,6 +55,7 @@ public class DetailPanel extends UiPart<Region> {
     private FlowPane reviews;
     @FXML
     private FlowPane tags;
+    //@@author
 
     public DetailPanel() {
         super(FXML);
@@ -91,6 +93,7 @@ public class DetailPanel extends UiPart<Region> {
      */
     public void freeResources() {
         browser = null;
+        //@@author emer7
         name = null;
         phone = null;
         address = null;
@@ -98,6 +101,7 @@ public class DetailPanel extends UiPart<Region> {
         rating = null;
         reviews = null;
         tags = null;
+        //@@author
     }
 
     @Subscribe
@@ -116,6 +120,7 @@ public class DetailPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        //@@author emer7
         Person person = event.getNewSelection().person;
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
@@ -127,9 +132,11 @@ public class DetailPanel extends UiPart<Region> {
         person.getReviews().forEach(review -> reviews.getChildren().add(new Label(review.toString())));
         tags.getChildren().clear();
         initTags(person);
+        //@@author
         loadPersonPage(event.getNewSelection().person);
     }
 
+    //@@author emer7
     @Subscribe
     public void handlePersonEditedEvent(PersonEditedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -146,6 +153,7 @@ public class DetailPanel extends UiPart<Region> {
         initTags(newPerson);
         loadPersonPage(event.getNewPerson());
     }
+    //@@author
 
     /**
      * Creates the tag labels for {@code person}.

@@ -19,16 +19,19 @@ public class DetailPanelHandle extends NodeHandle<Node> {
 
     public static final String BROWSER_ID = "#browser";
 
+    //@@author emer7
     public static final String BROWSER_PANEL_ID = "#detailPanel";
     private static final String NAME_FIELD_ID = "#name";
     private static final String ADDRESS_FIELD_ID = "#address";
     private static final String PHONE_FIELD_ID = "#phone";
     private static final String EMAIL_FIELD_ID = "#email";
     private static final String TAGS_FIELD_ID = "#tags";
+    //@@author
 
     private boolean isWebViewLoaded = true;
     private URL lastRememberedUrl;
 
+    //@@author emer7
     private final Label nameLabel;
     private final Label addressLabel;
     private final Label phoneLabel;
@@ -40,6 +43,7 @@ public class DetailPanelHandle extends NodeHandle<Node> {
     private Label oldPhoneLabel;
     private Label oldEmailLabel;
     private List<Label> oldTagLabels;
+    //@@author
 
     public DetailPanelHandle(Node detailPanelNode) {
         super(detailPanelNode);
@@ -54,6 +58,7 @@ public class DetailPanelHandle extends NodeHandle<Node> {
             }
         }));
 
+        //@@author emer7
         this.nameLabel = getChildNode(NAME_FIELD_ID);
         this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
         this.phoneLabel = getChildNode(PHONE_FIELD_ID);
@@ -65,6 +70,7 @@ public class DetailPanelHandle extends NodeHandle<Node> {
                 .stream()
                 .map(Label.class::cast)
                 .collect(Collectors.toList());
+        //@@author
     }
 
     /**
@@ -96,6 +102,7 @@ public class DetailPanelHandle extends NodeHandle<Node> {
         return isWebViewLoaded;
     }
 
+    //@@author emer7
     public String getName() {
         return nameLabel.getText();
     }
@@ -147,4 +154,5 @@ public class DetailPanelHandle extends NodeHandle<Node> {
                 && emailLabel.getText().equals("")
                 && oldTagLabels == null;
     }
+    //@@author
 }

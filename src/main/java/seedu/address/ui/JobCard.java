@@ -1,18 +1,24 @@
+//@@author kush1509
 package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.job.Job;
 
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * A UI component that displays information of a {@code Job}.
  */
 public class JobCard extends UiPart<Region> {
 
     private static final String FXML = "JobListCard.fxml";
+
+    private static final String[] SKILL_COLOR_STYLES =
+        { "teal", "red", "green", "blue", "orange", "brown",
+            "yellow", "pink", "lightgreen", "grey", "purple" };
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -36,6 +42,8 @@ public class JobCard extends UiPart<Region> {
     private Label jobLocation;
     @FXML
     private Label numberOfPositions;
+    @FXML
+    private FlowPane skills;
 
     public JobCard(Job job, int displayedIndex) {
         super(FXML);
@@ -45,6 +53,27 @@ public class JobCard extends UiPart<Region> {
         team.setText(job.getTeam().value);
         jobLocation.setText(job.getLocation().value);
         numberOfPositions.setText("Positions: " + job.getNumberOfPositions().value);
+        initSkills(job);
+    }
+
+    /**
+     * Creates the skill labels for {@code job}.
+     */
+    private void initSkills(Job job) {
+        job.getSkills().forEach(skill -> {
+            Label skillLabel = new Label(skill.skillName);
+            skillLabel.getStyleClass().add(getSkillColorStyleFor(skill.skillName));
+            skills.getChildren().add(skillLabel);
+        });
+    }
+
+    /**
+     * Returns the color style for {@code skillName}'s label.
+     */
+    private String getSkillColorStyleFor(String skillName) {
+        // we use the hash code of the skill name to generate a random color, so that the color remain consistent
+        // between different runs of the program while still making it random enough between skills.
+        return SKILL_COLOR_STYLES[Math.abs(skillName.hashCode()) % SKILL_COLOR_STYLES.length];
     }
 
     @Override

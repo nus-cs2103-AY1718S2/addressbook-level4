@@ -6,6 +6,7 @@ import java.io.IOException;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.Model;
+import seedu.address.model.job.Job;
 import seedu.address.model.person.Person;
 
 /**
@@ -34,15 +35,29 @@ public class TestUtil {
     /**
      * Returns the middle index of the person in the {@code model}'s person list.
      */
-    public static Index getMidIndex(Model model) {
+    public static Index getMidPersonIndex(Model model) {
         return Index.fromOneBased(model.getAddressBook().getPersonList().size() / 2);
     }
 
     /**
      * Returns the last index of the person in the {@code model}'s person list.
      */
-    public static Index getLastIndex(Model model) {
+    public static Index getLastPersonIndex(Model model) {
         return Index.fromOneBased(model.getAddressBook().getPersonList().size());
+    }
+
+    /**
+     * Returns the middle index of the job in the {@code model}'s job list.
+     */
+    public static Index getMidJobIndex(Model model) {
+        return Index.fromOneBased(model.getAddressBook().getJobList().size() / 2);
+    }
+
+    /**
+     * Returns the last index of the person in the {@code model}'s person list.
+     */
+    public static Index getLastJobIndex(Model model) {
+        return Index.fromOneBased(model.getAddressBook().getJobList().size());
     }
 
     /**
@@ -50,5 +65,12 @@ public class TestUtil {
      */
     public static Person getPerson(Model model, Index index) {
         return model.getAddressBook().getPersonList().get(index.getZeroBased());
+    }
+
+    /**
+     * Returns the job in the {@code model}'s job list at {@code index}.
+     */
+    public static Job getJob(Model model, Index index) {
+        return model.getAddressBook().getJobList().get(index.getZeroBased());
     }
 }

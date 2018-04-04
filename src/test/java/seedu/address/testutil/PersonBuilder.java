@@ -11,7 +11,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ProfilePicture;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.skill.Skill;
 import seedu.address.model.util.SampleDataUtil;
 
 /**
@@ -27,7 +27,7 @@ public class PersonBuilder {
     public static final String DEFAULT_COMPANY = "Google";
     public static final String DEFAULT_PROFILE_PICTURE =
             "./src/test/data/images/alice.jpeg";
-    public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_SKILLS = "friends";
 
     private Name name;
     private Phone phone;
@@ -36,7 +36,7 @@ public class PersonBuilder {
     private ProfilePicture profilePicture;
     private CurrentPosition currentPosition;
     private Company company;
-    private Set<Tag> tags;
+    private Set<Skill> skills;
 
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -46,7 +46,7 @@ public class PersonBuilder {
         currentPosition = new CurrentPosition(DEFAULT_CURRENT_POSITION);
         company = new Company(DEFAULT_COMPANY);
         profilePicture = new ProfilePicture(DEFAULT_PROFILE_PICTURE);
-        tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+        skills = SampleDataUtil.getSkillSet(DEFAULT_SKILLS);
     }
 
     /**
@@ -60,7 +60,7 @@ public class PersonBuilder {
         currentPosition = personToCopy.getCurrentPosition();
         company = personToCopy.getCompany();
         profilePicture = personToCopy.getProfilePicture();
-        tags = new HashSet<>(personToCopy.getTags());
+        skills = new HashSet<>(personToCopy.getSkills());
     }
 
     /**
@@ -72,10 +72,10 @@ public class PersonBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
+     * Parses the {@code skills} into a {@code Set<Skill>} and set it to the {@code Person} that we are building.
      */
-    public PersonBuilder withTags(String ... tags) {
-        this.tags = SampleDataUtil.getTagSet(tags);
+    public PersonBuilder withSkills(String ... skills) {
+        this.skills = SampleDataUtil.getSkillSet(skills);
         return this;
     }
 
@@ -132,7 +132,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, currentPosition, company, profilePicture, tags);
+        return new Person(name, phone, email, address, currentPosition, company, profilePicture, skills);
     }
 
 }

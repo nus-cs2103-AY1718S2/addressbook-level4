@@ -1,3 +1,4 @@
+//@@author kush1509
 package seedu.address.model.job;
 
 import static java.util.Objects.requireNonNull;
@@ -13,7 +14,7 @@ public class Location {
             "Job locations can take any values, and it should not be blank";
 
     /*
-     * The first character of the address must not be a whitespace,
+     * The first character of the location must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String LOCATION_VALIDATION_REGEX = "[^\\s].*";
@@ -32,7 +33,7 @@ public class Location {
     }
 
     /**
-     * Returns true if a given string is a valid person location.
+     * Returns true if a given string is a valid job location.
      */
     public static boolean isValidLocation(String test) {
         return test.matches(LOCATION_VALIDATION_REGEX);

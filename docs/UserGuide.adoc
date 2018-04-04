@@ -306,7 +306,7 @@ e.g. `John Doe | Friends`, `John Dick| Colleagues`, `John | Friends, Colleagues`
 
 === Deleting an employee : `delete`
 
-Deletes the specified employee from the Employees Tracker. +
+Deletes the specified employee from the Employees Tracker whose calendar will also be deleted. +
 Format: `delete INDEX`
 
 ****
@@ -319,10 +319,10 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd employee in the Employees Tracker.
+Deletes the 2nd employee and his calendar in the Employees Tracker.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st employee in the results of the `find` command.
+Deletes the 1st employee and his calendar in the results of the `find` command.
 
 === Selecting an employee : `select`
 
@@ -421,13 +421,23 @@ Lock the Employees Tracker.
 
 === Viewing my own calendar: `myCalendar`
 
-Views my own calendar in a seperate pop-up web page window.
+Views my own calendar in a seperate pop-up web page window. +
 Format: `myCalendar`
 
 Examples:
 
 * `myCalendar` +
 view my own calendar in a pop-up window.
+
+=== Viewing my to-do-list: `todoList`
+
+Views the upcoming events on my google account main calendar in to-do-list manner in a separate window. +
+Format: `todoList`
+
+Examples:
+
+* `todoList` +
+show the to-do-list in  a pop-up window.
 
 === Setting the application unlock password: `setPassword`
 
@@ -484,7 +494,7 @@ Adds the event to 2nd employee's timetable in the list.
 
 === Deleting an event in one employee's timetable: `deleteEvent`
 
-Deletes an event with specified title in the timetable of employee identified by the index number used in the last employees listing. +
+Deletes an event with specified title which is the first occurrence in the timetable of employee identified by the index number used in the last employees listing. +
 Format: `deleteEvent INDEX TITLE`
 
 ****
@@ -496,7 +506,7 @@ Format: `deleteEvent INDEX TITLE`
 Examples:
 
 * `list` +
-`deleteEvent 1 some event` +
+`deleteEvent 2 some event` +
 Deletes the event with title "some event" in 2nd employee's timetable in the list.
 
 === Clearing all entries : `clear`
@@ -548,7 +558,6 @@ Features yet to be implemented. Coming in `v2.0`.
 * Editing a event.
 * Deleting a event.
 * Adding an event in mass to many employees' timetable at once.
-* Having my own timetable.
 * Jumping to email composing with a command.
 * Viewing my to-do-list.
 * Changing the window scheme/theme/skin.

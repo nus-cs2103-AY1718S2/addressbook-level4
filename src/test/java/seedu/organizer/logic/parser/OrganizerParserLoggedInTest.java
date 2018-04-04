@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.organizer.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.organizer.logic.parser.CliSyntax.PREFIX_ANSWER;
+import static seedu.organizer.logic.parser.CliSyntax.PREFIX_QUESTION;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
 import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
@@ -19,6 +21,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.organizer.logic.commands.AddCommand;
+import seedu.organizer.logic.commands.AddQuestionAnswerCommand;
 import seedu.organizer.logic.commands.AddSubtaskCommand;
 import seedu.organizer.logic.commands.ClearCommand;
 import seedu.organizer.logic.commands.CurrentMonthCommand;
@@ -33,6 +36,7 @@ import seedu.organizer.logic.commands.FindNameCommand;
 import seedu.organizer.logic.commands.HelpCommand;
 import seedu.organizer.logic.commands.HistoryCommand;
 import seedu.organizer.logic.commands.ListCommand;
+import seedu.organizer.logic.commands.LogoutCommand;
 import seedu.organizer.logic.commands.NextMonthCommand;
 import seedu.organizer.logic.commands.PreviousMonthCommand;
 import seedu.organizer.logic.commands.RedoCommand;
@@ -57,17 +61,51 @@ import seedu.organizer.testutil.EditTaskDescriptorBuilder;
 import seedu.organizer.testutil.TaskBuilder;
 import seedu.organizer.testutil.TaskUtil;
 
-public class OrganizerParserTest {
+/**
+ * Performs OrganizerParser tests when a user is logged in
+ */
+public class OrganizerParserLoggedInTest {
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     private final OrganizerParser parser = new OrganizerParser();
 
+    private Model model = new ModelManager(getTypicalOrganizer(), new UserPrefs());
+
     @Before
-    public void setUp() throws UserNotFoundException, CurrentlyLoggedInException {
-        Model model = new ModelManager(getTypicalOrganizer(), new UserPrefs());
-        model.loginUser(ADMIN_USER);
+    public void setUp() {
+        try {
+            model.loginUser(ADMIN_USER);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        }
     }
+
+    //@@author dominickenn
+    @Test
+    public void parseCommand_logout() throws Exception {
+        assertTrue(parser.parseCommand(LogoutCommand.COMMAND_WORD) instanceof LogoutCommand);
+        assertTrue(parser.parseCommand(LogoutCommand.COMMAND_WORD + " 3") instanceof LogoutCommand);
+
+        assertTrue(parser.parseCommand(LogoutCommand.COMMAND_ALIAS) instanceof LogoutCommand);
+        assertTrue(parser.parseCommand(LogoutCommand.COMMAND_ALIAS + " 3") instanceof LogoutCommand);
+    }
+
+    @Test
+    public void parseCommand_addQuestionAnswer() throws Exception {
+        String question = "question";
+        String answer = "answer";
+        AddQuestionAnswerCommand command = (AddQuestionAnswerCommand)
+                parser.parseCommand(
+                        AddQuestionAnswerCommand.COMMAND_WORD + " "
+                                + PREFIX_QUESTION + question + " "
+                                + PREFIX_ANSWER + answer);
+        assertEquals(new AddQuestionAnswerCommand(question, answer), command);
+    }
+    //@@author
 
     @Test
     public void parseCommand_add() throws Exception {
@@ -114,9 +152,9 @@ public class OrganizerParserTest {
         Task task = new TaskBuilder().build();
         EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder(task).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_TASK.getOneBased() + " " + TaskUtil.getPersonDetails(task));
+                + INDEX_FIRST_TASK.getOneBased() + " " + TaskUtil.getTaskDetails(task));
         EditCommand commandAlias = (EditCommand) parser.parseCommand(EditCommand.COMMAND_ALIAS + " "
-                + INDEX_FIRST_TASK.getOneBased() + " " + TaskUtil.getPersonDetails(task));
+                + INDEX_FIRST_TASK.getOneBased() + " " + TaskUtil.getTaskDetails(task));
         assertEquals(new EditCommand(INDEX_FIRST_TASK, descriptor), command);
         assertEquals(new EditCommand(INDEX_FIRST_TASK, descriptor), commandAlias);
     }
@@ -127,10 +165,10 @@ public class OrganizerParserTest {
         Subtask subtask = new Subtask(task.getName());
         AddSubtaskCommand command = (AddSubtaskCommand) parser.parseCommand(
                 AddSubtaskCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_TASK.getOneBased() + " " + TaskUtil.getSubtaskDetails(task));
+                        + INDEX_FIRST_TASK.getOneBased() + " " + TaskUtil.getSubtaskDetails(task));
         AddSubtaskCommand commandAlias = (AddSubtaskCommand) parser.parseCommand(
                 AddSubtaskCommand.COMMAND_ALIAS + " "
-                + INDEX_FIRST_TASK.getOneBased() + " " + TaskUtil.getSubtaskDetails(task));
+                        + INDEX_FIRST_TASK.getOneBased() + " " + TaskUtil.getSubtaskDetails(task));
         assertEquals(new AddSubtaskCommand(INDEX_FIRST_TASK, subtask), command);
         assertEquals(new AddSubtaskCommand(INDEX_FIRST_TASK, subtask), commandAlias);
     }
@@ -151,7 +189,7 @@ public class OrganizerParserTest {
                 FindMultipleFieldsCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindMultipleFieldsCommand(new MultipleFieldsContainsKeywordsPredicate(keywords)), command);
         assertEquals(new FindMultipleFieldsCommand(new MultipleFieldsContainsKeywordsPredicate(keywords)),
-            commandAlias);
+                commandAlias);
     }
     //@@author
 
@@ -171,11 +209,11 @@ public class OrganizerParserTest {
     public void parseCommand_findDescription() throws Exception {
         List<String> keywords = Arrays.asList("cs2103", "cs2101", "CS2010");
         FindDescriptionCommand command = (FindDescriptionCommand) parser.parseCommand(
-            FindDescriptionCommand.COMMAND_WORD + " " + keywords.stream()
-            .collect(Collectors.joining(" ")));
+                FindDescriptionCommand.COMMAND_WORD + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")));
         FindDescriptionCommand commandAlias = (FindDescriptionCommand) parser.parseCommand(
-            FindDescriptionCommand.COMMAND_ALIAS + " " + keywords.stream()
-            .collect(Collectors.joining(" ")));
+                FindDescriptionCommand.COMMAND_ALIAS + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")));
         assertEquals(new FindDescriptionCommand(new DescriptionContainsKeywordsPredicate(keywords)), command);
         assertEquals(new FindDescriptionCommand(new DescriptionContainsKeywordsPredicate(keywords)), commandAlias);
     }

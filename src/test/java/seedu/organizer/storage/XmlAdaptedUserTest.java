@@ -13,11 +13,13 @@ public class XmlAdaptedUserTest {
 
     public static final String USERNAME = "Jennifer";
     public static final String PASSWORD = "Jennifer123";
+    public static final String QUESTION = "Question";
+    public static final String ANSWER = "Answer";
 
     public static final String OTHER_USERNAME = "bobby";
 
     @Test
-    public void equal_defaultconstructor() {
+    public void equal_defaultConstructor() {
         XmlAdaptedUser user = new XmlAdaptedUser(USERNAME, PASSWORD);
         XmlAdaptedUser otherUser = new XmlAdaptedUser(USERNAME, PASSWORD);
         assertEquals(user, otherUser);
@@ -28,9 +30,17 @@ public class XmlAdaptedUserTest {
     }
 
     @Test
-    public void equal_userconstructor() {
+    public void equal_userConstructor() {
         XmlAdaptedUser user = new XmlAdaptedUser(USERNAME, PASSWORD);
         XmlAdaptedUser otherUser = new XmlAdaptedUser(USERNAME, PASSWORD);
+        assertEquals(user, otherUser);
+        assertEquals(user, user);
+    }
+
+    @Test
+    public void equal_userWithQuestionAnswerConstructor() {
+        XmlAdaptedUser user = new XmlAdaptedUser(USERNAME, PASSWORD, QUESTION, ANSWER);
+        XmlAdaptedUser otherUser = new XmlAdaptedUser(USERNAME, PASSWORD, QUESTION, ANSWER);
         assertEquals(user, otherUser);
         assertEquals(user, user);
     }
@@ -46,6 +56,28 @@ public class XmlAdaptedUserTest {
     public void toModel_invalidPassword() {
         Assert.assertThrows(
                 IllegalValueException.class, () -> new XmlAdaptedUser("validusername", "").toUserModelType()
+        );
+    }
+
+    @Test
+    public void toModel_invalidQuestion() {
+        Assert.assertThrows(
+                IllegalValueException.class, () -> new XmlAdaptedUser(
+                        "validusername",
+                        "validpassword",
+                        "",
+                        "valid answer").toUserQuestionAnswerModelType()
+        );
+    }
+
+    @Test
+    public void toModel_invalidAnswer() {
+        Assert.assertThrows(
+                IllegalValueException.class, () -> new XmlAdaptedUser(
+                        "validusername",
+                        "validpassword",
+                        "validquestion",
+                        "").toUserQuestionAnswerModelType()
         );
     }
 }

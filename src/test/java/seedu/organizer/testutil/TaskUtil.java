@@ -18,20 +18,20 @@ public class TaskUtil {
      * Returns an add command string for adding the {@code task}.
      */
     public static String getAddCommand(Task task) {
-        return AddCommand.COMMAND_WORD + " " + getPersonDetails(task);
+        return AddCommand.COMMAND_WORD + " " + getTaskDetails(task);
     }
 
     /**
      * Returns an add command string for adding the {@code task} using alias.
      */
     public static String getAddCommandAlias(Task task) {
-        return AddCommand.COMMAND_ALIAS + " " + getPersonDetails(task);
+        return AddCommand.COMMAND_ALIAS + " " + getTaskDetails(task);
     }
 
     /**
      * Returns the part of command string for the given {@code task}'s details.
      */
-    public static String getPersonDetails(Task task) {
+    public static String getTaskDetails(Task task) {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + task.getName().fullName + " ");
         sb.append(PREFIX_PRIORITY + task.getPriority().value + " ");

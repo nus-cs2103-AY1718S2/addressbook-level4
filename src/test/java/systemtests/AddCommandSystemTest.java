@@ -203,7 +203,7 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
         toAdd = new TaskBuilder().withName(VALID_NAME_EXAM).withPriority
                 (VALID_PRIORITY_EXAM).withDeadline(VALID_DEADLINE_EXAM).withDescription("")
                 .withTags(VALID_TAG_FRIEND).build();
-        command = "addss " + TaskUtil.getPersonDetails(toAdd);
+        command = "addss " + TaskUtil.getTaskDetails(toAdd);
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
         */
 /* Case: invalid name -> rejected *//*

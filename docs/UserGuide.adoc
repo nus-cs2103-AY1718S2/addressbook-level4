@@ -202,16 +202,24 @@ Login to PrioriTask +
 * [example]#`login u/mary p/m4ry`#
 ====
 
-=== Logging out: `logout` or `out` `[since v1.4]`
+=== Adding question: `addqa` `[since v1.4]`
 
-Logout of PrioriTask +
+Adding a question for password retrieval +
 
 [.format]
 ====
-[format-title]#Format:# `logout`
+[format-title]#Format:# `addqa q/QUESTION a/ANSWER`
 ====
 
-==== Retrieving question for user's password: `forgotpassword` or `fp` `[since v1.4]`
+[.example]
+====
+[example-title]#Examples:#
+
+* [example]#`addqa q/are you male? a/yes#
+* [example]#`addqa q/are you female? a/yes`#
+====
+
+=== Retrieving question for user's password: `forgotpassword` or `fp` `[since v1.4]`
 
 Retrieve question for user's password +
 
@@ -228,7 +236,24 @@ Retrieve question for user's password +
 * [example]#`forgotpassword u/mary`#
 ====
 
-==== Answering question: `answer` or `ans` `[since v1.4]`
+=== Retrieving question for user's password: `forgotpassword` or `fp` `[since v1.4]`
+
+Retrieve question for user's password +
+
+[.format]
+====
+[format-title]#Format:# `forgotpassword u/USERNAME `
+====
+
+[.example]
+====
+[example-title]#Examples:#
+
+* [example]#`forgotpassword u/patrick`#
+* [example]#`forgotpassword u/mary`#
+====
+
+=== Answering question: `answer` or `ans` `[since v1.4]`
 
 Answer a user's question to retrieve the password +
 
@@ -245,7 +270,6 @@ Answer a user's question to retrieve the password +
 * [example]#`answer u/mary a/no`#
 ====
 
-=== Task Management Features
 === Deleting an account `[coming in v2.0]`
 
 _{ Describe the command function }_

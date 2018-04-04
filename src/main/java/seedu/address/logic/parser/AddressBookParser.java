@@ -149,7 +149,7 @@ public class AddressBookParser {
         //@@ samuelloh
         case EditPictureCommand.COMMAND_WORD:
             return new EditPictureCommandParser().parse(arguments);
-            
+
         //@@ samuelloh
         case MoreInfoCommand.COMMAND_WORD:
             return new MoreInfoCommandParser().parse(arguments);

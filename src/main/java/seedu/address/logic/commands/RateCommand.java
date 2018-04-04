@@ -97,7 +97,7 @@ public class RateCommand extends UndoableCommand {
         toReturn.setId(personToEdit.getId());
 
         return toReturn;
-        //@@author
+        //@@author IzHoBX
 
     }
 

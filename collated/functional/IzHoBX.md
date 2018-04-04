@@ -304,6 +304,31 @@ public class RateCommand extends UndoableCommand {
         Rating updatedRating = editPersonDescriptor.getRating().orElse(new Rating());
 
 ```
+###### \java\seedu\address\logic\commands\RateCommand.java
+``` java
+
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof RateCommand)) {
+            return false;
+        }
+
+        // state check
+        RateCommand e = (RateCommand) other;
+        return index.equals(e.index)
+                && editPersonDescriptor.equals(e.editPersonDescriptor)
+                && Objects.equals(personToEdit, e.personToEdit);
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\TestAddEventCommand.java
 ``` java
         if (calendarId == null || calendarId.equals("")) {

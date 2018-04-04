@@ -55,7 +55,7 @@ public class AddEventCommandSystemTest extends AddressBookSystemTest {
         /* Case: add an event to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
          */
-        LocalDate localDate = LocalDate.now();//For reference
+        LocalDate localDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String today = localDate.format(formatter);
         Event toAdd = new EventBuilder().withDate(today).build();

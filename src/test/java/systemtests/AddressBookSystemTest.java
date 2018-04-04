@@ -21,8 +21,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
-import guitests.guihandles.DetailPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.DetailPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
@@ -39,8 +39,8 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.testutil.TypicalPersons;
-import seedu.address.ui.DetailPanel;
 import seedu.address.ui.CommandBox;
+import seedu.address.ui.DetailPanel;
 import seedu.address.ui.ResultDisplay;
 
 /**

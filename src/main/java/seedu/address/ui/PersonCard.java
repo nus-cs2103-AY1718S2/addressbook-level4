@@ -103,10 +103,13 @@ public class PersonCard extends UiPart<Region> {
                 + "-fx-background-radius: 6 0 0 6; -fx-border-color: #242C35; "
                 + "-fx-border-radius: 6 0 0 6; -fx-border-width: 2 0 2 2;");
         ImageView tabIcon = new ImageView();
-        tabIcon.setFitWidth(20);
-        tabIcon.setFitHeight(20);
-        tabIcon.setImage(new Image(imageUrl(type)));
-        socialMediaIconTab.getChildren().addAll(tabBackground, tabIcon);
+        String url = imageUrl(type);
+        if (!url.isEmpty()) {
+            tabIcon.setFitWidth(20);
+            tabIcon.setFitHeight(20);
+            tabIcon.setImage(new Image(url));
+            socialMediaIconTab.getChildren().addAll(tabBackground, tabIcon);
+        }
         return socialMediaIconTab;
     }
 

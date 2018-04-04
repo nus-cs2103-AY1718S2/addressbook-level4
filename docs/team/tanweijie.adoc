@@ -29,7 +29,7 @@ Media Socializer is a desktop address book application used to help social media
 *** Identified the deliverables for each release to keep track of
 ** Enhancements to existing features:
 *** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+*** Wrote additional tests for existing features to increase coverage from 91% to 92% (Pull requests https://github.com/CS2103JAN2018-F12-B3/main/pull/87[#87])
 ** Documentation:
 *** Updated appendix of the Developer Guide to match the goals of the application: https://github.com/CS2103JAN2018-F12-B3/main/pull/45[#45]
 *** Added tags to the User Guide and Developer Guide to link portfolios to their associated sections: https://github.com/CS2103JAN2018-F12-B3/main/pull/69[#69]

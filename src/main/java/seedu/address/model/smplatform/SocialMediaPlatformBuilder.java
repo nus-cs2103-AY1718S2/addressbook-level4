@@ -7,9 +7,14 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Acts as a social media platform creator.
  * Determines the different types of social media platform objects to be created by using the link and its type.
  */
-public class SocialMediaPlatformBuilder {
+public final class SocialMediaPlatformBuilder {
     public static final String MESSAGE_BUILD_ERROR = "Social media platform cannot be constructed. "
             + "Link type is unrecognised or mismatched with link.";
+
+    /**
+     * Don't let anyone instantiate this class.
+     */
+    private SocialMediaPlatformBuilder() {}
 
     /**
      * Constructs the specific social media platform object by using the {@code type} and setting the {@code link}

@@ -78,11 +78,6 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public void backupDeskBoard(ReadOnlyDeskBoard deskBoard) throws IOException {
-        deskBoardStorage.backupDeskBoard(deskBoard);
-    }
-
-    @Override
     @Subscribe
     public void handleDeskBoardChangedEvent(DeskBoardChangedEvent dbce) {
         logger.info(LogsCenter.getEventHandlingLogMessage(dbce, "Local data changed, saving to file"));
@@ -92,5 +87,4 @@ public class StorageManager extends ComponentManager implements Storage {
             raise(new DataSavingExceptionEvent(e));
         }
     }
-
 }

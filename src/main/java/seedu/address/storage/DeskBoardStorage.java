@@ -41,11 +41,4 @@ public interface DeskBoardStorage {
      * @see #saveDeskBoard(ReadOnlyDeskBoard)
      */
     void saveDeskBoard(ReadOnlyDeskBoard deskBoard, String filePath) throws IOException;
-
-    /**
-     * Saves the given {@link ReadOnlyDeskBoard} to the fixed temporary location.
-     * @param deskBoard cannot be null.
-     * @throws IOException if there was any problem writing to the file.
-     */
-    void backupDeskBoard(ReadOnlyDeskBoard deskBoard) throws IOException;
 }

@@ -11,6 +11,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CompleteCommand;
 import seedu.address.logic.commands.EventCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RemoveCommand;
 import seedu.address.logic.commands.TaskCommand;
@@ -94,6 +95,10 @@ public class DeskBoardParser {
 
         //case RedoCommand.COMMAND_WORD:
             //return new RedoCommand();
+
+        //@@author karenfrilya97
+        case ImportCommand.COMMAND_WORD:
+            return new ImportCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -7,6 +8,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -14,7 +16,9 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.TimetableChangedEvent;
 import seedu.address.database.DatabaseManager;
+import seedu.address.model.event.WeeklyEvent;
 import seedu.address.model.person.Person;
 
 /**
@@ -56,7 +60,8 @@ public class ResultDisplay extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Person selected = event.getNewSelection().person;
-        DatabaseManager.getInstance().parseEvents(selected.getTimeTableLink());
+        ArrayList<WeeklyEvent> eventList = DatabaseManager.getInstance().parseEvents(selected.getTimeTableLink());
+        raise(new TimetableChangedEvent(FXCollections.observableArrayList(eventList)));
     }
 
     /**

@@ -122,4 +122,16 @@ public interface Model {
 
     /** Adds the given Event */
     void addEvent(Event event) throws DuplicateEventException;
+
+    /** Checks whether application is in Calendar or Timetable view */
+    boolean calendarIsViewed();
+
+    /** Switches between Calendar and Timetable view */
+    void switchView();
+
+    /** Raises an event to indicate the calendar has changed */
+    void indicateCalendarChanged();
+
+    /** Raises an event to indicate the timetable has changed */
+    void indicateTimetableChanged();
 }

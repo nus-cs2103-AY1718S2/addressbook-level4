@@ -492,3 +492,88 @@
     -fx-stroke: #888;
     -fx-stroke-width: 0.5;
 }
+
+#calendarPlaceholder .timecell {
+    -fx-border-width: 0;
+    -fx-pref-width: 100;
+}
+
+#calendarPlaceholder .time {
+    -fx-border-width: 0;
+    -fx-pref-width: 150;
+}
+
+#calendarPlaceholder .blank1 {
+    -fx-border-width: 1px 0;
+    -fx-border-color: #666;
+    -fx-background-color: #ccc;
+}
+
+#calendarPlaceholder .blank2 {
+    -fx-border-width: 1px 0;
+    -fx-border-color: #666;
+    -fx-background-color: #999;
+}
+
+#calendarPlaceholder .module1hr {
+    -fx-border-radius: 6;
+    -fx-border-width: 0 0 3px 0;
+    -fx-background-radius: 10;
+}
+
+#calendarPlaceholder .module2hrtop {
+    -fx-border-radius: 6 6 0 0;
+    -fx-border-width: 0;
+    -fx-background-radius: 10 10 0 0;
+}
+
+#calendarPlaceholder .module2hrbottom {
+    -fx-border-radius: 0 0 6 6;
+    -fx-border-width: 0 0 3px 0;
+    -fx-background-radius: 0 0 10 10;
+}
+
+#calendarPlaceholder .red {
+    -fx-background-color: #f27770;
+    -fx-border-color: #e91a1f;
+}
+
+#calendarPlaceholder .orange {
+    -fx-background-color: #f99157;
+    -fx-border-color: #e25608;
+}
+
+#calendarPlaceholder .yellow {
+    -fx-background-color: #fc6;
+    -fx-border-color: #fa0;
+}
+
+#calendarPlaceholder .blue {
+    -fx-background-color: #69c;
+    -fx-border-color: #369;
+}
+
+#calendarPlaceholder .teal {
+    -fx-background-color: #6aa;
+    -fx-border-color: #399;
+}
+
+#calendarPlaceholder .green {
+    -fx-background-color: #9c9;
+    -fx-border-color: #5a5;
+}
+
+#calendarPlaceholder .brown {
+    -fx-background-color: #d27b53;
+    -fx-border-color: #974b28;
+}
+
+#calendarPlaceholder .purple {
+    -fx-background-color: #c9c;
+    -fx-border-color: #a5a;
+}
+
+#calendarPlaceholder .pink {
+    -fx-background-color: #fad;
+    -fx-border-color: #c7a;
+}

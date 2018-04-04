@@ -892,8 +892,6 @@ Do take a look at <<Design-Storage>> before attempting to modify the `Storage` c
 ** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
 ****
 
-<<<<<<< HEAD
-=======
 *_return to <<toc,Table of Contents>>_*
 
 [[GetStartedProgramming-RemarkCommand]]
@@ -1026,7 +1024,6 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 *_return to <<toc,Table of Contents>>_*
 
 [appendix]
->>>>>>> master
 == Product Scope
 
 *Target user profile*:

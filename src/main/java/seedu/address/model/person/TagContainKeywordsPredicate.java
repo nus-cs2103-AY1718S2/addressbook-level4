@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+//@@author jas5469
+
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;

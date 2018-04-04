@@ -1,7 +1,9 @@
 package seedu.address.model.group;
 
+//@@author jas5469
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+
 
 /**
  * Represents a Group's information in the address book.

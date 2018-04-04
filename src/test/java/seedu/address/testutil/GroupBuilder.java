@@ -1,5 +1,7 @@
 package seedu.address.testutil;
 
+//@@author jas5469
+
 import seedu.address.model.group.Group;
 import seedu.address.model.group.Information;
 import seedu.address.model.person.UniquePersonList;

@@ -1,5 +1,7 @@
 package systemtests;
 
+//@@author jas5469
+
 import static seedu.address.logic.commands.CommandTestUtil.INFORMATION_A;
 import static seedu.address.testutil.TypicalGroups.GROUP_A;
 

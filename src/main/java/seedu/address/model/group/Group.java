@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import seedu.address.model.person.UniquePersonList;
 
+//@@author jas5469
 /**
  * Represents a Group in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.

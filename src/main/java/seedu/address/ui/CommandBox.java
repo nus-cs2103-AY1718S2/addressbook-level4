@@ -28,7 +28,6 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.RateCommand;
 import seedu.address.logic.commands.ReviewCommand;

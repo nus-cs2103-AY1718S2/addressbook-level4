@@ -7,7 +7,10 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+
 import java.util.Set;
+
+import com.google.common.collect.Iterables;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -154,13 +157,40 @@ public class ParserUtil {
     }
 
     /**
+     * Splits a {@code String subjects} into {@code String subjectName} and {@code String subjectGrade}
+     * Parses {@code String subjectName} and {@code String subjectGrade}into a {@code Subject}.
+     * Add {@code Subject} into a {@code Set<Subject> subjectSet}.
+     * @throws IllegalValueException if the given {@code subjects} is invalid
+     */
+    public static void parseSubject(Collection<String> subjects, Set<Subject> subjectSet) throws IllegalValueException {
+        requireNonNull(subjects);
+        String subjectsStr = Iterables.get(subjects, 0);
+        String[] splitSubjectStr = subjectsStr.trim().split("\\s+");
+        for (int i = 0; i < splitSubjectStr.length; i++) {
+            String subjectName = splitSubjectStr[i];
+            i += 1;
+            String subjectGrade = splitSubjectStr[i];
+            if (!Subject.isValidSubjectName(subjectName)) {
+                throw new IllegalValueException(Subject.MESSAGE_SUBJECT_NAME_CONSTRAINTS);
+            } else if (!Subject.isValidSubjectGrade(subjectGrade)) {
+                throw new IllegalValueException(Subject.MESSAGE_SUBJECT_GRADE_CONSTRAINTS);
+            }
+            subjectSet.add(new Subject(subjectName, subjectGrade));
+        }
+    }
+
+    /**
      * Parses {@code Collection<String> subjects} into a {@code Set<Subject}.
      */
     public static Set<Subject> parseSubjects(Collection<String> subjects) throws IllegalValueException {
         requireNonNull(subjects);
         final Set<Subject> subjectSet = new HashSet<>();
-        for (String subject : subjects) {
-            subjectSet.add(parseSubject(subject));
+        if (subjects.size() == 1) {
+            parseSubject(subjects, subjectSet);
+        } else {
+            for (String subject : subjects) {
+                subjectSet.add(parseSubject(subject));
+            }
         }
         return subjectSet;
     }

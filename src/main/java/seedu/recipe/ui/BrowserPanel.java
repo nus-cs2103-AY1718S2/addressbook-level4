@@ -1,6 +1,6 @@
 package seedu.recipe.ui;
 
-import java.awt.*;
+import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -10,26 +10,17 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Worker;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
-import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import seedu.recipe.MainApp;
-import seedu.recipe.commons.core.EventsCenter;
 import seedu.recipe.commons.core.LogsCenter;
 import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.commons.events.ui.InternetSearchRequestEvent;
-import seedu.recipe.commons.events.ui.JumpToListRequestEvent;
-import seedu.recipe.commons.events.ui.NewResultAvailableEvent;
 import seedu.recipe.commons.events.ui.RecipePanelSelectionChangedEvent;
 import seedu.recipe.commons.events.ui.ShareRecipeEvent;
 import seedu.recipe.commons.events.ui.UploadRecipesEvent;
-import seedu.recipe.logic.commands.UploadCommand;
-import seedu.recipe.logic.commands.exceptions.CommandException;
 import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.recipe.Url;
 import seedu.recipe.ui.util.CloudStorageUtil;
@@ -69,6 +60,10 @@ public class BrowserPanel extends UiPart<Region> {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
 
+    /**
+     * Loads a website on the user's external default browser based on the
+     * @param url provided, if it is valid.
+     */
     public void loadPageExternalBrowser(String url) {
         Desktop d = Desktop.getDesktop();
         try {
@@ -132,30 +127,7 @@ public class BrowserPanel extends UiPart<Region> {
             loadPage(FacebookHandler.REDIRECT_DOMAIN);
         }
     }
-/*
-    /**
-     * Sets up a URL listener on the browser to watch for access token.
 
-    private void setUpBrowserUrlListener() {
-        WebEngine browserEngine = browser.getEngine();
-        browserEngine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
-            @Override
-            public void changed(ObservableValue ov, Worker.State oldState, Worker.State newState) {
-                if (newState == Worker.State.SUCCEEDED) {
-                    String url = browserEngine.getLocation();
-                    System.out.println("passing by");
-                    if (CloudStorageUtil.checkAndSetAccessToken(url)) {
-                        CloudStorageUtil.upload(uploadFilename);
-                        System.out.println("a");
-                        EventsCenter.getInstance().post(new NewResultAvailableEvent(UploadCommand.MESSAGE_SUCCESS));
-                        EventsCenter.getInstance().post(new JumpToListRequestEvent(FIRST_INDEX));
-                    }
-                }
-            }
-        });
-    }
-    //@@author
-*/
     //@@author nicholasangcx
     @Subscribe
     private void handleUploadRecipesEvent(UploadRecipesEvent event) {

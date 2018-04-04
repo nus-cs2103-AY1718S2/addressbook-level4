@@ -15,7 +15,6 @@ public class UploadCommand extends Command {
     public static final String COMMAND_WORD = "upload";
     public static final String MESSAGE_SUCCESS = "Upload Success!";
     public static final String MESSAGE_FAILURE = "Failed to upload!";
-    public static final String MESSAGE_WRONG_URL = "The entered URL has the wrong format";
     public static final String MESSAGE_ACCESS_TOKEN = "Copy and paste the code given by dropbox.\n"
             + "Example: token VALID_ACCESS_TOKEN";
 

@@ -4,21 +4,17 @@ package seedu.recipe.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.recipe.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.recipe.logic.commands.UploadCommand.MESSAGE_UPLOAD;
+import static seedu.recipe.logic.commands.UploadCommand.MESSAGE_ACCESS_TOKEN;
 import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipeBook;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import seedu.recipe.model.Model;
 import seedu.recipe.model.ModelManager;
 import seedu.recipe.model.UserPrefs;
+import seedu.recipe.ui.util.CloudStorageUtil;
 
 public class UploadCommandTest {
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager(getTypicalRecipeBook(), new UserPrefs());
 
@@ -52,7 +48,8 @@ public class UploadCommandTest {
     @Test
     public void execute_inputWithValidArgs_noAccessToken() {
         UploadCommand uploadCommand = new UploadCommand("recipebook.xml");
-        assertCommandSuccess(uploadCommand, model, MESSAGE_UPLOAD, model);
+        CloudStorageUtil.setAccessToken(null);
+        assertCommandSuccess(uploadCommand, model, MESSAGE_ACCESS_TOKEN, model);
     }
 }
 //@@author

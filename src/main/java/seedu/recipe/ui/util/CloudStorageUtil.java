@@ -14,6 +14,7 @@ import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.DbxWebAuth;
 import com.dropbox.core.v2.DbxClientV2;
+
 import seedu.recipe.commons.util.FileUtil;
 import seedu.recipe.logic.commands.UploadCommand;
 
@@ -23,10 +24,9 @@ import seedu.recipe.logic.commands.UploadCommand;
  */
 public class CloudStorageUtil {
 
-    public static final String RECIPE_DATA_FOLDER = FileUtil.getPath("data/");
-    public static final File RECIPE_BOOK_FILE = new File(RECIPE_DATA_FOLDER + "recipebook.xml");
-    public static final String CLIENT_IDENTIFIER = "dropbox/recirecipe";
-    public static final String ACCESS_TOKEN_IDENTIFIER = "#access_token=";
+    private static final String RECIPE_DATA_FOLDER = FileUtil.getPath("data/");
+    private static final File RECIPE_BOOK_FILE = new File(RECIPE_DATA_FOLDER + "recipebook.xml");
+    private static final String CLIENT_IDENTIFIER = "dropbox/recirecipe";
 
     private static final String APP_KEY = "0kj3cb9w27d66n8";
     private static final String APP_SECRET = "7stnncfsyvgim60";

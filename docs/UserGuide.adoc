@@ -253,7 +253,7 @@ Clears all entries from reInsurance. +
 Alias: `c` +
 Format: `clear` Alias: `c`
 
-=== Export data : `Since v1.3`
+=== Export data : `export`
 
 Exports the data from the specified export type (case insensitive). +
 Format: `export EXPORT_TYPE`
@@ -261,15 +261,18 @@ Format: `export EXPORT_TYPE`
 Examples:
 
 * `export calendar` +
-Exports the data on the calendar to a .ics file
+Exports the data on the calendar to Google Calendar
+** When running this command, you will be prompted to enter your credentials to your Google Account.
 * `export portfolio` +
 Exports the data in the portfolio to a .csv file
 
 [NOTE]
 ====
-* Coming in v2.0, there will be more options on the types of data to export, since as of v1.2 the only export types are CALENDAR and PORTFOLIO.
-* As of v1.2, the application only handles the command for the portfolio. The actual export of the data files of the calendar will come in v2.0.
+* Coming in v2.0, there will be more options on the types of data to export.
+* As of v1.4, the application handles the command for the portfolio and calendar.
 * Default destination file is at `data/portfolio.csv` for the `export portfolio` command.
+* The default calendar created in Google Calendars is titled `reInsurance Events`, which contains birthdays and appointments.
+* Coming in v2.0, the user will be able to specify what the created calendar is called.
 ====
 
 === Exiting the program : `exit`

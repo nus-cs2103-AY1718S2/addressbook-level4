@@ -82,6 +82,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author daviddalmaso
     @Override
     public void export(ExportType typeToExport) {
         requireAllNonNull(typeToExport);
@@ -92,6 +93,7 @@ public class ModelManager extends ComponentManager implements Model {
             addressBook.exportCalendar();
         }
     }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 

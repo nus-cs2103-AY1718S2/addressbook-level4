@@ -203,8 +203,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }
-
-
+    
     //=========== Filtered Group List Accessors =============================================================
 
     /**

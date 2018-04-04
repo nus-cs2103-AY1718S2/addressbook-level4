@@ -37,6 +37,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
         return syncStatusNode.getText();
     }
 
+    //@@author jas5469
     /**
      * Returns the text of the 'total persons' portion of the status bar.
      */
@@ -65,7 +66,6 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
     public boolean isSyncStatusChanged() {
         return !lastRememberedSyncStatus.equals(getSyncStatus());
     }
-
 
     /**
      * Remembers the content of the 'total persons' portion of the status bar.

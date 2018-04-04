@@ -75,30 +75,30 @@ public class PersonCard extends UiPart<Region> {
         switch(tag) {
         case "friends":
         case "friend":
-            return TAG_COLOR_STYLES[0];//yellow
+            return TAG_COLOR_STYLES[0]; //yellow
 
         case "teacher":
         case "classmates":
-            return TAG_COLOR_STYLES[1];//blue
+            return TAG_COLOR_STYLES[1]; //blue
 
         case "family":
         case "husband":
-            return TAG_COLOR_STYLES[3];//green
+            return TAG_COLOR_STYLES[3]; //green
 
         case "enemy":
         case "owesMoney":
-            return TAG_COLOR_STYLES[2];//red
+            return TAG_COLOR_STYLES[2]; //red
 
         case "boyfriend":
         case "girlfriend":
-            return TAG_COLOR_STYLES[5];//purple
+            return TAG_COLOR_STYLES[5]; //purple
 
         case "grandparent":
         case "neighbours":
-            return TAG_COLOR_STYLES[6];//grey
+            return TAG_COLOR_STYLES[6]; //grey
 
         case "colleagues":
-            return TAG_COLOR_STYLES[4];//orange
+            return TAG_COLOR_STYLES[4]; //orange
 
         default:
             return "";

@@ -29,7 +29,7 @@ public class Commission {
         Matcher m2 = p2.matcher(insuranceName);
 
         while (m1.find()) {
-        if (commission.equals("0")) {
+            if (commission.equals("0")) {
                 commission = m1.group().substring(1, m1.group().length() - 1);
             }
         }

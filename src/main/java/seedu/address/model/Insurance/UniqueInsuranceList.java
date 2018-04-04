@@ -12,6 +12,8 @@ import java.util.Set;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+
+
 /**
  * A list of insurance that enforces no nulls and uniqueness between its elements.
  *

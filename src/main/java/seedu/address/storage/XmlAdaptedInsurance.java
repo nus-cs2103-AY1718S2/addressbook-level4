@@ -5,12 +5,12 @@ import seedu.address.model.Insurance.Insurance;
 
 import javax.xml.bind.annotation.XmlValue;
 
-public class XmlAdaptedInsurance {
-
 //@@author Sebry9
 /**
- * JAXB-friendly adapted version of the Insurance.
+ * JAXB-friendly version of the Insurance.
  */
+public class XmlAdaptedInsurance {
+
     @XmlValue
     private String insuranceName;
 

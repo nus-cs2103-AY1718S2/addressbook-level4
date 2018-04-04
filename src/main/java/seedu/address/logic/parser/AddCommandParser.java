@@ -63,7 +63,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             }
             Set<Insurance> insuranceList = ParserUtil.parseInsurance
                 (argMultimap.getAllValues(PREFIX_INSURANCE));
-            Person person = new Person(name, phone, email, address, tagList, birthday, appointment, group, insuranceList);
+            Person person = new Person(name, phone, email, address,
+                tagList, birthday, appointment, group, insuranceList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

@@ -105,7 +105,7 @@ public class Person {
         return group;
     }
 
-    public String getTotalCommission(){
+    public String getTotalCommission() {
         return totalCommission;
     }
 
@@ -113,13 +113,13 @@ public class Person {
     /**
      * Calculate the total commission based on the number of plan this person/client have.
      */
-    public String calculateTotalCommission(Set<Insurance> insurances){
-      int commission = 0;
-      Insurance[] insuranceList = insurances.toArray(new Insurance[insurances.size()]);
+    public String calculateTotalCommission(Set<Insurance> insurances) {
+        int commission = 0;
+        Insurance[] insuranceList = insurances.toArray(new Insurance[insurances.size()]);
 
-      for(int i=0; i<insurances.size(); i++) {
-          Commission plans = new Commission(insuranceList[i]);
-          commission += parseInt(plans.getCommission());
+        for(int i = 0; i < insurances.size(); i++) {
+            Commission plans = new Commission(insuranceList[i]);
+            commission += parseInt(plans.getCommission());
       }
         return Integer.toString(commission);
     }

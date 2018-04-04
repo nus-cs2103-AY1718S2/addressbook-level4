@@ -22,6 +22,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Insurance.Insurance;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -62,6 +63,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             }
             ParserUtil.parseGroup(argMultimap.getValue(PREFIX_GROUP)).ifPresent(editPersonDescriptor::setGroup);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
+            parseInsuranceForEdit(argMultimap.getAllValues(PREFIX_INSURANCE))
+                .ifPresent(editPersonDescriptor::setInsurances);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -86,6 +89,22 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
+    }
+
+    /**
+     * Parses {@code Collection<String> insurances} into a {@code Set<Insurance>} if {@code insurances} is non-empty.
+     * If {@code insurances} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<Insurance>} containing zero insurances.
+     */
+    private Optional<Set<Insurance>> parseInsuranceForEdit(Collection<String> insurances) throws IllegalValueException {
+        assert insurances != null;
+
+        if (insurances.isEmpty()) {
+            return Optional.empty();
+        }
+        Collection<String> insuranceSet = insurances.size() == 1
+            && insurances.contains("") ? Collections.emptySet() : insurances;
+        return Optional.of(ParserUtil.parseInsurance(insuranceSet));
     }
 
 }

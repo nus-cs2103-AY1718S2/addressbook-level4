@@ -16,6 +16,7 @@
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <VBox prefHeight="200.0" prefWidth="100.0">
       <children>
+          <!-- @@author Sebry9 -->
          <Label prefHeight="134.0" prefWidth="131.0" text="Client Image">
             <graphic>
                <ImageView fitHeight="150.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
@@ -24,6 +25,15 @@
                   </image>
                </ImageView>
             </graphic></Label>
+         <Label text="Total Commission:" />
+         <Label fx:id="commission" text="\$commission">
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
+            <padding>
+               <Insets bottom="10.0" left="30.0" right="10.0" top="10.0" />
+            </padding>
+         </Label>
       </children>
    </VBox>
   <GridPane prefWidth="201.0" HBox.hgrow="ALWAYS">
@@ -44,12 +54,13 @@
         <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
       </HBox>
       <FlowPane fx:id="tags" />
-        <Label fx:id="insurance" styleClass="cell_small_label_green" text="\$insurance" />
+         <FlowPane fx:id="insurances" />
         <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
       <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday" />
       <Label fx:id="appointment" styleClass="cell_small_label" text="\$appointment" />
+        <Label fx:id="group" styleClass="cell_small_label" text="\$group" />
     </VBox>
       <rowConstraints>
          <RowConstraints />

@@ -86,13 +86,18 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author daviddalmaso
     @Override
     public void export(ExportType typeToExport) {
         requireAllNonNull(typeToExport);
         if (typeToExport.equals(ExportType.PORTFOLIO)) {
             addressBook.exportPortfolio();
         }
+        if (typeToExport.equals(ExportType.CALENDAR)) {
+            addressBook.exportCalendar();
+        }
     }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 

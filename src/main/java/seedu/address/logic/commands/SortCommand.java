@@ -1,9 +1,10 @@
 package seedu.address.logic.commands;
 
+//@@author Yoochard
+
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
- * By Yang Yuqing
  * Sorts the employees by any field
  */
 

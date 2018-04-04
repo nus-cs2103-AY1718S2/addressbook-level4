@@ -158,12 +158,14 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author Yoochard
     @Override
     public void sort(String field) {
         addressBook.sort(field);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {

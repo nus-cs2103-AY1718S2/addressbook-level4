@@ -1,3 +1,4 @@
+/* @@author Yoochard */
 .background {
     -fx-background-color: derive(floralwhite, 20%);
     background-color: white; /* Used in the default.html file */

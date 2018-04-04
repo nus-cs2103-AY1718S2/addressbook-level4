@@ -125,7 +125,7 @@ a|
 |=====
 {empty} +
 
-image::add_examples.PNG[width="700"]
+image::add_examples.PNG[width="800"]
 {empty} +
 
 .**Copy & paste to try out**

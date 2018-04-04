@@ -31,7 +31,8 @@ public class XmlAdaptedPersonTest {
     private static final String VALID_BIRTHDAY = BENSON.getBirthday().toString();
     private static final String VALID_APPOINTMENT = BENSON.getAppointment().toString();
     private static final String VALID_GROUP = BENSON.getGroup().toString();
-    private static final String VALID_INSURANCE = BENSON.getInsurance().toString();
+    private static final List<XmlAdaptedInsurance> VALID_INSURANCE = BENSON.getInsurance().stream()
+            .map(XmlAdaptedInsurance::new).collect(Collectors.toList());
     private static final List<XmlAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
             .map(XmlAdaptedTag::new)
             .collect(Collectors.toList());

@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.AddressBook;
+import seedu.address.storage.XmlAdaptedInsurance;
 import seedu.address.storage.XmlAdaptedPerson;
 import seedu.address.storage.XmlAdaptedTag;
 import seedu.address.storage.XmlSerializableAddressBook;
@@ -42,9 +43,12 @@ public class XmlUtilTest {
     private static final String VALID_BIRTHDATE = "09-12-1994";
     private static final String VALID_APPOINTMENT = "09-12-1994";
     private static final String VALID_GROUP = "PRIORITY";
-    private static final String VALID_INSURANCE = "Health";
 
-    private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
+    private static final List<XmlAdaptedTag> VALID_TAGS =
+        Collections.singletonList(new XmlAdaptedTag("friends"));
+
+    private static final List<XmlAdaptedInsurance> VALID_INSURANCE = Collections.singletonList
+        (new XmlAdaptedInsurance("Health"));
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

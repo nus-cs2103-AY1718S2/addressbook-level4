@@ -1,11 +1,11 @@
 package seedu.address.model.Insurance;
 
+import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static java.util.Objects.requireNonNull;
 
 /**
  * Represents the commission recieved from a insurance plan in reInsurance.
@@ -27,8 +27,8 @@ public class Commission {
         Matcher m = p.matcher(insuranceName);
 
         while (m.find()) {
-            if (commission.equals("0")) {
-                    commission = m.group().substring(1,m.group().length()-1);
+        if (commission.equals("0")) {
+                commission = m.group().substring(1, m.group().length() - 1);
             }
         }
         this.commission = commission;
@@ -49,7 +49,7 @@ public class Commission {
             return false;
         }
 
-        Commission otherCommission= (Commission) other;
+        Commission otherCommission = (Commission) other;
         return otherCommission.getCommission().equals(this.getCommission());
     }
 

@@ -66,7 +66,7 @@ public class GoogleAuthentication {
     public static Credential authorize() throws IOException {
         // Load client secrets.
         InputStream in =
-                BirthdayChangedEvent.class.getResourceAsStream("/client_secret.json");
+                BirthdayChangedEvent.class.getResourceAsStream("/oAuth/client_secret.json");
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 

@@ -63,7 +63,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             }
             ParserUtil.parseGroup(argMultimap.getValue(PREFIX_GROUP)).ifPresent(editPersonDescriptor::setGroup);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
-            parseInsuranceForEdit(argMultimap.getAllValues(PREFIX_INSURANCE)).ifPresent(editPersonDescriptor::setInsurances);
+            parseInsuranceForEdit(argMultimap.getAllValues(PREFIX_INSURANCE)).
+                ifPresent(editPersonDescriptor::setInsurances);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -101,8 +102,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (insurances.isEmpty()) {
             return Optional.empty();
         }
-        Collection<String> insuranceSet = insurances.size() == 1 &&
-            insurances.contains("") ? Collections.emptySet() : insurances;
+        Collection<String> insuranceSet = insurances.size() == 1
+            && insurances.contains("") ? Collections.emptySet() : insurances;
         return Optional.of(ParserUtil.parseInsurance(insuranceSet));
     }
 

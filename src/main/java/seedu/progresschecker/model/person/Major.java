@@ -3,6 +3,7 @@ package seedu.progresschecker.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.progresschecker.commons.util.AppUtil.checkArgument;
 
+//@@author EdwardKSG
 /**
  * Represents a Person's major in the ProgressChecker.
  * Guarantees: immutable; is valid as declared in {@link #isValidMajor(String)}

@@ -180,9 +180,11 @@ public class EditCommandSystemTest extends ProgressCheckerSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
                 + INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS);
 
+        //@@author EdwardKSG
         /* Case: invalid username -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
                 + INVALID_USERNAME_DESC, GithubUsername.MESSAGE_USERNAME_CONSTRAINTS);
+        //@@author
 
         /* Case: invalid major -> rejected */
         /*assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_MAJOR_DESC,

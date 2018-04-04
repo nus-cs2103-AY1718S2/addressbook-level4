@@ -1,5 +1,8 @@
 package seedu.progresschecker.logic.commands;
 
+import static seedu.progresschecker.logic.commands.AddDefaultTasksCommand.DEFAULT_LIST_ID;
+import static seedu.progresschecker.logic.commands.AddDefaultTasksCommand.DEFAULT_LIST_TITLE;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -20,6 +23,7 @@ import seedu.progresschecker.commons.util.FileUtil;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.task.MyTaskList;
 
+//@@author EdwardKSG
 /**
  * View the web view of a particular TaskList (with the name provided).
  */
@@ -27,9 +31,9 @@ public class ViewTaskListCommand extends Command {
 
     public static final String COMMAND_WORD = "viewtask";
     public static final String COMMAND_ALIAS = "vt";
+    public static final String DATA_FOLDER = "data/";
     public static final String TASK_PAGE = "tasklist.html";
-    public static final String DEFAULT_TASK_PAGE = "/nulltasklist.html";
-    public static final String FILE_FAILURE = "Something wrong with the file system.";
+    public static final String FILE_FAILURE = "Something is wrong with the file system.";
     public static final String COMMAND_FORMAT = COMMAND_WORD + "TASKLIST-TITLE";
     public static final String MESSAGE_TITLE_CONSTRAINTS = "The title of a task list should not exceed "
             + "49 characters (as specified by Google Task.";
@@ -41,20 +45,23 @@ public class ViewTaskListCommand extends Command {
             + "Parameters: TASKLIST-TITLE (max "
             + MAX_TITLE_LENGTH
             + " characters)\n"
-            + "Example: " + COMMAND_WORD + " CS2103 LOs";
+            + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "Viewing task list: %1$s";
 
-    private final String listName;
-
-    public ViewTaskListCommand(String name) {
-        this.listName = name;
-    }
-
     @Override
     public CommandResult execute() throws CommandException {
-        List<Task> list = MyTaskList.searchTaskList(listName);
-        File htmlFile = new File("data/" + TASK_PAGE);
+        updateView();
+        return new CommandResult(String.format(MESSAGE_SUCCESS, DEFAULT_LIST_TITLE));
+    }
+
+    /**
+     * Updates the HTML file and refresh the browser panel
+     * @throws CommandException
+     */
+    public static void updateView() throws CommandException {
+        List<Task> list = MyTaskList.searchTaskListById(DEFAULT_LIST_ID);
+        File htmlFile = new File(DATA_FOLDER + TASK_PAGE);
         writeToHtml(list, htmlFile);
         try {
             EventsCenter.getInstance().post(new LoadTaskEvent(readFile(htmlFile.getAbsolutePath(),
@@ -62,15 +69,8 @@ public class ViewTaskListCommand extends Command {
         } catch (IOException ioe) {
             throw new CommandException(FILE_FAILURE);
         }
-        return new CommandResult(String.format(MESSAGE_SUCCESS, listName));
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof ViewTaskListCommand // instanceof handles nulls
-                && this.listName.equals(((ViewTaskListCommand) other).listName)); // state check
-    }
 
     /**
      * Writes the loaded task list to an html file.Loads the tasks.
@@ -78,7 +78,7 @@ public class ViewTaskListCommand extends Command {
      * @param list task list serialized in a java List.
      * @param file File object of the html file.
      */
-    void writeToHtml(List<Task> list, File file) throws CommandException {
+    public static void writeToHtml(List<Task> list, File file) throws CommandException {
         int size = list.size();
 
         try {
@@ -94,15 +94,29 @@ public class ViewTaskListCommand extends Command {
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw);
 
-            out.print("<!DOCTYPE html>\n" + "<html>\n" + "<body>\n");
-            out.print("<h1>" + listName + "</h1>\n" + "<dl>\n");
+            out.print("<!DOCTYPE html>\n" + "<html>\n"
+                    + "<body style=\"background-color:grey;\">\n");
+            out.print("<h1 style=\"font-family:verdana; color:white\">"
+                    + DEFAULT_LIST_TITLE + "</h1>\n" + "<hr />\n" + "<dl>\n");
 
-            for (int i = 0; i < (size - 2); i++) {
+            for (int i = 0; i < size; i++) {
                 Task task = list.get(i);
-                out.print("    <dt>" + task.getTitle() + "</dt>\n");
-                out.print("    <dd>Deadline: " + task.getDue() + "</dd>\n");
-                out.print("    <dd>Status: " + task.getStatus() + "</dd>\n");
-                out.print("    <dd>PS: " + task.getNotes() + "</dd>\n");
+                out.print("    <dt style=\"font-family:verdana; color:antiquewhite;\">"
+                        + (i + 1) + ". " + task.getTitle() + "</dt>\n");
+                out.print("    <dd style=\"font-family:verdana; color:white;\">Due: &nbsp;&nbsp;&nbsp;"
+                        + task.getDue().toString().substring(0, 10) + "</dd>\n");
+                String status = task.getStatus();
+                if (status.length() >= 11) {
+                    out.print("    <dd style=\"font-family:verdana; color:red;\">Status:   "
+                            + task.getStatus() + "</dd>\n");
+                } else {
+                    out.print("    <dd style=\"font-family:verdana; color:darkseagreen;\">Status: "
+                            + task.getStatus() + "</dd>\n");
+                }
+
+                out.print("    <dd style=\"font-family:verdana; color:white;\">Notes: &nbsp;&nbsp;"
+                        + task.getNotes() + "</dd>\n");
+                out.print("    <hr />\n");
 
             }
 

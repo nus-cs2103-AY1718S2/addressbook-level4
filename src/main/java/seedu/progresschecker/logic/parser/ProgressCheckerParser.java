@@ -12,6 +12,7 @@ import seedu.progresschecker.logic.commands.AddDefaultTasksCommand;
 import seedu.progresschecker.logic.commands.ClearCommand;
 import seedu.progresschecker.logic.commands.CloseIssueCommand;
 import seedu.progresschecker.logic.commands.Command;
+import seedu.progresschecker.logic.commands.CompleteTaskCommand;
 import seedu.progresschecker.logic.commands.CreateIssue;
 import seedu.progresschecker.logic.commands.DeleteCommand;
 import seedu.progresschecker.logic.commands.EditCommand;
@@ -23,6 +24,7 @@ import seedu.progresschecker.logic.commands.HistoryCommand;
 import seedu.progresschecker.logic.commands.ListCommand;
 import seedu.progresschecker.logic.commands.RedoCommand;
 import seedu.progresschecker.logic.commands.ReopenIssueCommand;
+import seedu.progresschecker.logic.commands.ResetTaskCommand;
 import seedu.progresschecker.logic.commands.SelectCommand;
 import seedu.progresschecker.logic.commands.SortCommand;
 import seedu.progresschecker.logic.commands.UndoCommand;
@@ -65,7 +67,15 @@ public class ProgressCheckerParser {
 
         case ViewTaskListCommand.COMMAND_WORD:
         case ViewTaskListCommand.COMMAND_ALIAS:
-            return new ViewTaskListCommandParser().parse(arguments);
+            return new ViewTaskListCommand();
+
+        case CompleteTaskCommand.COMMAND_WORD:
+        case CompleteTaskCommand.COMMAND_ALIAS:
+            return new CompleteTaskCommandParser().parse(arguments);
+
+        case ResetTaskCommand.COMMAND_WORD:
+        case ResetTaskCommand.COMMAND_ALIAS:
+            return new ResetTaskCommandParser().parse(arguments);
 
         case AddCommand.COMMAND_WORD:
         case AddCommand.COMMAND_ALIAS:

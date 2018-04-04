@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
+<!-- @@author EdwardKSG -->
 <HBox id="taskCardPane" fx:id="taskCardPane" prefHeight="140.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane prefHeight="140.0" prefWidth="362.0" HBox.hgrow="ALWAYS">
         <columnConstraints>

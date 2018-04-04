@@ -31,7 +31,7 @@ public class FindCommandParser implements Parser<FindCommand> {
                 || arePrefixesPresent(argMultimap, PREFIX_TAG)
                 || arePrefixesPresent(argMultimap, PREFIX_RATING))
                 || !argMultimap.getPreamble().isEmpty()) {
-                //@@author
+            //@@author
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 

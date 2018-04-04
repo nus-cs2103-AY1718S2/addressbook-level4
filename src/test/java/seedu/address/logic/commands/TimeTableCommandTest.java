@@ -121,7 +121,7 @@ public class TimeTableCommandTest {
         int oddEvenIndex = StringUtil.getOddEven(oddEven);
         try {
             CommandResult commandResult = timeTableCommand.execute();
-            assertEquals(String.format(TimeTableCommand.MESSAGE_SELECT_PERSON_SUCCESS, oddEven, index.getOneBased()),
+            assertEquals(String.format(TimeTableCommand.MESSAGE_SELECT_PERSON_SUCCESS, oddEven, target.getName()),
                     commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);

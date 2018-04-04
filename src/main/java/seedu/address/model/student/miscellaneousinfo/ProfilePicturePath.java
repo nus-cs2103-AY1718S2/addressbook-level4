@@ -15,7 +15,7 @@ public class ProfilePicturePath {
     public static final String MESSAGE_PICTURE_CONSTRAINTS =
             "File URL must exist and have extensions of '.jpg' or '.png' only.";
     public static final String DEFAULT_PROFILE_PICTURE =
-            "out/production/resources/images/profile_photo_placeholder.png";
+            "profile_photo_placeholder.png";
 
     public final Path profilePicturePath;
 

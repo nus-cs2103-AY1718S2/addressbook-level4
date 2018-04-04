@@ -1,10 +1,10 @@
 package seedu.address.ui;
 
+import java.io.File;
 import java.net.URL;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
-
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -25,6 +25,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String STUDENT_MISC_INFO_PAGE = "StudentMiscInfo.html";
+    public static final String STUDENT_INFO_PAGE_STYLESHEET = "StudentInfoTheme.css";
     public static final String SEARCH_PAGE_URL =
             "https://www.google.com.sg/maps/place/";
 
@@ -53,8 +54,11 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void loadStudentInfoPage() {
-        URL exampleStudentPage = MainApp.class.getResource(FXML_FILE_FOLDER + STUDENT_MISC_INFO_PAGE);
-        loadPage(exampleStudentPage.toExternalForm());
+        String jarFolder = new File(MainApp.class.getProtectionDomain().getCodeSource().getLocation()
+                .getPath()).getParentFile().getPath().replace('\\', '/');
+        String studentPageFilePath = "file:/" + jarFolder + "/data/view/" + STUDENT_MISC_INFO_PAGE;
+        loadPage(studentPageFilePath);
+
     }
 
 

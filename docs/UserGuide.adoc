@@ -215,7 +215,7 @@ Deletes the 2nd person in the address book.
 `delete 1`  OR `d 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Deleting a group : `groupdelete` `Since V1.2`
+=== Deleting a group : `groupdelete` `since v1.2`
 
 Deletes the specified group from the address book. +
 Format: `groupdelete GROUP_NAME` +
@@ -233,7 +233,7 @@ Examples:
 `gd friends`+
 All persons in ContactSails with the group `friends` will have the group removed.
 
-=== Deleting a preference : `prefdelete` `Since V1.2`
+=== Deleting a preference : `prefdelete` `since v1.2`
 
 Deletes the specified preference from the address book. +
 Format: `prefdelete PREFERENCE_NAME` +
@@ -358,6 +358,22 @@ Examples:
 `t light` +
 Changes the theme of the application to the light theme.
 
+=== Changing the order status : `orderstatus` `since v1.4`
+
+Changes the order status of the order specified by the index number used in the order listing.
+Format: `orderstatus INDEX os/ORDER STATUS`
+Alias: `os`
+
+****
+* Orders can be marked as `ongoing` and `done` only.
+****
+
+Examples:
+
+* `orderstatus 2 os/done` OR +
+`os 2 os/done`
+Marks the order status of the 2nd order in the most recent order listing as 'done'.
+
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
@@ -409,7 +425,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` OR `r` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Displaying Calendar : `calendar` `V1.3`
+=== Displaying Calendar : `calendar` `since v1.3`
 
 Displays the Calendar at centre of window in Month-View format. +
 Format: `calendar` +
@@ -426,13 +442,13 @@ Examples:
 `cal` +
 Shows Calendar in Month-View.
 
-=== Listing all events : `eventlist` `Coming in V1.5`
+=== Listing all events : `eventlist` `coming in v1.5`
 
 Shows a list of all events in the address book. +
 Format: `eventlist` +
 Alias: `el`
 
-=== Adding events to Event list : `eventadd` `Since V1.3`
+=== Adding events to Event list : `eventadd` `since v1.3`
 
 Adds an event to the Event list. +
 Format: `eventadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
@@ -457,7 +473,7 @@ Event appears on specified date in the Calendar.
 `ea t/roadshow sd/01-01-2019 ed/10-01-2019 st/09:00 et/18:00` +
 Event starting from 1 Jan 2019 1000 and ending at 10 Jan 2019 1800 appears at the specified time period in Calendar.
 
-=== editing events in Event list : `eventedit` `Coming in V1.5`
+=== editing events in Event list : `eventedit` `coming in v1.5`
 
 Edits an existing event in the Event List. +
 Format: `eventedit e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
@@ -483,7 +499,7 @@ Changes reflect on the Calendar.
 Edits starting date and time, ending date and time of the 3rd event in Event list. +
 Removes all persons tagged to the event.
 
-=== Deleting events in Event list : `eventdelete` `Coming in V1.5`
+=== Deleting events in Event list : `eventdelete` `coming in v1.5`
 
 Deletes an existing event in Event list. +
 Format: `eventdelete EVENT_INDEX` +
@@ -502,7 +518,7 @@ Examples:
 Deletes the event at index 1 of most recent event listing. +
 Event is removed from the Calendar.
 
-=== Clearing all entries in Event List : `eventclear` `Coming in V1.5`
+=== Clearing all entries in Event List : `eventclear` `coming in v1.5`
 
 Clears all event list entries from the address book. +
 Format: `eventclear` +
@@ -520,6 +536,78 @@ Exits the program. +
 Format: `exit` +
 Alias: `q`
 
+=== Viewing top customers : `topcustomers` `coming in v2.0`
+
+Displays a list of the top customers based on the frequency their contacts are accessed. +
+Format: `topcustomers NUMBER` +
+Alias: `tc`
+
+****
+* The command will display the top `NUMBER` amount of people, sorted by most frequently contacted to the least.
+* `NUMBER` must be in the range of 1 to total number of persons in the address book, both inclusive.
+****
+
+Examples:
+
+* `topcustomers 10` OR +
+`tc 10` +
+Displays the list of the top ten persons in the address book based on how frequently you access these contacts.
+
+=== Viewing top customers : `topitems` `coming in v2.0`
+
+Displays a list of the top items based on amount of items that have been sold to customers. +
+Format: `topitems NUMBER` +
+Alias: `ti`
+
+****
+* The command will display the top `NUMBER` amount of items, sorted by most bought item to the least.
+* `NUMBER` must be in the range of 1 to total number of items in the address book, both inclusive.
+****
+
+Examples:
+
+* `topitems 10` OR +
+`ti 10` +
+Displays the list of the top ten items in the address book based on how many of the items have been sold.
+
+=== Sending promotions based on group : `sendpromogroup` `coming in v2.0`
+
+Opens a promotion email draft in the browser, which can be sent to multiple persons having the same group tags.
+Format: `sendpromogroup GROUP... [sub/SUBJECT] [b/BODY]`
+Alias: `spg`
+
+****
+* The email draft will use the Default Email Service Provider on your local device.
+* The command will add all the persons with the `GROUP` tag as recipients of the email.
+* Multiple `GROUP` tags can be specified. All persons in these groups will be added as recipients.
+* The subject and body of the email will be specified by the `SUBJECT` and `BODY` parameters respectively.
+****
+
+Examples:
+
+* `sendpromogroup friends sub/New Offer on Sunglasses` OR +
+`spg friends sub/New Offer on Sunglasses` +
+Opens an email draft in the browser with recipients as all persons tagged as 'friends' and subject as 'New Offer on Sunglasses'. +
+
+=== Sending promotions based on preference : `sendpromopref` `coming in v2.0`
+
+Opens a promotion email draft in the browser, which can be sent to multiple persons having the same preference tags.
+Format: `sendpromopref PREFERENCE... [sub/SUBJECT] [b/BODY]`
+Alias: `spp`
+
+****
+* The email draft will use the Default Email Service Provider on your local device.
+* The command will add all the persons with the `PREFERENCE` tag as recipients of the email.
+* Multiple `PREFERENCE` tags can be specified. All persons in these groups will be added as recipients.
+* The subject and body of the email will be specified by the `SUBJECT` and `BODY` parameters respectively.
+****
+
+Examples:
+
+* `sendpromopref books sub/Books on SALE` OR +
+`spp books sub/Books on SALE` +
+Opens an email draft in the browser with recipients as all persons tagged with 'books' and subject as 'Books on SALE'. +
+
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
@@ -534,29 +622,29 @@ There is no need to save manually.
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [g/GROUP]... [pr/PREFERENCE]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 g/friend g/colleague pr/computers`
-* *Add Event [Coming in V1.5]* : `eventadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
+* *EventAdd `coming in v1.5`* : `eventadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
 e.g. `eventadd t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800`
 * *Calendar [Coming in V1.5]* : `calendar [VIEW_FORMAT]` +
 e.g. `calendar year`
 * *Clear* : `clear`
-* *Clear Event list [Coming in V1.5]* : `eventclear`
+* *EventListClear `coming in v1.5`* : `eventclear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Delete Event [Coming in V1.5]* : `eventdelete INDEX` +
+* *EventDelete `coming in v1.5`* : `eventdelete INDEX` +
 e.g. `eventdelete 2`
-* *Delete Group* : `groupdelete GROUP_NAME` +
+* *GroupDelete* : `groupdelete GROUP_NAME` +
 e.g. `groupdelete friends`
-* *Delete Preference*: `prefdelete PREFERENCE_NAME` +
+* *PreferenceDelete*: `prefdelete PREFERENCE_NAME` +
 e.g. `prefdelete computers`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [g/GROUP]... [pr/PREFERENCE]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Edit Event [Coming in V1.5]* : `eventedit e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
+* *EventEdit `coming in v1.5`* : `eventedit e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
 e.g. `eventedit e/2 t/meeting with Jason ed/20-20-2020 i/2`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *Findgroup* : groupfind KEYWORD [MORE_KEYWORDS]` +
+* *GroupFind* : `groupfind KEYWORD [MORE_KEYWORDS]` +
 e.g. `groupfind friends`
-* *Findpref* : preffind KEYWORD [MORE_KEYWORDS]` +
+* *PrefFind* : `preffind KEYWORD [MORE_KEYWORDS]` +
 e.g. `preffind computers`
 * *List* : `list`
 * *Help* : `help`
@@ -570,37 +658,42 @@ e.g. `orderedit 1 pr/15.00 d/05-03-2018`
 e.g. `orderdelete 5`
 * *History* : `history`
 * *Theme* : `theme THEME_TYPE`
+* *OrderStatus* : `orderstatus INDEX os/ORDER STATUS`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *TopCustomers `coming in v2.0`* : `topcustomers NUMBER`
+* *TopItems `coming in v2.0`* : `topitems NUMBER`
+* *SendPromoGroup `coming in v2.0`* : `sendpromogroup GROUP... [sub/SUBJECT] [b/BODY]`
+* *SendPromoPref `coming in v2.0`* : `sendpromopref PREFERENCE... [sub/SUBJECT] [b/BODY]`
 * *Exit* : `exit`
 
 == Command Alias Summary
 
 * *Add* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [g/GROUP]... [pr/PREFERENCE]...` +
 e.g. `a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 g/friend g/colleague pr/computers`
-* *Add Event [Coming in V1.5]* : `ea t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
+* *EventAdd `coming in v1.5`* : `ea t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
 e.g. `ea t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800`
-* *Calendar [Coming in V1.5]* : `cal [VIEW_FORMAT]` +
+* *Calendar `coming in v1.5`* : `cal [VIEW_FORMAT]` +
 e.g. `cal year`
 * *Clear* : `c`
-* *Clear Event list [Coming in V1.5]* : `ec`
+* *EventListClear `coming in v1.5`* : `elc`
 * *Delete* : `d INDEX` +
 e.g. `d 3`
-* *Delete Event [Coming in V1.5]* : `ed INDEX` +
+* *EventDelete `coming in v1.5`* : `ed INDEX` +
 e.g. `ed 2`
-* *Delete Group* : `gd GROUP_NAME` +
+* *GroupDelete* : `gd GROUP_NAME` +
 e.g. `gd friends`
-* *Delete Preference*: `pd PREFERENCE_NAME` +
+* *PreferenceDelete*: `pd PREFERENCE_NAME` +
 e.g. `pd computers`
 * *Edit* : `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [g/GROUP]... [pr/PREFERENCE]...` +
 e.g. `e 2 n/James Lee e/jameslee@example.com`
-* *Edit Event [Coming in V1.5]* : `ee e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
+* *EventEdit `coming in v1.5`* : `ee e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
 e.g. `ee e/2 t/meeting with Jason ed/20-20-2020 i/2`
 * *Find* : `f KEYWORD [MORE_KEYWORDS]` +
 e.g. `f James Jake`
-* *Findgroup* : gf KEYWORD [MORE_KEYWORDS]` +
+* *GroupFind* : `gf KEYWORD [MORE_KEYWORDS]` +
 e.g. `gf friends`
-* *Findpref* : pf KEYWORD [MORE_KEYWORDS]` +
+* *PrefFind* : `pf KEYWORD [MORE_KEYWORDS]` +
 e.g. `pf computers`
 * *List* : `l`
 * *Help* : `?`
@@ -614,12 +707,11 @@ e.g. `oe 1 pr/15.00 d/05-03-2018`
 e.g. `od 5`
 * *History* : `h`
 * *Theme* : `t THEME_TYPE`
+* *OrderStatus* : `os INDEX os/ORDER STATUS`
 * *Undo* : `u`
 * *Redo* : `r`
+* *TopCustomers `coming in v2.0`* : `tc NUMBER`
+* *TopItems `coming in v2.0`* : `ti NUMBER`
+* *SendPromoGroup `coming in v2.0`* : `spg GROUP... [sub/SUBJECT] [b/BODY]`
+* *SendPromoPref `coming in v2.0`* : `spp PREFERENCE... [sub/SUBJECT] [b/BODY]`
 * *Exit* : `q`
-
-== Coming in v2.0
-
-* Encrypting data files
-* Reminders
-* Sending promotions to target groups

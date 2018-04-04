@@ -49,17 +49,15 @@ public class SelectCommand extends Command {
         Person selectedPerson = lastShownList.get(targetIndex.getZeroBased());
         StringBuilder result = new StringBuilder();
 
-        if (selectedPerson.getSubjects().size() < 6) {
-            throw new CommandException(Messages.MESSAGE_INSUFFICIENT_SUBJECTS);
-        }
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
         try {
             score = selectedPerson.calculateL1R5();
         } catch (InvalidSubjectCombinationException isce) {
-            return new CommandResult("Please check that you have at least 1 subject in each L1R5 "
-                    + "category.\n"  + "Please use edit to change subjects allocated to student.");
+            return new CommandResult(result.append(String.format(MESSAGE_SELECT_PERSON_SUCCESS,
+                    selectedPerson.getName())).append(String.format(MESSAGE_L1R5_SUCCESS, "0. "))
+                    .append(Messages.MESSAGE_INSUFFICIENT_SUBJECTS).toString());
         }
 
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
         return new CommandResult(result.append(String.format(MESSAGE_SELECT_PERSON_SUCCESS, selectedPerson.getName()))
                 .append(String.format(MESSAGE_L1R5_SUCCESS, score)).toString());
 

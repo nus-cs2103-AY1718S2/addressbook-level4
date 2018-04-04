@@ -130,10 +130,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         removeUnusedTags();
     }
 
+    //@@author kengsengg
     public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
         appointments.add(appointment);
     }
 
+    //@author TeyXinHui
     /**
      * Removes all {@code Tag}s that are not used by any {@code Person} in this {@code AddressBook}.
      */
@@ -144,6 +146,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 .collect(Collectors.toSet());
         tags.setTags(tagsInPersons);
     }
+    //@@author
     /**
      *  Updates the master tag list to include tags and subjects in {@code person} that are not in the list.
      *  @return a copy of this {@code person} such that every tag in this person points to a Tag object
@@ -188,6 +191,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author kengsengg
     /**
      * Chooses the sorting method based on the parameter given
      */
@@ -199,13 +203,14 @@ public class AddressBook implements ReadOnlyAddressBook {
             persons.sortTags();
         }
     }
-
+    //@@author
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
 
+    //@@author TeyXinHui
     public void addSubject(Subject s) throws UniqueSubjectList.DuplicateSubjectException {
         subjects.add(s);
     }
@@ -225,6 +230,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author chuakunhong
     /**
      * Calls replaceTagForPerson method when tag is found in tags.
      * @param tagSet
@@ -244,7 +250,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-
+    //@@author TeyXinHui
     /**
      * Removes a specific tag from an individual person and updates the person's information.
      * Person needs to have the specific tag in his/her tag list.
@@ -267,13 +273,13 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     }
 
+    //@@author chuakunhong
     /**
      * Removes a specific tag from an individual person and updates the person's information.
      * @param tagToBeReplaced
      * @param tagToBePlaced
      * @param person
      */
-
     public void replaceTagForPerson(Tag tagToBeReplaced, Tag tagToBePlaced, Person person) {
         Set<Tag> tagList = new HashSet<>(person.getTags());
         if (tagList.remove(tagToBeReplaced)) {
@@ -293,6 +299,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// util methods
 
+    //@@author
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags, "

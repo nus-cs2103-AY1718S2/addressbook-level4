@@ -5,6 +5,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.util.Arrays;
 
+//@@author TeyXinHui
 /**
  * Represents a subject in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -147,3 +148,4 @@ public class Subject {
     }
 
 }
+//@@author

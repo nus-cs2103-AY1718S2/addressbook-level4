@@ -48,7 +48,9 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs(), new CustomerStats());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new UserPrefs(),
+                new CustomerStats());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
@@ -69,7 +71,9 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs(), new CustomerStats());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new UserPrefs(),
+                new CustomerStats());
         expectedModel.updatePerson(lastPerson, editedPerson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
@@ -82,7 +86,9 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs(), new CustomerStats());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new UserPrefs(),
+                new CustomerStats());
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -98,7 +104,9 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs(), new CustomerStats());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new UserPrefs(),
+                new CustomerStats());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
@@ -160,7 +168,9 @@ public class EditCommandTest {
         Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs(), new CustomerStats());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new UserPrefs(),
+                new CustomerStats());
 
         // edit -> first person edited
         editCommand.execute();
@@ -206,7 +216,9 @@ public class EditCommandTest {
         Person editedPerson = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs(), new CustomerStats());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new UserPrefs(),
+                new CustomerStats());
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
         Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());

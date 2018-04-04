@@ -17,7 +17,7 @@ By: `Team T09-B3`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
-ProgressChecker is for those who *prefer to use a desktop app for managing contacts*. More importantly, ProgressChecker is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, ProgressChecker can get your learning outcome tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+ProgressChecker is for *CS2103/T students* who *prefer to use a desktop app* to keep track of their learning progress throughout the module. More importantly, ProgressChecker is *optimized for students who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, ProgressChecker can get your learning outcome tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -35,6 +35,11 @@ This app will not work with earlier versions of Java 8.
 +
 image::Ui.png[width="790"]
 +
+[NOTE]
+====
+The viewing of learning outcomes and exercises are not ready yet! Only some of week 3's exercises are reflected and they are in the midst of bug fixing.
+====
++
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
@@ -43,7 +48,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com m/Computer Science y/2` : adds a contact named `John Doe` to the Address Book. He is in his 2nd year majoring in computer engineering.
 
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* **`+issue`**`ti/TestIssue` : creates an issue on github in the team repo
+
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.

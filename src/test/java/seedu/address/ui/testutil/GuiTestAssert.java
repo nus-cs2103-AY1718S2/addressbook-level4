@@ -40,6 +40,7 @@ public class GuiTestAssert {
                 actualCard.getTags());
     }
 
+    //@@author emer7
     /**
      * Asserts that {@code actualPanel} displays the details of {@code expectedPerson}.
      */
@@ -50,6 +51,7 @@ public class GuiTestAssert {
         assertEquals(expectedPersonCard.getAddress(), actualPanel.getAddress());
         assertEquals(expectedPersonCard.getTags(), actualPanel.getTags());
     }
+    //@@author
 
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and

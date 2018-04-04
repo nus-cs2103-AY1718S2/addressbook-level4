@@ -84,6 +84,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author emer7
     /**
      * Sets the {@code Review} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -93,6 +94,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setReviews(reviewSet);
         return this;
     }
+    //@@author
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}

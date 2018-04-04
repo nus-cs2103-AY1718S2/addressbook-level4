@@ -117,7 +117,7 @@ public class EditCommand extends UndoableCommand {
         Set<Review> updatedReviews = editPersonDescriptor.getReviews().orElse(personToEdit.getReviews());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-
+        //@@author emer7
         Person toReturn = new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
                 personToEdit.getCalendarId());
         toReturn.setRating(updatedRating);
@@ -125,6 +125,7 @@ public class EditCommand extends UndoableCommand {
         toReturn.setId(personToEdit.getId());
 
         return toReturn;
+        //@@author
     }
 
     @Override
@@ -243,6 +244,7 @@ public class EditCommand extends UndoableCommand {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
+        //@@author emer7
         /**
          * Sets {@code reviews} to this object's {@code reviews}.
          * A defensive copy of {@code reviews} is used internally.
@@ -259,8 +261,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Set<Review>> getReviews() {
             return (reviews != null) ? Optional.of(Collections.unmodifiableSet(reviews)) : Optional.empty();
         }
-
-
+        //@@author
 
         @Override
         public boolean equals(Object other) {

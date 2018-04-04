@@ -16,7 +16,8 @@ public class LoginCommand extends Command {
     public static final String COMMAND_WORD = "login";
 
     public static final String MESSAGE_USAGE = "Login with the parameters: u/USERNAME p/PASSWORD"
-            + "\nEXAMPLE: login u/user p/123456";
+            + "\nEXAMPLE: login u/user p/123456"
+            + "\nDefault user login credentials are as follows: USERNAME: user , PASSWORD: pass";
 
     public static final String MESSAGE_LOGIN_SUCCESS = "Login successful!";
     public static final String MESSAGE_LOGIN_FAILURE = "Username or password is incorrect. Please login again.";

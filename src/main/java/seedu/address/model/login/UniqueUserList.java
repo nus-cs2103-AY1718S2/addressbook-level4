@@ -51,16 +51,12 @@ public class UniqueUserList implements Iterable<User> {
      * @throws UserNotFoundException if {@code target} could not be found in the list.
      */
     public void setUser(User target, User editedUser)
-            throws DuplicateUserException, UserNotFoundException {
+            throws UserNotFoundException {
         requireNonNull(editedUser);
 
         int index = internalList.indexOf(target);
         if (index == -1) {
             throw new UserNotFoundException();
-        }
-
-        if (!target.equals(editedUser) && internalList.contains(editedUser)) {
-            throw new DuplicateUserException();
         }
 
         internalList.set(index, editedUser);

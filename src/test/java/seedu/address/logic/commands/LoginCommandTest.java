@@ -19,8 +19,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.login.Password;
+import seedu.address.model.login.User;
 import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
+import seedu.address.model.login.exceptions.DuplicateUserException;
+import seedu.address.model.login.exceptions.UserNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -120,6 +123,12 @@ public class LoginCommandTest {
         }
 
         @Override
+        public User getLoggedInUser() {
+            fail("This method should not be called.");
+            return null;
+        };
+
+        @Override
         public void setLoginStatus(boolean status) {
             fail("This method should not be called.");
         }
@@ -134,6 +143,33 @@ public class LoginCommandTest {
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public boolean checkCredentials(Username username, Password password) throws AlreadyLoggedInException {
+            fail("This method should not be called.");
+            return false;
+        };
+
+        @Override
+        public void updateUserPassword(User target, User userWithNewPassword) throws UserNotFoundException {
+            fail("This method should not be called.");
+        };
+
+        @Override
+        public void addUser(User person) throws DuplicateUserException {
+            fail("This method should not be called.");
+        };
+
+        @Override
+        public void deleteUser(User target) throws UserNotFoundException {
+            fail("This method should not be called.");
+        };
+
+        @Override
+        public ReadOnlyAddressBook getUserDatabase() {
+            fail("This method should not be called.");
+            return null;
+        };
     }
 
 
@@ -162,6 +198,8 @@ public class LoginCommandTest {
         public boolean hasLoggedIn() {
             return this.loginStatus;
         }
+
+
     }
 
 

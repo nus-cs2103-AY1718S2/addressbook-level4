@@ -8,6 +8,7 @@ import seedu.address.model.login.Password;
 import seedu.address.model.login.User;
 import seedu.address.model.login.Username;
 
+//@@author kaisertanqr
 /**
  * JAXB-friendly version of the User.
  */
@@ -28,7 +29,7 @@ public class XmlAdaptedUser {
     public XmlAdaptedUser() {}
 
     /**
-     * Constructs an {@code XmlAdaptedPerson} with the given person details.
+     * Constructs an {@code XmlAdaptedUser} with the given person details.
      */
     public XmlAdaptedUser(String username, String password, String addressbookfilepath) {
         this.username = username;

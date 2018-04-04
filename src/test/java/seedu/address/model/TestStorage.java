@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.UserDatabaseChangedEvent;
+import seedu.address.commons.events.model.UserDeletedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.login.User;
@@ -83,4 +85,13 @@ public class TestStorage extends ComponentManager implements Storage {
     public void saveUserDatabase(ReadOnlyUserDatabase userDatabase, String filePath) throws IOException {}
 
     public void update(User user) {}
+
+    @Override
+    public void deleteAddressBook(User user){};
+
+    @Override
+    public void handleUserDeletedEvent(UserDeletedEvent event){};
+
+    @Override
+    public void handleUserDatabaseChangedEvent(UserDatabaseChangedEvent abce){};
 }

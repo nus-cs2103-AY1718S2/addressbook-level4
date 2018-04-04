@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.login.User;
 
 /**
  * Represents a storage for {@link seedu.address.model.AddressBook}.
@@ -40,5 +41,10 @@ public interface AddressBookStorage {
      * @see #saveAddressBook(ReadOnlyAddressBook)
      */
     void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException;
+
+    /**
+     * Deletes the AddressBook XML file in the {@code String} given.
+     */
+    void deleteAddressBook(User user);
 
 }

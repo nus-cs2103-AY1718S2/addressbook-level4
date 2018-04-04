@@ -13,7 +13,7 @@ import javafx.scene.layout.Region;
 public class LoginStatusBar extends UiPart<Region> {
 
     public static final String LOGIN_STATUS_PREFIX = "Status: ";
-    public static final String LOGIN_STATUS_TRUE = "Logged In As ";
+    public static final String LOGIN_STATUS_TRUE = "Logged In";
     public static final String LOGIN_STATUS_FALSE = "Not Logged In";
 
     private static final String FXML = "LoginStatusBar.fxml";

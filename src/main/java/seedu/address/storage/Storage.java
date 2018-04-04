@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Optional;
 
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.UserDatabaseChangedEvent;
+import seedu.address.commons.events.model.UserDeletedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -38,6 +40,19 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, UserDatab
      */
     void handleAddressBookChangedEvent(AddressBookChangedEvent abce);
 
+    /**
+     * Saves the current version of the User Database to the hard disk.
+     *   Creates the data file if it is missing.
+     * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
+     */
+    void handleUserDatabaseChangedEvent(UserDatabaseChangedEvent abce);
+
+    /**
+     * Saves the current version of the User Database to the hard disk.
+     *   Creates the data file if it is missing.
+     * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
+     */
+    void handleUserDeletedEvent(UserDeletedEvent event);
 
     @Override
     String getUserDatabaseFilePath();
@@ -53,6 +68,9 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, UserDatab
 
     @Override
     void saveUserDatabase(ReadOnlyUserDatabase userDatabase, String filePath) throws IOException;
+
+    @Override
+    void deleteAddressBook(User user);
 
     void update(User user);
 }

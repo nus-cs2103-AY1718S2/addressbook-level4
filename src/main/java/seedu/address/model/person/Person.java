@@ -55,27 +55,6 @@ public class Person {
 
     }
 
-    /**
-     * TODO: To be phased out
-     */
-
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Birthday birthday,
-            Appointment appointment, Group group) {
-        requireAllNonNull(name, phone, email, address, tags, birthday);
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.birthday = birthday;
-        this.appointment = appointment;
-        this.group = group;
-        this.insurance = null;
-        this.totalCommission = null;
-        // protect internal tags from changes in the arg list
-        this.tags = new UniqueTagList(tags);
-        this.groups = new UniqueGroupList(group);
-    }
-
 
     public Name getName() {
         return name;

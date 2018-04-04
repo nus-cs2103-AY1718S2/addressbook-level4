@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.model.Insurance.Insurance;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Birthday;
@@ -41,6 +42,8 @@ public class EditPersonDescriptorBuilder {
         descriptor.setBirthday(person.getBirthday());
         descriptor.setAppointment(person.getAppointment());
         descriptor.setGroup(person.getGroup());
+        descriptor.setCommission(person.getTotalCommission());
+        descriptor.setInsurances(person.getInsurance());
         descriptor.setTags(person.getTags());
     }
 
@@ -99,6 +102,16 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder withTags(String... tags) {
         Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
         descriptor.setTags(tagSet);
+        return this;
+    }
+
+    /**
+     * Parses the {@code insurances} into a {@code Set<Insurance>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withInsurances(String... insurances) {
+        Set<Insurance> insuranceSet = Stream.of(insurances).map(Insurance::new).collect(Collectors.toSet());
+        descriptor.setInsurances(insuranceSet);
         return this;
     }
 

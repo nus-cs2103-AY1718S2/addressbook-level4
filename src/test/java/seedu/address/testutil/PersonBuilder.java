@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.model.Insurance.Commission;
 import seedu.address.model.Insurance.Insurance;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Address;
@@ -29,6 +30,7 @@ public class PersonBuilder {
     public static final String DEFAULT_APPOINTMENT = "12-05-2018";
     public static final String DEFAULT_GROUP = "family";
     public static final String DEFAULT_INSURANCE = "Health";
+    public static final String DEFAULT_COMMISSION = "0";
 
     private Name name;
     private Phone phone;
@@ -38,7 +40,8 @@ public class PersonBuilder {
     private Birthday birthday;
     private Appointment appointment;
     private Group group;
-    private Insurance insurance;
+    private Set<Insurance> insurance;
+    private String totalCommission;
 
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -49,7 +52,8 @@ public class PersonBuilder {
         birthday = new Birthday(DEFAULT_BIRTHDAY);
         appointment = new Appointment(DEFAULT_APPOINTMENT);
         group = new Group(DEFAULT_GROUP);
-        insurance = new Insurance(DEFAULT_INSURANCE);
+        insurance = SampleDataUtil.getInsuranceSet(DEFAULT_INSURANCE);
+        totalCommission = new String(DEFAULT_COMMISSION);
     }
 
     /**
@@ -64,7 +68,8 @@ public class PersonBuilder {
         birthday = personToCopy.getBirthday();
         appointment = personToCopy.getAppointment();
         group = personToCopy.getGroup();
-        insurance = personToCopy.getInsurance();
+        insurance = new HashSet<>(personToCopy.getInsurance());
+        totalCommission = personToCopy.getTotalCommission();
     }
 
     /**
@@ -128,7 +133,7 @@ public class PersonBuilder {
      * Sets the {@code Insurance} of the {@code Person} that we are building.
      */
     public PersonBuilder withInsurance(String insurance) {
-        this.insurance = new Insurance(insurance);
+        this.insurance = SampleDataUtil.getInsuranceSet(insurance);
         return this;
     }
 

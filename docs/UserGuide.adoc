@@ -64,9 +64,10 @@ Refer to <<Commands>> for details of each command.
 ****
 
 == Features
-This section outlines all of Employees Tracker's features in detail.
+This section lists all Employees Tracker's features in detail.
 
 === The User Interface
+The User Interface will be the application's interface that you will interact with.
 
 ==== Knowing the components
 

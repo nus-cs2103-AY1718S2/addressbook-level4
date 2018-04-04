@@ -519,6 +519,42 @@ image::UiComponentBirthdayListSequenceDiagram.png[width="800"]
 ** Pros: Users can enter their birthday in their preferred format.
 ** Cons: External API will be used. May introduce unforeseen bugs.
 
+=== Vacant Room Finder feature
+==== Current Implementation
+We are using Venue Information JSON file from https://nusmods.com/api/2017-2018/2/venueInformation.json[NUSMods] to get the weekly timetable of the venues. To increase the performance of getting the timetable of the venue, we decided to download Venue Information JSON file and have an offline copy stored in our StardyTogether application.
+
+We have added the list of NUS buildings and the list of rooms in each building into the offline copy.
+
+We use `ReadOnlyJsonVenueInformation`, which resides inside `Storage` to read and store the room timetable data inside `nusVenues` in `Room` class, and also store NUS Buildings and their respective rooms inside `nusBuildingsAndRooms` in `Building` class.
+
+To avoid reading the data whenever the `vacant` command is executed, we only read the data once when the `MainApp` starts.
+
+The following sequence diagram shows how the vacant command is parsed:
+
+
+`ModelManager` will checks if the building is in the list of NUS Buildings, and will throw `BuildingNotFoundException` if the building is not in the list of NUS Buildings.
+
+We have created `Building`, `Room`, `Week`, and `WeekDay` in `Model` to read and store all weekday schedule of all NUS Rooms.
+
+The following architecture diagram shows the model and storage component:
+
+image::ModelClassDiagram.png[width="800"]
+
+image::StorageClassDiagram.png[width="800"]
+
+The following sequence diagram shows how the logic component of Vacant Room Finder works:
+
+
+As shown in diagram above, all Rooms weekday schedule will be return in an `ArrayList<ArrayList<String>>` data structure. This result will be shown to the UI on the `InfoPanel`
+
+===== Aspect: Shows list of vacant rooms
+* **Alternative 1 (current choice):** Displays a list of rooms and the weekday schedule from 0800 to 2100
+** Pros: User is able to see which rooms are vacant throughout the day
+** Cons: User has to manually find which rooms are vacant at the current time
+* **Alternative 2:** Displays a list of vacant rooms at the current time
+** Pros: User is able to see which rooms are vacant at current time immediately
+** Cons: User is not able to see the room schedule for the whole day
+
 === Timetable feature
 ==== Current Implementation
 When adding a Person using the Add Command, users can enter their NUSMods shortened link into the "tt/" field

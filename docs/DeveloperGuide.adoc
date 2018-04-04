@@ -399,7 +399,7 @@ The user now decides that adding the activity was a mistake, and decides to undo
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the desk board to the state before the `add` command executed.
 
-.'Undo' stack popping into the 'Redo' Stack
+.'Undo' stack pops into the 'Redo' Stack
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
@@ -417,14 +417,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
+.Adding 'ClearCommand' to the 'Undo' Stack
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
+.'ListCommand' does not affect the 'Undo' Stack
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
+.Activity Diagram for 'Undo' and 'Redo'
 image::UndoRedoActivityDiagram.png[width="650"]
 
 ==== Design Considerations
@@ -497,7 +500,7 @@ Task refer to a piece of work to be done that can be added by a student user usi
 
 ==== Current Implementation
 
-A `Task` is represented in the applicationas shown in ____ given below.
+*_Figure17_* below shows how `Task` is represented in the application.
 
 .UML Diagram for Task
 image::UML diagram for task.png[width="450"]

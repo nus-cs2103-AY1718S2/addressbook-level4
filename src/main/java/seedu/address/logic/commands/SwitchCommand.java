@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+//@@author LeonidAgarth
 /**
  * Switches between Calendar view and Timetable view
  */

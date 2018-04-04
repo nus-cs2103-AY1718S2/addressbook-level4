@@ -56,7 +56,7 @@ public class CommandTestUtil {
 
     public static final String VALID_EVENT_NAME_F1 = "F1 Race";
     public static final String VALID_EVENT_NAME_NDP = "National Day Parade";
-    public static final String VALID_EVENT_VENUE_F1 = "Marina Bay";
+    public static final String VALID_EVENT_VENUE_F1 = "Marina Bay Street Circuit";
     public static final String VALID_EVENT_VENUE_NDP = "Promenade";
     public static final String VALID_EVENT_DATE_F1 = "19/07/2018";
     public static final String VALID_EVENT_DATE_NDP = "09/08/2018";

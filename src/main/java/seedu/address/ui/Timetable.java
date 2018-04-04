@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.WeeklyEvent;
 
+//@@author LeonidAgarth
 /**
  * The weekly Timetable of the App.
  */

@@ -14,6 +14,7 @@ import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
 
+//@@author LeonidAgarth
 /**
  * Parses input arguments and creates a new AddEventCommand object
  */

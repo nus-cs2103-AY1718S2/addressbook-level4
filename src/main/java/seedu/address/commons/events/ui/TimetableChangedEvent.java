@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.event.WeeklyEvent;
 
+//@@author LeonidAgarth
 /**
  * Represents a selection change in the Person List Panel
  */

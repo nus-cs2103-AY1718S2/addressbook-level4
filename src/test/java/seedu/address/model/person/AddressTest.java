@@ -1,6 +1,8 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -18,6 +20,17 @@ public class AddressTest {
     public void constructor_invalidAddress_throwsIllegalArgumentException() {
         String invalidAddress = "";
         Assert.assertThrows(IllegalArgumentException.class, () -> new Address(invalidAddress));
+    }
+
+    @Test
+    public void hashCode_variousTest() {
+        Address address1 = new Address("Blk 456, Den Road, #01-355");
+        Address address2 = new Address("Blk 456, Den Road, #01-355");
+        Address address3 = new Address("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA");
+
+        assertEquals(address1.hashCode(), address1.hashCode());
+        assertEquals(address1.hashCode(), address2.hashCode());
+        assertNotEquals(address2.hashCode(), address3.hashCode());
     }
 
     @Test

@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -22,6 +23,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Insurance.Insurance;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
@@ -53,7 +55,8 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_BIRTHDAY + "BIRTHDAY] "
             + "[" + PREFIX_APPOINTMENT + "APPOINTMENT] "
             + "[" + PREFIX_GROUP + "GROUP]"
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_TAG + "TAG]"
+            + "[" + PREFIX_INSURANCE + "INSURANCE]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -120,8 +123,9 @@ public class EditCommand extends UndoableCommand {
         Appointment updatedAppointment = editPersonDescriptor.getAppointment().orElse(personToEdit.getAppointment());
         Group updatedGroup = editPersonDescriptor.getGroup().orElse(personToEdit.getGroup());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Insurance> updateInsurances = editPersonDescriptor.getInsurances().orElse(personToEdit.getInsurance());
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedBirthday,
-                updatedAppointment, updatedGroup);
+                updatedAppointment, updatedGroup, updateInsurances);
     }
 
     @Override
@@ -155,6 +159,8 @@ public class EditCommand extends UndoableCommand {
         private Birthday birthday;
         private Appointment appointment;
         private Group group;
+        private String totalCommission;
+        private Set<Insurance> insurances;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -172,6 +178,7 @@ public class EditCommand extends UndoableCommand {
             setAppointment(toCopy.appointment);
             setGroup(toCopy.group);
             setTags(toCopy.tags);
+            setInsurances(toCopy.insurances);
         }
 
         /**
@@ -179,7 +186,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags,
-                    this.birthday, this.appointment);
+                    this.birthday, this.appointment, this.insurances);
         }
 
         public void setName(Name name) {
@@ -238,6 +245,14 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(group);
         }
 
+        public void setCommission(String commission) {
+            this.totalCommission = commission;
+        }
+
+        public Optional<String> getCommission() {
+            return Optional.ofNullable(totalCommission);
+        }
+
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -253,6 +268,23 @@ public class EditCommand extends UndoableCommand {
          */
         public Optional<Set<Tag>> getTags() {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        }
+
+        /**
+         * Sets {@code insurances} to this object's {@code insurances}.
+         * A defensive copy of {@code insurances} is used internally.
+         */
+        public void setInsurances(Set<Insurance> insurances) {
+            this.insurances = (insurances != null) ? new HashSet<>(insurances) : null;
+        }
+
+        /**
+         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code tags} is null.
+         */
+        public Optional<Set<Insurance>> getInsurances() {
+            return (insurances != null) ? Optional.of(Collections.unmodifiableSet(insurances)) : Optional.empty();
         }
 
         @Override
@@ -276,7 +308,8 @@ public class EditCommand extends UndoableCommand {
                     && getAddress().equals(e.getAddress())
                     && getBirthday().equals(e.getBirthday())
                     && getTags().equals(e.getTags())
-                    && getGroup().equals(e.getGroup());
+                    && getGroup().equals(e.getGroup())
+                    && getInsurances().equals(e.getInsurances());
         }
     }
 }

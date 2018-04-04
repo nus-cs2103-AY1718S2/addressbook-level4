@@ -42,9 +42,11 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label appointment;
     @FXML
-    private Label insurance;
+    private Label commission;
     @FXML
     private FlowPane tags;
+    @FXML
+    private FlowPane insurances;
 
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
@@ -60,60 +62,43 @@ public class PersonCard extends UiPart<Region> {
         } else {
             appointment.setText(person.getAppointment().value);
         }
-        if (person.getInsurance() == null) {
-            insurance.setText("Potential Client");
-        }
-        else {
-            insurance.setText(person.getInsurance().insuranceName);
-        }
+        commission.setText(person.getTotalCommission());
+
+        person.getInsurance().forEach(insurance -> insurances.getChildren().add(new Label(insurance.insuranceName)));
+
         startTag(person);
     }
 
+    //@@author Sebry9
     private String getTagColorStyleFor(String tag) {
-
-        if (tag.equals("Life")) {
-            return TAG_COLOR_STYLES[0]; //yellow
-        }
-
-        if (tag.equals("Saving")) {
-            return TAG_COLOR_STYLES[1]; //blue
-        }
-
-        if (tag.equals("Health")) {
-            return TAG_COLOR_STYLES[2]; //red
-        }
-
-        if (tag.equals("General")) {
-            return TAG_COLOR_STYLES[4]; //orange
-        }
 
         switch(tag) {
         case "friends":
         case "friend":
-            return TAG_COLOR_STYLES[0];
+            return TAG_COLOR_STYLES[0]; //yellow
 
         case "teacher":
         case "classmates":
-            return TAG_COLOR_STYLES[1];
+            return TAG_COLOR_STYLES[1]; //blue
 
         case "family":
         case "husband":
-            return TAG_COLOR_STYLES[3];
+            return TAG_COLOR_STYLES[3]; //green
 
         case "enemy":
         case "owesMoney":
-            return TAG_COLOR_STYLES[2];
+            return TAG_COLOR_STYLES[2]; //red
 
         case "boyfriend":
         case "girlfriend":
-            return TAG_COLOR_STYLES[5];
+            return TAG_COLOR_STYLES[5]; //purple
 
         case "grandparent":
         case "neighbours":
-            return TAG_COLOR_STYLES[6];
+            return TAG_COLOR_STYLES[6]; //grey
 
         case "colleagues":
-            return TAG_COLOR_STYLES[4];
+            return TAG_COLOR_STYLES[4]; //orange
 
         default:
             return "";
@@ -131,6 +116,7 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
+
 
     @Override
     public boolean equals(Object other) {

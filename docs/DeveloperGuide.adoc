@@ -940,6 +940,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
+* is an insurance agent
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
 * can type fast
@@ -971,7 +972,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |update my client's personal detail |keep their information up to date
 
-|`* * *` |user |search for a single client  |narrow down to the client I am interested in in that time
+|`* * *` |user |search for a single client |narrow down to the client I am interested in in that time
 
 |`* * *` |user |clear the address book |start on a clean slate
 
@@ -981,17 +982,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add the insurance plans that my clients are committed |track what plans he/she has
 
-|`* * *` |user |search for my clients based on their plan’s maturity dates |offer a renewal plan
-
-|`* * *` |user |add in the monthly premium paid by my client |calculate my commission
-
-|`* * *` |user |add in how much commission rate I am getting off my client’s insurance plan|calculate my commission
+|`* * *` |user |add in how much commission I am getting off my client’s insurance plan|calculate my commission
 
 |`* * *` |user |view the commission I get off a client |see how much I am earning off them
 
 |`* * *` |user |view the total commission I am getting |view my total earning
 
-|`* * *` |user |view which are my top clients |to serve them better
+|`* * *` |user |rank my clients |to serve them better
 
 |`* * *` |user |group my clients|to manage the different groups differently
 

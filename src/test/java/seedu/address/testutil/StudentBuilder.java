@@ -172,10 +172,11 @@ public class StudentBuilder {
         return this;
     }
 
+    /**
+     * Builds the student with given attributes
+     */
     public Student build() {
         return new Student(key, name, phone, email, address, programmingLanguage, tags,
                 favourite, dashboard, profilePicturePath);
     }
-
-
-    }
+}

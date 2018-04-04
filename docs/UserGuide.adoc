@@ -353,7 +353,7 @@ image:addGroupExample.png[width ="500"] +
 Figure 4. Example of add Group
 // end:AddGroup[]
 
-=== Add Members To Group: `addGroupMember`
+=== Add Member To Group: `addGroupMember`
 
 Adds a person named `KEYWORD`  that exists in Fastis into a group `GROUP_NAME` that already exist in Fastis.
 Alias: `aGM` +

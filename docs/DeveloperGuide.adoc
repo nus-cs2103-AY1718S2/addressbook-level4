@@ -643,6 +643,30 @@ image:AddGroupSequenceDiagram.png[width="800"]
 
 // end::addGroup[]
 
+// tag::addMemberToGroup[]
+=== Add Member To Group feature
+
+Fastis adds a person from the existing contact list to an existing group.
+
+==== Current Implementation
+
+The add members to groups mechanism is facilitated by `AddMembersToGroupCommand`, which resides inside `Logic` component.
+It supports adding a member to Group objects to the address book.
+
+The list of members in the group list are facilitated by `Group` class. Each `Group` object have a `UniquePersonList` object, representing the list of persons in the group.
+Address book stores all members added to the group using XmlAdaptedPersons as person object storage.
+The following sequence diagram shows how the addMembersToGroup operates.
+
+image:aGMSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `AddGroupCommand`
+* **Alternative 1 (current choice):** Add a new command method `AddMembersToGroupCommand()`
+** Pros: It is easy for developers to modify method to suit what they want
+
+// end::addMembersToGroup[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 

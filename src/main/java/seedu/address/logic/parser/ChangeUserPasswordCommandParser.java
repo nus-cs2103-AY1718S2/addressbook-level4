@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ChangeUserPasswordCommand;
-import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.login.Password;
 import seedu.address.model.login.Username;
@@ -30,7 +29,8 @@ public class ChangeUserPasswordCommandParser implements Parser<ChangeUserPasswor
 
         if (!arePrefixesPresent(argMultimap, PREFIX_USERNAME, PREFIX_PASSWORD, PREFIX_NEW_PASSWORD)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ChangeUserPasswordCommand.MESSAGE_USAGE));
         }
 
         try {

@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
-
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -29,51 +28,45 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 
-public class LoginCommandTest {
+public class CreateUserCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void execute_loginAcceptedByModel_loginSuccessful() throws Exception {
-        ModelStubAcceptingLogin modelStub = new ModelStubAcceptingLogin();
+    public void execute_createUserAcceptedByModel_createSuccessful() throws Exception {
+        CreateUserCommandTest.ModelStubAcceptingCreateUser modelStub =
+                new CreateUserCommandTest.ModelStubAcceptingCreateUser();
 
-        LoginAttempt loginAttempt = new LoginAttempt("slap", "password");
+        User validUser = createValidUser();
 
-        CommandResult commandResult = getLoginCommandForLoginAttempt(loginAttempt.getUsername(),
-                loginAttempt.getPassword(), modelStub).execute();
+        CommandResult commandResult =
+                getCreateUserCommandForCreateUserAttempt(validUser, modelStub).execute();
 
-        assertEquals(LoginCommand.MESSAGE_LOGIN_SUCCESS, commandResult.feedbackToUser);
+        assertEquals(String.format(CreateUserCommand.MESSAGE_SUCCESS, validUser.getUsername().toString()),
+                commandResult.feedbackToUser);
     }
 
-    @Test
-    public void execute_loginAcceptedByModel_loginFailure() throws Exception {
-        ModelStubAcceptingLogin modelStub = new ModelStubAcceptingLogin();
-        LoginAttempt invalidloginAttempt = new LoginAttempt("slapsdad", "password");
-
-        CommandResult commandResult = getLoginCommandForLoginAttempt(invalidloginAttempt.getUsername(),
-                invalidloginAttempt.getPassword(), modelStub).execute();
-
-        assertEquals(LoginCommand.MESSAGE_LOGIN_SUCCESS, commandResult.feedbackToUser);
-    }
 
     @Test
-    public void execute_alreadyLoggedIn_throwsCommandException() throws Exception {
-        ModelStubThrowingAlreadyLoggedInException modelStub = new ModelStubThrowingAlreadyLoggedInException();
-        LoginAttempt validloginAttempt = new LoginAttempt("slap", "password");
+    public void execute_duplicateUser_throwsCommandException() throws Exception {
+        CreateUserCommandTest.ModelStubThrowingDuplicateUserException modelStub =
+                new CreateUserCommandTest.ModelStubThrowingDuplicateUserException();
+
+        User validUser = createValidUser();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(LoginCommand.MESSAGE_LOGIN_ALREADY);
+        thrown.expectMessage(CreateUserCommand.MESSAGE_DUPLICATE_USER);
 
-        getLoginCommandForLoginAttempt(validloginAttempt.getUsername(),
-                validloginAttempt.getPassword(), modelStub).execute();
+        getCreateUserCommandForCreateUserAttempt(validUser, modelStub).execute();
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new CreateUserCommand with the details of the given person.
      */
-    private LoginCommand getLoginCommandForLoginAttempt(Username username, Password password, Model model) {
-        LoginCommand command = new LoginCommand(username, password);
+    private CreateUserCommand getCreateUserCommandForCreateUserAttempt(User user, Model model) {
+
+        CreateUserCommand command = new CreateUserCommand(user);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -176,61 +169,31 @@ public class LoginCommandTest {
     /**
      * A Model stub that always accepts the login attempt.
      */
-    private class ModelStubAcceptingLogin extends ModelStub {
-
-        private boolean loginStatus = false;
-
-        @Override
-        public boolean checkLoginCredentials(Username username, Password password) throws AlreadyLoggedInException {
-            requireNonNull(username);
-            requireNonNull(password);
-            setLoginStatus(true);
-            return true;
-        }
-
+    private class ModelStubAcceptingCreateUser extends CreateUserCommandTest.ModelStub {
+        final ArrayList<User> usersAdded = new ArrayList<>();
 
         @Override
-        public void setLoginStatus(boolean status) {
-            this.loginStatus = true;
+        public void addUser(User user) throws DuplicateUserException {
+            requireNonNull(user);
+            usersAdded.add(user);
         }
-
-        @Override
-        public boolean hasLoggedIn() {
-            return this.loginStatus;
-        }
-
 
     }
 
 
     /**
-     * A Model stub that always throw a AlreadyLoggedInException when trying to login.
+     * A Model stub that always throw a DuplicateUserException when trying to login.
      */
-    private class ModelStubThrowingAlreadyLoggedInException extends ModelStub {
+    private class ModelStubThrowingDuplicateUserException extends CreateUserCommandTest.ModelStub {
         @Override
-        public boolean checkLoginCredentials(Username username, Password password)
-                throws AlreadyLoggedInException {
-            throw new AlreadyLoggedInException();
+        public void addUser(User person) throws DuplicateUserException {
+            throw new DuplicateUserException();
         }
 
     }
 
-    private class LoginAttempt {
-        private Username username;
-        private Password password;
-
-        public LoginAttempt(String username, String password) {
-            this.username = new Username(username);
-            this.password = new Password(password);
-        }
-
-        public Password getPassword() {
-            return password;
-        }
-
-        public Username getUsername() {
-            return username;
-        }
+    private User createValidUser() {
+        return new User(new Username("slap"), new Password("pass"));
     }
 
 }

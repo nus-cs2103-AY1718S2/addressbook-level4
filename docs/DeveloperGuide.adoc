@@ -220,6 +220,7 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+* can save the User Database data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -230,7 +231,17 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-=== Login Feature
+=== Multi-User Feature
+
+==== Current Implementation
+
+To implement the multi-user feature, where each user has his/her own Address Book, we have added a `userDatabase` in Model
+to store all the available users in the application. The `userDatabase` is the same architectural level as the `addressBook`.
+A similar storing system used in `addressBook` is also used for `userDatabase` where the all the user data is stored in a
+single XML file.
+
+
+=== Authentication
 
 ==== Current Implementation
 
@@ -240,7 +251,7 @@ The Login feature involves UI, Logic and Model components. It allows the user to
 from the application. When the user is logged out, the user commands are limited, some panels are hidden
 the user and the viewing of history is disabled. It serves the purpose of maintaining confidentiality of the data in the application.
 
-The `LoginCommand` is part of Logic component. However it makes use of `addressBook` to check for the match in
+The `LoginCommand` is part of Logic component. However it makes use of `userDatabase` to check for the match in
 the username and password input. Below is a sequence diagram of how the feature works.
 
 .Sequence Diagram for Login Command (Logic Component)

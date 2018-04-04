@@ -32,9 +32,11 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The Login GUI should appear in a few seconds.
-.  Enter your username and password. Press Enter.
-.  If login is successful, the GUI should appear.
+.  Double-click the file to start the app. The application main window should appear in a few seconds.
+.  You firstly need to create a user account with a unique username and password. (See `create-user` command in <<Features>>)
+.  If you do not wish to create a new user, there is a default user account available. The username is "user" and the password is "pass".
+.  Login into your account using the `login` command (See <<Features>>) and using your username and password.
+.  If login is successful, the GUI below should appear.
 +
 image::Ui.png[width="790"]
 +
@@ -65,6 +67,27 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+=== Create new user : `create-user`
+
+Creates a new user account in the application.
+Format: `create-user u/USERNAME p/PASSWORD`
+
+****
+* You will need to enter a unique username to successfully create an new user.
+* Multiple entries of username and password can be included, however only the last entry will be considered.
+****
+
+=== Delete existing user : `delete-user`
+
+Deletes an existing user account in the application.
+Format: `delete-user u/USERNAME p/PASSWORD`
+
+****
+* You will need to enter both the correct username and password for the target user account that you wish to delete.
+* You will also need to be logged out to use this Command.
+* Multiple entries of username and password can be included, however only the last entry will be considered.
+****
+
 === Login : `login`
 
 Logs the user into the application.
@@ -78,6 +101,18 @@ Format: `login u/USERNAME p/PASSWORD`
 
 Logs the user out of the application.
 Format: `logout`
+
+=== Change user password: `change-user-password`
+
+Change the password of an existing user in the application.
+Format: `change-user-password u/USERNAME p/PASSWORD newp/NEWPASSWORD`
+
+****
+* You will need to enter both the correct username and password for the target user account that you wish to change password for.
+* You will also need to be logged out to use this Command.
+* Multiple entries of username and password can be included, however only the last entry will be considered.
+****
+
 
 === Switching between feature interfaces : `switch`
 
@@ -333,17 +368,6 @@ There is no need to save manually.
 
 // tag::dataencryption[]
 
-=== Login to your account: `login`
-
-Logs in to your application
-Format: `login u/USERNAME p/PASSWORD`
-
-Application will request for your login credentials (username and password) before allowing you to access it.
-
-=== Logout from your account: `logout`
-
-Application allows to log out from your account so that you can ensure confidentiality of your data.
-
 
 === Encrypting data files `[coming in v2.0]`
 
@@ -382,5 +406,8 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Create New User* : `create-user u/USERNAME p/PASSWORD`
+* *Delete Existing User* : `delete-user u/USERNAME p/PASSWORD`
+* *Change Password of Existing User* : `change-user-password u/USERNAME p/PASSWORD newp/NEWPASSWORD`
 * *Login* : `login u/USERNAME p/PASSWORD`
 * *Logout* : `logout`

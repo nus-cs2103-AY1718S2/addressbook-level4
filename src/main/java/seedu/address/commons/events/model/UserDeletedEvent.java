@@ -3,6 +3,7 @@ package seedu.address.commons.events.model;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.login.User;
 
+//@@author kaisertanqr
 /** Indicates a User in the model has been deleted*/
 public class UserDeletedEvent extends BaseEvent {
 

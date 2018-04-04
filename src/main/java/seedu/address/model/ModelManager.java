@@ -117,6 +117,9 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+
+    //@@author kaisertanqr
+
     /**
      * Reloads and updates the addressBook and its storage path using the {@code username} provided.
      * @param username

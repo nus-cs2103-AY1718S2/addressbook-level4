@@ -16,8 +16,8 @@ public class ChangeUserPasswordCommand extends Command {
     public static final String COMMAND_WORD = "change-user-password";
 
     public static final String MESSAGE_USAGE = "Changes the user password."
-            + "with the parameters: u/USERNAME p/PASSWORD n/NEWPASSWORD"
-            + "\nEXAMPLE: change-user-password u/slap p/123456 n/";
+            + "with the parameters: u/USERNAME p/PASSWORD newp/NEWPASSWORD"
+            + "\nEXAMPLE: change-user-password u/slap p/123456 newp/543210";
 
     public static final String MESSAGE_SUCCESS = "Password updated!";
     public static final String MESSAGE_UPDATE_FAILURE = "Password update failed. Username or password is incorrect.";

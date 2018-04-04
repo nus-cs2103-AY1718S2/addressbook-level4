@@ -21,6 +21,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddPlatformCommand;
 import seedu.address.model.smplatform.Link;
 
+//@@author Nethergale
 public class AddPlatformCommandParserTest {
 
     private static final String FACEBOOK_LINK_FIELD_AMY = " " + PREFIX_LINK + VALID_FACEBOOK_LINK_AMY;

@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlValue;
 
 public class XmlAdaptedInsurance {
 
+//@@author Sebry9
 /**
  * JAXB-friendly adapted version of the Insurance.
  */

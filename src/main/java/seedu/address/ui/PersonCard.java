@@ -62,8 +62,10 @@ public class PersonCard extends UiPart<Region> {
         } else {
             appointment.setText(person.getAppointment().value);
         }
-        person.getInsurance().forEach(insurance -> insurances.getChildren().add(new Label(insurance.insuranceName)));
         commission.setText(person.getTotalCommission());
+
+        person.getInsurance().forEach(insurance -> insurances.getChildren().add(new Label(insurance.insuranceName)));
+
         startTag(person);
     }
 
@@ -73,12 +75,10 @@ public class PersonCard extends UiPart<Region> {
         switch(tag) {
         case "friends":
         case "friend":
-        case "Life":
             return TAG_COLOR_STYLES[0];//yellow
 
         case "teacher":
         case "classmates":
-        case "Saving":
             return TAG_COLOR_STYLES[1];//blue
 
         case "family":
@@ -87,7 +87,6 @@ public class PersonCard extends UiPart<Region> {
 
         case "enemy":
         case "owesMoney":
-        case "Health":
             return TAG_COLOR_STYLES[2];//red
 
         case "boyfriend":
@@ -99,7 +98,6 @@ public class PersonCard extends UiPart<Region> {
             return TAG_COLOR_STYLES[6];//grey
 
         case "colleagues":
-        case "General":
             return TAG_COLOR_STYLES[4];//orange
 
         default:

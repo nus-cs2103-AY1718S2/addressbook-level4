@@ -24,7 +24,8 @@
                   </image>
                </ImageView>
             </graphic></Label>
-         <Label fx:id="commission" prefHeight="64.0" prefWidth="139.0" text="\$commission">
+         <Label text="Total Commission:" />
+         <Label fx:id="commission" text="\$commission">
             <VBox.margin>
                <Insets />
             </VBox.margin>

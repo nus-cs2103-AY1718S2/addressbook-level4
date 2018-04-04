@@ -59,7 +59,7 @@ public class XmlAdaptedPerson {
      */
 
     public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged,
-                            String birthday, String appointment, String group, String insurance) {
+                            String birthday, String appointment, String group, List<XmlAdaptedInsurance> insurances) {
 
         this.name = name;
         this.phone = phone;
@@ -73,7 +73,7 @@ public class XmlAdaptedPerson {
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
-        if (insurance != null) {
+        if (insurances != null) {
             this.insurances = new ArrayList<>(insurances);
         }
     }
@@ -100,11 +100,10 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
-        tagged = new ArrayList<>();
+        insurances = new ArrayList<>();
         for (Insurance insurance : source.getInsurance()) {
             insurances.add(new XmlAdaptedInsurance(insurance));
         }
-        insurances = new ArrayList<>();
     }
 
     /**

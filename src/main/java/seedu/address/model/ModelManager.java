@@ -121,9 +121,11 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author kengsengg
     public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
         addressBook.addAppointment(appointment);
     }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 

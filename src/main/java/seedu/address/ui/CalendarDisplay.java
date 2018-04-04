@@ -27,6 +27,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 
+//@@author kengsengg
 /**
  * Calendar of the App
  */
@@ -139,3 +140,4 @@ public class CalendarDisplay {
                 .concat(":").concat(endTime.substring(2, 4)).concat(":00+08:00");
     }
 }
+//@@author

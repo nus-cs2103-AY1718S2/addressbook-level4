@@ -16,6 +16,7 @@ import seedu.address.model.person.Person;
 import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CalendarDisplay;
 
+//@@author kengsengg
 /**
  * Creates an appointment for the student at the specified index.
  */
@@ -95,4 +96,5 @@ public class AppointmentCommand extends Command {
                 && toAdd.equals(((AppointmentCommand) other).toAdd));
     }
 }
+//@@author
 

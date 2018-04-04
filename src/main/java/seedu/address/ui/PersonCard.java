@@ -42,11 +42,11 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label appointment;
     @FXML
-    private Label insurance;
-    @FXML
     private Label commission;
     @FXML
     private FlowPane tags;
+    @FXML
+    private FlowPane insurances;
 
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
@@ -62,13 +62,8 @@ public class PersonCard extends UiPart<Region> {
         } else {
             appointment.setText(person.getAppointment().value);
         }
-        if (person.getInsurance() == null) {
-            insurance.setText("Potential Client");
-        }
-        else {
-            insurance.setText(person.getInsurance().insuranceName);
-            commission.setText(person.getCommission());
-        }
+
+        startInsurance(person);
         startTag(person);
     }
 
@@ -132,6 +127,16 @@ public class PersonCard extends UiPart<Region> {
             Label tagLabel = new Label(tag.tagName);
             tagLabel.getStyleClass().add(getTagColorStyleFor(tag.tagName));
             tags.getChildren().add(tagLabel);
+        });
+    }
+
+    /**
+     * Creates the insurance labels for {@code person}.
+     */
+    private void startInsurance(Person person) {
+        person.getInsurance().forEach(insurance -> {
+            Label insuranceLabel = new Label(insurance.insuranceName);
+            insurances.getChildren().add(insuranceLabel);
         });
     }
 

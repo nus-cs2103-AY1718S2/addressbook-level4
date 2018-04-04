@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import org.omg.PortableInterceptor.INACTIVE;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
@@ -218,13 +219,15 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> appointment} into an {@code Optional<Appointment>} if {@code appointment}
-     * is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
+     * Parses {@code Collection<String> insurances} into a {@code Set<Insurance>}.
      */
-    public static Optional<Insurance> parseInsurance(Optional<String> insurance) throws IllegalValueException {
-        requireNonNull(insurance);
-        return insurance.isPresent() ? Optional.of(parseInsurance(insurance.get())) : Optional.empty();
+    public static Set<Insurance> parseInsurance(Collection<String> insurances) throws IllegalValueException {
+        requireNonNull(insurances);
+        final Set<Insurance> insuranceSet = new HashSet<>();
+        for (String insuranceName : insurances) {
+            insuranceSet.add(parseInsurance(insuranceName));
+        }
+        return insuranceSet;
     }
 
     /**

@@ -8,6 +8,7 @@ import java.util.Set;
 
 import seedu.address.model.Insurance.Commission;
 import seedu.address.model.Insurance.Insurance;
+import seedu.address.model.Insurance.UniqueInsuranceList;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.tag.Tag;
@@ -26,9 +27,9 @@ public class Person {
     private final Birthday birthday;
     private final Appointment appointment;
     private final Group group;
-    private final Insurance insurance;
-    private final String commission;
+   //private final String commission;
 
+    private final UniqueInsuranceList insurance;
     private final UniqueTagList tags;
     private final UniqueGroupList groups;
 
@@ -36,7 +37,7 @@ public class Person {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Birthday birthday,
-            Appointment appointment, Group group, Insurance insurance) {
+            Appointment appointment, Group group, Set<Insurance> insurance) {
         requireAllNonNull(name, phone, email, address, tags, birthday);
         this.name = name;
         this.phone = phone;
@@ -45,8 +46,8 @@ public class Person {
         this.birthday = birthday;
         this.appointment = appointment;
         this.group = group;
-        this.insurance = insurance;
-        this.commission = new Commission(insurance).getCommission();
+        this.insurance = new UniqueInsuranceList(insurance);
+        //this.commission = new Commission(insurance).getCommission();
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.groups = new UniqueGroupList(group);
@@ -68,7 +69,7 @@ public class Person {
         this.appointment = appointment;
         this.group = group;
         this.insurance = null;
-        this.commission = null;
+       // this.commission = null;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.groups = new UniqueGroupList(group);
@@ -103,13 +104,14 @@ public class Person {
         return group;
     }
 
-    public Insurance getInsurance() {
-        return insurance;
+    public Set<Insurance> getInsurance() {
+        return Collections.unmodifiableSet(insurance.toSet());
     }
 
-    public String getCommission() {
+    /* public String getCommission() {
         return commission;
     }
+    */
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -141,7 +143,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, birthday, appointment, group, insurance, commission);
+        return Objects.hash(name, phone, email, address, tags, birthday, appointment, group, insurance/*, commission*/);
     }
 
     @Override

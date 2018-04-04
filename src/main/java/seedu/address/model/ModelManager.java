@@ -74,7 +74,6 @@ public class ModelManager extends ComponentManager implements Model {
         String path = new File("src/main/resources/StudentPage/template.html").getAbsolutePath();
         File htmlTemplateFile = new File(path);
         String htmlString = FileUtils.readFileToString(htmlTemplateFile);
-        System.out.println("WOOHOO");
         Name titleName = person.getName();
         String title = titleName.toString();
         Nric identityNumberClass = person.getNric();
@@ -86,6 +85,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         File newHtmlFile = new File(newPath);
         FileUtils.writeStringToFile(newHtmlFile, htmlString);
+        updatePage(person);
     }
 
     /**

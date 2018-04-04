@@ -161,7 +161,7 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<String> getUpcomingEventsAsStringList(User user) throws IOException {
-        List<Event> upcomingEvents = getNextXEvents(user, 250);
+        List<Event> upcomingEvents = getUpcomingEvents(user);
         int numberOfEventsRetrieved = upcomingEvents.size();
         List<String> eventListAsString = new ArrayList<>();
 
@@ -176,7 +176,7 @@ public class OAuthManager {
             }
         }
 
-        mostRecentEventList = getUpcomingEvents(user);
+        mostRecentEventList = upcomingEvents;
 
         return eventListAsString;
     }
@@ -186,7 +186,10 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<Event> getDailyEvents(User user) throws IOException {
-        List<Event> dailyEvents = getNextXEvents(user, 250);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String currentDate = LocalDate.now().format(formatter);
+
+        List<Event> dailyEvents = getEventsByDay(user, currentDate);
         int numberOfEventsRetrieved = dailyEvents.size();
 
         if (numberOfEventsRetrieved == 0) {
@@ -203,10 +206,7 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<String> getDailyEventsAsStringList(User user) throws IOException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String currentDate = LocalDate.now().format(formatter);
-
-        List<Event> dailyEvents = getEventsByDay(user, currentDate);
+        List<Event> dailyEvents = getDailyEvents(user);
         int numberOfEventsRetrieved = dailyEvents.size();
         List<String> eventListAsString = new ArrayList<>();
 
@@ -221,7 +221,7 @@ public class OAuthManager {
             }
         }
 
-        dailyEventsList = getDailyEvents(user);
+        dailyEventsList = dailyEvents;
 
         return eventListAsString;
     }
@@ -429,6 +429,20 @@ public class OAuthManager {
     public static Event getEventByIndexFromLastList(int index) {
         return mostRecentEventList.get(index - 1);
     }
+
+    /**
+     * Gets the specified event pair by index (offset by 1 due to array indexing) according to a user's input.
+     * @param index
+     * @return List
+     */
+    public static List<Event> getEventByIndexPairFromDailyList(int index) {
+        List<Event> eventPair = new ArrayList<>();
+        eventPair.add(dailyEventsList.get(index - 1));
+        eventPair.add(dailyEventsList.get(index));
+
+        return eventPair;
+    }
+
 
     /**
      * A wrapper of the Google Calendar Event: delete API endpoint to remove a calendar event

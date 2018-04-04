@@ -128,7 +128,7 @@ public class AddressBookParser {
             return new SwitchCommandParser().parse(arguments);
 
         case NavigateCommand.COMMAND_WORD:
-            return new NavigateCommand();
+            return new NavigateCommandParser().parse(arguments);
 
         case LoginCommand.COMMAND_WORD:
             return new LoginCommandParser().parse(arguments);

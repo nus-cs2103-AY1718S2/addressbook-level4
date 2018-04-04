@@ -1,9 +1,13 @@
 package seedu.address.database;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -27,6 +31,7 @@ import seedu.address.model.person.TimeTableLink;
 public class DatabaseManager {
 
     private static final String DEFAULT_JSON_DATABASE_FILEPATH = "modules.json";
+    private static final String DEFAULT_JSON_DATABASE_URL = "https://api.nusmods.com/2017-2018/2/modules.json";
     private static final Logger logger = LogsCenter.getLogger(DatabaseManager.class);
 
     private static final Map<String, String> lessonAbbrev = Collections.unmodifiableMap(
@@ -49,7 +54,54 @@ public class DatabaseManager {
     private static HashMap<String, Module> moduleDatabase;
 
     private DatabaseManager() {
+        File jsonFile = new File(DEFAULT_JSON_DATABASE_FILEPATH);
+        if (jsonFile.exists()) {
+            try {
+                URL databaseUrl = new URL(DEFAULT_JSON_DATABASE_URL);
+                URLConnection databaseConnection = databaseUrl.openConnection();
+                if (databaseConnection.getLastModified() > jsonFile.lastModified()) {
+                    downloadFile(databaseUrl, jsonFile);
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                logger.warning("Problem updating Module database. Existing database will be used.");
+            }
+        } else {
+            try {
+                URL databaseUrl = new URL(DEFAULT_JSON_DATABASE_URL);
+                downloadFile(databaseUrl, jsonFile);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                logger.severe("Unable to download Module Database. Scheduling functionality will no be available.");
+            }
+        }
         moduleDatabase = parseDatabase(DEFAULT_JSON_DATABASE_FILEPATH);
+    }
+
+    /**
+     * Downloads the file from the specified {@code url} saves it in the given {@code file}
+     * Creates a new file if it does not exist, and attempts to overwrite if it does.
+     *
+     * @param url
+     * @param file
+     */
+    private void downloadFile(URL url, File file) throws IOException {
+        logger.info("Retrieving Module Database...");
+        ReadableByteChannel rbc = Channels.newChannel(url.openStream());
+        if (file.createNewFile()) {
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+            fos.close();
+        } else {
+            File temp = new File("temp.json");
+            FileOutputStream fos = new FileOutputStream(temp);
+            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+            file.delete();
+            fos.close();
+            temp.renameTo(file);
+        }
     }
 
     public static DatabaseManager getInstance() {
@@ -97,7 +149,7 @@ public class DatabaseManager {
             }
         }
         logger.info(result.toString());
-        return  eventList;
+        return eventList;
     }
 
     /**

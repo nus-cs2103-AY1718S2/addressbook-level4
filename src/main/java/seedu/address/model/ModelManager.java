@@ -27,6 +27,7 @@ import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
@@ -69,27 +70,63 @@ public class ModelManager extends ComponentManager implements Model {
      * Adds a BrowserPanel html Page into StudentPage
      */
     public void addPage(Person person) throws IOException {
-        File htmlTemplateFile = new File("/Users/johnnychan/Documents/"
-                + "GitHub/main/src/main/resources/StudentPage/template.html");
+
+        String path = new File("src/main/resources/StudentPage/template.html").getAbsolutePath();
+        File htmlTemplateFile = new File(path);
         String htmlString = FileUtils.readFileToString(htmlTemplateFile);
+        System.out.println("WOOHOO");
         Name titleName = person.getName();
         String title = titleName.toString();
         Nric identityNumberClass = person.getNric();
         String identityNumber = identityNumberClass.toString();
         htmlString = htmlString.replace("$title", title);
         htmlString = htmlString.replace("$identityNumber", identityNumber);
-        File newHtmlFile = new File("/Users/johnnychan/Documents/"
-                 + "GitHub/main/src/main/resources/StudentPage/" + title + ".html");
-        FileUtils.writeStringToFile(newHtmlFile, htmlString);
 
+        String newPath = new File("src/main/resources/StudentPage/" + title + ".html").getAbsolutePath();
+
+        File newHtmlFile = new File(newPath);
+        FileUtils.writeStringToFile(newHtmlFile, htmlString);
+    }
+
+    /**
+     *
+     * @param person
+     * @throws IOException
+     * Updates BrowserPanel html
+     */
+    public void updatePage(Person person) throws IOException {
+
+        // When Edit Command is being called, run this method
+        Name titleName = person.getName();
+        String title = titleName.toString();
+        File htmlTemplateFile = new File("/Users/johnnychan/Documents/"
+                + "GitHub/main/src/main/resources/StudentPage/" + title + ".html");
+        String htmlString = FileUtils.readFileToString(htmlTemplateFile);
+        //htmlTemplateFile.delete();
+        List<Subject> subjectList = person.getSubjectArray();
+        int listSize = subjectList.size();
+        //System.out.println(subjectList.toString());
+        //System.out.println(subjectList);
+        int i = 0;
+        while (i < listSize) {
+            String iString = Integer.toString(i + 1);
+            htmlString = htmlString.replace("$subject" + iString, subjectList.get(i).nameToString());
+            htmlString = htmlString.replace("$percent" + iString, subjectList.get(i).gradeToPercent());
+            htmlString = htmlString.replace("$grade" + iString, subjectList.get(i).gradeToString());
+            i++;
+        }
+
+        FileUtils.writeStringToFile(htmlTemplateFile, htmlString);
     }
 
 
+    /**
+     * Deletes BrowserPanel html
+     */
     public void deletePage(Person person) {
         File deleteTemplateFile = new File("/Users/johnnychan/Documents/"
                 + "GitHub/main/src/main/resources/StudentPage/" + person.getName() + ".html");
         boolean bool = deleteTemplateFile.delete();
-        System.out.println(bool);
     }
 
     @Override

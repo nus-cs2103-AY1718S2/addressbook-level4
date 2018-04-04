@@ -41,8 +41,6 @@ public interface Model {
     /** Adds the given appointment */
     void addAppointment(Appointment appointment) throws DuplicateAppointmentException;
 
-   // void deletePage(Person person) throws IOException;
-
     /** Sorts the person list by name in alphabetical order */
     void sortPersonList(String parameter);
 
@@ -56,9 +54,9 @@ public interface Model {
     void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    void updatePage(Person person) throws IOException;
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
-
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.

@@ -53,6 +53,7 @@ public class PersonCard extends UiPart<Region> {
         remark.setText(person.getRemark().value);
     }
 
+    //@@author kengsengg
     /**
      * Generates different colors for different tag labels
      *
@@ -74,6 +75,7 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

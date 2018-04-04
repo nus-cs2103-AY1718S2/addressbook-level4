@@ -55,6 +55,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
                 .collect(Collectors.toList());
     }
 
+    //@@author kengsengg
     public List<String> getTagStyles(String tag) {
         return tagLabels
                 .stream()
@@ -63,4 +64,5 @@ public class PersonCardHandle extends NodeHandle<Node> {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("No such tag."));
     }
+    //@@author
 }

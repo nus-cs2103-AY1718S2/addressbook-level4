@@ -64,6 +64,7 @@ public class Person {
         return Collections.unmodifiableSet(subjects.toSet());
     }
 
+    //@@author TeyXinHui
     /**
      * Calculates the lowest possible score from the grades of the subjects of the selected person.
      * @return L1R5 score
@@ -121,6 +122,7 @@ public class Person {
         return score;
     }
 
+    //@@author TeyXinHui
     /**
      * Takes in a set of subjects under the category of L1 or R5 and find the smallest grade score.
      * Removes the best subject from the full list of subjects of the student to prevent the same subject being
@@ -141,6 +143,7 @@ public class Person {
         return lowest;
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         if (other == this) {

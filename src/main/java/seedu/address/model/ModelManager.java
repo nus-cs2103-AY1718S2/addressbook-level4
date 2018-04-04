@@ -144,12 +144,13 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
-
+    //@@author kengsengg
     @Override
     public void sortPersonList(String parameter) {
         addressBook.sort(parameter);
     }
 
+    //@@author TeyXinHui
     @Override
     public void deleteTag(Tag tag) {
         try {
@@ -159,19 +160,16 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //@@author chuakunhong
     @Override
     public void replaceTag(List<Tag> tagSet) {
         Tag[] tagArray = new Tag[2];
         tagSet.toArray(tagArray);
-        try {
-            addressBook.replaceTag(tagSet);
-            indicateAddressBookChanged();
-        } catch (TagNotFoundException error) {
-            throw new AssertionError();
-        }
+        addressBook.replaceTag(tagSet);
+        indicateAddressBookChanged();
     }
 
-
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

@@ -31,7 +31,10 @@ public class BrowserPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
-    private WebView browser, browser1;
+    private WebView browser;
+
+    @FXML
+    private WebView browser1;
 
     public BrowserPanel() {
         super(FXML);

@@ -30,7 +30,7 @@ public class Student {
     private ProfilePicturePath profilePicturePath;
 
     /**
-     * Every field must be present and not null. For when dashboard, favourite and profilePictureURL is not initialised
+     * Every field must be present and not null. For when dashboard, favourite and profilePicturePath is not initialised
      */
     public Student(Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
                    Set<Tag> tags) {

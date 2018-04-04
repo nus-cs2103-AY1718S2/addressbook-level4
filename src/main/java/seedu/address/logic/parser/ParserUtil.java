@@ -10,10 +10,18 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
+import seedu.address.model.goal.GoalText;
+import seedu.address.model.goal.Importance;
+import seedu.address.model.person.Birthday;
+import seedu.address.model.person.Cca;
+import seedu.address.model.person.LevelOfFriendship;
+import seedu.address.model.person.Meet;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.UnitNumber;
+import seedu.address.model.reminder.DateTime;
+import seedu.address.model.reminder.EndDateTime;
+import seedu.address.model.reminder.ReminderText;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -91,54 +99,135 @@ public class ParserUtil {
         return phone.isPresent() ? Optional.of(parsePhone(phone.get())) : Optional.empty();
     }
 
+    //@@author deborahlow97
     /**
-     * Parses a {@code String address} into an {@code Address}.
+     * Parses a {@code String birthday} into an {@code birthday}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws IllegalValueException if the given {@code address} is invalid.
      */
-    public static Address parseAddress(String address) throws IllegalValueException {
-        requireNonNull(address);
-        String trimmedAddress = address.trim();
-        if (!Address.isValidAddress(trimmedAddress)) {
-            throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
+    public static Birthday parseBirthday(String birthday) throws IllegalValueException {
+        requireNonNull(birthday);
+        String trimmedBirthday = birthday.trim();
+        if (!Birthday.isValidBirthday(trimmedBirthday)) {
+            throw new IllegalValueException(Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
         }
-        return new Address(trimmedAddress);
+        return new Birthday(trimmedBirthday);
     }
 
     /**
-     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
+     * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
-        requireNonNull(address);
-        return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
+    public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
+        requireNonNull(birthday);
+        return birthday.isPresent() ? Optional.of(parseBirthday(birthday.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code String email} into an {@code Email}.
+     * Parses a {@code String levelOfFriendship} into a {@code LevelOfFriendship}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code email} is invalid.
+     * @throws IllegalValueException if the given {@code levelOfFriendship} is invalid.
      */
-    public static Email parseEmail(String email) throws IllegalValueException {
-        requireNonNull(email);
-        String trimmedEmail = email.trim();
-        if (!Email.isValidEmail(trimmedEmail)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
+    public static LevelOfFriendship parseLevelOfFriendship(String levelOfFriendship) throws IllegalValueException {
+        requireNonNull(levelOfFriendship);
+        String trimmedLevelOfFriendship = levelOfFriendship.trim();
+        if (!LevelOfFriendship.isValidLevelOfFriendship(trimmedLevelOfFriendship)) {
+            throw new IllegalValueException(LevelOfFriendship.MESSAGE_LEVEL_OF_FRIENDSHIP_CONSTRAINTS);
         }
-        return new Email(trimmedEmail);
+        return new LevelOfFriendship(trimmedLevelOfFriendship);
     }
 
     /**
-     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
-        requireNonNull(email);
-        return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
+    public static Optional<LevelOfFriendship> parseLevelOfFriendship(Optional<String> levelOfFriendship)
+            throws IllegalValueException {
+        requireNonNull(levelOfFriendship);
+        return levelOfFriendship.isPresent() ? Optional.of(parseLevelOfFriendship(levelOfFriendship.get()))
+                : Optional.empty();
     }
 
+    /**
+     * Parses a {@code String unitNumber} into an {@code UnitNumber}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code unitNumber} is invalid.
+     */
+    public static UnitNumber parseUnitNumber(String unitNumber) throws IllegalValueException {
+        requireNonNull(unitNumber);
+        String trimmedUnitNumber = unitNumber.trim();
+        if (!UnitNumber.isValidUnitNumber(trimmedUnitNumber)) {
+            throw new IllegalValueException(UnitNumber.MESSAGE_UNIT_NUMBER_CONSTRAINTS);
+        }
+        return new UnitNumber(trimmedUnitNumber);
+    }
+
+    /**
+     * Parses a {@code Optional<String> unitNumber} into an {@code Optional<UnitNumber>} if {@code unitNumber}
+     * is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<UnitNumber> parseUnitNumber(Optional<String> unitNumber) throws IllegalValueException {
+        requireNonNull(unitNumber);
+        return unitNumber.isPresent() ? Optional.of(parseUnitNumber(unitNumber.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String unitNumber} into an {@code UnitNumber}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code unitNumber} is invalid.
+     */
+    public static Meet parseMeetDate(String meetDate) throws IllegalValueException {
+        requireNonNull(meetDate);
+        String trimmedMeetDate = meetDate.trim();
+        if (!Meet.isValidDate(trimmedMeetDate)) {
+            throw new IllegalValueException(Meet.MESSAGE_DATE_CONSTRAINTS);
+        }
+        return new Meet(trimmedMeetDate);
+    }
+
+    /**
+     * Parses a {@code Optional<String> meetDate} into an {@code Optional<meetDate>} if {@code meetDate}
+     * is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Meet> parseMeetDate(Optional<String> meetDate) throws IllegalValueException {
+        requireNonNull(meetDate);
+        return meetDate.isPresent() ? Optional.of(parseMeetDate(meetDate.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String cca} into a {@code Cca}
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code cca} is invalid.
+     */
+    public static Cca parseCca(String cca) throws IllegalValueException {
+        requireNonNull(cca);
+        String trimmedCca = cca.trim();
+        if (!Cca.isValidCcaName(trimmedCca)) {
+            throw new IllegalValueException(Cca.MESSAGE_CCA_CONSTRAINTS);
+        }
+        return new Cca(trimmedCca);
+    }
+
+    /**
+     * Parses {@code Collection<String> ccas} into a {@code Set<Cca>}.
+     */
+    public static Set<Cca> parseCcas(Collection<String> ccas) throws IllegalValueException {
+        requireNonNull(ccas);
+        final Set<Cca> ccaSet = new HashSet<>();
+        for (String ccaName : ccas) {
+            ccaSet.add(parseCca(ccaName));
+        }
+        return ccaSet;
+    }
+
+    //@@author
     /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
@@ -164,5 +253,133 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    //@@author deborahlow97
+    /**
+     * Parses a {@code String importance} into an {@code Importance}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code importance} is invalid.
+     */
+    public static Importance parseImportance(String importance) throws IllegalValueException {
+        requireNonNull(importance);
+        String trimmedImportance = importance.trim();
+        if (!Importance.isValidImportance(trimmedImportance)) {
+            throw new IllegalValueException(Importance.MESSAGE_IMPORTANCE_CONSTRAINTS);
+        }
+        return new Importance(trimmedImportance);
+    }
+
+    /**
+     * Parses a {@code Optional<String> importance} into an {@code Optional<Importance>} if {@code importance}
+     * is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Importance> parseImportance(Optional<String> importance) throws IllegalValueException {
+        requireNonNull(importance);
+        return importance.isPresent() ? Optional.of(parseImportance(importance.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String goalText} into an {@code GoalText}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code goalText} is invalid.
+     */
+    public static GoalText parseGoalText(String goalText) throws IllegalValueException {
+        requireNonNull(goalText);
+        String trimmedGoalText = goalText.trim();
+        if (!GoalText.isValidGoalText(trimmedGoalText)) {
+            throw new IllegalValueException(GoalText.MESSAGE_GOAL_TEXT_CONSTRAINTS);
+        }
+        return new GoalText(trimmedGoalText);
+    }
+
+    /**
+     * Parses a {@code Optional<String> goalText} into an {@code Optional<GoalText>} if {@code goalText}
+     * is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<GoalText> parseGoalText(Optional<String> goalText) throws IllegalValueException {
+        requireNonNull(goalText);
+        return goalText.isPresent() ? Optional.of(parseGoalText(goalText.get())) : Optional.empty();
+    }
+
+    //@@author fuadsahmawi
+
+    /**
+     * Parses a {@code String reminderText} into an {@code ReminderText}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code reminderText} is invalid.
+     */
+    public static ReminderText parseReminderText(String reminderText) throws IllegalValueException {
+        requireNonNull(reminderText);
+        String trimmedReminderText = reminderText.trim();
+        if (!ReminderText.isValidReminderText(trimmedReminderText)) {
+            throw new IllegalValueException(ReminderText.MESSAGE_REMINDER_TEXT_CONSTRAINTS);
+        }
+        return new ReminderText(trimmedReminderText);
+    }
+
+    /**
+     * Parses a {@code Optional<String> reminderText} into an {@code Optional<ReminderText>} if {@code reminderText}
+     * is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ReminderText> parseReminderText(Optional<String> reminderText) throws IllegalValueException {
+        requireNonNull(reminderText);
+        return reminderText.isPresent() ? Optional.of(parseReminderText(reminderText.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String reminderText} into an {@code ReminderText}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code reminderText} is invalid.
+     */
+    public static DateTime parseDateTime(String dateTime) throws IllegalValueException {
+        requireNonNull(dateTime);
+        String trimmedDateTime = dateTime.trim();
+        if (!DateTime.isValidDateTime(trimmedDateTime)) {
+            throw new IllegalValueException(DateTime.MESSAGE_DATE_TIME_CONSTRAINTS);
+        }
+        return new DateTime(trimmedDateTime);
+    }
+
+    /**
+     * Parses a {@code Optional<String> reminderText} into an {@code Optional<ReminderText>} if {@code reminderText}
+     * is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<DateTime> parseDateTime(Optional<String> dateTime) throws IllegalValueException {
+        requireNonNull(dateTime);
+        return dateTime.isPresent() ? Optional.of(parseDateTime(dateTime.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String reminderText} into an {@code ReminderText}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code reminderText} is invalid.
+     */
+    public static EndDateTime parseEndDateTime(String endDateTime) throws IllegalValueException {
+        requireNonNull(endDateTime);
+        String trimmedEndDateTime = endDateTime.trim();
+        if (!DateTime.isValidDateTime(trimmedEndDateTime)) {
+            throw new IllegalValueException(EndDateTime.MESSAGE_END_DATE_TIME_CONSTRAINTS);
+        }
+        return new EndDateTime(trimmedEndDateTime);
+    }
+
+    /**
+     * Parses a {@code Optional<String> reminderText} into an {@code Optional<ReminderText>} if {@code reminderText}
+     * is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EndDateTime> parseEndDateTime(Optional<String> endDateTime) throws IllegalValueException {
+        requireNonNull(endDateTime);
+        return endDateTime.isPresent() ? Optional.of(parseEndDateTime(endDateTime.get())) : Optional.empty();
     }
 }

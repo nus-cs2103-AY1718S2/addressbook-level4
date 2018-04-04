@@ -54,12 +54,14 @@ public class ResultDisplay extends UiPart<Region> {
         }
     }
 
+    //@@author IzHoBX
     @Subscribe
     private void handleShowSuggestionEvent(ShowSuggestionEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         setStyleForSuggestion();
         Platform.runLater(() -> displayed.setValue(event.getSuggestion()));
     }
+    //@@author
 
     /**
      * Sets the {@code ResultDisplay} style to indicate a failed command.
@@ -79,6 +81,7 @@ public class ResultDisplay extends UiPart<Region> {
         resultDisplay.getStyleClass().remove(ERROR_STYLE_CLASS);
     }
 
+    //@@author IzHoBX
     /**
      * Sets the {@code ResultDisplay} style to use the suggestion style.
      */
@@ -94,5 +97,5 @@ public class ResultDisplay extends UiPart<Region> {
     private void removeStyleForSuggestion() {
         resultDisplay.getStyleClass().remove(SUGGESTION_STYLE_CLASS);
     }
-
+    //@@author
 }

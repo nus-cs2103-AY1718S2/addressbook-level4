@@ -164,6 +164,7 @@ public class XmlAdaptedPerson {
         }
         final Address address = new Address(this.address);
 
+        //@@author IzHoBX
         if (this.rating == null) {
             this.rating = (new Rating()).toString();
         }
@@ -172,6 +173,7 @@ public class XmlAdaptedPerson {
         }
 
         final Rating rating = new Rating(this.rating);
+        //@@author
 
         final Set<Review> reviews = new HashSet<>(personReviews);
 

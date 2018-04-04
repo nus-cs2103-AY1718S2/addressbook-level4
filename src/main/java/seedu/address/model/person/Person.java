@@ -61,6 +61,7 @@ public class Person {
         return email;
     }
 
+    //@@author IzHoBX
     public Rating getRating() {
         return rating;
     }
@@ -68,6 +69,7 @@ public class Person {
     public String getRatingDisplay() {
         return rating.getRatingDisplay();
     }
+    //@@author
 
     public Address getAddress() {
         return address;

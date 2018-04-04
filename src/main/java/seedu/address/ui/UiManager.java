@@ -87,6 +87,7 @@ public class UiManager extends ComponentManager implements Ui {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
         }
+        //@@author IzHoBX
         primaryStage.iconifiedProperty().addListener(new ChangeListener<Boolean>() {
 
             @Override
@@ -98,6 +99,7 @@ public class UiManager extends ComponentManager implements Ui {
                 }
             }
         });
+        //@@author
     }
 
     @Override
@@ -166,6 +168,7 @@ public class UiManager extends ComponentManager implements Ui {
                 event.exception);
     }
 
+    //@@author IzHoBX
     @Subscribe
     private void handleShowNotificationEvent(ShowNotificationEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -204,6 +207,26 @@ public class UiManager extends ComponentManager implements Ui {
         }
     }
 
+    /**
+     * Shows notification on Windows System Tray
+     */
+    private void showNotificationOnWindows(ShowNotificationEvent event) {
+        SystemTray tray = SystemTray.getSystemTray();
+        java.awt.Image image = Toolkit.getDefaultToolkit().createImage(ICON_APPLICATION);
+        TrayIcon trayIcon = new TrayIcon(image, "E.T. timetable entry ended");
+        trayIcon.setImageAutoSize(true);
+        try {
+            tray.add(trayIcon);
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+
+        trayIcon.displayMessage("Task ended", event.getOwnerName() + " has " + event.getNotification().getTitle()
+                + " ended at " + event.getNotification().getEndDateDisplay(), TrayIcon.MessageType.INFO);
+
+    }
+    //@@author
+
     @Subscribe
     private void handleShowTodoListEvent(ShowTodoListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -222,24 +245,5 @@ public class UiManager extends ComponentManager implements Ui {
         } catch (Exception e2) {
             System.out.println(e2.getMessage());
         }
-    }
-
-    /**
-     * Shows notification on Windows System Tray
-     */
-    private void showNotificationOnWindows(ShowNotificationEvent event) {
-        SystemTray tray = SystemTray.getSystemTray();
-        java.awt.Image image = Toolkit.getDefaultToolkit().createImage(ICON_APPLICATION);
-        TrayIcon trayIcon = new TrayIcon(image, "E.T. timetable entry ended");
-        trayIcon.setImageAutoSize(true);
-        try {
-            tray.add(trayIcon);
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
-
-        trayIcon.displayMessage("Task ended", event.getOwnerName() + " has " + event.getNotification().getTitle()
-                + " ended at " + event.getNotification().getEndDateDisplay(), TrayIcon.MessageType.INFO);
-
     }
 }

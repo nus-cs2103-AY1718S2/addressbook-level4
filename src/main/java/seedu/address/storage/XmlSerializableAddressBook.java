@@ -74,8 +74,10 @@ public class XmlSerializableAddressBook {
         for (XmlAdaptedNotification t : notifications) {
             addressBook.addNotification(t.toModelType());
         }
+        //@@author IzHoBX
         addressBook.setNextId(nextId);
         addressBook.setPassword(password);
+        //@@author IzHoBX
         return addressBook;
     }
 

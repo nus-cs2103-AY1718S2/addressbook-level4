@@ -74,6 +74,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author IzHoBX
     @Override
     public synchronized void deleteNotification(String id) throws TimetableEntryNotFoundException {
         addressBook.deleteNotification(id);
@@ -88,17 +89,20 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateNotificationAdded(Notification e) {
         raise(new NotificationAddedEvent(e));
     }
+    //@@author
 
     private void indicatePasswordChangedEvent(String p) {
         raise(new AddressBookPasswordChangedEvent(p, addressBook));
     }
 
+    //@@author IzHoBX
     @Override
     public void addNotification(Notification e) throws DuplicateTimetableEntryException {
         addressBook.addNotification(e);
         indicateAddressBookChanged();
         indicateNotificationAdded(e);
     }
+    //@@author
 
     @Override
     public void setPassword(String password) {
@@ -131,9 +135,11 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.getPersonList().get(index);
     }
 
+    //@@author IzHoBX
     public String getNameById(String id) {
         return addressBook.findPersonById(Integer.parseInt(id)).getName().toString();
     }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -177,6 +183,7 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    //@@author IzHoBX
     @Subscribe
     private void handleRequestToDeleteNotificationEvent(RequestToDeleteNotificationEvent event) {
         try {
@@ -195,4 +202,5 @@ public class ModelManager extends ComponentManager implements Model {
             indicateNotificationAdded(n);
         }
     }
+    //@@author
 }

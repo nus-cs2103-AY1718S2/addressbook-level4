@@ -215,6 +215,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        //@@author IzHoBX
         public void setRating(Rating rating) {
             this.rating = rating;
         }
@@ -222,6 +223,8 @@ public class EditCommand extends UndoableCommand {
         public Optional<Rating> getRating() {
             return Optional.ofNullable(rating);
         }
+        //@@author
+
 
         /**
          * Sets {@code tags} to this object's {@code tags}.

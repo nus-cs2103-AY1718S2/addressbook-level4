@@ -61,12 +61,10 @@ public class AddCommandParser implements Parser<AddCommand> {
             if (argMultimap.getValue(PREFIX_APPOINTMENT).isPresent()) {
                 appointment = ParserUtil.parseAppointment(argMultimap.getValue(PREFIX_APPOINTMENT)).get();
             }
-            Insurance insurance = null;
-            if (argMultimap.getValue(PREFIX_INSURANCE).isPresent()) {
-                insurance = ParserUtil.parseInsurance(argMultimap.getValue(PREFIX_INSURANCE)).get();
-            }
-
-            Person person = new Person(name, phone, email, address, tagList, birthday, appointment, group, insurance);
+            Set<Insurance> insuranceList = ParserUtil.parseInsurance
+                (argMultimap.getAllValues(PREFIX_INSURANCE));
+            Person person = new Person(name, phone, email, address,
+                tagList, birthday, appointment, group, insuranceList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

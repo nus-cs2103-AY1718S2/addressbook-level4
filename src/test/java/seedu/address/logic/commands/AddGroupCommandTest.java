@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+//@@author jas5469
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -32,6 +33,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagNotFoundException;
 import seedu.address.model.todo.ToDo;
 import seedu.address.model.todo.exceptions.DuplicateToDoException;
+import seedu.address.model.todo.exceptions.ToDoNotFoundException;
 import seedu.address.testutil.GroupBuilder;
 
 public class AddGroupCommandTest {
@@ -152,6 +154,11 @@ public class AddGroupCommandTest {
         }
 
         @Override
+        public void deleteToDo(ToDo target) throws ToDoNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updatePerson(Person target, Person editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -160,6 +167,11 @@ public class AddGroupCommandTest {
         @Override
         public void updateToDo(ToDo target, ToDo editedToDo)
                 throws DuplicateToDoException {
+            fail("This method should not be called.");
+        }
+        @Override
+        public void updateGroup(Group target, Group editedGroup)
+                throws DuplicateGroupException {
             fail("This method should not be called.");
         }
 
@@ -176,11 +188,33 @@ public class AddGroupCommandTest {
         }
 
         @Override
+        public ObservableList<Event> getFilteredEventList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ObservableList<Group> getFilteredGroupList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }
 
         public void updateFilteredToDoList(Predicate<ToDo> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredEventList(Predicate<Event> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredGroupList(Predicate<Group> predicate) {
             fail("This method should not be called.");
         }
 

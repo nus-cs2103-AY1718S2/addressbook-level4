@@ -7,6 +7,7 @@ import seedu.address.logic.commands.AddGroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.Information;
+import seedu.address.model.person.UniquePersonList;
 
 
 /**
@@ -28,7 +29,7 @@ public class AddGroupCommandParser implements Parser<AddGroupCommand> {
 
         try {
             Information information = ParserUtil.parseInformation(args);
-
+            UniquePersonList personList = new UniquePersonList();
             Group group = new Group(information);
 
             return new AddGroupCommand(group);

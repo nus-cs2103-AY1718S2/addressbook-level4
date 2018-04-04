@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLOR_RED;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
@@ -50,6 +52,18 @@ public class ChangeTagColorCommandTest {
         ChangeTagColorCommand command = prepareCommand(VALID_TAG_HUSBAND, VALID_TAG_COLOR_RED);
 
         assertCommandFailure(command, model, ChangeTagColorCommand.MESSAGE_TAG_NOT_IN_LIST);
+    }
+
+    @Test
+    public void equals_test() throws Exception {
+        ChangeTagColorCommand command1 = prepareCommand(VALID_TAG_HUSBAND, VALID_TAG_COLOR_RED);
+        ChangeTagColorCommand command2 = prepareCommand(VALID_TAG_FRIEND, VALID_TAG_COLOR_RED);
+        ChangeTagColorCommand command3 = prepareCommand(VALID_TAG_FRIEND, VALID_TAG_COLOR_RED);
+
+        assertEquals(command1, command1);
+        assertEquals(command2, command3);
+        assertNotEquals(command3, 1);
+        assertNotEquals(command1, command2);
     }
 
     /**

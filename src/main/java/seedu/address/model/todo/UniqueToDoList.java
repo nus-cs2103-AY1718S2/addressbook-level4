@@ -1,3 +1,4 @@
+//@@author nhatquang3112
 package seedu.address.model.todo;
 
 import static java.util.Objects.requireNonNull;
@@ -78,6 +79,20 @@ public class UniqueToDoList implements Iterable<ToDo> {
             replacement.add(todo);
         }
         setToDos(replacement);
+    }
+
+    /**
+     * Removes the equivalent to-do from the list.
+     *
+     * @throws ToDoNotFoundException if no such to-do could be found in the list.
+     */
+    public boolean remove(ToDo toRemove) throws ToDoNotFoundException {
+        requireNonNull(toRemove);
+        final boolean toDoFoundAndDeleted = internalList.remove(toRemove);
+        if (!toDoFoundAndDeleted) {
+            throw new ToDoNotFoundException();
+        }
+        return toDoFoundAndDeleted;
     }
 
     /**

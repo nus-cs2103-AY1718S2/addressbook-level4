@@ -12,8 +12,8 @@ public class Event {
             "Event names should only contain alphanumeric characters and spaces, and it should not be blank";
     public static final String MESSAGE_VENUE_CONSTRAINTS =
             "Venues should only contain alphanumeric characters and spaces, and it should not be blank";
-    public static final String MESSAGE_DATE_CONSTRAINTS = "Date should be in the format of DD/MM/YYYY";
-    public static final String MESSAGE_TIME_CONSTRAINTS = "Time should be in the format of HHmm";
+    public static final String MESSAGE_DATE_CONSTRAINTS = "DATE must be a valid date in the format of DD/MM/YYYY";
+    public static final String MESSAGE_TIME_CONSTRAINTS = "TIME must be a valid time in the format of HHmm";
 
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
     public static final String DATE_VALIDATION_REGEX = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/"

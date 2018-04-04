@@ -18,7 +18,7 @@ By: `Team W15-B3`      Since: `February 2018`      Licence: `MIT`
 == Introduction
 
 image:FASTIS.png[ align="center"] +
-Fastis is a desktop Event Manager application. It has a GUI but most of the user interactions happen + using a CLI (Command Line Interface). This application is for students with group projects to keep track of their teammates' + timetable, in order to schedule the most suitable meetup time. Users can store person's timetables, arrange persons in groups and  + generate a suitable meetup time.
+Fastis is a desktop application that aims to help students who are studying at National University of Singapore (NUS) manage their group projects effectively. The application enables students to keep track of group members’ timetables, information, meetups agendas, to-dos and schedule suitable meetup time.
 
 == Quick Start
 
@@ -281,11 +281,44 @@ Examples:
 
 * `uncheck 1`
 
-=== List Group Members: `ListGroupMembers`
+=== Editing a to-do's content : `editToDo`
+
+Edits an existing to-do's content in the address book. +
+Alias: `eTD` +
+Format: `editToDo INDEX [c/CONTENT]`
+
+****
+* Edits the to-do's content at the specified `INDEX`. The index refers to the index number shown in the last to-do listing. The index *must be a positive integer* 1, 2, 3, ...
+* Existing content will be updated to the input values.
+****
+
+Examples:
+
+* `editToDo 1 c/Swim like a fish` +
+Edits the content of the 1st to-do to be `Swim like a fish`.
+
+=== Deleting a to-do : `deleteToDo`
+
+Deletes the specified to-do from the address book. +
+Alias: `dTD` +
+Format: `deleteToDo INDEX`
+
+****
+* Deletes the to-do at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+`deleteToDo 2` +
+Deletes the 2nd to-do in the address book.
+
+=== List Group Members: `listGroupMembers`
 
 List out all persons with the given keywords(group tags). +
 Alias: `lgm` +
-Format: `ListGroupMembers INPUT`
+Format: `listGroupMembers INPUT`
 
 ****
 * The search is case insensitive. e.g `cs1010` will match `CS1010`
@@ -296,16 +329,16 @@ Examples:
 
 * `ListGroupMembers CS3230 CS1010` +
 Returns any person having group tags `CS3230`, `CS1010`
-Refer to Figure 2 for example.
+Refer to Figure 3 for example.
 
 image:lgmExample.png[width="500"] +
-Figure 2. Example of ListGroupMembers
+Figure 3. Example of ListGroupMembers
 
-=== Add Group: `AddGroup`
+=== Add Group: `addGroup`
 
 Creates a group named `KEYWORD` +
 Alias: `aG` +
-Format: `aG KEYWORD[KEYWORDS]`
+Format: `addGroup KEYWORD[KEYWORDS]`
 
 [NOTE]
 ====
@@ -315,11 +348,37 @@ Keyword cannot be an empty input.
 Examples:
 
 * `addGroups CS2101 Oral Presentation` +
-New Group `CS2101 Oral Presentation` added, refer to Figure 3. +
+New Group `CS2101 Oral Presentation` added, refer to Figure 4. +
 image:addGroupExample.png[width ="500"] +
-Figure 3. Example of add Group
+Figure 4. Example of add Group
 // end:AddGroup[]
 
+=== Add Member To Group: `addGroupMember`
+
+Adds a person named `KEYWORD`  that exists in Fastis into a group `GROUP_NAME` that already exist in Fastis.
+Alias: `aGM` +
+Format: `addGroupMember g/GROUP_NAME n/KEYWORD`
+
+[NOTE]
+====
+GROUP_NAME cannot be an empty input.
+KEYWORD cannot be an empty input.
+KEYWORD must be the exact name of the person and it must be case-sensitive.
+====
+
+Examples:
+
+* `addGroupMember g/CS2010 n/David Li` +
+Added person `David Li` into group `CS2010`  refer to Figure 5. +
+image:addGroupMembersToGroupExample.png[width ="500"] +
+Figure 5. Example of addMembersToGroup +
+
+If person already added, Fastis will output already added person in group.
+* `addGroupMember g/CS2010 n/David Li` +
+Refer to Figure 6. +
+image:addGroupMembersToGroupFailExample.png[width ="500"] +
+Figure 6. Example of addMembersToGroup +
+// end:AddGroup[]
 
 === Display Calendar : `display` `[coming in v2.0]`
 
@@ -396,6 +455,10 @@ e.g. `addToDo Do home work`
 e.g. `check 3`
 * *UnCheckToDo* : `uncheck INDEX` +
 e.g. `uncheck 3`
+* *EditToDo* : `editToDo INDEX [c/CONTENT]` +
+e.g. `editToDo 2 c/Swim like a fish`
+* *DeleteToDo* : `deleteToDo INDEX` +
+e.g. `deleteToDo 3`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`

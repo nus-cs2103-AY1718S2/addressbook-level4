@@ -1,3 +1,4 @@
+//@@author nhatquang3112
 package systemtests;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TODOS;
@@ -80,7 +81,7 @@ public class UnCheckToDoCommandSystemTest extends AddressBookSystemTest {
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>
-     * 1. Asserts that result display box displays the success message of executing {@code UnCheckToDoCommand}.<br>
+     * 1. Asserts that result display node displays the success message of executing {@code UnCheckToDoCommand}.<br>
      * 2. Asserts that the model related components are updated to reflect the to-do at index {@code toUnCheck} being
      * updated to values specified {@code unCheckedToDo}.<br>
      *
@@ -116,13 +117,13 @@ public class UnCheckToDoCommandSystemTest extends AddressBookSystemTest {
 
     /**
      * Executes {@code command} and in addition,<br>
-     * 1. Asserts that the command box displays an empty string.<br>
-     * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
+     * 1. Asserts that the command node displays an empty string.<br>
+     * 2. Asserts that the result display node displays {@code expectedResultMessage}.<br>
      * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
      * 4. Asserts that the browser url and selected card update accordingly depending on the card at
      * {@code expectedSelectedCardIndex}.<br>
      * 5. Asserts that the status bar's sync status changes.<br>
-     * 6. Asserts that the command box has the default style class.<br>
+     * 6. Asserts that the command node has the default style class.<br>
      * Verifications 1 to 3 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      *
@@ -145,11 +146,11 @@ public class UnCheckToDoCommandSystemTest extends AddressBookSystemTest {
 
     /**
      * Executes {@code command} and in addition,<br>
-     * 1. Asserts that the command box displays {@code command}.<br>
-     * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
+     * 1. Asserts that the command node displays {@code command}.<br>
+     * 2. Asserts that result display node displays {@code expectedResultMessage}.<br>
      * 3. Asserts that the model related components equal to the current model.<br>
      * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
-     * 5. Asserts that the command box has the error style.<br>
+     * 5. Asserts that the command node has the error style.<br>
      * Verifications 1 to 3 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      *

@@ -99,9 +99,9 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
 
     /**
      * Executes {@code command} and asserts that the,<br>
-     * 1. Command box displays an empty string.<br>
-     * 2. Command box has the default style class.<br>
-     * 3. Result display box displays the success message of executing select command with the
+     * 1. Command node displays an empty string.<br>
+     * 2. Command node has the default style class.<br>
+     * 3. Result display node displays the success message of executing select command with the
      * {@code expectedSelectedCardIndex} of the selected person.<br>
      * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
      * 5. Selected card is at {@code expectedSelectedCardIndex} and the browser url is updated accordingly.<br>
@@ -132,9 +132,9 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
 
     /**
      * Executes {@code command} and asserts that the,<br>
-     * 1. Command box displays {@code command}.<br>
-     * 2. Command box has the error style class.<br>
-     * 3. Result display box displays {@code expectedResultMessage}.<br>
+     * 1. Command node displays {@code command}.<br>
+     * 2. Command node has the error style class.<br>
+     * 3. Result display node displays {@code expectedResultMessage}.<br>
      * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
      * 5. Browser url, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by

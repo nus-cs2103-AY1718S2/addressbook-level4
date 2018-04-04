@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TODO;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,11 +17,17 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.AddGroupCommand;
+import seedu.address.logic.commands.AddToDoCommand;
+import seedu.address.logic.commands.CheckToDoCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteToDoCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditToDoCommand;
+import seedu.address.logic.commands.EditToDoCommand.EditToDoDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -29,16 +36,24 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListGroupMembersCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UnCheckToDoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.TagContainKeywordsPredicate;
+import seedu.address.model.todo.ToDo;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.EditToDoDescriptorBuilder;
+import seedu.address.testutil.EventBuilder;
+import seedu.address.testutil.EventUtil;
 import seedu.address.testutil.GroupBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.ToDoBuilder;
+import seedu.address.testutil.ToDoUtil;
 
 public class AddressBookParserTest {
     @Rule
@@ -62,6 +77,67 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_addToDo() throws Exception {
+        ToDo toDo = new ToDoBuilder().build();
+        AddToDoCommand command = (AddToDoCommand) parser.parseCommand(ToDoUtil.getAddToDoCommand(toDo));
+        assertEquals(new AddToDoCommand(toDo), command);
+    }
+
+    @Test
+    public void parseCommand_addToDoAlias() throws Exception {
+        ToDo toDo = new ToDoBuilder().build();
+        AddToDoCommand command = (AddToDoCommand) parser.parseCommand(AddToDoCommand.COMMAND_ALIAS + " "
+                + ToDoUtil.getToDoDetails(toDo));
+        assertEquals(new AddToDoCommand(toDo), command);
+    }
+
+    @Test
+    public void parseCommand_check() throws Exception {
+        CheckToDoCommand command = (CheckToDoCommand) parser.parseCommand(
+                CheckToDoCommand.COMMAND_WORD + " " + INDEX_FIRST_TODO.getOneBased());
+        assertEquals(new CheckToDoCommand(INDEX_FIRST_TODO), command);
+    }
+
+    @Test
+    public void parseCommand_uncheck() throws Exception {
+        UnCheckToDoCommand command = (UnCheckToDoCommand) parser.parseCommand(
+                UnCheckToDoCommand.COMMAND_WORD + " " + INDEX_FIRST_TODO.getOneBased());
+        assertEquals(new UnCheckToDoCommand(INDEX_FIRST_TODO), command);
+    }
+
+    @Test
+    public void parseCommand_editToDo() throws Exception {
+        ToDo toDo = new ToDoBuilder().build();
+        EditToDoDescriptor descriptor = new EditToDoDescriptorBuilder(toDo).build();
+        EditToDoCommand command = (EditToDoCommand) parser.parseCommand(EditToDoCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_TODO.getOneBased() + " c/" + ToDoUtil.getToDoDetails(toDo));
+        assertEquals(new EditToDoCommand(INDEX_FIRST_TODO, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_editToDoAlias() throws Exception {
+        ToDo toDo = new ToDoBuilder().build();
+        EditToDoDescriptor descriptor = new EditToDoDescriptorBuilder(toDo).build();
+        EditToDoCommand command = (EditToDoCommand) parser.parseCommand(EditToDoCommand.COMMAND_ALIAS + " "
+                + INDEX_FIRST_TODO.getOneBased() + " c/" + ToDoUtil.getToDoDetails(toDo));
+        assertEquals(new EditToDoCommand(INDEX_FIRST_TODO, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_deleteToDo() throws Exception {
+        DeleteToDoCommand command = (DeleteToDoCommand) parser.parseCommand(
+                DeleteToDoCommand.COMMAND_WORD + " " + INDEX_FIRST_TODO.getOneBased());
+        assertEquals(new DeleteToDoCommand(INDEX_FIRST_TODO), command);
+    }
+
+    @Test
+    public void parseCommand_deleteToDoAlias() throws Exception {
+        DeleteToDoCommand command = (DeleteToDoCommand) parser.parseCommand(
+                DeleteToDoCommand.COMMAND_ALIAS + " " + INDEX_FIRST_TODO.getOneBased());
+        assertEquals(new DeleteToDoCommand(INDEX_FIRST_TODO), command);
+    }
+
+    @Test
     public void parseCommand_addGroup() throws Exception {
         Group group = new GroupBuilder().build();
         AddGroupCommand command = (AddGroupCommand) parser.parseCommand(AddGroupCommand.COMMAND_WORD
@@ -69,12 +145,28 @@ public class AddressBookParserTest {
         assertEquals(new AddGroupCommand(group), command);
     }
 
+
     @Test
     public void parseCommand_addGroupAlias() throws Exception {
         Group group = new GroupBuilder().build();
         AddGroupCommand command = (AddGroupCommand) parser.parseCommand(AddGroupCommand.COMMAND_ALIAS
                 + " " + group.getInformation());
         assertEquals(new AddGroupCommand(group), command);
+    }
+
+    @Test
+    public void parseCommand_addEvent() throws Exception {
+        Event event = new EventBuilder().build();
+        AddEventCommand command = (AddEventCommand) parser.parseCommand(EventUtil.getAddEventCommand(event));
+        assertEquals(new AddEventCommand(event), command);
+    }
+
+    @Test
+    public void parseCommand_addEventAlias() throws Exception {
+        Event event = new EventBuilder().build();
+        AddEventCommand command = (AddEventCommand) parser.parseCommand(AddEventCommand.COMMAND_ALIAS + " "
+                + EventUtil.getEventDetails(event));
+        assertEquals(new AddEventCommand(event), command);
     }
 
     @Test
@@ -195,8 +287,6 @@ public class AddressBookParserTest {
                 ListGroupMembersCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new ListGroupMembersCommand(new TagContainKeywordsPredicate(keywords)), command);
     }
-
-
 
     @Test
     public void parseCommand_select() throws Exception {

@@ -127,6 +127,12 @@ public class AddressBookTest {
     }
 
     @Test
+    public void getGroupList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getToDoList().remove(0);
+    }
+
+    @Test
     public void removeTag_removeNonexistentTag_addressBookUnchanged() throws Exception {
         amyNBobAddressBook.removeTag(new Tag(VALID_TAG_UNUSED));
 

@@ -7,6 +7,7 @@ import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -23,6 +24,7 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
     Predicate<ToDo> PREDICATE_SHOW_ALL_TODOS = unused -> true;
+    Predicate<Event> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -32,6 +34,9 @@ public interface Model {
 
     /** Deletes the given person. */
     void deletePerson(Person target) throws PersonNotFoundException;
+
+    /** Deletes the given to-do. */
+    void deleteToDo(ToDo target) throws ToDoNotFoundException;
 
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
@@ -61,12 +66,29 @@ public interface Model {
      */
     void updateToDo(ToDo target, ToDo editedToDo)
             throws DuplicateToDoException, ToDoNotFoundException;
+    /**
+     * Replaces the given Group {@code target} with {@code editedGroup}.
+     *
+     * @throws DuplicateGroupException if updating the Group's details causes the Group to be equivalent to
+     *      another existing Group in the list.
+     * @throws GroupNotFoundException if {@code target} could not be found in the list.
+     */
+    void updateGroup(Group target, Group editedGroup)
+            throws DuplicateGroupException, GroupNotFoundException;
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 
     /** Returns an unmodifiable view of the filtered to-do list */
     ObservableList<ToDo> getFilteredToDoList();
+
+    /** Returns an unmodifiable view of the filtered to-do list */
+    ObservableList<Event> getFilteredEventList();
+
+    /**
+     * Returns an unmodifiable view of the filtered group list
+     */
+    ObservableList<Group> getFilteredGroupList();
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
@@ -79,6 +101,18 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredToDoList(Predicate<ToDo> predicate);
+
+    /**
+     * Updates the filter of the filtered event list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredEventList(Predicate<Event> predicate);
+
+    /**
+     * Updates the filter of the filtered groupList to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredGroupList(Predicate<Group> predicate);
 
     /** Adds the given to-do */
     void addToDo(ToDo todo) throws DuplicateToDoException;

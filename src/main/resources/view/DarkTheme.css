@@ -311,6 +311,15 @@
     -fx-border-width: 0;
 }
 
+#toDoCardPane {
+    -fx-background-color: #22A86D;
+    -fx-background-radius: 30px;
+
+    -fx-border-radius: 20px;
+    -fx-border-width: 5px;
+    -fx-border-color: #1B6041;
+}
+
 #commandTypeLabel {
     -fx-font-size: 11px;
     -fx-text-fill: #F70D1A;
@@ -347,7 +356,6 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
-
 #tags .teal {
     -fx-text-fill: white;
     -fx-background-color: #3e7b91;
@@ -480,7 +488,7 @@
 
 #calendarPlaceholder .notThisMonthDate {
     -fx-font: 13px Tahoma;
-    -fx-fill: silver;
-    -fx-stroke: silver;
+    -fx-fill: #888;
+    -fx-stroke: #888;
     -fx-stroke-width: 0.5;
 }

@@ -1,5 +1,6 @@
 package seedu.address.model.group.exceptions;
 
+//@@author jas5469
 import seedu.address.commons.exceptions.DuplicateDataException;
 
 /**

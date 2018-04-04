@@ -17,6 +17,7 @@ import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -84,6 +85,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setGroups(List<Group> groups) throws DuplicateGroupException {
         this.groups.setGroups(groups);
     }
+
+    public void setEvents(List<Event> events) throws DuplicateEventException {
+        this.events.setEvents(events);
+    }
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -95,17 +100,21 @@ public class AddressBook implements ReadOnlyAddressBook {
                 .collect(Collectors.toList());
         List<ToDo> syncedToDoList = newData.getToDoList();
         List<Group> syncedGroupList = newData.getGroupList();
+        List<Event> syncedEventList = newData.getEventList();
 
         try {
             setPersons(syncedPersonList);
             setToDos(syncedToDoList);
             setGroups(syncedGroupList);
+            setEvents(syncedEventList);
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         } catch (DuplicateToDoException e) {
             throw new AssertionError("AddressBooks should not have duplicate todos");
         } catch (DuplicateGroupException e) {
             throw new AssertionError("AddressBooks Should not have duplicate groups");
+        } catch (DuplicateEventException e) {
+            throw new AssertionError("AddressBooks Should not have duplicate events");
         }
     }
 
@@ -161,11 +170,26 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the given Group {@code target} in the list with {@code editedGroup}.
+     *
+     * @throws DuplicateGroupException if updating the Group's details causes the Group to be equivalent to
+     *                                  another existing Group in the list.
+     * @throws GroupNotFoundException  if {@code target} could not be found in the list.
+     */
+    public void updateGroup(Group target, Group editedGroup)
+            throws DuplicateGroupException, GroupNotFoundException {
+        requireNonNull(editedGroup);
+
+        groups.setGroup(target, editedGroup);
+    }
+
+    /**
      * Updates the master tag list to include tags in {@code person} that are not in the list.
      *
      * @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
      * list.
      */
+
     private Person syncWithMasterTagList(Person person) {
         final UniqueTagList personTags = new UniqueTagList(person.getTags());
         tags.mergeFrom(personTags);
@@ -193,6 +217,19 @@ public class AddressBook implements ReadOnlyAddressBook {
             return true;
         } else {
             throw new PersonNotFoundException();
+        }
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     *
+     * @throws ToDoNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeToDo(ToDo key) throws ToDoNotFoundException {
+        if (todos.remove(key)) {
+            return true;
+        } else {
+            throw new ToDoNotFoundException();
         }
     }
 

@@ -13,7 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
-
+//@@author kengsengg
 /**
  * Parses input arguments and creates a new AppointmentCommand object
  */
@@ -57,3 +57,4 @@ public class AppointmentCommandParser implements Parser<AppointmentCommand> {
     }
 
 }
+//@@author

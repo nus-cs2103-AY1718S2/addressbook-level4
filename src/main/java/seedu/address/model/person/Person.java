@@ -2,9 +2,11 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -13,6 +15,9 @@ import seedu.address.model.subject.Subject;
 import seedu.address.model.subject.UniqueSubjectList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+
+
+
 
 /**
  * Represents a Person in the address book.
@@ -63,7 +68,16 @@ public class Person {
     public Set<Subject> getSubjects() {
         return Collections.unmodifiableSet(subjects.toSet());
     }
+    public List<Subject> getSubjectArray () {
+        Set<Subject> set = getSubjects();
+        List<Subject> list = new ArrayList<Subject>();
+        list.addAll(set);
+        //Subject obj = list.get(0);
+        //System.out.println(obj);
+        return list;
+    }
 
+    //@@author TeyXinHui
     /**
      * Calculates the lowest possible score from the grades of the subjects of the selected person.
      * @return L1R5 score
@@ -121,6 +135,7 @@ public class Person {
         return score;
     }
 
+    //@@author TeyXinHui
     /**
      * Takes in a set of subjects under the category of L1 or R5 and find the smallest grade score.
      * Removes the best subject from the full list of subjects of the student to prevent the same subject being
@@ -141,6 +156,7 @@ public class Person {
         return lowest;
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         if (other == this) {

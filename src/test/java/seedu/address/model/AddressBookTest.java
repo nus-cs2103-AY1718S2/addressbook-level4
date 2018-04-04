@@ -39,6 +39,7 @@ public class AddressBookTest {
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
+        assertEquals(Collections.emptyList(), addressBook.getSubjectList());
     }
 
     @Test
@@ -79,6 +80,13 @@ public class AddressBookTest {
     }
 
     @Test
+    public void getSubjectList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getSubjectList().remove(0);
+    }
+
+    //@@author TeyXinHui
+    @Test
     public void removeTag_tagNotFound_throwsTagNotFoundException() {
         AddressBook testCase = new AddressBookBuilder().withPerson(BOB).build();
         AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BOB).build();
@@ -104,6 +112,7 @@ public class AddressBookTest {
                 .withPerson(amyWithoutFriendTag).build();
         assertEquals(expectedAddressBook, testCase);
     }
+    //@@author
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
      */

@@ -11,35 +11,39 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-T09-B1/main
 
 By: `CS2103JAN2018-T09-B1`      Since: `Mar 2018`      Licence: `MIT`
 
 == Introduction
 
-_EduBuddy_ is for those who *prefer to use a desktop app for managing student profiles*. More importantly, _EduBuddy_ is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, EduBuddy can get your student profile management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+_EduBuddy_ is designed for secondary school teachers who *prefer to use a desktop app to manage student profiles*.
+More importantly, _EduBuddy_ is *optimized for those who prefer to work with a
+Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI).
+If you can type fast, _EduBuddy_ can get your student profile management tasks done faster
+than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
-[NOTE]
+[IMPORTANT]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `EduBuddy.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `EduBuddy.jar` link:https://github.com/CS2103JAN2018-T09-B1/main/releases[here].
+.  Copy the file to the folder you want to use as the home folder for _EduBuddy_.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::UI.png[width="790"]
+image::UI.png[width="800"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list` or `l`* : lists all students
-* **`add` or `a`**`n/John Doe p/91234567 ic/S9315585J t/1A t/20 sub/English B3` : adds a student named `John Doe` to the Address Book.
-* **`delete` or `d`**`3` : deletes the 3rd student shown in the current list
+* **`add` or `a` **`n/John Doe p/91234567 ic/S9315585J t/1A t/20 sub/English B3` : adds a student named `John Doe` to _EduBuddy_
+* **`delete` or `d`** `3` : deletes the 3rd student shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
@@ -47,47 +51,54 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [[Features]]
 == Features
 
-====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Parameters can be in any order e.g. if the command specifies `n/NAME ic/S9500186H`, `ic/S9500186H n/NAME` is also acceptable.
-* Items in square brackets are optional. e.g `n/NAME [t/CLASS]` can be used as `n/John Doe t/1A` or as `n/John Doe`.
-* Command input is not case sensitive, e.g 'fInD Alex' , 'find alex' works the same.
-====
+[NOTE]
+Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`. +
+Parameters can be in *any order* e.g. if the command specifies `n/NAME ic/S9500186H`, `ic/S9500186H n/NAME` is also acceptable. +
+Items in square brackets are *optional*. e.g `n/NAME [t/CLASS]` can be used as `n/John Doe t/1A` or as `n/John Doe`. +
+Command input is *case insensitive*, e.g `fInD Alex` and `find Alex` works the same. +
 
 === Viewing help : `help`
 
 Shows the help page. +
 Format: `help`
 
-=== Adding a person: `add` or `a`
+=== Adding a student: `add` or `a`
 
-Adds a person to EduBuddy +
-Format: `add n/NAME p/PHONE_NUMBER ic/NRIC  t/CLASS t/CLASS_REGISTER sub/English A2`
-Abbreviation Format: `a n/NAME p/PHONE_NUMBER ic/NRIC  t/CLASS t/CLASS_REGISTER sub/English A2`
+Adds a student to _EduBuddy_ +
+Format: `add n/NAME p/PHONE_NUMBER ic/NRIC t/CLASS t/CLASS_REGISTER sub/SUBJECT_NAME SUBJECT_GRADE SUBJECT_NAME2 SUBJECT_GRADE2...` +
+Abbreviation Format: `a n/NAME p/PHONE_NUMBER ic/NRIC t/CLASS t/CLASS_REGISTER sub/SUBJECT_NAME SUBJECT_GRADE SUBJECT_NAME2 SUBJECT_GRADE2...`
+
+[NOTE]
+Students with the same name can be added, provided that their IC numbers are different.
+
+[IMPORTANT]
+A `SPACE` should be inserted between each `SUBJECT_NAME` and `SUBJECT_GRADE`. +
+At least 1 subject from each L1R5 category should be assigned to a student. +
+For example: English, EMath(Elementary Mathematics), Hist(History), Chinese, Phy(Physics), Music. +
+For more examples on what subjects and subject grades can be added, please refer to the <<FAQ>> section below.
 
 Examples:
 
-* `add n/John Doe p/91234567 ic/S9500186H t/1A t/20 sub/English B3 sub/Mathematics A2`
+* `add n/John Doe p/91234567 ic/S9500186H t/1A t/20 sub/English B3 EMath A2`
 * `add n/Betsy Crowe p/91234567 t/2B t/21 ic/S9511111I`
-* `a n/John Doe p/91234567 ic/S9500186H t/1A t/2 sub/English B3 sub/Mathematics A2`
+* `a n/John Doe p/91234567 ic/S9500186H t/1A t/2 sub/English B3 EMath A2`
 * `a n/Betsy Crowe p/91234567 t/2B t/21 ic/S9511111I`
 
-=== Listing all student : `list` or `l`
+=== Listing all students : `list` or `l`
 
-Shows a list of all students in EduBuddy. +
+Shows a list of all students in _EduBuddy_. +
 Format: `list` +
 Abbreviation Format: `l`
 
-=== Sorting students : `sort [since v1.2]`
+=== Sorting all students : `sort` [since v1.2]
 
-Sorts the list of students in EduBuddy according to the given parameter +
+Sorts the list of all students in _EduBuddy_ according to the given parameter +
 Format: `sort PARAMETER`
 
-****
-* List of available PARAMETER: name, tag
-****
+[NOTE]
+List of available PARAMETER: name, tag
 
 Examples:
 
@@ -97,40 +108,44 @@ Sorts the list of students by name in alphabetical order (case insensitive).
 Sorts the list of students by tag in alphabetical and numerical order (case insensitive)
 
 === Editing a student : `edit` or `e`
-Edits an existing student in EduBuddy. +
+Edits an existing student in _EduBuddy_.The existing fields will then be updated accordingly. +
 Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
 Abbreviation Format: `e INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]`
 
-****
-* Edits the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-****
+[NOTE]
+Edits the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. +
+
+
+[IMPORTANT]
+At least one of the optional fields must be provided. +
+`INDEX` *must be a positive integer*: 1, 2, 3, ...
 
 Examples:
 
 * `edit 1 ic/S9123456A` +
-Edits the nric number of the 1st student to be `S9123456A` respectively.
+Edits the NRIC number of the 1st student to be `S9123456A`.
 * `edit 2 n/Betsy Crower` +
 Edits the name of the 2nd student to be `Betsy Crower`.
 * `e 1 ic/S9123456A` +
-Edits the nric number of the 1st student to be `S9123456A` respectively.
+Edits the NRIC number of the 1st student to be `S9123456A`.
 * `e 2 n/Betsy Crower` +
 Edits the name of the 2nd student to be `Betsy Crower`.
 
-=== Locating students by name: `find` or `f`
+*_return to <<toc,Table of Contents>>_*
 
-Finds persons whose names contain any of the given keywords. +
+=== Finding students by name: `find` or `f`
+
+Finds a list of students whose name contains any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 Abbreviation Format: `f KEYWORD [MORE_KEYWORDS]`
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Students matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+[NOTE]
+The search is case insensitive. e.g `hans` will match `Hans`. +
+The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`. +
+Students matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
+
+[IMPORTANT]
+Only the name is searched and only exact words will be matched e.g. `Han` will not match `Hans`.
 
 Examples:
 
@@ -139,60 +154,120 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` or `f Betsy Tim John` +
 Returns any student having names `Betsy`, `Tim`, or `John`
 
+*_return to <<toc,Table of Contents>>_*
+
 === Deleting a student : `delete` or `d`
 
-Deletes the specified student from EduBuddy. +
+Deletes the specified student from _EduBuddy_. +
 Format: `delete INDEX` +
 Abbreviation Format: `d INDEX`
 
-****
-* Deletes the student at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
+[NOTE]
+Deletes the student at the specified `INDEX`. +
+The index refers to the index number shown in the most recent listing.
+
+[IMPORTANT]
+`INDEX` *must be a positive integer*: 1, 2, 3, ...
 
 Examples:
 
 * `list` +
 `d 2` +
-Deletes the 2nd student in EduBuddy.
+Deletes the 2nd student in _EduBuddy_.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st student in the results of the `find` command.
 
-=== Deleting a tag : `tagdelete` or `td [since v1.1]`
+*_return to <<toc,Table of Contents>>_*
 
-Deletes the specified tag from every student in EduBuddy. +
+=== Deleting a tag : `tagdelete` or `td` [since v1.1]
+
+Deletes the specified tag from every student in _EduBuddy_. +
 Format: `tagdelete TAGNAME` +
 Abbreviation Format: `td TAGNAME`
 
-****
-* Deletes the specified tag from every student in Edubuddy.
-* The tag refers to the index number shown in the most recent listing.
-* The tag must be a valid tag name that is assigned to at least one student in the Edubuddy.
-****
+[NOTE]
+The tag refers to the index number shown in the most recent listing.
+
+[IMPORTANT]
+The tag must be a valid tag name that is assigned to at least one student in the _EduBuddy_.
+
+If successful, you will see the following result:
+
+image::TagDeleteResult.png[width="800"]
 
 Examples:
 
 * `tagdelete Class1A` or `td Class1A` +
-Deletes the 'Class 1A' tag from every student in the EduBuddy.
+Deletes the 'Class 1A' tag from every student in the _EduBuddy_.
 
-=== Replacing a tag : `tagreplace` or `tr [since v1.2]`
+*_return to <<toc,Table of Contents>>_*
 
-Replaces the specified tag from every student in EduBuddy with a specific tag. +
+=== Replacing a tag : `tagreplace` or `tr` [since v1.2]
+
+Replaces the specified tag from every student in _EduBuddy_ with a specific tag. +
 Format: `tagreplace t/TAGNAME t/TAGNAME`
 Abbreviation Format: `tr t/TAGNAME t/TAGNAME`
 
+<<<<<<< HEAD
 ****
 * Replaces the specified tag from every student in Edubuddy with a specific tag.
-* The tag refers to the index number shown in the most recent listing.
 * The tag must be a valid tag name that is assigned to at least one student in the Edubuddy.
 ****
+=======
+[NOTE]
+The tag refers to the index number shown in the most recent listing.
+
+[IMPORTANT]
+The tag must be a valid tag name that is assigned to at least one student in the _EduBuddy_.
+>>>>>>> master
 
 Examples:
 
 * `tagreplace t/Class1A t/Class2A` or `tr t/Class1A t/Class2A` +
-Replaces the 'Class 1A' tag from every student in the EduBuddy with 'Class 2A'.
+Replaces the 'Class 1A' tag from every student in _EduBuddy_ with 'Class 2A'.
+
+*_return to <<toc,Table of Contents>>_*
+
+image::TagReplaceCommand.png[width="650"]
+
+=== Adding a remark : `addremark`
+
+Adds a remark to a specified student in EduBuddy.
+Format: `addremark INDEX r/REMARK`
+
+****
+* Adds a remark to the the student at the specified `INDEX`.
+* The remark refers to anything that the teachers wants to comment
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...`
+****
+
+Examples:
+* `list` +
+`addremark 2 r/Class Monitor` +
+Adds a remark to the 2nd student in EduBuddy.
+
+image::AddRemarkCommand.png[width="650"]
+
+=== Deleting a remark : `deleteremark`
+
+Delete a remark to a specified student in EduBuddy.
+Format: `deleteremark INDEX r/REMARK`
+
+****
+* Deletes a remark from the the student at the specified `INDEX`.
+* The remark refers to any part of the existing remark that is in the student profile for the student that you want.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...`
+****
+
+Examples:
+* `list` +
+`deleteremark 2 r/Class Monitor` +
+Deletes the remark, Class Monitor, from the 2nd student in EduBuddy.
+
+image::DeleteRemarkCommand.png[width="650"]
 
 === Selecting a person : `select` or `s`
 
@@ -200,20 +275,24 @@ Selects the student identified by the index number used in the last student list
 Format: `select INDEX` +
 Abbreviation Format: `s INDEX`
 
-****
-* Selects the student and loads the student profile of the student at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
+[NOTE]
+Checks that the student selected has the expected number of subjects (minimum 6) and the right subject combination assigned to him/her. +
+Selects the student and loads the student profile of the student at the specified `INDEX`. +
+The index refers to the index number shown in the most recent listing.
+
+[IMPORTANT]
+The index *must be a positive integer*: 1, 2, 3, ...
 
 Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd student in EduBuddy.
+Selects the 2nd student in _EduBuddy_.
 * `find Betsy` +
 `s 1` +
 Selects the 1st student in the results of the `find` command.
+
+*_return to <<toc,Table of Contents>>_*
 
 === Listing entered commands : `history` or `h`
 
@@ -226,16 +305,18 @@ Abbreviation Format: `h`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+*_return to <<toc,Table of Contents>>_*
+
 // tag::undoredo[]
 === Undoing previous command : `undo` or `u`
 
-Restores EduBuddy to the state before the previous _undoable_ command was executed. +
+Restores _EduBuddy_ to the state before the previous _undoable_ command was executed. +
 Format: `undo` +
 Abbreviation Format: `u`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the EduBuddy's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify EduBuddy's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -253,6 +334,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 `clear` +
 `u` (reverses the `clear` command) +
 `u` (reverses the `delete 1` command) +
+
+*_return to <<toc,Table of Contents>>_*
 
 === Redoing the previously undone command : `redo` or `r`
 
@@ -278,9 +361,36 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `r` (reapplies the `clear` command) +
 // end::undoredo[]
 
+<<<<<<< HEAD
+// tag::remarks Command[]
+=== Remarks Command `[Since v1.3]`
+
+Adds a remark to the student. +
+Format: `remark INDEX r/REMARK` +
+
+****
+* Adds a remark to the student profile of the student at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`remark 2` +
+Adds a remark to the 2nd student in EduBuddy.
+* `find Betsy` +
+`remark 1` +
+Adds a remark to the 1st student in the results of the `find` command.
+
+// end::remarks Command[]
+=======
+*_return to <<toc,Table of Contents>>_*
+>>>>>>> master
+
 === Clearing all entries : `clear` or `c`
 
-Clears all entries from EduBuddy. +
+Clears all student entries from _EduBuddy_. +
 Format: `clear` +
 Abbreviation Format: `c`
 
@@ -289,30 +399,29 @@ Abbreviation Format: `c`
 Exits the program. +
 Format: `exit`
 
-=== Creating an appointment on the calendar : `create [coming in v2.0]`
+=== Creating an appointment: `appointment` or `appt` [since v1.4]
 
-Creates an appointment with the student identified by the index number used
+Creates an appointment (e.g. setting a consultation time slot with students)
+with the student identified by the index number used
 in the last student listing and displays it on the calendar.
-E.g. setting a consultation time slot with students. +
-Format: `create INDEX date/DATE time/TIME`
 
-****
-* Date is in *DDMMYY* format
-* Time is in *24 hour* format
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
+Format: `appointment INDEX d/DATE s/START_TIME e/END_TIME` +
+Abbreviation Format: `appt INDEX d/DATE s/START_TIME e/END_TIME`
+
+[IMPORTANT]
+`DATE` should be in *DDMMYYYY* format e.g. 25th Dec 2018 would be 25122018. +
+`START_TIME` and `END_TIME` should be in *24 hour* format e.g. 3:30p.m. would be 1530. +
+`INDEX` *must be a positive integer*: 1, 2, 3, ...
 
 Examples:
 
-* `create 1 date/01022018 time/1500` +
-Creates an appointment with the 1st student on `01022018` at `1500`
+* `appointment 1 d/01022018 s/1500 e/1600` +
+Creates an appointment with the 1st student on 1st Feb 2018 from 3p.m. to 4p.m.
+* `appt 3 d/20042018 s/0930 e/1100` +
+Creates an appointment with the 3rd student on 20th Apr 2018 from 9:30a.m. to 11a.m.
 
-// tag::remarks Command[]
-=== Remarks Command `[coming in v2.0]`
+*_return to <<toc,Table of Contents>>_*
 
-_{Allows the teachers to write a remark for the student for all other teachers to see. e.g. Medical/Injuries history}_
-
-// end::remarks Command[]
 
 // tag::CCA section[]
 === CCA section `[coming in v2.0]`
@@ -339,17 +448,65 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
+*_return to <<toc,Table of Contents>>_*
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous EduBuddy folder.
 
-== Command Summary
+*Q*: What is L1B4? +
+*A*: A grading system for Secondary School students taking "O Level Examination" at the end of their four years of studies in Secondary School.
+     The score obtained from the grading system will be used to determine the eligibility of the students to enter the next level of education, Polytechnic.
+     `L1` represents the First language subject and `B4` represents 2 relevant subjects, according to the polytechnic course applied, and 2 other best subjects.
+     The score will be calculated by considering the subjects' grades. Each subject can only be considered once.
 
-* *Add* `add n/NAME p/PHONE_NUMBER ic/NRIC t/CLASS t/CLASS_REGISTER sub/SUBJECT_NAME SUBJECT_GRADE` +
-e.g. `add n/James Ho p/22224444 ic/S9500186H t/1A t/20 sub/English A2` +
-e.g. `a n/James Ho p/22224444 ic/S9500186H t/1A t/20 sub/English A2` +
+*Q*: What is L1R5? +
+*A*: L1R5 is a grading system used in Singapore to determine the secondary school students' proficiency in the subjects taken for the O'Level Examinations.
+The score is used for the students to enroll into Junior Colleges, which is the next higher level of education. "L1" refers to the first language subject taken by the student, while "R5" refers to the 5 relevant subjects that are examinable by the students.
+The grade of L1R5 is then determined by taking the best grades of each category and summing them up, for example, if a student scores A1 for all 6 subjects are from each category, the score will be 6. Each subject can only be considered once.
 
+*Q*: How are the grades for the subjects determined? +
+*A*: The level of achievement in each subject is indicated by the grade obtained, with A1 being the highest achievable grade and F9 the lowest:
+
+[width="85%",cols="22%,<23%",options="header",]
+|=======================================================================
+|Grade|Percentage of Competency
+|A1| 75% - 100%
+|A2| 70% - 74%
+|B3| 65% - 69%
+|B4| 60% - 64%
+|C5| 55% - 59%
+|C6| 50% - 54%
+|D7| 45% - 49%
+|E8| 40% - 44%
+|F9| 0% - 39%
+|=======================================================================
+
+*Q*: What are the subjects are in the L1R5 category? +
+*A*: These are the following subjects that are examinable in O-level Examinations in Singapore (as of Year 2018).
+[NOTE]
+The subjects in the brackets are not to be used as input. The subjects not in brackets are preferred for better efficiency in typing.
+[width="85%",cols="22%,<23%",options="header",]
+|=======================================================================
+|Subject Category|Subjects
+|L1| English, HTamil(Higher Tamil), HChi(Higher Chinese), HMalay(Higher Malay)
+|R1| Hist(History), Geog(Geography), ComHum(Combined Humanities), ELit(English Literature), CLit(Chinese Literature),
+     MLit(Malay Literature), TLit(Tamil Literature), HArt(Higher Art), HMusic(Higher Music), BIndo(Bahasa Indonesia),
+     CSP(Chinese Special Programme), MSP(Malay Special Programme)
+|R2| EMath(Elementary Mathematics), AMath(Additional Mathematics), Phy(Physics), Chem(Chemistry), Bio(Biology), Sci(Combined Science)
+|R3| Consist of both R1 and R2 subjects
+|R4| Consist of L1, R1 and R2 subjects. French, German, Spanish, Hindi, Urdu, Gujarati, Panjabi, Bengali, Burmese,
+     Thai, Jap, Tamil, Chinese, Malay, DnT, Comp(Computing), FnN(Food and Nutrition), PoA(Principles of Accounting),
+     Econs(Economics), Drama, PE(Physical Education), Biz(Business Studies), Biotech(Biotechnology), Design(Design Studies)
+|R5| Consist of R4 subjects
+|=======================================================================
+
+* The following subjects can be assigned to students but are not considered as O-Level subjects: ChiB (Chinese B), MalayB (Malay B), TamilB(Tamil B).
+
+*_return to <<toc,Table of Contents>>_*
+
+<<<<<<< HEAD
 * *Clear* : `clear` or `c`
 
 * *Delete* : `delete INDEX` or `d INDEX` +
@@ -363,6 +520,12 @@ e.g. `td CLASS2A`
 * *TagReplace* : `tagreplace t/TAGNAME t/TAGNAME` or `tr t/TAGNAME t/TAGNAME` +
 e.g. `tagreplace t/CLASS2A t/CLASS3A` +
 e.g. `tr t/CLASS2A t/CLASS3A`
+
+* *Add Remark* : `addremark INDEX r/REMARKK` +
+e.g. `addremark 1 r/Class Monitor
+
+* *Delete Remark* : `deleteremark INDEX r/REMARK` +
+e.g. `deleteremark 1 r/Class Monitor
 
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
 `e INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
@@ -380,13 +543,114 @@ e.g. `sort tag`
 * *List* : `list` or `l`
 
 * *Help* : `help`
+=======
+== Command Summary
+>>>>>>> master
 
-* *Select* : `select INDEX` or `s INDEX`+
-e.g.`select 2`
-e.g.`s 2`
+The table below provides a quick summary of all the commands available in EduBuddy.
 
-* *History* : `history` or `h`
+[width="90%",cols="20%,<22%,<23%,<25%",options="header",]
+|=======================================================================
+|Command |Function |Format |Example
+|*Add* |Adds a student entry |`add n/NAME ic/NRIC t/CLASS t/CLASS_REGISTER sub/SUBJECT_NAME SUBJECT_GRADE` +
+OR +
+`a n/NAME ic/NRIC t/CLASS t/CLASS_REGISTER sub/SUBJECT_NAME SUBJECT_GRADE`
+|`add n/James Ho p/22224444 ic/S9500186H t/1A t/20 sub/English A2` +
+OR +
+`a n/James Ho p/22224444 ic/S9500186H t/1A t/20 sub/English A2`
 
-* *Undo* : `undo` or `u`
+|*Appointment* |Creates an appointment |`appointment INDEX d/DATE s/START_TIME e/END_TIME` +
+OR +
+`appt INDEX d/DATE s/START_TIME e/END_TIME`
+|`appointment 1 d/25122018 s/1200 e/1300` +
+OR +
+`appt 1 d/25122018 s/1200 e/1300`
 
-* *Redo* : `redo` or `r`
+|*Clear* |Clears all student entries |`clear` +
+OR +
+`c`
+|`clear` +
+OR +
+`c`
+
+|*Delete* |Deletes a student entry |`delete INDEX` +
+OR +
+`d INDEX`
+|`delete 3` +
+OR +
+`d 3`
+
+|*Edit* |Edits a student entry |`edit INDEX [n/NAME] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
+OR +
+`e INDEX [n/NAME] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]`
+|`edit 2 n/James Lee` +
+OR +
+`e 2 n/James Lee`
+
+|*Exit* |Exits _EduBuddy_ |`exit` |`exit`
+
+|*Find* |Finds student by name |`find KEYWORD [MORE_KEYWORDS]` +
+OR +
+`f KEYWORD [MORE_KEYWORDS]`
+|`find James Jake` +
+OR +
+`f James Jake`
+
+|*Help* |Shows the help page |`help` |`help`
+
+|*History* |Lists the past commands entered |`history` +
+OR +
+`h`
+|`history` +
+OR +
+`h`
+
+|*List* |Lists all student entries |`list` +
+OR +
+`l`
+|`list` +
+OR +
+`l`
+
+|*Redo* |Redo previous undo command |`redo` +
+OR +
+`r`
+|`redo` +
+OR +
+`r`
+
+|*Select* |Selects the student entry |`select INDEX` +
+OR +
+`s INDEX`
+|`select 2` +
+OR +
+`s 2`
+
+|*Sort* |Sorts student entries by parameters |`sort PARAMETER`|`sort name` +
+OR +
+`sort tag`
+
+|*TagDelete* |Deletes a tag from every student|`tagdelete TAGNAME` +
+OR +
+`td TAGNAME`
+|`tagdelete CLASS2A` +
+OR +
+`td CLASS2A`
+
+|*TagReplace* |Replaces a tag for every student|`tagreplace t/TAGNAME t/TAGNAME` +
+OR +
+`tr t/TAGNAME t/TAGNAME`
+|`tagreplace t/CLASS2A t/CLASS3A` +
+OR +
+`tr t/CLASS2A t/CLASS3A`
+
+|*Undo* |Undo previous command |`undo` +
+OR +
+`u`
+|`undo` +
+OR +
+`u`
+
+|=======================================================================
+
+*_return to <<toc,Table of Contents>>_*

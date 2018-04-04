@@ -28,35 +28,28 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline").withNric("S8535525Z")
-            .withTags("friends").withSubjects("English A1", "Mathematics A1", "History A1", "H.Tamil A1",
-                                              "Chemistry A1", "Physics A1").withRemark("").build();
+            .withTags("friends").withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1")
+            .withRemark("").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier").withNric("S9123456X")
-            .withTags("owesMoney", "friends").withSubjects("English A1", "Mathematics A1", "History A1",
-                                                           "H.Tamil A1", "Chemistry A1", "Physics A2")
+            .withTags("owesMoney", "friends").withSubjects("English A1", "EMath A1", "Hist A1",
+                                                           "HTamil A1", "Chem A1", "Phy A2")
                                                            .withRemark("").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withNric("S9535256J")
-            .withSubjects("English A1", "Mathematics A1", "History A1", "H.Tamil A1", "Chemistry A1", "Physics A1")
-            .withRemark("").build();
+            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1").withRemark("").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withNric("S8765253I")
-            .withSubjects("English A1", "Mathematics A1", "History A1", "H.Tamil A1", "Chemistry A1", "Physics A1")
-            .withRemark("").build();
+            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1").withRemark("").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withNric("S9482224A")
-            .withSubjects("English A1", "Mathematics A1", "History A1", "H.Tamil A1", "Chemistry A1", "Physics A1")
-            .withRemark("").build();
+            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1").withRemark("").build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withNric("S9482427J")
-            .withSubjects("English A1", "Mathematics A1", "History A1", "H.Tamil A1", "Chemistry A1", "Physics A1")
-            .withRemark("").build();
+            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1").withRemark("").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withNric("S9482442U")
-            .withSubjects("English A1", "Mathematics A1", "History A1", "H.Tamil A1", "Chemistry A1", "Physics A1")
-            .withRemark("").build();
+            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1").withRemark("").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withNric("S8482424Z")
-            .withSubjects("English A1", "Mathematics A1", "History A1", "H.Tamil A1", "Chemistry A1", "Physics A1")
-            .withRemark("").build();
+            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1").withRemark("").build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withNric("S8482131K")
-            .withSubjects("English A1", "Mathematics A1", "History A1", "H.Tamil A1", "Chemistry A1", "Physics A1")
-            .withRemark("").build();
+            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1").withRemark("").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withNric(VALID_NRIC_AMY)

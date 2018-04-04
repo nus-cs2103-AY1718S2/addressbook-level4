@@ -13,6 +13,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
 
+//@@author kengsengg
 /**
  * Creates an appointment for the student at the specified index.
  */
@@ -76,4 +77,4 @@ public class AppointmentCommand extends UndoableCommand {
                 && toAdd.equals(((AppointmentCommand) other).toAdd));
     }
 }
-
+//@@author

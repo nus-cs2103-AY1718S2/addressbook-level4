@@ -8,6 +8,7 @@ import java.util.List;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
+import seedu.address.model.account.PrivilegeLevel;
 
 /**
  * Lists all the commands entered by user from the start of app launch.
@@ -17,6 +18,7 @@ public class HistoryCommand extends Command {
     public static final String COMMAND_WORD = "history";
     public static final String MESSAGE_SUCCESS = "Entered commands (from most recent to earliest):\n%1$s";
     public static final String MESSAGE_NO_HISTORY = "You have not yet entered any commands.";
+    public static final PrivilegeLevel PRIVILEGE_LEVEL = Model.PRIVILEGE_LEVEL_LIBRARIAN;
 
     @Override
     public CommandResult execute() {
@@ -34,5 +36,10 @@ public class HistoryCommand extends Command {
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
         requireNonNull(history);
         this.history = history;
+    }
+
+    @Override
+    public PrivilegeLevel getPrivilegeLevel() {
+        return PRIVILEGE_LEVEL;
     }
 }

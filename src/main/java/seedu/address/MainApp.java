@@ -20,20 +20,26 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-import seedu.address.model.AddressBook;
+import seedu.address.model.Catalogue;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyCatalogue;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.account.Account;
+import seedu.address.model.account.UniqueAccountList;
+import seedu.address.model.account.exceptions.DuplicateAccountException;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.AccountListStorage;
+import seedu.address.storage.CatalogueStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.SerialisedAccountListStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
-import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.XmlCatalogueStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
+
 
 /**
  * The main entry point to the application.
@@ -51,22 +57,27 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
 
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing Catalogue ]===========================");
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        CatalogueStorage catalogueStorage = new XmlCatalogueStorage(userPrefs.getCatalogueFilePath());
+        AccountListStorage accountListStorage = new SerialisedAccountListStorage(userPrefs.getAccountListFilePath());
+        storage = new StorageManager(catalogueStorage, userPrefsStorage, accountListStorage);
 
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
+
 
         logic = new LogicManager(model);
 
@@ -81,28 +92,56 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
-     * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
-     * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
+     * Returns a {@code ModelManager} with the data from {@code storage}'s C\catalogue and {@code userPrefs}. <br>
+     * The data from the sample Catalogue will be used instead if {@code storage}'s Catalogue is not found,
+     * or an empty Catalogue will be used instead if errors occur when reading {@code storage}'s Catalogue.
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
-        Optional<ReadOnlyAddressBook> addressBookOptional;
-        ReadOnlyAddressBook initialData;
+        Optional<ReadOnlyCatalogue> catalogueOptional;
+        Optional<UniqueAccountList> accountListOptional;
+        ReadOnlyCatalogue initialData;
+        UniqueAccountList initlaAccountList;
         try {
-            addressBookOptional = storage.readAddressBook();
-            if (!addressBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample AddressBook");
+            catalogueOptional = storage.readCatalogue();
+            if (!catalogueOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample Catalogue");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialData = catalogueOptional.orElseGet(SampleDataUtil::getSampleCatalogue);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            logger.warning("Data file not in the correct format. Will be starting with an empty Catalogue");
+            initialData = new Catalogue();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            logger.warning("Problem while reading from the file. Will be starting with an empty Catalogue");
+            initialData = new Catalogue();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        try {
+            accountListOptional = storage.readAccountList();
+            if (!accountListOptional.isPresent()) {
+                logger.info("AccountList file not found. Will be starting with an accountList with only admin");
+                initlaAccountList = new UniqueAccountList();
+            } else {
+                initlaAccountList = accountListOptional.get();
+            }
+        } catch (DataConversionException e) {
+            logger.warning("AccountList file not in the correct format. "
+                + "Will be starting with an accountList with only admin");
+            initlaAccountList = new UniqueAccountList();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the AccountList file. "
+                + "Will be starting with an accountList with only admin");
+            System.out.print(e.getMessage());
+            initlaAccountList = new UniqueAccountList();
+        }
+
+        try {
+            if (!initlaAccountList.contains(Account.createDefaultAdminAccount())) {
+                initlaAccountList.add(Account.createDefaultAdminAccount());
+            }
+        } catch (DuplicateAccountException e) {
+            e.printStackTrace();
+        }
+        return new ModelManager(initialData, initlaAccountList, userPrefs);
     }
 
     private void initLogging(Config config) {
@@ -132,7 +171,7 @@ public class MainApp extends Application {
             initializedConfig = configOptional.orElse(new Config());
         } catch (DataConversionException e) {
             logger.warning("Config file at " + configFilePathUsed + " is not in the correct format. "
-                    + "Using default config properties");
+                + "Using default config properties");
             initializedConfig = new Config();
         }
 
@@ -160,10 +199,10 @@ public class MainApp extends Application {
             initializedPrefs = prefsOptional.orElse(new UserPrefs());
         } catch (DataConversionException e) {
             logger.warning("UserPrefs file at " + prefsFilePath + " is not in the correct format. "
-                    + "Using default user prefs");
+                + "Using default user prefs");
             initializedPrefs = new UserPrefs();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            logger.warning("Problem while reading from the file. Will be starting with an empty Catalogue");
             initializedPrefs = new UserPrefs();
         }
 
@@ -183,13 +222,13 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting Catalogue " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping Address Book ] =============================");
+        logger.info("============================ [ Stopping Catalogue ] =============================");
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);
@@ -204,9 +243,5 @@ public class MainApp extends Application {
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.stop();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

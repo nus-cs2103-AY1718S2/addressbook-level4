@@ -35,7 +35,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    private BookListPanel bookListPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -49,7 +49,7 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane bookListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -84,6 +84,7 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -119,13 +120,13 @@ public class MainWindow extends UiPart<Stage> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        bookListPanel = new BookListPanel(logic.getFilteredBookList());
+        bookListPanelPlaceholder.getChildren().add(bookListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getCatalogueFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -157,7 +158,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
+            (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
     /**
@@ -181,8 +182,8 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
+    public BookListPanel getBookListPanel() {
+        return this.bookListPanel;
     }
 
     void releaseResources() {

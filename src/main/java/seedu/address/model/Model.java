@@ -3,46 +3,82 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.account.Account;
+import seedu.address.model.account.Credential;
+import seedu.address.model.account.PrivilegeLevel;
+import seedu.address.model.account.exceptions.AccountNotFoundException;
+import seedu.address.model.account.exceptions.DuplicateAccountException;
+import seedu.address.model.book.Book;
+import seedu.address.model.book.exceptions.BookNotFoundException;
+import seedu.address.model.book.exceptions.DuplicateBookException;
+
 
 /**
  * The API of the Model component.
  */
 public interface Model {
-    /** {@code Predicate} that always evaluate to true */
-    Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
-
-    /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData);
-
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
-
-    /** Deletes the given person. */
-    void deletePerson(Person target) throws PersonNotFoundException;
-
-    /** Adds the given person */
-    void addPerson(Person person) throws DuplicatePersonException;
-
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
-     *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * {@code Predicate} that always evaluate to true
      */
-    void updatePerson(Person target, Person editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException;
+    Predicate<Book> PREDICATE_SHOW_ALL_BOOKS = unused -> true;
 
-    /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<Person> getFilteredPersonList();
+    PrivilegeLevel PRIVILEGE_LEVEL_GUEST = new PrivilegeLevel(0);
+    PrivilegeLevel PRIVILEGE_LEVEL_STUDENT = new PrivilegeLevel(1);
+    PrivilegeLevel PRIVILEGE_LEVEL_LIBRARIAN = new PrivilegeLevel(2);
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * Clears existing backing model and replaces with the provided new data.
+     */
+    void resetData(ReadOnlyCatalogue newData);
+
+    /**
+     * Returns the Catalogue
+     */
+    ReadOnlyCatalogue getCatalogue();
+
+    /**
+     * Deletes the given book.
+     */
+    void deleteBook(Book target) throws BookNotFoundException;
+
+    /**
+     * Adds the given book
+     */
+    void addBook(Book book) throws DuplicateBookException;
+
+    /**
+     * Replaces the given book {@code target} with {@code editedBook}.
+     *
+     * @throws DuplicateBookException if updating the book's details causes the book to be equivalent to
+     *                                another existing book in the list.
+     * @throws BookNotFoundException  if {@code target} could not be found in the list.
+     */
+    void updateBook(Book target, Book editedBook)
+        throws DuplicateBookException, BookNotFoundException;
+
+    /**
+     * Returns an unmodifiable view of the filtered book list
+     */
+    ObservableList<Book> getFilteredBookList();
+
+    /**
+     * Updates the filter of the filtered book list to filter by the given {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<Person> predicate);
+    void updateFilteredBookList(Predicate<Book> predicate);
+
+    void addAccount(Account account) throws DuplicateAccountException;
+
+    void deleteAccount(Account account) throws AccountNotFoundException;
+
+    void updateAccount(Account account, Account editedAccount)
+        throws DuplicateAccountException, AccountNotFoundException;
+
+    PrivilegeLevel authenticate(Credential credential);
+
+    void logout();
+
+    PrivilegeLevel getPrivilegeLevel();
 
 }

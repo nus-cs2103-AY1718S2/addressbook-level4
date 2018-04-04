@@ -3,16 +3,18 @@ package seedu.address.storage;
 import java.io.IOException;
 import java.util.Optional;
 
-import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.AccountListChangedEvent;
+import seedu.address.commons.events.model.CatalogueChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyCatalogue;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.account.UniqueAccountList;
 
 /**
  * API of the Storage component
  */
-public interface Storage extends AddressBookStorage, UserPrefsStorage {
+public interface Storage extends CatalogueStorage, UserPrefsStorage, AccountListStorage {
 
     @Override
     Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException;
@@ -21,18 +23,26 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
     void saveUserPrefs(UserPrefs userPrefs) throws IOException;
 
     @Override
-    String getAddressBookFilePath();
+    String getCatalogueFilePath();
 
     @Override
-    Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyCatalogue> readCatalogue() throws DataConversionException, IOException;
 
     @Override
-    void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+    void saveCatalogue(ReadOnlyCatalogue catalogue) throws IOException;
 
     /**
-     * Saves the current version of the Address Book to the hard disk.
-     *   Creates the data file if it is missing.
+     * Saves the current version of the Catalogue to the hard disk.
+     * Creates the data file if it is missing.
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
-    void handleAddressBookChangedEvent(AddressBookChangedEvent abce);
+    void handleCatalogueChangedEvent(CatalogueChangedEvent abce);
+
+    String getAccountListFilePath();
+
+    Optional<UniqueAccountList> readAccountList() throws DataConversionException, IOException;
+
+    void saveAccountList(UniqueAccountList accountList) throws IOException;
+
+    void handleAccountListChangedEvent(AccountListChangedEvent event);
 }

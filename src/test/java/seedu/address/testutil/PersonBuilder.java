@@ -25,14 +25,14 @@ public class PersonBuilder {
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_CALENDARID = "null";
     public static final String DEFAULT_RATING = "-1";
-    public static final String DEFAULT_REVIEW = "-";
+    public static final String DEFAULT_REVIEWS = "-\n-";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
     private Rating rating;
-    private Review review;
+    private Set<Review> reviews;
     private Set<Tag> tags;
     private String calendarId;
 
@@ -42,7 +42,8 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         rating = new Rating(DEFAULT_RATING);
-        review = new Review(DEFAULT_REVIEW);
+        //reviews = SampleDataUtil.getReviewSet(DEFAULT_REVIEWS);
+        reviews = new HashSet<>();
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
         calendarId = this.DEFAULT_CALENDARID;
     }
@@ -56,7 +57,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         rating = personToCopy.getRating();
-        review = personToCopy.getReview();
+        reviews = personToCopy.getReviews();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -119,8 +120,8 @@ public class PersonBuilder {
     /**
      * Sets the {@code Review} of the {@code Person} that we are building.
      */
-    public PersonBuilder withReview(String review) {
-        this.review = new Review(review);
+    public PersonBuilder withReviews(String ... reviews) {
+        this.reviews = SampleDataUtil.getReviewSet(reviews);
         return this;
     }
 
@@ -131,7 +132,7 @@ public class PersonBuilder {
     public Person build() {
         Person toReturn = new Person(name, phone, email, address, tags, calendarId);
         toReturn.setRating(rating);
-        toReturn.setReview(review);
+        toReturn.setReviews(reviews);
         return toReturn;
     }
 

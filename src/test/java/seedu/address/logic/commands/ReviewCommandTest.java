@@ -15,6 +15,8 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.HashSet;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -36,10 +38,11 @@ public class ReviewCommandTest {
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Person reviewedPerson = new PersonBuilder().withEmail("alice@example.com").withRating("1").withReview("Lazy")
+        Person reviewedPerson = new PersonBuilder().withEmail("alice@example.com").withRating("1")
+                .withReviews("supervisor@example.com\nLazy")
                 .build();
         EditCommand.EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(reviewedPerson)
-                .withReview("Lazy").build();
+                .withReview("supervisor@example.com\nLazy").build();
 
         ReviewCommand reviewCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
 
@@ -55,7 +58,7 @@ public class ReviewCommandTest {
     public void execute_noFieldSpecifiedUnfilteredList_success() {
         ReviewCommand reviewCommand = prepareCommand(INDEX_FIRST_PERSON, new EditCommand.EditPersonDescriptor());
         Person reviewedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        reviewedPerson.setReview(new Review());
+        reviewedPerson.setReviews(new HashSet<Review>());
 
         String expectedMessage = String.format(ReviewCommand.MESSAGE_REVIEW_PERSON_SUCCESS, reviewedPerson);
 
@@ -69,9 +72,11 @@ public class ReviewCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         Person personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person reviewedPerson = new PersonBuilder(personInFilteredList).withReview("Lazy").build();
+        Person reviewedPerson = new PersonBuilder(personInFilteredList)
+                .withReviews("supervisor@example.com\nLazy")
+                .build();
         ReviewCommand reviewCommand = prepareCommand(INDEX_FIRST_PERSON,
-                new EditPersonDescriptorBuilder().withReview("Lazy").build());
+                new EditPersonDescriptorBuilder().withReview("supervisor@example.com\nLazy").build());
 
         String expectedMessage = String.format(ReviewCommand.MESSAGE_REVIEW_PERSON_SUCCESS,
                 reviewedPerson);
@@ -117,11 +122,11 @@ public class ReviewCommandTest {
         Person reviewedPerson = new PersonBuilder()
                 .withEmail("alice@example.com")
                 .withRating("5")
-                .withReview("Lazy")
+                .withReviews("supervisor@example.com\nLazy")
                 .build();
         Person personToReview = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         EditCommand.EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(reviewedPerson)
-                .withReview("Lazy")
+                .withReview("supervisor@example.com\nLazy")
                 .build();
         ReviewCommand reviewCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -174,10 +179,10 @@ public class ReviewCommandTest {
                 .withEmail("johnd@example.com")
                 .withAddress("311, Clementi Ave 2, #02-25")
                 .withTags("owesMoney", "friends")
-                .withReview("Lazy")
+                .withReviews("supervisor@example.com\nLazy")
                 .build();
         EditCommand.EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(reviewedPerson)
-                .withReview("Lazy")
+                .withReview("supervisor@example.com\nLazy")
                 .build();
         ReviewCommand reviewCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());

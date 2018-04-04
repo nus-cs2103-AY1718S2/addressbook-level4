@@ -37,8 +37,8 @@ public class XmlAdaptedPerson {
     private String calendarId;
     @XmlElement
     private String rating;
-    @XmlElement(required = true)
-    private String review;
+    @XmlElement
+    private List<XmlAdaptedReview> reviewed = new ArrayList<>();
     @XmlElement
     private int id;
 
@@ -76,7 +76,7 @@ public class XmlAdaptedPerson {
                             String email,
                             String address,
                             String rating,
-                            String review,
+                            List<XmlAdaptedReview> reviewed,
                             List<XmlAdaptedTag> tagged,
                             int id) {
         this.name = name;
@@ -84,7 +84,9 @@ public class XmlAdaptedPerson {
         this.email = email;
         this.address = address;
         this.rating = rating;
-        this.review = review;
+        if (reviewed != null) {
+            this.reviewed = new ArrayList<>(reviewed);
+        }
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -102,7 +104,10 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         rating = source.getRating().value.toString();
-        review = source.getReview().toString();
+        reviewed = new ArrayList<>();
+        for (Review review : source.getReviews()) {
+            reviewed.add(new XmlAdaptedReview(review));
+        }
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -120,6 +125,11 @@ public class XmlAdaptedPerson {
         final List<Tag> personTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
+        }
+
+        final List<Review> personReviews = new ArrayList<>();
+        for (XmlAdaptedReview review : reviewed) {
+            personReviews.add(review.toModelType());
         }
 
         if (this.name == null) {
@@ -163,19 +173,13 @@ public class XmlAdaptedPerson {
 
         final Rating rating = new Rating(this.rating);
 
-        if (this.review == null) {
-            this.review = (new Review()).toString();
-        }
-        if (!Review.isValidCombined(this.review)) {
-            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
-        }
-        final Review review = new Review(this.review);
+        final Set<Review> reviews = new HashSet<>(personReviews);
 
         final Set<Tag> tags = new HashSet<>(personTags);
 
         Person toReturn = new Person(name, phone, email, address, tags, calendarId);
         toReturn.setRating(rating);
-        toReturn.setReview(review);
+        toReturn.setReviews(reviews);
         toReturn.setId(id);
 
         return toReturn;

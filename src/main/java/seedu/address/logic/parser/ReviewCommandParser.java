@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.HashSet;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -65,9 +66,11 @@ public class ReviewCommandParser implements Parser<ReviewCommand> {
         String review = reviewInput.trim();
 
         String combined = reviewer + "\n" + review;
+        HashSet<Review> combinedSet = new HashSet<Review>();
+        combinedSet.add(new Review(combined));
 
         EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
-        editPersonDescriptor.setReview(new Review(combined));
+        editPersonDescriptor.setReviews(combinedSet);
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(ReviewCommand.MESSAGE_NOT_EDITED);
         }

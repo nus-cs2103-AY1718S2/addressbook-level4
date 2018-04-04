@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -39,7 +40,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setRating(person.getRating());
-        descriptor.setReview(person.getReview());
+        descriptor.setReviews(person.getReviews());
         descriptor.setTags(person.getTags());
     }
 
@@ -87,7 +88,9 @@ public class EditPersonDescriptorBuilder {
      * Sets the {@code Review} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withReview(String review) {
-        descriptor.setReview(new Review(review));
+        HashSet<Review> reviewSet = new HashSet<Review>();
+        reviewSet.add(new Review(review));
+        descriptor.setReviews(reviewSet);
         return this;
     }
 

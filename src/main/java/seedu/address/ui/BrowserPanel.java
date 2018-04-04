@@ -50,7 +50,7 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private Label rating;
     @FXML
-    private Label review;
+    private FlowPane reviews;
     @FXML
     private FlowPane tags;
 
@@ -95,7 +95,7 @@ public class BrowserPanel extends UiPart<Region> {
         address = null;
         email = null;
         rating = null;
-        review = null;
+        reviews = null;
         tags = null;
     }
 
@@ -107,7 +107,7 @@ public class BrowserPanel extends UiPart<Region> {
         address.setText("");
         email.setText("");
         rating.setText("");
-        review.setText("");
+        reviews.getChildren().clear();
         tags.getChildren().clear();
         loadDefaultPage();
     }
@@ -122,10 +122,9 @@ public class BrowserPanel extends UiPart<Region> {
         email.setText(person.getEmail().value);
         rating.setText(person.getRatingDisplay());
         rating.setTextFill(Color.RED);
-        review.setText(person.getReview().toString());
-        review.setWrapText(true);
+        reviews.getChildren().clear();
+        person.getReviews().forEach(review -> reviews.getChildren().add(new Label(review.toString())));
         tags.getChildren().clear();
-        //person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         initTags(person);
         loadPersonPage(event.getNewSelection().person);
     }

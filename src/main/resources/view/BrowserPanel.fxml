@@ -68,7 +68,7 @@
                   <Insets left="5.0" />
                </padding>
             </Label>
-            <Label text="Review" GridPane.rowIndex="6">
+            <Label text="Reviews" GridPane.rowIndex="6">
                <font>
                   <Font size="15.0" />
                </font>
@@ -112,10 +112,7 @@
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Label>
-            <Label fx:id="review" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="6">
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin></Label>
+            <FlowPane fx:id="reviews" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <FlowPane fx:id="tags" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="5.0" />

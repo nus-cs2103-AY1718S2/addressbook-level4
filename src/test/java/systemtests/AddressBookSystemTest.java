@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javafx.scene.input.KeyCode;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -141,6 +142,54 @@ public abstract class AddressBookSystemTest {
 
         waitUntilBrowserLoaded(getBrowserPanel());
     }
+
+    //@@author jonleeyz
+    /**
+     * Executes {@code command} associated with the given keyboard shortcut.
+     * Method returns after UI components have been updated.
+     */
+    protected void executeUsingAccelerator(KeyCode... combination) {
+        rememberStates();
+        // Injects a fixed clock before executing a command so that the time stamp shown in the status bar
+        // after each command is predictable and also different from the previous command.
+        clockRule.setInjectedClockToCurrentTime();
+
+        mainWindowHandle.getMainMenu().useAccelerator(combination);
+
+        waitUntilBrowserLoaded(getBrowserPanel());
+    }
+
+    /**
+     * Populates the appropriate {@code command} template in the application's
+     * {@code CommandBox} given a keyboard shortcut.
+     */
+    protected void populateUsingAccelerator(KeyCode... combination) {
+        mainWindowHandle.getMainMenu().useAccelerator(combination);
+    }
+
+    /**
+     * Executes {@code command} associated with the given menu item.
+     * Method returns after UI components have been updated.
+     */
+    protected void executeUsingMenuItem(String... menuItems) {
+        rememberStates();
+        // Injects a fixed clock before executing a command so that the time stamp shown in the status bar
+        // after each command is predictable and also different from the previous command.
+        clockRule.setInjectedClockToCurrentTime();
+
+        mainWindowHandle.getMainMenu().clickOnMenuItemsSequentially(menuItems);
+
+        waitUntilBrowserLoaded(getBrowserPanel());
+    }
+
+    /**
+     * Populates the appropriate {@code command} template in the application's
+     * {@code CommandBox} given the appropriate menu item.
+     */
+    protected void populateUsingMenu(String... menuItems) {
+        mainWindowHandle.getMainMenu().useAccelerator(menuItems);
+    }
+    //@@author
 
     /**
      * Displays all persons in the address book.

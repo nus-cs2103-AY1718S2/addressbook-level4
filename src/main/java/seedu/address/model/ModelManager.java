@@ -92,16 +92,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public Person getPersonWithNric(Nric ownerNric) {
-        for (Person p : addressBook.getPersonList()) {
-            if (p.getNric().equals(ownerNric)) {
-                return p;
-            }
-        }
-        return null;
-    }
-
-    @Override
     public synchronized void deletePetPatient(PetPatient target)
             throws PetPatientNotFoundException, AppointmentDependencyNotEmptyException {
         addressBook.removePetPatient(target);
@@ -129,6 +119,17 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author aquarinte
+    @Override
+    public Person getPersonWithNric(Nric ownerNric) {
+        for (Person p : addressBook.getPersonList()) {
+            if (p.getNric().equals(ownerNric)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
     @Override
     public PetPatient getPetPatientWithNricAndName(Nric ownerNric, PetPatientName petPatientName) {
         for (PetPatient p : addressBook.getPetPatientList()) {
@@ -138,6 +139,12 @@ public class ModelManager extends ComponentManager implements Model {
         }
         return null;
     }
+
+    @Override
+    public List<Tag> getTagList() {
+        return addressBook.getTagList();
+    }
+    //@@author
 
     @Override
     public void updatePerson(Person target, Person editedPerson)

@@ -50,4 +50,7 @@ public interface Logic {
 
     /** Returns a set of all pet patient names found in model*/
     Set<String> getAllPetPatientNames();
+
+    /** Returns a set of all tag names found in model*/
+    Set<String> getAllTagNames();
 }

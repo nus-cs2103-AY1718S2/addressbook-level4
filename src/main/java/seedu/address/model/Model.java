@@ -86,9 +86,14 @@ public interface Model {
 
     void addPetPatient(PetPatient petPatient) throws DuplicatePetPatientException;
 
+    /** Returns a person object that has the given {@code Nric}. */
     Person getPersonWithNric(Nric ownerNric);
 
+    /** Returns a petpatient object that has the given {@code Nric} and {@code PetPatientName}. */
     PetPatient getPetPatientWithNricAndName(Nric ownerNric, PetPatientName petPatientName);
+
+    /** Returns a list of tags used in the application. */
+    List<Tag> getTagList();
 
     /** Deletes the given pet. */
     void deletePetPatient(PetPatient target)

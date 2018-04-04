@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.Image?>
 <?import java.net.URL?>
-
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="450" minHeight="600">
     <icons>
@@ -14,8 +14,6 @@
     </icons>
     <scene>
         <Scene>
-
-
             <AnchorPane prefHeight="704.0" prefWidth="1155.0" styleClass="background" xmlns="http://javafx.com/javafx/8"
                         xmlns:fx="http://javafx.com/fxml/1">
                 <children>
@@ -83,10 +81,10 @@
                     <StackPane fx:id="statusbarPlaceholder" layoutX="116.0" layoutY="761.0" prefHeight="33.0"
                                prefWidth="1155.0"
                                AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+                    <StackPane fx:id="agendaPanelPlaceholer" layoutY="478.0" prefHeight="195.0" prefWidth="500.0" AnchorPane.bottomAnchor="31.0"
+                               AnchorPane.leftAnchor="0.0" />
                 </children>
             </AnchorPane>
         </Scene>
     </scene>
 </fx:root>
-
-

@@ -85,6 +85,7 @@ public class AddressBookTest {
         addressBook.getSubjectList().remove(0);
     }
 
+    //@@author TeyXinHui
     @Test
     public void removeTag_tagNotFound_throwsTagNotFoundException() {
         AddressBook testCase = new AddressBookBuilder().withPerson(BOB).build();
@@ -111,6 +112,7 @@ public class AddressBookTest {
                 .withPerson(amyWithoutFriendTag).build();
         assertEquals(expectedAddressBook, testCase);
     }
+    //@@author
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
      */

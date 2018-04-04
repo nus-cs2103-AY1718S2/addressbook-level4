@@ -5,7 +5,7 @@ import static junit.framework.TestCase.assertEquals;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
+//@@author TeyXinHui
 public class UniqueSubjectListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -32,3 +32,4 @@ public class UniqueSubjectListTest {
     }
 
 }
+//@@author

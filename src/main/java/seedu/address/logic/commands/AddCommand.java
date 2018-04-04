@@ -58,6 +58,7 @@ public class AddCommand extends UndoableCommand {
         try {
             model.addPerson(toAdd);
             model.addPage(toAdd);
+
             //EventsCenter.getInstance().post(new JumpToListRequestEvent(model.getFilteredPersonList().size() - 1));
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
 

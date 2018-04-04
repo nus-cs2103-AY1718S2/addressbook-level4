@@ -125,10 +125,12 @@ public class AddEventCommandTest {
         public void addGroup(Group group) throws DuplicateGroupException {
             fail("This method should not be called.");
         }
+
         @Override
         public void updateTag(Tag target, Tag editedTag) throws TagNotFoundException {
             fail("This method should not be called.");
         }
+
         @Override
         public void removeTag(Tag tag) {
             fail("This method should not be called.");
@@ -217,7 +219,7 @@ public class AddEventCommandTest {
         public void updateFilteredGroupList(Predicate<Group> predicate) {
             fail("This method should not be called.");
         }
-      
+
         @Override
         public void indicateCalendarChanged() {
             fail("This method should not be called.");

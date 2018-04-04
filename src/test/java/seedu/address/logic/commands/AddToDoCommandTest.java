@@ -214,12 +214,12 @@ public class AddToDoCommandTest {
         public void updateFilteredEventList(Predicate<Event> predicate) {
             fail("This method should not be called.");
         }
-      
+
         @Override
         public void updateFilteredGroupList(Predicate<Group> predicate) {
             fail("This method should not be called.");
         }
-      
+
         @Override
         public void indicateCalendarChanged() {
             fail("This method should not be called.");

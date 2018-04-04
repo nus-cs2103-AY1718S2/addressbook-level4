@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 //@@author jas5469
+
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -169,6 +170,7 @@ public class AddGroupCommandTest {
                 throws DuplicateToDoException {
             fail("This method should not be called.");
         }
+
         @Override
         public void updateGroup(Group target, Group editedGroup)
                 throws DuplicateGroupException {
@@ -204,6 +206,7 @@ public class AddGroupCommandTest {
             fail("This method should not be called.");
         }
 
+        @Override
         public void updateFilteredToDoList(Predicate<ToDo> predicate) {
             fail("This method should not be called.");
         }
@@ -212,12 +215,12 @@ public class AddGroupCommandTest {
         public void updateFilteredEventList(Predicate<Event> predicate) {
             fail("This method should not be called.");
         }
-      
+
         @Override
         public void updateFilteredGroupList(Predicate<Group> predicate) {
             fail("This method should not be called.");
         }
-      
+
         @Override
         public void indicateCalendarChanged() {
             fail("This method should not be called.");

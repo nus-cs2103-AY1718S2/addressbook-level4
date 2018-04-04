@@ -8,7 +8,9 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
@@ -18,7 +20,10 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.InfoPanelChangedEvent;
+import seedu.address.commons.events.ui.PersonChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowPanelRequestEvent;
+import seedu.address.commons.util.UiUtil;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Rating;
 
@@ -30,9 +35,12 @@ public class InfoPanel extends UiPart<Region> {
     public static final Person DEFAULT_PERSON = null;
     public static final int SPLIT_MIN_WIDTH = 550;
 
+    public static final String PANEL_NAME = "InfoPanel";
     private static final String FXML = "InfoPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private int currentSelectedIndex = -1;
+    private Person currentSelectedPerson;
 
     @FXML
     private AnchorPane infoPaneWrapper;
@@ -96,6 +104,11 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private ProgressBar infoRatingExperience;
 
+    // Resume
+    @FXML
+    private VBox infoSideButtons;
+    @FXML
+    private Button infoSideButtonResume;
 
     public InfoPanel() {
         super(FXML);
@@ -105,6 +118,11 @@ public class InfoPanel extends UiPart<Region> {
             handleResize(oldValue.intValue(), newValue.intValue());
         });
         handleResponsive((int) infoPaneWrapper.getWidth());
+    }
+
+    @FXML
+    private void showResume() {
+        raise(new ShowPanelRequestEvent(PdfPanel.PANEL_NAME));
     }
 
     /**
@@ -151,23 +169,37 @@ public class InfoPanel extends UiPart<Region> {
         }
     }
 
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Person person = event.getNewSelection().person;
+    /**
+     * Update the info panel with the latest information
+     * It can be updated from address book change or selection change
+     */
+    private void updateInfoPanel() {
+        if (currentSelectedPerson == null) {
+            return;
+        }
+        Person person = currentSelectedPerson;
 
-        infoPaneWrapper.setVisible(true);
         infoMainName.setText(person.getName().fullName);
         infoMainUniversity.setText(person.getUniversity().value);
-        infoMainMajorYear.setText("- (Expected " + person.getExpectedGraduationYear().value + ")");
-        infoMainCgpa.setText(person.getGradePointAverage().value);
+        infoMainMajorYear.setText(person.getMajor() + " (Expected " + person.getExpectedGraduationYear().value + ")");
+        infoMainCgpa.setText(UiUtil.toFixed(person.getGradePointAverage().value, 2));
         infoMainEmail.setText(person.getEmail().value);
         infoMainAddress.setText(person.getAddress().value);
         infoMainPhone.setText(person.getPhone().value);
         infoMainPosition.setText(person.getJobApplied().value);
         infoMainStatus.setText(person.getStatus().value);
-        infoMainStatus.setTextFill(person.getStatus().color);
-        infoMainComments.setText("-");
+        infoMainStatus.setStyle("-fx-text-fill: " + UiUtil.colorToHex(person.getStatus().color));
+
+        // Update comment
+        String comment = person.getComment().value;
+        infoMainComments.setText(comment == null ? "" : comment);
+
+        // Disable resume if it is null
+        boolean resumeVisible = (person.getResume().value != null);
+        infoSideButtons.setManaged(resumeVisible);
+        infoSideButtonResume.setManaged(resumeVisible);
+        infoSideButtons.setVisible(resumeVisible);
+        infoSideButtonResume.setVisible(resumeVisible);
 
         // Process Interview info
         LocalDateTime interviewDate = person.getInterviewDate().getDateTime();
@@ -175,7 +207,8 @@ public class InfoPanel extends UiPart<Region> {
             infoMainInterviewMonth.setText(interviewDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH));
             infoMainInterviewDate.setText(String.valueOf(interviewDate.getDayOfMonth()));
             infoMainInterviewDay.setText(interviewDate.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.ENGLISH));
-            infoMainInterviewTime.setText(DateTimeFormatter.ofPattern("hh:mma").format(interviewDate).toLowerCase());
+            infoMainInterviewTime.setText(DateTimeFormatter.ofPattern("hh:mma", Locale.ENGLISH)
+                    .format(interviewDate).toLowerCase());
             infoMainInterviewDatePane.setVisible(true);
         } else {
             infoMainInterviewDatePane.setVisible(false);
@@ -198,8 +231,37 @@ public class InfoPanel extends UiPart<Region> {
             infoRatingExperience.setProgress(0);
         }
 
+        // Scroll to top
+        infoMainPane.setVvalue(0);
+        infoSplitMainPane.setVvalue(0);
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        PersonCard currentSelected = event.getNewSelection();
+        currentSelectedIndex = currentSelected.index;
+        currentSelectedPerson = currentSelected.getPerson();
+
+        updateInfoPanel();
+
         // Set user data for test
-        infoPaneWrapper.setUserData(person);
+        infoPaneWrapper.setUserData(currentSelectedPerson);
         infoPaneWrapper.fireEvent(new InfoPanelChangedEvent());
+    }
+
+    @Subscribe
+    private void handlePersonChangedEvent(PersonChangedEvent event) {
+        ListChangeListener.Change<? extends Person> changes = event.getPersonChanged();
+        if (currentSelectedPerson != null) {
+            while (changes.next()) {
+                for (int i = changes.getFrom(); i < changes.getTo(); i++) {
+                    if (i == currentSelectedIndex) {
+                        currentSelectedPerson = changes.getList().get(i);
+                        updateInfoPanel();
+                    }
+                }
+            }
+        }
     }
 }

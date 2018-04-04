@@ -4,6 +4,8 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
@@ -20,8 +22,11 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.MaximizeAppRequestEvent;
 import seedu.address.commons.events.ui.MinimizeAppRequestEvent;
+import seedu.address.commons.events.ui.PersonChangedEvent;
+import seedu.address.commons.events.ui.ShowPanelRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Person;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -43,6 +48,8 @@ public class MainWindow extends UiPart<Stage> {
     private UserPrefs prefs;
 
     // Independent UI parts residing in this UI container
+    private InfoPanel infoPanel;
+    private PdfPanel pdfPanel;
     private PersonListPanel personListPanel;
 
     // X and Y offset of the window (Use for draggable title bar
@@ -52,6 +59,8 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private AnchorPane topPane;
 
+    @FXML
+    private AnchorPane resumePanePlaceholder;
 
     @FXML
     private AnchorPane infoPanePlaceholder;
@@ -114,11 +123,16 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        InfoPanel infoPanel = new InfoPanel();
+        infoPanel = new InfoPanel();
         infoPanePlaceholder.getChildren().add(infoPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        pdfPanel = new PdfPanel();
+        resumePanePlaceholder.getChildren().add(pdfPanel.getRoot());
+
+        ObservableList<Person> personList = logic.getFilteredPersonList();
+        personListPanel = new PersonListPanel(personList);
         listPersonsPlaceholder.getChildren().add(personListPanel.getRoot());
+        setupPersonChangedEvent(personList);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         centerPanePlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -235,6 +249,30 @@ public class MainWindow extends UiPart<Stage> {
             primaryStage.setX(event.getScreenX() - xOffset);
             primaryStage.setY(Math.max(newY, minY));
         });
+    }
+
+    private void setupPersonChangedEvent(ObservableList<Person> personList) {
+        personList.addListener((ListChangeListener<Person>) c -> {
+            raise(new PersonChangedEvent(c));
+        });
+    }
+
+    @Subscribe
+    private void handleShowPanelRequestEvent(ShowPanelRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        // Hide all panel
+        infoPanePlaceholder.setVisible(false);
+        resumePanePlaceholder.setVisible(false);
+
+        // Show relevant panel
+        if (event.getRequestedPanel().equals(PdfPanel.PANEL_NAME)) {
+            pdfPanel.load();
+            resumePanePlaceholder.setVisible(true);
+        } else if (event.getRequestedPanel().equals(InfoPanel.PANEL_NAME)) {
+            infoPanePlaceholder.setVisible(true);
+            pdfPanel.unload();
+        }
     }
 
     @Subscribe

@@ -7,6 +7,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.io.File;
 import java.util.Objects;
 
+import javafx.scene.image.Image;
+
 /**
  * Represents a Person's profile image in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidFile(String)}
@@ -34,6 +36,41 @@ public class ProfileImage {
     }
 
     /**
+     * Return the loaded {@code Image} of the person's Profile Image,
+     * resized to 100px for performance issue
+     * @return the image in {@code Image}
+     */
+    public Image getImage() {
+        try {
+            return new Image(getFile().toURI().toString(),
+                    100d, 0d, true, true, false);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Return the {@code File} of the image
+     * @return the image in {@code File}
+     */
+    private File getFile() {
+        if (this.value == null) {
+            return null;
+        }
+        return getFileFromPath(this.value);
+    }
+
+    /**
+     * Return the {@code File} representation of the path
+     * @param path of the image
+     * @return the {@code File} representation
+     */
+    private static File getFileFromPath(String path) {
+        String userDir = System.getProperty("user.dir");
+        return new File(userDir + File.separator + path);
+    }
+
+    /**
      * Returns true if a given string is a valid file path,
      * however it doesn't validate if it is a valid image file
      * due to there are too many different image types
@@ -45,8 +82,7 @@ public class ProfileImage {
             return false;
         }
 
-        String userDir = System.getProperty("user.dir");
-        File imageFile = new File(userDir + File.separator + test);
+        File imageFile = getFileFromPath(test);
 
         if (imageFile.isDirectory() || !imageFile.exists() || imageFile.length() > ONEMEGABYTE) {
             return false;

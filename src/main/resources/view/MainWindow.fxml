@@ -42,8 +42,8 @@
                                     <Label fx:id="welcomeMadeWith" text="Made with love by"/>
                                     <Label fx:id="welcomeName" text="Yee Chin, Hong Qiang, Xiao Wen, Heng Yeow"/>
                                 </VBox>
-                                <VBox fx:id="infoCalendarPane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                <AnchorPane fx:id="infoPanePlaceholder" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                <AnchorPane fx:id="resumePanePlaceholder" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                <AnchorPane fx:id="infoPanePlaceholder" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                             </AnchorPane>
                         </SplitPane>
                         <padding>

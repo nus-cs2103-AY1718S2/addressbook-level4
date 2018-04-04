@@ -59,7 +59,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
      */
     public void navigateToCard(Person person) {
         List<PersonCard> cards = getRootNode().getItems();
-        Optional<PersonCard> matchingCard = cards.stream().filter(card -> card.person.equals(person)).findFirst();
+        Optional<PersonCard> matchingCard = cards.stream().filter(card -> card.getPerson().equals(person)).findFirst();
 
         if (!matchingCard.isPresent()) {
             throw new IllegalArgumentException("Person does not exist.");
@@ -76,7 +76,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
      * Returns the person card handle of a person associated with the {@code index} in the list.
      */
     public PersonCardHandle getPersonCardHandle(int index) {
-        return getPersonCardHandle(getRootNode().getItems().get(index).person);
+        return getPersonCardHandle(getRootNode().getItems().get(index).getPerson());
     }
 
     /**
@@ -84,7 +84,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
      */
     public PersonCardHandle getPersonCardHandle(Person person) {
         Optional<PersonCardHandle> handle = getRootNode().getItems().stream()
-                .filter(card -> card.person.equals(person))
+                .filter(card -> card.getPerson().equals(person))
                 .map(card -> new PersonCardHandle(card.getRoot()))
                 .findFirst();
         return handle.orElseThrow(() -> new IllegalArgumentException("Person does not exist."));

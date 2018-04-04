@@ -107,7 +107,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person without tags to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
          */
-        Person toAdd = AMY;
+        Person toAdd = new PersonBuilder(AMY).withRating("-1", "-1", "-1", "-1").build();
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
                 + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + UNIVERSITY_DESC_AMY + " "
                 + EXPECTED_GRADUATION_YEAR_DESC_AMY + " "
@@ -259,10 +259,10 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: add to empty address book -> added */
         deleteAllPersons();
-        assertCommandSuccess(ALICE);
+        assertCommandSuccess(new PersonBuilder(ALICE).withRating("-1", "-1", "-1", "-1").build());
 
         /* Case: add a person with resume, command with parameters in random order -> added */
-        toAdd = AMY;
+        toAdd = new PersonBuilder(AMY).withRating("-1", "-1", "-1", "-1").build();;
         command = AddCommand.COMMAND_WORD + RESUME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY
                 + TAG_DESC_FRIEND + EMAIL_DESC_AMY + PROFILE_IMAGE_DESC_AMY + COMMENT_DESC_AMY
                 + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY + UNIVERSITY_DESC_AMY
@@ -270,11 +270,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person, missing resume -> added */
-        assertCommandSuccess(BOB);
+        assertCommandSuccess(new PersonBuilder(BOB).withRating("-1", "-1", "-1", "-1").build());
         deleteAllPersons();
 
         /* Case: add a person with tags, command with parameters in random order -> added */
-        toAdd = BOB;
+        toAdd = new PersonBuilder(BOB).withRating("-1", "-1", "-1", "-1").build();
         command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + PHONE_DESC_BOB + ADDRESS_DESC_BOB + NAME_DESC_BOB
                 + TAG_DESC_HUSBAND + EMAIL_DESC_BOB + PROFILE_IMAGE_DESC_BOB + COMMENT_DESC_BOB
                 + EXPECTED_GRADUATION_YEAR_DESC_BOB + UNIVERSITY_DESC_BOB
@@ -282,19 +282,19 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person, missing tags -> added */
-        assertCommandSuccess(HOON);
+        assertCommandSuccess(new PersonBuilder(HOON).withRating("-1", "-1", "-1", "-1").build());
 
         /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
 
         /* Case: filters the person list before adding -> added */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        assertCommandSuccess(IDA);
+        assertCommandSuccess(new PersonBuilder(IDA).withRating("-1", "-1", "-1", "-1").build());
 
         /* ------------------------ Perform add operation while a person card is selected --------------------------- */
 
         /* Case: selects first card in the person list, add a person -> added, card selection remains unchanged */
         selectPerson(Index.fromOneBased(1));
-        assertCommandSuccess(CARL);
+        assertCommandSuccess(new PersonBuilder(CARL).withRating("-1", "-1", "-1", "-1").build());
 
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
 

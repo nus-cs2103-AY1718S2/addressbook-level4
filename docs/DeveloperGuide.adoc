@@ -453,9 +453,7 @@ Currently the implementation of `loadDefaultPage()` reloads the `_BrowserPanel_`
 === Cloud storage support
 ==== Current implementation
 
-Formerly, there was no function to upload the data in the recipe book on to the cloud. All these data were only stored locally in a specific file on the user's computer.
-
-Currently, a new command `_UploadCommand_` has been added. `_UploadCommandParser_` takes in a `_String_` filename, adds an XML extension to it before parsing it to `_UploadCommand_` which then uploads the data within the application to Dropbox using the specified filename.
+A new command `_UploadCommand_` has been added to allow users to upload data in the recipe book onto the cloud. `_UploadCommandParser_` takes in and checks the `_String_` filename, adds an XML extension to it before saving it to `_CloudStorageUtil_` and parsing it to `_UploadCommand_`.
 Adding the XML extension is to make the command more user-friendly and to maintain integrity of the data since the application can only read data from files in an XML format.
 
 `_UploadCommandParser_` parses the user-input as shown below:
@@ -464,37 +462,54 @@ Adding the XML extension is to make the command more user-friendly and to mainta
 ----
 String XmlExtensionFilename = ParserUtil.parseFilename(filename);
 ----
-Because the file is being uploaded to the user's Dropbox account, their Dropbox account access token is needed and is stored in the variable `ACCESS_TOKEN`. This token is then used together
-with `_String_` `XmlExtensionFilename`, which was obtained from `_UploadCommandParser_`, in the `upload()` method as shown below:
+The `parseFilename` method will then call `isValidFilename` to make sure that the user input does not contain characters restricted by Dropbox for filenames.
 
 [source,java]
 ----
-private CommandResult upload() throws DbxException {
-    // Create Dropbox client
-    DbxRequestConfig config = DbxRequestConfig.newBuilder("dropbox/recirecipe").build();
-    DbxClientV2 client = new DbxClientV2(config, ACCESS_TOKEN);
-
-    // Upload RECIPE_BOOK_FILE which contains all the data on recipes to Dropbox
-    try (InputStream in = new FileInputStream(RECIPE_BOOK_FILE)) {
-        client.files().uploadBuilder("/" + XmlExtensionFilename).uploadAndFinish(in);
-    } catch (IOException IOE) {
-        return new CommandResult(MESSAGE_FAILURE);
-    }
-
-    return new CommandResult(MESSAGE_SUCCESS);
+private static final String FILENAME_VALIDATION_REGEX = "[^\\Q<>:/|.?\"\\*\\E\\s]+";
+/**
+ * Returns true if a given string is a valid filename.
+ */
+public static boolean isValidFilename(String test) {
+    return test.matches(FILENAME_VALIDATION_REGEX);
 }
 ----
-The `ACCESS_TOKEN` is currently hardcoded in, as shown below, but will be improved upon soon.
+Because the file is being uploaded to the user's Dropbox account, they will be prompted to authorize ReciRecipe if it is their first time connecting to Dropbox.
+After authorization the user will copy and paste the authorization code given by using the *`token`* command.
+The code will then be converted into a unique access token that will be stored in `CloudStorageUtil` for that session.
 
 [source,java]
 ----
-private static final String ACCESS_TOKEN = "example_of_legit_token_taken_from_dropbox";
+public static void processAuthorizationCode(String code) {
+    // Converts authorization code to access token
+    DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
+    DbxWebAuth webAuth = new DbxWebAuth(config, appInfo);
+    try {
+        DbxAuthFinish authFinish = webAuth.finishFromCode(code);
+        accessToken = authFinish.getAccessToken();
+    } catch (DbxException e) {
+        throw new AssertionError(UploadCommand.MESSAGE_FAILURE + " Invalid authorization code");
+    }
+    upload();
+}
+----
+Since the access token will be saved in the application for the current session, any subsequent calls to the *`upload`* command
+will skip the above `processAuthorizationCode` method and skip straight to the `upload()` method.
+
+Furthermore, to overcome the problem with conflicting filenames that already exist in the user's dropbox, we turned on the auto-renaming which will append a (#) to the filename while uploading.
+
+[source,java]
+----
+try (InputStream in = new FileInputStream(RECIPE_BOOK_FILE)) {
+        client.files().uploadBuilder("/" + uploadFilename)
+                .withAutorename(true)
+                .uploadAndFinish(in);
 ----
 
 ==== Design considerations
 
 ===== Aspect: Handling of the access token.
-* **Alternative 1 (current choice):** Save the access token within the application for future use.
+* **Alternative 1 (current choice):** Save the access token within the application for future use within that session.
 ** Pros: Convenience. User does not have to keep logging into their Dropbox account every time they want to upload. Since our application does not support multiple users, keeping them "logged in" is acceptable.
 ** Cons: Security concerns. Since the access token is meant to be a secret and there is no security aspect to our application at all, it is possible for a someone malicious to obtain this access token.
 * **Alternative 2:** One-time usage of the access token. Delete after using.

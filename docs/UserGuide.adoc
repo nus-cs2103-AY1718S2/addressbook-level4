@@ -442,6 +442,22 @@ Adds a medical appointment for Betsy on 19/3/2018 at 10am.
 * `aa John 23/3/2019 1430` +
 Adds a medical appointment for John on 23/3/2018 at 2:30pm.
 
+==== Viewing medical appointments by patient name: `viewappt` [coming in v1.3]
+
+Shows a list of medical appointments of the patient.
+
+*This command is only accessible to medical staffs.* +
+
+Format: `viewappt PATIENT_NAME` or `va PATIENT_NAME`
+
+Examples:
+
+* `viewappt Betsy` +
+List of medical appointments made by Betsy.
+
+* `va John` +
+List of medical appointments made by John.
+
 ==== Deleting a medical appointment by patient name and appointment index number: `delappt` [coming in v1.3]
 
 Deletes a medical appointment of the patient.
@@ -459,22 +475,6 @@ Delete a medical appointment of Betsy with index number 2.
 * `va John` +
 `da John 1` +
 Delete a medical appointment of John with index number 1.
-
-==== Viewing medical appointments by patient name: `viewappt` [coming in v1.3]
-
-Shows a list of medical appointments of the patient.
-
-*This command is only accessible to medical staffs.* +
-
-Format: `viewappt PATIENT_NAME` or `va PATIENT_NAME`
-
-Examples:
-
-* `viewappt Betsy` +
-List of medical appointments made by Betsy.
-
-* `va John` +
-List of medical appointments made by John.
 
 ==== Viewing medical appointments by month: `viewappt` [coming in v1.4]
 

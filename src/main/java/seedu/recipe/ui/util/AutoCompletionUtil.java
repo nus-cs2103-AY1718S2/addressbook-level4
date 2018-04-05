@@ -47,7 +47,6 @@ public class AutoCompletionUtil {
         prefixesForCommand.put("group", groupPrefixes);
 
         for (String command : APPLICATION_COMMANDS) {
-            System.out.println(command + " " + prefixesForCommand.containsKey(command));
             if (!prefixesForCommand.containsKey(command)) {
                 prefixesForCommand.put(command, new ArrayList<>());
             }

@@ -1,8 +1,8 @@
 package seedu.recipe.logic.parser;
 
 import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_GROUP_NAME;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INDEX;
 
 import java.util.Set;
 import java.util.stream.Stream;

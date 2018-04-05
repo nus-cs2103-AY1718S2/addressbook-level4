@@ -2,7 +2,6 @@ package seedu.recipe.logic.commands;
 
 import seedu.recipe.model.recipe.GroupName;
 import seedu.recipe.model.recipe.GroupPredicate;
-import seedu.recipe.model.recipe.Recipe;
 
 //@@author hoangduong1607
 

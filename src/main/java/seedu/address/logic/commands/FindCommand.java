@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
-import seedu.address.model.petpatient.PetPatientOwnerNricContainsKeywordsPredicate;
+import seedu.address.model.petpatient.PetPatient;
 
+//@@author wynonaK
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
@@ -24,6 +26,7 @@ public class FindCommand extends Command {
             + "Example: " + COMMAND_WORD + "-o n/alice bob charlie";
 
     private Predicate<Person> personPredicate = null;
+    private Predicate<PetPatient> petPatientPredicate = null;
     private int type = 0;
 
     public FindCommand(Predicate<Person> personPredicate) {
@@ -31,13 +34,19 @@ public class FindCommand extends Command {
         type = 1;
     }
 
+    public FindCommand(Predicate<PetPatient> petPatientPredicate, int petPatientIndicator) {
+        this.petPatientPredicate = petPatientPredicate;
+        type = petPatientIndicator;
+    }
+
+
     @Override
     public CommandResult execute() throws CommandException {
         switch (type) {
         case 1:
             return findOwner();
         case 2:
-            //return findPetPatient();
+            return findPetPatient();
         default:
             throw new CommandException(MESSAGE_USAGE);
         }
@@ -55,6 +64,17 @@ public class FindCommand extends Command {
     }
 
     /**
+     * Finds owners with given {@code predicate} in this {@code addressbook}.
+     */
+    private CommandResult findPetPatient() {
+        model.updateFilteredPetPatientList(petPatientPredicate);
+        updateOwnerListForPets();
+        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())
+                + "\n"
+                + getMessageForPetPatientListShownSummary(model.getFilteredPetPatientList().size()));
+    }
+
+    /**
      * Updates the filtered pet list with the changed owners in this {@code addressbook}.
      */
     private void updatePetListForOwner() {
@@ -62,9 +82,24 @@ public class FindCommand extends Command {
         for (Person person : model.getFilteredPersonList()) {
             nricKeywordsForPets.add(person.getNric().toString());
         }
-        PetPatientOwnerNricContainsKeywordsPredicate petPatientOwnerNricPredicate =
-                new PetPatientOwnerNricContainsKeywordsPredicate(nricKeywordsForPets);
-        model.updateFilteredPetPatientList(petPatientOwnerNricPredicate);
+        Predicate<PetPatient> petPatientNricPredicate =  petPatient -> nricKeywordsForPets.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getOwner().toString(), keyword));
+        model.updateFilteredPetPatientList(petPatientNricPredicate);
+    }
+
+    /**
+     * Updates the filtered person list with the changed pets in this {@code addressbook}.
+     */
+    private void updateOwnerListForPets() {
+        List<String> nricKeywordsForOwner = new ArrayList<>();
+        for (PetPatient petPatient : model.getFilteredPetPatientList()) {
+            if (!nricKeywordsForOwner.contains(petPatient.getOwner().toString())) {
+                nricKeywordsForOwner.add(petPatient.getOwner().toString());
+            }
+        }
+        Predicate<Person> ownerNricPredicate =  person -> nricKeywordsForOwner.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getNric().toString(), keyword));
+        model.updateFilteredPersonList(ownerNricPredicate);
     }
 
     @Override

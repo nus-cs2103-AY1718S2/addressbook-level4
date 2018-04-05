@@ -58,7 +58,7 @@ public class TypicalPersons {
             .withJobApplied("Software Engineer")
             .withRating("2.7", "3.9",
                     "2.5", "2.5")
-            .withResume(formPathFromFileName("alice.pdf"))
+            .withResumeLazy(formPathFromFileName("alice.pdf"))
             .withProfileImage(formImagePathFromFileName("elon.jpg"))
             .withComment("Alice!")
             .withInterviewDate(LocalDateTime.of(2018, Month.APRIL, 2, 14, 0, 0))

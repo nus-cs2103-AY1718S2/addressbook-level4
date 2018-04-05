@@ -54,6 +54,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_RESUME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
@@ -251,6 +252,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: edit a person with new values same as another person's values but with different tags -> rejected */
+        index = INDEX_THIRD_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + UNIVERSITY_DESC_BOB + EXPECTED_GRADUATION_YEAR_DESC_BOB + MAJOR_DESC_BOB
                 + GRADE_POINT_AVERAGE_DESC_BOB + JOB_APPLIED_DESC_BOB + RESUME_DESC_BOB + PROFILE_IMAGE_DESC_BOB

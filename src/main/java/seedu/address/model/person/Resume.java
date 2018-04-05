@@ -140,6 +140,10 @@ public class Resume {
         return false;
     }
 
+    public boolean isHashed() {
+        return isHashed;
+    }
+
     @Override
     public String toString() {
         return userInput;
@@ -149,11 +153,17 @@ public class Resume {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Resume // instanceof handles nulls
-                && ((isNull(this.value) && isNull(((Resume) other).value)) //both value are null
+                && ((this.value == null && ((Resume) other).value == null) //both value are null
                     || (isHashed && ((Resume) other).isHashed) ? isHashEqual(this.value, ((Resume) other).value)
                                 : this.userInput.equals(((Resume) other).userInput))); // state check
     }
 
+    /**
+     * Checks whether the hash of two resume are the same
+     * @param first resume
+     * @param second resume
+     * @return same as true or false otherwise
+     */
     private boolean isHashEqual(String first, String second) {
         assert(first.split("_").length == 2);
         String firstHash = first.split("_")[1];

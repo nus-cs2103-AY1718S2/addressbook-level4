@@ -13,13 +13,14 @@ import java.util.Arrays;
 import javax.xml.bind.DatatypeConverter;
 
 import org.junit.Test;
+
 import seedu.address.model.person.Resume;
 
 public class ResumeUtilTest {
     private static final String TEST_DATA_FOLDER = "src/test/data/ResumeTest/";
 
     @Test
-    public void process_validResume_FileCopied() {
+    public void process_validResume_fileCopied() {
         Resume resume = new Resume(formFilePath("1 2.pdf"));
         Resume processed = null;
         try {
@@ -54,7 +55,7 @@ public class ResumeUtilTest {
     }
 
     @Test
-    public void process_differentResumes_DifferentHash() {
+    public void process_differentResumes_differentHash() {
         Resume resume1 = new Resume(formFilePath("1 2.pdf"));
         Resume resume2 = new Resume(formFilePath("alice.pdf"));
         Resume processed1 = null;

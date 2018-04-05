@@ -262,7 +262,7 @@ public class XmlAdaptedPerson {
         if (!isNull(this.resume) && !Resume.isValidResume(this.resume)) {
             resume = new Resume(null);
         } else {
-            resume = new Resume(this.resume);
+            resume = new Resume(this.resume, this.resume);
         }
 
         final ProfileImage profileImage;

@@ -7,17 +7,25 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
-import java.util.Arrays;
 
 import javax.xml.bind.DatatypeConverter;
 
 import seedu.address.model.person.Resume;
 import seedu.address.storage.ResumeFileStorage;
 
+/**
+ * Handles resume file in the data folder
+ */
 public class ResumeUtil {
-    public static Resume process(Resume resume) throws IOException{
+    /**
+     * Processes the resume into the correct resume name
+     * @param resume
+     * @return processed resume
+     * @throws IOException
+     */
+    public static Resume process(Resume resume) throws IOException {
         String filePath = resume.value;
-        if(filePath == null){
+        if (filePath == null) {
             return new Resume(null);
         }
         String fullPath = System.getProperty("user.dir") + File.separator + filePath;
@@ -49,7 +57,13 @@ public class ResumeUtil {
         ResumeFileStorage.copyResumeFileToDataFolder(fullPath, newFileName);
     }
 
+    /**
+     * cleans Data Folder when there is a DuplicatePersonException
+     * @param resume the resume to be deleted in folder
+     */
     public static void cleanUpDataFolder(Resume resume) {
-        ResumeFileStorage.deleteUnreferencedResume(resume.value);
+        if (resume.isHashed()) {
+            ResumeFileStorage.deleteUnreferencedResume(resume.value);
+        }
     }
 }

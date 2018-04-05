@@ -16,6 +16,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_RESUME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_UNIVERSITY;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -72,13 +73,19 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseJobApplied(argMultimap.getValue(PREFIX_JOB_APPLIED))
                     .ifPresent(editPersonDescriptor::setJobApplied);
 
-            parseResumeForEdit(argMultimap.getValue(PREFIX_RESUME)).ifPresent(editPersonDescriptor::setResume);
+            Optional<Resume> parsedResume = parseResumeForEdit(argMultimap.getValue(PREFIX_RESUME));
+            if (parsedResume.isPresent()) {
+                Resume processedResume = ResumeUtil.process(parsedResume.get());
+                editPersonDescriptor.setResume(processedResume);
+            }
             parseProfileImageForEdit(argMultimap.getValue(PREFIX_IMAGE))
                     .ifPresent(editPersonDescriptor::setProfileImage);
             parseCommentForEdit(argMultimap.getValue(PREFIX_COMMENT)).ifPresent(editPersonDescriptor::setComment);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
+        } catch (IOException ioe) {
+            throw new ParseException(ioe.getMessage(), ioe);
         }
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {

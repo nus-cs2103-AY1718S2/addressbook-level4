@@ -225,6 +225,14 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Resume} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withResumeLazy(String resume) {
+        this.resume = new Resume(resume);
+        return this;
+    }
+
     //@@author Ang-YC
     /**
      * Sets the {@code ProfileImage} of the {@code Person} that we are building.

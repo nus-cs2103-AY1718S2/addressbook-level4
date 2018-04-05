@@ -426,7 +426,7 @@ List of patients in the visiting queue will be displayed.
 
 The commands listed in this section are commands that pertain to the patient's appointment.
 
-==== Adding a medical appointment with: `addappt` [coming in v1.4]
+==== Adding a medical appointment with: `addappt` [since v1.4]
 
 Adds a medical appointment with patient name, date, time.
 
@@ -442,7 +442,7 @@ Adds a medical appointment for Betsy on 19/3/2018 at 10am.
 * `aa John 23/3/2019 1430` +
 Adds a medical appointment for John on 23/3/2018 at 2:30pm.
 
-==== Viewing medical appointments by patient name: `viewappt` [coming in v1.3]
+==== Viewing medical appointments by patient name: `viewappt` [since v1.3]
 
 Shows a list of medical appointments of the patient.
 
@@ -458,7 +458,7 @@ List of medical appointments made by Betsy.
 * `va John` +
 List of medical appointments made by John.
 
-==== Deleting a medical appointment by patient name and appointment index number: `delappt` [coming in v1.3]
+==== Deleting a medical appointment by patient name and appointment index number: `delappt` [since v1.3]
 
 Deletes a medical appointment of the patient.
 
@@ -476,7 +476,7 @@ Delete a medical appointment of Betsy with index number 2.
 `da John 1` +
 Delete a medical appointment of John with index number 1.
 
-==== Viewing medical appointments in calendar: `viewappt` [coming in v1.4]
+==== Viewing medical appointments in calendar: `viewappt` [since v1.4]
 
 Shows a list of medical appointments in calendar month view.
 

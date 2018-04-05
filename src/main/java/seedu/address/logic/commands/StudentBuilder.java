@@ -146,8 +146,12 @@ public class StudentBuilder {
         return this;
     }
 
+    /**
+     * Creates and returns the Student object with the current attributes.
+     */
     public Student build() {
-        return new Student(name, phone, email, address, programmingLanguage, tags, favourite, profilePicturePath);
+        return new Student(uniqueKey, name, phone, email, address, programmingLanguage, tags, favourite, dashboard,
+                profilePicturePath);
     }
 
     /**

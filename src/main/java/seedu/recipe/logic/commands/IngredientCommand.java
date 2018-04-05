@@ -35,7 +35,7 @@ public class IngredientCommand extends Command {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
+        return other == this // short circuit if they are the same object
                 || (other instanceof IngredientCommand // instanceof handles nulls
                 && this.predicate.equals(((IngredientCommand) other).predicate)); // state check
     }

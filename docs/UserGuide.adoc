@@ -124,7 +124,7 @@ Schedule the interview of the 2nd person to be 14 March at 2pm.
 
 === Locating persons by exact keyword search: `find` `[since v1.2]`
 
-Finds persons whose fields contain any of the given keywords. +
+Finds persons whose fields contain any of the given **exact** keywords. +
 
 Option 1: `find KEYWORD [MORE_KEYWORDS]`
 

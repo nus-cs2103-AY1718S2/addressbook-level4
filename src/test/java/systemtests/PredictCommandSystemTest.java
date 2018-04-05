@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import seedu.address.logic.GradientDescent;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -38,6 +39,20 @@ public class PredictCommandSystemTest extends AddressBookSystemTest {
             .withActualSpending(2000.0)
             .withAge(20)
             .build();
+
+    private Person extremeLow1 = new PersonBuilder()
+            .withName("extremeLow1")
+            .withIncome(40.0)
+            .withActualSpending(2000.0)
+            .withAge(20)
+            .build();
+    private Person extremehigh1 = new PersonBuilder()
+            .withName("extremeHigh1")
+            .withIncome(1234568989.0)
+            .withActualSpending(10.0)
+            .withAge(20)
+            .build();
+
     private Person new1 = new PersonBuilder()
             .withName("new1")
             .withIncome(10000.0)
@@ -45,27 +60,27 @@ public class PredictCommandSystemTest extends AddressBookSystemTest {
             .withAge(20)
             .build();
     private Person new2 = new PersonBuilder()
-            .withName("new1")
+            .withName("new2")
             .withIncome(100.0)
             .withActualSpending(0.0)
             .withAge(20)
             .build();
 
 
-
+    //@author SoilChang
     @Test
     public void predict() {
+
+        //Case: 1: normal prediction
         Model model = getModel();
         model.resetData(new AddressBook());
-
-
-        //prepare data
         try {
             model.addPerson(old1);
             model.addPerson(old2);
             model.addPerson(old3);
             model.addPerson(new1);
         } catch (DuplicatePersonException dpe) {
+            assert(dpe == null);
             System.out.println(dpe.getMessage());
 
             System.out.println("Data Preparation Failed");
@@ -76,6 +91,7 @@ public class PredictCommandSystemTest extends AddressBookSystemTest {
         try {
             gd.solve();
         } catch (CommandException ce) {
+            assert(ce == null);
             System.out.println(ce.getMessage());
             return;
         }
@@ -87,18 +103,18 @@ public class PredictCommandSystemTest extends AddressBookSystemTest {
         assertEquals(500.0, p4es, 5.0);
 
 
-        //test 2
+        //test 2: 2 users
         model.resetData(new AddressBook());
         GradientDescent.resetWeights();
         //prepare data
         try {
+            model.addPerson(new2);
             model.addPerson(old1);
             model.addPerson(old2);
             model.addPerson(old3);
-            model.addPerson(new2);
         } catch (DuplicatePersonException dpe) {
+            assert( dpe == null);
             System.out.println(dpe.getMessage());
-
             System.out.println("Data Preparation Failed");
             return;
         }
@@ -109,11 +125,39 @@ public class PredictCommandSystemTest extends AddressBookSystemTest {
             System.out.println(ce.getMessage());
             return;
         }
-
-        p4es = model.getFilteredPersonList().get(3).getExpectedSpending().value;
+        p4es = model.getFilteredPersonList().get(0).getExpectedSpending().value;
         assertEquals(0.05, GradientDescent.getWeights().get(0), 0.01);
         assertEquals(5.0, p4es, 1.0);
 
+
+        //test 3: extreme value, divergent solution
+        model.resetData(new AddressBook());
+        GradientDescent.resetWeights();
+        //prepare data
+        try {
+            model.addPerson(new2);
+            model.addPerson(extremehigh1);
+            model.addPerson(old3);
+        } catch (DuplicatePersonException dpe) {
+            assert(dpe == null);
+            System.out.println(dpe.getMessage());
+
+            System.out.println("Data Preparation Failed");
+            return;
+        }
+
+        try {
+            CommandResult result = gd.solve();
+            assertEquals(result.feedbackToUser, GradientDescent.MESSAGE_PREDICTION_DIVERGENT);
+        } catch (CommandException ce) {
+            assert(ce == null);
+            System.out.println(ce.getMessage());
+            return;
+        }
+
+
+        p4es = model.getFilteredPersonList().get(0).getExpectedSpending().value;
+        assertEquals(0.0, p4es, 1.0);
 
     }
 

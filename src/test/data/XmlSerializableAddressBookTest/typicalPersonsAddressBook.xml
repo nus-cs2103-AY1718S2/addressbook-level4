@@ -9,7 +9,7 @@
         <order>Chicken Rice</order>
         <!-- @@author -->
         <email>alice@example.com</email>
-        <address>123, Jurong West Ave 6,#08-111</address>
+        <address>123, Jurong West Ave 6, #08-111</address>
         <!-- @@author ZacZequn -->
         <halal>Non-halal</halal>
         <vegetarian>Non-vegetarian</vegetarian>
@@ -43,6 +43,7 @@
         <halal>Non-halal</halal>
         <vegetarian>Non-vegetarian</vegetarian>
         <!-- @@author -->
+        <tagged>friends</tagged>
     </persons>
     <persons>
         <name>Daniel Meier</name>
@@ -56,6 +57,7 @@
         <halal>Non-halal</halal>
         <vegetarian>Non-vegetarian</vegetarian>
         <!-- @@author -->
+        <tagged>friends</tagged>
     </persons>
     <persons>
         <name>Elle Meyer</name>
@@ -69,6 +71,7 @@
         <halal>Non-halal</halal>
         <vegetarian>Non-vegetarian</vegetarian>
         <!-- @@author -->
+        <tagged>friends</tagged>
     </persons>
     <persons>
         <name>Fiona Kunz</name>
@@ -82,6 +85,7 @@
         <halal>Non-halal</halal>
         <vegetarian>Non-vegetarian</vegetarian>
         <!-- @@author -->
+        <tagged>friends</tagged>
     </persons>
     <persons>
         <name>George Best</name>
@@ -95,6 +99,7 @@
         <halal>Non-halal</halal>
         <vegetarian>Non-vegetarian</vegetarian>
         <!-- @@author -->
+        <tagged>friends</tagged>
     </persons>
     <tags>friends</tags>
     <tags>owesMoney</tags>

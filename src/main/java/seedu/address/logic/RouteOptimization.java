@@ -122,8 +122,8 @@ public class RouteOptimization {
             String destination = filteredAddresses.get(i);
             paths.put(labelRoutes(origin, destination), distance.getDistance(origin, destination));
         }
+        dummy = sort.cleanSorted(sort.sortByComparator(paths));
         if (dummy.entrySet().iterator().hasNext()) {
-            dummy = sort.cleanSorted(sort.sortByComparator(paths));
             Map.Entry<String, Double> entry = dummy.entrySet().iterator().next();
             next = entry.getKey().split("_")[1];
             optimizedRoute.add(next);
@@ -132,6 +132,7 @@ public class RouteOptimization {
                 optimizedRoute = getDistances(filteredAddresses, next, optimizedRoute);
             }
         }
+
         return optimizedRoute;
     }
 

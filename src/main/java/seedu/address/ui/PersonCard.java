@@ -52,6 +52,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label participation;
+    @FXML
     private FlowPane tags;
     @FXML
     private ImageView displayPic;
@@ -65,6 +67,7 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
+        participation.setText(person.getParticipation().toString());
         initTags(person);
         Image image = DisplayPicStorage.fetchDisplay(person.getDisplayPic());
         displayPic.setImage(image);

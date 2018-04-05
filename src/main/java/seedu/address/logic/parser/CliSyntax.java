@@ -16,5 +16,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_TASK_DESC = new Prefix("desc/");
     public static final Prefix PREFIX_DEADLINE = new Prefix("by/");
     public static final Prefix PREFIX_PRIORITY = new Prefix("priority/");
+    public static final Prefix PREFIX_MARK_PARTICIPATION = new Prefix("marks/");
 
 }

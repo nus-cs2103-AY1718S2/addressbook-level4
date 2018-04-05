@@ -108,7 +108,6 @@ public class Recipe {
     }
 
     public void addNewGroup(GroupName groupName) {
-        System.out.println(groupName);
         groupNames.add(groupName);
     }
 

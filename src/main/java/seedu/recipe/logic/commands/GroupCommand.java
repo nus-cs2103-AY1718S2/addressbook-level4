@@ -17,12 +17,10 @@ import seedu.recipe.model.recipe.Recipe;
 public class GroupCommand extends Command {
 
     public static final String COMMAND_WORD = "group";
-
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Groups the recipes identified by the indices numbers used in the last recipe listing.\n"
             + "Parameters: GROUP_NAME INDEX [INDEX] (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " Best 1 3";
-
     public static final String MESSAGE_RECIPE_GROUP_SUCCESS = "Created New Recipe Group: %s";
 
     private GroupName groupName;

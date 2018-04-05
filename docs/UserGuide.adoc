@@ -269,13 +269,15 @@ Return the distance from the headquarter to the 1st person name Betsy in the add
 
 === Emailing the customers : `email`
 
-Sends an email to the current list of customers to remind them when their delivery is coming. +
+Sends an email to the filtered list of customers to remind them when their delivery is coming
+and the itinerary to the driver with the list of all the addresses
+ordered so that it corresponds to the shortest journey. +
 Format: `email`
 
-This command will email every user listed on the UI screen when the email command is fun
+This command will email every user listed on the UI screen when the email command is run. +
 
-If you want to email a specific person or specific set of people first run the find/filter commands to limit the
-displayed list
+[NOTE]
+Remind to first filter the customers by date.
 
 === Exiting the program : `exit`
 

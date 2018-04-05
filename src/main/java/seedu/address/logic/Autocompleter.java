@@ -22,6 +22,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.person.Person;
 
+//@@author mattbuot
 /**
  * Implements methods to autocomplete commands and fields in a user query
  */

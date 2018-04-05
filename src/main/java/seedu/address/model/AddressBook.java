@@ -106,7 +106,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setTags(new HashSet<>(newData.getTagList()));
         List<Appointment> syncedAppointmentList = newData.getAppointmentList().stream()
-                .map(this::syncWithAppointmentMasterTagList)
+                .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
         try {
             setAppointments(syncedAppointmentList);
@@ -167,6 +167,42 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the given pet patient {@code target} in the list with {@code editedPetPatient}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPetPatient}.
+     *
+     * @throws DuplicatePetPatientException if updating the pet patient's details causes the pet patient to be
+     *                                      equivalent to another existing pet patient in the list.
+     * @throws PetPatientNotFoundException  if {@code target} could not be found in the list.
+     * @see #syncWithMasterTagList(PetPatient)
+     */
+    public void updatePetPatient(PetPatient target, PetPatient editedPetPatient)
+            throws DuplicatePetPatientException, PetPatientNotFoundException {
+        requireNonNull(editedPetPatient);
+
+        PetPatient syncEditedPetPatient = syncWithMasterTagList(editedPetPatient);
+        petPatients.setPetPatient(target, syncEditedPetPatient);
+        removeUselessTags();
+    }
+
+    /**
+     * Replaces the given appointment {@code target} in the list with {@code editedAppointment}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedAppointment}.
+     *
+     * @throws DuplicateAppointmentException if updating the appointment's details causes the appointment to be
+     *                                       equivalent to another existing appointment in the list.
+     * @throws AppointmentNotFoundException  if {@code target} could not be found in the list.
+     * @see #syncWithMasterTagList(Appointment)
+     */
+    public void updateAppointment(Appointment target, Appointment editedAppointment)
+            throws DuplicateAppointmentException, AppointmentNotFoundException {
+        requireNonNull(editedAppointment);
+
+        Appointment syncEditedPetPatient = syncWithMasterTagList(editedAppointment);
+        appointments.setAppointment(target, syncEditedPetPatient);
+        removeUselessTags();
+    }
+
+    /**
      * Adds an appointment.
      * Also checks the new appointment's tags and updates {@link #tags} with any new tags found,
      * and updates the Tag objects in the appointment to point to those in {@link #tags}.
@@ -174,7 +210,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws DuplicateAppointmentException if an equivalent person already exists.
      */
     public void addAppointment(Appointment a) throws DuplicateAppointmentException, DuplicateDateTimeException {
-        Appointment appointment = syncWithAppointmentMasterTagList(a);
+        Appointment appointment = syncWithMasterTagList(a);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any appointment
         // in the appointment list.
@@ -297,7 +333,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @return a copy of this {@code appointment} such that every tag in this appointment
      * points to a Tag object in the master list.
      */
-    private Appointment syncWithAppointmentMasterTagList(Appointment appointment) {
+    private Appointment syncWithMasterTagList(Appointment appointment) {
         final UniqueTagList appointmentTags = new UniqueTagList(appointment.getAppointmentTags());
         tags.mergeFrom(appointmentTags);
 

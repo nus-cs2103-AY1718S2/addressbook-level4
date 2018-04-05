@@ -1,11 +1,14 @@
 package systemtests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-//import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
@@ -38,6 +41,8 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
+import guitests.GuiRobot;
+import javafx.scene.input.KeyCode;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
@@ -54,6 +59,7 @@ import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
+    private final GuiRobot guiRobot = new GuiRobot();
 
     @Test
     public void add() throws Exception {
@@ -182,6 +188,36 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
     }
 
+    //@@author jonleeyz
+    @Test
+    public void populateAddCommandTemplate() {
+        //use accelerator
+        getCommandBox().click();
+        populateAddCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        getResultDisplay().click();
+        populateAddCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        /**Unusual: Ctrl + Space does not work when focus is on PersonListPanel.
+         * Although most accelerators work fine when focus is on PersonListPanel,
+         * the Space key does not play nice with the PersonListPanel.
+         */
+        getPersonListPanel().click();
+        populateAddCommandUsingAccelerator();
+        assertPopulationFailure();
+
+        getBrowserPanel().click();
+        populateAddCommandUsingAccelerator();
+        assertPopulationFailure();
+
+        //use menu button
+        populateAddCommandUsingMenu();
+        assertPopulationSuccess();
+    }
+    //@@author
+
     /**
      * Executes the {@code AddCommand} that adds {@code toAdd} to the model and asserts that the,<br>
      * 1. Command box displays an empty string.<br>
@@ -253,4 +289,54 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandBoxAndResultDisplayShowsErrorStyle();
         assertStatusBarUnchanged();
     }
+
+    //@@author jonleeyz
+    /**
+     * Asserts that population of the {@code CommandBox} with the AddCommand
+     * template was successful.
+     */
+    private void assertPopulationSuccess() {
+        AddCommand addCommand = new AddCommand();
+        assertEquals(addCommand.getTemplate(), getCommandBox().getInput());
+        assertEquals(addCommand.getUsageMessage(), getResultDisplay().getText());
+        guiRobot.pauseForHuman();
+
+        executeCommand("invalid command");
+        assertTrue(getCommandBox().clear());
+        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Asserts that population of the {@code CommandBox} with the AddCommand
+     * template was unsuccessful.
+     */
+    private void assertPopulationFailure() {
+        AddCommand addCommand = new AddCommand();
+        assertNotEquals(addCommand.getTemplate(), getCommandBox().getInput());
+        assertNotEquals(addCommand.getUsageMessage(), getResultDisplay().getText());
+        guiRobot.pauseForHuman();
+
+        executeCommand("invalid command");
+        assertTrue(getCommandBox().clear());
+        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the AddCommand template
+     * using the associated accelerator in {@code MainWindow}.
+     */
+    private void populateAddCommandUsingAccelerator() {
+        populateUsingAccelerator(KeyCode.CONTROL, KeyCode.SPACE);
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the AddCommand template
+     * using the menu bar in {@code MainWindow}.
+     */
+    private void populateAddCommandUsingMenu() {
+        populateUsingMenu("Actions", "Add a Person...");
+    }
+    //@@author
 }

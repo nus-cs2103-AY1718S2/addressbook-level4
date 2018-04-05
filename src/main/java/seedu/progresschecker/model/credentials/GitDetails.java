@@ -17,7 +17,7 @@ public class GitDetails {
     /**
      * Every field must be present and not null.
      */
-    public GitDetails(Username username, Repository repository, Passcode passcode) {
+    public GitDetails(Username username, Passcode passcode, Repository repository) {
         requireAllNonNull(username, repository, passcode);
         this.username = username;
         this.repository = repository;

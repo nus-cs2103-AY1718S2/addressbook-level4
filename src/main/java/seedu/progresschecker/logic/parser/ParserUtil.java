@@ -235,7 +235,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> bodu} into an {@code Optional<Body>} if {@code body} is present.
+     * Parses a {@code Optional<String> body} into an {@code Optional<Body>} if {@code body} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Body> parseBody(Optional<String> body) throws IllegalValueException {
@@ -244,9 +244,8 @@ public class ParserUtil {
     }
 
     /**
-     * 
-     * @param username
-     * @return
+     * Parses a {@code String username} into a {@code Username}.
+     * Leading and trailing whitespaces will be trimmed.
      */
     public static Username parseGitUsername(String username) {
         requireNonNull(username);
@@ -255,10 +254,8 @@ public class ParserUtil {
     }
 
     /**
-     * 
-     * @param username
-     * @return
-     * @throws IllegalValueException
+     Parses a {@code Optional<String> username} into an {@code Optional<Username>} if {@code username} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Username> parseGitUsername(Optional<String> username) throws IllegalValueException {
         requireNonNull(username);
@@ -266,9 +263,7 @@ public class ParserUtil {
     }
 
     /**
-     *
-     * @param passcode
-     * @return
+     * Parses a {@code String passcode} into a {@code Passcode}.
      */
     public static Passcode parsePasscode(String passcode) {
         requireNonNull(passcode);
@@ -276,10 +271,8 @@ public class ParserUtil {
     }
 
     /**
-     *
-     * @param passcode
-     * @return
-     * @throws IllegalValueException
+     Parses a {@code Optional<String> Passcode} into an {@code Optional<Passcode>} if {@code passcpde} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Passcode> parsePasscode(Optional<String> passcode) throws IllegalValueException {
         requireNonNull(passcode);
@@ -287,9 +280,8 @@ public class ParserUtil {
     }
 
     /**
-     *
-     * @param repository
-     * @return
+     * Parses a {@code String repositroy} into a {@code Repository}.
+     * Leading and trailing whitespaces will be trimmed.
      */
     public static Repository parseRepository(String repository) {
         requireNonNull(repository);
@@ -298,10 +290,8 @@ public class ParserUtil {
     }
 
     /**
-     *
-     * @param repository
-     * @return
-     * @throws IllegalValueException
+     Parses a {@code Optional<String> Repository} into an {@code Optional<Repository>} if {@code repository} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Repository> parseRepository(Optional<String> repository) throws IllegalValueException {
         requireNonNull(repository);

@@ -169,7 +169,7 @@ public class ModelManager extends ComponentManager implements Model {
     private void setUser(Account account) {
         user = user.ofNullable(account);
     }
-    
+
     //@@author kush1509
     @Override
     public synchronized void deleteJob(Job target) throws JobNotFoundException {

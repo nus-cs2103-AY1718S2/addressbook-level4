@@ -48,7 +48,7 @@ public class SearchCommandSystemTest extends RecipeBookSystemTest {
         int noOfResults = wikiaQueryHandler.getQueryNumberOfResults();
 
         if (noOfResults == 0) {
-            assertApplicationDisplaysExpected("", SearchCommand.MESSAGE_FAILURE, model);
+            assertApplicationDisplaysExpected("", SearchCommand.MESSAGE_NO_RESULT, model);
         } else {
             assertApplicationDisplaysExpected("", String.format(SearchCommand.MESSAGE_SUCCESS, noOfResults), model);
             assertBrowserPanel(wikiaQueryHandler.getRecipeQueryUrl());

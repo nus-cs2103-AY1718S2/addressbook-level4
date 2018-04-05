@@ -28,7 +28,7 @@ public class WikiaQueryHandler implements WikiaQuery {
     private String rawDataString;
     private JsonObject rawDataJson;
 
-    public WikiaQueryHandler(String recipeToSearch) {
+    public WikiaQueryHandler(String recipeToSearch) throws AssertionError {
         requireNonNull(recipeToSearch);
         this.recipeToSearch = recipeToSearch;
         loadUrl();
@@ -77,7 +77,7 @@ public class WikiaQueryHandler implements WikiaQuery {
      * Reads the HTTP connection and print data to {@code rawDataString}.
      * Adapted from https://stackoverflow.com/questions/1485708/how-do-i-do-a-http-get-in-java
      */
-    private void getRawData() {
+    private void getRawData() throws AssertionError {
         requireNonNull(queryUrl);
         requireNonNull(httpUrlConnection);
 

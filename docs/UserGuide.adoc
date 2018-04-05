@@ -610,8 +610,8 @@ A: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue
 | Shortcut                  |   Function
 
 | kbd:[Enter]               |   Command submission
-| kbd:kbd:[&uarr;]          |   Previous command
-| kbd:kbd:[&darr;]          |   Next command
+| kbd:[Ctrl] + kbd:[&uarr;] |   Previous command
+| kbd:[Ctrl] + kbd:[&darr;] |   Next command
 | kbd:[Shift] + kbd:[Enter] |   New line in command
 | kbd:[Shift] + kbd:[Space] |   Show command suggestions
 | kbd:[Tab]                 |   Next field in command

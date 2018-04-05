@@ -2,6 +2,20 @@
 package seedu.recipe.ui.parser;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.recipe.testutil.WikiaRecipes.BEEF_INGREDIENT;
+import static seedu.recipe.testutil.WikiaRecipes.CHICKEN_INGREDIENT;
+import static seedu.recipe.testutil.WikiaRecipes.CHICKEN_INSTRUCTION;
+import static seedu.recipe.testutil.WikiaRecipes.CHICKEN_NAME;
+import static seedu.recipe.testutil.WikiaRecipes.CHICKEN_RICE_IMAGE_URL;
+import static seedu.recipe.testutil.WikiaRecipes.UGANDAN_INGREDIENT;
+import static seedu.recipe.testutil.WikiaRecipes.UGANDAN_INSTRUCTION;
+import static seedu.recipe.testutil.WikiaRecipes.UGANDAN_NAME;
+import static seedu.recipe.testutil.WikiaRecipes.WIKIA_CHICKEN_ADD_COMMAND;
+import static seedu.recipe.testutil.WikiaRecipes.WIKIA_NOT_RECIPE;
+import static seedu.recipe.testutil.WikiaRecipes.WIKIA_RECIPE_URL_BEEF;
+import static seedu.recipe.testutil.WikiaRecipes.WIKIA_RECIPE_URL_CHICKEN;
+import static seedu.recipe.testutil.WikiaRecipes.WIKIA_RECIPE_URL_UGANDAN;
+import static seedu.recipe.testutil.WikiaRecipes.WIKIA_UGANDAN_ADD_COMMAND;
 
 import java.io.IOException;
 
@@ -15,21 +29,19 @@ import seedu.recipe.ui.GuiUnitTest;
 
 public class WikiaParserTest extends GuiUnitTest {
 
-    private static final String WIKIA_RECIPE_URL_A = "http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice";
-    private static final String WIKIA_RECIPE_URL_B = "http://recipes.wikia.com/wiki/Beef_Tenderloin_with_Madeira_Sauce";
-    private static final String WIKIA_NOT_RECIPE = "http://recipes.wikia.com/d/f?sort=latest";
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private WikiaParser wikiaParserA;
-    private WikiaParser wikiaParserB;
+    private WikiaParser wikiaParserChicken;
+    private WikiaParser wikiaParserBeef;
+    private WikiaParser wikiaParserUgandan;
     private WikiaParser wikiaParserNotRecipe;
 
     @Before
     public void setUp() throws IOException {
-        wikiaParserA = new WikiaParser(Jsoup.connect(WIKIA_RECIPE_URL_A).get());
-        wikiaParserB = new WikiaParser(Jsoup.connect(WIKIA_RECIPE_URL_B).get());
+        wikiaParserChicken = new WikiaParser(Jsoup.connect(WIKIA_RECIPE_URL_CHICKEN).get());
+        wikiaParserUgandan = new WikiaParser(Jsoup.connect(WIKIA_RECIPE_URL_UGANDAN).get());
+        wikiaParserBeef = new WikiaParser(Jsoup.connect(WIKIA_RECIPE_URL_BEEF).get());
         wikiaParserNotRecipe = new WikiaParser(Jsoup.connect(WIKIA_NOT_RECIPE).get());
     }
 
@@ -51,110 +63,39 @@ public class WikiaParserTest extends GuiUnitTest {
 
     @Test
     public void getName_validRecipes_returnsResult() throws Exception {
-        assertEquals(wikiaParserA.getName(), "Hainanese Chicken Rice");
-        assertEquals(wikiaParserB.getName(), "Beef Tenderloin with Madeira Sauce");
+        assertEquals(wikiaParserChicken.getName(), CHICKEN_NAME);
+        assertEquals(wikiaParserUgandan.getName(), UGANDAN_NAME);
     }
 
     @Test
     public void getIngredient_validRecipes_returnsResult() throws Exception {
-        assertEquals(wikiaParserA.getIngredient(), "chicken, salt, spring onion, pandan leaves, "
-                + "ginger, ginger, garlic, cinnamon, cloves, star anise, chicken broth, pandan leaves, salt,"
-                + " light soy sauce, sesame oil, cucumber, tomatoes, coriander, lettuce, pineapple, fresh "
-                + "chillies, ginger, garlic, vinegar, fish sauce, sugar, sweet soy sauce");
-        assertEquals(wikiaParserB.getIngredient(), "1 cup of garlic, 2 cups of mustard, 3 tbs chopped "
-                + "rosemary, 1 cup chopped thyme, 2 tsp garlic, 2 tsp vegtebale oil, 4 tsp salt, 1 tsp pepper, "
-                + "3 cups of water, 4 tbs butter, 2 cups of red wine, 1 cup of garlic, 2 1/2 cups of corn, "
-                + "4 cup of water, 2 tomatoes, 1 tsp chopped thyme, 1/2 tsp each sea salt and pepper");
+        assertEquals(wikiaParserBeef.getIngredient(), BEEF_INGREDIENT);
+        assertEquals(wikiaParserChicken.getIngredient(), CHICKEN_INGREDIENT);
+        assertEquals(wikiaParserUgandan.getIngredient(), UGANDAN_INGREDIENT);
     }
 
     @Test
     public void getInstruction_validRecipes_returnsResult() throws Exception {
-        assertEquals(wikiaParserA.getInstruction(),
-                "Boil water with spring Onion, ginger and pandan leaves, put in Chicken and cook till done,"
-                        + " do not over cook. briefly dip in cold water and set aside to cool. Keep broth heated.\n"
-                        + "Wash rice and drain. Finely shred ginger and garlic, fry in oil with cloves, cinammon and "
-                        + "star anise till fragrant, add in rice and fry for several minutes. Transfer into rice "
-                        + "cooker, add chicken broth, pinch of salt, pandan leaves and start cooking.\n"
-                        + "Put all chili sauce ingredient in a mixer and grind till fine.\n"
-                        + "Slice and arrange tomatoes and cucumbers on a big plate, cut Chicken into small pieces and p"
-                        + "ut on top. Splash some light soy sauce and sesame oil over, throw a bunch of coriander "
-                        + "on top.\nNext, Put broth in a bowl with lettuce, get ready chili sauce and sweet "
-                        + "soy sauce. #Serve rice on a plate with spoon and folk.");
-        assertEquals(wikiaParserB.getInstruction(),
-                "Heat oven to 475 degrees and prepare a Large rimmed baking sheet coated with cooking spray.\n"
-                        + "Spread beef with mustard.\n"
-                        + "Mix herbs, garlic, oil, salt and pepper in a cup, press on mustard.\n"
-                        + "Place beef on baking sheet.\n"
-                        + "Roast 50 min.\n"
-                        + "Remove to cutting board, cover tight with foil and let rest 15 min.]\n"
-                        + "Slice beef and arrange on a serving platter, spoon on a little sauce. "
-                        + "Serve with remaining sauce.\n"
-                        + "Put butter in skillet.\n"
-                        + "Add mushrooms, saute 2 min.\n"
-                        + "Stir in garlic, boil 5 min.\n"
-                        + "Stir corn into broth until blended. Add to skillet.\n"
-                        + "Bring to a boil, boil stirring 5 min.\n"
-                        + "Pour into gravy boat and serve with the beef.");
+        assertEquals(wikiaParserChicken.getInstruction(), CHICKEN_INSTRUCTION);
+        assertEquals(wikiaParserUgandan.getInstruction(), UGANDAN_INSTRUCTION);
     }
 
     @Test
     public void getImageUrl_validRecipes_returnsResult() throws Exception {
-        assertEquals(wikiaParserA.getImageUrl(), "https://vignette.wikia.nocookie.net/recipes/images/d/d3"
-                + "/Chickenrice2.jpg/revision/latest/scale-to-width-down/180?cb=20080516004325");
+        assertEquals(wikiaParserChicken.getImageUrl(), CHICKEN_RICE_IMAGE_URL);
     }
 
     @Test
     public void getUrl_validRecipes_returnsResult() throws Exception {
-        assertEquals(wikiaParserA.getUrl(), WIKIA_RECIPE_URL_A);
-        assertEquals(wikiaParserB.getUrl(), WIKIA_RECIPE_URL_B);
+        assertEquals(wikiaParserChicken.getUrl(), WIKIA_RECIPE_URL_CHICKEN);
+        assertEquals(wikiaParserUgandan.getUrl(), WIKIA_RECIPE_URL_UGANDAN);
     }
 
     @Test
     public void parseRecipe_validRecipe_returnsValidCommand() throws Exception {
-        assertEquals(wikiaParserA.parseRecipe(), "add\n"
-                + "name/Hainanese Chicken Rice\n"
-                + "ingredient/chicken, salt, spring onion, pandan leaves, ginger, ginger, garlic, cinnamon, "
-                + "cloves, star anise, chicken broth, pandan leaves, salt, light soy sauce, sesame oil, "
-                + "cucumber, tomatoes, coriander, lettuce, pineapple, fresh chillies, ginger, garlic, "
-                + "vinegar, fish sauce, sugar, sweet soy sauce\n"
-                + "instruction/Boil water with spring Onion, ginger and pandan leaves, put in Chicken "
-                + "and cook till done, do not over cook. briefly dip in cold water and set aside to cool."
-                + " Keep broth heated.\n"
-                + "Wash rice and drain. Finely shred ginger and garlic, fry in oil with cloves, cinammon"
-                + " and star anise till fragrant, add in rice and fry for several minutes. Transfer into "
-                + "rice cooker, add chicken broth, pinch of salt, pandan leaves and start cooking.\n"
-                + "Put all chili sauce ingredient in a mixer and grind till fine.\n"
-                + "Slice and arrange tomatoes and cucumbers on a big plate, cut Chicken into small pieces"
-                + " and put on top. Splash some light soy sauce and sesame oil over, throw a bunch of "
-                + "coriander on top.\n"
-                + "Next, Put broth in a bowl with lettuce, get ready chili sauce and sweet soy sauce. "
-                + "#Serve rice on a plate with spoon and folk.\n"
-                + "img/https://vignette.wikia.nocookie.net/recipes/images/d/d3/Chickenrice2.jpg/revision/"
-                + "latest/scale-to-width-down/180?cb=20080516004325\n"
-                + "url/http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice");
-        assertEquals(wikiaParserB.parseRecipe(), "add\n"
-                + "name/Beef Tenderloin with Madeira Sauce\n"
-                + "ingredient/1 cup of garlic, 2 cups of mustard, 3 tbs chopped rosemary,"
-                + " 1 cup chopped thyme, 2 tsp garlic, 2 tsp vegtebale oil, 4 tsp salt, 1"
-                + " tsp pepper, 3 cups of water, 4 tbs butter, 2 cups of red wine, 1 cup of"
-                + " garlic, 2 1/2 cups of corn, 4 cup of water, 2 tomatoes, 1 tsp chopped thyme,"
-                + " 1/2 tsp each sea salt and pepper\n"
-                + "instruction/Heat oven to 475 degrees and prepare a Large rimmed baking sheet"
-                + " coated with cooking spray.\n"
-                + "Spread beef with mustard.\n"
-                + "Mix herbs, garlic, oil, salt and pepper in a cup, press on mustard.\n"
-                + "Place beef on baking sheet.\n"
-                + "Roast 50 min.\n"
-                + "Remove to cutting board, cover tight with foil and let rest 15 min.]\n"
-                + "Slice beef and arrange on a serving platter, spoon on a little sauce. "
-                + "Serve with remaining sauce.\n"
-                + "Put butter in skillet.\n"
-                + "Add mushrooms, saute 2 min.\n"
-                + "Stir in garlic, boil 5 min.\n"
-                + "Stir corn into broth until blended. Add to skillet.\n"
-                + "Bring to a boil, boil stirring 5 min.\n"
-                + "Pour into gravy boat and serve with the beef.\n"
-                + "url/http://recipes.wikia.com/wiki/Beef_Tenderloin_with_Madeira_Sauce");
+        String a = WIKIA_CHICKEN_ADD_COMMAND;
+        assertEquals(wikiaParserChicken.parseRecipe(), WIKIA_CHICKEN_ADD_COMMAND);
+        assertEquals(wikiaParserUgandan.parseRecipe(), WIKIA_UGANDAN_ADD_COMMAND);
     }
 
     @Test

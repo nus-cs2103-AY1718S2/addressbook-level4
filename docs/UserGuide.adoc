@@ -170,11 +170,11 @@ Option 1: `find KEYWORD [MORE_KEYWORDS]`
 Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case insensitive.
+* The order of the keywords does not matter.
 * All fields are searched if no prefix is supplied.
 * Different keywords should be **comma separated**, if not it will be treated as one keyword
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Persons matching at least one keyword will be returned (i.e. `OR` search).
 * Wildcard `"example"` searches for field that **contains** keyword `example`
 * Wildcard `*example` searches for field that **ends** with keyword `example`
 * Wildcard `example*` searches for field that **starts** with keyword `example`

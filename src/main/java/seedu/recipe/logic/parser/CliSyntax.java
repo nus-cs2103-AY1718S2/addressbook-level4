@@ -16,5 +16,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_TAG = new Prefix("tag/");
     public static final Prefix PREFIX_URL = new Prefix("url/");
     public static final Prefix PREFIX_IMG = new Prefix("img/");
+    public static final Prefix PREFIX_INDEX = new Prefix("index/");
+
 
 }

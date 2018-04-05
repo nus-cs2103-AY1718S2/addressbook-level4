@@ -15,6 +15,7 @@ import seedu.recipe.logic.commands.DeleteCommand;
 import seedu.recipe.logic.commands.EditCommand;
 import seedu.recipe.logic.commands.ExitCommand;
 import seedu.recipe.logic.commands.FindCommand;
+import seedu.recipe.logic.commands.GroupCommand;
 import seedu.recipe.logic.commands.HelpCommand;
 import seedu.recipe.logic.commands.HistoryCommand;
 import seedu.recipe.logic.commands.ListCommand;
@@ -107,6 +108,9 @@ public class RecipeBookParser {
 
         case AccessTokenCommand.COMMAND_WORD:
             return new AccessTokenCommandParser().parse(arguments);
+
+        case GroupCommand.COMMAND_WORD:
+            return new GroupCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

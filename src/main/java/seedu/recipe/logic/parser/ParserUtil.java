@@ -39,6 +39,7 @@ public class ParserUtil {
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
@@ -74,6 +75,7 @@ public class ParserUtil {
     }
 
     //@@author kokonguyen191
+
     /**
      * Returns a null {@code Ingredient} object to use as the default value if no value is given.
      */
@@ -341,6 +343,7 @@ public class ParserUtil {
     }
 
     //@@author RyanAngJY
+
     /**
      * Parses a {@code String url} into an {@code Url}.
      * Leading and trailing whitespaces will be trimmed.
@@ -443,7 +446,22 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author hoangduong1607
+    /**
+     * Parses {@code Collection<String> indices} into a {@code Set<Index>}.
+     */
+    public static Set<Index> parseIndices(Collection<String> indices) throws IllegalValueException {
+        requireNonNull(indices);
+        final Set<Index> indexSet = new HashSet<>();
+        for (String index : indices) {
+            indexSet.add(parseIndex(index));
+        }
+        return indexSet;
+    }
+    //@@author
+
     //@@author nicholasangcx
+
     /**
      * Parses {@code String filename} into a {@code String XmlExtensionFilename}.
      * A .xml extension will be added to the original filename.

@@ -3,6 +3,7 @@ package seedu.recipe.model.recipe;
 import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import seedu.recipe.model.recipe.exceptions.RecipeNotFoundException;
 
 /**
  * A list of recipes that enforces uniqueness between its elements and does not allow nulls.
- *
+ * <p>
  * Supports a minimal set of list operations.
  *
  * @see Recipe#equals(Object)
@@ -49,7 +50,7 @@ public class UniqueRecipeList implements Iterable<Recipe> {
      * Replaces the recipe {@code target} in the list with {@code editedRecipe}.
      *
      * @throws DuplicateRecipeException if the replacement is equivalent to another existing recipe in the list.
-     * @throws RecipeNotFoundException if {@code target} could not be found in the list.
+     * @throws RecipeNotFoundException  if {@code target} could not be found in the list.
      */
     public void setRecipe(Recipe target, Recipe editedRecipe)
             throws DuplicateRecipeException, RecipeNotFoundException {
@@ -110,7 +111,7 @@ public class UniqueRecipeList implements Iterable<Recipe> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UniqueRecipeList // instanceof handles nulls
-                        && this.internalList.equals(((UniqueRecipeList) other).internalList));
+                && this.internalList.equals(((UniqueRecipeList) other).internalList));
     }
 
     @Override

@@ -85,6 +85,8 @@ image::autocomplete.png[width="500"]
 * Press kbd:[Enter] to select an autocomplete suggestion on the pop-up context menu.
 ====
 
+{empty} +
+
 === Viewing help : `help` or `h`
 
 If you are feeling lost, enter `help` or `h` in Medeina's command box, or press kbd:[F1] to bring up this user guide document in a pop-up window.
@@ -207,6 +209,7 @@ edit -p 2 n/Makkachin t/
 
 edit -a 3 d/2018-06-04 12:30
 ----
+
 {empty} +
 
 === Find contacts or pet patients: `find` or `f`
@@ -263,6 +266,7 @@ find -p s/Cat b/Maine Coon c/Black bt/AB t/Aggressive
 
 find -p n/Chae s/Cat b/Russian Blue c/Grey bt/A t/Naive
 ----
+
 {empty} +
 
 === Deleting a owner, pet patient or appointment : `delete` or `d` `[Since v1.3]`
@@ -308,6 +312,7 @@ delete -fp 1
 delete -fo 1
 
 ----
+
 {empty} +
 
 === Listing entered commands : `history` or `his`
@@ -319,6 +324,8 @@ The command format should be: `history` or `his`
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+{empty} +
 
 // tag::undoredo[]
 === Undoing previous command : `undo` or `ud`
@@ -347,6 +354,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (The command reverses the `clear` command) +
 `ud` (The command reverses the `delete 1` command) +
 
+{empty} +
+
 === Redoing the previously undone command : `redo` or `rd`
 
 To reverse the most recent `undo` command. +
@@ -370,6 +379,8 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `rd` (The command reapplies the `clear` command) +
 // end::undoredo[]
 
+{empty} +
+
 === Clearing all entries : `clear` or `cls`
 
 To clear all entries from Medeina's address book. +
@@ -378,6 +389,8 @@ The command format should be: `clear` or `cls`
 ====
 This command **cannot** be undone. Please be certain that you have backed up your data (which is located in the `data` folder) before executing this command!
 ====
+
+{empty} +
 
 === Changing theme : `theme` or `t` `[Since v1.1]`
 
@@ -397,11 +410,14 @@ Medeina will change to dark theme.
 * Type in `t light` +
 Medeina will change to light theme.
 
+{empty} +
+
 === Exiting the program : `exit` or `q`
 
 You can easily exit Medeina on the command line without having to move your mouse. +
 The command format should be: `exit` or `q`
 
+{empty} +
 
 === Data saving
 
@@ -417,6 +433,8 @@ This command will remove information in the storage.
 
 You do not need to manually save the data.
 
+{empty} +
+
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
@@ -424,10 +442,14 @@ Coming v2.0, the data you have will be automatically encrypted after commands th
 You do not need to manually encrypt your data files.
 // end::dataencryption[]
 
+{empty} +
+
 === Creating other user profiles `[coming in v2.0]`
 
 Coming v2.0, Medeina will have user accounts, so that veterinarians and their assistants can collaborate on the same computer, but at the same time keep their information private to themselves. +
 This command will be added when it is released.
+
+{empty} +
 
 === Setting user permissions `[coming in v2.0]`
 
@@ -445,10 +467,14 @@ Information that vets should not change:
 
 The command will be added when it is released.
 
+{empty} +
+
 === Supporting multiple users `[coming in v2.0]`
 
 Coming v2.0, Medeina can be used concurrently on different systems. The data will be synced over an internet connection. This allow Veterinarians and their assistants to access Medeina simultaneously in different rooms, making it easier to collaborate with others. +
 The command will be added when it is released.
+
+{empty} +
 
 == FAQ
 

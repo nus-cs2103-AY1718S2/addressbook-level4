@@ -209,18 +209,16 @@ Replaces the specified tag from every student in _EduBuddy_ with a specific tag.
 Format: `tagreplace t/TAGNAME t/TAGNAME`
 Abbreviation Format: `tr t/TAGNAME t/TAGNAME`
 
-<<<<<<< HEAD
 ****
 * Replaces the specified tag from every student in Edubuddy with a specific tag.
 * The tag must be a valid tag name that is assigned to at least one student in the Edubuddy.
 ****
-=======
+
 [NOTE]
 The tag refers to the index number shown in the most recent listing.
 
 [IMPORTANT]
 The tag must be a valid tag name that is assigned to at least one student in the _EduBuddy_.
->>>>>>> master
 
 Examples:
 
@@ -361,7 +359,6 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `r` (reapplies the `clear` command) +
 // end::undoredo[]
 
-<<<<<<< HEAD
 // tag::remarks Command[]
 === Remarks Command `[Since v1.3]`
 
@@ -384,9 +381,8 @@ Adds a remark to the 2nd student in EduBuddy.
 Adds a remark to the 1st student in the results of the `find` command.
 
 // end::remarks Command[]
-=======
+
 *_return to <<toc,Table of Contents>>_*
->>>>>>> master
 
 === Clearing all entries : `clear` or `c`
 
@@ -506,46 +502,8 @@ The subjects in the brackets are not to be used as input. The subjects not in br
 
 *_return to <<toc,Table of Contents>>_*
 
-<<<<<<< HEAD
-* *Clear* : `clear` or `c`
-
-* *Delete* : `delete INDEX` or `d INDEX` +
-e.g. `delete 3` +
-e.g. `d 3`
-
-* *TagDelete* : `tagdelete TAGNAME` or `td TAGNAME` +
-e.g. `tagdelete CLASS2A` +
-e.g. `td CLASS2A`
-
-* *TagReplace* : `tagreplace t/TAGNAME t/TAGNAME` or `tr t/TAGNAME t/TAGNAME` +
-e.g. `tagreplace t/CLASS2A t/CLASS3A` +
-e.g. `tr t/CLASS2A t/CLASS3A`
-
-* *Add Remark* : `addremark INDEX r/REMARKK` +
-e.g. `addremark 1 r/Class Monitor
-
-* *Delete Remark* : `deleteremark INDEX r/REMARK` +
-e.g. `deleteremark 1 r/Class Monitor
-
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
-`e INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
-e.g. `edit 2 n/James Lee` +
-e.g. `e 2 n/James Lee`
-
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake` +
-e.g. `f James Jake`
-
-* *Sort* : `sort PARAMETER` +
-e.g. `sort name` +
-e.g. `sort tag`
-
-* *List* : `list` or `l`
-
-* *Help* : `help`
-=======
 == Command Summary
->>>>>>> master
+
 
 The table below provides a quick summary of all the commands available in EduBuddy.
 

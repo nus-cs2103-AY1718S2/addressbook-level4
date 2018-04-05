@@ -295,6 +295,40 @@ customer. Otherwise potential customer. The prediction is to predict
 the potential customer's spending based on the information on the
 existing customers.
 
+=== Add a policy : `add_policy`
+Add a policy to a person in the address book.
+
+Format: `add_policy INDEX beg/BEGINNING DATE exp/EXPIRATION DATE pr/PRICE [is/ISSUE]...`
+
+[TIP]
+A person can have any number of issues covered (including 0)
+These can be added later with `edit_policy`
+
+Examples:
+
+* `add_policy 1 beg/01/04/2018 exp/02/04/2020 pr/140 is/car_damage is/theft`
+* `add_policy 3 beg/01/02/2018 exp/31/02/2018 pr/140 is/car_damage is/theft`
+
+=== Edit a policy : `edit_policy`
+Edit the policy of a person in the address book.
+
+Format: `edit_policy INDEX [beg/BEGINNING DATE] [exp/EXPIRATION DATE] [pr/PRICE] [is/ISSUE]...`
+
+Examples:
+
+* `edit_policy 2 beg/01/07/2018 exp/02/04/2019`
+* `edit_policy 1 pr/100`
+* `edit_policy 4 pr/150 is/theft is/house_damage`
+
+=== Remove a policy : `remove_policy`
+Remove the policy of a person in the address book.
+
+Format: `remove_policy INDEX`
+
+Examples:
+
+* `remove_policy 1`
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -368,3 +402,9 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Add a Policy* : `add_policy` +
+e.g. `add_policy 1 beg/01/04/2018 exp/02/04/2020 pr/140 is/car_damage is/theft`
+* *Edit a Policy* : `edit_policy` +
+e.g. `edit_policy 4 pr/150 is/theft is/house_damage`
+* *Remove a Policy* : `remove_policy` +
+e.g. `remove_policy 1`

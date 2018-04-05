@@ -1,5 +1,319 @@
 # nicholasangcx
-###### /java/seedu/recipe/ui/util/CloudStorageUtil.java
+###### \java\seedu\recipe\commons\events\ui\UploadRecipesEvent.java
+``` java
+package seedu.recipe.commons.events.ui;
+
+import seedu.recipe.commons.events.BaseEvent;
+
+/**
+ * Indicates a request to upload recipes to Dropbox
+ */
+public class UploadRecipesEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\recipe\logic\commands\AccessTokenCommand.java
+``` java
+package seedu.recipe.logic.commands;
+
+import seedu.recipe.ui.util.CloudStorageUtil;
+
+/**
+ * Takes in the access token given by dropbox and saves it in the app
+ * to allow user to upload files easily.
+ */
+public class AccessTokenCommand extends Command {
+
+    public static final String COMMAND_WORD = "token";
+    public static final String MESSAGE_SUCCESS = "Upload Success!";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Takes in the access token given by Dropbox "
+            + "to allow user to upload files. *ONLY use this command directly after the upload command.*\n"
+            + "Parameters: TOKEN\n"
+            + "Example: " + COMMAND_WORD + "VALID_ACCESS_TOKEN";
+
+    private final String accessCode;
+
+    public AccessTokenCommand(String code) {
+        this.accessCode = code;
+    }
+
+    @Override
+    public CommandResult execute() {
+        CloudStorageUtil.processAuthorizationCode(accessCode);
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AccessTokenCommand // instanceof handles nulls
+                && accessCode.equals(((AccessTokenCommand) other).accessCode));
+    }
+}
+```
+###### \java\seedu\recipe\logic\commands\Command.java
+``` java
+    /**
+     * Constructs a feedback message to summarise an operation that displayed
+     * a listing of persons with the specified tags.
+     *
+     * @param displaySize indicates the number of people listed, used to generate summary
+     * @param tagKeywords the tags searched for, used to generate summary
+     * @return summary message for persons displayed
+     */
+    public static String getMessageForTagListShownSummary(int displaySize, String tagKeywords) {
+        return String.format(Messages.MESSAGE_RECIPES_WITH_TAGS_LISTED_OVERVIEW, displaySize, tagKeywords);
+    }
+```
+###### \java\seedu\recipe\logic\commands\TagCommand.java
+``` java
+package seedu.recipe.logic.commands;
+
+import java.util.Arrays;
+
+import seedu.recipe.model.tag.TagContainsKeywordsPredicate;
+
+/**
+ * Finds and lists all recipes in address book whose tag contains any of the argument keywords.
+ * Keyword matching is case sensitive.
+ */
+public class TagCommand extends Command {
+
+    public static final String COMMAND_WORD = "tag";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all recipes whose tags contain any of "
+            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+            + "Example: " + COMMAND_WORD + " favourite";
+
+    // Contains a list of strings of the keywords
+    private final TagContainsKeywordsPredicate predicate;
+    private final String[] tagKeywords;
+
+    public TagCommand(TagContainsKeywordsPredicate predicate, String[] tagKeywords) {
+        this.predicate = predicate;
+        this.tagKeywords = tagKeywords;
+    }
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredRecipeList(predicate);
+        return new CommandResult(getMessageForTagListShownSummary
+                                    (model.getFilteredRecipeList().size(), Arrays.toString(tagKeywords)));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof TagCommand // instanceof handles nulls
+                && this.predicate.equals(((TagCommand) other).predicate)); // state check
+    }
+}
+```
+###### \java\seedu\recipe\logic\commands\UploadCommand.java
+``` java
+package seedu.recipe.logic.commands;
+
+import static seedu.recipe.storage.model.Filename.MESSAGE_FILENAME_CONSTRAINTS;
+
+import seedu.recipe.commons.core.EventsCenter;
+import seedu.recipe.commons.events.ui.UploadRecipesEvent;
+import seedu.recipe.ui.util.CloudStorageUtil;
+
+/**
+ * Uploads all recipes online, specifically to Dropbox.
+ */
+public class UploadCommand extends Command {
+
+    public static final String COMMAND_WORD = "upload";
+    public static final String MESSAGE_SUCCESS = "Upload Success!";
+    public static final String MESSAGE_FAILURE = "Failed to upload!";
+    public static final String MESSAGE_ACCESS_TOKEN = "Copy and paste the code given by dropbox.\n"
+            + "Example: token VALID_ACCESS_TOKEN";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Uploads all recipes to your Dropbox with the "
+            + "specified filename, with no spaces. It will only take in the first parameter. "
+            + MESSAGE_FILENAME_CONSTRAINTS + "\n"
+            + "Parameters: KEYWORD\n"
+            + "Example: " + COMMAND_WORD + " RecipeBook";
+
+    private final String xmlExtensionFilename;
+
+    /**
+     * Creates an UploadCommand to upload recipebook.xml to Dropbox with the
+     * specified {@code String XmlExtensionFilename}
+     */
+    public UploadCommand(String xmlExtensionFilename) {
+        this.xmlExtensionFilename = xmlExtensionFilename;
+        CloudStorageUtil.setUploadFilename(xmlExtensionFilename);
+    }
+
+    @Override
+    public CommandResult execute() {
+        if (CloudStorageUtil.hasAccessToken()) {
+            CloudStorageUtil.upload();
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
+        EventsCenter.getInstance().post(new UploadRecipesEvent());
+        return new CommandResult(MESSAGE_ACCESS_TOKEN);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UploadCommand // instanceof handles nulls
+                && xmlExtensionFilename.equals(((UploadCommand) other).xmlExtensionFilename));
+    }
+}
+```
+###### \java\seedu\recipe\logic\parser\ParserUtil.java
+``` java
+
+    /**
+     * Parses {@code String filename} into a {@code String XmlExtensionFilename}.
+     * A .xml extension will be added to the original filename.
+     *
+     * @throws IllegalValueException if the give {@code filename} is invalid.
+     */
+    public static String parseFilename(String filename) throws IllegalValueException {
+        requireNonNull(filename);
+        if (!Filename.isValidFilename(filename)) {
+            throw new IllegalValueException(Filename.MESSAGE_FILENAME_CONSTRAINTS);
+        }
+        return filename + ".xml";
+    }
+```
+###### \java\seedu\recipe\logic\parser\TagCommandParser.java
+``` java
+package seedu.recipe.logic.parser;
+
+import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import java.util.Arrays;
+
+import seedu.recipe.logic.commands.TagCommand;
+import seedu.recipe.logic.parser.exceptions.ParseException;
+import seedu.recipe.model.tag.TagContainsKeywordsPredicate;
+
+
+/**
+ * Parses input arguments and creates a new TagCommand object
+ */
+public class TagCommandParser implements Parser<TagCommand> {
+
+    private static final String REGEX = "\\s+";
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the TagCommand
+     * and returns an TagCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public TagCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
+        }
+
+        String[] tagKeywords = trimmedArgs.split(REGEX);
+
+        return new TagCommand(new TagContainsKeywordsPredicate(Arrays.asList(tagKeywords)), tagKeywords);
+    }
+
+}
+```
+###### \java\seedu\recipe\logic\parser\UploadCommandParser.java
+``` java
+package seedu.recipe.logic.parser;
+
+import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.recipe.commons.exceptions.IllegalValueException;
+import seedu.recipe.logic.commands.UploadCommand;
+import seedu.recipe.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new UploadCommand object
+ */
+public class UploadCommandParser implements Parser<UploadCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the UploadCommand
+     * and returns an UploadCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public UploadCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        String[] tagKeywords = trimmedArgs.split("\\s+");
+        String filename = tagKeywords[0];
+        if (filename.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
+        }
+        try {
+            String xmlExtensionFilename = ParserUtil.parseFilename(filename);
+            return new UploadCommand(xmlExtensionFilename);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
+        }
+    }
+}
+//@author
+```
+###### \java\seedu\recipe\model\tag\TagContainsKeywordsPredicate.java
+``` java
+package seedu.recipe.model.tag;
+
+import java.util.List;
+import java.util.function.Predicate;
+
+import seedu.recipe.model.recipe.Recipe;
+
+/**
+ * Tests that a {@code Recipe}'s {@code Tags} matches any of the keywords given.
+ */
+public class TagContainsKeywordsPredicate implements Predicate<Recipe> {
+    private final List<String> keywords;
+
+    public TagContainsKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    @Override
+    public boolean test(Recipe recipe) {
+        /*figure out why cannot work
+           return keywords.stream()
+                    .anyMatch(keyword -> Recipe.getTags().contains(keyword));
+
+         */
+        return keywords.stream()
+                    .anyMatch(keyword -> recipe.getTags().stream()
+                        .anyMatch(tag -> tag.tagName.equals(keyword)));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof TagContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
+    }
+
+}
+```
+###### \java\seedu\recipe\ui\BrowserPanel.java
+``` java
+    @Subscribe
+    private void handleUploadRecipesEvent(UploadRecipesEvent event) {
+        loadPageExternalBrowser(CloudStorageUtil.getAuthorizationUrl());
+    }
+```
+###### \java\seedu\recipe\ui\util\CloudStorageUtil.java
 ``` java
 package seedu.recipe.ui.util;
 
@@ -110,318 +424,5 @@ public class CloudStorageUtil {
     public static String getAuthorizationUrl() {
         return AUTHORIZATION_URL;
     }
-}
-```
-###### /java/seedu/recipe/ui/BrowserPanel.java
-``` java
-    @Subscribe
-    private void handleUploadRecipesEvent(UploadRecipesEvent event) {
-        loadPageExternalBrowser(CloudStorageUtil.getAuthorizationUrl());
-    }
-```
-###### /java/seedu/recipe/commons/events/ui/UploadRecipesEvent.java
-``` java
-package seedu.recipe.commons.events.ui;
-
-import seedu.recipe.commons.events.BaseEvent;
-
-/**
- * Indicates a request to upload recipes to Dropbox
- */
-public class UploadRecipesEvent extends BaseEvent {
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-}
-```
-###### /java/seedu/recipe/logic/parser/TagCommandParser.java
-``` java
-package seedu.recipe.logic.parser;
-
-import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import java.util.Arrays;
-
-import seedu.recipe.logic.commands.TagCommand;
-import seedu.recipe.logic.parser.exceptions.ParseException;
-import seedu.recipe.model.tag.TagContainsKeywordsPredicate;
-
-
-/**
- * Parses input arguments and creates a new TagCommand object
- */
-public class TagCommandParser implements Parser<TagCommand> {
-
-    private static final String REGEX = "\\s+";
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the TagCommand
-     * and returns an TagCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public TagCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
-        }
-
-        String[] tagKeywords = trimmedArgs.split(REGEX);
-
-        return new TagCommand(new TagContainsKeywordsPredicate(Arrays.asList(tagKeywords)), tagKeywords);
-    }
-
-}
-```
-###### /java/seedu/recipe/logic/parser/UploadCommandParser.java
-``` java
-package seedu.recipe.logic.parser;
-
-import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import seedu.recipe.commons.exceptions.IllegalValueException;
-import seedu.recipe.logic.commands.UploadCommand;
-import seedu.recipe.logic.parser.exceptions.ParseException;
-
-/**
- * Parses input arguments and creates a new UploadCommand object
- */
-public class UploadCommandParser implements Parser<UploadCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the UploadCommand
-     * and returns an UploadCommand object for execution.
-     *
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public UploadCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        String[] tagKeywords = trimmedArgs.split("\\s+");
-        String filename = tagKeywords[0];
-        if (filename.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
-        }
-        try {
-            String xmlExtensionFilename = ParserUtil.parseFilename(filename);
-            return new UploadCommand(xmlExtensionFilename);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
-        }
-    }
-}
-//@author
-```
-###### /java/seedu/recipe/logic/parser/ParserUtil.java
-``` java
-    /**
-     * Parses {@code String filename} into a {@code String XmlExtensionFilename}.
-     * A .xml extension will be added to the original filename.
-     *
-     * @throws IllegalValueException if the give {@code filename} is invalid.
-     */
-    public static String parseFilename(String filename) throws IllegalValueException {
-        requireNonNull(filename);
-        if (!Filename.isValidFilename(filename)) {
-            throw new IllegalValueException(Filename.MESSAGE_FILENAME_CONSTRAINTS);
-        }
-        return filename + ".xml";
-    }
-```
-###### /java/seedu/recipe/logic/commands/Command.java
-``` java
-    /**
-     * Constructs a feedback message to summarise an operation that displayed
-     * a listing of persons with the specified tags.
-     *
-     * @param displaySize indicates the number of people listed, used to generate summary
-     * @param tagKeywords the tags searched for, used to generate summary
-     * @return summary message for persons displayed
-     */
-    public static String getMessageForTagListShownSummary(int displaySize, String tagKeywords) {
-        return String.format(Messages.MESSAGE_RECIPES_WITH_TAGS_LISTED_OVERVIEW, displaySize, tagKeywords);
-    }
-```
-###### /java/seedu/recipe/logic/commands/AccessTokenCommand.java
-``` java
-package seedu.recipe.logic.commands;
-
-import seedu.recipe.ui.util.CloudStorageUtil;
-
-/**
- * Takes in the access token given by dropbox and saves it in the app
- * to allow user to upload files easily.
- */
-public class AccessTokenCommand extends Command {
-
-    public static final String COMMAND_WORD = "token";
-    public static final String MESSAGE_SUCCESS = "Upload Success!";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Takes in the access token given by Dropbox "
-            + "to allow user to upload files. *ONLY use this command directly after the upload command.*\n"
-            + "Parameters: TOKEN\n"
-            + "Example: " + COMMAND_WORD + "VALID_ACCESS_TOKEN";
-
-    private final String accessCode;
-
-    public AccessTokenCommand(String code) {
-        this.accessCode = code;
-    }
-
-    @Override
-    public CommandResult execute() {
-        CloudStorageUtil.processAuthorizationCode(accessCode);
-        return new CommandResult(MESSAGE_SUCCESS);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AccessTokenCommand // instanceof handles nulls
-                && accessCode.equals(((AccessTokenCommand) other).accessCode));
-    }
-}
-```
-###### /java/seedu/recipe/logic/commands/UploadCommand.java
-``` java
-package seedu.recipe.logic.commands;
-
-import static seedu.recipe.storage.model.Filename.MESSAGE_FILENAME_CONSTRAINTS;
-
-import seedu.recipe.commons.core.EventsCenter;
-import seedu.recipe.commons.events.ui.UploadRecipesEvent;
-import seedu.recipe.ui.util.CloudStorageUtil;
-
-/**
- * Uploads all recipes online, specifically to Dropbox.
- */
-public class UploadCommand extends Command {
-
-    public static final String COMMAND_WORD = "upload";
-    public static final String MESSAGE_SUCCESS = "Upload Success!";
-    public static final String MESSAGE_FAILURE = "Failed to upload!";
-    public static final String MESSAGE_ACCESS_TOKEN = "Copy and paste the code given by dropbox.\n"
-            + "Example: token VALID_ACCESS_TOKEN";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Uploads all recipes to your Dropbox with the "
-            + "specified filename, with no spaces. It will only take in the first parameter. "
-            + MESSAGE_FILENAME_CONSTRAINTS + "\n"
-            + "Parameters: KEYWORD\n"
-            + "Example: " + COMMAND_WORD + " RecipeBook";
-
-    private final String xmlExtensionFilename;
-
-    /**
-     * Creates an UploadCommand to upload recipebook.xml to Dropbox with the
-     * specified {@code String XmlExtensionFilename}
-     */
-    public UploadCommand(String xmlExtensionFilename) {
-        this.xmlExtensionFilename = xmlExtensionFilename;
-        CloudStorageUtil.setUploadFilename(xmlExtensionFilename);
-    }
-
-    @Override
-    public CommandResult execute() {
-        if (CloudStorageUtil.hasAccessToken()) {
-            CloudStorageUtil.upload();
-            return new CommandResult(MESSAGE_SUCCESS);
-        }
-        EventsCenter.getInstance().post(new UploadRecipesEvent());
-        return new CommandResult(MESSAGE_ACCESS_TOKEN);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof UploadCommand // instanceof handles nulls
-                && xmlExtensionFilename.equals(((UploadCommand) other).xmlExtensionFilename));
-    }
-}
-```
-###### /java/seedu/recipe/logic/commands/TagCommand.java
-``` java
-package seedu.recipe.logic.commands;
-
-import java.util.Arrays;
-
-import seedu.recipe.model.tag.TagContainsKeywordsPredicate;
-
-/**
- * Finds and lists all recipes in address book whose tag contains any of the argument keywords.
- * Keyword matching is case sensitive.
- */
-public class TagCommand extends Command {
-
-    public static final String COMMAND_WORD = "tag";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all recipes whose tags contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " favourite";
-
-    // Contains a list of strings of the keywords
-    private final TagContainsKeywordsPredicate predicate;
-    private final String[] tagKeywords;
-
-    public TagCommand(TagContainsKeywordsPredicate predicate, String[] tagKeywords) {
-        this.predicate = predicate;
-        this.tagKeywords = tagKeywords;
-    }
-
-    @Override
-    public CommandResult execute() {
-        model.updateFilteredRecipeList(predicate);
-        return new CommandResult(getMessageForTagListShownSummary
-                                    (model.getFilteredRecipeList().size(), Arrays.toString(tagKeywords)));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof TagCommand // instanceof handles nulls
-                && this.predicate.equals(((TagCommand) other).predicate)); // state check
-    }
-}
-```
-###### /java/seedu/recipe/model/tag/TagContainsKeywordsPredicate.java
-``` java
-package seedu.recipe.model.tag;
-
-import java.util.List;
-import java.util.function.Predicate;
-
-import seedu.recipe.model.recipe.Recipe;
-
-/**
- * Tests that a {@code Recipe}'s {@code Tags} matches any of the keywords given.
- */
-public class TagContainsKeywordsPredicate implements Predicate<Recipe> {
-    private final List<String> keywords;
-
-    public TagContainsKeywordsPredicate(List<String> keywords) {
-        this.keywords = keywords;
-    }
-
-    @Override
-    public boolean test(Recipe recipe) {
-        /*figure out why cannot work
-           return keywords.stream()
-                    .anyMatch(keyword -> Recipe.getTags().contains(keyword));
-
-         */
-        return keywords.stream()
-                    .anyMatch(keyword -> recipe.getTags().stream()
-                        .anyMatch(tag -> tag.tagName.equals(keyword)));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof TagContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
-    }
-
 }
 ```

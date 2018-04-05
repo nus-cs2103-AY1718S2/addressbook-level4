@@ -1,7 +1,7 @@
 # nicholasangcx
-###### /java/seedu/recipe/ui/testutil/CloudStorageUtilTest.java
+###### \java\seedu\recipe\logic\commands\AccessTokenCommandTest.java
 ``` java
-package seedu.recipe.ui.testutil;
+package seedu.recipe.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -10,240 +10,49 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.recipe.ui.util.CloudStorageUtil;
+public class AccessTokenCommandTest {
 
-public class CloudStorageUtilTest {
-
-    private static final String WRONG_AUTHORIZATION_CODE = "abcdefg";
-    private static final String ACCESS_TOKEN_STUB = "adjhsj";
+    private static final String INVALID_AUTHORIZATION_CODE = "wrong_format";
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void hasAccessToken() {
-        CloudStorageUtil.setAccessToken(null);
-        assertFalse(CloudStorageUtil.hasAccessToken());
-
-        CloudStorageUtil.setAccessToken(ACCESS_TOKEN_STUB);
-        assertTrue(CloudStorageUtil.hasAccessToken());
-    }
-
-    @Test
-    public void processInvalidAuthorizationCode() {
-        thrown.expect(AssertionError.class);
-        CloudStorageUtil.processAuthorizationCode(WRONG_AUTHORIZATION_CODE);
-        assertFalse(CloudStorageUtil.hasAccessToken());
-    }
-}
-```
-###### /java/seedu/recipe/logic/parser/TagCommandParserTest.java
-``` java
-package seedu.recipe.logic.parser;
-
-import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.recipe.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.recipe.logic.parser.CommandParserTestUtil.assertParseSuccess;
-
-import java.util.Arrays;
-
-import org.junit.Test;
-
-import seedu.recipe.logic.commands.TagCommand;
-import seedu.recipe.model.tag.TagContainsKeywordsPredicate;
-
-public class TagCommandParserTest {
-
-    private TagCommandParser parser = new TagCommandParser();
-
-    @Test
-    public void parseEmptyArgThrowsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
-    }
-
-    @Test
-    public void parseValidArgsReturnsTagCommand() {
-        // no leading and trailing whitespaces
-        TagCommand expectedTagCommand =
-                new TagCommand(new TagContainsKeywordsPredicate(Arrays.asList("friends", "owesMoney")),
-                                    new String[] {"friends", "owesMoney"});
-        assertParseSuccess(parser, "friends owesMoney", expectedTagCommand);
-
-        // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n friends \n \t owesMoney  \t", expectedTagCommand);
-    }
-}
-```
-###### /java/seedu/recipe/logic/parser/RecipeBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_tag() throws Exception {
-        List<String> keywords = Arrays.asList("friends", "family", "owesMoney");
-        TagCommand command = (TagCommand) parser.parseCommand(
-                TagCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new TagCommand(new TagContainsKeywordsPredicate(keywords),
-                keywords.toArray(new String[0])), command);
-    }
-
-    @Test
-    public void parseCommand_upload() throws Exception {
-        String filename = "RecipeBook";
-        UploadCommand command = (UploadCommand) parser.parseCommand(
-                UploadCommand.COMMAND_WORD + " " + filename);
-        assertEquals(new UploadCommand(filename + ".xml"), command);
-    }
-```
-###### /java/seedu/recipe/logic/parser/AccessTokenCommandParserTest.java
-``` java
-package seedu.recipe.logic.parser;
-
-import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.recipe.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.recipe.logic.parser.CommandParserTestUtil.assertParseSuccess;
-
-import org.junit.Test;
-
-import seedu.recipe.logic.commands.AccessTokenCommand;
-
-public class AccessTokenCommandParserTest {
-
-    private static final String DUMMY_ACCESS_CODE = "valid_access_code";
-    private AccessTokenCommandParser parser = new AccessTokenCommandParser();
-
-    @Test
-    public void parseEmptyArgThrowsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                AccessTokenCommand.MESSAGE_USAGE));
-    }
-
-    @Test
-    public void parseValidArgsReturnsUploadCommand() {
-        // code taken from an actual dropbox authorization process
-        AccessTokenCommand expectedAccessTokenCommand =
-                new AccessTokenCommand(DUMMY_ACCESS_CODE);
-        assertParseSuccess(parser, "valid_access_code", expectedAccessTokenCommand);
-
-        // trim leading and trailing whitespaces
-        assertParseSuccess(parser, "  valid_access_code  ", expectedAccessTokenCommand);
-    }
-}
-```
-###### /java/seedu/recipe/logic/parser/UploadCommandParserTest.java
-``` java
-package seedu.recipe.logic.parser;
-
-import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.recipe.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.recipe.logic.parser.CommandParserTestUtil.assertParseSuccess;
-
-import org.junit.Test;
-
-import seedu.recipe.logic.commands.UploadCommand;
-
-public class UploadCommandParserTest {
-
-    private UploadCommandParser parser = new UploadCommandParser();
-
-    @Test
-    public void parseEmptyArgThrowsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
-    }
-
-    @Test
-    public void parseValidArgsReturnsUploadCommand() {
-        // no leading and trailing whitespaces
-        UploadCommand expectedUploadCommand =
-                new UploadCommand("RecipeBook.xml");
-        assertParseSuccess(parser, "RecipeBook", expectedUploadCommand);
-
-        // ignores subsequent keywords after the first
-        assertParseSuccess(parser, " \n RecipeBook \n \t otherBook \t", expectedUploadCommand);
-    }
-
-    @Test
-    public void parseInvalidArgsThrowsParseException() {
-        assertParseFailure(parser, "recipe/book", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                UploadCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### /java/seedu/recipe/logic/parser/ParserUtilTest.java
-``` java
-    @Test
-    public void parseFilename_null_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        ParserUtil.parseFilename(null);
-    }
-
-    @Test
-    public void parseFilename_invalidValue_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseFilename(INVALID_FILENAME);
-    }
-
-    @Test
-    public void parseFilename_validValueWithoutWhitespace_returnsString() throws Exception {
-        String expectedFilename = VALID_FILENAME_1 + ".xml";
-        assertEquals(expectedFilename, ParserUtil.parseFilename(VALID_FILENAME_1));
-    }
-```
-###### /java/seedu/recipe/logic/commands/UploadCommandTest.java
-``` java
-package seedu.recipe.logic.commands;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.recipe.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.recipe.logic.commands.UploadCommand.MESSAGE_ACCESS_TOKEN;
-import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipeBook;
-
-import org.junit.Test;
-
-import seedu.recipe.model.Model;
-import seedu.recipe.model.ModelManager;
-import seedu.recipe.model.UserPrefs;
-import seedu.recipe.ui.util.CloudStorageUtil;
-
-public class UploadCommandTest {
-
-    private Model model = new ModelManager(getTypicalRecipeBook(), new UserPrefs());
-
-    @Test
     public void equals() {
-        String firstTest = "RecipeBook1";
-        String secondTest = "Recipe_Book_1";
+        String firstTest = "firstCode";
+        String secondTest = "secondCode";
 
-        UploadCommand uploadFirstCommand = new UploadCommand(firstTest);
-        UploadCommand uploadSecondCommand = new UploadCommand(secondTest);
+        AccessTokenCommand accessTokenFirstCommand = new AccessTokenCommand(firstTest);
+        AccessTokenCommand accessTokenSecondCommand = new AccessTokenCommand(secondTest);
 
         // same object -> returns true
-        assertTrue(uploadFirstCommand.equals(uploadFirstCommand));
+        assertTrue(accessTokenFirstCommand.equals(accessTokenFirstCommand));
 
         // same values -> returns true
-        UploadCommand uploadFirstCommandCopy = new UploadCommand(firstTest);
-        assertTrue(uploadFirstCommandCopy.equals(uploadFirstCommand));
+        AccessTokenCommand accessTokenFirstCommandCopy = new AccessTokenCommand(firstTest);
+        assertTrue(accessTokenFirstCommandCopy.equals(accessTokenFirstCommand));
 
         // different types -> returns false
-        assertFalse(uploadFirstCommand.equals(1));
-        assertFalse(uploadFirstCommand.equals(new HelpCommand()));
-        assertFalse(uploadFirstCommand.equals("anything"));
+        assertFalse(accessTokenFirstCommand.equals(1));
+        assertFalse(accessTokenFirstCommand.equals(new HelpCommand()));
+        assertFalse(accessTokenFirstCommand.equals("anything"));
 
         // null -> returns false
-        assertFalse(uploadFirstCommand.equals(null));
+        assertFalse(accessTokenFirstCommand.equals(null));
 
         // different recipe -> returns false
-        assertFalse(uploadFirstCommand.equals(uploadSecondCommand));
+        assertFalse(accessTokenFirstCommand.equals(accessTokenSecondCommand));
     }
 
     @Test
-    public void execute_inputWithValidArgs_noAccessToken() {
-        UploadCommand uploadCommand = new UploadCommand("recipebook.xml");
-        CloudStorageUtil.setAccessToken(null);
-        assertCommandSuccess(uploadCommand, model, MESSAGE_ACCESS_TOKEN, model);
+    public void execute_invalidAuthorizationCode() {
+        thrown.expect(AssertionError.class);
+        AccessTokenCommand command = new AccessTokenCommand(INVALID_AUTHORIZATION_CODE);
+        command.execute();
     }
 }
 ```
-###### /java/seedu/recipe/logic/commands/TagCommandTest.java
+###### \java\seedu\recipe\logic\commands\TagCommandTest.java
 ``` java
 package seedu.recipe.logic.commands;
 
@@ -355,105 +164,213 @@ public class TagCommandTest {
     }
 }
 ```
-###### /java/seedu/recipe/logic/commands/AccessTokenCommandTest.java
+###### \java\seedu\recipe\logic\commands\UploadCommandTest.java
 ``` java
 package seedu.recipe.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.recipe.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.recipe.logic.commands.UploadCommand.MESSAGE_ACCESS_TOKEN;
+import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipeBook;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
-public class AccessTokenCommandTest {
+import seedu.recipe.model.Model;
+import seedu.recipe.model.ModelManager;
+import seedu.recipe.model.UserPrefs;
+import seedu.recipe.ui.util.CloudStorageUtil;
 
-    private static final String INVALID_AUTHORIZATION_CODE = "wrong_format";
+public class UploadCommandTest {
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    private Model model = new ModelManager(getTypicalRecipeBook(), new UserPrefs());
 
     @Test
     public void equals() {
-        String firstTest = "firstCode";
-        String secondTest = "secondCode";
+        String firstTest = "RecipeBook1";
+        String secondTest = "Recipe_Book_1";
 
-        AccessTokenCommand accessTokenFirstCommand = new AccessTokenCommand(firstTest);
-        AccessTokenCommand accessTokenSecondCommand = new AccessTokenCommand(secondTest);
+        UploadCommand uploadFirstCommand = new UploadCommand(firstTest);
+        UploadCommand uploadSecondCommand = new UploadCommand(secondTest);
 
         // same object -> returns true
-        assertTrue(accessTokenFirstCommand.equals(accessTokenFirstCommand));
+        assertTrue(uploadFirstCommand.equals(uploadFirstCommand));
 
         // same values -> returns true
-        AccessTokenCommand accessTokenFirstCommandCopy = new AccessTokenCommand(firstTest);
-        assertTrue(accessTokenFirstCommandCopy.equals(accessTokenFirstCommand));
+        UploadCommand uploadFirstCommandCopy = new UploadCommand(firstTest);
+        assertTrue(uploadFirstCommandCopy.equals(uploadFirstCommand));
 
         // different types -> returns false
-        assertFalse(accessTokenFirstCommand.equals(1));
-        assertFalse(accessTokenFirstCommand.equals(new HelpCommand()));
-        assertFalse(accessTokenFirstCommand.equals("anything"));
+        assertFalse(uploadFirstCommand.equals(1));
+        assertFalse(uploadFirstCommand.equals(new HelpCommand()));
+        assertFalse(uploadFirstCommand.equals("anything"));
 
         // null -> returns false
-        assertFalse(accessTokenFirstCommand.equals(null));
+        assertFalse(uploadFirstCommand.equals(null));
 
         // different recipe -> returns false
-        assertFalse(accessTokenFirstCommand.equals(accessTokenSecondCommand));
+        assertFalse(uploadFirstCommand.equals(uploadSecondCommand));
     }
 
     @Test
-    public void execute_invalidAuthorizationCode() {
-        thrown.expect(AssertionError.class);
-        AccessTokenCommand command = new AccessTokenCommand(INVALID_AUTHORIZATION_CODE);
-        command.execute();
+    public void execute_inputWithValidArgs_noAccessToken() {
+        UploadCommand uploadCommand = new UploadCommand("recipebook.xml");
+        CloudStorageUtil.setAccessToken(null);
+        assertCommandSuccess(uploadCommand, model, MESSAGE_ACCESS_TOKEN, model);
     }
 }
 ```
-###### /java/seedu/recipe/storage/model/FilenameTest.java
+###### \java\seedu\recipe\logic\parser\AccessTokenCommandParserTest.java
 ``` java
-package seedu.recipe.storage.model;
+package seedu.recipe.logic.parser;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.recipe.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.recipe.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.Test;
 
-import seedu.recipe.testutil.Assert;
+import seedu.recipe.logic.commands.AccessTokenCommand;
 
-public class FilenameTest {
+public class AccessTokenCommandParserTest {
+
+    private static final String DUMMY_ACCESS_CODE = "valid_access_code";
+    private AccessTokenCommandParser parser = new AccessTokenCommandParser();
 
     @Test
-    public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new Filename(null));
+    public void parseEmptyArgThrowsParseException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AccessTokenCommand.MESSAGE_USAGE));
     }
 
     @Test
-    public void constructor_invalidFilename_throwsIllegalArgumentException() {
-        String invalidFilename = "";
-        Assert.assertThrows(IllegalArgumentException.class, () -> new Filename(invalidFilename));
-    }
+    public void parseValidArgsReturnsUploadCommand() {
+        // code taken from an actual dropbox authorization process
+        AccessTokenCommand expectedAccessTokenCommand =
+                new AccessTokenCommand(DUMMY_ACCESS_CODE);
+        assertParseSuccess(parser, "valid_access_code", expectedAccessTokenCommand);
 
-    @Test
-    public void isValidFilename() {
-        // null Filename
-        Assert.assertThrows(NullPointerException.class, () -> Filename.isValidFilename(null));
-
-        // blank Filename
-        assertFalse(Filename.isValidFilename("")); // empty string
-        assertFalse(Filename.isValidFilename(" ")); // spaces only
-
-        // invalid Filename
-        assertFalse(Filename.isValidFilename("test.Filename")); // invalid character .
-        assertFalse(Filename.isValidFilename("test|test")); // invalid character |
-        assertFalse(Filename.isValidFilename("test/filename")); // invalid character /
-
-        // valid Filename
-        assertTrue(Filename.isValidFilename("Recipe2Book")); // alphanumeric filename
-        assertTrue(Filename.isValidFilename("RecipeBook(1)")); // valid characters ()
-        assertTrue(Filename.isValidFilename("Recipe_Book")); // valid character _
+        // trim leading and trailing whitespaces
+        assertParseSuccess(parser, "  valid_access_code  ", expectedAccessTokenCommand);
     }
 }
 ```
-###### /java/seedu/recipe/model/tag/TagContainsKeywordsPredicateTest.java
+###### \java\seedu\recipe\logic\parser\ParserUtilTest.java
+``` java
+    @Test
+    public void parseFilename_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseFilename(null);
+    }
+
+    @Test
+    public void parseFilename_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseFilename(INVALID_FILENAME);
+    }
+
+    @Test
+    public void parseFilename_validValueWithoutWhitespace_returnsString() throws Exception {
+        String expectedFilename = VALID_FILENAME_1 + ".xml";
+        assertEquals(expectedFilename, ParserUtil.parseFilename(VALID_FILENAME_1));
+    }
+```
+###### \java\seedu\recipe\logic\parser\RecipeBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_tag() throws Exception {
+        List<String> keywords = Arrays.asList("friends", "family", "owesMoney");
+        TagCommand command = (TagCommand) parser.parseCommand(
+                TagCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new TagCommand(new TagContainsKeywordsPredicate(keywords),
+                keywords.toArray(new String[0])), command);
+    }
+
+    @Test
+    public void parseCommand_upload() throws Exception {
+        String filename = "RecipeBook";
+        UploadCommand command = (UploadCommand) parser.parseCommand(
+                UploadCommand.COMMAND_WORD + " " + filename);
+        assertEquals(new UploadCommand(filename + ".xml"), command);
+    }
+```
+###### \java\seedu\recipe\logic\parser\TagCommandParserTest.java
+``` java
+package seedu.recipe.logic.parser;
+
+import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.recipe.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.recipe.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import java.util.Arrays;
+
+import org.junit.Test;
+
+import seedu.recipe.logic.commands.TagCommand;
+import seedu.recipe.model.tag.TagContainsKeywordsPredicate;
+
+public class TagCommandParserTest {
+
+    private TagCommandParser parser = new TagCommandParser();
+
+    @Test
+    public void parseEmptyArgThrowsParseException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parseValidArgsReturnsTagCommand() {
+        // no leading and trailing whitespaces
+        TagCommand expectedTagCommand =
+                new TagCommand(new TagContainsKeywordsPredicate(Arrays.asList("friends", "owesMoney")),
+                                    new String[] {"friends", "owesMoney"});
+        assertParseSuccess(parser, "friends owesMoney", expectedTagCommand);
+
+        // multiple whitespaces between keywords
+        assertParseSuccess(parser, " \n friends \n \t owesMoney  \t", expectedTagCommand);
+    }
+}
+```
+###### \java\seedu\recipe\logic\parser\UploadCommandParserTest.java
+``` java
+package seedu.recipe.logic.parser;
+
+import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.recipe.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.recipe.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.recipe.logic.commands.UploadCommand;
+
+public class UploadCommandParserTest {
+
+    private UploadCommandParser parser = new UploadCommandParser();
+
+    @Test
+    public void parseEmptyArgThrowsParseException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parseValidArgsReturnsUploadCommand() {
+        // no leading and trailing whitespaces
+        UploadCommand expectedUploadCommand =
+                new UploadCommand("RecipeBook.xml");
+        assertParseSuccess(parser, "RecipeBook", expectedUploadCommand);
+
+        // ignores subsequent keywords after the first
+        assertParseSuccess(parser, " \n RecipeBook \n \t otherBook \t", expectedUploadCommand);
+    }
+
+    @Test
+    public void parseInvalidArgsThrowsParseException() {
+        assertParseFailure(parser, "recipe/book", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                UploadCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\recipe\model\tag\TagContainsKeywordsPredicateTest.java
 ``` java
 package seedu.recipe.model.tag;
 
@@ -525,6 +442,89 @@ public class TagContainsKeywordsPredicateTest {
                             ("Food", "12345", "fish", "egg", "Main", "Street"));
         assertFalse(predicate.test(new RecipeBuilder().withName("Food").withPreparationTime("12345")
                 .withIngredient("fish, egg").withInstruction("Main Street").build()));
+    }
+}
+```
+###### \java\seedu\recipe\storage\model\FilenameTest.java
+``` java
+package seedu.recipe.storage.model;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.recipe.testutil.Assert;
+
+public class FilenameTest {
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new Filename(null));
+    }
+
+    @Test
+    public void constructor_invalidFilename_throwsIllegalArgumentException() {
+        String invalidFilename = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Filename(invalidFilename));
+    }
+
+    @Test
+    public void isValidFilename() {
+        // null Filename
+        Assert.assertThrows(NullPointerException.class, () -> Filename.isValidFilename(null));
+
+        // blank Filename
+        assertFalse(Filename.isValidFilename("")); // empty string
+        assertFalse(Filename.isValidFilename(" ")); // spaces only
+
+        // invalid Filename
+        assertFalse(Filename.isValidFilename("test.Filename")); // invalid character .
+        assertFalse(Filename.isValidFilename("test|test")); // invalid character |
+        assertFalse(Filename.isValidFilename("test/filename")); // invalid character /
+
+        // valid Filename
+        assertTrue(Filename.isValidFilename("Recipe2Book")); // alphanumeric filename
+        assertTrue(Filename.isValidFilename("RecipeBook(1)")); // valid characters ()
+        assertTrue(Filename.isValidFilename("Recipe_Book")); // valid character _
+    }
+}
+```
+###### \java\seedu\recipe\ui\testutil\CloudStorageUtilTest.java
+``` java
+package seedu.recipe.ui.testutil;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.recipe.ui.util.CloudStorageUtil;
+
+public class CloudStorageUtilTest {
+
+    private static final String WRONG_AUTHORIZATION_CODE = "abcdefg";
+    private static final String ACCESS_TOKEN_STUB = "adjhsj";
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void hasAccessToken() {
+        CloudStorageUtil.setAccessToken(null);
+        assertFalse(CloudStorageUtil.hasAccessToken());
+
+        CloudStorageUtil.setAccessToken(ACCESS_TOKEN_STUB);
+        assertTrue(CloudStorageUtil.hasAccessToken());
+    }
+
+    @Test
+    public void processInvalidAuthorizationCode() {
+        thrown.expect(AssertionError.class);
+        CloudStorageUtil.processAuthorizationCode(WRONG_AUTHORIZATION_CODE);
+        assertFalse(CloudStorageUtil.hasAccessToken());
     }
 }
 ```

@@ -104,7 +104,7 @@ public class RouteOptimization {
         for (int i = 0; i < filteredAddresses.size(); i++) {
             if (filteredAddresses.get(i).equals(address)) {
                 filteredAddresses.remove(i);
-                break;
+                i--;
             }
         }
         return filteredAddresses;
@@ -120,14 +120,18 @@ public class RouteOptimization {
             String destination = filteredAddresses.get(i);
             paths.put(labelRoutes(origin, destination), distance.getDistance(origin, destination));
         }
+
         dummy = sort.cleanSorted(sort.sortByComparator(paths));
-        Map.Entry<String, Double> entry = dummy.entrySet().iterator().next();
-        next = entry.getKey().split("_")[1];
-        optimizedRoute.add(next);
-        filteredAddresses = removeAddress(next, filteredAddresses);
-        if (filteredAddresses.size() != 0) {
-            optimizedRoute = getDistances(filteredAddresses, next, optimizedRoute);
+        if( dummy.entrySet().iterator().hasNext()) {
+            Map.Entry<String, Double> entry = dummy.entrySet().iterator().next();
+            next = entry.getKey().split("_")[1];
+            optimizedRoute.add(next);
+            filteredAddresses = removeAddress(next, filteredAddresses);
+            if (filteredAddresses.size() != 0) {
+                optimizedRoute = getDistances(filteredAddresses, next, optimizedRoute);
+            }
         }
+
         return optimizedRoute;
     }
 

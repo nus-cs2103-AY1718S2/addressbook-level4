@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_ADDRESS_CANNOT_AT_HQ;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIV_DATE;
@@ -12,6 +13,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.GetDistance;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
@@ -26,6 +28,7 @@ import seedu.address.model.tag.Tag;
  * Parses input arguments and creates a new AddCommand object
  */
 public class AddCommandParser implements Parser<AddCommand> {
+    public static final String HQ_ADDRESS = "Kent Ridge MRT";
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
@@ -49,6 +52,14 @@ public class AddCommandParser implements Parser<AddCommand> {
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             DelivDate date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DELIV_DATE)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+
+            //check whether the person address is different from the HQ
+            String addressToString =  address.toString();
+            Double checkDistanceFromHQ = new GetDistance().getDistance(HQ_ADDRESS, addressToString);
+            if (checkDistanceFromHQ == 0) {
+                throw new ParseException(MESSAGE_ADDRESS_CANNOT_AT_HQ);
+            }
+
 
             Person person = new Person(name, phone, email, address, date, tagList);
 

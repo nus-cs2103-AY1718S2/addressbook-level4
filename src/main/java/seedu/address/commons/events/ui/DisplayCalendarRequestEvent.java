@@ -1,27 +1,31 @@
 package seedu.address.commons.events.ui;
 
-import javafx.collections.ObservableList;
+import java.util.Optional;
+
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.model.event.CalendarEvent;
 
 /**
  * Indicates request to display calendar.
  */
+//@@author SuxianAlicia
 public class DisplayCalendarRequestEvent extends BaseEvent {
 
-    private final ObservableList<CalendarEvent> calendarEvents;
+    private final Optional<String> calendarView;
 
-    public DisplayCalendarRequestEvent(ObservableList<CalendarEvent> calendarEvents) {
-        this.calendarEvents = calendarEvents;
+    public DisplayCalendarRequestEvent(Optional<String> calendarView) {
+        if (calendarView.isPresent()) {
+            this.calendarView = calendarView;
+        } else {
+            this.calendarView = null;
+        }
+    }
+
+    public String getView() {
+        return calendarView.isPresent() ? calendarView.get() : null;
     }
 
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
-
-    public ObservableList<CalendarEvent> getCalendarEvents() {
-        return calendarEvents;
-    }
-
 }

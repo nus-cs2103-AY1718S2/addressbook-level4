@@ -331,6 +331,12 @@ Examples:
 `od 3` +
 Deletes the 3rd order of the order list in the address book.
 
+=== Listing all orders : `orderlist` `Since V1.4`
+
+Shows a list of all orders in the address book. +
+Format: `orderlist` +
+Alias: `ol`
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -427,31 +433,31 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Displaying Calendar : `calendar` `since v1.3`
 
-Displays the Calendar at centre of window in Month-View format. +
-Format: `calendar` +
+Displays the Calendar at centre of window in specified viewing format. +
+Format: `calendar [VIEW_FORMAT]` +
 Alias: `cal` +
 
 ****
-* Calendar shows current month.
-* Calendar will display all incoming events within timeframe of the Month-View.
+* Calendar has 3 views; Day, Week, and Month.
+* `VIEW_FORMAT` only accepts the keywords, `day`, `week` and `month` to display the calendar in the respective format.
+* Calendar shows current day by default if no parameters are entered or invalid parameters are entered.
+* Calendar will display all incoming events within timeframe of the specified view.
 ****
 
 Examples:
 
-* `calendar`` OR +
+* `calendar` OR +
 `cal` +
+Shows Calendar in Day-View.
+
+* `calendar month` OR +
+`cal month` +
 Shows Calendar in Month-View.
 
-=== Listing all events : `eventlist` `coming in v1.5`
+=== Adding entries to Event list : `entryadd` `Since V1.3`
 
-Shows a list of all events in the address book. +
-Format: `eventlist` +
-Alias: `el`
-
-=== Adding events to Event list : `eventadd` `since v1.3`
-
-Adds an event to the Event list. +
-Format: `eventadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
+Adds an entry to the Calendar entry list. +
+Format: `entryadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
 Alias: `ea t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
 
 ****
@@ -473,18 +479,16 @@ Event appears on specified date in the Calendar.
 `ea t/roadshow sd/01-01-2019 ed/10-01-2019 st/09:00 et/18:00` +
 Event starting from 1 Jan 2019 1000 and ending at 10 Jan 2019 1800 appears at the specified time period in Calendar.
 
-=== editing events in Event list : `eventedit` `coming in v1.5`
 
-Edits an existing event in the Event List. +
-Format: `eventedit e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
-Alias: `ee e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
+=== editing entries in Calendar Entry list : `entryedit` `Coming in V1.5`
+
+Edits an existing entry in the Calendar entry List. +
+Format: `entryedit e/ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` +
+Alias: `ee e/ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` +
 
 ****
-* Edits the event at specified EVENT_INDEX. The index refers to the index number shown in the last event listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the entry at specified ENTRY_INDEX. The index refers to the index number shown in the last event listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
-* Person at the specified INDEX shown in the last person listing will be tagged to the event.
-* When editing INDEX, the existing persons tagged to the event will be removed i.e adding of person indexes is not cumulative.
-* You can remove all persons tagged to the event by typing `i/` without specifying any positive integer after it.
 ****
 
 Examples:
@@ -494,29 +498,34 @@ Examples:
 Edits title and end time of 1st event in Event list to "meet with bosses" and 1400 respectively. +
 Changes reflect on the Calendar.
 
-* `eventedit e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800 i/` OR +
-`ee e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800 i/` +
-Edits starting date and time, ending date and time of the 3rd event in Event list. +
-Removes all persons tagged to the event.
+* `eventedit e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800` OR +
+`ee e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800` +
+Edits starting date and time, ending date and time of the 3rd event in Event list.
 
-=== Deleting events in Event list : `eventdelete` `coming in v1.5`
+=== Deleting events in Calendar entry list : `entrydelete` `Since V1.4`
 
-Deletes an existing event in Event list. +
-Format: `eventdelete EVENT_INDEX` +
+Deletes an existing entry in Calendar entry list. +
+Format: `entrydelete EVENT_INDEX` +
 Alias: `ed EVENT_INDEX` +
 
 ****
-* Deletes event at specified EVENT_INDEX of Event list.
-* The index refers to index number shown in the most recent event listing.
+* Deletes entry at specified EVENT_INDEX of Event list.
+* The index refers to index number shown in the most recent entry listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
 Examples:
 
-* `eventdelete 1` OR +
+* `entrydelete 1` OR +
 `ed 1` +
-Deletes the event at index 1 of most recent event listing. +
-Event is removed from the Calendar.
+Deletes the entry at index 1 of most recent event listing. +
+Entry is removed from the Calendar.
+
+=== Listing all calendar entries : `entrylist` `Since V1.4`
+
+Shows a list of all calendar entries in the address book. +
+Format: `entrylist` +
+Alias: `el`
 
 === Clearing all entries in Event List : `eventclear` `coming in v1.5`
 

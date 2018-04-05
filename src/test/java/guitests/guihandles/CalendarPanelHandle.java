@@ -1,18 +1,33 @@
 package guitests.guihandles;
 
-import javafx.scene.Node;
+import com.calendarfx.model.Calendar;
+import com.calendarfx.model.CalendarSource;
+import com.calendarfx.view.CalendarView;
+
+import javafx.scene.layout.StackPane;
+import seedu.address.ui.util.CalendarFxUtil;
 
 /**
  * A handler for {@code CentrePanel} of the Ui.
  */
-public class CalendarPanelHandle extends NodeHandle<Node> {
+//@@author SuxianAlicia
+public class CalendarPanelHandle extends NodeHandle<StackPane> {
 
-    public static final String LABEL_YEAR_ID = "#year";
-    public static final String LABEL_MONTH_ID = "#month";
-    public static final String GRID_PANE_ID = "#daysOfMonth";
+    public static final String CALENDAR_PANEL_ID = "#calendarPanelholder";
 
-    protected CalendarPanelHandle(Node rootNode) {
+    private Calendar calendar;
+    private CalendarSource calendarSource;
+    private CalendarView calendarView;
+
+    protected CalendarPanelHandle(StackPane rootNode) {
         super(rootNode);
+        calendarView = CalendarFxUtil.returnModifiedCalendarView();
+        calendarSource = new CalendarSource();
+        calendar = new Calendar();
+        calendar.setReadOnly(true);
+        calendarSource.getCalendars().addAll(calendar);
+        calendarView.getCalendarSources().setAll(calendarSource);
+        getRootNode().getChildren().add(calendarView);
     }
 
 }

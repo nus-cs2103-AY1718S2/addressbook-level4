@@ -12,6 +12,7 @@ import seedu.address.model.tag.Preference;
  * and returns an DeletePreferenceCommand object for execution.
  * @throws ParseException if the user input does not conform the expected format
  */
+//@@author SuxianAlicia
 public class DeletePreferenceCommandParser implements Parser<DeletePreferenceCommand> {
     @Override
     public DeletePreferenceCommand parse(String userInput) throws ParseException {

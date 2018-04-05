@@ -17,6 +17,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.CalendarManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -28,7 +29,7 @@ import seedu.address.model.order.Order;
  */
 public class DeleteOrderCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBookWithOrders(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBookWithOrders(), new CalendarManager(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
@@ -37,7 +38,7 @@ public class DeleteOrderCommandTest {
 
         String expectedMessage = String.format(DeleteOrderCommand.MESSAGE_DELETE_ORDER_SUCCESS, orderToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
         expectedModel.deleteOrder(orderToDelete);
 
         assertCommandSuccess(deleteOrderCommand, model, expectedMessage, expectedModel);
@@ -58,7 +59,7 @@ public class DeleteOrderCommandTest {
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Order orderToDelete = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
         DeleteOrderCommand deleteOrderCommand = prepareCommand(INDEX_FIRST_ORDER);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
 
         // delete -> first order deleted
         deleteOrderCommand.execute();

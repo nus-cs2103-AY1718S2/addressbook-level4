@@ -12,12 +12,15 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.AddressBook;
+import seedu.address.model.CalendarManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyCalendarManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlSerializableAddressBook;
+import seedu.address.storage.XmlSerializableCalendarManager;
 import seedu.address.testutil.TestUtil;
 import systemtests.ModelHelper;
 
@@ -27,27 +30,41 @@ import systemtests.ModelHelper;
  */
 public class TestApp extends MainApp {
 
-    public static final String SAVE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("sampleData.xml");
+    public static final String SAVE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("sampleAbData.xml");
+    public static final String SAVE_LOCATION_FOR_CALENDAR_TESTING =
+            TestUtil.getFilePathInSandboxFolder("sampleCalendarData.xml");
     public static final String APP_TITLE = "Test App";
 
     protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
     protected static final String ADDRESS_BOOK_NAME = "Test";
+    protected static final String CALENDAR_MANAGER_NAME = "Calendar Test";
     protected Supplier<ReadOnlyAddressBook> initialDataSupplier = () -> null;
-    protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;
+    protected Supplier<ReadOnlyCalendarManager> initialCalDataSupplier = () -> null;
+    protected String saveAbFileLocation = SAVE_LOCATION_FOR_TESTING;
+    protected String saveCmFileLocation = SAVE_LOCATION_FOR_CALENDAR_TESTING;
 
     public TestApp() {
     }
 
-    public TestApp(Supplier<ReadOnlyAddressBook> initialDataSupplier, String saveFileLocation) {
+    public TestApp(Supplier<ReadOnlyAddressBook> initialDataSupplier,
+                   Supplier<ReadOnlyCalendarManager> initialCalDataSupplier, String saveAbFileLocation,
+                   String saveCmFileLocation) {
         super();
         this.initialDataSupplier = initialDataSupplier;
-        this.saveFileLocation = saveFileLocation;
+        this.initialCalDataSupplier = initialCalDataSupplier;
+        this.saveAbFileLocation = saveAbFileLocation;
+        this.saveCmFileLocation = saveCmFileLocation;
 
         // If some initial local data has been provided, write those to the file
         if (initialDataSupplier.get() != null) {
             createDataFileWithData(new XmlSerializableAddressBook(this.initialDataSupplier.get()),
-                    this.saveFileLocation);
+                    this.saveAbFileLocation);
+        }
+
+        if (initialCalDataSupplier.get() != null) {
+            createDataFileWithData(new XmlSerializableCalendarManager(this.initialCalDataSupplier.get()),
+                    this.saveCmFileLocation);
         }
     }
 
@@ -65,8 +82,10 @@ public class TestApp extends MainApp {
         double x = Screen.getPrimary().getVisualBounds().getMinX();
         double y = Screen.getPrimary().getVisualBounds().getMinY();
         userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
-        userPrefs.setAddressBookFilePath(saveFileLocation);
+        userPrefs.setAddressBookFilePath(saveAbFileLocation);
+        userPrefs.setCalendarManagerFilePath(saveCmFileLocation);
         userPrefs.setAddressBookName(ADDRESS_BOOK_NAME);
+        userPrefs.setCalendarManagerName(CALENDAR_MANAGER_NAME);
         return userPrefs;
     }
 
@@ -84,6 +103,19 @@ public class TestApp extends MainApp {
     }
 
     /**
+     * Returns a defensive copy of the calendar manager data stored inside the storage file.
+     */
+    public CalendarManager readStorageCalendarManager() {
+        try {
+            return new CalendarManager(storage.readCalendarManager().get());
+        } catch (DataConversionException dce) {
+            throw new AssertionError("Data is not in the CalendarManager format.");
+        } catch (IOException ioe) {
+            throw new AssertionError("Storage file cannot be found.");
+        }
+    }
+
+    /**
      * Returns the file path of the storage file.
      */
     public String getStorageSaveLocation() {
@@ -94,7 +126,7 @@ public class TestApp extends MainApp {
      * Returns a defensive copy of the model.
      */
     public Model getModel() {
-        Model copy = new ModelManager((model.getAddressBook()), new UserPrefs());
+        Model copy = new ModelManager((model.getAddressBook()), model.getCalendarManager(), new UserPrefs());
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
         return copy;
     }

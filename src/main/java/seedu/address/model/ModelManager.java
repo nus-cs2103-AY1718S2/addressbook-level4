@@ -6,14 +6,18 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import com.calendarfx.model.Calendar;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.event.CalendarEvent;
-import seedu.address.model.event.UniqueCalendarEventList;
+import seedu.address.commons.events.model.CalendarManagerChangedEvent;
+import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.event.exceptions.CalendarEntryNotFoundException;
+import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.UniqueOrderList;
 import seedu.address.model.order.exceptions.OrderNotFoundException;
@@ -35,31 +39,35 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Order> filteredOrders;
-    private final FilteredList<CalendarEvent> filteredEvents;
+    private final FilteredList<CalendarEntry> filteredEvents;
+    private final CalendarManager calendarManager;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyCalendarManager calendarManager, UserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(addressBook, calendarManager, userPrefs);
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.calendarManager = new CalendarManager(calendarManager);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredOrders = new FilteredList<>(this.addressBook.getOrderList());
-        filteredEvents = new FilteredList<>(this.addressBook.getEventList());
+        filteredEvents = new FilteredList<>(this.calendarManager.getCalendarEntryList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new CalendarManager(), new UserPrefs());
     }
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
+    public void resetData(ReadOnlyAddressBook newData, ReadOnlyCalendarManager newCalendarData) {
         addressBook.resetData(newData);
+        calendarManager.resetData(newCalendarData);
         indicateAddressBookChanged();
+        indicateCalendarManagerChanged();
     }
 
     @Override
@@ -67,9 +75,18 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
+    @Override
+    public ReadOnlyCalendarManager getCalendarManager() {
+        return calendarManager;
+    }
+
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
+    }
+
+    private void indicateCalendarManagerChanged() {
+        raise(new CalendarManagerChangedEvent(calendarManager));
     }
 
     @Override
@@ -110,22 +127,35 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addOrderToOrderList(Order orderToAdd) throws UniqueOrderList.DuplicateOrderException {
         addressBook.addOrderToOrderList(orderToAdd);
+        updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
         indicateAddressBookChanged();
     }
 
     @Override
     public void deleteOrder(Order targetOrder) throws OrderNotFoundException {
         addressBook.deleteOrder(targetOrder);
+        updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
         indicateAddressBookChanged();
     }
     //@@author
 
+    //@@author SuxianAlicia
     @Override
-    public void addCalendarEvent(CalendarEvent toAdd) throws UniqueCalendarEventList.DuplicateCalendarEventException {
-        addressBook.addCalendarEvent(toAdd);
-        updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_EVENTS);
-        indicateAddressBookChanged();
+    public void addCalendarEntry(CalendarEntry toAdd) throws DuplicateCalendarEntryException {
+        calendarManager.addCalendarEntry(toAdd);
+        updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
+        indicateCalendarManagerChanged();
     }
+
+
+    @Override
+    public void deleteCalendarEntry(CalendarEntry entryToDelete) throws CalendarEntryNotFoundException {
+        calendarManager.deleteCalendarEntry(entryToDelete);
+        updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
+        indicateCalendarManagerChanged();
+    }
+
+    //@@author
 
     //@@author amad-person
     @Override
@@ -174,11 +204,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public ObservableList<CalendarEvent> getFilteredCalendarEventList() {
-        return FXCollections.unmodifiableObservableList(filteredEvents);
-    }
-
-    @Override
     public void updateFilteredOrderList(Predicate<Order> predicate) {
 
         requireNonNull(predicate);
@@ -186,12 +211,25 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
+    // ========== Filtered Calendar Entry List Accessors ==================================
+    //@@author SuxianAlicia
     @Override
-    public void updateFilteredCalendarEventList(Predicate<CalendarEvent> predicate) {
+    public ObservableList<CalendarEntry> getFilteredCalendarEventList() {
+        return FXCollections.unmodifiableObservableList(filteredEvents);
+    }
+
+    @Override
+    public void updateFilteredCalendarEventList(Predicate<CalendarEntry> predicate) {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }
 
+    @Override
+    public Calendar getCalendar() {
+        return calendarManager.getCalendar();
+    }
+
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -207,6 +245,7 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
+                && calendarManager.equals(other.calendarManager)
                 && filteredPersons.equals(other.filteredPersons);
     }
 

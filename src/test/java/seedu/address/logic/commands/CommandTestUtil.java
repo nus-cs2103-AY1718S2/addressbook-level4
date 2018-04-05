@@ -8,7 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERY_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TITLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ENTRY_TITLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ORDER_INFORMATION;
@@ -66,8 +66,8 @@ public class CommandTestUtil {
     public static final String VALID_QUANTITY_COMPUTER = "1";
     public static final String VALID_DELIVERY_DATE_COMPUTER = "18-07-2018";
 
-    public static final String VALID_EVENT_TITLE_MEET_BOSS = "Meeting with boss";
-    public static final String VALID_EVENT_TITLE_GET_STOCKS = "Get stocks from supplier";
+    public static final String VALID_ENTRY_TITLE_MEET_BOSS = "Meeting with boss";
+    public static final String VALID_ENTRY_TITLE_GET_STOCKS = "Get stocks from supplier";
     public static final String VALID_START_DATE_MEET_BOSS = "06-06-2018";
     public static final String VALID_START_DATE_GET_STOCKS = "01-07-2018";
     public static final String VALID_END_DATE_MEET_BOSS = "06-06-2018";
@@ -107,8 +107,8 @@ public class CommandTestUtil {
     public static final String QUANTITY_DESC_COMPUTER = " " + PREFIX_QUANTITY + VALID_QUANTITY_COMPUTER;
     public static final String DELIVERY_DATE_DESC_COMPUTER = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_COMPUTER;
 
-    public static final String EVENT_TITLE_DESC_MEET_BOSS = " " + PREFIX_EVENT_TITLE + VALID_EVENT_TITLE_MEET_BOSS;
-    public static final String EVENT_TITLE_DESC_GET_STOCKS = " " + PREFIX_EVENT_TITLE + VALID_EVENT_TITLE_GET_STOCKS;
+    public static final String ENTRY_TITLE_DESC_MEET_BOSS = " " + PREFIX_ENTRY_TITLE + VALID_ENTRY_TITLE_MEET_BOSS;
+    public static final String ENTRY_TITLE_DESC_GET_STOCKS = " " + PREFIX_ENTRY_TITLE + VALID_ENTRY_TITLE_GET_STOCKS;
     public static final String START_DATE_DESC_MEET_BOSS = " " + PREFIX_START_DATE + VALID_START_DATE_MEET_BOSS;
     public static final String START_DATE_DESC_GET_STOCKS = " " + PREFIX_START_DATE + VALID_START_DATE_GET_STOCKS;
     public static final String END_DATE_DESC_MEET_BOSS = " " + PREFIX_END_DATE + VALID_END_DATE_MEET_BOSS;
@@ -133,8 +133,8 @@ public class CommandTestUtil {
             + PREFIX_QUANTITY + "-11"; // '-' sign not allowed in quantities
     public static final String INVALID_DELIVERY_DATE_DESC = " " + PREFIX_DELIVERY_DATE + "20-45-10000"; // illegal date
 
-    public static final String INVALID_EVENT_TITLE_DESC = " "
-            + PREFIX_EVENT_TITLE + "M@@ting with the boss, "; // '@' and ',' are not allowed in event title.
+    public static final String INVALID_ENTRY_TITLE_DESC = " "
+            + PREFIX_ENTRY_TITLE + "M@@ting with the boss, "; // '@' and ',' are not allowed in event title.
     public static final String INVALID_START_DATE_DESC = " " + PREFIX_START_DATE + "31-02-2018"; // Illegal date
     public static final String INVALID_END_DATE_DESC = " " + PREFIX_END_DATE + "23-20-20000"; // Illegal date
     public static final String INVALID_START_TIME_DESC = " " + PREFIX_START_TIME + "12-30"; //Illegal time format
@@ -143,7 +143,8 @@ public class CommandTestUtil {
             " " + PREFIX_START_DATE + "06-07-2018"; // Start Date later than 06-06-2018
     public static final String INVALID_START_TIME_LATER_THAN_END_TIME_DESC =
             " " + PREFIX_START_TIME + "23:00"; // Start Time later than End time same Start Date and End Date.
-
+    public static final String INVALID_START_TIME_LESS_THAN_FIFTEEN_MINUTES_FROM_END_TIME_DESC =
+            " " + PREFIX_START_TIME + "11:50";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

@@ -1,0 +1,10 @@
+<calendarmanager>
+    <!-- Entry with invalid end date -->
+    <calendarEntries>
+        <entryTitle>Meeting with boss</entryTitle>
+        <startDate>06-06-2018</startDate>
+        <endDate>36-06-2018</endDate>
+        <startTime>10:00</startTime>
+        <endTime>12:00</endTime>
+    </calendarEntries>
+</calendarmanager>

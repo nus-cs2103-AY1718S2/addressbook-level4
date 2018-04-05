@@ -23,6 +23,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.EditOrderCommand.EditOrderDescriptor;
 import seedu.address.model.AddressBook;
+import seedu.address.model.CalendarManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -36,7 +37,7 @@ import seedu.address.testutil.OrderBuilder;
  */
 public class EditOrderCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBookWithOrders(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBookWithOrders(), new CalendarManager(), new UserPrefs());
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
@@ -46,7 +47,8 @@ public class EditOrderCommandTest {
 
         String expectedMessage = String.format(EditOrderCommand.MESSAGE_EDIT_ORDER_SUCCESS, editedOrder);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new CalendarManager(),
+                new UserPrefs());
         expectedModel.updateOrder(model.getFilteredOrderList().get(0), editedOrder);
 
         assertCommandSuccess(editOrderCommand, model, expectedMessage, expectedModel);
@@ -68,7 +70,8 @@ public class EditOrderCommandTest {
 
         String expectedMessage = String.format(EditOrderCommand.MESSAGE_EDIT_ORDER_SUCCESS, editedOrder);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new CalendarManager(),
+                new UserPrefs());
         expectedModel.updateOrder(lastOrder, editedOrder);
 
         assertCommandSuccess(editOrderCommand, model, expectedMessage, expectedModel);
@@ -81,7 +84,8 @@ public class EditOrderCommandTest {
 
         String expectedMessage = String.format(EditOrderCommand.MESSAGE_EDIT_ORDER_SUCCESS, editedOrder);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new CalendarManager(),
+                new UserPrefs());
         expectedModel.updateOrder(model.getFilteredOrderList().get(0), editedOrder);
 
         assertCommandSuccess(editOrderCommand, model, expectedMessage, expectedModel);
@@ -115,7 +119,8 @@ public class EditOrderCommandTest {
         Order orderToEdit = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
         EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder(editedOrder).build();
         EditOrderCommand editOrderCommand = prepareCommand(INDEX_FIRST_ORDER, descriptor);
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new CalendarManager(),
+                new UserPrefs());
 
         // edit -> first order edited
         editOrderCommand.execute();

@@ -15,7 +15,7 @@ import seedu.address.testutil.TestUtil;
 
 public class SampleDataTest extends AddressBookSystemTest {
     /**
-     * Returns null to force test app to load data of the file in {@code getDataFileLocation()}.
+     * Returns null to force test app to load data of the file in {@code getAbDataFileLocation()}.
      */
     @Override
     protected AddressBook getInitialData() {
@@ -26,7 +26,7 @@ public class SampleDataTest extends AddressBookSystemTest {
      * Returns a non-existent file location to force test app to load sample data.
      */
     @Override
-    protected String getDataFileLocation() {
+    protected String getAbDataFileLocation() {
         String filePath = TestUtil.getFilePathInSandboxFolder("SomeFileThatDoesNotExist1234567890.xml");
         deleteFileIfExists(filePath);
         return filePath;

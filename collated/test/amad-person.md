@@ -1,5 +1,5 @@
 # amad-person
-###### /java/guitests/guihandles/OrderCardHandle.java
+###### \java\guitests\guihandles\OrderCardHandle.java
 ``` java
 package guitests.guihandles;
 
@@ -53,7 +53,7 @@ public class OrderCardHandle extends NodeHandle<Node> {
     }
 }
 ```
-###### /java/guitests/guihandles/OrderListPanelHandle.java
+###### \java\guitests\guihandles\OrderListPanelHandle.java
 ``` java
 package guitests.guihandles;
 
@@ -113,7 +113,7 @@ public class OrderListPanelHandle extends NodeHandle<ListView<OrderCard>> {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AddOrderCommandTest.java
+###### \java\seedu\address\logic\commands\AddOrderCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -136,6 +136,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import com.calendarfx.model.Calendar;
+
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.index.Index;
@@ -143,12 +145,15 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.CalendarManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyCalendarManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.event.CalendarEvent;
-import seedu.address.model.event.UniqueCalendarEventList;
+import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.event.exceptions.CalendarEntryNotFoundException;
+import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.UniqueOrderList;
 import seedu.address.model.order.exceptions.OrderNotFoundException;
@@ -169,7 +174,7 @@ public class AddOrderCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new CalendarManager(), new UserPrefs());
 
     @Test
     public void constructor_nullOrder_throwsNullPointerException() {
@@ -247,8 +252,9 @@ public class AddOrderCommandTest {
             fail("This method should not be called.");
         }
 
+
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
+        public void resetData(ReadOnlyAddressBook newData, ReadOnlyCalendarManager newCalendarData) {
             fail("This method should not be called.");
         }
 
@@ -275,6 +281,12 @@ public class AddOrderCommandTest {
         }
 
         @Override
+        public void updateOrderStatus(Order target, String orderStatus)
+                throws UniqueOrderList.DuplicateOrderException, OrderNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             return model.getFilteredPersonList();
         }
@@ -285,8 +297,20 @@ public class AddOrderCommandTest {
         }
 
         @Override
-        public ObservableList<CalendarEvent> getFilteredCalendarEventList() {
+        public ObservableList<CalendarEntry> getFilteredCalendarEventList() {
             return model.getFilteredCalendarEventList();
+        }
+
+        @Override
+        public Calendar getCalendar() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ReadOnlyCalendarManager getCalendarManager() {
+            fail("This method should not be called.");
+            return null;
         }
 
         @Override
@@ -295,7 +319,7 @@ public class AddOrderCommandTest {
         }
 
         @Override
-        public void updateFilteredCalendarEventList(Predicate<CalendarEvent> predicate) {
+        public void updateFilteredCalendarEventList(Predicate<CalendarEntry> predicate) {
             fail("This method should not be called.");
         }
 
@@ -325,8 +349,13 @@ public class AddOrderCommandTest {
         }
 
         @Override
-        public void addCalendarEvent(CalendarEvent toAdd)
-                throws UniqueCalendarEventList.DuplicateCalendarEventException {
+        public void addCalendarEntry(CalendarEntry toAdd)
+                throws DuplicateCalendarEntryException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteCalendarEntry(CalendarEntry entryToDelete) throws CalendarEntryNotFoundException {
             fail("This method should not be called.");
         }
     }
@@ -343,6 +372,11 @@ public class AddOrderCommandTest {
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
+        }
+
+        @Override
+        public ReadOnlyCalendarManager getCalendarManager() {
+            return new CalendarManager();
         }
     }
 
@@ -362,11 +396,16 @@ public class AddOrderCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
+
+        @Override
+        public ReadOnlyCalendarManager getCalendarManager() {
+            return new CalendarManager();
+        }
     }
 }
 
 ```
-###### /java/seedu/address/logic/commands/ChangeThemeCommandTest.java
+###### \java\seedu\address\logic\commands\ChangeThemeCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -389,6 +428,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.CalendarManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -403,7 +443,7 @@ public class ChangeThemeCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), new CalendarManager(), new UserPrefs());
         userPrefs = new UserPrefs();
         guiSettings = userPrefs.getGuiSettings();
     }
@@ -429,7 +469,7 @@ public class ChangeThemeCommandTest {
                 LIGHT_THEME_KEYWORD
         );
 
-        Model expectedModel = new ModelManager(getTypicalAddressBook(), expectedUserPrefs);
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new CalendarManager(), expectedUserPrefs);
         assertCommandSuccess(changeThemeToLightCommand, model, expectedMessage, expectedModel);
 
         ChangeThemeCommand changeThemeToDarkCommand = prepareCommand(DARK_THEME_KEYWORD);
@@ -445,7 +485,7 @@ public class ChangeThemeCommandTest {
                 DARK_THEME_KEYWORD
         );
 
-        expectedModel = new ModelManager(getTypicalAddressBook(), expectedUserPrefs);
+        expectedModel = new ModelManager(getTypicalAddressBook(), new CalendarManager(), expectedUserPrefs);
         assertCommandSuccess(changeThemeToDarkCommand, model, expectedMessage, expectedModel);
     }
 
@@ -488,7 +528,7 @@ public class ChangeThemeCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/DeleteOrderCommandTest.java
+###### \java\seedu\address\logic\commands\DeleteOrderCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -508,6 +548,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.CalendarManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -519,7 +560,7 @@ import seedu.address.model.order.Order;
  */
 public class DeleteOrderCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBookWithOrders(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBookWithOrders(), new CalendarManager(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
@@ -528,7 +569,7 @@ public class DeleteOrderCommandTest {
 
         String expectedMessage = String.format(DeleteOrderCommand.MESSAGE_DELETE_ORDER_SUCCESS, orderToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
         expectedModel.deleteOrder(orderToDelete);
 
         assertCommandSuccess(deleteOrderCommand, model, expectedMessage, expectedModel);
@@ -549,7 +590,7 @@ public class DeleteOrderCommandTest {
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Order orderToDelete = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
         DeleteOrderCommand deleteOrderCommand = prepareCommand(INDEX_FIRST_ORDER);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
 
         // delete -> first order deleted
         deleteOrderCommand.execute();
@@ -615,7 +656,7 @@ public class DeleteOrderCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/EditOrderCommandTest.java
+###### \java\seedu\address\logic\commands\EditOrderCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -641,6 +682,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.EditOrderCommand.EditOrderDescriptor;
 import seedu.address.model.AddressBook;
+import seedu.address.model.CalendarManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -654,7 +696,7 @@ import seedu.address.testutil.OrderBuilder;
  */
 public class EditOrderCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBookWithOrders(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBookWithOrders(), new CalendarManager(), new UserPrefs());
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
@@ -664,7 +706,8 @@ public class EditOrderCommandTest {
 
         String expectedMessage = String.format(EditOrderCommand.MESSAGE_EDIT_ORDER_SUCCESS, editedOrder);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new CalendarManager(),
+                new UserPrefs());
         expectedModel.updateOrder(model.getFilteredOrderList().get(0), editedOrder);
 
         assertCommandSuccess(editOrderCommand, model, expectedMessage, expectedModel);
@@ -686,7 +729,8 @@ public class EditOrderCommandTest {
 
         String expectedMessage = String.format(EditOrderCommand.MESSAGE_EDIT_ORDER_SUCCESS, editedOrder);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new CalendarManager(),
+                new UserPrefs());
         expectedModel.updateOrder(lastOrder, editedOrder);
 
         assertCommandSuccess(editOrderCommand, model, expectedMessage, expectedModel);
@@ -699,7 +743,8 @@ public class EditOrderCommandTest {
 
         String expectedMessage = String.format(EditOrderCommand.MESSAGE_EDIT_ORDER_SUCCESS, editedOrder);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new CalendarManager(),
+                new UserPrefs());
         expectedModel.updateOrder(model.getFilteredOrderList().get(0), editedOrder);
 
         assertCommandSuccess(editOrderCommand, model, expectedMessage, expectedModel);
@@ -733,7 +778,8 @@ public class EditOrderCommandTest {
         Order orderToEdit = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
         EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder(editedOrder).build();
         EditOrderCommand editOrderCommand = prepareCommand(INDEX_FIRST_ORDER, descriptor);
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new CalendarManager(),
+                new UserPrefs());
 
         // edit -> first order edited
         editOrderCommand.execute();
@@ -805,7 +851,7 @@ public class EditOrderCommandTest {
     }
 }
 ```
-###### /java/seedu/address/model/order/DeliveryDateTest.java
+###### \java\seedu\address\model\order\DeliveryDateTest.java
 ``` java
 package seedu.address.model.order;
 
@@ -850,7 +896,7 @@ public class DeliveryDateTest {
     }
 }
 ```
-###### /java/seedu/address/model/order/OrderInformationTest.java
+###### \java\seedu\address\model\order\OrderInformationTest.java
 ``` java
 package seedu.address.model.order;
 
@@ -890,7 +936,7 @@ public class OrderInformationTest {
     }
 }
 ```
-###### /java/seedu/address/model/order/OrderTest.java
+###### \java\seedu\address\model\order\OrderTest.java
 ``` java
 package seedu.address.model.order;
 
@@ -906,7 +952,7 @@ public class OrderTest {
     }
 }
 ```
-###### /java/seedu/address/model/order/PriceTest.java
+###### \java\seedu\address\model\order\PriceTest.java
 ``` java
 package seedu.address.model.order;
 
@@ -952,7 +998,7 @@ public class PriceTest {
     }
 }
 ```
-###### /java/seedu/address/model/order/QuantityTest.java
+###### \java\seedu\address\model\order\QuantityTest.java
 ``` java
 package seedu.address.model.order;
 
@@ -996,7 +1042,7 @@ public class QuantityTest {
     }
 }
 ```
-###### /java/seedu/address/model/theme/ThemeTest.java
+###### \java\seedu\address\model\theme\ThemeTest.java
 ``` java
 package seedu.address.model.theme;
 
@@ -1074,7 +1120,7 @@ public class ThemeTest {
     }
 }
 ```
-###### /java/seedu/address/model/UniqueGroupListTest.java
+###### \java\seedu\address\model\UniqueGroupListTest.java
 ``` java
     @Test
     public void equals() throws UniqueGroupList.DuplicateGroupException {
@@ -1093,7 +1139,7 @@ public class ThemeTest {
         assertFalse(firstGroupList.equals(secondGroupList));
     }
 ```
-###### /java/seedu/address/model/UniqueGroupListTest.java
+###### \java\seedu\address\model\UniqueGroupListTest.java
 ``` java
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
@@ -1111,7 +1157,7 @@ public class ThemeTest {
         uniqueGroupList.add(FRIENDS);
     }
 ```
-###### /java/seedu/address/model/UniqueOrderListTest.java
+###### \java\seedu\address\model\UniqueOrderListTest.java
 ``` java
 package seedu.address.model;
 
@@ -1177,7 +1223,7 @@ public class UniqueOrderListTest {
     }
 }
 ```
-###### /java/seedu/address/model/UniquePreferenceListTest.java
+###### \java\seedu\address\model\UniquePreferenceListTest.java
 ``` java
     @Test
     public void equals() throws UniquePreferenceList.DuplicatePreferenceException {
@@ -1196,7 +1242,7 @@ public class UniqueOrderListTest {
         assertFalse(firstPrefList.equals(secondPrefList));
     }
 ```
-###### /java/seedu/address/model/UniquePreferenceListTest.java
+###### \java\seedu\address\model\UniquePreferenceListTest.java
 ``` java
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
@@ -1214,7 +1260,7 @@ public class UniqueOrderListTest {
         uniquePrefList.add(SHOES);
     }
 ```
-###### /java/seedu/address/storage/XmlAdaptedOrderTest.java
+###### \java\seedu\address\storage\XmlAdaptedOrderTest.java
 ``` java
 package seedu.address.storage;
 
@@ -1313,7 +1359,7 @@ public class XmlAdaptedOrderTest {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlSerializableAddressBookTest.java
+###### \java\seedu\address\storage\XmlSerializableAddressBookTest.java
 ``` java
     @Test
     public void toModelType_typicalOrdersFile_success() throws Exception {
@@ -1324,7 +1370,7 @@ public class XmlAdaptedOrderTest {
         assertEquals(addressBookFromFile, typicalOrdersAddressBook);
     }
 ```
-###### /java/seedu/address/storage/XmlSerializableAddressBookTest.java
+###### \java\seedu\address\storage\XmlSerializableAddressBookTest.java
 ``` java
     @Test
     public void toModelType_invalidOrderFile_throwsIllegalValueException() throws Exception {
@@ -1334,7 +1380,7 @@ public class XmlAdaptedOrderTest {
         dataFromFile.toModelType();
     }
 ```
-###### /java/seedu/address/testutil/EditOrderDescriptorBuilder.java
+###### \java\seedu\address\testutil\EditOrderDescriptorBuilder.java
 ``` java
 package seedu.address.testutil;
 
@@ -1405,7 +1451,7 @@ public class EditOrderDescriptorBuilder {
     }
 }
 ```
-###### /java/seedu/address/testutil/OrderBuilder.java
+###### \java\seedu\address\testutil\OrderBuilder.java
 ``` java
 package seedu.address.testutil;
 
@@ -1484,7 +1530,7 @@ public class OrderBuilder {
     }
 }
 ```
-###### /java/seedu/address/testutil/OrderUtil.java
+###### \java\seedu\address\testutil\OrderUtil.java
 ``` java
 package seedu.address.testutil;
 
@@ -1521,7 +1567,7 @@ public class OrderUtil {
     }
 }
 ```
-###### /java/seedu/address/testutil/TestUtil.java
+###### \java\seedu\address\testutil\TestUtil.java
 ``` java
     /**
      * Returns the middle index of the order in the {@code model}'s order list.
@@ -1537,7 +1583,7 @@ public class OrderUtil {
         return Index.fromOneBased(model.getAddressBook().getOrderList().size());
     }
 ```
-###### /java/seedu/address/testutil/TestUtil.java
+###### \java\seedu\address\testutil\TestUtil.java
 ``` java
 
     /**
@@ -1548,7 +1594,7 @@ public class OrderUtil {
     }
 
 ```
-###### /java/seedu/address/testutil/TestUtil.java
+###### \java\seedu\address\testutil\TestUtil.java
 ``` java
     /**
      * Returns the order in the {@code model}'s order list at {@code index}.
@@ -1557,7 +1603,7 @@ public class OrderUtil {
         return model.getAddressBook().getOrderList().get(index.getZeroBased());
     }
 ```
-###### /java/seedu/address/testutil/TypicalOrders.java
+###### \java\seedu\address\testutil\TypicalOrders.java
 ``` java
 package seedu.address.testutil;
 
@@ -1660,7 +1706,7 @@ public class TypicalOrders {
     }
 }
 ```
-###### /java/seedu/address/ui/CommandBoxTest.java
+###### \java\seedu\address\ui\CommandBoxTest.java
 ``` java
     @Test
     public void handleKeyPress_tab() {
@@ -1677,7 +1723,7 @@ public class TypicalOrders {
         assertInputHistory(KeyCode.TAB, COMMAND_THAT_FAILS);
     }
 ```
-###### /java/seedu/address/ui/OrderCardTest.java
+###### \java\seedu\address\ui\OrderCardTest.java
 ``` java
 package seedu.address.ui;
 
@@ -1746,7 +1792,7 @@ public class OrderCardTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/address/ui/OrderListPanelTest.java
+###### \java\seedu\address\ui\OrderListPanelTest.java
 ``` java
 package seedu.address.ui;
 
@@ -1791,7 +1837,7 @@ public class OrderListPanelTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/systemtests/AddOrderCommandSystemTest.java
+###### \java\systemtests\AddOrderCommandSystemTest.java
 ``` java
 package systemtests;
 
@@ -2057,7 +2103,7 @@ public class AddOrderCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### /java/systemtests/DeleteOrderCommandSystemTest.java
+###### \java\systemtests\DeleteOrderCommandSystemTest.java
 ``` java
 package systemtests;
 
@@ -2231,7 +2277,7 @@ public class DeleteOrderCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### /java/systemtests/EditOrderCommandSystemTest.java
+###### \java\systemtests\EditOrderCommandSystemTest.java
 ``` java
 package systemtests;
 

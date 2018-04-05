@@ -369,7 +369,7 @@
     -fx-border-width: 0;
 }
 
-#cardPane #name, #cardPane #id, #cardPane #orderInformation {
+#cardPane #name, #cardPane #id, #cardPane #orderInformation, #cardPane #entryTitle {
     -fx-font-size: 15pt;
 }
 
@@ -393,24 +393,4 @@
 
 #personPanel .split-pane-divider {
     -fx-background-color: derive(#1d1d1d, 50%);
-}
-//@@author AJZ1995
-.cell-cal-label {
-    -fx-background-color: #3e7b91;
-    -fx-background-insets: 0, 0 0 1 1 ;
-    -fx-padding: 1 3 1 3;
-    -fx-border-width: 1;
-}
-
-.cell-cal-event {
-    -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
-    -fx-padding: 1 3 1 3;
-    -fx-border-radius: 2;
-    -fx-background-radius: 2;
-    -fx-font-size: 11;
-}
-
-.cal-anchor-pane {
-    -fx-background-color: white;
 }

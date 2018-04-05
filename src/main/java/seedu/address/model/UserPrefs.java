@@ -15,6 +15,9 @@ public class UserPrefs {
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
 
+    private String calendarManagerFilePath = "data/calendarmanager.xml";
+    private String calendarManagerName = "MyCalendarManager";
+
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0, DEFAULT_THEME);
     }
@@ -39,16 +42,32 @@ public class UserPrefs {
         return addressBookFilePath;
     }
 
+    public String getCalendarManagerFilePath() {
+        return calendarManagerFilePath;
+    }
+
     public void setAddressBookFilePath(String addressBookFilePath) {
         this.addressBookFilePath = addressBookFilePath;
+    }
+
+    public void setCalendarManagerFilePath(String calendarManagerFilePath) {
+        this.calendarManagerFilePath = calendarManagerFilePath;
     }
 
     public String getAddressBookName() {
         return addressBookName;
     }
 
+    public String getCalendarManagerName() {
+        return calendarManagerName;
+    }
+
     public void setAddressBookName(String addressBookName) {
         this.addressBookName = addressBookName;
+    }
+
+    public void setCalendarManagerName(String calendarManagerName) {
+        this.calendarManagerName = calendarManagerName;
     }
 
     @Override

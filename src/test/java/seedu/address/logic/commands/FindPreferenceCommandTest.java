@@ -18,14 +18,16 @@ import org.junit.Test;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
+import seedu.address.model.CalendarManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PreferencesContainKeywordsPredicate;
 
+//@@author SuxianAlicia
 public class FindPreferenceCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new CalendarManager(), new UserPrefs());
 
     @Test
     public void equals() {

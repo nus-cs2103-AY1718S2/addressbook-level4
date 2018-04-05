@@ -6,6 +6,7 @@ import seedu.address.model.person.PreferencesContainKeywordsPredicate;
  * Finds and lists all persons in address book whose preferences contains any of the argument keywords.
  * Keyword matching is case insensitive.
  */
+//@@author SuxianAlicia
 public class FindPreferenceCommand extends Command {
     public static final String COMMAND_WORD = "preffind";
     public static final String COMMAND_ALIAS = "pf";

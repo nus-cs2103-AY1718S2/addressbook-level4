@@ -5,10 +5,12 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.CalendarEntryCardHandle;
 import guitests.guihandles.OrderCardHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import seedu.address.model.event.CalendarEntry;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Person;
 
@@ -60,6 +62,24 @@ public class GuiTestAssert {
         assertEquals(expectedTotalPrice, actualCard.getTotalPrice());
 
         assertEquals("Deliver By: " + expectedOrder.getDeliveryDate().toString(), actualCard.getDeliveryDate());
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedEntry}.
+     */
+    public static void assertCardDisplaysEntry(CalendarEntry expectedEntry, CalendarEntryCardHandle actualCard) {
+        assertEquals(expectedEntry.getEntryTitle().toString(), actualCard.getEntryTitle());
+
+        String expectedStartDate = "From: " + expectedEntry.getStartDate().toString();
+        assertEquals(expectedStartDate, actualCard.getStartDate());
+
+        String expectedEndDate = "To: " + expectedEntry.getEndDate().toString();
+
+        assertEquals(expectedEndDate, actualCard.getEndDate());
+
+        String expectedTimeDuration = "Between " + expectedEntry.getStartTime().toString()
+                + " and " + expectedEntry.getEndTime().toString();
+        assertEquals(expectedTimeDuration, actualCard.getTimeDuration());
     }
 
     /**

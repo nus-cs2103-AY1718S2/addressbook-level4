@@ -11,6 +11,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.FindPreferenceCommand;
 import seedu.address.model.person.PreferencesContainKeywordsPredicate;
 
+//@@author SuxianAlicia
 public class FindPreferenceCommandParserTest {
     private FindPreferenceCommandParser parser = new FindPreferenceCommandParser();
 

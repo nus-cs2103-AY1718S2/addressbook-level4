@@ -5,8 +5,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import seedu.address.commons.util.TimeUtil;
 import seedu.address.testutil.Assert;
 
+//@@author SuxianAlicia
 public class EndTimeTest {
 
     @Test
@@ -23,20 +25,20 @@ public class EndTimeTest {
     @Test
     public void isValidEndTime() {
         // null end time
-        Assert.assertThrows(NullPointerException.class, () -> EndTime.isValidEndTime(null));
+        Assert.assertThrows(NullPointerException.class, () -> TimeUtil.isValidTime(null));
 
         // invalid end time
-        assertFalse(EndTime.isValidEndTime("")); // empty string
-        assertFalse(EndTime.isValidEndTime(" ")); // spaces only
-        assertFalse(EndTime.isValidEndTime("wejo*21")); // invalid string
-        assertFalse(EndTime.isValidEndTime("12-01")); // invalid format
-        assertFalse(EndTime.isValidEndTime("24:01")); // invalid Hour
-        assertFalse(EndTime.isValidEndTime("00:79")); // invalid Minute
-        assertFalse(EndTime.isValidEndTime("101:04")); // invalid Hour
-        assertFalse(EndTime.isValidEndTime("00:100")); // invalid Minute
+        assertFalse(TimeUtil.isValidTime("")); // empty string
+        assertFalse(TimeUtil.isValidTime(" ")); // spaces only
+        assertFalse(TimeUtil.isValidTime("wejo*21")); // invalid string
+        assertFalse(TimeUtil.isValidTime("12-01")); // invalid format
+        assertFalse(TimeUtil.isValidTime("24:01")); // invalid Hour
+        assertFalse(TimeUtil.isValidTime("00:79")); // invalid Minute
+        assertFalse(TimeUtil.isValidTime("101:04")); // invalid Hour
+        assertFalse(TimeUtil.isValidTime("00:100")); // invalid Minute
 
         // valid end time
-        assertTrue(EndTime.isValidEndTime("10:00")); // valid date
-        assertTrue(EndTime.isValidEndTime("18:55")); // valid date (24Hr Format)
+        assertTrue(TimeUtil.isValidTime("10:00")); // valid date
+        assertTrue(TimeUtil.isValidTime("18:55")); // valid date (24Hr Format)
     }
 }

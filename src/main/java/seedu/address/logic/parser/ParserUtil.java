@@ -9,10 +9,12 @@ import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.DateUtil;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.commons.util.TimeUtil;
 import seedu.address.model.event.EndDate;
 import seedu.address.model.event.EndTime;
-import seedu.address.model.event.EventTitle;
+import seedu.address.model.event.EntryTitle;
 import seedu.address.model.event.StartDate;
 import seedu.address.model.event.StartTime;
 import seedu.address.model.order.DeliveryDate;
@@ -348,26 +350,26 @@ public class ParserUtil {
     //@@ author
 
     /**
-     * Parses a {@code String eventTitle} into a {@code EventTitle}.
+     * Parses a {@code String eventTitle} into a {@code EntryTitle}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws IllegalValueException if the given {@code eventTitle} is invalid.
      */
-    public static EventTitle parseEventTitle(String eventTitle) throws IllegalValueException {
+    public static EntryTitle parseEventTitle(String eventTitle) throws IllegalValueException {
         requireNonNull(eventTitle);
         String trimmedEventTitle = eventTitle.trim();
-        if (!EventTitle.isValidEventTitle(trimmedEventTitle)) {
-            throw new IllegalValueException(EventTitle.MESSAGE_EVENT_TITLE_CONSTRAINTS);
+        if (!EntryTitle.isValidEntryTitle(trimmedEventTitle)) {
+            throw new IllegalValueException(EntryTitle.MESSAGE_ENTRY_TITLE_CONSTRAINTS);
         }
-        return new EventTitle(trimmedEventTitle);
+        return new EntryTitle(trimmedEventTitle);
     }
 
     /**
-     * Parses a {@code Optional<String> eventTitle} into an {@code Optional<EventTitle>}
+     * Parses a {@code Optional<String> eventTitle} into an {@code Optional<EntryTitle>}
      * if {@code eventTitle} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<EventTitle> parseEventTitle(Optional<String> eventTitle)
+    public static Optional<EntryTitle> parseEventTitle(Optional<String> eventTitle)
             throws IllegalValueException {
         requireNonNull(eventTitle);
         return eventTitle.isPresent()
@@ -384,7 +386,7 @@ public class ParserUtil {
     public static StartDate parseStartDate(String startDate) throws IllegalValueException {
         requireNonNull(startDate);
         String trimmedStartDate = startDate.trim();
-        if (!StartDate.isValidStartDate(trimmedStartDate)) {
+        if (!DateUtil.isValidDate(trimmedStartDate)) {
             throw new IllegalValueException(StartDate.MESSAGE_START_DATE_CONSTRAINTS);
         }
         return new StartDate(trimmedStartDate);
@@ -412,7 +414,7 @@ public class ParserUtil {
     public static EndDate parseEndDate(String endDate) throws IllegalValueException {
         requireNonNull(endDate);
         String trimmedEndDate = endDate.trim();
-        if (!EndDate.isValidEndDate(trimmedEndDate)) {
+        if (!DateUtil.isValidDate(trimmedEndDate)) {
             throw new IllegalValueException(EndDate.MESSAGE_END_DATE_CONSTRAINTS);
         }
         return new EndDate(trimmedEndDate);
@@ -440,7 +442,7 @@ public class ParserUtil {
     public static StartTime parseStartTime(String startTime) throws IllegalValueException {
         requireNonNull(startTime);
         String trimmedStartTime = startTime.trim();
-        if (!StartTime.isValidStartTime(trimmedStartTime)) {
+        if (!TimeUtil.isValidTime(trimmedStartTime)) {
             throw new IllegalValueException(StartTime.MESSAGE_START_TIME_CONSTRAINTS);
         }
         return new StartTime(trimmedStartTime);
@@ -468,7 +470,7 @@ public class ParserUtil {
     public static EndTime parseEndTime(String endTime) throws IllegalValueException {
         requireNonNull(endTime);
         String trimmedEndTime = endTime.trim();
-        if (!EndTime.isValidEndTime(trimmedEndTime)) {
+        if (!TimeUtil.isValidTime(trimmedEndTime)) {
             throw new IllegalValueException(EndTime.MESSAGE_END_TIME_CONSTRAINTS);
         }
         return new EndTime(trimmedEndTime);

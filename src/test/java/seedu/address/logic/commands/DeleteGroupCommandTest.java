@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.CalendarManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -23,8 +24,9 @@ import seedu.address.model.tag.Group;
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
  * {@code DeleteGroupCommand}.
  */
+//@@author SuxianAlicia
 public class DeleteGroupCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new CalendarManager(), new UserPrefs());
 
     @Test
     public void execute_validGroup_success() throws Exception {
@@ -33,7 +35,7 @@ public class DeleteGroupCommandTest {
 
         String expectedMessage = String.format(DeleteGroupCommand.MESSAGE_DELETE_GROUP_SUCCESS, groupToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
         expectedModel.deleteGroup(groupToDelete);
 
         assertCommandSuccess(deleteGroupCommand, model, expectedMessage, expectedModel);
@@ -54,7 +56,7 @@ public class DeleteGroupCommandTest {
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Group groupToDelete = FRIENDS;
         DeleteGroupCommand deleteGroupCommand = prepareCommand(groupToDelete);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
 
         // delete -> friends group deleted
         deleteGroupCommand.execute();

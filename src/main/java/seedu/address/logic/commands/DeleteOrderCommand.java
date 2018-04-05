@@ -6,8 +6,10 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 import java.util.Objects;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.DisplayOrderListEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.exceptions.OrderNotFoundException;
@@ -43,6 +45,7 @@ public class DeleteOrderCommand extends UndoableCommand {
             throw new AssertionError("The target order cannot be missing");
         }
 
+        EventsCenter.getInstance().post(new DisplayOrderListEvent());
         return new CommandResult(String.format(MESSAGE_DELETE_ORDER_SUCCESS, orderToDelete));
     }
 

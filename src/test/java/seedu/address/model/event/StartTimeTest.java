@@ -5,8 +5,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import seedu.address.commons.util.TimeUtil;
 import seedu.address.testutil.Assert;
 
+//@@author SuxianAlicia
 public class StartTimeTest {
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -22,20 +24,20 @@ public class StartTimeTest {
     @Test
     public void isValidStartTime() {
         // null start time
-        Assert.assertThrows(NullPointerException.class, () -> StartTime.isValidStartTime(null));
+        Assert.assertThrows(NullPointerException.class, () -> TimeUtil.isValidTime(null));
 
         // invalid start time
-        assertFalse(StartTime.isValidStartTime("")); // empty string
-        assertFalse(StartTime.isValidStartTime(" ")); // spaces only
-        assertFalse(StartTime.isValidStartTime("wejo*21")); // invalid string
-        assertFalse(StartTime.isValidStartTime("12-01")); // invalid format
-        assertFalse(StartTime.isValidStartTime("24:01")); // invalid Hour
-        assertFalse(StartTime.isValidStartTime("00:79")); // invalid Minute
-        assertFalse(StartTime.isValidStartTime("101:04")); // invalid Hour
-        assertFalse(StartTime.isValidStartTime("00:100")); // invalid Minute
+        assertFalse(TimeUtil.isValidTime("")); // empty string
+        assertFalse(TimeUtil.isValidTime(" ")); // spaces only
+        assertFalse(TimeUtil.isValidTime("wejo*21")); // invalid string
+        assertFalse(TimeUtil.isValidTime("12-01")); // invalid format
+        assertFalse(TimeUtil.isValidTime("24:01")); // invalid Hour
+        assertFalse(TimeUtil.isValidTime("00:79")); // invalid Minute
+        assertFalse(TimeUtil.isValidTime("101:04")); // invalid Hour
+        assertFalse(TimeUtil.isValidTime("00:100")); // invalid Minute
 
         // valid start time
-        assertTrue(StartTime.isValidStartTime("10:00")); // valid date
-        assertTrue(StartTime.isValidStartTime("18:55")); // valid date (24Hr Format)
+        assertTrue(TimeUtil.isValidTime("10:00")); // valid date
+        assertTrue(TimeUtil.isValidTime("18:55")); // valid date (24Hr Format)
     }
 }

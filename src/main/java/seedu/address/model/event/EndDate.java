@@ -2,22 +2,23 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.commons.util.DateUtil.convertStringToDate;
+import static seedu.address.commons.util.DateUtil.isValidDate;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 /**
- * Represents Ending Date of a {@code CalendarEvent}.
- * Guarantees: immutable; is valid as declared in {@link #isValidEndDate(String)}
+ * Represents Ending Date of a {@code CalendarEntry}.
+ * Guarantees: immutable; is valid as declared in {@link seedu.address.commons.util.DateUtil#isValidDate(String)}
  */
+//@@author SuxianAlicia
 public class EndDate {
     public static final String MESSAGE_END_DATE_CONSTRAINTS =
             "End Date should be DD-MM-YYYY, and it should not be blank";
 
-    public static final String END_DATE_VALIDATION_REGEX = "\\d{2}-\\d{2}-\\d{4}"; // format
-    public static final String END_DATE_VALIDATION_FORMAT = "dd-MM-yyyy"; // legal dates
-
-    private final String endDate;
+    private final String endDateString;
+    private final LocalDate endDate;
 
     /**
      * Constructs {@code EndDate}.
@@ -26,30 +27,22 @@ public class EndDate {
      */
     public EndDate(String endDate) {
         requireNonNull(endDate);
-        checkArgument(isValidEndDate(endDate), MESSAGE_END_DATE_CONSTRAINTS);
-        this.endDate = endDate;
-
+        checkArgument(isValidDate(endDate), MESSAGE_END_DATE_CONSTRAINTS);
+        try {
+            this.endDate = convertStringToDate(endDate);
+            this.endDateString = endDate;
+        } catch (DateTimeParseException dtpe) {
+            throw new AssertionError("Given End date should be valid for conversion.");
+        }
     }
 
-    /**
-     * Returns true if given string is a valid end date.
-     */
-    public static boolean isValidEndDate(String test) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(END_DATE_VALIDATION_FORMAT);
-        simpleDateFormat.setLenient(false);
-
-        try {
-            simpleDateFormat.parse(test);
-        } catch (ParseException e) {
-            return false;
-        }
-
-        return test.matches(END_DATE_VALIDATION_REGEX);
+    public LocalDate getLocalDate() {
+        return endDate;
     }
 
     @Override
     public String toString() {
-        return endDate;
+        return endDateString;
     }
 
     @Override

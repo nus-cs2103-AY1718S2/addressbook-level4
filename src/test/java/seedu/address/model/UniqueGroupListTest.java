@@ -11,6 +11,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.model.tag.UniqueGroupList;
 
+//@@author SuxianAlicia
 public class UniqueGroupListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

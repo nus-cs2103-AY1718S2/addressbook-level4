@@ -37,8 +37,10 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.AddressBook;
+import seedu.address.model.CalendarManager;
 import seedu.address.model.Model;
 import seedu.address.model.order.UniqueOrderList;
+import seedu.address.testutil.TypicalCalendarEntries;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.CommandBox;
 
@@ -66,7 +68,8 @@ public abstract class AddressBookSystemTest {
     @Before
     public void setUp() {
         setupHelper = new SystemTestSetupHelper();
-        testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
+        testApp = setupHelper.setupApplication(this::getInitialData, this::getInitialCalendarData,
+                getAbDataFileLocation(), getCmDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
         assertApplicationStartingStateIsCorrect();
@@ -79,7 +82,7 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Returns the data to be loaded into the file in {@link #getDataFileLocation()}.
+     * Returns the data to be loaded into the file in {@link #getAbDataFileLocation()}.
      */
     protected AddressBook getInitialData() {
         AddressBook ab = TypicalPersons.getTypicalAddressBook();
@@ -96,10 +99,25 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Returns the directory of the data file.
+     * Returns the data to be loaded into the file in {@Link #getCmDataFileLocation()}.
      */
-    protected String getDataFileLocation() {
+    protected CalendarManager getInitialCalendarData() {
+        CalendarManager cm = TypicalCalendarEntries.getTypicalCalendarManagerWithEntries();
+        return cm;
+    }
+
+    /**
+     * Returns the directory of the data file of address book.
+     */
+    protected String getAbDataFileLocation() {
         return TestApp.SAVE_LOCATION_FOR_TESTING;
+    }
+
+    /**
+     * Returns the directory of the data file of calendar manager.
+     */
+    protected String getCmDataFileLocation() {
+        return TestApp.SAVE_LOCATION_FOR_CALENDAR_TESTING;
     }
 
     public MainWindowHandle getMainWindowHandle() {

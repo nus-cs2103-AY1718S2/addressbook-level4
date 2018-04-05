@@ -11,6 +11,7 @@ import seedu.address.model.person.PreferencesContainKeywordsPredicate;
 /**
  * Parses input arguments and creates a new FindPreferenceCommand object
  */
+//@@author SuxianAlicia
 public class FindPreferenceCommandParser implements Parser<FindPreferenceCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindPreferenceCommand

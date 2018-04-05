@@ -38,7 +38,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private CentrePanel centrePanel;
     private PersonListPanel personListPanel;
-    private OrderListPanel orderListPanel;
+    private RightPanel rightPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -55,7 +55,7 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane personListPanelPlaceholder;
 
     @FXML
-    private StackPane orderListPanelPlaceholder;
+    private StackPane rightPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -123,14 +123,16 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        centrePanel = new CentrePanel(logic.getCalendarEventList());
+
+        centrePanel = new CentrePanel(logic.getCalendar());
+
         centrePlaceholder.getChildren().add(centrePanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        orderListPanel = new OrderListPanel(logic.getFilteredOrderList());
-        orderListPanelPlaceholder.getChildren().add(orderListPanel.getRoot());
+        rightPanel = new RightPanel(logic.getFilteredOrderList(), logic.getFilteredCalendarEntryList());
+        rightPanelPlaceholder.getChildren().add(rightPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -211,13 +213,10 @@ public class MainWindow extends UiPart<Stage> {
         return this.personListPanel;
     }
 
-    public OrderListPanel getOrderListPanel() {
-        return this.orderListPanel;
+    public RightPanel getRightPanel() {
+        return this.rightPanel;
     }
 
-    void releaseResources() {
-        centrePanel.freeResources();
-    }
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {

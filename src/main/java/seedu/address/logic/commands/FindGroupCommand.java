@@ -6,6 +6,7 @@ import seedu.address.model.person.GroupsContainKeywordsPredicate;
  * Finds and lists all persons in address book whose groups contains any of the argument keywords.
  * Keyword matching is case insensitive.
  */
+//@@author SuxianAlicia
 public class FindGroupCommand extends Command {
 
     public static final String COMMAND_WORD = "groupfind";

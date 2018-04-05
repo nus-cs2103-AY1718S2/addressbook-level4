@@ -7,13 +7,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.AddEventCommand;
+import seedu.address.logic.commands.AddEntryCommand;
 import seedu.address.logic.commands.AddOrderCommand;
 import seedu.address.logic.commands.ChangeOrderStatusCommand;
 import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteEntryCommand;
 import seedu.address.logic.commands.DeleteGroupCommand;
 import seedu.address.logic.commands.DeleteOrderCommand;
 import seedu.address.logic.commands.DeletePreferenceCommand;
@@ -25,7 +26,9 @@ import seedu.address.logic.commands.FindGroupCommand;
 import seedu.address.logic.commands.FindPreferenceCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCalendarEntryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListOrderCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -63,8 +66,8 @@ public class AddressBookParser {
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
 
-        case AddEventCommand.COMMAND_WORD:
-        case AddEventCommand.COMMAND_ALIAS:
+        case AddEntryCommand.COMMAND_WORD:
+        case AddEntryCommand.COMMAND_ALIAS:
             return new AddEventCommandParser().parse(arguments);
 
         case AddOrderCommand.COMMAND_WORD:
@@ -94,6 +97,10 @@ public class AddressBookParser {
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
+
+        case DeleteEntryCommand.COMMAND_WORD:
+        case DeleteEntryCommand.COMMAND_ALIAS:
+            return new DeleteEntryCommandParser().parse(arguments);
 
         case DeleteGroupCommand.COMMAND_WORD:
         case DeleteGroupCommand.COMMAND_ALIAS:
@@ -127,6 +134,14 @@ public class AddressBookParser {
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
+        case ListOrderCommand.COMMAND_WORD:
+        case ListOrderCommand.COMMAND_ALIAS:
+            return new ListOrderCommand();
+
+        case ListCalendarEntryCommand.COMMAND_WORD:
+        case ListCalendarEntryCommand.COMMAND_ALIAS:
+            return new ListCalendarEntryCommand();
+
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
@@ -149,7 +164,7 @@ public class AddressBookParser {
 
         case ViewCalendarCommand.COMMAND_WORD:
         case ViewCalendarCommand.COMMAND_ALIAS:
-            return new ViewCalendarCommand();
+            return new ViewCalendarCommand(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

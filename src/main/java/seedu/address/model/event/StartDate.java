@@ -2,22 +2,23 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.commons.util.DateUtil.convertStringToDate;
+import static seedu.address.commons.util.DateUtil.isValidDate;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 /**
- * Represents Starting Date of a {@code CalendarEvent}.
- * Guarantees: immutable; is valid as declared in {@link #isValidStartDate(String)}
+ * Represents Starting Date of a {@code CalendarEntry}.
+ * Guarantees: immutable; is valid as declared in {@link seedu.address.commons.util.DateUtil#isValidDate(String)}
  */
+//@@author SuxianAlicia
 public class StartDate {
     public static final String MESSAGE_START_DATE_CONSTRAINTS =
             "Start Date should be DD-MM-YYYY, and it should not be blank";
 
-    public static final String START_DATE_VALIDATION_REGEX = "\\d{2}-\\d{2}-\\d{4}"; // format
-    public static final String START_DATE_VALIDATION_FORMAT = "dd-MM-yyyy"; // legal dates
-
-    private final String startDate;
+    private final String startDateString;
+    private final LocalDate startDate;
 
     /**
      * Constructs {@code StartDate}.
@@ -26,30 +27,22 @@ public class StartDate {
      */
     public StartDate(String startDate) {
         requireNonNull(startDate);
-        checkArgument(isValidStartDate(startDate), MESSAGE_START_DATE_CONSTRAINTS);
-        this.startDate = startDate;
-
+        checkArgument(isValidDate(startDate), MESSAGE_START_DATE_CONSTRAINTS);
+        try {
+            this.startDate = convertStringToDate(startDate);
+            this.startDateString = startDate;
+        } catch (DateTimeParseException dtpe) {
+            throw new AssertionError("Given Start date should be valid for conversion.");
+        }
     }
 
-    /**
-     * Returns true if given string is a valid start date.
-     */
-    public static boolean isValidStartDate(String test) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(START_DATE_VALIDATION_FORMAT);
-        simpleDateFormat.setLenient(false);
-
-        try {
-            simpleDateFormat.parse(test);
-        } catch (ParseException e) {
-            return false;
-        }
-
-        return test.matches(START_DATE_VALIDATION_REGEX);
+    public LocalDate getLocalDate() {
+        return startDate;
     }
 
     @Override
     public String toString() {
-        return startDate;
+        return startDateString;
     }
 
     @Override

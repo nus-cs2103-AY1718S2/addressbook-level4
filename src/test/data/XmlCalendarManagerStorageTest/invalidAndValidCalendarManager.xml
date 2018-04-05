@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<calendarmanager>
+    <!-- Valid Entry -->
+    <calendarEntries>
+        <entryTitle>Meeting with boss</entryTitle>
+        <startDate>06-06-2018</startDate>
+        <endDate>06-06-2018</endDate>
+        <startTime>10:00</startTime>
+        <endTime>12:00</endTime>
+    </calendarEntries>
+    <!-- Entry with invalid Start Time -->
+    <calendarEntries>
+    <entryTitle>Get stocks</entryTitle>
+    <startDate>06-06-2018</startDate>
+    <endDate>06-06-2018</endDate>
+    <startTime>14:00</startTime>
+    <endTime>12:00</endTime>
+    </calendarEntries>
+</calendarmanager>

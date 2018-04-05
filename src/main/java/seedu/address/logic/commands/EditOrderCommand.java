@@ -12,8 +12,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.DisplayOrderListEvent;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.order.DeliveryDate;
@@ -83,6 +85,7 @@ public class EditOrderCommand extends UndoableCommand {
         }
 
         model.updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
+        EventsCenter.getInstance().post(new DisplayOrderListEvent());
         return new CommandResult(String.format(MESSAGE_EDIT_ORDER_SUCCESS, editedOrder));
     }
 

@@ -11,6 +11,7 @@ import seedu.address.model.tag.exceptions.PreferenceNotFoundException;
 /**
  * Deletes a preference specified by user from address book.
  */
+//@@author SuxianAlicia
 public class DeletePreferenceCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "prefdelete";

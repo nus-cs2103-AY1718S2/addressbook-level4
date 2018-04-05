@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.CalendarManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -24,8 +25,9 @@ import seedu.address.model.tag.Preference;
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
  * {@code DeletePreferenceCommand}.
  */
+//@@author SuxianAlicia
 public class DeletePreferenceCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new CalendarManager(), new UserPrefs());
 
     @Test
     public void execute_validPreference_success() throws Exception {
@@ -34,7 +36,7 @@ public class DeletePreferenceCommandTest {
 
         String expectedMessage = String.format(DeletePreferenceCommand.MESSAGE_DELETE_PREFERENCE_SUCCESS, prefToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
         expectedModel.deletePreference(prefToDelete);
 
         assertCommandSuccess(deletePrefCommand, model, expectedMessage, expectedModel);
@@ -55,7 +57,7 @@ public class DeletePreferenceCommandTest {
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Preference prefToDelete = SHOES;
         DeletePreferenceCommand deletePrefCommand = prepareCommand(prefToDelete);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
 
         // delete -> shoes preference deleted
         deletePrefCommand.execute();

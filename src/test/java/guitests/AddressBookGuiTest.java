@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.model.AddressBook;
+import seedu.address.model.CalendarManager;
+import seedu.address.testutil.TypicalCalendarEntries;
 import seedu.address.testutil.TypicalPersons;
 
 /**
@@ -53,7 +55,8 @@ public abstract class AddressBookGuiTest {
         FxToolkit.setupStage((stage) -> {
             this.stage = stage;
         });
-        FxToolkit.setupApplication(() -> new TestApp(this::getInitialData, getDataFileLocation()));
+        FxToolkit.setupApplication(() -> new TestApp(this::getInitialAbData, this::getInitialCmData,
+                getAbDataFileLocation(), getCmDataFileLocation()));
         FxToolkit.showStage();
 
         mainWindowHandle = new MainWindowHandle(stage);
@@ -61,11 +64,19 @@ public abstract class AddressBookGuiTest {
     }
 
     /**
-     * Override this in child classes to set the initial local data.
-     * Return null to use the data in the file specified in {@link #getDataFileLocation()}
+     * Override this in child classes to set the initial local data of address book.
+     * Return null to use the data in the file specified in {@link #getAbDataFileLocation()}
      */
-    protected AddressBook getInitialData() {
+    protected AddressBook getInitialAbData() {
         return TypicalPersons.getTypicalAddressBook();
+    }
+
+    /**
+     * Override this in child classes to set the initial local data of calendar manager.
+     * Return null to use the data in the file specified in {@link #getAbDataFileLocation()}
+     */
+    protected CalendarManager getInitialCmData() {
+        return TypicalCalendarEntries.getTypicalCalendarManagerWithEntries();
     }
 
     protected CommandBoxHandle getCommandBox() {
@@ -92,6 +103,7 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getResultDisplay();
     }
 
+
     /**
      * Runs {@code command} in the application's {@code CommandBox}.
      * @return true if the command was executed successfully.
@@ -101,10 +113,17 @@ public abstract class AddressBookGuiTest {
     }
 
     /**
-     * Override this in child classes to set the data file location.
+     * Override this in child classes to set the Address book data file location.
      */
-    protected String getDataFileLocation() {
+    protected String getAbDataFileLocation() {
         return TestApp.SAVE_LOCATION_FOR_TESTING;
+    }
+
+    /**
+     * Override this in child classes to set the Calendar Manager data file location.
+     */
+    protected String getCmDataFileLocation() {
+        return TestApp.SAVE_LOCATION_FOR_CALENDAR_TESTING;
     }
 
     @After

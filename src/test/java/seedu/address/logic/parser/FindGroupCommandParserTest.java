@@ -11,6 +11,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.FindGroupCommand;
 import seedu.address.model.person.GroupsContainKeywordsPredicate;
 
+//@@author SuxianAlicia
 public class FindGroupCommandParserTest {
 
     private FindGroupCommandParser parser = new FindGroupCommandParser();

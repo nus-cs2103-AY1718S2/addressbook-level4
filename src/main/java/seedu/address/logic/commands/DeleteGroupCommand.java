@@ -11,6 +11,7 @@ import seedu.address.model.tag.exceptions.GroupNotFoundException;
 /**
  * Deletes a group specified by user from address book.
  */
+//@@author SuxianAlicia
 public class DeleteGroupCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "groupdelete";

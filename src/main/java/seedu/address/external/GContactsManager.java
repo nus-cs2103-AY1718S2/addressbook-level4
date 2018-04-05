@@ -3,7 +3,10 @@ package seedu.address.external;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -13,6 +16,11 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
+import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.Events;
 import com.google.gdata.client.contacts.ContactsService;
 import com.google.gdata.data.contacts.ContactEntry;
 import com.google.gdata.data.extensions.Email;
@@ -24,6 +32,7 @@ import com.google.gdata.util.ServiceException;
 import seedu.address.external.exceptions.CredentialsException;
 
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlySchedule;
 import seedu.address.model.student.Student;
 
 /**
@@ -41,13 +50,15 @@ public class GContactsManager {
 
     private static final String APPLICATION_NAME = "codeducator/v1.4";
 
-    private static final String[] scopesArray = new String[]{
+    private final String[] scopesArray = new String[]{
         "https://www.googleapis.com/auth/userinfo.profile",
         "https://www.googleapis.com/auth/userinfo.email",
-        "https://www.google.com/m8/feeds/"};
+        "https://www.google.com/m8/feeds/",
+        CalendarScopes.CALENDAR};
 
     /** OAuth 2.0 scopes. */
     public final List<String> scopes = Arrays.asList(scopesArray);
+
     static {
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
@@ -142,6 +153,35 @@ public class GContactsManager {
         for (Student student : addressBook.getStudentList()) {
             ContactEntry toBeInserted = studentToContactEntry(student);
             myService.insert(postUrl, toBeInserted);
+        }
+
+    }
+
+    public void synchronize(ReadOnlySchedule schedule) {
+        Calendar service = new Calendar.Builder(
+                httpTransport, JSON_FACTORY, credential)
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+        DateTime now = new DateTime(System.currentTimeMillis());
+        try {
+            Events events = service.events().list("primary")
+                    .setMaxResults(10)
+                    .setTimeMin(now)
+                    .setOrderBy("startTime")
+                    .setSingleEvents(true)
+                    .execute();
+            List<Event> items = events.getItems();
+            System.out.println("Upcoming events");
+            for (Event event : items) {
+                DateTime start = event.getStart().getDateTime();
+                if (start == null) {
+                    start = event.getStart().getDate();
+                }
+                System.out.printf("%s (%s)\n", event.getSummary(), start);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Lmao " + e);
         }
     }
 }

@@ -51,6 +51,7 @@ dependencies {
     compile 'com.google.api-client:google-api-client:1.23.0'
     compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
     compile 'com.google.apis:google-api-services-oauth2:v1-rev139-1.23.0'
+    compile 'com.google.apis:google-api-services-calendar:v3-rev305-1.23.0'
     compile group: 'com.google.gdata', name: 'core', version: '1.47.1'
     compile 'com.ibm.watson.developer_cloud:java-sdk:5.1.1'
 

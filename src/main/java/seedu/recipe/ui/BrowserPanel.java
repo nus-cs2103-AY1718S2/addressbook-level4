@@ -26,6 +26,8 @@ import seedu.recipe.model.recipe.Url;
 import seedu.recipe.model.util.HtmlFormatter;
 import seedu.recipe.ui.util.CloudStorageUtil;
 import seedu.recipe.ui.util.FacebookHandler;
+import seedu.recipe.ui.util.WebParser;
+import seedu.recipe.ui.util.WebParserHandler;
 
 /**
  * The Browser Panel of the App.
@@ -40,6 +42,7 @@ public class BrowserPanel extends UiPart<Region> {
     private static final Index FIRST_INDEX = Index.fromOneBased(1);
 
     private Recipe recipeToShare;
+    private WebParserHandler webParserHandler;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -52,6 +55,7 @@ public class BrowserPanel extends UiPart<Region> {
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
+        initializeWebParserHandler();
         loadDefaultPage(isDarkTheme);
         registerAsAnEventHandler(this);
 
@@ -129,6 +133,22 @@ public class BrowserPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         if (event.wikiaQueryHandler.getQueryNumberOfResults() != 0) {
             loadPage(event.wikiaQueryHandler.getRecipeQueryUrl());
+        }
+    }
+
+    private void initializeWebParserHandler() {
+        webParserHandler = new WebParserHandler(browser);
+    }
+
+    /**
+     * Parses the BrowserPanel, gets an AddCommand string.
+     */
+    public String parseRecipe() {
+        WebParser webParser = webParserHandler.getWebParser();
+        if (webParser != null) {
+            return webParser.parseRecipe();
+        } else {
+            return null;
         }
     }
 

@@ -224,6 +224,34 @@ Shows a list of all recipes in the recipe book.
 
 Format: `list`
 
+//tag::web-parse[]
+=== *`parse`* : Parsing a recipe from a website
+
+Gets a recipe from a website loaded in the browser panel.
+
+Format: `parse`
+
+To use this format, you do a `search` first (See <<Search>>) then select a recipe. +
+Suppose you have that done and you are at this step (see <<fig-InternetSearchResult0>>) +
+{nbsp} +
+
+[[fig-InternetSearchResult0]]
+.After you click on a result
+image::InternetSearchResult.png[width="750"]
+
+{nbsp} +
+Type in *`parse`*, press kbd:[Enter] and you have <<fig-ParseCommand>>. +
+{nbsp} +
+[[fig-ParseCommand]]
+.Parsed result
+image::ParsedResult.png[width="750"]
+[TIP]
+After that, you can add more fields if you want, or you can just press kbd:[Enter] to submit an `add` command!
+
+[NOTE]
+Currently only http://recipes.wikia.com/ is supported!
+//end::web-parse[]
+
 === *`redo`* : Redoing the previously undone command
 
 Reverses the most recent *`undo`* command.
@@ -253,6 +281,7 @@ ReciRecipé saves data in the hard disk automatically after any command that cha
 There is no need to save manually.
 
 //tag::internet-search[]
+[[Search]]
 === *`search`* : Searching on the Internet
 
 Searchs for your recipe on the Internet.
@@ -268,7 +297,12 @@ image::InternetSearchCommand.png[width="750"]
 Examples:
 
 * *`search chicken rice`* +
-You will be brought to the result page and from there, you can select any recipes that you want.
+You will be brought to the result page and from there, you can select any recipes that you want. See <<fig-InternetSearchResult>>. +
+{nbsp} +
++
+[[fig-InternetSearchResult]]
+.After you click on a result
+image::InternetSearchResult.png[width="750"]
 //end::internet-search[]
 
 === *`select`* : Selecting a recipe
@@ -488,6 +522,8 @@ A: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue
                             |   E.g. *`search chicken rice`*
 .2+|    *List*              |  `list`
                             |  *`list`*
+.2+|    *Parse*             |  `parse`
+                            |  *`parse`*
 .2+|    *Redo*              |  `redo`
                             |  *`redo`*
 .2+|    *Select*            |  `select INDEX`
@@ -509,8 +545,8 @@ A: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue
 | Shortcut                  |   Function
 
 | kbd:[Enter]               |   Command submission
-| kbd:[Ctrl] + kbd:[&uarr;] |   Previous command
-| kbd:[Ctrl] + kbd:[&darr;] |   Next command
+| kbd:kbd:[&uarr;]          |   Previous command
+| kbd:kbd:[&darr;]          |   Next command
 | kbd:[Shift] + kbd:[Enter] |   New line in command
 | kbd:[Shift] + kbd:[Space] |   Show command suggestions
 | kbd:[Tab]                 |   Next field in command

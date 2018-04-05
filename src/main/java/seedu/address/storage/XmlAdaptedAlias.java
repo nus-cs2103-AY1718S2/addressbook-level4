@@ -59,7 +59,7 @@ public class XmlAdaptedAlias {
         if (!Alias.isValidAliasParameter(aliasName)) {
             throw new IllegalValueException(Alias.MESSAGE_ALIAS_CONSTRAINTS);
         }
-        final String alias = this.aliasName;
+        final String aliasName = this.aliasName;
 
         return new Alias(command, aliasName);
     }

@@ -193,36 +193,8 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
      *
      * @throws IOException if theres any fault in the input values or the authentication fails due to wrong input
      */
-    public void createIssueOnGitHub(Issue i) throws IOException {
-        GitHub github = GitHub.connectUsingPassword(userLogin, userAuthentication);
-        GHRepository repository = github.getRepository(repoName);
-        GHIssueBuilder issueBuilder = repository.createIssue(i.getTitle().toString());
-        issueBuilder.body(i.getBody().toString());
-
-        List<Assignees> assigneesList = i.getAssignees();
-        List<Labels> labelsList = i.getLabelsList();
-
-        ArrayList<GHUser> listOfUsers = new ArrayList<>();
-        ArrayList<String> listOfLabels = new ArrayList<>();
-        MilestoneMap obj = new MilestoneMap();
-        HashMap<Milestone, Integer> getMilestone = obj.getMilestoneMap();
-
-        for (int ct = 0; ct < assigneesList.size(); ct++) {
-            listOfUsers.add(github.getUser(assigneesList.get(ct).toString()));
-        }
-
-        for (int ct = 0; ct < labelsList.size(); ct++) {
-            listOfLabels.add(labelsList.get(ct).toString());
-        }
-
-        GHIssue createdIssue = issueBuilder.create();
-        //GHMilestone check = repository.getMilestone(1);
-        if (i.getMilestone() != null) {
-            GHMilestone check = repository.getMilestone(getMilestone.get(i.getMilestone()));
-            createdIssue.setMilestone(check);
-        }
-        createdIssue.setAssignees(listOfUsers);
-        createdIssue.setLabels(listOfLabels.toArray(new String[0]));
+    public void createIssueOnGitHub(Issue i) throws IOException, CommandException {
+        issues.createIssue(i);
     }
 
     /**
@@ -232,12 +204,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
      * @throws IOException if the index mentioned is not valid or he's closed
      */
     public void reopenIssueOnGithub(Index index) throws IOException, CommandException {
-        GitHub github = GitHub.connectUsingPassword(userLogin, userAuthentication);
-        GHRepository repository = github.getRepository(repoName);
-        GHIssue issue = repository.getIssue(index.getOneBased());
-        if (issue.getState() == GHIssueState.OPEN) {
-            throw new CommandException("Issue is already open");
-        }
+        issues.reopenIssue(index);
     }
 
     /**
@@ -246,13 +213,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
      * @throws IOException if the index mentioned is not valid or he's closed
      */
     public void closeIssueOnGithub(Index index) throws IOException, CommandException {
-        GitHub github = GitHub.connectUsingPassword(userLogin, userAuthentication);
-        GHRepository repository = github.getRepository(repoName);
-        GHIssue issue = repository.getIssue(index.getOneBased());
-        if (issue.getState() == GHIssueState.CLOSED) {
-            throw new CommandException("This issue is already closed");
-        }
-        issue.close();
+        issues.closeIssue(index);
     }
 
     /**
@@ -264,34 +225,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
      */
     public void updateIssue(Index index, Issue editedIssue) throws IOException {
         requireNonNull(editedIssue);
-        GitHub github = GitHub.connectUsingPassword(userLogin, userAuthentication);
-        GHRepository repository = github.getRepository(repoName);
-        GHIssue toEdit = repository.getIssue(index.getOneBased());
-
-        List<Assignees> assigneesList = editedIssue.getAssignees();
-        List<Labels> labelsList = editedIssue.getLabelsList();
-
-        ArrayList<GHUser> listOfUsers = new ArrayList<>();
-        ArrayList<String> listOfLabels = new ArrayList<>();
-        MilestoneMap obj = new MilestoneMap();
-        HashMap<Milestone, Integer> getMilestone = obj.getMilestoneMap();
-
-        for (int ct = 0; ct < assigneesList.size(); ct++) {
-            listOfUsers.add(github.getUser(assigneesList.get(ct).toString()));
-        }
-
-        for (int ct = 0; ct < labelsList.size(); ct++) {
-            listOfLabels.add(labelsList.get(ct).toString());
-        }
-
-        if (editedIssue.getMilestone() != null) {
-            GHMilestone check = repository.getMilestone(getMilestone.get(editedIssue.getMilestone()));
-            toEdit.setMilestone(check);
-        }
-        toEdit.setTitle(editedIssue.getTitle().toString());
-        toEdit.setBody(editedIssue.getBody().toString());
-        toEdit.setAssignees(listOfUsers);
-        toEdit.setLabels(listOfLabels.toArray(new String[0]));
+        issues.setIssue(index, editedIssue);
     }
 
     //@@author

@@ -35,11 +35,11 @@ Interested? Jump to <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
-_{ Add a preface here }_
+_{ TODO: Add a preface here }_
 
 === Setting Up
 
-_{ Add a preface here }_
+_{ TODO: Add a preface here }_
 
 .  Ensure that you have Java `1.8.0_60` or later installed in your computer. You may download the latest version of Java http://www.oracle.com/technetwork/java/javase/downloads/index.html[here].
 
@@ -71,7 +71,7 @@ image::Ui.png[width="790"]
 
 === Signing Up
 
-_{ Add a preface here }_
+_{ TODO: Add a preface here }_
 
 . Type the command [example-no-box]#`signup u/USERNAME p/PASSWORD`# in the command box, replacing the `USERNAME` and `PASSWORD` with your own.
 
@@ -94,7 +94,7 @@ image::UserGuideQuickStart3.png[width="790"]
 
 === Logging In
 
-_{ Add a preface here }_
+_{ TODO: Add a preface here }_
 
 . Type the command [example-no-box]#`login u/USERNAME p/PASSWORD`# in the command box, replacing the `USERNAME` and `PASSWORD` with your own.
 
@@ -115,7 +115,7 @@ image::UserGuideQuickStart5.png[width="790"]
 
 == Using PrioriTask
 
-_{ Add a preface here }_
+_{ TODO: Add a preface here }_
 
 === The Different Sections of PrioriTask
 
@@ -159,7 +159,7 @@ In the following sections, you will be introduced to several commands and their 
 
 == User Features
 
-_{ To explain what a user feature is. }_
+_{ TODO: To explain what a user feature is. }_
 
 === Viewing help : `help`
 
@@ -272,7 +272,7 @@ Answer a user's question to retrieve the password +
 
 === Deleting an account `[coming in v2.0]`
 
-_{ Describe the command function }_
+_{ TODO: Describe the command function }_
 
 === Exiting the program : `exit`
 
@@ -285,7 +285,9 @@ Exits the program. +
 
 == Task Management Features
 
-_{ To explain what a task management feature is. }_
+_{ TODO: To explain what a task management feature is. }_
+_{ TODO: Update the Task Parameters box and update it. }_
+_{ TODO: Explain priority levels }_
 
 [.noteblock]
 ====
@@ -464,7 +466,7 @@ Returns any task having deadlines `2018-03-17`, `2018-09-04`, or `2018-03-21`.
 
 ==== Locating tasks by tag `[coming in v2.0]`
 
-_{ coming in v2.0 }_
+_{ TODO: Explain the feature }_
 
 === Deleting a task : `delete` or `d`
 
@@ -553,7 +555,8 @@ Clears all entries from the PrioriTask. +
 
 == Subtask Management Features
 
-_{ To explain what a subtask feature is. }_
+_{ TODO: To explain what a subtask feature is. }_
+_{ TODO: Update the subtask parameters. }_
 
 [.noteblock]
 ====
@@ -638,11 +641,11 @@ Deletes the fourth subtask of the second task in th result of `find cleaning` co
 
 === Editing a subtask `[coming in v2.0]`
 
-_{ coming in v2.0 }_
+_{ TODO: Explain the feature }_
 
 === Reorder subtask `[coming in v2.0]`
 
-_{ coming in v2.0 }_
+_{ TODO: Explain the feature }_
 
 == Calendar Features
 
@@ -650,6 +653,8 @@ The `Calendar` allows you to have a chronic overview of the deadlines of all you
 
 * _[coming in v2.0]_ To show only completed tasks on the calendar.
 * _[coming in v2.0]_ To support the viewing of the calendar by days, weeks and years.
+
+_{ TODO: Add a note about display }_
 
 === Go to current month: `cmonth` or `cm` `[since v1.4]`
 
@@ -708,7 +713,7 @@ Goes to `April 2018`
 
 === PrioriTask Features
 
-_{ To describe what this feature is about }_
+_{ TODO: Add a preface }_
 
 === Listing entered commands : `history`
 
@@ -793,11 +798,11 @@ There is no need to save manually.
 
 === Recover past data `[coming in v2.0]`
 
-_{ To explain what this feature is about }_
+_{ TODO: To explain what this feature is about }_
 
 == Reminders `[coming in v2.0]`
 
-_{ To explain what this feature is about }_
+_{ TODO: To explain what this feature is about }_
 
 == FAQ
 

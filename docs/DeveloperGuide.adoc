@@ -1,6 +1,8 @@
 = PrioriTask - Developer Guide
 :linkcss:
 :icons: font
+:source-highlighter: coderay
+:coderay-css: style
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -273,6 +275,7 @@ There are two types of commands. Commands that modify the state of the organizer
 
 The class diagram below gives a more detailed overview of how the command system in the `Logic` component works. It shows the finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>.
 
+[[fig-CommandsDiagram]]
 .Structure of Commands in the Logic Component
 image::LogicCommandClassDiagram.png[width="800"]
 
@@ -333,17 +336,21 @@ Classes used by multiple components are in the `seedu.organizer.commons` package
 
 == Implementation
 
-This section describes some noteworthy details on how certain features are implemented.
+PrioriTask consists of many different features. This section describes some noteworthy details on how certain features are implemented.
 
-// tag::undoredo[]
 === Undo/Redo feature
+
+The `undo` feature restores the PrioriTask to the state before the previous undoable command was executed. Undoable commands are defined as commands that modify the PrioriTask’s content (e.g. `add`, `delete`, `edit` and `clear`).
+
+The `redo` feature does the opposite - it reverses the most recent `undo` command.
+
 ==== Current Implementation
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the organizer (e.g. `add`, `edit`). Such commands inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
-.Reference from Figure 7.
+.Structure of Commands in the Logic Component
 image::LogicCommandClassDiagram.png[width="800"]
 
 `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the organizer before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while child classes implement the details of how to execute the class-specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
@@ -379,16 +386,20 @@ public class DeleteCommand extends UndoableCommand {
 }
 ----
 
-===== Scenario
+==== Scenario
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th task in the organizer. The current state of the organizer is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
+The diagram below illustrates how the execution of the `delete 5` command affects the `UndoRedoStack`.
+
 .UndoRedoStack `delete 5` command execution
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/Study ...` to add a new task.
+
+The diagram below illustrates how the execution of the `add n/Study` command affects the `UndoRedoStack`.
 
 .UndoRedoStack `add n/Study ...` command execution
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
@@ -399,6 +410,8 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 The user now decides that adding the task was a mistake, and decides to undo that action using `undo`.
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the organizer to the state before the `add` command executed.
+
+The diagram below illustrates the process of the execution of the `undo` command on the `UndoRedoStack`.
 
 .UndoRedoStack `undo` command execution
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
@@ -418,11 +431,14 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/Study` command (this is the behavior that most modern desktop applications follow).
 
+The diagram below illustrates how the execution of the `clear` command affects the `UndoRedoStack`.
+
 .UndoRedoStack `clear` command execution
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
-Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
+Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution (refer to <<fig-ListExecution>>).
 
+[[fig-ListExecution]]
 .UndoRedoStack `list` command execution
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
@@ -471,10 +487,12 @@ image::UndoRedoActivityDiagram.png[width="650"]
 * **Alternative 2:** Use `HistoryManager` for undo/redo
 ** Pros: Do not need to maintain a separate stack, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: Must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
-// end::undoredo[]
 
 // tag::taskpriority[]
 === Task's Priority Auto-updating and Auto-sorting feature
+
+_{ TODO: Add preface }_
+
 ==== Current Implementation
 
 The autoupdating and autosorting mechanism resides inside `UniqueTaskList`. The `UniqueTaskList` is responsible for updating each Task’s priority level and sorting the `ObservableList<Task>` whenever a new `Task` is added. In addition, whenever a `Task` is edited, the `ObservableList<Task>` is sorted again.
@@ -532,7 +550,7 @@ private void sortTasks() {
 
 The `sortTasks` method makes use of the `ObservableList` class’s `sort` method and `Task`’s `priorityComparator` method. The `priorityComparator` method returns a `Comparator` that sorts `Task` s based on descending `Priority` levels. The `internalList` is sorted with respect to the comparator.
 
-===== Scenario
+==== Scenario
 
 Consider an `addTask` method call by the `Organizer`. The current date is 2018-03-19.
 
@@ -654,6 +672,9 @@ private void createMainView() throws IOException {
 
 // tag::subtask[]
 === Subtask
+
+_{ TODO: Add preface }_
+
 ==== Current Implementation
 
 Subtask feature allows user to split their tasks into multiple subtasks. This feature allows user to better
@@ -814,7 +835,7 @@ The following are steps to create a new release:
 
 .  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
-.  Tag the repo with the version number. e.g. `v0.1`
+.  Tag the repo with the version number. e.g. `v0.1`.
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
 === Managing Dependencies

@@ -45,9 +45,22 @@ public class XmlAdaptedAlias {
      *
      */
     public Alias toModelType() throws IllegalValueException {
-        if (!Alias.isValidAliasName(aliasName)) {
+        if (this.command == null) {
             throw new IllegalValueException(Alias.MESSAGE_ALIAS_CONSTRAINTS);
         }
+        if (!Alias.isValidAliasParameter(command)) {
+            throw new IllegalValueException(Alias.MESSAGE_ALIAS_CONSTRAINTS);
+        }
+        final String command = this.command;
+
+        if (this.aliasName == null) {
+            throw new IllegalValueException(Alias.MESSAGE_ALIAS_CONSTRAINTS);
+        }
+        if (!Alias.isValidAliasParameter(aliasName)) {
+            throw new IllegalValueException(Alias.MESSAGE_ALIAS_CONSTRAINTS);
+        }
+        final String alias = this.aliasName;
+
         return new Alias(command, aliasName);
     }
 

@@ -10,11 +10,7 @@ import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -166,6 +162,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Alias> getAliasList() {
             return aliases;
+        }
+
+        @Override
+        public HashMap<String, String> getAliasMapping() {
+            return null;
         }
 
         @Override

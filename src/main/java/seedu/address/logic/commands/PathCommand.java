@@ -1,3 +1,4 @@
+//@@author ZhangYijiong
 package seedu.address.logic.commands;
 
 import java.util.List;
@@ -11,7 +12,8 @@ import seedu.address.model.person.Person;
 import seedu.address.ui.PersonCard;
 
 /**
- * Selects a person identified using it's last displayed index from the address book.
+ * Selects a person identified using it's last displayed index from the address book
+ * and show the path to the address of the person identified
  */
 public class PathCommand extends Command {
 

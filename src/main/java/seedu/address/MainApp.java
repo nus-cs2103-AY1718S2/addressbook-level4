@@ -109,6 +109,7 @@ public class MainApp extends Application {
             initialData = new AddressBook();
         }
 
+        //@@author Wuhao-ooo
         try {
             customerStatsOptional = storage.readCustomerStats();
             if (!customerStatsOptional.isPresent()) {
@@ -126,6 +127,7 @@ public class MainApp extends Application {
         return new ModelManager(initialData, userPrefs, initialCustomerStats);
     }
 
+    //@@author
     private void initLogging(Config config) {
         LogsCenter.init(config);
     }

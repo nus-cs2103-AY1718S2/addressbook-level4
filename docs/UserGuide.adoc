@@ -307,6 +307,9 @@ Format: `exit`
 Customers' data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+=== Saving Customers' Stats `[coming in v1.5rc]`
+The statistics of customers will be stored in the hard disk.
+
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 

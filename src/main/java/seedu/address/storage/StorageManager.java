@@ -99,6 +99,7 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    //@@author Wuhao-ooo
     // ================ CustomerStats methods ==============================
 
     @Override

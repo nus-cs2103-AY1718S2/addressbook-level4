@@ -35,10 +35,12 @@ public class UserPrefs {
         return addressBookFilePath;
     }
 
+    //@@author Wuhao-ooo
     public String getCustomerStatsFilePath() {
         return customerStatsFilePath;
     }
 
+    //@@author
     public void setAddressBookFilePath(String addressBookFilePath) {
         this.addressBookFilePath = addressBookFilePath;
     }
@@ -47,10 +49,12 @@ public class UserPrefs {
         return addressBookName;
     }
 
+    //@@author Wuhao-ooo
     public String getCustomerStatsName() {
         return customerStatsName;
     }
 
+    //@@author
     public void setAddressBookName(String addressBookName) {
         this.addressBookName = addressBookName;
     }

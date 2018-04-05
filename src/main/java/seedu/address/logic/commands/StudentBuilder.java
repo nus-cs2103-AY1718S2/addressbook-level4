@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.student.miscellaneousinfo.ProfilePicturePath.DEFAULT_PROFILE_PICTURE;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,6 +23,7 @@ import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneExcept
 import seedu.address.model.student.dashboard.exceptions.DuplicateTaskException;
 import seedu.address.model.student.dashboard.exceptions.MilestoneNotFoundException;
 import seedu.address.model.student.dashboard.exceptions.TaskNotFoundException;
+import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -36,6 +39,7 @@ public class StudentBuilder {
     public static final String DEFAULT_PROGRAMMING_LANGUAGE = "Java";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_FAVOURITE = "false";
+    public static final String DEFAULT_PROFILE_PICTURE_URL = DEFAULT_PROFILE_PICTURE;
 
     private Name name;
     private Phone phone;
@@ -44,6 +48,7 @@ public class StudentBuilder {
     private ProgrammingLanguage programmingLanguage;
     private Set<Tag> tags;
     private Favourite favourite;
+    private ProfilePicturePath profilePicturePath;
     private Dashboard dashboard;
     private UniqueKey uniqueKey;
 
@@ -55,6 +60,7 @@ public class StudentBuilder {
         programmingLanguage = new ProgrammingLanguage(DEFAULT_PROGRAMMING_LANGUAGE);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
         favourite = new Favourite(DEFAULT_FAVOURITE);
+        profilePicturePath = new ProfilePicturePath(DEFAULT_PROFILE_PICTURE_URL);
         dashboard = new Dashboard();
         uniqueKey = UniqueKey.generateRandomKey();
     }
@@ -70,6 +76,7 @@ public class StudentBuilder {
         programmingLanguage = studentToCopy.getProgrammingLanguage();
         tags = new HashSet<>(studentToCopy.getTags());
         favourite = studentToCopy.getFavourite();
+        profilePicturePath = studentToCopy.getProfilePicturePath();
         dashboard = studentToCopy.getDashboard();
         uniqueKey = studentToCopy.getUniqueKey();
     }
@@ -128,6 +135,19 @@ public class StudentBuilder {
     public StudentBuilder withProgrammingLanguage(String progLang) {
         this.programmingLanguage = new ProgrammingLanguage(progLang);
         return this;
+    }
+
+    /**
+
+     * Sets the {@code profilePicturePath} of the {@code Student} that we are building.
+     */
+    public StudentBuilder withProfilePictureUrl(String url) {
+        this.profilePicturePath = new ProfilePicturePath(url);
+        return this;
+    }
+
+    public Student build() {
+        return new Student(name, phone, email, address, programmingLanguage, tags, favourite, profilePicturePath);
     }
 
     /**
@@ -198,10 +218,6 @@ public class StudentBuilder {
         dashboard.getMilestoneList().setMilestone(milestone, updatedMilestone);
 
         return this;
-    }
-
-    public Student build() {
-        return new Student(uniqueKey, name, phone, email, address, programmingLanguage, tags, favourite, dashboard);
     }
 
 }

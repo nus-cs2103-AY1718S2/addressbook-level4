@@ -19,6 +19,7 @@ import seedu.address.model.student.dashboard.Task;
 import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneException;
 import seedu.address.model.student.dashboard.exceptions.DuplicateTaskException;
 import seedu.address.model.student.dashboard.exceptions.MilestoneNotFoundException;
+import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -35,6 +36,7 @@ public class StudentBuilder {
     public static final String DEFAULT_PROGRAMMING_LANGUAGE = "Java";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_FAVOURITE = "false";
+    public static final String DEFAULT_PATH = "/src/main/resources/view/images/profile_photo_placeholder";
 
     private UniqueKey key;
     private Name name;
@@ -45,6 +47,7 @@ public class StudentBuilder {
     private Set<Tag> tags;
     private Favourite favourite;
     private Dashboard dashboard;
+    private ProfilePicturePath profilePicturePath;
 
     public StudentBuilder() {
         key = new UniqueKey(DEFAULT_KEY);
@@ -56,6 +59,7 @@ public class StudentBuilder {
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
         favourite = new Favourite(DEFAULT_FAVOURITE);
         dashboard = new Dashboard();
+        profilePicturePath = new ProfilePicturePath(ProfilePicturePath.DEFAULT_PROFILE_PICTURE);
     }
 
     /**
@@ -71,6 +75,7 @@ public class StudentBuilder {
         tags = new HashSet<>(studentToCopy.getTags());
         favourite = studentToCopy.getFavourite();
         dashboard = studentToCopy.getDashboard();
+        profilePicturePath = studentToCopy.getProfilePicturePath();
     }
 
     /**
@@ -167,8 +172,11 @@ public class StudentBuilder {
         return this;
     }
 
+    /**
+     * Builds the student with given attributes
+     */
     public Student build() {
-        return new Student(key, name, phone, email, address, programmingLanguage, tags, favourite, dashboard);
+        return new Student(key, name, phone, email, address, programmingLanguage, tags,
+                favourite, dashboard, profilePicturePath);
     }
-
 }

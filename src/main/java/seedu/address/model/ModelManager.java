@@ -18,6 +18,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.ScheduleChangedEvent;
 import seedu.address.commons.events.model.StudentInfoChangedEvent;
 import seedu.address.commons.events.model.StudentInfoDisplayEvent;
+import seedu.address.commons.events.storage.ProfilePictureChangeEvent;
 import seedu.address.commons.events.storage.RequiredStudentIndexChangeEvent;
 import seedu.address.external.GContactsManager;
 import seedu.address.external.exceptions.CredentialsException;
@@ -92,6 +93,8 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+
+
     @Override
     public void updateStudent(Student target, Student editedStudent)
             throws DuplicateStudentException, StudentNotFoundException {
@@ -165,6 +168,24 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public String printSchedule() {
         return schedule.print(addressBook);
+    }
+
+    @Override
+    public void updateProfilePicture (Student target, Student editedStudent, Student finalEditedStudent)
+            throws DuplicateStudentException, StudentNotFoundException {
+
+        requireAllNonNull(target, editedStudent);
+        addressBook.updateStudent(target, editedStudent);
+        indicateProfilePictureChange(editedStudent);
+        addressBook.updateStudent(editedStudent, finalEditedStudent);
+        indicateAddressBookChanged();
+        indicateStudentInfoChanged();
+
+    }
+
+    /** Raises an event to indicate a student's profile picture has been changed*/
+    private void indicateProfilePictureChange(Student target) {
+        raise(new ProfilePictureChangeEvent(target));
     }
 
     //=========== Filtered Student List Accessors =============================================================

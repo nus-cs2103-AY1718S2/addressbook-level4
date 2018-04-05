@@ -1,11 +1,7 @@
 package seedu.recipe.logic.commands;
 
-import static seedu.recipe.model.Model.PREDICATE_SHOW_ALL_RECIPES;
-
-import java.util.ArrayList;
-
 import seedu.recipe.model.recipe.GroupName;
-import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.model.recipe.GroupPredicate;
 
 //@@author hoangduong1607
 
@@ -22,24 +18,17 @@ public class ViewGroupCommand extends Command {
     public static final String MESSAGE_FAILURE = "Recipe group not found!";
     public static final String MESSAGE_SUCCESS = "Listed all recipes in [%s]";
 
+    private GroupPredicate groupPredicate;
     private GroupName groupName;
 
-    public ViewGroupCommand(GroupName groupName) {
+    public ViewGroupCommand(GroupPredicate groupPredicate, GroupName groupName) {
+        this.groupPredicate = groupPredicate;
         this.groupName = groupName;
     }
 
     @Override
     public CommandResult execute() {
-        ArrayList<Recipe> newFilteredRecipeList = new ArrayList<>();
-
-        for (Recipe recipe : model.getRecipeBook().getRecipeList()) {
-            if (recipe.getGroupNames().contains(groupName)) {
-                newFilteredRecipeList.add(recipe);
-                System.out.println(recipe);
-            }
-        }
-
-        model.updateFilteredRecipeList(PREDICATE_SHOW_ALL_RECIPES);
+        model.updateFilteredRecipeList(groupPredicate);
         return new CommandResult(String.format(MESSAGE_SUCCESS, groupName));
     }
 

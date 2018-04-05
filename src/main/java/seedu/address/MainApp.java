@@ -233,7 +233,7 @@ public class MainApp extends Application {
     private void readWelcomeMessage() {
         try {
             Runtime.getRuntime().exec("wscript src\\main\\resources\\scripts\\Welcome.vbs");
-            //Runtime.getRuntime().exec("osascript src\\main\\resources\\scripts\\");
+            //Runtime.getRuntime().exec("osascript src\\main\\resources\\scripts\\WelcomeMac.scpt");
         } catch (IOException e) {
             System.out.println("Unable to load welcome message.");
         }

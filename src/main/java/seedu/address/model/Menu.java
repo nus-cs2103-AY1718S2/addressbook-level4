@@ -2,12 +2,13 @@
 package seedu.address.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import seedu.address.model.dish.Dish;
-import seedu.address.model.dish.Name;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+
+import seedu.address.model.dish.Dish;
+import seedu.address.model.dish.Name;
 
 
 /**
@@ -30,7 +31,7 @@ public class Menu implements ReadOnlyMenu {
             Dish dish = mapper.readValue(new File("data/menu.xml"), Dish.class);
             Name name = dish.getName();
             dishes.put(name.toString(), dish);
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -41,12 +42,12 @@ public class Menu implements ReadOnlyMenu {
      * Returns the dish in Menu if available.
      * Otherwise return null.
      */
-    public Dish get(String dish){return dishes.get(dish);}
+    public Dish get(String dish) { return dishes.get(dish); }
 
     /**
      * Returns a copy of the data in Menu.
      * Modifications on this copy will not affect the original Menu data
      */
     @Override
-    public HashMap<String, Dish> getDishes(){return new HashMap<>(dishes);}
+    public HashMap<String, Dish> getDishes() { return new HashMap<>(dishes); }
 }

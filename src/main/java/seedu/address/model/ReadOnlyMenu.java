@@ -1,9 +1,10 @@
 //@@author ZacZequn
 package seedu.address.model;
 
+import java.util.HashMap;
+
 import seedu.address.model.dish.Dish;
 
-import java.util.HashMap;
 
 /**
  * Unmodifiable view of customers statistics

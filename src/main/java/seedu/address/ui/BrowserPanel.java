@@ -14,6 +14,7 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
+import seedu.address.model.smplatform.Link;
 
 /**
  * The Browser Panel of the App.
@@ -47,10 +48,26 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void loadBrowserPersonPage(Person person) {
-        loadBrowserPage(FACEBOOK_SEARCH_PAGE_URL + person.getName().fullName);
+        if (person.getSocialMediaPlatformMap().containsKey(Link.FACEBOOK_LINK_TYPE)) {
+            String url = person.getSocialMediaPlatformMap().get(Link.FACEBOOK_LINK_TYPE).getLink().value;
+            if (!url.contains("://")) {
+                url = "https://" + url;
+            }
+            loadBrowserPage(url);
+        } else {
+            loadBrowserPage(FACEBOOK_SEARCH_PAGE_URL + person.getName().fullName);
+        }
     }
     private void loadBrowser1PersonPage(Person person) {
-        loadBrowser1Page(TWITTER_SEARCH_PAGE_URL + person.getName().fullName);
+        if (person.getSocialMediaPlatformMap().containsKey(Link.TWITTER_LINK_TYPE)) {
+            String url = person.getSocialMediaPlatformMap().get(Link.TWITTER_LINK_TYPE).getLink().value;
+            if (!url.contains("://")) {
+                url = "https://" + url;
+            }
+            loadBrowser1Page(url);
+        } else {
+            loadBrowser1Page(TWITTER_SEARCH_PAGE_URL + person.getName().fullName);
+        }
     }
 
     public void loadBrowserPage(String url) {

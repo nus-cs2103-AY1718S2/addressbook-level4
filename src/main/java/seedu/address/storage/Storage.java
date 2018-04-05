@@ -24,9 +24,11 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, CustomerS
     @Override
     String getAddressBookFilePath();
 
+    //@@author Wuhao-ooo
     @Override
     String getCustomerStatsFilePath();
 
+    //@@author
     @Override
     Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException;
 
@@ -40,6 +42,7 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, CustomerS
      */
     void handleAddressBookChangedEvent(AddressBookChangedEvent abce);
 
+    //@@author Wuhao-ooo
     /**
      * Saves the current CustomerStats to the hard disk.
      *   Creates the data file if it is missing.

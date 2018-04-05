@@ -1,3 +1,6 @@
+/*
+@@author Wuhao-ooo
+ */
 .background {
     -fx-background-color: derive(#FFC947, 20%);
     background-color: white; /* Used in the default.html file */

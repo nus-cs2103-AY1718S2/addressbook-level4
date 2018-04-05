@@ -22,7 +22,7 @@ public class ProfilePicture {
             "Profile picture does not exist. Please give another profile picture";
 
     // alphanumeric and special characters
-    public static final String PROFILE_PICTURE_VALIDATION_REGEX = "^$|([^\\s]+(\\.(?i)(jpeg|jpg|png|gif|bmp))$)";
+    public static final String PROFILE_PICTURE_VALIDATION_REGEX = "^$|(.+(\\.(?i)(jpeg|jpg|png|gif|bmp))$)";
     public static final String PROFILE_PICTURE_FOLDER =
             "./ProfilePictures/";
 

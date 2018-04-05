@@ -18,8 +18,6 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.scene.input.KeyCode;
-
 import org.junit.Test;
 
 import guitests.GuiRobot;
@@ -30,6 +28,8 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.tag.Tag;
+
+import javafx.scene.input.KeyCode;
 
 public class FindCommandSystemTest extends AddressBookSystemTest {
     private final GuiRobot guiRobot = new GuiRobot();

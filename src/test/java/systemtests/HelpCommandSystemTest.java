@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
-import javafx.scene.input.KeyCode;
 import org.junit.Test;
 
 import guitests.GuiRobot;
@@ -17,6 +16,8 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.StatusBarFooter;
+
+import javafx.scene.input.KeyCode;
 
 /**
  * A system test class for the help window, which contains interaction with other UI components.

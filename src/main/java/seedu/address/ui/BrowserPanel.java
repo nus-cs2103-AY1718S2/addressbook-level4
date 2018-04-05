@@ -56,8 +56,7 @@ public class BrowserPanel extends UiPart<Region> {
         if (person instanceof Customer) {
             htmlWriter = new HtmlWriter((Customer) person);
             personfilepath = htmlWriter.writeCustomer();
-        }
-        else if (person instanceof Runner) {
+        } else if (person instanceof Runner) {
             htmlWriter = new HtmlWriter((Runner) person);
             personfilepath = htmlWriter.writeRunner();
         } else {

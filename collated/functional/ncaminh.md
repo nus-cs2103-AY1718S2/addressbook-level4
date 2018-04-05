@@ -220,6 +220,9 @@ public class DistanceCommand extends Command {
      * get driving distance from origin to destination
      */
     public double getDistance(String origin, String destination) {
+        if (origin.equals(destination)) {
+            return 0;
+        }
         String distanceWithoutUnit = "";
         DistanceMatrix matrix = null;
         matrix = getMatrix(origin, destination);
@@ -286,6 +289,7 @@ public class DistanceCommandParser implements Parser<DistanceCommand> {
     private void readWelcomeMessage() {
         try {
             Runtime.getRuntime().exec("wscript src\\main\\resources\\scripts\\Welcome.vbs");
+            //Runtime.getRuntime().exec("osascript src\\main\\resources\\scripts\\");
         } catch (IOException e) {
             System.out.println("Unable to load welcome message.");
         }
@@ -320,6 +324,8 @@ public class DistanceCommandParser implements Parser<DistanceCommand> {
         try {
             Runtime.getRuntime().exec("wscript src\\main\\resources\\scripts\\ClickOnNameCard.vbs"
                     + " " + person.getName().fullName);
+            //Runtime.getRuntime().exec("osascript src\\main\\resources\\scripts\\ClickOnNameCard.vbs"
+            //                    + " " + person.getName().fullName);
         } catch (IOException e) {
             System.out.println("Unable to read person name");
         }

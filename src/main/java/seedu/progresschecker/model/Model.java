@@ -39,7 +39,7 @@ public interface Model {
     //@@author adityaa1998
 
     /** creates an issue on github */
-    void createIssueOnGitHub(Issue issue) throws IOException;
+    void createIssueOnGitHub(Issue issue) throws IOException, CommandException;
 
     /** reopen issue on github */
     void reopenIssueOnGithub(Index index) throws IOException, CommandException;

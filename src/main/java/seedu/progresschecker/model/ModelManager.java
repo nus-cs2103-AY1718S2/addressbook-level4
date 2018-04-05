@@ -89,7 +89,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void createIssueOnGitHub(Issue issue) throws IOException {
+    public synchronized void createIssueOnGitHub(Issue issue) throws IOException, CommandException {
         progressChecker.createIssueOnGitHub(issue);
         indicateProgressCheckerChanged();
     }

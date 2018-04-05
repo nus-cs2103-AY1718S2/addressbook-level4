@@ -29,7 +29,7 @@ public class Person {
      */
 
     public Person() {
-        this.name = new Name("DefaultName");
+        this.name = new Name("NotAssigned");
         this.phone = new Phone();
         this.email = new Email();
         this.address = new Address();
@@ -107,7 +107,8 @@ public class Person {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
+        builder.append("Name: ")
+                .append(getName())
                 .append(" Phone: ")
                 .append(getPhone())
                 .append(" Email: ")

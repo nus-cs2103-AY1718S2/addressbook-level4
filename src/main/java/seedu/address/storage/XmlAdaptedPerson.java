@@ -60,7 +60,7 @@ public class XmlAdaptedPerson {
 
     //Runner fields
     @XmlElement(required = true)
-    private List<Customer> customers;
+    private List<XmlAdaptedPerson> customers = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -93,10 +93,10 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         tagged = new ArrayList<>();
-        personType = source.getType();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        personType = source.getType();
 
         if (source instanceof Customer) {
             moneyBorrowed = ((Customer) source).getMoneyBorrowed();
@@ -108,7 +108,10 @@ public class XmlAdaptedPerson {
         }
 
         if (source instanceof Runner) {
-            customers = ((Runner) source).getCustomers();
+            customers = new ArrayList<>();
+            for (Person person : ((Runner) source).getCustomers()) {
+                customers.add(new XmlAdaptedPerson(person));
+            }
         }
 
     }
@@ -204,7 +207,18 @@ public class XmlAdaptedPerson {
                     standardInterest, lateInterest, new Runner());
 
         } else if (this.personType == Person.PersonType.RUNNER) {
-            return new Runner(name, phone, email, address, tags, new ArrayList<>());
+            if (this.customers == null) {
+                throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, StandardInterest.class
+                        .getSimpleName()));
+            }
+            //TODO: write valid regex check
+
+            final List<Person> customerList = new ArrayList<>();
+            for (XmlAdaptedPerson person : customers) {
+                customerList.add(person.toModelType());
+            }
+
+            return new Runner(name, phone, email, address, tags, customerList);
 
         } else {
             return new Person(name, phone, email, address, tags);

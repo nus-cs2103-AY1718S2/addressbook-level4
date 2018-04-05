@@ -36,7 +36,7 @@ public class Autocomplete {
         if (words.length == 1) {
             return suggestCommandWords();
         } else {
-            if (addReferenceOwnerNric(words) || editPetPatientOwnerNric(words)) {
+            if (addReferenceOwnerNric(words) || editPetPatientOwnerNric(words) || findByPersonNric(words)) {
                 return suggestNrics();
             }
 
@@ -77,6 +77,16 @@ public class Autocomplete {
     }
 
     /**
+     * Checks if command input is the "edit -p" command, with the last word starting with "nr/".
+     */
+    private boolean findByPersonNric(String[] words) {
+        if (words[0].equals("find") && words[1].equals("-o") && targetWord.startsWith("nr/")) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Returns a sorted list of suggestions for tags.
      */
     private List<String> suggestTagNames() {
@@ -89,7 +99,7 @@ public class Autocomplete {
             String[] splitByPrefix = targetWord.split("/");
             String targetTag = splitByPrefix[1];
             List<String> suggestions = logic.getAllTagNames().stream()
-                    .filter(t -> t.startsWith(targetTag) && !t.equals(targetTag))
+                    .filter(t -> t.toLowerCase().startsWith(targetTag) && !t.toLowerCase().equals(targetTag))
                     .sorted()
                     .collect(Collectors.toList());
             return suggestions;

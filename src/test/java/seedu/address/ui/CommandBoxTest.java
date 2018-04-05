@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 
 public class CommandBoxTest extends GuiUnitTest {
 
@@ -27,7 +29,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        Model model = new ModelManager();
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Logic logic = new LogicManager(model);
 
         CommandBox commandBox = new CommandBox(logic);
@@ -160,7 +162,7 @@ public class CommandBoxTest extends GuiUnitTest {
     public void commandBox_autocompleteCommandWord() {
         //add command
         testAutocompleteForUserInput("a", 1, "add");
-        testAutocompleteForUserInput(" ", 1, " add");
+        testAutocompleteForUserInput(" ", 1, "add");
 
         //clear command
         testAutocompleteForUserInput("cl", 1, "clear");
@@ -222,25 +224,53 @@ public class CommandBoxTest extends GuiUnitTest {
         testAutocompleteForUserInput("add -p b", 2, "add -p bt/");
     }
 
+    @Test
+    public void commandBox_autocompleteNric() {
+        // autocomplete suggestions for nric for add command that follows "-o nr/"
+        testAutocompleteForUserInput("add -o nr/", 1, "add -o nr/F0184556R");
+        testAutocompleteForUserInput("add -o nr/F018", 1, "add -o nr/F0184556R");
+        testAutocompleteForUserInput("add -o nr/", 2, "add -o nr/F2345678U");
+        testAutocompleteForUserInput("add -o nr/S", 1, "add -o nr/S0123456Q");
+
+        // no nric autocomplete suggestion if add command does not have "-o nr/"
+        testAutocompleteForUserInput("add -p nr/S", 1, "add -p nr/S");
+        testAutocompleteForUserInput("add -a nr/F", 1, "add -a nr/F");
+
+        // autocomplete suggestions for nric for "edit -p" command
+        testAutocompleteForUserInput("edit -p nr/", 1, "edit -p nr/F0184556R");
+        testAutocompleteForUserInput("edit -p nr/F018", 1, "edit -p nr/F0184556R");
+        testAutocompleteForUserInput("edit -p nr/", 2, "edit -p nr/F2345678U");
+        testAutocompleteForUserInput("edit -p nr/S", 1, "edit -p nr/S0123456Q");
+
+        // no nric autocomplete suggestion if edit command does not start with "edit -p"
+        testAutocompleteForUserInput("edit -o nr/", 1, "edit -o nr/");
+        testAutocompleteForUserInput("edit -o nr/S", 1, "edit -o nr/S");
+
+        // autocomplete suggestions for nric for "find -o" command
+        testAutocompleteForUserInput("find -o nr/", 1, "find -o nr/F0184556R");
+        testAutocompleteForUserInput("find -o nr/", 3, "find -o nr/G1111111B");
+        testAutocompleteForUserInput("find -o nr/T", 3, "find -o nr/T0120956W");
+        testAutocompleteForUserInput("find -o nr/T0", 2, "find -o nr/T0123456L");
+
+        // no nric autocomplete suggestion if edit command does not start with "find -o"
+        testAutocompleteForUserInput("find -p nr/T0", 2, "find -p nr/T0");
+        testAutocompleteForUserInput("find -a nr/S", 2, "find -a nr/S");
+    }
+
+    @Test
+    public void commandBox_autocompleteTag() {
+        testAutocompleteForUserInput("add t/", 1, "add t/Depression");
+        testAutocompleteForUserInput("add t/F", 1, "add t/friends");
+        testAutocompleteForUserInput("add t/", 2, "add t/Test");
+        testAutocompleteForUserInput("add t/ow", 2, "add t/owesMoney");
+    }
+
     /**
      * Checks that {@code userInput} with the {@code numOfTabs} to select an option on autocomplete's context menu
      * will result in {@code actualCommand}.
      */
     private void testAutocompleteForUserInput(String userInput, int numOfTabs, String actualCommand) {
         commandBoxHandle.setText(userInput);
-
-        while (numOfTabs > 0) {
-            guiRobot.push(KeyCode.TAB);
-            numOfTabs--;
-        }
-        guiRobot.push(KeyCode.ENTER);
-
-        assertEquals(actualCommand, commandBoxHandle.getInput());
-    }
-
-    private void testAutocompleteForNric(String userInput, String input2, int numOfTabs, String actualCommand) {
-        commandBoxHandle.setText(userInput);
-        commandBoxHandle.insertText(input2);
 
         while (numOfTabs > 0) {
             guiRobot.push(KeyCode.TAB);

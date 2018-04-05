@@ -22,19 +22,30 @@ public class NavigateCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "Displaying directions between...";
+    public static final String MESSAGE_FAILURE = "FAILURE";
     private final List<Event> eventPair;
 
     public NavigateCommand(List<Event> eventPair) {
         this.eventPair = eventPair;
     };
 
+    //@@author jaronchan
+
     @Override
     public CommandResult execute() {
-        System.out.print("Retrieved: ");
-        System.out.print(this.eventPair.size());
-        System.out.println(" events.");
-        System.out.println(this.eventPair.toString());
-        EventsCenter.getInstance().post(new LoadDirectionsEvent());
+        if (this.eventPair.isEmpty()) {
+            return new CommandResult(String.format(MESSAGE_FAILURE));
+        }
+//        System.out.print("Retrieved: ");
+//        System.out.print(this.eventPair.size());
+//        System.out.println(" events.");
+//        System.out.println(this.eventPair.toString());
+        EventsCenter.getInstance().post(
+            new LoadDirectionsEvent(
+                    this.eventPair.get(0).getLocation(),
+                    this.eventPair.get(1).getLocation()
+            )
+        );
         return new CommandResult(String.format(MESSAGE_SUCCESS));
     }
 

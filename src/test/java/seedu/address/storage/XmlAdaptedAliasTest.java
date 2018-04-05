@@ -1,17 +1,18 @@
 package seedu.address.storage;
 
-import org.junit.Test;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.alias.Alias;
-import seedu.address.testutil.AliasBuilder;
-import seedu.address.testutil.Assert;
-
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.testutil.TypicalAliases.ADD;
 import static seedu.address.testutil.TypicalAliases.DELETE;
 import static seedu.address.testutil.TypicalAliases.UNKNOWN;
+
+import org.junit.Test;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.alias.Alias;
+import seedu.address.testutil.AliasBuilder;
+import seedu.address.testutil.Assert;
 
 public class XmlAdaptedAliasTest {
     private static final String ILLEGAL_COMMAND_WORD = "add%";

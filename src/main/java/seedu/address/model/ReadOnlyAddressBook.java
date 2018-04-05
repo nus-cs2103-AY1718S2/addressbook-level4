@@ -1,11 +1,11 @@
 package seedu.address.model;
 
+import java.util.HashMap;
+
 import javafx.collections.ObservableList;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
-
-import java.util.HashMap;
 
 /**
  * Unmodifiable view of an address book

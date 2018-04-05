@@ -1,484 +1,1 @@
-= StardyTogether - User Guide
-:toc:
-:toc-title:
-:toc-placement: preamble
-:sectnums:
-:imagesDir: images
-:stylesDir: stylesheets
-:xrefstyle: full
-:experimental:
-ifdef::env-github[]
-:tip-caption: :bulb:
-:note-caption: :information_source:
-endif::[]
-:repoURL: https://github.com/CS2103JAN2018-W11-B4/main
-
-By: `Team W11-B4`      Since: `Feb 2018`      Licence: `MIT`
-
-== Introduction
-
-* Stardy Together (ST) is for *NUS Students* who prefer to use a *desktop app* for managing NUS friends' contacts.
-* More importantly, ST is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI).
-* If you can type fast, ST can get your contact management tasks done faster than traditional GUI apps.
-* This guide provides a list of features that are available on ST and their usage.
-* Interested? Jump to the next section, <<Quick Start>>, to get started. Enjoy!
-
-== Quick Start
-
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
-+
-[NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
-+
-.  Download the latest `StardyTogether.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your StardyTogether.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
-+
-image::Ui.png[width="790"]
-+
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
-
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/010195` : adds a contact named `John Doe` to StardyTogether.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
-
-.  Refer to the next section, <<Features>>, for details of each command, or refer to <<Command Summary>> for the summary of all the commands.
-
-[[Features]]
-== Features
-
-====
-*Command Format*
-
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
-
-=== Viewing help : `help`
-
-Format: `help`
-
-=== Adding a person: `add`
-
-Adds a person to StardyTogether. +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY tt/TIMETABLE [t/TAG]...`
-
-[TIP]
-A person can have any number of tags (including 0)
-
-[NOTE]
-====
-* Birthday must be in DDMMYYYY format
-* Timetable must either be a valid NUSMods shortened link or left empty (in which a empty timetable will be created)
-====
-
-For more information on how to get a valid link, refer to <<FAQ>>.
-
-Examples:
-
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/010195 tt/http://modsn.us/oNZLY`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/121212 tt/http://modsn.us/ojGeu t/criminal`
-
-=== Listing all persons : `list`
-
-Shows a list of all persons in StardyTogether. +
-Format: `list`
-
-=== Editing a person : `edit`
-
-Edits an existing person in StardyTogether. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...`
-
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
-
-Examples:
-
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-=== Locating persons by name: `find`
-
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-=== Deleting a person : `delete`
-
-Deletes the specified person from StardyTogether. +
-Format: `delete INDEX`
-
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`delete 2` +
-Deletes the 2nd person in StardyTogether.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
-=== Selecting a person : `select`
-
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
-
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd person in StardyTogether.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
-
-=== Viewing a collated birthday list: `birthdays` (since v1.3)
-
-Displays a list that contains all the birthdays of all contacts ordered by date +
-Or display a notification of the birthdays today +
-Format: `birthdays [ADDITIONAL_PARAMETER]`
-
-****
-The following parameters can be inputted into the [ADDITIONAL_PARAMETER] field
-* `todays`: Shows a notification of the birthdays occurring today
-****
-
-Examples:
-
-* `birthdays` +
-Displays a list of all birthdays
-* `birthdays today` +
-Displays a window with the birthdays today
-
-=== Viewing timetable of a person: `timetable` (since v1.4)
-
-Displays the timetable of a person for Odd or Even Week. +
-Format: `timetable INDEX ODD/EVEN`
-
-****
-* The Odd or Even is case insensitive. e.g `odd` or `Odd` gets the same output
-****
-
-Examples:
-
-* `timetable 1 odd` +
-Displays combined timetable of the 1st person.
-
-=== Viewing common time slots in timetable: `free` (coming in v2.0)
-
-Displays the common free time of two people in StardyTogether. +
-Format: `free p/[PERSON1] p/[PERSON2]`
-
-****
-* Only full names will be matched e.g. `Han` will not match `Han Tan`
-* Overlap of the two persons' timetables will be displayed.
-****
-
-Examples:
-
-* `free p/John Doe p/Han Tan` +
-Displays the combined timetable for John Doe and Han Tan.
-
-=== Adding a command alias: `alias` (since v1.1)
-
-Creates customized aliases for any valid command. +
-Format: `alias [COMMAND] [ALIAS]`
-
-Examples:
-
-* `alias history hist`
-* `alias find f`
-* `alias alias al`
-
-=== Listing all aliases: `alias list` (since v1.4)
-
-Lists all created aliases. +
-Format: `alias list`
-
-=== Removing a currently existing alias: `unalias` (since v1.3)
-
-Removes a previously created alias. +
-Format: `unalias [CURRENT_ALIAS]`
-
-Examples:
-
-* `unalias hist`
-
-=== Vacant study rooms finder : `vacant` (since v1.3)
-
-Displays a list of rooms in the specified building and whether each room is vacant or not, in blocks of 1 hours. +
-Format: `vacant BUILDING`
-
-****
-* Finds vacant study rooms in the specified `BUILDING`.
-* The building must be in NUS venue format, e.g. `COM1`, `S17`, `E2`
-****
-
-Examples:
-
-* `vacant COM1` +
-Finds the vacancy status of study rooms in COM1 building.
-
-=== Google maps display : `map` (since v1.4)
-
-Launches Google Maps with the specified location(s).
-Format: `map LOCATION` or `map LOCATION/LOCATION...`
-
-****
-* NUS building name is case insensitive e.g. `COM1` or `com1` gets the same output
-* If only one location is provided, the location will be displayed on the map.
-* If more than one location is provided, directions to each location, starting from the first one, will be displayed.
-* Typing "map LOCATION_START to LOCATION_DESTINATION" can work as well only if neither locations specified are NUS buildings.
-****
-
-Examples:
-
-* `map BIZ1` +
-Displays the location of BIZ1 (which is an NUS building name).
-* `map Tampines Mall/COM1` +
-Displays the directions from `Tampines Mall` to `COM1`.
-* `map Tampines Mall/COM1/Airport Blvd` +
-Displays the directions from `Tampines Mall` to `COM1` to `Airport Blvd`.
-
-=== Listing entered commands : `history`
-
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
-
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
-
-// tag::undoredo[]
-=== Undoing previous command : `undo`
-
-Restores the StardyTogether instance to the state before the previous _undoable_ command was executed. +
-Format: `undo`
-
-[NOTE]
-====
-Undoable commands: those commands that modify the StardyTogether's content (`add`, `delete`, `edit` and `clear`).
-====
-
-Examples:
-
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-
-=== Redoing the previously undone command : `redo`
-
-Reverses the most recent `undo` command. +
-Format: `redo`
-
-Examples:
-
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
-
-=== Clearing all entries : `clear`
-
-Clears all entries from StardyTogether. +
-Format: `clear`
-
-// tag::dataencryption[]
-=== Encrypting data files : `password` (since v1.2)
-
-Activates or change the password used to encrypt the StardyTogether. +
-Format: `password PASSWORD`
-
-****
-* Encrypts StardyTogether using the specified PASSWORD.
-* Passwords are case-sensitive.
-* The password string can only contain characters in the UTF-8 format.
-****
-
-Examples:
-
-* `password test` +
-Encrypts `addressbook.xml` with "test" as the password.
-
-// end::dataencryption[]
-
-=== Removal of password: `nopassword` (since v1.3)
-
-Removes the password of the application and unencrypts `addressbook.xml`. +
-Format: `nopassword`
-
-=== Importing data : `import` (since v1.1)
-
-Imports an encrypted or unencrypted StardyTogether instance from filepath to the existing StardyTogether application. Persons, Tags, and Aliases that are not in your StardyTogether will be added. +
-Format: `import FILEPATH PASSWORD`
-
-****
-* Imports an instance of StardyTogether from the specified `FILEPATH`.
-* Decrypt that instance using the `PASSWORD` provided.
-* If no `PASSWORD` is provided, the instance will be read without decryption.
-* The filepath refers to the filepath where the instance file is stored.
-* The instance file *must be in XML file format* after decryption.
-****
-
-Example:
-
-* `import data/addressBook.xml testpassword` +
-Imports `addressBook.xml` file at data folder using "testpassword" as the password.
-
-=== Exporting data : `export` (since v1.4)
-
-Exports the current view of the existing StardyTogether application with or without password encryption to the specified filepath
-Format: `export FILEPATH PASSWORD`
-
-****
-* Exports an instance of StardyTogether to the specified `FILEPATH`.
-* Encrypt that instance using the `PASSWORD` provided.
-* If no `PASSWORD` is provided, the instance will be exported without encryption.
-* The filepath refers to the filepath where the instance file will be stored.
-****
-
-Example:
-
-* `export data/addressBook.xml testpassword` +
-Exports the current list of StardyTogether application to the `addressBook.xml` file at data folder using "testpassword" as the password for encryption.
-
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit`
-
-=== Saving the data
-
-StardyTogether data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
-
-== FAQ
-
-*Q*: How do I transfer my data to another Computer? +
-*A*:
-*Method 1*: Replaces the other computer's data completely
-****
-.  In the folder that `StardyTogether.jar` is in, find the `data` folder
-.  Copy the `addressbook.xml` storage file inside
-.  Transfer that file to the other computer
-.  Place it in the `data` folder of `StardyTogether.jar`, on the other computer
-****
-*Method 2*: Merges the contacts of both computers
-****
-.  In the folder that `StardyTogether.jar` is in, find the `data` folder
-.  Copy the `addressbook.xml` storage file inside
-.  Transfer that file to the other computer
-.  Rename that file to avoid overwriting the existing `addressbook.xml`
-.  Place it in the `data` folder of `StardyTogether.jar`, on the other computer
-.  Type `import [fileName]` into the command box, where [fileName] is the new name from Step 4
-.  Press Enter
-****
-
-*Q*: How do I import my timetable from NUSMods? +
-*A*:
-****
-When adding or editing a person, you can input his/her NUSMods shortened link in the tt/TIMETABLE field
-.   Go to NUSMods
-.   Click `Share/Sync` at the bottom right hand corner
-image::NUSMods_SS1.png[width="800"]
-.   Copy the link in the window that appeared
-image::NUSMods_SS2.png[width="800"]
-.   Paste it in StardyTogether at the tt/TIMETABLE field
-****
-
-== Command Summary
-
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/010195 t/friend t/colleague`
-* *Alias* `alias COMMAND ALIAS` +
-e.g. `alias history hist`
-* *Alias List* `alias list` +
-* *Birthday List*: `birthdays [todays]`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Export* : `Export FILEPATH PASSWORD` +
-e.g.`export data/addressBook.xml testpassword`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *Help* : `help`
-* *History* : `history`
-* *Import* : `import FILEPATH PASSWORD` +
-e.g.`import data/addressBook.xml testpassword`
-* *List* : `list`
-* *Map* : `map LOCATION` +
-e.g. `map S16`
-* *Password* : `password PASSWORD` +
-e.g. `password test`
-* *Remove Password* : `nopassword`
-* *Redo* : `redo`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *Unalias* `unalias CURRENT_ALIAS` +
-e.g. `unalias hist`
-* *Undo* : `undo`
-* *Vacant* : `vacant BUILDING` +
-e.g. `vacant COM1`
+= StardyTogether - User Guide:toc::toc-title::toc-placement: preamble:sectnums::imagesDir: images:stylesDir: stylesheets:xrefstyle: full:experimental:ifdef::env-github[]:tip-caption: :bulb::note-caption: :information_source:endif::[]:repoURL: https://github.com/CS2103JAN2018-W11-B4/mainBy: `Team W11-B4`      Since: `Feb 2018`      Licence: `MIT`== Introduction* Stardy Together (ST) is for *NUS Students* who prefer to use a *desktop app* for managing NUS friends' contacts.* More importantly, ST is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI).* If you can type fast, ST can get your contact management tasks done faster than traditional GUI apps.* This guide provides a list of features that are available on ST and their usage.* Interested? Jump to the next section, <<Quick Start>>, to get started. Enjoy!== Quick Start.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.+[NOTE]Having any Java 8 version is not enough. +This app will not work with earlier versions of Java 8.+.  Download the latest `StardyTogether.jar` link:{repoURL}/releases[here]..  Copy the file to the folder you want to use as the home folder for your StardyTogether..  Double-click the file to start the app. The GUI should appear in a few seconds.+image::Ui.png[width="790"]+.  Type the command in the command box and press kbd:[Enter] to execute it. +e.g. typing *`help`* and pressing kbd:[Enter] will open the help window..  Some example commands you can try:* *`list`* : lists all contacts* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/010195` : adds a contact named `John Doe` to StardyTogether.* **`delete`**`3` : deletes the 3rd contact shown in the current list* *`exit`* : exits the app.  Refer to the next section, <<Features>>, for details of each command, or refer to <<Command Summary>> for the summary of all the commands.[[Features]]== Features====*Command Format** Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.======= Viewing help : `help`Format: `help`=== Adding a person: `add`Adds a person to StardyTogether. +Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY tt/TIMETABLE [t/TAG]...`[TIP]A person can have any number of tags (including 0)[NOTE]====* Birthday must be in DDMMYYYY format* Timetable must either be a valid NUSMods shortened link or left empty (in which a empty timetable will be created)====For more information on how to get a valid link, refer to <<FAQ>>.Examples:* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/010195 tt/http://modsn.us/oNZLY`* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/121212 tt/http://modsn.us/ojGeu t/criminal`=== Listing all persons : `list`Shows a list of all persons in StardyTogether. +Format: `list`=== Editing a person : `edit`Edits an existing person in StardyTogether. +Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...`***** Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...* At least one of the optional fields must be provided.* Existing values will be updated to the input values.* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.* You can remove all the person's tags by typing `t/` without specifying any tags after it.****Examples:* `edit 1 p/91234567 e/johndoe@example.com` +Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.* `edit 2 n/Betsy Crower t/` +Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.=== Locating persons by name: `find`Finds persons whose names contain any of the given keywords. +Format: `find KEYWORD [MORE_KEYWORDS]`***** The search is case insensitive. e.g `hans` will match `Hans`* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`* Only the name is searched.* Only full words will be matched e.g. `Han` will not match `Hans`* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`****Examples:* `find John` +Returns `john` and `John Doe`* `find Betsy Tim John` +Returns any person having names `Betsy`, `Tim`, or `John`=== Deleting a person : `delete`Deletes the specified person from StardyTogether. +Format: `delete INDEX`***** Deletes the person at the specified `INDEX`.* The index refers to the index number shown in the most recent listing.* The index *must be a positive integer* 1, 2, 3, ...****Examples:* `list` +`delete 2` +Deletes the 2nd person in StardyTogether.* `find Betsy` +`delete 1` +Deletes the 1st person in the results of the `find` command.=== Selecting a person : `select`Selects the person identified by the index number used in the last person listing. +Format: `select INDEX`***** Selects the person and loads the Google search page the person at the specified `INDEX`.* The index refers to the index number shown in the most recent listing.* The index *must be a positive integer* `1, 2, 3, ...`****Examples:* `list` +`select 2` +Selects the 2nd person in StardyTogether.* `find Betsy` +`select 1` +Selects the 1st person in the results of the `find` command.=== Viewing a collated birthday list: `birthdays` (since v1.3)Displays a list that contains all the birthdays of all contacts ordered by date +Or display a notification of the birthdays today +Format: `birthdays [ADDITIONAL_PARAMETER]`****The following parameters can be inputted into the [ADDITIONAL_PARAMETER] field* `todays`: Shows a notification of the birthdays occurring today****Examples:* `birthdays` +Displays a list of all birthdays* `birthdays today` +Displays a window with the birthdays today=== Viewing timetable of a person: `timetable` (since v1.4)Displays the timetable of a person for Odd or Even Week. +Format: `timetable INDEX ODD/EVEN`***** The Odd or Even is case insensitive. e.g `odd` or `Odd` gets the same output****Examples:* `timetable 1 odd` +Displays combined timetable of the 1st person.=== Viewing common time slots in timetable: `free` (coming in v2.0)Displays the common free time of two people in StardyTogether. +Format: `free p/[PERSON1] p/[PERSON2]`***** Only full names will be matched e.g. `Han` will not match `Han Tan`* Overlap of the two persons' timetables will be displayed.****Examples:* `free p/John Doe p/Han Tan` +Displays the combined timetable for John Doe and Han Tan.=== Adding a command alias: `alias` (since v1.1)Creates customized aliases for any valid command. +Format: `alias [COMMAND] [ALIAS]`Examples:* `alias history hist`* `alias find f`* `alias alias al`=== Listing all aliases: `alias list` (since v1.4)Lists all created aliases. +Format: `alias list`=== Removing a currently existing alias: `unalias` (since v1.3)Removes a previously created alias. +Format: `unalias [CURRENT_ALIAS]`Examples:* `unalias hist`=== Vacant study rooms finder : `vacant` (since v1.3)Displays a list of rooms in the specified building and whether each room is vacant or not, in blocks of 1 hours. +Format: `vacant BUILDING`***** Finds vacant study rooms in the specified `BUILDING`.* The building must be in NUS venue format, e.g. `COM1`, `S17`, `E2`****Examples:* `vacant COM1` +Finds the vacancy status of study rooms in COM1 building.=== Google maps display : `map` (since v1.4)Launches Google Maps with the specified location(s).Format: `map LOCATION` or `map LOCATION/LOCATION...`***** NUS building name is case insensitive e.g. `COM1` or `com1` gets the same output* If only one location is provided, the location will be displayed on the map.* If more than one location is provided, directions to each location, starting from the first one, will be displayed.* Typing "map LOCATION_START to LOCATION_DESTINATION" can work as well only if neither locations specified are NUS buildings.****Examples:* `map BIZ1` +Displays the location of BIZ1 (which is an NUS building name).* `map Tampines Mall/COM1` +Displays the directions from `Tampines Mall` to `COM1`.* `map Tampines Mall/COM1/Airport Blvd` +Displays the directions from `Tampines Mall` to `COM1` to `Airport Blvd`.=== Listing entered commands : `history`Lists all the commands that you have entered in reverse chronological order. +Format: `history`[NOTE]====Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.====// tag::undoredo[]=== Undoing previous command : `undo`Restores the StardyTogether instance to the state before the previous _undoable_ command was executed. +Format: `undo`[NOTE]====Undoable commands: those commands that modify the StardyTogether's content (`add`, `delete`, `edit` and `clear`).====Examples:* `delete 1` +`list` +`undo` (reverses the `delete 1` command) +* `select 1` +`list` +`undo` +The `undo` command fails as there are no undoable commands executed previously.* `delete 1` +`clear` +`undo` (reverses the `clear` command) +`undo` (reverses the `delete 1` command) +=== Redoing the previously undone command : `redo`Reverses the most recent `undo` command. +Format: `redo`Examples:* `delete 1` +`undo` (reverses the `delete 1` command) +`redo` (reapplies the `delete 1` command) +* `delete 1` +`redo` +The `redo` command fails as there are no `undo` commands executed previously.* `delete 1` +`clear` +`undo` (reverses the `clear` command) +`undo` (reverses the `delete 1` command) +`redo` (reapplies the `delete 1` command) +`redo` (reapplies the `clear` command) +// end::undoredo[]=== Clearing all entries : `clear`Clears all entries from StardyTogether. +Format: `clear`// tag::dataencryption[]=== Encrypting data files : `password` (since v1.2)Activates or change the password used to encrypt the StardyTogether. +Format: `password PASSWORD`***** Encrypts StardyTogether using the specified PASSWORD.* Passwords are case-sensitive.* The password string can only contain characters in the UTF-8 format.****Examples:* `password test` +Encrypts `addressbook.xml` with "test" as the password.// end::dataencryption[]=== Removal of password: `nopassword` (since v1.3)Removes the password of the application and unencrypts `addressbook.xml`. +Format: `nopassword`=== Importing data : `import` (since v1.1)Imports an encrypted or unencrypted StardyTogether instance from filepath to the existing StardyTogether application. Persons, Tags, and Aliases that are not in your StardyTogether will be added. +Format: `import FILEPATH PASSWORD`***** Imports an instance of StardyTogether from the specified `FILEPATH`.* Decrypt that instance using the `PASSWORD` provided.* If no `PASSWORD` is provided, the instance will be read without decryption.* The filepath refers to the filepath where the instance file is stored.* The instance file *must be in XML file format* after decryption.****Example:* `import data/addressBook.xml testpassword` +Imports `addressBook.xml` file at data folder using "testpassword" as the password.=== Exporting data : `export` (since v1.4)Exports the current view of the existing StardyTogether application with or without password encryption to the specified filepathFormat: `export FILEPATH PASSWORD`***** Exports an instance of StardyTogether to the specified `FILEPATH`.* Encrypt that instance using the `PASSWORD` provided.* If no `PASSWORD` is provided, the instance will be exported without encryption.* The filepath refers to the filepath where the instance file will be stored.****Example:* `export data/addressBook.xml testpassword` +Exports the current list of StardyTogether application to the `addressBook.xml` file at data folder using "testpassword" as the password for encryption.=== Exiting the program : `exit`Exits the program. +Format: `exit`=== Saving the dataStardyTogether data are saved in the hard disk automatically after any command that changes the data. +There is no need to save manually.== FAQ*Q*: How do I transfer my data to another Computer? +*A*:*Method 1*: Replaces the other computer's data completely****.  In the folder that `StardyTogether.jar` is in, find the `data` folder.  Copy the `addressbook.xml` storage file inside.  Transfer that file to the other computer.  Place it in the `data` folder of `StardyTogether.jar`, on the other computer*****Method 2*: Merges the contacts of both computers****.  In the folder that `StardyTogether.jar` is in, find the `data` folder.  Copy the `addressbook.xml` storage file inside.  Transfer that file to the other computer.  Rename that file to avoid overwriting the existing `addressbook.xml`.  Place it in the `data` folder of `StardyTogether.jar`, on the other computer.  Type `import [fileName]` into the command box, where [fileName] is the new name from Step 4.  Press Enter*****Q*: How do I import my timetable from NUSMods? +*A*:****When adding or editing a person, you can input his/her NUSMods shortened link in the tt/TIMETABLE field.   Go to NUSMods.   Click `Share/Sync` at the bottom right hand cornerimage::NUSMods_SS1.png[width="800"].   Copy the link in the window that appearedimage::NUSMods_SS2.png[width="800"].   Paste it in StardyTogether at the tt/TIMETABLE field****== Command Summary* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...` +e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/010195 t/friend t/colleague`* *Alias* `alias COMMAND ALIAS` +e.g. `alias history hist`* *Alias List* `alias list` +* *Birthday List*: `birthdays [todays]`* *Clear* : `clear`* *Delete* : `delete INDEX` +e.g. `delete 3`* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` +e.g. `edit 2 n/James Lee e/jameslee@example.com`* *Export* : `Export FILEPATH PASSWORD` +e.g.`export data/addressBook.xml testpassword`* *Find* : `find KEYWORD [MORE_KEYWORDS]` +e.g. `find James Jake`* *Help* : `help`* *History* : `history`* *Import* : `import FILEPATH PASSWORD` +e.g.`import data/addressBook.xml testpassword`* *List* : `list`* *Map* : `map LOCATION` +e.g. `map S16`* *Password* : `password PASSWORD` +e.g. `password test`* *Remove Password* : `nopassword`* *Redo* : `redo`* *Select* : `select INDEX` +e.g.`select 2`* *Unalias* `unalias CURRENT_ALIAS` +e.g. `unalias hist`* *Undo* : `undo`* *Vacant* : `vacant BUILDING` +e.g. `vacant COM1`

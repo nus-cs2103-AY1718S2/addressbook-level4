@@ -47,8 +47,10 @@ public interface Model {
     /** Gets the password */
     String getPassword();
 
+    //@@author Yoochard
     /** Sort existing employees by any field in alphabetical order */
     void sort(String field);
+    //@@author
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

@@ -180,14 +180,17 @@ public class XmlAdaptedPerson {
         }
 
         final Rating rating = new Rating(this.rating);
-        //@@author
+        //@@author crizyli
 
         final Photo photo = new Photo(this.photoName);
 
+        //@@author emer7
         final Set<Review> reviews = new HashSet<>(personReviews);
+        //@@author
 
         final Set<Tag> tags = new HashSet<>(personTags);
 
+        //@@author emer7
         Person toReturn = new Person(name, phone, email, address, tags, calendarId);
         toReturn.setRating(rating);
         toReturn.setReviews(reviews);
@@ -196,6 +199,7 @@ public class XmlAdaptedPerson {
         //System.out.println(toReturn.getName().fullName + "  " + toReturn.getPhotoName());
 
         return toReturn;
+        //@@author
     }
 
     @Override

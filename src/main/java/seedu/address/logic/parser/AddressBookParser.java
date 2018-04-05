@@ -70,8 +70,10 @@ public class AddressBookParser {
         case RateCommand.COMMAND_WORD:
             return new RateCommandParser().parse(arguments);
 
+        //@@author emer7
         case ReviewCommand.COMMAND_WORD:
             return new ReviewCommandParser().parse(arguments);
+        //@@author
 
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);

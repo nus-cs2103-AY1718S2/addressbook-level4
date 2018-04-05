@@ -61,7 +61,7 @@ public class ResultDisplay extends UiPart<Region> {
         setStyleForSuggestion();
         Platform.runLater(() -> displayed.setValue(event.getSuggestion()));
     }
-    //@@author
+    //@@author Yoochard
 
     /**
      * Sets the {@code ResultDisplay} style to indicate a failed command.

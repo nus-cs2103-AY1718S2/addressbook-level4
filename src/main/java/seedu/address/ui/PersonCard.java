@@ -48,6 +48,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private ImageView photo;
 
+    //@@author Yoochard
+    //Part of code is referenced to Developer Guide
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;

@@ -97,6 +97,7 @@ public class Person {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
+    //@@author emer7
     /**
      * Returns an immutable review set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -124,6 +125,7 @@ public class Person {
     public void setRating(Rating rating) {
         this.rating = rating;
     }
+    //@@author
 
     public void setId(int id) {
         this.id = id;

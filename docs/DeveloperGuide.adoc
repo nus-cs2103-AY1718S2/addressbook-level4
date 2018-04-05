@@ -1125,6 +1125,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |student |view completed tasks |be assured I have completed a task
 
+|`* * *` |student |import entries from another file |easily add entries previously saved in another file
+
 |`* * *` |forgetful student |view overdue tasks |be assured I did not miss any deadline
 
 |`* * *` |forgetful student |get notification for upcoming tasks |never forget to complete my tasks
@@ -1143,10 +1145,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |procrastinating student |add estimated time needed to complete a task |estimate when to start on a task to complete it on time
 
-|`* *` |procrastinating student |view contact details of activity in-charge for a deadline extension |have enough time to complete my assignments despite my tight schedule
-=======
-|`* *` |procrastinating student |view contact details of person in-charge for a deadline extension |have enough time to complete my task despite my tight schedule
-
+|`* *` |procrastinating student |view contact details of person in-charge for a deadline extension |have enough time to complete my assignments despite my tight schedule
 
 |`* *` |busy student |view free time slots before a deadline |know how much time I have when I'm actually free to finish my tasks
 
@@ -1159,7 +1158,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |student |be rewarded for completing a task |feel a sense of achievement
 
 |`*` |student |hide private events |minimize chance of someone else seeing them by accident
-|=======================================================================
 
 [appendix]
 == Use Cases

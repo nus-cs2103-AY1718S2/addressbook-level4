@@ -1,4 +1,4 @@
-//@@author Kai Yong
+//@@author Kyholmes
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;

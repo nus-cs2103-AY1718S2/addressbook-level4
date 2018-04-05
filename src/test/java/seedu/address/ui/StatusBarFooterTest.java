@@ -68,7 +68,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
                 String.format(RECORD_NUMBER_STATUS, EVENT_STUB.data.getUniquePatientQueue().size()));
     }
 
-    //@@author yamgent-reused
+    //@@author Kyholmes-reused
     //Reused from https://github.com/se-edu/addressbook-level4/pull/799/files with minor modifications
     /**
      * Asserts that the save location matches that of {@code expectedSaveLocation}, and the

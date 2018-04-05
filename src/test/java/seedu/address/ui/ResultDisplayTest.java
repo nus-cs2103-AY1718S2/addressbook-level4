@@ -33,7 +33,7 @@ public class ResultDisplayTest extends GuiUnitTest {
         resultDisplayHandle = new ResultDisplayHandle(getChildNode(resultDisplay.getRoot(),
                 ResultDisplayHandle.RESULT_DISPLAY_ID));
 
-        //@@author yamgent-reused
+        //@@author Kyholmes-reused
         //Reused from https://github.com/se-edu/addressbook-level4/pull/799/files with minor modifications
         messageDefaultStyleClasses = new ArrayList<>(resultDisplayHandle.getStyleClass());
         messageErrorStyleClasses = new ArrayList<>(messageDefaultStyleClasses);
@@ -53,7 +53,7 @@ public class ResultDisplayTest extends GuiUnitTest {
 
     }
 
-    //@@author yamgent-reused
+    //@@author Kyholmes-reused
     //Reused from https://github.com/se-edu/addressbook-level4/pull/799/files with minor modifications
     /**
      * check if the event message and message text color is same as the expected one

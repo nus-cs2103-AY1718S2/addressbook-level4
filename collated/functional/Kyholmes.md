@@ -1,4 +1,4 @@
-# Kai
+# Kyholmes
 ###### \src\main\java\seedu\address\logic\commands\AddPatientQueueCommand.java
 ``` java
 package seedu.address.logic.commands;

@@ -28,7 +28,7 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getDob(), actualCard.getDob());
         assertEquals(expectedCard.getBloodType(), actualCard.getBloodType());
 
-        //@@author yamgent-reused
+        //@@author Kyholmes-reused
         //Reused from https://github.com/se-edu/addressbook-level4/pull/798/files
         expectedCard.getTags().forEach(tag ->
             assertEquals(expectedCard.getTagColors(tag), actualCard.getTagColors(tag)));

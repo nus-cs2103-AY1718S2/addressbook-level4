@@ -430,7 +430,7 @@ image::emailSS2.PNG[width="400"]
 
 === Clearing all entries : `clear`
 
-You can clear all entries from contactHeRo using the following format. +
+You can clear all your contacts from contactHeRo using the following format. +
 Format: `clear`
 
 On running the above command, you should see the following success message: +

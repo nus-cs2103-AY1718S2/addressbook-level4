@@ -490,18 +490,23 @@ It was important to make sure that the `find` command would search through field
 It was also important to be able to specify the field the user was interested in searching as this would increase the relevance of search results or reduce the occurence of irrelevant results. For example, if I searched "Baker" and there was a contact whose address was "Baker Street" and there was another contact who had been tagged as "Baker" I would receive two search results. But if I wanted to only view contacts who had been _tagged_ as "Baker", then I need only enter the specifier `-t` to increase the relevance of the results. This becomes more important as the size of the addressbook gets larger. Having more relevant results also increases the speed at which a user can use the application.
 
 
-=== Location on Google Map
+=== Locate on Google Map
 
-The command locate followed by an INDEX(must be positive) shows the location of the place on Google Map in the BrowserPanel. The command takes the INDEX from the argument and get the name of the place in the list in LocateCommand.java, and pass it to the method loadUrl in browerPanel in MainWindow. The user can use 'locate' / 'lo' command with the index of the person as the parameter to locate a person on google map.
+The `locate` command accepts a specifier, such as `-t` or `-p` as the first argument to the program to search through a specific field. `LocateCommandParser` then recognises the specifers and constructs the correct `LocateCommand` object with the correct `Predicate<Person>`. `LocateCommand.execute()` is then called, and it searches for the keywords in the correct fields according to the Predicate that was passed to it.
+Then it gets the address of the person specified by the parameter and pass it to the method loadUrl in browerPanel in MainWindow. The user can use 'locate' / 'lo' command with a specifier as the parameter to locate a person on google map.
 
-The method loadUrl will pass the Google Map url to BrowserPanel to display the location in BrowserPanel.
+`LocateCommand` relies on `LocateRequestEvent` which is handled by `BrowserPanel` to call the appropriate method for loading `Person` address using Google Map.
 
-In the implementation, the `LocateCommand` takes `Index targetIndex` as an argument, and then uses that index in `execute()` to filter the list in the `Model`.
+The current implementation enables the user to search through all fields in a Person. If there're more than one person with the same specifier passed in by the user, it automatically locates the address of the person on top of the filteredList and ask the user to be more specific given the filtered list.
+For example, `Locate Alex` will locate the first person on the filtered list and present a message for the user to select one from the listed persons.
+
+image::locate_same_specifier.png[width="800"]
+
 Locate command is implemented this way:
 [source,java]
 ----
-public LocateCommand (Index targetIndex) {
-        this.targetIndex = targetIndex;
+public LocateCommand(Predicate<Person> predicate) {
+        this.predicate = predicate;
     }
 ----
 
@@ -509,32 +514,28 @@ With loadUrl, the Google Map url is passed to 'BrowserPanel'to display the locat
 
 ----
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult execute() {
+            List<Person> lastShownList = model.getFilteredPersonList(predicate);
 
-        List<Person> lastShownList = model.getFilteredPersonList();
+            Person location = lastShownList.get(target);
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            // Open Google Map on BrowserPanel
+            MainWindow.loadUrl("https://www.google.com.sg/maps/place/"
+                    + location.getAddress().toString());
+
+            EventsCenter.getInstance().post(new LocateRequestEvent(target));
+
+            if (model.getFilteredPersonList().size() > 1) {
+                return new CommandResult(String.format(MESSAGE_LOCATE_SELECT, targetOne));
+            }
+            return new CommandResult(String.format(MESSAGE_LOCATE_SUCCESS, targetOne));
+
         }
-        Person location = lastShownList.get(targetIndex.getZeroBased());
-        // Open Google Map on BrowserPanel
-        MainWindow.loadUrl("https://www.google.com.sg/maps/place/"
-                + location.getAddress().toString());
-
-        EventsCenter.getInstance().post(new LocateRequestEvent(targetIndex));
-        return new CommandResult(String.format(MESSAGE_LOCATE_SUCCESS, targetIndex.getOneBased()));
-    }
 ----
 
 As we can see from the picture below, once the command is executed, the location is presented on Google Map is loaded in the BrowserPanel.
 
 image::interface_of_locate.png[width="800"]
-
-==== Further Enhancement
-
-The `locate` command currently accepts only INDEX as the parameter to locate a person, if the user needs to locate a person, he would have to find out the index of the person first, which is not easy to use in this case. It should be more natural if the user can locate a person with any related information of that person. For example, the user might want to locate a person by his name with a simple command of 'locate Alice', or the user might forget the name of a person he's trying to find, but he knows the phone of the person, then he wants to use 'locate 93714378' to locate the person.
-
-In order to implement this further enhancement, we have to modify `LocateCommandParser` to use the parameters as the new "INDEX" to find the person and then find the location of the person to loacte him on Google Map.
 
 ==== Rationale
 The rationale for implementing the `locate` command is that there's actual need of the users to find a person as easily as possible while using this application. By locating the person on Google Map in this application, the user can directly see the location of a person instead of a simple line of address that's not so useful.
@@ -589,9 +590,6 @@ The rationale for adding tag colours stems from two facts: firstly, that in the 
 As a result, implementing tag colours utilises these two facts in tandom to make it significantly easier for the User to group different `Persons` and in combination with our newly implement `find` command, which enables wide sweeping, flexible search and filtering functionality, these tag colours add much value to the searching and filtering user experience.
 
 These tag colours will be significantly more useful with the further enhancement mentioned above and hence, this basic enhancement is the first step towards the finished product.
-
-=== BrowserPanel Enhancement
-In the original AddressBook, the BrowserPanel displayed a dummy page when a Person was selected. A more useful implementation shows the customer's name, amount owed, due date, status, and runner assigned. These are important fields for a loanshark manager to get a quick grasp of a customer.
 
 === Keyboard shortcuts
 
@@ -651,13 +649,24 @@ This would have posed problems when implementing the keyboard shortcuts that pop
 Limitation: when the focus is on the BrowserPanel UI element, the implemented keyboard shortcuts do not work as a user would expect them to.
 This is a limitation of the BrowserPanel UI element.
 
-==== Enhancement
-A HTML file with a customer's fields, as outlined above, in that order, is created each time a PersonCard is selected. The BrowserPanel then displays this HTML file. The background and font colors are matched to the LoanSharkTycoon application.
+=== BrowserPanel Enhancement
+In the original AddressBook, the BrowserPanel displayed a dummy page when a Person was selected. A more useful implementation shows some more important details of the runner or customer.
+These are important fields for a loanshark manager to get a quick grasp of a customer's details, as well as who the runners are in charge of.
 
-image::BrowserPanelMockup.png[width="800"]
+==== Enhancement
+Depending on whether the selected Person is a Runner or Customer, the respective HTML file with the desired fields are generated.
+Upon selection of the PersonCard, or select command from the CommandBox, a HtmlWriter gathers data on the particular Person using the getter methods available in the Customer and Runner classes.
+Fields for the Customer are: name, amount owed, due date, status, and runner assigned.
+Fields for the Runner are: name, and a list of customers assigned to the specified runner.
+The BrowserPanel then displays this HTML file.
+The background and font colors are matched to the LoanSharkTycoon application.
+
+image::BrowserPanelMockup.PNG[width="800"]
 
 ==== Rationale
-A customer's amount owed and due dates are very important variables which directly affect the PnL of the LoanShark's enterprise. Therefore, this feature is suitable, and definitely desirable from the perspective of a LoanShark manager.
+A customer's amount owed and due dates are very important variables which directly affect the PnL of the LoanShark's enterprise.
+Being able to view a runner's list of assigned customers is important for managing human resource.
+Therefore, this feature is suitable, and definitely desirable from the perspective of a LoanShark manager.
 
 == Documentation
 
@@ -1075,24 +1084,24 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 Major: Implementation of `Locate` command to bring up address of target on Google Maps.
 
-Minor: Addition of command aliases to improve speed of using CLI
+Minor: Addition of command aliases to improve speed of using CLI.
 
 
 ~Melvin Tan~
 
-Major: Integration with Google Calendar
+Major: Implementation of model and related components to support new subclasses, ensure basic functions work with the new model, and to enable new target user-specific functions, such as assigning customers to a runner.
 
-Minor: Enhancement to `Find` command to improve searching
+Minor: Enhancement to `Find` command to improve searching.
 
 ~Jonathan Lee~
 
 Major: Speed up User workflow using keyboard shortcuts and other input enhancements.
 
-Minor: UI update - colours, styles and menu elements
+Minor: UI update - colours, styles and menu elements.
 
 ~Choi Wi Su~
 
-Major: Import and export function to update contacts and export information to other formats
+Major: Implement new UI option for displaying relevant information of selected persons.
 
 Minor: Addition of remarks field for each contact
 

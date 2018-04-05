@@ -29,7 +29,7 @@ public class Person {
      */
 
     public Person() {
-        this.name = new Name("NotAssigned");
+        this.name = new Name("Not Assigned");
         this.phone = new Phone();
         this.email = new Email();
         this.address = new Address();

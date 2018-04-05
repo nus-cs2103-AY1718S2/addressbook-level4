@@ -33,13 +33,11 @@ With PrioriTask, you can:
 
 Interested? Jump to <<Quick Start>> to get started. Enjoy!
 
-== Quick Start
+== Getting Started
 
-_{ TODO: Add a preface here }_
+_This section explains how to download, launch, and start using PrioriTask._
 
 === Setting Up
-
-_{ TODO: Add a preface here }_
 
 .  Ensure that you have Java `1.8.0_60` or later installed in your computer. You may download the latest version of Java http://www.oracle.com/technetwork/java/javase/downloads/index.html[here].
 
@@ -71,8 +69,6 @@ image::Ui.png[width="790"]
 
 === Signing Up
 
-_{ TODO: Add a preface here }_
-
 . Type the command [example-no-box]#`signup u/USERNAME p/PASSWORD`# in the command box, replacing the `USERNAME` and `PASSWORD` with your own.
 
 +
@@ -94,8 +90,6 @@ image::UserGuideQuickStart3.png[width="790"]
 
 === Logging In
 
-_{ TODO: Add a preface here }_
-
 . Type the command [example-no-box]#`login u/USERNAME p/PASSWORD`# in the command box, replacing the `USERNAME` and `PASSWORD` with your own.
 
 +
@@ -115,7 +109,7 @@ image::UserGuideQuickStart5.png[width="790"]
 
 == Using PrioriTask
 
-_{ TODO: Add a preface here }_
+_This section explains the functions and usages of PrioriTask's different features._
 
 === The Different Sections of PrioriTask
 
@@ -159,7 +153,7 @@ In the following sections, you will be introduced to several commands and their 
 
 == User Features
 
-_{ TODO: To explain what a user feature is. }_
+_This section explains the commands specific to command inquiry and *User* account management._
 
 === Viewing help : `help`
 
@@ -170,7 +164,7 @@ _{ TODO: To explain what a user feature is. }_
 
 === Signing up: `signup` or `su` `[since v1.3]`
 
-Sign up for a PrioriTask account +
+Sign up for a PrioriTask account. +
 
 [.format]
 ====
@@ -181,13 +175,13 @@ Sign up for a PrioriTask account +
 ====
 [example-title]#Examples:#
 
-* [example]#`signup u/patrick p/pat19503#
+* [example]#`signup u/patrick p/pat19503`#
 * [example]#`signup u/mary p/m4ry`#
 ====
 
 === Logging in: `login` or `in` `[since v1.4]`
 
-Login to PrioriTask +
+Login to PrioriTask. +
 
 [.format]
 ====
@@ -198,13 +192,18 @@ Login to PrioriTask +
 ====
 [example-title]#Examples:#
 
-* [example]#`login u/patrick p/pat19503#
+* [example]#`login u/patrick p/pat19503`#
 * [example]#`login u/mary p/m4ry`#
 ====
 
 === Adding question: `addqa` `[since v1.4]`
 
-Adding a question for password retrieval +
+Add a question for password retrieval. +
+
+[NOTE]
+====
+Must be currently logged in to a user account on PrioriTask.
+====
 
 [.format]
 ====
@@ -217,23 +216,6 @@ Adding a question for password retrieval +
 
 * [example]#`addqa q/are you male? a/yes#
 * [example]#`addqa q/are you female? a/yes`#
-====
-
-=== Retrieving question for user's password: `forgotpassword` or `fp` `[since v1.4]`
-
-Retrieve question for user's password +
-
-[.format]
-====
-[format-title]#Format:# `forgotpassword u/USERNAME `
-====
-
-[.example]
-====
-[example-title]#Examples:#
-
-* [example]#`forgotpassword u/patrick`#
-* [example]#`forgotpassword u/mary`#
 ====
 
 === Retrieving question for user's password: `forgotpassword` or `fp` `[since v1.4]`
@@ -272,11 +254,11 @@ Answer a user's question to retrieve the password +
 
 === Deleting an account `[coming in v2.0]`
 
-_{ TODO: Describe the command function }_
+Delete a user account to stop using PrioriTask.
 
 === Exiting the program : `exit`
 
-Exits the program. +
+Exit the program. +
 
 [.format]
 ====
@@ -285,39 +267,48 @@ Exits the program. +
 
 == Task Management Features
 
-_{ TODO: To explain what a task management feature is. }_
-_{ TODO: Update the Task Parameters box and update it. }_
-_{ TODO: Explain priority levels }_
+_This section explains what a *Task* is, and the commands to manage them._
 
 [.noteblock]
 ====
 [noteblock-title]#*Task Parameters*#
 
 * [parameters]#`NAME`#
-* [parameters]#`PRIORITY LEVEL`#
-** A task can have a priority level ranging from 0 (lowest) to 9 (highest).
-** Setting a priority level is optional. PrioriTask will automatically set a task’s priority level to its default level (0) if User does not add one.
-** Priority levels are automatically updated as the deadline approaches.
-** If a task is still uncompleted after the deadline has passed, priority level will be updated to it's maximum level : 9.
-* [parameters]#`DEADLINE`#
-** A task must have a deadline in the format of YYYY-MM-DD.
-* [parameters]#`DESCRIPTION`#
-** A task can have a description that takes in any value (i.e. alphabet, numbers, special symbols).
-** Having a task description is optional.
+** A name can only be alphanumeric characters and spaces, and should not be blank.
+** It is *compulsory* to set a name.
 * [parameters]#`STATUS`#
-** A task can be in one of two states, "Done" or "Not Done".
-** By default, every new task is marked as "Not Done".
-* [parameters]#`TAG`#
-** A task can have any number of tags (including 0).
+** A state can only be one of two values : *Done* or *Not Done*.
+** By *default*, every new task is marked as *Not Done*.
+* [parameters]#`PRIORITY LEVEL`#
+** A priority level can range from *0* (lowest) to *9* (highest).
+** It is *optional* to set a priority level. If the user does not specify a priority level, PrioriTask will automatically set it to its *default level* : *0*.
+** Priority levels are automatically updated by gradual incremental steps, based on the date added, current date, and deadline.
+** If a task is still uncompleted after the deadline has passed, its priority level will be at the *maximum level* : *9*.
+* [parameters]#`DESCRIPTION`#
+** A description can be any value (i.e. alphabet, numbers, special symbols).
+** It is *optional* to have a description.
+* [parameters]#`DATEADDED`#
+** A date added is in the format of *YYYY-MM-DD*.
+** It is automatically set upon task addition.
+* [parameters]#`DATECOMPLETED`#
+** A date completed is in the format of *YYYY-MM-DD*.
+** It is automatically set upon toggling a task's completion.
+* [parameters]#`DEADLINE`#
+** A deadline is in the format of YYYY-MM-DD.
+** It is *compulsory* to have a deadline.
 * [parameters]#`SUBTASK`#
 ** A task can have any number of subtasks (including 0).
+** It is *optional* to have subtasks.
 ** More information about subtask parameters can be found in <<Subtask Management Features>>.
+* [parameters]#`TAG`#
+** A task can have any number of tags (including 0).
+** It is *optional* to have tags.
 
 ====
 
 === Adding a task: `add` or `a`
 
-Adds a task to the PrioriTask +
+Add a task to the PrioriTask. +
 
 [.format]
 ====
@@ -334,7 +325,7 @@ Adds a task to the PrioriTask +
 
 === Listing all tasks : `list` or `l`
 
-Shows a list of all tasks in the PrioriTask. +
+Show a list of all tasks in the PrioriTask. +
 
 [.format]
 ====
@@ -345,7 +336,7 @@ Shows a list of all tasks in the PrioriTask. +
 
 === Editing a task : `edit` or `e`
 
-Edits an existing task in the PrioriTask. +
+Edit an existing task in the PrioriTask. +
 
 [.format]
 ====
@@ -382,7 +373,7 @@ Depending on the suffix (or lack of) at the end of the `find` command, you can f
 
 ==== Locating tasks: `find` or `f`
 
-Finds tasks whose names, descriptions and deadlines contain any of the given keywords. +
+Find tasks whose names, descriptions and deadlines contain any of the given keywords. +
 
 [.format]
 ====
@@ -403,7 +394,7 @@ Returns any task having names or descriptions `CS2101`, `Developer`, or `User`
 
 ==== Locating tasks by name: `findn` or `fn`
 
-Finds tasks whose names contain any of the given keywords. +
+Find tasks whose names contain any of the given keywords. +
 
 [.format]
 ====
@@ -466,18 +457,18 @@ Returns any task having deadlines `2018-03-17`, `2018-09-04`, or `2018-03-21`.
 
 ==== Locating tasks by tag `[coming in v2.0]`
 
-_{ TODO: Explain the feature }_
+_Locate all tasks with a common tag_
 
 === Deleting a task : `delete` or `d`
 
-Deletes the specified task from the PrioriTask. +
+Delete the specified task from the PrioriTask. +
 
 [.format]
 ====
 [format-title]#Format:# `delete INDEX`
 ====
 
-* Deletes the task at the specified `INDEX`.
+* Delete the task at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* (i.e. 1, 2, 3, ...).
 
@@ -495,7 +486,7 @@ Deletes the 1st task in the results of the `find` command.
 
 === Selecting a task : `select` or `s`
 
-Selects the task identified by the index number used in the last task listing. +
+Select the task identified by the index number used in the last task listing. +
 
 [.format]
 ====
@@ -544,9 +535,9 @@ Toggle the first task in the PrioriTask.
 Toggle the first task in th result of `find homework` command.
 ====
 
-=== Clearing all entries : `clear` or `c`
+=== Clearing all tasks : `clear` or `c`
 
-Clears all entries from the PrioriTask. +
+Clear all of your tasks from PrioriTask. +
 
 [.format]
 ====
@@ -555,17 +546,18 @@ Clears all entries from the PrioriTask. +
 
 == Subtask Management Features
 
-_{ TODO: To explain what a subtask feature is. }_
-_{ TODO: Update the subtask parameters. }_
+_This section explains what a *Subtask* is, and the commands to manage them._
 
 [.noteblock]
 ====
 [noteblock-title]#*Subtask Parameters*#
 
 * [parameters]#`NAME`#
+** A name can only be alphanumeric characters and spaces, and should not be blank.
+** It is *compulsory* to set a name.
 * [parameters]#`STATUS`#
-** A task can be in one of two states, "Done" or "Not Done".
-** By default, every new task is marked as "Not Done".
+** A state can only be one of two values : *Done* or *Not Done*.
+** By *default*, every new task is marked as *Not Done*.
 
 ====
 
@@ -616,7 +608,7 @@ Toggles the fourth subtask of the second task in th result of `find homework` co
 
 === Deleting a subtask from a task: `delete-subtask` or `ds` `[since v1.3]`
 
-Deletes the specified subtask from the PrioriTask. +
+Delete the specified subtask from the PrioriTask. +
 
 [.format]
 ====
@@ -641,11 +633,11 @@ Deletes the fourth subtask of the second task in th result of `find cleaning` co
 
 === Editing a subtask `[coming in v2.0]`
 
-_{ TODO: Explain the feature }_
+_Edit the name of a subtask_
 
 === Reorder subtask `[coming in v2.0]`
 
-_{ TODO: Explain the feature }_
+_Reorder subtasks using a given condition_
 
 == Calendar Features
 
@@ -658,7 +650,7 @@ _{ TODO: Add a note about display }_
 
 === Go to current month: `cmonth` or `cm` `[since v1.4]`
 
-Changes the view of the calendar to that of the current month. +
+Chang the view of the calendar to that of the current month. +
 
 [.format]
 ====
@@ -677,7 +669,7 @@ Goes to `April 2018`
 
 === Go to previous month: `pmonth` or `pm` `[since v1.4]`
 
-Changes the view of the calendar to that of the previous month. +
+Chang the view of the calendar to that of the previous month. +
 
 [.format]
 ====
@@ -695,7 +687,7 @@ Goes to `February 2018`
 
 === Go to next month: `nmonth` or `nm` `[since v1.4]`
 
-Changes the view of the calendar to that of the next month. +
+Chang the view of the calendar to that of the next month. +
 
 [.format]
 ====
@@ -711,13 +703,13 @@ Changes the view of the calendar to that of the next month. +
 Goes to `April 2018`
 ====
 
-=== PrioriTask Features
+== PrioriTask Features
 
-_{ TODO: Add a preface }_
+_This section explains the commands which access and manage PrioriTask data._
 
 === Listing entered commands : `history`
 
-Lists all the commands that you have entered in reverse chronological order. +
+List all the commands that you have entered in reverse chronological order. +
 
 [.format]
 ====
@@ -731,7 +723,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 === Undoing previous command : `undo`
 
-Restores the PrioriTask to the state before the previous _undoable_ command was executed. +
+Restore the PrioriTask to the state before the previous _undoable_ command was executed. +
 
 [.format]
 ====
@@ -764,7 +756,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
+Reverse the most recent `undo` command. +
 
 [.format]
 ====
@@ -793,16 +785,16 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Saving the data
 
-PrioriTask data is saved in the hard disk automatically after any command that changes the data. +
+PrioriTask data is saved in the hard disk automatically after any data-altering command is called. +
 There is no need to save manually.
 
 === Recover past data `[coming in v2.0]`
 
-_{ TODO: To explain what this feature is about }_
+_Restore data from a recent date (coming in v2.0)_
 
 == Reminders `[coming in v2.0]`
 
-_{ TODO: To explain what this feature is about }_
+_This section explains the commands to manage the reminder system (coming in v2.0)_
 
 == FAQ
 
@@ -833,6 +825,12 @@ e.g. [example-no-box]#`login u/patrick p/pat12351`#
 * *Logout* : [format-no-box]#`logout`#
 * *Sign Up* : [format-no-box]#`signup u/USERNAME p/PASSWORD`#
 e.g. [example-no-box]#`signup u/patrick p/pat12351`#
+* *Add Question* : [format-no-box]#`addqa q/QUESTION a/ANSWER`#
+e.g. [example-no-box]#`addqa q/are cats cool? a/yes`#
+* *Retrieve Question* : [format-no-box]#`forgotpassword u/USERNAME`#
+e.g. [example-no-box]#`forgotpassword u/david`#
+* *Answer Question* : [format-no-box]#`answer u/USERNAME a/ANSWER`#
+e.g. [example-no-box]#`answer u/david a/yes`#
 
 === Task Management Features
 * *Add* : [format-no-box]#`add n/NAME [p/PRIORITY_LEVEL] d/DEADLINE [des/DESCRIPTION] [t/TAG]…`# +

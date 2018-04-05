@@ -61,6 +61,7 @@ The various menu items have keyboard shortcuts that can be used to speed up your
 * Default date is January 1, 1970 (default Java Date value), when no start date or due date
 is specified when adding a customer.
 
+== Command Summary
 [NOTE]
 ====
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n: NAME`, `NAME` is a parameter which can be used as `add n: John Doe`.

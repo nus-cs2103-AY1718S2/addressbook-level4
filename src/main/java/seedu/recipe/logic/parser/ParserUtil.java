@@ -2,6 +2,7 @@ package seedu.recipe.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.security.acl.Group;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -12,6 +13,7 @@ import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.commons.util.StringUtil;
 import seedu.recipe.model.recipe.Calories;
 import seedu.recipe.model.recipe.CookingTime;
+import seedu.recipe.model.recipe.GroupName;
 import seedu.recipe.model.recipe.Image;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
@@ -476,4 +478,29 @@ public class ParserUtil {
         return filename + ".xml";
     }
     //@@author
+
+    //@@author hoangduong1607
+    /**
+     * Parses a {@code String groupName} into a {@code GroupName}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code groupName} is invalid.
+     */
+    public static GroupName parseGroupName(String groupName) throws IllegalValueException {
+        requireNonNull(groupName);
+        String trimmedName = groupName.trim();
+        if (!Name.isValidName(trimmedName)) {
+            throw new IllegalValueException(GroupName.MESSAGE_NAME_CONSTRAINTS);
+        }
+        return new GroupName(trimmedName);
+    }
+
+    /**
+     * Parses a {@code Optional<String> groupName} into an {@code Optional<GroupName>} if {@code groupName} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<GroupName> parseGroupName(Optional<String> groupName) throws IllegalValueException {
+        requireNonNull(groupName);
+        return groupName.isPresent() ? Optional.of(parseGroupName(groupName.get())) : Optional.empty();
+    }
 }

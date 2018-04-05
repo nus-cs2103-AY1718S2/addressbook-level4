@@ -2,7 +2,7 @@ package seedu.recipe.logic.parser;
 
 import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INDEX;
-import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_GROUP_NAME;
 
 import java.util.Set;
 import java.util.stream.Stream;
@@ -11,7 +11,7 @@ import seedu.recipe.commons.core.index.Index;
 import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.logic.commands.GroupCommand;
 import seedu.recipe.logic.parser.exceptions.ParseException;
-import seedu.recipe.model.recipe.Name;
+import seedu.recipe.model.recipe.GroupName;
 
 //@@author hoangduong1607
 
@@ -28,15 +28,15 @@ public class GroupCommandParser implements Parser<GroupCommand> {
      */
     public GroupCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer
-                .tokenize(args, PREFIX_NAME, PREFIX_INDEX);
+                .tokenize(args, PREFIX_GROUP_NAME, PREFIX_INDEX);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)
+        if (!arePrefixesPresent(argMultimap, PREFIX_GROUP_NAME)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
         }
 
         try {
-            Name groupName = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+            GroupName groupName = ParserUtil.parseGroupName(argMultimap.getValue(PREFIX_GROUP_NAME)).get();
             Set<Index> indexSet = ParserUtil.parseIndices(argMultimap.getAllValues(PREFIX_INDEX));
 
             return new GroupCommand(groupName, indexSet);

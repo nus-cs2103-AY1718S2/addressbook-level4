@@ -380,6 +380,9 @@ The commands listed in this section are commands that pertain to the queue.
 ==== Adding a patient into the visiting queue with patient name: `addq` [since v1.2]
 
 Adds patient into visiting queue (registration).
+
+*This command is only accessible to medical staffs.* +
+
 Format: `addq PATIENT_NAME` or `aq PATIENT_NAME`
 
 Examples:
@@ -393,6 +396,9 @@ John will be added at the back of the visiting queue.
 ==== Removing a patient from the visiting queue with patient name: `removeq` [since v1.2]
 
 Removes the first patient from the visiting queue (check-out).
+
+*This command is only accessible to medical staffs.* +
+
 Format: `removeq` or `rq`
 
 Examples:
@@ -403,6 +409,19 @@ Betsy will be removed if she is the first patient in the queue.
 * `rq John` +
 John will be removed if he is the first patient in the queue.
 
+==== Viewing visiting queue: `viewq` [since v1.2]
+
+Show the list of patients in the visiting queue.
+
+*This command is accessible both to medical staffs and doctors.* +
+
+Format: `viewq` or `vq`
+
+Examples:
+
+* `viewq` +
+List of patients in the visiting queue will be displayed.
+
 === Appointment Commands
 
 The commands listed in this section are commands that pertain to the patient's appointment.
@@ -410,6 +429,9 @@ The commands listed in this section are commands that pertain to the patient's a
 ==== Adding a medical appointment with: `addappt` [coming in v1.4]
 
 Adds a medical appointment with patient name, date, time.
+
+*This command is only accessible to medical staffs.* +
+
 Format: `addappt PATIENT_NAME DATE TIME` or `aa PATIENT_NAME DATE TIME`
 
 Examples:
@@ -423,19 +445,27 @@ Adds a medical appointment for John on 23/3/2018 at 2:30pm.
 ==== Deleting a medical appointment by patient name and appointment index number: `delappt` [coming in v1.3]
 
 Deletes a medical appointment of the patient.
+
+*This command is only accessible to medical staffs.* +
+
 Format: `delappt PATIENT_NAME APPOINTMENT_INDEX_NO` or `da PATIENT_NAME APPOINTMENT_INDEX_NO`
 
 Examples:
 
-* `delappt Betsy 2` +
+* `viewappt Betsy` +
+`delappt Betsy 2` +
 Delete a medical appointment of Betsy with index number 2.
 
-* `da John 1` +
+* `va John` +
+`da John 1` +
 Delete a medical appointment of John with index number 1.
 
 ==== Viewing medical appointments by patient name: `viewappt` [coming in v1.3]
 
 Shows a list of medical appointments of the patient.
+
+*This command is only accessible to medical staffs.* +
+
 Format: `viewappt PATIENT_NAME` or `va PATIENT_NAME`
 
 Examples:
@@ -449,6 +479,9 @@ List of medical appointments made by John.
 ==== Viewing medical appointments by month: `viewappt` [coming in v1.4]
 
 Shows a list of medical appointments in month view.
+
+*This command is only accessible to medical staffs.* +
+
 Format: `viewappt` or `va`
 
 Examples:

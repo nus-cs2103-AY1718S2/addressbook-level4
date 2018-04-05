@@ -202,6 +202,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<Task>[][] getCalendarList() {
+        return tasks.asCalendarList();
+    }
+
+    @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
     }

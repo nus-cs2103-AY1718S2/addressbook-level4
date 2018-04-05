@@ -303,6 +303,21 @@ The `Tag` Class,
 [TIP]
 For every `Person` object, there can be multiple (or zero) tags.
 
+The `Task` Class:
+
+* Stores the information of a specific task in the AddressBook
+* Information includes: Task Description, Deadline, Priority.
+* Implements `UniqueTaskList` that enforces uniqueness of its elements and disallows nulls.
+* `Task Description`: Object that stores the task description of the `Task` Object.
+[NOTE]
+Task's name can contain any alphanumeric characters, but should not be null.
+* `Deadline`: Object that stores the deadline of the `Task` Object.
+[NOTE]
+Deadline should not be dates of the past and should only be in the format dd-mm-yyyy.
+* `Priority`: Object that stores the priority of the `Task` Object.
+[NOTE]
+Priority should only be a value from 1 to 3, 1 being the lowest and 3 being the highest.
+
 [[Design-Storage]]
 === Storage component
 

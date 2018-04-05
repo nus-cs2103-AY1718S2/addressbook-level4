@@ -10,6 +10,34 @@
     -fx-opacity: 0.9;
 }
 
+.label-date {
+    -fx-text-fill: white;
+}
+
+.label-small {
+    -fx-font-size: 9pt;
+    -fx-text-fill: black;
+    -fx-background-color: darkgrey;
+}
+
+.label-small-red {
+    -fx-font-size: 9pt;
+    -fx-text-fill: black;
+    -fx-background-color: derive(#d26a6a, 20%);
+}
+
+.label-small-yellow {
+    -fx-font-size: 9pt;
+    -fx-text-fill: black;
+    -fx-background-color: derive(#e4d858, 20%);
+}
+
+.label-small-green {
+    -fx-font-size: 9pt;
+    -fx-text-fill: black;
+    -fx-background-color: derive(#8ac973, 20%);
+}
+
 .label-bright {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -93,6 +121,18 @@
     -fx-background-color: derive(#1d1d1d, 20%);
 }
 
+.list-view-calendar {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+.list-view-calendar .scroll-bar:horizontal ,
+.list-view-calendar  .scroll-bar:vertical{
+    -fx-background-color:transparent;
+
+}
+
 .list-cell {
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap : 0;
@@ -145,7 +185,7 @@
 }
 
 .calendar-grid-pane {
-    -fx-background-color: darkgrey;
+    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 .anchor-pane {
@@ -154,7 +194,7 @@
 
 .pane-with-border {
      -fx-background-color: derive(#1d1d1d, 20%);
-     -fx-border-color: derive(#1d1d1d, 10%);
+     -fx-border-color: darkgrey;
      -fx-border-top-width: 1px;
 }
 

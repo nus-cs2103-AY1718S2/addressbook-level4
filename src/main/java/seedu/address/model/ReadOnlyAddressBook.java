@@ -22,6 +22,11 @@ public interface ReadOnlyAddressBook {
     ObservableList<Task> getTaskList();
 
     /**
+     * Returns view of the calendar list.
+     */
+    ObservableList<Task>[][] getCalendarList();
+
+    /**
      * Returns an unmodifiable view of the tags list.
      * This list will not contain any duplicate tags.
      */

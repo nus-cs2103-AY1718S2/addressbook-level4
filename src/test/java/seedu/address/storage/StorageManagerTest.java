@@ -54,10 +54,7 @@ public class StorageManagerTest {
         assertEquals(original, retrieved);
     }
 
-    //TODO: TEST
-    /**
-     * Test
-     */
+    @Test
     public void deskBoardReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the

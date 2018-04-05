@@ -36,10 +36,7 @@ public class XmlAdaptedEventTest {
             .map(XmlAdaptedTag::new)
             .collect(Collectors.toList());
 
-    // TODO: 3/26/2018 fix bug
-    /**
-     * Test
-     */
+    @Test
     public void toModelType_validEventDetails_returnsEvent() throws Exception {
         XmlAdaptedEvent event = new XmlAdaptedEvent(CIP_EVENT);
         assertEquals(CIP_EVENT, event.toModelType());

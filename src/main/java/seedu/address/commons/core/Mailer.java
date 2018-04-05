@@ -62,8 +62,16 @@ public class Mailer {
         return true;
     }
 
+    /**
+     *
+     * Sends an email to the driver with a recap of the itinerary including the following information
+     * @param addresses
+     * @param duration
+     * @param date
+     * @return false if an error occured, true otherwise
+     */
     public static boolean emailDriver(List<String> addresses, String duration, String date) {
-        if(addresses.size() == 0) {
+        if (addresses.size() == 0) {
             return false;
         }
         Session session = getSession();
@@ -73,8 +81,8 @@ public class Mailer {
             message.setFrom(new InternetAddress(pigeonsMail));
             message.setSubject("Your itinerary on " + date);
 
-            String body = "<h2>The estimated duration for this itinerary is : " +
-                    duration
+            String body = "<h2>The estimated duration for this itinerary is : "
+                    + duration
                     + " ("
                     + addresses.size()
                     + " deliveries)"

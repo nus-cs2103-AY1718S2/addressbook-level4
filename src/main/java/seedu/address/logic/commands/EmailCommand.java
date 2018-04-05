@@ -17,7 +17,8 @@ public class EmailCommand extends Command {
 
     public static final String COMMAND_WORD = "email";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Send an email to list of persons and the optimized itinerary to the driver.";
+    public static final String MESSAGE_USAGE =
+            COMMAND_WORD + ": Send an email to list of persons and the optimized itinerary to the driver.";
 
     public static final String MESSAGE_SUCCESS = "Emails sent successfully.";
 
@@ -35,7 +36,9 @@ public class EmailCommand extends Command {
         optimizedRoute = route.getAddresses(model);
         String duration = FilterCommand.getStringDuration();
 
-        boolean result = Mailer.emailDriver(optimizedRoute, duration, delivDate) &&  Mailer.emailCustomers(model.getFilteredPersonList());
+        boolean result =
+                Mailer.emailDriver(optimizedRoute, duration, delivDate)
+                        &&  Mailer.emailCustomers(model.getFilteredPersonList());
 
         String message = result ? MESSAGE_SUCCESS : MESSAGE_ERROR;
 
@@ -45,10 +48,10 @@ public class EmailCommand extends Command {
     private DelivDate getDate() throws CommandException {
         ObservableList<Person> filteredPersonList = model.getFilteredPersonList();
 
-        if(filteredPersonList.size() > 0) {
+        if (filteredPersonList.size() > 0) {
             DelivDate date = filteredPersonList.get(0).getDate();
-            for(Person p : filteredPersonList) {
-                if(! date.equals(p.getDate())) {
+            for (Person p : filteredPersonList) {
+                if (!date.equals(p.getDate())) {
                     throw new CommandException("The list is not filtered!");
                 }
             }

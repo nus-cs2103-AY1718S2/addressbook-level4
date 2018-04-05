@@ -71,6 +71,7 @@ public class ResumeTest {
         } catch (IOException ioe) {
             throw new AssertionError("This should never happen.");
         }
+        assert(hashedResume.value != null);
         assertEquals(new Resume(formFilePath("1 2.pdf")), hashedResume);
         //both hashed
         Resume anotherhashedResume = null;

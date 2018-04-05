@@ -55,8 +55,8 @@ public class AddCommandParser implements Parser<AddCommand> {
 
             //check whether the person address is different from the HQ
             String addressToString =  address.toString();
-            Double checkDistanceFromHQ = new GetDistance().getDistance(HQ_ADDRESS, addressToString);
-            if (checkDistanceFromHQ == 0) {
+            Double checkDistanceFromHq = new GetDistance().getDistance(HQ_ADDRESS, addressToString);
+            if (checkDistanceFromHq == 0) {
                 throw new ParseException(MESSAGE_ADDRESS_CANNOT_AT_HQ);
             }
 

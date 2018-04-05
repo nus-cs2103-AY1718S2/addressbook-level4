@@ -83,10 +83,13 @@ public class BrowserPanel extends UiPart<Region> {
         try {
             Runtime.getRuntime().exec("wscript src\\main\\resources\\scripts\\ClickOnNameCard.vbs"
                     + " " + person.getName().fullName);
-            //Runtime.getRuntime().exec("osascript src\\main\\resources\\scripts\\ClickOnNameCardMac.scpt"
-            //       + " " + person.getName().fullName);
         } catch (IOException e) {
-            System.out.println("Unable to read person name");
+            try {
+                Runtime.getRuntime().exec("osascript src\\main\\resources\\scripts\\ClickOnNameCardMac.scpt"
+                        + " " + person.getName().fullName);
+            } catch (IOException e1) {
+                logger.warning("Unable to load welcome message.");
+            }
         }
     }
     //@@author

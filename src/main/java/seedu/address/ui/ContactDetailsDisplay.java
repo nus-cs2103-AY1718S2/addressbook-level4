@@ -11,8 +11,10 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
@@ -24,7 +26,7 @@ public class ContactDetailsDisplay extends UiPart<Region> {
 
     private static final String FXML = "ContactDetailsDisplay.fxml";
     private final Logger logger = LogsCenter.getLogger(ContactDetailsDisplay.class);
-
+    private static final String DEFAULT_IMAGE = "/images/default.png";
 
     @FXML
     private Label name;
@@ -43,6 +45,10 @@ public class ContactDetailsDisplay extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    private Image getImage(String imagePath) {
+        return new Image(MainApp.class.getResourceAsStream(imagePath));
+    }
+
     /**
      *Shows the contact details of the person
      */
@@ -50,8 +56,11 @@ public class ContactDetailsDisplay extends UiPart<Region> {
 
         name.setWrapText(true);
         name.setText(person.getName().fullName);
-        imageView.setImage(person.getProfilePicture().getImage());
-
+        if (person.getProfilePicture().filePath != null) {
+            imageView.setImage(person.getProfilePicture().getImage());
+        } else {
+            imageView.setImage(getImage(DEFAULT_IMAGE));
+        }
         List<Label> keysList = new ArrayList<>();
         List<Label> valuesList = new ArrayList<>();
 

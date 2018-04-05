@@ -13,11 +13,13 @@ import seedu.recipe.logic.parser.CliSyntax;
  */
 public class AutoCompletionUtil {
     public static final ArrayList<String> APPLICATION_COMMANDS = new ArrayList<>(Arrays.asList("add", "clear", "delete",
-            "edit", "exit", "find", "help", "history", "list", "redo", "select", "share", "tag", "undo", "upload"));
+            "edit", "exit", "find", "group", "help", "history", "list", "redo", "select", "share", "tag", "undo",
+            "upload", "view_group"));
     public static final ArrayList<String> APPLICATION_KEYWORDS = new ArrayList<>(Arrays.asList(
             CliSyntax.PREFIX_NAME.toString(), CliSyntax.PREFIX_INGREDIENT.toString(),
             CliSyntax.PREFIX_INSTRUCTION.toString(), CliSyntax.PREFIX_PREPARATION_TIME.toString(),
-            CliSyntax.PREFIX_TAG.toString(), CliSyntax.PREFIX_URL.toString()));
+            CliSyntax.PREFIX_TAG.toString(), CliSyntax.PREFIX_URL.toString(), CliSyntax.PREFIX_INDEX.toString(),
+            CliSyntax.PREFIX_GROUP_NAME.toString()));
     public static final int MAX_SUGGESTIONS = 8;
     public static final char LF = '\n';
     public static final char WHITESPACE = ' ';
@@ -40,11 +42,20 @@ public class AutoCompletionUtil {
                 CliSyntax.PREFIX_URL.toString()));
         prefixesForCommand.put("edit", editPrefixes);
 
+        ArrayList<String> groupPrefixes = new ArrayList<>(Arrays.asList(CliSyntax.PREFIX_GROUP_NAME.toString(),
+                CliSyntax.PREFIX_INDEX.toString()));
+        prefixesForCommand.put("group", groupPrefixes);
+
+        System.out.println(prefixesForCommand.get("add").size());
+
         for (String command : APPLICATION_COMMANDS) {
-            if (!command.equals("add") && !command.equals("edit")) {
+            System.out.println(command + " " + prefixesForCommand.containsKey(command));
+            if (!prefixesForCommand.containsKey(command)) {
                 prefixesForCommand.put(command, new ArrayList<>());
             }
         }
+
+        System.out.println(prefixesForCommand.get("add").size());
     }
 
     /**

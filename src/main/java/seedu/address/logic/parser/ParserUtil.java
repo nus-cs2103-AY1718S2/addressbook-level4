@@ -375,6 +375,7 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author ValerianRey
     /**
      * Parses a {@code String value} into a {@code Price}.
      * Leading and trailing whitespaces will be trimmed.
@@ -468,4 +469,6 @@ public class ParserUtil {
         }
         return issuesList;
     }
+
+    //@@author
 }

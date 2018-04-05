@@ -1,3 +1,5 @@
+//@@author ValerianRey
+
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
@@ -18,6 +20,7 @@ import seedu.address.logic.commands.EditPolicyCommand.EditPolicyDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.policy.Coverage;
 import seedu.address.model.policy.Issue;
+import seedu.address.model.policy.Policy;
 
 /**
  * Parses input arguments and creates a new EditPolicyCommand object

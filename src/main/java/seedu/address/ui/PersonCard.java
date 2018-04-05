@@ -12,7 +12,7 @@ import seedu.address.model.person.Person;
  */
 public class PersonCard extends UiPart<Region> {
 
-    private int displayedIndex;
+
     public static final String FXML = "PersonListCard.fxml";
     private static final String[] TAG_COLOR_STYLES =
         { "teal", "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey" };
@@ -25,6 +25,7 @@ public class PersonCard extends UiPart<Region> {
      */
 
     public final Person person;
+    private final int displayedIndex;
 
     @FXML
     private HBox cardPane;
@@ -50,7 +51,7 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         initTags(person);
-        displayedIndex = displayedIndex;
+        this.displayedIndex = displayedIndex;
     }
 
     /**

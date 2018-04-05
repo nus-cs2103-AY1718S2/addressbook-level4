@@ -30,8 +30,6 @@ public class XmlSerializableAddressBookTest {
                 XmlSerializableAddressBook.class);
         AddressBook addressBookFromFile = dataFromFile.toModelType();
         AddressBook typicalPersonsAddressBook = TypicalPersons.getTypicalAddressBook();
-        System.out.println("first: "+ addressBookFromFile.getPersonList());
-        System.out.println("first: "+ typicalPersonsAddressBook.getPersonList());
         assertEquals(addressBookFromFile, typicalPersonsAddressBook);
     }
 

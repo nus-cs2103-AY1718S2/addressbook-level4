@@ -19,6 +19,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.tasks.Tasks;
 import com.google.api.services.tasks.TasksScopes;
 
+//@@author EdwardKSG
 /**
  * Sets up Google Tasks API.
  * i. Authorizes data access based on client credentials.

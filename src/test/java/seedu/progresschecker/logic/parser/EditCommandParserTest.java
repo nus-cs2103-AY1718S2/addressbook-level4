@@ -96,10 +96,12 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_NAME_DESC, Name.MESSAGE_NAME_CONSTRAINTS); // invalid name
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC, Phone.MESSAGE_PHONE_CONSTRAINTS); // invalid phone
         assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS); // invalid email
+        //@@author EdwardKSG
         assertParseFailure(parser, "1" + INVALID_USERNAME_DESC,
                 GithubUsername.MESSAGE_USERNAME_CONSTRAINTS); // invalid username
         assertParseFailure(parser, "1" + INVALID_MAJOR_DESC, Major.MESSAGE_MAJOR_CONSTRAINTS); // invalid major
         assertParseFailure(parser, "1" + INVALID_YEAR_DESC, Year.MESSAGE_YEAR_CONSTRAINTS); // invalid year
+        //@@author
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
 
         // invalid phone followed by valid email
@@ -173,6 +175,7 @@ public class EditCommandParserTest {
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
+        //@@author EdwardKSG
         // username
         userInput = targetIndex.getOneBased() + USERNAME_DESC_AMY;
         descriptor = new EditPersonDescriptorBuilder().withUsername(VALID_USERNAME_AMY).build();
@@ -184,6 +187,7 @@ public class EditCommandParserTest {
         descriptor = new EditPersonDescriptorBuilder().withMajor(VALID_MAJOR_AMY).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
+        //@@author
 
         // tags
         userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND;

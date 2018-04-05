@@ -2,6 +2,7 @@ package seedu.progresschecker.model.issues;
 
 import static java.util.Objects.requireNonNull;
 
+//@@author adityaa1998
 /**
  * Represents all the Labels of an issue
  */

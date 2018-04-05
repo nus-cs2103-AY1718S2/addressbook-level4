@@ -5,7 +5,7 @@ import java.io.IOException;
 import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 
-
+//@@author adityaa1998
 /**
  * Close an issue on github
  */

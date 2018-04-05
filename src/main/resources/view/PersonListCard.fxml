@@ -46,15 +46,15 @@
                      <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
                  </rowConstraints>
                   <children>
-                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Year: " GridPane.rowIndex="4" />
+                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Year: " GridPane.rowIndex="4" />
                   <Label fx:id="year" styleClass="cell_small_label" text="\$year" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone: " />
+                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone: " />
                   <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" GridPane.columnIndex="1" />
-                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Major: " GridPane.rowIndex="3" />
+                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Major: " GridPane.rowIndex="3" />
                   <Label fx:id="major" styleClass="cell_small_label" text="\$major" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Email: " GridPane.rowIndex="1" />
+                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email: " GridPane.rowIndex="1" />
                   <Label fx:id="email" styleClass="cell_small_label" text="\$email" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="GitHub: " GridPane.rowIndex="2" />
+                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GitHub: " GridPane.rowIndex="2" />
                      <Label fx:id="username" styleClass="cell_small_label" text="\$username" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   </children>
                </GridPane>

@@ -61,6 +61,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(MODULE_PAGE_URL + OUTCOMES_PAGE_PATH + index + OUTCOMES_PAGE_DOCUMENT);
     }
 
+    //@@author EdwardKSG
     /**
      * Loads the HTML file which contains task information.
      */
@@ -71,6 +72,7 @@ public class BrowserPanel extends UiPart<Region> {
     public void loadPageViaString(String content) {
         Platform.runLater(() -> browser.getEngine().loadContent(content));
     }
+    //@@author
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
@@ -103,9 +105,11 @@ public class BrowserPanel extends UiPart<Region> {
         loadOutcomesPage(event.getPageIndex());
     }
 
+    //@@author EdwardKSG
     @Subscribe
     private void handleLoadTaskEvent(LoadTaskEvent event)  {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadTaskPage(event.getContent());
     }
+    //@@author
 }

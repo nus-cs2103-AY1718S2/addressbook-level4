@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import seedu.progresschecker.testutil.Assert;
 
+//@@author EdwardKSG
 public class MajorTest {
 
     @Test

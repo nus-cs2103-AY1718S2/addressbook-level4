@@ -1,4 +1,4 @@
-//@@author ifalluphill
+//@@author jaronchan
 package seedu.address.logic.commands;
 
 import java.util.List;
@@ -7,8 +7,6 @@ import com.google.api.services.calendar.model.Event;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.LoadDirectionsEvent;
-import seedu.address.logic.commands.exceptions.CommandException;
-
 
 /**
  * Displays directions between locations scheduled for the day based on specified events of the day.
@@ -23,15 +21,18 @@ public class NavigateCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "Displaying directions between...";
-    public static final String MESSAGE_NO_EVENT = "FAILURE";
+    public static final String MESSAGE_INVALID_RANGE = "The INDEX provided is invalid.\n"
+            + "INDEX must more than ZERO and less than the number of planned events for the day.";
+    public static final String MESSAGE_NO_EVENT = "There is either zero or one event planned for the day.\n"
+            + "No directions will be listed.";
     private final List<Event> eventPair;
 
+    //@@author ifalluphill
     public NavigateCommand(List<Event> eventPair) {
         this.eventPair = eventPair;
-    };
+    }
 
     //@@author jaronchan
-
     @Override
     public CommandResult execute() {
 
@@ -43,14 +44,4 @@ public class NavigateCommand extends Command {
         );
         return new CommandResult(String.format(MESSAGE_SUCCESS));
     }
-
-    //@@author jaronchan
-    //    @Override
-    //    public boolean equals(Object other) {
-    //        return other == this // short circuit if same object
-    //                || (other instanceof SwitchCommand // instanceof handles nulls
-    //                && this.featureTarget.equals(((SwitchCommand) other).featureTarget)); // state check
-    //    }
 }
-
-//@@author

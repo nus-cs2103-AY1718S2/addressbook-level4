@@ -116,7 +116,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if (mapPanel != null && mapPanelPlaceholder.getChildren().contains(mapPanel.getRoot())){
+        if (mapPanel != null && mapPanelPlaceholder.getChildren().contains(mapPanel.getRoot())) {
             mapPanel.loadAddress(event.getNewSelection().person.getAddress().toString());
         }
         showSelectedPersonDetails(event.getNewSelection().person);

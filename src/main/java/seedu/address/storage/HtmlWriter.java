@@ -95,9 +95,9 @@ public class HtmlWriter {
             PrintWriter printWriter = new PrintWriter(file);
             printWriter.print(OPENING_LINE);
             printWriter.println("<p>Name: " + name + "</p>");
-            printWriter.println("<p>Customers Assigned: dummy list </p>");
+            printWriter.println("<p>Customers Assigned: ");
             for (Person eachCustomer: customerList) {
-                printWriter.println("<p>Customers Assigned: " + eachCustomer.getName().fullName + " </p>");
+                printWriter.println(eachCustomer.getName().fullName + " </p>");
             }
             printWriter.println("</body></html>");
             printWriter.close();

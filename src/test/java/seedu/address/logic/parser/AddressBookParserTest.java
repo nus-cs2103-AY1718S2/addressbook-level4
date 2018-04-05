@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +26,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.PathCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -175,6 +177,22 @@ public class AddressBookParserTest {
     public void parseCommand_listAlias() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
+    }
+
+    //@@author ZhangYijiong
+    @Test
+    public void parseCommand_path() throws Exception {
+        PathCommand command = (PathCommand) parser.parseCommand(
+                PathCommand.COMMAND_WORD + " " + INDEX_SECOND_PERSON.getOneBased());
+        assertEquals(new PathCommand(INDEX_SECOND_PERSON), command);
+    }
+
+    //@@author ZhangYijiong
+    @Test
+    public void parseCommand_pathAlias() throws Exception {
+        PathCommand command = (PathCommand) parser.parseCommand(
+                PathCommand.COMMAND_ALIAS + " " + INDEX_SECOND_PERSON.getOneBased());
+        assertEquals(new PathCommand(INDEX_SECOND_PERSON), command);
     }
 
     //@@author

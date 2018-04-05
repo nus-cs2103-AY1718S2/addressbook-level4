@@ -21,7 +21,7 @@ public class Order {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String ORDER_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
-    public static final Menu menu = new Menu();
+    public static final Menu MENU = new Menu();
 
     public final String fullOrder;
 
@@ -33,7 +33,7 @@ public class Order {
     public Order(String order) {
         requireNonNull(order);
         checkArgument(isValidOrder(order), MESSAGE_ORDER_CONSTRAINTS);
-        checkArgument(isInsideMenu(order),MESSAGE_ORDER_NOT_AVAILABLE);
+        checkArgument(isInsideMenu(order), MESSAGE_ORDER_NOT_AVAILABLE);
         this.fullOrder = order.toString();
     }
 
@@ -48,7 +48,7 @@ public class Order {
      * Returns true if a given string is a valid person order.
      */
     public static boolean isInsideMenu(String test) {
-        //if(menu.get(test) == null){
+        //if(MENU.get(test) == null){
         //   return false;
         //}
         return true;

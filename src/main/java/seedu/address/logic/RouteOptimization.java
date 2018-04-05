@@ -86,7 +86,7 @@ public class RouteOptimization {
             startingRoute.put(labelRoutes(origin, destination), distance.getDistance(origin, destination));
         }
         dummy = sort.cleanSorted(sort.sortByComparator(startingRoute));
-        sort.printMap(dummy);
+        //sort.printMap(dummy);
         Map.Entry<String, Double> entry = dummy.entrySet().iterator().next();
         first = entry.getKey().split("_")[1];
         optimizedRoute.add(first);
@@ -102,14 +102,11 @@ public class RouteOptimization {
      */
     //@@author meerakanani10
     public List<String> removeAddress(String address, List<String> filteredAddresses) {
-        List<Integer> idx = new ArrayList<>();
         for (int i = 0; i < filteredAddresses.size(); i++) {
             if (filteredAddresses.get(i).equals(address)) {
-                idx.add(i);
+                filteredAddresses.remove(i);
+                i--;
             }
-        }
-        for (int i = 0; i < idx.size(); i++) {
-            filteredAddresses.remove(idx.get(i));
         }
         return filteredAddresses;
     }
@@ -135,7 +132,6 @@ public class RouteOptimization {
                 optimizedRoute = getDistances(filteredAddresses, next, optimizedRoute);
             }
         }
-
         return optimizedRoute;
     }
 

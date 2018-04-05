@@ -3,7 +3,11 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INTEREST;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEYOWED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OWEDUEDATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OWESTARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
@@ -28,12 +32,22 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
             + "[" + PREFIX_EMAIL + " EMAIL] "
             + "[" + PREFIX_ADDRESS + " ADDRESS] "
             + "[" + PREFIX_TAG + " TAG]...\n"
-            + "Example: " + COMMAND_WORD + " "
+            + "if type(ty) is 'c' then additional fields are "
+            + "[" + PREFIX_OWESTARTDATE + " OWESTARTDATE] "
+            + "[" + PREFIX_OWEDUEDATE + " OWEDUEDATE] "
+            + "[" + PREFIX_MONEYOWED + " MONEYOWED] "
+            + "[" + PREFIX_INTEREST + " INTERESTRATE]\n"
+
+            + "\nExample: " + COMMAND_WORD + " "
             + PREFIX_TYPE + " c "
             + PREFIX_NAME + " John Doe "
             + PREFIX_PHONE + " 98765432 "
             + PREFIX_EMAIL + " johnd@example.com "
             + PREFIX_ADDRESS + " 311, Clementi Ave 2, #02-25 "
+            + PREFIX_MONEYOWED + " 1000 "
+            + PREFIX_INTEREST + " 2.5 "
+            + PREFIX_OWESTARTDATE + " today "
+            + PREFIX_OWEDUEDATE + " 5 May 2018 "
             + PREFIX_TAG + " owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New person added!\n%1$s";

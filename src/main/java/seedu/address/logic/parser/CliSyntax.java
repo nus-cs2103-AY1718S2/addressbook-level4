@@ -21,6 +21,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_CAL_END_DATE_TIME = new Prefix("end/");
     public static final Prefix PREFIX_CAL_LOCATION = new Prefix("loc/");
     public static final Prefix PREFIX_CAL_LINK_PERSON = new Prefix("lp/");
+
+    public static final Prefix PREFIX_SCHEDULE_DATE = new Prefix("d/");
     //@@author
 
 }

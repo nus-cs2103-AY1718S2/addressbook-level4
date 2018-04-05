@@ -27,8 +27,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class CalendarAddCommandParser implements Parser<CalendarAddCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the AddCommand
-     * and returns an AddCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the CalendarAddCommand
+     * and returns an CalendarAddCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public CalendarAddCommand parse(String args) throws ParseException {

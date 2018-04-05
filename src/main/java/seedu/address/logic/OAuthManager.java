@@ -3,15 +3,20 @@
 
 package seedu.address.logic;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -69,9 +74,11 @@ public class OAuthManager {
     /** Most recent list of retrieved events */
     private static List<Event> mostRecentEventList = new ArrayList<>();
 
-    /** List of events for the day */
+    /** List of events for the specified day */
     private static List<Event> dailyEventsList = new ArrayList<>();
 
+    /** Dat specified in dailyEventsList */
+    private static LocalDate dailyEventsListDate = null;
 
     static {
         try {
@@ -98,8 +105,23 @@ public class OAuthManager {
         }
     }
 
+
+    /**
+     * Deletes the current Oauth certificate for the logged in user.
+     * @param user
+     * @throws IOException
+     */
+    public static void deleteOauthCert(User user) throws IOException {
+        Path dirPath = Paths.get(DATA_STORE_DIR.getAbsolutePath());
+        Files.walk(dirPath)
+                .map(Path::toFile)
+                .sorted(Comparator.comparing(File::isDirectory))
+                .forEach(File::delete);
+    }
+
     /**
      * Creates an authorized Credential object.
+     * @param user
      * @return an authorized Credential object.
      * @throws IOException
      */
@@ -153,6 +175,8 @@ public class OAuthManager {
             System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s).");
         }
 
+        mostRecentEventList = upcomingEvents;
+
         return upcomingEvents;
     }
 
@@ -185,18 +209,21 @@ public class OAuthManager {
      * Get a list of events for the day as a list of event objects.
      * @throws IOException
      */
-    public static List<Event> getDailyEvents(User user) throws IOException {
+    public static List<Event> getDailyEvents(User user, LocalDate localDate) throws IOException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String currentDate = LocalDate.now().format(formatter);
+        String inputDate = localDate.format(formatter);
 
-        List<Event> dailyEvents = getEventsByDay(user, currentDate);
+        List<Event> dailyEvents = getEventsByDay(user, inputDate);
         int numberOfEventsRetrieved = dailyEvents.size();
 
         if (numberOfEventsRetrieved == 0) {
-            System.out.println("No events found for today.");
+            System.out.println("No events found.");
         } else {
             System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s).");
         }
+
+        dailyEventsListDate = localDate;
+        dailyEventsList = dailyEvents;
 
         return dailyEvents;
     }
@@ -205,13 +232,13 @@ public class OAuthManager {
      * Get a list of events for the day as a list of strings.
      * @throws IOException
      */
-    public static List<String> getDailyEventsAsStringList(User user) throws IOException {
-        List<Event> dailyEvents = getDailyEvents(user);
+    public static List<String> getDailyEventsAsStringList(User user, LocalDate localDate) throws IOException {
+        List<Event> dailyEvents = getDailyEvents(user, localDate);
         int numberOfEventsRetrieved = dailyEvents.size();
         List<String> eventListAsString = new ArrayList<>();
 
         if (numberOfEventsRetrieved == 0) {
-            System.out.println("No events found for today.");
+            System.out.println("No events found.");
         } else {
             System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s): ");
             int eventIndex = 1;
@@ -221,6 +248,7 @@ public class OAuthManager {
             }
         }
 
+        dailyEventsListDate = localDate;
         dailyEventsList = dailyEvents;
 
         return eventListAsString;
@@ -331,7 +359,7 @@ public class OAuthManager {
      * Used as part of the oauth verification process.
      * @throws IOException
      */
-    public static void addEvent(User user) throws IOException {
+    public static void addEventTest(User user) throws IOException {
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
@@ -441,6 +469,23 @@ public class OAuthManager {
         eventPair.add(dailyEventsList.get(index));
 
         return eventPair;
+    }
+
+
+    /**
+     * Gets the most recent daily event list shown to the user.
+     * @return List
+     */
+    public static List<Event> getMostRecentDailyEventList() {
+        return dailyEventsList;
+    }
+
+    /**
+     * Gets the date of the most recent daily event list shown to the user.
+     * @return List
+     */
+    public static LocalDate getMostRecentDailyEventListDate() {
+        return dailyEventsListDate;
     }
 
 

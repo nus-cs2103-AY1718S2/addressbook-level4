@@ -107,7 +107,7 @@ public class AddressBookParser {
             return new CalendarListCommand();
 
         case ShowScheduleCommand.COMMAND_WORD:
-            return new ShowScheduleCommand();
+            return new ShowScheduleCommandParser().parse(arguments);
 
         case ErrorLogCommand.COMMAND_WORD:
             return new ErrorLogCommand();

@@ -153,58 +153,6 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Viewing timetable of a person: `timetable` (since in v1.4)
-
-Displays the timetable of a person for Odd or Even Week. +
-Format: `timetable INDEX ODD/EVEN`
-
-****
-* The Odd or Even is case insensitive. e.g `odd` or `Odd` gets the same output
-****
-
-Examples:
-
-* `timetable 1 odd` +
-Displays combined timetable of the 1st person.
-
-=== Removal of password: `nopassword` (since v1.3)
-
-Removes the password of the application. +
-Format: `nopassword`
-
-=== Viewing a collated birthday list: `birthdays` (since v1.3)
-
-Displays a list that contains all the birthdays of all contacts ordered by date +
-Or display a notification of the birthdays today +
-Format: `birthdays [ADDITIONAL_PARAMETER]`
-
-****
-* There is an optional field of [ADDITIONAL_PARAMETER]
-* You can input `todays` in that field to show a notification of the birthdays today instead
-****
-
-Examples:
-
-* `birthdays` +
-Displays a list of all birthdays
-* `birthdays today` +
-Displays a window with the birthdays today
-
-=== Viewing common time slots in timetable: `free` (coming in v2.0)
-
-Displays the common free time of two people in StardyTogether. +
-Format: `free p/[PERSON1] p/[PERSON2]`
-
-****
-* Only full names will be matched e.g. `Han` will not match `Han Tan`
-* Overlap of the two persons' timetables will be displayed.
-****
-
-Examples:
-
-* `free p/John Doe p/Han Tan` +
-Displays the combined timetable for John Doe and Han Tan.
-
 === Deleting a person : `delete`
 
 Deletes the specified person from StardyTogether. +
@@ -245,40 +193,52 @@ Selects the 2nd person in StardyTogether.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Importing data : `import` (since v1.1)
+=== Viewing a collated birthday list: `birthdays` (since v1.3)
 
-Imports an encrypted or unencrypted StardyTogether instance from filepath to the existing StardyTogether application. Persons, Tags, and Aliases that are not in your StardyTogether will be added. +
-Format: `import FILEPATH PASSWORD`
-
-****
-* Imports an instance of StardyTogether from the specified `FILEPATH`.
-* Decrypt that instance using the `PASSWORD` provided.
-* If no `PASSWORD` is provided, the instance will be read without decryption.
-* The filepath refers to the filepath where the instance file is stored.
-* The instance file *must be in XML file format* after decryption.
-****
-
-Example:
-
-* `import data/addressBook.xml testpassword` +
-Imports `addressBook.xml` file at data folder using "testpassword" as the password.
-
-=== Exporting data : `export` (since v1.4)
-
-Exports the current view of the existing StardyTogether application with or without password encryption to the specified filepath
-Format: `export FILEPATH PASSWORD`
+Displays a list that contains all the birthdays of all contacts ordered by date +
+Or display a notification of the birthdays today +
+Format: `birthdays [ADDITIONAL_PARAMETER]`
 
 ****
-* Exports an instance of StardyTogether to the specified `FILEPATH`.
-* Encrypt that instance using the `PASSWORD` provided.
-* If no `PASSWORD` is provided, the instance will be exported without encryption.
-* The filepath refers to the filepath where the instance file will be stored.
+* There is an optional field of [ADDITIONAL_PARAMETER]
+* You can input `todays` in that field to show a notification of the birthdays today instead
 ****
 
-Example:
+Examples:
 
-* `export data/addressBook.xml testpassword` +
-Exports the current list of StardyTogether application to the `addressBook.xml` file at data folder using "testpassword" as the password for encryption.
+* `birthdays` +
+Displays a list of all birthdays
+* `birthdays today` +
+Displays a window with the birthdays today
+
+=== Viewing timetable of a person: `timetable` (since v1.4)
+
+Displays the timetable of a person for Odd or Even Week. +
+Format: `timetable INDEX ODD/EVEN`
+
+****
+* The Odd or Even is case insensitive. e.g `odd` or `Odd` gets the same output
+****
+
+Examples:
+
+* `timetable 1 odd` +
+Displays combined timetable of the 1st person.
+
+=== Viewing common time slots in timetable: `free` (coming in v2.0)
+
+Displays the common free time of two people in StardyTogether. +
+Format: `free p/[PERSON1] p/[PERSON2]`
+
+****
+* Only full names will be matched e.g. `Han` will not match `Han Tan`
+* Overlap of the two persons' timetables will be displayed.
+****
+
+Examples:
+
+* `free p/John Doe p/Han Tan` +
+Displays the combined timetable for John Doe and Han Tan.
 
 === Vacant study rooms finder : `vacant` (since v1.3)
 
@@ -301,6 +261,7 @@ Launches Google Maps with the specified location(s).
 Format: `map LOCATION` or `map LOCATION/LOCATION...`
 
 ****
+* NUS building name is case insensitive e.g. `COM1` or `com1` gets the same output
 * If only one location is provided, the location will be displayed on the map.
 * If more than one location is provided, directions to each location, starting from the first one, will be displayed.
 * Typing "map LOCATION_START to LOCATION_DESTINATION" can work as well only if neither locations specified are NUS buildings.
@@ -380,20 +341,10 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from StardyTogether. +
 Format: `clear`
 
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit`
-
-=== Saving the data
-
-StardyTogether data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
 // tag::dataencryption[]
 === Encrypting data files : `password` (since v1.2)
 
-Changes the password used to encrypt the StardyTogether. +
+Activates or change the password used to encrypt the StardyTogether. +
 Format: `password PASSWORD`
 
 ****
@@ -405,9 +356,60 @@ Format: `password PASSWORD`
 Examples:
 
 * `password test` +
-Encrypts `addressbook.xml` with "test" as the key.
+Encrypts `addressbook.xml` with "test" as the password.
 
 // end::dataencryption[]
+
+=== Removal of password: `nopassword` (since v1.3)
+
+Removes the password of the application and unencrypts `addressbook.xml`. +
+Format: `nopassword`
+
+=== Importing data : `import` (since v1.1)
+
+Imports an encrypted or unencrypted StardyTogether instance from filepath to the existing StardyTogether application. Persons, Tags, and Aliases that are not in your StardyTogether will be added. +
+Format: `import FILEPATH PASSWORD`
+
+****
+* Imports an instance of StardyTogether from the specified `FILEPATH`.
+* Decrypt that instance using the `PASSWORD` provided.
+* If no `PASSWORD` is provided, the instance will be read without decryption.
+* The filepath refers to the filepath where the instance file is stored.
+* The instance file *must be in XML file format* after decryption.
+****
+
+Example:
+
+* `import data/addressBook.xml testpassword` +
+Imports `addressBook.xml` file at data folder using "testpassword" as the password.
+
+=== Exporting data : `export` (since v1.4)
+
+Exports the current view of the existing StardyTogether application with or without password encryption to the specified filepath
+Format: `export FILEPATH PASSWORD`
+
+****
+* Exports an instance of StardyTogether to the specified `FILEPATH`.
+* Encrypt that instance using the `PASSWORD` provided.
+* If no `PASSWORD` is provided, the instance will be exported without encryption.
+* The filepath refers to the filepath where the instance file will be stored.
+****
+
+Example:
+
+* `export data/addressBook.xml testpassword` +
+Exports the current list of StardyTogether application to the `addressBook.xml` file at data folder using "testpassword" as the password for encryption.
+
+=== Exiting the program : `exit`
+
+Exits the program. +
+Format: `exit`
+
+=== Saving the data
+
+StardyTogether data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
+
 
 == FAQ
 
@@ -447,14 +449,14 @@ e.g. `alias history hist`
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Export* : `Export FILEPATH PASSWORD` +
+e.g.`export data/addressBook.xml testpassword`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *Help* : `help`
 * *History* : `history`
 * *Import* : `import FILEPATH PASSWORD` +
 e.g.`import data/addressBook.xml testpassword`
-* *Export* : `Export FILEPATH PASSWORD` +
-e.g.`export data/addressBook.xml testpassword`
 * *List* : `list`
 * *Map* : `map LOCATION` +
 e.g. `map S16`

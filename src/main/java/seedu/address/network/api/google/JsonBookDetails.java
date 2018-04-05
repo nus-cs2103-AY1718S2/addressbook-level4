@@ -1,6 +1,6 @@
 package seedu.address.network.api.google;
 
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -48,8 +48,8 @@ public class JsonBookDetails {
         }
 
         return new Book(new Gid(id), isbn,
-                BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
-                getCategorySet(volumeInfo.categories), new Description(volumeInfo.description),
+                BookDataUtil.getAuthorList(volumeInfo.authors), new Title(volumeInfo.title),
+                getCategoryList(volumeInfo.categories), new Description(volumeInfo.description),
                 new Publisher(volumeInfo.publisher),
                 new PublicationDate(volumeInfo.publishedDate));
     }
@@ -62,11 +62,11 @@ public class JsonBookDetails {
                 .orElse(null);
     }
 
-    private static Set<Category> getCategorySet(String[] categories) {
+    private static List<Category> getCategoryList(String[] categories) {
         return Stream.of(categories)
                 .flatMap(category -> Stream.of(category.split("/")))
                 .map(token -> new Category(token.trim()))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     /** Temporary data holder used for deserialization. */

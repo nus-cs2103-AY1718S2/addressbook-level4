@@ -71,8 +71,8 @@ public class JsonSearchResults {
         }
 
         return new Book(new Gid(volume.id), isbn,
-                BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
-                BookDataUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description),
+                BookDataUtil.getAuthorList(volumeInfo.authors), new Title(volumeInfo.title),
+                BookDataUtil.getCategoryList(volumeInfo.categories), new Description(volumeInfo.description),
                 new Publisher(volumeInfo.publisher), new PublicationDate(volumeInfo.publishedDate));
     }
 

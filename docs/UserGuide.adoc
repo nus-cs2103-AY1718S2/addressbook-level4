@@ -244,7 +244,7 @@ Format: `markPart INDEX marks/DIGITS`
 ****
 * Adds to the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* between 0 and 100 inclusive.
+* The digits *must be a positive integer* between 0 and 100 inclusive.
 ****
 
 Examples:

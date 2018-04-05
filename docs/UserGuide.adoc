@@ -1,4 +1,4 @@
-= Loanshark Tycoon v1.4 - User Guide
+= LoanShark Tycoon v1.4 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -13,16 +13,21 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-F12-B4/main
 
-By: `LoanShark Tycoon`      Since: `Jan 2016`      Licence: `MIT`
+By: `Huat Ah Finance Pte Ltd`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
+[NOTE]
+====
+If you:
 
-LoanShark Tycoon is for 21st century Loanshark bosses who *prefer to use a desktop app for managing operations*. More
-importantly, LoanShark Tycoon is *optimized for those who prefer to work with a Command Line Interface* (CLI) while
-still having the benefits of a Graphical User Interface (GUI). If you can type fast, LoanShark Tycoon can get your
-operations management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get
+* are a 21st Century modern loan shark boss,
+* prefers to use a desktop app for managing operations,
+* prefers to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI),
+* can type fast,
+
+LoanShark Tycoon can get your operations management tasks done faster than traditional GUI apps. Interested? Jump to <<Quick Start>> to get
 started. Enjoy!
-
+====
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -31,7 +36,7 @@ started. Enjoy!
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `LoanSharkTycoon.jar` link:{repoURL}/releases[here]. (_to be updated_)
+.  Download the latest `LoanSharkTycoon.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your application.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
@@ -39,17 +44,22 @@ image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
+.  If you still feel unfamiliar with the commands, you may make use of the Menu at the top of the application.
+The various menu items have keyboard shortcuts that can be used to speed up your workflow as well!
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`ty: c n: John Doe p: 98765432 e: johnd@example.com a: John street, block 123, #01-01` : adds a person named `John Doe` to the database.
+* **`add`**`ty: c n: John Doe p: 98765432 e: johnd@example.com a: John street, block 123, #01-01` : adds a `Customer` named `John Doe` to the database.
 * **`delete`**`3` : deletes the third contact shown in the current list
 * *`exit`* : exits the application
 
 == Known Issues
-* Deleting a customer will not update any Runner whose customer list contains that customer [*functionality not yet implemented - coming in v1.5*].
-* Deleting a runner will not update any Customer whose Runner field contains that runner [*functionality not yet implemented - coming in v1.5*].
-* Default date is January 1, 1970 (default Java Date value), when no start date or due date is specified when adding a customer.
+* Deleting a customer will not update any Runner whose customer list contains that customer
+[functionality not yet implemented - coming in v1.5].
+* Deleting a runner will not update any Customer whose Runner field contains that runner
+[functionality not yet implemented - coming in v1.5].
+* Default date is January 1, 1970 (default Java Date value), when no start date or due date
+is specified when adding a customer.
 
 == Command Summary
 
@@ -88,15 +98,15 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 |add (`a`)
 |kbd:[Ctrl+Space]
-|`add n:NAME ty:r(or c) [p:PHONE_NUMBER] [e:EMAIL] [a:ADDRESS] [t:TAG] ...`
-
-|edit (`e`)
-|kbd:[Ctrl+E]
-|`edit INDEX [n:NAME] [p:PHONE_NUMBER] [e:EMAIL] [a:ADDRESS] [t:TAG] ...`
+|`add n: NAME ty: r(or c) [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
 
 |delete (`d`)
 |kbd:[Ctrl+D]
 |`delete INDEX`
+
+|edit (`e`)
+|kbd:[Ctrl+E]
+|`edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
 
 |find (`f`)
 |kbd:[Ctrl+F]
@@ -120,7 +130,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |`redo`
 
 |assign (`as`)
-|(To be added)
+|kbd:[Ctrl+Shift+A]
 |`assign RUNNER-INDEX c: CUSTOMER-INDEX [CUSTOMER-INDEX ...]`
 |===
 
@@ -134,29 +144,63 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 ***
-=== Adding a person: `add`
+=== Adding a person: `add` [since v1.3]
 
 [NOTE]
 ====
+* This command adds a new `Customer` or `Runner` with the specified details.
 * A person can have any number of tags (including 0).
-* NAME and TYPE must be provided
+* `NAME` and `TYPE` must be provided. The other details are optional.
 ====
 
 *Usage examples:*
 
 ====
  add n: John Doe ty: c p: 98765432 e: johnd@example.com a: John street, block 123, #01-01
+
+_Adds a new `Customer` named "John Doe", with phone number "98765432", email address "johnd@example.com"
+and address "John street, block 123, #01-01"._
 ====
 
 ====
  add n: Betsy Crowe ty: r t: friend e: betsycrowe@example.com a: Newgate Prison p: 1234567 t: criminal
+
+_Adds a new `Runner` named "Betsy Crowe", with phone number "1234567", email address "betsycrowe@example.com"
+and address "Newgate Prison"._
 ====
 ***
-=== Editing a person : `edit`
+=== Deleting a person : `delete`
 
 [NOTE]
 ====
-* This command edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* This command deletes the person associated with the specified `INDEX`.
+** The `INDEX` refers to the index number shown in the most recent listing.
+** The `INDEX` must be a *positive integer*: 1, 2, 3, ...
+====
+
+*Usage examples:*
+
+====
+ list
+ delete 2
+
+_Deletes the second person in the database._
+====
+
+====
+ find Betsy
+ delete 1
+
+_Deletes the first person in the results of the `find` command._
+====
+***
+=== Editing a person : `edit` [since v1.3]
+
+[NOTE]
+====
+* This command edits the person associated with the specified `INDEX`.
+** The `INDEX` refers to the index number shown in the last person listing.
+** The `INDEX` must be a *positive integer*: 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
@@ -176,49 +220,36 @@ _Edits the phone number and email address of the first person to be `91234567` a
 _Edits the name of the second person to be `Betsy Crower` and clears all existing tags._
 ====
 ***
-=== Deleting a person : `delete`
+=== Searching for relevant persons : `find` [since v1.1]
 
 [NOTE]
 ====
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-====
-
-*Usage examples:*
-
-====
- list
- delete 2
-
-_Deletes the second person in the database._
-====
-
-====
- find Betsy
- delete 1
-
-_Deletes the first person in the results of the `find` command._
-====
-***
-=== Searching for relevant persons: `find`
-
-[NOTE]
-====
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* NAME, PHONE, EMAIL, ADDRESS and TAGS are searched by default ( when no specifier is input or -all specifier is input)
-* Only one specifier may be used
-* `-n` to search only NAME, `-p` to search only PHONE, `-e` to search only EMAIL,
-`-a` to search only ADDRESS, `-t` to search only TAGS.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* This command searches for relevant persons with the specified information.
+* Name, phone, email, address and tags are searched by default (no `SPECIFIER` or `-all` `SPECIFIERS`)
+* Only one `SPECIFIER` can be used at a time.
+* If more than one `SPECIFIER` is input, only the first will be considered. The others will be ignored.
+* Description of `SPECIFIERS`:
+** `-n` to search only names.
+** `-p` to search only phones.
+** `-e` to search only emails.
+** `-a` to search only addresses.
+** `-t` to search only tags.
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
+* The search is case insensitive. e.g `hans` will match `Hans`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
+* Only full words will be matched e.g. `Han` will not match `Hans`.
 ====
 
 *Usage examples:*
 
 ====
  find John
+
+_Returns all persons with name, address or tags matching `John`._
+====
+
+====
+ find -all John
 
 _Returns all persons with name, address or tags matching `John`._
 ====
@@ -232,7 +263,7 @@ _Returns all persons with names, addresses or tags matching `Betsy`, `Tim`, or `
 ====
  find -p 91234567
 
-_Returns all persons with the above phone number._
+_Returns all persons with phone number "91234567"._
 ====
 ***
 === Displaying a person's address using Google Maps : `locate`
@@ -257,13 +288,13 @@ _Locates the person with name "David" and displays his address on Google Maps._
 _Locates the address "Blk 30" on Google Maps and displays the person with that address in the PersonListPanel._
 ====
 ***
-=== Selecting a person : `select`
+=== Selecting and displaying details about a person : `select` [since v1.4]
 
 [NOTE]
 ====
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* This command selects and displays details about the person associated with the specified `INDEX`.
+** The `INDEX` refers to the index number shown in the last person listing.
+** The `INDEX` must be a *positive integer*: 1, 2, 3, ...
 ====
 
 *Usage examples:*
@@ -282,11 +313,12 @@ _Selects the second person in the database._
 _Selects the first person from the results of the `find` command._
 ====
 ***
-=== Undoing previous command : `undo`
+=== Undoing the last undoable command : `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+* Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+* Only undoable commands can be undone.
 ====
 
 *Usage examples:*
@@ -339,7 +371,16 @@ _The `redo` command fails as there are no `undo` commands executed previously._
 ====
 
 ***
-=== Assigning Customer to a Runner : `assign`
+=== Assigning one or more Customers to a Runner : `assign` [since v1.4]
+
+[NOTE]
+====
+* This command assigns one or more `Customers` to a `Runner` according to a specified `RUNNER-INDEX`
+and `CUSTOMER-INDICES`.
+** Each `INDEX` refers to the index number shown in the last person listing.
+** Each `INDEX` must be a *positive integer*: 1, 2, 3, ...
+* The `RUNNER-INDEX`` must always be specified and at least one `CUSTOMER-INDEX` must be specified as well.
+====
 
 [NOTE]
 ====
@@ -348,30 +389,37 @@ _The `redo` command fails as there are no `undo` commands executed previously._
 *Usage examples:*
 
 ====
-`assign 1 c: 2`
+`assign INDEX1 c: INDEX2`
 
-_Assigns customer at Index 2 to Runner at Index 1 based on the last shown listing_
+_Assigns customer at `INDEX2` to Runner at `INDEX1` based on the last shown listing._
 ====
 
-====
-`as 1 c: 2 4`
-
-_Assigns customers at Index 2 and Index 4 to Runner at Index 1 based on the last shown listing_
-====
-
-=== Saving the data
-
-The state of the database is saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+== Up and coming features [coming in v2.0]
 
 // tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
-
-_{explain how the user can enable/disable data encryption}_
+* Adding multiple persons from an input file
 // end::dataencryption[]
+* Adding visitation history to `Customers`
+* Adding job history to `Runners`
+* Scheduling jobs for `Runners`
+* Changing status of jobs for `Runners`
+* Plotting a visitation route given a set of `Customers` and displaying it in Google Maps
+* Show countdown timers for `Customers`
+* Show a summary and analytics page on application start
 
 == FAQ
 
 [qanda]
 How do I transfer my data to another Computer?::
-Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. By default, the path for the data file is "data/addressbook.xml".
+Install the app in the other computer and overwrite the empty data file it creates with the file that contains
+the data of your previous Address Book folder. By default, the path for the data file is "data/addressbook.xml".
+How do I save my data?::
+The state of the database is saved in the hard disk automatically after any command that changes the data.
+Therefore, there is no need to save manually.
+How can I report a bug or suggest improvements to this application?::
+Open an issue https://github.com/CS2103JAN2018-F12-B4/main/issues[here]! We would love to hear your feedback.
+What if I am a law enforcement officer?::
+Huat Ah Finance Pte Ltd takes no responsibility for the actions of its users.
+We just like to make software that makes a different to the world! :)
+What if I am not a loan shark boss yet?::
+Work hard and collect more protection money! Maybe one day you'll make it! ;)

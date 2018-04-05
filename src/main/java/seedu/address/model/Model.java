@@ -81,8 +81,7 @@ public interface Model {
      * Exports the current view of {@code AddressBook} to the filepath.
      * @param filepath
      */
-    void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
-                                                                        DuplicatePersonException;
+    void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException;
     //@@author
 
     //@@author yeggasd

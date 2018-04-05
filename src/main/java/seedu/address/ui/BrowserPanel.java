@@ -44,11 +44,11 @@ public class BrowserPanel extends UiPart<Region> {
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
-
+    //@@author ZhangYijiong
     private void loadGoogleMapAddressPage(Person person) {
         loadPage(GOOGLE_MAP_SEARCH_PAGE + person.getAddress().getGoogleMapSearchForm());
     }
-
+    //@@author ZhangYijiong
     private void loadGoogleMapPathPage(Person person) {
         loadPage(GOOGLE_MAP_PATH_SEARCH_PAGE + Address.ADDRESS_USER_OWN
                 + "/" + person.getAddress().getGoogleMapSearchForm());
@@ -73,12 +73,14 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
+    //@@author ZhangYijiong
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadGoogleMapAddressPage(event.getNewSelection().person);
     }
 
+    //@@author ZhangYijiong
     @Subscribe
     private void handlePersonPanelPathChangedEvent(PersonPanelPathChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

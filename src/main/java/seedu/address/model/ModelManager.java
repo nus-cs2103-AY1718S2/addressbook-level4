@@ -20,7 +20,7 @@ import seedu.address.commons.events.model.StudentInfoChangedEvent;
 import seedu.address.commons.events.model.StudentInfoDisplayEvent;
 import seedu.address.commons.events.storage.ProfilePictureChangeEvent;
 import seedu.address.commons.events.storage.RequiredStudentIndexChangeEvent;
-import seedu.address.external.GContactsManager;
+import seedu.address.external.GServiceManager;
 import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Lesson;
@@ -44,7 +44,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final Schedule schedule;
     private final FilteredList<Student> filteredStudents;
-    private final GContactsManager gContactsManager;
+    private final GServiceManager gServiceManager;
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -56,7 +56,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.schedule = new Schedule(schedule);
-        this.gContactsManager = new GContactsManager();
+        this.gServiceManager = new GServiceManager();
         filteredStudents = new FilteredList<>(this.addressBook.getStudentList());
     }
 
@@ -207,17 +207,17 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void loginGoogleAccount() throws CredentialsException {
-        this.gContactsManager.login();
+        this.gServiceManager.login();
     }
 
     @Override
     public void logoutGoogleAccount() throws CredentialsException {
-        this.gContactsManager.logout();
+        this.gServiceManager.logout();
     }
 
     @Override
     public void synchronize() throws ServiceException, IOException {
-        this.gContactsManager.synchronize(schedule);
+        this.gServiceManager.synchronize(addressBook, schedule);
     }
 
     @Override

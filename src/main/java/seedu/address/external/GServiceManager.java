@@ -10,6 +10,8 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.calendar.CalendarScopes;
 import seedu.address.external.exceptions.CredentialsException;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlySchedule;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +26,7 @@ public class GServiceManager {
     /** Global instance of the HTTP transport. */
     private static HttpTransport httpTransport;
 
-    private static final String APPLICATION_NAME = "codeducator/v1.4";
+    public static final String APPLICATION_NAME = "codeducator/v1.4";
 
     private final String[] scopesArray = new String[]{
             "https://www.googleapis.com/auth/userinfo.profile",
@@ -81,5 +83,20 @@ public class GServiceManager {
     }
 
     public GServiceManager() { }
-    
+
+    public void synchronize(ReadOnlyAddressBook addressBook, ReadOnlySchedule schedule) {
+        try {
+            GContactsService gContactsService = new GContactsService(credential);
+            gContactsService.synchronize(addressBook);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        try {
+            GCalendarService gCalendarService = new GCalendarService(
+                    credential, httpTransport, JSON_FACTORY);
+            gCalendarService.synchronize(schedule);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
 }

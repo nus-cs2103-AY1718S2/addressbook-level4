@@ -209,7 +209,6 @@ Replaces the specified tag from every student in _EduBuddy_ with a specific tag.
 Format: `tagreplace t/TAGNAME t/TAGNAME`
 Abbreviation Format: `tr t/TAGNAME t/TAGNAME`
 
-<<<<<<< HEAD
 ****
 * Replaces the specified tag from every student in Edubuddy with a specific tag.
 * The tag must be a valid tag name that is assigned to at least one student in the Edubuddy.

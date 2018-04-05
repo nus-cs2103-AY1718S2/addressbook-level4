@@ -5,14 +5,13 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
+import javafx.scene.input.KeyCode;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-
-import javafx.scene.input.KeyCode;
 
 public class ClearCommandSystemTest extends AddressBookSystemTest {
 

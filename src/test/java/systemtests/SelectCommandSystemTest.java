@@ -14,13 +14,12 @@ import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 import org.junit.Test;
 
 import guitests.GuiRobot;
+import javafx.scene.input.KeyCode;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
-
-import javafx.scene.input.KeyCode;
 
 public class SelectCommandSystemTest extends AddressBookSystemTest {
     private final GuiRobot guiRobot = new GuiRobot();

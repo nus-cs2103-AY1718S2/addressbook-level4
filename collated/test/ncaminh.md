@@ -1,36 +1,6 @@
-package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.ShowRouteFromOneToAnotherEvent;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.GetDistance;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.ui.testutil.EventsCollectorRule;
-
-//@@author ncaminh
+# ncaminh
+###### \java\seedu\address\logic\commands\DistanceCommandTest.java
+``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code DistanceCommand}.
  */
@@ -198,3 +168,127 @@ public class DistanceCommandTest {
         return distanceCommand;
     }
 }
+```
+###### \java\seedu\address\logic\commands\FilterCommandTest.java
+``` java
+    @Test
+    public void execute_noPersonMatchesDate() {
+        DatePredicate datePredicate =
+                new DatePredicate(Collections.singletonList("2019-03-23"));
+        FilterCommand filterCommand = prepareFilterCommand(datePredicate);
+
+        try {
+            CommandResult actualCommandResult = filterCommand.execute();
+            CommandResult expectedCommandResult =
+                    new CommandResult(getMessageForPersonListShownSummary(0));
+            assertEquals(actualCommandResult.feedbackToUser, expectedCommandResult.feedbackToUser);
+
+        } catch (CommandException | IOException ce) {
+            ce.printStackTrace();
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+    }
+
+    @Test
+    public void execute_allAddressesCannotBeFound() {
+        DatePredicate datePredicate =
+                new DatePredicate(Collections.singletonList("2018-03-25"));
+        FilterCommand filterCommand = prepareFilterCommand(datePredicate);
+        model.updateFilteredPersonList(datePredicate);
+        int numberOfPersonsListed = model.getFilteredPersonList().size();
+
+        try {
+            CommandResult actualCommandResult = filterCommand.execute();
+            String shown = getMessageForPersonListShownSummary(numberOfPersonsListed)
+                    + "\nAll the addresses on "
+                    + model.getFilteredPersonList().get(0).getDate().toString()
+                    + " cannot be found.";
+            CommandResult expectedCommandResult =
+                    new CommandResult(shown);
+            assertEquals(actualCommandResult.feedbackToUser, expectedCommandResult.feedbackToUser);
+
+        } catch (CommandException | IOException ce) {
+            ce.printStackTrace();
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+    }
+
+    @Test
+    public void execute_someAddressesCannotBeFound() {
+        DatePredicate datePredicate =
+                new DatePredicate(Collections.singletonList("2018-03-23"));
+        FilterCommand filterCommand = prepareFilterCommand(datePredicate);
+        model.updateFilteredPersonList(datePredicate);
+        int numberOfPersonsListed = model.getFilteredPersonList().size();
+
+        try {
+            CommandResult actualCommandResult = filterCommand.execute();
+            String shown = getMessageForPersonListShownSummary(numberOfPersonsListed)
+                    + "\nAt least one address on "
+                    + model.getFilteredPersonList().get(0).getDate().toString()
+                    + " cannot be found.";
+            CommandResult expectedCommandResult =
+                    new CommandResult(shown);
+            assertEquals(actualCommandResult.feedbackToUser, expectedCommandResult.feedbackToUser);
+
+        } catch (CommandException | IOException ce) {
+            ce.printStackTrace();
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+    }
+
+    @Test
+    public void execute_allAddressesCanBeFound() {
+        DatePredicate datePredicate =
+                new DatePredicate(Collections.singletonList("2018-03-28"));
+        FilterCommand filterCommand = prepareFilterCommand(datePredicate);
+        model.updateFilteredPersonList(datePredicate);
+        int numberOfPersonsListed = model.getFilteredPersonList().size();
+
+        try {
+            CommandResult actualCommandResult = filterCommand.execute();
+            CommandResult expectedCommandResult =
+                    new CommandResult(getMessageForPersonListShownSummary(numberOfPersonsListed));
+            assertEquals(actualCommandResult.feedbackToUser, expectedCommandResult.feedbackToUser);
+
+        } catch (CommandException | IOException ce) {
+            ce.printStackTrace();
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+    }
+
+    private FilterCommand prepareFilterCommand(DatePredicate datePredicate) {
+        FilterCommand filterCommand = new FilterCommand(datePredicate);
+        filterCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return filterCommand;
+    }
+}
+```
+###### \java\seedu\address\logic\parser\DistanceCommandParserTest.java
+``` java
+/**
+ * Test scope: similar to {@code DeleteCommandParserTest}.
+ * @see DeleteCommandParserTest
+ */
+public class DistanceCommandParserTest {
+
+    private DistanceCommandParser parser = new DistanceCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsDistanceCommand() {
+        assertParseSuccess(parser, "1", new DistanceCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DistanceCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\ui\BrowserPanelTest.java
+``` java
+        String addressValue = ALICE.getAddress().value;
+        String addressWithoutUnit = addressValue.substring(0, addressValue.indexOf('#') - 2);
+        URL expectedPersonUrl = new URL(BrowserPanel.SEARCH_PAGE_URL
+                + addressWithoutUnit.replaceAll(" ", "%20") + "?dg=dbrw&newdg=1");
+```

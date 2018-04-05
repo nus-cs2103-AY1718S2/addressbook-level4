@@ -306,6 +306,19 @@ _{explain how the user can enable/disable data encryption}_
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+== User Testing
+
+When testing and using our system for the first time, here are some commands you can try to get the full experience.
+Feel free to try other commands outlined above when you get the feel of our program as well.
+
+*1.*  add n/John Doe a/321 Clementi Ave p/67340028 e/pigeonscs2103@gmail.com d/2018-03-24
+
+*2.* list John
+
+*3.* filter 2018-03-30
+
+*4.* delete John
+
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +

@@ -41,6 +41,7 @@ public class FilterCommand extends Command {
         optimizedRoute = route.getAddresses(model);
         stringDuration = getDuration(optimizedRoute);
 
+        //@@author ncaminh
         int numberOfPersonsListed = model.getFilteredPersonList().size();
 
         //no person matches date
@@ -71,6 +72,7 @@ public class FilterCommand extends Command {
 
         //all addresses can be found
         return new CommandResult(getMessageForPersonListShownSummary(numberOfPersonsListed));
+        //@@author meerakanani10
     }
 
     @Override
@@ -80,7 +82,7 @@ public class FilterCommand extends Command {
                 && this.predicate.equals(((FilterCommand) other).predicate)); // state check
     }
 
-    public String getDuration(List<String> route) {
+    public static String getDuration(List<String> route) {
         Double duration;
         GetDistance distance = new GetDistance();
         Double totalDuration = 0.0;

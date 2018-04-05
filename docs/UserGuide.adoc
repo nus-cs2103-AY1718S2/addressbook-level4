@@ -113,24 +113,6 @@ Format: `change-user-password u/USERNAME p/PASSWORD newp/NEWPASSWORD`
 * Multiple entries of username and password can be included, however only the last entry will be considered.
 ****
 
-
-=== Switching between feature interfaces : `switch`
-
-Switches to the user interface feature identified by the user. +
-Format: `switch FEATURE`
-
-****
-* Switches to the specified `FEATURE`
-* `FEATURE` must be either "details", "calendar" or "scheduler".
-****
-
-Examples:
-
-* `switch calendar` +
-Switches to `calendar` tab and displays contents
-* `switch details` +
-Switches to `details` tab and displays contents
-
 === Adding a person: `add`
 
 Adds a person to the address book +
@@ -252,6 +234,51 @@ Format: `history`
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+=== Switching between feature interfaces : `switch`
+
+Switches to the user interface feature identified by the user. +
+Format: `switch FEATURE`
+
+****
+* Switches to the specified `FEATURE`
+* `FEATURE` must be either "details", "calendar" or "scheduler".
+****
+
+Examples:
+
+* `switch calendar` +
+Switches to `calendar` tab and displays contents
+* `switch details` +
+Switches to `details` tab and displays contents
+
+=== Navigate between scheduled events : `navigate`
+
+Displays the directions between planned locations on the daily scheduler map. +
+Format: `navigate INDEX`
+
+[NOTE]
+====
+Command is still in the middle of development. Only static result will appear.
+
+Must be on `scheduler` view first for command to work, enter `switch scheduler` to do so.
+
+`show-schedule` has to be called BEFORE `navigate` can work properly.
+====
+
+****
+* Displays direction between two different but adjacent events by specifiying `INDEX`
+* `INDEX` must be more then `1`, but less than total events for the day minus 2 or `LENGTH - 2`.
+****
+
+Examples:
+
+* `switch scheduler` +
+Switches to `calendar` tab and displays contents
+* `show-schedule` +
+Retrieves events for specified day
+* `navigate 1` +
+Displays dummy directions on the scheduler map
 
 === Opening a calendar : `calendar-launch`
 

@@ -147,37 +147,63 @@ s/cat b/persian c/calico bt/AB -a d/2018-12-31 12:30 r/nil t/surgery t/steriliza
 
 Medeina will show a list of all stored contacts if you enter `list` or `ls` in the command box.
 
-=== Editing a contact : `edit` or `ed`
+=== Editing a contact : `edit` or `ed` `[Since v1.4]`
 
-Use the following command format to:
+You can use `edit` or `ed` to do the following:
 
-Edit an existing contact:: `edit **-o** INDEX [n/CONTACT_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [nr/NRIC] [t/TAG]...`
+[width="100%", cols="15%,<45%a,<40%", options="header"]
+|=====
+| To edit
+| Command syntax
+| Notes
 
-Edit an existing pet patient:: `edit **-p** INDEX [n/PET_PATIENT_NAME] [s/SPECIES] [b/BREED] [c/COLOR] [bt/BLOOD_TYPE] [nr/OWNER_NRIC] [t/TAG]...`
-
-Edit an existing appointment:: `edit **-a** INDEX [d/YYYY-MM-DD HH:MM] [r/REMARK] [nr/OWNER_NRIC] [n/PET_PATIENT_NAME] [t/TAG]...`
-
-****
-* The command edits the contact / pet patient at the specified `INDEX`. The index refers to the index number shown in the latest contact / pet patient listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
+.^a|Person
+| `edit **-o** INDEX [n/CONTACT_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [nr/NRIC] [t/TAG]...`
+a| * At least one of the optional fields must be provided.
+* The command edits the contact at the specified `INDEX`.
+* The index refers to the index number shown in the latest contact listing. The index *must be a positive integer* 1, 2, 3, etc ...
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the contact / pet patient will be removed i.e adding of tags is not cumulative.
+* When editing tags, the existing tags of the contact will be removed i.e adding of tags is not cumulative.
 * You can remove all of the contact's tags by typing `t/` without specifying any tags after it.
-****
 
-Examples:
+.^| Pet Patient
+| `edit **-p** INDEX [n/PET_PATIENT_NAME] [s/SPECIES] [b/BREED] [c/COLOR] [bt/BLOOD_TYPE] [nr/OWNER_NRIC] [t/TAG]...`
+a| * At least one of the optional fields must be provided.
+* The command edits the pet patient at the specified `INDEX`.
+* The index refers to the index number shown in the latest pet patient listing. The index *must be a positive integer* 1, 2, 3, etc ...
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the pet patient will be removed i.e adding of tags is not cumulative.
+* You can remove all of the pet patient's tags by typing `t/` without specifying any tags after it.
+* OWNER_NRIC must belong to an existing contact.
 
-* `edit **-o** 1 p/91234567 e/johndoe@example.com` +
-Medeina will edit the phone number and email address of the 1st contact to be `91234567` and `johndoe@example.com` respectively.
 
-* `edit **-o** 2 n/Betsy Crower t/` or `e **-o** 2 n/Betsy Crower t/` +
-Medeina will edit the name of the 2nd contact to be `Betsy Crower` and clears all existing tags.
+.^| Appointment
+| `edit **-a** INDEX [d/YYYY-MM-DD HH:MM] [r/REMARK] [t/TAG]...`
+a| * At least one of the optional fields must be provided.
+* The command edits the appointment at the specified `INDEX`.
+* The index refers to the index number shown in the latest appointment listing. The index *must be a positive integer* 1, 2, 3, etc ...
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the appointment will be removed i.e adding of tags is not cumulative.
+* You can remove all of the appointment's tags by typing `t/` without specifying any tags after it.
+* Appointment time HH:MM must be in 30-minute blocks.
+* Modification of owner's NRIC and / or pet patient's name is NOT allowed.
+|=====
+{empty} +
 
-* `edit **-p** 2 n/jewel baby t/` or `e **-p** 2 n/jewel baby t/` +
-Medeina will edit the name of the 2nd pet patient to be `jewel baby` and clears all existing tags.
+image::edit_examples.PNG[width="800"]
+{empty} +
 
-* `edit **-a** 3 d/2018-06-04` +
-Medeina will edit the date and time of the 3rd appointment to be `2018-06-04`.
+.**Copy & paste to try out**
+----
+edit -o 1 p/91234567 e/alexyeoh@anotherexample.com
+
+edit -o 2 n/Betsy Crowers t/
+
+edit -p 2 n/Makkachin t/
+
+edit -a 3 d/2018-06-04 12:30
+----
+{empty} +
 
 === Find contacts or pet patients: `find` or `f`
 

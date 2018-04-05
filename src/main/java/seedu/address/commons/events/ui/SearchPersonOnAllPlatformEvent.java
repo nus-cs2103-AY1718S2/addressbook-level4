@@ -5,7 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * Represents a search for person on all available social media platforms.
  */
-public class SearchPersonOnAllPlatformEvent extends BaseEvent{
+public class SearchPersonOnAllPlatformEvent extends BaseEvent {
 
     private final String searchName;
 

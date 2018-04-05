@@ -101,6 +101,12 @@ public class UniqueAliasList {
         return internalList;
     }
 
+    /**
+     * Getter for hashlist
+     */
+    public HashMap<String, String> getHashList() {
+        return hashList;
+    }
 
     /**
      * Replaces the Aliases in this list with those in the argument alias list.

@@ -291,6 +291,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public HashMap<String, String> getAliasMapping() {
+        return aliases.getHashList();
+    }
+
+    @Override
     public void resetAliasList() {
         aliases.resetHashmap();
     }

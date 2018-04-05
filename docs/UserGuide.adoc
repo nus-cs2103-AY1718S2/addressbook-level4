@@ -47,8 +47,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * *`exit`* : exits the application
 
 == Known Issues
-* Deleting a customer will not update any Runner whose customer list contains that customer [*functionality not yet implemented - coming in v1.5*]
-* Deleting a runner will not update any Customer whose Runner field contains that runner [*functionality not yet implemented - coming in v1.5*]
+* Deleting a customer will not update any Runner whose customer list contains that customer [*functionality not yet implemented - coming in v1.5*].
+* Deleting a runner will not update any Customer whose Runner field contains that runner [*functionality not yet implemented - coming in v1.5*].
+* Default date is January 1, 1970 (default Java Date value), when no start date or due date is specified when adding a customer.
 
 == Command Summary
 

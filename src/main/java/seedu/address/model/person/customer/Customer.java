@@ -85,6 +85,9 @@ public class Customer extends Person {
 
         Date currentDate = new Date();
         long elapsedTime = currentDate.getTime() - oweStartDate.getTime();
+        if (elapsedTime < 0) {
+            return moneyBorrowed.value;
+        }
         long elapsedWeeks = elapsedTime / numOfMsPerWeek;
         return moneyBorrowed.value * Math.pow(1 + standardInterest.value / 100, (double) elapsedWeeks);
     }

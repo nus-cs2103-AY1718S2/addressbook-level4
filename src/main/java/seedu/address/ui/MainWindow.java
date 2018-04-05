@@ -435,7 +435,7 @@ public class MainWindow extends UiPart<Stage> {
         chooser.setTitle("Choose a Photo");
         File file = chooser.showOpenDialog(new Stage());
         String filePath;
-        if(file != null) {
+        if (file != null) {
             filePath = file.getPath();
         } else {
             filePath = "NoFileChoosed";

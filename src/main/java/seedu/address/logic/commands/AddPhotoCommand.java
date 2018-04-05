@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
-
+//@@author crizyli
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.BufferedInputStream;
@@ -11,6 +11,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import com.google.common.eventbus.Subscribe;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.logic.FileChoosedEvent;
@@ -21,9 +23,6 @@ import seedu.address.model.person.Photo;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
-import com.google.common.eventbus.Subscribe;
-
-//@@author crizyli
 /**
  * Adds a photo to an employee.
  */

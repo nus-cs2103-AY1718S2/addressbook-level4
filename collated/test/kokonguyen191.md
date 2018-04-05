@@ -78,7 +78,7 @@ package seedu.recipe.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.recipe.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.recipe.logic.commands.SearchCommand.MESSAGE_FAILURE;
+import static seedu.recipe.logic.commands.SearchCommand.MESSAGE_NO_RESULT;
 import static seedu.recipe.logic.commands.SearchCommand.MESSAGE_SUCCESS;
 import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipeBook;
 
@@ -132,7 +132,7 @@ public class SearchCommandTest {
     @Test
     public void execute_inputWithNoResults_noRecipesFound() {
         SearchCommand searchCommandWithNoResult = new SearchCommand("blah");
-        assertCommandSuccess(searchCommandWithNoResult, model, MESSAGE_FAILURE, model);
+        assertCommandSuccess(searchCommandWithNoResult, model, MESSAGE_NO_RESULT, model);
     }
 
     // THIS TEST MIGHT FAIL IN THE FUTURE! PLEASE UPDATE IF IT FAILS!
@@ -797,6 +797,85 @@ public class ServingsTest {
     }
 
 ```
+###### \java\seedu\recipe\testutil\WikiaRecipes.java
+``` java
+package seedu.recipe.testutil;
+
+import static seedu.recipe.logic.commands.AddCommand.COMMAND_WORD;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_IMG;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INGREDIENT;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.recipe.logic.parser.CliSyntax.PREFIX_URL;
+
+/**
+ * A utility class containing a list of {@code Recipe} objects parsed from Wikia to be used in tests.
+ */
+public class WikiaRecipes {
+    public static final String LF = "\n";
+
+    public static final String WIKIA_NOT_RECIPE = "http://recipes.wikia.com/d/f?sort=latest";
+
+    public static final String CHICKEN_NAME = "Hainanese Chicken Rice";
+    public static final String CHICKEN_INGREDIENT = "chicken, salt, spring onion, pandan leaves, "
+            + "ginger, ginger, garlic, cinnamon, cloves, star anise, chicken broth, pandan leaves, salt,"
+            + " light soy sauce, sesame oil, cucumber, tomatoes, coriander, lettuce, pineapple, fresh "
+            + "chillies, ginger, garlic, vinegar, fish sauce, sugar, sweet soy sauce";
+    public static final String CHICKEN_INSTRUCTION = "Boil water with spring Onion, ginger and pandan leaves, "
+            + "put in Chicken and cook till done,"
+            + " do not over cook. briefly dip in cold water and set aside to cool. Keep broth heated.\n"
+            + "Wash rice and drain. Finely shred ginger and garlic, fry in oil with cloves, cinammon and "
+            + "star anise till fragrant, add in rice and fry for several minutes. Transfer into rice "
+            + "cooker, add chicken broth, pinch of salt, pandan leaves and start cooking.\n"
+            + "Put all chili sauce ingredient in a mixer and grind till fine.\n"
+            + "Slice and arrange tomatoes and cucumbers on a big plate, cut Chicken into small pieces and p"
+            + "ut on top. Splash some light soy sauce and sesame oil over, throw a bunch of coriander "
+            + "on top.\nNext, Put broth in a bowl with lettuce, get ready chili sauce and sweet "
+            + "soy sauce. #Serve rice on a plate with spoon and folk.";
+    public static final String WIKIA_RECIPE_URL_CHICKEN = "http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice";
+    public static final String CHICKEN_RICE_IMAGE_URL = "https://vignette.wikia.nocookie.net/recipes/images/d/d3"
+            + "/Chickenrice2.jpg/revision/latest/scale-to-width-down/180?cb=20080516004325";
+    public static final String MOBILE_WIKIA_RECIPE_URL_CHICKEN =
+            "http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice?useskin=wikiamobile";
+    public static final String MOBILE_CHICKEN_RICE_IMAGE_URL = "https://vignette.wikia.nocookie.net/recipes/images/d/d3"
+            + "/Chickenrice2.jpg/revision/latest/scale-to-width-down/340?cb=20080516004325";
+
+    public static final String UGANDAN_NAME = "Ugandan Chicken Stew";
+    public static final String UGANDAN_INGREDIENT = "chicken, oil, onion, tomatoes, potatoes, salt, pepper";
+    public static final String UGANDAN_INSTRUCTION = "In a heavy stewing pan, sauté chicken pieces "
+            + "in hot oil until nicely browned.\n"
+            + "Add onion, tomatoes, potatoes, salt, pepper, and enough water to just cover.\n"
+            + "Cover pan and simmer until chicken is cooked, 45 minutes to 1 hour.";
+    public static final String WIKIA_RECIPE_URL_UGANDAN = "http://recipes.wikia.com/wiki/Ugandan_Chicken_Stew";
+    public static final String MOBILE_WIKIA_RECIPE_URL_UGANDAN =
+            "http://recipes.wikia.com/wiki/Ugandan_Chicken_Stew?useskin=wikiamobile";
+
+    public static final String WIKIA_RECIPE_URL_BEEF =
+            "http://recipes.wikia.com/wiki/Beef_Tenderloin_with_Madeira_Sauce";
+    public static final String BEEF_INGREDIENT = "1 cup of garlic, 2 cups of mustard, 3 tbs chopped rosemary, 1 cup "
+            + "chopped thyme, 2 tsp garlic, 2 tsp vegtebale oil, 4 tsp salt, 1 tsp pepper, 3 cups of water, 4 "
+            + "tbs butter, 2 cups of red wine, 1 cup of garlic, 2 1/2 cups of corn, 4 cup of water, 2 tomatoes,"
+            + " 1 tsp chopped thyme, 1/2 tsp each sea salt and pepper";
+
+    public static final String WIKIA_CHICKEN_ADD_COMMAND =
+            COMMAND_WORD + LF + PREFIX_NAME + CHICKEN_NAME + LF + PREFIX_INGREDIENT + CHICKEN_INGREDIENT + LF
+                    + PREFIX_INSTRUCTION + CHICKEN_INSTRUCTION + LF + PREFIX_IMG + CHICKEN_RICE_IMAGE_URL + LF
+                    + PREFIX_URL + WIKIA_RECIPE_URL_CHICKEN;
+    public static final String WIKIA_UGANDAN_ADD_COMMAND =
+            COMMAND_WORD + LF + PREFIX_NAME + UGANDAN_NAME + LF + PREFIX_INGREDIENT + UGANDAN_INGREDIENT + LF
+                    + PREFIX_INSTRUCTION + UGANDAN_INSTRUCTION + LF + PREFIX_URL + WIKIA_RECIPE_URL_UGANDAN;
+    public static final String MOBILE_WIKIA_CHICKEN_ADD_COMMAND =
+            COMMAND_WORD + LF + PREFIX_NAME + CHICKEN_NAME + LF + PREFIX_INGREDIENT + CHICKEN_INGREDIENT + LF
+                    + PREFIX_INSTRUCTION + CHICKEN_INSTRUCTION + LF + PREFIX_IMG + MOBILE_CHICKEN_RICE_IMAGE_URL + LF
+                    + PREFIX_URL + MOBILE_WIKIA_RECIPE_URL_CHICKEN;
+    public static final String MOBILE_WIKIA_UGANDAN_ADD_COMMAND =
+            COMMAND_WORD + LF + PREFIX_NAME + UGANDAN_NAME + LF + PREFIX_INGREDIENT + UGANDAN_INGREDIENT + LF
+                    + PREFIX_INSTRUCTION + UGANDAN_INSTRUCTION + LF + PREFIX_URL + MOBILE_WIKIA_RECIPE_URL_UGANDAN;
+
+    private WikiaRecipes() {
+    } // prevents instantiation
+}
+```
 ###### \java\seedu\recipe\ui\CommandBoxTest.java
 ``` java
     @Test
@@ -809,7 +888,6 @@ public class ServingsTest {
 ```
 ###### \java\seedu\recipe\ui\CommandBoxTest.java
 ``` java
-
     /**
      * Checks that the input in the {@code commandBox} equals to {@code expectedCommand}.
      */
@@ -823,6 +901,17 @@ public class ServingsTest {
 package seedu.recipe.ui.parser;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.recipe.testutil.WikiaRecipes.CHICKEN_INGREDIENT;
+import static seedu.recipe.testutil.WikiaRecipes.CHICKEN_INSTRUCTION;
+import static seedu.recipe.testutil.WikiaRecipes.CHICKEN_NAME;
+import static seedu.recipe.testutil.WikiaRecipes.MOBILE_CHICKEN_RICE_IMAGE_URL;
+import static seedu.recipe.testutil.WikiaRecipes.MOBILE_WIKIA_CHICKEN_ADD_COMMAND;
+import static seedu.recipe.testutil.WikiaRecipes.MOBILE_WIKIA_RECIPE_URL_CHICKEN;
+import static seedu.recipe.testutil.WikiaRecipes.MOBILE_WIKIA_RECIPE_URL_UGANDAN;
+import static seedu.recipe.testutil.WikiaRecipes.MOBILE_WIKIA_UGANDAN_ADD_COMMAND;
+import static seedu.recipe.testutil.WikiaRecipes.UGANDAN_INGREDIENT;
+import static seedu.recipe.testutil.WikiaRecipes.UGANDAN_INSTRUCTION;
+import static seedu.recipe.testutil.WikiaRecipes.UGANDAN_NAME;
 
 import java.io.IOException;
 
@@ -836,21 +925,16 @@ import seedu.recipe.ui.GuiUnitTest;
 
 public class MobileWikiaParserTest extends GuiUnitTest {
 
-    private static final String WIKIA_RECIPE_URL_A =
-            "http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice?useskin=wikiamobile";
-    private static final String WIKIA_RECIPE_URL_B =
-            "http://recipes.wikia.com/wiki/Beef_Tenderloin_with_Madeira_Sauce?useskin=wikiamobile";
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private MobileWikiaParser wikiaParserA;
-    private MobileWikiaParser wikiaParserB;
+    private MobileWikiaParser wikiaParserChicken;
+    private MobileWikiaParser wikiaParserUgandan;
 
     @Before
     public void setUp() throws IOException {
-        wikiaParserA = new MobileWikiaParser(Jsoup.connect(WIKIA_RECIPE_URL_A).get());
-        wikiaParserB = new MobileWikiaParser(Jsoup.connect(WIKIA_RECIPE_URL_B).get());
+        wikiaParserChicken = new MobileWikiaParser(Jsoup.connect(MOBILE_WIKIA_RECIPE_URL_CHICKEN).get());
+        wikiaParserUgandan = new MobileWikiaParser(Jsoup.connect(MOBILE_WIKIA_RECIPE_URL_UGANDAN).get());
     }
 
     @Test
@@ -871,110 +955,37 @@ public class MobileWikiaParserTest extends GuiUnitTest {
 
     @Test
     public void getName_validRecipes_returnsResult() throws Exception {
-        assertEquals(wikiaParserA.getName(), "Hainanese Chicken Rice");
-        assertEquals(wikiaParserB.getName(), "Beef Tenderloin with Madeira Sauce");
+        assertEquals(wikiaParserChicken.getName(), CHICKEN_NAME);
+        assertEquals(wikiaParserUgandan.getName(), UGANDAN_NAME);
     }
 
     @Test
     public void getIngredient_validRecipes_returnsResult() throws Exception {
-        assertEquals(wikiaParserA.getIngredient(), "chicken, salt, spring onion, pandan leaves, "
-                + "ginger, ginger, garlic, cinnamon, cloves, star anise, chicken broth, pandan leaves, salt,"
-                + " light soy sauce, sesame oil, cucumber, tomatoes, coriander, lettuce, pineapple, fresh "
-                + "chillies, ginger, garlic, vinegar, fish sauce, sugar, sweet soy sauce");
-        assertEquals(wikiaParserB.getIngredient(), "1 cup of garlic, 2 cups of mustard, 3 tbs chopped "
-                + "rosemary, 1 cup chopped thyme, 2 tsp garlic, 2 tsp vegtebale oil, 4 tsp salt, 1 tsp pepper, "
-                + "3 cups of water, 4 tbs butter, 2 cups of red wine, 1 cup of garlic, 2 1/2 cups of corn, "
-                + "4 cup of water, 2 tomatoes, 1 tsp chopped thyme, 1/2 tsp each sea salt and pepper");
+        assertEquals(wikiaParserChicken.getIngredient(), CHICKEN_INGREDIENT);
+        assertEquals(wikiaParserUgandan.getIngredient(), UGANDAN_INGREDIENT);
     }
 
     @Test
     public void getInstruction_validRecipes_returnsResult() throws Exception {
-        assertEquals(wikiaParserA.getInstruction(),
-                "Boil water with spring Onion, ginger and pandan leaves, put in Chicken and cook till done,"
-                        + " do not over cook. briefly dip in cold water and set aside to cool. Keep broth heated.\n"
-                        + "Wash rice and drain. Finely shred ginger and garlic, fry in oil with cloves, cinammon and "
-                        + "star anise till fragrant, add in rice and fry for several minutes. Transfer into rice "
-                        + "cooker, add chicken broth, pinch of salt, pandan leaves and start cooking.\n"
-                        + "Put all chili sauce ingredient in a mixer and grind till fine.\n"
-                        + "Slice and arrange tomatoes and cucumbers on a big plate, cut Chicken into small pieces and p"
-                        + "ut on top. Splash some light soy sauce and sesame oil over, throw a bunch of coriander "
-                        + "on top.\nNext, Put broth in a bowl with lettuce, get ready chili sauce and sweet "
-                        + "soy sauce. #Serve rice on a plate with spoon and folk.");
-        assertEquals(wikiaParserB.getInstruction(),
-                "Heat oven to 475 degrees and prepare a Large rimmed baking sheet coated with cooking spray.\n"
-                        + "Spread beef with mustard.\n"
-                        + "Mix herbs, garlic, oil, salt and pepper in a cup, press on mustard.\n"
-                        + "Place beef on baking sheet.\n"
-                        + "Roast 50 min.\n"
-                        + "Remove to cutting board, cover tight with foil and let rest 15 min.]\n"
-                        + "Slice beef and arrange on a serving platter, spoon on a little sauce. "
-                        + "Serve with remaining sauce.\n"
-                        + "Put butter in skillet.\n"
-                        + "Add mushrooms, saute 2 min.\n"
-                        + "Stir in garlic, boil 5 min.\n"
-                        + "Stir corn into broth until blended. Add to skillet.\n"
-                        + "Bring to a boil, boil stirring 5 min.\n"
-                        + "Pour into gravy boat and serve with the beef.");
+        assertEquals(wikiaParserChicken.getInstruction(), CHICKEN_INSTRUCTION);
+        assertEquals(wikiaParserUgandan.getInstruction(), UGANDAN_INSTRUCTION);
     }
 
     @Test
     public void getImageUrl_validRecipes_returnsResult() throws Exception {
-        assertEquals(wikiaParserA.getImageUrl(), "https://vignette.wikia.nocookie.net/recipes/images/d/d3"
-                + "/Chickenrice2.jpg/revision/latest/scale-to-width-down/340?cb=20080516004325");
+        assertEquals(wikiaParserChicken.getImageUrl(), MOBILE_CHICKEN_RICE_IMAGE_URL);
     }
 
     @Test
     public void getUrl_validRecipes_returnsResult() throws Exception {
-        assertEquals(wikiaParserA.getUrl(), WIKIA_RECIPE_URL_A);
-        assertEquals(wikiaParserB.getUrl(), WIKIA_RECIPE_URL_B);
+        assertEquals(wikiaParserChicken.getUrl(), MOBILE_WIKIA_RECIPE_URL_CHICKEN);
+        assertEquals(wikiaParserUgandan.getUrl(), MOBILE_WIKIA_RECIPE_URL_UGANDAN);
     }
 
     @Test
     public void parseRecipe_validRecipe_returnsValidCommand() throws Exception {
-        assertEquals(wikiaParserA.parseRecipe(), "add\n"
-                + "name/Hainanese Chicken Rice\n"
-                + "ingredient/chicken, salt, spring onion, pandan leaves, ginger, ginger, garlic, cinnamon, "
-                + "cloves, star anise, chicken broth, pandan leaves, salt, light soy sauce, sesame oil, "
-                + "cucumber, tomatoes, coriander, lettuce, pineapple, fresh chillies, ginger, garlic, "
-                + "vinegar, fish sauce, sugar, sweet soy sauce\n"
-                + "instruction/Boil water with spring Onion, ginger and pandan leaves, put in Chicken "
-                + "and cook till done, do not over cook. briefly dip in cold water and set aside to cool."
-                + " Keep broth heated.\n"
-                + "Wash rice and drain. Finely shred ginger and garlic, fry in oil with cloves, cinammon"
-                + " and star anise till fragrant, add in rice and fry for several minutes. Transfer into "
-                + "rice cooker, add chicken broth, pinch of salt, pandan leaves and start cooking.\n"
-                + "Put all chili sauce ingredient in a mixer and grind till fine.\n"
-                + "Slice and arrange tomatoes and cucumbers on a big plate, cut Chicken into small pieces"
-                + " and put on top. Splash some light soy sauce and sesame oil over, throw a bunch of "
-                + "coriander on top.\n"
-                + "Next, Put broth in a bowl with lettuce, get ready chili sauce and sweet soy sauce. "
-                + "#Serve rice on a plate with spoon and folk.\n"
-                + "img/https://vignette.wikia.nocookie.net/recipes/images/d/d3/Chickenrice2.jpg/revision/"
-                + "latest/scale-to-width-down/340?cb=20080516004325\n"
-                + "url/http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice?useskin=wikiamobile");
-        assertEquals(wikiaParserB.parseRecipe(), "add\n"
-                + "name/Beef Tenderloin with Madeira Sauce\n"
-                + "ingredient/1 cup of garlic, 2 cups of mustard, 3 tbs chopped rosemary,"
-                + " 1 cup chopped thyme, 2 tsp garlic, 2 tsp vegtebale oil, 4 tsp salt, 1"
-                + " tsp pepper, 3 cups of water, 4 tbs butter, 2 cups of red wine, 1 cup of"
-                + " garlic, 2 1/2 cups of corn, 4 cup of water, 2 tomatoes, 1 tsp chopped thyme,"
-                + " 1/2 tsp each sea salt and pepper\n"
-                + "instruction/Heat oven to 475 degrees and prepare a Large rimmed baking sheet"
-                + " coated with cooking spray.\n"
-                + "Spread beef with mustard.\n"
-                + "Mix herbs, garlic, oil, salt and pepper in a cup, press on mustard.\n"
-                + "Place beef on baking sheet.\n"
-                + "Roast 50 min.\n"
-                + "Remove to cutting board, cover tight with foil and let rest 15 min.]\n"
-                + "Slice beef and arrange on a serving platter, spoon on a little sauce. "
-                + "Serve with remaining sauce.\n"
-                + "Put butter in skillet.\n"
-                + "Add mushrooms, saute 2 min.\n"
-                + "Stir in garlic, boil 5 min.\n"
-                + "Stir corn into broth until blended. Add to skillet.\n"
-                + "Bring to a boil, boil stirring 5 min.\n"
-                + "Pour into gravy boat and serve with the beef.\n"
-                + "url/http://recipes.wikia.com/wiki/Beef_Tenderloin_with_Madeira_Sauce?useskin=wikiamobile");
+        assertEquals(wikiaParserChicken.parseRecipe(), MOBILE_WIKIA_CHICKEN_ADD_COMMAND);
+        assertEquals(wikiaParserUgandan.parseRecipe(), MOBILE_WIKIA_UGANDAN_ADD_COMMAND);
     }
 }
 ```
@@ -998,6 +1009,10 @@ import seedu.recipe.ui.GuiUnitTest;
 public class WebParserHandlerTest extends GuiUnitTest {
 
     private static final String WIKIA_RECIPE_URL = "http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice";
+    private static final String DUMMY_URL = "https://google.com/";
+    private static final String DUMMY_DOCUMENT_WIKIA = "<html><div id=\"mw-content-text\">something</div></html>";
+    private static final String DUMMY_DOCUMENT_WIKIA_MOBILE = "<html></html>";
+    private static final String DUMMY_DOCUMENT_EMPTY = "<html></html>";
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -1024,18 +1039,18 @@ public class WebParserHandlerTest extends GuiUnitTest {
 
     @Test
     public void getWebParser_unparsableWebsite_returnNull() throws Exception {
-        assertNullWebParser("https://google.com/", "");
+        assertNullWebParser(DUMMY_URL, "");
     }
 
     @Test
     public void getWebParser_wikiaLoaded_returnWikiaParser() throws Exception {
-        assertWebParser(WIKIA_RECIPE_URL, "<html><div id=\"mw-content-text\">something</div></html>",
+        assertWebParser(WIKIA_RECIPE_URL, DUMMY_DOCUMENT_WIKIA,
                 new WikiaParser(new Document("")));
     }
 
     @Test
     public void getWebParser_mobileWikiaLoaded_returnMobileWikiaParser() throws Exception {
-        assertWebParser(WIKIA_RECIPE_URL, "<html></html>",
+        assertWebParser(WIKIA_RECIPE_URL, DUMMY_DOCUMENT_WIKIA_MOBILE,
                 new MobileWikiaParser(new Document("")));
     }
 
@@ -1062,6 +1077,20 @@ public class WebParserHandlerTest extends GuiUnitTest {
 package seedu.recipe.ui.parser;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.recipe.testutil.WikiaRecipes.BEEF_INGREDIENT;
+import static seedu.recipe.testutil.WikiaRecipes.CHICKEN_INGREDIENT;
+import static seedu.recipe.testutil.WikiaRecipes.CHICKEN_INSTRUCTION;
+import static seedu.recipe.testutil.WikiaRecipes.CHICKEN_NAME;
+import static seedu.recipe.testutil.WikiaRecipes.CHICKEN_RICE_IMAGE_URL;
+import static seedu.recipe.testutil.WikiaRecipes.UGANDAN_INGREDIENT;
+import static seedu.recipe.testutil.WikiaRecipes.UGANDAN_INSTRUCTION;
+import static seedu.recipe.testutil.WikiaRecipes.UGANDAN_NAME;
+import static seedu.recipe.testutil.WikiaRecipes.WIKIA_CHICKEN_ADD_COMMAND;
+import static seedu.recipe.testutil.WikiaRecipes.WIKIA_NOT_RECIPE;
+import static seedu.recipe.testutil.WikiaRecipes.WIKIA_RECIPE_URL_BEEF;
+import static seedu.recipe.testutil.WikiaRecipes.WIKIA_RECIPE_URL_CHICKEN;
+import static seedu.recipe.testutil.WikiaRecipes.WIKIA_RECIPE_URL_UGANDAN;
+import static seedu.recipe.testutil.WikiaRecipes.WIKIA_UGANDAN_ADD_COMMAND;
 
 import java.io.IOException;
 
@@ -1075,21 +1104,19 @@ import seedu.recipe.ui.GuiUnitTest;
 
 public class WikiaParserTest extends GuiUnitTest {
 
-    private static final String WIKIA_RECIPE_URL_A = "http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice";
-    private static final String WIKIA_RECIPE_URL_B = "http://recipes.wikia.com/wiki/Beef_Tenderloin_with_Madeira_Sauce";
-    private static final String WIKIA_NOT_RECIPE = "http://recipes.wikia.com/d/f?sort=latest";
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private WikiaParser wikiaParserA;
-    private WikiaParser wikiaParserB;
+    private WikiaParser wikiaParserChicken;
+    private WikiaParser wikiaParserBeef;
+    private WikiaParser wikiaParserUgandan;
     private WikiaParser wikiaParserNotRecipe;
 
     @Before
     public void setUp() throws IOException {
-        wikiaParserA = new WikiaParser(Jsoup.connect(WIKIA_RECIPE_URL_A).get());
-        wikiaParserB = new WikiaParser(Jsoup.connect(WIKIA_RECIPE_URL_B).get());
+        wikiaParserChicken = new WikiaParser(Jsoup.connect(WIKIA_RECIPE_URL_CHICKEN).get());
+        wikiaParserUgandan = new WikiaParser(Jsoup.connect(WIKIA_RECIPE_URL_UGANDAN).get());
+        wikiaParserBeef = new WikiaParser(Jsoup.connect(WIKIA_RECIPE_URL_BEEF).get());
         wikiaParserNotRecipe = new WikiaParser(Jsoup.connect(WIKIA_NOT_RECIPE).get());
     }
 
@@ -1111,110 +1138,39 @@ public class WikiaParserTest extends GuiUnitTest {
 
     @Test
     public void getName_validRecipes_returnsResult() throws Exception {
-        assertEquals(wikiaParserA.getName(), "Hainanese Chicken Rice");
-        assertEquals(wikiaParserB.getName(), "Beef Tenderloin with Madeira Sauce");
+        assertEquals(wikiaParserChicken.getName(), CHICKEN_NAME);
+        assertEquals(wikiaParserUgandan.getName(), UGANDAN_NAME);
     }
 
     @Test
     public void getIngredient_validRecipes_returnsResult() throws Exception {
-        assertEquals(wikiaParserA.getIngredient(), "chicken, salt, spring onion, pandan leaves, "
-                + "ginger, ginger, garlic, cinnamon, cloves, star anise, chicken broth, pandan leaves, salt,"
-                + " light soy sauce, sesame oil, cucumber, tomatoes, coriander, lettuce, pineapple, fresh "
-                + "chillies, ginger, garlic, vinegar, fish sauce, sugar, sweet soy sauce");
-        assertEquals(wikiaParserB.getIngredient(), "1 cup of garlic, 2 cups of mustard, 3 tbs chopped "
-                + "rosemary, 1 cup chopped thyme, 2 tsp garlic, 2 tsp vegtebale oil, 4 tsp salt, 1 tsp pepper, "
-                + "3 cups of water, 4 tbs butter, 2 cups of red wine, 1 cup of garlic, 2 1/2 cups of corn, "
-                + "4 cup of water, 2 tomatoes, 1 tsp chopped thyme, 1/2 tsp each sea salt and pepper");
+        assertEquals(wikiaParserBeef.getIngredient(), BEEF_INGREDIENT);
+        assertEquals(wikiaParserChicken.getIngredient(), CHICKEN_INGREDIENT);
+        assertEquals(wikiaParserUgandan.getIngredient(), UGANDAN_INGREDIENT);
     }
 
     @Test
     public void getInstruction_validRecipes_returnsResult() throws Exception {
-        assertEquals(wikiaParserA.getInstruction(),
-                "Boil water with spring Onion, ginger and pandan leaves, put in Chicken and cook till done,"
-                        + " do not over cook. briefly dip in cold water and set aside to cool. Keep broth heated.\n"
-                        + "Wash rice and drain. Finely shred ginger and garlic, fry in oil with cloves, cinammon and "
-                        + "star anise till fragrant, add in rice and fry for several minutes. Transfer into rice "
-                        + "cooker, add chicken broth, pinch of salt, pandan leaves and start cooking.\n"
-                        + "Put all chili sauce ingredient in a mixer and grind till fine.\n"
-                        + "Slice and arrange tomatoes and cucumbers on a big plate, cut Chicken into small pieces and p"
-                        + "ut on top. Splash some light soy sauce and sesame oil over, throw a bunch of coriander "
-                        + "on top.\nNext, Put broth in a bowl with lettuce, get ready chili sauce and sweet "
-                        + "soy sauce. #Serve rice on a plate with spoon and folk.");
-        assertEquals(wikiaParserB.getInstruction(),
-                "Heat oven to 475 degrees and prepare a Large rimmed baking sheet coated with cooking spray.\n"
-                        + "Spread beef with mustard.\n"
-                        + "Mix herbs, garlic, oil, salt and pepper in a cup, press on mustard.\n"
-                        + "Place beef on baking sheet.\n"
-                        + "Roast 50 min.\n"
-                        + "Remove to cutting board, cover tight with foil and let rest 15 min.]\n"
-                        + "Slice beef and arrange on a serving platter, spoon on a little sauce. "
-                        + "Serve with remaining sauce.\n"
-                        + "Put butter in skillet.\n"
-                        + "Add mushrooms, saute 2 min.\n"
-                        + "Stir in garlic, boil 5 min.\n"
-                        + "Stir corn into broth until blended. Add to skillet.\n"
-                        + "Bring to a boil, boil stirring 5 min.\n"
-                        + "Pour into gravy boat and serve with the beef.");
+        assertEquals(wikiaParserChicken.getInstruction(), CHICKEN_INSTRUCTION);
+        assertEquals(wikiaParserUgandan.getInstruction(), UGANDAN_INSTRUCTION);
     }
 
     @Test
     public void getImageUrl_validRecipes_returnsResult() throws Exception {
-        assertEquals(wikiaParserA.getImageUrl(), "https://vignette.wikia.nocookie.net/recipes/images/d/d3"
-                + "/Chickenrice2.jpg/revision/latest/scale-to-width-down/180?cb=20080516004325");
+        assertEquals(wikiaParserChicken.getImageUrl(), CHICKEN_RICE_IMAGE_URL);
     }
 
     @Test
     public void getUrl_validRecipes_returnsResult() throws Exception {
-        assertEquals(wikiaParserA.getUrl(), WIKIA_RECIPE_URL_A);
-        assertEquals(wikiaParserB.getUrl(), WIKIA_RECIPE_URL_B);
+        assertEquals(wikiaParserChicken.getUrl(), WIKIA_RECIPE_URL_CHICKEN);
+        assertEquals(wikiaParserUgandan.getUrl(), WIKIA_RECIPE_URL_UGANDAN);
     }
 
     @Test
     public void parseRecipe_validRecipe_returnsValidCommand() throws Exception {
-        assertEquals(wikiaParserA.parseRecipe(), "add\n"
-                + "name/Hainanese Chicken Rice\n"
-                + "ingredient/chicken, salt, spring onion, pandan leaves, ginger, ginger, garlic, cinnamon, "
-                + "cloves, star anise, chicken broth, pandan leaves, salt, light soy sauce, sesame oil, "
-                + "cucumber, tomatoes, coriander, lettuce, pineapple, fresh chillies, ginger, garlic, "
-                + "vinegar, fish sauce, sugar, sweet soy sauce\n"
-                + "instruction/Boil water with spring Onion, ginger and pandan leaves, put in Chicken "
-                + "and cook till done, do not over cook. briefly dip in cold water and set aside to cool."
-                + " Keep broth heated.\n"
-                + "Wash rice and drain. Finely shred ginger and garlic, fry in oil with cloves, cinammon"
-                + " and star anise till fragrant, add in rice and fry for several minutes. Transfer into "
-                + "rice cooker, add chicken broth, pinch of salt, pandan leaves and start cooking.\n"
-                + "Put all chili sauce ingredient in a mixer and grind till fine.\n"
-                + "Slice and arrange tomatoes and cucumbers on a big plate, cut Chicken into small pieces"
-                + " and put on top. Splash some light soy sauce and sesame oil over, throw a bunch of "
-                + "coriander on top.\n"
-                + "Next, Put broth in a bowl with lettuce, get ready chili sauce and sweet soy sauce. "
-                + "#Serve rice on a plate with spoon and folk.\n"
-                + "img/https://vignette.wikia.nocookie.net/recipes/images/d/d3/Chickenrice2.jpg/revision/"
-                + "latest/scale-to-width-down/180?cb=20080516004325\n"
-                + "url/http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice");
-        assertEquals(wikiaParserB.parseRecipe(), "add\n"
-                + "name/Beef Tenderloin with Madeira Sauce\n"
-                + "ingredient/1 cup of garlic, 2 cups of mustard, 3 tbs chopped rosemary,"
-                + " 1 cup chopped thyme, 2 tsp garlic, 2 tsp vegtebale oil, 4 tsp salt, 1"
-                + " tsp pepper, 3 cups of water, 4 tbs butter, 2 cups of red wine, 1 cup of"
-                + " garlic, 2 1/2 cups of corn, 4 cup of water, 2 tomatoes, 1 tsp chopped thyme,"
-                + " 1/2 tsp each sea salt and pepper\n"
-                + "instruction/Heat oven to 475 degrees and prepare a Large rimmed baking sheet"
-                + " coated with cooking spray.\n"
-                + "Spread beef with mustard.\n"
-                + "Mix herbs, garlic, oil, salt and pepper in a cup, press on mustard.\n"
-                + "Place beef on baking sheet.\n"
-                + "Roast 50 min.\n"
-                + "Remove to cutting board, cover tight with foil and let rest 15 min.]\n"
-                + "Slice beef and arrange on a serving platter, spoon on a little sauce. "
-                + "Serve with remaining sauce.\n"
-                + "Put butter in skillet.\n"
-                + "Add mushrooms, saute 2 min.\n"
-                + "Stir in garlic, boil 5 min.\n"
-                + "Stir corn into broth until blended. Add to skillet.\n"
-                + "Bring to a boil, boil stirring 5 min.\n"
-                + "Pour into gravy boat and serve with the beef.\n"
-                + "url/http://recipes.wikia.com/wiki/Beef_Tenderloin_with_Madeira_Sauce");
+        String a = WIKIA_CHICKEN_ADD_COMMAND;
+        assertEquals(wikiaParserChicken.parseRecipe(), WIKIA_CHICKEN_ADD_COMMAND);
+        assertEquals(wikiaParserUgandan.parseRecipe(), WIKIA_UGANDAN_ADD_COMMAND);
     }
 
     @Test
@@ -1333,6 +1289,8 @@ package systemtests;
 import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_RECIPE;
 import static seedu.recipe.testutil.TypicalIndexes.INDEX_SECOND_RECIPE;
 import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipeBook;
+import static seedu.recipe.testutil.WikiaRecipes.MOBILE_WIKIA_UGANDAN_ADD_COMMAND;
+import static seedu.recipe.testutil.WikiaRecipes.WIKIA_CHICKEN_ADD_COMMAND;
 
 import org.junit.Test;
 
@@ -1354,43 +1312,12 @@ public class ParseCommandSystemTest extends RecipeBookSystemTest {
         String command = SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_RECIPE.getOneBased();
         executeCommand(command);
 
-        assertCommandSuccess("add\n"
-                + "name/Hainanese Chicken Rice\n"
-                + "ingredient/chicken, salt, spring onion, pandan leaves, ginger, ginger, garlic, cinnamon, "
-                + "cloves, star anise, chicken broth, pandan leaves, salt, light soy sauce, sesame oil, "
-                + "cucumber, tomatoes, coriander, lettuce, pineapple, fresh chillies, ginger, garlic, "
-                + "vinegar, fish sauce, sugar, sweet soy sauce\n"
-                + "instruction/Boil water with spring Onion, ginger and pandan leaves, put in Chicken "
-                + "and cook till done, do not over cook. briefly dip in cold water and set aside to cool."
-                + " Keep broth heated.\n"
-                + "Wash rice and drain. Finely shred ginger and garlic, fry in oil with cloves, cinammon"
-                + " and star anise till fragrant, add in rice and fry for several minutes. Transfer into "
-                + "rice cooker, add chicken broth, pinch of salt, pandan leaves and start cooking.\n"
-                + "Put all chili sauce ingredient in a mixer and grind till fine.\n"
-                + "Slice and arrange tomatoes and cucumbers on a big plate, cut Chicken into small pieces"
-                + " and put on top. Splash some light soy sauce and sesame oil over, throw a bunch of "
-                + "coriander on top.\n"
-                + "Next, Put broth in a bowl with lettuce, get ready chili sauce and sweet soy sauce. "
-                + "#Serve rice on a plate with spoon and folk.\n"
-                + "img/https://vignette.wikia.nocookie.net/recipes/images/d/d3/Chickenrice2.jpg/revision/"
-                + "latest/scale-to-width-down/180?cb=20080516004325\n"
-                + "url/http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice");
+        assertCommandSuccess(WIKIA_CHICKEN_ADD_COMMAND);
 
         command = SelectCommand.COMMAND_WORD + " " + INDEX_SECOND_RECIPE.getOneBased();
         executeCommand(command);
 
-        assertCommandSuccess("add\n"
-                + "name/Asian Chicken Salad\n"
-                + "ingredient/chicken, cabbage, mushrooms, carrots, cilantro, cucumber, "
-                + "green onions, mandarin orange, tangerine, black pepper\n"
-                + "instruction/In a large bowl, combine chicken, cabbage, mushrooms, "
-                + "carrots, cilantro, cucumber, and dressing.\n"
-                + "Toss well.\n"
-                + "Top with green onions and tangerine sections.\n"
-                + "Pepper to taste.\n"
-                + "img/https://vignette.wikia.nocookie.net/recipes/images/3/35/Chicken"
-                + "-salad-ck-1940987-l.jpg/revision/latest/scale-to-width-down/340?cb=20131015235502\n"
-                + "url/http://recipes.wikia.com/wiki/Asian_Chicken_Salad?useskin=wikiamobile");
+        assertCommandSuccess(MOBILE_WIKIA_UGANDAN_ADD_COMMAND);
     }
 
     /**
@@ -1465,7 +1392,7 @@ public class SearchCommandSystemTest extends RecipeBookSystemTest {
         int noOfResults = wikiaQueryHandler.getQueryNumberOfResults();
 
         if (noOfResults == 0) {
-            assertApplicationDisplaysExpected("", SearchCommand.MESSAGE_FAILURE, model);
+            assertApplicationDisplaysExpected("", SearchCommand.MESSAGE_NO_RESULT, model);
         } else {
             assertApplicationDisplaysExpected("", String.format(SearchCommand.MESSAGE_SUCCESS, noOfResults), model);
             assertBrowserPanel(wikiaQueryHandler.getRecipeQueryUrl());

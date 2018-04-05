@@ -113,6 +113,8 @@ public class ParseCommand extends Command {
 ``` java
 package seedu.recipe.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.recipe.commons.core.EventsCenter;
 import seedu.recipe.commons.events.ui.InternetSearchRequestEvent;
 import seedu.recipe.logic.commands.exceptions.CommandException;
@@ -129,25 +131,31 @@ public class SearchCommand extends Command {
             + ": Search the recipe on recipes.wikia.com.\n"
             + "Parameters: NAME\n"
             + "Example: " + COMMAND_WORD + " chicken rice";
-    public static final String MESSAGE_FAILURE = "No recipes found. Please try another query.";
+    public static final String MESSAGE_NO_RESULT = "No recipes found. Please try another query.";
+    public static final String MESSAGE_FAILURE = "ReciRecipe couldn't search. Are you connected to the Internet?";
     public static final String MESSAGE_SUCCESS = "Found %1$s recipe(s). Please wait while the page is loading...";
 
     private final String recipeToSearch;
-    private final WikiaQueryHandler wikiaQueryHandler;
+    private WikiaQueryHandler wikiaQueryHandler;
 
     public SearchCommand(String recipeToSearch) {
+        requireNonNull(recipeToSearch);
         this.recipeToSearch = recipeToSearch;
-        this.wikiaQueryHandler = new WikiaQueryHandler(recipeToSearch);
     }
 
     @Override
     public CommandResult execute() throws CommandException {
+        try {
+            this.wikiaQueryHandler = new WikiaQueryHandler(recipeToSearch);
+        } catch (AssertionError ae) {
+            return new CommandResult(MESSAGE_FAILURE);
+        }
         int noOfResult = wikiaQueryHandler.getQueryNumberOfResults();
 
         EventsCenter.getInstance().post(new InternetSearchRequestEvent(wikiaQueryHandler));
 
         if (noOfResult == 0) {
-            return new CommandResult(MESSAGE_FAILURE);
+            return new CommandResult(MESSAGE_NO_RESULT);
         } else {
             return new CommandResult(String.format(MESSAGE_SUCCESS, noOfResult));
         }
@@ -214,7 +222,7 @@ public class WikiaQueryHandler implements WikiaQuery {
     private String rawDataString;
     private JsonObject rawDataJson;
 
-    public WikiaQueryHandler(String recipeToSearch) {
+    public WikiaQueryHandler(String recipeToSearch) throws AssertionError {
         requireNonNull(recipeToSearch);
         this.recipeToSearch = recipeToSearch;
         loadUrl();
@@ -263,7 +271,7 @@ public class WikiaQueryHandler implements WikiaQuery {
      * Reads the HTTP connection and print data to {@code rawDataString}.
      * Adapted from https://stackoverflow.com/questions/1485708/how-do-i-do-a-http-get-in-java
      */
-    private void getRawData() {
+    private void getRawData() throws AssertionError {
         requireNonNull(queryUrl);
         requireNonNull(httpUrlConnection);
 

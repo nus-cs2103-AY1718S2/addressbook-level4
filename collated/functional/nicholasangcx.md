@@ -59,15 +59,72 @@ public class AccessTokenCommand extends Command {
 ``` java
     /**
      * Constructs a feedback message to summarise an operation that displayed
-     * a listing of persons with the specified tags.
+     * a listing of recipes with the specified tags.
      *
-     * @param displaySize indicates the number of people listed, used to generate summary
+     * @param displaySize indicates the number of recipe listed, used to generate summary
      * @param tagKeywords the tags searched for, used to generate summary
-     * @return summary message for persons displayed
+     * @return summary message for recipes displayed
      */
     public static String getMessageForTagListShownSummary(int displaySize, String tagKeywords) {
         return String.format(Messages.MESSAGE_RECIPES_WITH_TAGS_LISTED_OVERVIEW, displaySize, tagKeywords);
     }
+
+    /**
+     * Constructs a feedback message to summarise an operation that displayed
+     * a listing of recipes with the specified ingredients.
+     *
+     * @param displaySize indicates the number of recipe listed, used to generate summary
+     * @param ingredientKeywords the ingredients searched for, used to generate summary
+     * @return summary message for recipes displayed
+     */
+    public static String getMessageForIngredientListShownSummary(int displaySize, String ingredientKeywords) {
+        return String.format(Messages.MESSAGE_RECIPES_WITH_INGREDIENTS_LISTED_OVERVIEW,
+                displaySize, ingredientKeywords);
+    }
+```
+###### \java\seedu\recipe\logic\commands\IngredientCommand.java
+``` java
+package seedu.recipe.logic.commands;
+
+import java.util.Arrays;
+
+import seedu.recipe.model.recipe.IngredientContainsKeywordsPredicate;
+
+/**
+ * Finds and lists all recipes in recipe book whose ingredient contains any of the argument keywords.
+ * Keyword matching is case sensitive.
+ */
+public class IngredientCommand extends Command {
+
+    public static final String COMMAND_WORD = "ingredient";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all recipes whose ingredients contain ALL of "
+            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+            + "Example: " + COMMAND_WORD + " chicken";
+
+    private final IngredientContainsKeywordsPredicate predicate;
+    private final String[] ingredientKeywords;
+
+    public IngredientCommand(IngredientContainsKeywordsPredicate predicate, String[] ingredientKeywords) {
+        this.predicate = predicate;
+        this.ingredientKeywords = ingredientKeywords;
+    }
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredRecipeList(predicate);
+        return new CommandResult(getMessageForIngredientListShownSummary
+                (model.getFilteredRecipeList().size(), Arrays.toString(ingredientKeywords)));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if they are the same object
+                || (other instanceof IngredientCommand // instanceof handles nulls
+                && this.predicate.equals(((IngredientCommand) other).predicate)); // state check
+    }
+}
 ```
 ###### \java\seedu\recipe\logic\commands\TagCommand.java
 ``` java
@@ -78,7 +135,7 @@ import java.util.Arrays;
 import seedu.recipe.model.tag.TagContainsKeywordsPredicate;
 
 /**
- * Finds and lists all recipes in address book whose tag contains any of the argument keywords.
+ * Finds and lists all recipes in recipe book whose tag contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
 public class TagCommand extends Command {
@@ -170,6 +227,44 @@ public class UploadCommand extends Command {
     }
 }
 ```
+###### \java\seedu\recipe\logic\parser\IngredientCommandParser.java
+``` java
+package seedu.recipe.logic.parser;
+
+import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import java.util.Arrays;
+
+import seedu.recipe.logic.commands.IngredientCommand;
+import seedu.recipe.logic.parser.exceptions.ParseException;
+import seedu.recipe.model.recipe.IngredientContainsKeywordsPredicate;
+
+/**
+ * Parses input arguments and creates a new IngredientCommand object
+ */
+public class IngredientCommandParser implements Parser<IngredientCommand> {
+
+    private static final String REGEX = "\\s+";
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the IngredientCommand
+     * and returns an IngredientCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public IngredientCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, IngredientCommand.MESSAGE_USAGE));
+        }
+
+        String[] ingredientKeywords = trimmedArgs.split(REGEX);
+
+        return new IngredientCommand(new IngredientContainsKeywordsPredicate(Arrays.asList(ingredientKeywords)),
+                    ingredientKeywords);
+    }
+}
+```
 ###### \java\seedu\recipe\logic\parser\ParserUtil.java
 ``` java
 
@@ -223,7 +318,6 @@ public class TagCommandParser implements Parser<TagCommand> {
 
         return new TagCommand(new TagContainsKeywordsPredicate(Arrays.asList(tagKeywords)), tagKeywords);
     }
-
 }
 ```
 ###### \java\seedu\recipe\logic\parser\UploadCommandParser.java
@@ -266,6 +360,45 @@ public class UploadCommandParser implements Parser<UploadCommand> {
 }
 //@author
 ```
+###### \java\seedu\recipe\model\recipe\IngredientContainsKeywordsPredicate.java
+``` java
+package seedu.recipe.model.recipe;
+
+import java.util.List;
+import java.util.function.Predicate;
+
+import seedu.recipe.commons.util.StringUtil;
+
+/**
+ * Tests that a {@code Recipe}'s {@code Ingredient} matches all of the keywords given.
+ */
+public class IngredientContainsKeywordsPredicate implements Predicate<Recipe> {
+    private final List<String> keywords;
+
+    public IngredientContainsKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    @Override
+    public boolean test(Recipe recipe) {
+        int matches = 0;
+        String ingredients = recipe.getIngredient().toString().replaceAll(",", " ");
+        for (String keyword : keywords) {
+            if (StringUtil.containsWordIgnoreCase(ingredients, keyword)) {
+                matches++;
+            }
+        }
+        return matches == keywords.size();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof IngredientContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((IngredientContainsKeywordsPredicate) other).keywords)); // state check
+    }
+}
+```
 ###### \java\seedu\recipe\model\tag\TagContainsKeywordsPredicate.java
 ``` java
 package seedu.recipe.model.tag;
@@ -279,6 +412,7 @@ import seedu.recipe.model.recipe.Recipe;
  * Tests that a {@code Recipe}'s {@code Tags} matches any of the keywords given.
  */
 public class TagContainsKeywordsPredicate implements Predicate<Recipe> {
+
     private final List<String> keywords;
 
     public TagContainsKeywordsPredicate(List<String> keywords) {
@@ -287,11 +421,6 @@ public class TagContainsKeywordsPredicate implements Predicate<Recipe> {
 
     @Override
     public boolean test(Recipe recipe) {
-        /*figure out why cannot work
-           return keywords.stream()
-                    .anyMatch(keyword -> Recipe.getTags().contains(keyword));
-
-         */
         return keywords.stream()
                     .anyMatch(keyword -> recipe.getTags().stream()
                         .anyMatch(tag -> tag.tagName.equals(keyword)));

@@ -132,7 +132,7 @@ public class MainWindow extends UiPart<Stage> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        //@@author yamgent-reused
+        //@@author Kyholmes-reused
         //Reused from https://github.com/se-edu/addressbook-level4/pull/799/files with minor modifications
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
                 logic.getPatientVisitingQueue().size());

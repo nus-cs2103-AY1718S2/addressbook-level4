@@ -73,7 +73,7 @@ public abstract class ImdbSystemTest {
         testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
-        //@@author yamgent-reused
+        //@@author Kyholmes-reused
         //Reused from https://github.com/se-edu/addressbook-level4/pull/799/files with minor modifications
         resultDisplayDefaultStyle = mainWindowHandle.getResultDisplay().getStyleClass();
         resultDisplayErrorStyle = mainWindowHandle.getResultDisplay().getStyleClass();
@@ -300,7 +300,7 @@ public abstract class ImdbSystemTest {
         }
     }
 
-    //@@author yamgent-reused
+    //@@author Kyholmes-reused
     //Reused from https://github.com/se-edu/addressbook-level4/pull/799/files with minor modifications
     /**
      * Asserts that the timing of sync status was changed and record number was changed to match total number of

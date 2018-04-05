@@ -104,7 +104,7 @@ public class PatientCardHandle extends NodeHandle<Node> {
                 .collect(Collectors.toList());
     }
 
-    //@@author yamgent-reused
+    //@@author Kyholmes-reused
     //Reused from https://github.com/se-edu/addressbook-level4/pull/798/files
     public List<String> getTagColors(String tag) {
         return tagLabels

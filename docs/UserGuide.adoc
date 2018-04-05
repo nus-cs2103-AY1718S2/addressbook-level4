@@ -1,4 +1,4 @@
-= Loanshark Tycoon - User Guide
+= Loanshark Tycoon v1.4 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -42,9 +42,14 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n: John Doe p: 98765432 e: johnd@example.com a: John street, block 123, #01-01` : adds a person named `John Doe` to the database.
+* **`add`**`ty: c n: John Doe p: 98765432 e: johnd@example.com a: John street, block 123, #01-01` : adds a person named `John Doe` to the database.
 * **`delete`**`3` : deletes the third contact shown in the current list
 * *`exit`* : exits the application
+
+== Known Issues
+* Deleting a customer will not update any Runner whose customer list contains that customer [*functionality not yet implemented - coming in v1.5*].
+* Deleting a runner will not update any Customer whose Runner field contains that runner [*functionality not yet implemented - coming in v1.5*].
+* Default date is January 1, 1970 (default Java Date value), when no start date or due date is specified when adding a customer.
 
 == Command Summary
 
@@ -116,7 +121,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 |assign (`as`)
 |(To be added)
-|`assign RUNNER-INDEX c: CUSTOMER-INDEX`
+|`assign RUNNER-INDEX c: CUSTOMER-INDEX [CUSTOMER-INDEX ...]`
 |===
 
 == Feature details
@@ -202,9 +207,10 @@ _Deletes the first person in the results of the `find` command._
 ====
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Name, phone, full email, address and tags are searched by default (no specifier or -all specifier)
-* `-n` to search only names, `-p` to search only phones, `-e` to search only emails,
-`-a` to search only addresses, `-t` to search only tags.
+* NAME, PHONE, EMAIL, ADDRESS and TAGS are searched by default ( when no specifier is input or -all specifier is input)
+* Only one specifier may be used
+* `-n` to search only NAME, `-p` to search only PHONE, `-e` to search only EMAIL,
+`-a` to search only ADDRESS, `-t` to search only TAGS.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ====
@@ -335,12 +341,22 @@ _The `redo` command fails as there are no `undo` commands executed previously._
 ***
 === Assigning Customer to a Runner : `assign`
 
+[NOTE]
+====
+* RUNNER-INDEX must be provided, and at least one CUSTOMER-INDEX must be provided
+====
 *Usage examples:*
 
 ====
 `assign 1 c: 2`
 
 _Assigns customer at Index 2 to Runner at Index 1 based on the last shown listing_
+====
+
+====
+`as 1 c: 2 4`
+
+_Assigns customers at Index 2 and Index 4 to Runner at Index 1 based on the last shown listing_
 ====
 
 === Saving the data

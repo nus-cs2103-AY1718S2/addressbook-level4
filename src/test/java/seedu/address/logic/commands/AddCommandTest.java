@@ -130,6 +130,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void sortPersons() {
+            fail("This method should not be called");
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
@@ -138,6 +143,11 @@ public class AddCommandTest {
         @Override
         public ObservableList<Task> getFilteredTaskList() {
             return null;
+        }
+
+        @Override
+        public ObservableList<Task>[][] getCalendarTaskLists() {
+            return new ObservableList[0][];
         }
 
         @Override

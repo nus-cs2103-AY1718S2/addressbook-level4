@@ -205,14 +205,27 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: refine later
     }
 
+    public ObservableList<Person> getSortedList() {
+        return persons.asObservableList();
+    }
+
     @Override
     public ObservableList<Person> getPersonList() {
         return persons.asObservableList();
     }
 
+    public void sortList() {
+        persons.sortList();
+    }
+
     @Override
     public ObservableList<Task> getTaskList() {
         return tasks.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Task>[][] getCalendarList() {
+        return tasks.asCalendarList();
     }
 
     @Override

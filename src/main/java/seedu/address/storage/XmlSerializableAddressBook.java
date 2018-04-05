@@ -115,6 +115,11 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<Task>[][] getCalendarList() {
+        return null;
+    }
+
+    @Override
     public ObservableList<Tag> getTagList() {
         final ObservableList<Tag> tags = this.tags.stream().map(t -> {
             try {

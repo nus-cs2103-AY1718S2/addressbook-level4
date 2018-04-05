@@ -31,6 +31,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Task> filteredTasks;
     private final ArrayList<String> filteredDeleteItems;
+    private final ObservableList<Task>[][] calendarTaskLists;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -45,6 +46,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredTasks = new FilteredList<>(this.addressBook.getTaskList());
         filteredDeleteItems = new ArrayList<>(this.addressBook.getItemList());
+        calendarTaskLists = this.addressBook.getCalendarList();
     }
 
     public ModelManager() {
@@ -107,6 +109,16 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void sortPersons() {
+        addressBook.sortList();
+    }
+
+    @Override
+    public ObservableList<Task>[][] getCalendarTaskLists() {
+        return calendarTaskLists;
     }
 
     //=========== Filtered Person List Accessors =============================================================

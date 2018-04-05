@@ -415,7 +415,7 @@ collect the information of the 2nd person in the list. On running the above comm
 The collected information will be used automatically to fill up details as shown below.
 
 .The User Interface to draft your email
-image::emailSS1.png[width="790"]
+image::emailSS1.PNG[width="790"]
 
 [TIP]
 You can use keyboard short-cuts like `Ctrl-B` to *bold* your text while drafting
@@ -426,7 +426,7 @@ button to send your email. If the email is sent successfully, you should see
 a pop-up message as shown below.
 
 .Pop-up message
-image::emailSS2.png[width="400"]
+image::emailSS2.PNG[width="400"]
 
 === Clearing all entries : `clear`
 

@@ -22,7 +22,7 @@ public class GroupCommandParser implements Parser<GroupCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the GroupCommand
-     * and returns an SelectCommand object for execution.
+     * and returns an GroupCommand object for execution.
      *
      * @throws ParseException if the user input does not conform the expected format
      */

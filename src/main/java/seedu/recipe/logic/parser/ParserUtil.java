@@ -2,7 +2,6 @@ package seedu.recipe.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
-import java.security.acl.Group;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -489,7 +488,7 @@ public class ParserUtil {
     public static GroupName parseGroupName(String groupName) throws IllegalValueException {
         requireNonNull(groupName);
         String trimmedName = groupName.trim();
-        if (!Name.isValidName(trimmedName)) {
+        if (!GroupName.isValidName(trimmedName)) {
             throw new IllegalValueException(GroupName.MESSAGE_NAME_CONSTRAINTS);
         }
         return new GroupName(trimmedName);
@@ -503,4 +502,5 @@ public class ParserUtil {
         requireNonNull(groupName);
         return groupName.isPresent() ? Optional.of(parseGroupName(groupName.get())) : Optional.empty();
     }
+    //@@author
 }

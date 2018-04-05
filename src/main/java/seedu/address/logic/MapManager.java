@@ -1,6 +1,7 @@
 //@@author jaronchan
 package seedu.address.logic;
 
+import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.javascript.object.DirectionsPane;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
@@ -111,6 +112,10 @@ public class MapManager {
             DirectionsRenderer directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
             directionsService.getRoute(request, new MyDirectionsServiceCallback(map), directionsRenderer);
         }
+
+//        public static void removeDirectionsOnMap(GoogleMap map, DirectionsPane directionsPane) {
+//
+//        }
     }
 }
 

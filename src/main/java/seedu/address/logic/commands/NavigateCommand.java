@@ -7,6 +7,7 @@ import com.google.api.services.calendar.model.Event;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.LoadDirectionsEvent;
+import seedu.address.commons.events.ui.RemoveDirectionsEvent;
 
 /**
  * Displays directions between locations scheduled for the day based on specified events of the day.
@@ -35,6 +36,8 @@ public class NavigateCommand extends Command {
     //@@author jaronchan
     @Override
     public CommandResult execute() {
+
+//        EventsCenter.getInstance().post(new RemoveDirectionsEvent());
 
         EventsCenter.getInstance().post(
             new LoadDirectionsEvent(

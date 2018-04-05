@@ -2,6 +2,7 @@
 package systemtests;
 
 import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_RECIPE;
+import static seedu.recipe.testutil.TypicalIndexes.INDEX_SECOND_RECIPE;
 import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipeBook;
 
 import org.junit.Test;
@@ -43,7 +44,24 @@ public class ParseCommandSystemTest extends RecipeBookSystemTest {
                 + "Next, Put broth in a bowl with lettuce, get ready chili sauce and sweet soy sauce. "
                 + "#Serve rice on a plate with spoon and folk.\n"
                 + "img/https://vignette.wikia.nocookie.net/recipes/images/d/d3/Chickenrice2.jpg/revision/"
-                + "latest/scale-to-width-down/180?cb=20080516004325");
+                + "latest/scale-to-width-down/180?cb=20080516004325\n"
+                + "url/http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice");
+
+        command = SelectCommand.COMMAND_WORD + " " + INDEX_SECOND_RECIPE.getOneBased();
+        executeCommand(command);
+
+        assertCommandSuccess("add\n"
+                + "name/Asian Chicken Salad\n"
+                + "ingredient/chicken, cabbage, mushrooms, carrots, cilantro, cucumber, "
+                + "green onions, mandarin orange, tangerine, black pepper\n"
+                + "instruction/In a large bowl, combine chicken, cabbage, mushrooms, "
+                + "carrots, cilantro, cucumber, and dressing.\n"
+                + "Toss well.\n"
+                + "Top with green onions and tangerine sections.\n"
+                + "Pepper to taste.\n"
+                + "img/https://vignette.wikia.nocookie.net/recipes/images/3/35/Chicken"
+                + "-salad-ck-1940987-l.jpg/revision/latest/scale-to-width-down/340?cb=20131015235502\n"
+                + "url/http://recipes.wikia.com/wiki/Asian_Chicken_Salad?useskin=wikiamobile");
     }
 
     /**

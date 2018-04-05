@@ -1,5 +1,5 @@
 //@@author kokonguyen191
-package seedu.recipe.ui.util;
+package seedu.recipe.ui.parser;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,34 +7,55 @@ import java.io.IOException;
 
 import org.jsoup.Jsoup;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import seedu.recipe.ui.GuiUnitTest;
 
-public class WikiaParserTest extends GuiUnitTest {
-    private static final String WIKIA_RECIPE_URL_A = "http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice";
-    private static final String WIKIA_RECIPE_URL_B = "http://recipes.wikia.com/wiki/Beef_Tenderloin_with_Madeira_Sauce";
-    private static final String WIKIA_NOT_RECIPE = "http://recipes.wikia.com/wiki/Category:Mushroom_Recipes";
+public class MobileWikiaParserTest extends GuiUnitTest {
 
-    private WikiaParser wikiaParserA;
-    private WikiaParser wikiaParserB;
-    private WikiaParser wikiaParserNotRecipe;
+    private static final String WIKIA_RECIPE_URL_A =
+            "http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice?useskin=wikiamobile";
+    private static final String WIKIA_RECIPE_URL_B =
+            "http://recipes.wikia.com/wiki/Beef_Tenderloin_with_Madeira_Sauce?useskin=wikiamobile";
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private MobileWikiaParser wikiaParserA;
+    private MobileWikiaParser wikiaParserB;
 
     @Before
     public void setUp() throws IOException {
-        wikiaParserA = new WikiaParser(Jsoup.connect(WIKIA_RECIPE_URL_A).get());
-        wikiaParserB = new WikiaParser(Jsoup.connect(WIKIA_RECIPE_URL_B).get());
-        wikiaParserNotRecipe = new WikiaParser(Jsoup.connect(WIKIA_NOT_RECIPE).get());
+        wikiaParserA = new MobileWikiaParser(Jsoup.connect(WIKIA_RECIPE_URL_A).get());
+        wikiaParserB = new MobileWikiaParser(Jsoup.connect(WIKIA_RECIPE_URL_B).get());
     }
 
     @Test
-    public void getName_validRecipe_returnsResult() throws Exception {
+    public void constructor_nullArgument_throwsException() {
+        thrown.expect(NullPointerException.class);
+        new MobileWikiaParser(null);
+        new MobileWikiaParser(null, "");
+    }
+
+    @Test
+    public void equals() {
+        String testDocumentString = "<html>Test</html>";
+        String testUrl = "127.0.0.1";
+        MobileWikiaParser wikiaParserA = new MobileWikiaParser(testDocumentString, testUrl);
+        MobileWikiaParser wikiaParserB = new MobileWikiaParser(Jsoup.parse(testDocumentString, testUrl));
+        assertEquals(wikiaParserA, wikiaParserB);
+    }
+
+    @Test
+    public void getName_validRecipes_returnsResult() throws Exception {
         assertEquals(wikiaParserA.getName(), "Hainanese Chicken Rice");
         assertEquals(wikiaParserB.getName(), "Beef Tenderloin with Madeira Sauce");
     }
 
     @Test
-    public void getIngredient_validRecipe_returnsResult() throws Exception {
+    public void getIngredient_validRecipes_returnsResult() throws Exception {
         assertEquals(wikiaParserA.getIngredient(), "chicken, salt, spring onion, pandan leaves, "
                 + "ginger, ginger, garlic, cinnamon, cloves, star anise, chicken broth, pandan leaves, salt,"
                 + " light soy sauce, sesame oil, cucumber, tomatoes, coriander, lettuce, pineapple, fresh "
@@ -46,7 +67,7 @@ public class WikiaParserTest extends GuiUnitTest {
     }
 
     @Test
-    public void getInstruction_validRecipe_returnsResult() throws Exception {
+    public void getInstruction_validRecipes_returnsResult() throws Exception {
         assertEquals(wikiaParserA.getInstruction(),
                 "Boil water with spring Onion, ginger and pandan leaves, put in Chicken and cook till done,"
                         + " do not over cook. briefly dip in cold water and set aside to cool. Keep broth heated.\n"
@@ -76,9 +97,15 @@ public class WikiaParserTest extends GuiUnitTest {
     }
 
     @Test
-    public void getImageUrl_validRecipe_returnsResult() throws Exception {
+    public void getImageUrl_validRecipes_returnsResult() throws Exception {
         assertEquals(wikiaParserA.getImageUrl(), "https://vignette.wikia.nocookie.net/recipes/images/d/d3"
-                + "/Chickenrice2.jpg/revision/latest/scale-to-width-down/180?cb=20080516004325");
+                + "/Chickenrice2.jpg/revision/latest/scale-to-width-down/340?cb=20080516004325");
+    }
+
+    @Test
+    public void getUrl_validRecipes_returnsResult() throws Exception {
+        assertEquals(wikiaParserA.getUrl(), WIKIA_RECIPE_URL_A);
+        assertEquals(wikiaParserB.getUrl(), WIKIA_RECIPE_URL_B);
     }
 
     @Test
@@ -102,7 +129,8 @@ public class WikiaParserTest extends GuiUnitTest {
                 + "Next, Put broth in a bowl with lettuce, get ready chili sauce and sweet soy sauce. "
                 + "#Serve rice on a plate with spoon and folk.\n"
                 + "img/https://vignette.wikia.nocookie.net/recipes/images/d/d3/Chickenrice2.jpg/revision/"
-                + "latest/scale-to-width-down/180?cb=20080516004325");
+                + "latest/scale-to-width-down/340?cb=20080516004325\n"
+                + "url/http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice?useskin=wikiamobile");
         assertEquals(wikiaParserB.parseRecipe(), "add\n"
                 + "name/Beef Tenderloin with Madeira Sauce\n"
                 + "ingredient/1 cup of garlic, 2 cups of mustard, 3 tbs chopped rosemary,"
@@ -124,33 +152,7 @@ public class WikiaParserTest extends GuiUnitTest {
                 + "Stir in garlic, boil 5 min.\n"
                 + "Stir corn into broth until blended. Add to skillet.\n"
                 + "Bring to a boil, boil stirring 5 min.\n"
-                + "Pour into gravy boat and serve with the beef.");
-    }
-
-    @Test
-    //TODO: Fix this test
-    public void getName_notRecipe_returnsResult() throws Exception {
-        assertEquals(wikiaParserNotRecipe.getName(), "Mushroom Recipes");
-    }
-
-    @Test
-    public void getIngredient_notRecipe_returnsBlank() throws Exception {
-        assertEquals(wikiaParserNotRecipe.getIngredient(), "");
-    }
-
-    @Test
-    public void getInstruction_notRecipe_returnsBlank() throws Exception {
-        assertEquals(wikiaParserNotRecipe.getInstruction(), "");
-    }
-
-    @Test
-    public void getImageUrl_notRecipe_returnsBlank() throws Exception {
-        assertEquals(wikiaParserNotRecipe.getImageUrl(), "");
-    }
-
-    @Test
-    //TODO: Fix this test
-    public void parseRecipe_notRecipe_returnsResult() throws Exception {
-        assertEquals(wikiaParserNotRecipe.parseRecipe(), "add\nname/Mushroom Recipes");
+                + "Pour into gravy boat and serve with the beef.\n"
+                + "url/http://recipes.wikia.com/wiki/Beef_Tenderloin_with_Madeira_Sauce?useskin=wikiamobile");
     }
 }

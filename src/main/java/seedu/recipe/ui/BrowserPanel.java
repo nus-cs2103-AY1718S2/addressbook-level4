@@ -24,11 +24,11 @@ import seedu.recipe.commons.events.ui.UploadRecipesEvent;
 import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.recipe.Url;
 import seedu.recipe.model.util.HtmlFormatter;
+import seedu.recipe.ui.parser.WebParser;
+import seedu.recipe.ui.parser.WebParserHandler;
 import seedu.recipe.ui.util.CloudStorageUtil;
 import seedu.recipe.ui.util.FacebookHandler;
 import seedu.recipe.ui.util.UiUtil;
-import seedu.recipe.ui.util.WebParser;
-import seedu.recipe.ui.util.WebParserHandler;
 
 /**
  * The Browser Panel of the App.

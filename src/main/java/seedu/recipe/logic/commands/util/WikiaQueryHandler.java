@@ -19,7 +19,7 @@ import com.restfb.json.JsonObject;
  */
 public class WikiaQueryHandler implements WikiaQuery {
 
-    public static final String QUERY_URL = "http://recipes.wikia.com/wiki/Special:Search?query=";
+    public static final String QUERY_URL = "http://recipes.wikia.com/search?query=";
     private static final String API_QUERY_URL = "http://recipes.wikia.com/api/v1/Search/List?query=";
 
     private String recipeToSearch;

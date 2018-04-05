@@ -234,7 +234,7 @@ Gets a recipe from a website loaded in the browser panel.
 
 Format: `parse`
 
-To use this format, you do a `search` first (See <<Search>>) then select a recipe. +
+To use this command, you do a `search` first (See <<Search>>) then select a recipe. +
 Suppose you have that done and you are at this step (see <<fig-InternetSearchResult0>>) +
 {nbsp} +
 

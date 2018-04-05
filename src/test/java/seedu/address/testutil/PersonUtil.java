@@ -47,7 +47,7 @@ public class PersonUtil {
         sb.append(PREFIX_JOB_APPLIED + person.getJobApplied().value + " ");
 
         if (!isNull(person.getResume().value)) {
-            sb.append(PREFIX_RESUME + person.getResume().value + " ");
+            sb.append(PREFIX_RESUME + person.getResume().userInput + " ");
         }
         if (!isNull(person.getProfileImage().value)) {
             sb.append(PREFIX_IMAGE + person.getProfileImage().value + " ");

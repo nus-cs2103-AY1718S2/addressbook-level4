@@ -19,17 +19,34 @@ public class Resume {
     private static final int ONEMEGABYTE = 1 * 1024 * 1024;
     private static final String RESUME_VALIDATION_REGEX = ".*\\S.*";
     public final String value;
+    public final String userInput;
+    private boolean isHashed;
     /**
      * Constructs a {@code Resume}.
      *
      * @param fileName A valid fileName.
      */
     public Resume(String fileName) {
+        isHashed = false;
         if (isNull(fileName)) {
             this.value = null;
+            this.userInput = null;
         } else {
             checkArgument(isValidResume(fileName), MESSAGE_RESUME_CONSTRAINTS);
             this.value = fileName;
+            userInput = fileName;
+        }
+    }
+
+    public Resume(String storageFileName, String userFileName) {
+        isHashed = true;
+        if (isNull(storageFileName)) {
+            this.value = null;
+            this.userInput = null;
+        } else {
+            checkArgument(isValidResume(storageFileName), MESSAGE_RESUME_CONSTRAINTS);
+            this.value = storageFileName;
+            userInput = userFileName;
         }
     }
 
@@ -125,7 +142,7 @@ public class Resume {
 
     @Override
     public String toString() {
-        return value;
+        return userInput;
     }
 
     @Override
@@ -133,9 +150,16 @@ public class Resume {
         return other == this // short circuit if same object
                 || (other instanceof Resume // instanceof handles nulls
                 && ((isNull(this.value) && isNull(((Resume) other).value)) //both value are null
-                    || this.value.equals(((Resume) other).value))); // state check
+                    || (isHashed && ((Resume) other).isHashed) ? isHashEqual(this.value, ((Resume) other).value)
+                                : this.userInput.equals(((Resume) other).userInput))); // state check
     }
 
+    private boolean isHashEqual(String first, String second) {
+        assert(first.split("_").length == 2);
+        String firstHash = first.split("_")[1];
+        String secondHash = second.split("_")[1];
+        return firstHash.equals(secondHash);
+    }
     @Override
     public int hashCode() {
         return value.hashCode();

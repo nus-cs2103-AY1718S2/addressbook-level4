@@ -16,6 +16,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_UNIVERSITY;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ResumeUtil;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
@@ -78,6 +79,7 @@ public class AddCommand extends UndoableCommand {
             model.addPerson(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicatePersonException e) {
+            ResumeUtil.cleanUpDataFolder(toAdd.getResume());
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 

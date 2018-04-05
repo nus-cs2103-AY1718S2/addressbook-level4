@@ -5,8 +5,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+
 import org.junit.Test;
 
+import seedu.address.logic.parser.ResumeUtil;
 import seedu.address.testutil.Assert;
 //@@author mhq199657
 public class ResumeTest {
@@ -55,6 +58,28 @@ public class ResumeTest {
         assertTrue(Resume.isValidResume(formFilePath("george.pdf")));
         assertTrue(Resume.isValidResume(formFilePath("hoon.pdf")));
 
+    }
+
+    @Test
+    public void equals() {
+        //neither hashed
+        assertEquals(new Resume(formFilePath("1 2.pdf")), new Resume(formFilePath("1 2.pdf")));
+        //one hashed
+        Resume hashedResume = null;
+        try {
+            hashedResume = ResumeUtil.process(new Resume(formFilePath("1 2.pdf")));
+        } catch (IOException ioe) {
+            throw new AssertionError("This should never happen.");
+        }
+        assertEquals(new Resume(formFilePath("1 2.pdf")), hashedResume);
+        //both hashed
+        Resume anotherhashedResume = null;
+        try {
+            anotherhashedResume = ResumeUtil.process(new Resume(formFilePath("1 2.pdf")));
+        } catch (IOException ioe) {
+            throw new AssertionError("This should never happen.");
+        }
+        assertEquals(anotherhashedResume, hashedResume);
     }
 
 }

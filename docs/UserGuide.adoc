@@ -267,6 +267,9 @@ Return the distance from the 2nd person to the 3rd person in the address book.
 `distance 1` +
 Return the distance from the headquarter to the 1st person name Betsy in the address book.
 
+=== Setting the HeadQuarters `[coming in v2.0]`
+User is able to set the address of the headquarters with 'sethq' command
+
 === Emailing the customers : `email`
 
 Sends an email to the filtered list of customers to remind them when their delivery is coming

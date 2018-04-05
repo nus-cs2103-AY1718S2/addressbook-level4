@@ -1,13 +1,16 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CUSTOMERS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -34,86 +37,128 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.runner.Runner;
 import seedu.address.model.tag.Tag;
 
+//@@author melvintzw
+
 /**
- * Edits the details of an existing person in the address book.
+ * Adds customers to a runner's customer list , list must contain unique elements
  */
-public class EditCommand extends UndoableCommand implements PopulatableCommand {
+public class AssignCommand extends UndoableCommand implements PopulatableCommand {
 
-    public static final String COMMAND_WORD = "edit";
-    public static final String COMMAND_ALIAS = "e";
+    public static final String COMMAND_WORD = "assign";
+    public static final String COMMAND_ALIAS = "as";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the last person listing. "
-            + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": assigns customers to a runner "
+            + "by the index number used in the last person listing.\n"
+            + "Parameters: RUNNER-INDEX (positive integer) "
+            + PREFIX_CUSTOMERS + " CUSTOMER INDEX (positive integer) "
+            + "[ CUSTOMER 2 INDEX...]\n"
+            + "Example: " + COMMAND_WORD + " 5 " + PREFIX_CUSTOMERS + " 2 ";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_ASSIGN_PERSON_SUCCESS = "Successfully assigned!\nUpdated Runner Info:\n%1$s";
+    // message
 
-    private final Index index;
-    private final EditPersonDescriptor editPersonDescriptor;
+    private final Index runnerIndex;
+    private final Index[] customerIndex;
 
+    private EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
     private Person personToEdit;
     private Person editedPerson;
 
     /**
-     * @param index of the person in the filtered person list to edit
-     * @param editPersonDescriptor details to edit the person with
+     * @param runnerIndex of the Runner in the filtered person list to edit
+     * @param customerIndex ... of the customers to add to Runner's customer list
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
-        requireNonNull(index);
-        requireNonNull(editPersonDescriptor);
+    public AssignCommand(Index runnerIndex, Index... customerIndex) {
+        requireNonNull(runnerIndex);
+        requireNonNull(customerIndex);
 
-        this.index = index;
-        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.runnerIndex = runnerIndex;
+        this.customerIndex = customerIndex;
     }
 
     /**
      * For call in PopulatePrefixRequestEvent class, to assign string values.
      */
-    public EditCommand() {
-        index = null;
-        editPersonDescriptor = null;
+    public AssignCommand() {
+        runnerIndex = null;
+        customerIndex = null;
     }
-
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
             model.updatePerson(personToEdit, editedPerson);
+            //TODO: model currently updates runners but does not update relevant customers with new change
+            //notable case when updating customer: if customer already has an assigned runner --> override old runner w
+            //new?
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
+        return new CommandResult(String.format(MESSAGE_ASSIGN_PERSON_SUCCESS, editedPerson));
     }
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
         List<Person> lastShownList = model.getFilteredPersonList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
+        if (runnerIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        personToEdit = lastShownList.get(index.getZeroBased());
+        personToEdit = lastShownList.get(runnerIndex.getZeroBased());
+
+        if (!(personToEdit instanceof Runner)) {
+            throw new CommandException(String.format("Person at index %d is not a Runner", runnerIndex.getOneBased()));
+        }
+
+        makeEditRunnerDescriptorFromCustIndices(); //modifies editPersonDescriptor
+
         editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+    }
+
+    /**
+     * Creates and returns an {@code EditPersonDescriptor} with new customers from customerIndex...
+     * the created EditPersonDescriptor is to be used to create editedPerson.
+     */
+    private void makeEditRunnerDescriptorFromCustIndices() throws CommandException {
+        List<Person> lastShownList = model.getFilteredPersonList();
+        Person runnerToBeEdited = lastShownList.get(runnerIndex.getZeroBased());
+        assert (runnerToBeEdited instanceof Runner);
+
+        editPersonDescriptor.setName(runnerToBeEdited.getName());
+        editPersonDescriptor.setPhone(runnerToBeEdited.getPhone());
+        editPersonDescriptor.setEmail(runnerToBeEdited.getEmail());
+        editPersonDescriptor.setAddress(runnerToBeEdited.getAddress());
+        editPersonDescriptor.setTags(runnerToBeEdited.getTags());
+
+        //the following list contains all UNIQUE customers that should be in Runner's customer list after AssignCommand
+        //command is executed
+        List<Person> updatedCustomers = new ArrayList<>();
+        updatedCustomers.addAll(((Runner) runnerToBeEdited).getCustomers());
+
+        List<Person> customersToBeAdded = new ArrayList<>();
+        for (Index index: customerIndex) {
+            Person p = lastShownList.get(index.getZeroBased());
+            if (!(p instanceof Customer)) {
+                throw new CommandException("invalid customer index");
+            }
+            if (updatedCustomers.indexOf(p) >= 0) {
+                throw new CommandException(String.format("customer at index %d, already assigned to runner",
+                        index.getOneBased()));
+            }
+            customersToBeAdded.add((Customer) p);
+        }
+        updatedCustomers.addAll(customersToBeAdded); //add new unique customers to current list of customers
+        editPersonDescriptor.setCustomers(updatedCustomers);
     }
 
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
+     * This method is borrowed from EditCommand
      */
     private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) throws
             CommandException {
@@ -165,13 +210,14 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
+        if (!(other instanceof AssignCommand)) {
             return false;
         }
 
         // state check
-        EditCommand e = (EditCommand) other;
-        return index.equals(e.index)
+        AssignCommand e = (AssignCommand) other;
+        return runnerIndex.equals(e.runnerIndex)
+                && customerIndex.equals(e.customerIndex)
                 && editPersonDescriptor.equals(e.editPersonDescriptor)
                 && Objects.equals(personToEdit, e.personToEdit);
     }
@@ -196,6 +242,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
     public String getUsageMessage() {
         return MESSAGE_USAGE;
     }
+
 
     /**
      * Stores the details to edit the person with. Each non-empty field value will replace the

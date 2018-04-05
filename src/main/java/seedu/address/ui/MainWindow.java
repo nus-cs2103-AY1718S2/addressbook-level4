@@ -20,6 +20,17 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LocateCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -122,17 +133,17 @@ public class MainWindow extends UiPart<Stage> {
 
         setAccelerator(undoMenuItem, KeyCombination.valueOf("Ctrl + Z"));
         setAccelerator(redoMenuItem, KeyCombination.valueOf("Ctrl + Y"));
-        setAccelerator(clearMenuItem, KeyCombination.valueOf("Alt + C"));
+        setAccelerator(clearMenuItem, KeyCombination.valueOf("Ctrl + Shift + C"));
 
-        setAccelerator(historyMenuItem, KeyCombination.valueOf("Alt + H"));
+        setAccelerator(historyMenuItem, KeyCombination.valueOf("Ctrl + H"));
         setAccelerator(listMenuItem, KeyCombination.valueOf("F2"));
         setAccelerator(findMenuItem, KeyCombination.valueOf("Ctrl + F"));
 
-        setAccelerator(addMenuItem, KeyCombination.valueOf("Alt + A"));
-        setAccelerator(deleteMenuItem, KeyCombination.valueOf("Alt + D"));
-        setAccelerator(editMenuItem, KeyCombination.valueOf("Alt + E"));
-        setAccelerator(locateMenuItem, KeyCombination.valueOf("Alt + L"));
-        setAccelerator(selectMenuItem, KeyCombination.valueOf("Alt + S"));
+        setAccelerator(addMenuItem, KeyCombination.valueOf("Ctrl + Space"));
+        setAccelerator(deleteMenuItem, KeyCombination.valueOf("Ctrl + D"));
+        setAccelerator(editMenuItem, KeyCombination.valueOf("Ctrl + E"));
+        setAccelerator(locateMenuItem, KeyCombination.valueOf("Ctrl + L"));
+        setAccelerator(selectMenuItem, KeyCombination.valueOf("Ctrl + S"));
 
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
     }
@@ -229,7 +240,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleUndo() {
-        raise(new ExecuteCommandRequestEvent("undo"));
+        raise(new ExecuteCommandRequestEvent(new UndoCommand()));
     }
 
     /**
@@ -237,7 +248,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleRedo() {
-        raise(new ExecuteCommandRequestEvent("redo"));
+        raise(new ExecuteCommandRequestEvent(new RedoCommand()));
     }
 
     /**
@@ -245,7 +256,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleClear() {
-        raise(new ExecuteCommandRequestEvent("clear"));
+        raise(new ExecuteCommandRequestEvent(new ClearCommand()));
     }
 
     /**
@@ -253,7 +264,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleHistory() {
-        raise(new ExecuteCommandRequestEvent("history"));
+        raise(new ExecuteCommandRequestEvent(new HistoryCommand()));
     }
 
     /**
@@ -261,7 +272,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleList() {
-        raise(new ExecuteCommandRequestEvent("list"));
+        raise(new ExecuteCommandRequestEvent(new ListCommand()));
     }
 
     /**
@@ -269,7 +280,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleFind() {
-        raise(new PopulatePrefixesRequestEvent("find"));
+        raise(new PopulatePrefixesRequestEvent(new FindCommand()));
     }
 
     /**
@@ -277,7 +288,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleAdd() {
-        raise(new PopulatePrefixesRequestEvent("add"));
+        raise(new PopulatePrefixesRequestEvent(new AddCommand()));
     }
 
     /**
@@ -285,7 +296,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleDelete() {
-        raise(new PopulatePrefixesRequestEvent("delete"));
+        raise(new PopulatePrefixesRequestEvent(new DeleteCommand()));
     }
 
     /**
@@ -293,7 +304,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleEdit() {
-        raise(new PopulatePrefixesRequestEvent("edit"));
+        raise(new PopulatePrefixesRequestEvent(new EditCommand()));
     }
 
     /**
@@ -301,7 +312,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleLocate() {
-        raise(new PopulatePrefixesRequestEvent("locate"));
+        raise(new PopulatePrefixesRequestEvent(new LocateCommand()));
     }
 
     /**
@@ -309,7 +320,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleSelect() {
-        raise(new PopulatePrefixesRequestEvent("select"));
+        raise(new PopulatePrefixesRequestEvent(new SelectCommand()));
     }
 
     void show() {

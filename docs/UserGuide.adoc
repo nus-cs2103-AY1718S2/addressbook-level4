@@ -71,26 +71,26 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |`list`
 
 |history (`h`)
-|kbd:[Alt+H]
+|kbd:[Ctrl+H]
 |`history`
 |exit
-|kbd:[Alt+Q]
+|kbd:[Ctrl+Q]
 |`exit`
 
 |clear (`c`)
-|kbd:[Alt+C]
+|kbd:[Ctrl+Shift+C]
 |`clear`
 
 |add (`a`)
-|kbd:[Alt+A]
-|`add n:NAME type:r(or c) [p:PHONE_NUMBER] [e:EMAIL] [a:ADDRESS] [t:TAG] ...`
+|kbd:[Ctrl+Space]
+|`add n:NAME ty:r(or c) [p:PHONE_NUMBER] [e:EMAIL] [a:ADDRESS] [t:TAG] ...`
 
 |edit (`e`)
-|kbd:[Alt+E]
+|kbd:[Ctrl+E]
 |`edit INDEX [n:NAME] [p:PHONE_NUMBER] [e:EMAIL] [a:ADDRESS] [t:TAG] ...`
 
 |delete (`d`)
-|kbd:[Alt+D]
+|kbd:[Ctrl+D]
 |`delete INDEX`
 
 |find (`f`)
@@ -98,11 +98,12 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |`find [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
 
 |locate (`lo`)
-|kbd:[Alt+L]
-|`locate INDEX` *OR* `locate name/email/phone/address/tags`
+|kbd:[Ctrl+L]
+|`locate INDEX` +
+`locate name/email/phone/address/tags`
 
 |select (`s`)
-|kbd:[Alt+S]
+|kbd:[Ctrl+S]
 |`select INDEX`
 
 |undo (`u`)
@@ -112,6 +113,10 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |redo (`r`)
 |kbd:[Ctrl+Y]
 |`redo`
+
+|assign (`as`)
+|(To be added)
+|`assign RUNNER-INDEX c: CUSTOMER-INDEX`
 |===
 
 == Feature details
@@ -135,11 +140,11 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 *Usage examples:*
 
 ====
- add n: John Doe type: c p: 98765432 e: johnd@example.com a: John street, block 123, #01-01
+ add n: John Doe ty: c p: 98765432 e: johnd@example.com a: John street, block 123, #01-01
 ====
 
 ====
- add n: Betsy Crowe type: r t: friend e: betsycrowe@example.com a: Newgate Prison p: 1234567 t: criminal
+ add n: Betsy Crowe ty: r t: friend e: betsycrowe@example.com a: Newgate Prison p: 1234567 t: criminal
 ====
 ***
 === Editing a person : `edit`
@@ -325,6 +330,17 @@ _The `redo` command fails as there are no `undo` commands executed previously._
  undo (reverses the "delete 1" command)
  redo (reapplies the "delete 1" command)
  redo (reapplies the "clear" command)
+====
+
+***
+=== Assigning Customer to a Runner : `assign`
+
+*Usage examples:*
+
+====
+`assign 1 c: 2`
+
+_Assigns customer at Index 2 to Runner at Index 1 based on the last shown listing_
 ====
 
 === Saving the data

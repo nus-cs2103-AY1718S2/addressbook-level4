@@ -12,7 +12,7 @@ import seedu.address.model.Model;
 /**
  * Lists all the commands entered by user from the start of app launch.
  */
-public class HistoryCommand extends Command {
+public class HistoryCommand extends Command implements ImmediatelyExecutableCommand {
 
     public static final String COMMAND_WORD = "history";
     public static final String COMMAND_ALIAS = "h";
@@ -35,5 +35,10 @@ public class HistoryCommand extends Command {
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
         requireNonNull(history);
         this.history = history;
+    }
+
+    @Override
+    public String getCommandWord() {
+        return COMMAND_WORD;
     }
 }

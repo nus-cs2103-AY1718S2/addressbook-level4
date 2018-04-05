@@ -4,6 +4,7 @@ import static seedu.progresschecker.commons.util.CollectionUtil.requireAllNonNul
 
 import java.util.Objects;
 
+//@@author adityaa1998
 /**
  * Represents an Issue.
  * Guarantees: details are present and not null, field values are validated, immutable.

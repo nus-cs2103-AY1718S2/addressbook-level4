@@ -2,6 +2,7 @@ package seedu.progresschecker.model.credentials;
 
 import static java.util.Objects.requireNonNull;
 
+//@@author adityaa1998
 /**
  * Represents a github passcode
  */

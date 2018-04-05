@@ -139,7 +139,8 @@ public class GitIssueList implements Iterable<Issue> {
      */
     private void checkGitAuthentication() throws CommandException {
         if (github == null) {
-            throw new CommandException("Github not authenticated. Use logn command to authenticate github first");
+            throw new CommandException("Github not authenticated. "
+                    + "Use 'githublogin' command to first authenticate your github account");
         }
     }
 

@@ -22,7 +22,7 @@ import seedu.progresschecker.model.issues.Labels;
 import seedu.progresschecker.model.issues.Milestone;
 import seedu.progresschecker.model.issues.Title;
 
-
+//@@author adityaa1998
 /**
  * Parses input arguments and creates a new CreateIssue object
  */
@@ -38,8 +38,7 @@ public class CreateIssueParser implements Parser<CreateIssue> {
                 ArgumentTokenizer.tokenize(args, PREFIX_TITLE, PREFIX_ASSIGNEES,
                         PREFIX_MILESTONE, PREFIX_BODY, PREFIX_LABEL);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_TITLE, PREFIX_ASSIGNEES,
-                PREFIX_MILESTONE, PREFIX_BODY, PREFIX_LABEL)
+        if (!arePrefixesPresent(argMultimap, PREFIX_TITLE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CreateIssue.MESSAGE_USAGE));
         }
@@ -47,8 +46,8 @@ public class CreateIssueParser implements Parser<CreateIssue> {
         try {
             Title title = ParserUtil.parseTitle(argMultimap.getValue(PREFIX_TITLE)).get();
             Set<Assignees> assigneeSet = ParserUtil.parseAssignees(argMultimap.getAllValues(PREFIX_ASSIGNEES));
-            Milestone milestone = ParserUtil.parseMilestone(argMultimap.getValue(PREFIX_MILESTONE)).get();
-            Body body = ParserUtil.parseBody(argMultimap.getValue(PREFIX_BODY).get());
+            Milestone milestone = ParserUtil.parseMilestone(argMultimap.getValue(PREFIX_MILESTONE)).orElse(null);
+            Body body = ParserUtil.parseBody(argMultimap.getValue(PREFIX_BODY).orElse(""));
             Set<Labels> labelSet = ParserUtil.parseLabels(argMultimap.getAllValues(PREFIX_LABEL));
 
             List<Assignees> assigneesList = new ArrayList<>(assigneeSet);

@@ -34,7 +34,7 @@ public abstract class UiPart<T> {
      * @see #UiPart(URL)
      */
     public UiPart(String fxmlFileName) {
-        this(getFxmlFileUrl(fxmlFileName));
+        this(fxmlFileName != null ? MainApp.class.getResource(FXML_FILE_FOLDER + fxmlFileName) : null);
     }
 
     /**

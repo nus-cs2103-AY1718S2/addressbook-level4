@@ -133,6 +133,7 @@ public class ParserUtilTest {
         assertEquals(Optional.of(expectedPhone), ParserUtil.parsePhone(Optional.of(phoneWithWhitespace)));
     }
 
+    //@@author EdwardKSG
     @Test
     public void parseUsername_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseUsername((String) null));
@@ -198,6 +199,7 @@ public class ParserUtilTest {
         assertEquals(expectedMajor, ParserUtil.parseMajor(majorWithWhitespace));
         assertEquals(Optional.of(expectedMajor), ParserUtil.parseMajor(Optional.of(majorWithWhitespace)));
     }
+    //@@author
 
     @Test
     public void parseEmail_null_throwsNullPointerException() {

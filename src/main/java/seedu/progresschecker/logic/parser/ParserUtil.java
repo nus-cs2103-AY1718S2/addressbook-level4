@@ -52,6 +52,21 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author EdwardKSG
+    /**
+     * Parses {@code String} into an {@code int} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static int parseTaskIndex(String index) throws IllegalValueException {
+        String trimmedIndex = index.trim();
+        if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+        }
+        return Integer.parseInt(trimmedIndex);
+    }
+    //@@author
+
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
@@ -66,6 +81,7 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author EdwardKSG
     /**
      * Parses a {@code String Title} into a {@code String}.
      * Leading and trailing whitespaces will be trimmed.
@@ -80,6 +96,7 @@ public class ParserUtil {
         }
         return trimmedTitle;
     }
+    //@@author
 
     /**
      * Parses a {@code String name} into a {@code Name}.
@@ -105,6 +122,7 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
 
+    //@@author adityaa1998
     /**
      * Parses a {@code String title} into a {@code Title}.
      * Leading and trailing whitespaces will be trimmed.
@@ -221,7 +239,9 @@ public class ParserUtil {
         requireNonNull(body);
         return body.isPresent() ? Optional.of(parseBody(body.get())) : Optional.empty();
     }
+    //@@author
 
+    //@@author EdwardKSG
     /**
      * Parses a {@code String username} into a {@code GithubUsername}.
      * Leading and trailing whitespaces will be trimmed.
@@ -247,6 +267,7 @@ public class ParserUtil {
         requireNonNull(username);
         return username.isPresent() ? Optional.of(parseUsername(username.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses a {@code String phone} into a {@code Phone}.
@@ -272,6 +293,7 @@ public class ParserUtil {
         return phone.isPresent() ? Optional.of(parsePhone(phone.get())) : Optional.empty();
     }
 
+    //@@author EdwardKSG
     /**
      * Parses a {@code String major} into an {@code Major}.
      * Leading and trailing whitespaces will be trimmed.
@@ -319,6 +341,7 @@ public class ParserUtil {
         requireNonNull(year);
         return year.isPresent() ? Optional.of(parseYear(year.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses a {@code String email} into an {@code Email}.

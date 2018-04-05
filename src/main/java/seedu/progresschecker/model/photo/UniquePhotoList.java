@@ -13,6 +13,7 @@ import seedu.progresschecker.commons.util.CollectionUtil;
 import seedu.progresschecker.model.photo.exceptions.DuplicatePhotoException;
 import seedu.progresschecker.model.photo.exceptions.PhotoNotFoundException;
 
+//@@author Livian1107
 /**
  * A list of photo paths that enforces uniqueness between its elements and does not allow nulls.
  *

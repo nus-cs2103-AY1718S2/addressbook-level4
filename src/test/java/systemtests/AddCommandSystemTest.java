@@ -115,6 +115,7 @@ public class AddCommandSystemTest extends ProgressCheckerSystemTest {
                 + MAJOR_DESC_AMY + YEAR_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
+        //@@author EdwardKSG
         /* Case: add a person with all fields same as another person in the ProgressChecker except major -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withUsername(VALID_USERNAME_AMY).withMajor(VALID_MAJOR_BOB).withYear(VALID_YEAR_AMY)
@@ -122,6 +123,7 @@ public class AddCommandSystemTest extends ProgressCheckerSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + USERNAME_DESC_AMY
                 + MAJOR_DESC_BOB + YEAR_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
+        //@@author
 
         /* Case: add to empty ProgressChecker -> added */
         deleteAllPersons();
@@ -176,6 +178,7 @@ public class AddCommandSystemTest extends ProgressCheckerSystemTest {
                 + MAJOR_DESC_AMY + YEAR_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
+        //@@author EdwardKSG
         /* Case: missing username -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + MAJOR_DESC_AMY + YEAR_DESC_AMY;
@@ -185,6 +188,7 @@ public class AddCommandSystemTest extends ProgressCheckerSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + USERNAME_DESC_AMY
                 + YEAR_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        //@@author
 
         /* Case: missing year -> rejected */
         /*command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + MAJOR_DESC_AMY;
@@ -209,10 +213,12 @@ public class AddCommandSystemTest extends ProgressCheckerSystemTest {
                 + MAJOR_DESC_AMY + YEAR_DESC_AMY;
         assertCommandFailure(command, Email.MESSAGE_EMAIL_CONSTRAINTS);
 
+        //@@author EdwardKSG
         /* Case: invalid username -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + INVALID_USERNAME_DESC
                 + MAJOR_DESC_AMY + YEAR_DESC_AMY;
         assertCommandFailure(command, GithubUsername.MESSAGE_USERNAME_CONSTRAINTS);
+        //@@author
 
         /* Case: invalid tag -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + USERNAME_DESC_AMY

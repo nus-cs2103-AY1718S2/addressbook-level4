@@ -62,11 +62,15 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+
+        //@@author adityaa1998
+        //TAB case is used to auto-complete commands
         case TAB:
             keyEvent.consume();
             autocompleteCommad(commandTextField.getText());
             break;
         default:
+            //dynamic search implementation
             try {
                 if ((commandTextField.getText().trim().equalsIgnoreCase(CORRECT_COMMAND_WORD)
                         || isCorrectCommandWord)) {
@@ -89,6 +93,7 @@ public class CommandBox extends UiPart<Region> {
                 logger.info("Invalid command: " + commandTextField.getText());
                 raise(new NewResultAvailableEvent(e.getMessage()));
             }
+            //@@author
         }
     }
 

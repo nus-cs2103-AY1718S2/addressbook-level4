@@ -6,6 +6,7 @@ import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.logic.commands.ViewTaskListCommand;
 import seedu.progresschecker.logic.parser.exceptions.ParseException;
 
+//@@author EdwardKSG
 /**
  * Parses input arguments and creates a new ViewTaskListCommand object
  */
@@ -19,7 +20,7 @@ public class ViewTaskListCommandParser implements Parser<ViewTaskListCommand> {
     public ViewTaskListCommand parse(String args) throws ParseException {
         try {
             String title = ParserUtil.parseTaskTitle(args);
-            return new ViewTaskListCommand(title);
+            return new ViewTaskListCommand(); // title);
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewTaskListCommand.MESSAGE_USAGE));

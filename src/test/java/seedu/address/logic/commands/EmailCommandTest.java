@@ -74,7 +74,7 @@ public class EmailCommandTest {
                 Collections.emptySet()));
         command.setData(model, null, null);
         assertCommandFailure(command, "The list is not filtered!");
-     }
+    }
 
     @Test
     public void execute()

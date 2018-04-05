@@ -9,8 +9,8 @@
         <order>Chicken Rice</order>
         <!-- @@author -->
         <email>alice@example.com</email>
-        <address>123, Jurong West Ave 6,
-            <!-- @@author ZacZequn -->#08-111</address>
+        <address>123, Jurong West Ave 6,#08-111</address>
+        <!-- @@author ZacZequn -->
         <halal>Non-halal</halal>
         <vegetarian>Non-vegetarian</vegetarian>
         <!-- @@author -->
@@ -23,8 +23,8 @@
         <order>Chicken Rice</order>
         <!-- @@author -->
         <email>johnd@example.com</email>
-        <address>311, Clementi Ave 2, #0
-            <!-- @@author ZacZequn -->2-25</address>
+        <address>311, Clementi Ave 2, #02-25</address>
+        <!-- @@author ZacZequn -->
         <halal>Non-halal</halal>
         <vegetarian>Non-vegetarian</vegetarian>
         <!-- @@author -->

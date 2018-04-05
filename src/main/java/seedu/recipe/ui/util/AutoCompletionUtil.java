@@ -46,16 +46,12 @@ public class AutoCompletionUtil {
                 CliSyntax.PREFIX_INDEX.toString()));
         prefixesForCommand.put("group", groupPrefixes);
 
-        System.out.println(prefixesForCommand.get("add").size());
-
         for (String command : APPLICATION_COMMANDS) {
             System.out.println(command + " " + prefixesForCommand.containsKey(command));
             if (!prefixesForCommand.containsKey(command)) {
                 prefixesForCommand.put(command, new ArrayList<>());
             }
         }
-
-        System.out.println(prefixesForCommand.get("add").size());
     }
 
     /**

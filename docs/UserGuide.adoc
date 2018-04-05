@@ -83,31 +83,6 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/010195 tt/http://modsn.us/oNZLY`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/121212 tt/http://modsn.us/ojGeu t/criminal`
 
-=== Adding a command alias: `alias` (since v1.1)
-
-Creates customized aliases for any valid command. +
-Format: `alias [COMMAND] [ALIAS]`
-
-Examples:
-
-* `alias history hist`
-* `alias find f`
-* `alias alias al`
-
-=== Listing all aliases: `alias list` (since v1.4)
-
-Lists all created aliases. +
-Format: `alias list`
-
-=== Removing a currently existing alias: `unalias` (since v1.3)
-
-Removes a previously created alias. +
-Format: `unalias [CURRENT_ALIAS]`
-
-Examples:
-
-* `unalias hist`
-
 === Listing all persons : `list`
 
 Shows a list of all persons in StardyTogether. +
@@ -239,6 +214,31 @@ Examples:
 
 * `free p/John Doe p/Han Tan` +
 Displays the combined timetable for John Doe and Han Tan.
+
+=== Adding a command alias: `alias` (since v1.1)
+
+Creates customized aliases for any valid command. +
+Format: `alias [COMMAND] [ALIAS]`
+
+Examples:
+
+* `alias history hist`
+* `alias find f`
+* `alias alias al`
+
+=== Listing all aliases: `alias list` (since v1.4)
+
+Lists all created aliases. +
+Format: `alias list`
+
+=== Removing a currently existing alias: `unalias` (since v1.3)
+
+Removes a previously created alias. +
+Format: `unalias [CURRENT_ALIAS]`
+
+Examples:
+
+* `unalias hist`
 
 === Vacant study rooms finder : `vacant` (since v1.3)
 

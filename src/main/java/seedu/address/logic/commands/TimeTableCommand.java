@@ -25,8 +25,8 @@ public class TimeTableCommand extends Command {
     public static final String COMMAND_WORD = "timetable";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds timetable of a person identified  \n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Parameters: INDEX (must be a positive integer) ODD/EVEN\n"
+            + "Example: " + COMMAND_WORD + " 1 Odd";
 
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "%1$s Week Timetable of selected Person: %2$s";
 

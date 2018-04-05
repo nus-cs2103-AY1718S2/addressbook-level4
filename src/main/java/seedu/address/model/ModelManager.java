@@ -166,16 +166,15 @@ public class ModelManager extends ComponentManager implements Model {
         accountsManager.register(username, password);
     }
 
+    private void setUser(Account account) {
+        user = user.ofNullable(account);
+    }
+
     //@@author kush1509
     @Override
     public synchronized void deleteJob(Job target) throws JobNotFoundException {
         addressBook.removeJob(target);
         indicateAddressBookChanged();
-    }
-
-    //@@author
-    private void setUser(Account account) {
-        user = user.ofNullable(account);
     }
 
     //@@author trafalgarandre
@@ -201,8 +200,6 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //@@author
-
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -219,7 +216,6 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
-
 
     //@@author kush1509
     //=========== Filtered Job List Accessors =============================================================

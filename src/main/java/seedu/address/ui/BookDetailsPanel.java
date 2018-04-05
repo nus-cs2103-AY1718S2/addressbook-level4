@@ -91,9 +91,9 @@ public class BookDetailsPanel extends UiPart<Region> {
         authors.getChildren().clear();
         categories.getChildren().clear();
         book.getAuthors().forEach(author -> authors.getChildren()
-                .add(new Label(author.fullName)));
+                .add(new Label(author.getDisplayText())));
         book.getCategories().forEach(category -> categories.getChildren()
-                .add(new Label(category.toString())));
+                .add(new Label(category.getDisplayText())));
 
         scrollToTop();
         getRoot().setVisible(true);

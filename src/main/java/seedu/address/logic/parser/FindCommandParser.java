@@ -189,7 +189,7 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     private String[] getStringKeyword(ArgumentMultimap argMultimapPetPatient, Prefix prefix) throws ParseException {
         String stringWithoutPrefix = argMultimapPetPatient.getAllValues(prefix).get(0);
-        if (stringWithoutPrefix.equals("")){
+        if (stringWithoutPrefix.equals("")) {
             throw new ParseException("Invalid keyword parameters!");
         }
         return stringWithoutPrefix.trim().split("\\s+");
@@ -206,7 +206,7 @@ public class FindCommandParser implements Parser<FindCommand> {
     /**
      * Parses {@code petPatientInfo} to find out what the user is parsing to find.
      */
-    private FindCommand parsePetPatient(String petPatientInfo) throws ParseException, IllegalArgumentException{
+    private FindCommand parsePetPatient(String petPatientInfo) throws ParseException, IllegalArgumentException {
         ArgumentMultimap argMultimapPetPatient =
                 ArgumentTokenizer.tokenize(petPatientInfo, PREFIX_NAME, PREFIX_SPECIES, PREFIX_BREED,
                         PREFIX_COLOUR, PREFIX_BLOODTYPE, PREFIX_TAG);

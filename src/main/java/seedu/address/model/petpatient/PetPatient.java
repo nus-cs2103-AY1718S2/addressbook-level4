@@ -144,7 +144,7 @@ public class PetPatient {
     public String getTagString() {
         StringBuilder tagString = new StringBuilder();
         Set<Tag> tagSet = Collections.unmodifiableSet(tags.toSet());
-        for (Tag tag : tagSet){
+        for (Tag tag : tagSet) {
             tagString.append(tag.tagName);
             tagString.append(" ");
         }

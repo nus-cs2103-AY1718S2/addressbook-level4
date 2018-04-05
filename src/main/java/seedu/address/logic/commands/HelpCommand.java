@@ -53,6 +53,18 @@ public class HelpCommand extends Command {
             case RemoveCommand.COMMAND_WORD:
                 return new CommandResult(RemoveCommand.MESSAGE_USAGE);
 
+            case HelpCommand.COMMAND_WORD:
+                return new CommandResult(HelpCommand.MESSAGE_USAGE);
+
+            case HelpCommand.COMMAND_ALIAS:
+                return new CommandResult(HelpCommand.MESSAGE_USAGE);
+
+            case ListCommand.COMMAND_WORD:
+                return new CommandResult(ListCommand.MESSAGE_USAGE);
+
+            case ListCommand.COMMAND_ALIAS:
+                return new CommandResult(ListCommand.MESSAGE_USAGE);
+
             //case FindCommand.COMMAND_WORD:
                 //return new CommandResult(FindCommand.MESSAGE_USAGE);
 

@@ -15,6 +15,11 @@ public class ListCommand extends Command {
     public static final String COMMAND_WORD = "list";
     public static final String COMMAND_ALIAS = "ls";
 
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists tasks, events or both tasks and events.\n"
+            + "Parameters: [task/event]\n"
+            + "Example: " + COMMAND_WORD + " OR "
+            + COMMAND_ALIAS + " task";
+
     public static final String MESSAGE_SUCCESS = "Listed all tasks and events!";
     public static final String MESSAGE_SUCCESS_TASK = "Listed all tasks!";
     public static final String MESSAGE_SUCCESS_EVENT = "Listed all events!";

@@ -49,6 +49,7 @@ public class PersonListPanelTest extends GuiUnitTest {
     /**
      * TODO: Test remaining unused until fix
      */
+    /*
     public void handleJumpToListRequestEvent() {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
@@ -57,4 +58,5 @@ public class PersonListPanelTest extends GuiUnitTest {
         PersonCardHandle selectedCard = personListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedCard, selectedCard);
     }
+    */
 }

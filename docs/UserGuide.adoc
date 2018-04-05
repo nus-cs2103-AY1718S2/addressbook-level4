@@ -27,9 +27,12 @@ Pigeons (AB4) is for those who *prefer to use a desktop app for managing their d
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.
-.  Run the MainApp scripts and await for the GUI to open
-.  A login screen should appear. Create a profile with desired username and password if using for the first time.
+.  Run the MainApp scripts / jar file and await for the GUI to open
+.  A login screen such as the one below should appear.
++
+image::LoginScreen.png[width="300"]
++
+. Create a profile with desired username and password if using for the first time.
 If profile has previously already been created, or after creation of profile, click login.
 +
 [NOTE]
@@ -50,6 +53,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
+.  Refer to <<User Testing>> for a quick list of the sequence of commands you can try in this app.
 
 [[Features]]
 == Features
@@ -131,6 +135,10 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 Filers the list of people by date (only one date)
 Format: `filter DATE`
+
+****
+* Date format should be YYYY-MM-DD
+****
 
 When you filter by date the back end of the program will create an optimized route
 for all the people on that date and display the route on the map.
@@ -268,7 +276,7 @@ Return the distance from the 2nd person to the 3rd person in the address book.
 Return the distance from the headquarter to the 1st person name Betsy in the address book.
 
 === Setting the HeadQuarters `[coming in v2.0]`
-User is able to set the address of the headquarters with 'sethq' command
+User is able to set the address of the headquarters with `sethq` command
 
 === Emailing the customers : `email`
 
@@ -314,13 +322,27 @@ _{explain how the user can enable/disable data encryption}_
 When testing and using our system for the first time, here are some commands you can try to get the full experience.
 Feel free to try other commands outlined above when you get the feel of our program as well.
 
-*1.*  add n/John Doe a/321 Clementi Ave p/67340028 e/pigeonscs2103@gmail.com d/2018-03-24
+*1.* add n/John Doa a/321 Clementi Ave p/67340028 e/pigeonscs2103@gmail.com d/2018-03-24
+****
+* John Doa should be added to the list of addressees.
+****
 
-*2.* list John
+*2.* filter 2018-03-24
+****
+* All addressees with 2018-03-24 in their delivery date should be listed.
+* Additionally, a map routing all the shown addressees should be generated.
+****
 
-*3.* filter 2018-03-30
+*3.* find John
+****
+* All addressees with John in their name should be listed.
+****
 
-*4.* delete John
+*4.* delete 1
+****
+* John, which we added at the start, should be removed.
+* 1-index numbering system (i.e. the first addressee has index 1)
+****
 
 == Command Summary
 

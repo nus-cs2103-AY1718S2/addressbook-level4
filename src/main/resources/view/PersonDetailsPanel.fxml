@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- @@author jaronchan -->
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -19,12 +21,12 @@
           <children>
             <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
               <items>
-                <VBox prefHeight="200.0" prefWidth="100.0">
+                <VBox prefHeight="200.0" prefWidth="100.0" styleClass="v-box">
                   <children>
-                    <GridPane gridLinesVisible="true">
+                    <GridPane gridLinesVisible="false" styleClass="grid-pane">
                       <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="250.0" />
                       </columnConstraints>
                       <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -38,18 +40,30 @@
                         <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
                       </padding>
                       <children>
-                        <Label text="Name" />
-                        <Label fx:id="nameLabel" GridPane.columnIndex="1" />
-                        <Label text="Phone Number" GridPane.rowIndex="1" />
-                        <Label fx:id="phoneNumberLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="Email" GridPane.rowIndex="2" />
-                        <Label fx:id="emailLabel" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="Address" GridPane.rowIndex="3" />
-                        <Label fx:id="addressLabel" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label text="Condition" GridPane.rowIndex="4" />
-                        <Label fx:id="conditionLabel" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label text="Priority" GridPane.rowIndex="5" />
-                        <Label fx:id="priorityLabel" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-odd" />
+                        <Label styleClass="label-bright" stylesheets="@DarkTheme.css" text="Name" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-odd" GridPane.columnIndex="1" />
+                        <Label fx:id="nameLabel" styleClass="label-bright" stylesheets="@DarkTheme.css" GridPane.columnIndex="1" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-even" GridPane.rowIndex="1" />
+                        <Label styleClass="label-bright" stylesheets="@DarkTheme.css" text="Phone Number" GridPane.rowIndex="1" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-even" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="phoneNumberLabel" styleClass="label-bright" stylesheets="@DarkTheme.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-odd" GridPane.rowIndex="2" />
+                        <Label styleClass="label-bright" stylesheets="@DarkTheme.css" text="Email" GridPane.rowIndex="2" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-odd" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="emailLabel" styleClass="label-bright" stylesheets="@DarkTheme.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-even" GridPane.rowIndex="3" />
+                        <Label styleClass="label-bright" stylesheets="@DarkTheme.css" text="Address" GridPane.rowIndex="3" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-even" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="addressLabel" styleClass="label-bright" stylesheets="@DarkTheme.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-odd" GridPane.rowIndex="4" />
+                        <Label styleClass="label-bright" stylesheets="@DarkTheme.css" text="Condition" GridPane.rowIndex="4" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-odd" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label fx:id="conditionLabel" styleClass="label-bright" stylesheets="@DarkTheme.css" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-even" GridPane.rowIndex="5" />
+                        <Label styleClass="label-bright" stylesheets="@DarkTheme.css" text="Priority" GridPane.rowIndex="5" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-even" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label fx:id="priorityLabel" styleClass="label-bright" stylesheets="@DarkTheme.css" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                       </children>
                     </GridPane>
                   </children>

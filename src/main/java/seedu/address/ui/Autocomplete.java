@@ -1,28 +1,21 @@
 package seedu.address.ui;
 
-import java.util.HashSet;
-import java.util.Set;
-//import java.util.regex.Pattern;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.scene.control.TextField;
 import seedu.address.logic.Logic;
-import seedu.address.logic.parser.Prefix;
 
 //@@author aquarinte
 /**
- * Handles autocompletion of command input such as command word, options and prefixes.
+ * Handles case-insensitive autocompletion of command input such as command word, options, prefixes
+ * and also some user input parameters: Nric, pet patient name and tag.
  */
 public class Autocomplete {
 
-    /*private static final Pattern ADD_COMMAND1 = Pattern.compile("add -(a)+(?<apptInfo>.*)-(o)(?<ownerNric>.*)"
-            + "-(p)+(?<petName>.*)");
-    private static final Pattern ADD_COMMAND2 = Pattern.compile("add -(p)+(?<petInfo>.*)-(o)+(?<ownerNric>.*)");
-    private static final Pattern ADD_COMMAND3 = Pattern.compile("add -(o)+(?<ownerInfo>.*)-(p)+(?<petInfo>.*)"
-            + "-(a)+(?<apptInfo>.*)");
-    private static final Pattern ADD_COMMAND4 = Pattern.compile("add -(o)+(?<ownerInfo>.*)");
-    */
     private static Autocomplete instance;
-    private Set<String> suggestions;
+    private Logic logic;
+    private String targetWord;
 
     public static Autocomplete getInstance() {
         if (instance == null) {
@@ -34,67 +27,156 @@ public class Autocomplete {
     /**
      * Find suggestions for current user-input in commandTextField.
      */
-    public Set<String> getSuggestions(Logic logic, TextField commandTextField) {
-        suggestions = new HashSet<>();
+    public List<String> getSuggestions(Logic logic, TextField commandTextField) {
+        this.logic = logic;
         String userInput = commandTextField.getText().trim();
         String[] words = userInput.split(" ");
-        //for (String s : words) {
-        //System.out.println("Word: " + s);
-        //}
-        //The string to auto-complete:
-        String target = words[words.length - 1];
+        targetWord = words[words.length - 1].toLowerCase();
 
         if (words.length == 1) {
-            suggestCommandWords(logic, words[0]);
+            return suggestCommandWords();
         } else {
-
-            if (words[words.length - 2].equals("-o") && target.equals("nr/")) {
-                for (String nric : logic.getAllNric()) {
-                    suggestions.add(nric);
-                }
+            if (addReferenceOwnerNric(words) || editPetPatientOwnerNric(words) || findByPersonNric(words)) {
+                return suggestNrics();
             }
 
-            if (words[words.length - 2].equals("-p") && target.equals("n/")) {
-                for (String petName : logic.getAllPetPatientNames()) {
-                    suggestions.add(petName);
-                }
+            if (words[words.length - 2].equals("-p") && targetWord.startsWith("n/")) {
+                return suggestPetPatientNames();
             }
-            suggestOptions(logic, target);
-            suggestPrefixes(logic, target);
+
+            if (targetWord.startsWith("t/")) {
+                return suggestTagNames();
+            }
+
+            if (targetWord.startsWith("-")) {
+                return suggestOptions();
+            }
+
+            return suggestPrefixes();
         }
+    }
+
+    /**
+     * Checks if command input is the "add" command, and whether it has the form "-o nr/" at the end.
+     */
+    private boolean addReferenceOwnerNric(String[] words) {
+        if (words[0].equals("add") && words[words.length - 2].equals("-o") && targetWord.startsWith("nr/")) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if command input is the "edit -p" command, with the last word starting with "nr/".
+     */
+    private boolean editPetPatientOwnerNric(String[] words) {
+        if (words[0].equals("edit") && words[1].equals("-p") && targetWord.startsWith("nr/")) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if command input is the "edit -p" command, with the last word starting with "nr/".
+     */
+    private boolean findByPersonNric(String[] words) {
+        if (words[0].equals("find") && words[1].equals("-o") && targetWord.startsWith("nr/")) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns a sorted list of suggestions for tags.
+     */
+    private List<String> suggestTagNames() {
+        if (targetWord.equals("t/")) {
+            List<String> suggestions = logic.getAllTagNames().stream()
+                    .sorted()
+                    .collect(Collectors.toList());
+            return suggestions;
+        } else {
+            String[] splitByPrefix = targetWord.split("/");
+            String targetTag = splitByPrefix[1];
+            List<String> suggestions = logic.getAllTagNames().stream()
+                    .filter(t -> t.toLowerCase().startsWith(targetTag) && !t.toLowerCase().equals(targetTag))
+                    .sorted()
+                    .collect(Collectors.toList());
+            return suggestions;
+        }
+    }
+
+    /**
+     * Returns a sorted list of suggestions for pet patient names.
+     */
+    private List<String> suggestPetPatientNames() {
+        if (targetWord.equals("n/")) {
+            List<String> suggestions = logic.getAllPetPatientNames().stream()
+                    .sorted()
+                    .collect(Collectors.toList());
+            return suggestions;
+        } else {
+            String[] splitByPrefix = targetWord.split("/");
+            String targetPetName = splitByPrefix[1];
+            List<String> suggestions = logic.getAllPetPatientNames().stream()
+                    .filter(pn -> pn.startsWith(targetPetName) && !pn.equals(targetPetName))
+                    .sorted()
+                    .collect(Collectors.toList());
+            return suggestions;
+        }
+    }
+
+    /**
+     * Returns a sorted list of suggestions for Nric.
+     */
+    private List<String> suggestNrics() {
+        if (targetWord.equals("nr/")) {
+            List<String> suggestions = logic.getAllNric().stream()
+                    .sorted()
+                    .collect(Collectors.toList());
+            return suggestions;
+
+        } else {
+            String[] splitByPrefix = targetWord.split("/");
+            String targetNric = splitByPrefix[1].toUpperCase();
+            List<String> suggestions = logic.getAllNric().stream()
+                    .filter(n -> n.startsWith(targetNric))
+                    .sorted()
+                    .collect(Collectors.toList());
+            return suggestions;
+        }
+    }
+
+    /**
+     * Returns a sorted list of suggestions for prefixes.
+     */
+    private List<String> suggestPrefixes() {
+        List<String> suggestions = logic.getAllPrefixes().stream()
+                .filter(p -> p.startsWith(targetWord) && !p.equals(targetWord))
+                .sorted()
+                .collect(Collectors.toList());
         return suggestions;
     }
 
     /**
-     * Find suggestions for prefixes.
+     * Returns a sorted list of suggestions for options.
      */
-    private void suggestPrefixes(Logic logic, String target) {
-        for (Prefix p : logic.getAllPrefixes()) {
-            if (p.toString().startsWith(target) && !p.toString().equals(target)) {
-                suggestions.add(p.toString());
-            }
-        }
+    private List<String> suggestOptions() {
+        List<String> suggestions = logic.getAllOptions().stream()
+                .filter(o -> o.startsWith(targetWord) && !o.equals(targetWord))
+                .sorted()
+                .collect(Collectors.toList());
+        return suggestions;
     }
 
     /**
-     * Find suggestions for options.
+     * Returns a sorted list of suggestions for command words.
      */
-    private void suggestOptions(Logic logic, String target) {
-        for (String option : logic.getAllOptions()) {
-            if (option.startsWith(target) && !option.equals(target)) {
-                suggestions.add(option);
-            }
-        }
-    }
-
-    /**
-     * Find suggestions for command word.
-     */
-    private void suggestCommandWords(Logic logic, String word) {
-        for (String command : logic.getAllCommandWords()) {
-            if (command.startsWith(word) && !command.equals(word)) {
-                suggestions.add(command);
-            }
-        }
+    private List<String> suggestCommandWords() {
+        List<String> suggestions = logic.getAllCommandWords().stream()
+                .filter(c -> c.startsWith(targetWord) && !c.equals(targetWord))
+                .sorted()
+                .collect(Collectors.toList());
+        return suggestions;
     }
 }

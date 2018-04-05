@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 
 public class CommandBoxTest extends GuiUnitTest {
 
@@ -27,7 +29,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        Model model = new ModelManager();
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Logic logic = new LogicManager(model);
 
         CommandBox commandBox = new CommandBox(logic);
@@ -159,114 +161,123 @@ public class CommandBoxTest extends GuiUnitTest {
     @Test
     public void commandBox_autocompleteCommandWord() {
         //add command
-        commandBoxHandle.setText("a");
-        selectFromContextMenu();
-        assertEquals("add", commandBoxHandle.getInput());
-
-        commandBoxHandle.setText(" ");
-        selectFromContextMenu();
-        assertEquals(" add", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("a", 1, "add");
+        testAutocompleteForUserInput(" ", 1, "add");
 
         //clear command
-        commandBoxHandle.setText("cl");
-        selectFromContextMenu();
-        assertEquals("clear", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("cl", 1, "clear");
 
         //delete command
-        commandBoxHandle.setText("d");
-        selectFromContextMenu();
-        assertEquals("delete", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("d", 1, "delete");
 
         //edit command
-        commandBoxHandle.setText("ed");
-        selectFromContextMenu();
-        assertEquals("edit", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("e", 1, "edit");
+        testAutocompleteForUserInput("ed", 1, "edit");
 
         //exit command
-        commandBoxHandle.setText("ex");
-        selectFromContextMenu();
-        assertEquals("exit", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("e", 2, "exit");
+        testAutocompleteForUserInput("ex", 1, "exit");
 
         //help command
-        commandBoxHandle.setText("h");
-        selectFromContextMenu();
-        assertEquals("help", commandBoxHandle.getInput());
-
-        commandBoxHandle.setText("he");
-        selectFromContextMenu();
-        assertEquals("help", commandBoxHandle.getInput());
-
-        commandBoxHandle.setText("hel");
-        selectFromContextMenu();
-        assertEquals("help", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("h", 1, "help");
+        testAutocompleteForUserInput("he", 1, "help");
+        testAutocompleteForUserInput("hel", 1, "help");
 
         //history command
-        commandBoxHandle.setText("h");
-        guiRobot.push(KeyCode.TAB);
-        selectFromContextMenu();
-        assertEquals("history", commandBoxHandle.getInput());
-
-        commandBoxHandle.setText("hi");
-        selectFromContextMenu();
-        assertEquals("history", commandBoxHandle.getInput());
-
-        commandBoxHandle.setText("hist");
-        selectFromContextMenu();
-        assertEquals("history", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("h", 2, "history");
+        testAutocompleteForUserInput("hi", 1, "history");
+        testAutocompleteForUserInput("hist", 1, "history");
 
         //list command
-        commandBoxHandle.setText("l");
-        selectFromContextMenu();
-        assertEquals("list", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("l", 1, "list");
 
         //theme command
-        commandBoxHandle.setText("t");
-        selectFromContextMenu();
-        assertEquals("theme", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("t", 1, "theme");
 
         //undo
-        commandBoxHandle.setText("u");
-        selectFromContextMenu();
-        assertEquals("undo", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("u", 1, "undo");
 
         //redo
-        commandBoxHandle.setText("r");
-        selectFromContextMenu();
-        assertEquals("redo", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("r", 1, "redo");
     }
 
     @Test
     public void commandBox_autocompleteOption() {
-        //add command with -o
-        commandBoxHandle.setText("add");
-        commandBoxHandle.insertText(" -");
-        selectFromContextMenu();
-        assertEquals("add -o", commandBoxHandle.getInput());
+        testAutocompleteForUserInput("delete -", 1, "delete -a");
+        testAutocompleteForUserInput("add -", 2, "add -o");
+        testAutocompleteForUserInput("find -", 3, "find -p");
     }
 
     @Test
     public void commandBox_autocompletePrefix() {
-        //prefix n/
-        commandBoxHandle.setText("add");
-        commandBoxHandle.insertText(" n");
-        selectFromContextMenu();
-        assertEquals("add n/", commandBoxHandle.getInput());
+        // prefix n/
+        testAutocompleteForUserInput("add -o n", 1, "add -o n/");
 
-        //prefix nr/
-        commandBoxHandle.setText("add");
-        commandBoxHandle.insertText(" n");
-        guiRobot.push(KeyCode.TAB);
-        selectFromContextMenu();
-        assertEquals("add nr/", commandBoxHandle.getInput());
+        // prefix nr/
+        testAutocompleteForUserInput("add -o n", 2, "add -o nr/");
+        testAutocompleteForUserInput("add -o nr", 1, "add -o nr/");
 
-        commandBoxHandle.setText("add");
-        commandBoxHandle.insertText(" nr");
-        selectFromContextMenu();
-        assertEquals("add nr/", commandBoxHandle.getInput());
+        //prefix b/
+        testAutocompleteForUserInput("add -p b", 1, "add -p b/");
+
+        //prefix bt/
+        testAutocompleteForUserInput("add -p b", 2, "add -p bt/");
     }
 
-    private void selectFromContextMenu() {
-        guiRobot.push(KeyCode.TAB);
+    @Test
+    public void commandBox_autocompleteNric() {
+        // autocomplete suggestions for nric for add command that follows "-o nr/"
+        testAutocompleteForUserInput("add -o nr/", 1, "add -o nr/F0184556R");
+        testAutocompleteForUserInput("add -o nr/F018", 1, "add -o nr/F0184556R");
+        testAutocompleteForUserInput("add -o nr/", 2, "add -o nr/F2345678U");
+        testAutocompleteForUserInput("add -o nr/S", 1, "add -o nr/S0123456Q");
+
+        // no nric autocomplete suggestion if add command does not have "-o nr/"
+        testAutocompleteForUserInput("add -p nr/S", 1, "add -p nr/S");
+        testAutocompleteForUserInput("add -a nr/F", 1, "add -a nr/F");
+
+        // autocomplete suggestions for nric for "edit -p" command
+        testAutocompleteForUserInput("edit -p nr/", 1, "edit -p nr/F0184556R");
+        testAutocompleteForUserInput("edit -p nr/F018", 1, "edit -p nr/F0184556R");
+        testAutocompleteForUserInput("edit -p nr/", 2, "edit -p nr/F2345678U");
+        testAutocompleteForUserInput("edit -p nr/S", 1, "edit -p nr/S0123456Q");
+
+        // no nric autocomplete suggestion if edit command does not start with "edit -p"
+        testAutocompleteForUserInput("edit -o nr/", 1, "edit -o nr/");
+        testAutocompleteForUserInput("edit -o nr/S", 1, "edit -o nr/S");
+
+        // autocomplete suggestions for nric for "find -o" command
+        testAutocompleteForUserInput("find -o nr/", 1, "find -o nr/F0184556R");
+        testAutocompleteForUserInput("find -o nr/", 3, "find -o nr/G1111111B");
+        testAutocompleteForUserInput("find -o nr/T", 3, "find -o nr/T0120956W");
+        testAutocompleteForUserInput("find -o nr/T0", 2, "find -o nr/T0123456L");
+
+        // no nric autocomplete suggestion if edit command does not start with "find -o"
+        testAutocompleteForUserInput("find -p nr/T0", 2, "find -p nr/T0");
+        testAutocompleteForUserInput("find -a nr/S", 2, "find -a nr/S");
+    }
+
+    @Test
+    public void commandBox_autocompleteTag() {
+        testAutocompleteForUserInput("add t/", 1, "add t/Depression");
+        testAutocompleteForUserInput("add t/F", 1, "add t/friends");
+        testAutocompleteForUserInput("add t/", 2, "add t/Test");
+        testAutocompleteForUserInput("add t/ow", 2, "add t/owesMoney");
+    }
+
+    /**
+     * Checks that {@code userInput} with the {@code numOfTabs} to select an option on autocomplete's context menu
+     * will result in {@code actualCommand}.
+     */
+    private void testAutocompleteForUserInput(String userInput, int numOfTabs, String actualCommand) {
+        commandBoxHandle.setText(userInput);
+
+        while (numOfTabs > 0) {
+            guiRobot.push(KeyCode.TAB);
+            numOfTabs--;
+        }
         guiRobot.push(KeyCode.ENTER);
+
+        assertEquals(actualCommand, commandBoxHandle.getInput());
     }
 }

@@ -5,7 +5,6 @@ import java.util.Set;
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Person;
@@ -40,7 +39,7 @@ public interface Logic {
     Set<String> getAllCommandWords();
 
     /** Returns a set of all prefixes */
-    Set<Prefix> getAllPrefixes();
+    Set<String> getAllPrefixes();
 
     /** Returns a set of all options used in command syntax */
     Set<String> getAllOptions();
@@ -50,4 +49,7 @@ public interface Logic {
 
     /** Returns a set of all pet patient names found in model*/
     Set<String> getAllPetPatientNames();
+
+    /** Returns a set of all tag names found in model*/
+    Set<String> getAllTagNames();
 }

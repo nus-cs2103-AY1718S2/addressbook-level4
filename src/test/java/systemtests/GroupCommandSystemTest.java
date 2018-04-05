@@ -12,10 +12,11 @@ import seedu.recipe.model.Model;
 
 public class GroupCommandSystemTest extends RecipeBookSystemTest {
 
-    private final String GROUP_NAME = "My best";
-    private final String WHITESPACE = " ";
-    private final String FIRST_INDEX = "1";
-    private final String SECOND_INDEX = "2";
+    private static final String GROUP_NAME = "My best";
+
+    private static final String WHITESPACE = " ";
+    private static final String FIRST_INDEX = "1";
+    private static final String SECOND_INDEX = "2";
 
     @Test
     public void group() throws Exception {
@@ -31,9 +32,9 @@ public class GroupCommandSystemTest extends RecipeBookSystemTest {
         assertCommandFailure("gRoUp", MESSAGE_UNKNOWN_COMMAND);
 
         /*Case: invalid index -> rejected */
-        String INVALID_INDEX = String.valueOf(defaultModel.getRecipeBook().getRecipeList().size() + 1);
+        String invalidIndex = String.valueOf(defaultModel.getRecipeBook().getRecipeList().size() + 1);
         command = GroupCommand.COMMAND_WORD + WHITESPACE + CliSyntax.PREFIX_GROUP_NAME + GROUP_NAME + WHITESPACE
-                + CliSyntax.PREFIX_INDEX + INVALID_INDEX;
+                + CliSyntax.PREFIX_INDEX + invalidIndex;
         expectedResultMessage = Messages.MESSAGE_INVALID_RECIPE_DISPLAYED_INDEX;
         assertCommandFailure(command, expectedResultMessage);
     }

@@ -9,6 +9,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.DelivDate;
 import seedu.address.model.person.Person;
 
+//@@author mattbuot
 /**
  * Send an email to the persons listed
  */
@@ -21,7 +22,6 @@ public class EmailCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Emails sent successfully.";
 
     public static final String MESSAGE_ERROR = "An error occurred, emails not sent.";
-
 
     @Override
     public CommandResult execute() throws CommandException {
@@ -54,6 +54,6 @@ public class EmailCommand extends Command {
             }
             return date;
         }
-        return null;
+        throw new CommandException("Empty filtered list!");
     }
 }

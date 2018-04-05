@@ -11,6 +11,7 @@ import javax.mail.internet.MimeMessage;
 
 import seedu.address.model.person.Person;
 
+//@@author mattbuot
 /**
  * Send personalized emails to drivers and customers
  */
@@ -61,7 +62,10 @@ public class Mailer {
         return true;
     }
 
-    public static boolean emailDriver(List<String> route, String duration, String date) {
+    public static boolean emailDriver(List<String> addresses, String duration, String date) {
+        if(addresses.size() == 0) {
+            return false;
+        }
         Session session = getSession();
 
         MimeMessage message = new MimeMessage(session);
@@ -72,12 +76,12 @@ public class Mailer {
             String body = "<h2>The estimated duration for this itinerary is : " +
                     duration
                     + " ("
-                    + route.size()
+                    + addresses.size()
                     + " deliveries)"
                     + "</h2>"
                     + "<ol>";
 
-            for (String address: route) {
+            for (String address: addresses) {
 
                 body += "<li>" + address + "</li>";
             }

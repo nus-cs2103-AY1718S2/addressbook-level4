@@ -18,6 +18,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
+//@@author mattbuot
 public class AutocompleterTest {
     private Model model;
     private Autocompleter autocompleter;

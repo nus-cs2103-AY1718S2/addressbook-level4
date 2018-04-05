@@ -297,6 +297,27 @@ customer. Otherwise potential customer. The prediction is to predict
 the potential customer's spending based on the information on the
 existing customers.
 
+* The solution is calculated through numerical methods. And numerical methods,
+unlike Jesus, can't solve everything. There are certain inputs that will lead
+to divergent solution. Also, certain value might be too large to be captured
+even with double. Hence in situations like this, an message of "Divergent solution"
+would be presented with no prediction.
+
+Test input: +
+    1. Person1 with income 20k, spending 1k. +
+    2. Person2 with income 40k, spending 2k. +
+    3. Person  with income 10k, no spending specified +
+
+    ==>  predict =>> Person3 now shows expected spending of 500
+
+Test Input 2: +
+    1. Person1 with income 1234568k, spending 10 +
+    2. Person2 with income 20k, spending 1k +
+
+    ==> predict ==> divergent solution
+
+this is to illustrate unrealistic extreme values might lead to divergent solution.
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +

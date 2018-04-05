@@ -447,6 +447,7 @@ image::NewPersonListCard.png[width="800"]
 To add a person with an age field, one must specify the age prefixed with the indicator `/age`:
 
 ```
+
 ADD n/NAME p/PHONE e/EMAIL a/ADDRESS i/INCOME as/ACTUALSPENDING es/EXPECTEDINCOME age/AGE [t/TAG]...
 ```
 

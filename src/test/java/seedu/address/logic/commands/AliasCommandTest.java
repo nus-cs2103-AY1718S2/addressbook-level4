@@ -11,6 +11,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -205,6 +206,12 @@ public class AliasCommandTest {
         @Override
         public void addAlias(Alias alias) throws DuplicateAliasException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public HashMap<String, String> getAliasList() {
+            fail("This method should not be called.");
+            return null;
         }
 
         @Override

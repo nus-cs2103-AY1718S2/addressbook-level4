@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -95,6 +96,11 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addAlias(Alias alias) throws DuplicateAliasException {
         addressBook.addAlias(alias);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized HashMap<String, String> getAliasList() {
+        return addressBook.getAliasMapping();
     }
     //@@author
 

@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -41,6 +42,9 @@ public interface Model {
     //@@author jingyinno
     /** Adds the given alias */
     void addAlias(Alias alias) throws DuplicateAliasException;
+
+    /** Returns a hashmap of command mapped to alias */
+    HashMap<String, String> getAliasList();
     //@@author
 
     /**

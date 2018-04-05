@@ -229,7 +229,7 @@ Replaces the 'Class 1A' tag from every student in _EduBuddy_ with 'Class 2A'.
 
 image::TagReplaceCommand.png[width="650"]
 
-=== Adding a remark : `addremark`
+=== Adding a remark : `addremark` [Since v1.4]
 
 Adds a remark to a specified student in EduBuddy.
 Format: `addremark INDEX r/REMARK`
@@ -244,11 +244,11 @@ Format: `addremark INDEX r/REMARK`
 Examples:
 * `list` +
 `addremark 2 r/Class Monitor` +
-Adds a remark to the 2nd student in EduBuddy.
+Adds a remark, Class Monitor, to the 2nd student in EduBuddy.
 
 image::AddRemarkCommand.png[width="650"]
 
-=== Deleting a remark : `deleteremark`
+=== Deleting a remark : `deleteremark` [Since v1.4]
 
 Delete a remark to a specified student in EduBuddy.
 Format: `deleteremark INDEX r/REMARK`
@@ -358,30 +358,6 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `r` (reapplies the `delete 1` command) +
 `r` (reapplies the `clear` command) +
 // end::undoredo[]
-
-// tag::remarks Command[]
-=== Remarks Command `[Since v1.3]`
-
-Adds a remark to the student. +
-Format: `remark INDEX r/REMARK` +
-
-****
-* Adds a remark to the student profile of the student at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`remark 2` +
-Adds a remark to the 2nd student in EduBuddy.
-* `find Betsy` +
-`remark 1` +
-Adds a remark to the 1st student in the results of the `find` command.
-
-// end::remarks Command[]
-
 *_return to <<toc,Table of Contents>>_*
 
 === Clearing all entries : `clear` or `c`
@@ -597,10 +573,11 @@ OR +
 
 |*TagReplace* |Replaces a tag for every student|`tagreplace t/TAGNAME t/TAGNAME` +
 OR +
-`tr t/TAGNAME t/TAGNAME`
-|`tagreplace t/CLASS2A t/CLASS3A` +
-OR +
-`tr t/CLASS2A t/CLASS3A`
+`tr t/TAGNAME t/TAGNAME`|
+
+|*AddRemark* |Adds a remark to a specific student|`addremark 1 r/REMARK`|
+
+|*DeleteRemark* |Deletes a remark from a specific student|`deleteremark 1 r/REMARK`|
 
 |*Undo* |Undo previous command |`undo` +
 OR +

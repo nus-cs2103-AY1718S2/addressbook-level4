@@ -169,9 +169,11 @@ public class CommandBoxTest extends GuiUnitTest {
         testAutocompleteForUserInput("d", 1, "delete");
 
         //edit command
+        testAutocompleteForUserInput("e", 1, "edit");
         testAutocompleteForUserInput("ed", 1, "edit");
 
         //exit command
+        testAutocompleteForUserInput("e", 2, "exit");
         testAutocompleteForUserInput("ex", 1, "exit");
 
         //help command
@@ -199,9 +201,9 @@ public class CommandBoxTest extends GuiUnitTest {
 
     @Test
     public void commandBox_autocompleteOption() {
-        testAutocompleteForUserInput("add -", 1, "add -o");
-        testAutocompleteForUserInput("find -", 2, "find -p");
-        testAutocompleteForUserInput("delete -", 3, "delete -a");
+        testAutocompleteForUserInput("delete -", 1, "delete -a");
+        testAutocompleteForUserInput("add -", 2, "add -o");
+        testAutocompleteForUserInput("find -", 3, "find -p");
     }
 
     @Test
@@ -214,10 +216,10 @@ public class CommandBoxTest extends GuiUnitTest {
         testAutocompleteForUserInput("add -o nr", 1, "add -o nr/");
 
         //prefix b/
-        testAutocompleteForUserInput("add -p b", 2, "add -p b/");
+        testAutocompleteForUserInput("add -p b", 1, "add -p b/");
 
         //prefix bt/
-        testAutocompleteForUserInput("add -p b", 1, "add -p bt/");
+        testAutocompleteForUserInput("add -p b", 2, "add -p bt/");
     }
 
     /**
@@ -236,4 +238,16 @@ public class CommandBoxTest extends GuiUnitTest {
         assertEquals(actualCommand, commandBoxHandle.getInput());
     }
 
+    private void testAutocompleteForNric(String userInput, String input2, int numOfTabs, String actualCommand) {
+        commandBoxHandle.setText(userInput);
+        commandBoxHandle.insertText(input2);
+
+        while (numOfTabs > 0) {
+            guiRobot.push(KeyCode.TAB);
+            numOfTabs--;
+        }
+        guiRobot.push(KeyCode.ENTER);
+
+        assertEquals(actualCommand, commandBoxHandle.getInput());
+    }
 }

@@ -231,7 +231,7 @@ public class ParserUtil {
      */
     public static Alias parseAlias(String command, String alias) throws IllegalValueException {
         requireNonNull(command, alias);
-        if (!Alias.isValidAliasName(command) || !Alias.isValidAliasName(alias)) {
+        if (!Alias.isValidAliasParameter(command) || !Alias.isValidAliasParameter(alias)) {
             throw new IllegalValueException(Alias.MESSAGE_ALIAS_CONSTRAINTS);
 
         }

@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.building.exceptions.CorruptedVenueInformationException;
+import seedu.address.model.building.exceptions.NoRoomsInBuildingException;
 
 //@@author Caijun7
 /**
@@ -121,7 +122,8 @@ public class Building {
      *
      * @throws CorruptedVenueInformationException if the room schedule format is not as expected.
      */
-    public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule() throws CorruptedVenueInformationException {
+    public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule() throws CorruptedVenueInformationException,
+                                                                          NoRoomsInBuildingException {
         ArrayList<ArrayList<String>> allRoomsSchedule = new ArrayList<>();
         ArrayList<String> allRoomsInBuilding = retrieveAllRoomsInBuilding();
         for (String roomName : allRoomsInBuilding) {
@@ -137,15 +139,16 @@ public class Building {
      *
      * @throws CorruptedVenueInformationException if the NUS Buildings and Rooms format is not as expected.
      */
-    public ArrayList<String> retrieveAllRoomsInBuilding() throws CorruptedVenueInformationException {
+    public ArrayList<String> retrieveAllRoomsInBuilding() throws CorruptedVenueInformationException,
+                                                                 NoRoomsInBuildingException {
         checkArgument(isValidBuilding(this));
         if (nusBuildingsAndRooms == null) {
             logger.warning("NUS buildings and rooms is null, venueinformation.json file is corrupted.");
             throw new CorruptedVenueInformationException();
         }
         if (nusBuildingsAndRooms.get(buildingName) == null) {
-            logger.warning("NUS buildings and rooms has some null data, venueinformation.json file is corrupted.");
-            throw new CorruptedVenueInformationException();
+            logger.warning(buildingName + " has no rooms.");
+            throw new NoRoomsInBuildingException();
         }
         return nusBuildingsAndRooms.get(buildingName);
     }

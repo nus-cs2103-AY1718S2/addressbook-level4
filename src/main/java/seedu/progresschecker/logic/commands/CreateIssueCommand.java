@@ -16,7 +16,7 @@ import seedu.progresschecker.model.issues.Issue;
 /**
  * Create an issue on github
  */
-public class CreateIssue extends Command {
+public class CreateIssueCommand extends Command {
 
     public static final String COMMAND_WORD = "+issue";
     public static final String COMMAND_ALIAS = "ci";
@@ -46,9 +46,9 @@ public class CreateIssue extends Command {
     private final Issue toCreate;
 
     /**
-     * Creates an CreateIssue to create the specified {@code Issue}
+     * Creates an CreateIssueCommand to create the specified {@code Issue}
      */
-    public CreateIssue(Issue issue) {
+    public CreateIssueCommand(Issue issue) {
         requireNonNull(issue);
         toCreate = issue;
     }

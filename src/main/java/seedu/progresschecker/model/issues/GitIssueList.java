@@ -60,6 +60,7 @@ public class GitIssueList implements Iterable<Issue> {
         } catch (IOException ie) {
             throw new CommandException("Enter correct repository name");
         }
+        updateInternalList();
     }
 
     /**

@@ -100,16 +100,21 @@ public class RouteOptimization {
      * @param filteredAddresses
      * @return
      */
+    //@@author meerakanani10
     public List<String> removeAddress(String address, List<String> filteredAddresses) {
+        List<Integer> idx = new ArrayList<>();
         for (int i = 0; i < filteredAddresses.size(); i++) {
             if (filteredAddresses.get(i).equals(address)) {
-                filteredAddresses.remove(i);
-                break;
+                idx.add(i);
             }
+        }
+        for (int i = 0; i < idx.size(); i++) {
+            filteredAddresses.remove(idx.get(i));
         }
         return filteredAddresses;
     }
 
+    //@@author meerakanani10
     public List<String> getDistances(List<String> filteredAddresses, String origin, List<String> optimizedRoute) {
         Map<String, Double> paths = new LinkedHashMap<>();
         Map<String, Double> dummy = new HashMap<>();
@@ -120,14 +125,17 @@ public class RouteOptimization {
             String destination = filteredAddresses.get(i);
             paths.put(labelRoutes(origin, destination), distance.getDistance(origin, destination));
         }
-        dummy = sort.cleanSorted(sort.sortByComparator(paths));
-        Map.Entry<String, Double> entry = dummy.entrySet().iterator().next();
-        next = entry.getKey().split("_")[1];
-        optimizedRoute.add(next);
-        filteredAddresses = removeAddress(next, filteredAddresses);
-        if (filteredAddresses.size() != 0) {
-            optimizedRoute = getDistances(filteredAddresses, next, optimizedRoute);
+        if (dummy.entrySet().iterator().hasNext()) {
+            dummy = sort.cleanSorted(sort.sortByComparator(paths));
+            Map.Entry<String, Double> entry = dummy.entrySet().iterator().next();
+            next = entry.getKey().split("_")[1];
+            optimizedRoute.add(next);
+            filteredAddresses = removeAddress(next, filteredAddresses);
+            if (filteredAddresses.size() != 0) {
+                optimizedRoute = getDistances(filteredAddresses, next, optimizedRoute);
+            }
         }
+
         return optimizedRoute;
     }
 

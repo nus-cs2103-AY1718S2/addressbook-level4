@@ -9,6 +9,7 @@ import java.util.List;
 import com.google.api.services.calendar.model.Event;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.exceptions.InvalidCalendarEventCountException;
 import seedu.address.logic.OAuthManager;
 import seedu.address.logic.commands.NavigateCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -35,6 +36,9 @@ public class NavigateCommandParser implements Parser<NavigateCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_EVENT_DISPLAYED_INDEX));
+        } catch (InvalidCalendarEventCountException e) {
+            throw new ParseException(
+                    String.format(NavigateCommand.MESSAGE_NO_EVENT));
         }
     }
 

@@ -36,6 +36,7 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
 
+import seedu.address.commons.exceptions.InvalidCalendarEventCountException;
 import seedu.address.model.login.User;
 
 /**
@@ -463,10 +464,14 @@ public class OAuthManager {
      * @param index
      * @return List
      */
-    public static List<Event> getEventByIndexPairFromDailyList(int index) {
+    public static List<Event> getEventByIndexPairFromDailyList(int index) throws InvalidCalendarEventCountException {
         List<Event> eventPair = new ArrayList<>();
-        eventPair.add(dailyEventsList.get(index - 1));
-        eventPair.add(dailyEventsList.get(index));
+        if (dailyEventsList.isEmpty() && dailyEventsList.size() < 2) {
+            throw new InvalidCalendarEventCountException();
+        } else {
+            eventPair.add(dailyEventsList.get(index - 1));
+            eventPair.add(dailyEventsList.get(index));
+        }
 
         return eventPair;
     }

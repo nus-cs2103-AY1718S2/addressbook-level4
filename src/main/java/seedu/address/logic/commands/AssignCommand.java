@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -60,9 +61,14 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
     private final Index runnerIndex;
     private final Index[] customerIndex;
 
-    private EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
+    private List<Person> oldCustomers = new ArrayList<>(); //customers already in runner's list of customers
+    private List<Person> newCustomers = new ArrayList<>(); //customers to be added to runner's list of customers
+    private List<Person> updatedCustomers = new ArrayList<>(); //new customers that have been been updated with runner
+    private List<EditPersonDescriptor> listOfEditedCustDesc = new ArrayList<>();
+
     private Person personToEdit;
     private Person editedPerson;
+    private EditPersonDescriptor editRunnerDescriptor = new EditPersonDescriptor();
 
     /**
      * @param runnerIndex of the Runner in the filtered person list to edit
@@ -88,9 +94,12 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
             model.updatePerson(personToEdit, editedPerson);
-            //TODO: model currently updates runners but does not update relevant customers with new change
-            //notable case when updating customer: if customer already has an assigned runner --> override old runner w
-            //new?
+
+            int i = 0;
+            for (Person c : newCustomers) {
+                model.updatePerson(c, updatedCustomers.get(i));
+                i++;
+            }
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
@@ -113,51 +122,108 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         if (!(personToEdit instanceof Runner)) {
             throw new CommandException(String.format("Person at index %d is not a Runner", runnerIndex.getOneBased()));
         }
+        //NOTE: it is important to call these methods in this order so that the appropriate resources are generated
+        generateNewCustomerList();
+        updateCustDescWithAssignedRunner();
+        generateUpdatedCustomerList();
+        makeEditRunnerDescriptorFromUpdatedCustList(); //modifies editRunnerDescriptor
+        editedPerson = createEditedPerson(personToEdit, editRunnerDescriptor);
+    }
 
-        makeEditRunnerDescriptorFromCustIndices(); //modifies editPersonDescriptor
-
-        editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+    /**
+     * Edit each new customer with the runner to be assigned.
+     *
+     * Requires an accompanying list of customer descriptors describing these new customers and reflecting the assigned
+     * runner.
+     * @throws CommandException
+     */
+    private void generateUpdatedCustomerList() throws CommandException {
+        int i = 0;
+        for (Person c : newCustomers) {
+            updatedCustomers.add(createEditedPerson(c, listOfEditedCustDesc.get(i)));
+            i++;
+        }
     }
 
     /**
      * Creates and returns an {@code EditPersonDescriptor} with new customers from customerIndex...
      * the created EditPersonDescriptor is to be used to create editedPerson.
      */
-    private void makeEditRunnerDescriptorFromCustIndices() throws CommandException {
+    private void makeEditRunnerDescriptorFromUpdatedCustList() throws CommandException {
         List<Person> lastShownList = model.getFilteredPersonList();
         Person runnerToBeEdited = lastShownList.get(runnerIndex.getZeroBased());
         assert (runnerToBeEdited instanceof Runner);
 
-        editPersonDescriptor.setName(runnerToBeEdited.getName());
-        editPersonDescriptor.setPhone(runnerToBeEdited.getPhone());
-        editPersonDescriptor.setEmail(runnerToBeEdited.getEmail());
-        editPersonDescriptor.setAddress(runnerToBeEdited.getAddress());
-        editPersonDescriptor.setTags(runnerToBeEdited.getTags());
+        editRunnerDescriptor.setName(runnerToBeEdited.getName());
+        editRunnerDescriptor.setPhone(runnerToBeEdited.getPhone());
+        editRunnerDescriptor.setEmail(runnerToBeEdited.getEmail());
+        editRunnerDescriptor.setAddress(runnerToBeEdited.getAddress());
+        editRunnerDescriptor.setTags(runnerToBeEdited.getTags());
 
-        //the following list contains all UNIQUE customers that should be in Runner's customer list after AssignCommand
-        //command is executed
-        List<Person> updatedCustomers = new ArrayList<>();
-        updatedCustomers.addAll(((Runner) runnerToBeEdited).getCustomers());
+        List<Person> allCustomers = new ArrayList<>();
+        allCustomers.addAll(oldCustomers);
+        allCustomers.addAll(updatedCustomers);
+        editRunnerDescriptor.setCustomers(allCustomers);
+    }
 
-        List<Person> customersToBeAdded = new ArrayList<>();
+    /**
+     * generates a list of new and unique customers to be assigned to the runner.
+     * @throws CommandException
+     */
+    private void generateNewCustomerList() throws CommandException {
+        List<Person> lastShownList = model.getFilteredPersonList();
+        Person runnerToBeEdited = lastShownList.get(runnerIndex.getZeroBased());
+        oldCustomers.addAll(((Runner) runnerToBeEdited).getCustomers());
+
         for (Index index: customerIndex) {
             Person p = lastShownList.get(index.getZeroBased());
             if (!(p instanceof Customer)) {
                 throw new CommandException("invalid customer index");
             }
-            if (updatedCustomers.indexOf(p) >= 0) {
+            if (oldCustomers.indexOf(p) >= 0) {
                 throw new CommandException(String.format("customer at index %d, already assigned to runner",
                         index.getOneBased()));
             }
-            customersToBeAdded.add((Customer) p);
+            if (newCustomers.indexOf(p) >= 0) {
+                throw new CommandException("cannot assign same customer twice");
+            }
+            newCustomers.add((Customer) p);
         }
-        updatedCustomers.addAll(customersToBeAdded); //add new unique customers to current list of customers
-        editPersonDescriptor.setCustomers(updatedCustomers);
+    }
+
+    /**
+     * Generates a list of EditPersonDescriptors for the purpose of updating each customer with the assigned runner
+     * This helper method is meant to be called in executeUndoableCommand().
+     * references to each other.
+     */
+    private void updateCustDescWithAssignedRunner() {
+        List<Person> lastShownList = model.getFilteredPersonList();
+        Person runnerToBeEdited = lastShownList.get(runnerIndex.getZeroBased());
+        assert (runnerToBeEdited instanceof Runner);
+        for (Person c : newCustomers) {
+            EditPersonDescriptor custDesc = new EditPersonDescriptor();
+
+            custDesc.setRunner((Runner) runnerToBeEdited);
+
+            custDesc.setName(c.getName());
+            custDesc.setPhone(c.getPhone());
+            custDesc.setEmail(c.getEmail());
+            custDesc.setAddress(c.getAddress());
+            custDesc.setTags(c.getTags());
+
+            custDesc.setMoneyBorrowed(((Customer) c).getMoneyBorrowed());
+            custDesc.setOweStartDate(((Customer) c).getOweStartDate());
+            custDesc.setOweDueDate(((Customer) c).getOweDueDate());
+            custDesc.setStandardInterest(((Customer) c).getStandardInterest());
+            custDesc.setLateInterest(((Customer) c).getLateInterest());
+
+            listOfEditedCustDesc.add(custDesc);
+        }
     }
 
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * edited with {@code editRunnerDescriptor}.
      * This method is borrowed from EditCommand
      */
     private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) throws
@@ -197,29 +263,37 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
             return new Runner(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, customers);
 
         } else {
-
             throw new CommandException("Error: Invalid Person");
         }
     }
 
     @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
-
-        // instanceof handles nulls
-        if (!(other instanceof AssignCommand)) {
+        if (!(o instanceof AssignCommand)) {
             return false;
         }
+        AssignCommand that = (AssignCommand) o;
+        return Objects.equals(runnerIndex, that.runnerIndex)
+                && Arrays.equals(customerIndex, that.customerIndex)
+                && Objects.equals(oldCustomers, that.oldCustomers)
+                && Objects.equals(newCustomers, that.newCustomers)
+                && Objects.equals(updatedCustomers, that.updatedCustomers)
+                && Objects.equals(listOfEditedCustDesc, that.listOfEditedCustDesc)
+                && Objects.equals(personToEdit, that.personToEdit)
+                && Objects.equals(editedPerson, that.editedPerson)
+                && Objects.equals(editRunnerDescriptor, that.editRunnerDescriptor);
+    }
 
-        // state check
-        AssignCommand e = (AssignCommand) other;
-        return runnerIndex.equals(e.runnerIndex)
-                && customerIndex.equals(e.customerIndex)
-                && editPersonDescriptor.equals(e.editPersonDescriptor)
-                && Objects.equals(personToEdit, e.personToEdit);
+    @Override
+    public int hashCode() {
+
+        int result = Objects.hash(runnerIndex, oldCustomers, newCustomers, updatedCustomers, listOfEditedCustDesc,
+                personToEdit, editedPerson, editRunnerDescriptor);
+        result = 31 * result + Arrays.hashCode(customerIndex);
+        return result;
     }
 
     @Override
@@ -411,8 +485,15 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
-                    && getTags().equals(e.getTags());
-            //TODO: add .equals for Runner and Customer
+                    && getTags().equals(e.getTags())
+                    && getMoneyBorrowed().equals(e.getMoneyBorrowed())
+                    && getOweDueDate().equals(e.getOweDueDate())
+                    && getOweStartDate().equals(e.getOweStartDate())
+                    && getStandardInterest().equals(e.getStandardInterest())
+                    && getLateInterest().equals(e.getLateInterest())
+                    && getRunner().equals(e.getRunner())
+                    && getCustomers().equals(e.getCustomers());
+
         }
     }
 }

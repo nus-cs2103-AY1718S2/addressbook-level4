@@ -11,6 +11,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.runner.Runner;
 import seedu.address.model.tag.Tag;
 
+//@@author melvintzw
 /**
  * Represents a customer in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.

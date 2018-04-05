@@ -126,6 +126,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
+        //@@author melvintzw
         if (personToEdit instanceof Customer) {
 
             MoneyBorrowed moneyBorrowed = editPersonDescriptor.getMoneyBorrowed().orElse(((Customer) personToEdit)

@@ -1,9 +1,9 @@
 package seedu.address.ui;
 
-import javax.mail.MessagingException;
-
 import java.io.IOException;
 import java.util.logging.Logger;
+
+import javax.mail.MessagingException;
 
 import com.google.common.eventbus.Subscribe;
 

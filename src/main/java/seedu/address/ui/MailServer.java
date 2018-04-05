@@ -17,9 +17,9 @@ import javax.mail.internet.MimeMessage;
  */
 //@@author glorialaw
 public class MailServer {
-    private static String USERNAME = "sell.it.sg@gmail.com";
-    private static String PASSWORD = "gloriacs2103";
-    private static String HOST = "smtp.gmail.com";
+    private static String username = "sell.it.sg@gmail.com";
+    private static String password = "gloriacs2103";
+    private static String host = "smtp.gmail.com";
 
     public MailServer(String[] recipient, String subject, String msg) {
         sendEmail(recipient, subject, msg);
@@ -31,9 +31,9 @@ public class MailServer {
     public static Session startSession() {
         Properties props = System.getProperties();
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", HOST);
-        props.put("mail.smtp.user", USERNAME);
-        props.put("mail.smtp.password", PASSWORD);
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.user", username);
+        props.put("mail.smtp.password", password);
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
@@ -41,7 +41,7 @@ public class MailServer {
         Authenticator auth = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(USERNAME, PASSWORD);
+                return new PasswordAuthentication(username, password);
             }
         };
         Session session = Session.getInstance(props, auth);
@@ -60,7 +60,7 @@ public class MailServer {
         //create the message
         try {
             MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(USERNAME));
+            message.setFrom(new InternetAddress(username));
             for (String recipient : recipients) {
                 message.addRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
             }

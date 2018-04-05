@@ -98,7 +98,7 @@ public class ReviewCommand extends UndoableCommand {
         toReturn.setRating(personToEdit.getRating());
         toReturn.setReviews(updatedReviews);
         toReturn.setId(personToEdit.getId());
-
+        toReturn.setPhotoName(personToEdit.getPhotoName());
         return toReturn;
     }
 

@@ -61,7 +61,8 @@ public class PersonCard extends UiPart<Region> {
         rating.setText(person.getRatingDisplay());
         rating.setTextFill(Color.RED);
         initTags(person);
-        Image image = new Image(Photo.DEFAULT_PHOTO_FOLDER + person.getPhotoName());
+        Image image = new Image(Photo.DEFAULT_PHOTO_FOLDER + person.getPhotoName(),
+                88, 88, false, false);
         photo.setImage(image);
         photo.preserveRatioProperty().set(true);
 

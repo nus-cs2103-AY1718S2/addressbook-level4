@@ -112,15 +112,15 @@ Adds an event to the desk board. +
 * `event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`
 * `event n/Blockchain Talk s/16/3/2018 16:00 e/16/03/2018 18:00`
 
-=== Listing uncompleted tasks and upcoming events: `ls` `[As of  v1.4]`
+=== Listing uncompleted tasks and upcoming events: `list` or `ls` `[As of  v1.4]`
 
 Shows one or two lists of tasks and events in the desk board as described below.
 
 *Format:*
 
-* `ls task`: shows only uncompleted tasks.
-* `ls event`: shows only upcoming events.
-* `ls`: shows both uncompleted tasks and upcoming events in 2 separate lists.
+* `list task` or `ls task`: shows only uncompleted tasks.
+* `list event` or `ls event`: shows only upcoming events.
+* `list` or `ls`: shows both uncompleted tasks and upcoming events in 2 separate lists.
 
 === Removing a task or event: `rm` `[As of  v1.4]`
 

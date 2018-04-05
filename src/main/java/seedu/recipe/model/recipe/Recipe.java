@@ -3,6 +3,7 @@ package seedu.recipe.model.recipe;
 import static seedu.recipe.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -31,6 +32,7 @@ public class Recipe {
     private final Url url;
     private final Image image;
     private final UniqueTagList tags;
+    private final Set<GroupName> groupNames;
 
     /**
      * Every field must be present and not null.
@@ -50,6 +52,7 @@ public class Recipe {
         this.image = image;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+        this.groupNames = new HashSet<>();
     }
 
     public Name getName() {
@@ -98,6 +101,15 @@ public class Recipe {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.toSet());
+    }
+
+    //@author hoangduong1607
+    public Set<GroupName> getGroupNames() {
+        return Collections.unmodifiableSet(groupNames);
+    }
+
+    public void addNewGroup(GroupName groupName) {
+        groupNames.add(groupName);
     }
 
     //@@author RyanAngJY

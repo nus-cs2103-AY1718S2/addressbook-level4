@@ -1,9 +1,8 @@
+//@@author hoangduong1607
 package seedu.recipe.ui.util;
 
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
-//@@author hoangduong1607
 
 /**
  * Provides basic functions for processing text input

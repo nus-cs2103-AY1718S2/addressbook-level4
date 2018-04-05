@@ -204,6 +204,28 @@ Returns `_Chicken rice_` and `_Chicken pizza_`.
 * *`find chicken fish pasta`* +
 Returns any recipe having substrings `_chicken_`, `_fish_`, or `_pasta_`.
 
+=== *`group`* : Creating a custom group of recipes
+
+Creates a group of one or multiple recipes by the index or indices used in the last recipe listing.
+
+Format: `group group_name/GROUP_NAME index/INDEX [index/INDEX]`
+
+****
+Details
+
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer*, e.g. "1, 2, 3, …"..
+* Only the name is searched.
+* Only full words will be matched e.g. *`find Chic`* will not match `_Chicken_`.
+* Recipes matching at least one keyword will be returned (i.e. "OR" search). E.g. *`find Chicken Pizza`* will return `_Chicken rice_` and `_Pizza_`.
+****
+
+Examples:
+
+* *`list`* +
+*`group group_name/ My best index/ 1 index/ 3`* +
+Creates a group that contains 1st recipe and 3rd recipe and names the group as `_My best_`.
+
 === *`help`* : Viewing help
 
 Shows the user guide.
@@ -475,6 +497,17 @@ Data file will be uploaded to Dropbox with the name RecipeBook.xml.
 * *`upload RecipeBook`* +
 Updated data file will be uploaded to Dropbox with the name RecipeBook(1).xml.
 
+=== *`view_group`* : Viewing groups of recipes
+
+Views recipes inside a group.
+
+Format: `view_group GROUP_NAME`
+
+Examples:
+
+* *`view_group My best`* +
+Lists all recipes inside `_My best_` group.
+
 == Upcoming features
 
 === *`pull`* : Getting a recipe from the recipes database (Coming in v2.0)
@@ -486,7 +519,7 @@ Format: `pull RECIPE_NAME`
 Examples:
 
 * *`pull chicken rice`* +
-Downloads all recipes that match the query `Chicken rice` from the server.
+Downloads all recipes that match the query `_Chicken rice_` from the server.
 
 === *`push`* : Uploading a recipe to the recipes database (Coming in v2.0)
 

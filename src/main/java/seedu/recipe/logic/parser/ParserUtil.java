@@ -12,6 +12,7 @@ import seedu.recipe.commons.exceptions.IllegalValueException;
 import seedu.recipe.commons.util.StringUtil;
 import seedu.recipe.model.recipe.Calories;
 import seedu.recipe.model.recipe.CookingTime;
+import seedu.recipe.model.recipe.GroupName;
 import seedu.recipe.model.recipe.Image;
 import seedu.recipe.model.recipe.Ingredient;
 import seedu.recipe.model.recipe.Instruction;
@@ -39,6 +40,7 @@ public class ParserUtil {
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
@@ -74,6 +76,7 @@ public class ParserUtil {
     }
 
     //@@author kokonguyen191
+
     /**
      * Returns a null {@code Ingredient} object to use as the default value if no value is given.
      */
@@ -341,6 +344,7 @@ public class ParserUtil {
     }
 
     //@@author RyanAngJY
+
     /**
      * Parses a {@code String url} into an {@code Url}.
      * Leading and trailing whitespaces will be trimmed.
@@ -443,7 +447,22 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author hoangduong1607
+    /**
+     * Parses {@code Collection<String> indices} into a {@code Set<Index>}.
+     */
+    public static Set<Index> parseIndices(Collection<String> indices) throws IllegalValueException {
+        requireNonNull(indices);
+        final Set<Index> indexSet = new HashSet<>();
+        for (String index : indices) {
+            indexSet.add(parseIndex(index));
+        }
+        return indexSet;
+    }
+    //@@author
+
     //@@author nicholasangcx
+
     /**
      * Parses {@code String filename} into a {@code String XmlExtensionFilename}.
      * A .xml extension will be added to the original filename.
@@ -456,6 +475,32 @@ public class ParserUtil {
             throw new IllegalValueException(Filename.MESSAGE_FILENAME_CONSTRAINTS);
         }
         return filename + ".xml";
+    }
+    //@@author
+
+    //@@author hoangduong1607
+    /**
+     * Parses a {@code String groupName} into a {@code GroupName}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code groupName} is invalid.
+     */
+    public static GroupName parseGroupName(String groupName) throws IllegalValueException {
+        requireNonNull(groupName);
+        String trimmedName = groupName.trim();
+        if (!GroupName.isValidName(trimmedName)) {
+            throw new IllegalValueException(GroupName.MESSAGE_NAME_CONSTRAINTS);
+        }
+        return new GroupName(trimmedName);
+    }
+
+    /**
+     * Parses a {@code Optional<String> groupName} into an {@code Optional<GroupName>} if {@code groupName} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<GroupName> parseGroupName(Optional<String> groupName) throws IllegalValueException {
+        requireNonNull(groupName);
+        return groupName.isPresent() ? Optional.of(parseGroupName(groupName.get())) : Optional.empty();
     }
     //@@author
 }

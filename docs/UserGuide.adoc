@@ -476,9 +476,9 @@ Delete a medical appointment of Betsy with index number 2.
 `da John 1` +
 Delete a medical appointment of John with index number 1.
 
-==== Viewing medical appointments by month: `viewappt` [coming in v1.4]
+==== Viewing medical appointments in calendar: `viewappt` [coming in v1.4]
 
-Shows a list of medical appointments in month view.
+Shows a list of medical appointments in calendar month view.
 
 *This command is only accessible to medical staffs.* +
 
@@ -529,10 +529,16 @@ e.g.`record` or `rec 1 in/2`
 * *Remover* : `remover` or `rr INDEX in/[RECORD INDEX]` +
 e.g.`remover` or `rr 1 in/2`
 * *Add patient into visiting queue* : `addq` or `aq`
+e.g.`addq john` or `aq john`
 * *Remove patient from visiting queue* : `removeq` or `rq`
-* *View appointments* : `viewappt` or `va`
+* *View visiting queue* : `viewq` or `vq`
+* *View appointments in calendar* : `viewappt` or `va`
+e.g.`viewappt john` or `viewappt john`
+* *View appointments by patient name* : `viewappt` or `va`
 * *Add new appointment* : `addappt` or `aa`
+e.g.`addappt betsy 19/3/2018 1300` or `aa betsy 19/3/2018 1300`
 * *Delete appointment* : `delappt` or `da`
+e.g.`delappt betsy 2` or `da betsy 2`
 * *History* : `history` or `hi`
 * *Undo* : `undo` or `u` or `z`
 * *Redo* : `redo` or `r` or `y`

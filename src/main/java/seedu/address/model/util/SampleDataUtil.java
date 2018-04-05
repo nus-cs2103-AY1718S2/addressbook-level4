@@ -20,17 +20,27 @@ public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Nric("S8743880X"),
-                getTagSet("friends"), getSubjectSet("English A2"), new Remark("Class Rep")),
+                getTagSet("3A"), getSubjectSet("English A2"), new Remark("Class Rep")),
             new Person(new Name("Bernice Yu"), new Nric("S9927275Z"),
-                getTagSet("colleagues", "friends"), getSubjectSet("EMath A1"), new Remark("Math Rep")),
+                getTagSet("3A"), getSubjectSet("EMath A1"), new Remark("Math Rep")),
             new Person(new Name("Charlotte Oliveiro"), new Nric("S9321028H"),
-                getTagSet("neighbours"), getSubjectSet("Chem B3"), new Remark("Chemistry Rep")),
+                getTagSet("3G"), getSubjectSet("Chem B3"), new Remark("Chemistry Rep")),
             new Person(new Name("David Li"), new Nric("S9103128J"),
-                getTagSet("family"), getSubjectSet("Phy B3"), new Remark("Physics Rep")),
+                getTagSet("4D"), getSubjectSet("Phy B3"), new Remark("Physics Rep")),
             new Person(new Name("Irfan Ibrahim"), new Nric("S9249202K"),
-                getTagSet("classmates"), getSubjectSet("Geog B4"), new Remark("Geography Rep")),
+                getTagSet("3G"), getSubjectSet("Geog B4"), new Remark("Geography Rep")),
             new Person(new Name("Roy Balakrishnan"), new Nric("S9262441U"),
-                getTagSet("colleagues"), getSubjectSet("Chinese C5"), new Remark("Chinese Rep"))
+                getTagSet("4G"), getSubjectSet("Chinese C5"), new Remark("Chinese Rep")),
+            new Person(new Name("John"), new Nric("S9123123A"),
+                getTagSet("4G"), getSubjectSet("ELit C5"), new Remark("")),
+            new Person(new Name("Ben"), new Nric("S9456456B"),
+                getTagSet("3G"), getSubjectSet("Econs A1"), new Remark("Econs Rep")),
+            new Person(new Name("Jill"), new Nric("S9321321C"),
+                getTagSet("4G"), getSubjectSet("German C5"), new Remark("")),
+            new Person(new Name("Tom"), new Nric("S9789789A"),
+                getTagSet("3A"), getSubjectSet("Bio A2"), new Remark("")),
+            new Person(new Name("Mary"), new Nric("S9654654B"),
+                getTagSet("5D"), getSubjectSet("HChi A1"), new Remark("Higher Chinese Rep")),
         };
     }
 

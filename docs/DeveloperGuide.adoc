@@ -591,9 +591,6 @@ As a result, implementing tag colours utilises these two facts in tandom to make
 
 These tag colours will be significantly more useful with the further enhancement mentioned above and hence, this basic enhancement is the first step towards the finished product.
 
-=== BrowserPanel Enhancement
-In the original AddressBook, the BrowserPanel displayed a dummy page when a Person was selected. A more useful implementation shows the customer's name, amount owed, due date, status, and runner assigned. These are important fields for a loanshark manager to get a quick grasp of a customer.
-
 === Keyboard shortcuts
 
 In the original AddressBook, the only keyboard shortcut that was implemented was kbd:[F1], which brought out the Help Window.
@@ -652,13 +649,24 @@ This would have posed problems when implementing the keyboard shortcuts that pop
 Limitation: when the focus is on the BrowserPanel UI element, the implemented keyboard shortcuts do not work as a user would expect them to.
 This is a limitation of the BrowserPanel UI element.
 
-==== Enhancement
-A HTML file with a customer's fields, as outlined above, in that order, is created each time a PersonCard is selected. The BrowserPanel then displays this HTML file. The background and font colors are matched to the LoanSharkTycoon application.
+=== BrowserPanel Enhancement
+In the original AddressBook, the BrowserPanel displayed a dummy page when a Person was selected. A more useful implementation shows some more important details of the runner or customer.
+These are important fields for a loanshark manager to get a quick grasp of a customer's details, as well as who the runners are in charge of.
 
-image::BrowserPanelMockup.png[width="800"]
+==== Enhancement
+Depending on whether the selected Person is a Runner or Customer, the respective HTML file with the desired fields are generated.
+Upon selection of the PersonCard, or select command from the CommandBox, a HtmlWriter gathers data on the particular Person using the getter methods available in the Customer and Runner classes.
+Fields for the Customer are: name, amount owed, due date, status, and runner assigned.
+Fields for the Runner are: name, and a list of customers assigned to the specified runner.
+The BrowserPanel then displays this HTML file.
+The background and font colors are matched to the LoanSharkTycoon application.
+
+image::BrowserPanelMockup.PNG[width="800"]
 
 ==== Rationale
-A customer's amount owed and due dates are very important variables which directly affect the PnL of the LoanShark's enterprise. Therefore, this feature is suitable, and definitely desirable from the perspective of a LoanShark manager.
+A customer's amount owed and due dates are very important variables which directly affect the PnL of the LoanShark's enterprise.
+Being able to view a runner's list of assigned customers is important for managing human resource.
+Therefore, this feature is suitable, and definitely desirable from the perspective of a LoanShark manager.
 
 == Documentation
 

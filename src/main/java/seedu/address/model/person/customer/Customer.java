@@ -11,6 +11,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.runner.Runner;
 import seedu.address.model.tag.Tag;
 
+//@@author melvintzw
 /**
  * Represents a customer in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -84,6 +85,9 @@ public class Customer extends Person {
 
         Date currentDate = new Date();
         long elapsedTime = currentDate.getTime() - oweStartDate.getTime();
+        if (elapsedTime < 0) {
+            return moneyBorrowed.value;
+        }
         long elapsedWeeks = elapsedTime / numOfMsPerWeek;
         return moneyBorrowed.value * Math.pow(1 + standardInterest.value / 100, (double) elapsedWeeks);
     }
@@ -116,7 +120,9 @@ public class Customer extends Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Money Owed: ")
+                .append(" Tags: ");
+        getTags().forEach(builder::append);
+        builder.append("\nMoney Owed: ")
                 .append(getMoneyCurrentlyOwed())
                 .append(" Standard Interest Rate: ")
                 .append(getStandardInterest())
@@ -124,10 +130,8 @@ public class Customer extends Person {
                 .append(getOweStartDate())
                 .append(" Due Date: ")
                 .append(getOweDueDate())
-                .append(" runner: ")
-                .append(runner.getName())
-                .append(" Tags: ");
-        getTags().forEach(builder::append);
+                .append("\nrunner: ")
+                .append(runner.getName());
         return builder.toString();
     }
 }

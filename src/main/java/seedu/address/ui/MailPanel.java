@@ -70,17 +70,11 @@ public class MailPanel extends UiPart<Region> {
 
         try {
             store = (IMAPStore) session.getStore("imaps");
-            System.out.println("store works");
             store.connect(USERNAME, PASSWORD);
-            System.out.println("store connected");
             inbox = (IMAPFolder) store.getFolder("INBOX");
             inbox.open(Folder.READ_ONLY);
             //gets & returns messages
-            System.out.println("right before messages");
             Message[] messages = inbox.getMessages();
-            System.out.println("right after messages");
-            System.out.println(messages[0].getSubject());
-            System.out.println(messages[0].getFrom()[0]);
             return messages;
         } catch (NoSuchProviderException e) {
             System.out.println("NoSuchProviderException");

@@ -35,7 +35,7 @@ public class MailerTest {
         boolean test = Mailer.emailDriver(Arrays.asList("NUS"), "45.0 min", "2018-05-04");
         assertTrue(test);
     }
-    
+
     @Test
     public void DriverEmailWithNoAddresses() {
         boolean test = Mailer.emailDriver(Collections.emptyList(), "45.0 min", "2018-05-24");

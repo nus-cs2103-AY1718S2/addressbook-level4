@@ -33,7 +33,6 @@ public class GroupCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-
         List<Recipe> lastShownList = model.getFilteredRecipeList();
 
         for (Index index : targetIndices) {

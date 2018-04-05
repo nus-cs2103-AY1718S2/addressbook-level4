@@ -79,8 +79,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 image::autocomplete.png[width="500"]
 
-* Medeina supports autocomplete for command words, options and prefixes.
-* You will also be shown a list of existing NRICs and a list of existing pet patients names when you need to reference them in `*-o* nr/OWNER_NRIC` and `*-p* n/PET_PATIENT_NAME` respectively.
+* Medeina supports autocomplete for command words, options, prefixes and tags.
+* You will be shown a list of suggested NRICs when when you need to reference an existing person in Medeina e.g. adding a pet patient / appointment, editing a pet patient to change ownership.
+* You will also be shown a list of suggested pet patients names when you need to reference them in `*-p* n/PET_PATIENT_NAME`.
 * You can use kbd:[Up] and kbd:[Down], or kbd:[Tab] to traverse through the autocomplete suggestions in the pop-up context menu.
 * Press kbd:[Enter] to select an autocomplete suggestion on the pop-up context menu.
 ====
@@ -147,6 +148,7 @@ s/cat b/persian c/calico bt/AB -a d/2018-12-31 12:30 r/nil t/surgery t/steriliza
 
 Medeina will show a list of all stored Owners and PetPatients if you enter `list` or `ls` in the command box.
 
+.`list` command
 image::List_Command.PNG[width="800"]
 
 === Editing a contact : `edit` or `ed`
@@ -311,7 +313,7 @@ Undoable commands: those commands that modify Medeina's content (`add`, `delete`
 
 .After `delete -fo 1` and `list`
 image::After_Delete.PNG[width:800]
-
+{empty} +
 .After `ud`
 image::After_Undo.PNG[width:800]
 
@@ -330,10 +332,10 @@ image::Undo_Fail.PNG[width:800]
 
 .Executed `delete -fo 1` and `clear`
 image::After_Clear.PNG[width:800]
-
+{empty} +
 .After `undo`
 image::Undo_Clear.PNG[width:800]
-
+{empty} +
 .After `ud`
 image::After_Undo.PNG[width:800]
 
@@ -348,12 +350,11 @@ Examples:
 `undo` (The command reverses the `delete -fo 1` command) +
 `redo` (The command reapplies the `delete -fo 1` command) +
 
-After `delete -fo 1` + `undo`:
-
+.After `delete -fo 1` + `undo`
 image::After_Undo.PNG[width:800]
+{empty} +
 
-After `redo`:
-
+.After `redo`
 image::Redo_Success.PNG[width:800]
 
 * `delete -fo 1` +
@@ -362,7 +363,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 image::Redo_Fail.PNG[width:800]
 
-* Type in `delete -fo 1` +
+* `delete -fo 1` +
 `clear` +
 `ud` (The command reverses the `clear` command) +
 `ud` (The command reverses the `delete 1` command) +
@@ -370,24 +371,24 @@ image::Redo_Fail.PNG[width:800]
 `rd` (The command reapplies the `clear` command) +
 // end::undoredo[]
 
-After `delete -fo 1` + `clear`:
-
+.After `delete -fo 1` + `clear`
 image::After_Clear.PNG[width:800]
 
-After first `ud`:
+{empty} +
 
+.After first `ud`
 image::Undo_Clear.PNG[width:800]
+{empty} +
 
-After second `ud`:
-
+.After second `ud`
 image::After_Undo.PNG[width:800]
+{empty} +
 
-After first `rd`:
-
+.After first `rd`:
 image::Redo_Success.PNG[width:800]
+{empty} +
 
-After second `rd`:
-
+.After second `rd`:
 image::Redo_Clear.PNG[width:800]
 
 === Clearing all entries : `clear` or `cls`
@@ -418,6 +419,7 @@ You can use `theme THEME_NAME` or `t THEME_NAME` to change Medeina's theme to on
 
 .Dark theme
 image::Theme_Dark.PNG[width:800]
+{empty} +
 
 .Light theme
 image::Theme_Light.PNG[width:800]

@@ -7,7 +7,6 @@ import java.io.IOException;
 import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Password;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 //@@author Caijun7
 /**

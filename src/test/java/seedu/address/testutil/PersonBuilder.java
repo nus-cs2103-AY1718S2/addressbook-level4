@@ -8,6 +8,7 @@ import seedu.address.model.person.DisplayPic;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MatriculationNumber;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Participation;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -24,6 +25,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_DISPLAY_PIC = "/images/displayPic/default.png";
+    public static final String DEFAULT_PARTICIPATION = "0";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
@@ -32,6 +34,7 @@ public class PersonBuilder {
     private Email email;
     private Address address;
     private DisplayPic displayPic;
+    private Participation participation;
     private Set<Tag> tags;
 
     public PersonBuilder() {
@@ -41,6 +44,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         displayPic = new DisplayPic(DEFAULT_DISPLAY_PIC);
+        participation = new Participation(DEFAULT_PARTICIPATION);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -54,6 +58,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         displayPic = personToCopy.getDisplayPic();
+        participation = personToCopy.getParticipation();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -121,8 +126,21 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Participation} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withParticipation(String participation) {
+        this.participation = new Participation(participation);
+        return this;
+    }
+
+    /**
+     * Builds the Person object
+     * @return A Person object
+     */
     public Person build() {
-        return new Person(name, matricNumber, phone, email, address, displayPic, tags);
+        return new Person(name, matricNumber, phone, email, address, displayPic,
+                participation, tags);
     }
 
 }

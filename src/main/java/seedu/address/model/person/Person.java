@@ -21,11 +21,28 @@ public class Person implements Comparable<Person> {
     private final Email email;
     private final Address address;
     private final DisplayPic displayPic;
-
+    private final Participation participation;
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
+     */
+    public Person(Name name, MatriculationNumber matricNum, Phone phone, Email email,
+                  Address address, DisplayPic displayPic, Participation participation, Set<Tag> tags) {
+        requireAllNonNull(name, matricNum, phone, email, address, tags);
+        this.name = name;
+        this.matricNumber = matricNum;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.displayPic = displayPic;
+        this.participation = participation;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+    }
+
+    /**
+     * Participation is not an essential field if one is creating a new Person object.
      */
     public Person(Name name, MatriculationNumber matricNum, Phone phone, Email email,
                   Address address, DisplayPic displayPic, Set<Tag> tags) {
@@ -36,6 +53,7 @@ public class Person implements Comparable<Person> {
         this.email = email;
         this.address = address;
         this.displayPic = displayPic;
+        this.participation = new Participation();
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -62,6 +80,10 @@ public class Person implements Comparable<Person> {
 
     public DisplayPic getDisplayPic() {
         return displayPic;
+    }
+
+    public Participation getParticipation() {
+        return participation;
     }
 
     /**
@@ -97,7 +119,7 @@ public class Person implements Comparable<Person> {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, matricNumber, phone, email, address, tags);
+        return Objects.hash(name, matricNumber, phone, email, address, displayPic, participation, tags);
     }
 
     @Override

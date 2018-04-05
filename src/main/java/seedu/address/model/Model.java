@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import java.time.YearMonth;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -38,6 +39,12 @@ public interface Model {
     /** Adds the given task */
     void addTask(Task task);
 
+    /** Adds an item to be deleted */
+    void addDeleteItem(String filepath);
+
+    /** Clears the list of items to be deleted */
+    void clearDeleteItems();
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -58,6 +65,9 @@ public interface Model {
 
     /** returns the calendar task list array */
     ObservableList<Task>[][] getCalendarTaskLists();
+
+    /** Returns an unmodifiable view of the filtered items list */
+    List<String> getItemList();
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.

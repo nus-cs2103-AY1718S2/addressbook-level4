@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
@@ -45,10 +44,7 @@ public class DeleteCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        if (!personToDelete.getDisplayPic().isDefault()) {
-            File toDelete = new File(personToDelete.getDisplayPic().toString());
-            toDelete.deleteOnExit();
-        }
+        model.addDeleteItem(personToDelete.getDisplayPic().toString());
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
     }
 

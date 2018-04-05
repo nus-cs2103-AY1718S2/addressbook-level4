@@ -14,6 +14,7 @@ import seedu.address.model.person.DisplayPic;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MatriculationNumber;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Participation;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -35,6 +36,8 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String participation;
 
     @XmlElement
     private String displayPic;
@@ -51,13 +54,14 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String matricNumber, String phone,
-        String email, String address, String displayPic, List<XmlAdaptedTag> tagged) {
+        String email, String address, String displayPic, String participation, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.matricNumber = matricNumber;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.displayPic = displayPic;
+        this.participation = participation;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -75,6 +79,7 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         displayPic = source.getDisplayPic().toString();
+        participation = source.getParticipation().toString();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -147,8 +152,17 @@ public class XmlAdaptedPerson {
             displayPic = new DisplayPic(this.displayPic);
         }
 
+        if (this.participation == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Participation.class.getSimpleName()));
+        }
+        if (!Participation.isValidParticipation(this.participation)) {
+            throw new IllegalValueException(Participation.MESSAGE_PARTICPATION_CONSTRAINTS);
+        }
+        final Participation participation = new Participation(this.participation);
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, matricNumber, phone, email, address, displayPic, tags);
+        return new Person(name, matricNumber, phone, email, address, displayPic, participation, tags);
     }
 
     @Override
@@ -168,6 +182,7 @@ public class XmlAdaptedPerson {
                 && Objects.equals(email, otherPerson.email)
                 && Objects.equals(address, otherPerson.address)
                 && Objects.equals(displayPic, otherPerson.displayPic)
+                && Objects.equals(participation, otherPerson.participation)
                 && tagged.equals(otherPerson.tagged);
     }
 }

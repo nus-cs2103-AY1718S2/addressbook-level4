@@ -1,11 +1,16 @@
 package seedu.address.ui;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.stage.Popup;
 import seedu.address.model.person.Person;
+
+import java.io.IOException;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -55,6 +60,20 @@ public class PersonCard extends UiPart<Region> {
 
         if (person.isArchived()) {
             name.getStyleClass().add(ARCHIVED_STYLE);
+        }
+    }
+
+    //@@author glorialaw
+    /**
+     * opens email sender when email is pushed
+     * @throws IOException
+     */
+    @FXML
+    private void writeEmail() throws IOException {
+        try{
+            ComposeEmailWindow cew = new ComposeEmailWindow();
+        } catch ( IOException e ){
+            System.out.println("IOException");
         }
     }
 

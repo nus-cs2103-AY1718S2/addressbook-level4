@@ -532,12 +532,12 @@ e.g.`remover` or `rr 1 in/2`
 e.g.`addq john` or `aq john`
 * *Remove patient from visiting queue* : `removeq` or `rq`
 * *View visiting queue* : `viewq` or `vq`
-* *View appointments in calendar* : `viewappt` or `va`
+* *View appointments in calendar* : `viewappt` or `va` +
 e.g.`viewappt john` or `viewappt john`
 * *View appointments by patient name* : `viewappt` or `va`
-* *Add new appointment* : `addappt` or `aa`
+* *Add new appointment* : `addappt` or `aa` +
 e.g.`addappt betsy 19/3/2018 1300` or `aa betsy 19/3/2018 1300`
-* *Delete appointment* : `delappt` or `da`
+* *Delete appointment* : `delappt` or `da` +
 e.g.`delappt betsy 2` or `da betsy 2`
 * *History* : `history` or `hi`
 * *Undo* : `undo` or `u` or `z`

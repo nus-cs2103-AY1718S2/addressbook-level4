@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddPhotoCommand;
 import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
@@ -134,6 +135,9 @@ public class AddressBookParser {
 
         case MyCalendarCommand.COMMAND_WORD:
             return new MyCalendarCommand();
+
+        case AddPhotoCommand.COMMAND_WORD:
+            return new AddPhotoCommandParser().parse(arguments);
 
 
         default:

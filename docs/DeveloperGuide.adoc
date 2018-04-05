@@ -441,9 +441,11 @@ This class is used in `CommandBox` which sends the content of the command line a
 //tag::mailer[]
 === Mailer feature
 
-We use an abstract `Mailer` class which provide a method that sends an email to a list of `Person`. +
+We use an abstract `Mailer` class which provide a method that sends an email to a list of `Person`
+and another which sends an itinerary to the driver. +
 This class uses the JavaMail API to send emails from the address : pigeonscs2103@gmail.com. +
 We also created a new `EmailCommand` which simply uses the `Mailer` class in its redefinition of `super.execute()`.
+The information related to the itinerary are collected by the `EmailCommand` which creates an instance of `RouteOptimization`.
 //end::mailer[]
 
 // tag::dataencryption[]

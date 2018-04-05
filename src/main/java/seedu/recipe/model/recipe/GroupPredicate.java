@@ -12,6 +12,6 @@ public class GroupPredicate implements Predicate<Recipe> {
 
     @Override
     public boolean test(Recipe recipe) {
-        return recipe.getGroupNames().stream().anyMatch(groupName1 -> groupName1.equals(groupName1));
+        return recipe.getGroupNames().stream().anyMatch(groupName1 -> groupName1.equals(groupName));
     }
 }

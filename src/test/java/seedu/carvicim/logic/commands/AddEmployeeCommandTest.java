@@ -194,9 +194,8 @@ public class AddEmployeeCommandTest {
         }
 
         @Override
-        public int archiveJob(DateRange dateRange) {
+        public void archiveJob(DateRange dateRange) {
             fail("This method should not be called");
-            return 0;
         }
 
         @Override

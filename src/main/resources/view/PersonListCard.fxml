@@ -52,21 +52,6 @@ m/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
             </padding>
         </HBox>
         <HBox alignment="CENTER_LEFT" spacing="5">
-            <ImageView fx:id="imageAddress" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="/images/address2.png" />
-                </image>
-            </ImageView>
-            <Label fx:id="address" styleClass="cell_small_label" text="\$address">
-                <padding>
-                    <Insets top="5.0" />
-                </padding>
-            </Label>
-            <padding>
-                <Insets top="5.0" />
-            </padding>
-        </HBox>
-        <HBox alignment="CENTER_LEFT" spacing="5">
             <ImageView fx:id="imageEmail" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="/images/email2.png" />

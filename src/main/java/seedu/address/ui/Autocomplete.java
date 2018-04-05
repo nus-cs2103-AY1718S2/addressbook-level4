@@ -10,17 +10,11 @@ import seedu.address.logic.parser.Prefix;
 
 //@@author aquarinte
 /**
- * Handles autocompletion of command input such as command word, options and prefixes.
+ * Handles autocompletion of command input such as command word, options, prefixes
+ * and also some user input parameters: Nric, pet patient name and tag.
  */
 public class Autocomplete {
 
-    /*private static final Pattern ADD_COMMAND1 = Pattern.compile("add -(a)+(?<apptInfo>.*)-(o)(?<ownerNric>.*)"
-            + "-(p)+(?<petName>.*)");
-    private static final Pattern ADD_COMMAND2 = Pattern.compile("add -(p)+(?<petInfo>.*)-(o)+(?<ownerNric>.*)");
-    private static final Pattern ADD_COMMAND3 = Pattern.compile("add -(o)+(?<ownerInfo>.*)-(p)+(?<petInfo>.*)"
-            + "-(a)+(?<apptInfo>.*)");
-    private static final Pattern ADD_COMMAND4 = Pattern.compile("add -(o)+(?<ownerInfo>.*)");
-    */
     private static Autocomplete instance;
     private Set<String> suggestions;
 
@@ -48,17 +42,46 @@ public class Autocomplete {
             suggestCommandWords(logic, words[0]);
         } else {
 
-            if (words[words.length - 2].equals("-o") && target.equals("nr/")) {
+            if (words[words.length - 2].equals("-o") && target.startsWith("nr/")) {
                 for (String nric : logic.getAllNric()) {
-                    suggestions.add(nric);
+                    if (target.equals("nr/")) {
+                        suggestions.add(nric);
+                    } else {
+                        String[] splitByPrefix = target.split("/");
+                        if (nric.startsWith(splitByPrefix[1])) {
+                            suggestions.add(nric);
+                        }
+                    }
                 }
             }
 
-            if (words[words.length - 2].equals("-p") && target.equals("n/")) {
+            if (words[words.length - 2].equals("-p") && target.startsWith("n/")) {
                 for (String petName : logic.getAllPetPatientNames()) {
-                    suggestions.add(petName);
+                    if (target.equals("n/")) {
+                        suggestions.add(petName);
+                    } else {
+                        String[] splitByPrefix = target.split("/");
+                        if (petName.startsWith(splitByPrefix[1])) {
+                            suggestions.add(petName);
+                        }
+                    }
+
                 }
             }
+
+            if (target.startsWith("t/")) {
+                for (String tag : logic.getAllTagNames()) {
+                    if (target.equals("t/")) {
+                        suggestions.add(tag);
+                    } else {
+                        String[] splitByPrefix = target.split("/");
+                        if (tag.startsWith(splitByPrefix[1]) && !tag.equals(splitByPrefix[1])) {
+                            suggestions.add(tag);
+                        }
+                    }
+                }
+            }
+
             suggestOptions(logic, target);
             suggestPrefixes(logic, target);
         }

@@ -117,7 +117,9 @@ public class Customer extends Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Money Owed: ")
+                .append(" Tags: ");
+        getTags().forEach(builder::append);
+        builder.append("\nMoney Owed: ")
                 .append(getMoneyCurrentlyOwed())
                 .append(" Standard Interest Rate: ")
                 .append(getStandardInterest())
@@ -125,10 +127,8 @@ public class Customer extends Person {
                 .append(getOweStartDate())
                 .append(" Due Date: ")
                 .append(getOweDueDate())
-                .append(" runner: ")
-                .append(runner.getName())
-                .append(" Tags: ");
-        getTags().forEach(builder::append);
+                .append("\nrunner: ")
+                .append(runner.getName());
         return builder.toString();
     }
 }

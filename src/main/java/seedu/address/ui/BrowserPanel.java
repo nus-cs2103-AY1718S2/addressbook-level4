@@ -13,6 +13,7 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.SearchPersonOnAllPlatformEvent;
 import seedu.address.model.person.Person;
 
 /**
@@ -21,9 +22,15 @@ import seedu.address.model.person.Person;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
+    public static final String FACEBOOK_PROFILE_PAGE_URL =
+            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+    public static final String TWITTER_PROFILE_PAGE_URL =
+            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
     public static final String FACEBOOK_SEARCH_PAGE_URL =
+            //"https://www.facebook.com/search/people?q=";
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
     public static final String TWITTER_SEARCH_PAGE_URL =
+            //"https://twitter.com/search?f=users&vertical=news&q=";
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
 
     private static final String FXML = "BrowserPanel.fxml";
@@ -46,11 +53,18 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void loadBrowserPersonPage(Person person) {
-        loadBrowserPage(FACEBOOK_SEARCH_PAGE_URL + person.getName().fullName);
+    private void loadBrowserProfilePage(Person person) {
+        loadBrowserPage(FACEBOOK_PROFILE_PAGE_URL + person.getName().fullName);
     }
-    private void loadBrowser1PersonPage(Person person) {
-        loadBrowser1Page(TWITTER_SEARCH_PAGE_URL + person.getName().fullName);
+    private void loadBrowser1ProfilePage(Person person) {
+        loadBrowser1Page(TWITTER_PROFILE_PAGE_URL + person.getName().fullName);
+    }
+
+    private void loadBrowserSearchPage(String searchName) {
+        loadBrowserPage(FACEBOOK_SEARCH_PAGE_URL + searchName);
+    }
+    private void loadBrowser1SearchPage(String searchName) {
+        loadBrowser1Page(TWITTER_SEARCH_PAGE_URL + searchName);
     }
 
     public void loadBrowserPage(String url) {
@@ -80,7 +94,14 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadBrowserPersonPage(event.getNewSelection().person);
-        loadBrowser1PersonPage(event.getNewSelection().person);
+        loadBrowserProfilePage(event.getNewSelection().person);
+        loadBrowser1ProfilePage(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handleSearchPersonOnAllPlatformEvent(SearchPersonOnAllPlatformEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadBrowserSearchPage(event.getSearchName());
+        loadBrowser1SearchPage(event.getSearchName());
     }
 }

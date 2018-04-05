@@ -152,7 +152,7 @@ public class ProgressCheckerParser {
         case CloseIssueCommand.COMMAND_WORD:
         case CloseIssueCommand.COMMAND_ALIAS:
             return new CloseIssueCommandParser().parse(arguments);
-            
+
         case GitLoginCommand.COMMAND_WORD:
         case GitLoginCommand.COMMAND_ALIAS:
             return new GitLoginCommandParser().parse(arguments);

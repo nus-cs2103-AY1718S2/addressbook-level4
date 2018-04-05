@@ -7,6 +7,8 @@ import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_GIT_PASSCODE;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_GIT_REPO;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_GIT_USERNAME;
 
+import java.io.IOException;
+
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.credentials.GitDetails;
 
@@ -43,16 +45,16 @@ public class GitLoginCommand extends Command {
         requireNonNull(gitDetails);
         toAuthenticate = gitDetails;
     }
-    
+
     @Override
     public CommandResult execute() throws CommandException {
 
-//        try {
-//            model.createIssueOnGitHub(toCreate);
+        try {
+            model.loginGithub(toAuthenticate);
             return new CommandResult(MESSAGE_SUCCESS);
-//        } catch (IOException e) {
-//            throw new CommandException(MESSAGE_FAILURE);
-//        }
+        } catch (IOException e) {
+            throw new CommandException(MESSAGE_FAILURE);
+        }
     }
 
 }

@@ -12,7 +12,6 @@ import java.util.List;
 import org.kohsuke.github.GHIssue;
 import org.kohsuke.github.GHIssueBuilder;
 import org.kohsuke.github.GHIssueState;
-import org.kohsuke.github.GHLabel;
 import org.kohsuke.github.GHMilestone;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
@@ -23,6 +22,7 @@ import javafx.collections.ObservableList;
 import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.commons.util.CollectionUtil;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
+import seedu.progresschecker.model.credentials.GitDetails;
 import seedu.progresschecker.model.person.Person;
 
 //@@author adityaa1998
@@ -37,9 +37,9 @@ import seedu.progresschecker.model.person.Person;
 public class GitIssueList implements Iterable<Issue> {
 
     private final ObservableList<Issue> internalList = FXCollections.observableArrayList();
-    private final String repoName = new String("AdityaA1998/samplerepo-pr-practice");
-    private final String userLogin = new String("adityaa1998");
-    private final String userAuthentication = new String("Aditya@123");
+    private String repoName;
+    private String userLogin;
+    private String userAuthentication;
     private GitHub github;
     private GHRepository repository;
     private GHIssueBuilder issueBuilder;
@@ -47,9 +47,19 @@ public class GitIssueList implements Iterable<Issue> {
     private GHIssue toEdit;
 
     /**
+     * Initialises github credentials
+     */
+    public void initialiseCredentials(GitDetails gitdetails) throws CommandException {
+        repoName = gitdetails.getRepository().toString();
+        userLogin = gitdetails.getUsername().toString();
+        userAuthentication = gitdetails.getPasscode().toString();
+        authoriseGithub();
+    }
+
+    /**
      * Authorises with github
      */
-    private void authoriseGithub () throws IOException, CommandException {
+    private void authoriseGithub () throws CommandException {
         try {
             github = GitHub.connectUsingPassword(userLogin, userAuthentication);
         } catch (IOException ie) {
@@ -60,49 +70,6 @@ public class GitIssueList implements Iterable<Issue> {
         } catch (IOException ie) {
             throw new CommandException("Enter correct repository name");
         }
-        //updateInternalList();
-    }
-
-    /**
-     * Updates the internal list by fetching data from github
-     */
-    private void updateInternalList() throws IOException {
-
-        List<GHIssue> gitIssues = repository.getIssues(GHIssueState.OPEN);
-        for (GHIssue issueOnGit : gitIssues) {
-            Issue toBeAdded = convertToIssue(issueOnGit);
-            internalList.add(toBeAdded);
-        }
-    }
-
-    /**
-     * Converts GHIssue to issue
-     */
-    private Issue convertToIssue(GHIssue i) throws IOException {
-
-        List<GHUser> gitAssigneeList = i.getAssignees();
-        ArrayList<GHLabel> gitLabelsList = new ArrayList<>(i.getLabels());
-        List<Assignees> assigneesList = new ArrayList<>();
-        List<Labels> labelsList = new ArrayList<>();
-        Milestone existingMilestone = null;
-        Body existingBody = new Body("");
-
-        if (i.getMilestone() == null) {
-            existingMilestone = null;
-        } else {
-            existingMilestone = new Milestone(i.getMilestone().getTitle());
-        }
-
-        for (GHUser assignee : gitAssigneeList) {
-            assigneesList.add(new Assignees(assignee.getLogin()));
-        }
-
-        for (GHLabel label : gitLabelsList) {
-            labelsList.add(new Labels(label.getName()));
-        }
-
-        return new Issue(new Title(issue.getTitle()), assigneesList, existingMilestone,
-                existingBody, labelsList);
     }
 
     /**
@@ -112,7 +79,7 @@ public class GitIssueList implements Iterable<Issue> {
      */
     public void createIssue(Issue toAdd) throws IOException, CommandException {
 
-        authoriseGithub();
+        checkGitAuthentication();
         issueBuilder = repository.createIssue(toAdd.getTitle().toString());
         issueBuilder.body(toAdd.getBody().toString());
 
@@ -139,7 +106,6 @@ public class GitIssueList implements Iterable<Issue> {
         }
         createdIssue.setAssignees(listOfUsers);
         createdIssue.setLabels(listOfLabels.toArray(new String[0]));
-        updateInternalList();
     }
 
     /**
@@ -147,14 +113,12 @@ public class GitIssueList implements Iterable<Issue> {
      */
     public void reopenIssue(Index index) throws IOException, CommandException {
 
-        authoriseGithub();
-        //checkGitAuthentication();
+        checkGitAuthentication();
         issue = repository.getIssue(index.getOneBased());
         if (issue.getState() == GHIssueState.OPEN) {
             throw new CommandException("Issue #" + index.getOneBased() + " is already open");
         }
         issue.reopen();
-        updateInternalList();
     }
 
     /**
@@ -168,7 +132,6 @@ public class GitIssueList implements Iterable<Issue> {
             throw new CommandException("Issue #" + index.getOneBased() + " is already closed");
         }
         issue.close();
-        updateInternalList();
     }
 
     /**

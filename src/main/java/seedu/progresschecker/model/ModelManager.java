@@ -84,7 +84,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@author adityaa1998
     @Override
-    public synchronized void loginGithub(GitDetails gitdetails) {
+    public synchronized void loginGithub(GitDetails gitdetails) throws IOException, CommandException {
         progressChecker.loginGithub(gitdetails);
         indicateProgressCheckerChanged();
     }
@@ -95,7 +95,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void createIssueOnGitHub(Issue issue) throws IOException {
+    public synchronized void createIssueOnGitHub(Issue issue) throws IOException, CommandException {
         progressChecker.createIssueOnGitHub(issue);
         indicateProgressCheckerChanged();
     }

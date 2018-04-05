@@ -3,7 +3,6 @@ package seedu.progresschecker.model;
 import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,14 +11,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.kohsuke.github.GHIssue;
-import org.kohsuke.github.GHIssueBuilder;
-import org.kohsuke.github.GHIssueState;
-import org.kohsuke.github.GHMilestone;
-import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GHUser;
-import org.kohsuke.github.GitHub;
-
 import javafx.collections.ObservableList;
 import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
@@ -27,11 +18,8 @@ import seedu.progresschecker.model.credentials.GitDetails;
 import seedu.progresschecker.model.exercise.Exercise;
 import seedu.progresschecker.model.exercise.UniqueExerciseList;
 import seedu.progresschecker.model.exercise.exceptions.DuplicateExerciseException;
-import seedu.progresschecker.model.issues.Assignees;
+import seedu.progresschecker.model.issues.GitIssueList;
 import seedu.progresschecker.model.issues.Issue;
-import seedu.progresschecker.model.issues.Labels;
-import seedu.progresschecker.model.issues.Milestone;
-import seedu.progresschecker.model.issues.MilestoneMap;
 import seedu.progresschecker.model.person.Person;
 import seedu.progresschecker.model.person.UniquePersonList;
 import seedu.progresschecker.model.person.exceptions.DuplicatePersonException;
@@ -48,14 +36,12 @@ import seedu.progresschecker.model.tag.UniqueTagList;
  */
 public class ProgressChecker implements ReadOnlyProgressChecker {
 
-    private final String repoName = new String("AdityaA1998/samplerepo-pr-practice");
-    private final String userLogin = new String("anminkang");
-    private final String userAuthentication = new String("aditya2018");
-
     private final UniquePersonList persons;
     private final UniquePhotoList photos;
     private final UniqueTagList tags;
     private final UniqueExerciseList exercises;
+    private final GitIssueList issues;
+
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -69,6 +55,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
         tags = new UniqueTagList();
         photos = new UniquePhotoList();
         exercises = new UniqueExerciseList();
+        issues = new GitIssueList();
     }
 
     public ProgressChecker() {}
@@ -181,13 +168,14 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
 
     /**
      * Login to github
-     * 
+     *
      * @throws IOException is there is any problem in authentication
      *
      */
-    public void loginGithub(GitDetails gitdetails) throws IOException {
-        
+    public void loginGithub(GitDetails gitdetails) throws IOException, CommandException {
+        issues.initialiseCredentials(gitdetails);
     }
+
     /**
      * Creates issue on github
      *

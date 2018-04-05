@@ -38,12 +38,11 @@ public interface Model {
     void sort();
 
     //@@author adityaa1998
-    
     /** authenticates git using password */
-    void loginGithub(GitDetails gitdetails);
+    void loginGithub(GitDetails gitdetails) throws IOException, CommandException;
 
     /** creates an issue on github */
-    void createIssueOnGitHub(Issue issue) throws IOException;
+    void createIssueOnGitHub(Issue issue) throws IOException, CommandException;
 
     /** reopen issue on github */
     void reopenIssueOnGithub(Index index) throws IOException, CommandException;

@@ -14,7 +14,7 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
     private static final String[] TAG_COLOUR_STYLES =
-        { "teal", "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey"};
+            {"teal", "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey"};
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -39,6 +39,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label personType;
+    @FXML
     private FlowPane tags;
 
     public PersonCard(Person person, int displayedIndex) {
@@ -49,6 +51,7 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
+        personType.setText(person.getType().name());
         initTags(person);
     }
 
@@ -62,9 +65,9 @@ public class PersonCard extends UiPart<Region> {
 
     /**
      * Creates the Labels fot a given {@code Person}.
-     *  1. Creates a new Label object for each tag, initialised with the respective tag.
-     *  2. Adds a style colour attribute to each Label based on its tag.
-     *  3. Adds each properly initialised Label to the containing FlowPane object.
+     * 1. Creates a new Label object for each tag, initialised with the respective tag.
+     * 2. Adds a style colour attribute to each Label based on its tag.
+     * 3. Adds each properly initialised Label to the containing FlowPane object.
      */
     private void initTags(Person person) {
         person.getTags().forEach(tag -> {

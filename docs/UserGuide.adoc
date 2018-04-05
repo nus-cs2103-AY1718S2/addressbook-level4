@@ -259,16 +259,13 @@ Format: `navigate INDEX`
 
 [NOTE]
 ====
-Command is still in the middle of development. Only static result will appear.
-
-Must be on `scheduler` view first for command to work, enter `switch scheduler` to do so.
-
+Must be on `scheduler` view first for command to work, else nothing happens.
 `show-schedule` has to be called BEFORE `navigate` can work properly.
 ====
 
 ****
-* Displays direction between two different but adjacent events by specifiying `INDEX`
-* `INDEX` must be more then `1`, but less than total events for the day minus 2 or `LENGTH - 2`.
+* Displays direction between two different but adjacent events by specifying `INDEX`
+* `INDEX` must be more then `1`, but less than total events for the day minus ONE or `NUM_OF_EVENTS - 1`.
 ****
 
 Examples:
@@ -278,7 +275,7 @@ Switches to `calendar` tab and displays contents
 * `show-schedule` +
 Retrieves events for specified day
 * `navigate 1` +
-Displays dummy directions on the scheduler map
+Displays directions between the first and the second event of the day.
 
 === Opening a calendar : `calendar-launch`
 
@@ -444,11 +441,13 @@ e.g. `find James Jake`
 * *Calendar Delete* : `calendar-delete INDEX` `[Since v1.4]`
 * *Show Schedule* : `show-schedule d/<date>` `[Since v1.4]`
 * *Error* : `errorlog` `[Since v1.2]`
-* *Switch* : `switch FEATURE` +
-e.g.`switch scheduler`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
+* *Switch* : `switch FEATURE` +
+e.g.`switch scheduler`
+* *Navigate* : `navigate INDEX` +
+e.g.`navigate 2`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Create New User* : `create-user u/USERNAME p/PASSWORD`

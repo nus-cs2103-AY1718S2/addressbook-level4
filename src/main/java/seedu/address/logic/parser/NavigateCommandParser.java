@@ -2,13 +2,12 @@
 
 package seedu.address.logic.parser;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX;
-
 import java.util.List;
 
 import com.google.api.services.calendar.model.Event;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.exceptions.InvalidCalendarEventCountException;
 import seedu.address.logic.OAuthManager;
 import seedu.address.logic.commands.NavigateCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -32,12 +31,14 @@ public class NavigateCommandParser implements Parser<NavigateCommand> {
 
             return new NavigateCommand(eventPair);
 
+        //@@author jaronchan
+
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_EVENT_DISPLAYED_INDEX));
+                    String.format(ive.getMessage()));
+        } catch (InvalidCalendarEventCountException e) {
+            throw new ParseException(
+                    String.format(NavigateCommand.MESSAGE_NO_EVENT));
         }
     }
-
 }
-
-//@@author

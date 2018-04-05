@@ -415,7 +415,7 @@ See <<fig-AuthorizationCode>> for more information. +
 
 [[fig-AuthorizationCode]]
 .Allow ReciRecipé access to your Dropbox
-image::AuthorizationCode.png[width="750"]
+image::AuthorizationCode.PNG[width="750"]
 {nbsp} +
 
 === *`undo`* : Undoing previous command
@@ -464,7 +464,7 @@ Details
 [NOTE]
 ====
 If it is the first time the user is using the `upload` command, you will be prompted to login to Dropbox and authorize this app.
-An authorization code will then be given to you which you should copy and paste into this app. See guide for `token` command for details.
+An authorization code will then be given to you which you should copy and paste into this app. See <<token>> for details.
 ====
 
 Examples:
@@ -562,6 +562,8 @@ A: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue
                             |   E.g.*`share 2`*
 .2+|    *Tag*               |  `tag KEYWORD [MORE_KEYWORDS]`
                             |   E.g. *`tag chicken favourites`*
+.2+|    *Token*             |   `token AuthorizationCode`
+                            |   E.g. *`token validCode`*
 .2+|    *Undo*              |  `undo`
                             |  *`undo`*
 .2+|    *Upload*            |  `upload FILENAME`

@@ -94,13 +94,13 @@ public class RouteOptimization {
 
     }
 
+    //@@author meerakanani10
     /**
      *
      * @param address
      * @param filteredAddresses
      * @return
      */
-    //@@author meerakanani10
     public List<String> removeAddress(String address, List<String> filteredAddresses) {
         for (int i = 0; i < filteredAddresses.size(); i++) {
             if (filteredAddresses.get(i).equals(address)) {
@@ -135,7 +135,8 @@ public class RouteOptimization {
 
         return optimizedRoute;
     }
-
+    
+    //@@author meerakanani10
     /**
      *
      * @param origin - starting point
@@ -148,6 +149,7 @@ public class RouteOptimization {
         return routeKey;
     }
 
+    //@@author meerakanani10
     /**
      *
      * @param combinedAddresses - the key from the hashmaps
@@ -158,6 +160,7 @@ public class RouteOptimization {
         return addresses;
     }
 
+    //@@author meerakanani10
     /**
      *
      * @param address address to be edited

@@ -53,7 +53,6 @@ public class PersonCard extends UiPart<Region> {
         initTags(person);
         this.displayedIndex = displayedIndex;
     }
-    
     //@@author ZacZequn
     /**
      * Returns the color style for {@code tagName}'s label.

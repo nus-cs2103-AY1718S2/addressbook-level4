@@ -91,7 +91,8 @@ public class Person {
                 && otherPerson.getMatricNumber().equals(this.getMatricNumber())
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
-                && otherPerson.getAddress().equals(this.getAddress());
+                && otherPerson.getAddress().equals(this.getAddress())
+                && otherPerson.getDisplayPic().equals(this.getDisplayPic());
     }
 
     @Override

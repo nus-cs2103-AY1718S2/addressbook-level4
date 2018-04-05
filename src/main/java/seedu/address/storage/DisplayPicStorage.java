@@ -76,10 +76,10 @@ public class DisplayPicStorage {
             File input = new File(filePath);
             BufferedImage image = ImageIO.read(input);
             String uniqueFileName = NamingUtil.generateUniqueName(name);
-            File toSave = new File(DisplayPic.DEFAULT_IMAGE_LOCATION + uniqueFileName);
+            File toSave = new File(DisplayPic.DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType);
             while (FileUtil.isFileExists(toSave)) {
                 uniqueFileName = NamingUtil.generateUniqueName(uniqueFileName);
-                toSave = new File(DisplayPic.DEFAULT_IMAGE_LOCATION + uniqueFileName);
+                toSave = new File(DisplayPic.DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType);
             }
             FileUtil.copyImage(image, fileType, SAVE_LOCATION + uniqueFileName + '.' + fileType);
             return uniqueFileName;

@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -7,6 +8,8 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -16,7 +19,10 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ShowCalendarRequestEvent;
+import seedu.address.commons.events.ui.ShowErrorsRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchFeatureEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -35,18 +41,50 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private PersonDetailsPanel personDetailsPanel;
+    private CalendarPanel calendarPanel;
+    private DailySchedulerPanel dailySchedulerPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+    private LoginStatusBar loginStatusBar;
+
 
     @FXML
     private StackPane browserPlaceholder;
+
+    //@@author jaronchan
+    @FXML
+    private StackPane personDetailsPlaceholder;
+
+    @FXML
+    private StackPane calendarPlaceholder;
+
+    @FXML
+    private StackPane dailySchedulerPlaceholder;
+
+    @FXML
+    private TabPane featuresTabPane;
+
+    @FXML
+    private Tab detailsTab;
+
+    @FXML
+    private Tab calendarTab;
+
+    @FXML
+    private Tab dailySchedulerTab;
+
+    //@@author
 
     @FXML
     private StackPane commandBoxPlaceholder;
 
     @FXML
     private MenuItem helpMenuItem;
+
+    @FXML
+    private MenuItem viewCalendarMenuItem;
 
     @FXML
     private StackPane personListPanelPlaceholder;
@@ -56,6 +94,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane loginStatusbarPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
@@ -80,6 +121,7 @@ public class MainWindow extends UiPart<Stage> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(viewCalendarMenuItem, KeyCombination.valueOf("F8"));
     }
 
     /**
@@ -115,26 +157,69 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Fills up all the placeholders of this window.
      */
-    void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+    void fillInnerParts() throws IOException {
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        loginStatusBar = new LoginStatusBar();
+        loginStatusbarPlaceholder.getChildren().add(loginStatusBar.getRoot());
+
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+
+        personDetailsPanel = new PersonDetailsPanel();
+        personDetailsPlaceholder.getChildren().add(personDetailsPanel.getRoot());
+
+        calendarPanel = new CalendarPanel();
+        calendarPlaceholder.getChildren().add(calendarPanel.getRoot());
+
+        dailySchedulerPanel = new DailySchedulerPanel();
+        dailySchedulerPlaceholder.getChildren().add(dailySchedulerPanel.getRoot());
+
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
+        commandBox.setMainWindow(this);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        hideBeforeLogin();
+
     }
 
     void hide() {
         primaryStage.hide();
     }
+
+    //@@author kaisertanqr
+
+    /**
+     * Hides browser and person list panel.
+     */
+    void hideBeforeLogin() {
+        loginStatusBar.updateLoginStatus(false);
+        featuresTabPane.setVisible(false);
+        personDetailsPlaceholder.setVisible(false);
+        calendarPlaceholder.setVisible(false);
+        dailySchedulerPlaceholder.setVisible(false);
+        personListPanelPlaceholder.setVisible(false);
+    }
+
+    /**
+     * Unhide browser and person list panel.
+     */
+    public void showAfterLogin() {
+        loginStatusBar.updateLoginStatus(true);
+        featuresTabPane.setVisible(true);
+        personDetailsPlaceholder.setVisible(true);
+        calendarPlaceholder.setVisible(true);
+        dailySchedulerPlaceholder.setVisible(true);
+        personListPanelPlaceholder.setVisible(true);
+    }
+
+    //@@author
 
     private void setTitle(String appTitle) {
         primaryStage.setTitle(appTitle);
@@ -169,8 +254,54 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    //@@author ifalluphill
+    /**
+     * Opens the error window.
+     */
+    @FXML
+    public void handleViewErrors() {
+        ErrorsWindow errorsWindow = new ErrorsWindow(logic);
+        errorsWindow.show();
+    }
+
+    /**
+     * Opens the calendar window.
+     */
+    @FXML
+    public void handleViewCalendar() throws IOException {
+        CalendarWindow calendarWindow = new CalendarWindow(logic);
+        calendarWindow.show();
+    }
+    //@@author
+
     void show() {
         primaryStage.show();
+    }
+
+    //@@author jaronchan
+
+    /**
+     * Handle event of feature tab switching.
+     */
+    @Subscribe
+    private void handleFeatureSwitch(SwitchFeatureEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switch (event.getFeatureTarget()) {
+        case "details":
+            featuresTabPane.getSelectionModel().select(detailsTab);
+            break;
+
+        case "calendar":
+            featuresTabPane.getSelectionModel().select(calendarTab);
+            break;
+
+        case "scheduler":
+            featuresTabPane.getSelectionModel().select(dailySchedulerTab);
+            break;
+
+        default:
+            break;
+        }
     }
 
     /**
@@ -186,7 +317,9 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        personDetailsPanel.freeResources();
+        calendarPanel.freeResources();
+        dailySchedulerPanel.freeResources();
     }
 
     @Subscribe
@@ -194,4 +327,18 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author ifalluphill
+    @Subscribe
+    private void handleShowErrorsEvent(ShowErrorsRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleViewErrors();
+    }
+
+    @Subscribe
+    private void handleViewCalendarEvent(ShowCalendarRequestEvent event) throws IOException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleViewCalendar();
+    }
+    //@@author
 }

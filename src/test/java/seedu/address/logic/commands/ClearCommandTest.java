@@ -9,19 +9,21 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.TestStorage;
+import seedu.address.model.UserDatabase;
 import seedu.address.model.UserPrefs;
 
 public class ClearCommandTest {
 
     @Test
     public void execute_emptyAddressBook_success() {
-        Model model = new ModelManager();
+        Model model = new ModelManager(new TestStorage());
         assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, model);
     }
 
     @Test
     public void execute_nonEmptyAddressBook_success() {
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new UserDatabase(), new TestStorage());
         assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, model);
     }
 

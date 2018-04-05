@@ -13,6 +13,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.login.User;
 
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.
@@ -42,7 +43,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
      * @throws DataConversionException if the file is not in the correct format.
      */
     public Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException,
-                                                                                 FileNotFoundException {
+            FileNotFoundException {
         requireNonNull(filePath);
 
         File addressBookFile = new File(filePath);
@@ -79,4 +80,14 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
     }
 
+    /**
+     * Similar to {@link #deleteAddressBook(User)}
+     * @param user location of the data. Cannot be null
+     */
+    public void deleteAddressBook(User user) {
+        requireNonNull(filePath);
+
+        File file = new File(user.getAddressBookFilePath());
+        file.delete();
+    }
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- @@author jaronchan -->
+
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<StackPane xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <SplitPane dividerPositions="0.5">
+      <items>
+        <StackPane>
+          <padding>
+            <Insets right="5.0" />
+          </padding>
+          <children>
+            <VBox prefHeight="-1.0" prefWidth="-1.0">
+              <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+              </padding>
+              <children>
+                <Label text="Scheduled Session for DATE">
+                  <padding>
+                    <Insets bottom="5" left="5"/>
+                  </padding>
+                </Label>
+                <ListView prefHeight="-1.0" prefWidth="-1.0" />
+              </children>
+            </VBox>
+          </children>
+        </StackPane>
+        <StackPane prefHeight="150.0" prefWidth="200.0">
+          <padding>
+            <Insets left="5.0" />
+          </padding>
+          <children>
+            <TabPane prefHeight="200.0" prefWidth="200.0" side="RIGHT" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="  ">
+                  <content>
+                    <StackPane prefHeight="-1.0" prefWidth="-1.0">
+                      <children>
+                        <StackPane fx:id="directionPanelPlaceholder" prefWidth="-1.0">
+                          <padding>
+                            <Insets right="10" left="10"/>
+                          </padding>
+                        </StackPane>
+                      </children>
+                    </StackPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+          </children>
+        </StackPane>
+      </items>
+    </SplitPane>
+  </children>
+</StackPane>

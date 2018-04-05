@@ -127,6 +127,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::filter[]
 === Filtering person by date: `filter`
 
 Filers the list of people by date (only one date)
@@ -140,6 +141,7 @@ for all the people on that date and display the route on the map.
 * This filter can be used to obtain a delivery route for a day
 ****
 
+// end::filter[]
 
 === Deleting a person : `delete`
 
@@ -309,6 +311,7 @@ _{explain how the user can enable/disable data encryption}_
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+// tag::testing[]
 == User Testing
 
 When testing and using our system for the first time, here are some commands you can try to get the full experience.
@@ -318,9 +321,11 @@ Feel free to try other commands outlined above when you get the feel of our prog
 
 *2.* list John
 
-*3.* filter 2018-03-30
+*3.* filter 2018-03-22
 
 *4.* delete John
+
+// end::testing[]
 
 == Command Summary
 

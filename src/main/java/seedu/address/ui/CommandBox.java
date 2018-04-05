@@ -1,8 +1,10 @@
 package seedu.address.ui;
 
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
@@ -30,13 +32,15 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private static ChangeListener<String> autocompleteListener;
+
 
     @FXML
     private TextField commandTextField;
     private ContextMenu suggestionBox;
     private Autocomplete autocompleteLogic = Autocomplete.getInstance();
 
-    private Set<String> suggestions;
+    private List<String> suggestions;
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -45,8 +49,10 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.setContextMenu(suggestionBox);
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
-        commandTextField.textProperty().addListener(((observable, oldValue, newValue) ->
-                triggerAutocomplete(newValue)));
+        // autocomplete
+        autocompleteListener = ((observable, oldValue, newValue) -> triggerAutocomplete(newValue));
+        commandTextField.textProperty().addListener(autocompleteListener);
+
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -193,5 +199,9 @@ public class CommandBox extends UiPart<Region> {
         int cursorPos = commandTextField.getCaretPosition();
         commandTextField.insertText(cursorPos, toAdd);
         commandTextField.positionCaret(commandTextField.getText().length());
+    }
+
+    public static ChangeListener getAutocompleteListener() {
+        return autocompleteListener;
     }
 }

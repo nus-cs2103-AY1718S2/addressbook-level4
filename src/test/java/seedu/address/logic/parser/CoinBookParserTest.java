@@ -45,6 +45,16 @@ public class CoinBookParserTest {
         assertEquals(new AddCommand(coin), aliasedCommand);
     }
 
+    /*
+    @Test
+    public void parseCommand_buy() throws Exception {
+        Coin coin = new CoinBuilder().build();
+        BuyCommand command = (BuyCommand) parser.parseCommand(BuyCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_COIN.getOneBased() + " 50.0");
+        assertEquals(new BuyCommand(INDEX_FIRST_COIN, 50.0), command);
+    }
+    */
+
     @Test
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
@@ -64,7 +74,7 @@ public class CoinBookParserTest {
     }
 
     @Test
-    public void parseCommand_edit() throws Exception {
+    public void parseCommand_tag() throws Exception {
         Coin coin = new CoinBuilder().build();
         EditCoinDescriptor descriptor = new EditCoinDescriptorBuilder(coin).build();
         TagCommand command = (TagCommand) parser.parseCommand(TagCommand.COMMAND_WORD + " "

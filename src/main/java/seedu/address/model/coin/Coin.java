@@ -73,11 +73,11 @@ public class Coin {
     //@@author
 
     /**
-     * Copy constructor with tag update.
+     * Copy constructor with update.
      */
-    public Coin(Coin toCopy, Set<Tag> tags) {
-        requireAllNonNull(toCopy);
-        this.code = toCopy.code;
+    public Coin(Coin toCopy, Code code, Set<Tag> tags) {
+        requireAllNonNull(toCopy, code, tags);
+        this.code = code;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.price = toCopy.price;
@@ -146,16 +146,26 @@ public class Coin {
         return totalAmountSold;
     }
 
+    /**
+     * Updates the total amount sold of this coin in units held and return gained
+     * @param addAmount
+     */
     public void addTotalAmountSold(Double addAmount) {
         this.totalAmountSold.addValue(addAmount);
+        this.totalDollarsSold.addValue(addAmount * price.getValue());
     }
 
     public Amount getTotalAmountBought() {
         return totalAmountBought;
     }
 
+    /**
+     * Updates the total amount bought of this coin in units held and capital invested
+     * @param addAmount
+     */
     public void addTotalAmountBought(Double addAmount) {
         this.totalAmountBought.addValue(addAmount);
+        this.totalDollarsBought.addValue(addAmount * price.getValue());
     }
 
     public Double getTotalProfit() {

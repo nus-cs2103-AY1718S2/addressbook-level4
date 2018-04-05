@@ -93,7 +93,7 @@ public class TagCommand extends UndoableCommand {
         Code updatedCode = coinToEdit.getCode();
         Set<Tag> updatedTags = editCoinDescriptor.getTags().orElse(coinToEdit.getTags());
 
-        return new Coin(updatedCode, updatedTags);
+        return new Coin(coinToEdit, updatedCode, updatedTags);
     }
 
     @Override

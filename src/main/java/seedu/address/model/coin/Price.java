@@ -11,7 +11,7 @@ public class Price {
      * Constructs a {@code Price}.
      */
     public Price() {
-        this.value = 0.0;
+        this.value = 1.0;
     }
 
     //@@author laichengyu

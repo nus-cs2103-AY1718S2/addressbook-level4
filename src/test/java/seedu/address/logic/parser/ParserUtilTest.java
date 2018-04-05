@@ -3,7 +3,6 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COIN;
 
@@ -55,6 +54,28 @@ public class ParserUtilTest {
 
         // Leading and trailing whitespaces
         assertEquals(INDEX_FIRST_COIN, ParserUtil.parseIndex("  1  "));
+    }
+
+    @Test
+    public void parseDouble_invalidInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseDouble("1.1a");
+    }
+
+    @Test
+    public void parseDouble_outOfRangeInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_INVALID_INDEX);
+        ParserUtil.parseDouble("-0.0001");
+    }
+
+    @Test
+    public void parseDouble_validInput_success() throws Exception {
+        // No whitespaces
+        assertEquals(1.2345, ParserUtil.parseDouble("1.2345"), 0.001);
+
+        // Leading and trailing whitespaces
+        assertEquals(1.2345, ParserUtil.parseDouble("  1.2345  "), 0.001);
     }
 
     @Test

@@ -500,7 +500,7 @@ The following is a summary of all commands available in Medeina:
 
 === Person-related Commands
 
-[cols="10, 8, 50, 32", options="header"]
+[cols="15, 10, 40, 35", options="header"]
 |=====
 | Command
 | Alias
@@ -530,7 +530,7 @@ The following is a summary of all commands available in Medeina:
 
 === Pet patient-related Commands
 
-[cols="10, 5, 50, 35", options="header"]
+[cols="15, 10, 40, 35", options="header"]
 |=====
 | Command
 | Alias
@@ -560,7 +560,7 @@ The following is a summary of all commands available in Medeina:
 
 === Appointment-related Commands
 
-[cols="10, 5, 50, 35", options="header"]
+[cols="15, 10, 40, 35", options="header"]
 |=====
 | Command
 | Alias

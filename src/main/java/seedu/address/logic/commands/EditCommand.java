@@ -27,6 +27,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Photo;
 import seedu.address.model.person.Rating;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -123,7 +124,7 @@ public class EditCommand extends UndoableCommand {
         toReturn.setRating(updatedRating);
         toReturn.setReviews(updatedReviews);
         toReturn.setId(personToEdit.getId());
-
+        toReturn.setPhotoName(personToEdit.getPhotoName());
         return toReturn;
     }
 
@@ -158,6 +159,7 @@ public class EditCommand extends UndoableCommand {
         private Set<Tag> tags;
         private Set<Review> reviews;
         private Rating rating;
+        private Photo photo;
 
         public EditPersonDescriptor() {}
 
@@ -173,6 +175,7 @@ public class EditCommand extends UndoableCommand {
             setRating(toCopy.rating);
             setTags(toCopy.tags);
             setReviews(toCopy.reviews);
+            setPhoto(toCopy.photo);
         }
 
         /**
@@ -213,6 +216,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
+        }
+
+        public void setPhoto(Photo photo) {
+            this.photo = photo;
+        }
+
+        public Optional<Photo> getPhoto() {
+            return Optional.ofNullable(photo);
         }
 
         //@@author IzHoBX

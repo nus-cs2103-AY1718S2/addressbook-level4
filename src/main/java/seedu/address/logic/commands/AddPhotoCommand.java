@@ -1,9 +1,15 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Photo;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -14,7 +20,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
 
 //@@author crizyli
 /**
@@ -77,7 +84,19 @@ public class AddPhotoCommand extends Command {
         }
 
         Photo newPhoto = new Photo(photoNameWithExtension);
-        targetPerson.setPhoto(newPhoto);
+        targetPerson.setPhotoName(newPhoto.getName());
+        Person editedPerson = new Person(targetPerson.getName(), targetPerson.getPhone(), targetPerson.getEmail(),
+                targetPerson.getAddress(), targetPerson.getTags(), targetPerson.getCalendarId());
+        editedPerson.setPhotoName(newPhoto.getName());
+
+        try {
+            model.updatePerson(targetPerson, editedPerson);
+        } catch (DuplicatePersonException e) {
+            e.printStackTrace();
+        } catch (PersonNotFoundException e) {
+            e.printStackTrace();
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(MESSAGE_SUCCESS);
     }

@@ -10,12 +10,15 @@ public class Photo {
 
     public final String path;
 
+    public final String name;
+
     /**
      * Constructs a {@code Photo}.
      *
      * @param name A photo name in images folder.
      */
     public Photo(String name) {
+        this.name = name;
         this.path = DEFAULT_PHOTO_FOLDER + name;
     }
 
@@ -24,6 +27,10 @@ public class Photo {
      */
     public static boolean isValidPhotoPath(String test) {
         return true;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     @Override

@@ -16,6 +16,7 @@ import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.notification.exceptions.TimetableEntryNotFoundException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Photo;
 import seedu.address.model.person.UniqueEmployeeList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -135,6 +136,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
+        syncedEditedPerson.setPhotoName(editedPerson.getPhotoName());
         persons.setPerson(target, syncedEditedPerson);
     }
 
@@ -161,6 +163,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         toReturn.setRating(person.getRating());
         toReturn.setReviews(person.getReviews());
         toReturn.setId(person.getId());
+        toReturn.setPhotoName(person.getPhotoName());
         return toReturn;
 
     }

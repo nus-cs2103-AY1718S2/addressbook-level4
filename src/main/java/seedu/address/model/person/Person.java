@@ -27,7 +27,7 @@ public class Person {
     private final Address address;
     private Rating rating;
     private int id;
-    private Photo photo;
+    private String photoName;
 
     private UniqueReviewList reviews;
     private final UniqueTagList tags;
@@ -48,7 +48,7 @@ public class Person {
 
         this.calendarId = calendarId;
         this.rating = new Rating();
-        this.photo = new Photo(DEFAULT_PHOTO);
+        this.photoName = DEFAULT_PHOTO;
         this.id = UNINITIALISED_ID;
     }
 
@@ -86,6 +86,9 @@ public class Person {
         return calendarId;
     }
 
+    public String getPhotoName() {
+        return photoName;
+    }
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -114,8 +117,8 @@ public class Person {
     /**
      * Set the photo field which is the path to the photo.
      */
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
+    public void setPhotoName(String photoName) {
+        this.photoName = photoName;
     }
 
     public void setRating(Rating rating) {

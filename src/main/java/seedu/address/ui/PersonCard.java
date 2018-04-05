@@ -2,10 +2,12 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.MainApp;
 import seedu.address.model.person.Person;
 
 
@@ -19,6 +21,7 @@ public class PersonCard extends UiPart<Region> {
     private static final String[] SKILL_COLOR_STYLES =
         { "teal", "red", "green", "blue", "orange", "brown",
             "yellow", "pink", "lightgreen", "grey", "purple" };
+    private static final String DEFAULT_IMAGE = "/images/default.png";
     //@@author
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -55,12 +58,18 @@ public class PersonCard extends UiPart<Region> {
         company.setText(person.getCompany().value);
         if (person.getProfilePicture().filePath != null) {
             imageView.setImage(person.getProfilePicture().getImage());
+        } else {
+            imageView.setImage(getImage(DEFAULT_IMAGE));
         }
         //@@author KevinCJH
         initSkills(person);
     }
 
-    //@@author KevinCJH
+    private Image getImage(String imagePath) {
+        return new Image(MainApp.class.getResourceAsStream(imagePath));
+    }
+
+    //@@author KevinCJHc
     /**
      * Returns the color style for {@code skillName}'s label.
      */

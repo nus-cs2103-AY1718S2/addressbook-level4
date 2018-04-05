@@ -42,8 +42,8 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks = new FilteredList<>(this.addressBook.getTaskList());
     }
 
-    public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+    public ModelManager(String username) {
+        this(new AddressBook(), new UserPrefs(username + ".xml"));
     }
 
 

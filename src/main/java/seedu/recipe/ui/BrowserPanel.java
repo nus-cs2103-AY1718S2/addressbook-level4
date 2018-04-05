@@ -26,6 +26,7 @@ import seedu.recipe.model.recipe.Url;
 import seedu.recipe.model.util.HtmlFormatter;
 import seedu.recipe.ui.util.CloudStorageUtil;
 import seedu.recipe.ui.util.FacebookHandler;
+import seedu.recipe.ui.util.UiUtil;
 import seedu.recipe.ui.util.WebParser;
 import seedu.recipe.ui.util.WebParserHandler;
 

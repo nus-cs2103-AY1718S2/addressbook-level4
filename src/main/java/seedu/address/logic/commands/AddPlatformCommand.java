@@ -28,8 +28,7 @@ public class AddPlatformCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "addplatform";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds social media platforms to the person "
-            + "identified by the index number used in the last person listing\n"
-            + "through website links. "
+            + "identified by the index number used in the last person listing through website links.\n"
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_LINK + "LINK]...\n"

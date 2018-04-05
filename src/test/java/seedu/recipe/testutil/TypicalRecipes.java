@@ -63,7 +63,7 @@ public class TypicalRecipes {
             .withPreparationTime("98765432")
             .withCalories("5000")
             .withServings("4")
-            .withUrl("https://www.bbcgoodfood.com/recipes/collection/burger")
+            .withUrl("http://recipes.wikia.com/wiki/Asian_Chicken_Salad?useskin=wikiamobile")
             .withImage("-")
             .withTags("owesMoney", "family").build();
     public static final Recipe CARL = new RecipeBuilder()

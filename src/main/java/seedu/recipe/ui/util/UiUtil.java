@@ -1,5 +1,5 @@
 //@@author RyanAngJY
-package seedu.recipe.ui;
+package seedu.recipe.ui.util;
 
 import static seedu.recipe.ui.CssSyntax.CSS_PROPERTY_BACKGROUND_COLOR;
 import static seedu.recipe.ui.CssSyntax.CSS_PROPERTY_TEXT_COLOR;

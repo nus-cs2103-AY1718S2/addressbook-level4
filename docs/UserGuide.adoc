@@ -234,7 +234,7 @@ Gets a recipe from a website loaded in the browser panel.
 
 Format: `parse`
 
-To use this format, you do a `search` first (See <<Search>>) then select a recipe. +
+To use this command, you do a `search` first (See <<Search>>) then select a recipe. +
 Suppose you have that done and you are at this step (see <<fig-InternetSearchResult0>>) +
 {nbsp} +
 
@@ -403,6 +403,21 @@ image::ChangeThemeCommand.png[width="750"]
 You can change theme from the menu bar or by pressing F2 too!
 //end::change-theme[]
 
+[[token]]
+=== *`token`* : Exchanging authorization code for access token
+
+Takes in the code given during the user's authorization of our app in Dropbox and coverts it into an access token that can be used to upload files to that specific Dropbox account.
+
+Format: `token authorizationCode`
+
+See <<fig-AuthorizationCode>> for more information. +
+{nbsp}
+
+[[fig-AuthorizationCode]]
+.Allow ReciRecipé access to your Dropbox
+image::AuthorizationCode.PNG[width="750"]
+{nbsp} +
+
 === *`undo`* : Undoing previous command
 
 Restores the recipe book to the state before the previous _undoable_ command was executed.
@@ -439,12 +454,18 @@ Format: `upload FILENAME`
 ****
 Details
 
-* *_FILENAME_* must not start with / or \ or have consecutie slashes.
-* *_FILENAME_* will be concatenated with .xml to maintain formatting.
-* If *_FILENAME_* already exists in the user's Dropbox, one of two things will happen:
+* The filename must not contain any invalid characters as defined by Dropbox https://www.dropbox.com/help/syncing-uploads/files-not-syncing[here].
+* The filename will be concatenated with .xml to maintain formatting.
+* If that exact filename already exists in the user's Dropbox, one of two things will happen:
 ** File will not be uploaded if contents of the two files are similar.
 ** File will be uploaded and renamed to *_FILENAME(1..)_* if contents of the two files are different.
 ****
+
+[NOTE]
+====
+If it is the first time the user is using the `upload` command, you will be prompted to login to Dropbox and authorize this app.
+An authorization code will then be given to you which you should copy and paste into this app. See <<token>> for details.
+====
 
 Examples:
 
@@ -541,6 +562,8 @@ A: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue
                             |   E.g.*`share 2`*
 .2+|    *Tag*               |  `tag KEYWORD [MORE_KEYWORDS]`
                             |   E.g. *`tag chicken favourites`*
+.2+|    *Token*             |   `token AuthorizationCode`
+                            |   E.g. *`token validCode`*
 .2+|    *Undo*              |  `undo`
                             |  *`undo`*
 .2+|    *Upload*            |  `upload FILENAME`

@@ -2,12 +2,14 @@
 package seedu.recipe.ui;
 
 import static org.junit.Assert.assertTrue;
-import static seedu.recipe.ui.UiUtil.HEX_COLOR_BLACK;
-import static seedu.recipe.ui.UiUtil.HEX_COLOR_WHITE;
+import static seedu.recipe.ui.util.UiUtil.HEX_COLOR_BLACK;
+import static seedu.recipe.ui.util.UiUtil.HEX_COLOR_WHITE;
 
 import java.util.regex.Pattern;
 
 import org.junit.Test;
+
+import seedu.recipe.ui.util.UiUtil;
 
 public class UiUtilTest {
 

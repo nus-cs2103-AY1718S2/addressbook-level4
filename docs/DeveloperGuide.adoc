@@ -432,7 +432,7 @@ Then the Addressbook would proceed to look for the persons with the unwanted tag
 tag and to add the new tag to the person.
 
 The figure below shows the Sequence Diagram for the interactions within the `Logic`
-component when "tag replace t/TAGNAME t/TAGNAME" is typed into the `CommandBox` by the user.
+component when "tagreplace t/TAGNAME t/TAGNAME" is typed into the `CommandBox` by the user.
 
 image::TagReplaceCommandSequenceDiagram.png[width="650"]
 
@@ -538,6 +538,7 @@ image::TagDeleteSequenceDiagram.png[width="800"]
 *_return to <<toc,Table of Contents>>_*
 
 // tag::dataencryption[]
+
 === [Proposed] Data Encryption
 
 _{Explain here how the data encryption feature will be implemented}_
@@ -572,6 +573,29 @@ html file called by the function.
 // end::browserpanel[]
 
 *_return to <<toc,Table of Contents>>_*
+
+// tag::Remark Feature[]
+=== Remark Feature
+==== Current Implementation
+
+A new remark component is added to the person model.
+
+image::ModelClassDiagram.png[width="800"]
+
+This remark feature allows the user to add remarks to the student profile of the specified student.
+
+image::RemarkClassSequenceDiagram.png[width="800"]
+
+Figure 15. Sequence Diagram of AddRemarkCommand
+
+==== Design Considerations
+===== Aspect: Implementation of the `Remark` feature
+* ** Alternative 1:** Using just one method to add and delete the remark.
+** Pros: Need not create 2 command just to add and delete the remarks.
+** Cons: The remark attached to the student in our student profile would not be able to exceed one line.
+
+*_return to <<toc,Table of Contents>>_*
+// end::Remark Feature[]
 
 === Logging
 
@@ -1265,7 +1289,7 @@ Use case resumes at step 2.
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 450,000 students
+.  Should be able to hold up to 1,200 students
  without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
@@ -1275,7 +1299,7 @@ Use case resumes at step 2.
 == Glossary
 
 [[Grade]] Grade::
-The grading of the subjects by the level of competence the students show during the examinations.
+The grading of the subjects by the level of competence the students show during the "O-Level examination".
 The level of achievement in each subject is indicated by the grade obtained, with A1 being the highest achievable grade and F9 the lowest:
 [width="30%",cols="22%,<23%",options="header",]
 |=======================================================================
@@ -1291,13 +1315,13 @@ The level of achievement in each subject is indicated by the grade obtained, wit
 |F9| 0% - 39%
 |=======================================================================
 [[L1B4]] L1B4::
-A grading system for Secondary School students taking "O Level Examination" at the end of their four years of studies in Secondary School.
+A grading system for Secondary School students taking "O-Level Examination" at the end of their four years of studies in Secondary School.
 The score obtained from the grading system will be used to determine the eligibility of the students to enter the next level of education, Polytechnic.
 `L1` represents the First language subject and `B4` represents 2 relevant subjects, according to the polytechnic course applied, and 2 other best subjects.
 The score will be calculated by considering the subjects' grades. Each subject can only be considered once.
 
 [[L1R5]] L1R5::
-A grading system for Secondary School students taking "O Level Examination" at the end of their four years of studies in Secondary School.
+A grading system for Secondary School students taking "O-Level Examination" at the end of their four years of studies in Secondary School.
 The score obtained from the grading system will be used to determine the eligibility of the students to enter the next level of education, Junior College.
 `L1` represents the First language subject and `R5` represents 5 relevant subjects. The score will be calculated by considering the subjects' grades. Each subject can only be considered once.
 
@@ -1308,7 +1332,7 @@ Windows, Linux, Unix, OS-X
 A contact detail that is not meant to be shared with others
 
 [[Subject]] Subject::
-These are the following subjects that are examinable in O level Examinations in Singapore (as of Year 2018).
+These are the following subjects that are examinable in O-level Examinations in Singapore (as of Year 2018).
 [NOTE]
 The subjects in the brackets are not to be used as input. The subjects not in brackets are preferred for better efficiency in typing.
 [width="85%",cols="22%,<23%",options="header",]
@@ -1321,7 +1345,7 @@ The subjects in the brackets are not to be used as input. The subjects not in br
 |R2| EMath(Elementary Mathematics), AMath(Additional Mathematics), Phy(Physics), Chem(Chemistry), Bio(Biology), Sci(Combined Science)
 |R3| Consist of both R1 and R2 subjects
 |R4| Consist of L1, R1 and R2 subjects. French, German, Spanish, Hindi, Urdu, Gujarati, Panjabi, Bengali, Burmese,
-     Thai, Jap, Tamil, Chinese, Malay, DnT, Comp(Computing), FnN(Food and Nutrition), PoA(Principles of Accounting),
+     Thai, Jap(Japanese), Tamil, Chinese, Malay, DnT(Design and Technology), Comp(Computing), FnN(Food and Nutrition), PoA(Principles of Accounting),
      Econs(Economics), Drama, PE(Physical Education), Biz(Business Studies), Biotech(Biotechnology), Design(Design Studies)
 |R5| Consist of R4 subjects
 |=======================================================================

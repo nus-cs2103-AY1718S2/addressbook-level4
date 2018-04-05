@@ -209,11 +209,18 @@ Replaces the specified tag from every student in _EduBuddy_ with a specific tag.
 Format: `tagreplace t/TAGNAME t/TAGNAME`
 Abbreviation Format: `tr t/TAGNAME t/TAGNAME`
 
+<<<<<<< HEAD
+****
+* Replaces the specified tag from every student in Edubuddy with a specific tag.
+* The tag must be a valid tag name that is assigned to at least one student in the Edubuddy.
+****
+=======
 [NOTE]
 The tag refers to the index number shown in the most recent listing.
 
 [IMPORTANT]
 The tag must be a valid tag name that is assigned to at least one student in the _EduBuddy_.
+>>>>>>> master
 
 Examples:
 
@@ -221,6 +228,46 @@ Examples:
 Replaces the 'Class 1A' tag from every student in _EduBuddy_ with 'Class 2A'.
 
 *_return to <<toc,Table of Contents>>_*
+
+image::TagReplaceCommand.png[width="650"]
+
+=== Adding a remark : `addremark`
+
+Adds a remark to a specified student in EduBuddy.
+Format: `addremark INDEX r/REMARK`
+
+****
+* Adds a remark to the the student at the specified `INDEX`.
+* The remark refers to anything that the teachers wants to comment
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...`
+****
+
+Examples:
+* `list` +
+`addremark 2 r/Class Monitor` +
+Adds a remark to the 2nd student in EduBuddy.
+
+image::AddRemarkCommand.png[width="650"]
+
+=== Deleting a remark : `deleteremark`
+
+Delete a remark to a specified student in EduBuddy.
+Format: `deleteremark INDEX r/REMARK`
+
+****
+* Deletes a remark from the the student at the specified `INDEX`.
+* The remark refers to any part of the existing remark that is in the student profile for the student that you want.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...`
+****
+
+Examples:
+* `list` +
+`deleteremark 2 r/Class Monitor` +
+Deletes the remark, Class Monitor, from the 2nd student in EduBuddy.
+
+image::DeleteRemarkCommand.png[width="650"]
 
 === Selecting a person : `select` or `s`
 
@@ -314,7 +361,32 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `r` (reapplies the `clear` command) +
 // end::undoredo[]
 
+<<<<<<< HEAD
+// tag::remarks Command[]
+=== Remarks Command `[Since v1.3]`
+
+Adds a remark to the student. +
+Format: `remark INDEX r/REMARK` +
+
+****
+* Adds a remark to the student profile of the student at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`remark 2` +
+Adds a remark to the 2nd student in EduBuddy.
+* `find Betsy` +
+`remark 1` +
+Adds a remark to the 1st student in the results of the `find` command.
+
+// end::remarks Command[]
+=======
 *_return to <<toc,Table of Contents>>_*
+>>>>>>> master
 
 === Clearing all entries : `clear` or `c`
 
@@ -350,12 +422,6 @@ Creates an appointment with the 3rd student on 20th Apr 2018 from 9:30a.m. to 11
 
 *_return to <<toc,Table of Contents>>_*
 
-// tag::remarks Command[]
-=== Remarks Command `[coming in v2.0]`
-
-_{Allows the teachers to write a remark for the student for all other teachers to see. e.g. Medical/Injuries history}_
-
-// end::remarks Command[]
 
 // tag::CCA section[]
 === CCA section `[coming in v2.0]`
@@ -390,13 +456,13 @@ _{explain how the user can enable/disable data encryption}_
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous EduBuddy folder.
 
 *Q*: What is L1B4? +
-*A*: A grading system for Secondary School students taking "O Level Examination" at the end of their four years of studies in Secondary School.
+*A*: A grading system for Secondary School students taking "O-Level Examination" at the end of their four years of studies in Secondary School.
      The score obtained from the grading system will be used to determine the eligibility of the students to enter the next level of education, Polytechnic.
      `L1` represents the First language subject and `B4` represents 2 relevant subjects, according to the polytechnic course applied, and 2 other best subjects.
      The score will be calculated by considering the subjects' grades. Each subject can only be considered once.
 
 *Q*: What is L1R5? +
-*A*: L1R5 is a grading system used in Singapore to determine the secondary school students' proficiency in the subjects taken for the O'Level Examinations.
+*A*: L1R5 is a grading system used in Singapore to determine the secondary school students' proficiency in the subjects taken for "O-Level Examination".
 The score is used for the students to enroll into Junior Colleges, which is the next higher level of education. "L1" refers to the first language subject taken by the student, while "R5" refers to the 5 relevant subjects that are examinable by the students.
 The grade of L1R5 is then determined by taking the best grades of each category and summing them up, for example, if a student scores A1 for all 6 subjects are from each category, the score will be 6. Each subject can only be considered once.
 
@@ -418,7 +484,7 @@ The grade of L1R5 is then determined by taking the best grades of each category 
 |=======================================================================
 
 *Q*: What are the subjects are in the L1R5 category? +
-*A*: These are the following subjects that are examinable in O-level Examinations in Singapore (as of Year 2018).
+*A*: These are the following subjects that are examinable in "O-level Examinations" in Singapore (as of Year 2018).
 [NOTE]
 The subjects in the brackets are not to be used as input. The subjects not in brackets are preferred for better efficiency in typing.
 [width="85%",cols="22%,<23%",options="header",]
@@ -431,7 +497,7 @@ The subjects in the brackets are not to be used as input. The subjects not in br
 |R2| EMath(Elementary Mathematics), AMath(Additional Mathematics), Phy(Physics), Chem(Chemistry), Bio(Biology), Sci(Combined Science)
 |R3| Consist of both R1 and R2 subjects
 |R4| Consist of L1, R1 and R2 subjects. French, German, Spanish, Hindi, Urdu, Gujarati, Panjabi, Bengali, Burmese,
-     Thai, Jap, Tamil, Chinese, Malay, DnT, Comp(Computing), FnN(Food and Nutrition), PoA(Principles of Accounting),
+     Thai, Jap(Japanese), Tamil, Chinese, Malay, DnT(Design and Technology), Comp(Computing), FnN(Food and Nutrition), PoA(Principles of Accounting),
      Econs(Economics), Drama, PE(Physical Education), Biz(Business Studies), Biotech(Biotechnology), Design(Design Studies)
 |R5| Consist of R4 subjects
 |=======================================================================
@@ -440,7 +506,46 @@ The subjects in the brackets are not to be used as input. The subjects not in br
 
 *_return to <<toc,Table of Contents>>_*
 
+<<<<<<< HEAD
+* *Clear* : `clear` or `c`
+
+* *Delete* : `delete INDEX` or `d INDEX` +
+e.g. `delete 3` +
+e.g. `d 3`
+
+* *TagDelete* : `tagdelete TAGNAME` or `td TAGNAME` +
+e.g. `tagdelete CLASS2A` +
+e.g. `td CLASS2A`
+
+* *TagReplace* : `tagreplace t/TAGNAME t/TAGNAME` or `tr t/TAGNAME t/TAGNAME` +
+e.g. `tagreplace t/CLASS2A t/CLASS3A` +
+e.g. `tr t/CLASS2A t/CLASS3A`
+
+* *Add Remark* : `addremark INDEX r/REMARKK` +
+e.g. `addremark 1 r/Class Monitor
+
+* *Delete Remark* : `deleteremark INDEX r/REMARK` +
+e.g. `deleteremark 1 r/Class Monitor
+
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
+`e INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
+e.g. `edit 2 n/James Lee` +
+e.g. `e 2 n/James Lee`
+
+* *Find* : `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]` +
+e.g. `find James Jake` +
+e.g. `f James Jake`
+
+* *Sort* : `sort PARAMETER` +
+e.g. `sort name` +
+e.g. `sort tag`
+
+* *List* : `list` or `l`
+
+* *Help* : `help`
+=======
 == Command Summary
+>>>>>>> master
 
 The table below provides a quick summary of all the commands available in EduBuddy.
 

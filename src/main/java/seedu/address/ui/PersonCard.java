@@ -3,11 +3,14 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Photo;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -42,6 +45,8 @@ public class PersonCard extends UiPart<Region> {
     private Label rating;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView photo;
 
     //@@author Yoochard
     //Part of code is referenced to Developer Guide
@@ -56,6 +61,10 @@ public class PersonCard extends UiPart<Region> {
         rating.setText(person.getRatingDisplay());
         rating.setTextFill(Color.RED);
         initTags(person);
+        Image image = new Image(Photo.DEFAULT_PHOTO_FOLDER + person.getPhotoName());
+        photo.setImage(image);
+        photo.preserveRatioProperty().set(true);
+
     }
 
     /**

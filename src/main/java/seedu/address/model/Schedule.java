@@ -79,9 +79,10 @@ public class Schedule implements ReadOnlySchedule {
         Student student;
         String finalMessage = "\n" + this.toString();
         System.out.println(this.toString());
+        printAll();
         for (Lesson l : lessons) {
             student = addressBook.findStudentByKey(l.getUniqueKey());
-            String message = index++ + " " + student.getName() +  "` " + l.toString();
+            String message = index++ + " " + student.getName() +  " " + l.toString();
             finalMessage = finalMessage + "\n" + message;
             System.out.println(message);
         }
@@ -107,6 +108,12 @@ public class Schedule implements ReadOnlySchedule {
         this.lessons.setLessons(lessons);
     }
 
+    public void printAll() {
+        for(Lesson l : lessons) {
+            System.out.println(l.getUniqueKey() +
+            " " + l.getDay() + " " + l.getStartTime() + " " + l.getEndTime());
+        }
+    }
     //// util methods
 
     @Override

@@ -94,7 +94,7 @@ public class GServiceManager {
         try {
             GCalendarService gCalendarService = new GCalendarService(
                     credential, httpTransport, JSON_FACTORY);
-            gCalendarService.synchronize(schedule);
+            gCalendarService.synchronize(schedule, addressBook);
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }

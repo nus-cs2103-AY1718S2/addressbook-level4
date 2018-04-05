@@ -7,8 +7,12 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
+import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
+import seedu.address.model.lesson.Lesson;
+import seedu.address.model.student.Student;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,6 +25,9 @@ public class GCalendarService {
     private Credential credential;
     private HttpTransport httpTransport;
     private JsonFactory JSON_FACTORY;
+
+    public static final String MESSAGE_SUMMARY = "Lesson with %1$s";
+    public static final String SingaporeTimeZone = "Asia/Singapore";
 
     public GCalendarService() {}
 
@@ -59,31 +66,44 @@ public class GCalendarService {
      * Synchronizes the user's Google Calendar with the local version
      * @param schedule
      */
-    public void synchronize(ReadOnlySchedule schedule) {
+    public void synchronize(ReadOnlySchedule schedule, ReadOnlyAddressBook addressBook) {
         Calendar service = new Calendar.Builder(
                 httpTransport, JSON_FACTORY, credential)
                 .setApplicationName(GServiceManager.APPLICATION_NAME)
                 .build();
         DateTime now = new DateTime(System.currentTimeMillis());
         try {
-            Events events = service.events().list("primary")
-                    .setMaxResults(10)
-                    .setTimeMin(now)
-                    .setOrderBy("startTime")
-                    .setSingleEvents(true)
-                    .execute();
-            List<Event> items = events.getItems();
-            System.out.println("Upcoming events");
-            for (Event event : items) {
-                DateTime start = event.getStart().getDateTime();
-                if (start == null) {
-                    start = event.getStart().getDate();
-                }
-                System.out.printf("%s (%s)\n", event.getSummary(), start);
+            for (Lesson lesson : schedule.getSchedule()) {
+                Event newEvent = lessonToCalendarEvent(lesson, addressBook);
+                String calendarId = "primary";
+                Event insertedEvent = service.events().insert(calendarId, newEvent).execute();
+                System.out.printf("Event created: %s\n", insertedEvent.getHtmlLink());
             }
-
         } catch (Exception e) {
             System.out.println("Lmao " + e);
         }
+    }
+
+    public Event lessonToCalendarEvent(Lesson lesson, ReadOnlyAddressBook addressBook) {
+        Event event = new Event();
+
+        Student student = addressBook.findStudentByKey(lesson.getUniqueKey());
+
+        event.setSummary(String.format(MESSAGE_SUMMARY, student.getName()));
+        event.setLocation(student.getAddress().toString());
+
+        DateTime startDateTime = new DateTime("2018-04-07T09:00:00-07:00");
+        EventDateTime start = new EventDateTime()
+                .setDateTime(startDateTime)
+                .setTimeZone(SingaporeTimeZone);
+        event.setStart(start);
+
+        DateTime endDateTime = new DateTime("2018-04-07T17:00:00-07:00");
+        EventDateTime end = new EventDateTime()
+                .setDateTime(endDateTime)
+                .setTimeZone(SingaporeTimeZone);
+        event.setEnd(end);
+
+        return event;
     }
 }

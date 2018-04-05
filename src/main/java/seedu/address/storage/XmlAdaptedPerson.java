@@ -22,6 +22,7 @@ import seedu.address.model.person.customer.StandardInterest;
 import seedu.address.model.person.runner.Runner;
 import seedu.address.model.tag.Tag;
 
+//@@author melvintzw
 /**
  * JAXB-friendly version of the Person.
  */

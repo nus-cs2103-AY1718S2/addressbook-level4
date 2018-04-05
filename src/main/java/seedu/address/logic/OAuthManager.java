@@ -3,15 +3,20 @@
 
 package seedu.address.logic;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -98,8 +103,23 @@ public class OAuthManager {
         }
     }
 
+
+    /**
+     * Deletes the current Oauth certificate for the logged in user.
+     * @param user
+     * @throws IOException
+     */
+    public static void deleteOauthCert(User user) throws IOException {
+        Path dirPath = Paths.get( DATA_STORE_DIR.getAbsolutePath() );
+        Files.walk( dirPath )
+                .map( Path::toFile )
+                .sorted( Comparator.comparing( File::isDirectory ) )
+                .forEach( File::delete );
+    }
+
     /**
      * Creates an authorized Credential object.
+     * @param user
      * @return an authorized Credential object.
      * @throws IOException
      */
@@ -331,7 +351,7 @@ public class OAuthManager {
      * Used as part of the oauth verification process.
      * @throws IOException
      */
-    public static void addEvent(User user) throws IOException {
+    public static void addEventTest(User user) throws IOException {
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.

@@ -67,6 +67,7 @@ public class MainApp extends Application {
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         CustomerStatsStorage customerStatsStorage = new XmlCustomerStatsStorage(userPrefs.getCustomerStatsFilePath());
+        //Menu menu = new XMLMenuStorage(userPrefs.getMenuFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage, customerStatsStorage);
 
         initLogging(config);

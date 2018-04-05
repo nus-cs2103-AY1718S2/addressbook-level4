@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 import seedu.recipe.commons.util.StringUtil;
 
 /**
- * Tests that a {@code Recipe}'s {@code Ingredient} matches any of the keywords given.
+ * Tests that a {@code Recipe}'s {@code Ingredient} matches all of the keywords given.
  */
 public class IngredientContainsKeywordsPredicate implements Predicate<Recipe> {
     private final List<String> keywords;
@@ -17,8 +17,14 @@ public class IngredientContainsKeywordsPredicate implements Predicate<Recipe> {
 
     @Override
     public boolean test(Recipe recipe) {
-        return keywords.stream()
-                .allMatch(keyword -> StringUtil.containsWordIgnoreCase(recipe.getIngredient().toString(), keyword));
+        int matches = 0;
+        String ingredients = recipe.getIngredient().toString().replaceAll(",","");
+        for (String keyword : keywords) {
+            if (StringUtil.containsWordIgnoreCase(ingredients, keyword)) {
+                matches++;
+            }
+        }
+        return matches == keywords.size();
     }
 
     @Override

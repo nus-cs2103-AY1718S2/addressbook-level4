@@ -23,19 +23,34 @@ public abstract class Command {
     public static String getMessageForRecipeListShownSummary(int displaySize) {
         return String.format(Messages.MESSAGE_RECIPES_LISTED_OVERVIEW, displaySize);
     }
+
     //@@author nicholasangcx
     /**
      * Constructs a feedback message to summarise an operation that displayed
-     * a listing of persons with the specified tags.
+     * a listing of recipes with the specified tags.
      *
-     * @param displaySize indicates the number of people listed, used to generate summary
+     * @param displaySize indicates the number of recipe listed, used to generate summary
      * @param tagKeywords the tags searched for, used to generate summary
-     * @return summary message for persons displayed
+     * @return summary message for recipes displayed
      */
     public static String getMessageForTagListShownSummary(int displaySize, String tagKeywords) {
         return String.format(Messages.MESSAGE_RECIPES_WITH_TAGS_LISTED_OVERVIEW, displaySize, tagKeywords);
     }
+
+    /**
+     * Constructs a feedback message to summarise an operation that displayed
+     * a listing of recipes with the specified ingredients.
+     *
+     * @param displaySize indicates the number of recipe listed, used to generate summary
+     * @param ingredientKeywords the ingredients searched for, used to generate summary
+     * @return summary message for recipes displayed
+     */
+    public static String getMessageForIngredientListShownSummary(int displaySize, String ingredientKeywords) {
+        return String.format(Messages.MESSAGE_RECIPES_WITH_INGREDIENTS_LISTED_OVERVIEW,
+                displaySize, ingredientKeywords);
+    }
     //@@author
+
     /**
      * Executes the command and returns the result message.
      *

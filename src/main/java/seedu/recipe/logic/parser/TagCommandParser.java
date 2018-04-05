@@ -33,6 +33,5 @@ public class TagCommandParser implements Parser<TagCommand> {
 
         return new TagCommand(new TagContainsKeywordsPredicate(Arrays.asList(tagKeywords)), tagKeywords);
     }
-
 }
 //@@author

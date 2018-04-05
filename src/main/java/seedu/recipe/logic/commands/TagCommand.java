@@ -6,7 +6,7 @@ import java.util.Arrays;
 import seedu.recipe.model.tag.TagContainsKeywordsPredicate;
 
 /**
- * Finds and lists all recipes in address book whose tag contains any of the argument keywords.
+ * Finds and lists all recipes in recipe book whose tag contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
 public class TagCommand extends Command {

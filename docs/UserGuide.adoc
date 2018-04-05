@@ -243,6 +243,28 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows while holding down kbd:[Ctrl] will display the previous and next input respectively in the command box.
 ====
 
+=== *`ingredient`* : Locating recipes by ingredients
+
+Finds recipes whose ingredients contain all of the given keywords.
+
+Format: `ingredient KEYWORD [MORE_KEYWORDS]`
+
+****
+Details
+
+* The search is case insensitive. e.g *`ingredient chicken`* will match _Chicken_.
+* Only the ingredients are searched.
+* Only full words will be matched e.g. *`ingredient Chic`* will not match `_Chicken_`.
+* Only recipes matching all keywords will be returned (i.e. "AND" search). E.g. *`ingredient Chicken Pizza`* will only return recipes with both _Chicken_ AND _Pizza_ as their ingredients.
+****
+
+Examples:
+
+* *`ingredient chicken`* +
+Returns recipe with ingredient _Chicken_.
+* *`ingredient chicken fish pasta`* +
+Returns only recipes that contain all `_chicken_`, `_fish_`, and `_pasta_` as ingredients.
+
 === *`list`* : Listing all recipes
 
 Shows a list of all recipes in the recipe book.

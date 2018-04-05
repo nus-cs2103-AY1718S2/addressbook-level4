@@ -8,6 +8,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
  */
 public class NoRoomsInBuildingException extends CommandException {
     public NoRoomsInBuildingException() {
-        super("Building has no rooms");
+        super("Building has no rooms available.");
     }
 }

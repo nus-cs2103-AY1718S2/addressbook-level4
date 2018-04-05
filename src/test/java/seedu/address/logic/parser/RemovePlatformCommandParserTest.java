@@ -17,8 +17,8 @@ import seedu.address.model.smplatform.Link;
 //@@author Nethergale
 public class RemovePlatformCommandParserTest {
 
-    private static String FACEBOOK_PLATFORM_FIELD = " " + PREFIX_SOCIAL_MEDIA_PLATFORM + Link.FACEBOOK_LINK_TYPE;
-    private static String TWITTER_PLATFORM_FIELD = " " + PREFIX_SOCIAL_MEDIA_PLATFORM + Link.TWITTER_LINK_TYPE;
+    private static final String FACEBOOK_PLATFORM_FIELD = " " + PREFIX_SOCIAL_MEDIA_PLATFORM + Link.FACEBOOK_LINK_TYPE;
+    private static final String TWITTER_PLATFORM_FIELD = " " + PREFIX_SOCIAL_MEDIA_PLATFORM + Link.TWITTER_LINK_TYPE;
 
     private RemovePlatformCommandParser parser = new RemovePlatformCommandParser();
     private Set<String> platformSet = new HashSet<>();

@@ -100,7 +100,7 @@ public class RemovePlatformCommandTest {
         platformSet.add("tester");
         RemovePlatformCommand removePlatformCommand = prepareCommand(INDEX_FIRST_PERSON, platformSet);
 
-        assertCommandFailure(removePlatformCommand, model,RemovePlatformCommand.MESSAGE_PLATFORM_MAP_NOT_EDITED);
+        assertCommandFailure(removePlatformCommand, model, RemovePlatformCommand.MESSAGE_PLATFORM_MAP_NOT_EDITED);
     }
 
     @Test

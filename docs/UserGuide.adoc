@@ -476,6 +476,7 @@ On running this command, you should see the following success message: +
  `You have logout successfully!`
 
 Examples
+
 === Auto-complete command
 
 To save your time, after typing a partial command, you can press TAB for the command to be auto-completed.

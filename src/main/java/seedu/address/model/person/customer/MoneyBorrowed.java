@@ -3,6 +3,8 @@ package seedu.address.model.person.customer;
 //import static java.util.Objects.requireNonNull;
 //import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author melvintzw
+
 /**
  * Represents a customer's amount of money that he/she borrowed.
  * Guarantees: immutable;

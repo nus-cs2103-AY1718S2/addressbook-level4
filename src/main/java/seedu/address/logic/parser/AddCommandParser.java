@@ -31,6 +31,7 @@ import seedu.address.model.person.customer.StandardInterest;
 import seedu.address.model.person.runner.Runner;
 import seedu.address.model.tag.Tag;
 
+//@@author melvintzw
 /**
  * Parses input arguments and creates a new AddCommand object
  */

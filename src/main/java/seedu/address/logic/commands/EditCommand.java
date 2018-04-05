@@ -200,6 +200,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(phone);
         }
 
+        //@@author ZacZequn
         public void setOrder(Order order) {
             this.order = order;
         }
@@ -207,6 +208,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Order> getOrder() {
             return Optional.ofNullable(order);
         }
+        //@@author
 
         public void setEmail(Email email) {
             this.email = email;
@@ -224,6 +226,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        //@@author ZacZequn
         public void setHalal(Halal halal) {
             this.halal = halal;
         }
@@ -239,6 +242,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Vegetarian> getVegetarian() {
             return Optional.ofNullable(vegetarian);
         }
+        //@@author
 
         /**
          * Sets {@code tags} to this object's {@code tags}.

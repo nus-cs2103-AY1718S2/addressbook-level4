@@ -69,6 +69,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
                 .collect(Collectors.toList());
     }
 
+    //@@author ZacZequn
     public List<String> getTagStyleClasses(String tag) {
         return tagLabels
                 .stream()
@@ -77,4 +78,5 @@ public class PersonCardHandle extends NodeHandle<Node> {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("No such tag."));
     }
+    //@@author
 }

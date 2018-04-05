@@ -1,3 +1,4 @@
+//@@author ZacZequn
 package seedu.address.model.person;
 
 import static java.util.Objects.isNull;

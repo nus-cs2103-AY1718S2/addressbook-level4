@@ -54,11 +54,13 @@ public class AddCommandParser implements Parser<AddCommand> {
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
 
+            //@@author ZacZequn
             Optional<Halal> halalOptional = ParserUtil.parseHalal(argMultimap.getValue(PREFIX_HALAL));
             Halal halal = halalOptional.isPresent() ? halalOptional.get() : new Halal(null);
             Optional<Vegetarian> vegetarianOptional =
                     ParserUtil.parseVegetarian(argMultimap.getValue(PREFIX_VEGETARIAN));
             Vegetarian vegetarian = vegetarianOptional.isPresent() ? vegetarianOptional.get() : new Vegetarian(null);
+            //@@author
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 

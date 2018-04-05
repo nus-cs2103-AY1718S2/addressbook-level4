@@ -1,3 +1,4 @@
+//@@author ZacZequn
 package seedu.address.model.dish;
 
 import static java.util.Objects.requireNonNull;

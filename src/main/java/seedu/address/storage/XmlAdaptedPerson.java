@@ -113,6 +113,7 @@ public class XmlAdaptedPerson {
         }
         final Phone phone = new Phone(this.phone);
 
+        //@@author ZacZequn
         if (this.order == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Order.class.getSimpleName()));
         }
@@ -120,6 +121,7 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(Order.MESSAGE_ORDER_CONSTRAINTS);
         }
         final Order order = new Order(this.order);
+        //@@author
 
         if (this.email == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
@@ -137,6 +139,7 @@ public class XmlAdaptedPerson {
         }
         final Address address = new Address(this.address);
 
+        //@@author ZacZequn
         if (this.halal == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Halal.class.getSimpleName()));
         }
@@ -153,6 +156,7 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(Vegetarian.MESSAGE_VEGETARIAN_CONSTRAINTS);
         }
         final Vegetarian vegetarian = new Vegetarian(this.vegetarian);
+        //@@author
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, order, email, address, halal, vegetarian, tags);
     }

@@ -50,9 +50,11 @@ public class Person {
         return phone;
     }
 
+    //@@author ZacZequn
     public Order getOrder() {
         return order;
     }
+    //@@author
 
     public Email getEmail() {
         return email;
@@ -62,6 +64,7 @@ public class Person {
         return address;
     }
 
+    //@@author ZacZequn
     public Halal getHalal() {
         return halal;
     }
@@ -69,6 +72,7 @@ public class Person {
     public Vegetarian getVegetarian() {
         return vegetarian;
     }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

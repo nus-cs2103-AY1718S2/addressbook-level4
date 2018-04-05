@@ -1,3 +1,4 @@
+//@@author ZacZequn
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
@@ -44,6 +45,7 @@ public class Order {
         return test.matches(ORDER_VALIDATION_REGEX);
     }
 
+    //@@author ZacZequn
     /**
      * Returns true if a given string is a valid person order.
      */
@@ -53,6 +55,7 @@ public class Order {
         //}
         return true;
     }
+    //@@author
 
 
     @Override

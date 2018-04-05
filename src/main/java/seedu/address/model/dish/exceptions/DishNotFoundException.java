@@ -1,3 +1,4 @@
+//@@author ZacZequn
 package seedu.address.model.dish.exceptions;
 
 /**

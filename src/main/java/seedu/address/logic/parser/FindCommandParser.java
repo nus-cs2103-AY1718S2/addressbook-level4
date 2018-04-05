@@ -3,13 +3,16 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Arrays;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Name;
@@ -17,6 +20,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.NameNricContainsKeywordsPredicate;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.NricContainsKeywordsPredicate;
+import seedu.address.model.person.Person;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -65,24 +69,31 @@ public class FindCommandParser implements Parser<FindCommand> {
     private FindCommand parsePerson(String personInfo) throws ParseException {
         ArgumentMultimap argMultimapOwner = ArgumentTokenizer.tokenize(personInfo, PREFIX_NAME, PREFIX_NRIC);
         if ((!arePrefixesPresent(argMultimapOwner, PREFIX_NAME)
-                && !arePrefixesPresent(argMultimapOwner, PREFIX_NRIC))) {
+                && !arePrefixesPresent(argMultimapOwner, PREFIX_NRIC)
+                && !arePrefixesPresent(argMultimapOwner, PREFIX_TAG))) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     "Unknown prefix parameters!"));
         }
 
-        if ((arePrefixesPresent(argMultimapOwner, PREFIX_NAME, PREFIX_NRIC))) {
-            return new FindCommand(new NameNricContainsKeywordsPredicate(
-                    Arrays.asList(getNameKeyword(argMultimapOwner)), Arrays.asList(getNricKeyword(argMultimapOwner))));
-        } else if (arePrefixesPresent(argMultimapOwner, PREFIX_NAME)
-                && !arePrefixesPresent(argMultimapOwner, PREFIX_NRIC)) {
-            return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(getNameKeyword(argMultimapOwner))));
-        } else if (!arePrefixesPresent(argMultimapOwner, PREFIX_NAME)
-                && arePrefixesPresent(argMultimapOwner, PREFIX_NRIC)) {
-            return new FindCommand(new NricContainsKeywordsPredicate(Arrays.asList(getNricKeyword(argMultimapOwner))));
-        } else {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    "Unknown prefix parameters!"));
+        Predicate<Person> finalPredicate = null;
+
+
+        if ((arePrefixesPresent(argMultimapOwner, PREFIX_NAME))) {
+            Predicate<Person> namePredicate =  person -> Arrays.asList(getNameKeyword(argMultimapOwner)).stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
         }
+
+        if ((arePrefixesPresent(argMultimapOwner, PREFIX_NRIC))) {
+            Predicate<Person> nricPredicate = person -> Arrays.asList(getNricKeyword(argMultimapOwner)).stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getNric().toString(), keyword));
+        }
+
+        if ((arePrefixesPresent(argMultimapOwner, PREFIX_TAG))) {
+            Predicate<Person> tagPredicate = person -> Arrays.asList(getTagKeyword(argMultimapOwner)).stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getTags().toString(), keyword));
+        }
+
+        return new FindCommand(finalPredicate);
     }
 
     /**

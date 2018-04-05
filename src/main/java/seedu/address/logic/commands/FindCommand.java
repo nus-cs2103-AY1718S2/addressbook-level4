@@ -2,7 +2,9 @@ package seedu.address.logic.commands;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.NameNricContainsKeywordsPredicate;
@@ -26,65 +28,29 @@ public class FindCommand extends Command {
             + "Example: " + COMMAND_WORD + "-o n/alice bob charlie";
 
     private NameContainsKeywordsPredicate namePredicate = null;
-    private NricContainsKeywordsPredicate nricPredicate = null;
-    private NameNricContainsKeywordsPredicate nameNricPredicate = null;
     private int type = 0;
 
-    public FindCommand(NameContainsKeywordsPredicate namePredicate) {
+    public FindCommand(Predicate<Person> personPredicate) {
         this.namePredicate = namePredicate;
         type = 1;
-    }
-
-    public FindCommand(NricContainsKeywordsPredicate nricPredicate) {
-        this.nricPredicate = nricPredicate;
-        type = 2;
-    }
-
-    public FindCommand(NameNricContainsKeywordsPredicate nameNricPredicate) {
-        this.nameNricPredicate = nameNricPredicate;
-        type = 3;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
         switch (type) {
         case 1:
-            return findOwnerByName();
+            return findOwner();
         case 2:
-            return findOwnerByNric();
-        case 3:
-            return findOwnerByNameNric();
+            //return findPetPatient();
         default:
             throw new CommandException(MESSAGE_USAGE);
         }
     }
 
     /**
-     * Finds owners with given {@code nameNricPredicate} in this {@code addressbook}.
+     * Finds owners with given {@code predicate} in this {@code addressbook}.
      */
-    private CommandResult findOwnerByNameNric() {
-        model.updateFilteredPersonList(nameNricPredicate);
-        updatePetListForOwner();
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())
-                + "\n"
-                + getMessageForPetPatientListShownSummary(model.getFilteredPetPatientList().size()));
-    }
-
-    /**
-     * Finds owners with given {@code nricPredicate} in this {@code addressbook}.
-     */
-    private CommandResult findOwnerByNric() {
-        model.updateFilteredPersonList(nricPredicate);
-        updatePetListForOwner();
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())
-                + "\n"
-                + getMessageForPetPatientListShownSummary(model.getFilteredPetPatientList().size()));
-    }
-
-    /**
-     * Finds owners with given {@code namePredicate} in this {@code addressbook}.
-     */
-    private CommandResult findOwnerByName() {
+    private CommandResult findOwner() {
         model.updateFilteredPersonList(namePredicate);
         updatePetListForOwner();
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())

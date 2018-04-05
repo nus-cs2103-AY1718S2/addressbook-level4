@@ -268,7 +268,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`addplatform`, `add`, `delete`, `edit`, `sort` and `clear`).
+Undoable commands: those commands that modify the address book's content (`addplatform`, `removeplatform`, `add`, `delete`, `edit`, `sort` and `clear`).
 ====
 
 Examples:
@@ -447,6 +447,8 @@ e.g. `find James Jake`
 e.g.`select 2`
 * *Add Platform* : `addplatform INDEX [l/LINK]...` +
 e.g. `addplatform 1 l/www.facebook.com/james.ho`
+* *Remove Platform* : `removeplatform INDEX [smp/PLATFORM]...` +
+e.g. `removeplatform 1 smp/facebook`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

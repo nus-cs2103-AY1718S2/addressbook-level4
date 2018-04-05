@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import javax.mail.MessagingException;
+
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -22,7 +24,6 @@ import seedu.address.commons.events.ui.SwitchThemeRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
-import javax.mail.MessagingException;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -156,9 +157,9 @@ public class MainWindow extends UiPart<Stage> {
         try {
             mailPanel = new MailPanel();
             emailPanelPlaceholder.getChildren().add(mailPanel.getRoot());
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Caught IOException");
-        } catch (MessagingException e){
+        } catch (MessagingException e) {
             System.out.println("Caught MessagingException @ Main");
         }
     }

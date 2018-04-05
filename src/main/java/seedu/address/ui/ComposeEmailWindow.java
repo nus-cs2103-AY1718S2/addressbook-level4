@@ -63,12 +63,12 @@ public class ComposeEmailWindow {
      * Handles the Enter button pressed event.
      */
     @FXML
-    public void sendEmail(){
+    public void sendEmail() {
         new MailServer(parseRecipients(), subject.getText(), message.getText());
         puWindow.close();
     }
 
-    private String[] parseRecipients(){
+    private String[] parseRecipients() {
         System.out.println(recipients.getText());
         return recipients.getText().split(",");
     }
@@ -79,11 +79,11 @@ public class ComposeEmailWindow {
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-            case ESCAPE:
-                puWindow.close();
-                break;
-            default:
-                // let JavaFx handle the keypress
+        case ESCAPE:
+            puWindow.close();
+            break;
+        default:
+            // let JavaFx handle the keypress
         }
     }
 }

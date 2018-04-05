@@ -55,14 +55,14 @@ public class MailPanel extends UiPart<Region> {
      * @return list of messages
      */
     public Message[] messageList() {
-        String USERNAME = "sell.it.sg@gmail.com";
-        String PASSWORD = "gloriacs2103";
-        String HOST = "imap.gmail.com";
+        String username = "sell.it.sg@gmail.com";
+        String password = "gloriacs2103";
+        String host = "imap.gmail.com";
         Properties props = new Properties();
         props.put("mail.store.protocol", "imaps");
-        props.put("mail.imaps.host", HOST);
+        props.put("mail.imaps.host", host);
         props.put("mail.imaps.port", "993");
-        props.put("mail.imaps.ssl.trust", HOST);
+        props.put("mail.imaps.ssl.trust", host);
         props.put("mail.imaps.timeout", "10000");
 
         Session session = Session.getInstance(props);
@@ -71,7 +71,7 @@ public class MailPanel extends UiPart<Region> {
 
         try {
             store = (IMAPStore) session.getStore("imaps");
-            store.connect(USERNAME, PASSWORD);
+            store.connect(username, password);
             inbox = (IMAPFolder) store.getFolder("INBOX");
             inbox.open(Folder.READ_ONLY);
             //gets & returns messages

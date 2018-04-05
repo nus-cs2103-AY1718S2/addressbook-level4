@@ -35,18 +35,18 @@ public class EmailCard extends UiPart<Region> {
             email.setText(message.getFrom()[0].toString());
             subject.setText(message.getSubject());
             //check if it is multipart
-            if( message.getContent() instanceof String ) {
+            if (message.getContent() instanceof String) {
                 preview.setText(((String) message.getContent()).substring(0, 20));
             } else {
                 Multipart multipart = (Multipart) message.getContent();
-                if( multipart.getCount() > 0 ) {
+                if (multipart.getCount() > 0) {
                     String msg =  multipart.getBodyPart(0).getContent().toString();
                     preview.setText(msg);
                 }
             }
-        } catch ( MessagingException e ) {
+        } catch (MessagingException e) {
             System.out.println("Messaging Exception");
-        } catch ( IOException e ) {
+        } catch (IOException e) {
             System.out.println("IOException");
         }
     }

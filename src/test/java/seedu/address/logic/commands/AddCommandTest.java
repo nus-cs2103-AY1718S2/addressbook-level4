@@ -25,6 +25,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -104,6 +105,16 @@ public class AddCommandTest {
 
         @Override
         public void addTask(Task task) {
+        }
+
+        @Override
+        public void deleteTask(Task target) throws TaskNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateTask(Task target, Task editedTask) throws TaskNotFoundException {
+            fail("This method should not be called.");
         }
 
         @Override

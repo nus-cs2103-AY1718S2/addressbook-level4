@@ -1,9 +1,8 @@
+//@@author hoangduong1607
 package seedu.recipe.logic.commands;
 
 import seedu.recipe.model.recipe.GroupName;
 import seedu.recipe.model.recipe.GroupPredicate;
-
-//@@author hoangduong1607
 
 /**
  * Lists all recipes in a group to the user.

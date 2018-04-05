@@ -1,3 +1,4 @@
+//@@author hoangduong1607
 package seedu.recipe.logic.parser;
 
 import static seedu.recipe.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -8,7 +9,6 @@ import seedu.recipe.logic.parser.exceptions.ParseException;
 import seedu.recipe.model.recipe.GroupName;
 import seedu.recipe.model.recipe.GroupPredicate;
 
-//@@author hoangduong1607
 /**
  * Parses input arguments and creates a new ViewGroupCommand object
  */

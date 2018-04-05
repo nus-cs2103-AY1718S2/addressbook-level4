@@ -1,3 +1,4 @@
+//@@author hoangduong1607
 package seedu.recipe.logic.commands;
 
 import java.util.List;
@@ -9,8 +10,6 @@ import seedu.recipe.logic.commands.exceptions.CommandException;
 import seedu.recipe.model.recipe.GroupName;
 import seedu.recipe.model.recipe.Recipe;
 
-//@@author hoangduong1607
-
 /**
  * Groups selected recipes.
  */
@@ -21,7 +20,7 @@ public class GroupCommand extends Command {
             + ": Groups the recipes identified by the indices numbers used in the last recipe listing.\n"
             + "Parameters: GROUP_NAME INDEX [INDEX] (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " Best 1 3";
-    public static final String MESSAGE_RECIPE_GROUP_SUCCESS = "Created New Recipe Group: %s";
+    public static final String MESSAGE_SUCCESS = "Created New Recipe Group: %s";
 
     private GroupName groupName;
     private Set<Index> targetIndices;
@@ -43,7 +42,7 @@ public class GroupCommand extends Command {
             recipe.addNewGroup(groupName);
         }
 
-        return new CommandResult(String.format(MESSAGE_RECIPE_GROUP_SUCCESS, groupName));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, groupName));
     }
 
     @Override

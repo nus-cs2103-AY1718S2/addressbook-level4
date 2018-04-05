@@ -1,3 +1,4 @@
+//@@author hoangduong1607
 package seedu.recipe.ui.util;
 
 import java.util.ArrayList;
@@ -5,8 +6,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import seedu.recipe.logic.parser.CliSyntax;
-
-//@@author hoangduong1607
 
 /**
  * Contains constants and functions needed for auto-completion

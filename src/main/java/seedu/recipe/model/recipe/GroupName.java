@@ -1,6 +1,6 @@
+//@@author hoangduong1607
 package seedu.recipe.model.recipe;
 
-//@@author hoangduong1607
 /**
  * Represents a Recipe's group name in the recipe book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}

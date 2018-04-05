@@ -25,8 +25,8 @@ import seedu.address.model.person.Person;
 public class ContactDetailsDisplay extends UiPart<Region> {
 
     private static final String FXML = "ContactDetailsDisplay.fxml";
-    private final Logger logger = LogsCenter.getLogger(ContactDetailsDisplay.class);
     private static final String DEFAULT_IMAGE = "/images/default.png";
+    private final Logger logger = LogsCenter.getLogger(ContactDetailsDisplay.class);
 
     @FXML
     private Label name;

@@ -48,10 +48,6 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private ImageView imageView;
 
-    private Image getImage(String imagePath) {
-        return new Image(MainApp.class.getResourceAsStream(imagePath));
-    }
-
     //@@author kush1509
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
@@ -69,7 +65,11 @@ public class PersonCard extends UiPart<Region> {
         initSkills(person);
     }
 
-    //@@author KevinCJH
+    private Image getImage(String imagePath) {
+        return new Image(MainApp.class.getResourceAsStream(imagePath));
+    }
+
+    //@@author KevinCJHc
     /**
      * Returns the color style for {@code skillName}'s label.
      */

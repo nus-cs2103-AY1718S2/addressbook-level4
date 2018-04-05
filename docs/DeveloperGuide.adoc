@@ -660,7 +660,6 @@ image::BrowserPanelMockup.png[width="800"]
 ==== Rationale
 A customer's amount owed and due dates are very important variables which directly affect the PnL of the LoanShark's enterprise. Therefore, this feature is suitable, and definitely desirable from the perspective of a LoanShark manager.
 
-
 == Documentation
 
 We use asciidoc for writing documentation.

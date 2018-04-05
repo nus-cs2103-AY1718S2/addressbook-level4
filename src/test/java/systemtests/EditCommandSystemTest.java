@@ -1,12 +1,14 @@
 package systemtests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-//import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
@@ -32,6 +34,8 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
+import guitests.GuiRobot;
+import javafx.scene.input.KeyCode;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
@@ -49,6 +53,7 @@ import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
 public class EditCommandSystemTest extends AddressBookSystemTest {
+    private final GuiRobot guiRobot = new GuiRobot();
 
     @Test
     public void edit() throws Exception {
@@ -189,6 +194,32 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
+    //@@author jonleeyz
+    @Test
+    public void populateEditCommandTemplate() {
+        //use accelerator
+        getCommandBox().click();
+        populateEditCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        getResultDisplay().click();
+        populateEditCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        getPersonListPanel().click();
+        populateEditCommandUsingAccelerator();
+        assertPopulationSuccess();
+
+        getBrowserPanel().click();
+        populateEditCommandUsingAccelerator();
+        assertPopulationFailure();
+
+        //use menu button
+        populateEditCommandUsingMenu();
+        assertPopulationSuccess();
+    }
+    //@@author
+
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, Index, Person, Index)} except that
      * the browser url and selected card remain unchanged.
@@ -280,4 +311,54 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandBoxAndResultDisplayShowsErrorStyle();
         assertStatusBarUnchanged();
     }
+
+    //@@author jonleeyz
+    /**
+     * Asserts that population of the {@code CommandBox} with the AddCommand
+     * template was successful.
+     */
+    private void assertPopulationSuccess() {
+        EditCommand editCommand = new EditCommand();
+        assertEquals(editCommand.getTemplate(), getCommandBox().getInput());
+        assertEquals(editCommand.getUsageMessage(), getResultDisplay().getText());
+        guiRobot.pauseForHuman();
+
+        executeCommand("invalid command");
+        assertTrue(getCommandBox().clear());
+        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Asserts that population of the {@code CommandBox} with the AddCommand
+     * template was unsuccessful.
+     */
+    private void assertPopulationFailure() {
+        EditCommand editCommand = new EditCommand();
+        assertNotEquals(editCommand.getTemplate(), getCommandBox().getInput());
+        assertNotEquals(editCommand.getUsageMessage(), getResultDisplay().getText());
+        guiRobot.pauseForHuman();
+
+        executeCommand("invalid command");
+        assertTrue(getCommandBox().clear());
+        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the EditCommand template
+     * using the associated accelerator in {@code MainWindow}.
+     */
+    private void populateEditCommandUsingAccelerator() {
+        populateUsingAccelerator(KeyCode.CONTROL, KeyCode.E);
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the EditCommand template
+     * using the menu bar in {@code MainWindow}.
+     */
+    private void populateEditCommandUsingMenu() {
+        populateUsingMenu("Actions", "Edit a Person...");
+    }
+    //@@author
 }

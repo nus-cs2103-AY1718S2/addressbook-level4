@@ -63,7 +63,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void loginAccount(Account account) {
         addressBook.loginAccount(account);
-        indicateAddressBookChanged();
+        //indicateAddressBookChanged();
     }
 
     @Override

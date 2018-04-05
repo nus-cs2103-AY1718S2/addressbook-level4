@@ -59,10 +59,10 @@ public class Account {
     }
 
     /**
-     * Puts the access token in {@link #client}.
+     * Returns the login dialog url using {@link #client}.
      */
-    public void putAccessToken() {
-        client.getLoginDialogUrl(APP_ID, REDIRECT_URL, scopeBuilder);
+    public String getLoginDialogUrl() {
+        return client.getLoginDialogUrl(APP_ID, REDIRECT_URL, scopeBuilder);
     }
 
     @Override

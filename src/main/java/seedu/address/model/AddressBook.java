@@ -11,6 +11,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ShowLoginDialogRequestEvent;
 import seedu.address.model.account.Account;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
@@ -85,7 +87,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void loginAccount(Account account) {
         this.account = account;
-        this.account.putAccessToken();
+        String loadUrl = this.account.getLoginDialogUrl();
+        EventsCenter.getInstance().post(new ShowLoginDialogRequestEvent(loadUrl));
+
     }
 
     //// person-level operations

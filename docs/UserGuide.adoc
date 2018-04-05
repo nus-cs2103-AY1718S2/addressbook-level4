@@ -382,6 +382,10 @@ and `CUSTOMER-INDICES`.
 * The `RUNNER-INDEX`` must always be specified and at least one `CUSTOMER-INDEX` must be specified as well.
 ====
 
+[NOTE]
+====
+* RUNNER-INDEX must be provided, and at least one CUSTOMER-INDEX must be provided
+====
 *Usage examples:*
 
 ====
@@ -389,10 +393,6 @@ and `CUSTOMER-INDICES`.
 
 _Assigns customer at `INDEX2` to Runner at `INDEX1` based on the last shown listing._
 ====
-
-== Saving the data
-
-
 
 == Up and coming features [coming in v2.0]
 

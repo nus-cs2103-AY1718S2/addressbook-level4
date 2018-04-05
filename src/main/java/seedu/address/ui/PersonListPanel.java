@@ -64,8 +64,8 @@ public class PersonListPanel extends UiPart<Region> {
 
     /**
      * Scrolls to the {@code PersonCard} at the {@code index} and display the location on Google Map.
-     * @param event
      */
+
     private void locate(int index) {
         Platform.runLater(()-> {
             personListView.scrollTo(index);
@@ -80,8 +80,9 @@ public class PersonListPanel extends UiPart<Region> {
     @Subscribe
     private void handleLocateRequestEvent(LocateRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        locate(event.targetInex);
+        locate(event.target);
     }
+
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
      */

@@ -89,6 +89,8 @@ image::autocomplete.png[width="500"]
 
 If you are feeling lost, enter `help` or `h` in Medeina's command box, or press kbd:[F1] to bring up this user guide document in a pop-up window.
 
+{empty} +
+
 === Adding a contact, pet patient or appointment : `add` or `a` `[Since v1.2]`
 
 You can use `add` or `a` to do the following :
@@ -147,7 +149,9 @@ s/cat b/persian c/calico bt/AB -a d/2018-12-31 12:30 r/nil t/surgery t/steriliza
 
 Medeina will show a list of all stored contacts if you enter `list` or `ls` in the command box.
 
-=== Editing a contact : `edit` or `ed` `[Since v1.4]`
+{empty} +
+
+=== Editing a contact, pet patient or appointment : `edit` or `ed` `[Since v1.4]`
 
 You can use `edit` or `ed` to do the following:
 
@@ -259,7 +263,7 @@ find -p s/Cat b/Maine Coon c/Black bt/AB t/Aggressive
 
 find -p n/Chae s/Cat b/Russian Blue c/Grey bt/A t/Naive
 ----
-
+{empty} +
 
 === Deleting a owner, pet patient or appointment : `delete` or `d` `[Since v1.3]`
 
@@ -304,6 +308,7 @@ delete -fp 1
 delete -fo 1
 
 ----
+{empty} +
 
 === Listing entered commands : `history` or `his`
 

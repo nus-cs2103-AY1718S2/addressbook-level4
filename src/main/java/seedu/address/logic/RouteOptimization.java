@@ -86,7 +86,7 @@ public class RouteOptimization {
             startingRoute.put(labelRoutes(origin, destination), distance.getDistance(origin, destination));
         }
         dummy = sort.cleanSorted(sort.sortByComparator(startingRoute));
-        sort.printMap(dummy);
+        //sort.printMap(dummy);
         Map.Entry<String, Double> entry = dummy.entrySet().iterator().next();
         first = entry.getKey().split("_")[1];
         optimizedRoute.add(first);
@@ -94,6 +94,7 @@ public class RouteOptimization {
 
     }
 
+    //@@author meerakanani10
     /**
      *
      * @param address
@@ -110,6 +111,7 @@ public class RouteOptimization {
         return filteredAddresses;
     }
 
+    //@@author meerakanani10
     public List<String> getDistances(List<String> filteredAddresses, String origin, List<String> optimizedRoute) {
         Map<String, Double> paths = new LinkedHashMap<>();
         Map<String, Double> dummy = new HashMap<>();
@@ -120,9 +122,8 @@ public class RouteOptimization {
             String destination = filteredAddresses.get(i);
             paths.put(labelRoutes(origin, destination), distance.getDistance(origin, destination));
         }
-
         dummy = sort.cleanSorted(sort.sortByComparator(paths));
-        if( dummy.entrySet().iterator().hasNext()) {
+        if (dummy.entrySet().iterator().hasNext()) {
             Map.Entry<String, Double> entry = dummy.entrySet().iterator().next();
             next = entry.getKey().split("_")[1];
             optimizedRoute.add(next);
@@ -134,7 +135,7 @@ public class RouteOptimization {
 
         return optimizedRoute;
     }
-
+    //@@author meerakanani10
     /**
      *
      * @param origin - starting point
@@ -147,6 +148,7 @@ public class RouteOptimization {
         return routeKey;
     }
 
+    //@@author meerakanani10
     /**
      *
      * @param combinedAddresses - the key from the hashmaps
@@ -157,6 +159,7 @@ public class RouteOptimization {
         return addresses;
     }
 
+    //@@author meerakanani10
     /**
      *
      * @param address address to be edited

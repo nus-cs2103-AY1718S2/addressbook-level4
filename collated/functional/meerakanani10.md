@@ -73,7 +73,9 @@ public class FilterCommand extends Command {
         }
     }
 
-
+```
+###### \java\seedu\address\logic\GetDistance.java
+``` java
     public double getTime(String origin, String destination) {
         String durationWithoutUnit = "";
         DistanceMatrix matrix = null;
@@ -176,7 +178,7 @@ public class RouteOptimization {
             startingRoute.put(labelRoutes(origin, destination), distance.getDistance(origin, destination));
         }
         dummy = sort.cleanSorted(sort.sortByComparator(startingRoute));
-        sort.printMap(dummy);
+        //sort.printMap(dummy);
         Map.Entry<String, Double> entry = dummy.entrySet().iterator().next();
         first = entry.getKey().split("_")[1];
         optimizedRoute.add(first);
@@ -184,6 +186,9 @@ public class RouteOptimization {
 
     }
 
+```
+###### \java\seedu\address\logic\RouteOptimization.java
+``` java
     /**
      *
      * @param address
@@ -194,12 +199,15 @@ public class RouteOptimization {
         for (int i = 0; i < filteredAddresses.size(); i++) {
             if (filteredAddresses.get(i).equals(address)) {
                 filteredAddresses.remove(i);
-                break;
+                i--;
             }
         }
         return filteredAddresses;
     }
 
+```
+###### \java\seedu\address\logic\RouteOptimization.java
+``` java
     public List<String> getDistances(List<String> filteredAddresses, String origin, List<String> optimizedRoute) {
         Map<String, Double> paths = new LinkedHashMap<>();
         Map<String, Double> dummy = new HashMap<>();
@@ -211,16 +219,21 @@ public class RouteOptimization {
             paths.put(labelRoutes(origin, destination), distance.getDistance(origin, destination));
         }
         dummy = sort.cleanSorted(sort.sortByComparator(paths));
-        Map.Entry<String, Double> entry = dummy.entrySet().iterator().next();
-        next = entry.getKey().split("_")[1];
-        optimizedRoute.add(next);
-        filteredAddresses = removeAddress(next, filteredAddresses);
-        if (filteredAddresses.size() != 0) {
-            optimizedRoute = getDistances(filteredAddresses, next, optimizedRoute);
+        if (dummy.entrySet().iterator().hasNext()) {
+            Map.Entry<String, Double> entry = dummy.entrySet().iterator().next();
+            next = entry.getKey().split("_")[1];
+            optimizedRoute.add(next);
+            filteredAddresses = removeAddress(next, filteredAddresses);
+            if (filteredAddresses.size() != 0) {
+                optimizedRoute = getDistances(filteredAddresses, next, optimizedRoute);
+            }
         }
+
         return optimizedRoute;
     }
-
+```
+###### \java\seedu\address\logic\RouteOptimization.java
+``` java
     /**
      *
      * @param origin - starting point
@@ -233,6 +246,9 @@ public class RouteOptimization {
         return routeKey;
     }
 
+```
+###### \java\seedu\address\logic\RouteOptimization.java
+``` java
     /**
      *
      * @param combinedAddresses - the key from the hashmaps
@@ -243,6 +259,9 @@ public class RouteOptimization {
         return addresses;
     }
 
+```
+###### \java\seedu\address\logic\RouteOptimization.java
+``` java
     /**
      *
      * @param address address to be edited

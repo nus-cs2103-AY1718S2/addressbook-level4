@@ -173,11 +173,14 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void submitCommand() {
         try {
+            String commandTrimmed = commandTextArea.getText().trim();
             CommandResult commandResult = logic.execute(commandTextArea.getText());
             initHistory();
             historySnapshot.next();
             // process result of the command
-            commandTextArea.setText("");
+            if (!commandTrimmed.equals("parse")) {
+                commandTextArea.setText("");
+            }
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
         } catch (CommandException | ParseException e) {

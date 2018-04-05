@@ -20,6 +20,7 @@ import seedu.recipe.commons.core.LogsCenter;
 import seedu.recipe.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.recipe.commons.events.ui.ExitAppRequestEvent;
 import seedu.recipe.commons.events.ui.ShowHelpRequestEvent;
+import seedu.recipe.commons.events.ui.WebParseRequestEvent;
 import seedu.recipe.logic.Logic;
 import seedu.recipe.model.UserPrefs;
 
@@ -42,6 +43,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private CommandBox commandBox;
     private RecipeListPanel recipeListPanel;
     private Config config;
     private UserPrefs prefs;
@@ -141,7 +143,7 @@ public class MainWindow extends UiPart<Stage> {
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getRecipeBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
+        commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
@@ -190,6 +192,18 @@ public class MainWindow extends UiPart<Stage> {
         loadStyle(!isUsingDarkTheme);
         prefs.setIsUsingDarkTheme(!isUsingDarkTheme);
     }
+
+    @Subscribe
+    private void handleWebParseRequestEvent(WebParseRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        String parsedRecipe = browserPanel.parseRecipe();
+        if (parsedRecipe != null) {
+            commandBox.replaceText(parsedRecipe);
+        } else {
+            commandBox.replaceText("");
+        }
+    }
+
     //@@author
 
     /**

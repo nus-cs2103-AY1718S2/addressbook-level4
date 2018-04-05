@@ -52,7 +52,7 @@ public class TypicalRecipes {
             .withPreparationTime("85355255")
             .withCalories("5000")
             .withServings("4")
-            .withUrl("https://www.bbcgoodfood.com/recipes/collection/baked-potato")
+            .withUrl("http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice")
             .withImage("-")
             .withTags("family").build();
     public static final Recipe BENSON = new RecipeBuilder()

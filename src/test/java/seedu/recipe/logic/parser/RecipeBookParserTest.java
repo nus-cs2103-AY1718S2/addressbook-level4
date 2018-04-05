@@ -26,6 +26,7 @@ import seedu.recipe.logic.commands.FindCommand;
 import seedu.recipe.logic.commands.HelpCommand;
 import seedu.recipe.logic.commands.HistoryCommand;
 import seedu.recipe.logic.commands.ListCommand;
+import seedu.recipe.logic.commands.ParseCommand;
 import seedu.recipe.logic.commands.RedoCommand;
 import seedu.recipe.logic.commands.SearchCommand;
 import seedu.recipe.logic.commands.SelectCommand;
@@ -168,6 +169,12 @@ public class RecipeBookParserTest {
         thrown.expect(ParseException.class);
         thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
         parser.parseCommand(SearchCommand.COMMAND_WORD);
+    }
+
+    @Test
+    public void parseCommand_parse() throws Exception {
+        assertTrue(parser.parseCommand(ParseCommand.COMMAND_WORD) instanceof ParseCommand);
+        assertTrue(parser.parseCommand(ParseCommand.COMMAND_WORD + " 3") instanceof ParseCommand);
     }
     //@@author
 

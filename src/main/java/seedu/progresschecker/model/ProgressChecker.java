@@ -300,8 +300,13 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     public ObservableList<Exercise> getExerciseList() {
         return exercises.asObservableList();
     }
-
     //@@author
+
+    @Override
+    public ObservableList<Issue> getIssueList() {
+        return issues.asObservableList();
+    }
+    
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

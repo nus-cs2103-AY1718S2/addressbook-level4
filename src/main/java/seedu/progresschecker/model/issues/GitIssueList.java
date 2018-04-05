@@ -38,8 +38,8 @@ public class GitIssueList implements Iterable<Issue> {
 
     private final ObservableList<Issue> internalList = FXCollections.observableArrayList();
     private final String repoName = new String("AdityaA1998/samplerepo-pr-practice");
-    private final String userLogin = new String("anminkang");
-    private final String userAuthentication = new String("aditya2018");
+    private final String userLogin = new String("adityaa1998");
+    private final String userAuthentication = new String("Aditya@123");
     private GitHub github;
     private GHRepository repository;
     private GHIssueBuilder issueBuilder;
@@ -60,7 +60,7 @@ public class GitIssueList implements Iterable<Issue> {
         } catch (IOException ie) {
             throw new CommandException("Enter correct repository name");
         }
-        updateInternalList();
+        //updateInternalList();
     }
 
     /**
@@ -69,9 +69,8 @@ public class GitIssueList implements Iterable<Issue> {
     private void updateInternalList() throws IOException {
 
         List<GHIssue> gitIssues = repository.getIssues(GHIssueState.OPEN);
-        Issue toBeAdded;
         for (GHIssue issueOnGit : gitIssues) {
-            toBeAdded = convertToIssue(issueOnGit);
+            Issue toBeAdded = convertToIssue(issueOnGit);
             internalList.add(toBeAdded);
         }
     }
@@ -148,7 +147,8 @@ public class GitIssueList implements Iterable<Issue> {
      */
     public void reopenIssue(Index index) throws IOException, CommandException {
 
-        checkGitAuthentication();
+        authoriseGithub();
+        //checkGitAuthentication();
         issue = repository.getIssue(index.getOneBased());
         if (issue.getState() == GHIssueState.OPEN) {
             throw new CommandException("Issue #" + index.getOneBased() + " is already open");

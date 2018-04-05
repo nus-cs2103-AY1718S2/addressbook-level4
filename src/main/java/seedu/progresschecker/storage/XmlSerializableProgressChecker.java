@@ -1,5 +1,6 @@
 package seedu.progresschecker.storage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,6 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.progresschecker.commons.exceptions.IllegalValueException;
+import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.ProgressChecker;
 import seedu.progresschecker.model.ReadOnlyProgressChecker;
 
@@ -23,6 +25,8 @@ public class XmlSerializableProgressChecker {
     private List<XmlAdaptedTag> tags;
     @XmlElement
     private List<XmlAdaptedExercise> exercises;
+    @XmlElement
+    private List<XmlAdaptedIssue> issues;
 
     /**
      * Creates an empty XmlSerializableProgressChecker.
@@ -32,6 +36,7 @@ public class XmlSerializableProgressChecker {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
         exercises = new ArrayList<>();
+        issues = new ArrayList<>();
     }
 
     /**
@@ -42,6 +47,8 @@ public class XmlSerializableProgressChecker {
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
         exercises.addAll(src.getExerciseList().stream().map(XmlAdaptedExercise::new).collect(Collectors.toList()));
+        issues.addAll(src.getIssueList().stream().map(XmlAdaptedIssue::new).collect(Collectors.toList()));
+
     }
 
     /**
@@ -50,7 +57,7 @@ public class XmlSerializableProgressChecker {
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
      * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag}.
      */
-    public ProgressChecker toModelType() throws IllegalValueException {
+    public ProgressChecker toModelType() throws IllegalValueException, CommandException, IOException {
         ProgressChecker progressChecker = new ProgressChecker();
         for (XmlAdaptedTag t : tags) {
             progressChecker.addTag(t.toModelType());
@@ -60,6 +67,9 @@ public class XmlSerializableProgressChecker {
         }
         for (XmlAdaptedExercise e : exercises) {
             progressChecker.addExercise(e.toModelType());
+        }
+        for (XmlAdaptedIssue i : issues) {
+            progressChecker.createIssueOnGitHub(i.toModelType());
         }
         return progressChecker;
     }
@@ -75,6 +85,6 @@ public class XmlSerializableProgressChecker {
         }
 
         XmlSerializableProgressChecker otherAb = (XmlSerializableProgressChecker) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags);
+        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags) && issues.equals(otherAb.issues);
     }
 }

@@ -33,7 +33,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final ProgressChecker progressChecker;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Exercise> filteredExercises;
-
+    private final FilteredList<Issue> filteredIssues;
     /**
      * Initializes a ModelManager with the given progressChecker and userPrefs.
      */
@@ -46,6 +46,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.progressChecker = new ProgressChecker(progressChecker);
         filteredPersons = new FilteredList<>(this.progressChecker.getPersonList());
         filteredExercises = new FilteredList<>(this.progressChecker.getExerciseList());
+        filteredIssues = new FilteredList<>(this.progressChecker.getIssueList());
     }
 
     public ModelManager() {
@@ -91,6 +92,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void createIssueOnGitHub(Issue issue) throws IOException, CommandException {
         progressChecker.createIssueOnGitHub(issue);
+        updateFilteredIssueList(PREDICATE_SHOW_ALL_ISSUES);
         indicateProgressCheckerChanged();
     }
     //@@author
@@ -145,6 +147,12 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    @Override
+    public void updateFilteredIssueList(Predicate<Issue> predicate) {
+        requireNonNull(predicate);
+        filteredIssues.setPredicate(predicate);
+    }
+
     //@@author Livian1107
     @Override
     public void uploadPhoto(Person target, String path)
@@ -189,6 +197,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ObservableList<Exercise> getFilteredExerciseList() {
         return FXCollections.unmodifiableObservableList(filteredExercises);
+    }
+    
+    @Override
+    public ObservableList<Issue> getFilteredIssueList() {
+        return FXCollections.unmodifiableObservableList(filteredIssues);
     }
 
 }

@@ -12,6 +12,8 @@ import seedu.progresschecker.commons.core.LogsCenter;
 import seedu.progresschecker.commons.exceptions.DataConversionException;
 import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.commons.util.FileUtil;
+import seedu.progresschecker.logic.commands.Command;
+import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.ReadOnlyProgressChecker;
 
 /**
@@ -58,6 +60,12 @@ public class XmlProgressCheckerStorage implements ProgressCheckerStorage {
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + progressCheckerFile + ": " + ive.getMessage());
             throw new DataConversionException(ive);
+        } catch (IOException ie) {
+            logger.info("Illegal values found in " + progressCheckerFile + ": " + ie.getMessage());
+            throw new DataConversionException(ie);
+        } catch (CommandException ce) {
+            logger.info("Illegal values found in " + progressCheckerFile + ": " + ce.getMessage());
+            throw new DataConversionException(ce);
         }
     }
 

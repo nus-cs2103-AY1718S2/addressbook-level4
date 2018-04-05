@@ -20,6 +20,7 @@ import seedu.progresschecker.model.photo.exceptions.DuplicatePhotoException;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Issue> PREDICATE_SHOW_ALL_ISSUES = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyProgressChecker newData);
@@ -75,8 +76,17 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    /**
+     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredIssueList(Predicate<Issue> predicate);
+
     /** Returns an unmodifiable view of the filtered exercise list */
     ObservableList<Exercise> getFilteredExerciseList();
+    
+    /** Returns unmodifiable view of the filtered issue list */
+    ObservableList<Issue> getFilteredIssueList();
 
     /** Uploads the given photo with given path */
     void uploadPhoto(Person target, String path)

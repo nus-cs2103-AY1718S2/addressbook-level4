@@ -8,6 +8,7 @@ import seedu.recipe.logic.parser.exceptions.ParseException;
 import seedu.recipe.model.recipe.GroupName;
 import seedu.recipe.model.recipe.GroupPredicate;
 
+//@@author hoangduong1607
 /**
  * Parses input arguments and creates a new ViewGroupCommand object
  */

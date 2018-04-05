@@ -2,21 +2,22 @@ package seedu.address.ui;
 
 import java.io.IOException;
 import java.util.Properties;
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
+
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import javax.mail.Session;
 
 import com.sun.mail.imap.IMAPFolder;
 import com.sun.mail.imap.IMAPStore;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-
-import org.fxmisc.easybind.EasyBind;
-
-import static seedu.address.ui.MailServer.startSession;
 
 
 /**

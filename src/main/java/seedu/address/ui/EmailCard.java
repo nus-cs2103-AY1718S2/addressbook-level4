@@ -4,7 +4,6 @@ import java.io.IOException;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
-import javax.mail.Part;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

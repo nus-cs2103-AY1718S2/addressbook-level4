@@ -50,6 +50,15 @@ public class SampleDataUtil {
         GregorianCalendar calendar = new GregorianCalendar(year, month, dayOfMonth, hourOfDay, minute, second);
         return calendar.getTime();
     }
+
+    /**
+     * helper method to generate a custom meaningful date.
+     * @return
+     */
+    private static Date createDate(int year, int month, int dayOfMonth, int hourOfDay, int minute, int second) {
+        GregorianCalendar calendar = new GregorianCalendar(year, month, dayOfMonth, hourOfDay, minute, second);
+        return calendar.getTime();
+    }
     //@@author
 
     public static ReadOnlyAddressBook getSampleAddressBook() {

@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.File;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -25,6 +26,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String STUDENT_MISC_INFO_PAGE = "StudentMiscInfo.html";
+    public static final String STUDENT_INFO_PAGE_STYLESHEET = "StudentInfoTheme.css";
     public static final String SEARCH_PAGE_URL =
             "https://www.google.com.sg/maps/place/";
 
@@ -52,10 +54,15 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(SEARCH_PAGE_URL + append);
     }
 
+    /**
+     * Loads the student's full information page on the browser including his/her profile picture if it exists
+     */
     private void loadStudentInfoPage() {
+        String jarFolder = new File(MainApp.class.getProtectionDomain().getCodeSource().getLocation()
+                .getPath()).getParentFile().getPath().replace('\\', '/');
+        String studentPageFilePath = "file:/" + jarFolder + "/data/view/" + STUDENT_MISC_INFO_PAGE;
+        loadPage(studentPageFilePath);
 
-        URL exampleStudentPage = MainApp.class.getResource(FXML_FILE_FOLDER + STUDENT_MISC_INFO_PAGE);
-        loadPage(exampleStudentPage.toExternalForm());
     }
 
 
@@ -73,7 +80,7 @@ public class BrowserPanel extends UiPart<Region> {
     private void loadDefaultPage() {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         loadPage(defaultPage.toExternalForm());
-        // -1 would mean no student's information is shown and the default page is in view
+
     }
 
     /**

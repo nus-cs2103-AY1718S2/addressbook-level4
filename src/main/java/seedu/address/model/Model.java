@@ -71,6 +71,9 @@ public interface Model {
 
     void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException;
 
+    void updateProfilePicture(Student target, Student editedStudent, Student finalEditedStudent)
+        throws DuplicateStudentException, StudentNotFoundException;
+
     void loginGoogleAccount() throws CredentialsException;
 
     void logoutGoogleAccount() throws CredentialsException;

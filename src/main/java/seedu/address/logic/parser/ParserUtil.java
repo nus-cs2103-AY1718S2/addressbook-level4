@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.lesson.Day;
@@ -19,6 +18,7 @@ import seedu.address.model.student.Email;
 import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.dashboard.Date;
+import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -259,6 +259,29 @@ public class ParserUtil {
     public static Optional<Date> parseDate(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
         return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> path} into an {@code Optional<ProfilePicturePath>} if {@code path} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ProfilePicturePath> parsePictureUrl(Optional<String> path) throws
+            IllegalValueException {
+
+        requireNonNull(path);
+        return path.isPresent() ? Optional.of(parsePictureUrl(path.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String path} into a {@code ProfilePicturePath}.
+     * @throws IllegalValueException if the given {@code path} is invalid.
+     */
+    public static ProfilePicturePath parsePictureUrl(String path) throws IllegalValueException {
+        requireNonNull(path);
+        if (!ProfilePicturePath.isValidPath(path)) {
+            throw new IllegalValueException(ProfilePicturePath.MESSAGE_PICTURE_CONSTRAINTS);
+        }
+        return new ProfilePicturePath(path);
     }
 
 }

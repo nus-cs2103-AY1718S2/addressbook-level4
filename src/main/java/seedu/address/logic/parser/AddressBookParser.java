@@ -99,10 +99,11 @@ public class AddressBookParser {
         case LocateCommand.COMMAND_WORD:
         case LocateCommand.COMMAND_ALIAS:
             return new LocateCommandParser().parse(arguments);
-
+        //@@author zhangriqi
         case AssignCommand.COMMAND_WORD:
         case AssignCommand.COMMAND_ALIAS:
             return new AssignCommandParser().parse(arguments);
+        //@@author
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

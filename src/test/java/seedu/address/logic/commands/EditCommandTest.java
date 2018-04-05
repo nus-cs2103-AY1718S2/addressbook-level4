@@ -48,7 +48,7 @@ public class EditCommandTest {
         EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder(editedActivity).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY, descriptor);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedActivity);
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_ACTIVITY_SUCCESS, editedActivity);
 
         Model expectedModel = new ModelManager(new DeskBoard(model.getDeskBoard()), new UserPrefs());
         expectedModel.updateActivity(model.getFilteredActivityList().get(0), editedActivity);
@@ -73,7 +73,7 @@ public class EditCommandTest {
                 .withPhone(VALID_DATE_TIME_CS2010_QUIZ).withTags(VALID_TAG_MA2108).build();
         EditCommand editCommand = prepareCommand(indexLastPerson, descriptor);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedActivity);
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_ACTIVITY_SUCCESS, editedActivity);
 
         Model expectedModel = new ModelManager(new DeskBoard(model.getDeskBoard()), new UserPrefs());
         expectedModel.updateActivity(lastActivity, editedActivity);
@@ -89,7 +89,7 @@ public class EditCommandTest {
         EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY, new EditActivityDescriptor());
         Activity editedActivity = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedActivity);
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_ACTIVITY_SUCCESS, editedActivity);
 
         Model expectedModel = new ModelManager(new DeskBoard(model.getDeskBoard()), new UserPrefs());
 
@@ -108,7 +108,7 @@ public class EditCommandTest {
         EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY,
                 new EditActivityDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ).build());
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedActivity);
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_ACTIVITY_SUCCESS, editedActivity);
 
         Model expectedModel = new ModelManager(new DeskBoard(model.getDeskBoard()), new UserPrefs());
         expectedModel.updateActivity(model.getFilteredActivityList().get(0), editedActivity);
@@ -125,7 +125,7 @@ public class EditCommandTest {
         EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder(firstActivity).build();
         EditCommand editCommand = prepareCommand(INDEX_SECOND_ACTIVITY, descriptor);
 
-        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_ACTIVITY);
     }
 
     //TODO: TEST
@@ -140,7 +140,7 @@ public class EditCommandTest {
         EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY,
                 new EditActivityDescriptorBuilder(activityInList).build());
 
-        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_ACTIVITY);
     }
 
     //TODO: TEST

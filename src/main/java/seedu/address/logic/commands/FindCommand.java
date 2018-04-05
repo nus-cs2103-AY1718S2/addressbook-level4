@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import seedu.address.model.activity.NameContainsKeywordsPredicate;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
+ * Finds and lists all activies in address book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
 public class FindCommand extends Command {
@@ -24,7 +24,7 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredActivityList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredActivityList().size()));
+        return new CommandResult(getMessageForActivityListShownSummary(model.getFilteredActivityList().size()));
     }
 
     @Override

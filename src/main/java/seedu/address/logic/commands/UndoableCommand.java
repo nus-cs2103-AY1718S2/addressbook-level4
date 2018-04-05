@@ -33,7 +33,7 @@ public abstract class UndoableCommand extends Command {
     /**
      * Reverts the DeskBoard to the state before this command
      * was executed and updates the filtered activity list to
-     * show all persons.
+     * show all activities.
      */
     protected final void undo() {
         requireAllNonNull(model, previousDeskBoard);
@@ -43,7 +43,7 @@ public abstract class UndoableCommand extends Command {
 
     /**
      * Executes the command and updates the filtered activity
-     * list to show all persons.
+     * list to show all activities.
      */
     protected final void redo() {
         requireNonNull(model);

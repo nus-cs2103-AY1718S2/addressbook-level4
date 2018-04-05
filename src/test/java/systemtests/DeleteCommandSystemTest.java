@@ -21,7 +21,7 @@
 //import seedu.address.model.activity.Activity;
 //import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 //
-//public class DeleteCommandSystemTest extends RemarkBookSystemTest {
+//public class DeleteCommandSystemTest extends DeskBoardSystemTest {
 //
 //    private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
 //            String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
@@ -162,8 +162,8 @@
 //     * 5. Asserts that the status bar's sync status changes.<br>
 //     * 6. Asserts that the command box has the default style class.<br>
 //     * Verifications 1 to 3 are performed by
-//     * {@code RemarkBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.
-//     * @see RemarkBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+//     * {@code DeskBoardSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.
+//     * @see DeskBoardSystemTest#assertApplicationDisplaysExpected(String, String, Model)
 //     */
 //    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
 //        assertCommandSuccess(command, expectedModel, expectedResultMessage, null);
@@ -200,8 +200,8 @@
 //     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
 //     * 5. Asserts that the command box has the error style.<br>
 //     * Verifications 1 to 3 are performed by
-//     * {@code RemarkBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-//     * @see RemarkBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+//     * {@code DeskBoardSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+//     * @see DeskBoardSystemTest#assertApplicationDisplaysExpected(String, String, Model)
 //     */
 //    private void assertCommandFailure(String command, String expectedResultMessage) {
 //        Model expectedModel = getModel();

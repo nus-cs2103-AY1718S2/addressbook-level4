@@ -21,7 +21,7 @@
 //import seedu.address.model.Model;
 //import seedu.address.model.tag.Tag;
 //
-//public class FindCommandSystemTest extends RemarkBookSystemTest {
+//public class FindCommandSystemTest extends DeskBoardSystemTest {
 //
 //    //TODO: TEST
 //    /**
@@ -162,7 +162,7 @@
 //     * {@code RemarkBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
 //     * Also verifies that the status bar remains unchanged, and the command box has the default style class, and the
 //     * selected card updated accordingly, depending on {@code cardStatus}.
-//     * @see RemarkBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+//     * @see DeskBoardSystemTest#assertApplicationDisplaysExpected(String, String, Model)
 //     */
 //    private void assertCommandSuccess(String command, Model expectedModel) {
 //        String expectedResultMessage = String.format(
@@ -181,7 +181,7 @@
 //     * {@code RemarkBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
 //     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
 //     * error style.
-//     * @see RemarkBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+//     * @see DeskBoardSystemTest#assertApplicationDisplaysExpected(String, String, Model)
 //     */
 //    private void assertCommandFailure(String command, String expectedResultMessage) {
 //        Model expectedModel = getModel();

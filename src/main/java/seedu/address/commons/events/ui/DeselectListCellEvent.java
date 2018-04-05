@@ -5,7 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.ui.EventCard;
 
 /**
- * Indicates a request to jump to the list of persons
+ * Indicates a request to jump to the list of activities
  */
 public class DeselectListCellEvent extends BaseEvent {
 

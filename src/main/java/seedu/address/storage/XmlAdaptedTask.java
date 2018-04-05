@@ -48,9 +48,9 @@ public class XmlAdaptedTask extends XmlAdaptedActivity {
      * @throws IllegalValueException if there were any data constraints violated in the adapted task
      */
     public Task toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
+        final List<Tag> activityTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
-            personTags.add(tag.toModelType());
+            activityTags.add(tag.toModelType());
         }
 
         if (this.name == null) {
@@ -76,7 +76,7 @@ public class XmlAdaptedTask extends XmlAdaptedActivity {
         }
         final Remark remark = new Remark(this.remark);
 
-        final Set<Tag> tags = new HashSet<>(personTags);
+        final Set<Tag> tags = new HashSet<>(activityTags);
 
         return new Task(name, dateTime, remark, tags, this.iscompleted);
     }

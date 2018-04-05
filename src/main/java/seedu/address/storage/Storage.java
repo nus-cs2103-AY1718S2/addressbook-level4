@@ -30,7 +30,7 @@ public interface Storage extends DeskBoardStorage, UserPrefsStorage {
     void saveDeskBoard(ReadOnlyDeskBoard deskBoard) throws IOException;
 
     /**
-     * Saves the current version of the Remark Book to the hard disk.
+     * Saves the current version of the desk board to the hard disk.
      *   Creates the data file if it is missing.
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */

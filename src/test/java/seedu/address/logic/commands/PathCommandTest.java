@@ -124,7 +124,8 @@ public class PathCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        PersonPanelPathChangedEvent lastEvent = (PersonPanelPathChangedEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        PersonPanelPathChangedEvent lastEvent =
+                (PersonPanelPathChangedEvent) eventsCollectorRule.eventsCollector.getMostRecent();
         assertEquals(index, Index.fromZeroBased(lastEvent.getNewSelection().getDisplayedIndex()));
     }
 

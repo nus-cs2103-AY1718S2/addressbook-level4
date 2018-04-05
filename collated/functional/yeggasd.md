@@ -1,293 +1,53 @@
 # yeggasd
-###### /resources/view/DarkTheme.css
-``` css
-#passwordTextField {
-    -fx-background-color: transparent #383838 transparent #383838;
-    -fx-background-insets: 0;
-    -fx-border-color: #383838 #383838 #ffffff #383838;
-    -fx-border-insets: 0;
-    -fx-border-width: 1;
-    -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
-    -fx-text-fill: white;
-}
-```
-###### /resources/view/PasswordBox.fxml
-``` fxml
-<StackPane prefHeight="99.0" prefWidth="200.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <PasswordField fx:id="passwordTextField" onAction="#handlePasswordInputChanged" onKeyPressed="#handleKeyPress" />
-   <BorderPane prefHeight="200.0" prefWidth="200.0">
-      <top>
-         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" BorderPane.alignment="CENTER" />
-      </top>
-   </BorderPane>
-</StackPane>
-```
-###### /resources/view/PasswordWindow.fxml
-``` fxml
-<fx:root maxHeight="90.0" minHeight="80.0" minWidth="400.0" resizable="false" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
-  <icons>
-    <Image url="@/images/address_book_32.png" />
-  </icons>
-  <scene>
-    <Scene>
-      <stylesheets>
-        <URL value="@DarkTheme.css" />
-        <URL value="@Extensions.css" />
-      </stylesheets>
-
-      <VBox>
-
-        <StackPane fx:id="passwordBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
-          <padding>
-            <Insets bottom="5" left="10" right="10" top="5" />
-          </padding>
-        </StackPane>
-      </VBox>
-    </Scene>
-  </scene>
-</fx:root>
-```
-###### /java/seedu/address/ui/PasswordWindow.java
+###### \java\seedu\address\commons\events\ui\PasswordCorrectEvent.java
 ``` java
 /**
- * The Password Window. Provides the basic application layout containing
- * space where other JavaFX elements can be placed.
+ * Indicates a request for App termination
  */
-public class PasswordWindow extends UiPart<Stage> {
-    private static final String PASSWORDBOX_TITLE = "Key In Password";
-    private static final String FXML = "PasswordWindow.fxml";
+public class PasswordCorrectEvent extends BaseEvent {
 
-    private final Storage storage;
-    private final Model model;
-
-    private Stage primaryStage;
-
-    @FXML
-    private StackPane passwordBoxPlaceholder;
-
-    public PasswordWindow(Stage primaryStage, Model model, Storage storage) {
-        super(FXML, primaryStage);
-        // Set dependencies
-        this.primaryStage = primaryStage;
-        this.storage = storage;
-        this.model = model;
-
-        setTitle(PASSWORDBOX_TITLE);
-        registerAsAnEventHandler(this);
-    }
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
-    /**
-     * Fills up all the placeholders of this window.
-     */
-    void fillInnerParts() {
-        PasswordBox passwordBox = new PasswordBox(storage, model);
-        passwordBoxPlaceholder.getChildren().add(passwordBox.getRoot());
-    }
-
-    void hide() {
-        primaryStage.hide();
-    }
-
-    private void setTitle(String appTitle) {
-        primaryStage.setTitle(appTitle);
-    }
-
-    public void show() {
-        primaryStage.show();
-    }
-
-    /**
-     * Closes the application.
-     */
-    @FXML
-    private void handleExit() {
-        raise(new ExitAppRequestEvent());
-    }
-
-    void releaseResources() {
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 }
 ```
-###### /java/seedu/address/ui/PasswordBox.java
+###### \java\seedu\address\commons\events\ui\TimeTableEvent.java
 ``` java
 /**
- * The UI component that is responsible for receiving user password inputs.
+ * Represents the TimeTable
  */
-public class PasswordBox extends UiPart<Region> {
+public class TimeTableEvent extends BaseEvent {
 
-    public static final String ERROR_STYLE_CLASS = "error";
-    private static final String FXML = "PasswordBox.fxml";
+    private final ObservableList<ArrayList<String>> timetable;
 
-    private final Logger logger = LogsCenter.getLogger(PasswordBox.class);
-    private ListElementPointer historySnapshot;
-    private final Storage storage;
-    private final Model model;
-
-    @FXML
-    private PasswordField passwordTextField;
-
-    public PasswordBox(Storage storage, Model model) {
-        super(FXML);
-
-        this.storage = storage;
-        this.model = model;
-
-        // calls #setStyleToDefault() whenever there is a change to the text of the command box.
-        passwordTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+    public TimeTableEvent(ObservableList<ArrayList<String>> timetable) {
+        this.timetable = timetable;
     }
 
-    /**
-     * Handles the key press event, {@code keyEvent}.
-     */
-    @FXML
-    private void handleKeyPress(KeyEvent keyEvent) {
-        switch (keyEvent.getCode()) {
-        default:
-            // let JavaFx handle the keypress
-        }
-    }
-
-
-    /**
-     * Handles the Enter button pressed event.
-     */
-    @FXML
-    private void handlePasswordInputChanged() {
-        Optional<ReadOnlyAddressBook> addressBookOptional;
-        ReadOnlyAddressBook initialData;
-        String input = passwordTextField.getText();
-        try {
-            passwordTextField.setText("");
-            addressBookOptional = storage.readAddressBook(new Password(input));
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
-            model.resetData(initialData);
-            raise(new PasswordCorrectEvent());
-        } catch (WrongPasswordException e) {
-            logger.warning("Wrong password used. Trying again.");
-            setStyleToIndicateCommandFailure();
-        } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
-        } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
-        }
-    }
-
-    /**
-     * Sets the password box style to use the default style.
-     */
-    private void setStyleToDefault() {
-        passwordTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
-    }
-
-    /**
-     * Sets the password box style to indicate a wrong password.
-     */
-    private void setStyleToIndicateCommandFailure() {
-        ObservableList<String> styleClass = passwordTextField.getStyleClass();
-
-        if (styleClass.contains(ERROR_STYLE_CLASS)) {
-            return;
-        }
-
-        styleClass.add(ERROR_STYLE_CLASS);
-    }
-
-}
-```
-###### /java/seedu/address/ui/PasswordUiManager.java
-``` java
-/**
- * The manager of the Password UI component.
- */
-public class PasswordUiManager extends ComponentManager implements Ui {
-
-    public static final String ALERT_DIALOG_PANE_FIELD_ID = "alertDialogPane";
-
-    public static final String FILE_OPS_ERROR_DIALOG_STAGE_TITLE = "File Op Error";
-    public static final String FILE_OPS_ERROR_DIALOG_HEADER_MESSAGE = "Could not save data";
-    public static final String FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE = "Could not save data to file";
-
-    private static final Logger logger = LogsCenter.getLogger(UiManager.class);
-
-    private Storage storage;
-    private Model model;
-    private Ui ui;
-
-    private MainWindow mainWindow;
-    private Stage primaryStage;
-
-    public PasswordUiManager(Storage storage, Model model, Ui ui) {
-        super();
-        this.storage = storage;
-        this.model = model;
-        this.ui = ui;
+    public ObservableList<ArrayList<String>> getTimeTable() {
+        return timetable;
     }
 
     @Override
-    public void start(Stage primaryStage) {
-        logger.info("Starting UI...");
-        this.primaryStage = primaryStage;
-        try {
-            PasswordWindow pw = new PasswordWindow(primaryStage, model, storage);
-            pw.show();
-            pw.fillInnerParts();
-        } catch (Throwable e) {
-            logger.severe(StringUtil.getDetails(e));
-            showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
-        }
-    }
-
-    /**
-     * Shows an error alert dialog with {@code title} and error message, {@code e},
-     * and exits the application after the user has closed the alert dialog.
-     */
-    private void showFatalErrorDialogAndShutdown(String title, Throwable e) {
-        logger.severe(title + " " + e.getMessage() + StringUtil.getDetails(e));
-        showAlertDialogAndWait(Alert.AlertType.ERROR, title, e.getMessage(), e.toString());
-        Platform.exit();
-        System.exit(1);
-    }
-
-    void showAlertDialogAndWait(Alert.AlertType type, String title, String headerText, String contentText) {
-        showAlertDialogAndWait(mainWindow.getPrimaryStage(), type, title, headerText, contentText);
-    }
-
-    /**
-     * Shows an alert dialog on {@code owner} with the given parameters.
-     * This method only returns after the user has closed the alert dialog.
-     */
-    private static void showAlertDialogAndWait(Stage owner, AlertType type, String title, String headerText,
-                                               String contentText) {
-        final Alert alert = new Alert(type);
-        alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
-        alert.initOwner(owner);
-        alert.setTitle(title);
-        alert.setHeaderText(headerText);
-        alert.setContentText(contentText);
-        alert.getDialogPane().setId(ALERT_DIALOG_PANE_FIELD_ID);
-        alert.showAndWait();
-    }
-
-    @Override
-    public void stop() {
-        mainWindow.hide();
-        mainWindow.releaseResources();
-    }
-    @Subscribe
-    private void handlePasswordCorrectEvent(PasswordCorrectEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        ui.start(primaryStage);
+    public String toString() {
+        return null;
     }
 }
 ```
-###### /java/seedu/address/commons/util/SecurityUtil.java
+###### \java\seedu\address\commons\exceptions\WrongPasswordException.java
+``` java
+/**
+ * Represents an error during decryption
+ */
+public class WrongPasswordException extends Exception {
+    public WrongPasswordException(String message) {
+        super(message);
+    }
+}
+
+```
+###### \java\seedu\address\commons\util\SecurityUtil.java
 ``` java
 /**
  * Contains utility methods used for encrypting and decrypting files for Storage
@@ -500,71 +260,59 @@ public class SecurityUtil {
     }
 }
 ```
-###### /java/seedu/address/commons/exceptions/WrongPasswordException.java
+###### \java\seedu\address\commons\util\StringUtil.java
 ``` java
-/**
- * Represents an error during decryption
- */
-public class WrongPasswordException extends Exception {
-    public WrongPasswordException(String message) {
-        super(message);
+    /**
+     * Returns true if {@code s} represents odd or even
+     ** Will return false for any other non-null string input
+     * e.g. empty string, "-1", "0", "+1", and " 2 " (untrimmed), "3 0" (contains whitespace), "1 a" (contains letters)
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static boolean isOddEven(String s) {
+        requireNonNull(s);
+        return s.equalsIgnoreCase("even") || s.equalsIgnoreCase("odd");
     }
-}
-
-```
-###### /java/seedu/address/commons/events/ui/PasswordCorrectEvent.java
-``` java
-/**
- * Indicates a request for App termination
- */
-public class PasswordCorrectEvent extends BaseEvent {
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-}
-```
-###### /java/seedu/address/logic/parser/RemovePasswordCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new AddCommand object
- */
-public class RemovePasswordCommandParser implements Parser<RemovePasswordCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the AddCommand
-     * and returns an AddCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * @param s The string to be checked
+     * @return 0 is string is even else 1.
      */
-    public RemovePasswordCommand parse(String arguments) {
-        return new RemovePasswordCommand();
-    }
-}
-```
-###### /java/seedu/address/logic/parser/PasswordCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new AddCommand object
- */
-public class PasswordCommandParser implements Parser<PasswordCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the AddCommand
-     * and returns an AddCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public PasswordCommand parse(String arguments) throws ParseException {
-        String args = arguments.trim();
-        if ("".equals(args)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, PasswordCommand.INVALID_PASSWORD,
-                            PasswordCommand.MESSAGE_USAGE));
+    public static int getOddEven(String s) {
+        requireNonNull(s);
+        if (s.equalsIgnoreCase("even")) {
+            return 0;
+        } else {
+            return 1;
         }
-        return new PasswordCommand(args);
     }
-}
+
+    /**
+     * Returns true if (@code text) represents a day in the week
+     * e.g. Monday
+     * Will return false for any other non-null string input
+     * e.g. empty string, "-1", "0", "+1", and " 2 " (untrimmed), "3 0" (contains whitespace), "1 a" (contains letters)
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static boolean isDay(String s) {
+        requireNonNull(s);
+        return s.equalsIgnoreCase("Monday") || s.equalsIgnoreCase("Tuesday")
+                || s.equalsIgnoreCase("Wednesday") || s.equalsIgnoreCase("Thursday")
+                || s.equalsIgnoreCase("Friday") || s.equalsIgnoreCase("Saturday")
+                || s.equalsIgnoreCase("Sunday");
+    }
+
+    /**
+     * Capitalizes the given (@code s)
+     * @param s String to be capitalized
+     * @return Capitalized String
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static String capitalize(String s) {
+        requireNonNull(s);
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
+    }
 ```
-###### /java/seedu/address/logic/commands/PasswordCommand.java
+###### \java\seedu\address\logic\commands\PasswordCommand.java
 ``` java
 /**
  * Adds a password to the address book.
@@ -605,7 +353,7 @@ public class PasswordCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/RemovePasswordCommand.java
+###### \java\seedu\address\logic\commands\RemovePasswordCommand.java
 ``` java
 /**
  * Removes password from the address book.
@@ -622,105 +370,166 @@ public class RemovePasswordCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlAdaptedPassword.java
+###### \java\seedu\address\logic\commands\TimeTableCommand.java
 ``` java
 /**
- * JAXB-friendly version of the Password.
+ * Retrieves the timetable of a person identified using it's last displayed index from the address book.
  */
-public class XmlAdaptedPassword {
+public class TimeTableCommand extends Command {
+    public static final String COMMAND_WORD = "timetable";
 
-    @XmlElement
-    private byte[] currPassword;
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds timetable of a person identified  \n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
 
-    @XmlElement
-    private byte[] prevPassword;
+    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "%1$s Week Timetable of selected Person: %2$s";
 
+    private final Index targetIndex;
+    private final String oddEven;
+    private Person personToShow;
     /**
-     * Constructs an XmlAdaptedPassword.
-     * This is the no-arg constructor that is required by JAXB.
+     * Creates a Timetable to retrieve the timetable of the given index
      */
-    public XmlAdaptedPassword() {}
+    public TimeTableCommand(Index targetIndex, String oddEven) {
+        requireNonNull(targetIndex);
+        requireNonNull(oddEven);
+        this.targetIndex = targetIndex;
+        this.oddEven = oddEven;
+    }
 
-    /**
-     * Constructs an {@code XmlAdaptedPassword} with the given password.
-     */
-    public XmlAdaptedPassword(Password password) {
-        this.currPassword = password.getPassword();
-        this.prevPassword = password.getPrevPassword();
+    @Override
+    public CommandResult execute() throws CommandException {
+        requireNonNull(model);
+
+        preprocess();
+
+        Timetable timeTable = personToShow.getTimetable();
+        int oddEvenIndex = StringUtil.getOddEven(oddEven);
+        ArrayList<ArrayList<String>> personTimeTable = timeTable.getTimetable().get(oddEvenIndex);
+        ObservableList<ArrayList<String>> timeTableList = FXCollections.observableArrayList(personTimeTable);
+        EventsCenter.getInstance().post(new TimeTableEvent(timeTableList));
+        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, StringUtil.capitalize(oddEven),
+                personToShow.getName()));
     }
 
     /**
-     * Converts this jaxb-friendly adapted password object into the model's Password object.
-     *
+     * Preprocess the required data for execution.
+     * @throws CommandException when index out of bound
      */
-    public Password toModelType() {
-        return new Password(currPassword, prevPassword);
+    protected void preprocess() throws CommandException {
+        List<Person> lastShownList = model.getFilteredPersonList();
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+        personToShow = lastShownList.get(targetIndex.getZeroBased());
     }
 
     @Override
     public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
+        return other == this // short circuit if same object
+                || (other instanceof TimeTableCommand // instanceof handles nulls
+                && this.targetIndex.equals(((TimeTableCommand) other).targetIndex) // state check
+                && this.oddEven.equalsIgnoreCase(((TimeTableCommand) other).oddEven)
+                && Objects.equals(this.personToShow, ((TimeTableCommand) other).personToShow));
 
-        if (!(other instanceof XmlAdaptedPassword)) {
-            return false;
-        }
+    }
 
-        XmlAdaptedPassword otherPassword = (XmlAdaptedPassword) other;
-        return Arrays.equals(currPassword, otherPassword.currPassword)
-                && Arrays.equals(prevPassword, otherPassword.prevPassword);
+    @Override
+    public String toString() {
+        return targetIndex.toString() + " " + oddEven + " " + personToShow;
     }
 }
 ```
-###### /java/seedu/address/storage/XmlAddressBookStorage.java
-``` java
-    @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook(Password password) throws DataConversionException, IOException,
-            WrongPasswordException {
-        return readAddressBook(filePath, password);
-    }
-```
-###### /java/seedu/address/storage/XmlAddressBookStorage.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
-     * Similar to {@link #readAddressBook()}
-     * @param filePath location of the data. Cannot be null
-     * @throws DataConversionException if the file is not in the correct format.
+     * Parses a (@code String oddEven)
+     * Leading and trailing whitespaces will be trimmed.
+     * @throws IllegalValueException if not odd or even
      */
-    public Optional<ReadOnlyAddressBook> readAddressBook(String filePath, Password password)
-            throws DataConversionException, IOException, WrongPasswordException {
-        requireNonNull(filePath);
-        requireNonNull(password);
-
-        File addressBookFile = new File(filePath);
-
-        if (!addressBookFile.exists()) {
-            logger.info("AddressBook file "  + addressBookFile + " not found");
-            return Optional.empty();
+    public static String parseOddEven(String oddEven) throws IllegalValueException {
+        requireNonNull(oddEven);
+        String trimmedOddEven = oddEven.trim();
+        if (!StringUtil.isOddEven(trimmedOddEven)) {
+            throw new IllegalValueException(MESSAGE_NOT_ODDEVEN);
         }
-        File file = new File(filePath);
-        SecurityUtil.decryptFile(file, password);
-        XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(file);
-        if (password.getPassword() != null) {
-            SecurityUtil.encrypt(file, password.getPassword());
+        return trimmedOddEven;
+    }
+```
+###### \java\seedu\address\logic\parser\PasswordCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new AddCommand object
+ */
+public class PasswordCommandParser implements Parser<PasswordCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the AddCommand
+     * and returns an AddCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public PasswordCommand parse(String arguments) throws ParseException {
+        String args = arguments.trim();
+        if ("".equals(args)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, PasswordCommand.INVALID_PASSWORD,
+                            PasswordCommand.MESSAGE_USAGE));
         }
+        return new PasswordCommand(args);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\RemovePasswordCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new AddCommand object
+ */
+public class RemovePasswordCommandParser implements Parser<RemovePasswordCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the AddCommand
+     * and returns an AddCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public RemovePasswordCommand parse(String arguments) {
+        return new RemovePasswordCommand();
+    }
+}
+```
+###### \java\seedu\address\logic\parser\TimeTableCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new TimeTableCommand object
+ */
+public class TimeTableCommandParser implements Parser<TimeTableCommand> {
+    private static final String SPLIT_TOKEN = " ";
+    private static final int PERSON_INDEX = 0;
+    private static final int ODD_EVEN_INDEX = 1;
+    /**
+     * Parses the given {@code String} of arguments in the context of the TimeTableCommand
+     * and returns an TimeTableCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public TimeTableCommand parse(String args) throws ParseException {
         try {
-            return Optional.of(xmlAddressBook.toModelType());
+            String trimmedArgs = args.trim();
+            String[] splitArgs = trimmedArgs.split(SPLIT_TOKEN);
+            if (splitArgs.length != 2) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, TimeTableCommand.MESSAGE_USAGE));
+            }
+            Index index = ParserUtil.parseIndex(splitArgs[PERSON_INDEX]);
+            String oddEven = ParserUtil.parseOddEven(splitArgs[ODD_EVEN_INDEX]);
+            return new TimeTableCommand(index, oddEven);
+
         } catch (IllegalValueException ive) {
-            logger.info("Illegal values found in " + addressBookFile + ": " + ive.getMessage());
-            throw new DataConversionException(ive);
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, TimeTableCommand.MESSAGE_USAGE));
         }
     }
+
+}
 ```
-###### /java/seedu/address/model/ReadOnlyAddressBook.java
-``` java
-    /**
-     * Returns the hashed password
-     */
-    Password getPassword();
-```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     public AddressBook() {
         password = new Password();
@@ -730,7 +539,7 @@ public class XmlAdaptedPassword {
         this.password = new Password(password);
     }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     @Override
     public Password getPassword() {
@@ -753,7 +562,14 @@ public class XmlAdaptedPassword {
         password.updatePassword(newPassword);
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\Model.java
+``` java
+    /**
+     * Updates the password with the given password.
+     */
+    void updatePassword(byte[] password);
+```
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void updatePassword(byte[] password) {
@@ -761,14 +577,7 @@ public class XmlAdaptedPassword {
         indicateAddressBookChanged();
     }
 ```
-###### /java/seedu/address/model/Model.java
-``` java
-    /**
-     * Updates the password with the given password.
-     */
-    void updatePassword(byte[] password);
-```
-###### /java/seedu/address/model/Password.java
+###### \java\seedu\address\model\Password.java
 ``` java
 /**
  * Represents the password of the address book
@@ -846,4 +655,577 @@ public class Password {
         return currentPassword.hashCode();
     }
 }
+```
+###### \java\seedu\address\model\ReadOnlyAddressBook.java
+``` java
+    /**
+     * Returns the hashed password
+     */
+    Password getPassword();
+```
+###### \java\seedu\address\storage\XmlAdaptedPassword.java
+``` java
+/**
+ * JAXB-friendly version of the Password.
+ */
+public class XmlAdaptedPassword {
+
+    @XmlElement
+    private byte[] currPassword;
+
+    @XmlElement
+    private byte[] prevPassword;
+
+    /**
+     * Constructs an XmlAdaptedPassword.
+     * This is the no-arg constructor that is required by JAXB.
+     */
+    public XmlAdaptedPassword() {}
+
+    /**
+     * Constructs an {@code XmlAdaptedPassword} with the given password.
+     */
+    public XmlAdaptedPassword(Password password) {
+        this.currPassword = password.getPassword();
+        this.prevPassword = password.getPrevPassword();
+    }
+
+    /**
+     * Converts this jaxb-friendly adapted password object into the model's Password object.
+     *
+     */
+    public Password toModelType() {
+        return new Password(currPassword, prevPassword);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof XmlAdaptedPassword)) {
+            return false;
+        }
+
+        XmlAdaptedPassword otherPassword = (XmlAdaptedPassword) other;
+        return Arrays.equals(currPassword, otherPassword.currPassword)
+                && Arrays.equals(prevPassword, otherPassword.prevPassword);
+    }
+}
+```
+###### \java\seedu\address\storage\XmlAddressBookStorage.java
+``` java
+    @Override
+    public Optional<ReadOnlyAddressBook> readAddressBook(Password password) throws DataConversionException, IOException,
+            WrongPasswordException {
+        return readAddressBook(filePath, password);
+    }
+```
+###### \java\seedu\address\storage\XmlAddressBookStorage.java
+``` java
+    /**
+     * Similar to {@link #readAddressBook()}
+     * @param filePath location of the data. Cannot be null
+     * @throws DataConversionException if the file is not in the correct format.
+     */
+    public Optional<ReadOnlyAddressBook> readAddressBook(String filePath, Password password)
+            throws DataConversionException, IOException, WrongPasswordException {
+        requireNonNull(filePath);
+        requireNonNull(password);
+
+        File addressBookFile = new File(filePath);
+
+        if (!addressBookFile.exists()) {
+            logger.info("AddressBook file "  + addressBookFile + " not found");
+            return Optional.empty();
+        }
+        File file = new File(filePath);
+        SecurityUtil.decryptFile(file, password);
+        XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(file);
+        if (password.getPassword() != null) {
+            SecurityUtil.encrypt(file, password.getPassword());
+        }
+        try {
+            return Optional.of(xmlAddressBook.toModelType());
+        } catch (IllegalValueException ive) {
+            logger.info("Illegal values found in " + addressBookFile + ": " + ive.getMessage());
+            throw new DataConversionException(ive);
+        }
+    }
+```
+###### \java\seedu\address\ui\InfoPanel.java
+``` java
+    @Subscribe
+    private void handleTimeTableEvent(TimeTableEvent event) {
+        timetablePlaceholder.getChildren().removeAll();
+        timeTablePanel = new TimeTablePanel(event.getTimeTable());
+        timetablePlaceholder.getChildren().add(timeTablePanel.getRoot());
+        timetablePlaceholder.toFront();
+        timeTablePanel.setStyle();
+    }
+```
+###### \java\seedu\address\ui\PasswordBox.java
+``` java
+/**
+ * The UI component that is responsible for receiving user password inputs.
+ */
+public class PasswordBox extends UiPart<Region> {
+
+    public static final String ERROR_STYLE_CLASS = "error";
+    private static final String FXML = "PasswordBox.fxml";
+
+    private final Logger logger = LogsCenter.getLogger(PasswordBox.class);
+    private ListElementPointer historySnapshot;
+    private final Storage storage;
+    private final Model model;
+
+    @FXML
+    private PasswordField passwordTextField;
+
+    public PasswordBox(Storage storage, Model model) {
+        super(FXML);
+
+        this.storage = storage;
+        this.model = model;
+
+        // calls #setStyleToDefault() whenever there is a change to the text of the command box.
+        passwordTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+    }
+
+    /**
+     * Handles the key press event, {@code keyEvent}.
+     */
+    @FXML
+    private void handleKeyPress(KeyEvent keyEvent) {
+        switch (keyEvent.getCode()) {
+        default:
+            // let JavaFx handle the keypress
+        }
+    }
+
+
+    /**
+     * Handles the Enter button pressed event.
+     */
+    @FXML
+    private void handlePasswordInputChanged() {
+        Optional<ReadOnlyAddressBook> addressBookOptional;
+        ReadOnlyAddressBook initialData;
+        String input = passwordTextField.getText();
+        try {
+            passwordTextField.setText("");
+            addressBookOptional = storage.readAddressBook(new Password(input));
+            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            model.resetData(initialData);
+            raise(new PasswordCorrectEvent());
+        } catch (WrongPasswordException e) {
+            logger.warning("Wrong password used. Trying again.");
+            setStyleToIndicateCommandFailure();
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
+            initialData = new AddressBook();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            initialData = new AddressBook();
+        }
+    }
+
+    /**
+     * Sets the password box style to use the default style.
+     */
+    private void setStyleToDefault() {
+        passwordTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
+    }
+
+    /**
+     * Sets the password box style to indicate a wrong password.
+     */
+    private void setStyleToIndicateCommandFailure() {
+        ObservableList<String> styleClass = passwordTextField.getStyleClass();
+
+        if (styleClass.contains(ERROR_STYLE_CLASS)) {
+            return;
+        }
+
+        styleClass.add(ERROR_STYLE_CLASS);
+    }
+
+}
+```
+###### \java\seedu\address\ui\PasswordUiManager.java
+``` java
+/**
+ * The manager of the Password UI component.
+ */
+public class PasswordUiManager extends ComponentManager implements Ui {
+
+    public static final String ALERT_DIALOG_PANE_FIELD_ID = "alertDialogPane";
+
+    public static final String FILE_OPS_ERROR_DIALOG_STAGE_TITLE = "File Op Error";
+    public static final String FILE_OPS_ERROR_DIALOG_HEADER_MESSAGE = "Could not save data";
+    public static final String FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE = "Could not save data to file";
+
+    private static final Logger logger = LogsCenter.getLogger(UiManager.class);
+
+    private Storage storage;
+    private Model model;
+    private Ui ui;
+
+    private MainWindow mainWindow;
+    private Stage primaryStage;
+
+    public PasswordUiManager(Storage storage, Model model, Ui ui) {
+        super();
+        this.storage = storage;
+        this.model = model;
+        this.ui = ui;
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+        logger.info("Starting UI...");
+        this.primaryStage = primaryStage;
+        try {
+            PasswordWindow pw = new PasswordWindow(primaryStage, model, storage);
+            pw.show();
+            pw.fillInnerParts();
+        } catch (Throwable e) {
+            logger.severe(StringUtil.getDetails(e));
+            showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
+        }
+    }
+
+    /**
+     * Shows an error alert dialog with {@code title} and error message, {@code e},
+     * and exits the application after the user has closed the alert dialog.
+     */
+    private void showFatalErrorDialogAndShutdown(String title, Throwable e) {
+        logger.severe(title + " " + e.getMessage() + StringUtil.getDetails(e));
+        showAlertDialogAndWait(Alert.AlertType.ERROR, title, e.getMessage(), e.toString());
+        Platform.exit();
+        System.exit(1);
+    }
+
+    void showAlertDialogAndWait(Alert.AlertType type, String title, String headerText, String contentText) {
+        showAlertDialogAndWait(mainWindow.getPrimaryStage(), type, title, headerText, contentText);
+    }
+
+    /**
+     * Shows an alert dialog on {@code owner} with the given parameters.
+     * This method only returns after the user has closed the alert dialog.
+     */
+    private static void showAlertDialogAndWait(Stage owner, AlertType type, String title, String headerText,
+                                               String contentText) {
+        final Alert alert = new Alert(type);
+        alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
+        alert.initOwner(owner);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+        alert.getDialogPane().setId(ALERT_DIALOG_PANE_FIELD_ID);
+        alert.showAndWait();
+    }
+
+    @Override
+    public void stop() {
+        mainWindow.hide();
+        mainWindow.releaseResources();
+    }
+    @Subscribe
+    private void handlePasswordCorrectEvent(PasswordCorrectEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ui.start(primaryStage);
+    }
+}
+```
+###### \java\seedu\address\ui\PasswordWindow.java
+``` java
+/**
+ * The Password Window. Provides the basic application layout containing
+ * space where other JavaFX elements can be placed.
+ */
+public class PasswordWindow extends UiPart<Stage> {
+    private static final String PASSWORDBOX_TITLE = "Key In Password";
+    private static final String FXML = "PasswordWindow.fxml";
+
+    private final Storage storage;
+    private final Model model;
+
+    private Stage primaryStage;
+
+    @FXML
+    private StackPane passwordBoxPlaceholder;
+
+    public PasswordWindow(Stage primaryStage, Model model, Storage storage) {
+        super(FXML, primaryStage);
+        // Set dependencies
+        this.primaryStage = primaryStage;
+        this.storage = storage;
+        this.model = model;
+
+        setTitle(PASSWORDBOX_TITLE);
+        registerAsAnEventHandler(this);
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    /**
+     * Fills up all the placeholders of this window.
+     */
+    void fillInnerParts() {
+        PasswordBox passwordBox = new PasswordBox(storage, model);
+        passwordBoxPlaceholder.getChildren().add(passwordBox.getRoot());
+    }
+
+    void hide() {
+        primaryStage.hide();
+    }
+
+    private void setTitle(String appTitle) {
+        primaryStage.setTitle(appTitle);
+    }
+
+    public void show() {
+        primaryStage.show();
+    }
+
+    /**
+     * Closes the application.
+     */
+    @FXML
+    private void handleExit() {
+        raise(new ExitAppRequestEvent());
+    }
+
+    void releaseResources() {
+    }
+}
+```
+###### \java\seedu\address\ui\TimeTablePanel.java
+``` java
+/**
+ * A ui for the info panel that is displayed when the timetable command is called.
+ */
+public class TimeTablePanel extends UiPart<Region> {
+    private static final String COLUMNHEADER_STYLE_CLASS = "column-header";
+    private static final String TABLECELL_STYLE_CLASS = "table-cell";
+    private static final String EMPTY_STYLE_CLASS = "timetable-cell-empty";
+    private static final String[] MOD_COLOR_STYLES = { "modteal", "modsandybrown", "modplum", "modyellow",
+                                                         "modyellow"};
+    private static final String FXML = "TimeTablePanel.fxml";
+
+    private ArrayList<TableColumn<ArrayList<String>, String>> columns;
+    @FXML
+    private TableView timeTable;
+    @FXML
+    private TableColumn<ArrayList<String>, String> day;
+    @FXML
+    private TableColumn<ArrayList<String>, String> eightAm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> nineAm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> tenAm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> elevenAm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> twelvePm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> onePm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> twoPm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> threePm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> fourPm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> fivePm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> sixPm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> sevenPm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> eightPm;
+
+
+    public TimeTablePanel() {
+        super(FXML);
+        timeTable.setItems(null);
+    }
+
+    public TimeTablePanel(ObservableList<ArrayList<String>> schedules) {
+        super(FXML);
+        timeTable.setItems(schedules);
+        timeTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        initializeColumns();
+        initializeTableColumns();
+        day.setMinWidth(100);
+        day.setMaxWidth(100);
+    }
+
+    /**
+     * Initializes columns
+     */
+    private void initializeColumns() {
+        columns = new ArrayList<>();
+        columns.add(day);
+        columns.add(eightAm);
+        columns.add(nineAm);
+        columns.add(tenAm);
+        columns.add(elevenAm);
+        columns.add(twelvePm);
+        columns.add(onePm);
+        columns.add(twoPm);
+        columns.add(threePm);
+        columns.add(fourPm);
+        columns.add(fivePm);
+        columns.add(sixPm);
+        columns.add(sevenPm);
+        columns.add(eightPm);
+    }
+
+    /**
+     * Initializes table columns
+     */
+    private void initializeTableColumns() {
+        for (int i = 0; i < columns.size(); i++) {
+            final int j = i;
+            columns.get(i).setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(j)));
+            columns.get(i).impl_setReorderable(false);
+            if (j != 0) {
+                columns.get(i).setMinWidth(75);
+                columns.get(i).setMaxWidth(200);
+            }
+
+        }
+    }
+
+    /**
+     * Sets the command box style to indicate free or having lesson
+     */
+    public void setStyle() {
+        for (int i = 0; i < columns.size(); i++) {
+            columns.get(i).setCellFactory(column -> {
+                return new TableCell<ArrayList<String>, String>() {
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (item == null || empty) {
+                            setText(null);
+                            setStyle("");
+                        } else {
+                            setText(item);
+                            removeAllStyle(this);
+                            if ("".equals(getItem())) {
+                                getStyleClass().add(EMPTY_STYLE_CLASS);
+                            } else if (StringUtil.isDay(getItem())) {
+                                getStyleClass().add(COLUMNHEADER_STYLE_CLASS);
+                            } else {
+                                getStyleClass().add(getColorStyleFor(getItem()));
+                            }
+                        }
+                    }
+                };
+            });
+        }
+    }
+
+    /**
+     * Removes all styles present in cell
+     * @param tableCell Cell with its style to be removed
+     */
+    private static void removeAllStyle(TableCell<ArrayList<String>, String> tableCell) {
+        for (String color : MOD_COLOR_STYLES) {
+            tableCell.getStyleClass().remove(color);
+        }
+        tableCell.getStyleClass().remove(EMPTY_STYLE_CLASS);
+        tableCell.getStyleClass().remove(TABLECELL_STYLE_CLASS);
+    }
+
+    /**
+     * Returns a Color Style for the Module based on its hashcode.
+     * @param modName
+     * @return colorStyle for {@code modName}'s label.
+     */
+    private static String getColorStyleFor(String modName) {
+        return MOD_COLOR_STYLES[Math.abs(modName.hashCode()) % MOD_COLOR_STYLES.length];
+    }
+}
+```
+###### \resources\view\DarkTheme.css
+``` css
+#passwordTextField {
+    -fx-background-color: transparent #383838 transparent #383838;
+    -fx-background-insets: 0;
+    -fx-border-color: #383838 #383838 #ffffff #383838;
+    -fx-border-insets: 0;
+    -fx-border-width: 1;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 13pt;
+    -fx-text-fill: white;
+}
+```
+###### \resources\view\PasswordBox.fxml
+``` fxml
+<StackPane prefHeight="99.0" prefWidth="200.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <PasswordField fx:id="passwordTextField" onAction="#handlePasswordInputChanged" onKeyPressed="#handleKeyPress" />
+   <BorderPane prefHeight="200.0" prefWidth="200.0">
+      <top>
+         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" BorderPane.alignment="CENTER" />
+      </top>
+   </BorderPane>
+</StackPane>
+```
+###### \resources\view\PasswordWindow.fxml
+``` fxml
+<fx:root maxHeight="90.0" minHeight="80.0" minWidth="400.0" resizable="false" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <icons>
+    <Image url="@/images/address_book_32.png" />
+  </icons>
+  <scene>
+    <Scene>
+      <stylesheets>
+        <URL value="@DarkTheme.css" />
+        <URL value="@Extensions.css" />
+      </stylesheets>
+
+      <VBox>
+
+        <StackPane fx:id="passwordBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
+          <padding>
+            <Insets bottom="5" left="10" right="10" top="5" />
+          </padding>
+        </StackPane>
+      </VBox>
+    </Scene>
+  </scene>
+</fx:root>
+```
+###### \resources\view\TimeTablePanel.fxml
+``` fxml
+
+<StackPane fx:id="venuePlaceholder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <TableView fx:id="timeTable" stylesheets="@DarkTheme.css">
+         <columns>
+             <TableColumn fx:id="day" prefWidth="100.0" text="" />
+             <TableColumn fx:id="eightAm" prefWidth="60.0" text="0800" />
+             <TableColumn fx:id="nineAm" prefWidth="60.0" text="0900" />
+             <TableColumn fx:id="tenAm" prefWidth="60.0" text="1000" />
+             <TableColumn fx:id="elevenAm" prefWidth="60.0" text="1100" />
+             <TableColumn fx:id="twelvePm" prefWidth="60.0" text="1200" />
+             <TableColumn fx:id="onePm" prefWidth="60.0" text="1300" />
+             <TableColumn fx:id="twoPm" prefWidth="60.0" text="1400" />
+             <TableColumn fx:id="threePm" prefWidth="60.0" text="1500" />
+             <TableColumn fx:id="fourPm" prefWidth="60.0" text="1600" />
+             <TableColumn fx:id="fivePm" prefWidth="60.0" text="1700" />
+             <TableColumn fx:id="sixPm" prefWidth="60.0" text="1800" />
+             <TableColumn fx:id="sevenPm" prefWidth="60.0" text="1900" />
+             <TableColumn fx:id="eightPm" prefWidth="60.0" text="2000" />
+         </columns></TableView>
+    </children>
+</StackPane>
 ```

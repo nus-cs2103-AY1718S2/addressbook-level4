@@ -23,6 +23,7 @@ import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.building.Building;
 import seedu.address.model.building.exceptions.BuildingNotFoundException;
 import seedu.address.model.building.exceptions.CorruptedVenueInformationException;
+import seedu.address.model.building.exceptions.NoRoomsInBuildingException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -155,13 +156,15 @@ public class ModelManager extends ComponentManager implements Model {
      * @param filepath
      */
     @Override
-    public void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
-                                                                                DuplicatePersonException {
+    public void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException {
         requireNonNull(filepath);
-
-        XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
-        xmlAddressBook.exportAddressBook(filepath, password, filteredPersons);
-        indicateAddressBookChanged();
+        try {
+            XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
+            xmlAddressBook.exportAddressBook(filepath, password, filteredPersons);
+            indicateAddressBookChanged();
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError();
+        }
     }
     //@@author
 
@@ -187,7 +190,7 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author Caijun7
     @Override
     public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
-            CorruptedVenueInformationException {
+            CorruptedVenueInformationException, NoRoomsInBuildingException {
         if (!Building.isValidBuilding(building)) {
             throw new BuildingNotFoundException();
         }

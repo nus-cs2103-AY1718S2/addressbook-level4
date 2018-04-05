@@ -115,7 +115,7 @@ public class InfoPanel extends UiPart<Region> {
     }
     //@@author
 
-    //@@author yegggasd
+    //@@author yeggasd
     @Subscribe
     private void handleTimeTableEvent(TimeTableEvent event) {
         timetablePlaceholder.getChildren().removeAll();

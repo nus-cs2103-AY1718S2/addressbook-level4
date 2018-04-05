@@ -19,10 +19,11 @@ public class GuiTestAssert {
      */
     public static void assertCardEquals(RecipeCardHandle expectedCard, RecipeCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
-        assertEquals(expectedCard.getInstruction(), actualCard.getInstruction());
-        assertEquals(expectedCard.getIngredient(), actualCard.getIngredient());
         assertEquals(expectedCard.getName(), actualCard.getName());
         assertEquals(expectedCard.getPreparationTime(), actualCard.getPreparationTime());
+        assertEquals(expectedCard.getServings(), actualCard.getServings());
+        assertEquals(expectedCard.getCalories(), actualCard.getCalories());
+        assertEquals(expectedCard.getIngredient(), actualCard.getIngredient());
         assertEquals(expectedCard.getUrl(), actualCard.getUrl());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
@@ -32,9 +33,14 @@ public class GuiTestAssert {
      */
     public static void assertCardDisplaysRecipe(Recipe expectedRecipe, RecipeCardHandle actualCard) {
         assertEquals(expectedRecipe.getName().fullName, actualCard.getName());
-        assertEquals(expectedRecipe.getPreparationTime().value, actualCard.getPreparationTime());
-        assertEquals(expectedRecipe.getIngredient().value, actualCard.getIngredient());
-        assertEquals(expectedRecipe.getInstruction().value, actualCard.getInstruction());
+        assertEquals(expectedRecipe.getCalories().value,
+                actualCard.getCalories());
+        assertEquals(expectedRecipe.getPreparationTime().value,
+                actualCard.getPreparationTime());
+        assertEquals(expectedRecipe.getServings().value,
+                actualCard.getServings());
+        assertEquals(expectedRecipe.getIngredient().value,
+                actualCard.getIngredient());
         assertEquals(expectedRecipe.getUrl().value, actualCard.getUrl());
         assertEquals(expectedRecipe.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());

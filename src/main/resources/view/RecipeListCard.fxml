@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
@@ -17,7 +18,7 @@
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
     </columnConstraints>
-    <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
+    <VBox alignment="CENTER_LEFT" minHeight="150.0" GridPane.columnIndex="0">
       <padding>
         <Insets bottom="5" left="15" right="5" top="5" />
       </padding>
@@ -30,13 +31,47 @@
         </Label>
         <Label fx:id="name" styleClass="cell_big_label" text="\$first" wrapText="true" />
       </HBox>
-      <FlowPane fx:id="tags" />
-      <Label fx:id="preparationTime" styleClass="cell_small_label" text="\$preparationTime" />
-      <Label fx:id="instruction" styleClass="cell_small_label" text="\$instruction" />
-      <Label fx:id="ingredient" styleClass="cell_small_label" text="\$ingredient" />
-        <Label fx:id="url" styleClass="cell_small_label" text="\$url" />
+      <FlowPane fx:id="tags" styleClass="flow_pane"/>
+      <Label fx:id="preparationTime" styleClass="cell_small_label" text="\$preparationTime">
+            <graphic>
+               <Label styleClass="cell_properties" text="Prep:">
+                  <font>
+                     <Font size="11.0" />
+                  </font></Label>
+            </graphic></Label>
+      <Label fx:id="servings" styleClass="cell_small_label" text="\$servings">
+            <graphic>
+               <Label styleClass="cell_properties" text="Servings:">
+                  <font>
+                     <Font name="System Bold" size="11.0" />
+                  </font></Label>
+            </graphic></Label>
+        <Label fx:id="calories" styleClass="cell_small_label" text="\$calories">
+            <graphic>
+               <Label styleClass="cell_properties" text="Calories:">
+                  <font>
+                     <Font name="System Bold" size="11.0" />
+                  </font>
+               </Label>
+            </graphic></Label>
+      <Label fx:id="ingredient" styleClass="cell_small_label" text="\$ingredient">
+            <graphic>
+               <Label styleClass="cell_properties" text="Ingredients:">
+                  <font>
+                     <Font size="11.0" />
+                  </font>
+               </Label>
+            </graphic></Label>
+        <Label fx:id="url" styleClass="cell_small_label" text="\$url">
+            <graphic>
+               <Label styleClass="cell_properties" text="URL:">
+                  <font>
+                     <Font size="11.0" />
+                  </font>
+               </Label>
+            </graphic></Label>
     </VBox>
-      <ImageView fx:id="imageView" fitHeight="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+      <ImageView fx:id="imageView" fitHeight="145.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
       </ImageView>
       <rowConstraints>
          <RowConstraints />

@@ -11,6 +11,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.recipe.model.recipe.Recipe;
+import seedu.recipe.ui.util.UiUtil;
 
 /**
  * An UI component that displays information of a {@code Recipe}.
@@ -38,7 +39,9 @@ public class RecipeCard extends UiPart<Region> {
     @FXML
     private Label preparationTime;
     @FXML
-    private Label instruction;
+    private Label servings;
+    @FXML
+    private Label calories;
     @FXML
     private Label ingredient;
     @FXML
@@ -54,7 +57,8 @@ public class RecipeCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(recipe.getName().fullName);
         preparationTime.setText(recipe.getPreparationTime().value);
-        instruction.setText(recipe.getInstruction().value);
+        servings.setText(recipe.getServings().value);
+        calories.setText(recipe.getCalories().value);
         ingredient.setText(recipe.getIngredient().value);
         url.setText(recipe.getUrl().value);
         setImageView(imageView);

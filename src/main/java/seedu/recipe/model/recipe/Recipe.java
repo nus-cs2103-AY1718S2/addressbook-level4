@@ -17,6 +17,7 @@ import seedu.recipe.model.tag.UniqueTagList;
 public class Recipe {
 
     public static final String LINE_BREAK = "\n\n";
+    public static final String NEW_LINE = "\n";
     public static final String NAME_HEADER = "Name:\n";
     public static final String INGREDIENTS_HEADER = "Ingredients:\n";
     public static final String INSTRUCTIONS_HEADER = "Instructions:\n";
@@ -151,18 +152,30 @@ public class Recipe {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" PreparationTime: ")
+        builder.append(NEW_LINE)
+                .append(getName())
+                .append(LINE_BREAK)
+                .append("PreparationTime: ")
+                .append(NEW_LINE)
                 .append(getPreparationTime())
-                .append(" Ingredient: ")
+                .append(LINE_BREAK)
+                .append("Ingredient: ")
+                .append(NEW_LINE)
                 .append(getIngredient())
-                .append(" Instruction: ")
+                .append(LINE_BREAK)
+                .append("Instruction: ")
+                .append(NEW_LINE)
                 .append(getInstruction())
-                .append(" Url: ")
+                .append(LINE_BREAK)
+                .append("Url: ")
+                .append(NEW_LINE)
                 .append(getUrl())
-                .append(" Image: ")
+                .append(LINE_BREAK)
+                .append("Image: ")
+                .append(NEW_LINE)
                 .append(getImage())
-                .append(" Tags: ");
+                .append(LINE_BREAK)
+                .append("Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

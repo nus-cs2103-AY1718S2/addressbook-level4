@@ -35,34 +35,42 @@
           </Menu>
         </MenuBar>
 
-        <StackPane fx:id="resultDisplayPlaceholder" maxHeight="150" minHeight="150" prefHeight="150" styleClass="pane-with-border" VBox.vgrow="NEVER">
-          <padding>
-            <Insets bottom="5" left="10" right="10" top="5" />
-          </padding>
-        </StackPane>
+
 
         <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" VBox.vgrow="ALWAYS">
 
-          <StackPane fx:id="commandBoxPlaceholder" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false"
+            <StackPane fx:id="browserPlaceholder" minWidth="350" prefWidth="370">
+                <padding>
+                    <Insets bottom="0" left="10" right="10" top="10" />
+                </padding>
+            </StackPane>
+
+            <VBox minHeight="340" prefWidth="340">
+                <StackPane fx:id="commandBoxPlaceholder" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false"
                      styleClass="pane-with-border">
-            <padding>
-              <Insets bottom="5" left="10" right="10" top="5" />
-            </padding>
-          </StackPane>
+                    <padding>
+                        <Insets bottom="0" left="0" right="10" top="5" />
+                    </padding>
+                </StackPane>
 
-          <StackPane fx:id="browserPlaceholder" prefWidth="340">
-            <padding>
-              <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
-          </StackPane>
+                <StackPane fx:id="resultDisplayPlaceholder" minWidth="300" prefWidth="300" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
+                    <padding>
+                        <Insets bottom="0" left="0" right="10" top="5" />
+                    </padding>
+                </StackPane>
+            </VBox>
 
-          <VBox fx:id="recipeList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+
+
+          <VBox fx:id="recipeList" minWidth="400" prefWidth="400" SplitPane.resizableWithParent="false">
             <padding>
-              <Insets bottom="10" left="10" right="10" top="10" />
+              <Insets bottom="0" left="0" right="10" top="10" />
             </padding>
             <StackPane fx:id="recipeListPanelPlaceholder" VBox.vgrow="ALWAYS" />
           </VBox>
         </SplitPane>
+
+
 
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
       </VBox>

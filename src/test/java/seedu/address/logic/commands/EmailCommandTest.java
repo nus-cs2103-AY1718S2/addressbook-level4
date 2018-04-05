@@ -1,7 +1,8 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+
+import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,8 +18,6 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
-import java.util.Collections;
-
 //@@author mattbuot
 public class EmailCommandTest {
 
@@ -33,7 +32,7 @@ public class EmailCommandTest {
     }
 
     @Test
-    public void executeWithEmptyModel(){
+    public void executeWithEmptyModel() {
 
         assertCommandFailure(command, "Empty filtered list!");
     }
@@ -55,27 +54,26 @@ public class EmailCommandTest {
         assertCommandFailure(command, EmailCommand.MESSAGE_ERROR);
     }
 
-     @Test
-     public void executeWithoutFilter()
-        throws DuplicatePersonException {
+    @Test
+    public void executeWithoutFilter()
+            throws DuplicatePersonException {
 
-         model.addPerson(new Person(
-                 new Name("Alice"),
-                 new Phone("98765432"),
-                 new Email("alice@gmail.com"),
-                 new Address("NUS"),
-                 new DelivDate("2018-03-24"),
-                 Collections.emptySet()));
-         model.addPerson(new Person(
-                 new Name("Bob"),
-                 new Phone("98765432"),
-                 new Email("bob@gmail.com"),
-                 new Address("NTU"),
-                 new DelivDate("2018-03-25"),
-                 Collections.emptySet()));
-
-         command.setData(model, null, null);
-         assertCommandFailure(command, "The list is not filtered!");
+        model.addPerson(new Person(
+                new Name("Alice"),
+                new Phone("98765432"),
+                new Email("alice@gmail.com"),
+                new Address("NUS"),
+                new DelivDate("2018-03-24"),
+                Collections.emptySet()));
+        model.addPerson(new Person(
+                new Name("Bob"),
+                new Phone("98765432"),
+                new Email("bob@gmail.com"),
+                new Address("NTU"),
+                new DelivDate("2018-03-25"),
+                Collections.emptySet()));
+        command.setData(model, null, null);
+        assertCommandFailure(command, "The list is not filtered!");
      }
 
     @Test
@@ -105,7 +103,7 @@ public class EmailCommandTest {
     /**
      * Asserts that the result message from the execution of {@code historyCommand} equals to {@code expectedMessage}
      */
-    private void assertCommandResult(EmailCommand emailCommand, String expectedMessage) throws CommandException{
+    private void assertCommandResult(EmailCommand emailCommand, String expectedMessage) throws CommandException {
         assertEquals(expectedMessage, emailCommand.execute().feedbackToUser);
     }
 

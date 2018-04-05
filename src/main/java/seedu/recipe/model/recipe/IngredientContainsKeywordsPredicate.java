@@ -1,3 +1,4 @@
+//@@author nicholasangcx
 package seedu.recipe.model.recipe;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class IngredientContainsKeywordsPredicate implements Predicate<Recipe> {
     @Override
     public boolean test(Recipe recipe) {
         int matches = 0;
-        String ingredients = recipe.getIngredient().toString().replaceAll(",","");
+        String ingredients = recipe.getIngredient().toString().replaceAll(",", " ");
         for (String keyword : keywords) {
             if (StringUtil.containsWordIgnoreCase(ingredients, keyword)) {
                 matches++;
@@ -34,3 +35,4 @@ public class IngredientContainsKeywordsPredicate implements Predicate<Recipe> {
                 && this.keywords.equals(((IngredientContainsKeywordsPredicate) other).keywords)); // state check
     }
 }
+//@@author

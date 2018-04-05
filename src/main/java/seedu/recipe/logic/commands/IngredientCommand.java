@@ -1,3 +1,4 @@
+//@@author nicholasangcx
 package seedu.recipe.logic.commands;
 
 import java.util.Arrays;
@@ -16,7 +17,7 @@ public class IngredientCommand extends Command {
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " chicken";
-    
+
     private final IngredientContainsKeywordsPredicate predicate;
     private final String[] ingredientKeywords;
 
@@ -39,3 +40,4 @@ public class IngredientCommand extends Command {
                 && this.predicate.equals(((IngredientCommand) other).predicate)); // state check
     }
 }
+//@@author

@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.NameNricContainsKeywordsPredicate;
-import seedu.address.model.person.NricContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.petpatient.PetPatientOwnerNricContainsKeywordsPredicate;
 
@@ -27,11 +23,11 @@ public class FindCommand extends Command {
             + "Parameters: OPTION PREFIX/KEYWORD [MORE_PREFIX/MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + "-o n/alice bob charlie";
 
-    private NameContainsKeywordsPredicate namePredicate = null;
+    private Predicate<Person> personPredicate = null;
     private int type = 0;
 
     public FindCommand(Predicate<Person> personPredicate) {
-        this.namePredicate = namePredicate;
+        this.personPredicate = personPredicate;
         type = 1;
     }
 
@@ -51,7 +47,7 @@ public class FindCommand extends Command {
      * Finds owners with given {@code predicate} in this {@code addressbook}.
      */
     private CommandResult findOwner() {
-        model.updateFilteredPersonList(namePredicate);
+        model.updateFilteredPersonList(personPredicate);
         updatePetListForOwner();
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())
                 + "\n"
@@ -75,6 +71,6 @@ public class FindCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof FindCommand // instanceof handles nulls
-                && this.namePredicate.equals(((FindCommand) other).namePredicate)); // state check
+                && this.personPredicate.equals(((FindCommand) other).personPredicate)); // state check
     }
 }

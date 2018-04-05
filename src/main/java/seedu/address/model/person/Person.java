@@ -65,6 +65,18 @@ public class Person {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
+    /**
+     * Returns the tags as a string for find command.
+     */
+    public String getTagsString() {
+        String tagString = "";
+        for (Tag tag : tags) {
+            tagString += tag.toString() + " ";
+        }
+
+        return tagString.trim();
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

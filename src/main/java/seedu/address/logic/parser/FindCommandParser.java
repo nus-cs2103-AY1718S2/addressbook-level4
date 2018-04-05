@@ -16,11 +16,9 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.NameNricContainsKeywordsPredicate;
 import seedu.address.model.person.Nric;
-import seedu.address.model.person.NricContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -67,7 +65,8 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @throws ParseException if the {@code personInfo} cannot be identified to a known prefix.
      */
     private FindCommand parsePerson(String personInfo) throws ParseException {
-        ArgumentMultimap argMultimapOwner = ArgumentTokenizer.tokenize(personInfo, PREFIX_NAME, PREFIX_NRIC);
+        ArgumentMultimap argMultimapOwner =
+                ArgumentTokenizer.tokenize(personInfo, PREFIX_NAME, PREFIX_NRIC, PREFIX_TAG);
         if ((!arePrefixesPresent(argMultimapOwner, PREFIX_NAME)
                 && !arePrefixesPresent(argMultimapOwner, PREFIX_NRIC)
                 && !arePrefixesPresent(argMultimapOwner, PREFIX_TAG))) {
@@ -77,23 +76,52 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         Predicate<Person> finalPredicate = null;
 
-
         if ((arePrefixesPresent(argMultimapOwner, PREFIX_NAME))) {
-            Predicate<Person> namePredicate =  person -> Arrays.asList(getNameKeyword(argMultimapOwner)).stream()
+            System.out.println("Here! Name");
+            String[] nameKeywords = getNameKeyword(argMultimapOwner);
+            Predicate<Person> namePredicate =  person -> Arrays.stream(nameKeywords)
                     .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+            finalPredicate = namePredicate;
+            String[] nricKeywords = getNricKeyword(argMultimapOwner);
+            Predicate<Person> nricPredicate = person -> Arrays.stream(nricKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getNric().toString(), keyword));
+            namePredicate.and(nricPredicate);
         }
 
         if ((arePrefixesPresent(argMultimapOwner, PREFIX_NRIC))) {
-            Predicate<Person> nricPredicate = person -> Arrays.asList(getNricKeyword(argMultimapOwner)).stream()
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getNric().toString(), keyword));
+
         }
 
         if ((arePrefixesPresent(argMultimapOwner, PREFIX_TAG))) {
-            Predicate<Person> tagPredicate = person -> Arrays.asList(getTagKeyword(argMultimapOwner)).stream()
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getTags().toString(), keyword));
+            System.out.println("Here! TAG");
+            String[] tagKeywords = getTagKeyword(argMultimapOwner);
+            Predicate<Person> tagPredicate = person -> Arrays.stream(tagKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getTagsString(), keyword));
+            if (finalPredicate == null) {
+                finalPredicate = tagPredicate;
+            } else {
+                finalPredicate.and(tagPredicate);
+            }
         }
 
         return new FindCommand(finalPredicate);
+    }
+
+    /**
+     * Gets the nric keywords from {@code argMultimapOwner}.
+     * @throws ParseException if there is an illegal value found.
+     */
+    private String[] getTagKeyword(ArgumentMultimap argMultimapOwner) throws ParseException {
+        try {
+            String tagWithoutPrefix = argMultimapOwner.getAllValues(PREFIX_TAG).get(0);
+            String[] tagKeywords = tagWithoutPrefix.trim().split("\\s+");
+            for (String tagKeyword : tagKeywords) {
+                Tag tag = ParserUtil.parseTag(tagKeyword);
+            }
+            return tagKeywords;
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
     }
 
     /**
@@ -145,6 +173,6 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         String[] nameKeywords = petPatientInfo.split("\\s+");
 
-        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        return null;
     }
 }

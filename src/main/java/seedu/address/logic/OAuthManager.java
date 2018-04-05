@@ -74,9 +74,11 @@ public class OAuthManager {
     /** Most recent list of retrieved events */
     private static List<Event> mostRecentEventList = new ArrayList<>();
 
-    /** List of events for the day */
+    /** List of events for the specified day */
     private static List<Event> dailyEventsList = new ArrayList<>();
 
+    /** Dat specified in dailyEventsList */
+    private static LocalDate dailyEventsListDate = null;
 
     static {
         try {
@@ -110,11 +112,11 @@ public class OAuthManager {
      * @throws IOException
      */
     public static void deleteOauthCert(User user) throws IOException {
-        Path dirPath = Paths.get( DATA_STORE_DIR.getAbsolutePath() );
-        Files.walk( dirPath )
-                .map( Path::toFile )
-                .sorted( Comparator.comparing( File::isDirectory ) )
-                .forEach( File::delete );
+        Path dirPath = Paths.get(DATA_STORE_DIR.getAbsolutePath());
+        Files.walk(dirPath)
+                .map(Path::toFile)
+                .sorted(Comparator.comparing(File::isDirectory))
+                .forEach(File::delete);
     }
 
     /**
@@ -173,6 +175,8 @@ public class OAuthManager {
             System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s).");
         }
 
+        mostRecentEventList = upcomingEvents;
+
         return upcomingEvents;
     }
 
@@ -205,18 +209,21 @@ public class OAuthManager {
      * Get a list of events for the day as a list of event objects.
      * @throws IOException
      */
-    public static List<Event> getDailyEvents(User user) throws IOException {
+    public static List<Event> getDailyEvents(User user, LocalDate localDate) throws IOException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String currentDate = LocalDate.now().format(formatter);
+        String inputDate = localDate.format(formatter);
 
-        List<Event> dailyEvents = getEventsByDay(user, currentDate);
+        List<Event> dailyEvents = getEventsByDay(user, inputDate);
         int numberOfEventsRetrieved = dailyEvents.size();
 
         if (numberOfEventsRetrieved == 0) {
-            System.out.println("No events found for today.");
+            System.out.println("No events found.");
         } else {
             System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s).");
         }
+
+        dailyEventsListDate = localDate;
+        dailyEventsList = dailyEvents;
 
         return dailyEvents;
     }
@@ -225,13 +232,13 @@ public class OAuthManager {
      * Get a list of events for the day as a list of strings.
      * @throws IOException
      */
-    public static List<String> getDailyEventsAsStringList(User user) throws IOException {
-        List<Event> dailyEvents = getDailyEvents(user);
+    public static List<String> getDailyEventsAsStringList(User user, LocalDate localDate) throws IOException {
+        List<Event> dailyEvents = getDailyEvents(user, localDate);
         int numberOfEventsRetrieved = dailyEvents.size();
         List<String> eventListAsString = new ArrayList<>();
 
         if (numberOfEventsRetrieved == 0) {
-            System.out.println("No events found for today.");
+            System.out.println("No events found.");
         } else {
             System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s): ");
             int eventIndex = 1;
@@ -241,6 +248,7 @@ public class OAuthManager {
             }
         }
 
+        dailyEventsListDate = localDate;
         dailyEventsList = dailyEvents;
 
         return eventListAsString;
@@ -461,6 +469,23 @@ public class OAuthManager {
         eventPair.add(dailyEventsList.get(index));
 
         return eventPair;
+    }
+
+
+    /**
+     * Gets the most recent daily event list shown to the user.
+     * @return List
+     */
+    public static List<Event> getMostRecentDailyEventList() {
+        return dailyEventsList;
+    }
+
+    /**
+     * Gets the date of the most recent daily event list shown to the user.
+     * @return List
+     */
+    public static LocalDate getMostRecentDailyEventListDate() {
+        return dailyEventsListDate;
     }
 
 

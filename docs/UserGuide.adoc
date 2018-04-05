@@ -299,6 +299,8 @@ Allows a user to add an event directly to their calendar.
 
 Format: `calendar-add title/<eventname> start/<startdatetime> end/<enddatetime> loc/<location> lp/<linkedperson>(optional)`
 
+Note: Dates can be written in natural language (e.g. Today, This Friday, May 4, etc.)
+
 === List upcoming events in the command line: `calendar-list`
 
 Allows a user to view their upcoming calendar events.
@@ -327,7 +329,9 @@ Format: `reauthenticate`
 
 Allows a user to view their calendar events for the current day.
 
-Format: `show-schdeule`
+Format: `show-schdeule d/<date>`
+
+Note: Date can be written in natural language (e.g. Today, This Friday, May 4, etc.)
 
 === Opening the Error Log : `errorlog`
 
@@ -438,7 +442,7 @@ e.g. `find James Jake`
 * *Calendar List* : `calendar-list` `[Since v1.2]`
 * *Calendar Add* : `calendar-add title/<eventname> start/<startdatetime> end/<enddatetime> loc/<location> lp/<linkedperson>(optional)` `[Since v1.3] [Updated v1.4]`
 * *Calendar Delete* : `calendar-delete INDEX` `[Since v1.4]`
-* *Show Schedule* : `show-schedule` `[Since v1.4]`
+* *Show Schedule* : `show-schedule d/<date>` `[Since v1.4]`
 * *Error* : `errorlog` `[Since v1.2]`
 * *Switch* : `switch FEATURE` +
 e.g.`switch scheduler`

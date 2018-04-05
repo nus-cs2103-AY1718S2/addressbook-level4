@@ -4,6 +4,7 @@ package seedu.address.logic.conditionalparser;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Test;
@@ -32,7 +33,7 @@ public class SyntaxParserTest {
 
 
     private static SyntaxParser initParser(Token... tokens) {
-        return new SyntaxParser(Arrays.asList(tokens));
+        return new SyntaxParser(new TokenStack(new ArrayList<Token>(Arrays.asList(tokens))));
     }
 
     @Test

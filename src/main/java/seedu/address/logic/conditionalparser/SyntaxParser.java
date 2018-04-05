@@ -1,9 +1,6 @@
 //@@author Eldon-Chung
 package seedu.address.logic.conditionalparser;
 
-import java.util.List;
-
-import seedu.address.logic.parser.Token;
 import seedu.address.logic.parser.TokenStack;
 import seedu.address.logic.parser.TokenType;
 
@@ -14,8 +11,8 @@ public class SyntaxParser {
 
     private TokenStack tokenStack;
 
-    public SyntaxParser(List<Token> tokenList) {
-        this.tokenStack = new TokenStack(tokenList);
+    public SyntaxParser(TokenStack tokenStack) {
+        this.tokenStack = tokenStack;
     }
 
     public TokenType getExpectedType() {

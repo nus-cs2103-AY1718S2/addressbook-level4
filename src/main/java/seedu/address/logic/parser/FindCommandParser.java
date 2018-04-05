@@ -2,8 +2,6 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.util.List;
-
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.conditionalparser.SyntaxParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -28,7 +26,7 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     public FindCommand parse(String args) throws ParseException {
         ArgumentTokenizer lexicalAnalyzer = new ArgumentTokenizer();
-        List<Token> tokenList = ArgumentTokenizer.tokenizeToTokenList(args, EXPECTED_TOKEN_TYPES);
+        TokenStack tokenList = ArgumentTokenizer.tokenizeToTokenStack(args, EXPECTED_TOKEN_TYPES);
         SyntaxParser syntaxParser = new SyntaxParser(tokenList);
         if (!syntaxParser.parse()) {
             throw new ParseException(

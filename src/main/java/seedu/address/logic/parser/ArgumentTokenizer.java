@@ -71,7 +71,7 @@ public class ArgumentTokenizer {
         Matcher m = pattern.matcher(args);
         while (m.find()) {
             for (TokenType type : typeList) {
-                if (m.group(type.name()) == null || type == TokenType.WHITESPACE) {
+                if (m.group(type.name()) == null) {
                     continue;
                 }
                 tokenList.add(new Token(type, m.group(type.name())));
@@ -106,8 +106,8 @@ public class ArgumentTokenizer {
      * @param prefixTokenTypes   prefix Tokens to tokenize the arguments string with
      * @return           {@code List<Token>} object contains a list of all the tokens
      */
-    public static List<Token> tokenizeToTokenList(String argString, TokenType... prefixTokenTypes) {
-        return lex(argString, prefixTokenTypes);
+    public static TokenStack tokenizeToTokenStack(String argString, TokenType... prefixTokenTypes) {
+        return new TokenStack(lex(argString, prefixTokenTypes));
     }
 
     /**
@@ -172,7 +172,7 @@ public class ArgumentTokenizer {
 
         StringBuilder stringBuilder = new StringBuilder();
         for (Token token : tokenList) {
-            stringBuilder.append(String.format(" %s", token.getPattern()));
+            stringBuilder.append(String.format("%s", token.getPattern()));
         }
         return stringBuilder.toString().trim();
     }

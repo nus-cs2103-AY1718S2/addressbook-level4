@@ -7,7 +7,6 @@ import static seedu.recipe.logic.parser.CommandParserTestUtil.assertParseSuccess
 
 import org.junit.Test;
 
-import seedu.recipe.logic.commands.SearchCommand;
 import seedu.recipe.logic.commands.ViewGroupCommand;
 import seedu.recipe.model.recipe.GroupName;
 import seedu.recipe.model.recipe.GroupPredicate;

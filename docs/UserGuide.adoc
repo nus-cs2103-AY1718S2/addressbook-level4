@@ -94,7 +94,7 @@ Examples:
 * `alias find f`
 * `alias alias al`
 
-=== Listing all aliases: `alias list` (since v1.5)
+=== Listing all aliases: `alias list` (since v1.4)
 
 Lists all created aliases. +
 Format: `alias list`

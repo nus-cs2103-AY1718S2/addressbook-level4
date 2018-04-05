@@ -19,7 +19,7 @@ public class YearCommand extends Command {
             + "Example: " + COMMAND_WORD + " 2018";
 
     public static final String MESSAGE_SUCCESS = "View year: %1$s";
-    public static final String YEAR_VALIDATION_REGEX = "^$|^\\d{4}";
+    public static final String YEAR_VALIDATION_REGEX = "^$|^[1-3][0-9][0-9][0-9]";
     public static final String MESSAGE_YEAR_CONSTRAINTS = "Year needs to be null or in format YYYY";
 
     private final Year year;

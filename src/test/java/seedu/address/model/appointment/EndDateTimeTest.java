@@ -33,6 +33,6 @@ public class EndDateTimeTest {
         assertFalse(EndDateTime.isValidEndDateTime("2018-23-09")); // missing time
 
         // valid endDateTime
-        assertTrue(EndDateTime.isValidEndDateTime("2018-26-03 12:00"));
+        assertTrue(EndDateTime.isValidEndDateTime("2018-03-26 12:00"));
     }
 }

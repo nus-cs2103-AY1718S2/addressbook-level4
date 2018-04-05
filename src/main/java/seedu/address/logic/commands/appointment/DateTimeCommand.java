@@ -20,7 +20,8 @@ public class DateTimeCommand extends Command {
             + "Example: " + COMMAND_WORD + " 2018-03-26 12:00";
 
     public static final String MESSAGE_SUCCESS = "View datetime: %1$s";
-    public static final String DATE_TIME_VALIDATION_REGEX = "^\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}";
+    public static final String DATE_TIME_VALIDATION_REGEX =
+            "^[1-3][0-9][0-9][0-9]-(1[0-2]|0[1-9])-(0[1-9]|[1-2][0-9]|3[0-1])\\s([0-1][0-9]|2[0-4]):([0-5][0-9])";
     public static final String MESSAGE_DATE_TIME_CONSTRAINTS = "Date Time needs to be in format YYYY-MM-DD HH:mm";
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private final LocalDateTime dateTime;

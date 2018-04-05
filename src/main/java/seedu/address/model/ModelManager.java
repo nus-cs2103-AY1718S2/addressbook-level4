@@ -12,6 +12,9 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.AppointmentChangedEvent;
+import seedu.address.commons.events.model.BirthdayChangedEvent;
+import seedu.address.model.export.ExportType;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -69,6 +72,8 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        raise(new BirthdayChangedEvent(person, "add"));
+        raise(new AppointmentChangedEvent(person, "add"));
         indicateAddressBookChanged();
     }
 
@@ -80,6 +85,19 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
+
+    //@@author daviddalmaso
+    @Override
+    public void export(ExportType typeToExport) {
+        requireAllNonNull(typeToExport);
+        if (typeToExport.equals(ExportType.PORTFOLIO)) {
+            addressBook.exportPortfolio();
+        }
+        if (typeToExport.equals(ExportType.CALENDAR)) {
+            addressBook.exportCalendar();
+        }
+    }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -116,4 +134,13 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    @Override
+    public ObservableList<Person> sortFilteredPersonList(ObservableList<Person> personsList) {
+
+        addressBook.sortedPersonsList();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+
+        return personsList;
+    }
 }

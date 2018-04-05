@@ -8,9 +8,16 @@ import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.Insurance.Insurance;
+import seedu.address.model.export.ExportType;
+import seedu.address.model.export.exceptions.IncorrectExportTypeException;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -28,7 +35,6 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -164,5 +170,103 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+    /**
+     * Parses a {@code Optional<String> group} into an {@code Optional<Group>} if {@code group} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Group> parseGroup (Optional<String> group) throws IllegalValueException {
+        requireNonNull(group);
+        return group.isPresent() ? Optional.of(new Group (group.get())) : Optional.empty();
+    }
+    /**
+     * Parses a {@code String birthday} into a {@code Birthday}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code birthday} is invalid.
+     */
+    public static Birthday parseBirthday(String birthday) throws IllegalValueException {
+        requireNonNull(birthday);
+        String trimmedBirthday = birthday.trim();
+        if (!Birthday.isValidBirthday(trimmedBirthday)) {
+            throw new IllegalValueException(Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
+        }
+        return new Birthday(trimmedBirthday);
+    }
+
+    /**
+     * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
+        requireNonNull(birthday);
+        return birthday.isPresent() ? Optional.of(parseBirthday(birthday.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String insurance} into a {@code Insurance}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code insurance} is invalid.
+     */
+    public static Insurance parseInsurance(String insurance) throws IllegalValueException {
+        requireNonNull(insurance);
+        String trimmedInsurance = insurance.trim();
+        if (!Insurance.isValidInsurance(trimmedInsurance)) {
+            throw new IllegalValueException(Insurance.MESSAGE_INSURANCE_CONSTRAINTS);
+        }
+        return new Insurance(trimmedInsurance);
+    }
+
+    /**
+     * Parses {@code Collection<String> insurances} into a {@code Set<Insurance>}.
+     */
+    public static Set<Insurance> parseInsurance(Collection<String> insurances) throws IllegalValueException {
+        requireNonNull(insurances);
+        final Set<Insurance> insuranceSet = new HashSet<>();
+        for (String insuranceName : insurances) {
+            insuranceSet.add(parseInsurance(insuranceName));
+        }
+        return insuranceSet;
+    }
+
+    /**
+     * Parses a {@code Optional<String> appointment} into an {@code Optional<Appointment>} if {@code appointment}
+     * is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Appointment> parseAppointment(Optional<String> appointment) throws IllegalValueException {
+        requireNonNull(appointment);
+        return appointment.isPresent() ? Optional.of(parseAppointment(appointment.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String appointment} into a {@code Appointment}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code appointment} is invalid.
+     */
+    public static Appointment parseAppointment(String appointment) throws IllegalValueException {
+        requireNonNull(appointment);
+        String trimmedAppointment = appointment.trim();
+        if (!Appointment.isValidAppointment(trimmedAppointment)) {
+            throw new IllegalValueException(Appointment.MESSAGE_APPOINTMENT_CONSTRAINTS);
+        }
+        return new Appointment(trimmedAppointment);
+    }
+
+    /**
+     * @param exportType
+     * @return the corresponding ExportType
+     * @throws IllegalArgumentException
+     */
+    public static ExportType parseExportType(String exportType) throws IllegalArgumentException {
+        requireNonNull(exportType);
+        String trimmedExportType = exportType.trim().toUpperCase();
+        if (!ExportType.isValidExportType(trimmedExportType)) {
+            throw new IncorrectExportTypeException();
+        }
+        return ExportType.valueOf(trimmedExportType);
+
     }
 }

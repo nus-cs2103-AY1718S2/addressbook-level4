@@ -2,6 +2,10 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -11,12 +15,18 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+
+import seedu.address.model.group.Group;
+import seedu.address.model.group.UniqueGroupList;
+import seedu.address.model.person.Appointment;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.util.GoogleCalendarClient;
 
 /**
  * Wraps all data at the address-book level
@@ -24,8 +34,10 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
+    private final UniqueGroupList groups;
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UserPrefs userPrefs;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,9 +49,15 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        userPrefs = new UserPrefs();
+        groups = new UniqueGroupList();
     }
+    /**
+     * empty constructor
+     */
+    public AddressBook() {
 
-    public AddressBook() {}
+    }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -47,6 +65,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
         resetData(toBeCopied);
+    }
+
+    public int getAddressBookSize() {
+        return this.persons.asObservableList().size();
     }
 
     //// list overwrite operations
@@ -57,6 +79,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
+    }
+
+    public void setGroups(List<Group> persons) {
+        this.groups.setGroups(groups);
     }
 
     /**
@@ -132,7 +158,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences,
+                person.getBirthday(), person.getAppointment(), person.getGroup(), person.getInsurance());
     }
 
     /**
@@ -153,6 +180,54 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    //// export-level operations
+
+    //@@author daviddalmaso
+    /**
+     * Exports the current address book to data/portfolio.csv
+     */
+    public void exportPortfolio() {
+        try {
+            PrintWriter pw = new PrintWriter(new File(userPrefs.getExportPortfolioFilePath()));
+            StringBuilder sb = new StringBuilder();
+            sb.append("Name,Phone,Email,Address,Tags\n");
+            for (Person person : persons) {
+                sb.append("\"" + person.getName().toString() + "\"");
+                sb.append(",");
+                sb.append("\"" + person.getPhone().toString() + "\"");
+                sb.append(",");
+                sb.append("\"" + person.getEmail().toString() + "\"");
+                sb.append(",");
+                sb.append("\"" + person.getAddress().toString() + "\"");
+                sb.append(",");
+                sb.append("\"" + person.getTags().toString() + "\"");
+                sb.append("\n");
+            }
+            pw.write(sb.toString());
+            pw.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File was not found");
+        }
+    }
+
+    /**
+     * Exports the calendar events to the user's Google Calendar
+     */
+    public void exportCalendar() {
+        List<Birthday> birthdays = new ArrayList<>();
+        List<Appointment> appointments = new ArrayList<>();
+        for (Person person : persons) {
+            birthdays.add(person.getBirthday());
+            appointments.add(person.getAppointment());
+        }
+        try {
+            GoogleCalendarClient.insertCalendar(persons);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    //@@author
+
     //// util methods
 
     @Override
@@ -172,6 +247,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<Group> getGroupList() {
+        return groups.asObservableList();
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
@@ -183,5 +263,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(persons, tags);
+    }
+
+    /**
+     * Sorts all persons from the address book.
+     */
+    public void sortedPersonsList() {
+        persons.sortPersons();
     }
 }

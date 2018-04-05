@@ -13,7 +13,7 @@ import org.junit.Test;
 import seedu.recipe.testutil.RecipeBuilder;
 
 public class IngredientContainsKeywordsPredicateTest {
-    
+
     @Test
     public void equals() {
         List<String> firstPredicateKeywordList = Collections.singletonList("first");
@@ -47,11 +47,12 @@ public class IngredientContainsKeywordsPredicateTest {
         // One keyword
         IngredientContainsKeywordsPredicate predicate =
                 new IngredientContainsKeywordsPredicate(Collections.singletonList("chicken"));
-        assertTrue(predicate.test(new RecipeBuilder().withInstruction("chicken rice").build()));
+        assertTrue(predicate.test(new RecipeBuilder().withIngredient("chicken, rice").build()));
 
         // Multiple keywords
-        predicate = new IngredientContainsKeywordsPredicate(Arrays.asList("chicken" , "rice"));
-        assertTrue(predicate.test(new RecipeBuilder().withIngredient("chicken rice").build()));
+        predicate = new IngredientContainsKeywordsPredicate(Arrays.asList("chicken", "rice"));
+        assertTrue(predicate.test(new RecipeBuilder().withIngredient("chicken, rice").build()));
+
     }
 
     @Test

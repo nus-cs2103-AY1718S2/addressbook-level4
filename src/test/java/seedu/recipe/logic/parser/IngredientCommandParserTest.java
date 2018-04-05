@@ -13,12 +13,13 @@ import seedu.recipe.logic.commands.IngredientCommand;
 import seedu.recipe.model.recipe.IngredientContainsKeywordsPredicate;
 
 public class IngredientCommandParserTest {
-    
+
     private IngredientCommandParser parser = new IngredientCommandParser();
 
     @Test
     public void parseEmptyArgThrowsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, IngredientCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                IngredientCommand.MESSAGE_USAGE));
     }
 
     @Test

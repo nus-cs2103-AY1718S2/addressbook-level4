@@ -32,10 +32,10 @@ import seedu.recipe.model.recipe.Recipe;
  */
 public class IngredientCommandTest {
 
-    private Model model = new ModelManager(getTypicalRecipeBook(), new UserPrefs());
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    private Model model = new ModelManager(getTypicalRecipeBook(), new UserPrefs());
 
     @Test
     public void equals() {

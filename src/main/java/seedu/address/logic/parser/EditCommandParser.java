@@ -58,6 +58,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 
+            //@@author melvintzw
             if (argMultimap.getValue(PREFIX_OWESTARTDATE).isPresent()) {
                 Date oweStartDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_OWESTARTDATE).get());
                 editPersonDescriptor.setOweStartDate(oweStartDate);
@@ -78,11 +79,10 @@ public class EditCommandParser implements Parser<EditCommand> {
                         (PREFIX_INTEREST).get());
                 editPersonDescriptor.setStandardInterest(standardInterest);
             }
-
-            //TODO: add more ParserUtil methods for Customer and Runner fields
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
+        //@@author
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);

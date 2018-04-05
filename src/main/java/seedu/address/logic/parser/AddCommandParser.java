@@ -48,6 +48,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                         PREFIX_INTEREST);
 
         //TODO: add test case
+        //@@author melvintzw
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_TYPE)
                 || !argMultimap.getPreamble().isEmpty()
                 || !argMultimap.getValue(PREFIX_TYPE).get().matches("[cCrR]")) {
@@ -81,6 +82,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
+        //@@author
     }
 
     /**

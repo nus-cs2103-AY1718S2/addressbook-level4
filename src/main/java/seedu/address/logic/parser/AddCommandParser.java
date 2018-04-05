@@ -49,6 +49,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                         PREFIX_INTEREST);
 
         //TODO: add test case
+        //@@author melvintzw
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_TYPE)
                 || !argMultimap.getPreamble().isEmpty()
                 || !argMultimap.getValue(PREFIX_TYPE).get().matches("[cCrR]")) {
@@ -65,10 +66,13 @@ public class AddCommandParser implements Parser<AddCommand> {
             if (argMultimap.getValue(PREFIX_TYPE).get().matches("[cC]")) {
                 Date oweStartDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_OWESTARTDATE)).orElse(new Date(0));
                 Date oweDueDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_OWEDUEDATE)).orElse(new Date(0));
-                //moneyOwed
-                //interest
-                Customer customer = new Customer(name, phone, email, address, tagList, new MoneyBorrowed(),
-                        oweStartDate, oweDueDate, new StandardInterest(), new LateInterest(), new Runner());
+                MoneyBorrowed moneyBorrowed = ParserUtil.parseMoneyBorrowed(argMultimap.getValue(PREFIX_MONEYOWED))
+                        .orElse(new MoneyBorrowed());
+                StandardInterest standardInterest = ParserUtil.parseStandardInterest(argMultimap
+                                .getValue(PREFIX_INTEREST)).orElse(new StandardInterest());
+
+                Customer customer = new Customer(name, phone, email, address, tagList, moneyBorrowed,
+                        oweStartDate, oweDueDate, standardInterest, new LateInterest(), new Runner());
                 return new AddCommand(customer);
 
             } else if (argMultimap.getValue(PREFIX_TYPE).get().matches("[rR]")) {
@@ -82,6 +86,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
+        //@@author
     }
 
     /**

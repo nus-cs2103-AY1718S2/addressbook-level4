@@ -108,10 +108,13 @@ public class Schedule implements ReadOnlySchedule {
         this.lessons.setLessons(lessons);
     }
 
+    /**
+     * Temp function @TODO delete later
+     */
     public void printAll() {
-        for(Lesson l : lessons) {
-            System.out.println(l.getUniqueKey() +
-            " " + l.getDay() + " " + l.getStartTime() + " " + l.getEndTime());
+        for (Lesson l : lessons) {
+            System.out.println(l.getUniqueKey() + " " + l.getDay()
+                    + " " + l.getStartTime() + " " + l.getEndTime());
         }
     }
     //// util methods

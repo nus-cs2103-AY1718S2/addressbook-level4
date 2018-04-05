@@ -1,41 +1,45 @@
 package seedu.address.external;
 
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Arrays;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
-import com.google.api.services.calendar.model.Events;
+
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
+import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Lesson;
+import seedu.address.model.lesson.Time;
 import seedu.address.model.student.Student;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
 
 /**
  * Constructs a new GContactsService object to communicate with Google's APIs
  */
 public class GCalendarService {
+    public static final String MESSAGE_SUMMARY = "Lesson with %1$s";
+    public static final String SINGAPORE_TIME_ZONE = "Asia/Singapore";
+    public static final String STRING_COLON = ":";
+    public static final String STRING_DASH = "-";
+    public static final String STRING_GMT_SG = "+08:00";
+
     private Credential credential;
     private HttpTransport httpTransport;
-    private JsonFactory JSON_FACTORY;
-
-    public static final String MESSAGE_SUMMARY = "Lesson with %1$s";
-    public static final String SingaporeTimeZone = "Asia/Singapore";
+    private JsonFactory jsonFactory;
 
     public GCalendarService() {}
 
     public GCalendarService(Credential credential,
-                            HttpTransport httpTransport, JsonFactory JSON_FACTORY) {
+                            HttpTransport httpTransport, JsonFactory jsonFactory) {
         this.credential = credential;
         this.httpTransport = httpTransport;
-        this.JSON_FACTORY = JSON_FACTORY;
+        this.jsonFactory = jsonFactory;
     }
 
     public void setCredential(Credential credential) {
@@ -54,12 +58,12 @@ public class GCalendarService {
         return httpTransport;
     }
 
-    public void setJSON_FACTORY(JsonFactory JSON_FACTORY) {
-        this.JSON_FACTORY = JSON_FACTORY;
+    public void setJsonFactory(JsonFactory jsonFactory) {
+        this.jsonFactory = jsonFactory;
     }
 
-    public JsonFactory getJSON_FACTORY() {
-        return JSON_FACTORY;
+    public JsonFactory getJsonFactory() {
+        return jsonFactory;
     }
 
     /**
@@ -68,10 +72,9 @@ public class GCalendarService {
      */
     public void synchronize(ReadOnlySchedule schedule, ReadOnlyAddressBook addressBook) {
         Calendar service = new Calendar.Builder(
-                httpTransport, JSON_FACTORY, credential)
+                httpTransport, jsonFactory, credential)
                 .setApplicationName(GServiceManager.APPLICATION_NAME)
                 .build();
-        DateTime now = new DateTime(System.currentTimeMillis());
         try {
             for (Lesson lesson : schedule.getSchedule()) {
                 Event newEvent = lessonToCalendarEvent(lesson, addressBook);
@@ -84,6 +87,12 @@ public class GCalendarService {
         }
     }
 
+    /**
+     * Converts a lesson to a recurring Calendar Event format
+     * @param lesson
+     * @param addressBook
+     * @return
+     */
     public Event lessonToCalendarEvent(Lesson lesson, ReadOnlyAddressBook addressBook) {
         Event event = new Event();
 
@@ -92,18 +101,46 @@ public class GCalendarService {
         event.setSummary(String.format(MESSAGE_SUMMARY, student.getName()));
         event.setLocation(student.getAddress().toString());
 
-        DateTime startDateTime = new DateTime("2018-04-07T09:00:00-07:00");
+        DateTime startDateTime = new DateTime(
+                dayTimeToDateTimeString(lesson.getDay(), lesson.getStartTime()));
         EventDateTime start = new EventDateTime()
                 .setDateTime(startDateTime)
-                .setTimeZone(SingaporeTimeZone);
+                .setTimeZone(SINGAPORE_TIME_ZONE);
         event.setStart(start);
 
-        DateTime endDateTime = new DateTime("2018-04-07T17:00:00-07:00");
+        DateTime endDateTime = new DateTime(
+                dayTimeToDateTimeString(lesson.getDay(), lesson.getEndTime()));
         EventDateTime end = new EventDateTime()
                 .setDateTime(endDateTime)
-                .setTimeZone(SingaporeTimeZone);
+                .setTimeZone(SINGAPORE_TIME_ZONE);
         event.setEnd(end);
 
+        //Set recurring for a month
+        event.setRecurrence(Arrays.asList("RRULE:FREQ=WEEKLY;COUNT=4"));
         return event;
+    }
+
+    /**
+     * Converts a Day and Time object to a RFC822 String format
+     * @param day
+     * @param time
+     * @return
+     */
+    public static String dayTimeToDateTimeString(Day day, Time time) {
+        LocalDate next = LocalDate.now().with(
+                TemporalAdjusters.next(Day.dayToDayOfWeekEnum(day)));
+
+        StringBuilder dateTimeString = new StringBuilder();
+        dateTimeString.append(Integer.toString(next.getYear()))
+                .append(STRING_DASH)
+                .append(String.format("%02d", next.getMonthValue()))
+                .append(STRING_DASH)
+                .append(String.format("%02d", next.getDayOfMonth()))
+                .append("T")
+                .append(time)
+                .append(STRING_COLON)
+                .append("00")
+                .append(STRING_GMT_SG);
+        return dateTimeString.toString();
     }
 }

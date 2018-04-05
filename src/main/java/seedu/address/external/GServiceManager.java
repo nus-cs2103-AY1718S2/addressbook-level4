@@ -1,5 +1,8 @@
 package seedu.address.external;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -9,14 +12,26 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.calendar.CalendarScopes;
+
 import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
 
-import java.util.Arrays;
-import java.util.List;
-
+/**
+ * Manages the two Google Services, Google Contacts as well as Google Calendar
+ */
 public class GServiceManager {
+    public static final String[] SCOPES_ARRAY = new String[]{
+        "https://www.googleapis.com/auth/userinfo.profile",
+        "https://www.googleapis.com/auth/userinfo.email",
+        "https://www.google.com/m8/feeds/",
+        CalendarScopes.CALENDAR};
+
+    /** OAuth 2.0 scopes. */
+    public static final List<String> SCOPES = Arrays.asList(SCOPES_ARRAY);
+
+    public static final String APPLICATION_NAME = "codeducator/v1.4";
+
     private static final String CLIENT_ID = "126472549776-8cd9bk56sfubm9rkacjivecikppte982.apps.googleusercontent.com";
     private static final String CLIENT_SECRET = "nyBpzm1OjnKNZOd0-kT1uo7W";
 
@@ -25,17 +40,6 @@ public class GServiceManager {
 
     /** Global instance of the HTTP transport. */
     private static HttpTransport httpTransport;
-
-    public static final String APPLICATION_NAME = "codeducator/v1.4";
-
-    private final String[] scopesArray = new String[]{
-            "https://www.googleapis.com/auth/userinfo.profile",
-            "https://www.googleapis.com/auth/userinfo.email",
-            "https://www.google.com/m8/feeds/",
-            CalendarScopes.CALENDAR};
-
-    /** OAuth 2.0 scopes. */
-    public final List<String> scopes = Arrays.asList(scopesArray);
 
     private Credential credential;
 
@@ -46,6 +50,8 @@ public class GServiceManager {
             t.printStackTrace();
         }
     }
+
+    public GServiceManager() { }
 
     /**
      * Login method for user to login to their Google account
@@ -58,7 +64,7 @@ public class GServiceManager {
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow =
                 new GoogleAuthorizationCodeFlow.Builder(
-                        httpTransport, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, scopes)
+                        httpTransport, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, SCOPES)
                         .setAccessType("offline")
                         .build();
         try {
@@ -82,8 +88,11 @@ public class GServiceManager {
         credential = null;
     }
 
-    public GServiceManager() { }
-
+    /**
+     * Uploads the schedule to Google Calendar
+     * @param addressBook
+     * @param schedule
+     */
     public void synchronize(ReadOnlyAddressBook addressBook, ReadOnlySchedule schedule) {
         try {
             GContactsService gContactsService = new GContactsService(credential);

@@ -23,5 +23,4 @@ public interface ReadOnlyAddressBook {
     ObservableList<Tag> getTagList();
 
     Student findStudentByKey(UniqueKey key);
-
 }

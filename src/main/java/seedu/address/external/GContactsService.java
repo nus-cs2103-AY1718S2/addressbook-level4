@@ -2,7 +2,6 @@ package seedu.address.external;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.gdata.client.contacts.ContactsService;
@@ -13,9 +12,7 @@ import com.google.gdata.data.extensions.Name;
 import com.google.gdata.data.extensions.PhoneNumber;
 import com.google.gdata.util.ServiceException;
 
-import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.ReadOnlySchedule;
 import seedu.address.model.student.Student;
 
 /**

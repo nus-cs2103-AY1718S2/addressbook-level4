@@ -28,6 +28,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     private List<XmlAdaptedTask> tasks;
     @XmlElement
     private List<XmlAdaptedTag> tags;
+    @XmlElement
+    private List<XmlAdaptedItem> items;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -37,6 +39,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
         tasks = new ArrayList<>();
+        items = new ArrayList<>();
     }
 
     /**
@@ -47,6 +50,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tasks.addAll(src.getTaskList().stream().map(XmlAdaptedTask::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        items.addAll(src.getItemList().stream().map(XmlAdaptedItem::new).collect(Collectors.toList()));
     }
 
     /**
@@ -65,6 +69,9 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         }
         for (XmlAdaptedTask ta : tasks) {
             addressBook.addTask(ta.toModelType());
+        }
+        for (XmlAdaptedItem it : items) {
+            addressBook.addDeleteItem(it.toModelType());
         }
         return addressBook;
     }
@@ -117,5 +124,17 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(tags);
+    }
+
+    @Override
+    public ObservableList<String> getItemList() {
+        final ObservableList<String> items = this.items.stream().map(it -> {
+            try {
+                return it.toModelType();
+            } catch (IllegalValueException e) {
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(items);
     }
 }

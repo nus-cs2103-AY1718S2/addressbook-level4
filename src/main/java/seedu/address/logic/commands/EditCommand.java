@@ -87,6 +87,12 @@ public class EditCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
+        if (!personToEdit.getDisplayPic().equals(editedPerson.getDisplayPic())) {
+            if (!personToEdit.getDisplayPic().isDefault()) {
+                model.addDeleteItem(personToEdit.getDisplayPic().toString());
+                model.addDeleteItem(editedPerson.getDisplayPic().toString());
+            }
+        }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
@@ -117,18 +123,16 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         DisplayPic updatedDisplay = editPersonDescriptor.getDisplayPic().orElse(personToEdit.getDisplayPic());
-        try {
-            if (personToEdit.getDisplayPic().isDefault()) {
+        if (!updatedDisplay.equals(personToEdit.getDisplayPic())) {
+            try {
                 updatedDisplay.saveDisplay(updatedName.toString() + updatedPhone.toString()
                         + updatedEmail.toString());
                 updatedDisplay.updateDisplay(updatedName.toString() + updatedPhone.toString()
                         + updatedEmail.toString());
-            } else {
-                updatedDisplay.saveDisplay(personToEdit.getDisplayPic().toString());
-                updatedDisplay.updateDisplay(personToEdit.getDisplayPic().toString());
+
+            } catch (IllegalValueException ive) {
+                updatedDisplay.updateToDefault();
             }
-        } catch (IllegalValueException ive) {
-            updatedDisplay.updateToDefault();
         }
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 

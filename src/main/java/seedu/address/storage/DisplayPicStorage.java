@@ -13,6 +13,7 @@ import seedu.address.MainApp;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.AppUtil;
 import seedu.address.commons.util.FileUtil;
+import seedu.address.commons.util.NamingUtil;
 import seedu.address.model.person.DisplayPic;
 
 /**
@@ -68,16 +69,22 @@ public class DisplayPicStorage {
      * @param name the name of the new image file
      * @param filePath the location of the current image file
      * @param fileType the file extension of the current image file
-     * @return whether the image was successfully copied
+     * @return the filename of the image
      */
-    public static boolean saveDisplayPic(String name, String filePath, String fileType) {
+    public static String saveDisplayPic(String name, String filePath, String fileType) throws IllegalValueException {
         try {
             File input = new File(filePath);
             BufferedImage image = ImageIO.read(input);
-            FileUtil.copyImage(image, fileType, SAVE_LOCATION + name + '.' + fileType);
-            return true;
+            String uniqueFileName = NamingUtil.generateUniqueName(name);
+            File toSave = new File(DisplayPic.DEFAULT_IMAGE_LOCATION + uniqueFileName);
+            while (FileUtil.isFileExists(toSave)) {
+                uniqueFileName = NamingUtil.generateUniqueName(uniqueFileName);
+                toSave = new File(DisplayPic.DEFAULT_IMAGE_LOCATION + uniqueFileName);
+            }
+            FileUtil.copyImage(image, fileType, SAVE_LOCATION + uniqueFileName + '.' + fileType);
+            return uniqueFileName;
         } catch (IOException | IllegalValueException exc) {
-            return false;
+            throw new IllegalValueException("Unable to write file");
         }
     }
 

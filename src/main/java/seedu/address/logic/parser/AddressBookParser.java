@@ -20,6 +20,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.appointment.AddAppointmentCommand;
 import seedu.address.logic.commands.appointment.CalendarCommand;
 import seedu.address.logic.commands.appointment.DateCommand;
+import seedu.address.logic.commands.appointment.DateTimeCommand;
 import seedu.address.logic.commands.appointment.DeleteAppointmentCommand;
 import seedu.address.logic.commands.appointment.MonthCommand;
 import seedu.address.logic.commands.appointment.WeekCommand;
@@ -37,6 +38,7 @@ import seedu.address.logic.commands.person.ListCommand;
 import seedu.address.logic.commands.person.SelectCommand;
 import seedu.address.logic.parser.appointment.AddAppointmentCommandParser;
 import seedu.address.logic.parser.appointment.DateCommandParser;
+import seedu.address.logic.parser.appointment.DateTimeCommandParser;
 import seedu.address.logic.parser.appointment.DeleteAppointmentCommandParser;
 import seedu.address.logic.parser.appointment.MonthCommandParser;
 import seedu.address.logic.parser.appointment.WeekCommandParser;
@@ -154,6 +156,9 @@ public class AddressBookParser {
 
         case DateCommand.COMMAND_WORD:
             return new DateCommandParser().parse(arguments);
+
+        case DateTimeCommand.COMMAND_WORD:
+            return new DateTimeCommandParser().parse(arguments);
 
         case WeekCommand.COMMAND_WORD:
             return new WeekCommandParser().parse(arguments);

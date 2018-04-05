@@ -16,7 +16,6 @@ import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.notification.exceptions.TimetableEntryNotFoundException;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Photo;
 import seedu.address.model.person.UniqueEmployeeList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;

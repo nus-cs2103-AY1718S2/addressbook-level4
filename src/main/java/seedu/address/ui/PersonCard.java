@@ -12,8 +12,6 @@ import javafx.scene.paint.Color;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Photo;
 
-import java.io.File;
-
 /**
  * An UI component that displays information of a {@code Person}.
  */

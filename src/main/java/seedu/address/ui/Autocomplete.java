@@ -35,8 +35,7 @@ public class Autocomplete {
 
         if (words.length == 1) {
             return suggestCommandWords();
-        }
-        else {
+        } else {
             if (addReferenceOwnerNric(words) || editPetPatientOwnerNric(words)) {
                 return suggestNrics();
             }
@@ -86,8 +85,7 @@ public class Autocomplete {
                     .sorted()
                     .collect(Collectors.toList());
             return suggestions;
-        }
-        else {
+        } else {
             String[] splitByPrefix = targetWord.split("/");
             String targetTag = splitByPrefix[1];
             List<String> suggestions = logic.getAllTagNames().stream()
@@ -107,8 +105,7 @@ public class Autocomplete {
                     .sorted()
                     .collect(Collectors.toList());
             return suggestions;
-        }
-        else {
+        } else {
             String[] splitByPrefix = targetWord.split("/");
             String targetPetName = splitByPrefix[1];
             List<String> suggestions = logic.getAllPetPatientNames().stream()
@@ -144,7 +141,6 @@ public class Autocomplete {
      * Returns a sorted list of suggestions for prefixes.
      */
     private List<String> suggestPrefixes() {
-
         List<String> suggestions = logic.getAllPrefixes().stream()
                 .filter(p -> p.startsWith(targetWord) && !p.equals(targetWord))
                 .sorted()
@@ -156,7 +152,6 @@ public class Autocomplete {
      * Returns a sorted list of suggestions for options.
      */
     private List<String> suggestOptions() {
-
         List<String> suggestions = logic.getAllOptions().stream()
                 .filter(o -> o.startsWith(targetWord) && !o.equals(targetWord))
                 .sorted()
@@ -167,7 +162,7 @@ public class Autocomplete {
     /**
      * Returns a sorted list of suggestions for command words.
      */
-        private List<String> suggestCommandWords() {
+    private List<String> suggestCommandWords() {
         List<String> suggestions = logic.getAllCommandWords().stream()
                 .filter(c -> c.startsWith(targetWord) && !c.equals(targetWord))
                 .sorted()

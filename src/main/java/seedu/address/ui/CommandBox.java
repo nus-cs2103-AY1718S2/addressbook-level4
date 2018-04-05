@@ -1,7 +1,6 @@
 package seedu.address.ui;
 
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import javafx.beans.value.ChangeListener;
@@ -28,11 +27,11 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
+    private static ChangeListener<String> autocompleteListener;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
-    private static ChangeListener<String> autocompleteListener;
 
 
     @FXML

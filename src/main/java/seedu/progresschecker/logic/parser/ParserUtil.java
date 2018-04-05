@@ -12,6 +12,9 @@ import java.util.Set;
 import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.commons.util.StringUtil;
+import seedu.progresschecker.model.credentials.Passcode;
+import seedu.progresschecker.model.credentials.Repository;
+import seedu.progresschecker.model.credentials.Username;
 import seedu.progresschecker.model.issues.Assignees;
 import seedu.progresschecker.model.issues.Body;
 import seedu.progresschecker.model.issues.Labels;
@@ -238,6 +241,71 @@ public class ParserUtil {
     public static Optional<Body> parseBody(Optional<String> body) throws IllegalValueException {
         requireNonNull(body);
         return body.isPresent() ? Optional.of(parseBody(body.get())) : Optional.empty();
+    }
+
+    /**
+     * 
+     * @param username
+     * @return
+     */
+    public static Username parseGitUsername(String username) {
+        requireNonNull(username);
+        String trimmedUsername = username.trim();
+        return new Username(trimmedUsername);
+    }
+
+    /**
+     * 
+     * @param username
+     * @return
+     * @throws IllegalValueException
+     */
+    public static Optional<Username> parseGitUsername(Optional<String> username) throws IllegalValueException {
+        requireNonNull(username);
+        return username.isPresent() ? Optional.of(parseGitUsername(username.get())) : Optional.empty();
+    }
+
+    /**
+     *
+     * @param passcode
+     * @return
+     */
+    public static Passcode parsePasscode(String passcode) {
+        requireNonNull(passcode);
+        return new Passcode(passcode);
+    }
+
+    /**
+     *
+     * @param passcode
+     * @return
+     * @throws IllegalValueException
+     */
+    public static Optional<Passcode> parsePasscode(Optional<String> passcode) throws IllegalValueException {
+        requireNonNull(passcode);
+        return passcode.isPresent() ? Optional.of(parsePasscode(passcode.get())) : Optional.empty();
+    }
+
+    /**
+     *
+     * @param repository
+     * @return
+     */
+    public static Repository parseRepository(String repository) {
+        requireNonNull(repository);
+        String trimmedRepository = repository.trim();
+        return new Repository(trimmedRepository);
+    }
+
+    /**
+     *
+     * @param repository
+     * @return
+     * @throws IllegalValueException
+     */
+    public static Optional<Repository> parseRepository(Optional<String> repository) throws IllegalValueException {
+        requireNonNull(repository);
+        return repository.isPresent() ? Optional.of(parseRepository(repository.get())) : Optional.empty();
     }
     //@@author
 

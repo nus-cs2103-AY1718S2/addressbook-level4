@@ -1,0 +1,75 @@
+package seedu.progresschecker.logic.parser;
+
+import static seedu.progresschecker.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_GIT_PASSCODE;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_GIT_REPO;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_GIT_USERNAME;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_MAJOR;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_USERNAME;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_YEAR;
+
+import java.util.Set;
+import java.util.stream.Stream;
+
+import seedu.progresschecker.commons.exceptions.IllegalValueException;
+import seedu.progresschecker.logic.commands.AddCommand;
+import seedu.progresschecker.logic.commands.GitLoginCommand;
+import seedu.progresschecker.logic.parser.exceptions.ParseException;
+import seedu.progresschecker.model.credentials.GitDetails;
+import seedu.progresschecker.model.credentials.Passcode;
+import seedu.progresschecker.model.credentials.Repository;
+import seedu.progresschecker.model.credentials.Username;
+import seedu.progresschecker.model.person.Email;
+import seedu.progresschecker.model.person.GithubUsername;
+import seedu.progresschecker.model.person.Major;
+import seedu.progresschecker.model.person.Name;
+import seedu.progresschecker.model.person.Person;
+import seedu.progresschecker.model.person.Phone;
+import seedu.progresschecker.model.person.Year;
+import seedu.progresschecker.model.tag.Tag;
+
+/**
+ * Parses input arguments and creates a new AddCommand object
+ */
+public class GitLoginCommandParser implements Parser<GitLoginCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the AddCommand
+     * and returns an AddCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public GitLoginCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_GIT_USERNAME, PREFIX_GIT_PASSCODE, PREFIX_GIT_REPO);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_GIT_USERNAME, PREFIX_GIT_PASSCODE, PREFIX_GIT_REPO)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GitLoginCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            Username username = ParserUtil.parseGitUsername(argMultimap.getValue(PREFIX_GIT_USERNAME)).get();
+            Passcode passcode = ParserUtil.parsePasscode(argMultimap.getValue(PREFIX_GIT_PASSCODE)).get();
+            Repository repository = ParserUtil.parseRepository(argMultimap.getValue(PREFIX_GIT_REPO)).get();
+
+            GitDetails details = new GitDetails(username, passcode, repository, username);
+
+            return new GitLoginCommand(details);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+}

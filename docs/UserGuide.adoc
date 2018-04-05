@@ -16,8 +16,7 @@ endif::[]
 By: `Huat Ah Finance Pte Ltd`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
-[NOTE]
-====
+
 If you:
 
 * are a 21st Century modern loan shark boss,
@@ -27,7 +26,7 @@ If you:
 
 LoanShark Tycoon can get your operations management tasks done faster than traditional GUI apps. Interested? Jump to <<Quick Start>> to get
 started. Enjoy!
-====
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.

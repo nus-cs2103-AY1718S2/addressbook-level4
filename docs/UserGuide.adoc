@@ -265,8 +265,8 @@ eg. `task n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/urgent`
 * *Add event*: `event n/NAME s/START_TIME e/END_TIME [l/LOCATION] [r/REMARK]` +
 eg. `event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`
 
-* *List uncompleted tasks and upcoming events*: `ls` +
-eg. `ls` or `ls task` or `ls event`
+* *List uncompleted tasks and upcoming events*: `list` or `ls` +
+eg. `list` or `ls` or `list task` or `ls event`
 
 * *Remove task or event*: `rm` +
 eg. `rm task 1` or `rm event 2`

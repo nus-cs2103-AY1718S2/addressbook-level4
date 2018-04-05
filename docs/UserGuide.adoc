@@ -497,3 +497,130 @@ The following is a summary of all commands available in Medeina:
 * *Undo* : `undo` or `ud`
 * *Redo* : `redo` or `rd`
 * *Change Theme* : `theme THEME_NAME` or `t THEME_NAME`
+
+=== Person-related Commands
+
+[cols="10, 8, 50, 32", options="header"]
+|=====
+| Command
+| Alias
+| Command Syntax
+| Description
+
+.^a|`add -o`
+| `a -o`
+| `add **-o** n/CONTACT_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAG]...`
+| Add a contact into Medeina
+
+.^a|`edit -o`
+| `ed -o`
+| `edit **-o** INDEX [n/CONTACT_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [nr/NRIC] [t/TAG]...`
+| Edit a contact in Medeina
+
+.^a|`find -o`
+| `f -o`
+| `find **-o** PREFIX/KEYWORD [MORE KEYWORDS] [MORE PREFIX/MORE KEYWORDS]`
+| Find a contact in Medeina
+
+.^a|`delete -o`
+| `d -o`
+| `delete **-[f]o** INDEX`
+| Delete a contact in Medeina
+|=====
+
+=== Pet patient-related Commands
+
+[cols="10, 5, 50, 35", options="header"]
+|=====
+| Command
+| Alias
+| Command Syntax
+| Description
+
+.^a|`add -p`
+| `a -p`
+| `add **-p** n/PET_PATIENT_NAME s/SPECIES b/BREED c/COLOR bt/BLOOD_TYPE [t/TAG]... **-o** nr/OWNER_NRIC`
+| Add a pet patient into Medeina
+
+.^a|`edit -p`
+| `ed -p`
+| `edit **-p** INDEX [n/PET_PATIENT_NAME] [s/SPECIES] [b/BREED] [c/COLOR] [bt/BLOOD_TYPE] [nr/OWNER_NRIC] [t/TAG]...`
+| Edit a pet patient in Medeina
+
+.^a|`find -p`
+| `f -p`
+| `find **-p** PREFIX/KEYWORD [MORE KEYWORDS] [MORE PREFIX/MORE KEYWORDS]`
+| Find a pet patient in Medeina
+
+.^a|`delete -p`
+| `d -p`
+| `delete **-[f]p** INDEX`
+| Delete a pet patient in Medeina
+|=====
+
+=== Appointment-related Commands
+
+[cols="10, 5, 50, 35", options="header"]
+|=====
+| Command
+| Alias
+| Command Syntax
+| Description
+
+.^a|`add -a`
+| `a -a`
+| `add **-a** d/YYYY-MM-DD HH:MM r/REMARK t/TAG...` +
+  `**-o** nr/OWNER_NRIC **-p** n/PET_PATIENT_NAME`
+| Adds an appointment into Medeina
+
+.^a|`edit -a`
+| `ed -a`
+| `edit **-a** INDEX [d/YYYY-MM-DD HH:MM] [r/REMARK] [t/TAG]...`
+| Edit an appointment in Medeina
+
+.^a|`find -a`
+| `f -a`
+| <IN PROGRESS>
+| Find an appointment in Medeina
+
+.^a|`delete -a`
+| `d -a`
+| `delete **-a** INDEX`
+| Delete an appointment in Medeina
+|=====
+
+=== System-related Commands
+
+[cols="20, 10, 50", options="header"]
+|=====
+| Command
+| Alias
+| Description
+
+.^a|`list`
+| `ls`
+| Lists all contacts and pet patients
+
+.^a|`help`
+| `h`
+| Brings up this user guide for your reference
+
+.^a|`history`
+| `his`
+| Lists all the commands that you have entered in reverse chronological order
+
+.^a|`undo`
+| `ud`
+| Undo the previous command
+
+.^a|`redo`
+| `rd`
+| Redo the previous command
+
+.^a|`clear`
+| `cls`
+| Clears all entries from Medeina
+
+.^a|`exit`
+| `q`
+| Exits the program

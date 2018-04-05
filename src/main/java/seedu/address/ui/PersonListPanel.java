@@ -65,24 +65,25 @@ public class PersonListPanel extends UiPart<Region> {
     /**
      * Scrolls to the {@code PersonCard} at the {@code index} and display the location on Google Map.
      */
-
+    //@@author zhangriqi
     private void locate(int index) {
         Platform.runLater(()-> {
             personListView.scrollTo(index);
         });
     }
+    //@@author
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
-
+    //@@author zhangriqi
     @Subscribe
     private void handleLocateRequestEvent(LocateRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         locate(event.target);
     }
-
+    //@@author
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
      */

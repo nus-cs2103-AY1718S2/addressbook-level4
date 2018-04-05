@@ -46,10 +46,7 @@ public class GuiTestAssert {
      */
     public static void assertPanelDisplaysPerson(PersonCardHandle expectedPersonCard, DetailPanelHandle actualPanel) {
         assertEquals(expectedPersonCard.getName(), actualPanel.getName());
-        assertEquals(expectedPersonCard.getPhone(), actualPanel.getPhone());
-        assertEquals(expectedPersonCard.getEmail(), actualPanel.getEmail());
         assertEquals(expectedPersonCard.getAddress(), actualPanel.getAddress());
-        assertEquals(expectedPersonCard.getTags(), actualPanel.getTags());
     }
     //@@author
 

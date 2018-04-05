@@ -44,17 +44,9 @@ public class DetailPanel extends UiPart<Region> {
     @FXML
     private Label name;
     @FXML
-    private Label phone;
-    @FXML
     private Label address;
     @FXML
-    private Label email;
-    @FXML
-    private Label rating;
-    @FXML
     private FlowPane reviews;
-    @FXML
-    private FlowPane tags;
     //@@author
 
     public DetailPanel() {
@@ -95,12 +87,8 @@ public class DetailPanel extends UiPart<Region> {
         browser = null;
         //@@author emer7
         name = null;
-        phone = null;
         address = null;
-        email = null;
-        rating = null;
         reviews = null;
-        tags = null;
         //@@author
     }
 
@@ -108,12 +96,8 @@ public class DetailPanel extends UiPart<Region> {
     private void handleHideDetailPanelEvent(HideDetailPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         name.setText("");
-        phone.setText("");
         address.setText("");
-        email.setText("");
-        rating.setText("");
         reviews.getChildren().clear();
-        tags.getChildren().clear();
         loadDefaultPage();
     }
 
@@ -123,15 +107,9 @@ public class DetailPanel extends UiPart<Region> {
         //@@author emer7
         Person person = event.getNewSelection().person;
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
-        rating.setText(person.getRatingDisplay());
-        rating.setTextFill(Color.RED);
         reviews.getChildren().clear();
         person.getReviews().forEach(review -> reviews.getChildren().add(new Label(review.toString())));
-        tags.getChildren().clear();
-        initTags(person);
         //@@author
         loadPersonPage(event.getNewSelection().person);
     }
@@ -142,36 +120,10 @@ public class DetailPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Person newPerson = event.getNewPerson();
         name.setText(newPerson.getName().fullName);
-        phone.setText(newPerson.getPhone().value);
         address.setText(newPerson.getAddress().value);
-        email.setText(newPerson.getEmail().value);
-        rating.setText(newPerson.getRatingDisplay());
-        rating.setTextFill(Color.RED);
         reviews.getChildren().clear();
         newPerson.getReviews().forEach(review -> reviews.getChildren().add(new Label(review.toString())));
-        tags.getChildren().clear();
-        initTags(newPerson);
         loadPersonPage(event.getNewPerson());
     }
     //@@author
-
-    /**
-     * Creates the tag labels for {@code person}.
-     */
-    private void initTags(Person person) {
-        person.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.getStyleClass().add(getTagColorStyleFor(tag.tagName));
-            tags.getChildren().add(tagLabel);
-        });
-    }
-
-    /**
-     * Returns the color style for {@code tagName}'s label.
-     */
-    private String getTagColorStyleFor(String tagName) {
-        // we use the hash code of the tag name to generate a random color, so that the color remain consistent
-        // between different runs of the program while still making it random enough between tags.
-        return TAG_COLOR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOR_STYLES.length];
-    }
 }

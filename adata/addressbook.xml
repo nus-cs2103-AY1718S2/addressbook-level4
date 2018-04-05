@@ -75,6 +75,14 @@
         <date>2018-03-30</date>
         <tagged>priority</tagged>
     </persons>
+    <persons>
+        <name>Test4</name>
+        <phone>93354655</phone>
+        <email>es@nus.edu.sg</email>
+        <address>Jurong Bird Park MRT</address>
+        <date>2018-03-30</date>
+        <tagged>priority</tagged>
+    </persons>
     <tags>friend</tags>
     <tags>enemy</tags>
     <tags>fragile</tags>

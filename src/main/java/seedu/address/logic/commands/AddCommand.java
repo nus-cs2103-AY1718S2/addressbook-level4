@@ -27,6 +27,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_DELIV_DATE + "DATE "
             + "[" + PREFIX_TAG + "TAG]...\n"
+            + "For the address, it cannot be at the Head Quarter\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "

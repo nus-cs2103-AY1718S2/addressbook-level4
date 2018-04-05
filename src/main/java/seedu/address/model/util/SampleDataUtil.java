@@ -22,13 +22,13 @@ public class SampleDataUtil {
             new Person(new Name("Alex Yeoh"), new Nric("S8743880X"),
                 getTagSet("friends"), getSubjectSet("English A2"), new Remark("Class Rep")),
             new Person(new Name("Bernice Yu"), new Nric("S9927275Z"),
-                getTagSet("colleagues", "friends"), getSubjectSet("Mathematics A1"), new Remark("Math Rep")),
+                getTagSet("colleagues", "friends"), getSubjectSet("EMath A1"), new Remark("Math Rep")),
             new Person(new Name("Charlotte Oliveiro"), new Nric("S9321028H"),
-                getTagSet("neighbours"), getSubjectSet("Chemistry B3"), new Remark("Chemistry Rep")),
+                getTagSet("neighbours"), getSubjectSet("Chem B3"), new Remark("Chemistry Rep")),
             new Person(new Name("David Li"), new Nric("S9103128J"),
-                getTagSet("family"), getSubjectSet("Physics B3"), new Remark("Physics Rep")),
+                getTagSet("family"), getSubjectSet("Phy B3"), new Remark("Physics Rep")),
             new Person(new Name("Irfan Ibrahim"), new Nric("S9249202K"),
-                getTagSet("classmates"), getSubjectSet("Humanities B4"), new Remark("Humanities Rep")),
+                getTagSet("classmates"), getSubjectSet("Geog B4"), new Remark("Geography Rep")),
             new Person(new Name("Roy Balakrishnan"), new Nric("S9262441U"),
                 getTagSet("colleagues"), getSubjectSet("Chinese C5"), new Remark("Chinese Rep"))
         };

@@ -1,4 +1,4 @@
-= Loanshark Tycoon - User Guide
+= LoanShark Tycoon v1.4 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -52,6 +52,14 @@ The various menu items have keyboard shortcuts that can be used to speed up your
 * **`add`**`ty: c n: John Doe p: 98765432 e: johnd@example.com a: John street, block 123, #01-01` : adds a `Customer` named `John Doe` to the database.
 * **`delete`**`3` : deletes the third contact shown in the current list
 * *`exit`* : exits the application
+
+== Known Issues
+* Deleting a customer will not update any Runner whose customer list contains that customer
+[functionality not yet implemented - coming in v1.5].
+* Deleting a runner will not update any Customer whose Runner field contains that runner
+[functionality not yet implemented - coming in v1.5].
+* Default date is January 1, 1970 (default Java Date value), when no start date or due date
+is specified when adding a customer.
 
 == Command Summary
 
@@ -122,8 +130,8 @@ The various menu items have keyboard shortcuts that can be used to speed up your
 |`redo`
 
 |assign (`as`)
-|(To be added)
-|`assign RUNNER-INDEX c: CUSTOMER-INDEX`
+|kbd:[Ctrl+Shift+A]
+|`assign RUNNER-INDEX c: CUSTOMER-INDEX [CUSTOMER-INDEX ...]`
 |===
 
 == Feature details
@@ -305,7 +313,7 @@ _Selects the second person in the database._
 _Selects the first person from the results of the `find` command._
 ====
 ***
-=== Undoing the previous undoable command : `undo`
+=== Undoing the last undoable command : `undo`
 
 [NOTE]
 ====
@@ -363,13 +371,15 @@ _The `redo` command fails as there are no `undo` commands executed previously._
 ====
 
 ***
-=== Assigning a Customer to a Runner : `assign` [since v1.4]
+=== Assigning one or more Customers to a Runner : `assign` [since v1.4]
 
 [NOTE]
 ====
-* This command assigns a `Customer` to a `Runner` using specified `INDICES`.
-** The `INDEX` refers to the index number shown in the last person listing.
-** The `INDEX` must be a *positive integer*: 1, 2, 3, ...
+* This command assigns one or more `Customers` to a `Runner` according to a specified `RUNNER-INDEX`
+and `CUSTOMER-INDICES`.
+** Each `INDEX` refers to the index number shown in the last person listing.
+** Each `INDEX` must be a *positive integer*: 1, 2, 3, ...
+* The `RUNNER-INDEX`` must always be specified and at least one `CUSTOMER-INDEX` must be specified as well.
 ====
 
 *Usage examples:*
@@ -386,28 +396,16 @@ _Assigns customer at `INDEX2` to Runner at `INDEX1` based on the last shown list
 
 == Up and coming features [coming in v2.0]
 
-
-=== Adding multiple persons from an input file
-
 // tag::dataencryption[]
-_{explain how the user can enable/disable data encryption}_
+* Adding multiple persons from an input file
 // end::dataencryption[]
-
-=== Assigning multiple `Customers` to a `Runner`
-
-=== Adding visitation history to `Customers`
-
-=== Adding job history to `Runners`
-
-=== Scheduling jobs for `Runners`
-
-=== Changing status of jobs for `Runners`
-
-=== Plotting a visitation route given a set of `Customers` and displaying it in Google Maps
-
-=== Show countdown timers for `Customers`
-
-=== Show a summary and analytics page on application start
+* Adding visitation history to `Customers`
+* Adding job history to `Runners`
+* Scheduling jobs for `Runners`
+* Changing status of jobs for `Runners`
+* Plotting a visitation route given a set of `Customers` and displaying it in Google Maps
+* Show countdown timers for `Customers`
+* Show a summary and analytics page on application start
 
 == FAQ
 

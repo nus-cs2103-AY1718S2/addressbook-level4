@@ -110,7 +110,6 @@ public class AddTaskCommand extends UndoableCommand {
         requireAllNonNull(studentToEdit, newTask);
 
         return new StudentBuilder(studentToEdit).withNewTask(targetMilestoneIndex, newTask).build();
-
     }
 
     @Override

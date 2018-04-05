@@ -118,7 +118,6 @@ public class CheckTaskCommand extends UndoableCommand {
             DuplicateMilestoneException, MilestoneNotFoundException {
         requireAllNonNull(studentToEdit, milestoneIndex, taskIndex);
 
-
         return new StudentBuilder(studentToEdit).withTaskCompleted(milestoneIndex, taskIndex).build();
     }
 

@@ -67,9 +67,6 @@ public class FavouriteCommand extends UndoableCommand {
      * Create and return a copy of the target {@Code Student} to favourite with its' Favourite attribute set to true.
      */
     private static Student createEditedStudent(Student target) {
-
-        assert target != null;
-
         requireNonNull(target);
 
         return new StudentBuilder(target).withFavourite(true).build();

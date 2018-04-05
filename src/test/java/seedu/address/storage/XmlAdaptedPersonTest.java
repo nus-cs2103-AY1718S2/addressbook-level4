@@ -81,6 +81,7 @@ public class XmlAdaptedPersonTest {
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
+    //@@author ZacZequn
     @Test
     public void toModelType_invalidOrder_throwsIllegalValueException() {
         XmlAdaptedPerson person =
@@ -97,6 +98,7 @@ public class XmlAdaptedPersonTest {
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Order.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
+    //@@author
 
     @Test
     public void toModelType_invalidEmail_throwsIllegalValueException() {
@@ -132,6 +134,7 @@ public class XmlAdaptedPersonTest {
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
+    //@@author ZacZequn
     @Test
     public void toModelType_invalidHalal_throwsIllegalValueException() {
         XmlAdaptedPerson person =
@@ -165,6 +168,7 @@ public class XmlAdaptedPersonTest {
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Vegetarian.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
+    //@@author
 
 
     @Test

@@ -94,6 +94,7 @@ public class ParserUtil {
         return phone.isPresent() ? Optional.of(parsePhone(phone.get())) : Optional.empty();
     }
 
+    //@@author ZacZequn
     /**
      * Parses a {@code String order} into a {@code Order}.
      * Leading and trailing whitespaces will be trimmed.
@@ -117,6 +118,7 @@ public class ParserUtil {
         requireNonNull(order);
         return order.isPresent() ? Optional.of(parseOrder(order.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses a {@code String address} into an {@code Address}.
@@ -166,6 +168,7 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
     }
 
+    //@@author ZacZequn
     /**
      * Parses a {@code String halal} into an {@code Halal}.
      * Leading and trailing whitespaces will be trimmed.
@@ -214,6 +217,7 @@ public class ParserUtil {
         requireNonNull(vegetarian);
         return vegetarian.isPresent() ? Optional.of(parseVegetarian(vegetarian.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses a {@code String tag} into a {@code Tag}.

@@ -1,3 +1,4 @@
+//@@author ZacZequn
 package seedu.address.model.dish;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;

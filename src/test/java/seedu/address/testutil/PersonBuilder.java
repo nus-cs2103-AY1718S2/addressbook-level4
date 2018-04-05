@@ -71,6 +71,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author ZacZequn
     /**
      * Sets the {@code Order} of the {@code Person} that we are building.
      */
@@ -78,6 +79,7 @@ public class PersonBuilder {
         this.order = new Order(order);
         return this;
     }
+    //@@author
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
@@ -111,6 +113,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author ZacZequn
     /**
      * Sets the {@code Halal} of the {@code Person} that we are building.
      */
@@ -126,6 +129,7 @@ public class PersonBuilder {
         this.vegetarian = new Vegetarian(vegetarian);
         return this;
     }
+    //@@author
 
 
     public Person build() {

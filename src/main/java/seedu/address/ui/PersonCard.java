@@ -50,7 +50,7 @@ public class PersonCard extends UiPart<Region> {
         email.setText(person.getEmail().value);
         initTags(person);
     }
-
+    //@@author ZacZequn
     /**
      * Returns the color style for {@code tagName}'s label.
      */
@@ -68,6 +68,7 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

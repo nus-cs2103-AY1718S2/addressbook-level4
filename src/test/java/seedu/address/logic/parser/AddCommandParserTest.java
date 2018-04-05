@@ -69,9 +69,11 @@ public class AddCommandParserTest {
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB + ORDER_DESC_BOB
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
+        //@@author ZacZequn
         // multiple orders - last order accepted
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + ORDER_DESC_AMY + ORDER_DESC_BOB
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+        //@@author
 
         // multiple emails - last email accepted
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + ORDER_DESC_BOB + EMAIL_DESC_AMY
@@ -111,9 +113,11 @@ public class AddCommandParserTest {
         assertParseFailure(parser, NAME_DESC_BOB + VALID_PHONE_BOB + ORDER_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB, expectedMessage);
 
+        //@@author ZacZequn
         // missing order prefix
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + VALID_ORDER_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB, expectedMessage);
+        //@@author
 
         // missing email prefix
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + VALID_EMAIL_BOB + ADDRESS_DESC_BOB,
@@ -138,9 +142,11 @@ public class AddCommandParserTest {
         assertParseFailure(parser, NAME_DESC_BOB + INVALID_PHONE_DESC + ORDER_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Phone.MESSAGE_PHONE_CONSTRAINTS);
 
+        //@@author ZacZequn
         // invalid order
         assertParseFailure(parser, NAME_DESC_BOB +  PHONE_DESC_BOB + INVALID_ORDER_DESC + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Order.MESSAGE_ORDER_CONSTRAINTS);
+        //@@author
 
         // invalid email
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + ORDER_DESC_BOB + INVALID_EMAIL_DESC

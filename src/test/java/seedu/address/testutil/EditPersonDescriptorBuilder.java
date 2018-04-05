@@ -57,13 +57,15 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author ZacZequn
     /**
-     * Sets the {@code Name} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Order} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withOrder(String order) {
         descriptor.setOrder(new Order(order));
         return this;
     }
+    //@@author
 
     /**
      * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.

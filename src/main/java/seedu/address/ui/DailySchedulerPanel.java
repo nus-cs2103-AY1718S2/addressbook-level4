@@ -14,7 +14,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.LoadDirectionsEvent;
 import seedu.address.commons.events.ui.LoadMapPanelEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.RemoveDirectionsEvent;
 import seedu.address.commons.events.ui.RemoveMapPanelEvent;
 import seedu.address.commons.events.ui.UpdateNumberOfButtonsEvent;
 
@@ -125,13 +124,13 @@ public class DailySchedulerPanel extends UiPart<Region> {
         updateDirections(event.getAddressOrigin(), event.getGetAddressDestination());
     }
 
-//    @Subscribe
-//    private void handleRemoveDirectionsEvent(RemoveDirectionsEvent event) {
-//        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-//        if (directionPanel != null && directionPanelPlaceholder.getChildren().contains(directionPanel.getRoot())) {
-//
-//        }
-//    }
+    //    @Subscribe
+    //    private void handleRemoveDirectionsEvent(RemoveDirectionsEvent event) {
+    //        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    //        if (directionPanel != null && directionPanelPlaceholder.getChildren().contains(directionPanel.getRoot())) {
+    //
+    //        }
+    //    }
     @Subscribe
     private void handleUpdateNumberOfButtonsEvent(UpdateNumberOfButtonsEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

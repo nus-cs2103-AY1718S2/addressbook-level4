@@ -1,7 +1,6 @@
 //@@author jaronchan
 package seedu.address.logic;
 
-import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.javascript.object.DirectionsPane;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
@@ -21,9 +20,6 @@ import com.lynden.gmapsfx.service.geocoding.GeocodingServiceCallback;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
-
-//import seedu.address.commons.core.EventsCenter;
-//import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
 
 /**
  * Handles changes to any Map user interfaces.

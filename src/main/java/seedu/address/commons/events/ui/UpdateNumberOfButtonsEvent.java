@@ -1,8 +1,12 @@
+//@@author jaronchan
 package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 
-public class UpdateNumberOfButtonsEvent extends BaseEvent{
+/**
+ * An event that updates the number of Scheduler Map Buttons to display.
+ */
+public class UpdateNumberOfButtonsEvent extends BaseEvent {
 
     private final int numOfInstances;
 

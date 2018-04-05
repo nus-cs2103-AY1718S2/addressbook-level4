@@ -89,9 +89,9 @@ public class MapPanel extends UiPart<Region>
     public void loadDirections(String addressOrigin, String addressDestination) {
         MapManager.DirectionsUtil.setDirectionsOnMap(map, mapView.getDirec(), addressOrigin, addressDestination);
     }
-//    public void removeDirections() {
-//
-//    }
+    //    public void removeDirections() {
+    //
+    //    }
     public void freeResources() {
         map = null;
     }

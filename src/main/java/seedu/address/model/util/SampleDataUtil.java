@@ -31,6 +31,10 @@ public class SampleDataUtil {
             new Customer(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                 new Address("Blk 30 Geylang Street 29, #06-40"),
                 getTagSet("friends"), new MoneyBorrowed(100), defaultDate(), new Date(),
+                new StandardInterest(1), new LateInterest(), new Runner()),
+            new Customer(new Name("Jonathan Lee"), new Phone("999"), new Email("monster@example.com"),
+                    new Address("Blk 349 Geylang Street 29, #06-40"),
+                    getTagSet("employeeOfTheMonth"), new MoneyBorrowed(100), defaultDate(), new Date(),
                     new StandardInterest(1), new LateInterest(), new Runner())
         };
     }

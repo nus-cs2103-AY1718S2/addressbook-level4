@@ -19,6 +19,7 @@ import seedu.progresschecker.logic.commands.EditCommand;
 import seedu.progresschecker.logic.commands.EditIssueCommand;
 import seedu.progresschecker.logic.commands.ExitCommand;
 import seedu.progresschecker.logic.commands.FindCommand;
+import seedu.progresschecker.logic.commands.GitLoginCommand;
 import seedu.progresschecker.logic.commands.HelpCommand;
 import seedu.progresschecker.logic.commands.HistoryCommand;
 import seedu.progresschecker.logic.commands.ListCommand;
@@ -151,6 +152,10 @@ public class ProgressCheckerParser {
         case CloseIssueCommand.COMMAND_WORD:
         case CloseIssueCommand.COMMAND_ALIAS:
             return new CloseIssueCommandParser().parse(arguments);
+            
+        case GitLoginCommand.COMMAND_WORD:
+        case GitLoginCommand.COMMAND_ALIAS:
+            return new GitLoginCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

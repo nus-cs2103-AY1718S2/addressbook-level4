@@ -23,6 +23,7 @@ import org.kohsuke.github.GitHub;
 import javafx.collections.ObservableList;
 import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
+import seedu.progresschecker.model.credentials.GitDetails;
 import seedu.progresschecker.model.exercise.Exercise;
 import seedu.progresschecker.model.exercise.UniqueExerciseList;
 import seedu.progresschecker.model.exercise.exceptions.DuplicateExerciseException;
@@ -178,6 +179,15 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
 
     //issue-level operations
 
+    /**
+     * Login to github
+     * 
+     * @throws IOException is there is any problem in authentication
+     *
+     */
+    public void loginGithub(GitDetails gitdetails) throws IOException {
+        
+    }
     /**
      * Creates issue on github
      *

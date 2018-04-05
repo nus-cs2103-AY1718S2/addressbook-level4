@@ -3,20 +3,12 @@ package seedu.progresschecker.logic.commands;
 //@@author adityaa1998
 
 import static java.util.Objects.requireNonNull;
-import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_ASSIGNEES;
-import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_BODY;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_GIT_PASSCODE;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_GIT_REPO;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_GIT_USERNAME;
-import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_LABEL;
-import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_MILESTONE;
-import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_TITLE;
-
-import java.io.IOException;
 
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.credentials.GitDetails;
-import seedu.progresschecker.model.issues.Issue;
 
 /**
  * Logins into github from app for issue creation
@@ -27,14 +19,14 @@ public class GitLoginCommand extends Command {
     public static final String COMMAND_ALIAS = "gl";
     public static final String COMMAND_FORMAT = COMMAND_WORD + " "
             + PREFIX_GIT_USERNAME + "USERNAME "
-            + PREFIX_GIT_REPO + "REPOSITORY "
-            + PREFIX_GIT_PASSCODE + "PASSCODE ";
+            + PREFIX_GIT_PASSCODE + "PASSCODE "
+            + PREFIX_GIT_REPO + "REPOSITORY ";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Logs into github "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Logs into github \n"
             + "Parameters: "
             + PREFIX_GIT_USERNAME + "USERNAME "
-            + PREFIX_GIT_REPO + "REPOSITORY "
             + PREFIX_GIT_PASSCODE + "PASSCODE "
+            + PREFIX_GIT_REPO + "REPOSITORY "
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_GIT_USERNAME + "johndoe "
             + PREFIX_GIT_PASSCODE + "dummy123 "
@@ -51,15 +43,16 @@ public class GitLoginCommand extends Command {
         requireNonNull(gitDetails);
         toAuthenticate = gitDetails;
     }
+    
     @Override
     public CommandResult execute() throws CommandException {
 
-        try {
-            model.createIssueOnGitHub(toCreate);
+//        try {
+//            model.createIssueOnGitHub(toCreate);
             return new CommandResult(MESSAGE_SUCCESS);
-        } catch (IOException e) {
-            throw new CommandException(MESSAGE_FAILURE);
-        }
+//        } catch (IOException e) {
+//            throw new CommandException(MESSAGE_FAILURE);
+//        }
     }
 
 }

@@ -3,6 +3,8 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -139,6 +141,69 @@ public class ModelManager extends ComponentManager implements Model {
         return null;
     }
 
+    //@@author chialejing
+    @Override
+    public ArrayList<PetPatient> getPetPatientsWithNric(Nric ownerNric) {
+        ArrayList<PetPatient> petPatientArrayList = new ArrayList<>();
+        for (PetPatient p : addressBook.getPetPatientList()) {
+            if (p.getOwner().equals(ownerNric)) {
+                petPatientArrayList.add(p);
+            }
+        }
+        return petPatientArrayList;
+    }
+
+    @Override
+    public ArrayList<Appointment> getAppointmentsWithNric(Nric ownerNric) {
+        ArrayList<Appointment> appointmentArrayList = new ArrayList<>();
+        for (Appointment a : addressBook.getAppointmentList()) {
+            if (a.getOwnerNric().equals(ownerNric)) {
+                appointmentArrayList.add(a);
+            }
+        }
+        return appointmentArrayList;
+    }
+
+    @Override
+    public ArrayList<Appointment> getAppointmentsWithNricAndPetName(Nric ownerNric, PetPatientName petPatientName) {
+        ArrayList<Appointment> appointmentArrayList = new ArrayList<>();
+        for (Appointment a : addressBook.getAppointmentList()) {
+            if (a.getOwnerNric().equals(ownerNric) && a.getPetPatientName().equals(petPatientName)) {
+                appointmentArrayList.add(a);
+            }
+        }
+        return appointmentArrayList;
+    }
+
+    @Override
+    public Appointment getClashingAppointment(LocalDateTime dateTime) {
+        for (Appointment a : addressBook.getAppointmentList()) {
+            if (a.getDateTime().equals(dateTime)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void updatePetPatient(PetPatient target, PetPatient editedPetPatient)
+            throws DuplicatePetPatientException, PetPatientNotFoundException {
+        requireAllNonNull(target, editedPetPatient);
+
+        addressBook.updatePetPatient(target, editedPetPatient);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateAppointment(Appointment target, Appointment editedAppointment)
+            throws DuplicateAppointmentException, AppointmentNotFoundException {
+        requireAllNonNull(target, editedAppointment);
+
+        addressBook.updateAppointment(target, editedAppointment);
+        indicateAddressBookChanged();
+    }
+
+    //@@author
     @Override
     public void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {

@@ -169,8 +169,7 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parseAppointment(String appointmentInfo) throws ParseException {
         requireNonNull(appointmentInfo);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(appointmentInfo, PREFIX_DATE, PREFIX_REMARK, PREFIX_NRIC,
-                        PREFIX_NAME, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(appointmentInfo, PREFIX_DATE, PREFIX_REMARK, PREFIX_TAG);
 
         Index index;
 
@@ -182,14 +181,14 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         EditAppointmentDescriptor editAppointmentDescriptor = new EditAppointmentDescriptor();
         try {
-            ParserUtil.parsePetPatientName(argMultimap.getValue(PREFIX_NAME))
-                    .ifPresent(editAppointmentDescriptor::setPetPatientName);
+            // ParserUtil.parsePetPatientName(argMultimap.getValue(PREFIX_NAME))
+            //        .ifPresent(editAppointmentDescriptor::setPetPatientName);
             ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_DATE))
                     .ifPresent(editAppointmentDescriptor::setLocalDateTime);
             ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK))
                     .ifPresent(editAppointmentDescriptor::setRemark);
-            ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC))
-                    .ifPresent(editAppointmentDescriptor::setOwnerNric);
+            //ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC))
+            //        .ifPresent(editAppointmentDescriptor::setOwnerNric);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG))
                     .ifPresent(editAppointmentDescriptor::setTags);
         } catch (IllegalValueException ive) {

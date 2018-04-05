@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -339,6 +340,42 @@ public class AddCommandTest {
         public void updatePerson(Person target, Person editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void updatePetPatient(PetPatient target, PetPatient editedPetPatient)
+                throws DuplicatePetPatientException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateAppointment(Appointment target, Appointment editedAppointment)
+                throws DuplicateAppointmentException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ArrayList<PetPatient> getPetPatientsWithNric(Nric ownerNric) {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ArrayList<Appointment> getAppointmentsWithNric(Nric ownerNric) {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ArrayList<Appointment> getAppointmentsWithNricAndPetName(Nric ownerNric, PetPatientName petPatientName) {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public Appointment getClashingAppointment(LocalDateTime dateTime) {
+            fail("This method should not be called.");
+            return null;
         }
 
         @Override

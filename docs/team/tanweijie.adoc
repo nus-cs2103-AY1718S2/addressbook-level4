@@ -54,6 +54,8 @@ include::../UserGuide.adoc[tag=sort]
 
 include::../UserGuide.adoc[tag=addplatform]
 
+include::../UserGuide.adoc[tag=removeplatform]
+
 == Contributions to the Developer Guide
 
 |===
@@ -64,6 +66,7 @@ include::../DeveloperGuide.adoc[tag=product-scope]
 
 include::../DeveloperGuide.adoc[tag=user-stories]
 
+include::../DeveloperGuide.adoc[tag=sort]
 
 == PROJECT: PowerPointLabs
 

@@ -50,7 +50,7 @@ public class PersonCardTest extends GuiUnitTest {
 
         // with platforms purposely put into wrong key, should not display any icons
         Map<String, SocialMediaPlatform> customSmpMap = new HashMap<String, SocialMediaPlatform>();
-        customSmpMap.put("unknown", new Facebook(new Link("www.facebook.com/testlink")));
+        customSmpMap.put(Link.UNKNOWN_LINK_TYPE, new Facebook(new Link("www.facebook.com/testlink")));
         Set<Tag> defaultTags = new HashSet<>();
         defaultTags.add(new Tag("friends"));
 

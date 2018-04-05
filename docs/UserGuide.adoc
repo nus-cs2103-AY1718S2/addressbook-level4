@@ -67,24 +67,23 @@ Format: `help`
 === Adding a student: `add` or `a`
 
 Adds a student to _EduBuddy_ +
-Format: `add n/NAME p/PHONE_NUMBER ic/NRIC t/CLASS t/CLASS_REGISTER sub/SUBJECT_NAME SUBJECT_GRADE SUBJECT_NAME2 SUBJECT_GRADE2...` +
-Abbreviation Format: `a n/NAME p/PHONE_NUMBER ic/NRIC t/CLASS t/CLASS_REGISTER sub/SUBJECT_NAME SUBJECT_GRADE SUBJECT_NAME2 SUBJECT_GRADE2...`
-
-[NOTE]
-Students with the same name can be added, provided that their IC numbers are different.
+Format: `add n/NAME ic/NRIC [t/CLASS] [r/REMARK] [sub/SUBJECT_NAME SUBJECT_GRADE SUBJECT_NAME2 SUBJECT_GRADE2...]` +
+Abbreviation Format: `a n/NAME ic/NRIC [t/CLASS] [r/REMARK] [sub/SUBJECT_NAME SUBJECT_GRADE SUBJECT_NAME2 SUBJECT_GRADE2...]`
 
 [IMPORTANT]
 A `SPACE` should be inserted between each `SUBJECT_NAME` and `SUBJECT_GRADE`. +
+
+[NOTE]
 At least 1 subject from each L1R5 category should be assigned to a student. +
 For example: English, EMath(Elementary Mathematics), Hist(History), Chinese, Phy(Physics), Music. +
 For more examples on what subjects and subject grades can be added, please refer to the <<FAQ>> section below.
 
 Examples:
 
-* `add n/John Doe p/91234567 ic/S9500186H t/1A t/20 sub/English B3 EMath A2`
-* `add n/Betsy Crowe p/91234567 t/2B t/21 ic/S9511111I`
-* `a n/John Doe p/91234567 ic/S9500186H t/1A t/2 sub/English B3 EMath A2`
-* `a n/Betsy Crowe p/91234567 t/2B t/21 ic/S9511111I`
+* `add n/John Doe ic/S9500186H t/1A r/English Rep sub/English B3 EMath A2`
+* `add n/Betsy Crowe ic/S9511111I`
+* `a n/John Doe ic/S9500186H t/1A r/English Rep sub/English B3 EMath A2`
+* `a n/Betsy Crowe ic/S9511111I`
 
 === Listing all students : `list` or `l`
 
@@ -384,17 +383,6 @@ Adds a remark to the 1st student in the results of the `find` command.
 
 *_return to <<toc,Table of Contents>>_*
 
-=== Clearing all entries : `clear` or `c`
-
-Clears all student entries from _EduBuddy_. +
-Format: `clear` +
-Abbreviation Format: `c`
-
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit`
-
 === Creating an appointment: `appointment` or `appt` [since v1.4]
 
 Creates an appointment (e.g. setting a consultation time slot with students)
@@ -409,6 +397,10 @@ Abbreviation Format: `appt INDEX d/DATE s/START_TIME e/END_TIME`
 `START_TIME` and `END_TIME` should be in *24 hour* format e.g. 3:30p.m. would be 1530. +
 `INDEX` *must be a positive integer*: 1, 2, 3, ...
 
+[NOTE]
+After the appointment is successfully created, right click on the calendar and select
+`Reload page` to see your appointment.
+
 Examples:
 
 * `appointment 1 d/01022018 s/1500 e/1600` +
@@ -418,6 +410,16 @@ Creates an appointment with the 3rd student on 20th Apr 2018 from 9:30a.m. to 11
 
 *_return to <<toc,Table of Contents>>_*
 
+=== Clearing all entries : `clear` or `c`
+
+Clears all student entries from _EduBuddy_. +
+Format: `clear` +
+Abbreviation Format: `c`
+
+=== Exiting the program : `exit`
+
+Exits the program. +
+Format: `exit`
 
 // tag::CCA section[]
 === CCA section `[coming in v2.0]`

@@ -192,9 +192,9 @@ Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
 * `find ir&ast; &ast;li n/"example"` - displays a list of people with **any** of their fields that matches the following:
    1. Start with keyword `ir`
    2. End with keyword `li`
-   3. Start with keyword `n/*example` (Prefix is ignored in this case similar to <<Locating persons by exact keyword search: `find` [Since v1.2]>>
+   3. Contains keyword `n/"example"` (Prefix is ignored in this case similar to <<Locating persons by exact keyword search: `find` [Since v1.2]>>
 
-* `find n/alex &ast;bern&ast; e/&ast;example.com p/&ast;8&ast; m/Computer&ast;` - displays a list of people matching:
+* `find n/alex "bern"; e/&ast;example.com p/"8" m/Computer&ast;` - displays a list of people matching:
    1. Name field containing exact keyword `alex` **OR** name field that contains keyword `bern` **AND**
    2. Email field that ends with keyword `example.com` **AND**
    3. Phone field that contains keyword `8` **AND**
@@ -210,15 +210,13 @@ Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * All fields are searched if no prefix is supplied
 * Different keywords should be **comma separated**, if not it will be treated as one keyword
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Persons matching at least one keyword will be returned
 * If the first keyword is not a prefix, this command would assume a global search for **all** fields.
 * A global search does an **OR** search between keywords
 * A prefix search does an **OR** search between keywords in the same prefix and an **AND** search between different prefixes.
-* The fuzzy matching algorithm is based on the Levenshtein distance (LD), which is a measure of the similarity between two strings. The threshold is set to `2` in HR+.
+* The fuzzy matching algorithm is based on the `Levenshtein distance (LD)`, which is a measure of the similarity between two strings. The threshold is set to `2` in HR+.
 ****
 
 Examples:

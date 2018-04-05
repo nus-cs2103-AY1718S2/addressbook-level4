@@ -19,7 +19,7 @@ public class MonthCommand extends Command {
             + "Example: " + COMMAND_WORD + " 2018-03";
 
     public static final String MESSAGE_SUCCESS = "View month: %1$s";
-    public static final String YEAR_MONTH_VALIDATION_REGEX = "^$|^\\d{4}-\\d{2}";
+    public static final String YEAR_MONTH_VALIDATION_REGEX = "^$|^[1-3][0-9][0-9][0-9]-(1[0-2]|0[1-9])";
     public static final String MESSAGE_YEAR_MONTH_CONSTRAINTS = "Month needs to be null or in format YYYY-MM";
 
     private final YearMonth yearMonth;

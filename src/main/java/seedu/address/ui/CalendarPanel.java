@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ShowDateRequestEvent;
+import seedu.address.commons.events.ui.ShowDateTimeRequestEvent;
 import seedu.address.commons.events.ui.ShowMonthRequestEvent;
 import seedu.address.commons.events.ui.ShowWeekRequestEvent;
 import seedu.address.commons.events.ui.ShowYearRequestEvent;
@@ -113,6 +114,12 @@ public class CalendarPanel extends UiPart<Region> {
         } else {
             calendarView.showDate(event.targetDate);
         }
+    }
+
+    @Subscribe
+    private void handleShowDateTimeRequestEvent(ShowDateTimeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        calendarView.showDateTime(event.targetDateTime);
     }
 
     @Subscribe

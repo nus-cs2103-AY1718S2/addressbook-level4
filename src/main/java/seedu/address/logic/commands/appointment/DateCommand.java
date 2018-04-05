@@ -19,8 +19,9 @@ public class DateCommand extends Command {
             + "Example: " + COMMAND_WORD + " 2018-03-26";
 
     public static final String MESSAGE_SUCCESS = "View date: %1$s";
-    public static final String DATE_VALIDATION_REGEX = "^$|^\\d{4}-\\d{2}-\\d{2}";
-    public static final String MESSAGE_DATE_CONSTRAINTS = "Date needs to be null or in format YYYY-MM-DD";
+    public static final String DATE_VALIDATION_REGEX =
+            "^$|^[1-3][0-9][0-9][0-9]-(1[0-2]|0[1-9])-(0[1-9]|[1-2][0-9]|3[0-1])";
+    public static final String MESSAGE_DATE_CONSTRAINTS = "Date needs to be null or a valid date in format YYYY-MM-DD";
 
     private final LocalDate date;
 

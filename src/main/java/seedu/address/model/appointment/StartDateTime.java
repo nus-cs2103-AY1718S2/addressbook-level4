@@ -16,7 +16,8 @@ public class StartDateTime {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String START_DATE_TIME_VALIDATION_REGEX = "^\\d{4}-\\d{2}-\\d{2}[ ]\\d{2}:\\d{2}$";
+    public static final String START_DATE_TIME_VALIDATION_REGEX =
+            "^[1-3][0-9][0-9][0-9]-(1[0-2]|0[1-9])-(0[1-9]|[1-2][0-9]|3[0-1])\\s([0-1][0-9]|2[0-4]):([0-5][0-9])$";
 
     public final String startDateTime;
 

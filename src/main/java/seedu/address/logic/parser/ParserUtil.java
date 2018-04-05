@@ -3,6 +3,8 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.commands.appointment.DateCommand.DATE_VALIDATION_REGEX;
 import static seedu.address.logic.commands.appointment.DateCommand.MESSAGE_DATE_CONSTRAINTS;
+import static seedu.address.logic.commands.appointment.DateTimeCommand.DATE_TIME_VALIDATION_REGEX;
+import static seedu.address.logic.commands.appointment.DateTimeCommand.MESSAGE_DATE_TIME_CONSTRAINTS;
 import static seedu.address.logic.commands.appointment.MonthCommand.MESSAGE_YEAR_MONTH_CONSTRAINTS;
 import static seedu.address.logic.commands.appointment.MonthCommand.YEAR_MONTH_VALIDATION_REGEX;
 import static seedu.address.logic.commands.appointment.WeekCommand.MESSAGE_WEEK_CONSTRAINTS;
@@ -11,8 +13,10 @@ import static seedu.address.logic.commands.appointment.YearCommand.MESSAGE_YEAR_
 import static seedu.address.logic.commands.appointment.YearCommand.YEAR_VALIDATION_REGEX;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Year;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -471,6 +475,25 @@ public class ParserUtil {
             return null;
         } else {
             return LocalDate.parse(trimmedDate);
+        }
+    }
+
+    /**
+     * Parses a {@code String dateTime} into a {@code dateTime}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code dateTime} is invalid.
+     */
+    public static LocalDateTime parseDateTime(String dateTime) throws IllegalValueException {
+        String trimmedDateTime = dateTime.trim();
+        if (!trimmedDateTime.matches(DATE_TIME_VALIDATION_REGEX)) {
+            throw new IllegalValueException(MESSAGE_DATE_TIME_CONSTRAINTS);
+        }
+        if (trimmedDateTime.length() == 0) {
+            return null;
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            return LocalDateTime.parse(trimmedDateTime, formatter);
         }
     }
 

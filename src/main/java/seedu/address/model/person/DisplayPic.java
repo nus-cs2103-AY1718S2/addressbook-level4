@@ -12,6 +12,7 @@ import seedu.address.storage.DisplayPicStorage;
 /**
  * Represents the filepath of a Person's displayPic in the address book.
  */
+//@@author Alaru
 public class DisplayPic {
 
     public static final String DEFAULT_DISPLAY_PIC = "/images/displayPic/default.png";

@@ -18,6 +18,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 /**
  * Adds a person to the address book.
  */
+//@@author Alaru
 public class MarkCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "markPart";

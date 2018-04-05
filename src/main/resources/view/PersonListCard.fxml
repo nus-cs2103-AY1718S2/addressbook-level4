@@ -12,11 +12,13 @@
 <?import javafx.scene.layout.VBox?>
 
 <HBox id="cardPane" fx:id="cardPane" alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <ImageView fx:id="displayPic" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+  <!-- @@author Alaru -->
+  <ImageView fx:id="displayPic" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
       <HBox.margin>
          <Insets left="15.0" />
       </HBox.margin>
    </ImageView>
+  <!-- @@author -->
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />

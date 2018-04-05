@@ -19,6 +19,7 @@ import seedu.address.model.person.DisplayPic;
 /**
  *  A class to save and open image files from the user's hard disk.
  */
+//@@author Alaru
 public class DisplayPicStorage {
 
     public static final String SAVE_LOCATION = "data/displayPic/";

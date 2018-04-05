@@ -3,6 +3,7 @@ package seedu.address.model.person;
 /**
  * Represents a Person's tutorial participation in the address book.
  */
+//@@author Alaru
 public class Participation {
 
     public static final String MESSAGE_PARTICPATION_CONSTRAINTS = "Participation marks cannot be negative or over 100!";

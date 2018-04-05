@@ -13,6 +13,7 @@ import java.util.List;
  *
  * @see String#equals(Object)
  */
+//@@author Alaru
 public class UniqueItemList {
 
     private final ArrayList<String> internalList = new ArrayList<>();

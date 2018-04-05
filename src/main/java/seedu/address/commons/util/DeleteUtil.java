@@ -9,7 +9,7 @@ import seedu.address.model.person.Person;
 /**
  * A class for deleting and managing unwanted storage files
  */
-
+//@@author Alaru
 public class DeleteUtil {
 
     /**

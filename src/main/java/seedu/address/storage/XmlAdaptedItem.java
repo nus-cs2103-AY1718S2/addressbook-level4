@@ -9,6 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 /**
  * JAXB-friendly version of a filepath.
  */
+//@@author Alaru
 public class XmlAdaptedItem {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Filepath is missing.";

@@ -13,6 +13,7 @@ import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.building.Building;
 import seedu.address.model.building.exceptions.BuildingNotFoundException;
 import seedu.address.model.building.exceptions.CorruptedVenueInformationException;
+import seedu.address.model.building.exceptions.NoRoomsInBuildingException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -100,7 +101,7 @@ public interface Model {
 
     //@@author Caijun7
     /** Returns rooms for the given building */
-    ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
-                                                                                    CorruptedVenueInformationException;
+    ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building)
+            throws BuildingNotFoundException, CorruptedVenueInformationException, NoRoomsInBuildingException;
     //@@author
 }

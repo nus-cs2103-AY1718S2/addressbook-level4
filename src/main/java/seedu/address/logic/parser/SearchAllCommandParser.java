@@ -19,8 +19,8 @@ public class SearchAllCommandParser {
      */
     public SearchAllCommand parse(String args) throws ParseException {
         try {
-            Index index = ParserUtil.parseIndex(args);
-            return new SearchAllCommand(index);
+            String inputName = ParserUtil.parseSearchName(args);
+            return new SearchAllCommand(inputName);
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchAllCommand.MESSAGE_USAGE));

@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -146,6 +147,20 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredTaskList(Predicate<Task> predicate) {
+
+        }
+
+        @Override
+        public void addDeleteItem(String filepath) {
+        }
+
+        @Override
+        public List<String> getItemList() {
+            return null;
+        }
+
+        @Override
+        public void clearDeleteItems() {
 
         }
     }

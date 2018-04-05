@@ -95,6 +95,11 @@ public class AddressBookTest {
         public ObservableList<Tag> getTagList() {
             return tags;
         }
+
+        @Override
+        public List<String> getItemList() {
+            return null;
+        }
     }
 
 }

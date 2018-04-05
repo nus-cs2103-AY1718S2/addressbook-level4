@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.timetable.Lesson;
-import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author AzuraAiR
 /**
@@ -38,9 +37,9 @@ public class TimetableWeek {
     /**
      * Add lesson to its respective day
      * @param lesson Lesson to be added
-     * @throws ParseException when Day is invalid
+     * @throws IllegalValueException when Day is invalid
      */
-    public void addLessonToWeek(Lesson lesson) throws ParseException {
+    public void addLessonToWeek(Lesson lesson) throws IllegalValueException {
         try {
             switch (lesson.getDay()) {
             case MONDAY_IDENTIFIER:
@@ -64,10 +63,10 @@ public class TimetableWeek {
                 break;
 
             default:
-                throw new ParseException(MESSAGE_INVALID_DAY);
+                throw new IllegalValueException(MESSAGE_INVALID_DAY);
             }
         } catch (IllegalValueException ie) {
-            throw new ParseException(ie.getMessage());
+            throw new IllegalValueException(MESSAGE_INVALID_DAY);
         }
     }
 

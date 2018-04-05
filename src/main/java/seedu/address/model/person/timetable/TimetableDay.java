@@ -43,7 +43,7 @@ public class TimetableDay {
      * @param time timing from NUSMods
      * @return index for slot array
      */
-    private int parseStartEndTime(String time) throws IllegalValueException {
+    public static int parseStartEndTime(String time) throws IllegalValueException {
         int value = Integer.parseInt(time) / 100;
 
         if (isValidTimeSlot(value)) {
@@ -72,7 +72,7 @@ public class TimetableDay {
      * @param index
      * @return true or false
      */
-    private boolean isValidTimeSlot(int index) {
+    private static boolean isValidTimeSlot(int index) {
         return (index < NUM_OF_SLOTS && index >= 0);
     }
 

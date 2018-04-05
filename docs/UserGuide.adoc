@@ -57,7 +57,8 @@ E.g. typing `help` and pressing kbd:[Enter] will open the help window.
 ** *_INSTRUCTION_* can receive multiple lines as its value.
 ** *_TIME_* fields accept a number of formats: `1h20m`, `1h20min`, `1 hour 20 minutes`, `80m`, `80min`, `80 mins`, etc. However, sticking to the most simple format `80m` is recommended.
 ** *_CALORIES_* and *_SERVINGS_* are positive numbers. E.g. `120`, `5000`, etc.
-** *_LINK_* takes a valid website address as its value. E.g. `http://google.com`.
+** *_URL_* takes a valid website address as its value. E.g. `http://google.com`.
+** *_IMAGE_* takes a valid image path as its value (E.g. for macOS: `/Users/administrator/Desktop/image.png`, for windows: `C:\Users\admin\image.png`).
 * Items in square brackets are optional e.g `name/NAME [tag/TAG]` can be used as *`name/Chicken rice tag/chicken`* or as *`name/Chicken rice`*.
 * Items with `...` after them can be used multiple times including zero times e.g. `[tag/TAG]...` can be used as `{nbsp}` (i.e. 0 times), *`tag/rice`*, *`tag/rice tag/chicken`*, etc.
 * Parameters can be in any order. E.g. if the command specifies `name/RECIPE_NAME instruction/INSTRUCTION`, `instruction/INSTRUCTION name/RECIPE_NAME` has the same effect.
@@ -76,7 +77,7 @@ E.g. typing `help` and pressing kbd:[Enter] will open the help window.
 
 Adds a recipe to the recipe book.
 
-Format: `add name/RECIPE_NAME [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [link/LINK] [tag/TAG]...`
+Format: `add name/RECIPE_NAME [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/URL] [img/IMAGE] [tag/TAG]...`
 
 [TIP]
 ====
@@ -103,13 +104,14 @@ You can split the command into multiple lines as shown in the figure below. In c
 image::AddCommandEg2.png[width="750"]
 
 {nbsp} +
-If you follow correctly, the result box will tell you so and your recipe will be added to the book (<<fig-AddRecipeResult>>).
+If you follow the instructions correctly, the result box will inform you and your recipe will be added to the book (<<fig-AddRecipeResult>>).
 {nbsp} +
 {nbsp}
 
 [[fig-AddRecipeResult]]
 .After adding a recipe
 image::AddCommandResultEg.png[width="750"]
+{nbsp} +
 
 === *`clear`* : Clearing all entries
 
@@ -122,6 +124,7 @@ See figure below for the expected behavior of this command. +
 
 .Effect of the clear command
 image::ClearCommand.png[width="750"]
+{nbsp} +
 [TIP]
 If you clear your recipe book by mistake, you can reverse the destructive process with an `undo`.
 
@@ -152,7 +155,7 @@ Deletes the 1st recipe in the results of the *`find`* command.
 
 Edits an existing recipe in the recipe book.
 
-Format: `edit INDEX [name/RECIPE_NAME] [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/LINK] [tag/TAG]`
+Format: `edit INDEX [name/RECIPE_NAME] [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/URL] [tag/TAG]`
 
 ****
 Details
@@ -284,7 +287,7 @@ There is no need to save manually.
 [[Search]]
 === *`search`* : Searching on the Internet
 
-Searchs for your recipe on the Internet.
+Searches for your recipe on the Internet.
 
 Format: `search RECIPE_NAME`
 
@@ -294,6 +297,7 @@ See <<fig-InternetSearchCommand>> for more information. +
 [[fig-InternetSearchCommand]]
 .Searching for your recipe on the Internet directly from ReciRecipé
 image::InternetSearchCommand.png[width="750"]
+{nbsp} +
 Examples:
 
 * *`search chicken rice`* +
@@ -314,7 +318,8 @@ Format: `select INDEX`
 ****
 Details
 
-* If the selected recipe has a URL, the in-app browser will load that URL.
+* If the selected recipe has a URL, the in-app browser will load that URL. Otherwise, it will load the recipe contents.
+* The result display will always show the recipe content regardless of whether there is an embedded URL or not.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer*, e.g. "1, 2, 3, ...".
 ****
@@ -341,11 +346,14 @@ Details
 * The index *must be a positive integer*, e.g. "1, 2, 3, ...".
 * The text in the recipe will be copied to the clipboard for the User to paste into the Facebook post.
 * The Facebook authentication page is shown on the browser for the User to log in.
-* Upon logging in: if the shared recipe has a URL, the in-app browser will load a feed dialog for the User to share the URL as shown below:
-image::Facebook_Feed_Dialog.jpg[width="400"]
+* Upon logging in: if the shared recipe has a URL, the in-app browser will load a feed dialog for the User to share the URL as shown below (see <<fig-FacebookFeedDialog>>).
 * The User will be redirected back to his/her Facebook feed once the post has been made.
 ****
 
+[[fig-FacebookFeedDialog]]
+.Facebook Feed Dialog
+image::FacebookFeedDialog.jpg[width="600"]
+{nbsp} +
 Examples:
 
 * *`list`* +
@@ -390,6 +398,7 @@ See <<fig-ChangeThemeCommand>> for more information. +
 [[fig-ChangeThemeCommand]]
 .Two themes provided for ReciRecipé
 image::ChangeThemeCommand.png[width="750"]
+{nbsp} +
 [TIP]
 You can change theme from the menu bar or by pressing F2 too!
 //end::change-theme[]
@@ -467,7 +476,7 @@ Format: `push INDEX`
 ****
 Details
 
-* If the selected recipe has a link, the in-app browser will load that link.
+* If the selected recipe has a URL, the in-app browser will load that URL.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer*, e.g. "1, 2, 3, ...".
 ****
@@ -502,7 +511,7 @@ A: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue
 |===
 | Command | Format and example
 
-.2+|    *Add*               |   `add name/RECIPE_NAME [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/LINK] [tag/TAG]...`
+.2+|    *Add*               |   `add name/RECIPE_NAME [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/URL] [img/IMAGE] [tag/TAG]...`
                             |   E.g. *`add name/Chicken Rice ingredient/chicken, rice cooking_time/10m tag/good tag/fast`*
 .2+|    *Change theme*      |  `theme`
                             |  *`theme`*
@@ -510,7 +519,7 @@ A: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue
                             |  *`clear`*
 .2+|    *Delete*            |  `delete INDEX`
                             |   E.g. *`delete 3`*
-.2+|    *Edit*              |  `edit INDEX [name/RECIPE_NAME] [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/LINK] [tag/TAG]`
+.2+|    *Edit*              |  `edit INDEX [name/RECIPE_NAME] [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/URL] [img/IMAGE] [tag/TAG]`
                             |   E.g. *`edit 2 name/Chicken pizza ingredient/INGREDIENT/flour,chicken,pepper`*
 .2+|    *Find*              |  `find KEYWORD [MORE_KEYWORDS]`
                             |   E.g. *`find Chicken Pizza`*

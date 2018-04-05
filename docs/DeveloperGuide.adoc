@@ -506,6 +506,18 @@ private static final String ACCESS_TOKEN = "example_of_legit_token_taken_from_dr
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: *config.json*).
 
+// tag::displaying-a-recipe[]
+=== Displaying a recipe
+==== Current Implementation
+
+The text from a selected recipe is always displayed in the `_ResultDisplay_`.
+
+When a recipe has an embedded URL, the browser panel displays the web page of the URL. Otherwise, it shows a HTML formatted recipe.
+
+The `_HtmlFormatter_` class is responsible for the HTML formatting of a recipe.
+
+// end::displaying-a-recipe[]
+
 // tag::embedded-url[]
 === Embedded URL
 
@@ -584,15 +596,44 @@ The `_BrowserPanel_` will be updated to show the Facebook feed of the User.
 
 ==== Design considerations
 
-===== Aspect: Implementation of Facebook sharing
+===== Aspect: Implementation of Facebook sharing.
 
-* **Alternative 1 (current choice):** Use a feed dialog
+* **Alternative 1 (current choice):** Use a feed dialog.
 ** Pros: User has more control over what is posted on their Facebook wall. Implementation is easier to maintain.
 ** Cons: User has to take more steps to successfully make a post (paste recipe onto post, click "post").
-* **Alternative 2:** Use RestFB API
+* **Alternative 2:** Use RestFB API.
 ** Pros: Recipe is posted immediately on the User's Facebook wall using the *`share`* command. User need not manually paste the recipe from the clipboard onto the post.
 ** Cons: User *must* manually obtain their Facebook access key and input it into the application - this may raise security concerns (Facebook does not allow automatic posting of text even if permission is given by the User upon log in).
 // end::facebook-compatibility[]
+
+// tag::inserting-an-image[]
+=== Inserting an image
+==== Current Implementation
+
+The image field is an optional field in the *`add`* command and can be omitted. A user can add an image to a recipe by inserting the absolute path name of the image into the image field.
+
+An `_ImageView_` has been inserted into RecipeListCard.fxml so that the image can also be displayed on the recipe card. The image is set in the `_RecipeCard_` class, which is the controller for the FXML file. This is shown below:
+
+[source,java]
+----
+    FileInputStream input = new FileInputStream(recipe.getImage().toString());
+    Image image = new Image(input);
+    imageView.setImage(image);
+----
+
+The recipe image is displayed using an <img> HTML tag in the HTML formatted recipe.
+
+==== Design considerations
+
+===== Aspect: Implementation of inserting image.
+
+* **Alternative 1 (current choice):** Insert the absolute image path during an *`add`* command.
+** Pros: No need for a mouse. Ensures that the application still uses Command Line Interface for important operations.
+** Cons: User may take a significant amount of time to type out the image path.
+* **Alternative 2 :** Drag and drop an image onto the GUI.
+** Pros: More intuitive for the user as there is no need to deal with image paths.
+** Cons: Deviates from the Command Line Interface.
+// end::inserting-an-image[]
 
 === Keyboard shortcuts
 // tag::keyboard-shortcut[]
@@ -1352,110 +1393,110 @@ Removes the remark for the first recipe.
 
 ==== Step-by-step Instructions
 
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing.
+**[Step 1] Logic: Teach the app to accept 'remark' which does nothing.**
 Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
 
-**Main:**
+===== Main:
 
 . Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/recipe/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
 . Modify link:{repoURL}/src/main/java/seedu/recipe/logic/parser/RecipeBookParser.java[`RecipeBookParser`] to accept a `RemarkCommand`.
 
-**Tests:**
+===== Tests:
 
 . Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
 . Add new test method to link:{repoURL}/src/test/java/seedu/recipe/logic/parser/RecipeBookParserTest.java[`RecipeBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
 
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments.
+**[Step 2] Logic: Teach the app to accept 'remark' arguments.**
 Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
 
-**Main:**
+===== Main:
 
 . Modify `RemarkCommand` to take in an `Index` and `_String_` and print those two parameters as the error message.
 . Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
 . Modify link:{repoURL}/src/main/java/seedu/recipe/logic/parser/RecipeBookParser.java[`RecipeBookParser`] to use the newly implemented `RemarkCommandParser`.
 
-**Tests:**
+===== Tests:
 
 . Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
 . Add `RemarkCommandParserTest` that tests different boundary values
 for `RemarkCommandParser`.
 . Modify link:{repoURL}/src/test/java/seedu/recipe/logic/parser/RecipeBookParserTest.java[`RecipeBookParserTest`] to test that the correct command is generated according to the user input.
 
-===== [Step 3] Ui: Add a placeholder for remark in `RecipeCard`.
+**[Step 3] Ui: Add a placeholder for remark in `RecipeCard`.**
 Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/recipe/ui/RecipeCard.java[`RecipeCard`] s to display a remark for each recipe later.
 
-**Main:**
+===== Main:
 
 . Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/RecipeListCard.fxml[RecipeListCard.fxml].
 . Add FXML annotation in link:{repoURL}/src/main/java/seedu/recipe/ui/RecipeCard.java[`RecipeCard`] to tie the variable to the actual label.
 
-**Tests:**
+===== Tests:
 
 . Modify link:{repoURL}/src/test/java/guitests/guihandles/RecipeCardHandle.java[`RecipeCardHandle`] so that future tests can read the contents of the remark label.
 
-===== [Step 4] Model: Add `Remark` class.
+**[Step 4] Model: Add `Remark` class.**
 We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Recipe.java[`Recipe`] class. Instead of just using a `_String_`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
 
-**Main:**
+===== Main:
 
 . Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Instruction.java[`Instruction`], remove the regex and change the names accordingly).
 . Modify `RemarkCommand` to now take in a `Remark` instead of a `_String_`.
 
-**Tests:**
+===== Tests:
 
 . Add test for `Remark`, to test the `Remark#equals()` method.
 
-===== [Step 5] Model: Modify `_Recipe_` to support a `Remark` field.
+**[Step 5] Model: Modify `_Recipe_` to support a `Remark` field.**
 Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Recipe.java[`Recipe`].
 
-**Main:**
+===== Main:
 
 . Add `getRemark()` in link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Recipe.java[`Recipe`].
 . You may assume that the user will not be able to use the *`add`* and `edit` commands to modify the remarks field (i.e. the recipe will be created without a remark).
 . Modify link:{repoURL}/src/main/java/seedu/recipe/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your *recipeBook.xml* so that the application will load the sample data when you launch it.)
 
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedRecipe` class.
+**[Step 6] Storage: Add `Remark` field to `XmlAdaptedRecipe` class.**
 We now have `Remark` s for `_Recipe_` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/recipe/storage/XmlAdaptedRecipe.java[`XmlAdaptedRecipe`] to include a `Remark` field so that it will be saved.
 
-**Main:**
+===== Main:
 
 . Add a new XML field for `Remark`.
 
-**Tests:**
+===== Tests:
 
 . Fix *invalidAndValidRecipeRecipeBook.xml*, *typicalRecipesRecipeBook.xml*, *validRecipeBook.xml* etc., such that the XML tests will not fail due to a missing `<remark>` element.
 
-===== [Step 6b] Test: Add withRemark() for `RecipeBuilder`.
+**[Step 6b] Test: Add withRemark() for `RecipeBuilder`.**
 Since `_Recipe_` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/recipe/testutil/RecipeBuilder.java[`RecipeBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Recipe.java[`Recipe`].
 
-**Tests:**
+===== Tests:
 
 . Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/recipe/testutil/RecipeBuilder.java[`RecipeBuilder`]. This method will create a new `Remark` for the recipe that it is currently building.
 . Try and use the method on any sample `_Recipe_` in link:{repoURL}/src/test/java/seedu/recipe/testutil/TypicalRecipes.java[`TypicalRecipes`].
 
-===== [Step 7] Ui: Connect `Remark` field to `RecipeCard`.
+**[Step 7] Ui: Connect `Remark` field to `RecipeCard`.**
 Our remark label in link:{repoURL}/src/main/java/seedu/recipe/ui/RecipeCard.java[`RecipeCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
 
-**Main:**
+===== Main:
 
 . Modify link:{repoURL}/src/main/java/seedu/recipe/ui/RecipeCard.java[`RecipeCard`]'s constructor to bind the `Remark` field to the `_Recipe_` 's remark.
 
-**Tests:**
+===== Tests:
 
 . Modify link:{repoURL}/src/test/java/seedu/recipe/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysRecipe(...)`] so that it will compare the now-functioning remark label.
 
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic.
+**[Step 8] Logic: Implement `RemarkCommand#execute()` logic.**
 We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
 
-**Main:**
+===== Main:
 
 . Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a recipe.
 
-**Tests:**
+===== Tests:
 
 . Update `RemarkCommandTest` to test that the `execute()` logic works.
 
-==== Full Solution
+**Full Solution**
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
@@ -1570,13 +1611,13 @@ _{More to be added}_
 (For all use cases below, the *System* is the *RecipeBook* and the *Actor* is the *user*, unless specified otherwise).
 
 [discrete]
-=== Use case: Add a video to recipe
+=== Use case: Add a URL to recipe
 
 *MSS*
 
 1.  User requests to list recipes.
 2.  RecipeBook shows a list of recipes.
-3.  User requests to add a video URL to a specific recipe in the list.
+3.  User requests to add a video URL to a specific recipe in the list using the edit command.
 4.  RecipeBook updates recipe to show an embedded video when recipe is selected.
 +
 Use case ends.
@@ -1695,6 +1736,32 @@ Use case ends.
 ** 1b1. RecipeBook reminds user that the current site displayed is not a valid recipe site.
 +
 Use case ends.
+
+[discrete]
+=== Use case: Sharing a recipe on Facebook
+
+*MSS*
+
+1.  User requests to list recipes.
+2.  RecipeBook shows a list of recipes.
+3.  User requests to share a specific recipe in the list.
+4.  RecipeBook shows the Facebook log in page. Recipe text is also copied to the clipboard.
+5.  User logs in to Facebook account.
+6.  RecipeBook shows a share dialog with the embedded URL of the recipe.
+7.  User inserts text if desired and presses "post".
+8.  RecipeBook shows the Facebook feed of the User.
++
+Use case ends.
+
+*Extensions*
+
+* 5a. The User does not successfully log in.
++
+Use case resumes at step 4.
+
+* 6a. The recipe does not have an embedded URL.
+** 6a1. RecipeBook shows the Facebook feed of the User
++
 
 _{More to be added}_
 

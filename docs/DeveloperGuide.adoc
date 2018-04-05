@@ -557,13 +557,19 @@ As shown in diagram above, all Rooms weekday schedule will be return in an `Arra
 
 === Timetable feature
 ==== Current Implementation
-When adding a Person using the Add Command, users can enter their NUSMods shortened link into the "tt/" field
+When adding a Person using the Add Command, users can enter their NUSMods shortened link into the "tt/" field.
 The link goes into the TimetableParserUtil class to parse and retrieve the info of the user's modules.
 The information is then sorted and added as a list of lessons taken by the user to the Timetable
 
 The main contents of the timetable is stored as TimetableData and is accessed through Timetable.
 TimetableData consists of 2 TimetableWeek, which each consist of 5 TimetableDay, which each consist of 24
 TimetableSlot (following the 24h clock)
+
+image::TimetableComponentGraph.png[width="800"]
+
+In the event the url provided is invalid or empty, a empty Timetable will be created.
+Do take note that there are dummy urls for the purpose of testing. While normal users should not be able to know of their existence,
+entering a dummy link will result in a preset timetable being built.
 
 When the user uses the `TimeTableCommand`, it will raise the `TimeTableEvent` which will be caught and handled by the `InfoPanel`.
 The `InfoPanel` will swap between `BrowsePanel`, `BirthdayList`, `VenueTable` and `TimeTablePanel` so that the UI would not be too cluttered.
@@ -577,7 +583,7 @@ The `InfoPanel` will swap between `BrowsePanel`, `BirthdayList`, `VenueTable` an
 ** Cons: Not helpful to a user who does not use NUSMods. If NUSMods API changes, StardyTogether needs to be updated
 * **Alternative 2**: Allow the use of more universal formats such as .ics files
 ** Pros: More flexibility for the user
-** Cons: Hard to implement and control the input
+** Cons: Hard to implement and parse the input
 
 ===== Aspect: Behaviour of the app when data from API is not retrieved successfully
 

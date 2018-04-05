@@ -1,12 +1,12 @@
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.ImportCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FILE_PATH;
 
 import java.util.stream.Stream;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_FILE_PATH;
+import seedu.address.logic.commands.ImportCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author karenfrilya97
 /**

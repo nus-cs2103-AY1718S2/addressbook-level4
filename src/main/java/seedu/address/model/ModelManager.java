@@ -159,6 +159,7 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    //@author SoilChang
     @Override
     public void preparePredictionData(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> targets,
                                       ArrayList<Double> normalizationConstant) {
@@ -182,6 +183,7 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
         }
     }
 
+    //@author SoilChang
     @Override
     public void updatePredictionResult(ArrayList<Double> trueWeights) throws CommandException {
         ObservableList<Person> personList = this.addressBook.getPersonList();

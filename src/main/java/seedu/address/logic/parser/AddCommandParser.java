@@ -40,9 +40,11 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
+        //@author SoilChang
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_INCOME, PREFIX_TAG, PREFIX_ACTUALSPENDING, PREFIX_AGE);
+        //@author
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_INCOME,
                 PREFIX_AGE) || !argMultimap.getPreamble().isEmpty()) {
@@ -54,9 +56,11 @@ public class AddCommandParser implements Parser<AddCommand> {
             Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+            //@author SoilChang
             Income income = ParserUtil.parseIncome(argMultimap.getValue(PREFIX_INCOME)).get();
             Expenditure actualSpending = ParserUtil.parseActualSpending(argMultimap
                     .getValue(PREFIX_ACTUALSPENDING)).orElse(null);
+            //@author
             Age age = ParserUtil.parseAge(argMultimap.getValue(PREFIX_AGE)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 

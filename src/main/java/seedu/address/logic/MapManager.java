@@ -109,9 +109,9 @@ public class MapManager {
             directionsService.getRoute(request, new MyDirectionsServiceCallback(map), directionsRenderer);
         }
 
-//        public static void removeDirectionsOnMap(GoogleMap map, DirectionsPane directionsPane) {
-//
-//        }
+        //        public static void removeDirectionsOnMap(GoogleMap map, DirectionsPane directionsPane) {
+        //
+        //        }
     }
 }
 

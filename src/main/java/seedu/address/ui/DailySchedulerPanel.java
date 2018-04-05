@@ -124,13 +124,6 @@ public class DailySchedulerPanel extends UiPart<Region> {
         updateDirections(event.getAddressOrigin(), event.getGetAddressDestination());
     }
 
-    //    @Subscribe
-    //    private void handleRemoveDirectionsEvent(RemoveDirectionsEvent event) {
-    //        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-    //        if (directionPanel != null && directionPanelPlaceholder.getChildren().contains(directionPanel.getRoot())) {
-    //
-    //        }
-    //    }
     @Subscribe
     private void handleUpdateNumberOfButtonsEvent(UpdateNumberOfButtonsEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

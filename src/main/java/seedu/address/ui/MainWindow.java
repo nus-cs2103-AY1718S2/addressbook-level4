@@ -116,7 +116,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        calender = new CalendarView(logic.getFilteredTaskList());
+        calender = new CalendarView(logic.getCalendarTaskLists());
         calendarPlaceholder.getChildren().add(calender.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());

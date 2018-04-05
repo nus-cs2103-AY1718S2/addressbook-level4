@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.util.DeleteUtil;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -30,6 +31,15 @@ public class LogicManager extends ComponentManager implements Logic {
         history = new CommandHistory();
         addressBookParser = new AddressBookParser();
         undoRedoStack = new UndoRedoStack();
+        clearRedundantImages();
+    }
+
+    /**
+     * Clears the data folder of redundant images
+     */
+    public void clearRedundantImages() {
+        DeleteUtil.clearImageFiles(model.getItemList(), model.getFilteredPersonList());
+        model.clearDeleteItems();
     }
 
     @Override
@@ -54,6 +64,11 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<Task> getFilteredTaskList() {
         return model.getFilteredTaskList();
+    }
+
+    @Override
+    public ObservableList<Task>[][] getCalendarTaskLists() {
+        return model.getCalendarTaskLists();
     }
 
     @Override

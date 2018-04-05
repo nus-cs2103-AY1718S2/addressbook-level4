@@ -139,8 +139,6 @@ public class TimeTablePanel extends UiPart<Region> {
                 };
             });
         }
-        TableColumn pos = (TableColumn) timeTable.getColumns().get(3);
-        System.out.println(pos.getCellObservableValue(0).getValue());
     }
 
     /**

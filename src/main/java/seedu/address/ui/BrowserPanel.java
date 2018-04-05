@@ -47,6 +47,7 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author Der-Erlkonig
     /**
      * Loads a HTML file with person details
      * @param person
@@ -69,6 +70,7 @@ public class BrowserPanel extends UiPart<Region> {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
 
+    //@@author
     /**
      * Loads a default HTML file with a background that matches the general theme.
      */

@@ -16,6 +16,7 @@ import seedu.address.logic.commands.SearchCommand;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 
+//@@author takuyakanbr
 public class SearchCommandSystemTest extends BibliotekSystemTest {
     @Test
     public void search() throws Exception {
@@ -55,6 +56,7 @@ public class SearchCommandSystemTest extends BibliotekSystemTest {
         assertCommandFailure(DeleteCommand.COMMAND_WORD + " 1", DeleteCommand.MESSAGE_WRONG_ACTIVE_LIST);
     }
 
+    //@@author
     /**
      * Executes {@code command} and verifies that, after the web API has returned a result,<br>
      * 1. Command box displays an empty string.<br>

@@ -15,6 +15,7 @@ import seedu.address.model.book.Title;
 import seedu.address.model.book.exceptions.InvalidBookException;
 import seedu.address.model.util.BookDataUtil;
 
+//@@author takuyakanbr
 /**
  * A temporary data holder used for deserialization of the JSON response
  * from the book details endpoint of Google Books API.
@@ -79,6 +80,7 @@ public class JsonBookDetails {
         private JsonIndustryIdentifiers[] industryIdentifiers = new JsonIndustryIdentifiers[0];
         private String[] categories = new String[0];
 
+        //@@author
         public void setIndustryIdentifiers(JsonIndustryIdentifiers[] industryIdentifiers) {
             this.industryIdentifiers = industryIdentifiers;
         }

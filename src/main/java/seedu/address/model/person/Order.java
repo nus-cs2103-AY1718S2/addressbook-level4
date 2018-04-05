@@ -1,5 +1,8 @@
 package seedu.address.model.person;
 
+import seedu.address.model.Menu;
+import seedu.address.model.dish.Dish;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
@@ -11,12 +14,15 @@ public class Order {
 
     public static final String MESSAGE_ORDER_CONSTRAINTS =
             "Invalid order";
+    public static final String MESSAGE_ORDER_NOT_AVAILABLE =
+            "Dish not available";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String ORDER_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final Menu menu = new Menu();
 
     public final String fullOrder;
 
@@ -28,7 +34,8 @@ public class Order {
     public Order(String order) {
         requireNonNull(order);
         checkArgument(isValidOrder(order), MESSAGE_ORDER_CONSTRAINTS);
-        this.fullOrder = order;
+        //checkArgument(isInsideMenu(order),MESSAGE_ORDER_NOT_AVAILABLE);
+        this.fullOrder = order.toString();
     }
 
     /**
@@ -38,10 +45,20 @@ public class Order {
         return test.matches(ORDER_VALIDATION_REGEX);
     }
 
+    /**
+     * Returns true if a given string is a valid person order.
+     */
+    public static boolean isInsideMenu(String test) {
+        if(menu.get(test) == null){
+            return false;
+        }
+        return true;
+    }
+
 
     @Override
     public String toString() {
-        return fullOrder;
+        return fullOrder.toString();
     }
 
     @Override

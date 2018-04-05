@@ -59,8 +59,7 @@ public class Dish {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
                 .append(" Price: ")
-                .append(getPrice())
-                .append(" Email: ");
+                .append(getPrice());
         return builder.toString();
     }
 

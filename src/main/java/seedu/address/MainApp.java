@@ -22,6 +22,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.AddressBook;
 import seedu.address.model.CustomerStats;
+import seedu.address.model.Menu;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -67,6 +68,7 @@ public class MainApp extends Application {
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         CustomerStatsStorage customerStatsStorage = new XmlCustomerStatsStorage(userPrefs.getCustomerStatsFilePath());
+        //Menu menu = new XMLMenuStorage(userPrefs.getMenuFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage, customerStatsStorage);
 
         initLogging(config);

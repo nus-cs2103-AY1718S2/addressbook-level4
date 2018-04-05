@@ -42,7 +42,6 @@ public class MarkCommand extends UndoableCommand {
     public MarkCommand(Index index, Integer marks) {
         requireNonNull(index);
         requireNonNull(marks);
-
         this.targetIndex = index;
         this.marks = marks;
     }

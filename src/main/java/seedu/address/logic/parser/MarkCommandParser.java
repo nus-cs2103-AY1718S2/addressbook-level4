@@ -2,12 +2,14 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MARK_PARTICIPATION;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.MarkCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Participation;
 
 /**
  * Parses input arguments and creates a new AddTaskCommand object
@@ -35,9 +37,11 @@ public class MarkCommandParser implements Parser<MarkCommand> {
 
         try {
             Integer marks = ParserUtil.parseMarks(argMultimap.getValue(PREFIX_MARK_PARTICIPATION)).get();
+            checkArgument(Participation.isValidParticipation(Integer.toString(marks)),
+                    Participation.MESSAGE_PARTICPATION_CONSTRAINTS);
             return new MarkCommand(index, marks);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
+        } catch (IllegalArgumentException | IllegalValueException ie) {
+            throw new ParseException(ie.getMessage(), ie);
         }
 
 

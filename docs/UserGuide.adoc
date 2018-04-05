@@ -90,8 +90,13 @@ The address book initially starts with default inputs as displayed in Figure 2:
 .Initial Address Book State +
 image::UiInitial.png[width="800"]
 
+Let's try entering a command, such as the one below: +
+
 Command entered: +
-`add n/John Doe m/A0111111X p/98765432 e/johnd@example.com a/John street, block 123, #01-01`: +
+`add n/John Doe m/A0111111X p/98765432 e/johnd@example.com a/John street, block 123, #01-01 dp/C:\Users\Name\Desktop\John.jpg`: +
+[NOTE]
+The filepath after the `dp/` depends on where your image file is located.
+
 This will add a person, 'John Doe' into the list with his respective details into the application (Figure 3).
 
 .Application after John Doe has been Added +
@@ -100,6 +105,9 @@ image::UiAfterFirst.png[width="800"]
 Command entered: +
 `add n/Betsy Crowe t/friend m/A1234567C e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`: +
 This will add a person, 'Betsy Crowe' into the list with her respective details into the application (Figure 4).
+
+[NOTE]
+You may leave the `dp/` portion empty if you do not have a profile picture. The application will default to using the default profile picture.
 
 .Application after Betsy Crowe has been added +
 image::UiAfterSecond.png[width="800"]
@@ -169,7 +177,7 @@ image::AllListed.png[width="800"]
 
 Edits an existing person in the address book. +
 Alias: `e` +
-Format: `edit INDEX [n/NAME] [m/MATRICULATION NUMBER] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [m/MATRICULATION NUMBER] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dp/IMAGE PATH] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -187,15 +195,16 @@ Address book starts with the following as shown in Figure 10:
 image::AllListed.png[width="800"]
 
 Command entered: +
-`edit 3 p/91234567 e/johndoe@example.com`: +
-This changes the details of the person with index 3 (John Doe), in this case, his phone number and email address and writes over his original saved details (Figure 11).
+`edit 2 p/91234567 e/johndoe@example.com`: +
+This changes the details of the person with index 2 (John Doe), in this case, his phone number and email address and writes over his original saved details (Figure 11).
 
 .Phone Number and Email of 3rd Person (John Doe) Edited. +
 image::FirstEdit.png[width="800"]
 
 Command entered: +
-`edit 4 n/Betsy Crower t/`: +
-This changed the details of the person with index 3 (originally Betsy Crowe), in this case, her name and tags. +
+`edit 3 n/Betsy Crower dp/C:\Users\Name\Desktop\Betsy.jpg t/`: +
+This changed the details of the person with index 3 (originally Betsy Crowe), in this case, her name and tags.
+It also updated her display picture. +
 Her tags are also cleared (Figure 12).
 
 .Name changed to "Betsy Crower" and All Tags Cleared. +
@@ -226,6 +235,32 @@ Returns Betsy as a result. Followed by: +
 `email 1` +
 Emails the 1st person in the results of the `find` command, in this case, Betsy.
 
+=== Adding Participation Marks : `markPart`
+
+Adds to the participation marks of a person. The maximum limit for participation marks is 100.
+
+Format: `markPart INDEX marks/DIGITS`
+
+****
+* Adds to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* between 0 and 100 inclusive.
+****
+
+Examples:
+
+Command(s) entered: +
+`list` +
+Lists all people in the address book. Followed by: +
+`markPart 2 marks/50` +
+Adds 50 participation marks to the 2nd person in the address book.
+
+Command(s) entered: +
+`find Betsy` +
+Returns Betsy as a result. Followed by: +
+`markPart 1 marks/70` +
+Adds 70 marks to the 1st person in the results of the `find` command, in this case, Betsy.
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -246,8 +281,8 @@ Address book starts with the following as shown in Figure 13:
 image::SecondEdit.png[width="800']
 
 Command(s) entered: +
-`list`, `delete 3`: +
-The 3rd person listed in the address book is deleted (Figure 14).
+`list`, `delete 2`: +
+The 2nd person listed in the address book is deleted (Figure 14).
 
 .3rd Person Deleted. +
 image::FirstDelete.png[width="800"]
@@ -276,7 +311,7 @@ Examples:
 Address book starts with the following as shown in Figure 16:
 
 .Application before Select. +
-image::UiInitial.png[width="800"]
+image::SecondStart.png[width="800"]
 
 Command(s) entered: +
 `list`, `select 1`: +
@@ -286,8 +321,8 @@ Lists all people in address book and selects the 1st person (Figure 17).
 image::FirstSelect.png[width="800"]
 
 Command(s) entered: +
-`find Timothy`, `select 1`: +
-The 1st person in the results of the `find` command is selected, in this case, Timothy is selected (Figure 18).
+`find John`, `select 1`: +
+The 1st person in the results of the `find` command is selected, in this case, John is selected (Figure 18).
 
 .1st Person from `find` Command Selected. +
 image::SecondSelect.png[width="800"]
@@ -320,7 +355,7 @@ Examples:
 Address book starts with the following as shown in Figure 19:
 
 .Application before any Commands +
-image::UiInitial.png[width="800"]
+image::SecondStart.png[width="800"]
 
 Command(s) entered: +
 `delete 1`, `list`, `undo`: +
@@ -370,6 +405,10 @@ image::SecondRedo.png[width="800"]
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
+[NOTE]
+This command does not clear the unused Display Pictures from your hard drive.
+It will be updated to work in v1.5rc
+
 Alias: `c` +
 Format: `clear`
 

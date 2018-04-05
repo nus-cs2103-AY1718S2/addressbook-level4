@@ -7,6 +7,7 @@ package seedu.address.model.person;
 public class Participation {
 
     public static final String MESSAGE_PARTICPATION_CONSTRAINTS = "Participation marks cannot be negative or over 100!";
+    public static final String UI_DISPLAY_HEADER = "Participation marks: ";
 
     public final Integer threshold;
     private Integer value;
@@ -43,6 +44,10 @@ public class Participation {
 
     public static boolean isValidParticipation(String value) {
         return Integer.parseInt(value) <= 100 && Integer.parseInt(value) > -1;
+    }
+
+    public String toDisplay() {
+        return UI_DISPLAY_HEADER + Integer.toString(value);
     }
 
     @Override

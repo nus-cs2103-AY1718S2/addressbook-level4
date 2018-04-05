@@ -135,8 +135,7 @@ Removes a task or event from the desk board according to the following condition
 * `rm task INDEX`: removes a task.
 * `rm event INDEX`: removes an event.
 
-*Examples:*
-
+*Example:*
 
 * `ls task` +
 `rm task 2` +
@@ -235,7 +234,17 @@ Clears all entries from the desk board.
 
 *Format:* `clear` or `c`
 
-=== Exiting the program : `exit` `[Coming Soon in  v1.5]`
+=== Importing data : `import` `[As of v1.4.1]`
+
+Import all entries from another desk board file in the specified file path.
+
+*Format:* `import f/FILE_PATH`
+
+*Example:*
+
+* `import f/C:\data\deskboard.xml`
+
+=== Exiting the program : `exit` `[As of v1.4.1]`
 
 Exits the program.
 
@@ -260,46 +269,49 @@ There is no need to save manually.
 == Command Summary
 
 * *Add task*: `task n/NAME d/DUE_DATE_TIME [r/REMARK] [t/TAGS]` +
-eg. `task n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/urgent`
+e.g. `task n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/urgent`
 
 * *Add event*: `event n/NAME s/START_TIME e/END_TIME [l/LOCATION] [r/REMARK]` +
-eg. `event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`
+e.g. `event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`
 
 * *List uncompleted tasks and upcoming events*: `ls` +
-eg. `ls` or `ls task` or `ls event`
+e.g. `ls` or `ls task` or `ls event`
 
 * *Remove task or event*: `rm` +
-eg. `rm task 1` or `rm event 2`
+e.g. `rm task 1` or `rm event 2`
 
 * *Complete a task*: `complete task` or `com task` +
-eg. `complete task 1` or `com task 2`
+e.g. `complete task 1` or `com task 2`
 
 * *List completed tasks*: `ls complete task` or `ls com task` +
-eg. `ls complete task` or `ls com task`
+e.g. `ls complete task` or `ls com task`
 
-* *Show overdue tasks*: `overdue` +
-eg. `overdue`
+* *List overdue tasks*: `overdue` +
+e.g. `overdue`
 
 * *List entered commands*: `history` +
-eg. `history`
+e.g. `history`
 
 * *Undo previous command*: `undo` or `u` +
-eg. `undo` or `u`
+e.g. `undo` or `u`
 
 * *Redo previously undone command*: `redo` or `r` +
-eg. `redo` or `r`
+e.g. `redo` or `r`
 
 * *Clear all entries*: `clear` or `c` +
-eg. `clear` or `c`
+e.g. `clear` or `c`
+
+* *Import data*: `import f\FILE_PATH` +
+e.g. `import f/C:\data\deskboard.xml`
 
 * *Exit the program*: `exit` +
-eg. `exit`
+e.g. `exit`
 
 * *Edit a task*: `edit task` +
-eg. `edit task 1`
+e.g. `edit task 1`
 
 * *Locate a task by name*: `find task` +
-eg. `find task CS2106 Assignment`
+e.g. `find task CS2106 Assignment`
 
 * *List all past events*: `ls past event` +
-eg. `ls past event`
+e.g. `ls past event`

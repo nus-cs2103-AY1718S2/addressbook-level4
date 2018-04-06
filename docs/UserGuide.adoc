@@ -428,7 +428,7 @@ Open an issue https://github.com/CS2103JAN2018-F12-B4/main/issues[here]! We woul
 
 What if I am a law enforcement officer?::
 Huat Ah Finance Pte Ltd takes no responsibility for the actions of its users.
-We just like to make software that makes a different to the world! :)
+We just like to make software that makes a positive impact on the world! :)
 
 What if I am not a loan shark boss yet?::
 Work hard and collect more protection money! Maybe one day you'll make it! ;)

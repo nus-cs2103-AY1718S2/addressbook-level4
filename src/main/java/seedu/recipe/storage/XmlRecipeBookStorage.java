@@ -80,7 +80,7 @@ public class XmlRecipeBookStorage implements RecipeBookStorage {
         FileUtil.createIfMissing(file);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableRecipeBook(recipeBook));
 
-        //saveAllImageFiles(recipeBook);
+        saveAllImageFiles(recipeBook);
     }
 
     /**

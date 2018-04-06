@@ -147,7 +147,7 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a person to show timetable : `select`
 
 Selects the person identified by the index number used in the last person listing. +
 Alias: `s` +
@@ -245,6 +245,23 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Adding an event: `addEvent`
+
+Adds an event to the address book and display it on the calendar +
+Format: `addEvent n/NAME v/VENUE d/DATE st/STARTTIME et/ENDTIME`
+
+[TIP]
+DATE must be in the format of DD/MM/YYYY
+[TIP]
+TIME must be in the format of HHmm
+
+Examples:
+
+* `addEvent addEvent n/CS2103 Meetup v/School of Computing d/7/4/2018 st/1000 et/1300`
+
+image:AddEventCommandExample.png[width="500"] +
+Figure 2. Example of an event shown on the calendar
+
 === Adding a to-do: `addToDo`
 
 Adds a to-do to the address book +
@@ -260,7 +277,7 @@ Examples:
 * `aTD Swim like a fish`
 
 image:AddToDoCommandExample.png[width="500"] +
-Figure 2. Example of to-dos
+Figure 3. Example of to-dos
 
 === Check a to-do as done: `check`
 
@@ -334,10 +351,10 @@ Examples:
 
 * `ListGroupMembers CS3230 CS1010` +
 Returns any person having group tags `CS3230`, `CS1010`
-Refer to Figure 3 for example.
+Refer to Figure 4 for example.
 
 image:lgmExample.png[width="500"] +
-Figure 3. Example of ListGroupMembers
+Figure 4. Example of ListGroupMembers
 
 === Add Group: `addGroup`
 
@@ -353,9 +370,9 @@ Keyword cannot be an empty input.
 Examples:
 
 * `addGroups CS2101 Oral Presentation` +
-New Group `CS2101 Oral Presentation` added, refer to Figure 4. +
+New Group `CS2101 Oral Presentation` added, refer to Figure 5. +
 image:addGroupExample.png[width ="500"] +
-Figure 4. Example of add Group
+Figure 5. Example of add Group
 // end:AddGroup[]
 
 === Add Member To Group: `addGroupMember`
@@ -375,15 +392,15 @@ This command is undoable.
 Examples:
 
 * `addGroupMember g/CS2010 n/David Li` +
-Added person `David Li` into group `CS2010`  refer to Figure 5. +
+Added person `David Li` into group `CS2010`  refer to Figure 6. +
 image:addGroupMembersToGroupExample.png[width ="800"] +
-Figure 5. Example of addMembersToGroup +
+Figure 6. Example of addMembersToGroup +
 
 If person already added, Fastis will output already added person in group.
 * `addGroupMember g/CS2010 n/David Li` +
-Refer to Figure 6. +
+Refer to Figure 7. +
 image:addGroupMembersToGroupFailExample.png[width ="800"] +
-Figure 6. Example of addMembersToGroup +
+Figure 7. Example of addMembersToGroup +
 // end:AddGroup[]
 
 === Display Calendar : `display` `[coming in v2.0]`
@@ -468,6 +485,8 @@ e.g. `uncheck 3`
 e.g. `editToDo 2 c/Swim like a fish`
 * *DeleteToDo* : `deleteToDo INDEX` +
 e.g. `deleteToDo 3`
+* *AddEvent* `addEvent n/NAME v/VENUE d/DATE st/STARTTIME et/ENDTIME` +
+e.g. `addEvent n/F1 Race v/Marina Bay Street Circuit d/19/07/2017 st/1000 et/1300`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`

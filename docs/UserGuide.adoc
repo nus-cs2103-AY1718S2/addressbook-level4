@@ -280,17 +280,11 @@ Assigns a review to an existing employee in Employees Tracker. +
 Format: `review INDEX`
 
 ****
-* Rate the employee at the specified `INDEX`. +
-The index refers to the index number shown in the last employees listing. +
+* The index refers to the index number shown in the last employees listing. +
 The index *must be a positive integer*, i.e. 1, 2, 3, ...
-* A pop-up dialog box will appear after user executes the command as shown in _Figure 8_ below. +
-The dialog box will prompt the user to enter the user's credential (as a reviewer) and the review.
 * The review can contain any character without length limitation.
 * A review will be tied to a single reviewer. [Implemented in V1.4]
 ****
-
-.A pop-up dialog box
-image::review_dialog.png[width=""]
 
 [NOTE]
 ====
@@ -303,11 +297,13 @@ Examples:
 * `list` +
 `review 1` +
 Gives the 1^st^ employee in the last employees listing a review. +
-The review will be based on the input in the pop-up dialog box.
+A pop-up dialog box will appear after user executes the command as shown in _Figure 8_ below. The dialog box will prompt the user to enter the user's credential (as a reviewer) and the review.
 * `find n/Alex` +
 `rate 2` +
 Gives the 2^nd^ employee in the list of Alex(s) a review. +
-The review will be based on the input in the pop-up dialog box.
+
+.A pop-up dialog box
+image::review_dialog.png[width=""]
 
 === Searching for employees: `find`
 
@@ -318,9 +314,9 @@ Format: `find (n/NAME_KEYPHRASE | t/TAG_KEYPHRASE | r/RATING_KEYPHRASE)  [n/NAME
 * The search is case insensitive, e.g. `n/hANs` will match `Hans`
 * The order of the keyphrase does not matter, e.g. `n/Hans Bo` will match `Bo Hans`
 * The search does not match exactly all the words in a phrase in sequential order, but only finds any phrase that contains the specified keyphrase's words without sequential order, e.g. `n/Hans Bo` will match `Jonathan Bo Hans`
-* The search only matches full wor, e.g. `n/Han` will not match `Hans`
-* Searching by multiple criteria will yield the result of employees that match all the criterias, e.g. +
-** `n/Hans Bo t/Sales` will match `Hans Bo` with tag `Friends` but not `Hans Bo` with tag `Enemy` or `John Doe` with tag `Friends` +
+* The search only matches full word, e.g. `n/Han` will not match `Hans`
+* Searching by multiple criteria will yield the result of employees that match all of them, e.g. +
+** `n/Hans Bo t/Sales` will match `Hans Bo` with tag `Sales` but not `Hans Bo` with tag `Enemy` or `John Doe` with tag `Friends` +
 ** `n/Hans Bo n/John Doe t/Sales t/Marketing` will match only `Hans Bo | Sales` or `Hans Bo | Marketing` or `John Doe | Sales` or `John Doe | Marketing`
 ****
 

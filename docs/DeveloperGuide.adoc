@@ -494,6 +494,10 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+[[Implementation-Configuration]]
+=== Configuration
+Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
 === UniqueActivityList
 `UniqueActivityList` resides in the `model` component of the application.
 
@@ -662,9 +666,7 @@ will be reflected in the GUI.
 {empty} +
 {empty} +
 
-===== Edit Tasks
-{empty} +
-{empty} +
+//===== Edit Tasks
 
 ==== Displaying Task
 A single `Task` is displayed using a `TaskListCard`. The list of all the `Task` added by the user
@@ -711,7 +713,7 @@ overdue correctly.
 {empty} +
 {empty} +
 
-===== Design Considerations
+====== Design Considerations
 
 `Task` and `Event` needs to be displayed in the GUI and there are 2 possible implementations to do so:
 
@@ -732,7 +734,7 @@ definitely the preferred approach here.
 {empty} +
 {empty} +
 
-===== Implementation
+====== Implementation
 The following snippet shows how `execute()` of `ListCommand` displays `Task` on the GUI. If an invalid
 request for `ListCommand` happens, a `CommandException` will be thrown.
 
@@ -843,7 +845,6 @@ If `ListCommand` is successful, only `Event` will be shown on the GUI.
 {empty} +
 {empty} +
 
-[[Implementation-Configuration]]
 === Storage for Task and Event
 
 Storing of `Task` and `Event` data is managed by `StorageManager` within the `Storage` component. `Task`

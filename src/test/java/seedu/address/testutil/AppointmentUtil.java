@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.model.appointment.Appointment;
 
+//@@author wynonaK
 /**
  * A utility class for Appointment.
  */

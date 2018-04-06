@@ -40,16 +40,16 @@ public class EncryptionUtil {
      * @param file path of the file to be encrypted
      * @throws IOException if file could not be found
      */
-    public static void encrypt(File file) throws IOException{
+    public static void encrypt(File file) throws IOException {
 
         try {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             SecretKey secretKey = generateKey();
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             fileToBytes(cipher, file);
-        } catch(GeneralSecurityException gse){
+        } catch (GeneralSecurityException gse){
             logger.severe("Cipher or Padding might not be supported " + gse.getMessage());
-        } catch(UnsupportedEncodingException use){
+        } catch (UnsupportedEncodingException use) {
             logger.info("Encoding Unsupported " + use.getMessage());
         }
 
@@ -61,16 +61,16 @@ public class EncryptionUtil {
      * @param file path of the file to be decrypted
      * @throws IOException if file could not be found
      */
-    public static void decrypt(File file) throws IOException{
+    public static void decrypt(File file) throws IOException {
 
         try {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             SecretKey secretKey = generateKey();
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             fileToBytes(cipher, file);
-        } catch(GeneralSecurityException gse){
+        } catch (GeneralSecurityException gse){
             logger.severe("Cipher or Padding might not be supported " + gse.getMessage());
-        } catch(UnsupportedEncodingException use){
+        } catch (UnsupportedEncodingException use){
             logger.info("Encoding Unsupported " + use.getMessage());
         }
     }
@@ -101,13 +101,14 @@ public class EncryptionUtil {
         } catch (IllegalBlockSizeException ibe) {
             logger.info("Input length size must be in multiple of 16  " + ibe.getMessage());
         } finally {
-            try{
-                if (fileInputStream != null){
+            try {
+                if (fileInputStream != null) {
                     fileInputStream.close();
-                }if (fileOutputStream != null) {
+                }
+                if (fileOutputStream != null) {
                     fileOutputStream.close();
                 }
-            }catch(IOException ioe){
+            } catch(IOException ioe) {
                 logger.info("File streams could not be closed  " + ioe.getMessage());
             }
         }
@@ -118,17 +119,17 @@ public class EncryptionUtil {
      *
      * @return SecretKey generated using AES encryption
      */
-    public static SecretKey generateKey(){
+    public static SecretKey generateKey() {
 
-        SecretKeySpec secretKeySpec =null;
+        SecretKeySpec secretKeySpec = null;
         try {
             MessageDigest digester = MessageDigest.getInstance("SHA-256");
             digester.update(password.getBytes("UTF-8"));
             byte[] key = digester.digest();
-            secretKeySpec = new SecretKeySpec(key,0,16, "AES");
-        } catch(NoSuchAlgorithmException nae){
+            secretKeySpec = new SecretKeySpec(key ,0 ,16 , "AES");
+        } catch (NoSuchAlgorithmException nae){
             logger.info("Algorithm Unsupported " + nae.getMessage());
-        } catch(UnsupportedEncodingException use){
+        } catch (UnsupportedEncodingException use){
             logger.info("Encoding Unsupported " + use.getMessage());
         }
 

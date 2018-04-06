@@ -19,6 +19,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.NotifyCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.TagCommand;
@@ -98,6 +99,12 @@ public class CoinBookParserTest {
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " n/BTC AND p/>100");
         assertEquals(new FindCommand(), command);
+    }
+
+    @Test
+    public void parseCommand_notify() throws Exception {
+        assertTrue(parser.parseCommand(
+                NotifyCommand.COMMAND_WORD + " n/TEST AND p/>100") instanceof NotifyCommand);
     }
 
     @Test

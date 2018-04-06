@@ -18,6 +18,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.NewsCardClickedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowNotifManRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -32,6 +33,7 @@ public class MainWindow extends UiPart<Stage> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Stage primaryStage;
+    private Stage secondaryStage;
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
@@ -39,6 +41,8 @@ public class MainWindow extends UiPart<Stage> {
     private CoinListPanel coinListPanel;
     private Config config;
     private UserPrefs prefs;
+
+    private NotificationsWindow notificationsWindow;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -66,6 +70,8 @@ public class MainWindow extends UiPart<Stage> {
         this.logic = logic;
         this.config = config;
         this.prefs = prefs;
+
+        secondaryStage = new Stage();
 
         // Configure the UI
         setTitle(config.getAppTitle());
@@ -127,7 +133,7 @@ public class MainWindow extends UiPart<Stage> {
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getFilteredCoinList().size(),
-                prefs.getAddressBookFilePath());
+                prefs.getCoinBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -206,4 +212,13 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author ewaldhew
+    @Subscribe
+    private void handleShowNotifManEvent(ShowNotifManRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        notificationsWindow = new NotificationsWindow(secondaryStage, event.data);
+        notificationsWindow.show();
+    }
+    //@@author
 }

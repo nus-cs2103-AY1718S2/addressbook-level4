@@ -79,8 +79,7 @@ public class CoinBookParser {
             return new FindCommandParser().parse(arguments);
 
         case NotifyCommand.COMMAND_WORD:
-        case NotifyCommand.COMMAND_ALIAS:
-            return new NotifyCommand();
+            return new NotifyCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:

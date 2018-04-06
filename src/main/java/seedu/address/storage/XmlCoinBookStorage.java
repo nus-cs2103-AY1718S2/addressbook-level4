@@ -54,7 +54,8 @@ public class XmlCoinBookStorage implements CoinBookStorage {
             return Optional.empty();
         }
 
-        XmlSerializableCoinBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
+        XmlSerializableCoinBook xmlAddressBook =
+                XmlFileStorage.loadDataFromSaveFile(new File(filePath), XmlSerializableCoinBook.class);
         try {
             return Optional.of(xmlAddressBook.toModelType());
         } catch (IllegalValueException ive) {

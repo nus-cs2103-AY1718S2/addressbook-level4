@@ -9,6 +9,9 @@ import javafx.collections.ObservableList;
 import seedu.address.model.coin.Coin;
 import seedu.address.model.coin.exceptions.CoinNotFoundException;
 import seedu.address.model.coin.exceptions.DuplicateCoinException;
+import seedu.address.model.rule.Rule;
+import seedu.address.model.rule.exceptions.DuplicateRuleException;
+import seedu.address.model.rule.exceptions.RuleNotFoundException;
 
 /**
  * The API of the Model component.
@@ -58,5 +61,25 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredCoinList(Predicate<Coin> predicate);
+
+
+    /** Deletes the given rule. */
+    void deleteRule(Rule target) throws RuleNotFoundException;
+
+    /** Adds the given rule */
+    void addRule(Rule rule) throws DuplicateRuleException;
+
+    /**
+     * Replaces the given rule {@code target} with {@code editedRule}.
+     *
+     * @throws DuplicateRuleException if updating the rule's details causes the rule to be equivalent to
+     *      another existing rule in the list.
+     * @throws RuleNotFoundException if {@code target} could not be found in the list.
+     */
+    void updateRule(Rule target, Rule editedRule)
+            throws DuplicateRuleException, RuleNotFoundException;
+
+    /** Returns an unmodifiable view of the rule list */
+    ObservableList<Rule> getRuleList();
 
 }

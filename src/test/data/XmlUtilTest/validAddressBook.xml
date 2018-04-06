@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addressbook>
+<coinbook>
     <coins>
         <code>Hans Muster</code>
     </coins>
@@ -27,4 +27,4 @@
     <coins>
         <code>Martin Mueller</code>
     </coins>
-</addressbook>
+</coinbook>

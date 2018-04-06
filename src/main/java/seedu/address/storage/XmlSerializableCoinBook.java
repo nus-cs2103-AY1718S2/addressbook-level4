@@ -14,7 +14,7 @@ import seedu.address.model.ReadOnlyCoinBook;
 /**
  * An Immutable CoinBook that is serializable to XML format
  */
-@XmlRootElement(name = "addressbook")
+@XmlRootElement(name = "coinbook")
 public class XmlSerializableCoinBook {
 
     @XmlElement

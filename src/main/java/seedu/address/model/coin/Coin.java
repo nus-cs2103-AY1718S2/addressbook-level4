@@ -187,4 +187,14 @@ public class Coin {
     public Amount getTotalDollarsBought() {
         return totalDollarsBought;
     }
+
+    //@@author ewaldhew
+    /**
+     * Gets the difference between two coins and makes a new coin record with that change.
+     * @return (final - initial) as a coin, where the final coin is this
+     */
+    public Coin getChangeFrom(Coin initialCoin) {
+        return null;
+    }
+    //@@author
 }

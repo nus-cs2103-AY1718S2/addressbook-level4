@@ -9,16 +9,16 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
 
 /**
- * Stores addressbook data in an XML file
+ * Stores book data in an XML file
  */
 public class XmlFileStorage {
     /**
-     * Saves the given addressbook data to the specified file.
+     * Saves the given book data to the specified file.
      */
-    public static void saveDataToFile(File file, XmlSerializableCoinBook addressBook)
+    public static <T> void saveDataToFile(File file, T data)
             throws FileNotFoundException {
         try {
-            XmlUtil.saveDataToFile(file, addressBook);
+            XmlUtil.saveDataToFile(file, data);
         } catch (JAXBException e) {
             throw new AssertionError("Unexpected exception " + e.getMessage());
         }
@@ -27,10 +27,10 @@ public class XmlFileStorage {
     /**
      * Returns address book in the file or an empty address book
      */
-    public static XmlSerializableCoinBook loadDataFromSaveFile(File file) throws DataConversionException,
-                                                                            FileNotFoundException {
+    public static <T> T loadDataFromSaveFile(File file, Class<T> classToConvert)
+            throws DataConversionException, FileNotFoundException {
         try {
-            return XmlUtil.getDataFromFile(file, XmlSerializableCoinBook.class);
+            return XmlUtil.getDataFromFile(file, classToConvert);
         } catch (JAXBException e) {
             throw new DataConversionException(e);
         }

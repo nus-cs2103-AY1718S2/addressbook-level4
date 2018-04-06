@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addressbook>
+<coinbook>
     <!-- Coin with invalid code field -->
     <coins>
         <code>H@N</code>
     </coins>
-</addressbook>
+</coinbook>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addressbook>
+<coinbook>
     <!-- Valid Coin -->
     <coins>
         <code>Hans Muster</code>
@@ -8,4 +8,4 @@
     <coins>
         <code>948asdf2424</code>
     </coins>
-</addressbook>
+</coinbook>

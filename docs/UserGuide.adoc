@@ -87,9 +87,13 @@ image::autocomplete.png[width="500"]
 * Press kbd:[Enter] to select an autocomplete suggestion on the pop-up context menu.
 ====
 
+{empty} +
+
 === Viewing help : `help` or `h`
 
 If you are feeling lost, enter `help` or `h` in Medeina's command box, or press kbd:[F1] to bring up this user guide document in a pop-up window.
+
+{empty} +
 
 === Adding a contact, pet patient or appointment : `add` or `a` `[Since v1.2]`
 
@@ -152,37 +156,66 @@ Medeina will show a list of all stored Owners and PetPatients if you enter `list
 .`list` command
 image::List_Command.PNG[width="800"]
 
-=== Editing a contact : `edit` or `ed`
+{empty} +
 
-Use the following command format to:
+=== Editing a contact, pet patient or appointment : `edit` or `ed` `[Since v1.4]`
 
-Edit an existing contact:: `edit **-o** INDEX [n/CONTACT_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [nr/NRIC] [t/TAG]...`
+You can use `edit` or `ed` to do the following:
 
-Edit an existing pet patient:: `edit **-p** INDEX [n/PET_PATIENT_NAME] [s/SPECIES] [b/BREED] [c/COLOR] [bt/BLOOD_TYPE] [nr/OWNER_NRIC] [t/TAG]...`
+[width="100%", cols="15%,<45%a,<40%", options="header"]
+|=====
+| To edit
+| Command syntax
+| Notes
 
-Edit an existing appointment:: `edit **-a** INDEX [d/YYYY-MM-DD HH:MM] [r/REMARK] [nr/OWNER_NRIC] [n/PET_PATIENT_NAME] [t/TAG]...`
-
-****
-* The command edits the contact / pet patient at the specified `INDEX`. The index refers to the index number shown in the latest contact / pet patient listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
+.^a|Person
+| `edit **-o** INDEX [n/CONTACT_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [nr/NRIC] [t/TAG]...`
+a| * At least one of the optional fields must be provided.
+* The command edits the contact at the specified `INDEX`.
+* The index refers to the index number shown in the latest contact listing. The index *must be a positive integer* 1, 2, 3, etc ...
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the contact / pet patient will be removed i.e adding of tags is not cumulative.
+* When editing tags, the existing tags of the contact will be removed i.e adding of tags is not cumulative.
 * You can remove all of the contact's tags by typing `t/` without specifying any tags after it.
-****
 
-Examples:
+.^| Pet Patient
+| `edit **-p** INDEX [n/PET_PATIENT_NAME] [s/SPECIES] [b/BREED] [c/COLOR] [bt/BLOOD_TYPE] [nr/OWNER_NRIC] [t/TAG]...`
+a| * At least one of the optional fields must be provided.
+* The command edits the pet patient at the specified `INDEX`.
+* The index refers to the index number shown in the latest pet patient listing. The index *must be a positive integer* 1, 2, 3, etc ...
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the pet patient will be removed i.e adding of tags is not cumulative.
+* You can remove all of the pet patient's tags by typing `t/` without specifying any tags after it.
+* OWNER_NRIC must belong to an existing contact.
 
-* `edit **-o** 1 p/91234567 e/johndoe@example.com` +
-Medeina will edit the phone number and email address of the 1st contact to be `91234567` and `johndoe@example.com` respectively.
 
-* `edit **-o** 2 n/Betsy Crower t/` or `e **-o** 2 n/Betsy Crower t/` +
-Medeina will edit the name of the 2nd contact to be `Betsy Crower` and clears all existing tags.
+.^| Appointment
+| `edit **-a** INDEX [d/YYYY-MM-DD HH:MM] [r/REMARK] [t/TAG]...`
+a| * At least one of the optional fields must be provided.
+* The command edits the appointment at the specified `INDEX`.
+* The index refers to the index number shown in the latest appointment listing. The index *must be a positive integer* 1, 2, 3, etc ...
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the appointment will be removed i.e adding of tags is not cumulative.
+* You can remove all of the appointment's tags by typing `t/` without specifying any tags after it.
+* Appointment time HH:MM must be in 30-minute blocks.
+* Modification of owner's NRIC and / or pet patient's name is NOT allowed.
+|=====
+{empty} +
 
-* `edit **-p** 2 n/jewel baby t/` or `e **-p** 2 n/jewel baby t/` +
-Medeina will edit the name of the 2nd pet patient to be `jewel baby` and clears all existing tags.
+image::edit_examples.PNG[width="800"]
+{empty} +
 
-* `edit **-a** 3 d/2018-06-04` +
-Medeina will edit the date and time of the 3rd appointment to be `2018-06-04`.
+.**Copy & paste to try out**
+----
+edit -o 1 p/91234567 e/alexyeoh@anotherexample.com
+
+edit -o 2 n/Betsy Crowers t/
+
+edit -p 2 n/Makkachin t/
+
+edit -a 3 d/2018-06-04 12:30
+----
+
+{empty} +
 
 === Find contacts or pet patients: `find` or `f`
 
@@ -239,6 +272,7 @@ find -p s/Cat b/Maine Coon c/Black bt/AB t/Aggressive
 find -p n/Chae s/Cat b/Russian Blue c/Grey bt/A t/Naive
 ----
 
+{empty} +
 
 === Deleting a owner, pet patient or appointment : `delete` or `d` `[Since v1.3]`
 
@@ -284,6 +318,8 @@ delete -fo 1
 
 ----
 
+{empty} +
+
 === Listing entered commands : `history` or `his`
 
 To list all the commands that you have entered in reverse chronological order. +
@@ -295,6 +331,8 @@ image::History_Command.PNG[width:800]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+{empty} +
 
 // tag::undoredo[]
 === Undoing previous command : `undo` or `ud`
@@ -342,6 +380,8 @@ image::Undo_Clear.PNG[width:800]
 
 .After `ud`
 image::After_Undo.PNG[width:800]
+
+{empty} +
 
 === Redoing the previously undone command : `redo` or `rd`
 
@@ -396,6 +436,8 @@ image::Redo_Success.PNG[width:800]
 .After second `rd`:
 image::Redo_Clear.PNG[width:800]
 
+{empty} +
+
 === Clearing all entries : `clear` or `cls`
 
 You can use `clear` or `cls` to delete all entries in Medeina. +
@@ -408,6 +450,8 @@ image::After_Clear.PNG[width:800]
 ====
 This command **cannot** be undone. Please be certain that you have backed up your data (which is located in the `data` folder) before executing this command!
 ====
+
+{empty} +
 
 === Changing theme : `theme` or `t` `[Since v1.1]`
 
@@ -430,10 +474,13 @@ image::Theme_Dark.PNG[width:800]
 image::Theme_Light.PNG[width:800]
 {empty} +
 
+{empty} +
+
 === Exiting the program : `exit` or `q`
 
 You can easily exit Medeina without any mouse click by entering `exit` or `q` in the command box. +
 
+{empty} +
 
 === Data saving
 
@@ -449,6 +496,8 @@ This command will remove information in the storage.
 
 You do not need to manually save the data.
 
+{empty} +
+
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
@@ -456,10 +505,14 @@ Coming v2.0, the data you have will be automatically encrypted after commands th
 You do not need to manually encrypt your data files.
 // end::dataencryption[]
 
+{empty} +
+
 === Creating other user profiles `[coming in v2.0]`
 
 Coming v2.0, Medeina will have user accounts, so that veterinarians and their assistants can collaborate on the same computer, but at the same time keep their information private to themselves. +
 This command will be added when it is released.
+
+{empty} +
 
 === Setting user permissions `[coming in v2.0]`
 
@@ -477,10 +530,14 @@ Information that vets should not change:
 
 The command will be added when it is released.
 
+{empty} +
+
 === Supporting multiple users `[coming in v2.0]`
 
 Coming v2.0, Medeina can be used concurrently on different systems. The data will be synced over an internet connection. This allow Veterinarians and their assistants to access Medeina simultaneously in different rooms, making it easier to collaborate with others. +
 The command will be added when it is released.
+
+{empty} +
 
 == FAQ
 
@@ -503,3 +560,130 @@ The following is a summary of all commands available in Medeina:
 * *Undo* : `undo` or `ud`
 * *Redo* : `redo` or `rd`
 * *Change Theme* : `theme THEME_NAME` or `t THEME_NAME`
+
+=== Person-related Commands
+
+[width="100%", cols="20%, 10%, 40%, 30%", options="header"]
+|=====
+| Command
+| Alias
+| Command Syntax
+| Description
+
+.^a|`add -o`
+| `a -o`
+| `add **-o** n/CONTACT_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAG]...`
+| Add a contact into Medeina
+
+.^a|`edit -o`
+| `ed -o`
+| `edit **-o** INDEX [n/CONTACT_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [nr/NRIC] [t/TAG]...`
+| Edit a contact in Medeina
+
+.^a|`find -o`
+| `f -o`
+| `find **-o** PREFIX/KEYWORD [MORE KEYWORDS] [MORE PREFIX/MORE KEYWORDS]`
+| Find a contact in Medeina
+
+.^a|`delete -o`
+| `d -o`
+| `delete **-[f]o** INDEX`
+| Delete a contact in Medeina
+|=====
+
+=== Pet patient-related Commands
+
+[width="100%", cols="20%, 10%, 40%, 30%", options="header"]
+|=====
+| Command
+| Alias
+| Command Syntax
+| Description
+
+.^a|`add -p`
+| `a -p`
+| `add **-p** n/PET_PATIENT_NAME s/SPECIES b/BREED c/COLOR bt/BLOOD_TYPE [t/TAG]... **-o** nr/OWNER_NRIC`
+| Add a pet patient into Medeina
+
+.^a|`edit -p`
+| `ed -p`
+| `edit **-p** INDEX [n/PET_PATIENT_NAME] [s/SPECIES] [b/BREED] [c/COLOR] [bt/BLOOD_TYPE] [nr/OWNER_NRIC] [t/TAG]...`
+| Edit a pet patient in Medeina
+
+.^a|`find -p`
+| `f -p`
+| `find **-p** PREFIX/KEYWORD [MORE KEYWORDS] [MORE PREFIX/MORE KEYWORDS]`
+| Find a pet patient in Medeina
+
+.^a|`delete -p`
+| `d -p`
+| `delete **-[f]p** INDEX`
+| Delete a pet patient in Medeina
+|=====
+
+=== Appointment-related Commands
+
+[width="100%", cols="20%, 10%, 40%, 30%", options="header"]
+|=====
+| Command
+| Alias
+| Command Syntax
+| Description
+
+.^a|`add -a`
+| `a -a`
+| `add **-a** d/YYYY-MM-DD HH:MM r/REMARK t/TAG...` +
+  `**-o** nr/OWNER_NRIC **-p** n/PET_PATIENT_NAME`
+| Adds an appointment into Medeina
+
+.^a|`edit -a`
+| `ed -a`
+| `edit **-a** INDEX [d/YYYY-MM-DD HH:MM] [r/REMARK] [t/TAG]...`
+| Edit an appointment in Medeina
+
+.^a|`find -a`
+| `f -a`
+| <IN PROGRESS>
+| Find an appointment in Medeina
+
+.^a|`delete -a`
+| `d -a`
+| `delete **-a** INDEX`
+| Delete an appointment in Medeina
+|=====
+
+=== System-related Commands
+
+[cols="20, 10, 50", options="header"]
+|=====
+| Command
+| Alias
+| Description
+
+.^a|`list`
+| `ls`
+| Lists all contacts and pet patients
+
+.^a|`help`
+| `h`
+| Brings up this user guide for your reference
+
+.^a|`history`
+| `his`
+| Lists all the commands that you have entered in reverse chronological order
+
+.^a|`undo`
+| `ud`
+| Undo the previous command
+
+.^a|`redo`
+| `rd`
+| Redo the previous command
+
+.^a|`clear`
+| `cls`
+| Clears all entries from Medeina
+
+.^a|`exit`
+| `q`
+| Exits the program

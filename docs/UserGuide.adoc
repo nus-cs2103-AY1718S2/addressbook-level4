@@ -79,11 +79,13 @@ Format: `login` or `lg`
 
 Examples:
 
-* Username: alice +
+* `login` +
+Username: alice +
 Password: password123 +
 This logs the user in as alice, who is a doctor.
 
-* Username: bob +
+* `login` +
+Username: bob +
 Password: password456 +
 This logs the user in as bob, who is a medical staff.
 

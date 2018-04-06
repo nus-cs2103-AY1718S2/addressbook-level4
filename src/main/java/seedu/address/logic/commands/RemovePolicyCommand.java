@@ -30,6 +30,7 @@ public class RemovePolicyCommand extends UndoableCommand {
 
     public static final String MESSAGE_POLICY_REMOVED_SUCCESS = "Removed Policy";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_NOT_ENROLLED = "This person did not apply to any policy yet.";
 
     private final Index targetIndex;
 
@@ -65,6 +66,11 @@ public class RemovePolicyCommand extends UndoableCommand {
         }
 
         target = lastShownList.get(targetIndex.getZeroBased());
+
+        if (!target.getPolicy().isPresent()) {
+            throw new CommandException(MESSAGE_NOT_ENROLLED);
+        }
+
         editedPerson = personWithoutPolicy(target);
     }
 

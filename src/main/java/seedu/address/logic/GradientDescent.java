@@ -89,6 +89,10 @@ public class GradientDescent {
         this.model.preparePredictionData(matrix, targets, normalizationConstant);
 
 
+        if (this.hasNaN(this.weights)) {
+            resetWeights();
+        }
+
         //solve
         descent(matrix, targets);
 

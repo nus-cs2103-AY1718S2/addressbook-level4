@@ -103,32 +103,6 @@ public class PredictCommandSystemTest extends AddressBookSystemTest {
         assertEquals(500.0, p4es, 5.0);
 
 
-        //test 2: 2 users
-        model.resetData(new AddressBook());
-        GradientDescent.resetWeights();
-        //prepare data
-        try {
-            model.addPerson(new2);
-            model.addPerson(old1);
-            model.addPerson(old2);
-            model.addPerson(old3);
-        } catch (DuplicatePersonException dpe) {
-            assert( dpe == null);
-            System.out.println(dpe.getMessage());
-            System.out.println("Data Preparation Failed");
-            return;
-        }
-
-        try {
-            gd.solve();
-        } catch (CommandException ce) {
-            System.out.println(ce.getMessage());
-            return;
-        }
-        p4es = model.getFilteredPersonList().get(0).getExpectedSpending().value;
-        assertEquals(0.05, GradientDescent.getWeights().get(0), 0.01);
-        assertEquals(5.0, p4es, 1.0);
-
 
         //test 3: extreme value, divergent solution
         model.resetData(new AddressBook());
@@ -158,6 +132,35 @@ public class PredictCommandSystemTest extends AddressBookSystemTest {
 
         p4es = model.getFilteredPersonList().get(0).getExpectedSpending().value;
         assertEquals(0.0, p4es, 1.0);
+
+        //test 3: 2 users, recover from previous unsuccessful test
+        model.resetData(new AddressBook());
+        //prepare data
+        try {
+            model.addPerson(new2);
+            model.addPerson(old1);
+            model.addPerson(old2);
+            model.addPerson(old3);
+        } catch (DuplicatePersonException dpe) {
+            assert( dpe == null);
+            System.out.println(dpe.getMessage());
+            System.out.println("Data Preparation Failed");
+            return;
+        }
+
+        try {
+            gd.solve();
+        } catch (CommandException ce) {
+            System.out.println(ce.getMessage());
+            return;
+        }
+        p4es = model.getFilteredPersonList().get(0).getExpectedSpending().value;
+        assertEquals(0.05, GradientDescent.getWeights().get(0), 0.01);
+        assertEquals(5.0, p4es, 1.0);
+
+
+
+
 
     }
 

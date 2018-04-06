@@ -291,6 +291,9 @@ The customer with `actualSpending` == 0 now has `expectedSpending` shown.
 
 Other Specification:
 
+* The solution is persistent. Hence when new users are added and old users are deleted,
+the new solutions are calculated incrementally from the old solution. 
+
 *  When adding an new `Person`, the `/as`(Actual Spending) is optional.
 if the actual spending is specified, the person is considered as existing
 customer. Otherwise potential customer. The prediction is to predict

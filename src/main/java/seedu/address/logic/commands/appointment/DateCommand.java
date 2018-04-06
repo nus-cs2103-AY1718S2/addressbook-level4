@@ -35,11 +35,8 @@ public class DateCommand extends Command {
     @Override
     public CommandResult execute() {
         EventsCenter.getInstance().post(new ShowDateRequestEvent(date));
-        if (date != null) {
-            return new CommandResult(String.format(MESSAGE_SUCCESS, date));
-        } else {
-            return new CommandResult(String.format(MESSAGE_SUCCESS, ""));
-        }
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, date));
     }
 
     @Override

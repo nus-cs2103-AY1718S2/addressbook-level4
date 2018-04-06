@@ -73,6 +73,7 @@ public class DeleteCommand extends UndoableCommand implements PopulatableCommand
                 && Objects.equals(this.personToDelete, ((DeleteCommand) other).personToDelete));
     }
 
+    //@@author jonleeyz
     @Override
     public String getCommandWord() {
         return COMMAND_WORD;
@@ -92,4 +93,5 @@ public class DeleteCommand extends UndoableCommand implements PopulatableCommand
     public String getUsageMessage() {
         return MESSAGE_USAGE;
     }
+    //@@author
 }

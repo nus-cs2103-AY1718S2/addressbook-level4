@@ -35,6 +35,7 @@ public class ResultDisplay extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author jonleeyz-reused
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -47,7 +48,9 @@ public class ResultDisplay extends UiPart<Region> {
             }
         });
     }
+    //@@author
 
+    //@@author jonleeyz
     /**
      * Handles the event where a valid keyboard shortcut is pressed
      * to populate the CommandBox with command prefixes,
@@ -60,7 +63,9 @@ public class ResultDisplay extends UiPart<Region> {
             displayed.setValue(event.commandUsageMessage);
         });
     }
+    //@@author
 
+    //@@author jonleeyz-reused
     private void setStyleToIndicateCommandSuccess() {
         resultDisplay.getStyleClass().remove(ERROR_STYLE_CLASS);
     }
@@ -72,4 +77,5 @@ public class ResultDisplay extends UiPart<Region> {
         }
         styleClass.add(ERROR_STYLE_CLASS);
     }
+    //@@author
 }

@@ -15,6 +15,7 @@ public class MainMenuHandle extends NodeHandle<Node> {
         super(mainMenuNode);
     }
 
+    //@@author jonleeyz
     /**
      * Clicks on {@code menuItems} in order.
      */
@@ -22,7 +23,6 @@ public class MainMenuHandle extends NodeHandle<Node> {
         Arrays.stream(menuItems).forEach(guiRobot::clickOn);
     }
 
-    //@@author jonleeyz
     /**
      * Simulates press of given keyboard shortcut
      */

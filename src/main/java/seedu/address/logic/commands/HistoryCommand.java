@@ -37,8 +37,10 @@ public class HistoryCommand extends Command implements ImmediatelyExecutableComm
         this.history = history;
     }
 
+    //@@author jonleeyz
     @Override
     public String getCommandWord() {
         return COMMAND_WORD;
     }
+    //@@author
 }

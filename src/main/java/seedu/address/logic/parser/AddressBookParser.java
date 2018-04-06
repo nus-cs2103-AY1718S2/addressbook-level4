@@ -73,7 +73,7 @@ public class AddressBookParser {
 
         case SearchFacebookCommand.COMMAND_WORD:
             return new SearchFacebookCommandParser().parse(arguments);
-            
+
         case SearchTwitterCommand.COMMAND_WORD:
             return new SearchTwitterCommandParser().parse(arguments);
 

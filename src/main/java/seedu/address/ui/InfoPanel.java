@@ -24,7 +24,6 @@ public class InfoPanel extends UiPart<Region> {
     private static final String FXML = "InfoPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
-    private Logic logic;
 
 
     private BrowserPanel browserPanel;
@@ -46,10 +45,9 @@ public class InfoPanel extends UiPart<Region> {
     private StackPane mapsPlaceholder;
 
 
-    public InfoPanel(Logic logic) {
+    public InfoPanel() {
         super(FXML);
 
-        this.logic = logic;
         fillInnerParts();
 
         venueTable = new VenueTable(null);

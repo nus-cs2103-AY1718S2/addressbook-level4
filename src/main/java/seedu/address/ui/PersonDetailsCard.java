@@ -35,9 +35,7 @@ public class PersonDetailsCard extends UiPart<Region> {
     public final Person person;
     private TimeTablePanel timeTablePanel;
     private ArrayList<Label> tagLabels = new ArrayList<>();
-
-    @FXML
-    private HBox cardPane;
+    
     @FXML
     private Label name;
     @FXML

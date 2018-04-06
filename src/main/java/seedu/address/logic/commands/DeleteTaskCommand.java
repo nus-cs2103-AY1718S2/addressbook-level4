@@ -11,6 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
+//@@author Wu Di
 /**
  * Deletes a task identified using it's last displayed index from the address book.
  */

@@ -8,7 +8,7 @@ import java.util.Objects;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Task implements Comparable<Task> {
+public class Task {
 
     private final Title title;
     private final TaskDescription taskDesc;
@@ -110,9 +110,5 @@ public class Task implements Comparable<Task> {
         return builder.toString();
     }
 
-    @Override
-    public int compareTo(Task task) {
-        return task.getPriority().value - this.getPriority().value;
-    }
 }
 

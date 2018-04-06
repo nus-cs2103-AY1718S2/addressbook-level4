@@ -126,7 +126,9 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        calender = new CalendarView(logic.getCalendarTaskLists());
+        ObservableList<Task> taskList = logic.getFilteredTaskList();
+
+        calender = new CalendarView(taskList);
         calendarPlaceholder.getChildren().add(calender.getRoot());
 
         todoListPanel = new TodoListPanel(taskList);

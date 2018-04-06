@@ -3,6 +3,7 @@ package seedu.address.model.task;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author Wu Di
 /**
  * Represents a task's title in the TodoList.
  * Guarantees: immutable; is valid as declared in {@link #isValidTitle(String)}

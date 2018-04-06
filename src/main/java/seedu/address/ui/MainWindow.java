@@ -96,6 +96,9 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem selectMenuItem;
 
     @FXML
+    private MenuItem assignMenuItem;
+
+    @FXML
     private MenuItem helpMenuItem;
 
     @FXML
@@ -144,6 +147,7 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerator(editMenuItem, KeyCombination.valueOf("Ctrl + E"));
         setAccelerator(locateMenuItem, KeyCombination.valueOf("Ctrl + L"));
         setAccelerator(selectMenuItem, KeyCombination.valueOf("Ctrl + S"));
+        setAccelerator(assignMenuItem, KeyCombination.valueOf("Ctrl + Shift + A"));
 
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
     }
@@ -322,6 +326,15 @@ public class MainWindow extends UiPart<Stage> {
     private void handleSelect() {
         raise(new PopulatePrefixesRequestEvent(new SelectCommand()));
     }
+
+    /**
+     * Populates the {@code CommandBox} with the {@code AssignCommand} prefixes.
+     */
+    @FXML
+    private void handleAssign() {
+        raise(new PopulatePrefixesRequestEvent(new AssignCommand()));
+    }
+
 
     void show() {
         primaryStage.show();

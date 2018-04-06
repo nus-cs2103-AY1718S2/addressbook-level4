@@ -12,6 +12,8 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
+:contactsURL: https://contacts.google.com/
+:calendarURL: https://calendar.google.com/calendar/r/week
 
 By: `Team W09-B3`      Since: `Mar 2018`      Licence: `MIT`
 
@@ -459,6 +461,40 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 Clears all entries from the address book. +
 Format: `clear`
+
+=== Syncing with your Google Account
+
+Syncs your Schedule and AddressBook and uploads them to your Google Account.
+AddressBook is synced with Google Contacts: link:{contactsURL}[`contacts.google.com`].
+Schedule is synced with Google Calendar: link:{calendarURL}[`calendar.google.com`]
+
+==== Logging in to your Google Account
+
+Logs in to your Google Account. Authorizes your Google Account to communicate with our app and gives
+Codeducator permission to modify your data. +
+Opens a new window in your default browser to the Oauth2 screen +
+
+[NOTE]
+You must be first logged out to log in
+
+Format: `login`
+
+==== Logging out of your Google Account
+
+Logs out of your Google Account. Securely deletes the OAuth2 credential stored in the App. +
+[NOTE]
+You must be first logged in to log out
+
+Format: `logout`
+
+==== Syncing data with your Google Account
+
+Updates both Google Contacts and Google Calendar with Addressbook and Schedule. +
+
+[NOTE]
+You must be first logged in to sync your data
+
+Format: `sync`
 
 === Exiting the program : `exit`
 

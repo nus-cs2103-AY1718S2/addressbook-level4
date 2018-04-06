@@ -307,12 +307,21 @@ These can be added later with `edit_policy`
 Examples:
 
 * `add_policy 1 beg/01/04/2018 exp/02/04/2020 pr/140 is/car_damage is/theft`
-* `add_policy 3 beg/01/02/2018 exp/31/02/2018 pr/140 is/car_damage is/theft`
+* `add_policy 3 beg/01/02/2018 exp/31/02/2018 pr/120`
 
 === Edit a policy : `edit_policy`
 Edit the policy of a person in the address book.
 
 Format: `edit_policy INDEX [beg/BEGINNING DATE] [exp/EXPIRATION DATE] [pr/PRICE] [is/ISSUE]...`
+
+****
+* Edits the policy of the person at the specified `INDEX`. The index refers to the index number shown
+ in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing issues, the existing issues of the policy will be removed i.e adding of issues is not cumulative.
+* You can remove all the policy's issues by typing `is/` without specifying any issue after it.
+****
 
 Examples:
 

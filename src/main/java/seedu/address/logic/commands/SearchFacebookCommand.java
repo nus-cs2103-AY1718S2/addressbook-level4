@@ -4,6 +4,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.SearchPersonOnFacebookEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author KevinChuangCH
 /**
  * Search for a person with the input name on facebook.
  */

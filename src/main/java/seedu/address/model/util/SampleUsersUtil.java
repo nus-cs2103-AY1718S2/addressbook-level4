@@ -17,7 +17,7 @@ public class SampleUsersUtil {
         try {
             UserDatabase sampleUd = new UserDatabase();
             sampleUd.addUser(new User(new Username("user"), new Password("pass"), "data/addressbook-user.xml"));
-            sampleUd.addUser(new User(new Username("u"), new Password("p"), "data/addressbook-hello.xml"));
+            sampleUd.addUser(new User(new Username("u"), new Password("p"), "data/addressbook-u.xml"));
             return sampleUd;
         } catch (DuplicateUserException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);

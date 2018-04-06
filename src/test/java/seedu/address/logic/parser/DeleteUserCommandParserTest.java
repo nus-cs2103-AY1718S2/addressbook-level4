@@ -17,7 +17,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.DeleteUserCommand;
 import seedu.address.model.login.Password;
 import seedu.address.model.login.Username;
-
+//@@author kaisertanqr
 public class DeleteUserCommandParserTest {
 
     private DeleteUserCommandParser parser = new DeleteUserCommandParser();

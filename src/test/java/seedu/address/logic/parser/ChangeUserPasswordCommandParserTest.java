@@ -19,7 +19,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.ChangeUserPasswordCommand;
 import seedu.address.model.login.Password;
 import seedu.address.model.login.Username;
-
+//@@author kaisertanqr
 public class ChangeUserPasswordCommandParserTest {
 
     private ChangeUserPasswordCommandParser parser = new ChangeUserPasswordCommandParser();

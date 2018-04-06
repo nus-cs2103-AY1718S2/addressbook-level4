@@ -10,10 +10,6 @@ ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
 endif::[]
 
-ifndef::env-github[]
-image::images/MockUi.png[width="600"]
-endif::[]
-
 == For All Your Social Media Needs
 
 Media Socializer aims to provide you with one-stop access to your favourite social media platforms.

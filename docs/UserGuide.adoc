@@ -176,9 +176,9 @@ Displays a list that contains all the birthdays of all contacts ordered by date 
 Or display a notification of the birthdays today +
 Format: `birthdays [ADDITIONAL_PARAMETER]`
 
+The following parameters can be inputted into the [ADDITIONAL_PARAMETER] field +
 ****
-The following parameters can be inputted into the [ADDITIONAL_PARAMETER] field
-* `todays`: Shows a notification of the birthdays occurring today
+* `todays`: Shows a notification of the birthdays occurring today +
 ****
 
 Examples:
@@ -436,14 +436,17 @@ There is no need to save manually.
 ****
 
 *Q*: How do I import my timetable from NUSMods? +
-*A*:
+*A*: When adding or editing a person, you can input his/her NUSMods shortened link in the tt/TIMETABLE field
 ****
-When adding or editing a person, you can input his/her NUSMods shortened link in the tt/TIMETABLE field
 .   Go to NUSMods
 .   Click `Share/Sync` at the bottom right hand corner
-image::NUSMods_SS1.png[width="800"]
++
+image::NUSMods_Screenshot_First.PNG[width="790"]
++
 .   Copy the link in the window that appeared
-image::NUSMods_SS2.png[width="800"]
++
+image::NUSMods_Screenshot_Second.PNG[width="790"]
++
 .   Paste it in StardyTogether at the tt/TIMETABLE field
 ****
 

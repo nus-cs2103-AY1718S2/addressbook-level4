@@ -39,7 +39,6 @@ public class PersonPanel extends UiPart<Region> {
     @FXML
     private FlowPane preferences;
 
-
     public PersonPanel() {
         super(FXML);
         registerAsAnEventHandler(this);

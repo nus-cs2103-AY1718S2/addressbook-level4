@@ -12,7 +12,7 @@
   </icons>
   <scene>
     <Scene>
-      <WebView fx:id="browser" />
+      <WebView fx:id="helpWindow" />
     </Scene>
   </scene>
 </fx:root>

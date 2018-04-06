@@ -225,7 +225,7 @@ _Edits the name of the second person to be `Betsy Crower` and clears all existin
 * This command searches for relevant persons with the specified information.
 * Name, phone, email, address and tags are searched by default (no `SPECIFIER` or `-all` `SPECIFIERS`)
 * Only one `SPECIFIER` can be used at a time.
-* If more than one `SPECIFIER` is input, only the first will be considered. The others will be ignored.
+* If more than one `SPECIFIER` is specified, only the first will be considered. The others will be ignored.
 * Description of `SPECIFIERS`:
 ** `-n` to search only names.
 ** `-p` to search only phones.

@@ -1,4 +1,4 @@
-= LoanSharkTycoon - Developer Guide
+= LoanSharkTycoon v1.4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `CS2103JAN2018-F12-B4`      Since: `Jan 2018`      Licence: `LoansharkTycoon.co`
+By: `Huat Ah Finance Ptd Ltd`      Since: `Jan 2018`      Licence: `MIT`
 
 == Setting up
 

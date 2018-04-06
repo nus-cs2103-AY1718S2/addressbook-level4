@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.UpdateNumberOfButtonsEvent;
 import seedu.address.logic.OAuthManager;
 import seedu.address.model.login.User;
 
@@ -45,6 +47,8 @@ public class ShowScheduleCommand extends Command {
             if (dailyEventsAsString.length() == 0) {
                 dailyEventsAsString = MESSAGE_NO_EVENTS;
             }
+
+            EventsCenter.getInstance().post(new UpdateNumberOfButtonsEvent(dailyEvents.size() - 1));
 
             return new CommandResult(dailyEventsAsString);
         } catch (IOException e) {

@@ -15,6 +15,7 @@ import seedu.address.commons.events.ui.LoadDirectionsEvent;
 import seedu.address.commons.events.ui.LoadMapPanelEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.RemoveMapPanelEvent;
+import seedu.address.commons.events.ui.UpdateNumberOfButtonsEvent;
 
 /**
  * The UI component that handles the display of daily schedules and directions between locations.
@@ -49,6 +50,12 @@ public class DailySchedulerPanel extends UiPart<Region> {
             buttonStack.getChildren().add(new ToggleButton(" "));
         }
     }
+    /**
+     * Removes existing buttons.
+     */
+    public void removeButtons() {
+        buttonStack.getChildren().clear();
+    }
 
     /**
      * Loads a map with directional information to the allocated stack pane.
@@ -58,7 +65,6 @@ public class DailySchedulerPanel extends UiPart<Region> {
             directionPanel = new MapPanel("MapPanel.fxml");
             directionPanelPlaceholder.getChildren().add(directionPanel.getRoot());
         }
-        addButtons(5);
     }
 
     /**
@@ -115,6 +121,13 @@ public class DailySchedulerPanel extends UiPart<Region> {
     @Subscribe
     private void handleLoadDirectionsEvent(LoadDirectionsEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        updateDirections("Blk 138, Potong Pasir Ave 3", "342 Pasir Panjang");
+        updateDirections(event.getAddressOrigin(), event.getGetAddressDestination());
+    }
+
+    @Subscribe
+    private void handleUpdateNumberOfButtonsEvent(UpdateNumberOfButtonsEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        removeButtons();
+        addButtons(event.getNumOfInstances());
     }
 }

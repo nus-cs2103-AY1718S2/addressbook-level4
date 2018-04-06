@@ -21,9 +21,6 @@ import com.lynden.gmapsfx.service.geocoding.GeocodingServiceCallback;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
 
-//import seedu.address.commons.core.EventsCenter;
-//import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
-
 /**
  * Handles changes to any Map user interfaces.
  */
@@ -111,6 +108,10 @@ public class MapManager {
             DirectionsRenderer directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
             directionsService.getRoute(request, new MyDirectionsServiceCallback(map), directionsRenderer);
         }
+
+        //        public static void removeDirectionsOnMap(GoogleMap map, DirectionsPane directionsPane) {
+        //
+        //        }
     }
 }
 

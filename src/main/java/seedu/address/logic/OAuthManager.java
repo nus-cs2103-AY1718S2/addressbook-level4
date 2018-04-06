@@ -36,6 +36,9 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.exceptions.InvalidCalendarEventCountException;
+import seedu.address.logic.commands.NavigateCommand;
 import seedu.address.model.login.User;
 
 /**
@@ -457,20 +460,27 @@ public class OAuthManager {
     public static Event getEventByIndexFromLastList(int index) {
         return mostRecentEventList.get(index - 1);
     }
-
+    //@@author jaronchan
     /**
      * Gets the specified event pair by index (offset by 1 due to array indexing) according to a user's input.
      * @param index
      * @return List
      */
-    public static List<Event> getEventByIndexPairFromDailyList(int index) {
+    public static List<Event> getEventByIndexPairFromDailyList(int index)
+            throws InvalidCalendarEventCountException, IllegalValueException {
         List<Event> eventPair = new ArrayList<>();
-        eventPair.add(dailyEventsList.get(index - 1));
-        eventPair.add(dailyEventsList.get(index));
+        if (index < 1 || index >= dailyEventsList.size() - 1) {
+            throw new IllegalValueException(NavigateCommand.MESSAGE_INVALID_RANGE);
+        } else if (dailyEventsList.isEmpty() && dailyEventsList.size() < 2) {
+            throw new InvalidCalendarEventCountException();
+        } else {
+            eventPair.add(dailyEventsList.get(index - 1));
+            eventPair.add(dailyEventsList.get(index));
+        }
 
         return eventPair;
     }
-
+    //@@author ifalluphill
 
     /**
      * Gets the most recent daily event list shown to the user.

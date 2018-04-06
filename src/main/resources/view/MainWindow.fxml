@@ -67,7 +67,7 @@
           <TabPane fx:id="featuresTabPane" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1"
                    xmlns="http://javafx.com/javafx/9.0.4">
             <tabs>
-              <Tab fx:id="detailsTab" text="Details">
+              <Tab id="details" fx:id="detailsTab" text="Details">
                 <content>
                   <StackPane fx:id="personDetailsPlaceholder" prefWidth="340">
                     <padding>
@@ -76,7 +76,7 @@
                   </StackPane>
                 </content>
               </Tab>
-              <Tab fx:id="calendarTab" text="Calendar">
+              <Tab id="calendar" fx:id="calendarTab" text="Calendar">
                 <content>
                   <StackPane fx:id="calendarPlaceholder" prefWidth="340">
                     <padding>
@@ -85,7 +85,7 @@
                   </StackPane>
                 </content>
               </Tab>
-              <Tab fx:id="dailySchedulerTab" text="Daily Scheduler">
+              <Tab id="scheduler" fx:id="dailySchedulerTab" text="Daily Scheduler">
                 <content>
                   <StackPane fx:id="dailySchedulerPlaceholder" prefWidth="340">
                     <padding>

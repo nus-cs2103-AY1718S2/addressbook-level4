@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -16,9 +18,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.LoadMapPanelEvent;
+import seedu.address.commons.events.ui.RemoveMapPanelEvent;
 import seedu.address.commons.events.ui.ShowCalendarRequestEvent;
 import seedu.address.commons.events.ui.ShowErrorsRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
@@ -162,7 +167,6 @@ public class MainWindow extends UiPart<Stage> {
         loginStatusBar = new LoginStatusBar();
         loginStatusbarPlaceholder.getChildren().add(loginStatusBar.getRoot());
 
-
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -185,6 +189,7 @@ public class MainWindow extends UiPart<Stage> {
         commandBox.setMainWindow(this);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
+        disableSelection();
         hideBeforeLogin();
 
     }
@@ -217,6 +222,20 @@ public class MainWindow extends UiPart<Stage> {
         calendarPlaceholder.setVisible(true);
         dailySchedulerPlaceholder.setVisible(true);
         personListPanelPlaceholder.setVisible(true);
+    }
+    //@@author jaronchan
+    /**
+     * Disables the selection of tabs and persons cards by mouse click.
+     */
+
+    private void disableSelection() {
+        featuresTabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+            @Override
+            public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
+                EventsCenter.getInstance().post(new RemoveMapPanelEvent(newValue.getId().toLowerCase()));
+                EventsCenter.getInstance().post(new LoadMapPanelEvent(newValue.getId().toLowerCase()));
+            }
+        });
     }
 
     //@@author
@@ -303,6 +322,7 @@ public class MainWindow extends UiPart<Stage> {
             break;
         }
     }
+    //@@author
 
     /**
      * Closes the application.

@@ -3,9 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -31,8 +28,6 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Task> filteredTasks;
-    private final ArrayList<String> filteredDeleteItems;
-    private final ObservableList<Task>[][] calendarTaskLists;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -46,8 +41,6 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredTasks = new FilteredList<>(this.addressBook.getTaskList());
-        filteredDeleteItems = new ArrayList<>(this.addressBook.getItemList());
-        calendarTaskLists = this.addressBook.getCalendarList();
     }
 
     public ModelManager() {
@@ -100,18 +93,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void addDeleteItem(String filepath) {
-        addressBook.addDeleteItem(filepath);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public synchronized void clearDeleteItems() {
-        addressBook.clearItems();
-        indicateAddressBookChanged();
-    }
-
-    @Override
     public void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
@@ -134,11 +115,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void sortPersons() {
         addressBook.sortList();
-    }
-
-    @Override
-    public ObservableList<Task>[][] getCalendarTaskLists() {
-        return calendarTaskLists;
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -174,12 +150,6 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredTasks.setPredicate(predicate);
     }
-
-    //=========== Item List Accessors ======================================================================
-    public List<String> getItemList() {
-        return Collections.unmodifiableList(filteredDeleteItems);
-    }
-
 
 
     @Override

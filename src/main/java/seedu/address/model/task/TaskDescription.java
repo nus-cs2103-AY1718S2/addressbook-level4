@@ -30,10 +30,10 @@ public class TaskDescription {
         requireNonNull(description);
         checkArgument(isValidDescription(description));
         this.value = description;
-        if (value.length() <= 20) {
+        if (value.length() <= 7) {
             shortDesc = value;
         } else {
-            shortDesc = value.substring(0, 20) + "...";
+            shortDesc = value.substring(0, 7) + "...";
         }
     }
 

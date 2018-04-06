@@ -29,17 +29,32 @@ public class CalendarNode extends UiPart<Region> {
      * @param txt the date of the node
      * @param taskList the task list linked to it
      */
-    public CalendarNode(String txt, ObservableList<Task> taskList) {
+    public CalendarNode(String txt, ObservableList<Task> taskList, int day, int month, int year) {
         super(FXML);
         date.setText(txt);
-        setConnections(taskList);
+        setConnections(taskList, day, month, year);
     }
 
-    private void setConnections(ObservableList<Task> taskList) {
+    private void setConnections(ObservableList<Task> taskList, int day, int month, int year) {
         ObservableList<CalendarTaskCard> mappedList = EasyBind.map(
-                taskList, (task) -> new CalendarTaskCard(task));
+                taskList, (task) -> mapFunction(task, day, month, year));
         tasks.setItems(mappedList);
         tasks.setCellFactory(listView -> new TasksCell());
+    }
+
+    /**
+     * Only maps tasks due on that date.
+     * @param task
+     * @param month
+     * @param year
+     * @return
+     */
+    private CalendarTaskCard mapFunction(Task task, int day, int month, int year) {
+        if (task.getDeadlineDay() == day && task.getDeadlineMonth() == month && task.getDeadlineYear() == year) {
+            return new CalendarTaskCard(task);
+        } else {
+            return null;
+        }
     }
 
     /**

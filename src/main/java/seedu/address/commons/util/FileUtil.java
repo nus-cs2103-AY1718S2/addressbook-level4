@@ -96,7 +96,6 @@ public class FileUtil {
         return pathWithForwardSlash.replace("/", File.separator);
     }
 
-    //@@author Alaru
     public static String getFileType(String filePath) throws IllegalValueException {
         requireNonNull(filePath);
         String trimmedFilePath = filePath.trim();
@@ -109,7 +108,7 @@ public class FileUtil {
     }
 
     /**
-     * Copies an image from the filepath provided to the specified destination
+     *
      */
     public static void copyImage(BufferedImage image, String fileType, String destPath) throws IllegalValueException {
         try {

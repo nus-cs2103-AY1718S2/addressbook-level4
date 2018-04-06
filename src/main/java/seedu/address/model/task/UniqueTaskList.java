@@ -5,7 +5,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -25,22 +24,12 @@ public class UniqueTaskList implements Iterable<Task> {
 
     private final ObservableList<Task> internalList = FXCollections.observableArrayList();
 
-    private final ObservableList<Task>[][] calendarList = new ObservableList[7][32];
-
     private Date dateNow = new Date();
 
     private LocalDate now = dateNow.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
     private int monthNow = now.getMonthValue();
 
-    public UniqueTaskList() {
-        super();
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 32; j++) {
-                calendarList[i][j] = FXCollections.observableArrayList();
-            }
-        }
-    }
     /**
      * Returns true if the list contains an equivalent task as the given argument.
      */
@@ -56,9 +45,6 @@ public class UniqueTaskList implements Iterable<Task> {
     public void add(Task toAdd) {
         requireNonNull(toAdd);
         internalList.add(toAdd);
-        int diff = toAdd.getDeadline().diff;
-        calendarList[diff][toAdd.getDeadlineDay()].add(toAdd);
-        Collections.sort(calendarList[diff][toAdd.getDeadlineDay()]);
     }
 
     //@@author Wu Di
@@ -75,8 +61,7 @@ public class UniqueTaskList implements Iterable<Task> {
         if (!taskFoundAndDeleted) {
             throw new TaskNotFoundException();
         }
-        remove(target);
-        add(editedTask);
+        internalList.add(editedTask);
     }
 
     /**
@@ -86,9 +71,8 @@ public class UniqueTaskList implements Iterable<Task> {
      */
     public boolean remove(Task toRemove) throws TaskNotFoundException {
         requireNonNull(toRemove);
-        final boolean personFoundAndDeleted = internalList.remove(toRemove)
-            && calendarList[toRemove.getDeadline().diff][toRemove.getDeadlineDay()].remove(toRemove);
-        if (!personFoundAndDeleted) {
+        final boolean taskFoundAndDeleted = internalList.remove(toRemove);
+        if (!taskFoundAndDeleted) {
             throw new TaskNotFoundException();
         }
         return taskFoundAndDeleted;
@@ -97,11 +81,6 @@ public class UniqueTaskList implements Iterable<Task> {
     //@@author
     public void setTasks(UniqueTaskList replacement) {
         this.internalList.setAll(replacement.internalList);
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 32; j++) {
-                calendarList[i][j].setAll(replacement.calendarList[i][j]);
-            }
-        }
     }
 
     public void setTasks(List<Task> tasks) {
@@ -118,14 +97,6 @@ public class UniqueTaskList implements Iterable<Task> {
      */
     public ObservableList<Task> asObservableList() {
         return FXCollections.unmodifiableObservableList(internalList);
-    }
-
-    /**
-     * Returns the calendarList array for tasks
-     * @return
-     */
-    public ObservableList<Task>[][] asCalendarList() {
-        return calendarList;
     }
 
     @Override

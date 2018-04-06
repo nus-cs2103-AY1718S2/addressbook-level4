@@ -70,7 +70,7 @@ public class WeekCommandTest {
         try {
             WeekCommand weekCommand = prepareCommand(str);
             CommandResult commandResult = weekCommand.execute();
-        assertEquals(String.format(WeekCommand.MESSAGE_SUCCESS, str.substring(5) + " of " + str.substring(0, 4)),
+            assertEquals(String.format(WeekCommand.MESSAGE_SUCCESS, str.substring(5) + " of " + str.substring(0, 4)),
                     commandResult.feedbackToUser);
 
             ShowWeekRequestEvent lastEvent = (ShowWeekRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();

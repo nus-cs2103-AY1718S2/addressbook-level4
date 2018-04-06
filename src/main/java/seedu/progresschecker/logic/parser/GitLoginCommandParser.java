@@ -15,6 +15,7 @@ import seedu.progresschecker.model.credentials.Passcode;
 import seedu.progresschecker.model.credentials.Repository;
 import seedu.progresschecker.model.credentials.Username;
 
+//@@author adityaa1998
 /**
  * Parses input arguments and creates a new GitDetails object
  */

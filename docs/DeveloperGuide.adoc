@@ -275,7 +275,7 @@ Formerly, users need to type all application keywords and their inputs to the co
 
 Currently, a class called `_SuggestionsPopUp_`, which inherits from `_ContextMenu_`, is created to handle all operations relating to auto-completion. The operations include displaying a pop-up menu consisting of suggestions for user’s input, automatically completing input field when a word is chosen and hiding the pop-up menu.
 
-Key combination kbd:[Shift]+kbd:[Space] is used to show suggestion pop-up. For other keys and key combinations, the pop-up is hidden. The code to handle these key and key combination actions is shown below:
+Key combination kbd:[Shift]+kbd:[Tab] is used to show suggestion pop-up. For other keys and key combinations, the pop-up is hidden. The code to handle these key and key combination actions is shown below:
 
 [source,java]
 ----

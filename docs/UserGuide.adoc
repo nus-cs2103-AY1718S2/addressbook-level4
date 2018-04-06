@@ -111,6 +111,17 @@ If you follow the instructions correctly, the result box will inform you and you
 image::AddCommandResultEg.png[width="750"]
 {nbsp} +
 
+[TIP]
+You can use kbd:[Shift]+kbd:[Tab] for command auto-completion. After choosing auto-completion for a command, all fields associated with that command will be automatically filled.
+
+
+.Auto-completion for command
+image::AddCommandWithAutoCompletion.png[width="750"]
+{nbsp} +
+
+[TIP]
+You can use kbd:[Tab] to quickly move the caret to next field.
+
 === *`clear`* : Clearing all entries
 
 Clears all entries from the recipe book.
@@ -583,6 +594,8 @@ A: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue
                             |   E.g. *`edit 2 name/Chicken pizza ingredient/INGREDIENT/flour,chicken,pepper`*
 .2+|    *Find*              |  `find KEYWORD [MORE_KEYWORDS]`
                             |   E.g. *`find Chicken Pizza`*
+.2+|    *Group*             |  `group group_name/GROUP_NAME index/INDEX [index/INDEX]`
+                            |   E.g. *`group group_name/ Best index/ 1 index/ 3`*
 .2+|    *Help*              |  `help`
                             |  *`help`*
 .2+|    *History*           |  `history`
@@ -607,6 +620,8 @@ A: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue
                             |  *`undo`*
 .2+|    *Upload*            |  `upload FILENAME`
                             |   E.g. *`upload RecipeBook`*
+.2+|    *View group*        |  `view_group GROUP_NAME`
+                            |   E.g. *`view_group Best`*
 |===
 
 == Keyboard shortcuts
@@ -619,7 +634,7 @@ A: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue
 | kbd:[Ctrl] + kbd:[&uarr;] |   Previous command
 | kbd:[Ctrl] + kbd:[&darr;] |   Next command
 | kbd:[Shift] + kbd:[Enter] |   New line in command
-| kbd:[Shift] + kbd:[Space] |   Show command suggestions
+| kbd:[Shift] + kbd:[Tab]   |   Show command suggestions
 | kbd:[Tab]                 |   Next field in command
 |===
 

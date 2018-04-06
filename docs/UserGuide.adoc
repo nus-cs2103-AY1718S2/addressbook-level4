@@ -75,8 +75,10 @@ A person can have any number of tags (including 0)
 [NOTE]
 ====
 * Birthday must be in DDMMYYYY format
-* Timetable must be a valid NUSMods shortened link
+* Timetable must either be a valid NUSMods shortened link or left empty (in which a empty timetable will be created)
 ====
+
+For more information on how to get a valid link, refer to <<FAQ>>.
 
 Examples:
 
@@ -175,8 +177,8 @@ Or display a notification of the birthdays today +
 Format: `birthdays [ADDITIONAL_PARAMETER]`
 
 ****
-* There is an optional field of [ADDITIONAL_PARAMETER]
-* You can input `todays` in that field to show a notification of the birthdays today instead
+The following parameters can be inputted into the [ADDITIONAL_PARAMETER] field
+* `todays`: Shows a notification of the birthdays occurring today
 ****
 
 Examples:
@@ -415,16 +417,14 @@ There is no need to save manually.
 
 *Q*: How do I transfer my data to another Computer? +
 *A*:
-*Method 1*
-Replaces the other computer's data completely
+*Method 1*: Replaces the other computer's data completely
 ****
 .  In the folder that `StardyTogether.jar` is in, find the `data` folder
 .  Copy the `addressbook.xml` storage file inside
 .  Transfer that file to the other computer
 .  Place it in the `data` folder of `StardyTogether.jar`, on the other computer
 ****
-*Method 2*
-Merges the contacts of both computers
+*Method 2*: Merges the contacts of both computers
 ****
 .  In the folder that `StardyTogether.jar` is in, find the `data` folder
 .  Copy the `addressbook.xml` storage file inside
@@ -435,6 +435,17 @@ Merges the contacts of both computers
 .  Press Enter
 ****
 
+*Q*: How do I import my timetable from NUSMods? +
+*A*:
+****
+When adding or editing a person, you can input his/her NUSMods shortened link in the tt/TIMETABLE field
+.   Go to NUSMods
+.   Click `Share/Sync` at the bottom right hand corner
+image::NUSMods_SS1.png[width="800"]
+.   Copy the link in the window that appeared
+image::NUSMods_SS2.png[width="800"]
+.   Paste it in StardyTogether at the tt/TIMETABLE field
+****
 
 == Command Summary
 
@@ -443,7 +454,7 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 * *Alias* `alias COMMAND ALIAS` +
 e.g. `alias history hist`
 * *Alias List* `alias list` +
-* *Birthday List*: `birthdays`
+* *Birthday List*: `birthdays [todays]`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`

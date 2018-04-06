@@ -15,6 +15,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.SearchPersonOnAllPlatformEvent;
 import seedu.address.commons.events.ui.SearchPersonOnFacebookEvent;
+import seedu.address.commons.events.ui.SearchPersonOnTwitterEvent;
 import seedu.address.model.person.Person;
 
 /**
@@ -112,5 +113,13 @@ public class BrowserPanel extends UiPart<Region> {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         loadBrowserSearchPage(event.getSearchName());
         loadBrowser1Page(defaultPage.toExternalForm());
+    }
+
+    @Subscribe
+    private void handleSearchPersonOnTwitterEvent(SearchPersonOnTwitterEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        loadBrowserPage(defaultPage.toExternalForm());
+        loadBrowser1SearchPage(event.getSearchName());
     }
 }

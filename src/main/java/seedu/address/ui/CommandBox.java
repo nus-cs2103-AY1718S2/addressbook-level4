@@ -1,8 +1,9 @@
 package seedu.address.ui;
 
-import java.util.Set;
+import java.util.List;
 import java.util.logging.Logger;
 
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
@@ -26,17 +27,19 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
+    private static ChangeListener<String> autocompleteListener;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+
 
     @FXML
     private TextField commandTextField;
     private ContextMenu suggestionBox;
     private Autocomplete autocompleteLogic = Autocomplete.getInstance();
 
-    private Set<String> suggestions;
+    private List<String> suggestions;
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -45,8 +48,10 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.setContextMenu(suggestionBox);
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
-        commandTextField.textProperty().addListener(((observable, oldValue, newValue) ->
-                triggerAutocomplete(newValue)));
+        // autocomplete
+        autocompleteListener = ((observable, oldValue, newValue) -> triggerAutocomplete(newValue));
+        commandTextField.textProperty().addListener(autocompleteListener);
+
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -186,12 +191,41 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Append autocomplete selection to commandTextField (do not append repeated characters).
      * user input: 'a', selected autocomplete 'add' --> commandTextField will show 'add' and not 'aadd'.
+     * user input: 'nr/F012', selected autocomplete 'F0123456B' --> commandTextField will show 'nr/F0123456B'
+     * and not 'nr/F012F0123456B'.
      */
     private void handleAutocompleteSelection(String toAdd) {
         String[] words = commandTextField.getText().trim().split(" ");
-        toAdd = toAdd.replaceFirst(words[words.length - 1], "");
-        int cursorPos = commandTextField.getCaretPosition();
-        commandTextField.insertText(cursorPos, toAdd);
+        String targetWord = words[words.length - 1];
+
+        if (containsPrefix(targetWord)) {
+            String[] splitByPrefix = words[words.length - 1].split("/");
+            words[words.length - 1] = splitByPrefix[0] + "/" + toAdd;
+            //toAdd = toAdd.replaceFirst("(?i)" + splitByPrefix[1], "");
+        } else {
+            toAdd = toAdd.replaceFirst(words[words.length - 1], "");
+            words[words.length - 1] += toAdd;
+        }
+
+        //int cursorPos = commandTextField.getCaretPosition();
+        //commandTextField.insertText(cursorPos, toAdd);
+        String updateInput = String.join(" ", words);
+        commandTextField.setText(updateInput);
         commandTextField.positionCaret(commandTextField.getText().length());
+    }
+
+    /**
+     * Returns true if {@code toCheck} contains a prefix, but is not a prefix.
+     */
+    private boolean containsPrefix(String toCheck) {
+        if (toCheck.contains("/") && !toCheck.substring(toCheck.length() - 1).equals("/")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static ChangeListener getAutocompleteListener() {
+        return autocompleteListener;
     }
 }

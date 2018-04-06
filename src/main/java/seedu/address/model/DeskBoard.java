@@ -94,6 +94,28 @@ public class DeskBoard implements ReadOnlyDeskBoard {
         activities.add(activity);
     }
 
+    //@@author karenfrilya97
+    /**
+     * Adds all activities from UniqueActivityList {@code activities} to the desk board.
+     * Also checks each new activity's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the activity to point to those in {@link #tags}.
+     *
+     * If an equivalent activity already exists, that activity will be ignored.
+     */
+    public void addActivities(List<Activity> toAdd) {
+        for (Activity activity : toAdd) {
+            activity = syncWithMasterTagList(activity);
+            // TODO: the tags master list will be updated even though the below line fails.
+            // This can cause the tags master list to have additional tags that are not tagged to any activity
+            // in the activity list.
+            try {
+                activities.add(activity);
+            } catch (DuplicateActivityException e) {
+                // Ignore duplicate activity.
+            }
+        }
+    }
+
     /**
      * Replaces the given activity {@code target} in the list with {@code editedActivity}.
      * {@code DeskBoard}'s tag list will be updated with the tags of {@code editedActivity}.

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<deskboard>
+    <tasks>
+        <name>CS2102Assignment</name>
+        <dateTime>01/04/2018 20:00</dateTime>
+        <remark>nil</remark>
+        <tagged>CS2102</tagged>
+    </tasks>
+    <events>
+        <name>CS2102ProjectDemo</name>
+        <dateTime>04/04/2018 09:00</dateTime>
+        <endDateTime>04/04/2018 10:00</endDateTime>
+        <location>COM1</location>
+        <remark>FinalDemo</remark>
+        <tagged>CS2102</tagged>
+    </events>
+    <tasks>
+        <name>CS2101Assignment</name>
+        <dateTime>04/03/2018 23:59</dateTime>
+        <remark> </remark>
+        <tagged>CS2101</tagged>
+    </tasks>
+    <events>
+        <name>CCA</name>
+        <dateTime>01/04/2018 20:00</dateTime>
+        <endDateTime>01/04/2018 21:00</endDateTime>
+        <location>Campus</location>
+        <remark>nil</remark>
+    </events>
+    <tags>CS2101</tags>
+    <tags>CS2102</tags>
+</deskboard>

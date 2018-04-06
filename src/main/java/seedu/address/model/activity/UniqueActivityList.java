@@ -26,7 +26,6 @@ import seedu.address.model.util.DateTimeComparator;
  */
 public class UniqueActivityList implements Iterable<Activity> {
 
-    //@@author karenfrilya97
     private static DateTimeComparator dateTimeComparator = new DateTimeComparator();
 
     private final ObservableList<Activity> internalList = FXCollections.observableArrayList();
@@ -41,7 +40,7 @@ public class UniqueActivityList implements Iterable<Activity> {
 
 
     /**
-     * Adds a activity to the list.
+     * Adds an activity to the list.
      * If activity is a task or an event, is added to its respective list.
      *
      * @throws DuplicateActivityException if the activity to add is a duplicate of an existing activity in the list.
@@ -53,6 +52,22 @@ public class UniqueActivityList implements Iterable<Activity> {
         }
         internalList.add(toAdd);
         //@@author karenfrilya97
+        Collections.sort(internalList, dateTimeComparator);
+    }
+
+    //@@author karenfrilya97
+    /**
+     * Adds all activities from another UniqueActivityList {@code activities} to the list.
+     * If an activity in {@code activities} is already in the {@code internalList},
+     * then that particular activity will not be added, but other activities will still be added to the list.
+     */
+    public void addAll(UniqueActivityList activities) {
+        requireNonNull(activities);
+        for (Activity activity : activities) {
+            if (!contains(activity)) {
+                internalList.add(activity);
+            }
+        }
         Collections.sort(internalList, dateTimeComparator);
     }
 

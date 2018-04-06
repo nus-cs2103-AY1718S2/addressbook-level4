@@ -3,11 +3,13 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FILE_PATH;
 
+import java.io.File;
 import java.io.IOException;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.DeskBoard;
+import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyDeskBoard;
 import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
@@ -28,12 +30,12 @@ public class ImportCommand extends UndoableCommand {
             + PREFIX_FILE_PATH + "C:\\Users\\Karen\\IdeaProjects\\main\\data\\deskboard.xml";
 
     public static final String MESSAGE_DUPLICATE_ACTIVITY = "The following entry already exists in the desk board: %s";
-    public static final String MESSAGE_FILE_NOT_FOUND = "Desk board file not found";
+    public static final String MESSAGE_FILE_NOT_FOUND = "Desk board file %s not found";
     public static final String MESSAGE_ILLEGAL_VALUES_IN_FILE = "Illegal values found in file: %s";
     public static final String MESSAGE_SUCCESS = "Data imported from: %1$s";
 
     private final String filePath;
-    private ReadOnlyDeskBoard importedDeskBoard;
+    private ReadOnlyDeskBoard toImport;
 
     /**
      * Creates an ImportCommand to import data from the specified {@code filePath}.
@@ -45,21 +47,16 @@ public class ImportCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(model);
         try {
-            importedDeskBoard = new XmlDeskBoardStorage(filePath).readDeskBoard().orElse(new DeskBoard());
+            toImport = new XmlDeskBoardStorage(filePath).readDeskBoard()
+                    .orElseThrow(() -> new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, filePath)));
         } catch (IOException ioe) {
-            throw new CommandException(MESSAGE_FILE_NOT_FOUND);
+            throw new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, filePath));
         } catch (DataConversionException dce) {
             throw new CommandException(String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, dce.getMessage()));
         }
-        for (Activity activity : importedDeskBoard.getActivityList()) {
-            try {
-                model.addActivity(activity);
-            } catch (DuplicateActivityException dae) {
-                throw new CommandException(String.format(MESSAGE_DUPLICATE_ACTIVITY, activity));
-            }
-        }
+        requireNonNull(model);
+        model.addActivities(toImport);
         return new CommandResult(String.format(MESSAGE_SUCCESS, filePath));
     }
 

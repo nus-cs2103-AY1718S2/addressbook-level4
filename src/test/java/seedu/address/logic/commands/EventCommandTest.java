@@ -88,7 +88,7 @@ public class EventCommandTest {
     /**
      * Generates a new EventCommand with the details of the given event.
      */
-    private EventCommand getEventCommandForGivenEvent(Event event, Model model) {
+    EventCommand getEventCommandForGivenEvent(Event event, Model model) {
         EventCommand command = new EventCommand(event);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
@@ -100,6 +100,11 @@ public class EventCommandTest {
     private class ModelStub implements Model {
         @Override
         public void addActivity(Activity activity) throws DuplicateActivityException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addActivities(ReadOnlyDeskBoard deskBoard) {
             fail("This method should not be called.");
         }
 

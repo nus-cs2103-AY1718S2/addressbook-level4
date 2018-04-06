@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -27,6 +28,10 @@ public interface Model {
     /** Adds the given activity */
     void addActivity(Activity activity) throws DuplicateActivityException;
 
+    //@@author karenfrilya97
+    void addActivities(ReadOnlyDeskBoard deskBoard);
+
+    //@@author YuanQQLer
     /**
      * Replaces the given activity {@code target} with {@code editedActivity}.
      *

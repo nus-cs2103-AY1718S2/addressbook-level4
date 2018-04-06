@@ -60,7 +60,7 @@ public class MainWindowHandle extends StageHandle {
     public PetPatientListPanelHandle getPetPatientListPanel() {
         return petPatientListPanel;
     }
-    //@@author []
+    //@@author
 
     //public BrowserPanelHandle getBrowserPanel() {
     //    return browserPanel;

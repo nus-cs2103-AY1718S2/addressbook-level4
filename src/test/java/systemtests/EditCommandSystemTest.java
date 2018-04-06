@@ -196,7 +196,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + OPTION_OWNER + " "
                 + INDEX_FIRST_PERSON.getOneBased() + INVALID_NRIC_DESC,
                 Nric.MESSAGE_NRIC_CONSTRAINTS);
-        //@@author []
+        //@@author
 
         /* Case: invalid tag -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + OPTION_OWNER + " "

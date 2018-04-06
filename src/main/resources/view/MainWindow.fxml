@@ -67,7 +67,7 @@
             </padding>
           </StackPane>
         </SplitPane>
-        <!-- @@author [] -->
+        <!-- @@author -->
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
       </VBox>
     </Scene>

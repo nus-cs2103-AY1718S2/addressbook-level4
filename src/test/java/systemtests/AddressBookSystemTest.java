@@ -112,7 +112,7 @@ public abstract class AddressBookSystemTest {
     public PetPatientListPanelHandle getPetPatientListPanel() {
         return mainWindowHandle.getPetPatientListPanel();
     }
-    //@@author []
+    //@@author
 
     public MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();
@@ -126,7 +126,7 @@ public abstract class AddressBookSystemTest {
     public CalendarPanelHandle getCalendarPanel() {
         return mainWindowHandle.getCalendarPanel();
     }
-    //@@author []
+    //@@author
 
     public StatusBarFooterHandle getStatusBarFooter() {
         return mainWindowHandle.getStatusBarFooter();

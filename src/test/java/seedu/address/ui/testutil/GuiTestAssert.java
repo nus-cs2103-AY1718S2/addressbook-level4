@@ -63,7 +63,7 @@ public class GuiTestAssert {
 
         //assertTagsEqual(expectedPetPatient, actualCard);
     }
-    //@@author []
+    //@@author
 
     /**
      * Returns the color style for {@code tagName}'s label. The tag's color is determined by looking up the color
@@ -126,7 +126,7 @@ public class GuiTestAssert {
             assertEquals(Arrays.asList(LABEL_DEFAULT_STYLE, getTagColorStyleFor(tag)),
                 actualCard.getTagStyleClasses(tag)));
     }
-    //@@author []
+    //@@author
 
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
@@ -149,7 +149,7 @@ public class GuiTestAssert {
             assertCardDisplaysPetPatient(petPatient[i], petPatientListPanelHandle.getPetPatientCardHandle(i));
         }
     }
-    //@@author []
+    //@@author
 
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and

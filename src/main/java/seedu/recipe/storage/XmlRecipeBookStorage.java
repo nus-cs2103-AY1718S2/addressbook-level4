@@ -22,7 +22,7 @@ import seedu.recipe.model.ReadOnlyRecipeBook;
 public class XmlRecipeBookStorage implements RecipeBookStorage {
 
     private static final Logger logger = LogsCenter.getLogger(XmlRecipeBookStorage.class);
-    private static final String IMAGE_FOLDER = "/image/";
+    private static final String IMAGE_FOLDER = "/images/";
     private static final String RECIPE_BOOK_FILENAME = "recipebook.xml";
 
     private String filePath;
@@ -96,6 +96,7 @@ public class XmlRecipeBookStorage implements RecipeBookStorage {
         for (int i = 0; i < recipeBook.getRecipeList().size(); i++) {
             try {
                 saveImageFile(recipeBook.getRecipeList().get(i).getImage().toString());
+                recipeBook.getRecipeList().get(i).getImage().setImageToInternalReference();
             } catch (Exception e) {
                 System.out.println("Cannot save image " + i);
             }

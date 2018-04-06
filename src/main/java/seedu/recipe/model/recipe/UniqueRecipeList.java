@@ -93,6 +93,12 @@ public class UniqueRecipeList implements Iterable<Recipe> {
         setRecipes(replacement);
     }
 
+    public void setAllImagesToInternalReference() {
+        for (int i = 0; i < internalList.size(); i++) {
+            internalList.get(i).getImage().setImageToInternalReference();
+        }
+    }
+
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */

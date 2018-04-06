@@ -1,6 +1,7 @@
 //@@author RyanAngJY
 package seedu.recipe.model.recipe;
 
+import static java.lang.Thread.sleep;
 import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.util.AppUtil.checkArgument;
 
@@ -20,7 +21,8 @@ public class Image {
     public static final String MESSAGE_IMAGE_CONSTRAINTS = "Image path should be valid";
     public static final URL VALID_IMAGE = MainApp.class.getResource("/images/clock.png");
     public static final String VALID_IMAGE_PATH = VALID_IMAGE.toExternalForm().substring(5);
-    public final String value;
+    private String value;
+    private String imageName;
 
     /**
      * Constructs a {@code Image}.
@@ -31,6 +33,7 @@ public class Image {
         requireNonNull(imagePath);
         checkArgument(isValidImage(imagePath), MESSAGE_IMAGE_CONSTRAINTS);
         this.value = imagePath;
+        this.imageName = new File(imagePath).getName();
     }
 
     /**
@@ -45,6 +48,11 @@ public class Image {
             return true;
         }
         return false;
+    }
+
+    public void setImageToInternalReference() {
+        System.out.println(imageName);
+        this.value = "/Users/administrator/IdeaProjects/CS2103_Software_Engineering/main/build/jar/data/images/" + imageName;
     }
 
     public String getUsablePath() {

@@ -148,6 +148,10 @@ public class RecipeBook implements ReadOnlyRecipeBook {
         }
     }
 
+    public void setRecipeImagesToInternalReference() {
+        recipes.setAllImagesToInternalReference();
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {

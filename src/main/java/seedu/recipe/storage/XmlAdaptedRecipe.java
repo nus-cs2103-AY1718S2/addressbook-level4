@@ -91,7 +91,7 @@ public class XmlAdaptedRecipe {
         calories = source.getCalories().value;
         servings = source.getServings().value;
         url = source.getUrl().value;
-        image = source.getImage().value;
+        image = source.getImage().toString();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));

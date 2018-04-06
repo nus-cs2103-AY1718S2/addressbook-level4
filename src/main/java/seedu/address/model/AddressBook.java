@@ -167,6 +167,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Adds a pet patient to the address book.
+     * Also checks the new pet patient's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the pet patient to point to those in {@link #tags}.
+     *
+     * @throws DuplicatePetPatientException if an equivalent person already exists.
+     */
+    public void addPetPatient(PetPatient p) throws DuplicatePetPatientException {
+        PetPatient petPatient = syncWithMasterTagList(p);
+        petPatients.add(petPatient);
+    }
+
+    /**
      * Replaces the given pet patient {@code target} in the list with {@code editedPetPatient}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPetPatient}.
      *
@@ -200,80 +212,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         Appointment syncEditedPetPatient = syncWithMasterTagList(editedAppointment);
         appointments.setAppointment(target, syncEditedPetPatient);
         removeUselessTags();
-    }
-
-    /**
-     * Adds an appointment.
-     * Also checks the new appointment's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the appointment to point to those in {@link #tags}.
-     *
-     * @throws DuplicateAppointmentException if an equivalent person already exists.
-     */
-    public void addAppointment(Appointment a) throws DuplicateAppointmentException, DuplicateDateTimeException {
-        Appointment appointment = syncWithMasterTagList(a);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any appointment
-        // in the appointment list.
-        appointments.add(appointment);
-    }
-
-    /**
-     * Removes appointment {@code key} from this {@code AddressBook}.
-     *
-     * @throws AppointmentNotFoundException if the {@code key} is not in this {@code AddressBook}.
-     */
-    public boolean removeAppointment(Appointment key) throws AppointmentNotFoundException {
-        if (appointments.remove(key)) {
-            removeUselessTags();
-            return true;
-        } else {
-            throw new AppointmentNotFoundException();
-        }
-    }
-
-    /**
-     * Removes all appointments of pet patient {@code key} from this {@code AddressBook}.
-     */
-    private void removeAllAppointments(PetPatient key) {
-        Iterator<Appointment> appointmentIterator = appointments.iterator();
-
-        while (appointmentIterator.hasNext()) {
-            Appointment appointment = appointmentIterator.next();
-
-            if (appointment.getPetPatientName().equals(key.getName())
-                    && appointment.getOwnerNric().equals(key.getOwner())) {
-                appointmentIterator.remove();
-            }
-        }
-    }
-
-    /**
-     * Removes all {@code tag}s not used by anyone in this {@code AddressBook}.
-     * Reused from https://github.com/se-edu/addressbook-level4/pull/790/files with minor modifications
-     */
-    private void removeUselessTags() {
-        Set<Tag> personTags =
-                persons.asObservableList()
-                        .stream()
-                        .map(Person::getTags)
-                        .flatMap(Set::stream)
-                        .collect(Collectors.toSet());
-        Set<Tag> appointmentTags =
-                appointments.asObservableList()
-                        .stream()
-                        .map(Appointment::getAppointmentTags)
-                        .flatMap(Set::stream)
-                        .collect(Collectors.toSet());
-        Set<Tag> petPatientTags =
-                petPatients.asObservableList()
-                        .stream()
-                        .map(PetPatient::getTags)
-                        .flatMap(Set::stream)
-                        .collect(Collectors.toSet());
-
-        personTags.addAll(appointmentTags);
-        personTags.addAll(petPatientTags);
-        tags.setTags(personTags);
     }
 
     /**
@@ -327,6 +265,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 correctTagReferences);
     }
 
+    //@@author wynonaK
     /**
      * Updates the master tag list to include tags in {@code appointment} that are not in the list.
      *
@@ -352,6 +291,25 @@ public class AddressBook implements ReadOnlyAddressBook {
                 appointment.getDateTime(),
                 correctTagReferences);
     }
+
+    /**
+     * Adds an appointment.
+     * Also checks the new appointment's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the appointment to point to those in {@link #tags}.
+     *
+     * @throws DuplicateAppointmentException if an equivalent person already exists.
+     */
+    public void addAppointment(Appointment a) throws DuplicateAppointmentException, DuplicateDateTimeException {
+        Appointment appointment = syncWithMasterTagList(a);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any appointment
+        // in the appointment list.
+        appointments.add(appointment);
+    }
+
+    ////Delete operations
+
+    //@@author wynonaK
     /**
      * Removes {@code key} from this {@code AddressBook}.
      *
@@ -367,20 +325,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         } else {
             throw new PersonNotFoundException();
         }
-    }
-
-    //// pet-patient-level operations
-
-    /**
-     * Adds a pet patient to the address book.
-     * Also checks the new pet patient's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the pet patient to point to those in {@link #tags}.
-     *
-     * @throws DuplicatePetPatientException if an equivalent person already exists.
-     */
-    public void addPetPatient(PetPatient p) throws DuplicatePetPatientException {
-        PetPatient petPatient = syncWithMasterTagList(p);
-        petPatients.add(petPatient);
     }
 
     /**
@@ -464,10 +408,55 @@ public class AddressBook implements ReadOnlyAddressBook {
         return appointmentsDeleted;
     }
 
-    //// tag-level operations
+    /**
+     * Removes appointment {@code key} from this {@code AddressBook}.
+     *
+     * @throws AppointmentNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeAppointment(Appointment key) throws AppointmentNotFoundException {
+        if (appointments.remove(key)) {
+            removeUselessTags();
+            return true;
+        } else {
+            throw new AppointmentNotFoundException();
+        }
+    }
 
+    //// tag operations
+
+    //@@author
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    //@@author wynonaK-reused
+    /**
+     * Removes all {@code tag}s not used by anyone in this {@code AddressBook}.
+     * Reused from https://github.com/se-edu/addressbook-level4/pull/790/files with minor modifications
+     */
+    private void removeUselessTags() {
+        Set<Tag> personTags =
+                persons.asObservableList()
+                        .stream()
+                        .map(Person::getTags)
+                        .flatMap(Set::stream)
+                        .collect(Collectors.toSet());
+        Set<Tag> appointmentTags =
+                appointments.asObservableList()
+                        .stream()
+                        .map(Appointment::getAppointmentTags)
+                        .flatMap(Set::stream)
+                        .collect(Collectors.toSet());
+        Set<Tag> petPatientTags =
+                petPatients.asObservableList()
+                        .stream()
+                        .map(PetPatient::getTags)
+                        .flatMap(Set::stream)
+                        .collect(Collectors.toSet());
+
+        personTags.addAll(appointmentTags);
+        personTags.addAll(petPatientTags);
+        tags.setTags(personTags);
     }
 
     /**
@@ -511,6 +500,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// util methods
 
+    //@@author
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, "
@@ -531,15 +521,17 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<Appointment> getAppointmentList() {
-        return appointments.asObservableList();
-    }
-
-    @Override
     public ObservableList<PetPatient> getPetPatientList() {
         return petPatients.asObservableList();
     }
 
+    //@@author wynonaK
+    @Override
+    public ObservableList<Appointment> getAppointmentList() {
+        return appointments.asObservableList();
+    }
+
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

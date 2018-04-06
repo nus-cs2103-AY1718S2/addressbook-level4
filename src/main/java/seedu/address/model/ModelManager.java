@@ -93,6 +93,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author wynonaK
     @Override
     public synchronized void deletePetPatient(PetPatient target)
             throws PetPatientNotFoundException, AppointmentDependencyNotEmptyException {
@@ -114,6 +115,7 @@ public class ModelManager extends ComponentManager implements Model {
         return dependenciesDeleted;
     }
 
+    //@@author
     @Override
     public synchronized void addPetPatient(PetPatient petPatient) throws DuplicatePetPatientException {
         addressBook.addPetPatient(petPatient);
@@ -220,6 +222,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author wynonaK
     @Override
     public synchronized void deleteAppointment(Appointment target) throws AppointmentNotFoundException {
         addressBook.removeAppointment(target);
@@ -234,6 +237,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+
     @Override
     public void deleteTag(Tag tag) {
         addressBook.removeTag(tag);
@@ -241,6 +245,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Filtered Person List Accessors =============================================================
 
+    //@@author
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
      * {@code addressBook}
@@ -258,6 +263,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Filtered Appointment List Accessors =============================================================
 
+    //@@author wynonaK
     /**
      * Returns an unmodifiable view of the list of {@code Appointment} backed by the internal list of
      * {@code addressBook}
@@ -275,6 +281,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Filtered Pet Patient List Accessors =============================================================
 
+    //@@author
     /**
      * Returns an unmodifiable view of the list of {@code PetPatient} backed by the internal list of
      * {@code addressBook}

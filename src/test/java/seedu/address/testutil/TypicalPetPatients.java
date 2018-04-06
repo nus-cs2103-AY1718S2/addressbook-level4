@@ -45,7 +45,7 @@ public class TypicalPetPatients {
             .withBreed("Himalayan")
             .withColour("Sealpoint")
             .withBloodType("AB")
-            .withOwnerNric(TypicalPersons.ELLE.getNric().toString())
+            .withOwnerNric(TypicalPersons.HOON.getNric().toString())
             .withTags(new String[]{}).build();
 
     // Manually added - Pet Patient's details found in {@code CommandTestUtil}

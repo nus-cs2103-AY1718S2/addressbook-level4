@@ -52,6 +52,7 @@ import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalPetPatients.KARUPIN;
 import static seedu.address.testutil.TypicalPetPatients.NERO;
 
 import org.junit.Test;
@@ -163,6 +164,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(HOON);
 
 
+        //@@author aquarinte
         /* Case: add a pet patient without tags to a non-empty address book, command with leading spaces and
          * trailing spaces -> added
          */
@@ -172,6 +174,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + "  " +  SPECIES_DESC_NERO + "  " + BREED_DESC_NERO + "  " +  COLOUR_DESC_NERO + "  "
                 + BLOODTYPE_DESC_NERO + "  " + OPTION_OWNER + "  " + NRIC_DESC_BOB;
         assertCommandSuccess(command, toAddPet, bobNric);
+
+        /* Case: add a pet patient, missing tags -> added */
+        assertCommandSuccess(KARUPIN, KARUPIN.getOwner());
+
+        //@author
 
         /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
 
@@ -223,6 +230,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PERSON));
+        //@@author
 
         /* Case: invalid keyword -> rejected */
         command = "adds " + PersonUtil.getPersonDetails(toAdd);
@@ -253,6 +261,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + PHONE_DESC_AMY
             + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + INVALID_NRIC_DESC;
         assertCommandFailure(command, Nric.MESSAGE_NRIC_CONSTRAINTS);
+        //@@author
 
         /* Case: invalid tag -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + PHONE_DESC_AMY

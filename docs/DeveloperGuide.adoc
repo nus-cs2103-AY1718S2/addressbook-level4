@@ -525,14 +525,15 @@ The editedStudent will have the new programming language attribute and will henc
 
 To get better control of one's weekly schedule, we will now attach a component called `Schedule` to `Model`.
 
-image::ScheduleClassDiagram.png[width="800"]
+image::LessonClassDiagram.png[width="800"]
 
-A `Schedule` is a list of `Lessons`. A `Lesson` has a `Student` attribute, a `Day` attribute, a starting `TIME START_TIME` and an ending `TIME END_TIME` attribute
+A `Schedule` is a list of `Lessons`. A `Lesson` has a `UniqueKey` attribute, a `Day` attribute, a starting `TIME START_TIME` and an ending `TIME END_TIME` attribute
 
-* A `Lesson` object called `newLesson` will be created by `ModelManager.addLesson(Student, Day, Time START_TIME, Time END_TIME)`, which is implemented as such:
+* Students have a unique UniqueKey field, which we will now use in Lesson to create a relation to Student objects.
+* A `Lesson` object called `newLesson` will be created by `ModelManager.addLesson(UniqueKey key, Day day, Time startTime, Time endTime)`, which is implemented as such:
 [source, java]
 ----
-    public void addLesson(Student studentToAddLesson, Day day, Time startTime, Time endTime)
+    public void addLesson(UniqueKey key, Day day, Time startTime, Time endTime)
             throws DuplicateLessonException, StudentNotFoundException, InvalidLessonTimeSlotException {
         //Check for Duplicate Lesson, StudentNotFound, invalid input ime
 
@@ -540,7 +541,8 @@ A `Schedule` is a list of `Lessons`. A `Lesson` has a `Student` attribute, a `Da
     }
 ----
 
-The student will be selected by the Index of the last seen list of students. A new `Lesson` will now be added for that student at the specific `Day`, `START_TIME` and `END_TIME`.
+The student will be selected by the Index of the last seen list of students.
+The UniqueKey is retrieved from the Student. A new `Lesson` will now be added for that student at the specific `Day`, `startTime` and `endTime`, associated with the Student by the `key`
 
 [NOTE]
 If you have a future implementation that requires the addition of a new attribute in the `Schedule` class, you must take note of updating the `Model.addLesson(Student, Day, Time START_TIME, Time END_TIME)` method to reflect the new attribute.
@@ -555,7 +557,24 @@ If you have a future implementation that requires the addition of a new attribut
 ** Pro: Less coupling and more cohesive design
 ** Con: Much harder to implement and gets overly complicated
 
+=== Google Service Integration
+
+To sync with Google Contacts and Google Calendar, a `GServiceManager` class is implemented to handle the 2 services.
+`GServiceManager` contains a `GContactsService` and `GCalendarService` objects. `GServiceManager.synchronize` calls `GContactsService.synchronize` and
+`GCalendarService.synchronize`
+
+==== Design Considerations
+
+===== Aspect: Implementation of `GServiceManager`
+* *Alternative 1 (current choice)*: Separate out 2 Google Services into two classes
+** Pro: Less coupling
+** Con: More files and more code
+* *Alternative 2*: All services are in `GServiceManager` class. Synchronize runs the upload for both Contacts and Calendar classes.
+** Pro: Fewer files and code to read
+** Con: More coupling
+
 // end::schedule[]
+
 
 // tag::dashboard[]
 === Dashboard feature

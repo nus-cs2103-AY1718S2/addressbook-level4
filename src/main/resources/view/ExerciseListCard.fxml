@@ -5,15 +5,23 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<!--@@author iNekox3-->
-<VBox id="cardPane" fx:id="cardPane" prefHeight="140.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<!-- @@author iNekox3 -->
+<VBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <padding>
         <Insets bottom="5" left="15" right="5" top="5" />
     </padding>
-    <Label fx:id="questionIndex" text="\$questionIndex" />
-    <Label fx:id="question" text="\$question"/>
-    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Answer: "/>
-    <Label fx:id="studentAnswer" styleClass="cell_small_label" text="\$studentAnswer"/>
-    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Suggested Answer: "/>
-    <Label fx:id="modelAnswer" text="\$modelAnswer"/>
+    <VBox prefWidth="325.0" styleClass="exercise">
+        <children>
+            <Label fx:id="questionIndex" text="\$questionIndex" wrapText="true"/>
+            <Label fx:id="question" text="\$question" wrapText="true"/>
+            <Text/>
+
+            <Label text="Your Answer: " styleClass="exercise-header"/>
+            <Label fx:id="studentAnswer" text="\$studentAnswer" wrapText="true"/>
+            <Text/>
+
+            <Label text="Suggested Answer: " styleClass="exercise-header, hide-text"/>
+            <Label fx:id="modelAnswer" text="\$modelAnswer" wrapText="true" styleClass="hide-text"/>
+        </children>
+    </VBox>
 </VBox>

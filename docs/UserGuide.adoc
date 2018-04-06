@@ -37,12 +37,15 @@ image::Ui.png[width="790"]
 +
 [NOTE]
 ====
-The viewing of learning outcomes and exercises are not ready yet! Only some of week 3's exercises are reflected and they are in the midst of bug fixing.
+The viewing of learning outcomes and exercises are not ready yet! Currently, only some of week 11's exercises are reflected.
 ====
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
+
+[TIP]
+You can type a command and press `Tab` to auto bring out all the command parameters.
 
 * *`list`* : lists all contacts
 
@@ -50,16 +53,17 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * **`+issue`**`ti/TestIssue` : creates an issue on github in the team repo
 
-* *`exit`* : exits the app
-
 * *`nl`* : adds the default TODO list
 
 * *`vt`* : views the TODO list
 
-* *`ct 3`* : mark task No.3 as completed
+* **`ct`**`3` : mark task No.3 as completed
 
-* *`rt 3`* : reset task No.3 as incompleted
+* **`rt`**`3` : reset task No.3 as incompleted
 
+* **`ans`**`11.1.1 sample answer` : answer exercise 11.1.1 with `sample answer`
+
+* *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
 
@@ -95,7 +99,7 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com m/Computer Engineering p/1234567 y/3 t/criminal`
 * `a n/Betsy Crowe t/friend e/betsycrowe@example.com m/Information Security y/2 p/1234567 t/criminal`
 
-=== Answering and saving an exercise : `answer` `[coming in v2.0]`
+=== Answering and saving an exercise : `answer` `[since v1.4rc]`
 
 Answer an exercise based off the given question number. +
 Format: `answer INDEX ANSWER`
@@ -105,11 +109,6 @@ Format: `answer INDEX ANSWER`
 * The index refers to the question number.
 * The index must be of format `section number`.`question number`, 2.1.1, 3.2.5, 6.1.7
 ****
-
-[NOTE]
-====
-`ANSWER` should be in the form of listed choices if the exercise is a multiple choice question. For example, in a question with 4 four choices, one can choose choice 1 and 3 as the answer by using `answer 2.1.1 a c`.
-====
 
 Examples:
 
@@ -354,19 +353,6 @@ Examples:
 * `list`
 * `l`
 
-=== Newly adding the default task list: `newtasklist OR nl`
-
-Adds the default task list to Google account +
-Format: `newtasklist OR nl`
-
-[TIP]
-Only the command word. No parameters at all.
-
-Examples:
-
-* `newtasklist`
-* `nl`
-
 // tag::undoredo[]
 === Redoing the previously undone command : `redo OR r`
 
@@ -466,22 +452,6 @@ The `undo` command fails as there are no undoable commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `u` (reverses the `delete 1` command)
-
-=== Viewing a specific week : `view OR v`
-
-Change the browser view to display contents identified by the week number. +
-Format: `view INDEX`
-
-****
-* View the contents such as learning outcomes and practices of the week at the specified `INDEX`.
-* The index refers to the school week number.
-* The index *must be a positive integer* in the *range of 2 to 13* `2, 3, ..., 13`
-****
-
-Examples:
-
-* `view 2`
-* `view 3`
 
 === Saving the data
 

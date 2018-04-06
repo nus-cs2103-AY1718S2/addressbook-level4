@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import seedu.progresschecker.logic.commands.AddCommand;
 import seedu.progresschecker.logic.commands.AddDefaultTasksCommand;
+import seedu.progresschecker.logic.commands.AnswerCommand;
 import seedu.progresschecker.logic.commands.ClearCommand;
 import seedu.progresschecker.logic.commands.CloseIssueCommand;
 import seedu.progresschecker.logic.commands.Command;
@@ -81,6 +82,10 @@ public class ProgressCheckerParser {
         case AddCommand.COMMAND_WORD:
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
+
+        case AnswerCommand.COMMAND_WORD:
+        case AnswerCommand.COMMAND_ALIAS:
+            return new AnswerCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:

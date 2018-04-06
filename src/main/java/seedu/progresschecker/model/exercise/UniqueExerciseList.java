@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.progresschecker.commons.util.CollectionUtil;
 import seedu.progresschecker.model.exercise.exceptions.DuplicateExerciseException;
+import seedu.progresschecker.model.exercise.exceptions.ExerciseNotFoundException;
 
 //@@author iNekox3
 /**
@@ -46,6 +47,23 @@ public class UniqueExerciseList implements Iterable<Exercise> {
         internalList.add(toAdd);
     }
 
+    /**
+     * Replaces the exercise {@code target} in the list with {@code editedExercise}.
+     *
+     * @throws ExerciseNotFoundException if {@code target} could not be found in the list.
+     */
+    public void setExercise(Exercise target, Exercise editedExercise)
+            throws ExerciseNotFoundException {
+        requireNonNull(editedExercise);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new ExerciseNotFoundException();
+        }
+
+        internalList.set(index, editedExercise);
+    }
+
     public void setExercises(UniqueExerciseList replacement) {
         this.internalList.setAll(replacement.internalList);
     }
@@ -69,5 +87,12 @@ public class UniqueExerciseList implements Iterable<Exercise> {
     @Override
     public Iterator<Exercise> iterator() {
         return internalList.iterator();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UniqueExerciseList // instanceof handles nulls
+                && this.internalList.equals(((UniqueExerciseList) other).internalList));
     }
 }

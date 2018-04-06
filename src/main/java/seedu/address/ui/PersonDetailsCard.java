@@ -7,7 +7,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.commons.util.StringUtil;
@@ -35,7 +34,6 @@ public class PersonDetailsCard extends UiPart<Region> {
     public final Person person;
     private TimeTablePanel timeTablePanel;
     private ArrayList<Label> tagLabels = new ArrayList<>();
-    
     @FXML
     private Label name;
     @FXML

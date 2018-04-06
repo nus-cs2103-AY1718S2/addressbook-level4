@@ -13,7 +13,6 @@ import seedu.address.commons.events.ui.GoogleMapsEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.TimeTableEvent;
 import seedu.address.commons.events.ui.VenueTableEvent;
-import seedu.address.logic.Logic;
 import seedu.address.model.person.Person;
 
 /**

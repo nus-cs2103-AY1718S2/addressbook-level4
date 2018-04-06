@@ -21,7 +21,6 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Priority;
 import seedu.address.model.task.TaskDescription;
-import seedu.address.model.task.Title;
 import seedu.address.storage.DisplayPicStorage;
 
 /**
@@ -249,6 +248,7 @@ public class ParserUtil {
 
     //@@author Wu Di
     /**
+<<<<<<< HEAD
      * Parses a {@code String taskTitle} into a {@code TaskTitle}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -275,6 +275,8 @@ public class ParserUtil {
 
     //@@author
     /**
+=======
+>>>>>>> fcc9ca17c2c8c77b827c5874d6beb415b936f8ca
      * Parses a {@code String taskDescription} into a {@code TaskDescription}.
      * Leading and trailing whitespaces will be trimmed.
      *

@@ -11,8 +11,13 @@ public class Priority {
 
 
     public static final String MESSAGE_PRIORITY_CONSTRAINTS =
+<<<<<<< HEAD
             "Priority value input can only contain numbers from 0 - 50.";
     public static final String PRIORITY_VALIDATION_REGEX = "\\d{1,2}";
+=======
+            "Priority value input can only be a value from 1 to 3. 1 being highest priority and 3 being lowest.";
+    public static final String PRIORITY_VALIDATION_REGEX = "[1-3]{1}";
+>>>>>>> fcc9ca17c2c8c77b827c5874d6beb415b936f8ca
     public final String priority;
     public final int value;
 

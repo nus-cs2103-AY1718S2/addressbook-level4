@@ -57,11 +57,20 @@ public class UniqueTaskList implements Iterable<Task> {
             throws TaskNotFoundException {
         requireNonNull(editedTask);
 
-        boolean taskFoundAndDeleted = internalList.remove(target);
-        if (!taskFoundAndDeleted) {
+        int index = internalList.indexOf(target);
+        if (index == -1) {
             throw new TaskNotFoundException();
         }
+<<<<<<< HEAD
         internalList.add(editedTask);
+=======
+        internalList.set(index, editedTask);
+        int indexCalendar = calendarList[target.getDeadline().diff][target.getDeadlineDay()].indexOf(target);
+        if (indexCalendar == -1) {
+            throw new TaskNotFoundException();
+        }
+        calendarList[target.getDeadline().diff][target.getDeadlineDay()].set(indexCalendar, editedTask);
+>>>>>>> fcc9ca17c2c8c77b827c5874d6beb415b936f8ca
     }
 
     /**
@@ -75,7 +84,7 @@ public class UniqueTaskList implements Iterable<Task> {
         if (!taskFoundAndDeleted) {
             throw new TaskNotFoundException();
         }
-        return taskFoundAndDeleted;
+        return personFoundAndDeleted;
     }
 
     //@@author

@@ -21,7 +21,7 @@ import seedu.address.model.task.Task;
  */
 public class CalendarView extends UiPart<Region> {
 
-    private static final String FXML = "CalendarViewWithoutButtons.fxml";
+    private static final String FXML = "CalendarView.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private ArrayList<AnchorPane> allCalendarDays = new ArrayList<>(35);
     private YearMonth currentYearMonth;
@@ -70,17 +70,6 @@ public class CalendarView extends UiPart<Region> {
     }
 
     /**
-     * Updates numTask array.
-     */
-    public void setArray(ObservableList<Task> tasks) {
-        tasks.forEach((task) -> {
-            if (task.getDeadlineMonth() == currentYearMonth.getMonthValue()
-                && task.getDeadlineYear() == currentYearMonth.getYear()) {
-                numTasks[task.getDeadlineDay() - 1]++;
-            }
-        });
-    }
-    /**
      * Set the days of the calendar to display the correct date
      * @param yearMonth year and month of the current month
      */
@@ -93,7 +82,6 @@ public class CalendarView extends UiPart<Region> {
             if (ap.getChildren().size() != 0) {
                 ap.getChildren().remove(0);
             }
-
             String txt = String.valueOf(calendarDate.getDayOfMonth());
             CalendarNode node = new CalendarNode(txt, tasks, calendarDate.getDayOfMonth(),
                 currentYearMonth.getMonthValue(), currentYearMonth.getYear());
@@ -110,6 +98,7 @@ public class CalendarView extends UiPart<Region> {
         initCalendar(currentYearMonth);
     }
 
+    @FXML
     /**
      * Move the month back by one. Repopulate the calendar with the correct dates.
      */
@@ -120,6 +109,7 @@ public class CalendarView extends UiPart<Region> {
         initCalendar(currentYearMonth);
     }
 
+    @FXML
     /**
      * Move the month forward by one. Repopulate the calendar with the correct dates.
      */

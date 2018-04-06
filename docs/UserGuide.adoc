@@ -1,6 +1,6 @@
 = Your TA - User Guide
 :toc:
-:toc-title: Table of Content
+:toc-title:
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
@@ -227,6 +227,35 @@ Returns Betsy as a result. Followed by: +
 `email 1` +
 Emails the 1st person in the results of the `find` command, in this case, Betsy.
 
+<<<<<<< HEAD
+=======
+=== Adding Participation Marks : `markPart`
+
+Adds to the participation marks of a person. The maximum limit for participation marks is 100.
+
+Format: `markPart INDEX marks/DIGITS`
+
+****
+* Adds to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* between 0 and 100 inclusive.
+****
+
+Examples:
+
+Command(s) entered: +
+`list` +
+Lists all people in the address book. Followed by: +
+`markPart 2 marks/50` +
+Adds 50 participation marks to the 2nd person in the address book.
+
+Command(s) entered: +
+`find Betsy` +
+Returns Betsy as a result. Followed by: +
+`markPart 1 marks/70` +
+Adds 70 marks to the 1st person in the results of the `find` command, in this case, Betsy.
+
+>>>>>>> fcc9ca17c2c8c77b827c5874d6beb415b936f8ca
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -396,6 +425,44 @@ Format: `sort`
 Exits the program. +
 Format: `exit`
 
+<<<<<<< HEAD
+=======
+== Task, To-do list and Calendar Features
+
+=== Adding a task: `addTask`
+
+Adds a person to the address book. +
+Format: `addTask desc/TASK DESCRIPTION by/DEADLINE priority/PRIORITY`
+
+New tasks will be added into the *To-do list* and *Calendar*.
+
+Examples:
+
+Current date: 03-04-2018 +
+The application initially starts with no tasks as displayed in Figure 2:
+
+.Initial Address Book State +
+image::UiInitial.png[width="800"]
+
+Command entered: +
+`addTask desc/Grade mid-terms by/04-04-2018 priority/2`: +
+This will add a task, 'Grade mid-terms' into the list with his respective details into the application (Figure ).
+
+.Application after first task has been added +
+image::AfterFirstTask.png[width="800"]
+
+Command entered: +
+`addTask desc/Submit tutorial attendance by/05-04-2018 priority/3`: +
+This will add a task, 'Submit tutorial attendance' into the calendar and to-do list with the respective details into the application (Figure ).
+
+.Application after second task has been added +
+image::AfterSecondTask.png[width="800"]
+
+=== Editing a task: `editTask`
+
+=== Removing a task: `removeTask`
+
+>>>>>>> fcc9ca17c2c8c77b827c5874d6beb415b936f8ca
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +

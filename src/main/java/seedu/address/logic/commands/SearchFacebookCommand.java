@@ -16,7 +16,7 @@ public class SearchFacebookCommand extends Command {
             + "Parameters: NAME (must only contain alphanumeric characters and spaces, and it should not be blank)\n"
             + "Example: " + COMMAND_WORD + " Tom";
 
-    public static final String MESSAGE_SEARCH_PERSON_SUCCESS = "Searched Person: %1$s" + "on Facebook";
+    public static final String MESSAGE_SEARCH_PERSON_SUCCESS = "Searched Person: %1$s" + " on Facebook";
 
     private final String targetName;
 

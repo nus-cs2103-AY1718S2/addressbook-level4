@@ -27,7 +27,7 @@ public class AddRemarkCommandParser implements Parser<AddRemarkCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_REMARK);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_REMARK)) {
+        if (!argMultimap.arePrefixesPresent(PREFIX_REMARK)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemarkCommand.MESSAGE_USAGE));
         }
         Index index;
@@ -45,10 +45,6 @@ public class AddRemarkCommandParser implements Parser<AddRemarkCommand> {
             ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).ifPresent(editPersonDescriptor::setRemark);
         }
         return new AddRemarkCommand(index, editPersonDescriptor);
-    }
-
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
     //@@author
 }

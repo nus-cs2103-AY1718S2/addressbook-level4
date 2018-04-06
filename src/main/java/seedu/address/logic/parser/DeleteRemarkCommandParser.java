@@ -26,7 +26,7 @@ public class DeleteRemarkCommandParser implements Parser<DeleteRemarkCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_REMARK);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_REMARK)) {
+        if (!argMultimap.arePrefixesPresent(PREFIX_REMARK)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteRemarkCommand.MESSAGE_USAGE));
         }
         Index index;
@@ -45,10 +45,6 @@ public class DeleteRemarkCommandParser implements Parser<DeleteRemarkCommand> {
             ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).ifPresent(editPersonDescriptor::setRemark);
         }
         return new DeleteRemarkCommand(index, editPersonDescriptor);
-    }
-
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
     //@@author
 }

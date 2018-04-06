@@ -1,7 +1,7 @@
-
 = PrioriTask - User Guide
 :linkcss:
 :icons: font
+:nofooter:
 :toc:
 :toclevels: 5
 :toc-title:
@@ -31,7 +31,7 @@ With PrioriTask, you can:
 - Manage your tasks' priorities with our automatic updating and sorting feature, so that you will never have to worry about deciding which task to start working on.
 - Maintain your list of tasks effectively with our easy-to-remember and user-friendly commands, which can help you get your tasks organised faster than traditional GUI applications.
 
-Interested? Jump to <<Quick Start>> to get started. Enjoy!
+Interested? Jump to <<Getting Started>> to get started. Enjoy!
 
 == Getting Started
 
@@ -51,7 +51,7 @@ It will not work with earlier versions of Java 8 (i.e. Java `1.8.0_51` and below
 
 +
 .Downloading the latest `organizer.jar`
-image::UserGuideQuickStart1.png[width="600"]
+image::UserGuideQuickStart1.png[width="650"]
 +
 
 .  Copy the file to the folder you want to use as the home folder for PrioriTask.
@@ -60,7 +60,7 @@ image::UserGuideQuickStart1.png[width="600"]
 +
 [[fig-Ui]]
 .PrioriTask's main page
-image::Ui.png[width="790"]
+image::Ui.png[width="650"]
 +
 
 .. If the application is unable to start, refer to <<FAQ>> for the solution.
@@ -73,7 +73,7 @@ image::Ui.png[width="790"]
 
 +
 .Signing up for an account
-image::UserGuideQuickStart2.png[width="790"]
+image::UserGuideQuickStart2.png[width="650"]
 +
 
 . Press kbd:[Enter] to execute the command. Your sign up will be confirmed in the result display box upon a successful registration (refer to <<fig-QuickStart3>>).
@@ -83,7 +83,7 @@ A warning message will be displayed in the result display box if your [parameter
 +
 [[fig-QuickStart3]]
 .Confirmation message upon successful sign up
-image::UserGuideQuickStart3.png[width="790"]
+image::UserGuideQuickStart3.png[width="650"]
 +
 
 . Proceed to <<Logging In>> for instructions on logging into your account on PrioriTask.
@@ -94,7 +94,7 @@ image::UserGuideQuickStart3.png[width="790"]
 
 +
 .Logging into an account
-image::UserGuideQuickStart4.png[width="790"]
+image::UserGuideQuickStart4.png[width="650"]
 +
 
 . Press kbd:[Enter] to execute the command. Your login will be confirmed in the result display box (refer to <<fig-QuickStart6>>).
@@ -102,7 +102,7 @@ image::UserGuideQuickStart4.png[width="790"]
 +
 [[fig-QuickStart6]]
 .Confirmation message upon successful login
-image::UserGuideQuickStart5.png[width="790"]
+image::UserGuideQuickStart5.png[width="650"]
 +
 
 . Proceed to <<Using PrioriTask>> to learn more about using the application, or head straight to <<Task Management Features>> to start managing your tasks.
@@ -117,7 +117,7 @@ The PrioriTask application consists of six different sections (refer to <<fig-Di
 
 [[fig-DifferentComponents]]
 .The Different Sections of PrioriTask
-image::UserGuideDifferentComponents.png[width="790"]
+image::UserGuideDifferentComponents.png[width="650"]
 
 Given below is a quick overview of each section.
 
@@ -214,7 +214,7 @@ Must be currently logged in to a user account on PrioriTask.
 ====
 [example-title]#Examples:#
 
-* [example]#`addqa q/are you male? a/yes#
+* [example]#`addqa q/are you male? a/yes`#
 * [example]#`addqa q/are you female? a/yes`#
 ====
 
@@ -649,7 +649,7 @@ The display of the calendar may differ from pictures on other computer screens.
 
 [[fig-UserGuideCalendarFeature1]]
 .PrioriTask's main page
-image::UserGuideCalendarFeature1.png[width="790"]
+image::UserGuideCalendarFeature1.png[width="650"]
 
 In future releases, the calendar will support,
 

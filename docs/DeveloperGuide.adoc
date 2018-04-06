@@ -1,9 +1,11 @@
 = PrioriTask - Developer Guide
 :linkcss:
 :icons: font
+:nofooter:
 :source-highlighter: coderay
 :coderay-css: style
 :toc:
+:toclevels: 3
 :toc-title:
 :toc-placement: preamble
 :sectnums:
@@ -492,8 +494,6 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // tag::taskpriority[]
 === Task's Priority Auto-updating and Auto-sorting feature
 
-_{ TODO: Add preface }_
-
 ==== Current Implementation
 
 The autoupdating and autosorting mechanism resides inside `UniqueTaskList`. The `UniqueTaskList` is responsible for updating each Task’s priority level and sorting the `ObservableList<Task>` whenever a new `Task` is added. In addition, whenever a `Task` is edited, the `ObservableList<Task>` is sorted again.
@@ -672,7 +672,7 @@ An `EntryCard` will be added to a specific date which reflects the deadline of t
 `MonthView` interacts very closely with its corresponding FXML file, `MonthView.fxml` to execute its tasks. The FXML file reflects the basic layout of the calendar feature, which is illustrated by the diagram below.
 
 .Basic Calendar Layout
-image::MonthViewLayoutDiagram.png[width="700"]
+image::MonthViewLayoutDiagram.png[width="600"]
 
 MonthView` uses the JavaFX layout objects extensively when executing its tasks. The following are some instances when JavaFX layout objects are called:
 
@@ -808,15 +808,13 @@ The sequence flow is slightly similar to that of the execution of a normal comma
 // tag::subtask[]
 === Subtask
 
-_{ TODO: Add preface }_
-
 ==== Current Implementation
 
 Subtask feature allows user to split their tasks into multiple subtasks. This feature allows user to better
 manage their task. It is implemented using `Subtask` class and `UniqueSubtaskList` class as shown by the diagram below:
 
 .Subtask UML Class Diagram
-image::SubtaskComponentDiagram.png[width="500"]
+image::SubtaskComponentDiagram.png[width="400"]
 
 `UniqueSubtaskList` is created to ensure that no task has a duplicated subtask.
 

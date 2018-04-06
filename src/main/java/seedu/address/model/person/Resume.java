@@ -7,6 +7,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Objects;
 //@@author mhq199657
 /**
  * Represents a Person's resume's file name in the address book.
@@ -133,7 +134,7 @@ public class Resume {
         return other == this // short circuit if same object
                 || (other instanceof Resume // instanceof handles nulls
                 && ((isNull(this.value) && isNull(((Resume) other).value)) //both value are null
-                    || this.value.equals(((Resume) other).value))); // state check
+                    || Objects.equals(this.value, ((Resume) other).value))); // state check
     }
 
     @Override

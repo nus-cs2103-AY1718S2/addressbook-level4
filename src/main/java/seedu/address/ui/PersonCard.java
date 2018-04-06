@@ -4,14 +4,16 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.collections.ListChangeListener;
+import javafx.animation.Animation;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.util.Duration;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonChangedEvent;
 import seedu.address.commons.util.UiUtil;
@@ -23,6 +25,7 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static final double MAX_ANIMATION_TIME_MS = 150;
 
     public final int index;
     private Person person;
@@ -36,6 +39,9 @@ public class PersonCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
+
+    @FXML
+    private AnchorPane cardPersonPane;
 
     @FXML
     private ImageView cardPhoto;
@@ -65,6 +71,8 @@ public class PersonCard extends UiPart<Region> {
 
         this.person = person;
         this.index = displayedIndex - 1;
+
+        cardPersonPane.setOpacity(0);
         updatePersonCard();
 
         registerAsAnEventHandler(this);
@@ -75,6 +83,10 @@ public class PersonCard extends UiPart<Region> {
      * It can be updated from address book change or selection change
      */
     private void updatePersonCard() {
+        if (person == null) {
+            return;
+        }
+
         cardPhotoMask.widthProperty().addListener((observable, oldValue, newValue) -> resizePhoto());
         cardPhotoMask.heightProperty().addListener((observable, oldValue, newValue) -> resizePhoto());
 
@@ -132,18 +144,30 @@ public class PersonCard extends UiPart<Region> {
         }
     }
 
+    /**
+     * Play animation (Fade is done on MainWindow)
+     */
+    public void play() {
+        Animation fadeIn = UiUtil.fadeNode(cardPersonPane, true, MAX_ANIMATION_TIME_MS, 0, e -> {});
+        fadeIn.setDelay(Duration.millis(index * 50));
+        fadeIn.play();
+    }
+
+    /**
+     * Show without animation (Fade is done on MainWindow)
+     */
+    public void show() {
+        cardPersonPane.setOpacity(1);
+    }
+
     @Subscribe
     private void handlePersonChangedEvent(PersonChangedEvent event) {
-        ListChangeListener.Change<? extends Person> changes = event.getPersonChanged();
-        if (person != null) {
-            while (changes.next()) {
-                for (int i = changes.getFrom(); i < changes.getTo(); i++) {
-                    if (i == index) {
-                        person = changes.getList().get(i);
-                        updatePersonCard();
-                    }
-                }
-            }
+        Person source = event.getSource();
+        Person target = event.getTarget();
+
+        if (person != null && person.equals(source)) {
+            person = target;
+            updatePersonCard();
         }
     }
     //@@author

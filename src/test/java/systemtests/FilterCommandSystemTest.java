@@ -247,14 +247,14 @@ public class FilterCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: filter while a person is selected -> selected card deselected */
+        /* Case: filter while a person is selected -> selected card remains selected */
         showAllPersons();
         selectPerson(Index.fromOneBased(4));
         assertTrue(getPersonListPanel().getHandleToSelectedCard().getName().equals(ELLE.getName().fullName));
         command = FilterCommand.COMMAND_WORD + " " + PREFIX_EXPECTED_GRADUATION_YEAR + "2017-2019";
         ModelHelper.setFilteredList(expectedModel, ELLE, FIONA);
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardDeselected();
+        assertSelectedCardChanged(Index.fromZeroBased(expectedModel.getFilteredPersonList().indexOf(ELLE)));
 
 
         /* Case: filter person in empty address book -> 0 persons found */

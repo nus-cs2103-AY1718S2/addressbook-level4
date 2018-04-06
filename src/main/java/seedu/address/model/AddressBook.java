@@ -137,6 +137,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tasks.add(t);
     }
 
+    //@@ author Wu Di
     /**
      * Replaces the given person {@code target} in the list with {@code editedPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPerson}.
@@ -154,6 +155,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tasks.setTask(target, editedTask);
     }
 
+    //@@ author
     /**
      *  Updates the master tag list to include tags in {@code person} that are not in the list.
      *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
@@ -189,6 +191,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author Wu Di
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws TaskNotFoundException if the {@code key} is not in this {@code AddressBook}.
@@ -202,7 +205,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// tag-level operations
-
+    //@@author
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }

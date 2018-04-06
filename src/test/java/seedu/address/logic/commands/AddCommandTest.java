@@ -107,6 +107,7 @@ public class AddCommandTest {
         public void addTask(Task task) {
         }
 
+        //@@author Wu Di
         @Override
         public void deleteTask(Task target) throws TaskNotFoundException {
             fail("This method should not be called.");
@@ -117,6 +118,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author
         @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");

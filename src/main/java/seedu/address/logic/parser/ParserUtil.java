@@ -247,6 +247,7 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author Wu Di
     /**
      * Parses a {@code String taskTitle} into a {@code TaskTitle}.
      * Leading and trailing whitespaces will be trimmed.
@@ -272,6 +273,7 @@ public class ParserUtil {
         return title.isPresent() ? Optional.of(parseTaskTitle(title.get())) : Optional.empty();
     }
 
+    //@@author
     /**
      * Parses a {@code String taskDescription} into a {@code TaskDescription}.
      * Leading and trailing whitespaces will be trimmed.

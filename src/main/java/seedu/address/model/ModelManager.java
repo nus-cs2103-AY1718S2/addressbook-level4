@@ -77,12 +77,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author Wu Di
     @Override
     public void deleteTask(Task target) throws TaskNotFoundException {
         addressBook.removeTask(target);
         indicateAddressBookChanged();
     }
 
+    //@@author
     @Override
     public synchronized void addTask(Task task) {
         addressBook.addTask(task);
@@ -99,6 +101,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author Wu Di
     @Override
     public void updateTask(Task target, Task editedTask)
             throws TaskNotFoundException {
@@ -108,6 +111,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author
     @Override
     public void sortPersons() {
         addressBook.sortList();

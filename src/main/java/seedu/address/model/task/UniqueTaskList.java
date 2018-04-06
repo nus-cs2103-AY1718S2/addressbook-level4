@@ -47,6 +47,7 @@ public class UniqueTaskList implements Iterable<Task> {
         internalList.add(toAdd);
     }
 
+    //@@author Wu Di
     /**
      * Replaces the task {@code target} in the list with {@code editedTask}.
      *
@@ -77,6 +78,7 @@ public class UniqueTaskList implements Iterable<Task> {
         return taskFoundAndDeleted;
     }
 
+    //@@author
     public void setTasks(UniqueTaskList replacement) {
         this.internalList.setAll(replacement.internalList);
     }

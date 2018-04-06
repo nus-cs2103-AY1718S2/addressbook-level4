@@ -20,6 +20,7 @@ import seedu.address.storage.StorageManager;
 import seedu.address.storage.XmlAddressBookStorage;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
+//@@author Wu Di
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
  * {@code ImportCommand}.

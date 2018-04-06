@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.task.Task;
 
+//@@author Wu Di
 /**
  * A UI component that displays information of a {@code task} in TodoList.
  */

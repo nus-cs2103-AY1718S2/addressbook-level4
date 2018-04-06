@@ -119,9 +119,6 @@ A person can have any number of skills (including 0)
 [TIP]
 Profile Picture indicates the profile picture's file path
 
-[TIP]
-Profile Picture indicates the profile picture's file path
-
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 cp/Software Engineer cc/Google pp//home/john/Desktop/John.jpg` +
@@ -607,18 +604,6 @@ Examples:
 On running the above command, you should see the following success message: +
 
  Appointment deleted: Meeting Start Date Time: 2018-04-05 14:00 End Date Time: 2018-04-05 15:00
-
-=== Editing a job opening `[coming in v1.4]`
-
-You will soon be able to edit a job opening in contactHeRo.
-
-=== Deleting a job opening `[coming in v1.4]`
-
-You will soon be able to delete a job opening in contactHeRo.
-
-=== Matching a job opening to a person `[coming in v1.4]`
-
-You will soon be able to match job openings to people in contactHeRo.
 
 === Editing a job opening `[coming in v1.5]`
 

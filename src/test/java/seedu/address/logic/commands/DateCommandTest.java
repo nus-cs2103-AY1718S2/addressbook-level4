@@ -24,7 +24,8 @@ public class DateCommandTest {
 
     @Test
     public void execute_validDate_success() {
-        assertExecutionSuccess("2018-02-27");
+        assertExecutionNonNullSuccess("2018-02-27");
+        assertExecutionNullSuccess();
     }
 
     @Test
@@ -63,7 +64,7 @@ public class DateCommandTest {
      * Executes a {@code dateCommand} with the given {@code date}, and checks that {@code handleShowDateRequestEvent}
      * is raised with the correct date.
      */
-    private void assertExecutionSuccess(String date) {
+    private void assertExecutionNonNullSuccess(String date) {
 
         try {
             DateCommand dateCommand = prepareCommand(date);
@@ -73,6 +74,25 @@ public class DateCommandTest {
 
             ShowDateRequestEvent lastEvent = (ShowDateRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
             assertEquals(ParserUtil.parseDate(date), lastEvent.targetDate);
+        } catch (IllegalValueException e) {
+            throw new IllegalArgumentException("Execution of command should not fail.", e);
+        }
+    }
+
+    /**
+     * Executes a {@code dateCommand} and checks that {@code handleShowDateRequestEvent}
+     * is raised with the message.
+     */
+    private void assertExecutionNullSuccess() {
+
+        try {
+            DateCommand dateCommand = prepareCommand("");
+            CommandResult commandResult = dateCommand.execute();
+            assertEquals(String.format(DateCommand.MESSAGE_SUCCESS, ""),
+                    commandResult.feedbackToUser);
+
+            ShowDateRequestEvent lastEvent = (ShowDateRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+            assertEquals(ParserUtil.parseDate(""), lastEvent.targetDate);
         } catch (IllegalValueException e) {
             throw new IllegalArgumentException("Execution of command should not fail.", e);
         }

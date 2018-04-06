@@ -23,6 +23,7 @@ import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.Model;
 import seedu.progresschecker.model.ProgressChecker;
 import seedu.progresschecker.model.ReadOnlyProgressChecker;
+import seedu.progresschecker.model.credentials.GitDetails;
 import seedu.progresschecker.model.exercise.Exercise;
 import seedu.progresschecker.model.issues.Issue;
 import seedu.progresschecker.model.person.Person;
@@ -102,6 +103,12 @@ public class AddCommandTest {
      * A default model stub that have all of the methods failing.
      */
     private class ModelStub implements Model {
+
+        @Override
+        public void loginGithub(GitDetails gitdetails) throws IOException, CommandException {
+            fail("This method should not be called.");
+        }
+
         @Override
         public void createIssueOnGitHub(Issue issue) throws IOException {
             fail("This method should not be called. ");

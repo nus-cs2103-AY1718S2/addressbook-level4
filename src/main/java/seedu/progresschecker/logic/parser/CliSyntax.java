@@ -18,5 +18,11 @@ public class CliSyntax {
     public static final Prefix PREFIX_MILESTONE = new Prefix("ms/");
     public static final Prefix PREFIX_BODY = new Prefix("b/");
     public static final Prefix PREFIX_LABEL = new Prefix("l/");
+    public static final Prefix PREFIX_GIT_USERNAME = new Prefix("gu/");
+    public static final Prefix PREFIX_GIT_REPO = new Prefix("r/");
+    public static final Prefix PREFIX_GIT_PASSCODE = new Prefix("pc/");
+
+
+
 
 }

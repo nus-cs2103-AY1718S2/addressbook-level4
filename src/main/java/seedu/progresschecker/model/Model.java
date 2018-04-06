@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
+import seedu.progresschecker.model.credentials.GitDetails;
 import seedu.progresschecker.model.exercise.Exercise;
 import seedu.progresschecker.model.exercise.exceptions.ExerciseNotFoundException;
 import seedu.progresschecker.model.issues.Issue;
@@ -41,9 +42,11 @@ public interface Model {
     void sort();
 
     //@@author adityaa1998
+    /** authenticates git using password */
+    void loginGithub(GitDetails gitdetails) throws IOException, CommandException;
 
     /** creates an issue on github */
-    void createIssueOnGitHub(Issue issue) throws IOException;
+    void createIssueOnGitHub(Issue issue) throws IOException, CommandException;
 
     /** reopen issue on github */
     void reopenIssueOnGithub(Index index) throws IOException, CommandException;

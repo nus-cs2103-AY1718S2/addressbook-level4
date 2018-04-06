@@ -12,6 +12,9 @@ import java.util.Set;
 import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.commons.util.StringUtil;
+import seedu.progresschecker.model.credentials.Passcode;
+import seedu.progresschecker.model.credentials.Repository;
+import seedu.progresschecker.model.credentials.Username;
 import seedu.progresschecker.model.exercise.QuestionIndex;
 import seedu.progresschecker.model.exercise.StudentAnswer;
 import seedu.progresschecker.model.issues.Assignees;
@@ -234,12 +237,67 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> bodu} into an {@code Optional<Body>} if {@code body} is present.
+     * Parses a {@code Optional<String> body} into an {@code Optional<Body>} if {@code body} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Body> parseBody(Optional<String> body) throws IllegalValueException {
         requireNonNull(body);
         return body.isPresent() ? Optional.of(parseBody(body.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String username} into a {@code Username}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Username parseGitUsername(String username) {
+        requireNonNull(username);
+        String trimmedUsername = username.trim();
+        return new Username(trimmedUsername);
+    }
+
+    /**
+     Parses a {@code Optional<String> username} into an {@code Optional<Username>} if {@code username} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Username> parseGitUsername(Optional<String> username) throws IllegalValueException {
+        requireNonNull(username);
+        return username.isPresent() ? Optional.of(parseGitUsername(username.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String passcode} into a {@code Passcode}.
+     */
+    public static Passcode parsePasscode(String passcode) {
+        requireNonNull(passcode);
+        return new Passcode(passcode);
+    }
+
+    /**
+     Parses a {@code Optional<String> Passcode} into an {@code Optional<Passcode>} if {@code passcpde} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Passcode> parsePasscode(Optional<String> passcode) throws IllegalValueException {
+        requireNonNull(passcode);
+        return passcode.isPresent() ? Optional.of(parsePasscode(passcode.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String repositroy} into a {@code Repository}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Repository parseRepository(String repository) {
+        requireNonNull(repository);
+        String trimmedRepository = repository.trim();
+        return new Repository(trimmedRepository);
+    }
+
+    /**
+     Parses a {@code Optional<String> Repository} into an {@code Optional<Repository>} if {@code repository} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Repository> parseRepository(Optional<String> repository) throws IllegalValueException {
+        requireNonNull(repository);
+        return repository.isPresent() ? Optional.of(parseRepository(repository.get())) : Optional.empty();
     }
     //@@author
 

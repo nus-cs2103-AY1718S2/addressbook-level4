@@ -11,7 +11,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-W13-B1/main
 
 By: `Team W13-B1`      Since: `Mar 2018`      Licence: `MIT`
 
@@ -29,7 +29,7 @@ To set up and start using ContactSails, do the following:
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `ContactSails.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
@@ -79,7 +79,7 @@ Alias: `?`
 
 === Adding a person: `add`
 
-Adds a person to the address book +
+Adds a person to ContactSails +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [g/GROUP]... [pr/PREFERENCE]...` +
 Alias: `a`
 
@@ -95,13 +95,13 @@ Examples:
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in ContactSails. +
 Format: `list` +
 Alias: `l`
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
+Edits an existing person in ContactSails. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [g/GROUP]... [pr/PREFERENCE]...` +
 Alias: `e`
 
@@ -195,7 +195,7 @@ Returns any person having preferences `computers`, `shoes`, or `necklaces`
 
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
+Deletes the specified person from ContactSails. +
 Format: `delete INDEX` +
 Alias: `d INDEX`
 
@@ -209,7 +209,7 @@ Examples:
 
 * `list` +
 `delete 2` OR `d 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in ContactSails.
 
 * `find Betsy` +
 `delete 1`  OR `d 1` +
@@ -217,7 +217,7 @@ Deletes the 1st person in the results of the `find` command.
 
 === Deleting a group : `groupdelete` `since v1.2`
 
-Deletes the specified group from the address book. +
+Deletes the specified group from ContactSails. +
 Format: `groupdelete GROUP_NAME` +
 Alias: `gd GROUP_NAME`
 
@@ -235,7 +235,7 @@ All persons in ContactSails with the group `friends` will have the group removed
 
 === Deleting a preference : `prefdelete` `since v1.2`
 
-Deletes the specified preference from the address book. +
+Deletes the specified preference from ContactSails. +
 Format: `prefdelete PREFERENCE_NAME` +
 Alias: `pd PREFERENCE_NAME`
 
@@ -267,7 +267,7 @@ Examples:
 
 * `list` +
 `select 2` OR `s 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in ContactSails.
 
 * `find Betsy` +
 `select 1` OR `s 1` +
@@ -281,14 +281,14 @@ Alias: `oa`
 
 [NOTE]
 For now, orders are added to the list of all orders and not the person selected.
-We are planning to implement this aspect by `v1.3`.
+We are planning to implement this aspect by `v1.5`.
 
 Examples:
 
 * `list` +
 `orderadd 1 i/Chocolates pr/10.00 q/5 d/12-08-2018` OR +
 `oa 1 i/Chocolates pr/10.00 q/5 d/12-08-2018` +
-Adds the 'Chocolates' order to the 1st person in the address book.
+Adds the 'Chocolates' order to the 1st person in ContactSails.
 
 * `find Betsy` +
 `orderadd 2 i/Books pr/20.00 q/2 d/04-11-2018` OR +
@@ -329,11 +329,11 @@ Examples:
 
 * `orderdelete 3` OR +
 `od 3` +
-Deletes the 3rd order of the order list in the address book.
+Deletes the 3rd order of the order list in ContactSails.
 
-=== Listing all orders : `orderlist` `Since V1.4`
+=== Listing all orders : `orderlist` `Since v1.4`
 
-Shows a list of all orders in the address book. +
+Shows a list of all orders in ContactSails. +
 Format: `orderlist` +
 Alias: `ol`
 
@@ -383,13 +383,13 @@ Marks the order status of the 2nd order in the most recent order listing as 'don
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores ContactSails to the state before the previous _undoable_ command was executed. +
 Format: `undo` +
 Alias: `u`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify ContactSails's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -431,7 +431,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` OR `r` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Displaying Calendar : `calendar` `since V1.3`
+=== Displaying Calendar : `calendar` `since v1.3`
 
 Displays the Calendar at centre of window in specified viewing format. +
 Format: `calendar [VIEW_FORMAT]` +
@@ -454,7 +454,7 @@ Shows Calendar in Day-View.
 `cal month` +
 Shows Calendar in Month-View.
 
-=== Go to next page in Calendar : `calendarnext` `coming in V1.5`
+=== Go to next page in Calendar : `calendarnext` `coming in v1.5`
 
 Goes to the next page in Calendar.
 Format: `calendarnext` +
@@ -464,7 +464,7 @@ Alias: `calnext` +
 * Depending on the current day/week/month calendar is displaying, this command will display the next day/week/month.
 ****
 
-=== Go to previous page in Calendar : `calendarprev` `coming in V1.5`
+=== Go to previous page in Calendar : `calendarprev` `coming in v1.5`
 
 Goes to the previous page in Calendar.
 Format: `calendarprev` +
@@ -474,7 +474,7 @@ Alias: `calprev` +
 * Depending on the current day/week/month calendar is displaying, this command will display the previous day/week/month.
 ****
 
-=== Display current day in Calendar : `calendarnow` `coming in V1.5`
+=== Display current day in Calendar : `calendarnow` `coming in v1.5`
 
 Displays today's date in Calendar.
 Format: `calendarnow` +
@@ -486,7 +486,7 @@ Alias: `calnow` +
 * If calendar is displaying in month-view, command displays current month of today in month-view.
 ****
 
-=== Adding entries to calendar entry list : `entryadd` `Since V1.3`
+=== Adding entries to calendar entry list : `entryadd` `Since v1.3`
 
 Adds an entry to the Calendar entry list. +
 Format: `entryadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
@@ -512,7 +512,7 @@ Entry appears on specified date in the Calendar.
 Entry starting from 1 Jan 2019 1000 and ending at 10 Jan 2019 1800 appears at the specified time period in Calendar.
 
 
-=== editing entries in calendar entry list : `entryedit` `Coming in V1.5`
+=== editing entries in calendar entry list : `entryedit` `Coming in v1.5`
 
 Edits an existing entry in the Calendar entry List. +
 Format: `entryedit e/ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` +
@@ -534,7 +534,7 @@ Changes reflect on the Calendar.
 `ee e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800` +
 Edits starting date and time, ending date and time of the 3rd entry in entry list.
 
-=== Deleting entries in calendar entry list : `entrydelete` `Since V1.4`
+=== Deleting entries in calendar entry list : `entrydelete` `Since v1.4`
 
 Deletes an existing entry in Calendar entry list. +
 Format: `entrydelete ENTRY_INDEX` +
@@ -553,21 +553,21 @@ Examples:
 Deletes the entry at index 1 of most recent entry listing. +
 Entry is removed from the Calendar.
 
-=== Listing all calendar entries : `entrylist` `Since V1.4`
+=== Listing all calendar entries : `entrylist` `Since v1.4`
 
-Shows a list of all calendar entries in the address book. +
+Shows a list of all calendar entries in ContactSails. +
 Format: `entrylist` +
 Alias: `el`
 
 === Clearing all entries in entryList : `entryclear` `coming in v1.5`
 
-Clears all entry list entries from the address book. +
+Clears all entry list entries from ContactSails. +
 Format: `entryclear` +
 Alias: `ec`
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from ContactSails. +
 Format: `clear` +
 Alias: `c`
 
@@ -585,14 +585,14 @@ Alias: `tc`
 
 ****
 * The command will display the top `NUMBER` amount of people, sorted by most frequently contacted to the least.
-* `NUMBER` must be in the range of 1 to total number of persons in the address book, both inclusive.
+* `NUMBER` must be in the range of 1 to total number of persons in ContactSails, both inclusive.
 ****
 
 Examples:
 
 * `topcustomers 10` OR +
 `tc 10` +
-Displays the list of the top ten persons in the address book based on how frequently you access these contacts.
+Displays the list of the top ten persons in ContactSails based on how frequently you access these contacts.
 
 === Viewing top customers : `topitems` `coming in v2.0`
 
@@ -602,14 +602,14 @@ Alias: `ti`
 
 ****
 * The command will display the top `NUMBER` amount of items, sorted by most bought item to the least.
-* `NUMBER` must be in the range of 1 to total number of items in the address book, both inclusive.
+* `NUMBER` must be in the range of 1 to total number of items in ContactSails, both inclusive.
 ****
 
 Examples:
 
 * `topitems 10` OR +
 `ti 10` +
-Displays the list of the top ten items in the address book based on how many of the items have been sold.
+Displays the list of the top ten items in ContactSails based on how many of the items have been sold.
 
 === Sending promotions based on group : `sendpromogroup` `coming in v2.0`
 

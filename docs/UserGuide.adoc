@@ -54,7 +54,7 @@ Some example commands you can try:
 * `list` +
 lists all employees.
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` +
-adds an employee named `John Doe` to the Employees Tracker.
+adds an employee named `John Doe` to Employees Tracker.
 * `delete 3` +
 deletes the 3^rd^ contact shown in the current list.
 * `exit` +
@@ -88,7 +88,7 @@ The result display box shows 3 types of information:
 
 * Error messages in [red]#red#, if the command you entered does not exists or does not match the pre-defined format.
 * Hints about the format and usage of the command in [green]#green#.
-* Statuses of the Employee Tracker in [white]#white#, if your command is processed successfully.
+* Statuses of Employees Tracker in [white]#white#, if your command is processed successfully.
 
 [NOTE]
 ET will intelligently provide [green]#hints# according to the words you type in the `Command Box`.
@@ -167,17 +167,17 @@ This section lists all Employees Tracker's command.
 ====
 
 === Logging in : `unlock`
-Unlocks the Employees Tracker. +
+Unlocks Employees Tracker. +
 Format: `unlock PASSWORD`
 
 [NOTE]
 ====
-* The Employees Tracker is locked when Employee Tracker is opened.
+* Employees Tracker is locked when Employees Tracker is opened.
 * The initial default password is 'admin', refer to <<Setting the application unlock password: `setPassword` `[Since v1.3]`>> if you want to change your password.
 ====
 
 ****
-* Unlock the EmployeeTracker with the PASSWORD which match the application's unlock password.
+* Unlock the Employees Tracker with the PASSWORD which match the application's unlock password.
 * PASSWORD is requiered.
 * The PASSWORD is a string that can contain any character.
 * The default PASSWORD is `admin`.
@@ -186,7 +186,7 @@ Format: `unlock PASSWORD`
 Examples:
 
 * `unlock 123` +
-Unlocks the Employees Tracker with password: 123 (which is also the application's unlock password)
+Unlocks Employees Tracker with password: 123 (which is also the application's unlock password)
 
 === Viewing help : `help`
 
@@ -195,7 +195,7 @@ Format: `help`
 
 === Adding an employee: `add`
 
-Adds an employee to the Employees Tracker +
+Adds an employee to Employees Tracker +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
@@ -208,7 +208,7 @@ Examples:
 
 === Listing all employees : `list`
 
-Shows a list of all employees in the Employees Tracker. +
+Shows a list of all employees in Employees Tracker. +
 Format: `list`
 
 ****
@@ -228,7 +228,7 @@ _Figure 3.3: List of employees_
 
 === Editing an employee : `edit`
 
-Edits an existing employee in the Employees Tracker. +
+Edits an existing employee in Employees Tracker. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/RATING] [t/TAG]...`
 
 ****
@@ -248,7 +248,7 @@ Edits the name of the 2^nd^ employee to be `Betsy Crower` and clears all existin
 
 === Rating an employee : `rate`
 
-Updates the rating of an existing employee in the Employees Tracker. +
+Updates the rating of an existing employee in Employees Tracker. +
 Format: `rate INDEX RATING`
 
 ****
@@ -276,21 +276,15 @@ Gives the 2^nd^ employee in the list of Alex(s) a 2-star rating.
 
 === Reviewing an employee : `review`
 
-Assigns a review to an existing employee in the Employees Tracker. +
+Assigns a review to an existing employee in Employees Tracker. +
 Format: `review INDEX`
 
 ****
-* Rate the employee at the specified `INDEX`. +
-The index refers to the index number shown in the last employees listing. +
+* The index refers to the index number shown in the last employees listing. +
 The index *must be a positive integer*, i.e. 1, 2, 3, ...
-* A pop-up dialog box will appear after user executes the command as shown in _Figure 8_ below. +
-The dialog box will prompt the user to enter the user's credential (as a reviewer) and the review.
 * The review can contain any character without length limitation.
 * A review will be tied to a single reviewer. [Implemented in V1.4]
 ****
-
-.A pop-up dialog box
-image::review_dialog.png[width=""]
 
 [NOTE]
 ====
@@ -303,11 +297,13 @@ Examples:
 * `list` +
 `review 1` +
 Gives the 1^st^ employee in the last employees listing a review. +
-The review will be based on the input in the pop-up dialog box.
+A pop-up dialog box will appear after user executes the command as shown in _Figure 8_ below. The dialog box will prompt the user to enter the user's credential (as a reviewer) and the review.
 * `find n/Alex` +
 `rate 2` +
 Gives the 2^nd^ employee in the list of Alex(s) a review. +
-The review will be based on the input in the pop-up dialog box.
+
+.A pop-up dialog box
+image::review_dialog.png[width=""]
 
 === Searching for employees: `find`
 
@@ -318,9 +314,9 @@ Format: `find (n/NAME_KEYPHRASE | t/TAG_KEYPHRASE | r/RATING_KEYPHRASE)  [n/NAME
 * The search is case insensitive, e.g. `n/hANs` will match `Hans`
 * The order of the keyphrase does not matter, e.g. `n/Hans Bo` will match `Bo Hans`
 * The search does not match exactly all the words in a phrase in sequential order, but only finds any phrase that contains the specified keyphrase's words without sequential order, e.g. `n/Hans Bo` will match `Jonathan Bo Hans`
-* The search only matches full wor, e.g. `n/Han` will not match `Hans`
-* Searching by multiple criteria will yield the result of employees that match all the criterias, e.g. +
-** `n/Hans Bo t/Sales` will match `Hans Bo` with tag `Friends` but not `Hans Bo` with tag `Enemy` or `John Doe` with tag `Friends` +
+* The search only matches full word, e.g. `n/Han` will not match `Hans`
+* Searching by multiple criteria will yield the result of employees that match all of them, e.g. +
+** `n/Hans Bo t/Sales` will match `Hans Bo` with tag `Sales` but not `Hans Bo` with tag `Enemy` or `John Doe` with tag `Friends` +
 ** `n/Hans Bo n/John Doe t/Sales t/Marketing` will match only `Hans Bo | Sales` or `Hans Bo | Marketing` or `John Doe | Sales` or `John Doe | Marketing`
 ****
 
@@ -344,7 +340,7 @@ e.g. `John Doe | Friends`, `John Dick| Colleagues`, `John | Friends, Colleagues`
 
 === Deleting an employee : `delete`
 
-Deletes the specified employee from the Employees Tracker whose calendar will also be deleted. +
+Deletes the specified employee from Employees Tracker whose calendar will also be deleted. +
 Format: `delete INDEX`
 
 ****
@@ -357,7 +353,7 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2^nd^ employee and his calendar in the Employees Tracker.
+Deletes the 2^nd^ employee and his calendar in Employees Tracker.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1^st^ employee and his calendar in the results of the `find` command.
@@ -377,7 +373,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2^nd^ employee in the Employees Tracker.
+Selects the 2^nd^ employee in Employees Tracker.
 * `find Betsy` +
 `select 1` +
 Selects the 1^st^ employee in the results of the `find` command.
@@ -402,12 +398,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the Employees Tracker to the state before the previous _undoable_ command was executed. +
+Restores Employees Tracker to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the Employees Tracker's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify Employees Tracker's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -449,20 +445,20 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Locking the EmployeeTracker temporary: `lock`
+=== Locking Employees Tracker temporary: `lock`
 
-Locks the Employee Tracker, so that the data is protected without the need of closing the program or shutting down your computer. +
+Locks Employees Tracker, so that the data is protected without the need of closing the program or shutting down your computer. +
 Format: `lock`
 
 ****
 * The `Employees List Panel` and `Employee's Profile Panel` will be emptied when Employees Tracker is locked.
-* Employee Tracker will not respond to any command other than `unlock` when it is locked.
+* Employees Tracker will not respond to any command other than `unlock` when it is locked.
 ****
 
 Examples:
 
 * `lock` +
-Locks the Employees Tracker.
+Locks Employees Tracker.
 
 [NOTE]
 After you locked Employees Tracker, you won't see any information on the User Interface. All information will be hiding when Employees Tracker is locked. Refer to Figure 10 below.
@@ -575,7 +571,7 @@ Deletes the event with title "some event" in 2^nd^ employee's timetable.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the Employees Tracker. +
+Clears all entries from Employees Tracker. +
 Format: `clear`
 
 === Exiting the program : `exit`
@@ -630,7 +626,7 @@ You will be able to add an event to many employee's timetable at once for maximu
 You will be able to jump to email with a command
 // tag::dataencryption[]
 * Encrypting data files. +
-Employee Tracker will ensure data security by encrypting data files.
+Employees Tracker will ensure data security by encrypting data files.
 
 
 == Frequently Asked Questions (FAQ)

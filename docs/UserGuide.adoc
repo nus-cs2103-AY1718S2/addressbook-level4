@@ -438,7 +438,7 @@ Format: `exit`
 
 === Adding a task: `addTask`
 
-Adds a person to the address book. +
+Adds a task to the address book. +
 Format: `addTask desc/TASK DESCRIPTION by/DEADLINE priority/PRIORITY`
 
 New tasks will be added into the *To-do list* and *Calendar*.
@@ -448,26 +448,33 @@ Examples:
 Current date: 03-04-2018 +
 The application initially starts with no tasks as displayed in Figure 2:
 
-.Initial Address Book State +
-image::UiInitial.png[width="800"]
-
 Command entered: +
 `addTask desc/Grade mid-terms by/04-04-2018 priority/2`: +
 This will add a task, 'Grade mid-terms' into the list with his respective details into the application (Figure ).
-
-.Application after first task has been added +
-image::AfterFirstTask.png[width="800"]
 
 Command entered: +
 `addTask desc/Submit tutorial attendance by/05-04-2018 priority/3`: +
 This will add a task, 'Submit tutorial attendance' into the calendar and to-do list with the respective details into the application (Figure ).
 
-.Application after second task has been added +
-image::AfterSecondTask.png[width="800"]
-
 === Editing a task: `editTask`
 
-=== Removing a task: `removeTask`
+Edits a task to the address book. +
+Format: `editTask INDEX title [/TASK TITLE] [desc/TASK DESCRIPTION] [by/DEADLINE] [priority/PRIORITY`]
+
+The specified tasks will be edited in the *To-do list* and *Calendar*.
+
+****
+* Edits the task at the specified `INDEX`. The index refers to the index number shown in the last task listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+****
+
+=== Removing a task: `deleteTask`
+
+Deletes a task in the address book. +
+Format: `deleteTask INDEX
+
+The specified tasks will be deleted from the *To-do list* and *Calendar*.
 
 === Saving the data
 

@@ -406,7 +406,9 @@ Birthday prefix "b/" has been added to the add command so that users can add the
 
 // tag::sort[]
 === Sort command
+
 *Since V1.4*
+
 ==== Current Implementation
 The sort command allows the users to sort their clients according to the lexicographical order of their name. It is facilitated by a custom comparator. The sort command would be implemented as an not undoable command.
 
@@ -438,7 +440,9 @@ Suppose that the user has a list of clients in the application as shown in the d
 
 // tag::group[]
 === Group feature
+
 *Since V1.4*
+
 ==== Current Implementation
 The Group feature will allow users to group their clients according to a specified group. Users will be required to add their clients to a group when adding a new user. Users can change the grouping of their clients later on if they wish to do so.
 
@@ -502,7 +506,9 @@ image::InsuranceClassInModel.png[width="790"]
 
 // tag:: encryption[]
 === Data Encryption
+
 *Since V1.4*
+
 ==== Current Implementation
 Client’s data is stored in an XML file in plain text is not secure, hence the need to encrypt XML data.
 

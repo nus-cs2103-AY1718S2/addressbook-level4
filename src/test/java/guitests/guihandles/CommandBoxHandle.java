@@ -62,4 +62,12 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
         guiRobot.interact(() -> getRootNode().insertText(caretPos, input));
         guiRobot.interact(() -> getRootNode().positionCaret(getInput().length()));
     }
+
+    /**
+     * Remove change listener for autocomplete,
+     * so that it will not interfere with JUnit System Tests.
+     */
+    public void disableAutocomplete() {
+        getRootNode().textProperty().removeListener(CommandBox.getAutocompleteListener());
+    }
 }

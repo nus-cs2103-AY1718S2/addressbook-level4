@@ -1,5 +1,7 @@
 package seedu.address.model;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -52,6 +54,12 @@ public interface Model {
     void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    void updatePetPatient(PetPatient target, PetPatient editedPetPatient)
+            throws DuplicatePetPatientException, PetPatientNotFoundException;
+
+    void updateAppointment(Appointment target, Appointment editedAppointment)
+            throws DuplicateAppointmentException, AppointmentNotFoundException;
+
     /** Removes the specific {@code tag} from all {@code persons} with that tag **/
     void deleteTag(Tag tag);
 
@@ -86,9 +94,22 @@ public interface Model {
 
     void addPetPatient(PetPatient petPatient) throws DuplicatePetPatientException;
 
+    /** Returns a person object that has the given {@code Nric}. */
     Person getPersonWithNric(Nric ownerNric);
 
+    /** Returns a petpatient object that has the given {@code Nric} and {@code PetPatientName}. */
     PetPatient getPetPatientWithNricAndName(Nric ownerNric, PetPatientName petPatientName);
+
+    /** Returns a list of tags used in the application. */
+    List<Tag> getTagList();
+
+    ArrayList<PetPatient> getPetPatientsWithNric(Nric ownerNric);
+
+    ArrayList<Appointment> getAppointmentsWithNric(Nric ownerNric);
+
+    ArrayList<Appointment> getAppointmentsWithNricAndPetName(Nric ownerNric, PetPatientName petPatientName);
+
+    Appointment getClashingAppointment(LocalDateTime dateTime);
 
     /** Deletes the given pet. */
     void deletePetPatient(PetPatient target)

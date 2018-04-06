@@ -11,12 +11,12 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
-import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.model.petpatient.PetPatient;
+import seedu.address.model.tag.Tag;
 
 /**
  * The main LogicManager of the app.
@@ -79,7 +79,7 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public Set<Prefix> getAllPrefixes() {
+    public Set<String> getAllPrefixes() {
         return commandSyntax.getPrefixes();
     }
 
@@ -104,5 +104,14 @@ public class LogicManager extends ComponentManager implements Logic {
             allPetPatientNamesInModel.add(p.getName().toString());
         }
         return allPetPatientNamesInModel;
+    }
+
+    @Override
+    public Set<String> getAllTagNames() {
+        Set<String> getTagNamesInModel = new HashSet<>();
+        for (Tag t : model.getTagList()) {
+            getTagNamesInModel.add(t.tagName);
+        }
+        return getTagNamesInModel;
     }
 }

@@ -76,6 +76,7 @@ You may find having to learn a large new number of commands rather intimidating.
 *Command Format*
 
 * The commands are case-insensitive. However, for simplicity all the examples have the commands in lower case.
+* You can auto-complete any command by pressing tab key.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
@@ -113,6 +114,21 @@ Format: `answer INDEX ANSWER`
 Examples:
 
 * `answer 2.1.1 Procedural languages work at simple data structures and functions level`
+
+=== Logging into Github: `gitlogin OR gl`
+
+Creates an issue on github in the team repo +
+Format: `gitlogin gu/USERNAME pc/PASSWORD r/REPO` +
+OR +
+`gl gu/USERNAME pc/PASSWORD r/REPOSITORY`
+
+[TIP]
+Your git details are not saved in our app for sercurity reasons. Hence, you will need to login everytime you start the software. +
+You need to login and mention the repo where you need to create/edit issues.
+
+Examples:
+
+* `gitlogin gu/johndoe pc/dummy123 r/CS2103T/main`
 
 === Creating an issue on Github: `+issue OR ci`
 

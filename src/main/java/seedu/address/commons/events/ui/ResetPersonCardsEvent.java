@@ -2,13 +2,10 @@ package seedu.address.commons.events.ui;
 //@@author crizyli
 import seedu.address.commons.events.BaseEvent;
 
-
 /**
- * Represents an event to free resources in Browser Panel
+ * Represents an event indicate person card changed.
  */
-public class HideDetailPanelEvent extends BaseEvent {
-
-    public HideDetailPanelEvent() { }
+public class ResetPersonCardsEvent extends BaseEvent {
 
     @Override
     public String toString() {

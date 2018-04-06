@@ -271,7 +271,7 @@ On running the above command and after you have logged in, you should a similar 
 .LinkedIn Command Execution
 image::linkedInCommand.png[width="790", align="center"]
 
-=== Adding a job opening
+=== Adding a job opening : `addjob`
 
 You can add a job opening to contactHero using the following format. +
 Format: `addjob p/POSITION t/TEAM l/LOCATION n/NUMBER_OF_POSITIONS s/REQUIRED_SKILLS`
@@ -290,7 +290,7 @@ On running the above command, you should see the following success message: +
 
  New job opening added: Marketing Intern Team: Social Media Marketing Location: Singapore Number of Positions: 1 Skills: [Excel]
 
-=== Deleting a job opening
+=== Deleting a job opening : `deletejob`
 
 You can delete a specified job opening from contactHeRo using the following format. +
 Format: `deletejob INDEX`
@@ -309,7 +309,7 @@ This deletes the 2nd job opening in contactHeRo and on running the above command
 
  Deleted Job: Marketing Intern Team: Social Media Marketing Location: Kuala Lampur, Malaysia Number of Positions: 1 Skills: [Excel][Writing]
 
-=== Matching a job opening to a person
+=== Matching a job opening to a person : `matchjob`
 
 You can see potential candidates for a specified job opening in contactHeRo using the following format. +
 Format: `matchjob INDEX`
@@ -501,14 +501,14 @@ You do not need to save manually. contactHeRo saves the data into the hard disk 
 
 // tag::dataencryption[]
 
-=== Opening the calendar
+=== Opening the calendar : `calendar`
 You can switch to the calendar tab using the following format. +
 Format: `calendar`
 
 === Viewing calendar
 You can view your calendar using these commands: +
 
-==== Viewing a specific date or switch to the date view
+==== Viewing a specific date or switch to the date view : `date`
 You can view a specifc date or switch to the date view by using the following format. +
 Format: `date [DATE]` +
 
@@ -521,7 +521,19 @@ Example: `date 2018-03-26`
 * Without `DATE`, you change to the date view +
 Example: `date`
 
-==== Viewing a specific week or switch to the week view
+.Date view
+image::dateView.png[width="400"]
+
+==== Viewing a specific date or switch to the date view : `datetime`
+You can view a specifc date time by using the following format. +
+Format: `datetime [DATE_TIME]` +
+
+[NOTE]
+`DATE_TIME` needs to be in format YYYY-MM-DD HH-mm
+
+Example: `date 2018-03-26 12:00`
+
+==== Viewing a specific week or switch to the week view : `week`
 You can view a specifc week or switch to the week view by using the following format. +
 Format: `week [YEAR WEEK]` +
 
@@ -536,7 +548,10 @@ Example: `week 2018 10`
 * Without `YEAR WEEK`, you change to the week view +
 Example: `week`
 
-==== Viewing a specific month or switch to the month view
+.Week view
+image::weekView.png[width="400"]
+
+==== Viewing a specific month or switch to the month view : `month`
 You can view a specifc month or switch to the month view by using the following format. +
 Format: `month [MONTH]` +
 
@@ -549,7 +564,10 @@ Example: `month 2018-10`
 * Without `MONTH`, you change to the month view +
 Example: `month`
 
-==== Viewing a specific year or switch to the year view
+.Month view
+image::monthView.png[width="400"]
+
+==== Viewing a specific year or switch to the year view : `year`
 You can view a specifc year or switch to the year view by using the following format. +
 Format: `year [YEAR]` +
 
@@ -562,7 +580,10 @@ Example: `year 2018`
 * Without `YEAR`, you change to the year view +
 Example: `year`
 
-=== Adding appointment
+.Year view
+image::yearView.png[width="400"]
+
+=== Adding appointment : `addapp`
 You can add appointment by using the following format. +
 
 Format: `addapp t/TITLE sdt/START_DATE_TIME edt/END_DATE_TIME`
@@ -575,7 +596,7 @@ On running the above command, you should see the following success message: +
 
  New appointment added: Meeting Start Date Time: 2018-04-05 14:00 End Date Time: 2018-04-05 15:00
 
-=== Deleting appointment
+=== Deleting appointment : `delapp`
 You can delete appointment by using the following format. +
 
 Format: `delapp t/TITLE sdt/START_DATE_TIME edt/END_DATE_TIME`
@@ -633,7 +654,7 @@ _{explain how the user can enable/disable data encryption}_
 To ask more questions, please send your email to contactHeRo@gmail.com. +
 We are willing to help you. +
 
-== Command Summary
+== ContactHeRo Cheat Sheet
 
 These are all the commands that you can use for the latest version of contactHeRo:
 
@@ -666,6 +687,8 @@ e.g. `addjob p/Software Engineer t/Cloud Services l/Singapore n/2`
 * *<<opening-the-calendar, Open calendar>>* : `calendar`
 * *<<viewing-specific-date-or-switch-to-date-view, View specific date or switch date view>>* : `date [DATE]` +
 e.g. `date` or `date 2018-04-04`
+* *<<viewing-specific-date-time, View specific date time>>* : `datetime [DATE_TIME]` +
+e.g. `datetime 2018-04-04 13:00`
 * *<<viewing-specific-week-or-switch-to-week-view, View specific week or switch week view>>* : `week [YEAR WEEK]` +
 e.g. `week` or `week 2018 14`
 * *<<viewing-specific-month-or-switch-to-month-view, View specific month or switch month view>>* : `month [MONTH]` +

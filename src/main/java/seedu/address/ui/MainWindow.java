@@ -35,7 +35,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    private InternshipListPanel internshipListPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -48,8 +48,12 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private MenuItem helpMenuItem;
 
+
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane internshipListPanelPlaceholder;
+
+    @FXML
+    private StackPane chatBotPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -119,11 +123,11 @@ public class MainWindow extends UiPart<Stage> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        internshipListPanel = new InternshipListPanel(logic.getFilteredInternshipList());
+        internshipListPanelPlaceholder.getChildren().add(internshipListPanel.getRoot());
 
-        ResultDisplay resultDisplay = new ResultDisplay();
-        resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+        ChatBotPanel chatBotPanel = new ChatBotPanel(logic);
+        chatBotPanelPlaceholder.getChildren().add(chatBotPanel.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
@@ -169,6 +173,7 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+
     void show() {
         primaryStage.show();
     }
@@ -181,8 +186,8 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
+    public InternshipListPanel getInternshipListPanel() {
+        return this.internshipListPanel;
     }
 
     void releaseResources() {
@@ -194,4 +199,5 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
 }

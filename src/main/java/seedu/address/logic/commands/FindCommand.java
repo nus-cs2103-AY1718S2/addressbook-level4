@@ -1,30 +1,57 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_INTERNSHIPS;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ModelManager;
+import seedu.address.model.internship.InternshipContainsKeywordsPredicate;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Finds and lists all Internships in address book whose name, address, salary, email or industry contains any of the
+ * argument keywords.
+ * Keyword matching is case insensitive.
  */
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
+    public static final String ALTERNATIVE_COMMAND_WORD = "search";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all internships whose names contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";
 
-    private final NameContainsKeywordsPredicate predicate;
+    public static final String MESSAGE_SEARCH_RESPONSE = "Awesome, would you like to narrow down your search even "
+            + "more? You may filter by location and specific address \nE.g: filter singapore hongkong tanjong pagar";
 
-    public FindCommand(NameContainsKeywordsPredicate predicate) {
+    private final InternshipContainsKeywordsPredicate predicate;
+
+    public FindCommand(InternshipContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 
+    //@@author TanCiKang
     @Override
     public CommandResult execute() {
-        model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+
+        // remove all tags from filtered list except 'saved' tags
+        try {
+            model.updateSearchedInternshipList(PREDICATE_SHOW_ALL_INTERNSHIPS);
+            ModelManager.removeTagsFromInternshipList(model.getFilteredInternshipList(), model);
+        } catch (CommandException e) {
+            e.printStackTrace();
+        }
+
+        model.updateSearchedInternshipList(predicate);
+
+        // add tags that have keywords matching the internship
+        try {
+            ModelManager.addTagsToFilteredList(ModelManager.getKeywords(), model.getFilteredInternshipList(), model);
+        } catch (CommandException e) {
+            e.printStackTrace();
+        }
+
+        return new CommandResult(MESSAGE_SEARCH_RESPONSE);
     }
 
     @Override

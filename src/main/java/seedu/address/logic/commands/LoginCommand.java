@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.account.Account;
 
+//@@author shadow2496
 /**
  * Logs into a social media platform using the user's account information.
  */

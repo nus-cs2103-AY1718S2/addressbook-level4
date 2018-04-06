@@ -22,11 +22,15 @@ import seedu.recipe.model.ReadOnlyRecipeBook;
 public class XmlRecipeBookStorage implements RecipeBookStorage {
 
     private static final Logger logger = LogsCenter.getLogger(XmlRecipeBookStorage.class);
+    private static final String IMAGE_FOLDER = "/image/";
+    private static final String RECIPE_BOOK_FILENAME = "recipebook.xml";
 
     private String filePath;
+    private String imageFolderPath;
 
     public XmlRecipeBookStorage(String filePath) {
         this.filePath = filePath;
+        this.imageFolderPath = filePath.replaceAll(RECIPE_BOOK_FILENAME, IMAGE_FOLDER);
     }
 
     public String getRecipeBookFilePath() {
@@ -77,7 +81,9 @@ public class XmlRecipeBookStorage implements RecipeBookStorage {
         requireNonNull(filePath);
 
         File file = new File(filePath);
+
         FileUtil.createIfMissing(file);
+        FileUtil.createDirs(new File(imageFolderPath));
         XmlFileStorage.saveDataToFile(file, new XmlSerializableRecipeBook(recipeBook));
 
         saveAllImageFiles(recipeBook);
@@ -101,8 +107,8 @@ public class XmlRecipeBookStorage implements RecipeBookStorage {
      */
     public String saveImageFile(String imagePath) throws IOException {
         File image = new File(imagePath);
-        Files.copy(image.toPath(), new File(filePath.replaceAll("recipebook.xml", "")
-                + image.getName()).toPath(), REPLACE_EXISTING);
+        File imageToSaveAs = new File (imageFolderPath + image.getName());
+        Files.copy(image.toPath(), imageToSaveAs.toPath(), REPLACE_EXISTING);
         return filePath;
     }
 }

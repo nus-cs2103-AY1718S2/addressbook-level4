@@ -47,7 +47,7 @@ public class EncryptionUtil {
             SecretKey secretKey = generateKey();
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             fileToBytes(cipher, file);
-        } catch (GeneralSecurityException gse){
+        } catch (GeneralSecurityException gse) {
             logger.severe("Cipher or Padding might not be supported " + gse.getMessage());
         } catch (UnsupportedEncodingException use) {
             logger.info("Encoding Unsupported " + use.getMessage());
@@ -68,9 +68,9 @@ public class EncryptionUtil {
             SecretKey secretKey = generateKey();
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             fileToBytes(cipher, file);
-        } catch (GeneralSecurityException gse){
+        } catch (GeneralSecurityException gse) {
             logger.severe("Cipher or Padding might not be supported " + gse.getMessage());
-        } catch (UnsupportedEncodingException use){
+        } catch (UnsupportedEncodingException use) {
             logger.info("Encoding Unsupported " + use.getMessage());
         }
     }
@@ -108,7 +108,7 @@ public class EncryptionUtil {
                 if (fileOutputStream != null) {
                     fileOutputStream.close();
                 }
-            } catch(IOException ioe) {
+            } catch (IOException ioe) {
                 logger.info("File streams could not be closed  " + ioe.getMessage());
             }
         }
@@ -126,10 +126,10 @@ public class EncryptionUtil {
             MessageDigest digester = MessageDigest.getInstance("SHA-256");
             digester.update(password.getBytes("UTF-8"));
             byte[] key = digester.digest();
-            secretKeySpec = new SecretKeySpec(key ,0 ,16 , "AES");
-        } catch (NoSuchAlgorithmException nae){
+            secretKeySpec = new SecretKeySpec(key , 0 , 16 ,  "AES");
+        } catch (NoSuchAlgorithmException nae) {
             logger.info("Algorithm Unsupported " + nae.getMessage());
-        } catch (UnsupportedEncodingException use){
+        } catch (UnsupportedEncodingException use) {
             logger.info("Encoding Unsupported " + use.getMessage());
         }
 

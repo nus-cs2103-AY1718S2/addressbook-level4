@@ -70,6 +70,8 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/TIMETABLE_LINK d/DETAIL [
 
 [TIP]
 A person can have any number of groups (including 0)
+[TIP]
+Timetable link refers to the NUSMods link of the person
 
 Examples:
 
@@ -152,7 +154,7 @@ Alias: `s` +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the NUSMods timetable of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -165,6 +167,9 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+image:SelectCommandExample.png[width="700"] +
+Figure 1. Example of timetable when selecting a person
 
 === Listing entered commands : `history`
 
@@ -453,7 +458,7 @@ image:nusModsLinkResult.png[width ="500"]
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *AddToDo* `CONTENT` +
+* *AddToDo* `addToDo CONTENT` +
 e.g. `addToDo Do home work`
 * *CheckToDo* : `check INDEX` +
 e.g. `check 3`

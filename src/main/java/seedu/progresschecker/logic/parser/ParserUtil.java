@@ -15,6 +15,8 @@ import seedu.progresschecker.commons.util.StringUtil;
 import seedu.progresschecker.model.credentials.Passcode;
 import seedu.progresschecker.model.credentials.Repository;
 import seedu.progresschecker.model.credentials.Username;
+import seedu.progresschecker.model.exercise.QuestionIndex;
+import seedu.progresschecker.model.exercise.StudentAnswer;
 import seedu.progresschecker.model.issues.Assignees;
 import seedu.progresschecker.model.issues.Body;
 import seedu.progresschecker.model.issues.Labels;
@@ -450,5 +452,32 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    //@@author iNekox3
+    /**
+     * Parses a {@code String questionIndex} into a {@code QuestionIndex}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code questionIndex} is invalid.
+     */
+    public static QuestionIndex parseQuestionIndex(String questionIndex) throws IllegalValueException {
+        requireNonNull(questionIndex);
+        String trimmedQuestionIndex = questionIndex.trim();
+        if (!QuestionIndex.isValidIndex(trimmedQuestionIndex)) {
+            throw new IllegalValueException(QuestionIndex.MESSAGE_INDEX_CONSTRAINTS);
+        }
+        return new QuestionIndex(trimmedQuestionIndex);
+    }
+
+    /**
+     * Parses a {@code String studentAnswer} into a {@code StudentAnswer}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static StudentAnswer parseStudentAnswer(String studentAnswer) {
+        requireNonNull(studentAnswer);
+        String trimmedStudentAnswer = studentAnswer.trim();
+
+        return new StudentAnswer(trimmedStudentAnswer);
     }
 }

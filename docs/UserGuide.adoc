@@ -52,6 +52,7 @@ The various menu items have keyboard shortcuts that can be used to speed up your
 * **`delete`**`3` : deletes the third contact shown in the current list
 * *`exit`* : exits the application
 
+//@@author melvintzw
 == Known Issues
 * Deleting a customer will not update any Runner whose customer list contains that customer
 [functionality not yet implemented - coming in v1.5].
@@ -59,7 +60,9 @@ The various menu items have keyboard shortcuts that can be used to speed up your
 [functionality not yet implemented - coming in v1.5].
 * Default date is January 1, 1970 (default Java Date value), when no start date or due date
 is specified when adding a customer.
+//@@author
 
+//@@author jonleeyz
 == Command Summary
 [NOTE]
 ====
@@ -367,8 +370,10 @@ _The `redo` command fails as there are no `undo` commands executed previously._
  redo (reapplies the "delete 1" command)
  redo (reapplies the "clear" command)
 ====
-
 ***
+//@@author
+
+//@@author melvintzw
 === Assigning one or more Customers to a Runner : `assign` [since v1.4]
 
 [NOTE]
@@ -391,7 +396,9 @@ and `CUSTOMER-INDICES`.
 
 _Assigns customer at `INDEX2` to Runner at `INDEX1` based on the last shown listing._
 ====
+//@@author
 
+//@@author jonleeyz
 == Up and coming features [coming in v2.0]
 
 // tag::dataencryption[]

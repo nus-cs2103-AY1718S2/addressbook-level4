@@ -13,8 +13,10 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    //@@author jonleeyz-reused
     private static final String[] TAG_COLOUR_STYLES =
         {"teal", "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey"};
+    //@@author
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -54,6 +56,7 @@ public class PersonCard extends UiPart<Region> {
         initTags(person);
     }
 
+    //@@author jonleeyz-reused
     // given a tagName, returns the String representation of a colour style
     private String getTagColourStyleFor(String tagName) {
         // hash code of tag name used to generate random colour
@@ -75,6 +78,7 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

@@ -20,8 +20,10 @@ public class ClearCommand extends UndoableCommand implements ImmediatelyExecutab
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
+    //@@author jonleeyz
     @Override
     public String getCommandWord() {
         return COMMAND_WORD;
     }
+    //@@author
 }

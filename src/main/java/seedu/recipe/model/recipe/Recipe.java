@@ -139,6 +139,7 @@ public class Recipe {
                 && otherRecipe.getCalories().equals(this.getCalories())
                 && otherRecipe.getServings().equals(this.getServings())
                 && otherRecipe.getUrl().equals(this.getUrl())
+                && otherRecipe.getImage().getImageName().equals(this.getImage().getImageName())
                 && otherRecipe.getTextFormattedRecipe().equals(this.getTextFormattedRecipe());
     }
 

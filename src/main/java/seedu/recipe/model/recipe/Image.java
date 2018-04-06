@@ -75,7 +75,8 @@ public class Image {
     }
 
     public String getUsablePath() {
-        return FILE_PREFIX + value;
+        File imagePath = new File(this.value);
+        return FILE_PREFIX + imagePath.getAbsolutePath();
     }
 
     @Override

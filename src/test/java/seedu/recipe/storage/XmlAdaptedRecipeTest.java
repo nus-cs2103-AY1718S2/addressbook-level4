@@ -31,7 +31,6 @@ public class XmlAdaptedRecipeTest {
     private static final String INVALID_CALORIES = "cccc";
     private static final String INVALID_SERVINGS = "dddd";
     private static final String INVALID_URL = "THIS@IS@NOT@AN@URL";
-    private static final String INVALID_IMAGE = "THIS@IS@NOT@A@FILEPATH";
     private static final String INVALID_TAG = "#hastagfriendzone";
 
     private static final String VALID_NAME = BENSON.getName().toString();

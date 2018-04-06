@@ -406,6 +406,7 @@ Birthday prefix "b/" has been added to the add command so that users can add the
 
 // tag::sort[]
 === Sort command
+*Since V1.4*
 ==== Current Implementation
 The sort command allows the users to sort their clients according to the lexicographical order of their name. It is facilitated by a custom comparator. The sort command would be implemented as an not undoable command.
 
@@ -437,7 +438,7 @@ Suppose that the user has a list of clients in the application as shown in the d
 
 // tag::group[]
 === Group feature
-
+*Since V1.4*
 ==== Current Implementation
 The Group feature will allow users to group their clients according to a specified group. Users will be required to add their clients to a group when adding a new user. Users can change the grouping of their clients later on if they wish to do so.
 
@@ -456,7 +457,7 @@ The following sequence diagram shows how the group feature is being implemented.
 
 // end::group[]
 
-// tag::dataencryption[]
+// tag::commission[]
 === Insurance with information of commission
 
 *Since V1.4*
@@ -497,7 +498,39 @@ image::InsuranceClassInModel.png[width="790"]
  ** Pros: Can sort by insurance plan to know if client belong to that category
  ** Cons: Difficult to implement
 
-// end::dataencryption[]
+// end::commission[]
+
+// tag:: encryption[]
+=== Data Encryption
+*Since V1.4*
+==== Current Implementation
+Client’s data is stored in an XML file in plain text is not secure, hence the need to encrypt XML data.
+
+Data is encrypted using a AES-256 bits encryption. File is automatically encrypted when the reInsurance closes and decrypted when the reInsurance is started.
+
+The current implementation is just a proof of concept and will be improved upon in upcoming version.
+
+==== Design Considerations
+
+===== Aspect: Implementation of SecretKey
+
+* **Alternative 1:** SecretKey will be stored in the same location as the XML file
+** Pros: Data Encryption will be easier for developers to implement this way.
+** Cons: Akin to not having encrypted the file since the key is exposed
+* **Alternative 2 (Prospective):** Use the Java Cryptography Extension KeyStore
+** Pros: Encryption keys will not be exposed
+** Cons: Harder for developers to code
+
+===== Aspect: Strength of the encryption
+
+* **Alternative 1 (Current):** 256-bits encryption
+** Pros: 256-bits provide much stronger encryption
+** Cons: Requires more computation resources and might be a tad slower, albeit negligible
+* **Alternative 2 (Prospective):** 128-bits encryption
+** Pros: Using 128-bits encryption will be much faster and requires less computation resources
+** Cons: Less stronger but still secure encryption
+
+// end:: encryption[]
 
 === Exporting
 

@@ -79,10 +79,10 @@ public class CoinBookParserTest {
         Coin coin = new CoinBuilder().build();
         EditCoinDescriptor descriptor = new EditCoinDescriptorBuilder(coin).build();
         TagCommand command = (TagCommand) parser.parseCommand(TagCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_COIN.getOneBased() + " " + CoinUtil.getCoinDetails(coin));
+                + INDEX_FIRST_COIN.getOneBased() + " " + CoinUtil.getCoinTags(coin));
         assertEquals(new TagCommand(INDEX_FIRST_COIN, descriptor), command);
         TagCommand aliasedCommand = (TagCommand) parser.parseCommand(TagCommand.COMMAND_ALIAS + " "
-                + INDEX_FIRST_COIN.getOneBased() + " " + CoinUtil.getCoinDetails(coin));
+                + INDEX_FIRST_COIN.getOneBased() + " " + CoinUtil.getCoinTags(coin));
         assertEquals(new TagCommand(INDEX_FIRST_COIN, descriptor), aliasedCommand);
     }
 

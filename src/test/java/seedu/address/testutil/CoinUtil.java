@@ -37,4 +37,14 @@ public class CoinUtil {
         return sb.toString();
     }
 
+    /**
+     * Returns the part of command string for the given {@code coin}'s tags.
+     */
+    public static String getCoinTags(Coin coin) {
+        StringBuilder sb = new StringBuilder();
+        coin.getTags().stream().forEach(
+            s -> sb.append(PREFIXTAG + s.tagName + " ")
+        );
+        return sb.toString();
+    }
 }

@@ -4,31 +4,23 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Set;
-import java.util.function.Predicate;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.google.gson.JsonObject;
-
-import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.CommandTestUtil.ModelStub;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.CoinBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyCoinBook;
 import seedu.address.model.coin.Coin;
-import seedu.address.model.coin.exceptions.CoinNotFoundException;
 import seedu.address.model.coin.exceptions.DuplicateCoinException;
-import seedu.address.model.rule.exceptions.DuplicateRuleException;
-import seedu.address.model.rule.exceptions.RuleNotFoundException;
 import seedu.address.testutil.CoinBuilder;
 
 public class AddCommandTest {
@@ -95,85 +87,6 @@ public class AddCommandTest {
         AddCommand command = new AddCommand(coin);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
-    }
-
-    /**
-     * A default model stub that have all of the methods failing.
-     */
-    private class ModelStub implements Model {
-        @Override
-        public void addCoin(Coin coin) throws DuplicateCoinException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void resetData(ReadOnlyCoinBook newData) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyCoinBook getCoinBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deleteCoin(Coin target) throws CoinNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updateCoin(Coin target, Coin editedCoin)
-                throws DuplicateCoinException {
-            fail("This method should not be called.");
-        }
-
-        //@@author laichengyu
-        @Override
-        public void syncAll(JsonObject newData)
-                throws DuplicateCoinException, CoinNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public Set<String> getCodeList() {
-            fail("This method should not be called.");
-            return null;
-        }
-        //@@author
-
-        @Override
-        public ObservableList<Coin> getFilteredCoinList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredCoinList(Predicate<Coin> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void deleteRule(seedu.address.model.rule.Rule target) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void addRule(seedu.address.model.rule.Rule rule) throws DuplicateRuleException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updateRule(seedu.address.model.rule.Rule target, seedu.address.model.rule.Rule editedRule)
-                throws DuplicateRuleException, RuleNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<seedu.address.model.rule.Rule> getRuleList() {
-            fail("This method should not be called.");
-            return null;
-        }
     }
 
     /**

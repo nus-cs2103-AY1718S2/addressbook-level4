@@ -1,8 +1,8 @@
 package systemtests;
 
 import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COIN_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_TARGET;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_COIN_SUCCESS;
 import static seedu.address.testutil.TypicalCoins.getTypicalCoins;
@@ -70,7 +70,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid index (size + 1) -> rejected */
         int invalidIndex = getModel().getFilteredCoinList().size() + 1;
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_COIN_DISPLAYED_INDEX);
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_COMMAND_TARGET);
 
         /* Case: invalid arguments (alphabets) -> rejected */
         assertCommandFailure(SelectCommand.COMMAND_WORD + " abc",
@@ -86,7 +86,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         /* Case: select from empty address book -> rejected */
         deleteAllCoins();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_COIN.getOneBased(),
-                MESSAGE_INVALID_COIN_DISPLAYED_INDEX);
+                MESSAGE_INVALID_COMMAND_TARGET);
     }
 
     /**

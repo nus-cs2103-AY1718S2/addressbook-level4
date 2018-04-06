@@ -52,7 +52,7 @@ public class DeleteCommand extends UndoableCommand {
         List<Coin> lastShownList = model.getFilteredCoinList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_COIN_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_COMMAND_TARGET);
         }
 
         coinToDelete = lastShownList.get(targetIndex.getZeroBased());

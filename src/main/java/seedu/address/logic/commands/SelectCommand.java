@@ -36,7 +36,7 @@ public class SelectCommand extends Command {
         List<Coin> lastShownList = model.getFilteredCoinList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_COIN_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_COMMAND_TARGET);
         }
 
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));

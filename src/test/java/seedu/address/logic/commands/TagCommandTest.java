@@ -86,7 +86,7 @@ public class TagCommandTest {
         EditCoinDescriptor descriptor = new EditCoinDescriptorBuilder().withName(VALID_NAME_BOB).build();
         TagCommand tagCommand = prepareCommand(outOfBoundIndex, descriptor);
 
-        assertCommandFailure(tagCommand, model, Messages.MESSAGE_INVALID_COIN_DISPLAYED_INDEX);
+        assertCommandFailure(tagCommand, model, Messages.MESSAGE_INVALID_COMMAND_TARGET);
     }
 
     /**
@@ -103,7 +103,7 @@ public class TagCommandTest {
         TagCommand tagCommand = prepareCommand(outOfBoundIndex,
                 new EditCoinDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
-        assertCommandFailure(tagCommand, model, Messages.MESSAGE_INVALID_COIN_DISPLAYED_INDEX);
+        assertCommandFailure(tagCommand, model, Messages.MESSAGE_INVALID_COMMAND_TARGET);
     }
 
     @Test
@@ -139,7 +139,7 @@ public class TagCommandTest {
         TagCommand tagCommand = prepareCommand(outOfBoundIndex, descriptor);
 
         // execution failed -> editCommand not pushed into undoRedoStack
-        assertCommandFailure(tagCommand, model, Messages.MESSAGE_INVALID_COIN_DISPLAYED_INDEX);
+        assertCommandFailure(tagCommand, model, Messages.MESSAGE_INVALID_COMMAND_TARGET);
 
         // no commands in undoRedoStack -> undoCommand and redoCommand fail
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);

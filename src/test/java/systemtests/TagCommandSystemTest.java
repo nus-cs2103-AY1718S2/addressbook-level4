@@ -89,7 +89,7 @@ public class TagCommandSystemTest extends AddressBookSystemTest {
         showCoinsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getCoinBook().getCoinList().size();
         assertCommandFailure(TagCommand.COMMAND_WORD + " " + invalidIndex + TAG_DESC_FRIEND,
-                Messages.MESSAGE_INVALID_COIN_DISPLAYED_INDEX);
+                Messages.MESSAGE_INVALID_COMMAND_TARGET);
 
         /* --------------------- Performing edit operation while a coin card is selected -------------------------- */
 
@@ -117,7 +117,7 @@ public class TagCommandSystemTest extends AddressBookSystemTest {
         /* Case: invalid index (size + 1) -> rejected */
         int invalidIndex = getModel().getFilteredCoinList().size() + 1;
         assertCommandFailure(TagCommand.COMMAND_WORD + " " + invalidIndex + TAG_DESC_FRIEND,
-                Messages.MESSAGE_INVALID_COIN_DISPLAYED_INDEX);
+                Messages.MESSAGE_INVALID_COMMAND_TARGET);
 
         /* Case: missing index -> rejected */
         assertCommandFailure(TagCommand.COMMAND_WORD + TAG_DESC_FRIEND,

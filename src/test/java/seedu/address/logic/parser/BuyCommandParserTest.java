@@ -12,6 +12,7 @@ import org.junit.Test;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.BuyCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommandTarget;
 
 public class BuyCommandParserTest {
     private static final String INDEX_AS_STRING = "1";
@@ -22,7 +23,8 @@ public class BuyCommandParserTest {
     private BuyCommandParser parser = new BuyCommandParser();
 
     private BuyCommand constructBuyCommand(String indexAsString, String valueAsString) throws IllegalValueException {
-        return new BuyCommand(ParserUtil.parseIndex(indexAsString), ParserUtil.parseDouble(valueAsString));
+        return new BuyCommand(new CommandTarget(ParserUtil.parseIndex(indexAsString)),
+                ParserUtil.parseDouble(valueAsString));
     }
 
     /**

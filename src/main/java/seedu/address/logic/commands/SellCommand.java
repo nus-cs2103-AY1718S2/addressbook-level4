@@ -15,36 +15,35 @@ import seedu.address.model.coin.exceptions.CoinNotFoundException;
 import seedu.address.model.coin.exceptions.DuplicateCoinException;
 
 /**
- * Adds value to an existing coin in the book.
+ * Removes value from an existing coin in the book.
  */
-public class BuyCommand extends UndoableCommand {
+public class SellCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "buy";
+    public static final String COMMAND_WORD = "sell";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add value to the coin account identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes value from the coin account identified "
             + "by the index number used in the last coin listing or its code. "
             + "Parameters: TARGET "
             + "AMOUNT\n"
             + "Example: " + COMMAND_WORD + " 1 " + "50.0";
 
-    public static final String MESSAGE_BUY_COIN_SUCCESS = "Bought: %1$s";
-    public static final String MESSAGE_NOT_BOUGHT = "Invalid code or amount entered.";
+    public static final String MESSAGE_SELL_COIN_SUCCESS = "Sold: %1$s";
 
     private final CommandTarget target;
-    private final double amountToAdd;
+    private final double amountToSell;
 
     private Coin coinToEdit;
     private Coin editedCoin;
 
     /**
-     * @param target      in the filtered coin list to change
-     * @param amountToAdd to the coin
+     * @param target of the coin in the filtered coin list to change
+     * @param amountToSell of the coin
      */
-    public BuyCommand(CommandTarget target, double amountToAdd) {
+    public SellCommand(CommandTarget target, double amountToSell) {
         requireNonNull(target);
 
         this.target = target;
-        this.amountToAdd = amountToAdd;
+        this.amountToSell = amountToSell;
     }
 
     @Override
@@ -57,7 +56,7 @@ public class BuyCommand extends UndoableCommand {
             throw new AssertionError("The target coin cannot be missing");
         }
         model.updateFilteredCoinList(PREDICATE_SHOW_ALL_COINS);
-        return new CommandResult(String.format(MESSAGE_BUY_COIN_SUCCESS, editedCoin));
+        return new CommandResult(String.format(MESSAGE_SELL_COIN_SUCCESS, editedCoin));
     }
 
     @Override
@@ -67,7 +66,7 @@ public class BuyCommand extends UndoableCommand {
         try {
             Index index = target.toIndex(model.getFilteredCoinList());
             coinToEdit = lastShownList.get(index.getZeroBased());
-            editedCoin = createEditedCoin(coinToEdit, amountToAdd);
+            editedCoin = createEditedCoin(coinToEdit, amountToSell);
         } catch (IndexOutOfBoundsException oobe) {
             throw new CommandException(Messages.MESSAGE_INVALID_COMMAND_TARGET);
         }
@@ -76,11 +75,11 @@ public class BuyCommand extends UndoableCommand {
     /**
      * Creates and returns a {@code Coin} with the details of {@code coinToEdit}
      */
-    private static Coin createEditedCoin(Coin coinToEdit, double amountToAdd) {
+    private static Coin createEditedCoin(Coin coinToEdit, double amountToSell) {
         assert coinToEdit != null;
 
         Coin editedCoin = new Coin(coinToEdit);
-        editedCoin.addTotalAmountBought(amountToAdd);
+        editedCoin.addTotalAmountSold(amountToSell);
 
         return editedCoin;
     }
@@ -93,14 +92,14 @@ public class BuyCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof BuyCommand)) {
+        if (!(other instanceof SellCommand)) {
             return false;
         }
 
         // state check
-        BuyCommand e = (BuyCommand) other;
+        SellCommand e = (SellCommand) other;
         return target.equals(e.target)
-                && amountToAdd == e.amountToAdd
+                && amountToSell == e.amountToSell
                 && Objects.equals(coinToEdit, e.coinToEdit);
     }
 }

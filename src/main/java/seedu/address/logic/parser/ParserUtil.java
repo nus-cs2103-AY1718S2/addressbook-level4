@@ -10,6 +10,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.CommandTarget;
 import seedu.address.model.coin.Code;
 import seedu.address.model.tag.Tag;
 
@@ -30,6 +31,7 @@ public class ParserUtil {
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
@@ -65,8 +67,26 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String target} into a {@code CommandTarget}.
+     * Can be any of: code or index.
+     *
+     * @throws IllegalValueException
+     */
+    public static CommandTarget parseTarget(String target) throws IllegalValueException {
+        requireNonNull(target);
+        try {
+            return new CommandTarget(parseIndex(target));
+        } catch (IllegalValueException ive) {
+            return new CommandTarget(parseName(target));
+            // may still throw again, handle it at call site
+        }
+
+    }
+
+    /**
      * Parses {@code value} into a {@code double} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws IllegalValueException if the specified index is invalid (not number value).
      */
     public static double parseDouble(String value) throws IllegalValueException {

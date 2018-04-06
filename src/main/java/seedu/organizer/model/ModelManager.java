@@ -110,6 +110,7 @@ public class ModelManager extends ComponentManager implements Model {
         currentlyLoggedInUser = organizer.getCurrentLoggedInUser();
         updateFilteredTaskList(PREDICATE_SHOW_NO_TASKS);
         indicateOrganizerChanged();
+
     }
 
     @Override

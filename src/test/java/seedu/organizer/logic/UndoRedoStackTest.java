@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import seedu.organizer.logic.commands.Command;
 import seedu.organizer.logic.commands.CommandResult;
+import seedu.organizer.logic.commands.LogoutCommand;
 import seedu.organizer.logic.commands.RedoCommand;
 import seedu.organizer.logic.commands.UndoCommand;
 import seedu.organizer.logic.commands.UndoableCommand;
@@ -28,16 +29,34 @@ public class UndoRedoStackTest {
 
     @Test
     public void push_nonUndoableCommand_redoStackClearedAndCommandNotAdded() {
-        // non-empty redoStack
+
+        // non-empty undoRedoStack
         undoRedoStack = prepareStack(Collections.singletonList(dummyUndoableCommandOne),
                 Arrays.asList(dummyUndoableCommandOne, dummyUndoableCommandTwo));
         undoRedoStack.push(dummyCommandOne);
         assertStackStatus(Collections.singletonList(dummyUndoableCommandOne), Collections.emptyList());
 
-        // empty redoStack
+        // empty undoRedoStack
         undoRedoStack.push(dummyCommandOne);
         assertStackStatus(Collections.singletonList(dummyUndoableCommandOne), Collections.emptyList());
     }
+
+    //@@author dominickenn
+    @Test
+    public void push_nonUndoableLogoutCommand_redoStackClearedAndCommandNotAdded() {
+        LogoutCommand logoutCommand = new LogoutCommand();
+
+        // non-empty redoStack
+        undoRedoStack = prepareStack(Collections.singletonList(dummyUndoableCommandOne),
+                Arrays.asList(dummyUndoableCommandOne, dummyUndoableCommandTwo));
+        undoRedoStack.push(logoutCommand);
+        assertStackStatus(Collections.emptyList(), Collections.emptyList());
+
+        // empty redoStack
+        undoRedoStack.push(logoutCommand);
+        assertStackStatus(Collections.emptyList(), Collections.emptyList());
+    }
+    //@@author
 
     @Test
     public void push_undoableCommand_redoStackClearedAndCommandAdded() {

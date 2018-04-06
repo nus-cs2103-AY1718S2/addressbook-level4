@@ -3,6 +3,7 @@ package seedu.organizer.logic;
 import java.util.Stack;
 
 import seedu.organizer.logic.commands.Command;
+import seedu.organizer.logic.commands.LogoutCommand;
 import seedu.organizer.logic.commands.RedoCommand;
 import seedu.organizer.logic.commands.UndoCommand;
 import seedu.organizer.logic.commands.UndoableCommand;
@@ -30,6 +31,11 @@ public class UndoRedoStack {
         }
 
         if (!(command instanceof UndoableCommand)) {
+            //@@author dominickenn
+            if (command instanceof LogoutCommand) {
+                this.reset();
+            }
+            //@@author
             return;
         }
 
@@ -67,6 +73,16 @@ public class UndoRedoStack {
     public boolean canRedo() {
         return !redoStack.empty();
     }
+
+    //@@author dominickenn
+    /**
+     * Resets undoRedoStack
+     */
+    public void reset() {
+        undoStack = new Stack<>();
+        redoStack = new Stack<>();
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

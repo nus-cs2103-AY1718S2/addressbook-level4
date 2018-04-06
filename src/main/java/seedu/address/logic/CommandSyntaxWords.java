@@ -29,7 +29,6 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
-import seedu.address.logic.parser.Prefix;
 
 //@@author aquarinte
 /**
@@ -45,9 +44,11 @@ public class CommandSyntaxWords {
             HelpCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD,
             HistoryCommand.COMMAND_WORD).collect(Collectors.toSet());
 
-    private static final Set<Prefix> prefixes = Stream.of(
+    private static final Set<String> prefixes = Stream.of(
             PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_NRIC, PREFIX_BREED, PREFIX_SPECIES,
-            PREFIX_COLOUR, PREFIX_BLOODTYPE, PREFIX_DATE, PREFIX_REMARK, PREFIX_TAG).collect(Collectors.toSet());
+            PREFIX_COLOUR, PREFIX_BLOODTYPE, PREFIX_DATE, PREFIX_REMARK, PREFIX_TAG)
+            .map(p -> p.toString())
+            .collect(Collectors.toSet());
 
     private static final Set<String> options = Stream.of("-o", "-p", "-a").collect(Collectors.toSet());
 
@@ -62,7 +63,7 @@ public class CommandSyntaxWords {
         return commandWords;
     }
 
-    public Set<Prefix> getPrefixes() {
+    public Set<String> getPrefixes() {
         return prefixes;
     }
 

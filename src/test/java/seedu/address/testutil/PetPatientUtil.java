@@ -44,7 +44,7 @@ public class PetPatientUtil {
         sb.append(PREFIX_SPECIES + petPatient.getSpecies() + " ");
         sb.append(PREFIX_BREED + petPatient.getBreed() + " ");
         sb.append(PREFIX_COLOUR + petPatient.getColour() + " ");
-        sb.append(PREFIX_BLOODTYPE + petPatient.getColour() + " ");
+        sb.append(PREFIX_BLOODTYPE + petPatient.getBloodType() + " ");
         petPatient.getTags().stream().forEach(s -> sb.append(PREFIX_TAG + s.tagName + " "));
         return sb.toString();
     }

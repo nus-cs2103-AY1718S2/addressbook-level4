@@ -100,10 +100,16 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle;
     }
 
+    //@@author aquarinte
+    /**
+     * Returns a command box with autocomplete function disabled.
+     */
     public CommandBoxHandle getCommandBox() {
+        mainWindowHandle.getCommandBox().disableAutocomplete();
         return mainWindowHandle.getCommandBox();
     }
 
+    //@@author
     public PersonListPanelHandle getPersonListPanel() {
         return mainWindowHandle.getPersonListPanel();
     }
@@ -112,6 +118,7 @@ public abstract class AddressBookSystemTest {
     public PetPatientListPanelHandle getPetPatientListPanel() {
         return mainWindowHandle.getPetPatientListPanel();
     }
+    //@@author
 
     public MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();
@@ -125,6 +132,7 @@ public abstract class AddressBookSystemTest {
     public CalendarPanelHandle getCalendarPanel() {
         return mainWindowHandle.getCalendarPanel();
     }
+    //@@author
 
     public StatusBarFooterHandle getStatusBarFooter() {
         return mainWindowHandle.getStatusBarFooter();

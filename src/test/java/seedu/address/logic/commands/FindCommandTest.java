@@ -13,9 +13,11 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.junit.Test;
 
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -23,7 +25,6 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 
 /**
@@ -34,10 +35,10 @@ public class FindCommandTest {
 
     @Test
     public void equals() {
-        NameContainsKeywordsPredicate firstPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("first"));
-        NameContainsKeywordsPredicate secondPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("second"));
+        Predicate<Person> firstPredicate = forPerson -> Collections.singletonList("first")
+                .stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPerson.getName().fullName, keyword));
+        Predicate<Person> secondPredicate = forPerson -> Collections.singletonList("second")
+                .stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPerson.getName().fullName, keyword));
 
         FindCommand findFirstCommand = new FindCommand(firstPredicate);
         FindCommand findSecondCommand = new FindCommand(secondPredicate);
@@ -81,8 +82,10 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FindCommand prepareCommand(String userInput) {
+        Predicate<Person> predicate = forPerson -> Arrays.asList(userInput.split("\\s+"))
+                .stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPerson.getName().fullName, keyword));
         FindCommand command =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new FindCommand(predicate);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

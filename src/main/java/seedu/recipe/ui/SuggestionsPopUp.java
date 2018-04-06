@@ -1,3 +1,4 @@
+//@@author hoangduong1607
 package seedu.recipe.ui;
 
 import static seedu.recipe.ui.util.AutoCompletionUtil.APPLICATION_COMMANDS;
@@ -13,8 +14,6 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import seedu.recipe.ui.util.TextInputProcessorUtil;
-
-//@@author hoangduong1607
 
 /**
  * The component that is responsible for showing a suggestion list for auto-completion

@@ -17,6 +17,10 @@ import seedu.recipe.ui.GuiUnitTest;
 public class WebParserHandlerTest extends GuiUnitTest {
 
     private static final String WIKIA_RECIPE_URL = "http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice";
+    private static final String DUMMY_URL = "https://google.com/";
+    private static final String DUMMY_DOCUMENT_WIKIA = "<html><div id=\"mw-content-text\">something</div></html>";
+    private static final String DUMMY_DOCUMENT_WIKIA_MOBILE = "<html></html>";
+    private static final String DUMMY_DOCUMENT_EMPTY = "<html></html>";
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -43,18 +47,18 @@ public class WebParserHandlerTest extends GuiUnitTest {
 
     @Test
     public void getWebParser_unparsableWebsite_returnNull() throws Exception {
-        assertNullWebParser("https://google.com/", "");
+        assertNullWebParser(DUMMY_URL, "");
     }
 
     @Test
     public void getWebParser_wikiaLoaded_returnWikiaParser() throws Exception {
-        assertWebParser(WIKIA_RECIPE_URL, "<html><div id=\"mw-content-text\">something</div></html>",
+        assertWebParser(WIKIA_RECIPE_URL, DUMMY_DOCUMENT_WIKIA,
                 new WikiaParser(new Document("")));
     }
 
     @Test
     public void getWebParser_mobileWikiaLoaded_returnMobileWikiaParser() throws Exception {
-        assertWebParser(WIKIA_RECIPE_URL, "<html></html>",
+        assertWebParser(WIKIA_RECIPE_URL, DUMMY_DOCUMENT_WIKIA_MOBILE,
                 new MobileWikiaParser(new Document("")));
     }
 

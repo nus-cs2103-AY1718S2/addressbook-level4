@@ -14,7 +14,6 @@ import seedu.recipe.model.recipe.exceptions.RecipeNotFoundException;
 
 /**
  * A list of recipes that enforces uniqueness between its elements and does not allow nulls.
- *
  * Supports a minimal set of list operations.
  *
  * @see Recipe#equals(Object)

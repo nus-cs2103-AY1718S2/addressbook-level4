@@ -27,7 +27,7 @@ Add salsa as desired.</instruction>
         <preparationTime>98765432</preparationTime>
         <calories>5000</calories>
         <servings>4</servings>
-        <url>http://recipes.wikia.com/wiki/Asian_Chicken_Salad?useskin=wikiamobile</url>
+        <url>http://recipes.wikia.com/wiki/Ugandan_Chicken_Stew?useskin=wikiamobile</url>
         <image>-</image>
         <tagged>owesMoney</tagged>
         <tagged>family</tagged>
@@ -57,7 +57,7 @@ Add salsa as desired.</instruction>
     </recipes>
     <recipes>
         <name>Elle Meyer</name>
-        <ingredient>frantic,aimless</ingredient>
+        <ingredient>test, aimless</ingredient>
         <instruction>michegan ave</instruction>
         <cookingTime>50m</cookingTime>
         <preparationTime>9482224</preparationTime>
@@ -68,7 +68,7 @@ Add salsa as desired.</instruction>
     </recipes>
     <recipes>
         <name>Fiona Kunz</name>
-        <ingredient>bluntness,falls</ingredient>
+        <ingredient>bluntness, ingredients</ingredient>
         <instruction>little tokyo</instruction>
         <cookingTime>50m</cookingTime>
         <preparationTime>9482427</preparationTime>

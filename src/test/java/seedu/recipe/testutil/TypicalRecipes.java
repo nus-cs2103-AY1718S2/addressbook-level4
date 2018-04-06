@@ -63,7 +63,7 @@ public class TypicalRecipes {
             .withPreparationTime("98765432")
             .withCalories("5000")
             .withServings("4")
-            .withUrl("http://recipes.wikia.com/wiki/Asian_Chicken_Salad?useskin=wikiamobile")
+            .withUrl("http://recipes.wikia.com/wiki/Ugandan_Chicken_Stew?useskin=wikiamobile")
             .withImage("-")
             .withTags("owesMoney", "family").build();
     public static final Recipe CARL = new RecipeBuilder()
@@ -89,7 +89,7 @@ public class TypicalRecipes {
             .withImage("-").build();
     public static final Recipe ELLE = new RecipeBuilder()
             .withName("Elle Meyer")
-            .withIngredient("frantic,aimless")
+            .withIngredient("test, aimless")
             .withInstruction("michegan ave")
             .withCookingTime("50m")
             .withPreparationTime("9482224")
@@ -99,7 +99,7 @@ public class TypicalRecipes {
             .withImage("-").build();
     public static final Recipe FIONA = new RecipeBuilder()
             .withName("Fiona Kunz")
-            .withIngredient("bluntness,falls")
+            .withIngredient("bluntness, ingredients")
             .withInstruction("little tokyo")
             .withCookingTime("50m")
             .withPreparationTime("9482427")
@@ -131,7 +131,7 @@ public class TypicalRecipes {
             .withImage("-").build();
     public static final Recipe IDA = new RecipeBuilder()
             .withName("Ida Mueller")
-            .withIngredient("just,example")
+            .withIngredient("test,ingredients")
             .withInstruction("chicago ave")
             .withCookingTime("5555")
             .withPreparationTime("420m")

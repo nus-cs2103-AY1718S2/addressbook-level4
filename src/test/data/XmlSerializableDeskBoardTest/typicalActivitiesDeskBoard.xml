@@ -7,17 +7,20 @@
         <dateTime>04/03/2018 23:59</dateTime>
         <remark> </remark>
         <tagged>CS2101</tagged>
+        <iscompleted>false</iscompleted>
     </tasks>
     <tasks>
         <name>CS2102Assignment</name>
         <dateTime>15/03/2018 23:59</dateTime>
         <remark> </remark>
         <tagged>CS2102</tagged>
+        <iscompleted>false</iscompleted>
     </tasks>
     <tasks>
         <name>CS2101Quiz</name>
         <dateTime>19/03/2018 23:59</dateTime>
         <remark>IVLE Quiz</remark>
+        <iscompleted>false</iscompleted>
     </tasks>
     <events>
         <name>CCA</name>
@@ -25,33 +28,37 @@
         <endDateTime>01/04/2018 21:00</endDateTime>
         <location>Campus</location>
         <remark>nil</remark>
+        <iscompleted>false</iscompleted>
     </events>
     <events>
         <name>CIP</name>
         <dateTime>02/04/2018 08:00</dateTime>
         <endDateTime>02/04/2018 12:00</endDateTime>
         <location>michegan ave</location>
-        <remark></remark>
+        <remark>nil</remark>
         <tagged>CIP</tagged>
+        <iscompleted>false</iscompleted>
     </events>
     <events>
         <name>CS2101Exam</name>
         <dateTime>28/04/2018 09:00</dateTime>
         <endDateTime>28/04/2018 11:00</endDateTime>
         <location>MPSH</location>
-        <remark></remark>
+        <remark>nil</remark>
         <tagged>CS2101</tagged>
+        <iscompleted>false</iscompleted>
     </events>
     <events>
         <name>InterFacultyGame</name>
         <dateTime>04/01/2018 20:00</dateTime>
         <endDateTime>04/01/2018 22:00</endDateTime>
         <location>MPSH 1</location>
-        <remark></remark>
+        <remark>nil</remark>
+        <iscompleted>false</iscompleted>
     </events>
     <tags>CS2101</tags>
     <tags>CS2102</tags>
-    <tags>MA2108</tags>
-    <tags>CS2010</tags>
+    <tags>Optional</tags>
+    <tags>optional</tags>
     <tags>CIP</tags>
 </deskboard>

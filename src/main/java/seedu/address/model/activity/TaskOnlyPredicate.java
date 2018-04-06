@@ -2,7 +2,7 @@ package seedu.address.model.activity;
 
 import java.util.function.Predicate;
 
-//@@author YuanQQLer
+//@@author YuanQLLer
 /**
  * This class gives a predicate that returns only the tasks in a list.
  */

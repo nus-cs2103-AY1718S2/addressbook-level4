@@ -7,7 +7,7 @@ import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 
-//@@author YuanQQLer
+//@@author YuanQLLer
 /**
  * The API of the Model component.
  */

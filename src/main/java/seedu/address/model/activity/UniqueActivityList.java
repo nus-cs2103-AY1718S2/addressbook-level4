@@ -3,6 +3,7 @@ package seedu.address.model.activity;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
+import seedu.address.model.util.DateTimeComparator;
 
 
 /**
@@ -23,6 +25,9 @@ import seedu.address.model.activity.exceptions.DuplicateActivityException;
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class UniqueActivityList implements Iterable<Activity> {
+
+    //@@author karenfrilya97
+    private static DateTimeComparator dateTimeComparator = new DateTimeComparator();
 
     private final ObservableList<Activity> internalList = FXCollections.observableArrayList();
 
@@ -47,6 +52,8 @@ public class UniqueActivityList implements Iterable<Activity> {
             throw new DuplicateActivityException();
         }
         internalList.add(toAdd);
+        //@@author karenfrilya97
+        Collections.sort(internalList, dateTimeComparator);
     }
 
     /**
@@ -74,10 +81,16 @@ public class UniqueActivityList implements Iterable<Activity> {
 
         internalList.set(index, editedActivity);
 
+        //@@author karenfrilya97
+        Collections.sort(internalList, dateTimeComparator);
+
     }
 
     public void setActivity(UniqueActivityList replacement) {
         this.internalList.setAll(replacement.internalList);
+
+        //@@author karenfrilya97
+        Collections.sort(internalList, dateTimeComparator);
     }
 
     public void setActivity(List<Activity> activities) throws DuplicateActivityException {
@@ -87,6 +100,9 @@ public class UniqueActivityList implements Iterable<Activity> {
             replacement.add(activity);
         }
         setActivity(replacement);
+
+        //@@author karenfrilya97
+        Collections.sort(internalList, dateTimeComparator);
     }
 
     /**

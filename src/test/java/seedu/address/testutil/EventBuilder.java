@@ -11,7 +11,7 @@ import seedu.address.model.activity.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
-//@@author YuanQQLer
+//@@author YuanQLLer
 /**
  * This the class to build event
  */

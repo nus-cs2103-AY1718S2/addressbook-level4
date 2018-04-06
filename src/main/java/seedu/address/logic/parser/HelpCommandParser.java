@@ -8,6 +8,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EventCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RemoveCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.TaskCommand;
@@ -35,6 +36,8 @@ public class HelpCommandParser implements Parser<HelpCommand> {
         availableCommands.add(CompleteCommand.COMMAND_WORD);
         availableCommands.add(HelpCommand.COMMAND_WORD);
         availableCommands.add(HelpCommand.COMMAND_ALIAS);
+        availableCommands.add(ListCommand.COMMAND_WORD);
+        availableCommands.add(ListCommand.COMMAND_ALIAS);
     }
 
     /**

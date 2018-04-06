@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.removeFirstActivity;
+import static seedu.address.logic.commands.CommandTestUtil.removeFirstTask;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ACTIVITY;
@@ -45,11 +45,11 @@ public class RedoCommandTest {
         Model expectedModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
 
         // multiple commands in redoStack
-        removeFirstActivity(expectedModel);
+        removeFirstTask(expectedModel);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // single command in redoStack
-        removeFirstActivity(expectedModel);
+        removeFirstTask(expectedModel);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // no command in redoStack

@@ -8,13 +8,12 @@ import java.util.Set;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
-//@@author YuanQQLer
+//@@author YuanQLLer
 /**
  * Represents a Activity in the desk board.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public abstract class Activity {
-
 
     private final Name name;
     private final DateTime dateTime;
@@ -22,6 +21,7 @@ public abstract class Activity {
 
     private final UniqueTagList tags;
     private final boolean isCompleted;
+
     /**
      * Every field must be present and not null.
      */

@@ -4,7 +4,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.activity.Activity;
 import seedu.address.model.tag.Tag;
 
-//@@author YuanQQLer
+//@@author YuanQLLer
 /**
  * Unmodifiable view of an desk board
  */

@@ -133,6 +133,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
 
+    //@@author jonleeyz-reused
     /**
      * Runs a command that fails, then verifies that <br>
      *      - {@code NewResultAvailableEvent} is posted
@@ -164,6 +165,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertEquals("", commandBoxHandle.getInput());
         assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }
+    //@@author
 
     /**
      * Pushes {@code keycode} and checks that the input in the {@code commandBox} equals to {@code expectedCommand}.

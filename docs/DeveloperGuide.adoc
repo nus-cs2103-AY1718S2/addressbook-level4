@@ -1,4 +1,4 @@
-= LoanSharkTycoon - Developer Guide
+= LoanSharkTycoon v1.4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `CS2103JAN2018-F12-B4`      Since: `Jan 2018`      Licence: `LoansharkTycoon.co`
+By: `Huat Ah Finance Ptd Ltd`      Since: `Jan 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -542,6 +542,7 @@ The rationale for implementing the `locate` command is that there's actual need 
 
 It was important to make sure that the `locate` command would use parameters other than the Index, as relevant information may be more easily to be obtained.
 
+//@@author jonleeyz
 === Tag Colours Enhancement
 
 In the original AddressBook, all tags were of the same colour, irrespective of the `Person` they were tagged to or the content of the tag. Users were able to visually identify the tags a `Person` is associated with by the textual content of each tag. The current implementation enables colours for tags and tags with the same textual content will consistently bear the same colour. This is substantially more useful than the previous application as users are able to visually identify multiple `Person` objects with the same tag with much more ease. Also, users can now more easily compare and contrast the tags that two distinct `Person` objects are associated with.
@@ -648,7 +649,7 @@ This would have posed problems when implementing the keyboard shortcuts that pop
 
 Limitation: when the focus is on the BrowserPanel UI element, the implemented keyboard shortcuts do not work as a user would expect them to.
 This is a limitation of the BrowserPanel UI element.
-
+//@@author
 === BrowserPanel Enhancement
 In the original AddressBook, the BrowserPanel displayed a dummy page when a Person was selected. A more useful implementation shows some more important details of the runner or customer.
 These are important fields for a loanshark manager to get a quick grasp of a customer's details, as well as who the runners are in charge of.

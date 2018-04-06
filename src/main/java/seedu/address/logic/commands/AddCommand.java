@@ -89,6 +89,7 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
                 && toAdd.equals(((AddCommand) other).toAdd));
     }
 
+    //@@author jonleeyz
     @Override
     public String getCommandWord() {
         return COMMAND_WORD;
@@ -110,4 +111,5 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
     public String getUsageMessage() {
         return MESSAGE_USAGE;
     }
+    //@@author
 }

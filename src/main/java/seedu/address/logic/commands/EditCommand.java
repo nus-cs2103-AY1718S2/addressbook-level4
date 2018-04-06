@@ -177,6 +177,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
                 && Objects.equals(personToEdit, e.personToEdit);
     }
 
+    //@@author jonleeyz
     @Override
     public String getCommandWord() {
         return COMMAND_WORD;
@@ -197,7 +198,9 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
     public String getUsageMessage() {
         return MESSAGE_USAGE;
     }
+    //@@author
 
+    //@@author melvintzw-reused
     /**
      * Stores the details to edit the person with. Each non-empty field value will replace the
      * corresponding field value of the person.
@@ -369,4 +372,5 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
             //TODO: add .equals for Runner and Customer
         }
     }
+    //@@author
 }

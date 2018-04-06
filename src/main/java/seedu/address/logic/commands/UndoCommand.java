@@ -35,8 +35,10 @@ public class UndoCommand extends Command implements ImmediatelyExecutableCommand
         this.undoRedoStack = undoRedoStack;
     }
 
+    //@@author jonleeyz
     @Override
     public String getCommandWord() {
         return COMMAND_WORD;
     }
+    //@@author
 }

@@ -47,6 +47,7 @@
             <MenuItem fx:id="editMenuItem" mnemonicParsing="false" onAction="#handleEdit" text="Edit a Person..." />
             <MenuItem fx:id="locateMenuItem" mnemonicParsing="false" onAction="#handleLocate" text="Locate a Person..." />
             <MenuItem fx:id="selectMenuItem" mnemonicParsing="false" onAction="#handleSelect" text="Select a Person..." />
+            <MenuItem fx:id="assignMenuItem" mnemonicParsing="false" onAction="#handleAssign" text="Assign Customers to a Runner..." />
           </Menu>
           <!--@@author -->
           <Menu mnemonicParsing="false" text="Help">

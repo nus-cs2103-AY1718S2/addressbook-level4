@@ -185,13 +185,12 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
 
     @Override
     public String getTemplate() {
-        return COMMAND_WORD + "  " + PREFIX_NAME + "  " + PREFIX_PHONE + "  "
-                + PREFIX_EMAIL + "  " + PREFIX_ADDRESS + "  " + PREFIX_TAG + " ";
+        return COMMAND_WORD + " ";
     }
 
     @Override
     public int getCaretIndex() {
-        return (COMMAND_WORD + " ").length();
+        return getTemplate().length();
     }
 
     @Override

@@ -21,6 +21,7 @@ import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AssignCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -98,6 +99,9 @@ public class MainWindow extends UiPart<Stage> {
     //@@author
 
     @FXML
+    private MenuItem assignMenuItem;
+
+    @FXML
     private MenuItem helpMenuItem;
 
     @FXML
@@ -147,6 +151,7 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerator(editMenuItem, KeyCombination.valueOf("Ctrl + E"));
         setAccelerator(locateMenuItem, KeyCombination.valueOf("Ctrl + L"));
         setAccelerator(selectMenuItem, KeyCombination.valueOf("Ctrl + S"));
+        setAccelerator(assignMenuItem, KeyCombination.valueOf("Ctrl + Shift + A"));
 
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
     }
@@ -328,6 +333,15 @@ public class MainWindow extends UiPart<Stage> {
         raise(new PopulatePrefixesRequestEvent(new SelectCommand()));
     }
     //@@author
+
+    /**
+     * Populates the {@code CommandBox} with the {@code AssignCommand} prefixes.
+     */
+    @FXML
+    private void handleAssign() {
+        raise(new PopulatePrefixesRequestEvent(new AssignCommand()));
+    }
+
 
     void show() {
         primaryStage.show();

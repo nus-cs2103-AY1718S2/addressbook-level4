@@ -303,8 +303,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
 
     @Override
     public String getTemplate() {
-        return COMMAND_WORD + "  " + PREFIX_NAME + "  " + PREFIX_PHONE + "  "
-                + PREFIX_EMAIL + "  " + PREFIX_ADDRESS + "  " + PREFIX_TAG + " ";
+        return COMMAND_WORD + "  " + PREFIX_CUSTOMERS + " ";
     }
 
     @Override

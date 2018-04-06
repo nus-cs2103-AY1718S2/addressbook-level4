@@ -18,3 +18,107 @@
 .tooltip-text {
     -fx-text-fill: white;
 }
+
+.tab-pane {
+    -fx-tab-min-height: 3em; /* 36 */
+    -fx-tab-max-height: 3em; /* 36 */
+    -fx-tab-min-width: 12em;
+    -fx-tab-max-width: 12em;
+}
+
+.tab-pane:right {
+    -fx-tab-min-height: 3em; /* 36 */
+    -fx-tab-max-height: 3em; /* 36 */
+    -fx-tab-min-width: 3em;
+    -fx-tab-max-width: 3em;
+ }
+
+.tab-pane .tab-header-area {
+    -fx-padding: 0 0 0 0%;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: white;
+    -fx-font-size: 1.16666667em;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab {
+    -fx-background-radius: 0 0 0 0, 0 0 0 0, 0 0 0 0;
+    -fx-background-color: #515658;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected {
+    -fx-background-color: #424d5f;
+    -fx-border-width: 1;
+    -fx-border-color: #3e7b91;
+}
+
+.tab-pane > .tab-header-area > .tab-header-background {
+    -fx-background-color: transparent;
+}
+
+#invalidAddressOverlay {
+    -fx-background-color: #515658;
+    -fx-border-color: derive(#1d1d1d, 30%);
+    -fx-border-width: 1px;
+}
+
+#invalidAddresseeName {
+    -fx-text-fill: white;
+}
+
+#invalidAddressMsg {
+    -fx-text-fill: white;
+}
+
+.list-view {
+    -fx-padding: 0;
+    -fx-background-color: #515658;
+}
+
+.v-box .grid-pane {
+    -fx-background-insets: 2 2 2 2;
+    -fx-background-color: none;
+    -fx-border-color: none;
+}
+
+.grid-pane > .label {
+    -fx-text-fill: white;
+}
+
+.grid-pane > .pane-even {
+    -fx-background-color: #515658;
+    -fx-border-color: #949494;
+    -fx-border-width: 1;
+}
+
+.grid-pane > .pane-odd {
+    -fx-background-color: #424d5f;
+    -fx-border-color: #949494;
+    -fx-border-width: 1;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 35;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-border-color:
+            transparent
+            transparent
+            derive(-fx-base, 80%)
+            transparent;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 20pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}

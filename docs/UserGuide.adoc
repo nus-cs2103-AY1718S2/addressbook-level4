@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= SLAP for Social Workers - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -13,11 +13,14 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103-T15-B3`      Since: `FEB 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Session Logger and Planner (SLAP) for Social Workers is for those who *prefer to use a desktop app for managing their schedule and
+contacts*. More importantly, SLAP is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having
+the benefits of a Graphical User Interface (GUI). If you can type fast, SLAP can get your daily scheduling and
+contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -29,7 +32,11 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The application main window should appear in a few seconds.
+.  You firstly need to create a user account with a unique username and password. (See `create-user` command in <<Features>>)
+.  If you do not wish to create a new user, there is a default user account available. The username is "user" and the password is "pass".
+.  Login into your account using the `login` command (See <<Features>>) and using your username and password.
+.  If login is successful, the GUI below should appear.
 +
 image::Ui.png[width="790"]
 +
@@ -59,6 +66,52 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 === Viewing help : `help`
 
 Format: `help`
+
+=== Create new user : `create-user`
+
+Creates a new user account in the application.
+Format: `create-user u/USERNAME p/PASSWORD`
+
+****
+* You will need to enter a unique username to successfully create an new user.
+* Multiple entries of username and password can be included, however only the last entry will be considered.
+****
+
+=== Delete existing user : `delete-user`
+
+Deletes an existing user account in the application.
+Format: `delete-user u/USERNAME p/PASSWORD`
+
+****
+* You will need to enter both the correct username and password for the target user account that you wish to delete.
+* You will also need to be logged out to use this Command.
+* Multiple entries of username and password can be included, however only the last entry will be considered.
+****
+
+=== Login : `login`
+
+Logs the user into the application.
+Format: `login u/USERNAME p/PASSWORD`
+
+****
+* Multiple entries of username and password can be included, however only the last entry will be considered.
+****
+
+=== Logout: `logout`
+
+Logs the user out of the application.
+Format: `logout`
+
+=== Change user password: `change-user-password`
+
+Change the password of an existing user in the application.
+Format: `change-user-password u/USERNAME p/PASSWORD newp/NEWPASSWORD`
+
+****
+* You will need to enter both the correct username and password for the target user account that you wish to change password for.
+* You will also need to be logged out to use this Command.
+* Multiple entries of username and password can be included, however only the last entry will be considered.
+****
 
 === Adding a person: `add`
 
@@ -118,6 +171,20 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Filtering contacts by tag: `filter`
+
+Filters persons whose contact contains the given tag. +
+Format: `filter TAG`
+
+****
+* The search is case insensitive. e.g `Friends` will match `friends`
+****
+
+Examples:
+
+* `filter friends` +
+Returns any person that has the tag `friends`
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -166,6 +233,112 @@ Format: `history`
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
+
+=== Switching between feature interfaces : `switch`
+
+Switches to the user interface feature identified by the user. +
+Format: `switch FEATURE`
+
+****
+* Switches to the specified `FEATURE`
+* `FEATURE` must be either "details", "calendar" or "scheduler".
+****
+
+Examples:
+
+* `switch calendar` +
+Switches to `calendar` tab and displays contents
+* `switch details` +
+Switches to `details` tab and displays contents
+
+=== Navigate between scheduled events : `navigate`
+
+Displays the directions between planned locations on the daily scheduler map. +
+Format: `navigate INDEX`
+
+[NOTE]
+====
+Must be on `scheduler` view first for command to work, else nothing happens.
+`show-schedule` has to be called BEFORE `navigate` can work properly.
+====
+
+****
+* Displays direction between two different but adjacent events by specifying `INDEX`
+* `INDEX` must be more then `1`, but less than total events for the day minus ONE or `NUM_OF_EVENTS - 1`.
+****
+
+Examples:
+
+* `switch scheduler` +
+Switches to `calendar` tab and displays contents
+* `show-schedule` +
+Retrieves events for specified day
+* `navigate 1` +
+Displays directions between the first and the second event of the day.
+
+=== Opening a calendar : `calendar-launch`
+
+Opens a calendar in a webview.
+Format: `calendar-launch`
+
+[NOTE]
+====
+The user can also open the calendar by pressing the `F8` function key, or by pressing `View > Open Calendar`.
+
+The previous `calendar` command has been depricated since v1.4 in favour of the `switch calendar` command that properly opens
+the calendar in the build-in scene switcher.
+====
+
+=== Adding and event to the calendar : `calendar-add`
+
+Allows a user to add an event directly to their calendar.
+
+Format: `calendar-add title/<eventname> start/<startdatetime> end/<enddatetime> loc/<location> lp/<linkedperson>(optional)`
+
+Note: Dates can be written in natural language (e.g. Today, This Friday, May 4, etc.)
+
+=== List upcoming events in the command line: `calendar-list`
+
+Allows a user to view their upcoming calendar events.
+
+Format: `calendar-list`
+
+=== Deleting an event from the calendar : `calendar-delete`
+
+Allows the user to delete an event based on the index listed from the `calendar-list` command.
+
+Format: `calendar-delete INDEX`
+
+=== Editing an event in the calendar : `calendar-edit`
+
+Displays a list of upcoming events to the user and lets them select one to edit.
+
+Format: `calendar-edit`
+
+=== Reauthenticate Google Oauth : `reauthenticate`
+
+Allows a user to manually reauthenticate their Google Oauth credentials/permissions for SLAP.
+
+Format: `reauthenticate`
+
+=== List upcoming events in the command line: `show-schedule`
+
+Allows a user to view their calendar events for the current day.
+
+Format: `show-schdeule d/<date>`
+
+Note: Date can be written in natural language (e.g. Today, This Friday, May 4, etc.)
+
+=== Opening the Error Log : `errorlog`
+
+Opens the error log in a new window.
+
+Format: `errorlog`
+
+[NOTE]
+====
+The user can also open the error log by pressing `View > Show Error Log`
 ====
 
 // tag::undoredo[]
@@ -230,14 +403,19 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+SLAP data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
+
+
 === Encrypting data files `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+Encryption is done automatically when SLAP is logged out or is exited.
+
+=== Export SLAP `[coming in v2.0]`
+
+Exports your SLAP into a file so that it can be transported across systems.
 
 == FAQ
 
@@ -257,8 +435,23 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `find James Jake`
 * *List* : `list`
 * *Help* : `help`
+* *Calendar Launch* : `calendar-launch` `[Since v1.1] [Updated v1.4]`
+* *Calendar List* : `calendar-list` `[Since v1.2]`
+* *Calendar Add* : `calendar-add title/<eventname> start/<startdatetime> end/<enddatetime> loc/<location> lp/<linkedperson>(optional)` `[Since v1.3] [Updated v1.4]`
+* *Calendar Delete* : `calendar-delete INDEX` `[Since v1.4]`
+* *Show Schedule* : `show-schedule d/<date>` `[Since v1.4]`
+* *Error* : `errorlog` `[Since v1.2]`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
+* *Switch* : `switch FEATURE` +
+e.g.`switch scheduler`
+* *Navigate* : `navigate INDEX` +
+e.g.`navigate 2`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Create New User* : `create-user u/USERNAME p/PASSWORD`
+* *Delete Existing User* : `delete-user u/USERNAME p/PASSWORD`
+* *Change Password of Existing User* : `change-user-password u/USERNAME p/PASSWORD newp/NEWPASSWORD`
+* *Login* : `login u/USERNAME p/PASSWORD`
+* *Logout* : `logout`

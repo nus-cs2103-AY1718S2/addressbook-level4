@@ -15,6 +15,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.account.Account;
 import seedu.address.testutil.AccountBuilder;
 
+//@@author shadow2496
 public class LoginCommandTest {
 
     @Rule

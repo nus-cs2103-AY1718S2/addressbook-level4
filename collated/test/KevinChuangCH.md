@@ -1,23 +1,106 @@
-package systemtests;
+# KevinChuangCH
+###### \java\seedu\address\logic\commands\FindWithTagCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) for {@code FindWithTagCommand}.
+ */
+public class FindWithTagCommandTest {
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-import static org.junit.Assert.assertFalse;
-import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalPersons.CARL;
-import static seedu.address.testutil.TypicalPersons.DANIEL;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_ARMYBUDDY;
+    @Test
+    public void equals() {
+        TagContainsKeywordsPredicate firstPredicate =
+                new TagContainsKeywordsPredicate(Collections.singletonList("first"));
+        TagContainsKeywordsPredicate secondPredicate =
+                new TagContainsKeywordsPredicate(Collections.singletonList("second"));
 
-import org.junit.Test;
+        FindWithTagCommand findFirstCommand = new FindWithTagCommand(firstPredicate);
+        FindWithTagCommand findSecondCommand = new FindWithTagCommand(secondPredicate);
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.FindWithTagCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.model.Model;
+        // same object -> returns true
+        assertTrue(findFirstCommand.equals(findFirstCommand));
 
-//@@author KevinChuangCH
+        // same values -> returns true
+        FindWithTagCommand findFirstCommandCopy = new FindWithTagCommand(firstPredicate);
+        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(findFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(findFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(findFirstCommand.equals(findSecondCommand));
+    }
+
+    @Test
+    public void execute_zeroKeywords_noPersonFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        FindWithTagCommand command = prepareCommand(" ");
+        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+    }
+
+    @Test
+    public void execute_multipleKeywords_multiplePersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindWithTagCommand command = prepareCommand("classmate PC3196 labPartner");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code FindWithTagCommand}.
+     */
+    private FindWithTagCommand prepareCommand(String userInput) {
+        FindWithTagCommand command =
+                new FindWithTagCommand(new TagContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    /**
+     * Asserts that {@code command} is successfully executed, and<br>
+     *     - the command feedback is equal to {@code expectedMessage}<br>
+     *     - the {@code FilteredList<Person>} is equal to {@code expectedList}<br>
+     *     - the {@code AddressBook} in model remains the same after executing the {@code command}
+     */
+    private void assertCommandSuccess(FindWithTagCommand command, String expectedMessage, List<Person> expectedList) {
+        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
+        CommandResult commandResult = command.execute();
+
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+        assertEquals(expectedList, model.getFilteredPersonList());
+        assertEquals(expectedAddressBook, model.getAddressBook());
+    }
+}
+```
+###### \java\seedu\address\logic\parser\FindWithTagCommandParserTest.java
+``` java
+public class FindWithTagCommandParserTest {
+
+    private FindWithTagCommandParser parser = new FindWithTagCommandParser();
+
+    @Test
+    public void parse_emptyArg_throwsParseException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                FindWithTagCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validArgs_returnsFindWithTagCommand() {
+        // no leading and trailing whitespaces
+        FindWithTagCommand expectedFindWithTagCommand =
+                new FindWithTagCommand(new TagContainsKeywordsPredicate(Arrays.asList("neighbour", "owesMoney")));
+        assertParseSuccess(parser, "neighbour owesMoney", expectedFindWithTagCommand);
+
+        // multiple whitespaces between keywords
+        assertParseSuccess(parser, " \n neighbour \n \t owesMoney  \t", expectedFindWithTagCommand);
+    }
+
+}
+```
+###### \java\systemtests\FindWithTagCommandSystemTest.java
+``` java
 public class FindWithTagCommandSystemTest extends AddressBookSystemTest {
 
     @Test
@@ -191,3 +274,4 @@ public class FindWithTagCommandSystemTest extends AddressBookSystemTest {
         assertStatusBarUnchanged();
     }
 }
+```

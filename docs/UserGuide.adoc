@@ -118,7 +118,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Locating persons by tag: `findtag` `[Coming in v2.0]`
+=== Locating persons by tag: `findtag` `[Since v1.2]`
 
 Finds persons whose tags contain any of the given keywords. +
 Format: `findtag KEYWORD [MORE_KEYWORDS]`
@@ -172,6 +172,29 @@ Format: `addplatform INDEX [l/LINK]...`
 * You can remove all the person's social media platforms by typing `l/` without specifying any links after it.
 ****
 
+[NOTE]
+========================================================================
+[halign="left",valign="top",options="header"]
+|=======================================================================
+|Valid Facebook Link Forms |Valid Twitter Link Forms
+a|
+* `\https://www.facebook.com/<profile username>`
+* `\https://facebook.com/<profile username>`
+* `\http://www.facebook.com/<profile username>`
+* `\http://facebook.com/<profile username>`
+* `www.facebook.com/<profile username>`
+* `facebook.com/<profile username>`
+* `facebook.com/profile.php?id=<user profile id>`
+a|
+* `\https://www.twitter.com/<username handle>`
+* `\https://twitter.com/<username handle>`
+* `\http://www.twitter.com/<username handle>`
+* `\http://twitter.com/<username handle>`
+* `www.twitter.com/<username handle>`
+* `twitter.com/<username handle>`
+|=======================================================================
+========================================================================
+
 Examples:
 
 * `addplatform 1 l/www.facebook.com/johndoe` +
@@ -179,6 +202,26 @@ Adds the Facebook platform with the link `www.facebook.com/johndoe` to the 1st p
 * `addplatform 2 l/` +
 Clears all existing social media platforms of the 2nd person.
 // end::addplatform[]
+
+// tag::removeplatform[]
+=== Removing stored platforms of a person : `removeplatform` `[Since v1.4]`
+
+Removes the specified social media platforms of the stated person. +
+Format: `removeplatform INDEX [smp/PLATFORM]...`
+
+****
+* Removes the social media platforms by editing the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* You can remove all the social media platforms of a person by not specifying any platform fields.
+* Unrecognised platforms will be ignored during execution.
+****
+
+Examples:
+
+* `removeplatform 1` +
+Removes all social media platforms tied to the 1st person.
+* `removeplatform 2 smp/twitter` +
+Removes the Twitter platform from the 2nd person.
+// end::removeplatform[]
 
 // tag::sort[]
 === Sorting all persons : `sort` `[Since v1.2]`
@@ -225,7 +268,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `sort` and `clear`).
+Undoable commands: those commands that modify the address book's content (`addplatform`, `removeplatform`, `add`, `delete`, `edit`, `sort` and `clear`).
 ====
 
 Examples:
@@ -334,10 +377,10 @@ Examples:
 
 * `post facebook/Sample post.`
 
-=== Search for profile : `search` `[Coming in v2.0]`
+=== Search for profile : `searchall` `[Coming in v2.0]`
 
 Search for the specified profiles on all social media platform linkable with the application. +
-Format: `search KEYWORD`
+Format: `searchall KEYWORD`
 
 ****
 * The KEYWORD can either be the user name or email.
@@ -369,11 +412,6 @@ Search with keyword "John" on facebook and display the search result in the brow
 Logout from all the social media platform that the user has logged in. +
 Format: `logoutall`
 
-=== Remove link to stored platform : `removeplatform` `[Coming in v2.0]`
-
-Remove a link to profile of specified social media platform of a specified person. +
-Format: `removeplatform INDEX SOCIALMEDIA`
-
 ****
 * After this command, when the person is selected, the tab for the removed platform will not be shown.
 * If the platform specified was not stored in the first place, the application prompt the user.
@@ -402,11 +440,17 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Find with Tag* : `findtag KEYWORD [MORE_KEYWORDS]` +
+e.g. `findtag friends neighbour`
 * *List* : `list`
 * *Sort* : `sort`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Add Platform* : `addplatform INDEX [l/LINK]...` +
+e.g. `addplatform 1 l/www.facebook.com/james.ho`
+* *Remove Platform* : `removeplatform INDEX [smp/PLATFORM]...` +
+e.g. `removeplatform 1 smp/facebook`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

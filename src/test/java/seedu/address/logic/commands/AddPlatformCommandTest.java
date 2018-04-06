@@ -48,7 +48,7 @@ public class AddPlatformCommandTest {
     public void execute_invalidPlatformLink_failure() {
         String invalidLink = "www.google.com";
         Map<String, SocialMediaPlatform> smpMap = new HashMap<>();
-        smpMap.put("facebook", new Facebook(new Link(invalidLink)));
+        smpMap.put(Link.FACEBOOK_LINK_TYPE, new Facebook(new Link(invalidLink)));
 
         AddPlatformCommand addPlatformCommand = prepareCommand(INDEX_THIRD_PERSON, smpMap);
 

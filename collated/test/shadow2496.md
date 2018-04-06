@@ -1,28 +1,55 @@
-package seedu.address.logic.parser;
+# shadow2496
+###### \java\seedu\address\logic\commands\LoginCommandTest.java
+``` java
+public class LoginCommandTest {
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_PASSWORD_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_USERNAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.PASSWORD_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PASSWORD_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
-import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
-import static seedu.address.logic.commands.CommandTestUtil.USERNAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.USERNAME_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PASSWORD_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_USERNAME_BOB;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
-import org.junit.Test;
+    @Test
+    public void execute_throwsCommandException() throws Exception {
+        Account validAccount = new AccountBuilder().build();
+        LoginCommand command = new LoginCommand(validAccount);
 
-import seedu.address.logic.commands.LoginCommand;
-import seedu.address.model.account.Account;
-import seedu.address.model.account.Password;
-import seedu.address.model.account.Username;
-import seedu.address.testutil.AccountBuilder;
+        thrown.expect(CommandException.class);
+        thrown.expectMessage("Test");
 
-//@@author shadow2496
+        command.execute();
+    }
+
+    @Test
+    public void equals() {
+        Account account = new AccountBuilder().withUsername(VALID_USERNAME_AMY)
+                .withPassword(VALID_PASSWORD_AMY).build();
+        Account accountWithDiffUsername = new AccountBuilder().withUsername(VALID_USERNAME_BOB)
+                .withPassword(VALID_PASSWORD_AMY).build();
+        Account accountWithDiffPassword = new AccountBuilder().withUsername(VALID_USERNAME_AMY)
+                .withPassword(VALID_PASSWORD_BOB).build();
+        LoginCommand standardCommand = new LoginCommand(account);
+
+        // same object -> returns true
+        assertTrue(standardCommand.equals(standardCommand));
+
+        // same values -> returns true
+        LoginCommand commandWithSameValues = new LoginCommand(account);
+        assertTrue(standardCommand.equals(commandWithSameValues));
+
+        // different types -> returns false
+        assertFalse(standardCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(standardCommand.equals(null));
+
+        // different values -> returns false
+        LoginCommand commandWithDiffUsername = new LoginCommand(accountWithDiffUsername);
+        LoginCommand commandWithDiffPassword = new LoginCommand(accountWithDiffPassword);
+        assertFalse(standardCommand.equals(commandWithDiffUsername));
+        assertFalse(standardCommand.equals(commandWithDiffPassword));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\LoginCommandParserTest.java
+``` java
 public class LoginCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =
@@ -80,3 +107,4 @@ public class LoginCommandParserTest {
                 MESSAGE_INVALID_FORMAT);
     }
 }
+```

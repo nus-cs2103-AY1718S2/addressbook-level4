@@ -97,6 +97,20 @@ public class ParserUtil {
     }
 
     /**
+     * Checks for the validation of {@code inputName} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified name is invalid (not following the name regex).
+     */
+    public static String parseSearchName(String inputName) throws IllegalValueException {
+        requireNonNull(inputName);
+        String trimmedInputName = inputName.trim();
+        if (!Name.isValidName(trimmedInputName)) {
+            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+        }
+        return trimmedInputName;
+    }
+
+    /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
      *

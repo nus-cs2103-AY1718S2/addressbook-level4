@@ -139,10 +139,11 @@ Format: `findTag KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `Friends` will match `friends`
-* The order of the keywords does not matter. e.g. ` friends owesMoney` will match `owesMoney friends`
+* The order of the keywords does not matter. e.g. ` friends owesMoney` will match `owesMoney` and `friends`
 * Only the tag is searched.
 * Only full words will be matched e.g. `friend` will not match `friends`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends owesMoney` will return `friends rich`, `owesMoney poor`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends owesMoney` will return a
+student with tags `friends` and `rich`, as well as a student with tags `owesMoney` and `poor`
 ****
 
 Examples:
@@ -350,11 +351,11 @@ Selects the 1st student in the results of the `find` command.
 
 === Viewing your schedule : `schedule`
 
-Shows your weekly schedule as a list of lessons. +
+Shows your weekly schedule as a list of lessons. Displays lessons in chronological order. +
 Format: `schedule`
 
 [NOTE]
-Currently displayed in the terminal. UI will be added in coming weeks.
+Currently displayed in the CommandResult Dialogue box. UI will be added in coming weeks.
 
 === Adding a lesson to your schedule: `addLesson`
 
@@ -364,20 +365,21 @@ Format: `addLesson INDEX [d/DAY] [st/START_TIME] [et/END_TIME]`
 ****
 * Adds a lesson for the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, ...
 * The day for the input is the abbreviated first three letters (non-case sensitive) of the name of day, i.e. `mon` for Monday, `fri` for Friday.
-* The time input must be in the format `HH:MM`, seperated by a colon '`:`'
+* The time input must be in the format `HH:MM`, seperated by a colon `:`
 * The time input must be a valid 24-hour time within the range of `00:00` to `23:59`
-* Input lesson cannot clash with existing lessons already in the schedule.
+* Input lesson cannot clash with existing lessons already in the `Schedule`
+* Lessons will be added in chronological order to your `Schedule`
 ****
 
 Examples:
 
-* `list`
-* `addLesson 1 d/mon st/10:00 et/10:30` +
+* `list` +
+`addLesson 1 d/mon st/10:00 et/10:30` +
 Adds a lesson for the 1st student of the `list` command. Lesson will be held on the day of `mon` and starting time will be `10:00` and ending time will be `10:30`.
 
 
-* `find Betsy`
-* `addLesson 1 d/tue st/12:00 et/13:30` +
+* `find Betsy` +
+`addLesson 1 d/tue st/12:00 et/13:30` +
 Adds a lesson for the 1st student of the `find Betsy` command. Lesson will be held on the day of `tue` and starting time will be `12:00` and ending time will be `13:30`.
 
 === Deleting a lesson in your schedule: `deleteLesson`
@@ -393,8 +395,8 @@ Format: `deleteLesson INDEX`
 
 Examples:
 
-* `schedule`
-* `deleteLesson 2` +
+* `schedule` +
+`deleteLesson 2` +
 Deletes the 2nd lesson listing in the schedule
 
 === Full information page for each student : `moreInfo`
@@ -431,8 +433,8 @@ Image files must exist and have extensions either of `.jpg` or `.png`.
 Examples:
 
 * `list` +
-* `editPicture i/1 pa/C:/Users/User/Desktop/test.jpg
-Changes the profil photo of the 1st student in the current listing to the image found at the specific file path.
+* `editPicture i/1 pa/C:/Users/User/Desktop/test.jpg` +
+Changes the profile photo of the 1st student in the current listing to the image found at the specific file path.
 
 === Listing entered commands : `history`
 
@@ -574,3 +576,26 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Show Dashboard*: `showDB INDEX` +
+e.g. `showDB 3`
+* *Add Milestone* : `addMS i/STUDENT_INDEX d/DUE_DATE o/DESCRIPTION` +
+e.g. `addMS i/1 d/23/11/2018 23:59 o/Arrays`
+* *Delete Milestone* : `deleteMS i/STUDENT_INDEX m/MILESTONE_INDEX` +
+e.g. `deleteMS i/1 m/2`
+* *Add Task* : `addTask i/STUDENT_INDEX m/MILESTONE_INDEX n/NAME o/DESCRIPTION` +
+e.g. `addTask i/1 m/2 n/Learn arrays syntax o/Refer to textbook`
+* *Mark Task as completed* : `checkTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX` +
+e.g. `checkTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX`
+* *View your Schedule* : `schedule`
+* *Add a Lesson* : `addLesson INDEX [d/DAY] [st/START_TIME] [et/END_TIME]` +
+e.g. `addLesson 1 d/mon st/10:00 et/10:30`
+* *Delete a Lesson* : `deleteLesson INDEX` +
+e.g. `deleteLesson 2`
+* *Login to your Google Account* : `login`
+* *Logout of your Google Account* : `logout`
+* *Synchronize data with Google Account* : `sync`
+* *Full information page* : `moreInfo INDEX`
+* *Edit the profile picture* : `editPicture i/STUDENT_INDEX pa/FILE_PATH_OF_PICTURE` +
+e.g. `editPicture i/1 pa/C:/Users/User/Desktop/test.jpg`
+
+

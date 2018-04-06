@@ -193,5 +193,15 @@ public class CardTag {
         return Objects.equals(otherCardTag.cardMap, cardMap)
                 && Objects.equals(otherCardTag.tagMap, tagMap);
     }
+
+    /**
+     * returns whether a tag has any cards associated to it.
+     * @param tag
+     * @return
+     */
+    public boolean hasCards(Tag tag) {
+        String tagId = tag.getId().toString();
+        return tagMap.containsKey(tagId);
+    }
 }
 //@@author

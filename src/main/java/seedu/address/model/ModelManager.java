@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -177,10 +178,23 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deleteCard(Card card) throws CardNotFoundException {
         CardTag cardTag = this.getAddressBook().getCardTag();
         List<Tag> tags = cardTag.getTags(card, this.getAddressBook().getTagList());
-        for (Tag tag : tags) {
+
+        // We need to clone tags because removing tags while iterating over it results in strange behaviour.
+        List<Tag> tempTags = new ArrayList<>();
+        for (Tag tag: tags) {
+            tempTags.add(tag);
+        }
+
+        int size = tempTags.size();
+        for (Tag tag : tempTags) {
             try {
                 cardTag.removeEdge(card, tag);
+                if (!cardTag.hasCards(tag)) {
+                    addressBook.removeTag(tag);
+                }
             } catch (EdgeNotFoundException e) {
+                throw new IllegalStateException("Not possible to reach here.");
+            } catch (TagNotFoundException e) {
                 throw new IllegalStateException("Not possible to reach here.");
             }
         }

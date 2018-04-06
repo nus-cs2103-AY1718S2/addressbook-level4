@@ -3,6 +3,9 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -16,6 +19,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -27,6 +31,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Task> filteredTasks;
+    private final ArrayList<String> filteredDeleteItems;
+    private final ObservableList<Task>[][] calendarTaskLists;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -40,6 +46,8 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredTasks = new FilteredList<>(this.addressBook.getTaskList());
+        filteredDeleteItems = new ArrayList<>(this.addressBook.getItemList());
+        calendarTaskLists = this.addressBook.getCalendarList();
     }
 
     public ModelManager() {
@@ -78,7 +86,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author Wu Di
     @Override
-<<<<<<< HEAD
     public void deleteTask(Task target) throws TaskNotFoundException {
         addressBook.removeTask(target);
         indicateAddressBookChanged();
@@ -86,11 +93,21 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author
     @Override
-=======
->>>>>>> fcc9ca17c2c8c77b827c5874d6beb415b936f8ca
     public synchronized void addTask(Task task) {
         addressBook.addTask(task);
         updateFilteredTaskList(PREDICATE_SHOW_ALL_CURRENT_TASKS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addDeleteItem(String filepath) {
+        addressBook.addDeleteItem(filepath);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void clearDeleteItems() {
+        addressBook.clearItems();
         indicateAddressBookChanged();
     }
 
@@ -105,7 +122,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author Wu Di
     @Override
-<<<<<<< HEAD
     public void updateTask(Task target, Task editedTask)
             throws TaskNotFoundException {
         requireAllNonNull(target, editedTask);
@@ -116,10 +132,13 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author
     @Override
-=======
->>>>>>> fcc9ca17c2c8c77b827c5874d6beb415b936f8ca
     public void sortPersons() {
         addressBook.sortList();
+    }
+
+    @Override
+    public ObservableList<Task>[][] getCalendarTaskLists() {
+        return calendarTaskLists;
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -156,6 +175,10 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks.setPredicate(predicate);
     }
 
+    //=========== Item List Accessors ======================================================================
+    public List<String> getItemList() {
+        return Collections.unmodifiableList(filteredDeleteItems);
+    }
 
     @Override
     public boolean equals(Object obj) {

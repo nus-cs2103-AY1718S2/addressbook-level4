@@ -75,7 +75,7 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 * For **Class count to use import with '\*'** and **Names count to use static import with '*'**: Set to *999* to prevent IntelliJ from contracting the import statements.
 * For *Import Layout*: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
-IntelliJ should look like the figure below after step 3.
+IntelliJ should look like Figure 1 below after step 3.
 
 .Code Style Imports
 image::CodeStyleImports.png[width="400"]
@@ -100,7 +100,7 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+When you are ready to start coding:
 
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
@@ -163,12 +163,12 @@ The sections below give more details of each component.
 === Main component
 <<Design-Main,*`Main`*>> has only one class called link:{repoURL}/src/main/java/seedu/recipe/MainApp.java[`MainApp`].
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
+* At app launch: Initializes all the components in the correct sequence, and connects them up with each other.
 * At shut down: Shuts down the components and invokes cleanup method where necessary.
 
 [[Design-Commons]]
 === Commons component
-<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level:
 
 * `_EventsCenter_` : Written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library] and used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
 * `_LogsCenter_` : Used by many classes to write log messages to the App's log file.
@@ -178,7 +178,7 @@ The sections below give more details of each component.
 
 *API*: link:{repoURL}/src/main/java/seedu/recipe/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `_MainWindow_` that is made up of smaller parts, for example, `_CommandBox_`, `_ResultDisplay_`, `_RecipeListPanel_`, `_StatusBarFooter_`, `_BrowserPanel_`, etc. All these, including the `_MainWindow_`, inherit from the abstract `_UiPart_` class. (See <<fig-UiClassDiagram>>)
+The UI consists of a `_MainWindow_` that is made up of smaller parts, for example, `_CommandBox_`, `_ResultDisplay_`, `_RecipeListPanel_`, `_StatusBarFooter_`, `_BrowserPanel_`, etc. All these, including the `_MainWindow_`, inherit from the abstract `_UiPart_` class (See <<fig-UiClassDiagram>>).
 
 [[fig-UiClassDiagram]]
 .Structure of the UI Component
@@ -187,7 +187,7 @@ image::UiClassDiagram.png[width="800"]
 
 The <<Design-Ui,*`UI`*>> component uses JavaFX UI framework. The layout of these UI parts is defined in matching *.fxml* files that are in the *src/main/resources/view* folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/recipe/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[MainWindow.fxml].
 
-The <<Design-Ui,*`UI`*>> component,
+The <<Design-Ui,*`UI`*>> component:
 
 * Executes user commands using the <<Design-Logic,*`Logic`*>> component.
 * Binds itself to some data in the <<Design-Model,*`Model`*>> so that the UI can auto-update when data in the <<Design-Model,*`Model`*>> change.
@@ -198,14 +198,14 @@ The <<Design-Ui,*`UI`*>> component,
 
 *API*: link:{repoURL}/src/main/java/seedu/recipe/logic/Logic.java[`Logic.java`]
 
-<<Design-Logic,*`Logic`*>> contains all commands and this is how <<Design-Logic,*`Logic`*>> reacts when the user submit a command:
+<<Design-Logic,*`Logic`*>> contains all commands and this is how <<Design-Logic,*`Logic`*>> reacts when the user submits a command:
 
 .  <<Design-Logic,*`Logic`*>> uses the `_RecipeBookParser_` class to parse the user command.
 .  This results in a `_Command_` object which is executed by the `_LogicManager_`.
 .  The command execution can affect the <<Design-Model,*`Model`*>> (e.g. adding a recipe) and/or raise events.
 .  The result of the command execution is encapsulated as a `_CommandResult_` object which is passed back to the <<Design-Ui,*`UI`*>>.
 
-Refer to diagram below <<fig-LogicClassDiagram>>.
+For an overview of the structure of the <<Design-Logic,*`Logic`*>> component, refer to the diagram below <<fig-LogicClassDiagram>>.
 
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
@@ -275,7 +275,7 @@ Formerly, users need to type all application keywords and their inputs to the co
 
 Currently, a class called `_SuggestionsPopUp_`, which inherits from `_ContextMenu_`, is created to handle all operations relating to auto-completion. The operations include displaying a pop-up menu consisting of suggestions for user’s input, automatically completing input field when a word is chosen and hiding the pop-up menu.
 
-Key combination kbd:[Shift]+kbd:[Space] is used to show suggestion pop-up. For other keys and key combinations, the pop-up is hidden. The code to handle these key and key combination actions is shown as below:
+Key combination kbd:[Shift]+kbd:[Space] is used to show suggestion pop-up. For other keys and key combinations, the pop-up is hidden. The code to handle these key and key combination actions is shown below:
 
 [source,java]
 ----
@@ -289,7 +289,7 @@ private void handleKeyPress(KeyEvent keyEvent) {
 }
 ----
 
-To display suggestions, first, a suggestion list is built, then position of pop-up menu is calculated for display.
+To display suggestions, first, a suggestion list is built, then the position of the pop-up menu is calculated for display.
 
 Suggestion list is built with a given list as a dictionary and last word in user input as a word that needs to be looked up. All words in the dictionary that take given word as prefix are valid suggestions and added to the list. However, since `_CommandBox_` is limited, only a small number of words are added to the pop-up menu. The code for compiling suggestion list is given below:
 
@@ -312,7 +312,7 @@ To calculate position to display pop-up menu, height and width of input text (in
 
 Then, the suggestion list can be shown in main window.
 
-To hide suggestion list, a method called `hide()` is implemented as below:
+To hide the suggestion list, a method called `hide()` is implemented as below:
 
 [source,java]
 ----
@@ -341,7 +341,7 @@ item.setOnAction(event -> commandBox.replaceText(textInputProcessor.replaceLastW
 ** Cons: Dependent on `_TextArea_` in `_CommandBox_` class.
 * **Alternative 2:** `_JPopupMenu_`
 ** Pros: NA.
-** Cons: Need additional works to make `_JPopupMenu_` compatible with `_TextArea_`.
+** Cons: Need additional work to make `_JPopupMenu_` compatible with `_TextArea_`.
 
 ===== Aspect: Abstraction of `_SuggestionsPopUp_`.
 
@@ -355,7 +355,7 @@ item.setOnAction(event -> commandBox.replaceText(textInputProcessor.replaceLastW
 ===== Aspect: Abstraction of `_TextInputProcessorUtil_`.
 
 * **Alternative 1 (current choice):** A separate class `_TextInputProcessorUtil_`.
-** Pros: Common functions can be easily used by other classes if needed.
+** Pros: Common functions easily used by other classes if needed.
 ** Cons: NA.
 * **Alternative 2:** An inner class of `_SuggestionsPopUp_` class.
 ** Pros: Convenient to use inside the containing class.
@@ -366,14 +366,14 @@ item.setOnAction(event -> commandBox.replaceText(textInputProcessor.replaceLastW
 // tag::change-theme[]
 ==== Current implementation
 
-The command is implemented in `_ChangeThemeCommand_`. When user submits the command to the *`UI`* component, it passes on the command to the *`Logic`* component, which posts a `_ChangeThemeRequestEvent_` to the `_EventsCenter_`. Refer to <<fig-ChangeThemeSD>>.
+The command is implemented in `_ChangeThemeCommand_`. When user submits the command to the *`UI`* component, it passes on the command to the *`Logic`* component, which posts a `_ChangeThemeRequestEvent_` to the `_EventsCenter_` (refer to <<fig-ChangeThemeSD>>).
 
 [[fig-ChangeThemeSD]]
 .Component interactions for *`theme`* command (part 1)
 image::SDforChangeTheme.png[width="800"]
 {nbsp} +
 
-The event is then propagated through the `_EventsCenter_` to the `*UI*`. The `*UI*` will call `handleChangeThemeRequestEvent()` to update the theme accordingly. Refer to <<fig-ChangeThemeEventSD>>.
+The event is then propagated through the `_EventsCenter_` to the `*UI*`. The `*UI*` will call `handleChangeThemeRequestEvent()` to update the theme accordingly (refer to <<fig-ChangeThemeEventSD>>).
 
 [[fig-ChangeThemeEventSD]]
 .Component interactions for *`theme`* command (part 2)
@@ -390,7 +390,7 @@ If the command is called directly from the menu bar, `handleChangeTheme()` will 
 . Changes the main page loaded on the `_BrowserPanel_`.
 . Changes the style using on the `_Stage_`.
 
-Refer to <<fig-ChangeThemeDetailsSD>>
+To understand the interaction between the components (refer to <<fig-ChangeThemeDetailsSD>>):
 
 [[fig-ChangeThemeDetailsSD]]
 .Component interactions for `handleChangeTheme()`
@@ -523,6 +523,7 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 // tag::displaying-a-recipe[]
 === Displaying a recipe
+[discrete]
 ==== Current Implementation
 
 The text from a selected recipe is always displayed in the `_ResultDisplay_`.

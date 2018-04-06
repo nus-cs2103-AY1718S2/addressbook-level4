@@ -25,7 +25,7 @@ If you can type fast, ReciRecipé can get your recipe management done faster tha
 == Quick start
 
 [TIP]
-You can use kbd:[Ctrl]+kbd:[F] to search in the user guide.
+You can use kbd:[Ctrl]+kbd:[F] to search for words in the user guide.
 
 To start using ReciRecipé, please follow the steps below carefully.
 
@@ -52,7 +52,7 @@ E.g. typing `help` and pressing kbd:[Enter] will open the help window.
 [[CommandFormat]]
 *Command Format*
 
-* Words in upper case are the parameters to be supplied by the user e.g. in `add name/NAME`, *_NAME_* is a parameter which can be used as *`add name/Chicken rice`*.
+* Words in upper case are the parameters to be supplied by the user. For example, in `add name/NAME calories/CALORIES`, *_NAME_* and *_CALORIES_* are parameters which can be substituted in this manner *`add name/Chicken rice calories/500`*.
 ** *_INGREDIENT_* is a list of ingredients, delimited by commas. E.g. `chicken,fish,rice` and `chicken, fish, rice` are valid.
 ** *_INSTRUCTION_* can receive multiple lines as its value.
 ** *_TIME_* fields accept a number of formats: `1h20m`, `1h20min`, `1 hour 20 minutes`, `80m`, `80min`, `80 mins`, etc. However, sticking to the most simple format `80m` is recommended.
@@ -85,8 +85,6 @@ You can add any number of tags (including 0) for a recipe.
 ====
 
 ****
-Details
-
 * See <<CommandFormat,Command Format>> for more details on which input is acceptable for each field.
 * White spaces after a colon are automatically trimmed. For example, `add name/ Chicken rice` and `add name/Chicken rice` are the same. However, the former is more visually pleasing.
 * Press kbd:[Enter] while holding down kbd:[Shift] to add a new line to your input.
@@ -126,7 +124,7 @@ See figure below for the expected behavior of this command. +
 image::ClearCommand.png[width="750"]
 {nbsp} +
 [TIP]
-If you clear your recipe book by mistake, you can reverse the destructive process with an `undo`.
+If you clear your recipe book by mistake, you can reverse the command with an `undo`.
 
 === *`delete`* : Deleting a recipe
 
@@ -135,9 +133,6 @@ Deletes the specified recipe from the recipe book.
 Format: `delete INDEX`
 
 ****
-Details
-
-* Deletes the recipe at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer*, e.g. 1, 2, 3, ...
 ****
@@ -158,8 +153,6 @@ Edits an existing recipe in the recipe book.
 Format: `edit INDEX [name/RECIPE_NAME] [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/URL] [tag/TAG]`
 
 ****
-Details
-
 * See <<CommandFormat,Command Format>> for more details on which input is acceptable for each field.
 * *_INDEX_* refers to the index number shown in the last recipe listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields *must* be provided.
@@ -188,8 +181,6 @@ Finds recipes whose names contain any of the given keywords.
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
-Details
-
 * The search is case-insensitive. e.g *`find chicken`* will match `_Chicken_`.
 * The order of the keywords does not matter. e.g. *`find Rice Chicken`* will match `_Chicken rice_`.
 * Only the name is searched.
@@ -211,8 +202,6 @@ Creates a group of one or multiple recipes by the index or indices used in the l
 Format: `group group_name/GROUP_NAME index/INDEX [index/INDEX]`
 
 ****
-Details
-
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer*, e.g. "1, 2, 3, …"..
 * Only the name is searched.
@@ -250,8 +239,6 @@ Finds recipes whose ingredients contain all of the given keywords.
 Format: `ingredient KEYWORD [MORE_KEYWORDS]`
 
 ****
-Details
-
 * The search is case insensitive. e.g *`ingredient chicken`* will match _Chicken_.
 * Only the ingredients are searched.
 * Only full words will be matched e.g. *`ingredient Chic`* will not match `_Chicken_`.
@@ -308,8 +295,10 @@ Format: `redo`
 Examples:
 
 * *`delete 1`* +
-*`undo`* (reverses the *`delete 1`* command) +
-*`redo`* (reapplies the *`delete 1`* command) +
+*`undo`* +
+Reverses the *`delete 1`* command +
+*`redo`* +
+Reapplies the *`delete 1`* command +
 
 * *`delete 1`* +
 *`redo`* +
@@ -317,10 +306,14 @@ The *`redo`* command fails as there are no *`undo`* commands executed previously
 
 * *`delete 1`* +
 *`clear`* +
-*`undo`* (reverses the *`clear`* command) +
-*`undo`* (reverses the *`delete 1`* command) +
-*`redo`* (reapplies the *`delete 1`* command) +
-*`redo`* (reapplies the *`clear`* command) +
+*`undo`* +
+Reverses the *`clear`* command +
+*`undo`* +
+Reverses the *`delete 1`* command +
+*`redo`* +
+Reapplies the *`delete 1`* command +
+*`redo`* +
+Reapplies the *`clear`* command +
 
 === Saving the data
 
@@ -360,10 +353,8 @@ Selects the recipe identified by the index number used in the last recipe listin
 Format: `select INDEX`
 
 ****
-Details
-
 * If the selected recipe has a URL, the in-app browser will load that URL. Otherwise, it will load the recipe contents.
-* The result display will always show the recipe content regardless of whether there is an embedded URL or not.
+* The result box will always show the recipe content regardless of whether there is an embedded URL or not.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer*, e.g. "1, 2, 3, ...".
 ****
@@ -384,28 +375,27 @@ Initiates the sharing of a recipe to Facebook, identified by the index number us
 Format: `share INDEX`
 
 ****
-Details
-
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer*, e.g. "1, 2, 3, ...".
-* The text in the recipe will be copied to the clipboard for the User to paste into the Facebook post.
-* The Facebook authentication page is shown on the browser for the User to log in.
-* Upon logging in: if the shared recipe has a URL, the in-app browser will load a feed dialog for the User to share the URL as shown below (see <<fig-FacebookFeedDialog>>).
-* The User will be redirected back to his/her Facebook feed once the post has been made.
 ****
 
-[[fig-FacebookFeedDialog]]
-.Facebook Feed Dialog
-image::FacebookFeedDialog.jpg[width="600"]
-{nbsp} +
 Examples:
 
 * *`list`* +
 *`share 2`* +
 Shares the 2nd recipe in the recipe book.
+The contents in the recipe will be copied to the clipboard for the User to paste into the Facebook post.
+The Facebook authentication page is shown on the browser for the User to log in.
+Upon logging in: if the shared recipe has a URL, the in-app browser will load a feed dialog for the User to share the URL as shown below (see <<fig-FacebookFeedDialog>>).
+[[fig-FacebookFeedDialog]]
+.Facebook Feed Dialog
+image::FacebookFeedDialog.jpg[width="600"]
+{nbsp} +
+The User will be redirected back to his/her Facebook feed once the post has been made.
+
 * *`find Chicken`* +
 *`share 1`* +
-Shares the 1st recipe in the results of the *`find`* command.
+Shares the 1st recipe in the results of the *`find`* command in a similar fashion as described in the previous example.
 
 === *`tag`* : Locating recipes by tags
 
@@ -414,8 +404,6 @@ Finds recipe whose tags contain any of the given keywords.
 Format: `tag KEYWORD [MORE_KEYWORDS]`
 
 ****
-Details
-
 * The search is case sensitive. For example, *`tag drinks`* will not match `_Drinks_`.
 * Only the tags are searched.
 * Only full words will be matched. For example, *`tag drinks`* will not match `_drink_`.
@@ -496,8 +484,6 @@ Uploads the xml file containing data of all recipes to Dropbox, giving it the sp
 Format: `upload FILENAME`
 
 ****
-Details
-
 * The filename must not contain any invalid characters as defined by Dropbox https://www.dropbox.com/help/syncing-uploads/files-not-syncing[here].
 * The filename will be concatenated with .xml to maintain formatting.
 * If that exact filename already exists in the user's Dropbox, one of two things will happen:
@@ -550,8 +536,6 @@ Uploads a selected recipe to the recipes server.
 Format: `push INDEX`
 
 ****
-Details
-
 * If the selected recipe has a URL, the in-app browser will load that URL.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer*, e.g. "1, 2, 3, ...".

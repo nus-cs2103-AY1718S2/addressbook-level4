@@ -5,7 +5,10 @@
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
+:pdf-stylesdir: stylesheets
+:pdf-style: pdf
 :xrefstyle: full
+:experimental:
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
@@ -14,9 +17,18 @@ endif::[]
 
 By: `Team CS2103JAN2018-F09-B3` Since: `Feb 2018` Licence: `MIT`
 
-== Setting Up
+== Getting Started with CoinBook
+Follow the instructions given in this section to get up and running with _CoinBook_. To summarise:
 
-=== Prerequisites
+. Make sure you have the prerequisites installed. See <<Obtaining Prerequisites>> for details.
+. Clone and import the project. See <<Setting Up>> for details.
+. Set up additional requirements before writing your code. See <<Configurations To Do Before Writing Code>> for details.
+
+For the full details, continue reading.
+
+=== Obtaining Prerequisites
+
+The following are required to ensure that _CoinBook_ works well.
 
 . *JDK `1.8.0_60`* or later
 +
@@ -32,7 +44,8 @@ IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` -> `Settings` -> `Plugins` to re-enable them.
 
 
-=== Setting Up the Project in Your Computer
+=== Setting Up
+Follow the steps below to set up the project in your computer.
 
 . Fork this repo, and clone the fork to your computer.
 . Open IntelliJ. If you are not in the welcome screen, click `File` -> `Close Project` to close the existing project dialog first.
@@ -47,11 +60,13 @@ Do not disable them. If you have disabled them, go to `File` -> `Settings` -> `P
 This will generate all resources required by the application and tests.
 
 === Verifying the Setup
+After setting up the project by following the steps in the previous part, do the below to make sure you have everything set up nicely.
 
 . Run the `seedu.address.MainApp` and try a few commands.
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations To Do Before Writing Code
+Before embarking on your modifications to _CoinBook_, you should set up the following things to facilitate a smooth development experience.
 
 ==== Configuring the Coding Style
 
@@ -89,6 +104,7 @@ Having both Travis and AppVeyor ensures that your app works on both Unix-based p
 When you are ready to start coding, get some sense of the overall design by reading the next section on _CoinBook_'s <<Design-Architecture>>.
 
 == Design
+This chapter offers a high-level overview of the components in _CoinBook_ and how they interact with one another. You should read this first to get some idea of which parts you might want to modify to suit your needs.
 
 [[Design-Architecture]]
 === Architecture
@@ -100,37 +116,39 @@ image::Architecture.png[width="600"]
 
 Following is a quick overview of each component:
 
-`*Main*` has only one class called [exref]#link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]#. It is responsible for:
+* `*Main*` has only one class called [exref]#link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]#. It is responsible for the following:
 
-* (On app launch) Initializing the components in the correct sequence, and connecting them up with one another
-* (On shut down) Shutting down the components and invoking cleanup methods where necessary
+** (On app launch) Initializes the components in the correct sequence, and connecting them up with one another
+** (On shut down) Shuts down all components and invoking cleanup methods where necessary
 
-`*Commons*` represents a collection of classes used by multiple other components. Two of these classes play important roles at the architectural level.
+* `*Commons*` represents a collection of classes used by multiple other components. Two of these classes play important roles at the architectural level.
 
-* `EventsCenter` : This class (written using [ext]#https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]#) is used by components to communicate with other components using events (i.e. a form of <<event-driven-design,Event Driven Design>>)
-* `LogsCenter` : Used by classes to write log messages to the App's log file.
+** `EventsCenter` uses [ext]#https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]#, and is used by other components to communicate with one another using events (i.e. a form of <<event-driven-design,Event Driven Design>>)
+** `LogsCenter` is used by classes to write log messages to the App's log file
 
-These classes are located in the [exref]#link:{repoURL}/src/main/java/seedu/address/commons[`seedu.address.commons`]# package.
+** These classes are located in the [exref]#link:{repoURL}/src/main/java/seedu/address/commons[`seedu.address.commons`]# package
 
-The rest of the App consists of four components: +
-<<Design-Ui,*`UI`*>>: The UI of the App. +
-<<Design-Logic,*`Logic`*>>: Executes commands. +
-<<Design-Model,*`Model`*>>: Holds the data of the App in memory. +
-<<Design-Storage,*`Storage`*>>: Reads data from and writes data to the hard disk.
+* The rest of the App consists of:
+** <<Design-Ui,*`UI`*>> which has the UI components of the App. +
+** <<Design-Logic,*`Logic`*>> which processes and executes commands. +
+** <<Design-Model,*`Model`*>> which holds the data of the App in memory. +
+** <<Design-Storage,*`Storage`*>> which reads data from and writes data to the hard disk.
 
-Each of these four components:
+** Each of these four components:
 
-* Defines its [gloss]#<<API,_API_>># in an interface with the same name as the component.
-* Exposes its functionality using a `{Component Name}Manager` class.
+*** Defines its [gloss]#<<API,_API_>># in an interface with the same name as the component.
+*** Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see Fig. 2 below) defines its API in the `Logic.java` interface and exposes its functionality via the `LogicManager.java` class.
+** For example, the `Logic` component (see Fig. 2 below) defines its API in the `Logic.java` interface and exposes its functionality via the `LogicManager.java` class.
 
 .Class Diagram of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
+We use event-driven design in order to allow communication between separate components without increasing coupling. The short section below gives a brief introduction to how events are being used in the App.
+
 [discrete]
 [[event-driven-design]]
-==== Event-Driven nature of the design
+==== Event-driven nature of the design
 
 The _Sequence Diagram_ below (Fig. 3) shows the interaction between the various components when the user issues the command `delete 1`.
 
@@ -222,6 +240,7 @@ The following diagram (Fig. 9) illustrates the structure of this component:
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
+
 [[Design-Storage]]
 === Storage component
 
@@ -240,17 +259,17 @@ image::StorageClassDiagram.png[width="800"]
 
 == Implementation
 
-This section describes some noteworthy details on how certain features are implemented.
+This chapter describes some noteworthy details on how certain features are implemented. It is highly recommended to read the previous chapter on <<Design>> first so that you have some picture of where these features fit in.
 
-=== Condition Parser feature
+=== Condition Parser Component
 
 ==== Current implementation
 The general parser for the SQL-like arguments for the find command can be broken down into a few sub-components, namely
-the `Lexer`, `SyntaxParser`, `SemanticParser`, and a `ConditionGenerator`, while using classes such as `Condition`,
+the `ArgumentTokenizer`, `SyntaxParser`, `SemanticParser`, and a `ConditionGenerator`, while using classes such as `Condition`,
 `Token`, `TokenType`, `TokenStack` to model the data that is to be operated on throughout the process. Their tasks are
 delegated as follows:
 
-* `Lexer` : Lexically analyzes the input string, then creates a list of tokens.
+* `ArgumentTokenizer` : Lexically analyzes the input string, then creates a list of tokens.
 * `SyntaxParser` : Parses the input by matching the tokens versus a list of rules to ensure they fit the desired
 structure.
 * `SemanticParser` : Parses the input by matching the tokens versus a list of rules to ensure their meaning is semantically valid
@@ -263,38 +282,39 @@ input. For example, `n/BTC AND OR p/>500` would not even be valid syntatically, 
 but not semantically, since it would not make sense to search for `Coin` objects whose price attribute was more than
 "BTC" since a price cannot be compared to a name.
 
-Below is the UML
-describing the classes and their relationships.
+The following sequence diagram will show how input arguments accompanying the `Find` command are parsed:
 
-.Class UML diagram for the Condition Parser
-image::ParserClassDiagram.png[]
+.Sequence diagram describing how arguments are parsed
+image::FindCommandSequence.png[]
 
-The general flow of the parser is very linear in nature, an input string is first broken up into reasonable sections by
-the lexer based on their possible meaning, then the syntax and semantic parser ensure that the input follows the
-structure required and then finally a condition objects is generated representing the statement that can be used to
-evaluate Coin objects.
+The `SyntaxParser`, `SemanticParser` and `ConditionGenerator` reside in a separate module that will be called by the
+`ParserUtil` class during the ParseCondition method.
 
-.Sequence diagram for the `ConditionParser` class on correct inputs
-image::mainSequence.png[width=800]
+The following sequence diagram expands on the Parse Sequence block in the previous diagram.
 
-We will illustrate the flow of the CommandParser on an example input:
+.Sequence diagram describing the sequence of parser operations
+image::ParserUtilSequence.png[]
+
+The `Condition` object that is generated at the end is actually just a `Predicate` object that evaluates properties of
+the Coin objects and returns a true/false value.
+
+===== Argument Tokenizing
+We will illustrate the flow of the tokenizing an example input:
 ```
 > n/BTC OR ( t/fav AND p/>100 )
 ```
-===== Lexer
-Firstly, the lexer would tokenize this into:
+The Lexer would tokenize this into:
 
 ```
-> [n/,OPTION][BTC,STRING][OR,BINARYOP][(,LEFTPAREN][t/,OPTION][fav,STRING][AND,BINRARYOP][p/,OPTION][>,COMPARATOR][100,NUMBER][),RIGHTPAREN]
+> [n/,OPTION][BTC,STRING][ OR ,BINARYOP][(,LEFTPAREN][t/,OPTION][fav,STRING][AND,BINRARYOP][p/,OPTION][>,COMPARATOR][100,NUMBER][),RIGHTPAREN]
 ```
 Notice how the whitespace has now been discarded, since it is not used for the purposes of parsing. Also each section of
 the input has now been grouped with a type.
 
-Below is a sequence diagram describing the behaviour of `Lexer` on the input:
+Below is a sequence diagram describing the behaviour of `ArgumentTokenizer` on the input:
 
-.Sequence diagram for the `Lexer` class
+.Sequence diagram for the `ArgumentTokenizer` class
 image::Lexer.png[]
-
 
 ===== Syntax Parser
 
@@ -305,54 +325,7 @@ This is done by matching the tokens off based on the following rules, expressed 
 . `TERM` := `LEFTPAREN` `EXPRESSION` `RIGHTPAREN` | `UNARYOP` `TERM` | `CONDITION`
 . `CONDITION` := `OPTION` `COMPARATOR` `NUM` | `OPTION` `STRING`
 
-
-Using our example, we will illustrate how we can sequentially express the argument based on the provided rules:
-
-. `EXPRESSION`
-. `TERM` `BINARYOP` `EXPRESSION`
-. `CONDITION` `BINARYOP` `EXPRESSION`
-. `OPTION` `STRING` `BINARYOP` `EXPRESSION`
-. n/`STRING` `BINARYOP` `EXPRESSION`
-. n/BTC `BINARYOP` `EXPRESSION`
-. n/BTC OR `EXPRESSION`
-. n/BTC OR `TERM`
-. n/BTC OR ( `EXPRESSION` )
-. n/BTC OR ( `TERM` `BINARYOP` `EXPRESSION` )
-. n/BTC OR ( `CONDITION` `BINARYOP` `EXPRESSION` )
-. n/BTC OR ( `OPTION` `STRING` `BINARYOP` `EXPRESSION` )
-. n/BTC OR ( t/ `STRING` `BINARYOP` `EXPRESSION` )
-. n/BTC OR ( t/fav `BINARYOP` `EXPRESSION` )
-. n/BTC OR ( t/fav AND `EXPRESSION` )
-. n/BTC OR ( t/fav AND `TERM` )
-. n/BTC OR ( t/fav AND `CONDITION` )
-. n/BTC OR ( t/fav AND `OPTION` `COMPARATOR` `NUM` )
-. n/BTC OR ( t/fav AND p/ `COMPARATOR` `NUM` )
-. n/BTC OR ( t/fav AND p/ > `NUM` )
-. n/BTC OR ( t/fav AND p/>100 )
-
-The recursive methods `Expression`, `Term`, `Condition` in the syntax parser class will match their own respective tokens
-as necessary. In fact the method calls in the parser are exactly the same as the matches made in the previously stated sequence.
-For example, here is the implementation for `EXPRESSION`.
-
-[source,java]
-----
-boolean expression() {
-    if (!term()) {
-        return false;
-    }
-    while (tokenStack.matchAndPopTokenType(TokenType.BINARYBOOL)) {
-        if (!term()) {
-            return false;
-        }
-    }
-    return true;
-}
-----
-
-Visually we can represent it with the following parse tree, which also serves as the recursion tree:
-
-.Parse and recursion tree for the example input
-image::parsetree.png[]
+Further details on how this is performed is delved into in the later <<Concept of parsing,section>>.
 
 ===== Semantic Parser
 
@@ -360,10 +333,15 @@ Following up, the Semantic Parser has to verify that the conditions are correct.
 type of the condition versus the parameters that follow. For example, a name condition should only be followed by a string.
 This can be done by checking the corresponding option class versus the type of token that follows.
 
+Thus, the checks that are made are just to ensure every string type option is followed by a string and every number type
+option is followed by a number.
+
 ===== Condition Generator
 
 Lastly, the condition generator creates lambdas based on the type of conditions found, and then recursively composes each
 condition based on the binary operators encounters up the recursion tree.
+
+Further details on how this is performed is delved into at the later <<Generating the Conditions,section>>.
 
 ==== Error handling
 On syntactically invalid inputs, the `ConditionParser` will retrieve the expected and actual type of Token that were not a math
@@ -395,8 +373,77 @@ image::failSequence.png[]
 ** Pros: Removal of redundant code.
 ** Cons: Clearly violates SRP.
 
+==== Advanced details
+===== Concept of parsing
+
+```
+> [n/,OPTION][BTC,STRING][ OR ,BINARYOP][(,LEFTPAREN][t/,OPTION][fav,STRING][AND,BINRARYOP][p/,OPTION][>,COMPARATOR][100,NUMBER][),RIGHTPAREN]
+```
+
+Using our example, we will illustrate how we can sequentially express the above tokenized argument based on the provided rules:
+
+. `*EXPRESSION*`
+. `*TERM*` `*BINARYOP*` `*EXPRESSION*`
+. `*CONDITION*` `*BINARYOP*` `*EXPRESSION*`
+. `*OPTION*` `*STRING*` `*BINARYOP*` `*EXPRESSION*`
+. `n/` `*STRING*` `*BINARYOP*` `*EXPRESSION*`
+. `n/` `BTC` `*BINARYOP*` `*EXPRESSION*`
+. `n/` `BTC` `OR` `*EXPRESSION*`
+. `n/` `BTC` `OR` `*TERM*`
+. `n/` `BTC` `OR` `(` `*EXPRESSION*` `)`
+. `n/` `BTC` `OR` `(` `*TERM*` `*BINARYOP*` `*EXPRESSION*` `)`
+. `n/` `BTC` `OR` `(` `*CONDITION*` `*BINARYOP*` `*EXPRESSION*` `)`
+. `n/` `BTC` `OR` `(` `*OPTION*` `*STRING*` `*BINARYOP*` `*EXPRESSION*` `)`
+. `n/` `BTC` `OR` `(` `t/` `*STRING*` `*BINARYOP*` `*EXPRESSION*` `)`
+. `n/` `BTC` `OR` `(` `t/` `fav` `*BINARYOP*` `*EXPRESSION*` `)`
+. `n/` `BTC` `OR` `(` `t/` `fav` `AND` `*EXPRESSION*` `)`
+. `n/` `BTC` `OR` `(` `t/` `fav` `AND` `*TERM*` `)`
+. `n/` `BTC` `OR` `(` `t/` `fav` `AND` `*CONDITION*` `)`
+. `n/` `BTC` `OR` `(` `t/` `fav` `AND` `*OPTION*` `*COMPARATOR*` `*NUM*` `)`
+. `n/` `BTC` `OR` `(` `t/` `fav` `AND` `p/` `*COMPARATOR*` `*NUM*` `)`
+. `n/` `BTC` `OR` `(` `t/` `fav` `AND` `p/` `>` `*NUM*` `)`
+. `n/` `BTC` `OR` `(` `t/` `fav` `AND` `p/` `>` `100` `)`
+
+The recursive methods `Expression`, `Term`, `Condition` in the syntax parser class will match their own respective tokens
+as necessary. In fact the method calls in the parser are exactly the same as the matches made in the previously stated sequence.
+For example, here is the implementation for `EXPRESSION`.
+
+[source,java]
+----
+boolean expression() {
+    if (!term()) {
+        return false;
+    }
+    while (tokenStack.matchAndPopTokenType(TokenType.BINARYBOOL)) {
+        if (!term()) {
+            return false;
+        }
+    }
+    return true;
+}
+----
+
+Visually we can represent it with the following parse tree, which also serves as the recursion tree:
+
+.Parse and recursion tree for the example input
+image::parsetree.png[]
+
+===== Generating the Conditions
+
+The final `Condition` object is actually just a composition of many individual `Condition` objects. This can be done
+as a back call at the end of each recursion tree.
+
+For example, consider the following argument:
+
+```
+p/>100 AND t/fav
+```
+
+The `p/>100` is a condition on price whereas the `t/fav` is a condition on tags, and they can be composed using the `Predicate`
+method `and()` to return a logical conjunction of the two conditions.
+
 // tag::undoredo[]
-=== Undo/Redo feature
+=== Undo/Redo Feature
 ==== Current Implementation
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports the undoing and redoing of commands that modify the stored data (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
@@ -659,7 +706,7 @@ By default, elements with the same key are inserted into `List<T>`, although thi
 // end::organisation[]
 
 // tag::autocomplete[]
-=== [Proposed] Autocomplete feature
+=== [Proposed] Autocomplete Feature
 
 The autocomplete mechanism is facilitated by a `RadixTree`, which resides inside `LogicManager`. It supports the predicting of a word or phrase that the user may type based on a partial text query.
 
@@ -739,12 +786,12 @@ We chose AsciiDoc over Markdown because AsciiDoc, although a bit more complex th
 
 === Editing Documentation
 
-See [exref]#<<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>># to learn how to render `.adoc` files locally to preview the end result of your edits.
+See [exref]##<<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>>## to learn how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
 === Publishing Documentation
 
-See [exref]#<<UsingTravis#deploying-github-pages, UsingTravis.adoc>># to learn how to deploy GitHub Pages using Travis.
+See [exref]##<<UsingTravis#deploying-github-pages, UsingTravis.adoc>>## to learn how to deploy GitHub Pages using Travis.
 
 === Converting Documentation to PDF format
 
@@ -752,10 +799,10 @@ We use [ext]#https://www.google.com/chrome/browser/desktop/[Google Chrome]# for 
 
 Here are the steps to convert the project documentation files to PDF format.
 
-.  Follow the instructions in [exref]#<<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>># to convert the AsciiDoc files in the `docs/` directory to HTML format.
+.  Follow the instructions in [exref]##<<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>>## to convert the AsciiDoc files in the `docs/` directory to HTML format.
 .  Find the generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
 .  In Chrome's menu, click on the `Print` option.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot (Fig. 19) below.
+.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot (Fig. 25) below.
 
 .Options for Saving Documentation as PDF Files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
@@ -763,9 +810,27 @@ image::chrome_save_as_pdf.png[width="300"]
 [[Testing]]
 == Testing
 
+When developing new features it is always important to write tests so that you can verify whether the features are working as intended, alone or with one another. This chapter introduces the basics of testing.
+
+=== Types of tests
+
+We use two types of tests in _Coinbook_:
+
+.  *GUI Tests* - These are tests involving the GUI. They include:
+.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
+.. _Unit tests_ that test the individual components. These are in the `seedu.address.ui` package.
+.  *Non-GUI Tests* - These are tests not involving the GUI. They include:
+..  _Unit tests_ targeting the lowest level methods/classes. +
+e.g. `seedu.address.commons.StringUtilTest`
+..  _Integration tests_ that check the integration of multiple code units (those code units are assumed to be working). +
+e.g. `seedu.address.storage.StorageManagerTest`
+..  Hybrids of unit and integration tests. These tests check multiple code units as well as the connections between them. +
+e.g. `seedu.address.logic.LogicManagerTest`
+
+
 === Running Tests
 
-There are three ways to run tests.
+There are three ways to run tests on your computer before sharing your changes to source control.
 
 *Method 1: Using IntelliJ JUnit test runner*
 
@@ -786,7 +851,7 @@ $ ./gradlew clean allTests
 ```
 
 [NOTE]
-See [exref]#<<UsingGradle#, UsingGradle.adoc>># for more info on how to run tests using Gradle.
+See [exref]##<<UsingGradle#, UsingGradle.adoc>>## for more info on how to run tests using Gradle.
 
 *Method 3: Using Gradle (headless)*
 
@@ -806,44 +871,36 @@ $ ./gradlew clean headless allTests
 [TIP]
 The most reliable way to run tests is the 3rd one. The first two methods might cause some GUI tests to fail due to platform/resolution-specific idiosyncrasies.
 
-=== Types of tests
-
-We have two types of tests:
-
-.  *GUI Tests* - These are tests involving the GUI. They include:
-.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
-.. _Unit tests_ that test the individual components. These are in the `seedu.address.ui` package.
-.  *Non-GUI Tests* - These are tests not involving the GUI. They include:
-..  _Unit tests_ targeting the lowest level methods/classes. +
-e.g. `seedu.address.commons.StringUtilTest`
-..  _Integration tests_ that check the integration of multiple code units (those code units are assumed to be working). +
-e.g. `seedu.address.storage.StorageManagerTest`
-..  Hybrids of unit and integration tests. These tests check multiple code units as well as the connections between them. +
-e.g. `seedu.address.logic.LogicManagerTest`
-
+[NOTE]
+<<Continuous Integration>> also automatically runs the tests specified with Gradle, but it is a good habit to test things on your own machine first.
 
 === Troubleshooting Testing
+
+Here are some common problems you may face when trying to run tests locally.
+
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
-== Dev Ops
+== DevOps
+
+This chapter introduces various systems we can put in place to unify the tasks of _development_ and _operations_, or _DevOps_ in short. We are mostly concerned with ways to reduce turnaround time through simple automation, and ways to manage the distribution of the completed App.
 
 === Build Automation
 
-See [exref]#<<UsingGradle#, UsingGradle.adoc>># to learn how to use Gradle for build automation.
+See [exref]##<<UsingGradle#, UsingGradle.adoc>>## to learn how to use Gradle for build automation.
 
 === Continuous Integration
 
-We use [ext]#https://travis-ci.org/[Travis CI]# and [ext]#https://www.appveyor.com/[AppVeyor]# to perform _Continuous Integration_ on our projects. See [exref]#<<UsingTravis#, UsingTravis.adoc>># and [exref]#<<UsingAppVeyor#, UsingAppVeyor.adoc>># for more details.
+We use [ext]#https://travis-ci.org/[Travis CI]# and [ext]#https://www.appveyor.com/[AppVeyor]# to perform _Continuous Integration_ on our projects. See [exref]##<<UsingTravis#, UsingTravis.adoc>>## and [exref]##<<UsingAppVeyor#, UsingAppVeyor.adoc>>## for more details.
 
 === Coverage Reporting
 
-We use [ext]#https://coveralls.io/[Coveralls]# to track the code coverage of our projects. See [exref]#<<UsingCoveralls#, UsingCoveralls.adoc>># for more details.
+We use [ext]#https://coveralls.io/[Coveralls]# to track the code coverage of our projects. See [exref]##<<UsingCoveralls#, UsingCoveralls.adoc>>## for more details.
 
 === Documentation Previews
-When a pull request has changes to AsciiDoc files, you can use [ext]#https://www.netlify.com/[Netlify]# to see a preview of the HTML version of those AsciiDoc files when the pull request is merged. See [exref]#<<UsingNetlify#, UsingNetlify.adoc>># for more details.
+When a pull request has changes to AsciiDoc files, you can use [ext]#https://www.netlify.com/[Netlify]# to see a preview of the HTML version of those AsciiDoc files when the pull request is merged. See [exref]##<<UsingNetlify#, UsingNetlify.adoc>>## for more details.
 
 === Making a Release
 
@@ -851,7 +908,7 @@ Here are the steps to creating a new release.
 
 .  Update the version number in
 [exref]#link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`]#.
-.  Generate a JAR file [exref]#<<UsingGradle#creating-the-jar-file, using Gradle>>#.
+.  Generate a JAR file [exref]##<<UsingGradle#creating-the-jar-file, using Gradle>>##.
 .  Tag the repo with the version number, e.g. `v0.1`.
 .  [ext]#https://help.github.com/articles/creating-releases/[Create a new release using GitHub]# and upload the JAR file you created in step 2.
 
@@ -864,6 +921,7 @@ A project often depends on third-party libraries. For example, _CoinBook_ depend
 
 [appendix]
 == Product Scope
+=== Goals
 
 *Target user profile*:
 
@@ -962,10 +1020,10 @@ Use case resumes at step 1.
 
 *MSS*
 
-1.  User requests to export storage data
-2.  CoinBook requests for the file destination
-3.  User specifies the file destination
-4.  CoinBook exports the file
+1.  User requests to export storage data.
+2.  CoinBook requests for the file destination.
+3.  User specifies the file destination.
+4.  CoinBook exports the file.
 +
 Use case ends.
 
@@ -983,7 +1041,41 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+=== Use case: Set notifications
+
+*MSS*
+
+1. User sets the condition under which he/she wishes to be notified.
+2. CoinBook notifies the user the condition has been acknowledged.
++
+Use case ends.
+
+*Extension*
+
+[none]
+* 2a. The condition argument was invalid.
+** 2a1. CoinBook shows an error message.
++
+Use case ends.
+
+=== Use case: Tag items for group commands
+
+*MSS*
+
+1. User finds the coins that he wishes to group using the `Find` command.
+2. CoinBook shows a list of coins.
+3. User tags all the found using the `TagAll` command.
+4. The tags appear on all the coins in the CoinBook.
+5. User then operates on all coins that were tagged. e.g. buy tag 50
+6. CoinBook shows the changes to the User.
+
+*Extension*
+
+[none]
+* 2a. The tag name was invalid.
+** 2a1. CoinBook shows an error message.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
@@ -1000,7 +1092,7 @@ _{More to be added}_
 [appendix]
 == Glossary
 
-[[API] API::
+[[API]] API::
 Short for Application-Programmer Interface.
 
 [[alias]] Alias::
@@ -1048,7 +1140,7 @@ When the price of a coin has fallen to a certain amount, the price may eventuall
 [appendix]
 == Instructions for Manual Testing
 
-Given below are instructions to test the App manually.
+Given below are instructions to test the App manually. This is a way to supplement the automated testing and find bugs through some concerted effort to break the software.
 
 [NOTE]
 These instructions only provide a starting point for testers to work on; testers are expected to do more _exploratory_ testing.
@@ -1057,8 +1149,8 @@ These instructions only provide a starting point for testers to work on; testers
 
 . Initial launch
 
-.. Download the jar file and copy into an empty folder
-.. Double-click the jar file +
+.. Download the jar file and copy into an empty folder.
+.. Double-click the jar file. +
    Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
 . Saving window preferences
@@ -1073,18 +1165,26 @@ These instructions only provide a starting point for testers to work on; testers
 
 .. Prerequisites: List all coins using the `list` command. Multiple coins in the list.
 .. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   Expected: First coin is deleted from the list. Details of the deleted entry shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
    Expected: No coin is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Other incorrect commands to try: `delete`, `delete x` (where x is larger than the list size), `delete -1` +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+. Deleting a coin while its details are being displayed
+
+.. Prerequisites: List coins as above. Select the second coin using the `view 2` command. The detail window should be open on the right side.
+.. Test case: `delete 2` +
+   Expected: The coin is removed from the list. The detail window should return to a blank one, as when no coin is selected.
 
 === Saving data
 
 . Dealing with missing/corrupted data files
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+.. Start the App so that it is ready to run some commands.
+.. Navigate to the location of the data file, `data/addressbook.xml`, and rename or delete it. +
+Expected:
 
-_{ more test cases ... }_
+. Transferring data files to another computer
+
+.. Copy

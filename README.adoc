@@ -21,7 +21,7 @@ endif::[]
 
 ** Provides various statistics such as Relative Strength Index (RSI) and moving average convergence divergence (MACD) charts to aid users with their decision making
 
-** User won't have to check news and statistics on another platform; CoinBook offers an integrated soluton
+** User won't have to check news and statistics on another platform; CoinBook offers an integrated solution
 
 ** Price history allows user to see price changes over time
 

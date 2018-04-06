@@ -5,6 +5,8 @@
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
+:pdf-stylesdir: stylesheets
+:pdf-style: pdf
 :xrefstyle: full
 :experimental:
 ifdef::env-github[]
@@ -17,6 +19,7 @@ By: `Team CS2103JAN2018-F09-B3` Since: `Feb 2018` Licence: `MIT`
 
 == How to Use this Guide
 Boxes::
+There are various types of boxes that provide extra information:
 [TIP]
 ====
 This icon indicates tips for usage and points out little details you may have missed.
@@ -30,6 +33,7 @@ This icon marks additional noteworthy information provided for reference.
 This icon warns you of things you should watch out for. Make sure to keep these in mind!
 ====
 
+[[example]]
 Markup::
 Text with special meaning look different. Here are the various types:
 * Commands, filenames, and other miscellaneous keywords are `monospaced for emphasis`
@@ -88,15 +92,15 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [[Features]]
 == Features
 
-Every account action in _CoinBook_ can be done by typing some command, followed by its required and optional _parameters_ and pressing kbd:[Enter] to execute the action. Please check the boxes below for the conventions used in this guide to refer to command format.
+Every account action in _CoinBook_ can be done by typing some command, followed by its required or optional _parameters_, then pressing kbd:[Enter] to execute the action. Please check the boxes below for the conventions used in this guide to refer to command format.
 
 Each command listing is usually followed by some examples on usage, with a description of the effect of each example below in the same order as displayed.
 
 .Terminology
 ****
 [[spec]]
-* Specifier
-** Refers to an account or group to perform the action upon
+* Target
+** Refers to the account or group to perform the action upon
 ** This is used in commands requiring a target coin, and can be any one of the coin's:
 *** INDEX: Its index number in the current coin listing
 *** NAME: The name of the coin, e.g. `Bitcoin`, and is case-insensitive
@@ -104,19 +108,19 @@ Each command listing is usually followed by some examples on usage, with a descr
 * Option/Parameter
 ** Refers to the additional information you must provide for the command
 ** These have a letter representing the option, followed by a slash (`/`), followed by the desired value
-** The value is [underline]#underlined# and is the meaning of the option it follows (`[underline]##VALUE##` when used generally), e.g. `t/[underline]##TAG##` indicates the desired value of the tag should be typed after `t/`
+** The name of the option follows each letter. You should replace this with the desired value, e.g. `t/TAG` indicates the desired value of the tag should be typed after `t/`
 ****
 
 .Command Format
 ****
 * Command parts denoted in `UPPERCASE` should be supplied by the user
 * Parts in square brackets are optional, e.g.
-`SPECIFIER pass:[[]t/[underline]#TAG#]`
+`TARGET [t/TAG]`
 can be used as either `BTC t/fav` or `BTC`
-* Parts with `...` after them can be used zero or more times, e.g. `pass:[[]t/[underline]#TAG#]...` can be used as `{nbsp}` (i.e. 0 times), `t/cheap`, `t/active t/fav`, etc.
-* If an option without `...` is used multiple times, only the rightmost value entered will be used
-* Parameters can be in any order, e.g. if the command specifies `t/[underline]##TAG## a/[underline]##VALUE##`, then `a/[underline]##VALUE## t/[underline]##TAG##` is also acceptable
-* Parts in curly braces indicate multiple possibilities, e.g. we use <<spec,`SPECIFIER`>> as shorthand for `{INDEX,NAME,CODE}`
+* Parts with `...` after them can be used zero or more times, e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/cheap`, `t/active t/fav`, etc.
+* If an option without `...` is used multiple times, only the rightmost value that you typed will be used
+* Parameters can be in any order, e.g. if the command specifies `t/TAG a/VALUE`, then `a/VALUE t/TAG` is also acceptable
+* Parts in curly braces indicate multiple possibilities, e.g. we use <<spec,`TARGET`>> as shorthand for `{INDEX,NAME,CODE}`
 ****
 
 === View help `help` / `?`
@@ -128,11 +132,11 @@ help
 
 Opens the help window.
 
-=== Add coin to an account `buy` / `b` `[Coming in v1.5]`
+=== Add coin to an account `buy` / `b` `[Since v1.4]`
 
 .Format
 ----
-buy SPECIFIER AMOUNT
+buy TARGET a/AMOUNT
 ----
 
 Adds value into the specified Coin account. `AMOUNT` must be a number.
@@ -143,11 +147,11 @@ buy BTC 0.5
 ----
 Adds 0.5 to the amount held in the `BTC` account.
 
-=== Sell coin from an account `sell` / `s` `[Coming in v1.5]`
+=== Sell coin from an account `sell` / `s` `[Since v1.4]`
 
 .Format
 ----
-sell SPECIFIER AMOUNT
+sell TARGET a/AMOUNT
 ----
 
 Removes value from a given Coin account. `AMOUNT` must be a number.
@@ -162,7 +166,7 @@ Subtracts 0.5 from the amount held in the `BTC` account.
 
 .Format
 ----
-tag SPECIFIER TAG
+tag TARGET t/TAG...
 ----
 
 Adds the given tag to an entry in the CoinBook.
@@ -193,7 +197,7 @@ Updates the listing to show all coin accounts in _CoinBook_. +
 
 .Format
 ----
-find [SPECIFIER] CONDITION
+find CONDITION
 ----
 
 Updates the listing to show only coin accounts whose details satisfy the given condition.
@@ -204,39 +208,41 @@ Updates the listing to show only coin accounts whose details satisfy the given c
 .Condition Query Format
 ****
 * Possible query options are: +
-** `t/[underline]##TAG##...`: Tags attached to the account
-** `p/[underline]##AMOUNT##`: Current price of the coin
-** `h/[underline]##AMOUNT##`: Current amount held in an account
-** `b/[underline]##AMOUNT##`: Total amount in dollars ever bought in the account
-** `s/[underline]##AMOUNT##`: Total amount in dollars ever sold from the account
-** `m/[underline]##AMOUNT##`: Total profit in dollars made from this account so far
-** `w/[underline]##AMOUNT##`: How much the current amount held is worth at the current price
-* All `AMOUNT` s can be preceded with `>` or `<` to specify greater or less than respectively, for example:
+** `n/NAME`:  Name of the coin
+** `c/CODE`: Trading code of the coin
+** `t/TAG...`: Tags attached to the coin
+** `p/PRICE`: Current price of the coin
+** `h/AMOUNT`: Current amount held in an account
+** `b/AMOUNT`: Total amount in dollars ever bought in the account
+** `s/AMOUNT`: Total amount in dollars ever sold from the account
+** `m/MADE`: Total profit in dollars made from this account so far
+** `w/WORTH`: How much the current amount held is worth at the current price
+* You can put `>` or `<` to specify amounts greater or less than, for example:
 ** `p/>500`: Current price exceeding 500
 ** `s/<20`: Total amount sold less than 20
 * Possible logical operators include:
 ** `AND`: This is the default
 ** `OR`: Only one of the conditions on either side need to be matched
 ** `NOT`: Reverses the matching result of the following condition
-** `({nbsp})`: Evaluates conditions inside parentheses first, inside to out
+** `({nbsp})`: Evaluates conditions inside parentheses first, starting with the innermost one
 ****
 ====
 
 .Examples
 ----
-find BT
-f t/fav
-find (p/>500 t/fav) OR h/<20
+find BT <1>
+f t/fav <2>
+find (p/>500 t/fav) OR h/<20 <3>
 ----
-. Finds accounts with `BT` in their name, code or index
-. Finds accounts with the `fav` tag
-. Finds accounts either with current price more than $500 and tagged `fav`, or with less than 20 Coins left
+<1> Finds accounts with `BT` in their name, code or index
+<2> Finds accounts with the `fav` tag
+<3> Finds accounts either with current price more than $500 and tagged `fav`, or with less than 20 Coins left
 
 === View details of an account `view` / `v`
 
 .Format
 ----
-view SPECIFIER
+view TARGET
 ----
 
 Opens up the detail window for the account specified. The detail window includes information such as:
@@ -249,42 +255,42 @@ Opens up the detail window for the account specified. The detail window includes
 
 .Examples
 ----
-view BTC
-view Bitcoin
-v 2
+view BTC     <1>
+view Bitcoin <2>
+v 2          <3>
 ----
-. See details for the `BTC` account
-. See details for the `Bitcoin` account
-. See details for the 2nd account in the current listing
+<1> See details for the `BTC` account
+<2> See details for the `Bitcoin` account
+<3> See details for the 2nd account in the current listing
 
 === Set up notifications `notify` / `n` `[Coming in v1.5]`
 
 .Format
 ----
-notify {SPECIFIER,TAG} CONDITION
+notify {TARGET} CONDITION
 ----
 
-Sets a condition that triggers a popup notification when a price update is done and the condition matches the new data for a coin. The condition query mostly follows the same format as that used in <<find,find>>, with additional options specified below. Also, `TAG` cannot be used as a notification condition.
+Sets a condition that triggers a popup notification when a price update is done and the condition matches the new data for a coin. The condition query mostly follows the same format as that used in <<find,find>>, with additional options specified below.
 
 .Notification Options Format
 ****
-* Additional specifier `all` to refer to any account
-* All `AMOUNT` s can be preceded with `+` or `-` to indicate a change in the detail specified instead of its absolute value, for example:
+* If no target is specified, all accounts are checked
+* You can put `+` or `-` before specifying an amount to indicate a change in the property specified instead of its absolute value, for example:
 ** `p/+1000`: Current price rose 1000
 ** `p/pass:[-]>500`: Current price fell more than 500
 ****
 
 .Example
 ----
-notify all h/>0
-notify 1 w/>50
-notify 3 w/+<1000
-notify all p/->10%
+notify h/>0        <1>
+notify 1 w/>50     <2>
+notify 3 w/+<1000  <3>
+notify all p/->10% <4>
 ----
-* Notify when the amount held in an account is more than 0 after the update. This always triggers and is useless on its own but can be combined with other conditions to restrict notifications to a smaller set of accounts
-* Notify when the amount worth in dollars of the first entry exceeds 50 dollars
-* Notify when the amount worth in dollars of the third entry rises by more than 1000 dollars
-* Notify when any coin's price falls more than 10%
+<1> Notify when the amount held in an account is more than 0 after the update. This always triggers and is useless on its own but can be combined with other conditions to restrict notifications to a smaller set of accounts
+<2> Notify when the amount worth in dollars of the first entry exceeds 50 dollars
+<3> Notify when the amount worth in dollars of the third entry rises by more than 1000 dollars
+<4> Notify when any coin's price falls more than 10%
 
 === Change listing order `order` / `o` `[Coming in v1.5]`
 
@@ -293,15 +299,17 @@ notify all p/->10%
 order OPTION/{a,d}...
 ----
 
-Orders the coin listing based on the specified details such as name, price, amount held, etc. Put `a` after the option to sort it in ascending order, and `d` to sort in descending order. The listing is sorted by the leftmost entered option first, then equal values are sorted by the next one, and so on. The default order is alphabetical order of the coin names.
+Orders the coin listing based on the specified details such as name, price, amount held, etc. Use the same letters in <<find,condition queries>>.
+
+Put `a` after the option to sort it in ascending order, and `d` to sort in descending order. The listing is sorted by the leftmost entered option first, then equal values are sorted by the next one, and so on. The default order is alphabetical order of the coin names.
 
 .Examples
 ----
-order p/a
-order p/d n/d
+order p/a     <1>
+order p/d n/d <2>
 ----
-* Sort the listing in ascending order based on current prices
-* Sort the listing in descending order based on the current prices first, then if two coins have the same price, they will be sorted by name in reverse alphabetical order
+<1> Sort the listing in ascending order based on current prices
+<2> Sort the listing in descending order based on the current prices first, then if two coins have the same price, sort them by name in reverse alphabetical order
 
 === List past commands `history` / `h`
 
@@ -399,11 +407,11 @@ Resets all data in _CoinBook_.
 This command can be reversed with `undo`, but only in the same session. The effect is permanent once _CoinBook_ is closed.
 ====
 
-=== Updating the information : `update` / `u` `[coming in v1.5]`
+=== Syncs local, outdated data with latest data and information : `sync` / `sy` `[Coming in v1.5]`
 
 .Format
 ----
-update
+sync
 ----
 
 Obtains the latest prices and refreshes the news feed from the Internet.
@@ -434,21 +442,25 @@ Subsequent kbd:[Tab] key presses will cycle through the list of suggestions.
 
 == Command Summary
 
-* *Help* : `help`
-* *Buy* : `buy SPECIFIER AMOUNT`
-* *Sell* : `sell SPECIFIER AMOUNT`
-* *Tag* : `tag SPECIFIER TAG`
-* *List* : `list`
-* *Find* : `find [SPECIFIER] CONDITION`
-* *View* : `view SPECIFIER`
-* *Notify* : `notify {SPECIFIER,TAG} CONDITION`
-* *Sort* : `order OPTION/{a,d}...`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
-* *Clear* : `clear`
-* *Update* : `update`
-* *Exit* :  `exit`
+[width="80%",cols="20%,<23%,<25%",options="header",]
+|=======================================================================
+| Command |Format | Description
+| *Buy* | `buy TARGET a/AMOUNT` | Adds AMOUNT of coin to the targeted account.
+| *Clear* | `clear` | Deletes all coin accounts from the CoinBook.
+| *Exit* |  `exit` | Exits the program.
+| *Find* | `find CONDITION` | Finds all coin accounts that fit the CONDITION.
+| *Help* | `help` | Displays the help page.
+| *History* | `history` | Shows the user a history of previously input commands.
+| *List* | `list` | Lists all coin accounts.
+| *Notify* | `notify CONDITION` | Sets CoinBook to notify the user when the CONDITION has been met.
+| *Redo* | `redo` | Reapplies the previously un-done command.
+| *Sell* | `sell TARGET AMOUNT` | Subtracts AMOUNT of coin from the targeted account.
+| *Order* | `order OPTION/{a,d}...` | Sorts the coin accounts in the CoinBook based on their OPTION.
+| *Tag* | `tag TARGET TAG` | Tags the targeted account with TAG name.
+| *Undo* | `undo` | Reverts the effect of the previous undo-able command.
+| *Update* | `update` | Fetches data from online sources to update the prices.
+| *View* | `view TARGET` | Views information about the targeted account.
+|=======================================================================
 
 [appendix]
 == Glossary

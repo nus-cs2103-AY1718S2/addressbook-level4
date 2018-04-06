@@ -1,0 +1,35 @@
+@startuml
+hide footbox
+participant AddressBookParser
+
+activate AddressBookParser
+
+create FindCommandParser
+AddressBookParser -> FindCommandParser : new FindCommandParser
+activate FindCommandParser
+FindCommandParser -> AddressBookParser
+deactivate
+
+AddressBookParser -> FindCommandParser : parse("<arg string>")
+activate FindCommandParser
+
+FindCommandParser -> ArgumentTokenizer : tokenizeToTokenList("<arg string>")
+activate ArgumentTokenizer
+
+ArgumentTokenizer -> FindCommandParser : TokenList
+deactivate ArgumentTokenizer
+
+FindCommandParser -> ParserUtil : ParseCondition(TokenList)
+activate ParserUtil
+
+ref over ParserUtil : Parse Sequence
+
+ParserUtil -> FindCommandParser : Condition
+deactivate ParserUtil
+
+FindCommandParser -> AddressBookParser : Condition
+deactivate FindCommandParser
+
+destroy FindCommandParser
+
+@enduml

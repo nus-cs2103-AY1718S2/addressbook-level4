@@ -71,7 +71,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void addPage(Person person) throws IOException {
 
-        String path = new File("src/main/resources/StudentPage/template.html").getAbsolutePath();
+        String path = new File("../resources/main/StudentPage/template.html").getAbsolutePath();
         File htmlTemplateFile = new File(path);
         String htmlString = FileUtils.readFileToString(htmlTemplateFile);
         Name titleName = person.getName();
@@ -81,7 +81,7 @@ public class ModelManager extends ComponentManager implements Model {
         htmlString = htmlString.replace("$title", title);
         htmlString = htmlString.replace("$identityNumber", identityNumber);
 
-        String newPath = new File("src/main/resources/StudentPage/" + title + ".html").getAbsolutePath();
+        String newPath = new File("../resources/main/resources/StudentPage/" + title + ".html").getAbsolutePath();
 
         File newHtmlFile = new File(newPath);
         FileUtils.writeStringToFile(newHtmlFile, htmlString);

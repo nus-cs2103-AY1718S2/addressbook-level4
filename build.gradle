@@ -199,12 +199,13 @@ task deployOfflineDocs(type: Copy) {
         include 'stylesheets/*'
         include 'images/*'
         include 'UserGuide.html'
+        include 'StudentPage/*'
     }
 }
 
 task copyDummySearchPage(type: Copy) {
     from '/docs/template.html'
-    into "${buildDir}/docs/StudentPage"
+    into "${buildDir}/jar/StudentPage"
 }
 
 deployOfflineDocs.dependsOn asciidoctor

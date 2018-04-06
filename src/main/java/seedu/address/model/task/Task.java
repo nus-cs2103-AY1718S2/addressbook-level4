@@ -15,8 +15,6 @@ public class Task implements Comparable<Task> {
     private final Deadline deadline;
     private final Priority priority;
 
-    private final long actualPriority;
-
     /**
      * Every field must be present and not null.
      */
@@ -26,9 +24,6 @@ public class Task implements Comparable<Task> {
         this.taskDesc = taskDesc;
         this.deadline = deadline;
         this.priority = priority;
-
-        //calculates priority based on deadline and priority input of user
-        this.actualPriority = calculatePriority(deadline.daysBetween, priority.value);
     }
 
     public Title getTitle() {
@@ -45,22 +40,6 @@ public class Task implements Comparable<Task> {
 
     public Priority getPriority() {
         return priority;
-    }
-
-    public long getActualPriority() {
-        return actualPriority;
-    }
-
-    /**
-     * Simple formula to calculate the priority of a task.
-     * @param daysBetween
-     * @param priority
-     * @return
-     */
-    private long calculatePriority(long daysBetween, int priority) {
-        long calPriority = ((1 / (daysBetween + 1)) * 50) + priority;
-
-        return calPriority;
     }
 
     public int getDeadlineDay() {
@@ -88,8 +67,7 @@ public class Task implements Comparable<Task> {
         seedu.address.model.task.Task otherPerson = (seedu.address.model.task.Task) other;
         return otherPerson.getTaskDesc().equals(this.getTaskDesc())
                 && otherPerson.getDeadline().equals(this.getDeadline())
-                && otherPerson.getPriority().equals(this.getPriority())
-                && (otherPerson.getActualPriority() == (this.getActualPriority()));
+                && otherPerson.getPriority().equals(this.getPriority());
     }
 
     @Override

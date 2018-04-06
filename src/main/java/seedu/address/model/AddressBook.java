@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.item.UniqueItemList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -30,6 +31,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueTaskList tasks;
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueItemList itemList;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -42,6 +44,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tasks = new UniqueTaskList();
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        itemList = new UniqueItemList();
     }
 
     public AddressBook() {}
@@ -58,6 +61,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void setPersons(List<Person> persons) throws DuplicatePersonException {
         this.persons.setPersons(persons);
+    }
+
+    public void setItemList(List<String> itemList) {
+        this.itemList.setItemList(itemList);
     }
 
     public void setTasks(List<Task> tasks) {
@@ -83,6 +90,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             setPersons(syncedPersonList);
             setTasks(newData.getTaskList());
+            setItemList(newData.getItemList());
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         }
@@ -176,7 +184,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return new Person(
                 person.getName(), person.getMatricNumber(),
                 person.getPhone(), person.getEmail(), person.getAddress(),
-                person.getDisplayPic(), correctTagReferences);
+                person.getDisplayPic(), person.getParticipation(), correctTagReferences);
     }
 
     /**
@@ -237,8 +245,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<Task>[][] getCalendarList() {
+        return tasks.asCalendarList();
+    }
+
+    @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
+    }
+
+    @Override
+    public List<String> getItemList() {
+        return itemList.getItemList();
     }
 
     @Override

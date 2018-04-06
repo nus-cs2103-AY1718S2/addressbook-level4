@@ -89,7 +89,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.account = account;
         String loadUrl = this.account.getLoginDialogUrl();
         EventsCenter.getInstance().post(new ShowLoginDialogRequestEvent(loadUrl));
+    }
 
+    public void setVerificationCode(String code) {
+        account.setCode(code);
     }
 
     //// person-level operations

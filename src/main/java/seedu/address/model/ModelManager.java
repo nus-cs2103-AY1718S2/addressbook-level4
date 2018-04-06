@@ -67,6 +67,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void setVerificationCode(String code) {
+        addressBook.setVerificationCode(code);
+    }
+
+    @Override
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();

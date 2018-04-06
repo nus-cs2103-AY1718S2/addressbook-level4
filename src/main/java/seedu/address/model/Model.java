@@ -24,6 +24,9 @@ public interface Model {
     /** Logs in with the given account */
     void loginAccount(Account account);
 
+    /** Sets the verification code in an account. */
+    void setVerificationCode(String code);
+
     /** Deletes the given person. */
     void deletePerson(Person target) throws PersonNotFoundException;
 

@@ -66,7 +66,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     /**
-     *
+     * Passes a verification code when the login is successful.
      */
     private void passVerificationCode() {
         browser.getEngine().getLoadWorker().stateProperty().addListener((

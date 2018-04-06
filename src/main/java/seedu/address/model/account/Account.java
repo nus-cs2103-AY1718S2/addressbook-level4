@@ -16,6 +16,7 @@ import com.restfb.scope.ScopeBuilder;
 public class Account {
 
     private static final String APP_ID = "366902457122089";
+    private static final String APP_SECRET = "9cdbed37c0780e75e995381f0688a8d7";
     private static final String REDIRECT_URL = "https://www.facebook.com/connect/login_success.html";
 
     private final Username username;
@@ -23,6 +24,7 @@ public class Account {
 
     private ScopeBuilder scopeBuilder;
     private FacebookClient client;
+    private String code;
 
     /**
      * Every field must be present and not null.
@@ -56,6 +58,10 @@ public class Account {
      */
     private void setClient() {
         client = new DefaultFacebookClient(Version.VERSION_2_12);
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     /**

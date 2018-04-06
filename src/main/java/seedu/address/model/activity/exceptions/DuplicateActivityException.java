@@ -2,7 +2,7 @@ package seedu.address.model.activity.exceptions;
 
 import seedu.address.commons.exceptions.DuplicateDataException;
 
-//@@author YuanQQLer
+//@@author YuanQLLer
 /**
  * Signals that the operation will result in duplicate Activity objects.
  */

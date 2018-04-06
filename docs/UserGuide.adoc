@@ -245,7 +245,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Adding a to-do: `addToDo` `v1.2`
+=== Adding a to-do: `addToDo`
 
 Adds a to-do to the address book +
 Alias: `aTD` +
@@ -262,7 +262,7 @@ Examples:
 image:AddToDoCommandExample.png[width="500"] +
 Figure 2. Example of to-dos
 
-=== Check a to-do as done: `check` `v1.3`
+=== Check a to-do as done: `check`
 
 Checks a to-do in the address book as done +
 Format: `check INDEX`
@@ -274,7 +274,7 @@ Examples:
 
 * `check 1`
 
-=== Uncheck a to-do as undone: `uncheck` `v1.3`
+=== Uncheck a to-do as undone: `uncheck`
 
 Unchecks a to-do in the address book as undone +
 Format: `uncheck INDEX`

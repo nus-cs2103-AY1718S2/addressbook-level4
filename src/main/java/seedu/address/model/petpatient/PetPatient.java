@@ -138,6 +138,19 @@ public class PetPatient {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
+    /**
+     * Returns a list of tags as a string, for find command.
+     */
+    public String getTagString() {
+        StringBuilder tagString = new StringBuilder();
+        Set<Tag> tagSet = Collections.unmodifiableSet(tags.toSet());
+        for (Tag tag : tagSet) {
+            tagString.append(tag.tagName);
+            tagString.append(" ");
+        }
+        return tagString.toString().trim();
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

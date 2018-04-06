@@ -60,14 +60,14 @@
             </padding>
             <StackPane fx:id="petPatientListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
           </VBox>
-          <!-- @@author Robert-Peng -->
+
           <StackPane fx:id="calendarPlaceholder" prefWidth="200" >
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>
           </StackPane>
         </SplitPane>
-
+        <!-- @@author -->
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
       </VBox>
     </Scene>

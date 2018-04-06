@@ -230,6 +230,51 @@ Sorts all persons in the address book alphabetically and then displays the curre
 Format: `sort`
 // end::sort[]
 
+=== Search for profile : `searchall` `[Since v1.4]`
+
+Search for the specified profiles on all social media platform linkable with the application. +
+Format: `searchall KEYWORD`
+
+****
+* The KEYWORD is the name to be searched for.
+* Make use of the search function of the respective social media platform.
+****
+
+Examples:
+
+* `searchall john`
+Search with keyword "john" on all the social media linked with the application and display the search result in the browser window under the respective tabs.
+
+=== Search for profile on Facebook : `searchfb` `[Since v1.4]`
+
+Search for the specified profiles on Facebook. +
+Format: `searchfb KEYWORD`
+
+****
+* The KEYWORD is the name to be searched on Facebook.
+* Make use of the search engine of Facebook.
+****
+
+Examples:
+
+* `searchfb tom` +
+Search with keyword "tom" on Facebook and display the search result in the browser window under the Facebook tab.
+
+=== Search for profile on Twitter : `searchtwitter` `[Since v1.4]`
+
+Search for the specified profiles on Twitter. +
+Format: `searchtwitter KEYWORD`
+
+****
+* The KEYWORD is the name to be searched on Twitter.
+* Make use of the search engine of Twitter.
+****
+
+Examples:
+
+* `searchtwitter tom` +
+Search with keyword "tom" on Twitter and display the search result in the browser window under the Twitter tab.
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -376,36 +421,6 @@ Format: `post SOCIALMEDIA/MESSAGE`
 Examples:
 
 * `post facebook/Sample post.`
-
-=== Search for profile : `searchall` `[Coming in v2.0]`
-
-Search for the specified profiles on all social media platform linkable with the application. +
-Format: `searchall KEYWORD`
-
-****
-* The KEYWORD can either be the user name or email.
-* Make use of the search function of the respective social media platform.
-****
-
-Examples:
-
-* `search John`
-Search with keyword "John" on all the social media linked with the application and display the search result in the browser window under the respective tabs.
-
-=== Search for profile on specific platform : `searchon` `[Coming in v2.0]`
-
-Search for the specified profiles on the social media platform specified. +
-Format: `search SOCIALMEDIA KEYWORD`
-
-****
-* The KEYWORD can either be the user name or email.
-* Make use of the search function of the specified social media platform.
-****
-
-Examples:
-
-* `searchon facebook John` +
-Search with keyword "John" on facebook and display the search result in the browser window under the respective tabs.
 
 === Logout from all the linked platform : `logoutall` `[Coming in v2.0]`
 

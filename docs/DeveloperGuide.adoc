@@ -495,39 +495,83 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
 === Task
-Task refer to a piece of work to be done that can be added by a student user using the application. After being added, tasks can be edited and deleted. When a task is not completed within the deadline
+Task refer to a piece of work to be done that can be added by a user of the application. After being added, tasks can be edited and deleted. When a task is not completed within the deadline
 , it will be automatically be marked as overdue.
 
 ==== Current Implementation
 
-*_Figure17_* below shows how `Task` is represented in the application.
+*_Figure 17_* below shows how `Task` is represented in the application.
 
 .UML Diagram for Task
 image::UML diagram for task.png[width="450"]
 
-A brief description of each of the attributes of `Task`is given below:
+A brief description of each of the attributes of `Task` is given below:
 
 * Name: Represents the name of the task
 * DateTime: Represents the due date and time of the task.
 * Remark: Represents a short description or reminder pertaining to the task.
 * Tags: Groupings or representation for the task
 
-Operation that manipulates the `task` object can been done using `task`, `complete`, `delete`, `edit` commands.
+Operations that manipulate a `task` class object can been done using `TaskCommand`, `CompleteCommand`, `RemoveCommand`, `EditCommand` commands.
 These commands are described in more detail below.
 
-===== Task
+Operations that manipulate the GUI with respect to a `task` class object includes
+`ListCommand`, `OverdueCommand`.
 
-===== Complete
+===== Adding tasks
+Tasks can be added through the use of the `TaskCommand`.
 
-===== Delete
+The following is a snippet shows how the `executeUndoableCommand()` of `TaskCommand` updates `UniqueActivityList` residing in model of CLIndar by adding `toAdd`. Note that `toAdd` will not be added if a duplicate task has been found or the `Name` or `DateTime` field is left empty.
 
-===== Edit
+[source,java]
+----
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.addActivity(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (DuplicateActivityException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
+        }
+    }
+----
+If the task is successfully added, it will be reflected in the CLIndar GUI itself.
+
+===== Completing Tasks
+Tasks can be completed through the use of the `CompleteCommand` by specifying the task's index reflected in the GUI.
+
+
+
+===== Removing Tasks
+Tasks can be removed through the use of the `RemoveCommand` by specifying the index of the task reflected in the GUI. `UniqueActivityList` residing in the `model` will be updated by having `activityToDelete` deleted from it.
+
+The following snippet shows the `executeUndoableCommand()` of the `RemoveCommand` class. If the index of an activity is not found, an `ActivityNotFoundException` will be thrown.
+
+[source,java]
+----
+    public CommandResult executeUndoableCommand() {
+        requireNonNull(activityToDelete);
+        try {
+            model.deleteActivity(activityToDelete);
+        } catch (ActivityNotFoundException pnfe) {
+            throw new AssertionError("The target activity cannot be missing");
+        }
+
+        if (activityOption.equals("task")) {
+            return new CommandResult(String.format(MESSAGE_REMOVE_TASK_SUCCESS, activityToDelete));
+        } else {
+            return new CommandResult(String.format(MESSAGE_REMOVE_EVENT_SUCCESS, activityToDelete));
+        }
+    }
+----
+
+===== Edit Tasks
 
 ===== Find
 
 ===== Overdue
 
-The user is able to list down overdue tasks by using the `overdue` command. Note that overdue only lists down overdue tasks; overdue events are marked as
+A user can view his overdue tasks through the use of the `OverdueCommand`. Note that overdue only lists down overdue tasks; overdue events are marked as
 completed automatically.
 
 We will be making use of the LocalDateTime class in Java. The class has a `now` method, which allows us to obtain the current system clock.

@@ -70,6 +70,7 @@ public class UnfavouriteCommand extends UndoableCommand {
 
         return new StudentBuilder(target).withFavourite(false).build();
     }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

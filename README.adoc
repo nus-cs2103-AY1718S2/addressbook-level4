@@ -13,17 +13,20 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-PrioriTask is a desktop Task Management application.
+PrioriTask is a desktop task management application. It is not just any task management application, but a combination of the to-do list, calendar and reminder features, with an added bonus of an automatic updating and sorting of your tasks based on priority levels.
 
-This application's main aim is to help busy university students keep track of their many tasks and priorities. This application is most suitable for students who:
+PrioriTask's main aim is to help busy university students keep track of their many tasks and priorities. This application is most suitable for students who:
 
 * have an endless number of tasks to keep track of
-* are unable to monitor their tasks and their levels of importance
-* prefer to use a desktop application
+* require help to monitor their tasks and their levels of importance
+* would like assistance in task planning
+* prefer a digital organizer over a physical organizer
 * prefer to work with a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI)
 
-Is PrioriTask the application for you? Get started by reading the
-<<UserGuide#, user guide>> and <<DeveloperGuide#, developer guide>>.
+Do you have any of the characteristics listed above? If so, then PrioriTask is the application for you!
+
+So what are you waiting for? Get started by downloading the link:https://github.com/CS2103JAN2018-W13-B4/main/releases[application], and reading the
+<<UserGuide#, user guide>> or <<DeveloperGuide#, developer guide>> now!
 
 == Site Map
 

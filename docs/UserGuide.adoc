@@ -641,16 +641,24 @@ _Reorder subtasks using a given condition_
 
 == Calendar Features
 
-The `Calendar` allows you to have a chronic overview of the deadlines of all your tasks. Tasks on the calendar changes according to the last task listing. By default, you will view the current month when you first open PrioriTask.
+The calendar allows you to have a chronic overview of the deadlines of all your tasks. Tasks on the calendar changes according to the last task listing. By default, you will view the current month when you first open PrioriTask. The diagram below (refer to <<fig-UserGuideCalendarFeature1>>) shows how the calendar would look like when displayed with task entries.
 
-* _[coming in v2.0]_ To show only completed tasks on the calendar.
-* _[coming in v2.0]_ To support the viewing of the calendar by days, weeks and years.
+[NOTE]
+The calendar is best viewed fully-maximised on a 13” computer screen. +
+The display of the calendar may differ from pictures on other computer screens.
 
-_{ TODO: Add a note about display }_
+[[fig-UserGuideCalendarFeature1]]
+.PrioriTask's main page
+image::UserGuideCalendarFeature1.png[width="790"]
+
+In future releases, the calendar will support,
+
+* Displaying of only the uncompleted tasks on the calendar.
+* Viewing of the calendar by days, weeks and years.
 
 === Go to current month: `cmonth` or `cm` `[since v1.4]`
 
-Chang the view of the calendar to that of the current month. +
+Change the view of the calendar to that of the current month. +
 
 [.format]
 ====

@@ -10,7 +10,6 @@ import java.util.Objects;
  */
 public class Task implements Comparable<Task> {
 
-    private final Title title;
     private final TaskDescription taskDesc;
     private final Deadline deadline;
     private final Priority priority;
@@ -18,16 +17,11 @@ public class Task implements Comparable<Task> {
     /**
      * Every field must be present and not null.
      */
-    public Task(Title title, TaskDescription taskDesc, Deadline deadline, Priority priority) {
-        requireAllNonNull(title, taskDesc, deadline, priority);
-        this.title = title;
+    public Task(TaskDescription taskDesc, Deadline deadline, Priority priority) {
+        requireAllNonNull(taskDesc, deadline, priority);
         this.taskDesc = taskDesc;
         this.deadline = deadline;
         this.priority = priority;
-    }
-
-    public Title getTitle() {
-        return title;
     }
 
     public TaskDescription getTaskDesc() {

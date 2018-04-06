@@ -368,7 +368,7 @@ You can then enter `add 4` to add the book into your book shelf.
 NOTE: If you don't see the intended book in the list, then too many book selections have been performed after
 that book.
 
-=== Finding a book in the library: `library` [coming in v1.4]
+=== Finding a book in the library: `library` [coming in v1.5]
 
 If you want to know whether a book is available in a library, use `library`. +
 Format: `library INDEX`
@@ -386,7 +386,7 @@ Examples:
 `library 1` +
 Search your chosen library for the 1st book in your book shelf.
 
-=== Placing a book on watchlist: `watch` [coming in v1.4]
+=== Placing a book on watchlist: `watch` [coming in v1.5]
 
 Interested in so many books that searching them up using `library` is time consuming?
 With `watch`, you can automatically get notified when a book in your watchlist
@@ -517,7 +517,7 @@ And `theme dark`:
 
 image::ThemeDark.png[width="700"]
 
-=== Changing settings: `settings` [coming in v1.4]
+=== Changing settings: `settings` [coming in v1.5]
 
 ==== Command alias [coming in v1.5]
 

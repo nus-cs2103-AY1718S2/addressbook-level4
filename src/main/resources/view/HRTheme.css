@@ -241,10 +241,6 @@
     -fx-background-color: white;
 }
 
-#bottomPaneSplit > .split-pane-divider {
-    -fx-background-color: transparent;
-}
-
 /* List */
 
 #listPersons {
@@ -406,8 +402,13 @@
 .pdf-page {
     -fx-background-color: white;
     -fx-border-width: 1;
-    -fx-border-color: #ccc;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0, 0, 3);
+    -fx-border-color: #ddd;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 12, 0, 0, 2);
+}
+
+#resumePane:focused .pdf-page {
+    -fx-border-color: #aaa;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 18, 0, 0, 3);
 }
 
 #resumePageLabel {
@@ -421,11 +422,15 @@
     -fx-background-color: white;
 }
 
+#resumePageLabel, #resumeLoadingLabel {
+    -fx-font-family: "Roboto";
+}
+
 
 
 /* Info */
 
-#infoMain, #infoMainPane, #infoSplitPane, #infoSplitMainPane {
+#infoMain, #infoMainPart, #infoMainPane, #infoSplitPane, #infoSplitMainPane {
     -fx-background-color: white;
 }
 
@@ -540,12 +545,20 @@
 /* Side graph */
 
 #infoSideGraph {
-    -fx-background-color: #eee;
+    -fx-background-color: white;
 }
 
 #infoRatingTechnicalLabel, #infoRatingCommunicationLabel,
-#infoRatingProblemSolvingLabel, #infoRatingExperienceLabel {
+#infoRatingProblemSolvingLabel, #infoRatingExperienceLabel,
+#infoRatingOverallLabel {
     -fx-font-family: "Roboto Medium";
+    -fx-font-size: 11;
+}
+
+#infoRatingTechnicalValue, #infoRatingCommunicationValue,
+#infoRatingProblemSolvingValue, #infoRatingExperienceValue,
+#infoRatingOverallValue {
+    -fx-font-family: "Roboto";
     -fx-font-size: 11;
 }
 
@@ -564,7 +577,7 @@
 
 /* Side button */
 
-#infoSideButtonResume {
+.hr-button {
     -fx-background-color: #42A5F5;
     -fx-background-insets: 0;
 
@@ -577,12 +590,12 @@
     -fx-cursor: hand;
 }
 
-#infoSideButtonResume:focused,
-#infoSideButtonResume:hover {
+.hr-button:focused,
+.hr-button:hover {
     -fx-background-color: #1976D2;
 }
 
-#infoSideButtonResume:pressed {
+.hr-button:pressed {
     -fx-background-color: #0D47A1;
 }
 

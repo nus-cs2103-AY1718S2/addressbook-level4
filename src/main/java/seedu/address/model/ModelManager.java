@@ -8,11 +8,13 @@ import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.PersonChangedEvent;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -29,6 +31,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
+    private final ObservableList<Person> personList;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -41,6 +44,13 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredPersons.setPredicate(PREDICATE_SHOW_ALL_PERSONS);
+
+        // Actively listen to predicate changes
+        personList = FXCollections.observableArrayList(filteredPersons);
+        filteredPersons.addListener((ListChangeListener<Person>) c -> {
+            personList.setAll(filteredPersons);
+        });
     }
 
     public ModelManager() {
@@ -63,10 +73,16 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    /** Raises an event to indicate the person has changed */
+    private void indicatePersonChanged(Person source, Person updated) {
+        raise(new PersonChangedEvent(source, updated));
+    }
+
     @Override
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
+        indicatePersonChanged(target, null);
     }
 
     @Override
@@ -83,6 +99,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+        indicatePersonChanged(target, editedPerson);
     }
 
     @Override
@@ -100,6 +117,16 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ObservableList<Person> getFilteredPersonList() {
         return FXCollections.unmodifiableObservableList(filteredPersons);
+    }
+
+    /**
+     * Returns an active view of the list of {@code Person} backed by the internal list of {@code addressBook}
+     * The differences with {@link ModelManager#getFilteredPersonList}
+     * is the ability to actively listen to predicate change
+     */
+    @Override
+    public ObservableList<Person> getActivePersonList() {
+        return personList;
     }
 
     @Override

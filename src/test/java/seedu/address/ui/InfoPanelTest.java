@@ -24,7 +24,7 @@ public class InfoPanelTest extends GuiUnitTest {
     public void setUp() {
         selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
 
-        guiRobot.interact(() -> infoPanel = new InfoPanel());
+        guiRobot.interact(() -> infoPanel = new InfoPanel(false));
         uiPartRule.setUiPart(infoPanel);
 
         infoPanelHandle = new InfoPanelHandle(infoPanel.getRoot());

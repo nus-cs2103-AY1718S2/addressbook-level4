@@ -74,7 +74,7 @@ public class AddressBookTest {
         newData.sortDesc(SortCommand.SortField.RATING);
 
         AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(BENSON).withPerson(ALICE)
-                .withPerson(GEORGE).withPerson(FIONA).withPerson(ELLE).withPerson(DANIEL).withPerson(CARL).build();
+                .withPerson(CARL).withPerson(DANIEL).withPerson(ELLE).withPerson(FIONA).withPerson(GEORGE).build();
         assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
     }
 

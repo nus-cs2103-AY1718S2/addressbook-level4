@@ -1,12 +1,15 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.collections.ListChangeListener;
+import javafx.animation.Animation;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -14,6 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -22,8 +26,8 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.MaximizeAppRequestEvent;
 import seedu.address.commons.events.ui.MinimizeAppRequestEvent;
-import seedu.address.commons.events.ui.PersonChangedEvent;
 import seedu.address.commons.events.ui.ShowPanelRequestEvent;
+import seedu.address.commons.util.UiUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
@@ -37,7 +41,9 @@ public class MainWindow extends UiPart<Stage> {
     public static final double MIN_WINDOW_WIDTH = 800;
     public static final double MIN_WINDOW_HEIGHT = 600;
     public static final int WINDOW_CORNER_SIZE = 8;
+
     private static final String FXML = "MainWindow.fxml";
+    private static final double MAX_ANIMATION_TIME_MS = 200;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -56,6 +62,12 @@ public class MainWindow extends UiPart<Stage> {
     private double xOffset = 0;
     private double yOffset = 0;
 
+    // Animation
+    private boolean animated;
+    private ArrayList<Animation> allAnimation = new ArrayList<>();
+    private Node activeNode;
+    private String activePanel;
+
     @FXML
     private AnchorPane topPane;
 
@@ -64,6 +76,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private AnchorPane infoPanePlaceholder;
+
+    @FXML
+    private VBox welcomePane;
 
     @FXML
     private AnchorPane topCommandPlaceholder;
@@ -111,6 +126,9 @@ public class MainWindow extends UiPart<Stage> {
         // Handle responsive
         handleSplitPaneResponsive();
 
+        // Animation setup
+        this.animated = prefs.isAnimated();
+
         // Handle minimize and maximize request
         registerAsAnEventHandler(this);
     }
@@ -123,16 +141,15 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        infoPanel = new InfoPanel();
+        infoPanel = new InfoPanel(animated);
         infoPanePlaceholder.getChildren().add(infoPanel.getRoot());
 
         pdfPanel = new PdfPanel();
         resumePanePlaceholder.getChildren().add(pdfPanel.getRoot());
 
-        ObservableList<Person> personList = logic.getFilteredPersonList();
-        personListPanel = new PersonListPanel(personList);
+        ObservableList<Person> personList = logic.getActivePersonList();
+        personListPanel = new PersonListPanel(personList, animated);
         listPersonsPlaceholder.getChildren().add(personListPanel.getRoot());
-        setupPersonChangedEvent(personList);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         centerPanePlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -252,27 +269,77 @@ public class MainWindow extends UiPart<Stage> {
         });
     }
 
-    private void setupPersonChangedEvent(ObservableList<Person> personList) {
-        personList.addListener((ListChangeListener<Person>) c -> {
-            raise(new PersonChangedEvent(c));
-        });
-    }
-
     @Subscribe
     private void handleShowPanelRequestEvent(ShowPanelRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
-        // Hide all panel
-        infoPanePlaceholder.setVisible(false);
-        resumePanePlaceholder.setVisible(false);
+        // Pause all current running animation
+        allAnimation.forEach(Animation::pause);
+        allAnimation.clear();
 
-        // Show relevant panel
-        if (event.getRequestedPanel().equals(PdfPanel.PANEL_NAME)) {
-            pdfPanel.load();
-            resumePanePlaceholder.setVisible(true);
-        } else if (event.getRequestedPanel().equals(InfoPanel.PANEL_NAME)) {
-            infoPanePlaceholder.setVisible(true);
-            pdfPanel.unload();
+        String requested = event.getRequestedPanel();
+        Node toHide = activeNode;
+        Animation fadeIn;
+        Animation fadeOut;
+
+        // Don't animate if the currently active panel is what requested
+        if (!Objects.equals(activePanel, requested)) {
+            activePanel = requested;
+
+            // Show relevant panel
+            if (PdfPanel.PANEL_NAME.equals(requested)) {
+                pdfPanel.load();
+                activeNode = resumePanePlaceholder;
+            } else if (InfoPanel.PANEL_NAME.equals(requested)) {
+                infoPanel.hide();
+                activeNode = infoPanePlaceholder;
+                infoPanel.show();
+            } else if ("WelcomePane".equals(requested)) {
+                activeNode = welcomePane;
+            }
+
+            if (activeNode == null) {
+                return;
+            }
+
+            if (animated) {
+                // Show currently requested panel
+                activeNode.setOpacity(0);
+                activeNode.setVisible(true);
+
+                fadeIn = UiUtil.fadeNode(activeNode, true, MAX_ANIMATION_TIME_MS, ev -> { });
+                allAnimation.add(fadeIn);
+                fadeIn.play();
+
+                // Hide the previously selected panel
+                if (toHide != null) {
+                    fadeOut = UiUtil.fadeNode(toHide, false,
+                            MAX_ANIMATION_TIME_MS, ev -> onFinishAnimation(toHide));
+                    allAnimation.add(fadeOut);
+                    fadeOut.play();
+                }
+            } else {
+                // Show currently requested panel
+                activeNode.setOpacity(1);
+                activeNode.setVisible(true);
+
+                // Hide the previously selected panel
+                onFinishAnimation(toHide);
+            }
+        }
+    }
+
+    /**
+     * Hide and unload relevant nodes when animation is done playing
+     * @param toHide The window to hide
+     */
+    private void onFinishAnimation(Node toHide) {
+        // Hide the previously selected panel
+        if (toHide != null) {
+            toHide.setVisible(false);
+            if (toHide.equals(resumePanePlaceholder)) {
+                pdfPanel.unload();
+            }
         }
     }
 

@@ -79,7 +79,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         showAllPersons();
         expectedModel = getModel();
         Index selectedIndex = getLastIndex(expectedModel);
-        Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
+        Index expectedIndex = Index.fromZeroBased(Integer.MAX_VALUE);
+        // Max value is a flag for nothing is selected
         selectPerson(selectedIndex);
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
         deletedPerson = removePerson(expectedModel, selectedIndex);

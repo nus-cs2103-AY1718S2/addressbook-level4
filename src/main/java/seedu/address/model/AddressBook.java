@@ -167,6 +167,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Adds a pet patient to the address book.
+     * Also checks the new pet patient's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the pet patient to point to those in {@link #tags}.
+     *
+     * @throws DuplicatePetPatientException if an equivalent person already exists.
+     */
+    public void addPetPatient(PetPatient p) throws DuplicatePetPatientException {
+        PetPatient petPatient = syncWithMasterTagList(p);
+        petPatients.add(petPatient);
+    }
+
+    /**
      * Replaces the given pet patient {@code target} in the list with {@code editedPetPatient}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPetPatient}.
      *
@@ -253,34 +265,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 correctTagReferences);
     }
 
-    /**
-     * Adds a pet patient to the address book.
-     * Also checks the new pet patient's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the pet patient to point to those in {@link #tags}.
-     *
-     * @throws DuplicatePetPatientException if an equivalent person already exists.
-     */
-    public void addPetPatient(PetPatient p) throws DuplicatePetPatientException {
-        PetPatient petPatient = syncWithMasterTagList(p);
-        petPatients.add(petPatient);
-    }
-
     //@@author wynonaK
-    /**
-     * Adds an appointment.
-     * Also checks the new appointment's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the appointment to point to those in {@link #tags}.
-     *
-     * @throws DuplicateAppointmentException if an equivalent person already exists.
-     */
-    public void addAppointment(Appointment a) throws DuplicateAppointmentException, DuplicateDateTimeException {
-        Appointment appointment = syncWithMasterTagList(a);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any appointment
-        // in the appointment list.
-        appointments.add(appointment);
-    }
-
     /**
      * Updates the master tag list to include tags in {@code appointment} that are not in the list.
      *
@@ -305,6 +290,21 @@ public class AddressBook implements ReadOnlyAddressBook {
                 appointment.getRemark(),
                 appointment.getDateTime(),
                 correctTagReferences);
+    }
+
+    /**
+     * Adds an appointment.
+     * Also checks the new appointment's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the appointment to point to those in {@link #tags}.
+     *
+     * @throws DuplicateAppointmentException if an equivalent person already exists.
+     */
+    public void addAppointment(Appointment a) throws DuplicateAppointmentException, DuplicateDateTimeException {
+        Appointment appointment = syncWithMasterTagList(a);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any appointment
+        // in the appointment list.
+        appointments.add(appointment);
     }
 
     ////Delete operations

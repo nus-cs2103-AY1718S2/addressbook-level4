@@ -6,7 +6,7 @@ import static java.util.Objects.requireNonNull;
 /**
  * Represents a remarks of the person in the address book.
  */
-public class CCA {
+public class Cca {
 
 
     public static final String MESSAGE_REMARK_CONSTRAINTS = "Remark can contain anything that you want.";
@@ -17,7 +17,7 @@ public class CCA {
      *
      * @param remark A valid remark.
      */
-    public CCA(String remark) {
+    public Cca(String remark) {
         requireNonNull(remark);
         this.value = remark;
     }
@@ -30,8 +30,8 @@ public class CCA {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof CCA // instanceof handles nulls
-                && this.value.equals(((CCA) other).value)); // state check
+                || (other instanceof Cca // instanceof handles nulls
+                && this.value.equals(((Cca) other).value)); // state check
     }
 
     @Override

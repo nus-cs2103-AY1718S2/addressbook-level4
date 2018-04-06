@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.SearchPersonOnAllPlatformEvent;
+import seedu.address.commons.events.ui.SearchPersonOnFacebookEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
@@ -27,7 +27,7 @@ public class SearchFacebookCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        EventsCenter.getInstance().post(new SearchPersonOnAllPlatformEvent(targetName));
+        EventsCenter.getInstance().post(new SearchPersonOnFacebookEvent(targetName));
         return new CommandResult(String.format(MESSAGE_SEARCH_PERSON_SUCCESS, targetName));
 
     }

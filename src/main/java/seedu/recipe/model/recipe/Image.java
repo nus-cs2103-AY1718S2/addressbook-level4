@@ -47,6 +47,10 @@ public class Image {
         }
     }
 
+    public String getImageName() {
+        return imageName;
+    }
+
     /**
      *  Returns true if a given string is a valid file path, or no file path has been assigned
      */

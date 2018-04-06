@@ -203,15 +203,6 @@ public class XmlAdaptedRecipeTest {
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Url.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
     }
-    @Test
-    public void toModelType_invalidImage_throwsIllegalValueException() {
-        XmlAdaptedRecipe recipe =
-                new XmlAdaptedRecipe(VALID_NAME, VALID_INGREDIENT, VALID_INSTRUCTION, VALID_COOKING_TIME,
-                        VALID_PREPARATION_TIME, VALID_CALORIES, VALID_SERVINGS, VALID_URL,
-                        INVALID_IMAGE, VALID_TAGS);
-        String expectedMessage = Image.MESSAGE_IMAGE_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, recipe::toModelType);
-    }
 
     @Test
     public void toModelType_nullImage_throwsIllegalValueException() {

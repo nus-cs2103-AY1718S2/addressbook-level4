@@ -185,7 +185,7 @@ public class XmlAdaptedRecipe {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Image.class.getSimpleName()));
         }
         if (!Image.isValidImage(this.image)) {
-            throw new IllegalValueException(Image.MESSAGE_IMAGE_CONSTRAINTS);
+            this.image = Image.NULL_IMAGE_REFERENCE;
         }
         final Image image = new Image(this.image);
         //@@author

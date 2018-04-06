@@ -3,14 +3,18 @@ package seedu.progresschecker.model.exercise;
 import static java.util.Objects.requireNonNull;
 import static seedu.progresschecker.commons.util.AppUtil.checkArgument;
 
+import java.util.regex.Pattern;
+
 //@@author iNekox3
 /**
  * Represents an Exercise's question index in the ProgressChecker.
  */
 public class QuestionIndex {
 
+    public static final int QUESTION_NUMBER_INDEX = 2;
+
     public static final String MESSAGE_INDEX_CONSTRAINTS =
-            "Indices can only contain numbers, and should be in the format of"
+            "Indices can only contain numbers, and should be in the format of "
             + "SECTION NUMBER.PART NUMBER.QUESTION NUMBER";
     public static final String INDEX_VALIDATION_REGEX = "([2-9]|1[0-3])\\.([0-9]|[0-9]{2})\\.([0-9]|[0-9]{2})";
     public final String value;
@@ -31,6 +35,13 @@ public class QuestionIndex {
      */
     public static boolean isValidIndex(String test) {
         return test.matches(INDEX_VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns the question number in the whole question index.
+     */
+    public int getQuestionNumber() {
+        return Integer.parseInt(value.split(Pattern.quote("."))[QUESTION_NUMBER_INDEX]);
     }
 
     @Override

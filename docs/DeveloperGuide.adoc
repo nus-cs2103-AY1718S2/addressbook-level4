@@ -565,7 +565,7 @@ The main contents of the timetable is stored as TimetableData and is accessed th
 TimetableData consists of 2 TimetableWeek, which each consist of 5 TimetableDay, which each consist of 24
 TimetableSlot (following the 24h clock)
 
-image::TimetableComponentGraph.png[width="800"]
+image::TimetableComponentClassDiagram.png[width="800"]
 
 In the event the url provided is invalid or empty, a empty Timetable will be created.
 Do take note that there are dummy urls for the purpose of testing. While normal users should not be able to know of their existence,

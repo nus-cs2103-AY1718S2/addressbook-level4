@@ -43,7 +43,7 @@ public class ComposeEmailWindow {
     /**
      * Creates a new Email compose window
      */
-    public ComposeEmailWindow() throws IOException, SyntaxException {
+    public ComposeEmailWindow(String email) throws IOException, SyntaxException {
         //get URL
         FXMLLoader fxmlLoader = new FXMLLoader();
         URL fxmlFileUrl = MainApp.class.getResource(FXML);
@@ -51,7 +51,7 @@ public class ComposeEmailWindow {
         fxmlLoader.setController(this);
         fxmlLoader.setRoot(null);
         Parent root = (Parent) fxmlLoader.load();
-
+        recipients.setText(email);
         puWindow.initModality(Modality.APPLICATION_MODAL);
         puWindow.initStyle(StageStyle.UNDECORATED);
         puWindow.setTitle("Compose Email");

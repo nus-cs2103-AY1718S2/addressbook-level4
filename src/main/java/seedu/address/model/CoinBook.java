@@ -2,7 +2,6 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,6 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import javafx.collections.ObservableList;
@@ -30,7 +30,6 @@ public class CoinBook implements ReadOnlyCoinBook {
 
     private final UniqueCoinList coins;
     private final UniqueTagList tags;
-    private final Set<String> codes;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -42,8 +41,6 @@ public class CoinBook implements ReadOnlyCoinBook {
     {
         coins = new UniqueCoinList();
         tags = new UniqueTagList();
-        //TODO: codes currently contain dummy coin codes, need to use actual data
-        codes = new HashSet<>(Arrays.asList("BTC", "ETH", "XRP", "NEO", "ICX", "DOGE"));
     }
 
     public CoinBook() {}
@@ -138,7 +135,11 @@ public class CoinBook implements ReadOnlyCoinBook {
 
         for (Coin coin : coins) {
             String code = coin.getCode().toString();
-            double newPrice = newData.get(code).getAsJsonObject().get("USD").getAsDouble();
+            JsonElement coinData = newData.get(code);
+            if (coinData == null) {
+                continue;
+            }
+            double newPrice = coinData.getAsJsonObject().get("USD").getAsDouble();
             Coin updatedCoin = new Coin(coin, newPrice);
             updateCoin(coin, updatedCoin);
         }
@@ -204,8 +205,10 @@ public class CoinBook implements ReadOnlyCoinBook {
 
     //@@author laichengyu
     @Override
-    public Set<String> getCodeList() {
-        return Collections.unmodifiableSet(codes);
+    public List<String> getCodeList() {
+        return Collections.unmodifiableList(coins.asObservableList().stream()
+                .map(coin -> coin.getCode().toString())
+                .collect(Collectors.toList()));
     }
     //@@author
 

@@ -4,13 +4,15 @@ package seedu.address.logic.commands;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Logger;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.google.gson.JsonObject;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.FetchUtil;
 import seedu.address.commons.util.UrlBuilderUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -27,6 +29,8 @@ public class SyncCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Synced all coins with latest cryptocurrency data";
 
+    private static final Logger logger = LogsCenter.getLogger(SyncCommand.class);
+
     private String cryptoCompareApiUrl = "https://min-api.cryptocompare.com/data/pricemulti";
 
     /**
@@ -35,7 +39,7 @@ public class SyncCommand extends Command {
      * @param coinList cannot be null
      * @return parameters for CryptoCompare API call
      */
-    private List<NameValuePair> getParams(Set<String> coinList) {
+    private List<NameValuePair> getParams(List<String> coinList) {
         List<NameValuePair> params = new ArrayList<>();
         String coinCodes = String.join(",", coinList);
         params.add(new BasicNameValuePair("fsyms", coinCodes));
@@ -57,13 +61,17 @@ public class SyncCommand extends Command {
         try {
             List<NameValuePair> params = getParams(model.getCodeList());
             buildApiUrl(params);
-            JsonObject newData = FetchUtil.fetchAsJson(cryptoCompareApiUrl);
+            JsonObject newData = FetchUtil.asyncFetch(cryptoCompareApiUrl);
             model.syncAll(newData);
-            return new CommandResult(MESSAGE_SUCCESS);
         } catch (DuplicateCoinException dpe) {
             throw new CommandException("Unexpected code path!");
         } catch (CoinNotFoundException cnfe) {
             throw new AssertionError("The target coin cannot be missing");
+        } catch (InterruptedException ie) {
+            logger.warning("Thread interrupted");
+        } catch (ExecutionException ee) {
+            logger.warning("Data fetching error");
         }
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 }

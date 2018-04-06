@@ -1,10 +1,12 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.GameCommand.SHOWING_GAME_MESSAGE;
 
 import org.junit.Rule;
 import org.junit.Test;
+
 import seedu.address.commons.events.ui.GameEvent;
 import seedu.address.ui.testutil.EventsCollectorRule;
 

@@ -1,19 +1,27 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.ui.UiManager.VALID_THEMES;
 
-import java.util.Collection;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.card.Card;
+import seedu.address.model.card.FillBlanksCard;
+import seedu.address.model.card.McqCard;
+import seedu.address.model.card.Schedule;
+import seedu.address.model.tag.Name;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,10 +37,14 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_INVALID_THEME =
+        "Theme must be one of " + String.join(", ", VALID_THEMES);
+    public static final String MESSAGE_INVALID_NUMBER = "Not a number, please put a valid number.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
@@ -67,102 +79,256 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
 
+    //@@author shawnclq
     /**
-     * Parses a {@code String phone} into a {@code Phone}.
+     * Parses a {@code String card} into an {@code String}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code phone} is invalid.
+     * @throws IllegalValueException if the given {@code card} is invalid.
      */
-    public static Phone parsePhone(String phone) throws IllegalValueException {
-        requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!Phone.isValidPhone(trimmedPhone)) {
-            throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
+    public static String parseCard(String card) throws IllegalValueException {
+        requireNonNull(card);
+        String trimmedCard = card.trim();
+        if (!Card.isValidCard(trimmedCard)) {
+            throw new IllegalValueException(Card.MESSAGE_CARD_CONSTRAINTS);
         }
-        return new Phone(trimmedPhone);
+        return trimmedCard;
     }
 
     /**
-     * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
+     * Parses a {@code String card} into an {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code String} is invalid.
+     */
+    public static String parseMcqOption(String option) throws IllegalValueException {
+        requireNonNull(option);
+        String trimmedOption = option.trim();
+        if (!Card.isValidCard(trimmedOption)) {
+            throw new IllegalValueException(McqCard.MESSAGE_MCQ_CARD_CONSTRAINTS);
+        }
+        return trimmedOption;
+    }
+
+    /**
+     * Parses a {@code String front, back, Set<String> options} into an {@code McqCard}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given parameters are invalid.
+     */
+    public static McqCard parseMcqCard(String front, String back, List<String> options) throws IllegalValueException {
+        requireNonNull(front);
+        requireNonNull(back);
+        requireAllNonNull(options);
+        if (!McqCard.isValidMcqCard(back, options)) {
+            throw new IllegalValueException(McqCard.MESSAGE_MCQ_CARD_ANSWER_CONSTRAINTS);
+        }
+        return new McqCard(front, back, options);
+    }
+
+    /**
+     * Parses a {@code String card} into an {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code String} is invalid.
+     */
+    public static FillBlanksCard parseFillBlanksCard(String front, String back) throws IllegalValueException {
+        requireAllNonNull(front, back);
+        if (!FillBlanksCard.isValidFillBlanksCard(front, back)) {
+            throw new IllegalValueException(FillBlanksCard.MESSAGE_FILLBLANKS_CARD_ANSWER_CONSTRAINTS);
+        }
+        return new FillBlanksCard(front, back);
+    }
+
+    /**
+     * Parses a {@code Optional<String> front} into an {@code Optional<Card>} if {@code front} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
-        requireNonNull(phone);
-        return phone.isPresent() ? Optional.of(parsePhone(phone.get())) : Optional.empty();
-    }
-
-    /**
-     * Parses a {@code String address} into an {@code Address}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code address} is invalid.
-     */
-    public static Address parseAddress(String address) throws IllegalValueException {
-        requireNonNull(address);
-        String trimmedAddress = address.trim();
-        if (!Address.isValidAddress(trimmedAddress)) {
-            throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
+    public static Optional<String> parseFront(Optional<String> front) throws IllegalValueException {
+        requireNonNull(front);
+        if (front.isPresent()) {
+            if (!Card.isValidCard(front.get())) {
+                throw new IllegalValueException(Card.MESSAGE_CARD_CONSTRAINTS);
+            }
         }
-        return new Address(trimmedAddress);
+        return front.isPresent() ? Optional.of(parseCard(front.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
+     * Parses a {@code Optional<String> front} into an {@code Optional<Card>} if {@code front} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
-        requireNonNull(address);
-        return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
+    public static Optional<String> parseBack(Optional<String> back) throws IllegalValueException {
+        requireNonNull(back);
+        if (back.isPresent()) {
+            if (!Card.isValidCard(back.get())) {
+                throw new IllegalValueException(Card.MESSAGE_CARD_CONSTRAINTS);
+            }
+        }
+        return back.isPresent() ? Optional.of(parseCard(back.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code String email} into an {@code Email}.
+     * Parses a {@code List<String>} into a {@code Optional<List<String>>}
+     */
+    public static Optional<List<String>> parseOptions(List<String> optionValues) throws IllegalValueException {
+        if (optionValues.isEmpty()) {
+            return Optional.empty();
+        }
+
+        List<String> options = new ArrayList<String>();
+        for (String option : optionValues) {
+            if (!Card.isValidCard(option)) {
+                throw new IllegalValueException(McqCard.MESSAGE_MCQ_CARD_CONSTRAINTS);
+            }
+            options.add(option.trim());
+        }
+
+        return Optional.of(options);
+    }
+    //@@author
+
+    /**
+     * Parses a {@code String theme} into an {@code Integer}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code email} is invalid.
+     * @throws IllegalValueException if the given {@code theme} is invalid.
      */
-    public static Email parseEmail(String email) throws IllegalValueException {
-        requireNonNull(email);
-        String trimmedEmail = email.trim();
-        if (!Email.isValidEmail(trimmedEmail)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
+    public static Integer parseTheme(Optional<String> theme) throws IllegalValueException {
+        final ArrayList<String> validThemes = new ArrayList<String>(Arrays.asList(VALID_THEMES));
+        requireNonNull(theme);
+        if (!validThemes.contains(theme.get())) {
+            throw new IllegalValueException(MESSAGE_INVALID_THEME);
         }
-        return new Email(trimmedEmail);
+        return validThemes.indexOf(theme.get());
     }
 
-    /**
-     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
-        requireNonNull(email);
-        return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
-    }
+    //@@author pukipuki
 
     /**
-     * Parses a {@code String tag} into a {@code Tag}.
+     * Parses a {@code String confidenceLevel} into an {@code Integer}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code tag} is invalid.
+     * @throws IllegalValueException if the given {@code confidenceLevel} is invalid.
      */
-    public static Tag parseTag(String tag) throws IllegalValueException {
-        requireNonNull(tag);
-        String trimmedTag = tag.trim();
-        if (!Tag.isValidTagName(trimmedTag)) {
-            throw new IllegalValueException(Tag.MESSAGE_TAG_CONSTRAINTS);
+    public static int parseConfidenceLevel(String confidenceLevelString) throws IllegalValueException {
+        requireNonNull(confidenceLevelString);
+        String trimmedConfidenceLevelString = confidenceLevelString.trim();
+        try {
+            if (!Schedule
+                .isValidConfidenceLevel(trimmedConfidenceLevelString)) {
+                throw new IllegalValueException(Schedule.MESSAGE_ANSWER_CONSTRAINTS);
+            }
+        } catch (NumberFormatException nfe) {
+            throw new IllegalValueException(Schedule.MESSAGE_ANSWER_CONSTRAINTS);
         }
-        return new Tag(trimmedTag);
+        return Integer.parseInt(confidenceLevelString);
     }
 
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     * Parses {@code String dayString, String monthString, String yearString} into a {@code LocalDateTime}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given date is invalid.
      */
-    public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
-        requireNonNull(tags);
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagName : tags) {
-            tagSet.add(parseTag(tagName));
+    public static LocalDateTime parseDate(String dayString, String monthString, String yearString)
+        throws IllegalValueException, DateTimeException {
+
+        try {
+            int year = getYear(yearString);
+            int month = getMonth(monthString);
+            int day = getDay(dayString);
+            if (!Schedule.isValidDay(day)) {
+                throw new IllegalValueException(Schedule.MESSAGE_DAY_CONSTRAINTS);
+            } else if (!Schedule.isValidMonth(month)) {
+                throw new IllegalValueException(Schedule.MESSAGE_MONTH_CONSTRAINTS);
+            }
+            LocalDateTime date = LocalDate.of(year, month, day).atStartOfDay();
+            return date;
+        } catch (DateTimeException dte) {
+            throw new IllegalValueException(dte.getMessage());
+        } catch (NumberFormatException e) {
+            throw new IllegalValueException(e.getMessage());
         }
-        return tagSet;
     }
+
+    /**
+     * Helper functions for parseDate
+     */
+    public static String trimDateArgs(Optional<String> args) {
+        if (args.isPresent()) {
+            return args.get();
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * Helper functions for parseDate
+     */
+    public static int getYear(String yearString) {
+        if (yearString.equals("")) {
+            return LocalDate.now().getYear();
+        } else {
+            try {
+                return Integer.parseInt(yearString);
+            } catch (NumberFormatException e) {
+                throw new NumberFormatException(MESSAGE_INVALID_NUMBER);
+            }
+        }
+    }
+
+    /**
+     * Helper functions for parseDate
+     */
+    public static int getMonth(String monthString) {
+        if (monthString.equals("")) {
+            return LocalDate.now().getMonthValue();
+        } else {
+            try {
+                return Integer.parseInt(monthString);
+            } catch (NumberFormatException e) {
+                throw new NumberFormatException(MESSAGE_INVALID_NUMBER);
+            }
+        }
+    }
+
+    /**
+     * Helper functions for parseDate
+     */
+    public static int getDay(String dayString) {
+        if (dayString.equals("")) {
+            return LocalDate.now().getDayOfMonth();
+        } else {
+            try {
+                return Integer.parseInt(dayString);
+            } catch (NumberFormatException e) {
+                throw new NumberFormatException(MESSAGE_INVALID_NUMBER);
+            }
+        }
+    }
+    //@@author
+
+    //@@author jethrokuan
+
+    /**
+     * Parses a {@code String tag} into a {@code Tag}
+     * Leading and trailing whitespaces will be trimmed
+     */
+    public static Optional<Set<Tag>> parseTags(List<String> tagNames) throws IllegalValueException {
+        if (tagNames.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Set<Tag> tags = new HashSet<>();
+        for (String tagName : tagNames) {
+            if (!Name.isValidName(tagName)) {
+                throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+            }
+            tags.add(new Tag(new Name(tagName.trim())));
+        }
+
+        return Optional.of(tags);
+    }
+    //@@author
 }

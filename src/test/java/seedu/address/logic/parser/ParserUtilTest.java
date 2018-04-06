@@ -2,43 +2,44 @@ package seedu.address.logic.parser;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TAG;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.card.FillBlanksCard;
+import seedu.address.model.card.McqCard;
+import seedu.address.model.tag.Name;
 import seedu.address.testutil.Assert;
 
 public class ParserUtilTest {
-    private static final String INVALID_NAME = "R@chel";
-    private static final String INVALID_PHONE = "+651234";
-    private static final String INVALID_ADDRESS = " ";
-    private static final String INVALID_EMAIL = "example.com";
-    private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_MCQ_BACK_INT = "4";
+    private static final String INVALID_MCQ_BACK_VALUE = "Hello World";
+    private static final String INVALID_NAME = "M@th";
+    private static final String INVALID_THEME = "solarized";
 
-    private static final String VALID_NAME = "Rachel Walker";
-    private static final String VALID_PHONE = "123456";
-    private static final String VALID_ADDRESS = "123 Main Street #0505";
-    private static final String VALID_EMAIL = "rachel@example.com";
-    private static final String VALID_TAG_1 = "friend";
-    private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_BACK = "Flashy";
+    private static final String VALID_FRONT = "What is the best flashcard app?";
+    private static final String VALID_MCQ_BACK = "2";
+    private static final String VALID_MCQ_FRONT = "Which continent is Singapore in?";
+    private static final String VALID_NAME = "Math";
+    private static final List<String> VALID_MCQ_OPTIONS =
+            Arrays.asList("Australia", "Asia", "Africa");
+    private static final String VALID_FILLBLANKS_FRONT =
+            "A _ is a four sided polygon with equal sides meeting at right angles.";
+    private static final String INVALID_FILLBLANKS_ARGUMENT = " ";
+    private static final String VALID_FILLBLANKS_BACK = "square";
+    private static final String INVALID_FILLBLANKS_BACK_ARGUMENTS = "square, too, many, arguments";
 
+    private static final String VALID_OPTION = "Asia";
+    private static final String VALID_THEME = "light";
     private static final String WHITESPACE = " \t\r\n";
 
     @Rule
@@ -60,10 +61,10 @@ public class ParserUtilTest {
     @Test
     public void parseIndex_validInput_success() throws Exception {
         // No whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("1"));
+        assertEquals(INDEX_FIRST_TAG, ParserUtil.parseIndex("1"));
 
         // Leading and trailing whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
+        assertEquals(INDEX_FIRST_TAG, ParserUtil.parseIndex("  1  "));
     }
 
     @Test
@@ -99,148 +100,158 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parsePhone_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePhone((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePhone((Optional<String>) null));
+    public void parseCard_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseCard((String) null));
     }
 
     @Test
-    public void parsePhone_invalidValue_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parsePhone(INVALID_PHONE));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parsePhone(Optional.of(INVALID_PHONE)));
+    public void parseCard_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseCard(WHITESPACE));
     }
 
     @Test
-    public void parsePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parsePhone(Optional.empty()).isPresent());
+    public void parseCard_validValueWithoutWhitespace_returnsName() throws Exception {
+        assertEquals(VALID_FRONT, ParserUtil.parseCard(VALID_FRONT));
     }
 
     @Test
-    public void parsePhone_validValueWithoutWhitespace_returnsPhone() throws Exception {
-        Phone expectedPhone = new Phone(VALID_PHONE);
-        assertEquals(expectedPhone, ParserUtil.parsePhone(VALID_PHONE));
-        assertEquals(Optional.of(expectedPhone), ParserUtil.parsePhone(Optional.of(VALID_PHONE)));
+    public void parseCard_validValueWithWhitespace_returnsTrimmedCard() throws Exception {
+        String nameWithWhitespace = WHITESPACE + VALID_FRONT + WHITESPACE;
+        assertEquals(VALID_FRONT, ParserUtil.parseCard(nameWithWhitespace));
     }
 
     @Test
-    public void parsePhone_validValueWithWhitespace_returnsTrimmedPhone() throws Exception {
-        String phoneWithWhitespace = WHITESPACE + VALID_PHONE + WHITESPACE;
-        Phone expectedPhone = new Phone(VALID_PHONE);
-        assertEquals(expectedPhone, ParserUtil.parsePhone(phoneWithWhitespace));
-        assertEquals(Optional.of(expectedPhone), ParserUtil.parsePhone(Optional.of(phoneWithWhitespace)));
+    public void parseMcqOption_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseMcqOption((String) null));
     }
 
     @Test
-    public void parseAddress_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseAddress((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseAddress((Optional<String>) null));
+    public void parseMcqOption_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseMcqOption(WHITESPACE));
     }
 
     @Test
-    public void parseAddress_invalidValue_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseAddress(INVALID_ADDRESS));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseAddress(Optional.of(INVALID_ADDRESS)));
+    public void parseMcqOption_validValueWithoutWhitespace_returnsString() throws Exception {
+        assertEquals(VALID_OPTION, ParserUtil.parseMcqOption(VALID_OPTION));
     }
 
     @Test
-    public void parseAddress_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseAddress(Optional.empty()).isPresent());
+    public void parseMcqOption_validValueWithWhitespace_returnsString() throws Exception {
+        String nameWithWhitespace = WHITESPACE + VALID_OPTION + WHITESPACE;
+        assertEquals(VALID_OPTION, ParserUtil.parseMcqOption(nameWithWhitespace));
     }
 
     @Test
-    public void parseAddress_validValueWithoutWhitespace_returnsAddress() throws Exception {
-        Address expectedAddress = new Address(VALID_ADDRESS);
-        assertEquals(expectedAddress, ParserUtil.parseAddress(VALID_ADDRESS));
-        assertEquals(Optional.of(expectedAddress), ParserUtil.parseAddress(Optional.of(VALID_ADDRESS)));
+    public void parseMcqCard_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseMcqCard((String) null,
+                VALID_MCQ_BACK, VALID_MCQ_OPTIONS));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseMcqCard(VALID_MCQ_FRONT,
+                (String) null, VALID_MCQ_OPTIONS));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseMcqCard(VALID_MCQ_FRONT,
+                VALID_MCQ_BACK, (List<String>) null));
     }
 
     @Test
-    public void parseAddress_validValueWithWhitespace_returnsTrimmedAddress() throws Exception {
-        String addressWithWhitespace = WHITESPACE + VALID_ADDRESS + WHITESPACE;
-        Address expectedAddress = new Address(VALID_ADDRESS);
-        assertEquals(expectedAddress, ParserUtil.parseAddress(addressWithWhitespace));
-        assertEquals(Optional.of(expectedAddress), ParserUtil.parseAddress(Optional.of(addressWithWhitespace)));
+    public void parseMcqCard_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseMcqCard(VALID_MCQ_FRONT,
+                INVALID_MCQ_BACK_INT, VALID_MCQ_OPTIONS));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseMcqCard(VALID_MCQ_FRONT,
+                INVALID_MCQ_BACK_VALUE, VALID_MCQ_OPTIONS));
     }
 
     @Test
-    public void parseEmail_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseEmail((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseEmail((Optional<String>) null));
+    public void parseMcqCard_validValue_returnsMcqCard() throws Exception {
+        McqCard expectedMcqCard = new McqCard(VALID_MCQ_FRONT, VALID_MCQ_BACK, VALID_MCQ_OPTIONS);
+        assertEquals(expectedMcqCard, ParserUtil.parseMcqCard(VALID_MCQ_FRONT, VALID_MCQ_BACK, VALID_MCQ_OPTIONS));
+    }
+
+
+    @Test
+    public void parseFillBlanksCard_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseFillBlanksCard(null,
+                VALID_FILLBLANKS_BACK));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseFillBlanksCard(VALID_FILLBLANKS_FRONT,
+                null));
     }
 
     @Test
-    public void parseEmail_invalidValue_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseEmail(INVALID_EMAIL));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseEmail(Optional.of(INVALID_EMAIL)));
+    public void parseFillBlanksCard_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseFillBlanksCard(VALID_FILLBLANKS_FRONT,
+                INVALID_FILLBLANKS_BACK_ARGUMENTS));
     }
 
     @Test
-    public void parseEmail_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseEmail(Optional.empty()).isPresent());
+    public void parseFillBlanksCard_validValue_returnsMcqCard() throws Exception {
+        FillBlanksCard expectedFillBlanksCard = new FillBlanksCard(VALID_FILLBLANKS_FRONT, VALID_FILLBLANKS_BACK);
+        assertEquals(expectedFillBlanksCard, ParserUtil.parseFillBlanksCard(VALID_FILLBLANKS_FRONT,
+                VALID_FILLBLANKS_BACK));
     }
 
     @Test
-    public void parseEmail_validValueWithoutWhitespace_returnsEmail() throws Exception {
-        Email expectedEmail = new Email(VALID_EMAIL);
-        assertEquals(expectedEmail, ParserUtil.parseEmail(VALID_EMAIL));
-        assertEquals(Optional.of(expectedEmail), ParserUtil.parseEmail(Optional.of(VALID_EMAIL)));
+    public void parseFront_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseFront((Optional<String>) null));
     }
 
     @Test
-    public void parseEmail_validValueWithWhitespace_returnsTrimmedEmail() throws Exception {
-        String emailWithWhitespace = WHITESPACE + VALID_EMAIL + WHITESPACE;
-        Email expectedEmail = new Email(VALID_EMAIL);
-        assertEquals(expectedEmail, ParserUtil.parseEmail(emailWithWhitespace));
-        assertEquals(Optional.of(expectedEmail), ParserUtil.parseEmail(Optional.of(emailWithWhitespace)));
+    public void parseFront_invalidValue_throwsIllegalValueException () {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseFront(Optional.of(WHITESPACE)));
     }
 
     @Test
-    public void parseTag_null_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        ParserUtil.parseTag(null);
+    public void parseFront_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseFront(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parseTag_invalidValue_throwsIllegalValueException() throws Exception {
+    public void parseFront_validValueWithoutWhitespace_returnsFront() throws Exception {
+        assertEquals(Optional.of(VALID_FRONT), ParserUtil.parseFront(Optional.of(VALID_FRONT)));
+    }
+
+    /*
+    @Test
+    public void parseFront_validValueWithWhitespace_returnsTrimmedFront() throws Exception {
+        String frontWithWhitespace = WHITESPACE + VALID_FRONT + WHITESPACE;
+        assertEquals(Optional.of(VALID_FRONT), ParserUtil.parseFront(Optional.of(frontWithWhitespace)));
+    }
+    */
+
+    @Test
+    public void parseBack_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseBack((Optional<String>) null));
+    }
+
+    @Test
+    public void parseBack_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseBack(Optional.of(WHITESPACE)));
+    }
+
+    @Test
+    public void parseBack_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseBack(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseBack_validValueWithoutWhitespace_returnsFront() throws Exception {
+        assertEquals(Optional.of(VALID_BACK), ParserUtil.parseBack(Optional.of(VALID_BACK)));
+    }
+
+    /*
+    @Test
+    public void parseBack_validValueWithWhitespace_returnsTrimmedBack() throws Exception {
+        String frontWithWhitespace = WHITESPACE + VALID_BACK + WHITESPACE;
+        assertEquals(Optional.of(VALID_BACK), ParserUtil.parseBack(Optional.of(backWithWhitespace)));
+    }
+    */
+
+    @Test
+    public void parseTheme_incorrectString_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseTag(INVALID_TAG);
+        ParserUtil.parseTheme(Optional.of(INVALID_THEME));
     }
 
     @Test
-    public void parseTag_validValueWithoutWhitespace_returnsTag() throws Exception {
-        Tag expectedTag = new Tag(VALID_TAG_1);
-        assertEquals(expectedTag, ParserUtil.parseTag(VALID_TAG_1));
-    }
-
-    @Test
-    public void parseTag_validValueWithWhitespace_returnsTrimmedTag() throws Exception {
-        String tagWithWhitespace = WHITESPACE + VALID_TAG_1 + WHITESPACE;
-        Tag expectedTag = new Tag(VALID_TAG_1);
-        assertEquals(expectedTag, ParserUtil.parseTag(tagWithWhitespace));
-    }
-
-    @Test
-    public void parseTags_null_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        ParserUtil.parseTags(null);
-    }
-
-    @Test
-    public void parseTags_collectionWithInvalidTags_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, INVALID_TAG));
-    }
-
-    @Test
-    public void parseTags_emptyCollection_returnsEmptySet() throws Exception {
-        assertTrue(ParserUtil.parseTags(Collections.emptyList()).isEmpty());
-    }
-
-    @Test
-    public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
-        Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
-        Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
-
-        assertEquals(expectedTagSet, actualTagSet);
+    public void parseTheme_correctString_returnsIndex() throws Exception {
+        Integer result = ParserUtil.parseTheme(Optional.of(VALID_THEME));
+        assertEquals((Integer) 0, result);
     }
 }

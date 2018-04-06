@@ -11,7 +11,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
+import seedu.address.model.card.Card;
+import seedu.address.model.tag.Tag;
 
 /**
  * The main LogicManager of the app.
@@ -46,8 +47,13 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return model.getFilteredPersonList();
+    public ObservableList<Tag> getFilteredTagList() {
+        return model.getFilteredTagList();
+    }
+
+    @Override
+    public ObservableList<Card> getFilteredCardList() {
+        return model.getFilteredCardList();
     }
 
     @Override

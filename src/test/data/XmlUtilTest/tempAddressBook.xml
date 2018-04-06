@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addressbook>
-    <persons>
-        <id>1</id>
-        <firstName>John</firstName>
-        <lastName>Doe</lastName>
-        <githubUsername></githubUsername>
-        <street></street>
-        <postalCode></postalCode>
-        <city></city>
-    </persons>
     <tags>
-        <name>Friends</name>
+        <id>67d1fc9c-4d3b-46ff-a663-bc76d80c148a</id>
+        <name>Math</name>
     </tags>
 </addressbook>

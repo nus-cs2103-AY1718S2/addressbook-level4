@@ -1,54 +1,70 @@
 package seedu.address.model.tag;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Represents a Tag in the address book.
- * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}
+ * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Tag {
 
-    public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
-    public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String MESSAGE_TAG_NOT_FOUND = "Tag not found: '%s'";
 
-    public final String tagName;
+    private final UUID id;
+    private final Name name;
 
     /**
-     * Constructs a {@code Tag}.
-     *
-     * @param tagName A valid tag name.
+     * Every field must be present and not null.
      */
-    public Tag(String tagName) {
-        requireNonNull(tagName);
-        checkArgument(isValidTagName(tagName), MESSAGE_TAG_CONSTRAINTS);
-        this.tagName = tagName;
+    public Tag(Name name) {
+        requireAllNonNull(name);
+        this.name = name;
+        this.id = UUID.randomUUID();
     }
 
-    /**
-     * Returns true if a given string is a valid tag name.
-     */
-    public static boolean isValidTagName(String test) {
-        return test.matches(TAG_VALIDATION_REGEX);
+    public Tag(UUID id, Name name) {
+        requireAllNonNull(id, name);
+        this.id = id;
+        this.name = name;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public Name getName() {
+        return name;
     }
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Tag // instanceof handles nulls
-                && this.tagName.equals(((Tag) other).tagName)); // state check
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Tag)) {
+            return false;
+        }
+
+        Tag otherTag = (Tag) other;
+
+        return otherTag.getName().equals(this.getName());
     }
 
     @Override
     public int hashCode() {
-        return tagName.hashCode();
+        // use this method for custom fields hashing instead of implementing your own
+        return Objects.hash(name);
     }
 
-    /**
-     * Format state as text for viewing.
-     */
+    @Override
     public String toString() {
-        return '[' + tagName + ']';
+        final StringBuilder builder = new StringBuilder();
+        builder.append(" Name: ")
+                .append(getName());
+        return builder.toString();
     }
-
 }

@@ -10,6 +10,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.card.Card;
+import seedu.address.model.card.McqCard;
 
 /**
  * An Immutable AddressBook that is serializable to XML format
@@ -18,17 +20,25 @@ import seedu.address.model.ReadOnlyAddressBook;
 public class XmlSerializableAddressBook {
 
     @XmlElement
-    private List<XmlAdaptedPerson> persons;
-    @XmlElement
     private List<XmlAdaptedTag> tags;
+
+    @XmlElement
+    private List<XmlAdaptedCard> cards;
+
+    @XmlElement
+    private List<XmlAdaptedMcqCard> mcqCards;
+
+    @XmlElement(name = "cardtag")
+    private XmlAdaptedCardTag cardTag = null;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
      * This empty constructor is required for marshalling.
      */
     public XmlSerializableAddressBook() {
-        persons = new ArrayList<>();
         tags = new ArrayList<>();
+        cards = new ArrayList<>();
+        mcqCards = new ArrayList<>();
     }
 
     /**
@@ -36,24 +46,37 @@ public class XmlSerializableAddressBook {
      */
     public XmlSerializableAddressBook(ReadOnlyAddressBook src) {
         this();
-        persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        for (Card card: src.getCardList()) {
+            if (card.getType().equals(McqCard.TYPE)) {
+                mcqCards.add(new XmlAdaptedMcqCard(card.getId().toString(), card.getFront(),
+                        card.getBack(), ((McqCard) card).getOptions()));
+            } else {
+                cards.add(new XmlAdaptedCard(card.getId().toString(), card.getFront(), card.getBack()));
+            }
+        }
+        cardTag = new XmlAdaptedCardTag(src.getCardTag());
     }
 
     /**
      * Converts this addressbook into the model's {@code AddressBook} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
-     * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag}.
+     * {@code XmlAdaptedTag} or {@code XmlAdaptedTag}.
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
-        for (XmlAdaptedTag t : tags) {
-            addressBook.addTag(t.toModelType());
+        for (XmlAdaptedTag tag : tags) {
+            addressBook.addTag(tag.toModelType());
         }
-        for (XmlAdaptedPerson p : persons) {
-            addressBook.addPerson(p.toModelType());
+        for (XmlAdaptedCard card : cards) {
+            addressBook.addCard(card.toModelType());
         }
+
+        if (cardTag != null) {
+            addressBook.setCardTag(cardTag.toModelType());
+        }
+
         return addressBook;
     }
 
@@ -68,6 +91,6 @@ public class XmlSerializableAddressBook {
         }
 
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags);
+        return tags.equals(otherAb.tags);
     }
 }

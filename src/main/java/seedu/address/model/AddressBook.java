@@ -2,21 +2,28 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.function.Predicate;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import javafx.collections.transformation.FilteredList;
+
+import seedu.address.model.card.Card;
+import seedu.address.model.card.UniqueCardList;
+import seedu.address.model.card.exceptions.CardNotFoundException;
+import seedu.address.model.card.exceptions.DuplicateCardException;
+import seedu.address.model.cardtag.CardTag;
+import seedu.address.model.cardtag.DuplicateEdgeException;
+import seedu.address.model.tag.AddTagResult;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.tag.exceptions.DuplicateTagException;
+import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
  * Wraps all data at the address-book level
@@ -24,8 +31,9 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueCardList cards;
+    private CardTag cardTag;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -35,14 +43,15 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
-        persons = new UniquePersonList();
         tags = new UniqueTagList();
+        cards = new UniqueCardList();
+        cardTag = new CardTag();
     }
 
     public AddressBook() {}
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an AddressBook using the Tags and Cards in the {@code toBeCopied}
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -51,12 +60,12 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// list overwrite operations
 
-    public void setPersons(List<Person> persons) throws DuplicatePersonException {
-        this.persons.setPersons(persons);
+    public void setTags(List<Tag> tags) throws DuplicateTagException {
+        this.tags.setTags(tags);
     }
 
-    public void setTags(Set<Tag> tags) {
-        this.tags.setTags(tags);
+    public void setCards(List<Card> cards) throws DuplicateCardException {
+        this.cards.setCards(cards);
     }
 
     /**
@@ -64,106 +73,147 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
-        setTags(new HashSet<>(newData.getTagList()));
-        List<Person> syncedPersonList = newData.getPersonList().stream()
-                .map(this::syncWithMasterTagList)
-                .collect(Collectors.toList());
+        List<Tag> syncedTagList = new ArrayList<>(newData.getTagList());
 
         try {
-            setPersons(syncedPersonList);
-        } catch (DuplicatePersonException e) {
-            throw new AssertionError("AddressBooks should not have duplicate persons");
+            setTags(syncedTagList);
+        } catch (DuplicateTagException e) {
+            throw new AssertionError("AddressBooks should not have duplicate tags");
         }
-    }
 
-    //// person-level operations
+        List<Card> syncedCardList = new ArrayList<>(newData.getCardList());
 
-    /**
-     * Adds a person to the address book.
-     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #tags}.
-     *
-     * @throws DuplicatePersonException if an equivalent person already exists.
-     */
-    public void addPerson(Person p) throws DuplicatePersonException {
-        Person person = syncWithMasterTagList(p);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
-        persons.add(person);
-    }
-
-    /**
-     * Replaces the given person {@code target} in the list with {@code editedPerson}.
-     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPerson}.
-     *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     *
-     * @see #syncWithMasterTagList(Person)
-     */
-    public void updatePerson(Person target, Person editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireNonNull(editedPerson);
-
-        Person syncedEditedPerson = syncWithMasterTagList(editedPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
-        persons.setPerson(target, syncedEditedPerson);
-    }
-
-    /**
-     *  Updates the master tag list to include tags in {@code person} that are not in the list.
-     *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
-     *  list.
-     */
-    private Person syncWithMasterTagList(Person person) {
-        final UniqueTagList personTags = new UniqueTagList(person.getTags());
-        tags.mergeFrom(personTags);
-
-        // Create map with values = tag object references in the master list
-        // used for checking person tag references
-        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
-        tags.forEach(tag -> masterTagObjects.put(tag, tag));
-
-        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
-        final Set<Tag> correctTagReferences = new HashSet<>();
-        personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
-    }
-
-    /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
-     */
-    public boolean removePerson(Person key) throws PersonNotFoundException {
-        if (persons.remove(key)) {
-            return true;
-        } else {
-            throw new PersonNotFoundException();
+        try {
+            setCards(syncedCardList);
+        } catch (DuplicateCardException e) {
+            throw new AssertionError("AddressBooks should not have duplicate cards");
         }
+
+        CardTag cardTag = new CardTag(newData.getCardTag());
+        setCardTag(cardTag);
     }
 
     //// tag-level operations
 
-    public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
-        tags.add(t);
+    /**
+     * Adds a tag to the card bank. Will not create a new Tag if it already exists. Returns the tag.
+     *
+     * @throws DuplicateTagException if an equivalent tag already exists.
+     */
+    public AddTagResult addTag(Tag p) {
+        return tags.add(p);
     }
+
+    /**
+     * Replaces the given tag {@code target} in the list with {@code editedTag}.
+     *
+     * @throws DuplicateTagException if updating the tag's details causes the tag to be equivalent to
+     *      another existing tag in the list.
+     * @throws TagNotFoundException if {@code target} could not be found in the list.
+     *
+     */
+    public void updateTag(Tag target, Tag editedTag)
+            throws DuplicateTagException, TagNotFoundException {
+        requireNonNull(editedTag);
+        tags.setTag(target, editedTag);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws TagNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeTag(Tag key) throws TagNotFoundException {
+        if (tags.remove(key)) {
+            return true;
+        } else {
+            throw new TagNotFoundException(key);
+        }
+    }
+
+    //// card-level operations
+
+    /**
+     * Adds a card to the address book.
+     */
+    public void addCard(Card c) throws DuplicateCardException {
+        cards.add(c);
+    }
+
+    /**
+     * Removes a card from the address book.
+     * @param c card to remove
+     * @throws CardNotFoundException
+     */
+    public void deleteCard(Card c) throws CardNotFoundException {
+        cards.remove(c);
+    }
+
+    //// card-tag-level operations
+    public void addEdge(Card c, Tag t) throws DuplicateEdgeException {
+        cardTag.addEdge(c, t);
+    }
+
+    /**
+     * Replaces the given card {@code target} in the list with {@code editedCard}.
+     *
+     * @throws DuplicateCardException if updating the card's details causes the card to be equivalent to
+     *      another existing card in the list.
+     * @throws CardNotFoundException if {@code target} could not be found in the list.
+     *
+     */
+    public void updateCard(Card target, Card editedCard)
+            throws DuplicateCardException, CardNotFoundException {
+        requireNonNull(editedCard);
+        cards.setCard(target, editedCard);
+    }
+
+    //@@author pukipuki
+    //// predicate for card review
+    public Predicate<Card> isBefore() {
+        return c -> c.getSchedule().getNextReview()
+              .isBefore(LocalDateTime.now());
+    }
+
+    /**
+     * Predicate for card review before a certain time
+     */
+    public Predicate<Card> isBefore(LocalDateTime date) {
+        return c -> c.getSchedule().getNextReview()
+            .isBefore(date.plusDays(1).minusNanos(1));
+    }
+
+    //// get list of cards for review
+    public ObservableList<Card> getReviewList(LocalDateTime date) {
+        requireNonNull(date);
+        Comparator<Card> byDate =
+            Comparator.comparing(Card::getSchedule);
+
+        ObservableList<Card> cardsList = cards.asObservableList();
+        FXCollections.sort(cardsList, byDate);
+        FilteredList<Card> filteredList = new FilteredList<Card>(cardsList, isBefore(date));
+
+        return filteredList;
+    }
+    //@@author
 
     //// util methods
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
-        // TODO: refine later
-    }
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(tags.asObservableList().size());
+        stringBuilder.append(" Tags:\n");
+        for (Tag tag : tags.asObservableList()) {
+            stringBuilder.append(tag.toString() + "\n");
+        }
+        stringBuilder.append(cards.asObservableList().size());
 
-    @Override
-    public ObservableList<Person> getPersonList() {
-        return persons.asObservableList();
+        stringBuilder.append(" Cards:\n");
+        for (Card card: cards.asObservableList()) {
+            stringBuilder.append(card.toString() + "\n");
+        }
+
+        return stringBuilder.toString();
     }
 
     @Override
@@ -172,16 +222,31 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<Card> getCardList() {
+        return cards.asObservableList();
+    }
+
+    @Override
+    public CardTag getCardTag() {
+        return cardTag;
+    }
+
+    public void setCardTag(CardTag cardTag) {
+        this.cardTag = cardTag;
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
-                && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equals(((AddressBook) other).tags)
+                && this.cards.equals(((AddressBook) other).cards))
+                && this.cardTag.equals(((AddressBook) other).cardTag);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(tags, cards);
     }
 }

@@ -1,17 +1,26 @@
 package seedu.address.storage;
 
-import javax.xml.bind.annotation.XmlValue;
+import java.util.Objects;
+import java.util.UUID;
+
+import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.tag.Name;
 import seedu.address.model.tag.Tag;
 
 /**
- * JAXB-friendly adapted version of the Tag.
+ * JAXB-friendly version of the Tag.
  */
 public class XmlAdaptedTag {
 
-    @XmlValue
-    private String tagName;
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Tag's %s field is missing!";
+
+    @XmlElement(required = true)
+    private String id;
+
+    @XmlElement(required = true)
+    private String name;
 
     /**
      * Constructs an XmlAdaptedTag.
@@ -20,31 +29,42 @@ public class XmlAdaptedTag {
     public XmlAdaptedTag() {}
 
     /**
-     * Constructs a {@code XmlAdaptedTag} with the given {@code tagName}.
+     * Constructs an {@code XmlAdaptedTag} with the given tag details.
      */
-    public XmlAdaptedTag(String tagName) {
-        this.tagName = tagName;
+    public XmlAdaptedTag(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     /**
      * Converts a given Tag into this class for JAXB use.
      *
-     * @param source future changes to this will not affect the created
+     * @param source future changes to this will not affect the created XmlAdaptedTag
      */
     public XmlAdaptedTag(Tag source) {
-        tagName = source.tagName;
+        id = source.getId().toString();
+        name = source.getName().fullName;
     }
 
     /**
      * Converts this jaxb-friendly adapted tag object into the model's Tag object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws IllegalValueException if there were any data constraints violated in the adapted tag
      */
     public Tag toModelType() throws IllegalValueException {
-        if (!Tag.isValidTagName(tagName)) {
-            throw new IllegalValueException(Tag.MESSAGE_TAG_CONSTRAINTS);
+        if (this.id == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Id"));
         }
-        return new Tag(tagName);
+
+        if (this.name == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
+        }
+        if (!Name.isValidName(this.name)) {
+            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+        }
+        final Name name = new Name(this.name);
+
+        return new Tag(UUID.fromString(id), name);
     }
 
     @Override
@@ -57,6 +77,8 @@ public class XmlAdaptedTag {
             return false;
         }
 
-        return tagName.equals(((XmlAdaptedTag) other).tagName);
+        XmlAdaptedTag otherTag = (XmlAdaptedTag) other;
+        return Objects.equals(id, otherTag.id)
+                && Objects.equals(name, otherTag.name);
     }
 }

@@ -1,10 +1,12 @@
 package seedu.recipe.storage;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.util.Objects.requireNonNull;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -77,6 +79,30 @@ public class XmlRecipeBookStorage implements RecipeBookStorage {
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableRecipeBook(recipeBook));
+
+        //saveAllImageFiles(recipeBook);
     }
 
+    /**
+     * Random comments
+     */
+    public void saveAllImageFiles(ReadOnlyRecipeBook recipeBook) {
+        for (int i = 0; i < recipeBook.getRecipeList().size(); i++) {
+            try {
+                saveImageFile(recipeBook.getRecipeList().get(i).getImage().toString());
+            } catch (Exception e) {
+                System.out.println("Cannot save image " + i);
+            }
+        }
+    }
+
+    /**
+     * Random comments
+     */
+    public String saveImageFile(String imagePath) throws IOException {
+        File image = new File(imagePath);
+        Files.copy(image.toPath(), new File(filePath.replaceAll("recipebook.xml", "")
+                + image.getName()).toPath(), REPLACE_EXISTING);
+        return filePath;
+    }
 }

@@ -77,7 +77,6 @@ public class StorageManager extends ComponentManager implements Storage {
         recipeBookStorage.saveRecipeBook(recipeBook, filePath);
     }
 
-
     @Override
     @Subscribe
     public void handleRecipeBookChangedEvent(RecipeBookChangedEvent event) {

@@ -22,6 +22,7 @@ import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemovePlatformCommand;
 import seedu.address.logic.commands.SearchAllCommand;
+import seedu.address.logic.commands.SearchFacebookCommand;
 import seedu.address.logic.commands.SearchTwitterCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
@@ -70,6 +71,9 @@ public class AddressBookParser {
         case SearchAllCommand.COMMAND_WORD:
             return new SearchAllCommandParser().parse(arguments);
 
+        case SearchFacebookCommand.COMMAND_WORD:
+            return new SearchFacebookCommandParser().parse(arguments);
+            
         case SearchTwitterCommand.COMMAND_WORD:
             return new SearchTwitterCommandParser().parse(arguments);
 

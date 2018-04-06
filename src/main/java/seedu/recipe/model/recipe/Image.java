@@ -1,7 +1,6 @@
 //@@author RyanAngJY
 package seedu.recipe.model.recipe;
 
-import static java.lang.Thread.sleep;
 import static java.util.Objects.requireNonNull;
 import static seedu.recipe.commons.util.AppUtil.checkArgument;
 
@@ -18,6 +17,7 @@ public class Image {
 
     public static final String NULL_IMAGE_REFERENCE = "-";
     public static final String FILE_PREFIX = "file:";
+    public static final String IMAGE_STORAGE_FOLDER = "data/images/";
     public static final String MESSAGE_IMAGE_CONSTRAINTS = "Image path should be valid";
     public static final URL VALID_IMAGE = MainApp.class.getResource("/images/clock.png");
     public static final String VALID_IMAGE_PATH = VALID_IMAGE.toExternalForm().substring(5);
@@ -33,7 +33,18 @@ public class Image {
         requireNonNull(imagePath);
         checkArgument(isValidImage(imagePath), MESSAGE_IMAGE_CONSTRAINTS);
         this.value = imagePath;
-        this.imageName = new File(imagePath).getName();
+        setImageName();
+    }
+
+    /**
+     * Sets the name of the image file
+     */
+    public void setImageName() {
+        if (this.value.equals(NULL_IMAGE_REFERENCE)) {
+            imageName = NULL_IMAGE_REFERENCE;
+        } else {
+            this.imageName = new File(this.value).getName();
+        }
     }
 
     /**
@@ -50,9 +61,13 @@ public class Image {
         return false;
     }
 
+    /**
+     * Sets image path to follow internal image storage folder
+     */
     public void setImageToInternalReference() {
-        System.out.println(imageName);
-        this.value = "/Users/administrator/IdeaProjects/CS2103_Software_Engineering/main/build/jar/data/images/" + imageName;
+        if (!imageName.equals(NULL_IMAGE_REFERENCE)) {
+            this.value = IMAGE_STORAGE_FOLDER + imageName;
+        }
     }
 
     public String getUsablePath() {

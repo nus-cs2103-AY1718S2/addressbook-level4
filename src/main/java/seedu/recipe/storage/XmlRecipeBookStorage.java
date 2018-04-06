@@ -1,12 +1,10 @@
 package seedu.recipe.storage;
 
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.util.Objects.requireNonNull;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -22,15 +20,12 @@ import seedu.recipe.model.ReadOnlyRecipeBook;
 public class XmlRecipeBookStorage implements RecipeBookStorage {
 
     private static final Logger logger = LogsCenter.getLogger(XmlRecipeBookStorage.class);
-    private static final String IMAGE_FOLDER = "/images/";
-    private static final String RECIPE_BOOK_FILENAME = "recipebook.xml";
+
 
     private String filePath;
-    private String imageFolderPath;
 
     public XmlRecipeBookStorage(String filePath) {
         this.filePath = filePath;
-        this.imageFolderPath = filePath.replaceAll(RECIPE_BOOK_FILENAME, IMAGE_FOLDER);
     }
 
     public String getRecipeBookFilePath() {
@@ -81,35 +76,8 @@ public class XmlRecipeBookStorage implements RecipeBookStorage {
         requireNonNull(filePath);
 
         File file = new File(filePath);
-
         FileUtil.createIfMissing(file);
-        FileUtil.createDirs(new File(imageFolderPath));
-        saveAllImageFiles(recipeBook);
+        ImageStorage.saveAllImageFiles(recipeBook, filePath);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableRecipeBook(recipeBook));
-    }
-
-    /**
-     * Saves all image files into the data folder of the application
-     */
-    public void saveAllImageFiles(ReadOnlyRecipeBook recipeBook) {
-        for (int i = 0; i < recipeBook.getRecipeList().size(); i++) {
-            try {
-                saveImageFile(recipeBook.getRecipeList().get(i).getImage().toString());
-                recipeBook.getRecipeList().get(i).getImage().setImageToInternalReference();
-            } catch (Exception e) {
-                System.out.println("Cannot save image " + i);
-            }
-        }
-    }
-
-    /**
-     * Saves an image file into the data folder of the application
-     * @param imagePath location of the image. Cannot be null
-     */
-    public String saveImageFile(String imagePath) throws IOException {
-        File imageToSave = new File(imagePath);
-        File pathToNewImage = new File (imageFolderPath + imageToSave.getName());
-        Files.copy(imageToSave.toPath(), pathToNewImage.toPath(), REPLACE_EXISTING);
-        return filePath;
     }
 }

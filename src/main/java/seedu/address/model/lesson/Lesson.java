@@ -95,8 +95,7 @@ public class Lesson implements Comparable<Lesson> {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getUniqueKey())
-                .append(" Day: ")
+        builder.append("Day: ")
                 .append(getDay().fullDayName())
                 .append(" Time: ")
                 .append(getStartTime() + " - " + getEndTime());

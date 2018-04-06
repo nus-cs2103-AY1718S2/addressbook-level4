@@ -91,8 +91,11 @@ public class CalendarWindow extends UiPart<Region> {
             calendarSource.getCalendars().add(calendar);
 
             LocalDateTime ldt = appointment.getDateTime();
-            Entry entry = new Entry (++appointmentCounter + ". " + appointment.getPetPatientName().toString());
-            entry.setInterval(new Interval(ldt, ldt.plusMinutes(30)));
+            appointmentCounter++;
+
+            Entry entry = new Entry (buildAppointment(appointment, appointmentCounter).toString());
+            System.out.println(buildAppointment(appointment, appointmentCounter).toString());
+            entry.setInterval(new Interval(ldt, ldt.plusMinutes(60)));
 
             styleNumber++;
             styleNumber = styleNumber % 7;
@@ -101,6 +104,25 @@ public class CalendarWindow extends UiPart<Region> {
 
         }
         calendarView.getCalendarSources().add(calendarSource);
+    }
+
+    /**
+     *
+     * @param appointment
+     * @param appointmentCounter
+     * @return
+     */
+    private StringBuilder buildAppointment (Appointment appointment, int appointmentCounter) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(appointmentCounter)
+            .append(". ")
+            .append(appointment.getPetPatientName().toString())
+            .append(" (")
+            .append(appointment.getOwnerNric())
+            .append(") ");
+        appointment.getAppointmentTags().forEach(builder::append);
+        builder.append(appointment.getRemark().toString());
+        return builder;
     }
 
     /**

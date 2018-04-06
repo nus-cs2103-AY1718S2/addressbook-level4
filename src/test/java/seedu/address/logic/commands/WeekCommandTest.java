@@ -26,7 +26,8 @@ public class WeekCommandTest {
 
     @Test
     public void execute_validWeek_success() {
-        assertExecutionSuccess("2018 18");
+        assertExecutionNonNullSuccess("2018 18");
+        assertExecutionNullSuccess();
     }
 
     @Test
@@ -63,9 +64,9 @@ public class WeekCommandTest {
 
     /**
      * Executes a {@code weekCommand} with the given {@code week}, and checks that {@code handleShowWeekRequestEvent}
-     * is raised with the correct date.
+     * is raised with the correct week.
      */
-    private void assertExecutionSuccess(String str) {
+    private void assertExecutionNonNullSuccess(String str) {
 
         try {
             WeekCommand weekCommand = prepareCommand(str);
@@ -76,6 +77,26 @@ public class WeekCommandTest {
             ShowWeekRequestEvent lastEvent = (ShowWeekRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
             assertEquals(ParserUtil.parseWeek(str), lastEvent.targetWeek);
             assertEquals(ParserUtil.parseYearOfWeek(str), lastEvent.targetYear);
+        } catch (IllegalValueException e) {
+            throw new IllegalArgumentException("Execution of command should not fail.", e);
+        }
+    }
+
+    /**
+     * Executes a {@code weekCommand}, and checks that {@code handleShowWeekRequestEvent}
+     * is raised with the correct week view.
+     */
+    private void assertExecutionNullSuccess() {
+
+        try {
+            WeekCommand weekCommand = prepareCommand("");
+            CommandResult commandResult = weekCommand.execute();
+            assertEquals(String.format(WeekCommand.MESSAGE_SUCCESS, ""),
+                    commandResult.feedbackToUser);
+
+            ShowWeekRequestEvent lastEvent = (ShowWeekRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+            assertEquals(ParserUtil.parseWeek(""), lastEvent.targetWeek);
+            assertEquals(ParserUtil.parseYearOfWeek(""), lastEvent.targetYear);
         } catch (IllegalValueException e) {
             throw new IllegalArgumentException("Execution of command should not fail.", e);
         }

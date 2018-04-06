@@ -22,14 +22,20 @@ Let's get started!
 
 == Setting up
 
-=== Prerequisites
-Given below are the required prerequisites for developing contactHeRo.
+Before you start to develop contactHeRo, let's us help you to set up.
 
-. *JDK `1.8.0_60`* or later
+=== Setting up your environment
+Given below are the required environment for you to start your journey.
+
+.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
++
+[TIP]
+Not sure how to install Java? Visit the oracle website link below for more information. https://tinyurl.com/yb8leqv8
+*JDK `1.8.0_60`* or later
 +
 
 . *IntelliJ* IDE
@@ -55,11 +61,14 @@ You can follow the steps below to set up contactHeRo in your computer.
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
+You can double check whether your setup is right or not by:
 
 . Run the `seedu.address.MainApp` and try a few commands
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
+
+Last thing before you start to develop contactHeRo, do some configuration to ensure the code is consistent
 
 ==== Configuring the coding style
 
@@ -92,14 +101,19 @@ Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingA
 [NOTE]
 Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
 
-==== Getting started with coding
+=== Starting your journey.
 
-When you are ready to start coding,
+Now you are ready to start coding. +
+Here are some tips to get started with developing contactHeRo:
 
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
 
+Thanks for joining us in developing contactHeRo! Have fun!
+
 == Design
+
+This section helps you understand the overall design of contactHeRo
 
 [[Design-Architecture]]
 === Architecture
@@ -551,7 +565,8 @@ image::chrome_save_as_pdf.png[width="300", align="center"]
 
 [[Testing]]
 == Testing
-
+This section shows you how to test contactHeRo
+.
 === Running Tests
 
 There are three ways for you to run tests.

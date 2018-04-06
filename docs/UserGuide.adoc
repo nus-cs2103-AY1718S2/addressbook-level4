@@ -103,8 +103,8 @@ Each command listing is usually followed by some examples on usage, with a descr
 ** Refers to the account or group to perform the action upon
 ** This is used in commands requiring a target coin, and can be any one of the coin's:
 *** INDEX: Its index number in the current coin listing
-*** NAME: The name of the coin, e.g. `Bitcoin`, and is case-insensitive
 *** CODE: The trading code of the coin, e.g. `BTC`
+*** NAME: The name of the coin, e.g. `Bitcoin`, and is case-insensitive [Coming in v2.0]
 * Option/Parameter
 ** Refers to the additional information you must provide for the command
 ** These have a letter representing the option, followed by a slash (`/`), followed by the desired value
@@ -143,7 +143,7 @@ Adds value into the specified Coin account. `AMOUNT` must be a number.
 
 .Example
 ----
-buy BTC 0.5
+buy BTC a/0.5
 ----
 Adds 0.5 to the amount held in the `BTC` account.
 
@@ -158,7 +158,7 @@ Removes value from a given Coin account. `AMOUNT` must be a number.
 
 .Example
 ----
-sell BTC 0.5
+sell BTC a/0.5
 ----
 Subtracts 0.5 from the amount held in the `BTC` account.
 
@@ -173,11 +173,11 @@ Adds the given tag to an entry in the CoinBook.
 
 .Example
 ----
-tag 1 fav
-tag 3 fav
-tag BTC watch
+tag 1 t/fav
+tag 3 t/fav
+tag BTC t/fav t/watch
 ----
-The first and third entry in the list is tagged with the `fav` tag, and `BTC` is tagged with `watch`.
+The first and third entry in the list is tagged with the `fav` tag, and `BTC` is tagged with `fav` and `watch`.
 
 [TIP]
 A Coin account can have any number of tags (including 0)
@@ -230,11 +230,11 @@ Updates the listing to show only coin accounts whose details satisfy the given c
 
 .Examples
 ----
-find BT <1>
-f t/fav <2>
+find c/BT                    <1>
+find t/fav                   <2>
 find (p/>500 t/fav) OR h/<20 <3>
 ----
-<1> Finds accounts with `BT` in their name, code or index
+<1> Finds accounts with `BT` in their code
 <2> Finds accounts with the `fav` tag
 <3> Finds accounts either with current price more than $500 and tagged `fav`, or with less than 20 Coins left
 
@@ -257,7 +257,7 @@ Opens up the detail window for the account specified. The detail window includes
 ----
 view BTC     <1>
 view Bitcoin <2>
-v 2          <3>
+view 2       <3>
 ----
 <1> See details for the `BTC` account
 <2> See details for the `Bitcoin` account
@@ -267,7 +267,7 @@ v 2          <3>
 
 .Format
 ----
-notify {TARGET} CONDITION
+notify [TARGET] CONDITION
 ----
 
 Sets a condition that triggers a popup notification when a price update is done and the condition matches the new data for a coin. The condition query mostly follows the same format as that used in <<find,find>>, with additional options specified below.
@@ -285,7 +285,7 @@ Sets a condition that triggers a popup notification when a price update is done 
 notify h/>0        <1>
 notify 1 w/>50     <2>
 notify 3 w/+<1000  <3>
-notify all p/->10% <4>
+notify p/->10%     <4>
 ----
 <1> Notify when the amount held in an account is more than 0 after the update. This always triggers and is useless on its own but can be combined with other conditions to restrict notifications to a smaller set of accounts
 <2> Notify when the amount worth in dollars of the first entry exceeds 50 dollars
@@ -452,11 +452,11 @@ Subsequent kbd:[Tab] key presses will cycle through the list of suggestions.
 | *Help* | `help` | Displays the help page.
 | *History* | `history` | Shows the user a history of previously input commands.
 | *List* | `list` | Lists all coin accounts.
-| *Notify* | `notify CONDITION` | Sets CoinBook to notify the user when the CONDITION has been met.
+| *Notify* | `notify [TARGET] CONDITION` | Sets CoinBook to notify the user when the CONDITION has been met.
 | *Redo* | `redo` | Reapplies the previously un-done command.
-| *Sell* | `sell TARGET AMOUNT` | Subtracts AMOUNT of coin from the targeted account.
+| *Sell* | `sell TARGET a/AMOUNT` | Subtracts AMOUNT of coin from the targeted account.
 | *Order* | `order OPTION/{a,d}...` | Sorts the coin accounts in the CoinBook based on their OPTION.
-| *Tag* | `tag TARGET TAG` | Tags the targeted account with TAG name.
+| *Tag* | `tag TARGET [t/TAG]...` | Tags the targeted account with TAG name.
 | *Undo* | `undo` | Reverts the effect of the previous undo-able command.
 | *Update* | `update` | Fetches data from online sources to update the prices.
 | *View* | `view TARGET` | Views information about the targeted account.

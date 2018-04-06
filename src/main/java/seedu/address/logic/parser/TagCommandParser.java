@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.TokenType.PREFIXNAME;
 import static seedu.address.logic.parser.TokenType.PREFIXTAG;
 
 import java.util.Collection;
@@ -30,7 +29,7 @@ public class TagCommandParser implements Parser<TagCommand> {
     public TagCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenizeToArgumentMultimap(args, PREFIXNAME, PREFIXTAG);
+                ArgumentTokenizer.tokenizeToArgumentMultimap(args, PREFIXTAG);
 
         Index index;
 

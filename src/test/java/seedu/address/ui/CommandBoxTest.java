@@ -11,6 +11,8 @@ import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -64,9 +66,26 @@ public class CommandBoxTest extends GuiUnitTest {
         assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
         guiRobot.push(KeyCode.ESCAPE);
         assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
-
         guiRobot.push(KeyCode.A);
         assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
+        assertBehaviorForSuccessfulCommand();
+        guiRobot.push(KeyCode.A);
+        guiRobot.push(KeyCode.TAB);
+        assertEquals(AddCommand.COMMAND_WORD, commandBoxHandle.getInput());
+        guiRobot.push(KeyCode.TAB);
+        assertEquals(AddCommand.COMMAND_WORD + " " + AddCommand.MESSAGE_PARAMETERS, commandBoxHandle.getInput());
+        guiRobot.push(KeyCode.TAB);
+        assertEquals(AddCommand.COMMAND_WORD, commandBoxHandle.getInput());
+        commandBoxHandle.run(COMMAND_THAT_FAILS);
+        guiRobot.push(KeyCode.TAB);
+        assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
+        commandBoxHandle.run("e");
+        guiRobot.push(KeyCode.TAB);
+        guiRobot.push(KeyCode.TAB);
+        guiRobot.push(KeyCode.ENTER);
+        assertEquals(ExitCommand.COMMAND_WORD, commandBoxHandle.getInput());
+
+
     }
 
     @Test

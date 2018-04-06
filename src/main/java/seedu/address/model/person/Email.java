@@ -28,6 +28,7 @@ public class Email {
             + DOMAIN_FIRST_CHARACTER_REGEX + DOMAIN_MIDDLE_REGEX + DOMAIN_LAST_CHARACTER_REGEX;
 
     public final String value;
+    private boolean isPrivate;
 
     /**
      * Constructs an {@code Email}.
@@ -38,6 +39,12 @@ public class Email {
         requireNonNull(email);
         checkArgument(isValidEmail(email), MESSAGE_EMAIL_CONSTRAINTS);
         this.value = email;
+        this.isPrivate = false;
+    }
+
+    public Email(String email, boolean isPrivate) {
+        this(email);
+        this.setPrivate(isPrivate);
     }
 
     /**
@@ -49,7 +56,22 @@ public class Email {
 
     @Override
     public String toString() {
+        if (isPrivate) {
+            return "<Private Email>";
+        }
         return value;
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public void togglePrivacy() {
+        this.isPrivate = isPrivate ? false : true;
+    }
+
+    public void setPrivate(boolean isPrivate) {
+        this.isPrivate = isPrivate;
     }
 
     @Override

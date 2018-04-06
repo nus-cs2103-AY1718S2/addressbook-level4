@@ -3,53 +3,75 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
-{empty} +
+My Team Manager was developed by the https://github.com/CS2103JAN2018-F14-B1[F14-B1] team. +
+
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
-
-Role: Project Advisor
-
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
-
-'''
-
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Codee Ong
+image::codeeo.jpg[width="150", align="left"]
+{empty}[https://github.com/codeeong[github]] [<<codeeong#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: UI Component +
+Feature Contribution:
+
+* Major Enhancement:
+** Revamp MTM's GUI for ease of viewing teams and players' details
+*** Remove browser panel, add player details panel, change person card
+* Minor Enhancement:
+** `setTagColour`: Command to set the colour of tags to colour of choice
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Jordan Chong
+image::jordanc.jpg[width="150", align="left"]
+{empty}[http://github.com/jordancjq[github]] [<<jordanchong#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Model Component +
+Feature Contribution:
+
+* Major Enhancement:
+** Team Components: Create `Team` class and corresponding commands,
+*** `create`, `view`, `assign`, `remove`
+* Minor Enhancement:
+** `remark`: Add remark field to player and command to add/edit/remove a remark to specified player.
+** `add`: Enhanced functionality of command that allows certain fields to be optional.
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Syafiq
+image::syafiq.jpg[width="150", align="left"]
+{empty}[http://github.com/lithiumlkid[github]] [<<syafiq#, portfolio>>]
+
+Role: Head Developer +
+Responsibilities: Storage Component +
+Feature Contribution:
+
+* Major Enhancement:
+** `Player` Components: Morph `Person` class to contain more information about the players.
+*** Addtional Fields: `POSITION`, `RATING`, `JERSEY_NUMBER`, `AVATAR`
+* Minor Enhancement:
+** Autocomplete: Enhance ease of usage through using kbd:[tab] keyboard shortcut.
+
+'''
+
+=== Loh Tian Wei
+image::ltianwei.jpg[width="150", align="left"]
+{empty}[http://github.com/lohtianwei[github]] [<<lohtianwei#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: Logic Component +
+Feature Contribution:
+
+* Major Enhancement:
+** `Privacy` Components: Implement functionality to hide specified player's information
+*** `toggleprivacy`
+* Minor Enhancement:
+** `sort`: Command to sort players by specified field and order.
 
 '''

@@ -7,46 +7,100 @@
         <phone>85355255</phone>
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
-        <tagged>friends</tagged>
+        <remark></remark>
+        <teamName>&lt;UNSPECIFIED&gt;</teamName>
+        <tagged>
+            <tagName>friends</tagName>
+            <tagColour>teal</tagColour>
+        </tagged>
+        <rating>0</rating>
+        <position>1</position>
+        <jerseyNumber>1</jerseyNumber>
     </persons>
     <persons>
         <name>Benson Meier</name>
         <phone>98765432</phone>
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
+        <remark></remark>
+        <teamName>&lt;UNSPECIFIED&gt;</teamName>
+        <tagged>
+            <tagName>friends</tagName>
+            <tagColour>teal</tagColour>
+        </tagged>
+        <tagged>
+            <tagName>owesMoney</tagName>
+            <tagColour>teal</tagColour>
+        </tagged>
+        <rating>1</rating>
+        <position>2</position>
+        <jerseyNumber>2</jerseyNumber>
     </persons>
     <persons>
         <name>Carl Kurz</name>
         <phone>95352563</phone>
         <email>heinz@example.com</email>
         <address>wall street</address>
+        <tagged>
+            <tagName>friends</tagName>
+            <tagColour>teal</tagColour>
+        </tagged>
+        <remark></remark>
+        <teamName>&lt;UNSPECIFIED&gt;</teamName>
+        <rating>2</rating>
+        <position>3</position>
+        <jerseyNumber>3</jerseyNumber>
     </persons>
     <persons>
         <name>Daniel Meier</name>
         <phone>87652533</phone>
         <email>cornelia@example.com</email>
         <address>10th street</address>
+        <remark></remark>
+        <teamName>&lt;UNSPECIFIED&gt;</teamName>
+        <rating>3</rating>
+        <position>4</position>
+        <jerseyNumber>4</jerseyNumber>
     </persons>
     <persons>
         <name>Elle Meyer</name>
         <phone>9482224</phone>
         <email>werner@example.com</email>
         <address>michegan ave</address>
+        <remark></remark>
+        <teamName>&lt;UNSPECIFIED&gt;</teamName>
+        <rating>4</rating>
+        <position>1</position>
+        <jerseyNumber>5</jerseyNumber>
     </persons>
     <persons>
         <name>Fiona Kunz</name>
         <phone>9482427</phone>
         <email>lydia@example.com</email>
         <address>little tokyo</address>
+        <remark></remark>
+        <teamName>&lt;UNSPECIFIED&gt;</teamName>
+        <rating>5</rating>
+        <position>2</position>
+        <jerseyNumber>6</jerseyNumber>
     </persons>
     <persons>
         <name>George Best</name>
         <phone>9482442</phone>
         <email>anna@example.com</email>
         <address>4th street</address>
+        <remark>Could be famous</remark>
+        <teamName>&lt;UNSPECIFIED&gt;</teamName>
+        <rating>0</rating>
+        <position>3</position>
+        <jerseyNumber>7</jerseyNumber>
     </persons>
-    <tags>friends</tags>
-    <tags>owesMoney</tags>
+    <tags>
+        <tagName>friends</tagName>
+        <tagColour>teal</tagColour>
+    </tags>
+    <tags>
+        <tagName>owesMoney</tagName>
+        <tagColour>teal</tagColour>
+    </tags>
 </addressbook>

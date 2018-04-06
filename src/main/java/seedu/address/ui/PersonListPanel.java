@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
@@ -24,8 +25,13 @@ public class PersonListPanel extends UiPart<Region> {
     private static final String FXML = "PersonListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 
+    private PlayerDetails playerDetails;
+
     @FXML
     private ListView<PersonCard> personListView;
+
+    @FXML
+    private StackPane playerDetailsPlaceholder;
 
     public PersonListPanel(ObservableList<Person> personList) {
         super(FXML);
@@ -45,8 +51,11 @@ public class PersonListPanel extends UiPart<Region> {
         personListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
+                        playerDetailsPlaceholder.getChildren().clear();
                         logger.fine("Selection in person list panel changed to : '" + newValue + "'");
                         raise(new PersonPanelSelectionChangedEvent(newValue));
+                        playerDetails = new PlayerDetails(newValue.person);
+                        playerDetailsPlaceholder.getChildren().add(playerDetails.getRoot());
                     }
                 });
     }

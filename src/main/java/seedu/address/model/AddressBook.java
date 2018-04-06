@@ -1,7 +1,9 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.ParserUtil.UNSPECIFIED_FIELD;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -14,9 +16,15 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.NoPlayerException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.team.Team;
+import seedu.address.model.team.TeamName;
+import seedu.address.model.team.UniqueTeamList;
+import seedu.address.model.team.exceptions.DuplicateTeamException;
+import seedu.address.model.team.exceptions.TeamNotFoundException;
 
 /**
  * Wraps all data at the address-book level
@@ -26,6 +34,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueTeamList teams;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +46,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        teams = new UniqueTeamList();
     }
 
     public AddressBook() {}
@@ -59,6 +69,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void setTeams(List<Team> teams) throws DuplicateTeamException {
+        this.teams.setTeams(teams);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -68,11 +82,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
+        List<Team> syncedTeamList = newData.getTeamList();
 
         try {
             setPersons(syncedPersonList);
+            setTeams(syncedTeamList);
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
+        } catch (DuplicateTeamException e) {
+            throw new AssertionError("MTM should not have duplicate teams");
         }
     }
 
@@ -112,7 +130,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, syncedEditedPerson);
+        removeUnusedTags();
     }
+
+    //@@author lohtianwei
+    public void sortPlayersBy(String field, String order) throws NoPlayerException {
+        persons.sortBy(field, order);
+    }
+    //@@author
 
     /**
      *  Updates the master tag list to include tags in {@code person} that are not in the list.
@@ -132,7 +157,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), person.getRemark(),
+                person.getTeamName(), correctTagReferences, person.getRating(), person.getPosition(),
+                person.getJerseyNumber());
     }
 
     /**
@@ -153,6 +180,203 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    /**
+     *
+     * Sets the colour of {@code tag}.
+     */
+    /** @@author Codee */
+    public void setTagColour(Tag tag, String colour) {
+        for (Tag t : tags) {
+            if (t.getTagName().equals(tag.getTagName())) {
+                t.changeTagColour(colour);
+            }
+        }
+    }
+    // @@author
+
+    /**
+     *
+     * Removes {@code tag} from all persons in this {@code AddressBook}.
+     */
+    public void removeTag(Tag tag) {
+        try {
+            for (Person person : persons) {
+                removeTagFromPerson(tag, person);
+            }
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Impossible: AddressBook should contain this person");
+        }
+    }
+
+    /**
+     * Removes {@code tag} from {@code person} in this {@code AddressBook}.
+     * @throws PersonNotFoundException if the {@code person} is not in this {@code AddressBook}.
+     */
+    private void removeTagFromPerson(Tag tag, Person person) throws PersonNotFoundException {
+        Set<Tag> newTags = new HashSet<>(person.getTags());
+
+        if (!newTags.remove(tag)) {
+            return;
+        }
+
+        Person newPerson =
+                new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
+                        person.getRemark(), person.getTeamName(), newTags, person.getRating(), person.getPosition(),
+                        person.getJerseyNumber());
+
+        try {
+            updatePerson(person, newPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("AddressBook should not have duplicate person "
+                    + "after updating person's tag.");
+        }
+    }
+
+    /**
+     * Removes all {@code tag} that are not in used by any {@code Person} in this {@code AddressBook}.
+     */
+    private void removeUnusedTags() {
+        Set<Tag> tagsInPersons = persons.asObservableList().stream()
+                .map(Person::getTags)
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
+        tags.setTags(tagsInPersons);
+    }
+
+    //@@author jordancjq
+    /**
+     * Creates a team in the manager.
+     * @throws DuplicateTeamException if an equivalent team already exists.
+     */
+    public void createTeam(Team t) throws DuplicateTeamException {
+        teams.add(t);
+    }
+
+    //@@author jordancjq
+    /**
+     * Assigns a {@code person} to a {@code team}.
+     * @throws TeamNotFoundException if the {@code team} is not found in this {@code AddressBook}.
+     */
+    public void assignPersonToTeam(Person person, TeamName teamName) throws DuplicatePersonException {
+        Person newPersonWithTeam =
+                new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
+                        person.getRemark(), teamName, person.getTags(), person.getRating(), person.getPosition(),
+                        person.getJerseyNumber());
+        try {
+            updatePerson(person, newPersonWithTeam);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("AddressBook should not have duplicate person after assigning team");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Impossible: AddressBook should contain this person");
+        }
+
+        teams.assignPersonToTeam(newPersonWithTeam, teams.getTeam(teamName));
+
+        try {
+            removePersonFromTeam(person, person.getTeamName());
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Impossible: Team should contain of this person");
+        }
+    }
+
+    //@@author jordancjq
+    /**
+     * Removes a {@code person} from a {@code team}.
+     */
+    public void removePersonFromTeam(Person person, TeamName teamName) throws PersonNotFoundException {
+        if (!person.getTeamName().toString().equals(UNSPECIFIED_FIELD)) {
+            try {
+                teams.removePersonFromTeam(person, teams.getTeam(teamName));
+            } catch (PersonNotFoundException pnfe) {
+                throw new PersonNotFoundException();
+            }
+        }
+    }
+
+    //@@author jordancjq
+    /**
+     * Removes a {@code team} from {@code teams}.
+     */
+    public void removeTeam(TeamName teamName) throws TeamNotFoundException {
+        if (!teams.contains(teamName)) {
+            throw new TeamNotFoundException();
+        }
+
+        Team teamToRemove = teams.getTeam(teamName);
+
+        for (Person person : teamToRemove) {
+            removeTeamFromPerson(person);
+        }
+
+        teams.remove(teamToRemove);
+    }
+
+    //@@author jordancjq
+    /**
+     * Removes {@code teamName} from {@code person} in this {@code Team}.
+     */
+    private void removeTeamFromPerson(Person person) {
+        Person personWithRemoveTeam =
+                new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
+                        person.getRemark(), new TeamName(UNSPECIFIED_FIELD), person.getTags(), person.getRating(),
+                        person.getPosition(), person.getJerseyNumber());
+
+        try {
+            persons.setPerson(person, personWithRemoveTeam);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("AddressBook should not have duplicate person after assigning team");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Impossible: AddressBook should contain this person");
+        }
+    }
+
+    //@@author jordancjq
+    /**
+     * Renames {@code Team} with {@code updatedTeamName}.
+     * @return
+     */
+    public void renameTeam(Team targetTeam, TeamName updatedTeamName) {
+        try {
+            List<Person> renameTeamPersonList = new ArrayList<>();
+
+            for (Person person : persons) {
+                if (person.getTeamName().equals(targetTeam.getTeamName())) {
+                    renameTeamInPerson(person, updatedTeamName, targetTeam);
+                    renameTeamPersonList.add(person);
+                }
+            }
+
+            Team updatedTeam = new Team(updatedTeamName, targetTeam.getTeamPlayers());
+
+            teams.setTeam(targetTeam, updatedTeam);
+        } catch (DuplicateTeamException dte) {
+            throw new AssertionError("AddressBook should not have duplicate team after renaming");
+        } catch (TeamNotFoundException tnfe) {
+            throw new AssertionError("Impossible: Teams should contain this team");
+        }
+    }
+
+    //@@author jordancjq
+    /**
+     * Renames {@code teamName} in {@code person} with {@code teamName}.
+     */
+    private void renameTeamInPerson(Person person, TeamName teamName, Team targetTeam) {
+        Person toRename = person;
+        Person personWithRenameTeam =
+                new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
+                        person.getRemark(), teamName, person.getTags(), person.getRating(),
+                        person.getPosition(), person.getJerseyNumber());
+
+        try {
+            targetTeam.setPerson(toRename, personWithRenameTeam);
+            persons.setPerson(toRename, personWithRenameTeam);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("AddressBook should not have duplicate person after assigning team");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Impossible: AddressBook should contain this person");
+        }
+    }
+    //@@author
     //// util methods
 
     @Override
@@ -169,6 +393,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Team> getTeamList() {
+        return teams.asObservableList();
     }
 
     @Override

@@ -1,3 +1,4 @@
+
 package seedu.address.storage;
 
 import java.util.ArrayList;
@@ -17,8 +18,12 @@ import seedu.address.model.ReadOnlyAddressBook;
 @XmlRootElement(name = "addressbook")
 public class XmlSerializableAddressBook {
 
+    /** @@author Codee */
+    @XmlElement
+    private List<XmlAdaptedTeam> teams;
     @XmlElement
     private List<XmlAdaptedPerson> persons;
+    //@@author
     @XmlElement
     private List<XmlAdaptedTag> tags;
 
@@ -29,15 +34,18 @@ public class XmlSerializableAddressBook {
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
+        teams = new ArrayList<>();
     }
 
     /**
      * Conversion
      */
+    /** @@author Codee */
     public XmlSerializableAddressBook(ReadOnlyAddressBook src) {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        teams.addAll(src.getTeamList().stream().map(XmlAdaptedTeam::new).collect(Collectors.toList()));
     }
 
     /**
@@ -54,8 +62,12 @@ public class XmlSerializableAddressBook {
         for (XmlAdaptedPerson p : persons) {
             addressBook.addPerson(p.toModelType());
         }
+        for (XmlAdaptedTeam tm : teams) {
+            addressBook.createTeam(tm.toModelType());
+        }
         return addressBook;
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
@@ -68,6 +80,6 @@ public class XmlSerializableAddressBook {
         }
 
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags);
+        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags) && teams.equals(otherAb.teams);
     }
 }

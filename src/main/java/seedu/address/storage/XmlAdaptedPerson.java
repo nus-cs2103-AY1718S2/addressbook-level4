@@ -11,10 +11,15 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.JerseyNumber;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Position;
+import seedu.address.model.person.Rating;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.team.TeamName;
 
 /**
  * JAXB-friendly version of the Person.
@@ -28,9 +33,29 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String phone;
     @XmlElement(required = true)
+    private Boolean phonePrivacy;
+    @XmlElement(required = true)
     private String email;
     @XmlElement(required = true)
+    private Boolean emailPrivacy;
+    @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private Boolean addressPrivacy;
+    @XmlElement(required = true)
+    private String remark;
+    @XmlElement(required = true)
+    private Boolean remarkPrivacy;
+    @XmlElement(required = true)
+    private String teamName;
+    @XmlElement(required = true)
+    private String rating;
+    @XmlElement(required = true)
+    private Boolean ratingPrivacy;
+    @XmlElement(required = true)
+    private String position;
+    @XmlElement(required = true)
+    private String jerseyNumber;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -49,6 +74,12 @@ public class XmlAdaptedPerson {
         this.phone = phone;
         this.email = email;
         this.address = address;
+
+        this.remarkPrivacy = false;
+        this.phonePrivacy = false;
+        this.addressPrivacy = false;
+        this.emailPrivacy = false;
+
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -64,7 +95,20 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        remark = source.getRemark().value;
+        teamName = source.getTeamName().fullName;
+
+        phonePrivacy = source.getPhone().isPrivate();
+        emailPrivacy = source.getEmail().isPrivate();
+        addressPrivacy = source.getAddress().isPrivate();
+        remarkPrivacy = source.getRemark().isPrivate();
+        ratingPrivacy = source.getRating().isPrivate();
+
         tagged = new ArrayList<>();
+        rating = source.getRating().value;
+        position = source.getPosition().value;
+        jerseyNumber = source.getJerseyNumber().value;
+
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
@@ -81,6 +125,26 @@ public class XmlAdaptedPerson {
             personTags.add(tag.toModelType());
         }
 
+        if (phonePrivacy == null) {
+            phonePrivacy = false;
+        }
+
+        if (emailPrivacy == null) {
+            emailPrivacy = false;
+        }
+
+        if (addressPrivacy == null) {
+            addressPrivacy = false;
+        }
+
+        if (remarkPrivacy == null) {
+            remarkPrivacy = false;
+        }
+
+        if (ratingPrivacy == null) {
+            ratingPrivacy = false;
+        }
+
         if (this.name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
         }
@@ -95,7 +159,7 @@ public class XmlAdaptedPerson {
         if (!Phone.isValidPhone(this.phone)) {
             throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
         }
-        final Phone phone = new Phone(this.phone);
+        final Phone phone = new Phone(this.phone, this.phonePrivacy);
 
         if (this.email == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
@@ -103,7 +167,7 @@ public class XmlAdaptedPerson {
         if (!Email.isValidEmail(this.email)) {
             throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
         }
-        final Email email = new Email(this.email);
+        final Email email = new Email(this.email, this.emailPrivacy);
 
         if (this.address == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
@@ -111,10 +175,40 @@ public class XmlAdaptedPerson {
         if (!Address.isValidAddress(this.address)) {
             throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
         }
-        final Address address = new Address(this.address);
+
+        final Address address = new Address(this.address, this.addressPrivacy);
+        final Remark remark = new Remark(this.remark, this.remarkPrivacy);
+        final TeamName teamName = new TeamName(this.teamName);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+
+        if (this.rating == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Rating.class.getSimpleName()));
+        }
+        if (!Rating.isValidRating(this.rating)) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
+        final Rating rating = new Rating(this.rating, this.ratingPrivacy);
+
+        if (this.position == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Position.class.getSimpleName()));
+        }
+        if (!Position.isValidPosition(this.position)) {
+            throw new IllegalValueException(Position.MESSAGE_POSITION_CONSTRAINTS);
+        }
+        final Position position = new Position(this.position);
+
+        if (this.jerseyNumber == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    JerseyNumber.class.getSimpleName()));
+        }
+        if (!JerseyNumber.isValidJerseyNumber(this.jerseyNumber)) {
+            throw new IllegalValueException(JerseyNumber.MESSAGE_JERSEY_NUMBER_CONSTRAINTS);
+        }
+        final JerseyNumber jerseyNumber = new JerseyNumber(this.jerseyNumber);
+
+        return new Person(name, phone, email, address, remark, teamName, tags, rating, position, jerseyNumber);
     }
 
     @Override

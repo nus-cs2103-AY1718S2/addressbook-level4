@@ -1,11 +1,21 @@
 package seedu.address.ui;
 
+import java.util.Iterator;
+import java.util.Set;
+import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
+
 import javafx.fxml.FXML;
+
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeTagColourEvent;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -23,6 +33,7 @@ public class PersonCard extends UiPart<Region> {
      */
 
     public final Person person;
+    private final Logger logger = LogsCenter.getLogger(PersonCard.class);
 
     @FXML
     private HBox cardPane;
@@ -31,23 +42,39 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label phone;
-    @FXML
-    private Label address;
-    @FXML
-    private Label email;
+    private Label teamName;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Label rating;
+    @FXML
+    private Label position;
 
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        if (person.getRating().isPrivate()) {
+            rating.setText(person.getRating().toString());
+        } else {
+            rating.setText(person.getRating().value);
+        }
+        teamName.setText(person.getTeamName().fullName);
+        position.setText(person.getPosition().getPositionName());
+        initTags(person);
+        registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Creates the tag labels for {@code person}.
+     */
+    private void initTags(Person person) {
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.getTagName());
+            tagLabel.getStyleClass().add(tag.getTagColour());
+            tags.getChildren().add(tagLabel);
+        });
     }
 
     @Override
@@ -66,5 +93,23 @@ public class PersonCard extends UiPart<Region> {
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
+    }
+
+    /** @@author Codee */
+    @Subscribe
+    public void handleColourChangeEvent(ChangeTagColourEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Set<Tag> tagSet = person.getTags();
+        int i = 0;
+        for (Iterator<Tag> it = tagSet.iterator(); it.hasNext();) {
+            Tag tag = it.next();
+            if (tag.getTagName().equals(event.tagName)) {
+                tags.getChildren().remove(i);
+                Label newTagLabel = new Label(event.tagName);
+                newTagLabel.getStyleClass().add(event.tagColour);
+                tags.getChildren().add(i, newTagLabel);
+            }
+            i++;
+        }
     }
 }

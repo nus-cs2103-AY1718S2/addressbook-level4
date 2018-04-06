@@ -1,9 +1,14 @@
 package seedu.address.ui;
 
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Side;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
@@ -12,6 +17,7 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.CommandTrie;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -23,19 +29,27 @@ public class CommandBox extends UiPart<Region> {
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
 
+    private CommandTrie commandTrie;
+    private Set<String> commandSet;
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private final ContextMenu suggestions;
+
 
     @FXML
     private TextField commandTextField;
 
-    public CommandBox(Logic logic) {
+    CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
+        commandTrie = logic.getCommandTrie();
+        commandSet = commandTrie.getCommandSet();
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+        suggestions = new ContextMenu();
+        commandTextField.setContextMenu(suggestions);
     }
 
     /**
@@ -55,7 +69,14 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        case TAB:
+            keyEvent.consume();
+            handleAutoComplete();
+            break;
         default:
+            if (suggestions.isShowing()) {
+                suggestions.hide();
+            }
             // let JavaFx handle the keypress
         }
     }
@@ -148,4 +169,37 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    /**
+     * Handles the Tab button pressed event. Attempts to autocomplete current input.
+     */
+    private void handleAutoComplete() {
+        String input = commandTextField.getText();
+        try {
+            String command = commandTrie.attemptAutoComplete(input);
+            if (input.equals(command)) {
+                setStyleToIndicateCommandFailure();
+                showSuggestions(commandTrie.getOptions(input));
+            } else if (commandSet.contains(command)) {
+                this.replaceText(command);
+            } else if (commandSet.contains(input)) {
+                this.replaceText(input + command);
+            }
+        } catch (NullPointerException e) {
+            setStyleToIndicateCommandFailure();
+        }
+    }
+
+    /**
+     * Populates ContextMenu and shows it to user
+     * @param options the options with matching prefix found in Command Trie
+     */
+    private void showSuggestions(List<String> options) {
+        suggestions.getItems().clear();
+        for (String option : options) {
+            MenuItem item = new MenuItem(option);
+            item.setOnAction(event -> replaceText(item.getText()));
+            suggestions.getItems().add(item);
+        }
+        suggestions.show(commandTextField, Side.BOTTOM, 0.0, 0.0);
+    }
 }

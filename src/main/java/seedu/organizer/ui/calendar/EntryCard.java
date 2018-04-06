@@ -8,7 +8,7 @@ import seedu.organizer.ui.UiPart;
 
 //@@author guekling
 /**
- * !!! ADD COMMENTS !!!
+ * An UI component that displays the name of a {@code Task}.
  */
 public class EntryCard extends UiPart<Region> {
 

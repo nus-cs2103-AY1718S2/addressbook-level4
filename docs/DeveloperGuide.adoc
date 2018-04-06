@@ -281,6 +281,7 @@ image::LogicCommandClassDiagram.png[width="800"]
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
+[[fig-LogicSequenceDiagram]]
 .Interactions Inside the Logic Component for the `delete 1` Command
 image::DeleteTaskSdForLogic.png[width="800"]
 
@@ -460,10 +461,10 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: How undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire organizer.
+* **Alternative 1 (current choice):** Saves the entire organizer
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
-* **Alternative 2:** Individual command knows how to undo/redo by itself.
+* **Alternative 2:** Individual command knows how to undo/redo by itself
 ** Pros: Will use less memory (e.g. for `delete`, just save the task being deleted).
 ** Cons: Need to ensure that the implementation of the counter to each command is correct.
 
@@ -626,48 +627,182 @@ image::OrganizerAddTaskDiagram4.png[width="600"]
 
 // tag::calendar[]
 === Calendar Feature
+
+The `Calendar` resides mainly in the `UI` component, constantly interacting with the `Logic` and `Model` components to complete its tasks. It allows users to have a chronic overview of the deadlines of all their tasks. Tasks on the calendar changes according to the last task listing. By default, users will view the current month when they first open PrioriTask.
+
+The calendar feature is currently still in its early stages of implementation. At present, it only supports the switching between months, and is best viewed fully-maximised on a 13” computer screen.
+
 ==== Current Implementation
 
-The calendar feature is facilitated by the `Calendar` class, which supports the `CalendarPanel`. The `Calendar` is responsible for displaying a monthly calendar view to the users through the `CalendarPanel`. The following diagram describes the structure of the calendar system:
+The calendar feature is facilitated by the `MonthView` class, which supports the `CalendarPanel`. The `MonthView` is responsible for displaying a monthly calendar view to the users through the `CalendarPanel`. The following diagram illustrates the structure of the calendar feature system:
 
-.UML Class Diagram for Calendar
-image::CalendarComponentClassDiagram.png[width="800"]
+.Structure of the Calendar Feature
+image::CalendarComponentClassDiagram.png[width="700"]
 
-As you can see from the diagram, `MonthView` facilitates the drawing of the calendar, while `Calendar` supports the display of the calendar onto the `CalendarPanel`. The `MonthView` interacts very closely with the corresponding FXML file.
+The following sequence diagram illustrates how the different classes work together to display the calendar when users first run the application.
 
-The following diagram shows the basic layout of the calendar:
+.Calendar Sequence Diagram
+image::CalendarSequenceDiagram.png[width="700"]
+
+Below describes the the implementation of the different classes supporting the calendar feature.
+
+===== Implementation of `EntryCard`
+`EntryCard` is responsible for displaying the name of a `Task` on the calendar. It is called by `MonthView` when mapping each `Task` to an `EntryCard`. The method is implemented as such:
+[source,java]
+----
+private ObservableList<EntryCard> getEntryCardsList(int year, int month) {
+    FilteredList<Task> filteredList = getFilteredTaskList(year, month);
+    SortedList<Task> taskSortedList = getSortedTaskList(filteredList);
+
+    return EasyBind.map(taskSortedList, (task) -> new EntryCard(task));
+}
+----
+
+An `EntryCard` will be added to a specific date which reflects the deadline of the `Task`. It is displayed on the calendar with the help of the JavaFX `ListView` object. More details of how this is implemented is further discussed in <<Implementation of `MonthView`>>.
+
+===== Implementation of `MonthView`
+
+`MonthView` is in charge of executing several tasks. It is responsible for,
+
+* Drawing the month view of the calendar, and populating the dates.
+
+* Adding the tasks’ entries onto the calendar, according to the last task listing. The calendar is also updated every time an undoable command is executed (refer to <<Undo/Redo feature>> for more details about an undoable command).
+* Aiding the `Logic` component by switching the month view accordingly when users execute the respective calendar feature commands (e.g. `pmonth`, `nmonth`, etc.). A calendar feature command is defined as a command that changes the display of the calendar. For the full list of calendar feature commands, head to <<UserGuide#calendar-features, User Guide: Calendar Features>>.
+
+`MonthView` interacts very closely with its corresponding FXML file, `MonthView.fxml` to execute its tasks. The FXML file reflects the basic layout of the calendar feature, which is illustrated by the diagram below.
 
 .Basic Calendar Layout
 image::MonthViewLayoutDiagram.png[width="700"]
 
-The basic calendar layout (refer to Figure 25) is reflected in `MonthView.fxml`. It is loaded by `MonthView` which uses the JavaFX layout objects extensively when drawing the calendar. An example would be the `addMonthDate` method, which adds a particular date to the exact `column` and `row` of the `taskCalendar`.
+MonthView` uses the JavaFX layout objects extensively when executing its tasks. The following are some instances when JavaFX layout objects are called:
 
-The `addMonthDate` method is implemented as such:
+* Populating the dates in the calendar: Adding a `Text` object, which contains the numerical value of a particular date, to the exact column and row in the `taskCalendar`. The method is implemented as such:
 
 [source,java]
 ----
 private void addMonthDate(Text dateToPrint, int column, int row) {
-    taskCalendar.add(dateToPrint, column, row);
+    // To update the JavaFX component from a non-JavaFX thread
+    Platform.runLater(new Runnable() {
+        @Override
+        public void run() {
+            taskCalendar.add(dateToPrint, column, row);
+        }
+    });
+
     taskCalendar.setHalignment(dateToPrint, HPos.LEFT);
     taskCalendar.setValignment(dateToPrint, VPos.TOP)
+    dateToPrint.setId("date" + String.valueOf(dateCount));
 }
 ----
 
-Both the `Calendar` and `CalendarPanel` use the JavaFX `StackPane` object as a placeholder for the `MonthView`. After loading the respective FXML files, methods in the `Calendar` and `CalendarPanel` fetch the display for the `MonthView` as such:
+* Adding the tasks’ entries onto the calendar: Adding a `ListView` object, which contains a list of `EntryCard`s, to the exact column and row in the `taskCalendar`. An `EntryCard` represents a task entry, which will be added to the date which reflects the deadline of the task. The method is implemented as such:
 
 [source,java]
 ----
-public void getCurrentMonth(YearMonth currentYearMonth) throws IOException {
-    // draws the calendar for the current month
-    calendarPlaceholder.getChildren().add(monthView.getRoot());
-}
+private void addEntryListView(ObservableList<EntryCard> toAddObservableList, int row, int column) {
+    ListView<EntryCard> entries = new ListView<>();
+    entries.setId("entry" + String.valueOf(row) + String.valueOf(column));
+    entries.setItems(toAddObservableList);
+    entries.setCellFactory(listView -> new EntryListViewCell());
+    entries.setMaxHeight(60);
 
-private void createMainView() throws IOException {
-    // fetches the calendar view
-    calendarPane.getChildren().add(calendar.getRoot());
+    // To update the JavaFX component from a non-JavaFX thread
+    Platform.runLater(new Runnable() {
+        @Override
+        public void run() {
+            taskCalendar.add(entries, column, row);
+        }
+    });
+
+    taskCalendar.setValignment(entries, VPos.BOTTOM);
 }
 ----
 
+`MonthView` also works very closely with the `Logic` component to accomplish,
+
+* Adding of the tasks’ entries onto the calendar, by retrieving an unmodifiable `ObservableList` containing the list of `Task`s. A listener to added to the `ObservableList` so that the calendar is updated with the latest tasks’ entries when a change in the list is detected. The method is implemented as such:
+
+[source,java]
+----
+private void addListenerToTaskList() {
+    taskList.addListener(new ListChangeListener<Task>() {
+        @Override
+        public void onChanged(Change change) {
+            while (change.next()) {
+                clearCalendar();
+                setMonthCalendarDatesAndEntries(viewYearMonth.getYear(), viewYearMonth.getMonthValue());
+            }
+        }
+    });
+}
+----
+
+* Switching the month view when users execute the respective calendar feature commands, by retrieving an `ObservableList` containing a list of executed commands by the user. A listener is added to the `ObservableList` so that the month view is changed accordingly when a calendar feature command in the list is detected. The method is implemented as such:
+
+[source,java]
+----
+private void addListenerToExecutedCommandsList() {
+    executedCommandsList.addListener(new ListChangeListener<String>() {
+        @Override
+        public void onChanged(Change change) {
+            while (change.next()) {
+                int size = executedCommandsList.size();
+                String executedCommand = executedCommandsList.get(size - 1);
+
+                if ((executedCommand.equals(CurrentMonthCommand.COMMAND_WORD)) || (executedCommand.equals(CurrentMonthCommand.COMMAND_ALIAS))) {
+                    goToCurrentMonth();
+                }
+
+                // … other similiar if statements for the remaining calendar feature commands ...
+            }
+        }
+    });
+}
+----
+
+===== Implementation of `CalendarPanel`
+`CalendarPanel` simply displays the calendar, by using the JavaFX `StackPane` object as a placeholder for `MonthView`, which contains the basic layout of the calendar. After loading its own FXML file, it will fetch the display for `MonthView` as such:
+
+
+[source,java]
+----
+private void createMainView() {
+    monthView.getMonthView(currentYearMonth);
+    calendarPane.getChildren().add(monthView.getRoot());
+}
+----
+
+==== Scenario
+
+Suppose the user executes a calendar feature command. Given below is the sequence diagram for interactions within the `Logic` and `UI` components for the execute(“nmonth”) API call.
+
+.Calendar Sequence Diagram
+image::CalendarCommandExecutionSequenceDiagram.png[width="700"]
+
+The sequence flow is slightly similar to that of the execution of a normal command (refer to <<fig-LogicSequenceDiagram>>), and is as follows:
+
+. `Logic` uses the `OrganizerParser` class to parse the calendar feature command.
+. This results in a `Command` object which is executed by the `LogicManager`.
+. The command execution triggers the `MonthView` class in the `UI`, which will display the new month view.
+. The result of the command execution is encapsulated as a `CommandResult` object which is passed to the `UI`. It will be shown in the `Result Display Box`.
+
+==== Design Considerations
+
+===== Aspect: Implementation of calendar feature
+* *Alternative 1 (current choice):* Draw the calendar manually using the JavaFX library
+** Pros: Feature is customised for the PrioriTask application.
+** Cons: Too much time invested in creating a feature that has been already been developed and freely available.
+* *Alternative 2:* Use a third-party framework / library
+** Pros: Speed up development, especially if it has already been thoroughly tested and does not have many bugs.
+** Cons: Not customised for the application, and may require much time to tweak or work around the framework / library to suit the application.
+
+===== Aspect: Updating of tasks’ entries on the calendar
+* *Alternative 1 (current choice):* Clears the calendar, and draws everything (i.e. the dates and entries) again
+** Pros: Easy to implement.
+** Cons: May have performance issues. There may be a lag after an undoable is executed.
+* *Alternative 2:* Track the `Task` that is being added / modified, and update the calendar accordingly
+** Pros: Update of the calendar will be almost instantaneous. Chances of a lag is rare.
+** Cons: Difficult to implement. Need to ensure that the tracking of `Task`s added / modified is accurate.
 // end::calendar[]
 
 // tag::subtask[]

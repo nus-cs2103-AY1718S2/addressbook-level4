@@ -84,13 +84,12 @@ public class XmlRecipeBookStorage implements RecipeBookStorage {
 
         FileUtil.createIfMissing(file);
         FileUtil.createDirs(new File(imageFolderPath));
-        XmlFileStorage.saveDataToFile(file, new XmlSerializableRecipeBook(recipeBook));
-
         saveAllImageFiles(recipeBook);
+        XmlFileStorage.saveDataToFile(file, new XmlSerializableRecipeBook(recipeBook));
     }
 
     /**
-     * Random comments
+     * Saves all image files into the data folder of the application
      */
     public void saveAllImageFiles(ReadOnlyRecipeBook recipeBook) {
         for (int i = 0; i < recipeBook.getRecipeList().size(); i++) {
@@ -104,12 +103,13 @@ public class XmlRecipeBookStorage implements RecipeBookStorage {
     }
 
     /**
-     * Random comments
+     * Saves an image file into the data folder of the application
+     * @param imagePath location of the image. Cannot be null
      */
     public String saveImageFile(String imagePath) throws IOException {
-        File image = new File(imagePath);
-        File imageToSaveAs = new File (imageFolderPath + image.getName());
-        Files.copy(image.toPath(), imageToSaveAs.toPath(), REPLACE_EXISTING);
+        File imageToSave = new File(imagePath);
+        File pathToNewImage = new File (imageFolderPath + imageToSave.getName());
+        Files.copy(imageToSave.toPath(), pathToNewImage.toPath(), REPLACE_EXISTING);
         return filePath;
     }
 }

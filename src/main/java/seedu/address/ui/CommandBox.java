@@ -198,13 +198,13 @@ public class CommandBox extends UiPart<Region> {
         String[] words = commandTextField.getText().trim().split(" ");
         String targetWord = words[words.length - 1];
 
-        if (containsPrefix(targetWord)) {
-            String[] splitByPrefix = words[words.length - 1].split("/");
+        if (containsPrefix(targetWord) || isPrefix(targetWord)) {
+            String[] splitByPrefix = targetWord.split("/");
             words[words.length - 1] = splitByPrefix[0] + "/" + toAdd;
             //toAdd = toAdd.replaceFirst("(?i)" + splitByPrefix[1], "");
         } else {
-            toAdd = toAdd.replaceFirst(words[words.length - 1], "");
-            words[words.length - 1] += toAdd;
+            //toAdd = toAdd.replaceFirst("(?i)"+words[words.length - 1], "");
+            words[words.length - 1] = toAdd;
         }
 
         //int cursorPos = commandTextField.getCaretPosition();
@@ -219,6 +219,17 @@ public class CommandBox extends UiPart<Region> {
      */
     private boolean containsPrefix(String toCheck) {
         if (toCheck.contains("/") && !toCheck.substring(toCheck.length() - 1).equals("/")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Returns true if {@code toCheck} is a prefix (ends with '/').
+     */
+    private boolean isPrefix(String toCheck) {
+        if (toCheck.length() > 0 && toCheck.substring(toCheck.length() - 1).equals("/")) {
             return true;
         } else {
             return false;

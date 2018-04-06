@@ -8,18 +8,16 @@ import static java.util.Objects.requireNonNull;
  */
 public class Cca {
 
-
-    public static final String MESSAGE_REMARK_CONSTRAINTS = "Remark can contain anything that you want.";
     public final String value;
 
     /**
      * Constructs a {@code Remark}.
      *
-     * @param remark A valid remark.
+     * @param cca A valid remark.
      */
-    public Cca(String remark) {
-        requireNonNull(remark);
-        this.value = remark;
+    public Cca(String cca) {
+        requireNonNull(cca);
+        this.value = cca;
     }
 
     @Override

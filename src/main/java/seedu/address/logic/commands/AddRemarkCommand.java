@@ -16,6 +16,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Cca;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
@@ -24,6 +25,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
+
 //@@author chuakunhong
 /**
  * Edits the details of an existing person in the address book.
@@ -99,8 +101,9 @@ public class AddRemarkCommand extends UndoableCommand {
         Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
         Remark updatedRemark = parseRemark(((personToEdit.getRemark()).toString() + "\n"
                                             + editPersonDescriptor.getRemark().get().toString()));
+        Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
 
-        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark);
+        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca);
     }
 
     @Override
@@ -132,6 +135,8 @@ public class AddRemarkCommand extends UndoableCommand {
         private Set<Tag> tags;
         private Set<Subject>  subjects;
         private Remark remark;
+        private Cca cca;
+
 
         public EditPersonDescriptor() {}
 
@@ -145,6 +150,7 @@ public class AddRemarkCommand extends UndoableCommand {
             setTags(toCopy.tags);
             setSubjects(toCopy.subjects);
             setRemark(toCopy.remark);
+            setCca(toCopy.cca);
         }
 
         /**
@@ -212,7 +218,23 @@ public class AddRemarkCommand extends UndoableCommand {
         }
 
         /**
-         * Returns an unmodifiable subject set, which throws {@code UnsupportedOperationException}
+         * Sets {@code cca} to this object's {@code cca}.
+         * A defensive copy of {@code cca} is used internally.
+         */
+        public void setCca(Cca cca) {
+            this.cca = cca;
+        }
+
+        /**
+         * Sets {@code cca} to this object's {@code cca}.
+         * A defensive copy of {@code cca} is used internally.
+         */
+        public Optional<Cca> getCca() {
+            return Optional.ofNullable(cca);
+        }
+
+        /**
+         * Returns an unmodifiable remark set, which throws {@code UnsupportedOperationException}
          * if modification is attempted.
          * Returns {@code Optional#empty()} if {@code subjects} is null.
          */

@@ -12,6 +12,7 @@ import java.util.Set;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Cca;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
@@ -44,12 +45,15 @@ public class AddCommandParser implements Parser<AddCommand> {
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Set<Subject> subjectList = ParserUtil.parseSubjects(argMultimap.getAllValues(PREFIX_SUBJECT));
             Remark remark;
+            Cca cca;
             if (!(argMultimap.getValue(PREFIX_REMARK)).isPresent()) {
                 remark = ParserUtil.parseRemark(" ");
+                cca = ParserUtil.parseCca(" ");
             } else {
                 remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
+                cca = ParserUtil.parseCca(argMultimap.getValue(PREFIX_REMARK).get());
             }
-            Person person = new Person(name, nric, tagList, subjectList, remark);
+            Person person = new Person(name, nric, tagList, subjectList, remark, cca);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

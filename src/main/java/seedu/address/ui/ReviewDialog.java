@@ -36,7 +36,9 @@ public class ReviewDialog {
     public ReviewDialog() {
         dialog = new Dialog<>();
         dialog.setTitle("Review Dialog");
-        dialog.setHeaderText("Reviewer must be a valid email address\nReview accepts any characters and has no length limit.");
+        dialog.setHeaderText("Reviewer must be a valid email address"
+                + "\n"
+                + "Review accepts any characters and has no length limit.");
 
         reviewButtonType = new ButtonType("Review", ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(reviewButtonType, ButtonType.CANCEL);

@@ -60,6 +60,7 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane commandBoxPlaceholder;
 
+    //@@author jonleeyz
     @FXML
     private MenuItem exitMenuItem;
 
@@ -95,6 +96,7 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private MenuItem selectMenuItem;
+    //@@author
 
     @FXML
     private MenuItem assignMenuItem;
@@ -132,6 +134,7 @@ public class MainWindow extends UiPart<Stage> {
         return primaryStage;
     }
 
+    //@@author jonleeyz
     private void setAccelerators() {
         setAccelerator(exitMenuItem, KeyCombination.valueOf("Alt + Q"));
 
@@ -152,6 +155,7 @@ public class MainWindow extends UiPart<Stage> {
 
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
     }
+    //@@author
 
     /**
      * Sets the accelerator of a MenuItem.
@@ -240,6 +244,7 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    //@@author jonleeyz
     /**
      * Executes the {@code undo} operation
      */
@@ -327,6 +332,7 @@ public class MainWindow extends UiPart<Stage> {
     private void handleSelect() {
         raise(new PopulatePrefixesRequestEvent(new SelectCommand()));
     }
+    //@@author
 
     /**
      * Populates the {@code CommandBox} with the {@code AssignCommand} prefixes.

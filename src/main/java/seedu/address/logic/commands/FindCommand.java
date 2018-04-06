@@ -50,6 +50,7 @@ public class FindCommand extends Command implements PopulatableCommand {
         // state check
     }
 
+    //@@author jonleeyz
     @Override
     public String getCommandWord() {
         return COMMAND_WORD;
@@ -69,4 +70,5 @@ public class FindCommand extends Command implements PopulatableCommand {
     public String getUsageMessage() {
         return MESSAGE_USAGE;
     }
+    //@@author
 }

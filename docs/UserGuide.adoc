@@ -238,6 +238,7 @@ Format: `searchall KEYWORD`
 ****
 * The KEYWORD is the name to be searched for.
 * Make use of the search function of the respective social media platform.
+* Dummy SearchPage is used currently, actual link to search result will come in v1.5.
 ****
 
 Examples:
@@ -253,6 +254,7 @@ Format: `searchfb KEYWORD`
 ****
 * The KEYWORD is the name to be searched on Facebook.
 * Make use of the search engine of Facebook.
+* Dummy SearchPage is used currently, actual link to search result will come in v1.5.
 ****
 
 Examples:
@@ -268,6 +270,7 @@ Format: `searchtwitter KEYWORD`
 ****
 * The KEYWORD is the name to be searched on Twitter.
 * Make use of the search engine of Twitter.
+* Dummy SearchPage is used currently, actual link to search result will come in v1.5.
 ****
 
 Examples:

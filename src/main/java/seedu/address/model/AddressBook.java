@@ -137,7 +137,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tasks.add(t);
     }
 
-    //@@ author Wu Di
+    //@@author Wu Di
     /**
      * Replaces the given person {@code target} in the list with {@code editedPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPerson}.
@@ -155,7 +155,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tasks.setTask(target, editedTask);
     }
 
-    //@@ author
+    //@@author
     /**
      *  Updates the master tag list to include tags in {@code person} that are not in the list.
      *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master

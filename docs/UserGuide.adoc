@@ -118,7 +118,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Locating persons by tag: `findtag` `[Coming in v2.0]`
+=== Locating persons by tag: `findtag` `[Since v1.2]`
 
 Finds persons whose tags contain any of the given keywords. +
 Format: `findtag KEYWORD [MORE_KEYWORDS]`
@@ -377,10 +377,10 @@ Examples:
 
 * `post facebook/Sample post.`
 
-=== Search for profile : `search` `[Coming in v2.0]`
+=== Search for profile : `searchall` `[Coming in v2.0]`
 
 Search for the specified profiles on all social media platform linkable with the application. +
-Format: `search KEYWORD`
+Format: `searchall KEYWORD`
 
 ****
 * The KEYWORD can either be the user name or email.
@@ -440,6 +440,8 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Find with Tag* : `findtag KEYWORD [MORE_KEYWORDS]` +
+e.g. `findtag friends neighbour`
 * *List* : `list`
 * *Sort* : `sort`
 * *Help* : `help`

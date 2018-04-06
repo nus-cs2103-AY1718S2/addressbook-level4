@@ -6,6 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.SearchAllCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author KevinChuangCH
 /**
  * Parses input arguments and creates a new SearchAllCommand object
  */

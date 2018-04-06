@@ -395,6 +395,43 @@ Examples:
 * `deleteLesson 2` +
 Deletes the 2nd lesson listing in the schedule
 
+=== Full information page for each student : `moreInfo`
+
+Displays the full information of a student on the browser panel. This includes his/her profile picture if one exists. +
+Format: `moreInfo INDEX`
+
+****
+* Displays the full information of a student with the specified `INDEX`.
+* The index refers to the index number shown in the last schedule listing. The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `moreInfo 2`
+Displays the full information of the 2nd student in the current listing.
+
+=== Edit the profile picture of a student : `editPicture`
+
+Edits the current profile picture of a student to a new picture from a specific file path indicated by the user. +
+Format: `editPicture i/STUDENT_INDEX pa/FILE_PATH_OF_PICTURE`
+
+****
+* Changes the profile photo of a student with the specified `INDEX` to a new one which has a file path of `FILE_PATH_OF_PICTURE`
+* The index refers to the index number shown in the last schedule listing. The index *must be a positive integer* 1, 2, 3, ...
+* The file path of the picture is either relative to the folder which the jar application is or can be speicifed from the hard drive.
+****
+
+[NOTE]
+====
+Image files must exist and have extensions either of `.jpg` or `.png`.
+====
+
+Examples:
+
+* `list` +
+* `editPicture i/1 pa/C:/Users/User/Desktop/test.jpg
+Changes the profil photo of the 1st student in the current listing to the image found at the specific file path.
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -475,12 +512,6 @@ There is no need to save manually.
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
-
-// tag::studentmoredetails
-=== Full information page for each student : `moreInfo` `[coming in v2.0]`
-
-_{Explain command to obtain full information page for each student}
-// end::studentmoredetails
 
 === Track student's homework in the dashboard `[coming in v2.0]`
 

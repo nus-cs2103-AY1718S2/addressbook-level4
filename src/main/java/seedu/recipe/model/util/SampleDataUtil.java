@@ -41,7 +41,7 @@ public class SampleDataUtil {
                     new Calories("2846"),
                     new Servings("5"),
                     new Url("https://www.allrecipes.com/recipe/73634/colleens-slow-cooker-jambalaya/"),
-                    new Image(Image.VALID_IMAGE_PATH),
+                    new Image("-"),
                     getTagSet("friends")),
             new Recipe(new Name("Pizza"),
                     new Ingredient("this, is, some, sample, ingredient"),
@@ -60,7 +60,7 @@ public class SampleDataUtil {
                     new Servings("2"),
                     new Url("https://www.allrecipes.com/recipe/8722/mexican-chicken-i/?"
                             + "internalSource=popular&referringContentType=home%20page&clickId=cardslot%203"),
-                    new Image(Image.VALID_IMAGE_PATH),
+                    new Image("-"),
                     getTagSet("colleagues", "friends")),
             new Recipe(new Name("Big Pizza"),
                     new Ingredient("this, is, some, sample, ingredient"),
@@ -81,7 +81,7 @@ public class SampleDataUtil {
                     new Servings("4"),
                     new Url("https://www.allrecipes.com/recipe/11901/to-die-for-fettuccini-alfredo/?"
                             + "internalSource=popular&referringContentType=home%20page&clickId=cardslot%206"),
-                    new Image(Image.VALID_IMAGE_PATH),
+                    new Image("-"),
                     getTagSet("neighbours")),
             new Recipe(new Name("Kinda Big Pizza"),
                     new Ingredient("this, is, some, sample, ingredient"),
@@ -96,7 +96,7 @@ public class SampleDataUtil {
                     new Servings("2"),
                     new Url("https://www.allrecipes.com/recipe/229110/savory-beef-stir-fry/?"
                             + "internalSource=popular&referringContentType=home%20page&clickId=cardslot%2014"),
-                    new Image(Image.VALID_IMAGE_PATH),
+                    new Image("-"),
                     getTagSet("family")),
             new Recipe(new Name("Somewhat Big Pizza"),
                     new Ingredient("this, is, some, sample, ingredient"),
@@ -112,7 +112,7 @@ public class SampleDataUtil {
                     new Servings("2"),
                     new Url("https://www.allrecipes.com/recipe/222615/scrambled-egg-brunch-bread/?"
                             + "internalSource=popular&referringContentType=home%20page&clickId=cardslot%2020"),
-                    new Image(Image.VALID_IMAGE_PATH),
+                    new Image("-"),
                     getTagSet("classmates")),
             new Recipe(new Name("I Am Running Out Of Names"),
                     new Ingredient("this, is, some, sample, ingredient"),
@@ -132,7 +132,7 @@ public class SampleDataUtil {
                     new Servings("4"),
                     new Url("https://www.allrecipes.com/recipe/15917/fudge-truffle-cheesecake/?"
                             + "internalSource=popular&referringContentType=home%20page&clickId=cardslot%2022"),
-                    new Image(Image.VALID_IMAGE_PATH),
+                    new Image("-"),
                     getTagSet("colleagues"))
         };
     }

@@ -142,7 +142,7 @@ public class PredictCommandSystemTest extends AddressBookSystemTest {
             model.addPerson(old2);
             model.addPerson(old3);
         } catch (DuplicatePersonException dpe) {
-            assert( dpe == null);
+            assert(dpe == null);
             System.out.println(dpe.getMessage());
             System.out.println("Data Preparation Failed");
             return;

@@ -117,6 +117,14 @@ public class AddCommandTest {
 
         }
 
+        public void updatePage(Person person) throws IOException{
+
+        }
+
+        public void deletePage(Person person) {
+
+        }
+
         @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");

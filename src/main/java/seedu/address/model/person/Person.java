@@ -2,9 +2,11 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -13,6 +15,9 @@ import seedu.address.model.subject.Subject;
 import seedu.address.model.subject.UniqueSubjectList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+
+
+
 
 /**
  * Represents a Person in the address book.
@@ -62,6 +67,14 @@ public class Person {
 
     public Set<Subject> getSubjects() {
         return Collections.unmodifiableSet(subjects.toSet());
+    }
+    public List<Subject> getSubjectArray () {
+        Set<Subject> set = getSubjects();
+        List<Subject> list = new ArrayList<Subject>();
+        list.addAll(set);
+        //Subject obj = list.get(0);
+        //System.out.println(obj);
+        return list;
     }
 
     //@@author TeyXinHui

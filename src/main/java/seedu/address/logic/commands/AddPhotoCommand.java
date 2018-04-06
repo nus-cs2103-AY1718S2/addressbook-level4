@@ -20,7 +20,7 @@ import seedu.address.commons.events.ui.ResetPersonCardsEvent;
 import seedu.address.commons.events.ui.ShowFileChooserEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Photo;
+import seedu.address.model.photo.Photo;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -31,7 +31,7 @@ public class AddPhotoCommand extends Command {
 
     public static final String COMMAND_WORD = "addPhoto";
 
-    public static final String IMAGE_FOLDER = "\\src\\main\\resources\\images\\";
+    public static final String IMAGE_FOLDER = "\\src\\main\\resources\\images\\personphoto\\";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a photo to an employee.\n"
             + "Choose a photo in the file chooser. Acceptable photo file type are jpg, jprg, png, bmp."

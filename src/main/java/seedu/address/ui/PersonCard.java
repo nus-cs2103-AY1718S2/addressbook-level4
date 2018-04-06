@@ -10,7 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Photo;
+import seedu.address.model.photo.Photo;
 
 /**
  * An UI component that displays information of a {@code Person}.

@@ -19,6 +19,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.UniqueEmployeeList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.photo.Photo;
+import seedu.address.model.photo.UniquePhotoList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -30,6 +32,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueEmployeeList persons;
     private final UniqueTagList tags;
+    private final UniquePhotoList photos;
     private LinkedList<Notification> notifications;
     private int nextId;
     private String password;
@@ -44,6 +47,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniqueEmployeeList();
         tags = new UniqueTagList();
+        photos = new UniquePhotoList();
         notifications = new LinkedList<>();
         nextId = 0;
         password = "admin";
@@ -69,6 +73,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void setPhotos(Set<Photo> photos) {
+        this.photos.setPhotos(photos);
+    }
+
     //@@author IzHoBX
     public void setNotificationsList(LinkedList<Notification> notifications) {
         this.notifications = notifications;
@@ -81,6 +89,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
         setTags(new HashSet<>(newData.getTagList()));
+        setPhotos(new HashSet<>(newData.getPhotoList()));
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
@@ -156,6 +165,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         // Rebuild the list of person tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+
+        //@@author crizyli
+        Photo toAdd = new Photo(person.getPhotoName());
+        if (!photos.contains(toAdd)) {
+            try {
+                photos.add(toAdd);
+            } catch (UniquePhotoList.DuplicatePhotoException e) {
+                e.printStackTrace();
+            }
+        }
+
         //@@author emer7
         Person toReturn = new Person(
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
@@ -185,6 +205,11 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    //@@author crizyli
+    public void addPhoto(Photo p) throws UniquePhotoList.DuplicatePhotoException {
+        photos.add(p);
     }
 
     //@@author IzHoBX
@@ -222,7 +247,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags, "
-                + notifications.size() + " notifications";
+                + notifications.size() + " notifications" + photos.asObservableList().size() + " photos.";
     }
 
     @Override
@@ -233,6 +258,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
+    }
+
+    //@@author crizyli
+    @Override
+    public ObservableList<Photo> getPhotoList() {
+        return photos.asObservableList();
     }
 
     @Override

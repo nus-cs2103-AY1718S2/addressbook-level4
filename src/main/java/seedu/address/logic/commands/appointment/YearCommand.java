@@ -34,8 +34,11 @@ public class YearCommand extends Command {
     @Override
     public CommandResult execute() {
         EventsCenter.getInstance().post(new ShowYearRequestEvent(year));
-
-        return new CommandResult(String.format(MESSAGE_SUCCESS, year));
+        if (year != null) {
+            return new CommandResult(String.format(MESSAGE_SUCCESS, year));
+        } else {
+            return new CommandResult(String.format(MESSAGE_SUCCESS, ""));
+        }
     }
 
     @Override

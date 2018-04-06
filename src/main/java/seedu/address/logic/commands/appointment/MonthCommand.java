@@ -34,8 +34,11 @@ public class MonthCommand extends Command {
     @Override
     public CommandResult execute() {
         EventsCenter.getInstance().post(new ShowMonthRequestEvent(yearMonth));
-
-        return new CommandResult(String.format(MESSAGE_SUCCESS, yearMonth));
+        if (yearMonth != null) {
+            return new CommandResult(String.format(MESSAGE_SUCCESS, yearMonth));
+        } else {
+            return new CommandResult(String.format(MESSAGE_SUCCESS, ""));
+        }
     }
 
     @Override

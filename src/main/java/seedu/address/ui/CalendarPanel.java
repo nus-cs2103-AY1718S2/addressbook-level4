@@ -44,7 +44,6 @@ public class CalendarPanel extends UiPart<Region> {
 
     public CalendarPanel(List<Appointment> appointmentsList) {
         super(FXML);
-        System.out.println(appointmentsList.size());
         calendar.setStyle(Calendar.Style.STYLE1);
         addAppointments(appointmentsList);
         source.getCalendars().add(calendar);
@@ -62,7 +61,6 @@ public class CalendarPanel extends UiPart<Region> {
         for (Appointment appointment: appointments) {
             Entry entry = new Entry();
             entry.setCalendar(calendar);
-            System.out.println(appointment.getTitle().title);
             LocalDateTime start = LocalDateTime.parse(appointment.getStartDateTime().startDateTime, formatter);
             LocalDateTime end = LocalDateTime.parse(appointment.getEndDateTime().endDateTime, formatter);
             entry.setInterval(start, end);

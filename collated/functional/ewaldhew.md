@@ -61,6 +61,7 @@ public class ShowNotifManRequestEvent extends BaseEvent {
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.TokenType.PREFIXAMOUNT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_COINS;
 
 import java.util.List;
@@ -83,8 +84,8 @@ public class BuyCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add value to the coin account identified "
             + "by the index number used in the last coin listing or its code. "
             + "Parameters: TARGET "
-            + "AMOUNT\n"
-            + "Example: " + COMMAND_WORD + " 1 " + "50.0";
+            + PREFIXAMOUNT + "AMOUNT\n"
+            + "Example: " + COMMAND_WORD + " 1 " + PREFIXAMOUNT + "50.0";
 
     public static final String MESSAGE_BUY_COIN_SUCCESS = "Bought: %1$s";
     public static final String MESSAGE_NOT_BOUGHT = "Invalid code or amount entered.";
@@ -301,6 +302,7 @@ public class NotifyCommand extends Command {
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.TokenType.PREFIXAMOUNT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_COINS;
 
 import java.util.List;
@@ -323,8 +325,8 @@ public class SellCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes value from the coin account identified "
             + "by the index number used in the last coin listing or its code. "
             + "Parameters: TARGET "
-            + "AMOUNT\n"
-            + "Example: " + COMMAND_WORD + " 1 " + "50.0";
+            + PREFIXAMOUNT + "AMOUNT\n"
+            + "Example: " + COMMAND_WORD + " 1 " + PREFIXAMOUNT + "50.0";
 
     public static final String MESSAGE_SELL_COIN_SUCCESS = "Sold: %1$s";
 

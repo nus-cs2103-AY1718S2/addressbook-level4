@@ -1,122 +1,133 @@
 # laichengyu
+###### \java\seedu\address\commons\events\ui\LoadingEvent.java
+``` java
+
+package seedu.address.commons.events.ui;
+
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * An event to indicate that the app is loading data
+ */
+public class LoadingEvent extends BaseEvent {
+
+    public final boolean isLoading;
+
+    public LoadingEvent(boolean isLoading) {
+        this.isLoading = isLoading;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
 ###### \java\seedu\address\commons\util\FetchUtil.java
 ``` java
 
 package seedu.address.commons.util;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Logger;
+import static org.asynchttpclient.Dsl.asyncHttpClient;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
+import org.asynchttpclient.AsyncHandler;
+import org.asynchttpclient.AsyncHttpClient;
+import org.asynchttpclient.BoundRequestBuilder;
+import org.asynchttpclient.HttpResponseBodyPart;
+import org.asynchttpclient.HttpResponseStatus;
+import org.asynchttpclient.Response;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import seedu.address.commons.core.LogsCenter;
+import io.netty.handler.codec.http.HttpHeaders;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.LoadingEvent;
 
 /**
  * Retrieves data in JSON format from a specified URL
  */
 public class FetchUtil {
 
-    private static final Logger logger = LogsCenter.getLogger(FetchUtil.class);
+    private static AsyncHttpClient myAsyncHttpClient = asyncHttpClient();
 
     /**
-     * Retrieves data from the specified url
+     * Asynchronously fetches data from the specified url and returns it as a JsonObject
      * @param url cannot be null
-     * @return File converted from the JSON obtained from the url
+     * @return data received as a JsonObject
+     * @throws InterruptedException when there is a thread interrupt
+     * @throws ExecutionException when there is an error in data fetching
      */
-    public static File fetch(String url) {
-        URL urlObject;
-        HttpURLConnection urlConnection = null;
-        File serverResponse;
+    public static JsonObject asyncFetch(String url)
+            throws InterruptedException, ExecutionException {
+        //Send HTTP request asynchronously
+        BoundRequestBuilder boundReqBuilder = myAsyncHttpClient.prepareGet(url);
+        AsyncHandler<Response> asyncHandler = getResponseAsyncHandler();
+        Future<Response> whenResponse = boundReqBuilder.execute(asyncHandler);
 
-        try {
-            urlObject = new URL(url);
-            urlConnection = (HttpURLConnection) urlObject.openConnection();
-
-            int responseCode = urlConnection.getResponseCode();
-
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                serverResponse = readStream(urlConnection.getInputStream());
-                logger.info("Fetch request from " + url + " is successful");
-                return serverResponse;
-            }
-        } catch (MalformedURLException e) {
-            logger.info("URL: " + url + " provided is malformed");
-        } catch (IOException e) {
-            logger.info("Invalid URL: " + url + " provided");
-        } finally {
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-        }
-
-        return null;
+        //Set loading UI
+        EventsCenter.getInstance().post(new LoadingEvent(true));
+        Response response = whenResponse.get();
+        //Return UI to normal
+        EventsCenter.getInstance().post(new LoadingEvent(false));
+        return parseStringToJsonObj(response.getResponseBody());
     }
 
     /**
-     * Retrieves data from the specified url and converts it into a JsonObject
-     * @param url cannot be null
-     * @return JsonObject converted from the File obtained from the url
+     * Creates a new async response handler
+     * @return AsyncHandler for Response objects
      */
-    public static JsonObject fetchAsJson(String url) {
-        File serverResponse = fetch(url);
-        JsonObject jsonObject = new JsonObject();
+    private static AsyncHandler<Response> getResponseAsyncHandler() {
+        return new AsyncHandler<Response>() {
+                private Response.ResponseBuilder builder = new Response.ResponseBuilder();
+                private Integer status;
+                @Override
+                public State onStatusReceived(HttpResponseStatus responseStatus) throws Exception {
+                    status = responseStatus.getStatusCode();
+                    builder.accumulate(responseStatus);
+                    if (status != 200) {
+                        return State.ABORT;
+                    }
+                    return State.CONTINUE;
+                }
+                @Override
+                public State onHeadersReceived(HttpHeaders headers) throws Exception {
+                    return State.CONTINUE;
+                }
+                @Override
+                public State onBodyPartReceived(HttpResponseBodyPart bodyPart) throws Exception {
+                    builder.accumulate(bodyPart);
+                    return State.CONTINUE;
+                }
+                @Override
+                public Response onCompleted() throws Exception {
+                    return builder.build();
+                }
+                @Override
+                public void onThrowable(Throwable t) {
+                }
+            };
+    }
 
-        try {
-            JsonParser parser = new JsonParser();
-            JsonElement jsonElement = parser.parse(new FileReader(serverResponse));
-            jsonObject = jsonElement.getAsJsonObject();
-        } catch (FileNotFoundException e) {
-            logger.info("File retrieved from URL not found");
-        }
+    /**
+     * Parses a String into a JsonObject
+     * @param str cannot be null
+     * @return JsonObject converted from String
+     */
+    private static JsonObject parseStringToJsonObj(String str) {
+        JsonObject jsonObject;
+
+        JsonParser parser = new JsonParser();
+        JsonElement jsonElement = parser.parse(str);
+        jsonObject = jsonElement.getAsJsonObject();
 
         return jsonObject;
     }
-
-    /**
-     * Reads the inputStream and outputs to a temporary file location
-     * @param inputStream cannot be null
-     * @return File read from inputStream
-     */
-    private static File readStream(InputStream inputStream) {
-        BufferedReader reader = null;
-        StringBuffer response = new StringBuffer();
-        File serverData = new File("temp.json");
-        //Do we want to keep the data of API calls? If yes, overwrite or make new copies?
-
-        try {
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
-            FileUtil.writeToFile(serverData, response.toString());
-            return serverData;
-        } catch (IOException e) {
-            logger.info("There was an error reading the server data: " + e);
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    logger.info("There was an error while closing connection with remote server: " + e);
-                }
-            }
-        }
-
-        return null;
-    }
-
 }
 ```
 ###### \java\seedu\address\commons\util\UrlBuilderUtil.java
@@ -169,13 +180,15 @@ package seedu.address.logic.commands;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Logger;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.google.gson.JsonObject;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.FetchUtil;
 import seedu.address.commons.util.UrlBuilderUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -192,6 +205,8 @@ public class SyncCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Synced all coins with latest cryptocurrency data";
 
+    private static final Logger logger = LogsCenter.getLogger(SyncCommand.class);
+
     private String cryptoCompareApiUrl = "https://min-api.cryptocompare.com/data/pricemulti";
 
     /**
@@ -200,7 +215,7 @@ public class SyncCommand extends Command {
      * @param coinList cannot be null
      * @return parameters for CryptoCompare API call
      */
-    private List<NameValuePair> getParams(Set<String> coinList) {
+    private List<NameValuePair> getParams(List<String> coinList) {
         List<NameValuePair> params = new ArrayList<>();
         String coinCodes = String.join(",", coinList);
         params.add(new BasicNameValuePair("fsyms", coinCodes));
@@ -222,14 +237,18 @@ public class SyncCommand extends Command {
         try {
             List<NameValuePair> params = getParams(model.getCodeList());
             buildApiUrl(params);
-            JsonObject newData = FetchUtil.fetchAsJson(cryptoCompareApiUrl);
+            JsonObject newData = FetchUtil.asyncFetch(cryptoCompareApiUrl);
             model.syncAll(newData);
-            return new CommandResult(MESSAGE_SUCCESS);
         } catch (DuplicateCoinException dpe) {
             throw new CommandException("Unexpected code path!");
         } catch (CoinNotFoundException cnfe) {
             throw new AssertionError("The target coin cannot be missing");
+        } catch (InterruptedException ie) {
+            logger.warning("Thread interrupted");
+        } catch (ExecutionException ee) {
+            logger.warning("Data fetching error");
         }
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 }
 ```
@@ -277,7 +296,11 @@ public class SyncCommand extends Command {
 
         for (Coin coin : coins) {
             String code = coin.getCode().toString();
-            double newPrice = newData.get(code).getAsJsonObject().get("USD").getAsDouble();
+            JsonElement coinData = newData.get(code);
+            if (coinData == null) {
+                continue;
+            }
+            double newPrice = coinData.getAsJsonObject().get("USD").getAsDouble();
             Coin updatedCoin = new Coin(coin, newPrice);
             updateCoin(coin, updatedCoin);
         }
@@ -286,14 +309,16 @@ public class SyncCommand extends Command {
 ###### \java\seedu\address\model\CoinBook.java
 ``` java
     @Override
-    public Set<String> getCodeList() {
-        return Collections.unmodifiableSet(codes);
+    public List<String> getCodeList() {
+        return Collections.unmodifiableList(coins.asObservableList().stream()
+                .map(coin -> coin.getCode().toString())
+                .collect(Collectors.toList()));
     }
 ```
 ###### \java\seedu\address\model\Model.java
 ``` java
     /** Returns an unmodifiable view of the code list */
-    Set<String> getCodeList();
+    List<String> getCodeList();
 
     /**
       * Syncs all coin data
@@ -314,7 +339,7 @@ public class SyncCommand extends Command {
 
     /** Returns an unmodifiable view of the code list */
     @Override
-    public Set<String> getCodeList() {
+    public List<String> getCodeList() {
         return coinBook.getCodeList();
     }
 ```
@@ -324,7 +349,7 @@ public class SyncCommand extends Command {
      * Returns an unmodifiable view of the codes list.
      * This list will not contain any duplicate codes.
      */
-    Set<String> getCodeList();
+    List<String> getCodeList();
 ```
 ###### \java\seedu\address\storage\CoinBookStorage.java
 ``` java
@@ -347,5 +372,36 @@ public class SyncCommand extends Command {
     @Override
     public void backupCoinBook(ReadOnlyCoinBook addressBook) throws IOException {
         saveCoinBook(addressBook, backupFilePath);
+    }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    private void setLoadingAnimation() {
+        ProgressIndicator pi = new ProgressIndicator();
+        loadingAnimation = new VBox(pi);
+        loadingAnimation.setAlignment(Pos.CENTER);
+    }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    /**
+     * Displays loading animation when isLoading is true and hides it otherwise
+     * @param isLoading loading state of the application
+     */
+    @FXML
+    private void handleLoading(boolean isLoading) {
+        if (isLoading) {
+            //Scene scene = new Scene(loadingAnimation, Color.TRANSPARENT);
+            //primaryStage.initStyle(StageStyle.TRANSPARENT);
+            //primaryStage.setScene(scene);
+        } else {
+            //primaryStage.setScene(new Scene(null));
+        }
+    }
+
+    @Subscribe
+    private void handleLoadingEvent(LoadingEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleLoading(event.isLoading);
     }
 ```

@@ -8,7 +8,7 @@
         }
 
         @Override
-        public Set<String> getCodeList() {
+        public List<String> getCodeList() {
             fail("This method should not be called.");
             return null;
         }
@@ -16,7 +16,9 @@
 ###### \java\seedu\address\model\CoinBookTest.java
 ``` java
         @Override
-        public Set<String> getCodeList() {
-            return codes;
+        public List<String> getCodeList() {
+            return Collections.unmodifiableList(coins.stream()
+                    .map(coin -> coin.getCode().toString())
+                    .collect(Collectors.toList()));
         }
 ```

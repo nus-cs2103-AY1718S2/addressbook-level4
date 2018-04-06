@@ -6,6 +6,7 @@ import java.util.List;
 
 import seedu.address.model.appointment.Appointment;
 
+//@@author wynonaK
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */

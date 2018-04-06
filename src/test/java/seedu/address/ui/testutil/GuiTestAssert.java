@@ -94,6 +94,9 @@ public class GuiTestAssert {
         case "husband":
             return "grey";
 
+        case "supplier":
+            return "black";
+
         default:
             fail(tagName + " does not have a color assigned.");
             return "";

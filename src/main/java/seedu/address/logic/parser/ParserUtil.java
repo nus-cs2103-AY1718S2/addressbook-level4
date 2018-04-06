@@ -127,6 +127,7 @@ public class ParserUtil {
         return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
     }
 
+    //@@author wynonaK
     /**
      * Parses a {@code String remark} into an {@code Remark}.
      * Leading and trailing whitespaces will be trimmed.
@@ -178,9 +179,10 @@ public class ParserUtil {
         return dateTime.isPresent() ? Optional.of(parseDateTime(dateTime.get())) : Optional.empty();
     }
 
+    //@@author
     /**
      * Parses a {@code String email} into an {@code Email}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Leading and trailing whitesp                                                                aces will be trimmed.
      *
      * @throws IllegalValueException if the given {@code email} is invalid.
      */

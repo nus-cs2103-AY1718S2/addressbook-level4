@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- @@author kush1509 -->
+
+<addressbook>
+    <!-- Valid Job -->
+    <jobs>
+        <position>Software Engineer</position>
+        <team>Cloud Services</team>
+        <location>Singapore</location>
+        <numberOfPositions>2</numberOfPositions>
+        <tagged>Java</tagged>
+        <tagged>Algorithms</tagged>
+    </jobs>
+    <!-- Job with invalid number of positions field -->
+    <jobs>
+        <position>Software Engineer</position>
+        <team>Cloud Services</team>
+        <location>Singapore</location>
+        <numberOfPositions>abc12</numberOfPositions>
+        <tagged>Java</tagged>
+        <tagged>Algorithms</tagged>
+    </jobs>
+</addressbook>

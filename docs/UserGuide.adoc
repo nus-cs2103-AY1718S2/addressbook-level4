@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= contactHeRo - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,15 +11,32 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/W09-B2/main
+:repoURL: https://github.com/CS2103JAN2018-W09-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W09-B2`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Welcome to *contactHeRo*! contactHeRo is the *perfect contact management solution for recruiters* across companies who need a *quick and efficient way* to manage the contact details and profiles of their potential recruits. It is a *Command Line Interface(CLI) application* with intuitive usage and effective features. You can manage details of prospective employees and job openings in your company through easy to use `add`, `delete` and `edit` features. Matching jobs to employees is also a great feature that makes the hiring process easy for you.
+Other than that, you can also view the linkedIn profiles of your potential employees, send emails and arrange meetings.
+
+== Before Reading This Guide
+
+This short guide will familiarize you with all of the features and functionality of contactHeRo. Given below is the legend for some symbols and markups used in this guide.
+
+
+[NOTE]
+This will represent something you should take a note of.
+
+[TIP]
+This will represent a useful tip.
+
+`This will represent an input/output statement in contactHeRo`
+
 
 == Quick Start
+
+You can begin using contactHeRo by following a few simple steps below.
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -27,12 +44,19 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+[TIP]
+Not sure how to install Java? Visit the oracle website link below for more information. https://tinyurl.com/yb8leqv8
+
+
+.  Download the latest `contactHeRo.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for contactHeRo.
+.  Double-click the file to start the app. The user interface should appear in a few seconds as shown below (Refer to figure 1).
 +
-image::Ui.png[width="790"]
-+
+.contactHeRo on launch
+image::Ui.png[width="790", align="center"]
+
+Now you can start using contactHeRo.
+
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
@@ -42,96 +66,133 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to <<Features>> for details of each command.
+.  You can refer to <<Features>> for more details of each command.
+
+Thank you for choosing us as your contact management solution!
 
 [[Features]]
 == Features
+contactHeRo is a *Command Line Interface(CLI) application*. Hence you need to type in the commands in order to use its features.
 
-====
-*Command Format*
+Below is the interface(refer to figure 2) that contactHeRo provides for you to type your command. +
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
+.Command Box in contactHeRo
 
-====
-*Auto-complete feature*
+image::commandBox.png[width="790", align="center"]
 
-* After typing partial command, you can press TAB for the command to be auto-completed. For e.g typing 'a' and pressing TAB will give the entire syntax for 'add' command.
-* The first lexicographically matched command is returned to you.
-====
+*Command Format* +
+Here is the format for the commands that will enable you to make most of contactHeRo.
+
+* Words in `UPPER_CASE` are the parameters you are supposed to fill in. For example, in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+
+* Items in square brackets are optional. You can choose to type them in or not. For example, you can type in `n/John Doe s/Java` or as `n/John Doe`.
+
+* Items with `…`​ after them can be used multiple times including zero times. For example, you can use `s/SKILL` as `{nbsp}` (i.e. 0 times), `s/Java`, `s/Java s/Designing` etc.
+
+* Parameters can be in any order. If the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+
+
+[NOTE]
+In case you make a mistake while typing the command, contactHeRo will show you the right format of the command. +
+
+Now that you have understood the command format, let's explore the features.
 
 === Viewing help : `help`
 
 You can get help using the following format. +
 Format: `help`
 
-=== Adding a person: `add`
+This will open the help window (refer to figure 3).
+
+.Help Window in contactHeRo
+image::helpWindow.png[width="790", align="center"]
+
+=== Adding a person : `add`
 
 You can add a person to contactHero using the following format. +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pp/PROFILE_PICTURE [t/TAG]...`
+
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS cp/CURRENT_POSITION cc/COMPANY [pp/PROFILE_PICTURE_PATH] [s/SKILL]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of skills (including 0)
+
+[TIP]
+Profile Picture indicates the profile picture's file path
 
 [TIP]
 Profile Picture indicates the profile picture's file path
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pp/C:\\Downloads\\john.jpg`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 pp/C:\\Downloads\\john.jpg t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 cp/Software Engineer cc/Google pp//home/john/Desktop/John.jpg` +
++
+On running the above command, you should see the following success message: +
 
-=== Listing all persons : `list`
+ New person added: John Doe Phone: 98765432 Email: johnd@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Skills:
 
-You can show a list of all persons in contactHero using the following format. +
-Format: `list`
+* `add n/Betsy Crowe s/Java e/betsycrowe@example.com a/Newgate Prison p/1234567 cp/Student cc/NUS s/C++`
+
+On running the above command, you should see the following success message: +
+
+ New person added: Betsy Crowe Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS  Skills: [C++]
+
 
 === Editing a person : `edit`
 
 You can edit an existing person in contactHero using this format. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pp/PROFILE_PICTURE][t/TAG]...`
+
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [cp/CURRENT_POSITION] [cc/COMPANY] [pp/PROFILE_PICTURE_PATH][s/SKILL]...`
 
 ****
-* You will edit the person at the specified `INDEX`. Remember that the index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the person at the specified `INDEX`. Remember that the index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * You need to provide at least one of the optional.
 * Existing values will be updated to the input values.
-* When you edit tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When you edit skills, the existing skills of the person will be removed i.e adding of skills is not cumulative.
+* You can remove all the person's skills by typing `s/` without specifying any skills after it.
+>>>>>>> c0dd6b66bf5a8d6b7170dce605a276204d22b39e
 ****
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-You have edited the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-You have edited the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
++
+On running the above command, you should see the following success message: +
 
-=== Locating persons by name: `find`
+ Edited Person: John Doe Phone: 91234567 Email: johndoe@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Skills:
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+* `edit 2 n/Betsy Crower s/` +
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing skills.
+
+On running the above command, you should see the following success message: +
+
+ Edited Person: Betsy Crower Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS Skills:
+
+=== Locating persons by name : `find`
+
+You can find all the persons whose names or skills contain any of the given keywords using the following format. +
+Format: `find n/KEYWORD [MORE_KEYWORDS]` to find by name or `find s/KEYWORD [MORE_KEYWORDS]` to find by skill
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* Only the name or skill is searched, depending on the prefix (n/ or s/)
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find n/John` +
+This will show any person having the name `john` or `John`.
+* `find s/designer` +
+This will show `Jane Doe` whose skill is `designer`.
+* `find n/Betsy Tim John` +
+This will show any person having any of the names `Betsy`, `Tim`, or `John`.
 
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
+You can delete a specified person from contactHeRo using the following format. +
 Format: `delete INDEX`
 
 ****
@@ -144,18 +205,25 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+This deletes the 2nd person in contactHeRo and on running the above command, you should see the following success message: +
+
+ Deleted Person: John Doe Phone: 98765432 Email: johnd@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Skills:
+
+
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st person in the results of the `find` command and on running the above command, you should see the following success message: +
 
-=== Selecting a person : `select`
+  Deleted Person: Betsy Crower Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS Skills:
 
-Selects the person identified by the index number used in the last person listing. +
+
+=== Viewing the contact details of a person: `select`
+
+You can select a person identified by the index number used in the last person listing to view his/her contact details using the following format. +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Shows the contact details of the person at the specified `INDEX` in a formatted page.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -164,10 +232,99 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in contactHeRo.
+
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+On running the above command, you should see a similar result as the following (refer to figure 4).
+
+.Select Command Execution
+image::selectCommand.png[width="790", align="center"]
+
+
+=== Viewing the LinkedIn search of a person: `linkedIn`
+
+You can select a person identified by the index number used in the last person listing to view his/her LinkedIn search using the following format. +
+Format: `linkedIn INDEX`
+
+****
+* Loads the LinkedIn search of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* You *will have to login to LinkedIn* the first time to use this command in order to search the person.
+****
+
+Examples:
+
+* `list` +
+`linkedIn 2` +
+Loads the LinkedIn search of the 2nd person in the contactHeRo.
+
+* `find Betsy` +
+`select 1` +
+Loads the LinkedIn search of 1st person in the results of the `find` command.
+
+On running the above command and after you have logged in, you should a similar result as the following (refer to figure 5):
+
+.LinkedIn Command Execution
+image::linkedInCommand.png[width="790", align="center"]
+
+=== Adding a job opening
+
+You can add a job opening to contactHero using the following format. +
+Format: `addjob p/POSITION t/TEAM l/LOCATION n/NUMBER_OF_POSITIONS s/REQUIRED_SKILLS`
+
+Examples:
+
+* `addjob p/Software Engineer t/Cloud Services l/Singapore n/1 s/Java`
+
+On running the above command, you should see the following success message: +
+
+ New job opening added: Software Engineer Team: Cloud Services Location: Singapore Number of Positions: 1 Skills: [Java]
+
+* `addjob p/Marketing Intern t/Social Media Marketing l/Singapore n/1 s/Excel`
+
+On running the above command, you should see the following success message: +
+
+ New job opening added: Marketing Intern Team: Social Media Marketing Location: Singapore Number of Positions: 1 Skills: [Excel]
+
+=== Deleting a job opening
+
+You can delete a specified job opening from contactHeRo using the following format. +
+Format: `deletejob INDEX`
+
+****
+* Deletes the job opening at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`deletejob 2` +
+This deletes the 2nd job opening in contactHeRo and on running the above command, you should see the following success message: +
+
+ Deleted Job: Marketing Intern Team: Social Media Marketing Location: Kuala Lampur, Malaysia Number of Positions: 1 Skills: [Excel][Writing]
+
+=== Matching a job opening to a person
+
+You can see potential candidates for a specified job opening in contactHeRo using the following format. +
+Format: `matchjob INDEX`
+
+****
+* Matches the job opening at the specified `INDEX` to potential candidates using skill-matching.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`matchjob 1` +
+This will show any person whose skills match any of those required for the job at index 1.
 
 === Listing entered commands : `history`
 
@@ -179,15 +336,23 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+=== Clearing list of entered commands : `clearhistory`
+
+You can clear your history of entered commands using the following format. +
+Format: `clearhistory`
+
+On running the above command, you should see the following success message: +
+ `Your history has been cleared.`
+
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+You can restore contactHeRo to the state before the previous _undoable_ command was executed using the following format. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the contactHeRo's content (`add`, `delete`, `edit` and `clear`, `addjob`).
 ====
 
 Examples:
@@ -208,7 +373,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
+You can reverse the most recent `undo` command using the following format. +
 Format: `redo`
 
 Examples:
@@ -229,20 +394,227 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Emailing your contact : `email`
+
+You can send email to any person you have saved in contactHeRo using the following format. +
+Format: `email INDEX`
+
+****
+* Opens up the Draft Email tab. This is an User Interface for you to draft your emails.
+* Collects the information of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The collected information will be used to help you fill up details in the draft like the person's email address.
+****
+
+Examples:
+
+* `list` +
+`email 2` +
+This will open up the Draft Email tab and then
+collect the information of the 2nd person in the list. On running the above command, you should see the following success message: +
+
+ Drafting email to: berniceyu@example.com
++
+The collected information will be used automatically to fill up details as shown below.
+
+.The User Interface to draft your email
+image::emailSS1.PNG[width="790"]
+
+[TIP]
+You can use keyboard short-cuts like `Ctrl-B` to *bold* your text while drafting
+your email.
+
+Finally, after you are done drafting up the email, simply hit the `Send`
+button to send your email. If the email is sent successfully, you should see
+a pop-up message as shown below.
+
+.Pop-up message
+image::emailSS2.PNG[width="400"]
+
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+You can clear all your contacts from contactHeRo using the following format. +
 Format: `clear`
+
+On running the above command, you should see the following success message: +
+`contactHeRo has been cleared!`
 
 === Exiting the program : `exit`
 
-Exits the program. +
+You can exit the program using the following format. +
 Format: `exit`
+
+=== Registering new account : `signup`
+
+You can create a new user account through the command line by using the following format. +
+Format: `signup u/USERNAME pw/PASSWORD`
+
+[NOTE]
+===
+* Username has to be at least 3 characters starting with a alphanumeric character. +
+* Password should be at least 4 characters long. +
+* Both username and password should not contain any whitespaces. +
+===
+Examples
+* signup u/JohnDoe pw/doe123
+
+On running the above command, you should see the following success message: +
+  `You have signup successfully!`
+
+=== Logging in : `login`
+You can login through the command line by using the following this format. +
+Format: `login u/USERNAME pw/PASSWORD`
+
+Examples
+* login u/JohnDoe pw/doe123
+
+On running the above command, you should see the following success message: +
+ `You have successfully login as JohnDoe`
+
+=== Logging out : `logout`
+You can logout through the command line by using the following this format. +
+Format: `logout`
+
+On running this command, you should see the following success message: +
+ `You have logout successfully!`
+
+Examples
+
+=== Auto-complete command
+
+To save your time, after typing a partial command, you can press TAB for the command to be auto-completed.
+[NOTE]
+The first lexicographically matched command is returned.
+
+Examples:
+
+* Typing `ad` and pressing `TAB` gives: +
+    `add n/ e/ a/ [s/]...`
+
+* Typing `h` and pressing `TAB` gives: +
+     `help`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+You do not need to save manually. contactHeRo saves the data into the hard disk for you automatically. +
+
+// tag::dataencryption[]
+
+=== Opening the calendar
+You can switch to the calendar tab using the following format. +
+Format: `calendar`
+
+=== Viewing calendar
+You can view your calendar using these commands: +
+
+==== Viewing a specific date or switch to the date view
+You can view a specifc date or switch to the date view by using the following format. +
+Format: `date [DATE]` +
+
+[NOTE]
+`DATE` needs to be in format YYYY-MM-DD
+
+* With `DATE`, you view the specific date +
+Example: `date 2018-03-26`
+
+* Without `DATE`, you change to the date view +
+Example: `date`
+
+==== Viewing a specific week or switch to the week view
+You can view a specifc week or switch to the week view by using the following format. +
+Format: `week [YEAR WEEK]` +
+
+[NOTE]
+`Year` needs to be in format YYYY. +
+`Week` needs to be in format WW and WW refers to the order of week in one year.
+
+
+* With `YEAR WEEK`, you view the specific week +
+Example: `week 2018 10`
+
+* Without `YEAR WEEK`, you change to the week view +
+Example: `week`
+
+==== Viewing a specific month or switch to the month view
+You can view a specifc month or switch to the month view by using the following format. +
+Format: `month [MONTH]` +
+
+[NOTE]
+`MONTH` needs to be in format YYYY-MM
+
+* With `MONTH`, you view the specific month +
+Example: `month 2018-10`
+
+* Without `MONTH`, you change to the month view +
+Example: `month`
+
+==== Viewing a specific year or switch to the year view
+You can view a specifc year or switch to the year view by using the following format. +
+Format: `year [YEAR]` +
+
+[NOTE]
+`YEAR` needs to be in format YYYY
+
+* With `YEAR`, you view the specific year +
+Example: `year 2018`
+
+* Without `YEAR`, you change to the year view +
+Example: `year`
+
+=== Adding appointment
+You can add appointment by using the following format. +
+
+Format: `addapp t/TITLE sdt/START_DATE_TIME edt/END_DATE_TIME`
+
+Examples:
+
+* `addapp t/Meeting sdt/2018-04-05 14:00 edt/2018-04-05 15:00`
+
+On running the above command, you should see the following success message: +
+
+ New appointment added: Meeting Start Date Time: 2018-04-05 14:00 End Date Time: 2018-04-05 15:00
+
+=== Deleting appointment
+You can delete appointment by using the following format. +
+
+Format: `delapp t/TITLE sdt/START_DATE_TIME edt/END_DATE_TIME`
+
+Examples:
+
+* `delapp t/Meeting sdt/2018-04-05 14:00 edt/2018-04-05 15:00`
+
+On running the above command, you should see the following success message: +
+
+ Appointment deleted: Meeting Start Date Time: 2018-04-05 14:00 End Date Time: 2018-04-05 15:00
+
+=== Editing a job opening `[coming in v1.4]`
+
+You will soon be able to edit a job opening in contactHeRo.
+
+=== Deleting a job opening `[coming in v1.4]`
+
+You will soon be able to delete a job opening in contactHeRo.
+
+=== Matching a job opening to a person `[coming in v1.4]`
+
+You will soon be able to match job openings to people in contactHeRo.
+
+=== Editing a job opening `[coming in v1.5]`
+
+You will soon be able to edit a job opening in contactHeRo.
+
+=== Arranging meetings with Gmail calendar `[coming in v2.0]`
+
+You will soon be able to arrange meeting on Gmail calender using contactHero.
+
+=== Add reminders `[coming in v2.0]`
+
+You will soon be able to set reminders for meetings, appointments or any other event and contactHeRo will remind you of the event.
+
+=== Login system `[coming in v2.0]`
+
+The login system shall provide security to your data stored in contactHeRo.
 
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
@@ -255,21 +627,53 @@ _{explain how the user can enable/disable data encryption}_
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+*Q*: How do I report bugs to the developers? +
+*A*: Please send an email to contactHeRo@gmail.com if you find a bug. Thank you.
+
+To ask more questions, please send your email to contactHeRo@gmail.com. +
+We are willing to help you. +
+
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pp/PROFILE_PICTURE [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 pp/C:\\Downloads\\Ho.jpg t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
+These are all the commands that you can use for the latest version of contactHeRo:
+
+* *<<adding-a-person-code-add-code, Add>>* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [pp/PROFILE_PICTURE_PATH]
+[s/SKILL]...` +
+e.g. `add n/John Doe p/98765432 e/johnd@example.com a/Raffles Hall
+pp//home/trafalgarandre/downloads/john.jpeg s/Java s/Designing`
+* *<<clearing-all-entries-code-clear-code, Clear>>* : `clear`
+* *<<clearing-list-of-entered-commands-code-clearhistory-code, ClearHistory>>* : `clearhistory`
+* *<<deleting-a-person-code-delete-code, Delete>>* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pp/PROFILE_PICTURE] [t/TAG]...` +
+* *<<editing-a-person-code-edit-code, Edit>>* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS]
+[pp/PROFILE_PICTURE_PATH] [s/SKILL]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *<<locating-persons-by-name-code-find-code, Find>>* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
+* *<<listing-all-persons-code-list-code, List>>* : `list`
+* *<<viewing-help-code-help-code, Help>>* : `help`
+* *<<viewing-the-contact-details-of-a-person-code-select-code, Select>>* : `select INDEX` +
 e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+* *<<listing-entered-commands-code-history-code, History>>* : `history`
+* *<<undoing-previous-command-code-undo-code, Undo>>* : `undo`
+* *<<redoing-the-previously-undone-command-code-redo-code, Redo>>* : `redo`
+* *<<viewing-the-linkedin-search-of-a-person-code-linkedin-code, LinkedIn>>*: `linkedIn INDEX` +
+e.g. `linkedIn 2`
+* *<<emailing-your-contact, Email>>* : `email INDEX` +
+e.g. `email 1`
+* *<<adding-a-job-opening, Add job opening>>* : `addjob p/POSITION t/TEAM l/LOCATION n/NUMBER_OF_POSITIONS` +
+e.g. `addjob p/Software Engineer t/Cloud Services l/Singapore n/2`
+* *<<opening-the-calendar, Open calendar>>* : `calendar`
+* *<<viewing-specific-date-or-switch-to-date-view, View specific date or switch date view>>* : `date [DATE]` +
+e.g. `date` or `date 2018-04-04`
+* *<<viewing-specific-week-or-switch-to-week-view, View specific week or switch week view>>* : `week [YEAR WEEK]` +
+e.g. `week` or `week 2018 14`
+* *<<viewing-specific-month-or-switch-to-month-view, View specific month or switch month view>>* : `month [MONTH]` +
+e.g. `month` or `month 2018-04`
+* *<<viewing-specific-year-or-switch-to-year-view, View specific year or switch year view>>* : `year [YEAR]` +
+e.g. `year` or `year 2018`
+* *<<adding-appointment, Adding appointment>>* : `addapp t/TITLE sdt/START_DATE_TIME edt/END_DATE_TIME` +
+e.g `addapp t/Meeting sdt/2018-04-05 14:00 edt/2018-04-05 15:00`
+* *<<deleting-appointment, Deleting appointment>>* : `delapp t/TITLE sdt/START_DATE_TIME edt/END_DATE_TIME` +
+e.g `delapp t/Meeting sdt/2018-04-05 14:00 edt/2018-04-05 15:00`
+

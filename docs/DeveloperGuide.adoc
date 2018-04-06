@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= contactHeRo - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,13 +10,20 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/W09-B2/main/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W09-B2/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W09-B2`      Since: `Mar 2018`      Licence: `MIT`
+
+== Intro
+
+Welcome to contactHeRo developer guide! This guide contains all the information you need to quickly get started in developing contactHeRo. +
+If you notice any mistakes or if there are any missing vital information then please let us know via contactHeRo@gmail.com. +
+Let's get started!
 
 == Setting up
 
 === Prerequisites
+Given below are the required prerequisites for developing contactHeRo.
 
 . *JDK `1.8.0_60`* or later
 +
@@ -33,6 +40,7 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 
 === Setting up the project in your computer
+You can follow the steps below to set up contactHeRo in your computer.
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -97,7 +105,7 @@ When you are ready to start coding,
 === Architecture
 
 .Architecture Diagram
-image::Architecture.png[width="600"]
+image::Architecture.png[width="600", align="center"]
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -129,7 +137,7 @@ Each of the four components
 For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 .Class Diagram of the Logic Component
-image::LogicClassDiagram.png[width="800"]
+image::LogicClassDiagram.png[width="800", align="center"]
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -137,15 +145,15 @@ image::LogicClassDiagram.png[width="800"]
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 .Component interactions for `delete 1` command (part 1)
-image::SDforDeletePerson.png[width="800"]
+image::SDforDeletePerson.png[width="800", align="center"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `AddressBookChangedEvent` when contactHeRo data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 .Component interactions for `delete 1` command (part 2)
-image::SDforDeletePersonEventHandling.png[width="800"]
+image::SDforDeletePersonEventHandling.png[width="800", align="center"]
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -156,7 +164,7 @@ The sections below give more details of each component.
 === UI component
 
 .Structure of the UI Component
-image::UiClassDiagram.png[width="800"]
+image::UiClassDiagram.png[width="800", align="center"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -175,10 +183,10 @@ The `UI` component,
 
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
-image::LogicClassDiagram.png[width="800"]
+image::LogicClassDiagram.png[width="800", align="center"]
 
 .Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
-image::LogicCommandClassDiagram.png[width="800"]
+image::LogicCommandClassDiagram.png[width="800", align="center"]
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -191,20 +199,20 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 .Interactions Inside the Logic Component for the `delete 1` Command
-image::DeletePersonSdForLogic.png[width="800"]
+image::DeletePersonSdForLogic.png[width="800", align="center"]
 
 [[Design-Model]]
 === Model component
 
 .Structure of the Model Component
-image::ModelClassDiagram.png[width="800"]
+image::ModelClassDiagram.png[width="800", align="center"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
+* stores contactHeRo data.
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -212,14 +220,14 @@ The `Model`,
 === Storage component
 
 .Structure of the Storage Component
-image::StorageClassDiagram.png[width="800"]
+image::StorageClassDiagram.png[width="800", align="center"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save contactHeRo data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -231,16 +239,17 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 // tag::undoredo[]
+// tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of contactHeRo (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
-image::LogicCommandClassDiagram.png[width="800"]
+image::LogicCommandClassDiagram.png[width="800", align="center"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of contactHeRo before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -275,46 +284,46 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in contactHeRo. The current state of contactHeRo is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
-image::UndoRedoStartingStackDiagram.png[width="800"]
+image::UndoRedoStartingStackDiagram.png[width="800", align="center"]
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
-image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+image::UndoRedoNewCommand1StackDiagram.png[width="800", align="center"]
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore contactHeRo to the state before the `add` command executed.
 
-image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+image::UndoRedoExecuteUndoStackDiagram.png[width="800", align="center"]
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
 The following sequence diagram shows how the undo operation works:
 
-image::UndoRedoSequenceDiagram.png[width="800"]
+image::UndoRedoSequenceDiagram.png[width="800", align="center"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores contactHeRo to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
-image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+image::UndoRedoNewCommand2StackDiagram.png[width="800", align="center"]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
-image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+image::UndoRedoNewCommand3StackDiagram.png[width="800", align="center"]
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
-image::UndoRedoActivityDiagram.png[width="650"]
+image::UndoRedoActivityDiagram.png[width="650", align="center"]
 
 ==== Design Considerations
 
@@ -329,7 +338,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: How undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Saves the entire contactHeRo.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
@@ -339,7 +348,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: Type of commands that can be undone/redone
 
-* **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`).
+* **Alternative 1 (current choice):** Only include commands that modifies contactHeRo (`add`, `clear`, `edit`).
 ** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
 ** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
 * **Alternative 2:** Include all commands.
@@ -359,6 +368,79 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // end::undoredo[]
 
 // tag::dataencryption[]
+// tag::dataencryption[]
+
+=== Details Panel Implementation
+
+The `select` command shows the contact details of the person in a separate panel while the `linkedIn` command shows the LinkedIn search of the person.
+
+The `DetailsPanel` is a TabPane which  which consists of the two tabs, `Contact Details` and `LinkedIn Search`. The `ContactDetailsDisplay` is embedded in the `Contact Details` tab and the `Browser Panel` in the `Linked Search` tab.
+
+The UML diagram below represents the UI structure for the `DetailsPanel` (Refer to Figure 30):
+
+image::DetailsPanelClassDiagram.png[width="600", align="center"]
+_Figure 30 : UML Diagram for Panel._
+
+We created a new event, `SwitchTabRequestEvent` which sets the current tab in the `DetailsPanel` to `Contact Details` or `LinkedIn Search` depending on the input command.
+The code for the SwitchTabRequestEvent` event is as follows.
+
+[source, java]
+----
+public class SwitchTabRequestEvent extends BaseEvent {
+    public final int tabId;
+    public SwitchTabRequestEvent(int tabId) {
+        this.tabId = tabId;
+    }
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+----
+
+[NOTE]
+The `SwitchTabRequestEvent` has an integer attribute `tabId`. The event handlers use this `tabId` to switch between tabs wherein the `Contact Details` and `LinkedIn Search` have tabIds 0 and 1 respectively.
+
+Event handlers use the following code to handle the `SwitchTabRequestEvent` event.
+
+[source, java]
+----
+@Subscribe
+private void handleSwitchTabRequestEvent(SwitchTabRequestEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    tabPane.getSelectionModel().clearAndSelect(event.tabId);
+}
+----
+
+The `DetailsPanel` is also displayed when the user manually clicks on the `PersonCard` and the panel corresponding to the current tab is shown. This is implemented by handling the `PersonPanelSelectionChangedEvent` in both the `ContactDetailsPanel` and the `BrowserPanel`.
+
+[NOTE]
+Both the `select` and `linkedIn` command function quite similarly and only differ in the panel that they trigger.
+
+The figure below (Refer to figure 31) is the wireframe for the `ContactDetailsDisplay`:
+
+image::ContactDetailsDisplayWireFrame.png[width="600", align="center"]
+_Figure 31 : Wireframe for Contact Details Panel._
+
+[discrete]
+==== Design Consideration
+
+**Aspect:** Improving the UI +
+
+
+**Alternative 1 (current choice):** Show the extra details of contact after they are selected. +
+**Pros**: Allows more readability of the contact details and if more attributes are added to the `Person` class, not everything needs to be shown in the `PersonCard`. +
+**Cons**: User needs to manually select the user to see more details of that person. +
+
+**Alternative 2:** Only show the LinkedIn search in the `BrowserPanel` and show the contact details of the person only in the `PersonCard`. +
+**Pros**: User only has to look in the `PersonCard` for any and every detail +
+**Cons**: Looks very cluttered and has poor User Interface design.
+
+**Alternative 3 :** Show the `ContactDetailsDisplay` and `LinkedIn` as completely independent windows without tabs. +
+**Pros**: Completely isolates the `select` and `linkedIn` commands. +
+**Cons**: Removes the connectivity between a person's contact information and LinkedIn profile. Also, in the current implementation one is easily accessible from another, just by manually switching tabs which would not be possible with this alternative.
+//end::details[]
+
 === [Proposed] Data Encryption
 
 _{Explain here how the data encryption feature will be implemented}_
@@ -384,6 +466,58 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+=== Showing Profile Picture
+
+==== Current implementation
+`ProfilePicture` is a `Person` 's attribute. It stores the path of the input profile picture and generates a similar profile picture which will be stored in the app.
+The ProfilePicture constructor is called when `AddCommand` or `EditCommand` is executed. In `AddCommand`, it is an optional attribute. Whenever there is no valid profile picture for `ProfilePicture`,
+`ProfilePicture` takes the default `ProfilePicture`.
+`ProfilePicture`.getImage() returns an image for the `ImageView` of UI.
+
+==== Design consideration
+===== Aspect: How to link with `ProfilePicture`
+* **Alternative 1 (current choice):** Takes in the image path then copy the image to the ProfilePictureFolder.
+** Pros: We still have profile picture if the original profile picture is lost.
+** Cons: Memory consumption.
+* **Alternative 2:** Store the path and retrieve the image from the path when necessary.
+** Pros: Less memory consumption.
+** Cons: Original Image may be lost.
+
+diagrams::ModelComponentClassDiagram.pptx[width="650"]
+
+=== Emailing a contact
+
+==== Current implementation
+The `EmailCommand` class will allow user to open an email interface to send email to the chosen contact. `EmailCommand` extends the `Command` class. It takes in an index through the `EmailCommandParser`,
+similar to the implementation of `DeleteCommand` and `DeleteCommandParser`.
+
+The sending of email will be implemented using the Gmail API.
+
+Firstly, `GoogleAuthorizationCodeFlow` is used to build and request for authorization from user.
+Then it saves the user authorization into `Credential`, which is saved into a local file so that they do not need to repeat the authorization step.
+This authorization is handled in the `GmailAuthentication` class.
+
+Next, a `GmailClient` is created using the `Credential` that was created by `GmailAuthentication`.
+The `GmailClient` class provides all the services that uses the Gmail API.
+
+The `EmailPanel` is the UI for user to draft their email. The UI has 3 inputs, *To*, *Subject* and *Body*. *From* is not needed here as we already have
+the authorised user's email address, which we can retrieve using `GmailClient`.
+
+The `GmailMessage` class will take in the values inputted by the user
+in the UI. These values will be stored in `GmailMessage`
+and packaged into a `MimeMessage` ready to be send out.
+
+Finally, `GmailClient` will send out the `MimeMessage` of `GmailMessage` as an email.
+
+==== Design consideration
+===== Aspect: How to send an email
+* Alternative 1 (current choice): Using Gmail API to send an email.
+** Pros: Able to customize the UI that the user will use to send out an email.
+** Cons: Will take more time to implement due to additional UI components.
+* Alternative 2: Using `Webview` to display the Gmail drafting url.
+** Pros: Faster implementation as similar feature has been done before.
+** Cons: Not customizable and text may appear small in `Webview`.
 
 == Documentation
 
@@ -413,14 +547,14 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 .Saving documentation as PDF files in Chrome
-image::chrome_save_as_pdf.png[width="300"]
+image::chrome_save_as_pdf.png[width="300", align="center"]
 
 [[Testing]]
 == Testing
 
 === Running Tests
 
-There are three ways to run tests.
+There are three ways for you to run tests.
 
 [TIP]
 The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
@@ -493,7 +627,7 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, contactHeRo depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
@@ -536,23 +670,30 @@ Do take a look at <<Design-Logic>> before attempting to modify the `Logic` compo
 [discrete]
 ==== `Model` component
 
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
+*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in contactHeRo, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
+*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in contactHeRo, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
 
 [TIP]
 Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
+. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in contactHeRo.
+. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in contactHeRo.
 +
 ****
 * Hints
 ** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
 ** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
+** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
 **  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
 * Solution
+** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
 ** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
 ** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
 ** Add new tests for each of the new public methods that you have added.
 ** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
+*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
 *** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
 *** The solution PR has a temporary fix for the flaw mentioned above in its first commit.
 ****
@@ -560,29 +701,41 @@ Do take a look at <<Design-Model>> before attempting to modify the `Model` compo
 [discrete]
 ==== `Ui` component
 
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your contactHeRo application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your contactHeRo application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your contactHeRo application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
 
 [TIP]
 Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
 
 . Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
+. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
+. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
+. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
 +
 **Before**
 +
-image::getting-started-ui-tag-before.png[width="300"]
+image::getting-started-ui-tag-before.png[width="300", align="center"]
 +
 **After**
 +
-image::getting-started-ui-tag-after.png[width="300"]
+image::getting-started-ui-tag-after.png[width="300", align="center"]
 +
 ****
 * Hints
+** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
+** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
+** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
 ** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
 ** Use the .css attribute `-fx-background-color` to add a color.
 ** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
 * Solution
 ** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
+** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
 ** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
+*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
+*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
+*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
 *** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
 ****
 
@@ -590,11 +743,11 @@ image::getting-started-ui-tag-after.png[width="300"]
 +
 **Before**
 +
-image::getting-started-ui-result-before.png[width="200"]
+image::getting-started-ui-result-before.png[width="200", align="center"]
 +
 **After**
 +
-image::getting-started-ui-result-after.png[width="200"]
+image::getting-started-ui-result-after.png[width="200", align="center"]
 +
 ****
 * Hints
@@ -610,20 +763,20 @@ image::getting-started-ui-result-after.png[width="200"]
 *** Do read the commits one at a time if you feel overwhelmed.
 ****
 
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
+. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in contactHeRo.
 +
 **Before**
 +
-image::getting-started-ui-status-before.png[width="500"]
+image::getting-started-ui-status-before.png[width="500", align="center"]
 +
 **After**
 +
-image::getting-started-ui-status-after.png[width="500"]
+image::getting-started-ui-status-after.png[width="500", align="center"]
 +
 ****
 * Hints
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
+** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever contactHeRo is updated.
 * Solution
 ** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
 ** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
@@ -635,12 +788,12 @@ image::getting-started-ui-status-after.png[width="500"]
 [discrete]
 ==== `Storage` component
 
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
+*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving contactHeRo to the cloud. However, the current implementation of the application constantly saves contactHeRo after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for contactHeRo storage.
 
 [TIP]
 Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
 
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
+. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that contactHeRo can be saved in a fixed temporary location.
 +
 ****
 * Hint
@@ -655,6 +808,7 @@ Do take a look at <<Design-Storage>> before attempting to modify the `Storage` c
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
 
+*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
 *Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
 
 ==== Description
@@ -757,7 +911,6 @@ Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.jav
 **Main:**
 
 . Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
-
 **Tests:**
 
 . Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
@@ -782,16 +935,77 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target users:*
 
-The application is targeted towards Human Resources Managers at SMEs and start-ups. HR managers have a lot of contacts to manage which include current employees, customers, potential employees, potential customers, investors and many others. It is essential for them to have a quick and easy access to these contacts. Hence, contactHero aims to make their lives easier by helping them to store and manage their contacts efficiently.
+The application is targeted towards Human Resources Managers at companies, especially those responsible for recruitment. Such recruiters have a lot of contacts to +
+manage which include contact details and profiles of potential employees. It is essential for them to have a quick and easy access to these contacts. Hence, contactHero aims to make their lives easier by helping them to store and manage their contacts efficiently.
 
 *User Profile*:
 
-* HR managers who have a significant number of contacts to manage
-* Start-up employee who is new to HR management
-* HR managers who prefer desktop apps
-* HR managers who are good at typing and hence prefer CLI apps
+* Recruiters who have a significant number of contacts and profiles to manage
+* Recruiters who prefer desktop apps
+* Recruiters who are good at typing and hence prefer CLI apps
 
 *Value proposition*: An ideal solution for small teams and business professionals who need a simple solution to manage their contacts and help them with day-to-day business activities.
+
+*Feature contributions:*
+
+1. Kushagra Goyal
+ * Major Feature: Job Openings
+ ** Users can add job openings.
+ ** Users can edit job openings.
+ ** Users can delete job openings.
+ ** Users can match job openings to potential employees.
+
+ * Minor Feature: Contact details and LinkedIn search display.
+ ** Users can view the contact details in a separate panel using the `select` command.
+ ** Users can view the LinkedIn search of the person using the `linkedIn` command.
+
+ * How do these features fit into the product scope?
+ ** Major Feature: A recruiter needs the list of the job openings in the company so he knows what are the current job openings and what tagsets to look for in people. This way, the user can better search for potential employees.
+ ** Major Feature: A recruiter needs the list of the job openings in the company so he knows what are the current job openings and what tagsets to look for in people. This way, the user can better search for potential employees.
+ ** Minor Feature: Viewing the contact details in a separate focused panel makes them easier to read for the user as the Person card can now just contain limited information like the person's name, current position and company, also allowing more number of contacts to be displayed at a time since amount of information is reduced. Moreover, recruiters need to keep a track of the professional progress of his/her potential recruits and having easy access to their LinkedIn profiles will help them do this efficiently.
+
+2. Do Andre Khoi Nguyen
+ * Major Feature: Calendar
+ ** Users can sync Gmail calendar.
+ ** Users can add events to the calendar.
+
+ * Minor Feature: Profile Picture display.
+ ** Users can add a profile picture by using `add` command or `edit` command.
+ ** Users can view the profile picture.
+
+ * How do these features fit into the product scope?
+ ** Major Feature: Recruiters have a lot of appointments, meetings, and interviews to manage. Hence, showing them on the calendar will help them visualize and manage their time effectively.
+ ** Minor Feature: Viewing profile pictures of the potential employees help recruiters to recognize them easily.
+
+3. Kevin Chin
+* Major Feature: Email contact
+** User can use the "email" command to send email to chosen contact.
+** The feature uses Gmail API to send emails.
+
+* Minor Feature: Find contact by tag
+* Minor Feature: Find contact by tag
+** User can find contact by tag using keyword of the tag.
+** User can find contact by tag using keyword of the tag.
+** User can find contact by tag using keyword of the tag.
+** Supports multiple keywords.
+
+* How do these features fit into the product scope?
+** Major Feature: Recruiters may sometimes need to set up appointments, meetings, and interviews. This will usually be done through the use of email. This feature will be convenient for them as the email address of the contacts are already in contactHeRo.
+** Minor Feature: Sometimes, recruiter might not remember the name of the person they wish to contact. The assigned role of a person is much easier to remember. Therefore, this feature is very useful in helping them find a contact easily.
+
+4. Jason Lim
+* Major Feature: Login System
+** Users can be assured that their data in contactHeRo is secured.
+** User can create a new account to login to contactHeRo.
+** User can login and logout of contactHeRo through CLI.
+
+* Minor Feature: Clear list of history
+** User can clear away the list of commands which they have entered in previously using the `clearhistory` command.
+
+* How do this features fit into the product scope?
+** Major Feature: Recruiters are dealing with data of their potential employees and some of these data are personal and sensitive. Recruiters may also have some confidential company data stored in the application. Hence it is necessary for them to set up some form of security to protect these sensitive data. Having a login system is one of the common methods to ensure data security.
+
+** Minor Feature: As our application is mainly using CLI, sometimes the commands we entered may contain sensitive information. For example, the `add` command contains the phone number, address and email of the person being added into the application. All of the inputs entered into the command line can be viewed by using the history command. Hence being able to clear away the history of user inputs can help to protect those sensitive information. In addition, clearing away the back log help save space in the application.
 
 [appendix]
 == User Stories
@@ -809,13 +1023,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user with many persons in contactHeRo |sort persons by name |locate a person easily
 
+|`* * *` |user |add tag |categorize people
 |`* * *` |user |add tag |categorize people
 
 |`* * *` |user |find people by tag | find people with similar tag
+|`* * *` |user |find people by tag | find people with similar tag
+|`* * *` |user |find people by tag | find people with similar tag
 
-|`* * *` |user |add Linkedin and Github link | view pople's profile
+|`* * *` |user |view LinkedIn profile | stay updated about the person's professional advancement and achievement
+
+|`* * *` |user |add jobs | find people with similar tag
+|`* * *` |user |add jobs | find people with similar tag
 
 |`* * *` |user |submit feedback to developer | receive a better version in the future
 
@@ -834,7 +1054,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user with many persons in contactHeRo |sort persons by name |locate a person easily
 
 |`* *` |user | add birthday of my contacts |wish them
 
@@ -922,7 +1142,7 @@ Use case resumes at step 2.
 *Extensions*
 
 
-* 3a. The partial word does not match any of the commands known.
+* 2a. The partial word does not match any of the commands known.
 +
 Use case ends.
 
@@ -942,7 +1162,7 @@ Use case resumes at step 2.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  The commands and what they do must be clear to the user.
-.  The address book should be able to export to other computers.
+.  contactHeRo should be able to export to other computers.
 .  Should take less than 5 seconds to respond to each command on any <<mainstream-os,mainstream OS>>.
 .  The user interface's font type and font size should be readable by user.
 .  Should be backwards compatible with older version of the software.

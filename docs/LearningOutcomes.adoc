@@ -6,7 +6,7 @@
 :sectnumlevels: 1
 :imagesDir: images
 :stylesDir: stylesheets
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W09-B2/main/tree/master
 
 After studying this code and completing the corresponding exercises, you should be able to,
 

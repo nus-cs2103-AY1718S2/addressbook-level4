@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -18,14 +19,22 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.person.AddCommand;
+import seedu.address.model.AccountsManager;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.exceptions.DuplicateJobException;
+import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.skill.Skill;
+import seedu.address.model.skill.UniqueSkillList;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -104,6 +113,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addJob(Job job) throws DuplicateJobException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -120,18 +134,30 @@ public class AddCommandTest {
         }
 
         @Override
+        public void deleteJob(Job target) throws JobNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updatePerson(Person target, Person editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
         }
 
         @Override
-        public void deleteTag(Tag t)
-                throws PersonNotFoundException, DuplicatePersonException, UniqueTagList.DuplicateTagException {
+        public void deleteSkill(Skill t)
+                throws PersonNotFoundException, DuplicatePersonException, UniqueSkillList.DuplicateSkillException {
             fail("This method should not be called.");
         }
+
         @Override
         public ObservableList<Person> getFilteredPersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ObservableList<Job> getFilteredJobList() {
             fail("This method should not be called.");
             return null;
         }
@@ -140,7 +166,55 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void deleteAppointment(Appointment target) throws AppointmentNotFoundException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void updateAppointment(Appointment target, Appointment editedPerson)
+                throws DuplicateAppointmentException, AppointmentNotFoundException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public List<Appointment> getAppointmentList() {
+            fail("This method should not be called");
+            return null;
+        }
+
+        public AccountsManager getAccountsManager() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void login(String username, String password) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void logout() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void register(String username, String password) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredJobList(Predicate<Job> predicate) {
+            fail("This method should not be called.");
+        }
     }
+
 
     /**
      * A Model stub that always throw a DuplicatePersonException when trying to add a person.

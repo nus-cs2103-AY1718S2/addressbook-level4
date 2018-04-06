@@ -94,8 +94,8 @@
 }
 
 .list-cell {
-    -fx-label-padding: 0 0 0 0;
-    -fx-graphic-text-gap : 0;
+    -fx-label-padding: 10 10 10 10;
+    -fx-graphic-text-gap : 10;
     -fx-padding: 0 0 0 0;
 }
 
@@ -336,69 +336,70 @@
     -fx-background-radius: 0;
 }
 
-#tags {
+#skills {
     -fx-hgap: 7;
     -fx-vgap: 3;
 }
 
-#tags .label {
+#skills .label {
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
 
-#tags .teal {
+/*@@author KevinCJH*/
+#skills .teal {
     -fx-text-fill: white;
     -fx-background-color: #3e7b91;
 }
 
-#tags .red {
+#skills .red {
     -fx-text-fill: black;
     -fx-background-color: red;
 }
 
-#tags .yellow {
+#skills .yellow {
     -fx-text-fill: black;
     -fx-background-color: yellow;
 }
 
-+#tags .blue {
++#skills .blue {
     -fx-text-fill: white;
     -fx-background-color: blue;
 }
 
-#tags .orange {
+#skills .orange {
     -fx-text-fill: black;
     -fx-background-color: orange;
 }
 
-#tags .brown {
+#skills .brown {
     -fx-text-fill: white;
     -fx-background-color: brown;
 }
 
-#tags .green {
+#skills .green {
     -fx-text-fill: black;
     -fx-background-color: green;
 }
 
-#tags .pink {
+#skills .pink {
     -fx-text-fill: black;
     -fx-background-color: pink;
 }
 
-#tags .lightgreen {
+#skills .lightgreen {
     -fx-text-fill: black;
     -fx-background-color: lightgreen;
 }
 
-#tags .grey {
+#skills .grey {
     -fx-text-fill: black;
     -fx-background-color: grey;
 }
 
-#tags .purple {
+#skills .purple {
     -fx-text-fill: white;
     -fx-background-color: purple;
 }

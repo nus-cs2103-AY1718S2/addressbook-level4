@@ -34,13 +34,17 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+    private DetailsPanel detailsPanel;
+    private JobListPanel jobListPanel;
 
     @FXML
     private StackPane browserPlaceholder;
+
+    @FXML
+    private StackPane detailsPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -53,6 +57,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane resultDisplayPlaceholder;
+
+    @FXML
+    private StackPane jobListPanelPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
@@ -116,14 +123,22 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        detailsPanel = new DetailsPanel();
+        detailsPanel.addBrowserPanel();
+        detailsPanel.addContactDetailsDisplayPanel();
+        detailsPanel.addCalendarPanel(logic.getAppointmentList());
+        detailsPanel.addEmailPanel();
+        detailsPlaceholder.getChildren().add(detailsPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+
+        jobListPanel = new JobListPanel(logic.getFilteredJobList());
+        jobListPanelPlaceholder.getChildren().add(jobListPanel.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
@@ -186,7 +201,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        detailsPanel.releaseResources();
     }
 
     @Subscribe

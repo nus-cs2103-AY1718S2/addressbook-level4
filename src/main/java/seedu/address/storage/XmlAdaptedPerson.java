@@ -10,11 +10,14 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Company;
+import seedu.address.model.person.CurrentPosition;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.ProfilePicture;
+import seedu.address.model.skill.Skill;
 
 /**
  * JAXB-friendly version of the Person.
@@ -31,24 +34,34 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String currentPosition;
+    @XmlElement(required = true)
+    private String company;
+    @XmlElement(required = true)
+    private String profilePicture;
 
     @XmlElement
-    private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    private List<XmlAdaptedSkill> tagged = new ArrayList<>();
 
     /**
-     * Constructs an XmlAdaptedPerson.
+     * Constructs an XmlAdaptedJob.
      * This is the no-arg constructor that is required by JAXB.
      */
     public XmlAdaptedPerson() {}
 
     /**
-     * Constructs an {@code XmlAdaptedPerson} with the given person details.
+     * Constructs an {@code XmlAdaptedJob} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String phone, String email, String address, String currentPosition,
+                            String company, String profilePicture, List<XmlAdaptedSkill> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.currentPosition = currentPosition;
+        this.company = company;
+        this.profilePicture = profilePicture;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -57,16 +70,20 @@ public class XmlAdaptedPerson {
     /**
      * Converts a given Person into this class for JAXB use.
      *
-     * @param source future changes to this will not affect the created XmlAdaptedPerson
+     * @param source future changes to this will not affect the created XmlAdaptedJob
      */
     public XmlAdaptedPerson(Person source) {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        currentPosition = source.getCurrentPosition().value;
+        company = source.getCompany().value;
+        profilePicture = source.getProfilePicture().filePath;
+
         tagged = new ArrayList<>();
-        for (Tag tag : source.getTags()) {
-            tagged.add(new XmlAdaptedTag(tag));
+        for (Skill skill : source.getSkills()) {
+            tagged.add(new XmlAdaptedSkill(skill));
         }
     }
 
@@ -76,9 +93,9 @@ public class XmlAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Person toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (XmlAdaptedTag tag : tagged) {
-            personTags.add(tag.toModelType());
+        final List<Skill> personSkills = new ArrayList<>();
+        for (XmlAdaptedSkill tag : tagged) {
+            personSkills.add(tag.toModelType());
         }
 
         if (this.name == null) {
@@ -113,8 +130,35 @@ public class XmlAdaptedPerson {
         }
         final Address address = new Address(this.address);
 
-        final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        //@@author kush1509
+        if (this.currentPosition == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    CurrentPosition.class.getSimpleName()));
+        }
+        if (!CurrentPosition.isValidCurrentPosition(this.currentPosition)) {
+            throw new IllegalValueException(CurrentPosition.MESSAGE_CURRENT_POSITION_CONSTRAINTS);
+        }
+        final CurrentPosition currentPosition = new CurrentPosition(this.currentPosition);
+
+        if (this.company == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Company.class.getSimpleName()));
+        }
+        if (!Company.isValidCompany(this.company)) {
+            throw new IllegalValueException(Company.MESSAGE_COMPANY_CONSTRAINTS);
+        }
+        final Company company = new Company(this.company);
+
+        //@@author
+        if (this.profilePicture != null) {
+            if (!ProfilePicture.isValidProfilePicture(this.profilePicture)) {
+                throw new IllegalValueException(ProfilePicture.MESSAGE_PROFILEPICTURE_CONSTRAINTS);
+            } else if (!ProfilePicture.hasValidProfilePicture(this.profilePicture)) {
+                throw new IllegalValueException(ProfilePicture.MESSAGE_PROFILEPICTURE_NOT_EXISTS);
+            }
+        }
+        final ProfilePicture profilePicture = new ProfilePicture(this.profilePicture);
+        final Set<Skill> skills = new HashSet<>(personSkills);
+        return new Person(name, phone, email, address, currentPosition, company, profilePicture, skills);
     }
 
     @Override
@@ -132,6 +176,9 @@ public class XmlAdaptedPerson {
                 && Objects.equals(phone, otherPerson.phone)
                 && Objects.equals(email, otherPerson.email)
                 && Objects.equals(address, otherPerson.address)
+                && Objects.equals(currentPosition, otherPerson.currentPosition)
+                && Objects.equals(company, otherPerson.company)
+                && Objects.equals(profilePicture, otherPerson.profilePicture)
                 && tagged.equals(otherPerson.tagged);
     }
 }

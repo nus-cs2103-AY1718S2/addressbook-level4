@@ -433,7 +433,7 @@ Image files must exist and have extensions either of `.jpg` or `.png`.
 Examples:
 
 * `list` +
-* `editPicture i/1 pa/C:/Users/User/Desktop/test.jpg` +
+`editPicture i/1 pa/C:/Users/User/Desktop/test.jpg` +
 Changes the profile photo of the 1st student in the current listing to the image found at the specific file path.
 
 === Listing entered commands : `history`
@@ -514,7 +514,7 @@ Codeducator permission to modify your data. +
 Opens a new window in your default browser to the Oauth2 screen +
 
 [NOTE]
-You must be first logged out to log in
+You must first be logged out to log in
 
 Format: `login`
 
@@ -522,7 +522,7 @@ Format: `login`
 
 Logs out of your Google Account. Securely deletes the OAuth2 credential stored in the App. +
 [NOTE]
-You must be first logged in to log out
+You must first be logged in to log out
 
 Format: `logout`
 
@@ -531,7 +531,7 @@ Format: `logout`
 Updates both Google Contacts and Google Calendar with Addressbook and Schedule. +
 
 [NOTE]
-You must be first logged in to sync your data
+You must first be logged in to sync your data
 
 Format: `sync`
 

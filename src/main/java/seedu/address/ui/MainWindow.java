@@ -21,6 +21,7 @@ import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AssignCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -59,6 +60,7 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane commandBoxPlaceholder;
 
+    //@@author jonleeyz
     @FXML
     private MenuItem exitMenuItem;
 
@@ -94,6 +96,10 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private MenuItem selectMenuItem;
+    //@@author
+
+    @FXML
+    private MenuItem assignMenuItem;
 
     @FXML
     private MenuItem helpMenuItem;
@@ -128,6 +134,7 @@ public class MainWindow extends UiPart<Stage> {
         return primaryStage;
     }
 
+    //@@author jonleeyz
     private void setAccelerators() {
         setAccelerator(exitMenuItem, KeyCombination.valueOf("Alt + Q"));
 
@@ -144,9 +151,11 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerator(editMenuItem, KeyCombination.valueOf("Ctrl + E"));
         setAccelerator(locateMenuItem, KeyCombination.valueOf("Ctrl + L"));
         setAccelerator(selectMenuItem, KeyCombination.valueOf("Ctrl + S"));
+        setAccelerator(assignMenuItem, KeyCombination.valueOf("Ctrl + Shift + A"));
 
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
     }
+    //@@author
 
     /**
      * Sets the accelerator of a MenuItem.
@@ -235,6 +244,7 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    //@@author jonleeyz
     /**
      * Executes the {@code undo} operation
      */
@@ -322,6 +332,16 @@ public class MainWindow extends UiPart<Stage> {
     private void handleSelect() {
         raise(new PopulatePrefixesRequestEvent(new SelectCommand()));
     }
+    //@@author
+
+    /**
+     * Populates the {@code CommandBox} with the {@code AssignCommand} prefixes.
+     */
+    @FXML
+    private void handleAssign() {
+        raise(new PopulatePrefixesRequestEvent(new AssignCommand()));
+    }
+
 
     void show() {
         primaryStage.show();

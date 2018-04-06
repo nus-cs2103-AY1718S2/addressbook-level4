@@ -130,6 +130,7 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+    //@@author jonleeyz
     /**
      * Handles the event where a valid keyboard shortcut is pressed
      * to populate the CommandBox with command prefixes,
@@ -150,6 +151,7 @@ public class CommandBox extends UiPart<Region> {
         replaceText(event.commandWord);
         handleCommandInputChanged();
     }
+    //@@author
 
     /**
      * Initializes the history snapshot.

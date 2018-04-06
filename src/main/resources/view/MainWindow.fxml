@@ -14,7 +14,7 @@
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="450" minHeight="600">
   <icons>
-    <!-- @@author zhangriqi -->
+    <!--@@author zhangriqi -->
     <Image url="@/images/loanshark_logo.png" />
     <!--@@author -->
   </icons>
@@ -30,6 +30,7 @@
           <Menu mnemonicParsing="false" text="File">
             <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#handleExit" text="Exit" />
           </Menu>
+          <!--@@author jonleeyz -->
           <Menu mnemonicParsing="false" text="Edit">
             <MenuItem fx:id="undoMenuItem" mnemonicParsing="false" onAction="#handleUndo" text="Undo" />
             <MenuItem fx:id="redoMenuItem" mnemonicParsing="false" onAction="#handleRedo" text="Redo" />
@@ -46,7 +47,9 @@
             <MenuItem fx:id="editMenuItem" mnemonicParsing="false" onAction="#handleEdit" text="Edit a Person..." />
             <MenuItem fx:id="locateMenuItem" mnemonicParsing="false" onAction="#handleLocate" text="Locate a Person..." />
             <MenuItem fx:id="selectMenuItem" mnemonicParsing="false" onAction="#handleSelect" text="Select a Person..." />
+            <MenuItem fx:id="assignMenuItem" mnemonicParsing="false" onAction="#handleAssign" text="Assign Customers to a Runner..." />
           </Menu>
+          <!--@@author -->
           <Menu mnemonicParsing="false" text="Help">
             <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
           </Menu>

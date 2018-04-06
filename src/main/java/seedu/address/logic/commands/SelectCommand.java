@@ -58,6 +58,7 @@ public class SelectCommand extends Command implements PopulatableCommand {
                 && this.targetIndex.equals(((SelectCommand) other).targetIndex)); // state check
     }
 
+    //@@author jonleeyz
     @Override
     public String getCommandWord() {
         return COMMAND_WORD;
@@ -77,4 +78,5 @@ public class SelectCommand extends Command implements PopulatableCommand {
     public String getUsageMessage() {
         return MESSAGE_USAGE;
     }
+    //@@author
 }

@@ -92,6 +92,7 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
         assertFalse(ERROR_MESSAGE, HelpWindowHandle.isWindowPresent());
     }
 
+    //@@author jonleeyz
     /**
      * Executes the HelpCommand using its accelerator in {@code MainMenu}
      */
@@ -105,4 +106,5 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
     private void executeHelpCommandUsingMenu() {
         executeUsingMenuItem("Help", "F1");
     }
+    //@@author
 }

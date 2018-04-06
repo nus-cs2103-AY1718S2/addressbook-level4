@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+//@@author jonleeyz
 /**
  * This interface is utilised in the {@code ExecuteCommandRequestEvent} class, where it is used
  * to provide a handle to {@code Commands} that immediately execute on press of their respective
@@ -18,3 +19,4 @@ public interface PopulatableCommand {
     /** Returns the usage message of the Command */
     String getUsageMessage();
 }
+//@@author

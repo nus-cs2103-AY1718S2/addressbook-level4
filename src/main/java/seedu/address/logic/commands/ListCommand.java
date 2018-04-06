@@ -18,8 +18,10 @@ public class ListCommand extends Command implements ImmediatelyExecutableCommand
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
+    //@@author jonleeyz
     @Override
     public String getCommandWord() {
         return COMMAND_WORD;
     }
+    //@@author
 }

@@ -33,15 +33,17 @@
 <ul class="sectlevel3">
 <li><a href="#adding-a-person-code-add-code">4.1.1. Adding a person: <code>add</code></a></li>
 <li><a href="#editing-a-person-code-edit-code">4.1.2. Editing a person : <code>edit</code></a></li>
-<li><a href="#add-a-remark-code-remark-code-since-v1-1">4.1.3. Add a remark : <code>remark</code> [Since v1.1]</a></li>
-<li><a href="#deleting-a-person-code-delete-code">4.1.4. Deleting a person : <code>delete</code></a></li>
-<li><a href="#clearing-all-entries-code-clear-code">4.1.5. Clearing all entries : <code>clear</code></a></li>
+<li><a href="#add-new-tags-to-a-person-code-edit-add-tag-code">4.1.3. Add new tags to a person : <code>edit -add-tag</code></a></li>
+<li><a href="#delete-tags-from-a-person-code-edit-delete-tag-code">4.1.4. Delete tags from a person : <code>edit -delete-tag</code></a></li>
+<li><a href="#add-a-remark-code-remark-code-since-v1-1">4.1.5. Add a remark : <code>remark</code> [Since v1.1]</a></li>
+<li><a href="#deleting-a-person-code-delete-code">4.1.6. Deleting a person : <code>delete</code></a></li>
+<li><a href="#clearing-all-entries-code-clear-code">4.1.7. Clearing all entries : <code>clear</code></a></li>
 </ul>
 </li>
 <li><a href="#navigating-infinity-book">4.2. Navigating Infinity Book</a>
 <ul class="sectlevel3">
 <li><a href="#listing-all-persons-code-list-code">4.2.1. Listing all persons : <code>list</code></a></li>
-<li><a href="#locating-persons-by-name-code-find-code">4.2.2. Locating persons by name: <code>find</code></a></li>
+<li><a href="#locating-persons-by-name-phone-email-and-tags-code-find-code">4.2.2. Locating persons by name, phone, email, and tags: <code>find</code></a></li>
 <li><a href="#viewing-a-person-code-view-code">4.2.3. Viewing a person: <code>view</code></a></li>
 <li><a href="#selecting-a-person-code-select-code">4.2.4. Selecting a person : <code>select</code></a></li>
 <li><a href="#auto-correct-and-auto-complete">4.2.5. Auto-correct and auto-complete</a></li>
@@ -49,12 +51,8 @@
 </li>
 <li><a href="#dashboard-reporting">4.3. Dashboard Reporting</a>
 <ul class="sectlevel3">
-<li><a href="#understanding-the-workflow">4.3.1. Understanding The Workflow</a></li>
-<li><a href="#managing-tag-of-a-person-refer-to-code-edit-code-command">4.3.2. Managing tag of a person: refer to <code>edit</code> command</a></li>
-<li><a href="#adding-a-new-report-code-report-new-code-coming-in-v1-4">4.3.3. Adding a new report : <code>report -new</code> [coming in v1.4]</a></li>
-<li><a href="#removing-a-report-code-report-remove-code-coming-in-v1-4">4.3.4. Removing a report : <code>report -remove</code> [coming in v1.4]</a></li>
-<li><a href="#saving-the-current-state-of-report-code-report-freeze-code-coming-in-v1-4">4.3.5. Saving the current state of report <code>report -freeze</code> [coming in v1.4]</a></li>
-<li><a href="#list-all-available-reports-coming-in-v2-0">4.3.6. List all available reports [coming in v2.0]</a></li>
+<li><a href="#viewing-a-report-code-viewreport-code-or-code-vr-code-since-v1-4">4.3.1. Viewing a report : <code>viewreport</code> or <code>vr</code> [Since v1.4]</a></li>
+<li><a href="#saveing-a-report-code-savereport-code-or-code-sr-code-since-v1-4">4.3.2. Saveing a report : <code>savereport</code> or <code>sr</code> [Since v1.4]</a></li>
 </ul>
 </li>
 <li><a href="#managing-job-postings">4.4. Managing Job Postings</a>
@@ -77,7 +75,7 @@
 </li>
 <li><a href="#miscellaneous">4.7. Miscellaneous</a>
 <ul class="sectlevel3">
-<li><a href="#change-theme-code-theme-code-since-v1-3">4.7.1. Change theme : <code>theme</code> [Since v1.3]</a></li>
+<li><a href="#changing-theme-code-theme-code-since-v1-3">4.7.1. Changing theme : <code>theme</code> [Since v1.3]</a></li>
 <li><a href="#viewing-help-code-help-code">4.7.2. Viewing help : <code>help</code></a></li>
 <li><a href="#listing-entered-commands-code-history-code">4.7.3. Listing entered commands : <code>history</code></a></li>
 <li><a href="#undoing-previous-command-code-undo-code">4.7.4. Undoing previous command : <code>undo</code></a></li>
@@ -229,6 +227,12 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="ulist">
 <ul>
 <li>
+<p>Command starts with a <code>COMMAND WORD</code> to specify the command you want to perform.</p>
+</li>
+<li>
+<p>Words prefixed with a dash (optional) are <code>COMMAND OPTION</code> e.g. in <code>edit -add-tag t/TAG</code>, <code>-add-tag</code> is a command option.</p>
+</li>
+<li>
 <p>Words in <code>UPPER_CASE</code> are the parameters to be supplied by the user e.g. in <code>add n/NAME</code>, <code>NAME</code> is a parameter which can be used as <code>add n/John Doe</code>.</p>
 </li>
 <li>
@@ -251,7 +255,7 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Description:</strong> Adds a person to the address book<br></p>
+<p><strong>Description:</strong> Adds a person to the Infinity Book<br></p>
 </li>
 <li>
 <p><strong>Format:</strong> <code>add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/LINK[t/TAG]&#8230;&#8203;</code></p>
@@ -291,7 +295,7 @@ A person can have any number of tags (including 0)
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Description:</strong> Edits an existing person in the address book.<br></p>
+<p><strong>Description:</strong> Edits an existing person in Infinity Book.<br></p>
 </li>
 <li>
 <p><strong>Format:</strong> <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]&#8230;&#8203;</code></p>
@@ -338,7 +342,79 @@ Edits the name of the 2nd person to be <code>Betsy Crower</code> and clears all 
 </div>
 </div>
 <div class="sect3">
-<h4 id="add-a-remark-code-remark-code-since-v1-1"><a class="link" href="#add-a-remark-code-remark-code-since-v1-1">4.1.3. Add a remark : <code>remark</code> [Since v1.1]</a></h4>
+<h4 id="add-new-tags-to-a-person-code-edit-add-tag-code"><a class="link" href="#add-new-tags-to-a-person-code-edit-add-tag-code">4.1.3. Add new tags to a person : <code>edit -add-tag</code></a></h4>
+<div class="paragraph">
+<p>To add new tags to an existing person in Infinity Book, use the edit -add-tag command.</p>
+</div>
+<div class="paragraph">
+<p><strong>Format:</strong> <code>edit -add-tag INDEX [t/TAG]&#8230;&#8203;</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Tag name comparision is case sensitive.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Example:</strong><br>
+<code>edit -add-tag 1 t/Year2 t/SpeakVietnamese</code><br>
+Adds tag <code>Year2</code> and <code>SpeakVietnamese</code> to the first person.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/addtag.png" alt="addtag" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p>_Figure. Added new tags to the first person.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="delete-tags-from-a-person-code-edit-delete-tag-code"><a class="link" href="#delete-tags-from-a-person-code-edit-delete-tag-code">4.1.4. Delete tags from a person : <code>edit -delete-tag</code></a></h4>
+<div class="paragraph">
+<p>To remove tags from an existing person in Infinity Book, use the edit -delete-tag command.</p>
+</div>
+<div class="paragraph">
+<p><strong>Format:</strong> <code>edit -delete-tag INDEX [t/TAG]&#8230;&#8203;</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Tag name comparision is case sensitive.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Example:</strong><br>
+<code>edit -delete-tag 1 t/Year2 t/SpeakVietnamese</code><br>
+Deletes tag <code>Year2</code> and <code>SpeakVietnamese</code> from the first person.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/deletetag.png" alt="deletetag" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p>_Figure. Deleted tags from the first person.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="add-a-remark-code-remark-code-since-v1-1"><a class="link" href="#add-a-remark-code-remark-code-since-v1-1">4.1.5. Add a remark : <code>remark</code> [Since v1.1]</a></h4>
 <div class="paragraph">
 <p>Adds or edits remarks to the person identified by the INDEX</p>
 </div>
@@ -369,11 +445,11 @@ Removes the remark for the second person.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="deleting-a-person-code-delete-code"><a class="link" href="#deleting-a-person-code-delete-code">4.1.4. Deleting a person : <code>delete</code></a></h4>
+<h4 id="deleting-a-person-code-delete-code"><a class="link" href="#deleting-a-person-code-delete-code">4.1.6. Deleting a person : <code>delete</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Description:</strong> Deletes the specified person from the address book.<br></p>
+<p><strong>Description:</strong> Deletes the specified person from the Infinity Book.<br></p>
 </li>
 <li>
 <p><strong>Format:</strong> <code>delete INDEX</code></p>
@@ -385,7 +461,7 @@ Removes the remark for the second person.</p>
 <li>
 <p><code>list</code><br>
 <code>delete 2</code><br>
-Deletes the 2nd person in the address book.</p>
+Deletes the 2nd person in the Infinity Book.</p>
 </li>
 <li>
 <p><code>find Betsy</code><br>
@@ -416,11 +492,11 @@ Deletes the 1st person in the results of the <code>find</code> command.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">4.1.5. Clearing all entries : <code>clear</code></a></h4>
+<h4 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">4.1.7. Clearing all entries : <code>clear</code></a></h4>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Description:</strong> Clears all entries from the address book.<br></p>
+<p><strong>Description:</strong> Clears all entries from the Infinity Book.<br></p>
 </li>
 <li>
 <p><strong>Format:</strong> <code>clear</code></p>
@@ -436,7 +512,7 @@ Deletes the 1st person in the results of the <code>find</code> command.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Description:</strong> Shows a list of all persons in the address book.<br></p>
+<p><strong>Description:</strong> Shows a list of all persons in the Infinity Book.<br></p>
 </li>
 <li>
 <p><strong>Format:</strong> <code>list</code></p>
@@ -445,31 +521,12 @@ Deletes the 1st person in the results of the <code>find</code> command.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="locating-persons-by-name-code-find-code"><a class="link" href="#locating-persons-by-name-code-find-code">4.2.2. Locating persons by name: <code>find</code></a></h4>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Description:</strong> Finds persons whose names contain any of the given keywords.<br></p>
-</li>
-<li>
-<p><strong>Format:</strong> <code>find KEYWORD [MORE_KEYWORDS]</code></p>
-</li>
-<li>
-<p><strong>Examples:</strong></p>
-<div class="ulist">
-<ul>
-<li>
-<p><code>find John</code><br>
-Returns <code>john</code> and <code>John Doe</code></p>
-</li>
-<li>
-<p><code>find Betsy Tim John</code><br>
-Returns any person having names <code>Betsy</code>, <code>Tim</code>, or <code>John</code></p>
-</li>
-</ul>
+<h4 id="locating-persons-by-name-phone-email-and-tags-code-find-code"><a class="link" href="#locating-persons-by-name-phone-email-and-tags-code-find-code">4.2.2. Locating persons by name, phone, email, and tags: <code>find</code></a></h4>
+<div class="paragraph">
+<p>Finds persons whose names, phone numbers, emails, or tags contain any of the given keywords.<br></p>
 </div>
-</li>
-</ul>
+<div class="paragraph">
+<p><strong>Format:</strong> <code>find KEYWORD [MORE_KEYWORDS]</code><br></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -482,7 +539,7 @@ Returns any person having names <code>Betsy</code>, <code>Tim</code>, or <code>J
 <p>The order of the keywords does not matter. e.g. <code>Hans Bo</code> will match <code>Bo Hans</code></p>
 </li>
 <li>
-<p>Only the name is searched.</p>
+<p>Only the name, phone number, email, and tags are searched.</p>
 </li>
 <li>
 <p>Only full words will be matched e.g. <code>Han</code> will not match <code>Hans</code></p>
@@ -493,6 +550,19 @@ Returns any person having names <code>Betsy</code>, <code>Tim</code>, or <code>J
 </ul>
 </div>
 </div>
+</div>
+<div class="paragraph">
+<p><strong>Examples:</strong>
+- <code>find Alex 93210283</code><br>
+Returns <code>Alex Yeoh</code>, <code>Charlotte Oliveiro</code>, and <code>Alex Smith</code> whose names and phone numbers match with the given keywords.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/Find.png" alt="Find" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure.</em> Person list after finding with keywords <code>Alex</code> and <code>93210283</code>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -552,7 +622,7 @@ Returns any person having names <code>Betsy</code>, <code>Tim</code>, or <code>J
 <li>
 <p><code>list</code><br>
 <code>select 2</code><br>
-Selects the 2nd person in the address book.</p>
+Selects the 2nd person in the Infinity Book.</p>
 </li>
 <li>
 <p><code>find Betsy</code><br>
@@ -627,102 +697,139 @@ Corrects command word to <code>list</code>.</p>
 </div>
 <div class="sect2">
 <h3 id="dashboard-reporting"><a class="link" href="#dashboard-reporting">4.3. Dashboard Reporting</a></h3>
-<div class="sect3">
-<h4 id="understanding-the-workflow"><a class="link" href="#understanding-the-workflow">4.3.1. Understanding The Workflow</a></h4>
 <div class="paragraph">
-<p>As a recruiter, your work mainly involves monitoring the progress of open jobs. Imagining a working day, you have to
-keep track of the number of new candidates, interviewees, and accepted offer, which is time-consuming given there is a
-significant number of candidates. Furthermore, you may want to analyze the productivity of your recruiting team in the
-last week, month, and quarter. Keeping track of historical data becomes necessary here.<br></p>
+<p>Infinity Book is tailored for people who are obsessed with speed. Aligning with this vision, our Report feature enables
+you to get insights of your huge list of contacts in a few keystrokes.</p>
 </div>
 <div class="paragraph">
-<p>Infinity Book proposes a workflow that helps you efficiently achieve these requirements:<br></p>
+<p>Each report is identified with a Population Tag:<br></p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
-<p>Summarize each candidate by a few keywords using <code>Tagging</code> feature. Example: <code>new</code>, <code>interviewing</code>, <code>offering</code>,
-<code>accepted</code>, &#8230;&#8203;<br></p>
+<p>Represented with the prefix <code>pop/</code> followed by the tag name of the population tag. Example: <code>pop/SEIntern</code>.</p>
 </li>
 <li>
-<p>Define a pie-chart report tailored to your specific goals. A report is defined by one <code>population</code> tag and at most
-three <code>group</code> tags. Example:</p>
+<p>The population tag name must be an alphanumeric string.</p>
 </li>
-</ol>
+</ul>
+</div>
+<div class="paragraph">
+<p>In the report, you will find statistics of the group of all Persons tagged with <code>POPULATION TAG</code>:<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A bar chart showing all other Tags owned by this group and number of owners for each Tag.</p>
+</li>
+<li>
+<p>A pie chart illustrating the numerical proportion of each Tag.</p>
+</li>
+<li>
+<p>A history panel listing statistics of this group at earlier points of time.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>An example usage:</strong></p>
+</div>
+<div class="paragraph">
+<p>You are recruiting Software Engineering interns, and you want to keep track of the number of candidates in each stage:
+Screening, Interviewing, Offered, or Rejected. Given the a significant pool of applicants, this task is tedious, and
+our Report feature is a solution.  <br></p>
+</div>
+<div class="paragraph">
+<p>Using our Report with population tag <code>SEIntern</code>,<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You can monitor recruiting pipeline:</p>
+</li>
+</ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/graph.png" alt="graph" width="500">
+<img src="images/barchart.png" alt="barchart" width="400">
 </div>
 </div>
 <div class="paragraph">
-<p>Figure 1: Data Visualization: Dashboard Reporting</p>
+<p><em>Figure.</em> Bar chart in <code>SEIntern</code> report<br>
+<em>Explanation:</em> there are 11 candidates tagged with <code>SEIntern</code> in which 5 of them are tagged with <code>Screening</code>, 3 of them
+are tagged with <code>Interviewing</code>, 1 of them is tagged with <code>Rejected</code>, and 2 of them are tagged with <code>Offered</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You can evaluate the amount of workload:</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/piechart.png" alt="piechart" width="400">
+</div>
 </div>
 <div class="paragraph">
-<p>You are recruiting interns, and you can use this report to keep track of the number of candidates in each stage. This
-report is defined by  tag <code>SoftwareEngineerInterns</code> as <code>population</code> tag,  and <code>screening</code>, <code>interviewing</code>, <code>accepted</code>
-as <code>group</code> tags.<br></p>
+<p><em>Figure.</em> Pie chart in <code>SEIntern</code> report<br>
+<em>Explanation:</em> there are 11 tags that candidates tagged with <code>SEIntern</code> has in total, and 45% of them are <code>Screening</code>,
+27% are <code>Interviewing</code>, 18% are <code>Offered</code>, and 9% are <code>Rejected</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You can track of the progress of your team:</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/history.png" alt="history" width="400">
+</div>
 </div>
 <div class="paragraph">
-<p>3.Save the current state of report persistently so that you can retrieve it in the future.</p>
+<p><em>Figure.</em> History panel in <code>SEIntern</code> report<br></p>
+</div>
+<div class="sect3">
+<h4 id="viewing-a-report-code-viewreport-code-or-code-vr-code-since-v1-4"><a class="link" href="#viewing-a-report-code-viewreport-code-or-code-vr-code-since-v1-4">4.3.1. Viewing a report : <code>viewreport</code> or <code>vr</code> [Since v1.4]</a></h4>
+<div class="paragraph">
+<p>Want to have bird&#8217;s view statistics of a certain group of candidates? View a report using <code>viewreport</code> or <code>vr</code> command.+</p>
+</div>
+<div class="paragraph">
+<p><strong>Format:</strong>  <code>viewreport pop/POPULATION_TAG</code> or <code>vr pop/POPULATION_TAG</code></p>
+</div>
+<div class="paragraph">
+<p><strong>Example:</strong>
+<code>viewreport pop/SEIntern</code></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/viewreport.png" alt="viewreport" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure.</em> Report with population Tag <code>SEIntern</code> is displayed.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="managing-tag-of-a-person-refer-to-code-edit-code-command"><a class="link" href="#managing-tag-of-a-person-refer-to-code-edit-code-command">4.3.2. Managing tag of a person: refer to <code>edit</code> command</a></h4>
-
+<h4 id="saveing-a-report-code-savereport-code-or-code-sr-code-since-v1-4"><a class="link" href="#saveing-a-report-code-savereport-code-or-code-sr-code-since-v1-4">4.3.2. Saveing a report : <code>savereport</code> or <code>sr</code> [Since v1.4]</a></h4>
+<div class="paragraph">
+<p>Wish to save the current statistics for future reference? Saving the report using <code>savereport</code> or <code>sr</code> command.<br>
+<strong>Format:</strong>  <code>savereport pop/REPORT_NAME</code>  <code>sr pop/REPORT_NAME</code></p>
 </div>
-<div class="sect3">
-<h4 id="adding-a-new-report-code-report-new-code-coming-in-v1-4"><a class="link" href="#adding-a-new-report-code-report-new-code-coming-in-v1-4">4.3.3. Adding a new report : <code>report -new</code> [coming in v1.4]</a></h4>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Description:</strong> Need to keep track certain information? Add new report using <code>report -new</code> command.<br></p>
-</li>
-<li>
-<p><strong>Format:</strong>  <code>report -new POPULATION [GROUP 1] [GROUP 2] [GROUP 3]</code><br>
-This will create a new Report with name presented in the format: <code>POPULATION_[GROUP 1]<em>[GROUP 2]</em>[GROUP 3]</code><br></p>
-</li>
-<li>
-<p><strong>Examples:</strong> <code>report -new SoftwareEngineerInterns screening interviewing accepted</code><br>
-This should create a new report named <code>SoftwareEngineerInterns_screening_interviewing_accepted</code>.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><strong>Example:</strong>
+<code>savereport pop/SEIntern</code>
+Saves the current statistics of the report. A new entry will be added at the end of history panel in the report.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/savereport.png" alt="savereport" width="600">
 </div>
 </div>
-<div class="sect3">
-<h4 id="removing-a-report-code-report-remove-code-coming-in-v1-4"><a class="link" href="#removing-a-report-code-report-remove-code-coming-in-v1-4">4.3.4. Removing a report : <code>report -remove</code> [coming in v1.4]</a></h4>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Description:</strong> To remove a report, use <code>report -remove</code> command</p>
-</li>
-<li>
-<p><strong>Format:</strong>  <code>report -remove REPORT_NAME</code></p>
-</li>
-</ul>
+<div class="paragraph">
+<p><em>Figure.</em> Report with population Tag <code>SEIntern</code> is saved.</p>
 </div>
-</div>
-<div class="sect3">
-<h4 id="saving-the-current-state-of-report-code-report-freeze-code-coming-in-v1-4"><a class="link" href="#saving-the-current-state-of-report-code-report-freeze-code-coming-in-v1-4">4.3.5. Saving the current state of report <code>report -freeze</code> [coming in v1.4]</a></h4>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Description:</strong> To save the current state of a report persistently, use <code>report -freeze</code> command.</p>
-</li>
-<li>
-<p><strong>Format:</strong>  <code>report -freeze POPULATION [GROUP 1] [GROUP 2] [GROUP 3]</code></p>
-</li>
-<li>
-<p><strong>Examples:</strong> <code>report -freeze SoftwareEngineerInterns_screening_interviewing_accepted</code><br>
-This will add an entry to report <code>SoftwareEngineerInterns_screening_interviewing_accepted</code> including list of emails and
-number of candidates in each group.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="list-all-available-reports-coming-in-v2-0"><a class="link" href="#list-all-available-reports-coming-in-v2-0">4.3.6. List all available reports [coming in v2.0]</a></h4>
-
 </div>
 </div>
 <div class="sect2">
@@ -853,48 +960,28 @@ features that Infinity Book offers.</p>
 <div class="sect2">
 <h3 id="miscellaneous"><a class="link" href="#miscellaneous">4.7. Miscellaneous</a></h3>
 <div class="sect3">
-<h4 id="change-theme-code-theme-code-since-v1-3"><a class="link" href="#change-theme-code-theme-code-since-v1-3">4.7.1. Change theme : <code>theme</code> [Since v1.3]</a></h4>
+<h4 id="changing-theme-code-theme-code-since-v1-3"><a class="link" href="#changing-theme-code-theme-code-since-v1-3">4.7.1. Changing theme : <code>theme</code> [Since v1.3]</a></h4>
 <div class="paragraph">
 <p>To change the theme of InfinityBook, use the <code>theme</code> command.<br></p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>Format: theme [THEME_NAME]</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Alias: t [THEME_NAME]</pre>
-</div>
+<div class="paragraph">
+<p><strong>Format:</strong> <code>theme [THEME_NAME]</code> or <code>t [THEME_NAME]</code></p>
 </div>
 <div class="paragraph">
-<p><span class="big green">Examples</span>:</p>
+<p><code>THEME_NAME</code> can be <code>morning</code>, <code>dark</code>, or <code>light</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Examples</strong>:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
 <p><code>theme</code> light</p>
 </li>
-<li>
-<p><code>t</code> dark</p>
-</li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Current available themes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>light</p>
-</li>
-<li>
-<p>dark</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>You should see the user interface change according the specified theme.</p>
+<p>You should see the user interface change to theme Light.</p>
 </div>
 </div>
 <div class="sect3">
@@ -939,7 +1026,7 @@ features that Infinity Book offers.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Description:</strong> Restores the address book to the state before the previous <em>undoable</em> command was executed.<br></p>
+<p><strong>Description:</strong> Restores the Infinity Book to the state before the previous <em>undoable</em> command was executed.<br></p>
 </li>
 <li>
 <p><strong>Format:</strong> <code>undo</code></p>
@@ -978,7 +1065,7 @@ The <code>undo</code> command fails as there are no undoable commands executed p
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Undoable commands: those commands that modify the address book&#8217;s content (<code>add</code>, <code>delete</code>, <code>edit</code> and <code>clear</code>).</p>
+<p>Undoable commands: those commands that modify the Infinity Book&#8217;s content (<code>add</code>, <code>delete</code>, <code>edit</code> and <code>clear</code>).</p>
 </div>
 </td>
 </tr>
@@ -1159,6 +1246,16 @@ There is no need to save manually.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>edit 2 n/James Lee e/jameslee@example.com</code></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Add new tags to a person</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>edit -add-tag INDEX [t/TAG]&#8230;&#8203;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>edit -add-tag 2 t/Computing</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete tags from a person</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>edit -delete-tag INDEX [t/TAG]&#8230;&#8203;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>edit -delete-tag 2 t/Computing</code></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Find</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>find KEYWORD [MORE_KEYWORDS]</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>find James Jake</code></p></td>
@@ -1193,6 +1290,16 @@ There is no need to save manually.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>undo</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>undo</code></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">View Report</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>viewreport pop/[POPULATION_TAG]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>viewreport pop/SEIntern</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Save Report</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>savereport pop/[POPULATION_TAG]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>savereport pop/SEIntern</code></p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1225,7 +1332,7 @@ There is no need to save manually.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-06 05:12:23 UTC
+Last updated 2018-04-06 07:27:23 UTC
 </div>
 </div>
 </body>

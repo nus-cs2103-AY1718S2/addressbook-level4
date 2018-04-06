@@ -315,6 +315,7 @@ Undoable commands: those commands that modify Medeina's content (`add`, `delete`
 .After `delete **-fo** 1` and `list`
 image::After_Delete.PNG[width:800]
 {empty} +
+
 .After `ud`
 image::After_Undo.PNG[width:800]
 
@@ -328,8 +329,8 @@ image::Undo_Fail.PNG[width:800]
 
 * `delete **-fo** 1` +
 `clear` +
-`undo` (The command reverses the `clear` command) +
-`ud` (The command reverses the `delete **-fo** 1` command) +
+`undo` (This command reverses `clear`) +
+`ud` (This command reverses the `delete **-fo** 1`) +
 
 .Executed `delete **-fo** 1` and `clear`
 image::After_Clear.PNG[width:800]

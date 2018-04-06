@@ -469,7 +469,7 @@ public class OAuthManager {
     public static List<Event> getEventByIndexPairFromDailyList(int index)
             throws InvalidCalendarEventCountException, IllegalValueException {
         List<Event> eventPair = new ArrayList<>();
-        if (index < 1 || index >= dailyEventsList.size() - 1) {
+        if (index < 1 || index > dailyEventsList.size() - 1) {
             throw new IllegalValueException(NavigateCommand.MESSAGE_INVALID_RANGE);
         } else if (dailyEventsList.isEmpty() && dailyEventsList.size() < 2) {
             throw new InvalidCalendarEventCountException();

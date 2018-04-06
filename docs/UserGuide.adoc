@@ -431,7 +431,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` OR `r` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Displaying Calendar : `calendar` `since v1.3`
+=== Displaying Calendar : `calendar` `since V1.3`
 
 Displays the Calendar at centre of window in specified viewing format. +
 Format: `calendar [VIEW_FORMAT]` +
@@ -441,7 +441,7 @@ Alias: `cal` +
 * Calendar has 3 views; Day, Week, and Month.
 * `VIEW_FORMAT` only accepts the keywords, `day`, `week` and `month` to display the calendar in the respective format.
 * Calendar shows current day by default if no parameters are entered or invalid parameters are entered.
-* Calendar will display all incoming events within timeframe of the specified view.
+* Calendar will display all incoming entries within timeframe of the specified view.
 ****
 
 Examples:
@@ -454,7 +454,39 @@ Shows Calendar in Day-View.
 `cal month` +
 Shows Calendar in Month-View.
 
-=== Adding entries to Event list : `entryadd` `Since V1.3`
+=== Go to next page in Calendar : `calendarnext` `coming in V1.5`
+
+Goes to the next page in Calendar.
+Format: `calendarnext` +
+Alias: `calnext` +
+
+****
+* Depending on the current day/week/month calendar is displaying, this command will display the next day/week/month.
+****
+
+=== Go to previous page in Calendar : `calendarprev` `coming in V1.5`
+
+Goes to the previous page in Calendar.
+Format: `calendarprev` +
+Alias: `calprev` +
+
+****
+* Depending on the current day/week/month calendar is displaying, this command will display the previous day/week/month.
+****
+
+=== Display current day in Calendar : `calendarnow` `coming in V1.5`
+
+Displays today's date in Calendar.
+Format: `calendarnow` +
+Alias: `calnow` +
+
+****
+* If calendar is displaying in day-view, command displays today's date in day-view.
+* If calendar is displaying in week-view, command displays the current week of today in week-view.
+* If calendar is displaying in month-view, command displays current month of today in month-view.
+****
+
+=== Adding entries to calendar entry list : `entryadd` `Since V1.3`
 
 Adds an entry to the Calendar entry list. +
 Format: `entryadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
@@ -470,46 +502,46 @@ Alias: `ea t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
 
 Examples:
 
-* `eventadd t/meet with boss ed/05-05-2020 st/10:00 et/12:00` OR +
+* `entryadd t/meet with boss ed/05-05-2020 st/10:00 et/12:00` OR +
 `ea t/meet with boss ed/05-05-2020 st/10:00 et/12:00` +
-Creates an event with listed title, starts from 1000 and ends at 1200 on 5 May 2020. +
-Event appears on specified date in the Calendar.
+Creates a calendar entry with listed title, starts from 1000 and ends at 1200 on 5 May 2020. +
+Entry appears on specified date in the Calendar.
 
-* `eventadd t/roadshow sd/01-01-2019 ed/10-01-2019 st/09:00 et/18:00` OR +
+* `entryadd t/roadshow sd/01-01-2019 ed/10-01-2019 st/09:00 et/18:00` OR +
 `ea t/roadshow sd/01-01-2019 ed/10-01-2019 st/09:00 et/18:00` +
-Event starting from 1 Jan 2019 1000 and ending at 10 Jan 2019 1800 appears at the specified time period in Calendar.
+Entry starting from 1 Jan 2019 1000 and ending at 10 Jan 2019 1800 appears at the specified time period in Calendar.
 
 
-=== editing entries in Calendar Entry list : `entryedit` `Coming in V1.5`
+=== editing entries in calendar entry list : `entryedit` `Coming in V1.5`
 
 Edits an existing entry in the Calendar entry List. +
 Format: `entryedit e/ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` +
 Alias: `ee e/ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` +
 
 ****
-* Edits the entry at specified ENTRY_INDEX. The index refers to the index number shown in the last event listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the entry at specified ENTRY_INDEX. The index refers to the index number shown in the last entry listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 ****
 
 Examples:
 
-* `eventedit e/1 t/meet with bosses et/1400` OR +
+* `entryedit e/1 t/meet with bosses et/1400` OR +
 `ee e/1 t/meet with bosses et/1400` +
-Edits title and end time of 1st event in Event list to "meet with bosses" and 1400 respectively. +
+Edits title and end time of 1st entry in entry list to "meet with bosses" and 1400 respectively. +
 Changes reflect on the Calendar.
 
-* `eventedit e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800` OR +
+* `entryedit e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800` OR +
 `ee e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800` +
-Edits starting date and time, ending date and time of the 3rd event in Event list.
+Edits starting date and time, ending date and time of the 3rd entry in entry list.
 
-=== Deleting events in Calendar entry list : `entrydelete` `Since V1.4`
+=== Deleting entries in calendar entry list : `entrydelete` `Since V1.4`
 
 Deletes an existing entry in Calendar entry list. +
-Format: `entrydelete EVENT_INDEX` +
-Alias: `ed EVENT_INDEX` +
+Format: `entrydelete ENTRY_INDEX` +
+Alias: `ed ENTRY_INDEX` +
 
 ****
-* Deletes entry at specified EVENT_INDEX of Event list.
+* Deletes entry at specified ENTRY_INDEX of entry list.
 * The index refers to index number shown in the most recent entry listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -518,7 +550,7 @@ Examples:
 
 * `entrydelete 1` OR +
 `ed 1` +
-Deletes the entry at index 1 of most recent event listing. +
+Deletes the entry at index 1 of most recent entry listing. +
 Entry is removed from the Calendar.
 
 === Listing all calendar entries : `entrylist` `Since V1.4`
@@ -527,10 +559,10 @@ Shows a list of all calendar entries in the address book. +
 Format: `entrylist` +
 Alias: `el`
 
-=== Clearing all entries in Event List : `eventclear` `coming in v1.5`
+=== Clearing all entries in entryList : `entryclear` `coming in v1.5`
 
-Clears all event list entries from the address book. +
-Format: `eventclear` +
+Clears all entry list entries from the address book. +
+Format: `entryclear` +
 Alias: `ec`
 
 === Clearing all entries : `clear`
@@ -629,26 +661,30 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [g/GROUP]... [pr/PREFERENCE]...` +
+* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [g/GROUP]... [pr/PREFERENCE]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 g/friend g/colleague pr/computers`
-* *EventAdd `coming in v1.5`* : `eventadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
-e.g. `eventadd t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800`
-* *Calendar [Coming in V1.5]* : `calendar [VIEW_FORMAT]` +
-e.g. `calendar year`
+* *Calendar* : `calendar [VIEW_FORMAT]` +
+e.g. `calendar week`
+* *Calendar Next `coming in v1.5`* : `calendarnext`
+* *Calendar Previous `coming in v1.5`* : `calendarprev`
+* *Calendar Today `coming in v1.5`* : `calendarnow`
 * *Clear* : `clear`
-* *EventListClear `coming in v1.5`* : `eventclear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *EventDelete `coming in v1.5`* : `eventdelete INDEX` +
-e.g. `eventdelete 2`
 * *GroupDelete* : `groupdelete GROUP_NAME` +
 e.g. `groupdelete friends`
 * *PreferenceDelete*: `prefdelete PREFERENCE_NAME` +
 e.g. `prefdelete computers`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [g/GROUP]... [pr/PREFERENCE]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *EventEdit `coming in v1.5`* : `eventedit e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
-e.g. `eventedit e/2 t/meeting with Jason ed/20-20-2020 i/2`
+* *EntryAdd* : `entryadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
+e.g. `entryadd t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800`
+* *EntryEdit `coming in v1.5`* : `entryedit e/ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` +
+e.g. `entryedit e/2 t/meeting with Jason ed/20-20-2020`
+* *EntryDelete* : `entrydelete INDEX` +
+e.g. `entrydelete 2`
+* *EntryList* : `entrylist`
+* *EntryListClear `coming in v1.5`* : `entryclear`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *GroupFind* : `groupfind KEYWORD [MORE_KEYWORDS]` +
@@ -665,6 +701,7 @@ e.g. `orderadd 1 i/NBA 2k18 pr/229.99 q/1 d/11-09-2018`
 e.g. `orderedit 1 pr/15.00 d/05-03-2018`
 * *OrderDelete* : `orderdelete INDEX` +
 e.g. `orderdelete 5`
+* *OrderList* : `orderlist`
 * *History* : `history`
 * *Theme* : `theme THEME_TYPE`
 * *OrderStatus* : `orderstatus INDEX os/ORDER STATUS`
@@ -680,24 +717,28 @@ e.g. `orderdelete 5`
 
 * *Add* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [g/GROUP]... [pr/PREFERENCE]...` +
 e.g. `a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 g/friend g/colleague pr/computers`
-* *EventAdd `coming in v1.5`* : `ea t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME [i/INDEX]...` +
-e.g. `ea t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800`
-* *Calendar `coming in v1.5`* : `cal [VIEW_FORMAT]` +
-e.g. `cal year`
+* *Calendar* : `cal [VIEW_FORMAT]` +
+e.g. `cal week`
+* *Calendar Next `coming in v1.5`* : `calnext`
+* *Calendar Previous `coming in v1.5`* : `calprev`
+* *Calendar Today `coming in v1.5`* : `calnow`
 * *Clear* : `c`
-* *EventListClear `coming in v1.5`* : `elc`
 * *Delete* : `d INDEX` +
 e.g. `d 3`
-* *EventDelete `coming in v1.5`* : `ed INDEX` +
-e.g. `ed 2`
 * *GroupDelete* : `gd GROUP_NAME` +
 e.g. `gd friends`
 * *PreferenceDelete*: `pd PREFERENCE_NAME` +
 e.g. `pd computers`
 * *Edit* : `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [g/GROUP]... [pr/PREFERENCE]...` +
 e.g. `e 2 n/James Lee e/jameslee@example.com`
-* *EventEdit `coming in v1.5`* : `ee e/EVENT_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME] [i/INDEX]...` +
-e.g. `ee e/2 t/meeting with Jason ed/20-20-2020 i/2`
+* *EntryAdd* : `ea t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
+e.g. `ea t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800`
+* *EntryEdit `coming in v1.5`* : `ee e/ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` +
+e.g. `ee e/2 t/meeting with Jason ed/20-20-2020`
+* *EntryDelete* : `ed INDEX` +
+e.g. `ed 2`
+* *EntryList* : `el`
+* *EntryListClear `coming in v1.5`* : `elc`
 * *Find* : `f KEYWORD [MORE_KEYWORDS]` +
 e.g. `f James Jake`
 * *GroupFind* : `gf KEYWORD [MORE_KEYWORDS]` +
@@ -714,6 +755,7 @@ e.g. `oa 1 i/NBA 2k18 pr/229.99 q/1 d/11-09-2018`
 e.g. `oe 1 pr/15.00 d/05-03-2018`
 * *OrderDelete* : `od INDEX` +
 e.g. `od 5`
+* *OrderList* : `ol`
 * *History* : `h`
 * *Theme* : `t THEME_TYPE`
 * *OrderStatus* : `os INDEX os/ORDER STATUS`

@@ -149,7 +149,6 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [cp/CURRENT_POSITIO
 * Existing values will be updated to the input values.
 * When you edit skills, the existing skills of the person will be removed i.e adding of skills is not cumulative.
 * You can remove all the person's skills by typing `s/` without specifying any skills after it.
->>>>>>> c0dd6b66bf5a8d6b7170dce605a276204d22b39e
 ****
 
 Examples:

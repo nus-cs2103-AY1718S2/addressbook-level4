@@ -187,7 +187,6 @@ a| * At least one of the optional fields must be provided.
 * You can remove all of the pet patient's tags by typing `t/` without specifying any tags after it.
 * OWNER_NRIC must belong to an existing contact.
 
-
 .^| Appointment
 | `edit **-a** INDEX [d/YYYY-MM-DD HH:MM] [r/REMARK] [t/TAG]...`
 a| * At least one of the optional fields must be provided.
@@ -217,7 +216,7 @@ edit -a 3 d/2018-06-04 12:30
 
 {empty} +
 
-=== Find contacts or pet patients: `find` or `f`
+=== Find contacts or pet patients: `find` or `f` `[Since v1.4]`
 
 You can use `find` or `f` to do the following :
 
@@ -230,23 +229,24 @@ You can use `find` or `f` to do the following :
 .^a|Person
 | `find **-o** PREFIX/KEYWORD [MORE KEYWORDS] [MORE PREFIX/MORE KEYWORDS]`
 a| * Currently accepted individual `PREFIX` finding are `n/NAME`, `nr/NRIC`, `t/TAGS`.
-* Accepted combinations are `nr/NRIC t/TAGS` and `n/NAME t/TAGS`.
+* The above `PREFIX` can be used in any combination to find more specific contacts.
 * Pets of displayed contacts will also be displayed.
 
 .^| Pet patient
 | `find **-p** PREFIX/KEYWORD [MORE KEYWORDS] [MORE PREFIX/MORE KEYWORDS]`
 a| * Currently accepted individual `PREFIX` finding are `n/PET_NAME`, `s/SPECIES`, `b/BREED`, `c/COLOR`, `bt/BLOOD_TYPE`, `t/PET_TAGS`.
-* Accepted combinations are `n/PET_NAME s/SPECIES`, `s/SPECIES bt/BLOOD TYPE`, `s/SPECIES c/COLOR`, `s/SPECIES b/BREED c/COLOR`, `s/SPECIES b/BREED c/COLOR bt/BLOODTYPE t/TAGS` and `n/PET_NAME s/SPECIES b/BREED c/COLOR bt/BLOODTYPE t/TAGS`.
+* The above `PREFIX` can be used in any combination to find more specific pet patients.
 * Contacts of displayed pets will also be displayed.
 
 |=====
 {empty} +
 
 ****
-* The search is case insensitive. e.g `alex` will match `Alex`.
-* The order of the keywords does not matter. e.g. `Yeoh Alex` will match `Alex Yeoh`.
-* Only full words will be matched e.g. `Al` will not match `Alex`.
-* Data matching at least one keyword within a prefix will be returned (i.e. `OR` search). e.g. `Alex Yu` will return `Alex Yeoh`, `Bernice Yu`.
+* The search is case insensitive. e.g `-o n/alex` will match `Alex`.
+* The order of the keywords does not matter. e.g. `-o n/Yeoh Alex` will match `Alex Yeoh`.
+* Only full words will be matched e.g. `-o n/Al` will not match `Alex`.
+* Data matching at least one keyword within a prefix will be returned. e.g. `-o n/Alex Yu` will return `Alex Yeoh`, `Bernice Yu`.
+* Only data matching at least one keyword in all prefixes will be returned. e.g. `-o n/Alex Yu nr/S0123456B` will return `Alex Yeoh` with the nric `S0123456B`.
 ****
 {empty} +
 

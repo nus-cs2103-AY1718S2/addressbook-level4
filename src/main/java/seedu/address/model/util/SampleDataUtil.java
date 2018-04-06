@@ -49,7 +49,10 @@ public class SampleDataUtil {
                 getTagSet("owner")),
             new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                 new Address("Blk 45 Aljunied Street 85, #11-31"), new Nric("F0123056T"),
-                getTagSet("owner"))
+                getTagSet("owner")),
+            new Person(new Name("Fuji Syuusuke"), new Phone("90245123"), new Email("fujis@example.com"),
+                    new Address("Blk 106 Bukit Purmei Street 10, #20-20"), new Nric("S9015638A"),
+                    getTagSet("supplier"))
         };
     }
 

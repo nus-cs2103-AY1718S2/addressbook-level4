@@ -4,6 +4,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -77,6 +78,17 @@ public class AddPhotoCommand extends Command {
 
         if (!model.getPhotoList().contains(new Photo(photoNameWithExtension))) {
             copyPhotoFileToStorage(photoNameWithExtension);
+        }
+
+        File folder = new File("C:\\repos\\main\\src\\main\\resources\\images\\personphoto");
+        File[] listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                System.out.println("File " + listOfFiles[i].getName());
+            } else if (listOfFiles[i].isDirectory()) {
+                System.out.println("Directory " + listOfFiles[i].getName());
+            }
         }
 
         Person editedPerson = createEditedPerson(targetPerson, photoNameWithExtension);

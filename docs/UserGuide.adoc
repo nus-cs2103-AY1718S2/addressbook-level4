@@ -74,8 +74,20 @@ Format: `help` or `h`
 
 ==== Logging into the system: `login` or `lg` [since v1.2]
 
-Logs the user into the IMDB with a matching username and password. +
+Opens a window for the user to log into the IMDB with a matching username and password. +
 Format: `login` or `lg`
+
+Examples:
+
+* `login` +
+Username: alice +
+Password: password123 +
+This logs the user in as alice, who is a doctor.
+
+* `login` +
+Username: bob +
+Password: password456 +
+This logs the user in as bob, who is a medical staff.
 
 ==== Listing entered commands : `history` or `hi`
 

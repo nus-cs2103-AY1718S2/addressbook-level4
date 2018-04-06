@@ -89,7 +89,7 @@ public class MainApp extends Application {
      * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
      * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
-     * TODO: if data not found, empty or Sample data?
+     * TODO: if data not found, empty or Sample data
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
@@ -101,9 +101,9 @@ public class MainApp extends Application {
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with an empty AddressBook");
+                logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
-            initialData = new AddressBook();
+            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
             initialData = new AddressBook();

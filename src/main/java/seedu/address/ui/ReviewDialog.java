@@ -36,7 +36,7 @@ public class ReviewDialog {
     public ReviewDialog() {
         dialog = new Dialog<>();
         dialog.setTitle("Review Dialog");
-        dialog.setHeaderText("Review accepts any character except new line and has no length limit.");
+        dialog.setHeaderText("Reviewer must be a valid email address\nReview accepts any characters and has no length limit.");
 
         reviewButtonType = new ButtonType("Review", ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(reviewButtonType, ButtonType.CANCEL);
@@ -47,9 +47,9 @@ public class ReviewDialog {
         grid.setPadding(new Insets(20, 150, 10, 10));
 
         reviewer = new TextField();
-        reviewer.setPromptText("Reviewer");
+        reviewer.setPromptText("Enter your email address here");
         review = new TextArea();
-        review.setPromptText("Review");
+        review.setPromptText("Enter your review here");
 
         grid.add(new Label("Reviewer:"), 0, 0);
         grid.add(reviewer, 1, 0);

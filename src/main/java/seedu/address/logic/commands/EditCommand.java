@@ -27,6 +27,7 @@ import seedu.address.model.person.DisplayPic;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MatriculationNumber;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Participation;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -87,6 +88,12 @@ public class EditCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
+        if (!personToEdit.getDisplayPic().equals(editedPerson.getDisplayPic())) {
+            if (!personToEdit.getDisplayPic().isDefault()) {
+                model.addDeleteItem(personToEdit.getDisplayPic().toString());
+                model.addDeleteItem(editedPerson.getDisplayPic().toString());
+            }
+        }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
@@ -117,23 +124,22 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         DisplayPic updatedDisplay = editPersonDescriptor.getDisplayPic().orElse(personToEdit.getDisplayPic());
-        try {
-            if (personToEdit.getDisplayPic().isDefault()) {
+        if (!updatedDisplay.equals(personToEdit.getDisplayPic())) {
+            try {
                 updatedDisplay.saveDisplay(updatedName.toString() + updatedPhone.toString()
                         + updatedEmail.toString());
                 updatedDisplay.updateDisplay(updatedName.toString() + updatedPhone.toString()
                         + updatedEmail.toString());
-            } else {
-                updatedDisplay.saveDisplay(personToEdit.getDisplayPic().toString());
-                updatedDisplay.updateDisplay(personToEdit.getDisplayPic().toString());
+
+            } catch (IllegalValueException ive) {
+                updatedDisplay.updateToDefault();
             }
-        } catch (IllegalValueException ive) {
-            updatedDisplay.updateToDefault();
         }
+        Participation updatedPart = editPersonDescriptor.getParticipation().orElse(personToEdit.getParticipation());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedMatricNumber, updatedPhone, updatedEmail, updatedAddress, updatedDisplay,
-                updatedTags);
+                updatedPart, updatedTags);
     }
 
     @Override
@@ -166,6 +172,7 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private DisplayPic displayPic;
+        private Participation participation;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -181,6 +188,7 @@ public class EditCommand extends UndoableCommand {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setDisplayPic(toCopy.displayPic);
+            setParticipation(toCopy.participation);
             setTags(toCopy.tags);
         }
 
@@ -238,6 +246,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<DisplayPic> getDisplayPic() {
             return Optional.ofNullable(displayPic);
+        }
+
+        public void setParticipation(Participation participation) {
+            this.participation = participation;
+        }
+
+        public Optional<Participation> getParticipation() {
+            return Optional.ofNullable(participation);
         }
 
         /**

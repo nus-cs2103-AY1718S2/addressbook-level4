@@ -9,6 +9,7 @@
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
         <displayPic>/images/displayPic/default.png</displayPic>
+        <participation>0</participation>
         <tagged>friends</tagged>
     </persons>
     <persons>
@@ -18,6 +19,7 @@
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
         <displayPic>/images/displayPic/default.png</displayPic>
+        <participation>0</participation>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </persons>
@@ -28,6 +30,7 @@
         <email>heinz@example.com</email>
         <address>wall street</address>
         <displayPic>/images/displayPic/default.png</displayPic>
+        <participation>0</participation>
     </persons>
     <persons>
         <name>Daniel Meier</name>
@@ -36,6 +39,7 @@
         <email>cornelia@example.com</email>
         <address>10th street</address>
         <displayPic>/images/displayPic/default.png</displayPic>
+        <participation>0</participation>
     </persons>
     <persons>
         <name>Elle Meyer</name>
@@ -44,6 +48,7 @@
         <email>werner@example.com</email>
         <address>michegan ave</address>
         <displayPic>/images/displayPic/default.png</displayPic>
+        <participation>0</participation>
     </persons>
     <persons>
         <name>Fiona Kunz</name>
@@ -52,6 +57,7 @@
         <email>lydia@example.com</email>
         <address>little tokyo</address>
         <displayPic>/images/displayPic/default.png</displayPic>
+        <participation>0</participation>
     </persons>
     <persons>
         <name>George Best</name>
@@ -60,6 +66,7 @@
         <email>anna@example.com</email>
         <address>4th street</address>
         <displayPic>/images/displayPic/default.png</displayPic>
+        <participation>0</participation>
     </persons>
     <tags>friends</tags>
     <tags>owesMoney</tags>

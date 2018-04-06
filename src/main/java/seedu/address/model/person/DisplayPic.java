@@ -12,6 +12,7 @@ import seedu.address.storage.DisplayPicStorage;
 /**
  * Represents the filepath of a Person's displayPic in the address book.
  */
+//@@author Alaru
 public class DisplayPic {
 
     public static final String DEFAULT_DISPLAY_PIC = "/images/displayPic/default.png";
@@ -53,13 +54,13 @@ public class DisplayPic {
     /**
      * Saves the display picture to the specified storage location.
      */
-    public boolean saveDisplay(String personDetails) throws IllegalValueException {
+    public void saveDisplay(String personDetails) throws IllegalValueException {
         if (originalPath.equals(value)) {
-            return true;
+            return;
         }
         String fileType = FileUtil.getFileType(originalPath);
-        String uniqueFileName = NamingUtil.generateUniqueName(personDetails);
-        return DisplayPicStorage.saveDisplayPic(uniqueFileName, originalPath, fileType);
+        String uniqueFileName = DisplayPicStorage.saveDisplayPic(personDetails, originalPath, fileType);
+        this.value = DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType;
     }
 
     public void updateToDefault() {
@@ -71,17 +72,14 @@ public class DisplayPic {
      * @param personDetails are the details to hash to ensure a unique value
      */
     public void updateDisplay(String personDetails) {
-        if (!this.value.equals(DEFAULT_DISPLAY_PIC)) {
-            String uniqueFileName = NamingUtil.generateUniqueName(personDetails);
-            try {
-                String fileType = FileUtil.getFileType(value);
-                DisplayPicStorage.saveDisplayPic(uniqueFileName, value, fileType);
-                //mark for delete the old photo(value) here
-                this.value = DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType;
-            } catch (IllegalValueException ive) {
-                assert false;
-            }
+        try {
+            String fileType = FileUtil.getFileType(value);
+            String uniqueFileName = DisplayPicStorage.saveDisplayPic(personDetails, value, fileType);
+            this.value = DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType;
+        } catch (IllegalValueException ive) {
+            assert false;
         }
+
     }
 
     public boolean isDefault() {

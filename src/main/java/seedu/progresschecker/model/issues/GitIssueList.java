@@ -62,6 +62,9 @@ public class GitIssueList implements Iterable<Issue> {
     private void authoriseGithub () throws CommandException {
         try {
             github = GitHub.connectUsingPassword(userLogin, userAuthentication);
+            if (!github.isCredentialValid()) {
+                throw new IOException();
+            }
         } catch (IOException ie) {
             throw new CommandException("Enter correct username and password");
         }

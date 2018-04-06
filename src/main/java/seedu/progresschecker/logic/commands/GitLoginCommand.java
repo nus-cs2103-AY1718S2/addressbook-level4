@@ -28,7 +28,7 @@ public class GitLoginCommand extends Command {
             + "Parameters: "
             + PREFIX_GIT_USERNAME + "USERNAME "
             + PREFIX_GIT_PASSCODE + "PASSCODE "
-            + PREFIX_GIT_REPO + "REPOSITORY "
+            + PREFIX_GIT_REPO + "REPOSITORY \n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_GIT_USERNAME + "johndoe "
             + PREFIX_GIT_PASSCODE + "dummy123 "

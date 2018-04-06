@@ -75,7 +75,9 @@ public class AddPhotoCommand extends Command {
 
         String photoNameWithExtension = path.substring(path.lastIndexOf("\\") + 1);
 
-        copyPhotoFileToStorage(photoNameWithExtension);
+        if (!model.getPhotoList().contains(new Photo(photoNameWithExtension))) {
+            copyPhotoFileToStorage(photoNameWithExtension);
+        }
 
         Person editedPerson = createEditedPerson(targetPerson, photoNameWithExtension);
 

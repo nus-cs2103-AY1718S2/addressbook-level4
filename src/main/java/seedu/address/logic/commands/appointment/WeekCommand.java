@@ -36,7 +36,11 @@ public class WeekCommand extends Command {
     @Override
     public CommandResult execute() {
         EventsCenter.getInstance().post(new ShowWeekRequestEvent(year, week));
-        return new CommandResult(String.format(MESSAGE_SUCCESS, week + " " + year));
+        if (year != null) {
+            return new CommandResult(String.format(MESSAGE_SUCCESS, week + " of " + year));
+        } else {
+            return new CommandResult(String.format(MESSAGE_SUCCESS, ""));
+        }
     }
 
     @Override

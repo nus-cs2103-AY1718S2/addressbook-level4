@@ -56,10 +56,11 @@ public class MainWindowHandle extends StageHandle {
         return calendarPanel;
     }
 
-    //@@author Robert-Peng
+
     public PetPatientListPanelHandle getPetPatientListPanel() {
         return petPatientListPanel;
     }
+    //@@author []
 
     //public BrowserPanelHandle getBrowserPanel() {
     //    return browserPanel;

@@ -183,6 +183,7 @@ Format: `edit INDEX [n/NAME] [m/MATRICULATION NUMBER] [p/PHONE] [e/EMAIL] [a/ADD
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+* Replaced display pictures will be removed from storage upon the next start up of Your TA.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
@@ -237,14 +238,14 @@ Emails the 1st person in the results of the `find` command, in this case, Betsy.
 
 === Adding Participation Marks : `markPart`
 
-Adds to the participation marks of a person. The maximum limit for participation marks is 100.
+Adds to the participation marks of a person. The maximum limit for participation marks is 100
+and the maximum amount that can be added with one execution of the command is 100.
 
 Format: `markPart INDEX marks/DIGITS`
 
 ****
-* Adds to the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* between 0 and 100 inclusive.
+* The marks to be added *must be a positive integer* between 0 and 100 inclusive.
 ****
 
 Examples:
@@ -290,6 +291,9 @@ image::FirstDelete.png[width="800"]
 Command(s) entered: +
 `find Betsy`,`delete 1`: +
 The 1st person in the results of the `find` command is deleted, in this case, Betsy is deleted (Figure 15).
+
+[NOTE]
+The display picture that is stored on your hard disk will only be removed upon the next start up of Your TA.
 
 .1st Person from `find` Command Deleted. +
 image::SecondDelete.png[width="800"]
@@ -423,7 +427,7 @@ Examples:
 Command entered: +
 `import ~/download/NewData.xml`
 
-=== Sorting all entries : `sort` `[coming in v2.0]`
+=== Sorting all entries : `sort`
 
 Sorts all entries from the address book in alphabetical order based on name. +
 Alias: `s` +
@@ -453,17 +457,11 @@ image::UiInitial.png[width="800"]
 
 Command entered: +
 `addTask desc/Grade mid-terms by/04-04-2018 priority/2`: +
-This will add a task, 'Grade mid-terms' into the list with his respective details into the application (Figure ).
-
-.Application after first task has been added +
-image::AfterFirstTask.png[width="800"]
+This will add a task, 'Grade mid-terms' into the list with his respective details into the application.
 
 Command entered: +
 `addTask desc/Submit tutorial attendance by/05-04-2018 priority/3`: +
-This will add a task, 'Submit tutorial attendance' into the calendar and to-do list with the respective details into the application (Figure ).
-
-.Application after second task has been added +
-image::AfterSecondTask.png[width="800"]
+This will add a task, 'Submit tutorial attendance' into the calendar and to-do list with the respective details into the application.
 
 === Editing a task: `editTask`
 

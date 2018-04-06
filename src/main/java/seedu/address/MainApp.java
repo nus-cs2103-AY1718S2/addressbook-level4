@@ -83,7 +83,7 @@ public class MainApp extends Application {
      * runs the initialising sequence.
      */
     private void runInitSequence() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing Your TA ]===========================");
         super.init();
 
         config = initConfig(getApplicationParameter("config"));

@@ -16,8 +16,7 @@ endif::[]
 By: `Huat Ah Finance Pte Ltd`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
-[NOTE]
-====
+
 If you:
 
 * are a 21st Century modern loan shark boss,
@@ -27,7 +26,7 @@ If you:
 
 LoanShark Tycoon can get your operations management tasks done faster than traditional GUI apps. Interested? Jump to <<Quick Start>> to get
 started. Enjoy!
-====
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -62,7 +61,6 @@ The various menu items have keyboard shortcuts that can be used to speed up your
 is specified when adding a customer.
 
 == Command Summary
-
 [NOTE]
 ====
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n: NAME`, `NAME` is a parameter which can be used as `add n: John Doe`.
@@ -413,13 +411,18 @@ _Assigns customer at `INDEX2` to Runner at `INDEX1` based on the last shown list
 How do I transfer my data to another Computer?::
 Install the app in the other computer and overwrite the empty data file it creates with the file that contains
 the data of your previous Address Book folder. By default, the path for the data file is "data/addressbook.xml".
+
 How do I save my data?::
 The state of the database is saved in the hard disk automatically after any command that changes the data.
 Therefore, there is no need to save manually.
+
 How can I report a bug or suggest improvements to this application?::
 Open an issue https://github.com/CS2103JAN2018-F12-B4/main/issues[here]! We would love to hear your feedback.
+
 What if I am a law enforcement officer?::
 Huat Ah Finance Pte Ltd takes no responsibility for the actions of its users.
 We just like to make software that makes a different to the world! :)
+
 What if I am not a loan shark boss yet?::
 Work hard and collect more protection money! Maybe one day you'll make it! ;)
+//@@author

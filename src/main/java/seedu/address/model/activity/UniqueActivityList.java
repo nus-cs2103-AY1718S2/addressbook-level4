@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,6 +12,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
+import seedu.address.model.util.DateTimeComparator;
 
 
 /**
@@ -27,13 +27,7 @@ import seedu.address.model.activity.exceptions.DuplicateActivityException;
 public class UniqueActivityList implements Iterable<Activity> {
 
     //@@author karenfrilya97
-    private static Comparator<Activity> dateTimeComparator = new Comparator<Activity>() {
-        public int compare (Activity o1, Activity o2) {
-            DateTime dt1 = o1.getDateTime();
-            DateTime dt2 = o2.getDateTime();
-            return dt1.getLocalDateTime().compareTo(dt2.getLocalDateTime());
-        }
-    };
+    private static DateTimeComparator dateTimeComparator = new DateTimeComparator();
 
     private final ObservableList<Activity> internalList = FXCollections.observableArrayList();
 

@@ -48,6 +48,28 @@ public class HelpCommandTest {
         assertCommandSuccess(command, CompleteCommand.MESSAGE_USAGE);;
     }
 
+    //@@author Kyomian
+    @Test
+    public void execute_helpForHelp_success() {
+        HelpCommand command = new HelpCommand("help");
+        assertCommandSuccess(command, HelpCommand.MESSAGE_USAGE);
+    }
+
+    @Test
+    public void execute_helpForMan_success() {
+        HelpCommand command = new HelpCommand("man");
+        assertCommandSuccess(command, HelpCommand.MESSAGE_USAGE);
+    }
+
+    @Test
+    public void execute_helpForList_success() {
+        HelpCommand command = new HelpCommand("list");
+        assertCommandSuccess(command, ListCommand.MESSAGE_USAGE);
+
+        command = new HelpCommand("ls");
+        assertCommandSuccess(command, ListCommand.MESSAGE_USAGE);
+    }
+
     @Test
     public void execute_invalidArgs_throwsCommandException()   {
         HelpCommand command = new HelpCommand("hello");

@@ -30,7 +30,7 @@ public interface Storage extends OrganizerStorage, UserPrefsStorage {
     void saveOrganizer(ReadOnlyOrganizer organizer) throws IOException;
 
     /**
-     * Saves the current version of the Address Book to the hard disk.
+     * Saves the current version of the Organizer to the hard disk.
      *   Creates the data file if it is missing.
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */

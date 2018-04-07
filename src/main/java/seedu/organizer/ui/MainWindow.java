@@ -1,5 +1,8 @@
 package seedu.organizer.ui;
 
+import static seedu.organizer.commons.core.GuiSettings.DEFAULT_HEIGHT;
+import static seedu.organizer.commons.core.GuiSettings.DEFAULT_WIDTH;
+
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -69,6 +72,7 @@ public class MainWindow extends UiPart<Stage> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
+        setWindowDefaultCoordinates(prefs);
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -141,17 +145,40 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.setTitle(appTitle);
     }
 
+    //@@author dominickenn
     /**
      * Sets the default size based on user preferences.
      */
     private void setWindowDefaultSize(UserPrefs prefs) {
-        primaryStage.setHeight(prefs.getGuiSettings().getWindowHeight());
-        primaryStage.setWidth(prefs.getGuiSettings().getWindowWidth());
+        double userPrefHeight = prefs.getGuiSettings().getWindowHeight();
+        double userPrefWidth = prefs.getGuiSettings().getWindowWidth();
+
+        primaryStage.setHeight(userPrefHeight < DEFAULT_HEIGHT ? DEFAULT_HEIGHT : userPrefHeight);
+        primaryStage.setWidth(userPrefWidth < DEFAULT_WIDTH ? DEFAULT_WIDTH : userPrefWidth);
+    }
+    //@@author
+
+    //@@author dominickenn
+    /**
+     * Sets the default position based on user preferences
+     * If window was minimized during closure in previous session, set screen to center
+     */
+    private void setWindowDefaultCoordinates(UserPrefs prefs) {
+        double xCoordinate;
+        double yCoordinate;
+
         if (prefs.getGuiSettings().getWindowCoordinates() != null) {
-            primaryStage.setX(prefs.getGuiSettings().getWindowCoordinates().getX());
-            primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
+            xCoordinate = prefs.getGuiSettings().getWindowCoordinates().getX();
+            yCoordinate = prefs.getGuiSettings().getWindowCoordinates().getY();
+            if (xCoordinate < 0 && yCoordinate < 0) { // If window was minimized
+                primaryStage.centerOnScreen();
+            } else {
+                primaryStage.setX(xCoordinate);
+                primaryStage.setY(yCoordinate);
+            }
         }
     }
+    //@@author
 
     /**
      * Returns the current size and the position of the main Window.

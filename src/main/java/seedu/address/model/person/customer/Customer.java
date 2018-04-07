@@ -23,7 +23,7 @@ public class Customer extends Person {
     private final Date oweDueDate;
     private final StandardInterest standardInterest; //in percent
     private final LateInterest lateInterest; //in percent
-    private final Runner runner;
+    private final Person runner;
 
     /**
      * customer constructor
@@ -41,7 +41,7 @@ public class Customer extends Person {
 
     public Customer(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
                     MoneyBorrowed moneyBorrowed, Date oweStartDate, Date oweDueDate, StandardInterest
-                            standardInterest, LateInterest lateInterest, Runner runner) {
+                            standardInterest, LateInterest lateInterest, Person runner) {
         super(name, phone, email, address, tags);
         this.setType(PersonType.CUSTOMER);
         this.moneyBorrowed = moneyBorrowed;
@@ -72,7 +72,7 @@ public class Customer extends Person {
         return lateInterest;
     }
 
-    public Runner getRunner() {
+    public Person getRunner() {
         return runner;
     }
 

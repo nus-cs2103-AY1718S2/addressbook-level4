@@ -139,7 +139,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
                     .orElse(((Customer) personToEdit).getStandardInterest());
             LateInterest lateInterest = editPersonDescriptor.getLateInterest().orElse(((Customer) personToEdit)
                     .getLateInterest());
-            Runner runner = editPersonDescriptor.getRunner().orElse(((Customer) personToEdit)
+            Person runner = editPersonDescriptor.getRunner().orElse(((Customer) personToEdit)
                     .getRunner());
 
             return new Customer(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, moneyBorrowed,
@@ -217,7 +217,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
         private Date oweDueDate;
         private StandardInterest standardInterest;
         private LateInterest lateInterest;
-        private Runner runner;
+        private Person runner;
 
         //Runner fields
         private List<Person> customers;
@@ -317,10 +317,10 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
             return Optional.ofNullable(lateInterest);
         }
 
-        public void setRunner(Runner runner) {
+        public void setRunner(Person runner) {
             this.runner = runner;
         }
-        public Optional<Runner> getRunner() {
+        public Optional<Person> getRunner() {
             return Optional.ofNullable(runner);
         }
 

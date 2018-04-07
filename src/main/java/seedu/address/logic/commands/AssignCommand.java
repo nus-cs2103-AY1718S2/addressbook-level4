@@ -46,8 +46,8 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": assigns customers to a runner "
             + "by the index number used in the last person listing.\n"
             + "Parameters: RUNNER-INDEX (positive integer) "
-            + PREFIX_CUSTOMERS + " CUSTOMER INDEX (positive integer) "
-            + "[ CUSTOMER 2 INDEX...]\n"
+            + PREFIX_CUSTOMERS + " CUSTOMER-INDEX (positive integer) "
+            + "[ CUSTOMER-2-INDEX...]\n"
             + "Example: " + COMMAND_WORD + " 5 " + PREFIX_CUSTOMERS + " 2 ";
 
     public static final String MESSAGE_ASSIGN_PERSON_SUCCESS = "Successfully assigned!\nUpdated Runner Info:\n%1$s";
@@ -88,13 +88,14 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
+            deletePrevRunnerCustomer();
             model.updatePerson(personToEdit, editedPerson);
-
             int i = 0;
             for (Person c : newCustomers) {
                 model.updatePerson(c, updatedCustomers.get(i));
                 i++;
             }
+
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
@@ -119,10 +120,49 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         }
         //NOTE: it is important to call these methods in this order so that the appropriate resources are generated
         generateNewCustomerList();
-        updateCustDescWithAssignedRunner();
+        generateCustDescWithAssignedRunner();
         generateUpdatedCustomerList();
         makeEditRunnerDescriptorFromUpdatedCustList(); //modifies editRunnerDescriptor
         editedPerson = createEditedPerson(personToEdit, editRunnerDescriptor);
+    }
+
+    /**
+     * Since each Customer should only have 1 Runner, if the customer had a runner previously assigned, then that
+     * previous runner should have its association with this customer removed. The customer will now only be associated
+     * with the newly assigned runner.
+     */
+    private void deletePrevRunnerCustomer() throws CommandException, PersonNotFoundException,
+            DuplicatePersonException {
+        List<Person> pl = model.getAddressBook().getPersonList();
+        //List<Person> allCustomers = new ArrayList<>();
+        //allCustomers.addAll(oldCustomers);
+        //allCustomers.addAll(newCustomers);
+        for (Person c : newCustomers) {
+            Person r = ((Customer) c).getRunner(); //not getting a runner from pl but an incomplete copy
+            int indexOfActualPerson = pl.indexOf(r);
+
+            if (indexOfActualPerson >= 0) {
+                //the conditional check is necessary so that I'm only modifying valid existing runners
+
+                Person actualRunner =  pl.get(indexOfActualPerson); //getting the actual complete runner from pl
+
+                //generate editPersonDescriptor with c removed from runner's customer list
+                EditPersonDescriptor runnerDescWCustRemoved = new EditPersonDescriptor();
+
+                runnerDescWCustRemoved.setName(actualRunner.getName());
+                runnerDescWCustRemoved.setPhone(actualRunner.getPhone());
+                runnerDescWCustRemoved.setEmail(actualRunner.getEmail());
+                runnerDescWCustRemoved.setAddress(actualRunner.getAddress());
+                runnerDescWCustRemoved.setTags(actualRunner.getTags());
+
+                List<Person> newList = ((Runner) actualRunner).getCustomers();
+                newList.remove(c);
+                runnerDescWCustRemoved.setCustomers(newList);
+
+                Person editedPrevRunner = createEditedPerson((Runner) actualRunner, runnerDescWCustRemoved);
+                model.updatePerson(actualRunner, editedPrevRunner);
+            }
+        }
     }
 
     /**
@@ -176,7 +216,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
                 throw new CommandException("invalid customer index");
             }
             if (oldCustomers.indexOf(p) >= 0) {
-                throw new CommandException(String.format("customer at index %d, already assigned to runner",
+                throw new CommandException(String.format("one or more customers already assigned to runner",
                         index.getOneBased()));
             }
             if (newCustomers.indexOf(p) >= 0) {
@@ -191,7 +231,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
      * This helper method is meant to be called in executeUndoableCommand().
      * references to each other.
      */
-    private void updateCustDescWithAssignedRunner() {
+    private void generateCustDescWithAssignedRunner() {
         List<Person> lastShownList = model.getFilteredPersonList();
         Person runnerToBeEdited = lastShownList.get(runnerIndex.getZeroBased());
         assert (runnerToBeEdited instanceof Runner);
@@ -244,7 +284,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
                     .orElse(((Customer) personToEdit).getStandardInterest());
             LateInterest lateInterest = editPersonDescriptor.getLateInterest().orElse(((Customer) personToEdit)
                     .getLateInterest());
-            Runner runner = editPersonDescriptor.getRunner().orElse(((Customer) personToEdit)
+            Person runner = editPersonDescriptor.getRunner().orElse(((Customer) personToEdit)
                     .getRunner());
 
             return new Customer(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, moneyBorrowed,
@@ -329,7 +369,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         private Date oweDueDate;
         private StandardInterest standardInterest;
         private LateInterest lateInterest;
-        private Runner runner;
+        private Person runner;
 
         //Runner fields
         private List<Person> customers;
@@ -429,10 +469,10 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
             return Optional.ofNullable(lateInterest);
         }
 
-        public void setRunner(Runner runner) {
+        public void setRunner(Person runner) {
             this.runner = runner;
         }
-        public Optional<Runner> getRunner() {
+        public Optional<Person> getRunner() {
             return Optional.ofNullable(runner);
         }
 

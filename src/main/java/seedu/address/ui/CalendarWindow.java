@@ -12,10 +12,14 @@ import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
 import com.calendarfx.view.CalendarView;
 
+import com.google.common.eventbus.Subscribe;
+
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 //import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
+import seedu.address.commons.events.ui.ChangeCalendarViewEvent;
 import seedu.address.model.appointment.Appointment;
 
 
@@ -125,6 +129,36 @@ public class CalendarWindow extends UiPart<Region> {
         calendarView.setShowPrintButton(false);
         calendarView.setShowSourceTrayButton(false);
         calendarView.showDayPage();
+    }
+
+    /**
+     *To switch between CalendarView displays
+     * @param character
+     */
+    private void switchViews(Character character) {
+        switch (character) {
+        case('d'):
+            calendarView.showDayPage();
+            return;
+        case('w'):
+            calendarView.showWeekPage();
+            return;
+        case('m'):
+            calendarView.showMonthPage();
+            return;
+        case('y'):
+            calendarView.showYearPage();
+            return;
+        default:
+            throw new AssertionError("Wrong showPage input");
+        }
+
+    }
+
+    @Subscribe
+    private void handleCalendarViewEvent(ChangeCalendarViewEvent event) {
+        Character character = event.character;
+        Platform.runLater(() -> switchViews(character));
     }
 
     public CalendarView getRoot() {

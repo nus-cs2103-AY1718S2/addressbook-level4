@@ -12,10 +12,14 @@ import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
 import com.calendarfx.view.CalendarView;
 
+import com.google.common.eventbus.Subscribe;
+
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 //import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
+import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.appointment.Appointment;
 
 
@@ -88,7 +92,10 @@ public class CalendarWindow extends UiPart<Region> {
             calendarSource.getCalendars().add(calendar);
 
             LocalDateTime ldt = appointment.getDateTime();
-            Entry entry = new Entry (++appointmentCounter + ". " + appointment.getPetPatientName().toString());
+            appointmentCounter++;
+
+            Entry entry = new Entry (buildAppointment(appointment, appointmentCounter).toString());
+
             entry.setInterval(new Interval(ldt, ldt.plusMinutes(30)));
 
             styleNumber++;
@@ -98,6 +105,25 @@ public class CalendarWindow extends UiPart<Region> {
 
         }
         calendarView.getCalendarSources().add(calendarSource);
+    }
+
+    /**
+     *
+     * @param appointment
+     * @param appointmentCounter
+     * @return
+     */
+    private StringBuilder buildAppointment (Appointment appointment, int appointmentCounter) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(appointmentCounter)
+            .append(". ")
+            //.append(appointment.getPetPatientName().toString())
+            // .append(" (")
+            .append(appointment.getOwnerNric() + " ");
+        //.append(") ");
+        appointment.getAppointmentTags().forEach(builder::append);
+        //builder.append(appointment.getRemark().toString());
+        return builder;
     }
 
     /**
@@ -131,7 +157,14 @@ public class CalendarWindow extends UiPart<Region> {
         return this.calendarView;
     }
 
+    @Subscribe
+    private void handleNewAppointmentEvent(AddressBookChangedEvent event) {
+        appointmentList = event.data.getAppointmentList();
+        Platform.runLater(
+            this::setCalendar
+        );
 
+    }
 
 }
 

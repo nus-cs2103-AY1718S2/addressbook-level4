@@ -14,6 +14,7 @@ import seedu.address.commons.events.ui.ShowStudentDashboardEvent;
 import seedu.address.commons.events.ui.ShowStudentNameInDashboardEvent;
 import seedu.address.commons.events.ui.StudentPanelSelectionChangedEvent;
 
+//@@author yapni
 /**
  * Panel that contains the browser panel and the dashboard panel
  */

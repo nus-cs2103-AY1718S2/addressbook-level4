@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.programminglanguage.ProgrammingLanguage;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Email;
@@ -11,6 +12,14 @@ import seedu.address.model.student.Name;
 import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.UniqueKey;
+import seedu.address.model.student.dashboard.Dashboard;
+import seedu.address.model.student.dashboard.Milestone;
+import seedu.address.model.student.dashboard.Progress;
+import seedu.address.model.student.dashboard.Task;
+import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneException;
+import seedu.address.model.student.dashboard.exceptions.DuplicateTaskException;
+import seedu.address.model.student.dashboard.exceptions.MilestoneNotFoundException;
+import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -27,6 +36,7 @@ public class StudentBuilder {
     public static final String DEFAULT_PROGRAMMING_LANGUAGE = "Java";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_FAVOURITE = "false";
+    public static final String DEFAULT_PATH = "/src/main/resources/view/images/profile_photo_placeholder";
 
     private UniqueKey key;
     private Name name;
@@ -36,6 +46,8 @@ public class StudentBuilder {
     private ProgrammingLanguage programmingLanguage;
     private Set<Tag> tags;
     private Favourite favourite;
+    private Dashboard dashboard;
+    private ProfilePicturePath profilePicturePath;
 
     public StudentBuilder() {
         key = new UniqueKey(DEFAULT_KEY);
@@ -46,6 +58,8 @@ public class StudentBuilder {
         programmingLanguage = new ProgrammingLanguage(DEFAULT_PROGRAMMING_LANGUAGE);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
         favourite = new Favourite(DEFAULT_FAVOURITE);
+        dashboard = new Dashboard();
+        profilePicturePath = new ProfilePicturePath(ProfilePicturePath.DEFAULT_PROFILE_PICTURE);
     }
 
     /**
@@ -60,6 +74,8 @@ public class StudentBuilder {
         programmingLanguage = studentToCopy.getProgrammingLanguage();
         tags = new HashSet<>(studentToCopy.getTags());
         favourite = studentToCopy.getFavourite();
+        dashboard = studentToCopy.getDashboard();
+        profilePicturePath = studentToCopy.getProfilePicturePath();
     }
 
     /**
@@ -126,8 +142,41 @@ public class StudentBuilder {
         return this;
     }
 
-    public Student build() {
-        return new Student(key, name, phone, email, address, programmingLanguage, tags, favourite);
+    /**
+     * Adds a new {@code milestone} to the {@code dashboard} of the {@code Student} that we are building.
+     *
+     * @throws DuplicateMilestoneException if the new milestone is a duplicate of an existing milestone
+     */
+    public StudentBuilder withNewMilestone(Milestone milestone) throws DuplicateMilestoneException {
+        dashboard.getMilestoneList().add(milestone);
+        return this;
     }
 
+    /**
+     * Adds a new {@code task} to the specified milestone in the {@code dashboard}
+     * of the {@code Student} we are building.
+     *
+     * @throws DuplicateTaskException if the new task is a duplicate of an existing task
+     */
+    public StudentBuilder withNewTask(Index milestoneIndex, Task task) throws DuplicateTaskException,
+            DuplicateMilestoneException, MilestoneNotFoundException {
+        Milestone milestone = dashboard.getMilestoneList().get(milestoneIndex);
+
+        milestone.getTaskList().add(task);
+        Progress updatedProgress = new Progress(milestone.getProgress().getTotalTasks() + 1,
+                milestone.getProgress().getNumCompletedTasks());
+        Milestone updatedMilestone = new Milestone(milestone.getDueDate(), milestone.getTaskList(),
+                updatedProgress, milestone.getDescription());
+        dashboard.getMilestoneList().setMilestone(milestone, updatedMilestone);
+
+        return this;
+    }
+
+    /**
+     * Builds the student with given attributes
+     */
+    public Student build() {
+        return new Student(key, name, phone, email, address, programmingLanguage, tags,
+                favourite, dashboard, profilePicturePath);
+    }
 }

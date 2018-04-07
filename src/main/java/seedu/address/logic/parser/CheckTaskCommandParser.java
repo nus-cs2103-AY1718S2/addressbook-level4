@@ -6,13 +6,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MILESTONE_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK_INDEX;
 
-import java.util.stream.Stream;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.CheckTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author yapni
 /**
  * Parses input arguments and create a new CheckTaskCommand object
  */
@@ -30,7 +29,7 @@ public class CheckTaskCommandParser implements Parser<CheckTaskCommand> {
         ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args,
                 PREFIX_INDEX, PREFIX_MILESTONE_INDEX, PREFIX_TASK_INDEX);
 
-        if (!arePrefixesPresent(argMultiMap, PREFIX_INDEX, PREFIX_MILESTONE_INDEX, PREFIX_TASK_INDEX)
+        if (!argMultiMap.arePrefixesPresent(PREFIX_INDEX, PREFIX_MILESTONE_INDEX, PREFIX_TASK_INDEX)
                 || !argMultiMap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CheckTaskCommand.MESSAGE_USAGE));
         }
@@ -44,13 +43,5 @@ public class CheckTaskCommandParser implements Parser<CheckTaskCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
-    }
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }

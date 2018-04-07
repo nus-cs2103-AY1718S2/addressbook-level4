@@ -10,6 +10,9 @@
         <address>123, Jurong West Ave 6, #08-111</address>
         <tagged>friends</tagged>
 		<programmingLanguage>Java</programmingLanguage>
+        <favourite>false</favourite>
+        <dashboard/>
+            <milestoneList/>
     </students>
     <students>
         <key>558a24</key>
@@ -18,6 +21,19 @@
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
 		<programmingLanguage>Java</programmingLanguage>
+        <favourite>false</favourite>
+        <dashboard>
+            <milestoneList>
+                <dueDate>31/12/2018 23:59</dueDate>
+                <progress>0/1</progress>
+                <description>Arrays</description>
+                <tasksList>
+                    <name>Learn Array syntax</name>
+                    <description>Refer to textbook</description>
+                    <isCompleted>false</isCompleted>
+                </tasksList>
+            </milestoneList>
+        </dashboard>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </students>
@@ -28,6 +44,9 @@
         <email>heinz@example.com</email>
         <address>wall street</address>
 		<programmingLanguage>Java</programmingLanguage>
+        <favourite>false</favourite>
+        <dashboard/>
+            <milestoneList/>
     </students>
     <students>
         <key>dd5605</key>
@@ -36,6 +55,9 @@
         <email>cornelia@example.com</email>
         <address>10th street</address>
 		<programmingLanguage>Java</programmingLanguage>
+        <favourite>false</favourite>
+        <dashboard/>
+            <milestoneList/>
     </students>
     <students>
         <key>abbcfd</key>
@@ -44,6 +66,9 @@
         <email>werner@example.com</email>
         <address>michegan ave</address>
 		<programmingLanguage>Java</programmingLanguage>
+        <favourite>false</favourite>
+        <dashboard/>
+            <milestoneList/>
     </students>
     <students>
         <key>9d2b20</key>
@@ -52,6 +77,9 @@
         <email>lydia@example.com</email>
         <address>little tokyo</address>
 		<programmingLanguage>Java</programmingLanguage>
+        <favourite>false</favourite>
+        <dashboard/>
+            <milestoneList/>
     </students>
     <students>
         <key>4e0965</key>
@@ -60,6 +88,9 @@
         <email>anna@example.com</email>
         <address>4th street</address>
 		<programmingLanguage>Java</programmingLanguage>
+        <favourite>false</favourite>
+        <dashboard/>
+            <milestoneList/>
     </students>
     <tags>friends</tags>
     <tags>owesMoney</tags>

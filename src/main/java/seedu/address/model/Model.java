@@ -1,8 +1,12 @@
 package seedu.address.model;
 
+import java.io.IOException;
 import java.util.function.Predicate;
 
+import com.google.gdata.util.ServiceException;
+
 import javafx.collections.ObservableList;
+import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.Time;
@@ -63,8 +67,16 @@ public interface Model {
 
     Schedule getSchedule();
 
-    void printSchedule();
+    String printSchedule();
 
     void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException;
 
+    void updateProfilePicture(Student target, Student editedStudent, Student finalEditedStudent)
+        throws DuplicateStudentException, StudentNotFoundException;
+
+    void loginGoogleAccount() throws CredentialsException;
+
+    void logoutGoogleAccount() throws CredentialsException;
+
+    void synchronize() throws ServiceException, IOException;
 }

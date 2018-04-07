@@ -62,12 +62,14 @@ public class UniqueStudentList implements Iterable<Student> {
             throw new StudentNotFoundException();
         }
 
+
         if (!target.equals(editedStudent) && internalList.contains(editedStudent)) {
             throw new DuplicateStudentException();
         }
 
         internalList.set(index, editedStudent);
     }
+
 
     /**
      * Removes the equivalent student from the list.
@@ -136,9 +138,11 @@ public class UniqueStudentList implements Iterable<Student> {
      */
     public Student findKey(UniqueKey key) throws StudentNotFoundException {
         boolean found = false;
-        Student foundStudent = internalList.get(0);
+        Student foundStudent = null;
         for (Student student : internalList) {
+
             if (key.equals(student.getUniqueKey())) {
+                found = true;
                 return student;
             }
         }

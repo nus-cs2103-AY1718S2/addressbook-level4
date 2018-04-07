@@ -15,6 +15,7 @@ import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.showStudentAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_STUDENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_STUDENT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_STUDENT;
 import static seedu.address.testutil.TypicalStudents.getTypicalAddressBook;
 
 import org.junit.Test;
@@ -112,7 +113,7 @@ public class EditCommandTest {
     public void execute_duplicateStudentUnfilteredList_failure() {
         Student firstStudent = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
         EditCommand.EditStudentDescriptor descriptor = new EditStudentDescriptorBuilder(firstStudent).build();
-        EditCommand editCommand = prepareCommand(INDEX_SECOND_STUDENT, descriptor);
+        EditCommand editCommand = prepareCommand(INDEX_THIRD_STUDENT, descriptor);
 
         assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_STUDENT);
     }
@@ -122,7 +123,7 @@ public class EditCommandTest {
         showStudentAtIndex(model, INDEX_FIRST_STUDENT);
 
         // edit student in filtered list into a duplicate in address book
-        Student studentInList = model.getAddressBook().getStudentList().get(INDEX_SECOND_STUDENT.getZeroBased());
+        Student studentInList = model.getAddressBook().getStudentList().get(INDEX_THIRD_STUDENT.getZeroBased());
         EditCommand editCommand = prepareCommand(INDEX_FIRST_STUDENT,
                 new EditStudentDescriptorBuilder(studentInList).build());
 
@@ -214,9 +215,9 @@ public class EditCommandTest {
         Model expectedModel = new ModelManager(
                 new AddressBook(model.getAddressBook()), new UserPrefs(), new Schedule());
 
-        showStudentAtIndex(model, INDEX_SECOND_STUDENT);
+        showStudentAtIndex(model, INDEX_THIRD_STUDENT);
         Student studentToEdit = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
-        // edit -> edits second student in unfiltered student list / first student in filtered student list
+        // edit -> edits third student in unfiltered student list / first student in filtered student list
         editCommand.execute();
         undoRedoStack.push(editCommand);
 

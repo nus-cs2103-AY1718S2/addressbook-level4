@@ -3,8 +3,11 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.io.IOException;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import com.google.gdata.util.ServiceException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,7 +18,10 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.ScheduleChangedEvent;
 import seedu.address.commons.events.model.StudentInfoChangedEvent;
 import seedu.address.commons.events.model.StudentInfoDisplayEvent;
+import seedu.address.commons.events.storage.ProfilePictureChangeEvent;
 import seedu.address.commons.events.storage.RequiredStudentIndexChangeEvent;
+import seedu.address.external.GServiceManager;
+import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.Time;
@@ -38,7 +44,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final Schedule schedule;
     private final FilteredList<Student> filteredStudents;
-
+    private final GServiceManager gServiceManager;
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -50,6 +56,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.schedule = new Schedule(schedule);
+        this.gServiceManager = new GServiceManager();
         filteredStudents = new FilteredList<>(this.addressBook.getStudentList());
     }
 
@@ -85,6 +92,8 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
         indicateAddressBookChanged();
     }
+
+
 
     @Override
     public void updateStudent(Student target, Student editedStudent)
@@ -157,8 +166,26 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void printSchedule() {
-        schedule.print(addressBook);
+    public String printSchedule() {
+        return schedule.print(addressBook);
+    }
+
+    @Override
+    public void updateProfilePicture (Student target, Student editedStudent, Student finalEditedStudent)
+            throws DuplicateStudentException, StudentNotFoundException {
+
+        requireAllNonNull(target, editedStudent);
+        addressBook.updateStudent(target, editedStudent);
+        indicateProfilePictureChange(editedStudent);
+        addressBook.updateStudent(editedStudent, finalEditedStudent);
+        indicateAddressBookChanged();
+        indicateStudentInfoChanged();
+
+    }
+
+    /** Raises an event to indicate a student's profile picture has been changed*/
+    private void indicateProfilePictureChange(Student target) {
+        raise(new ProfilePictureChangeEvent(target));
     }
 
     //=========== Filtered Student List Accessors =============================================================
@@ -176,6 +203,21 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredStudentList(Predicate<Student> predicate) {
         requireNonNull(predicate);
         filteredStudents.setPredicate(predicate);
+    }
+
+    @Override
+    public void loginGoogleAccount() throws CredentialsException {
+        this.gServiceManager.login();
+    }
+
+    @Override
+    public void logoutGoogleAccount() throws CredentialsException {
+        this.gServiceManager.logout();
+    }
+
+    @Override
+    public void synchronize() throws ServiceException, IOException {
+        this.gServiceManager.synchronize(addressBook, schedule);
     }
 
     @Override

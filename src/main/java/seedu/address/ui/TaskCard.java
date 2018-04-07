@@ -6,6 +6,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.model.student.dashboard.Task;
 
+//@@author yapni
 /**
  * An UI component that displays information of a {@code Task}.
  */
@@ -34,7 +35,7 @@ public class TaskCard extends UiPart<Region> {
         super(FXML);
         this.task = task;
 
-        index.setText(displayedIndex + ".");
+        index.setText("Task " + displayedIndex);
         name.setText(task.getName());
         description.setText(task.getDescription());
         isCompleted.setText(String.valueOf(task.isCompleted()));

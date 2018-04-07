@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="StudentInfoTheme.css">
+	<style>
+table,th,td {
+  border : 1px solid black;
+  border-collapse: collapse;
+  font-size: 20px;
+}
+th,td {
+  padding: 5px;
+}
+</style>
+
+</head>
+
+
+<body class="background" onload="loadAddressBook()">
+
+
+	<p id="name"> </p>
+<br><br>
+<div id="profilePicture" > </div>
+<div class = "infoPartOne">
+	<p id = "phone"></p>
+	<p id = "email"></p>
+	<p id = "address"></p>
+	<p id = "programmingLanguage"></p>
+	<p id = "tags"></p>
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script language="JavaScript" type="text/javascript">
+
+function test(){
+	document.write(location.href);
+}
+
+function getIndex(){
+
+	var xmlhttp = new XMLHttpRequest
+
+	xmlhttp.open("GET", "../requiredStudentIndex.xml", false);
+	xmlhttp.send();
+
+	var xmlDoc = xmlhttp.responseXML;
+
+	var index = xmlDoc.getElementsByTagName("requiredStudentIndex")[0].getElementsByTagName("requiredStudentIndex")[0].childNodes[0].nodeValue;
+
+	return index;
+}
+
+function loadAddressBook() {
+	var xmlhttp = new XMLHttpRequest();
+
+	xmlhttp.open("GET",  "../addressbook.xml", false);
+	xmlhttp.send();
+
+	var index = getIndex();
+
+	var xmlDoc = xmlhttp.responseXML;
+
+	var x = xmlDoc.getElementsByTagName("students");
+
+	var name = "<b>" + x[index].getElementsByTagName("name")[0].childNodes[0].nodeValue + "</b>"
+	document.getElementById("name").innerHTML = name;
+
+	var phone = "<b>Contact</b> : " + x[index].getElementsByTagName("phone")[0].childNodes[0].nodeValue;
+	document.getElementById("phone").innerHTML = phone;
+
+	var email = "<b>Email</b> : " + x[index].getElementsByTagName("email")[0].childNodes[0].nodeValue;
+	document.getElementById("email").innerHTML = email;
+
+	var address = "<b>Address</b>: " + x[index].getElementsByTagName("address")[0].childNodes[0].nodeValue;
+	document.getElementById("address").innerHTML = address;
+
+	var programmingLanguage = "<b>Prgoramming Language</b> : " + x[index].getElementsByTagName("programmingLanguage")[0].childNodes[0].nodeValue;
+	document.getElementById("programmingLanguage").innerHTML = programmingLanguage;
+
+
+
+	var tags = x[index].getElementsByTagName("tagged");
+	var showTags = "<b>Tags</b> : ";
+	for (i = 0; i < tags.length; i++) {
+		showTags += "[";
+		if(i%2){
+		showTags += "<span style='color:blue'>";
+		showTags += tags[i].childNodes[0].nodeValue;
+		showTags += "</span>";
+		}
+		else{
+		showTags += "<span style='color:maroon'>";
+		showTags += tags[i].childNodes[0].nodeValue;
+		showTags += "</span>";
+		}
+		showTags += "]";
+
+	}
+
+	document.getElementById("tags").innerHTML = showTags;
+
+
+	var profilePicturePath = x[index].getElementsByTagName("profilePicturePath")[0].childNodes[0].nodeValue;
+	var imageSourcePart1;
+
+	if (profilePicturePath == "profile_photo_placeholder.png") {
+		imageSourcePart1 = "<img src='";
+	} else {
+		imageSourcePart1 = "<img src='../../";
+	}
+
+	var imageSourcePart2 = "' style='width:100%; height:100%'>";
+	var finalImageSource = imageSourcePart1 + profilePicturePath + "?" + new Date().getTime() + imageSourcePart2;
+	document.getElementById("profilePicture").innerHTML = finalImageSource;
+
+	}
+</script>
+
+
+</body>
+</html>

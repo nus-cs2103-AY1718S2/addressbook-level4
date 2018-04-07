@@ -11,6 +11,7 @@ import seedu.address.commons.events.ui.ShowStudentDashboardEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.student.Student;
 
+//@@author yapni
 /**
  * Shows the dashboard of a student who is identified using it's last displayed index from the address book to the user
  */
@@ -41,5 +42,12 @@ public class ShowDashboardCommand extends Command {
 
         EventsCenter.getInstance().post(new ShowStudentDashboardEvent(lastShownList.get(targetIndex.getZeroBased())));
         return new CommandResult(String.format(MESSAGE_SELECT_STUDENT_DASHBOARD_SUCCESS, targetIndex.getOneBased()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ShowDashboardCommand // instanceof handles null
+                && ((ShowDashboardCommand) other).targetIndex == this.targetIndex);
     }
 }

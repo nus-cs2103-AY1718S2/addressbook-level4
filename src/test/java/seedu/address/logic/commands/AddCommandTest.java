@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
@@ -14,10 +15,15 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import com.google.gdata.util.ServiceException;
+
 import javafx.collections.ObservableList;
+
+import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -32,6 +38,7 @@ import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 import seedu.address.model.tag.Tag;
+
 import seedu.address.testutil.StudentBuilder;
 
 public class AddCommandTest {
@@ -152,6 +159,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateProfilePicture(Student target, Student editedStudent, Student finalEditedStudent)
+                throws DuplicateStudentException, StudentNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void addLesson(Student student, Day day, Time start, Time end)
                 throws DuplicateLessonException, StudentNotFoundException, InvalidLessonTimeSlotException {
             fail("This method should not be called");
@@ -169,7 +182,24 @@ public class AddCommandTest {
         }
 
         @Override
-        public void printSchedule() {
+        public String printSchedule() {
+            fail("This method should not be called");
+            return null;
+        }
+
+
+        @Override
+        public void loginGoogleAccount() throws CredentialsException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void logoutGoogleAccount() throws CredentialsException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void synchronize() throws ServiceException, IOException {
             fail("This method should not be called");
         }
     }

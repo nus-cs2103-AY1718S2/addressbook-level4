@@ -7,11 +7,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.model.student.dashboard.Milestone;
 import seedu.address.model.student.dashboard.Task;
 
+//@@author yapni
 /**
  * An UI component that displays information of a {@code Milestone}.
  */
@@ -37,7 +39,10 @@ public class MilestoneCard extends UiPart<Region> {
     private Label dueDate;
 
     @FXML
-    private Label progress;
+    private Label progressPercent;
+
+    @FXML
+    private ProgressBar progress;
 
     public MilestoneCard(Milestone milestone, int displayedIndex) {
         super(FXML);
@@ -46,7 +51,8 @@ public class MilestoneCard extends UiPart<Region> {
         index.setText(Integer.toString(displayedIndex));
         description.setText(milestone.getDescription());
         dueDate.setText(milestone.getDueDate().toString());
-        progress.setText(milestone.getProgress().toString());
+        progress.setProgress(milestone.getProgress().getProgressInPercent() / 100.0);
+        progressPercent.setText(milestone.getProgress().getProgressInPercent() + "%");
         loadTaskList(milestone.getTaskList().asObservableList());
     }
 

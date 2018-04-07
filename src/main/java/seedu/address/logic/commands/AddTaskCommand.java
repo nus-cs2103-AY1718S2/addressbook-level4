@@ -9,7 +9,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.task.Task;
 
 /**
- * Adds a task to the todo list and calendar.
+ * Adds a task to the To-do list and calendar.
  */
 public class AddTaskCommand extends UndoableCommand {
 

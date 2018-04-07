@@ -52,9 +52,10 @@
 <li><a href="#Implementation-Configuration">5.4. Configuration</a></li>
 <li><a href="#tag-colors-since-v1-0">5.5. Tag colors [since v1.0]</a></li>
 <li><a href="#add-remove-one-tag-for-a-person-since-v1-2">5.6. Add/Remove one Tag for a person [since v1.2]</a></li>
-<li><a href="#display-relevant-github-or-resume-page-coming-in-v1-4">5.7. Display relevant Github or resume page. [coming in v1.4]</a></li>
+<li><a href="#display-relevant-github-or-resume-page-since-v1-4">5.7. Display relevant Github or resume page. [Since v1.4]</a></li>
 <li><a href="#add-and-match-job-postings-to-candidates-since-v1-3">5.8. Add and match job postings to candidates. [Since v1.3]</a></li>
 <li><a href="#theming-mechanism-since-v1-3">5.9. Theming Mechanism [since v1.3]</a></li>
+<li><a href="#interview-management">5.10. Interview Management</a></li>
 </ul>
 </li>
 <li><a href="#documentation">6. Documentation</a>
@@ -1052,7 +1053,7 @@ Command syntax: EDIT [-OPTIONS] [PARAMETERS]…​, where:<br></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="display-relevant-github-or-resume-page-coming-in-v1-4"><a class="link" href="#display-relevant-github-or-resume-page-coming-in-v1-4">5.7. Display relevant Github or resume page. [coming in v1.4]</a></h3>
+<h3 id="display-relevant-github-or-resume-page-since-v1-4"><a class="link" href="#display-relevant-github-or-resume-page-since-v1-4">5.7. Display relevant Github or resume page. [Since v1.4]</a></h3>
 <div class="paragraph">
 <p>As a candidate may have linked online resume or github page. The recruiter may want
 to consider these pages.
@@ -1153,6 +1154,73 @@ The <code>scene</code> is necessary for changing the CSS at runtime.</p>
 <strong>Alternative 2:</strong> Change the themes in <code>MainWindow</code> class directly<br>
 <strong>Pros:</strong> Decreases coupling<br>
 <strong>Cons:</strong> Violates the single responsibility principle since <code>MainWindow</code> class also controls the changing of theme. It is harder for <code>ThemeCommand</code> class to access the methods from <code>MainWindow</code> to change theme<br></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="interview-management"><a class="link" href="#interview-management">5.10. Interview Management</a></h3>
+<div class="sect3">
+<h4 id="adding-an-interview-since-v1-4"><a class="link" href="#adding-an-interview-since-v1-4">5.10.1. Adding an interview (Since v1.4)</a></h4>
+<div class="paragraph">
+<p>The recruiter may want to conduct an interview with candidates, and maintain
+an interview lists.</p>
+</div>
+<div class="paragraph">
+<p>Aspects: Implementation of removing/add interview with candidates.</p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1:</strong> (current choice): Add a new model interview including many
+sub fields such as Date, Location, List of Questions.<br>
+<strong>Pros:</strong> It is easier to implement other commands such as find Interview, delete
+Interview, add questions.<br>
+<strong>Cons:</strong> It takes time to create new model.</p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Add a new field interview to each candidates and maintain
+according to each candidates.<br>
+<strong>Pros:</strong> It is easier to implement.<br>
+<strong>Cons:</strong> It is difficult to search specific interview effectively.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="list-interview-coming-v1-5"><a class="link" href="#list-interview-coming-v1-5">5.10.2. List interview (coming v1.5)</a></h4>
+<div class="paragraph">
+<p>The recruiter may want to take a look at all of the interviews.</p>
+</div>
+<div class="paragraph">
+<p>Aspects: Implementation of listing all the interviews.</p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1:</strong> (current choice) create a new command to listing all the interview.<br>
+<strong>Pros:</strong> It is easier to use and modify.<br>
+<strong>Cons:</strong> Have to create new comamnd.</p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> each candidate has been linked to an interview, listing all the
+interview when listing all candidates.<br>
+<strong>Pros:</strong> No need to create new command, just need to edit current list comamnd<br>
+<strong>Cons:</strong> It increases coupling and it is harder to implement.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="adding-question-answer-coming-v2-0"><a class="link" href="#adding-question-answer-coming-v2-0">5.10.3. Adding question/answer (coming v2.0)</a></h4>
+<div class="paragraph">
+<p>The recruiter may want to maintain a list of questions and keep track of candidate&#8217;s
+answer of each interview.</p>
+</div>
+<div class="paragraph">
+<p>Aspects: Implementation of adding question/answer:</p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1:</strong> (current choice) create two new command for adding question/answer<br>
+<strong>Pros:</strong> It can be added the interview questions first and answer later. It can be
+conducted interview in anytime.<br>
+<strong>Cons:</strong> Create new addtional command.</p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> + combining into one command questions/answer<br>
+<strong>Pros:</strong> It is easier to maintain list answer with respect to questions<br>
+<strong>Cons:</strong> Cannot add the answer and interview separately.</p>
 </div>
 </div>
 </div>
@@ -2830,7 +2898,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-06 07:32:57 UTC
+Last updated 2018-04-07 10:24:35 UTC
 </div>
 </div>
 </body>

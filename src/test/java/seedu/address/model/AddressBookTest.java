@@ -19,6 +19,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.notification.Notification;
 import seedu.address.model.person.Person;
+import seedu.address.model.photo.Photo;
 import seedu.address.model.tag.Tag;
 
 public class AddressBookTest {
@@ -52,7 +53,8 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        List<Photo> newPhotos = new ArrayList<>();
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newPhotos);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -78,14 +80,22 @@ public class AddressBookTest {
 
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
+        private final ObservableList<Photo> photos = FXCollections.observableArrayList();
+
+        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags, Collection<? extends Photo> photos) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
+            this.photos.setAll(photos);
         }
 
         @Override
         public ObservableList<Person> getPersonList() {
             return persons;
+        }
+
+        @Override
+        public ObservableList<Photo> getPhotoList() {
+            return photos;
         }
 
         @Override

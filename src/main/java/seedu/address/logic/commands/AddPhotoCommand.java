@@ -157,7 +157,7 @@ public class AddPhotoCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof AddPhotoCommand // instanceof handles nulls
                 && targetIndex.equals(((AddPhotoCommand) other).targetIndex)
-                && path.equals(((AddPhotoCommand) other).path));
+                && (path == null || path.equals(((AddPhotoCommand) other).path)));
     }
 
     protected void registerAsAnEventHandler(Object handler) {

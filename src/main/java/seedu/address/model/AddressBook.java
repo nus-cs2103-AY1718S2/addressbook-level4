@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 
+import seedu.address.model.person.Appointment;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniqueGroupList;

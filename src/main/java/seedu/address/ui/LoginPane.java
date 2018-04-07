@@ -45,6 +45,9 @@ public class LoginPane extends UiPart<Region> {
     private Button exitButton;
 
     @FXML
+    private Button helpButton;
+
+    @FXML
     private Text loginStatus;
 
     public LoginPane(Login login) {
@@ -112,6 +115,8 @@ public class LoginPane extends UiPart<Region> {
                 createButton.fire();
             } else if (exitButton.isFocused()) {
                 exitButton.fire();
+            } else if (helpButton.isFocused()) {
+                helpButton.fire();
             }
         }
     }

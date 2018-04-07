@@ -31,15 +31,15 @@
                <font>
                   <Font name="ADAM.CGPRO" size="12.0" />
                </font></Button>
+                <Button fx:id="exitButton" layoutX="337.0" layoutY="20.0" mnemonicParsing="false" onAction="#closeApplication" onKeyPressed="#handleKeyPress" prefHeight="23.0" prefWidth="44.0" text="X">
+                    <font>
+                        <Font name="ADAM.CGPRO" size="12.0" />
+                    </font></Button>
                 <Button fx:id="helpButton" layoutX="337.0" layoutY="50.0" mnemonicParsing="false" onAction="#openHelp" onKeyPressed="#handleKeyPress" text="Help">
                     <font>
                         <Font name="ADAM.CGPRO" size="12.0" />
                     </font>
                 </Button>
-                <Button fx:id="exitButton" layoutX="337.0" layoutY="20.0" mnemonicParsing="false" onAction="#closeApplication" onKeyPressed="#handleKeyPress" prefHeight="23.0" prefWidth="44.0" text="X">
-               <font>
-                  <Font name="ADAM.CGPRO" size="12.0" />
-               </font></Button>
                 <ImageView blendMode="SOFT_LIGHT" cacheHint="QUALITY" depthTest="ENABLE" fitHeight="195.0" fitWidth="251.0" layoutX="105.0" layoutY="20.0" preserveRatio="true">
                     <image>
                         <Image url="@PigeonsLogoDigital.png" />

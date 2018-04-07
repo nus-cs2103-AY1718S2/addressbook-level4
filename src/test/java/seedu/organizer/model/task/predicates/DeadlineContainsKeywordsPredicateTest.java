@@ -1,4 +1,4 @@
-package seedu.organizer.model.task;
+package seedu.organizer.model.task.predicates;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

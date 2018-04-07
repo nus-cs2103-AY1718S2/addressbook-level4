@@ -28,7 +28,7 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
-    public void execute_newPerson_success() throws Exception {
+    public void execute_newTask_success() throws Exception {
         Task validTask = new TaskBuilder().build();
 
         Model expectedModel = new ModelManager(model.getOrganizer(), new UserPrefs());
@@ -39,7 +39,7 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
+    public void execute_duplicateTask_throwsCommandException() {
         Task taskInList = model.getOrganizer().getTaskList().get(0);
         assertCommandFailure(prepareCommand(taskInList, model), model, AddCommand.MESSAGE_DUPLICATE_TASK);
     }

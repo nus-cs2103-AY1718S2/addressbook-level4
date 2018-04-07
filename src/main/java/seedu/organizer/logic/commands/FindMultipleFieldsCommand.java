@@ -1,10 +1,10 @@
 package seedu.organizer.logic.commands;
 
-import seedu.organizer.model.task.MultipleFieldsContainsKeywordsPredicate;
+import seedu.organizer.model.task.predicates.MultipleFieldsContainsKeywordsPredicate;
 
 //@@author guekling
 /**
- * Finds and lists all persons in organizer book whose name, descriptions or deadline contains any of the argument
+ * Finds and lists all tasks in organizer book whose name, descriptions or deadline contains any of the argument
  * keywords.
  * Keyword matching is not case sensitive.
  */

@@ -14,6 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.organizer.commons.util.CollectionUtil;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
+import seedu.organizer.model.task.predicates.TaskByUserPredicate;
 import seedu.organizer.model.user.User;
 
 /**

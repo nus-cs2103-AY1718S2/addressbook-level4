@@ -3,7 +3,7 @@ package seedu.organizer.logic.commands;
 import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
 /**
- * Lists all persons in the organizer book to the user.
+ * Lists all tasks in the organizer to the user.
  */
 public class ListCommand extends Command {
 

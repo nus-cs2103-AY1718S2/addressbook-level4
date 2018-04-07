@@ -20,9 +20,9 @@ import seedu.organizer.logic.commands.exceptions.CommandException;
 import seedu.organizer.logic.commands.util.EditTaskDescriptor;
 import seedu.organizer.model.Model;
 import seedu.organizer.model.Organizer;
-import seedu.organizer.model.task.NameContainsKeywordsPredicate;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
+import seedu.organizer.model.task.predicates.NameContainsKeywordsPredicate;
 import seedu.organizer.testutil.EditTaskDescriptorBuilder;
 import seedu.organizer.ui.calendar.MonthView;
 
@@ -46,7 +46,7 @@ public class CommandTestUtil {
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_TAG_FRIENDS = "friends";
-    public static final String VALID_TAG_UNUSED = "unused"; // do not use this tag when creating a person
+    public static final String VALID_TAG_UNUSED = "unused"; // do not use this tag when creating a task
 
     public static final String NAME_DESC_EXAM = " " + PREFIX_NAME + VALID_NAME_EXAM;
     public static final String NAME_DESC_STUDY = " " + PREFIX_NAME + VALID_NAME_STUDY;
@@ -144,7 +144,7 @@ public class CommandTestUtil {
      * Updates {@code model}'s filtered list to show only the task at the given {@code targetIndex} in the
      * {@code model}'s organizer book.
      */
-    public static void showPersonAtIndex(Model model, Index targetIndex) {
+    public static void showTaskAtIndex(Model model, Index targetIndex) {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredTaskList().size());
 
         Task task = model.getFilteredTaskList().get(targetIndex.getZeroBased());
@@ -157,7 +157,7 @@ public class CommandTestUtil {
     /**
      * Deletes the first task in {@code model}'s filtered list from {@code model}'s organizer book.
      */
-    public static void deleteFirstPerson(Model model) {
+    public static void deleteFirstTask(Model model) {
         Task firstTask = model.getFilteredTaskList().get(0);
         try {
             model.deleteTask(firstTask);

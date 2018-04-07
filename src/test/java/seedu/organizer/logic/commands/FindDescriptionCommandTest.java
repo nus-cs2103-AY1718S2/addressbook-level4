@@ -17,7 +17,7 @@ import org.junit.Test;
 import seedu.organizer.logic.CommandHistory;
 import seedu.organizer.logic.UndoRedoStack;
 import seedu.organizer.logic.commands.exceptions.CommandException;
-import seedu.organizer.model.task.DescriptionContainsKeywordsPredicate;
+import seedu.organizer.model.task.predicates.DescriptionContainsKeywordsPredicate;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
 

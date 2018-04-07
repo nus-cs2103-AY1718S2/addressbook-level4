@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import seedu.organizer.logic.commands.FindDeadlineCommand;
 import seedu.organizer.logic.parser.exceptions.ParseException;
-import seedu.organizer.model.task.DeadlineContainsKeywordsPredicate;
+import seedu.organizer.model.task.predicates.DeadlineContainsKeywordsPredicate;
 
 //@@author guekling
 /**

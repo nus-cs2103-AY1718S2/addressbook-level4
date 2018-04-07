@@ -3,7 +3,7 @@ package seedu.organizer.logic.commands;
 import static seedu.organizer.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.organizer.logic.commands.CommandTestUtil.deleteFirstPerson;
+import static seedu.organizer.logic.commands.CommandTestUtil.deleteFirstTask;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
 import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
@@ -55,7 +55,7 @@ public class UndoCommandTest {
         // multiple commands in undoStack
         Model expectedModel = new ModelManager(getTypicalOrganizer(), new UserPrefs());
         expectedModel.loginUser(ADMIN_USER);
-        deleteFirstPerson(expectedModel);
+        deleteFirstTask(expectedModel);
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // single command in undoStack

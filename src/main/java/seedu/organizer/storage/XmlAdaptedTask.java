@@ -111,14 +111,14 @@ public class XmlAdaptedTask {
      * @throws IllegalValueException if there were any data constraints violated in the adapted task
      */
     public Task toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
+        final List<Tag> taskTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
-            personTags.add(tag.toModelType());
+            taskTags.add(tag.toModelType());
         }
 
-        final List<Subtask> personSubtasks = new ArrayList<>();
+        final List<Subtask> taskSubtasks = new ArrayList<>();
         for (XmlAdaptedSubtask subtask : subtasks) {
-            personSubtasks.add(subtask.toModelType());
+            taskSubtasks.add(subtask.toModelType());
         }
 
         if (this.user == null) {
@@ -184,9 +184,9 @@ public class XmlAdaptedTask {
         }
         final Status status = new Status(this.status);
 
-        final Set<Tag> tags = new HashSet<>(personTags);
+        final Set<Tag> tags = new HashSet<>(taskTags);
 
-        final List<Subtask> subtasks = new ArrayList<>(personSubtasks);
+        final List<Subtask> subtasks = new ArrayList<>(taskSubtasks);
 
         return new Task(name, priority, deadline, dateadded, datecompleted, description, status, tags, subtasks, user);
     }

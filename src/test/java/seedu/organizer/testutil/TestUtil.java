@@ -48,7 +48,7 @@ public class TestUtil {
     /**
      * Returns the task in the {@code model}'s task list at {@code index}.
      */
-    public static Task getPerson(Model model, Index index) {
+    public static Task getTask(Model model, Index index) {
         return model.getOrganizer().getTaskList().get(index.getZeroBased());
     }
 }

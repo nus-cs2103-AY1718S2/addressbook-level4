@@ -30,7 +30,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_NAME + "CS2103T "
             + PREFIX_PRIORITY + "9 "
             + PREFIX_DEADLINE + "2018-03-11 "
-            + PREFIX_DESCRIPTION + "Refactor AddressBook to PrioriTask "
+            + PREFIX_DESCRIPTION + "Refactor Organizer to PrioriTask "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
@@ -52,11 +52,10 @@ public class AddCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addTask(toAdd);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateTaskException e) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }
-
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 
     @Override

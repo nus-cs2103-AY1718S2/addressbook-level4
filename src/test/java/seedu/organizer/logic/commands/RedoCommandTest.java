@@ -3,7 +3,7 @@ package seedu.organizer.logic.commands;
 import static seedu.organizer.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.organizer.logic.commands.CommandTestUtil.deleteFirstPerson;
+import static seedu.organizer.logic.commands.CommandTestUtil.deleteFirstTask;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_SECOND_TASK;
 import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
@@ -56,11 +56,11 @@ public class RedoCommandTest {
         }
 
         // multiple commands in redoStack
-        deleteFirstPerson(expectedModel);
+        deleteFirstTask(expectedModel);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // single command in redoStack
-        deleteFirstPerson(expectedModel);
+        deleteFirstTask(expectedModel);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // no command in redoStack

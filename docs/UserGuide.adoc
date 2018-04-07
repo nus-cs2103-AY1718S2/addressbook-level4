@@ -196,6 +196,15 @@ Login to PrioriTask. +
 * [example]#`login u/mary p/m4ry`#
 ====
 
+=== Logging out: `logout` or `out` `[since v1.4]`
+
+Logout of PrioriTask. +
+
+[.format]
+====
+[format-title]#Format:# `logout`
+====
+
 === Adding question: `addqa` `[since v1.4]`
 
 Add a question for password retrieval. +
@@ -323,16 +332,30 @@ Add a task to the PrioriTask. +
 * [example]#`add n/CS2101 Script p/8 d/2018-03-05 des/Script should be 500 words long t/CS2101`#
 ====
 
-=== Listing all tasks : `list` or `l`
+=== Deleting a task : `delete` or `d`
 
-Show a list of all tasks in the PrioriTask. +
+Delete the specified task from the PrioriTask. +
 
 [.format]
 ====
-[format-title]#Format:# `list`
+[format-title]#Format:# `delete INDEX`
 ====
 
-* _[Coming in v2.0]_ Shows a list of all tasks (regardless of status), all completed tasks, or all uncompleted tasks.
+* Delete the task at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* (i.e. 1, 2, 3, ...).
+
+[.example]
+====
+[example-title]#Examples:#
+
+* [example]#`list`# +
+[example]#`delete 2`# +
+Deletes the 2nd task in the PrioriTask.
+* [example]#`find Developer`# +
+[example]#`delete 1`# +
+Deletes the 1st task in the results of the `find` command.
+====
 
 === Editing a task : `edit` or `e`
 
@@ -357,6 +380,31 @@ Edit an existing task in the PrioriTask. +
 Edits the priority level and deadline of the 1st task to be `9` and `2018-12-30` respectively.
 * [example]#`edit 2 n/CS2101 Final Assignment t/`# +
 Edits the name of the 2nd task to be `CS2101 Final Assignment` and clears all existing tags.
+====
+
+=== Listing tasks
+
+Different commands for listing different tasks. +
+
+==== Listing all tasks : `list` or `l`
+
+[.format]
+====
+[format-title]#Format:# `list`
+====
+
+==== Listing all uncompleted tasks : `uncompleted` or `uncom` `[since v1.5]`
+
+[.format]
+====
+[format-title]#Format:# `uncompleted`
+====
+
+==== Listing all completed tasks : `completed` or `com` `[since v1.5]`
+
+[.format]
+====
+[format-title]#Format:# `completed`
 ====
 
 === Locating tasks `[since v1.2]`
@@ -459,31 +507,6 @@ Returns any task having deadlines `2018-03-17`, `2018-09-04`, or `2018-03-21`.
 
 _Locate all tasks with a common tag_
 
-=== Deleting a task : `delete` or `d`
-
-Delete the specified task from the PrioriTask. +
-
-[.format]
-====
-[format-title]#Format:# `delete INDEX`
-====
-
-* Delete the task at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* (i.e. 1, 2, 3, ...).
-
-[.example]
-====
-[example-title]#Examples:#
-
-* [example]#`list`# +
-[example]#`delete 2`# +
-Deletes the 2nd task in the PrioriTask.
-* [example]#`find Developer`# +
-[example]#`delete 1`# +
-Deletes the 1st task in the results of the `find` command.
-====
-
 === Selecting a task : `select` or `s`
 
 Select the task identified by the index number used in the last task listing. +
@@ -580,32 +603,6 @@ Add a subtask to an existing task. +
 Adds a subtask with name `Submit report` to the 1st task.
 ====
 
-=== Mark subtask as complete: `toggle-subtask` or `ts` `[since v1.3]`
-
-Toggle the status of the subtask identified by the index number used in the last subtask listing
-between `Done` and `Not Done`. +
-
-[.format]
-====
-[format-title]#Format:# `toggle-subtask TASK_INDEX SUBTASK_INDEX`
-====
-
-* Toggle the status of the `SUBTASK_INDEX`-th subtask of task at the specified by `TASK_INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* (i.e. `1, 2, 3, ...`).
-
-[.example]
-====
-[example-title]#Examples:#
-
-* [example]#`list`# +
-[example]#`toggle-subtask 1 1`# +
-Toggles the first subtask of the first task in the PrioriTask.
-* [example]#`find homework`# +
-[example]#`toggle-subtask 2 4`# +
-Toggles the fourth subtask of the second task in th result of `find homework` command.
-====
-
 === Deleting a subtask from a task: `delete-subtask` or `ds` `[since v1.3]`
 
 Delete the specified subtask from the PrioriTask. +
@@ -634,6 +631,32 @@ Deletes the fourth subtask of the second task in th result of `find cleaning` co
 === Editing a subtask `[coming in v2.0]`
 
 _Edit the name of a subtask_
+
+=== Mark subtask as complete: `toggle-subtask` or `ts` `[since v1.3]`
+
+Toggle the status of the subtask identified by the index number used in the last subtask listing
+between `Done` and `Not Done`. +
+
+[.format]
+====
+[format-title]#Format:# `toggle-subtask TASK_INDEX SUBTASK_INDEX`
+====
+
+* Toggle the status of the `SUBTASK_INDEX`-th subtask of task at the specified by `TASK_INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* (i.e. `1, 2, 3, ...`).
+
+[.example]
+====
+[example-title]#Examples:#
+
+* [example]#`list`# +
+[example]#`toggle-subtask 1 1`# +
+Toggles the first subtask of the first task in the PrioriTask.
+* [example]#`find homework`# +
+[example]#`toggle-subtask 2 4`# +
+Toggles the fourth subtask of the second task in th result of `find homework` command.
+====
 
 === Reorder subtask `[coming in v2.0]`
 
@@ -826,28 +849,30 @@ Install the application in the other computer and overwrite the empty data file 
 == Command Summary
 
 === User Features
-* *Exit* : [format-no-box]#`exit`#
 * *Help* : [format-no-box]#`help`#
+* *Sign Up* : [format-no-box]#`signup u/USERNAME p/PASSWORD`#
+e.g. [example-no-box]#`signup u/patrick p/pat12351`#
 * *Login* : [format-no-box]#`login u/USERNAME p/PASSWORD`#
 e.g. [example-no-box]#`login u/patrick p/pat12351`#
 * *Logout* : [format-no-box]#`logout`#
-* *Sign Up* : [format-no-box]#`signup u/USERNAME p/PASSWORD`#
-e.g. [example-no-box]#`signup u/patrick p/pat12351`#
 * *Add Question* : [format-no-box]#`addqa q/QUESTION a/ANSWER`#
 e.g. [example-no-box]#`addqa q/are cats cool? a/yes`#
 * *Retrieve Question* : [format-no-box]#`forgotpassword u/USERNAME`#
 e.g. [example-no-box]#`forgotpassword u/david`#
 * *Answer Question* : [format-no-box]#`answer u/USERNAME a/ANSWER`#
 e.g. [example-no-box]#`answer u/david a/yes`#
+* *Exit* : [format-no-box]#`exit`#
 
 === Task Management Features
 * *Add* : [format-no-box]#`add n/NAME [p/PRIORITY_LEVEL] d/DEADLINE [des/DESCRIPTION] [t/TAG]…`# +
 e.g. [example-no-box]#`add n/CS2101 Script p/8 d/2018-03-05 des/Script should be 500 words long t/CS2101 t/PhaseA`#
-* *Clear* : [format-no-box]#`clear`#
 * *Delete* : [format-no-box]#`delete INDEX`# +
 e.g. [example-no-box]#`delete 3`#
 * *Edit* : [format-no-box]#`edit INDEX [n/NAME] [p/PRIORITY_LEVEL] [d/DEADLINE] [des/DESCRIPTION] [t/TAG]…​`# +
 e.g. [example-no-box]#`edit 1 p/9 d/2018-12-30`#
+* *List* : [format-no-box]#`list`#
+* *List all uncompleted* : [format-no-box]#`uncompleted`#
+* *List all completed* : [format-no-box]#`completed`#
 * *Find* : [format-no-box]#`find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`# +
 e.g. [example-no-box]#`find CS2103 update 2018-03-17`#
 ** *Find Name* : [format-no-box]#`findn KEYWORD [MORE_KEYWORDS]` or `fn KEYWORD [MORE_KEYWORDS]`# +
@@ -856,11 +881,11 @@ e.g. [example-no-box]#`findn Developer User`#
 e.g. [example-no-box]#`finddes study update`#
 ** *Find Deadline* : [format-no-box]#`findd KEYWORD [MORE_KEYWORDS]` or `fd KEYWORDS [MORE_KEYWORDS]`# +
 e.g. [example-no-box]#`findd 2018-03-17 2018-09-07`#
-* *List* : [format-no-box]#`list`#
 * *Select* : [format-no-box]#`select INDEX`# +
 e.g.[example-no-box]#`select 2`#
 * *Toggle* : [format-no-box]#`toggle INDEX`# +
 e.g.[example-no-box]#`toggle 3`#
+* *Clear* : [format-no-box]#`clear`#
 
 === Subtask Management Features
 * *Add Subtask* : [format-no-box]#`adds INDEX n/NAME`# +
@@ -872,8 +897,8 @@ e.g.[example-no-box]#`toggle-subtask 3 2`#
 
 === Calendar Features
 * *Go To Current Month* : [format-no-box]#`cmonth`#
-* *Go To Next Month* : [format-no-box]#`nmonth`#
 * *Go To Previous Month* : [format-no-box]#`pmonth`#
+* *Go To Next Month* : [format-no-box]#`nmonth`#
 
 === PrioriTask Features
 * *History* : [format-no-box]#`history`#

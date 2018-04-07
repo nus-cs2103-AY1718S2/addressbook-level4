@@ -9,7 +9,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import seedu.organizer.logic.commands.FindDeadlineCommand;
-import seedu.organizer.model.task.DeadlineContainsKeywordsPredicate;
+import seedu.organizer.model.task.predicates.DeadlineContainsKeywordsPredicate;
 
 //@@author guekling
 public class FindDeadlineCommandParserTest {

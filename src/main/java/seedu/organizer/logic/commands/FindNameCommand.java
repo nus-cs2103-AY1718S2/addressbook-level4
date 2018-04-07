@@ -1,9 +1,9 @@
 package seedu.organizer.logic.commands;
 
-import seedu.organizer.model.task.NameContainsKeywordsPredicate;
+import seedu.organizer.model.task.predicates.NameContainsKeywordsPredicate;
 
 /**
- * Finds and lists all persons in organizer book whose name contains any of the argument keywords.
+ * Finds and lists all tasks in organizer book whose name contains any of the argument keywords.
  * Keyword matching is not case sensitive.
  */
 public class FindNameCommand extends Command {

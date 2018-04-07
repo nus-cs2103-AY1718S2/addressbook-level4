@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import seedu.organizer.logic.commands.FindNameCommand;
 import seedu.organizer.logic.parser.exceptions.ParseException;
-import seedu.organizer.model.task.NameContainsKeywordsPredicate;
+import seedu.organizer.model.task.predicates.NameContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindNameCommand object

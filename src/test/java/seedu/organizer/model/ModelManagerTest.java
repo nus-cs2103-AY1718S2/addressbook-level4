@@ -20,8 +20,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.organizer.model.tag.Tag;
-import seedu.organizer.model.task.NameContainsKeywordsPredicate;
 import seedu.organizer.model.task.Task;
+import seedu.organizer.model.task.predicates.NameContainsKeywordsPredicate;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.DuplicateUserException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;

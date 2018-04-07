@@ -9,7 +9,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import seedu.organizer.logic.commands.FindMultipleFieldsCommand;
-import seedu.organizer.model.task.MultipleFieldsContainsKeywordsPredicate;
+import seedu.organizer.model.task.predicates.MultipleFieldsContainsKeywordsPredicate;
 
 //@@author guekling
 public class FindMultipleFieldsCommandParserTest {

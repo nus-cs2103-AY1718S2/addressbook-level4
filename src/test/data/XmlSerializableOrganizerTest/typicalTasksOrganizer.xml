@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!-- Organizer save file which contains the same Task values as in
-{@code TypicalTasks#getTypicalAddressBook()}-->
+{@code TypicalTasks#getTypicalOrganizer()}-->
 <organizer>
     <tasks>
         <name>Grocery</name>

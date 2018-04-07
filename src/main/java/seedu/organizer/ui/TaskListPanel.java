@@ -18,7 +18,7 @@ import seedu.organizer.commons.events.ui.TaskPanelSelectionChangedEvent;
 import seedu.organizer.model.task.Task;
 
 /**
- * Panel containing the list of persons.
+ * Panel containing the list of tasks.
  */
 public class TaskListPanel extends UiPart<Region> {
     private static final String FXML = "TaskListPanel.fxml";
@@ -35,7 +35,7 @@ public class TaskListPanel extends UiPart<Region> {
 
     private void setConnections(ObservableList<Task> taskList) {
         ObservableList<TaskCard> mappedList = EasyBind.map(
-                taskList, (person) -> new TaskCard(person, taskList.indexOf(person) + 1));
+                taskList, (task) -> new TaskCard(task, taskList.indexOf(task) + 1));
         taskListView.setItems(mappedList);
         taskListView.setCellFactory(listView -> new TaskListViewCell());
         setEventHandlerForSelectionChangeEvent();

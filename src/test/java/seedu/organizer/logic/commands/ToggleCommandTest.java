@@ -91,7 +91,7 @@ public class ToggleCommandTest {
         toggleCommand.execute();
         undoRedoStack.push(toggleCommand);
 
-        // undo -> reverts addressbook back to previous state and filtered task list to show all persons
+        // undo -> reverts organizer back to previous state and filtered task list to show all tasks
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> same first task edited again

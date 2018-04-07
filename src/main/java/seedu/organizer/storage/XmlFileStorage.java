@@ -9,16 +9,16 @@ import seedu.organizer.commons.exceptions.DataConversionException;
 import seedu.organizer.commons.util.XmlUtil;
 
 /**
- * Stores addressbook data in an XML file
+ * Stores organizer data in an XML file
  */
 public class XmlFileStorage {
     /**
-     * Saves the given addressbook data to the specified file.
+     * Saves the given organizer data to the specified file.
      */
-    public static void saveDataToFile(File file, XmlSerializableOrganizer addressBook)
+    public static void saveDataToFile(File file, XmlSerializableOrganizer organizer)
             throws FileNotFoundException {
         try {
-            XmlUtil.saveDataToFile(file, addressBook);
+            XmlUtil.saveDataToFile(file, organizer);
         } catch (JAXBException e) {
             throw new AssertionError("Unexpected exception " + e.getMessage());
         }

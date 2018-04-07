@@ -1,9 +1,10 @@
-package seedu.organizer.model.task;
+package seedu.organizer.model.task.predicates;
 
 import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.organizer.commons.util.StringUtil;
+import seedu.organizer.model.task.Task;
 
 //@@author guekling
 /**

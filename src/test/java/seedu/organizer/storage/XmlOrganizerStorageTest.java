@@ -29,12 +29,12 @@ public class XmlOrganizerStorageTest {
     public TemporaryFolder testFolder = new TemporaryFolder();
 
     @Test
-    public void readAddressBook_nullFilePath_throwsNullPointerException() throws Exception {
+    public void readOrganizer_nullFilePath_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        readAddressBook(null);
+        readOrganizer(null);
     }
 
-    private java.util.Optional<ReadOnlyOrganizer> readAddressBook(String filePath) throws Exception {
+    private java.util.Optional<ReadOnlyOrganizer> readOrganizer(String filePath) throws Exception {
         return new XmlOrganizerStorage(filePath).readOrganizer(addToTestDataPathIfNotNull(filePath));
     }
 
@@ -46,14 +46,14 @@ public class XmlOrganizerStorageTest {
 
     @Test
     public void read_missingFile_emptyResult() throws Exception {
-        assertFalse(readAddressBook("NonExistentFile.xml").isPresent());
+        assertFalse(readOrganizer("NonExistentFile.xml").isPresent());
     }
 
     @Test
     public void read_notXmlFormat_exceptionThrown() throws Exception {
 
         thrown.expect(DataConversionException.class);
-        readAddressBook("NotXmlFormatOrganizer.xml");
+        readOrganizer("NotXmlFormatOrganizer.xml");
 
         /* IMPORTANT: Any code below an exception-throwing line (like the one above) will be ignored.
          * That means you should not have more than one exception test in one method
@@ -61,64 +61,64 @@ public class XmlOrganizerStorageTest {
     }
 
     @Test
-    public void readAddressBook_invalidPersonAddressBook_throwDataConversionException() throws Exception {
+    public void readOrganizer_invalidTaskOrganizer_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
-        readAddressBook("invalidTaskOrganizer.xml");
+        readOrganizer("invalidTaskOrganizer.xml");
     }
 
     @Test
-    public void readAddressBook_invalidAndValidPersonAddressBook_throwDataConversionException() throws Exception {
+    public void readOrganizer_invalidAndValidTaskOrganizer_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
-        readAddressBook("invalidAndValidTaskOrganizer.xml");
+        readOrganizer("invalidAndValidTaskOrganizer.xml");
     }
 
     @Test
-    public void readAndSaveAddressBook_allInOrder_success() throws Exception {
-        String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
+    public void readAndSaveOrganizer_allInOrder_success() throws Exception {
+        String filePath = testFolder.getRoot().getPath() + "TempOrganizer.xml";
         Organizer original = getTypicalOrganizer();
-        XmlOrganizerStorage xmlAddressBookStorage = new XmlOrganizerStorage(filePath);
+        XmlOrganizerStorage xmlOrganizerStorage = new XmlOrganizerStorage(filePath);
 
         //Save in new file and read back
-        xmlAddressBookStorage.saveOrganizer(original, filePath);
-        ReadOnlyOrganizer readBack = xmlAddressBookStorage.readOrganizer(filePath).get();
+        xmlOrganizerStorage.saveOrganizer(original, filePath);
+        ReadOnlyOrganizer readBack = xmlOrganizerStorage.readOrganizer(filePath).get();
         assertEquals(original, new Organizer(readBack));
 
         //Modify data, overwrite exiting file, and read back
         original.addTask(MAKEPRESENT);
         original.removeTask(GROCERY);
-        xmlAddressBookStorage.saveOrganizer(original, filePath);
-        readBack = xmlAddressBookStorage.readOrganizer(filePath).get();
+        xmlOrganizerStorage.saveOrganizer(original, filePath);
+        readBack = xmlOrganizerStorage.readOrganizer(filePath).get();
         assertEquals(original, new Organizer(readBack));
 
         //Save and read without specifying file path
         original.addTask(INTERVIEWPREP);
-        xmlAddressBookStorage.saveOrganizer(original); //file path not specified
-        readBack = xmlAddressBookStorage.readOrganizer().get(); //file path not specified
+        xmlOrganizerStorage.saveOrganizer(original); //file path not specified
+        readBack = xmlOrganizerStorage.readOrganizer().get(); //file path not specified
         assertEquals(original, new Organizer(readBack));
 
     }
 
     @Test
-    public void saveAddressBook_nullAddressBook_throwsNullPointerException() {
+    public void saveOrganizer_nullOrganizer_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        saveAddressBook(null, "SomeFile.xml");
+        saveOrganizer(null, "SomeFile.xml");
     }
 
     /**
-     * Saves {@code addressBook} at the specified {@code filePath}.
+     * Saves {@code organizer} at the specified {@code filePath}.
      */
-    private void saveAddressBook(ReadOnlyOrganizer addressBook, String filePath) {
+    private void saveOrganizer(ReadOnlyOrganizer organizer, String filePath) {
         try {
-            new XmlOrganizerStorage(filePath).saveOrganizer(addressBook, addToTestDataPathIfNotNull(filePath));
+            new XmlOrganizerStorage(filePath).saveOrganizer(organizer, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }
     }
 
     @Test
-    public void saveAddressBook_nullFilePath_throwsNullPointerException() throws IOException {
+    public void saveOrganizer_nullFilePath_throwsNullPointerException() throws IOException {
         thrown.expect(NullPointerException.class);
-        saveAddressBook(new Organizer(), null);
+        saveOrganizer(new Organizer(), null);
     }
 
 

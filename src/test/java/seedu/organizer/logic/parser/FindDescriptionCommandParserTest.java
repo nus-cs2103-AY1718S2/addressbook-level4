@@ -9,7 +9,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import seedu.organizer.logic.commands.FindDescriptionCommand;
-import seedu.organizer.model.task.DescriptionContainsKeywordsPredicate;
+import seedu.organizer.model.task.predicates.DescriptionContainsKeywordsPredicate;
 
 //@@author guekling
 public class FindDescriptionCommandParserTest {

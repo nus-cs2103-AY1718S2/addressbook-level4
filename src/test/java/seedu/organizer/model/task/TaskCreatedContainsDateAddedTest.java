@@ -17,7 +17,7 @@ import seedu.organizer.model.tag.Tag;
 /**\
  * Tests whether a DateAdded is automatically created upon Task creation
  */
-public class TaskCreatedContainsDateAdded {
+public class TaskCreatedContainsDateAddedTest {
 
     @Test
     public void createTaskContainsDateAdded() {

@@ -66,14 +66,14 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
         return !lastRememberedSyncStatus.equals(getSyncStatus());
     }
     /**
-     * Remembers the content of the 'total persons' portion of the status bar.
+     * Remembers the content of the 'total tasks' portion of the status bar.
      */
     public void rememberTotalTasksStatus() {
         lastRememberedTotalTasksStatus = getTotalTasksStatus();
     }
 
     /**
-     * Returns true if the current content of the 'total persons' is different from the value remembered by the most
+     * Returns true if the current content of the 'total tasks' is different from the value remembered by the most
      * recent {@code rememberTotalTasksStatus()} call.
      */
     public boolean isTotalTasksStatusChanged() {

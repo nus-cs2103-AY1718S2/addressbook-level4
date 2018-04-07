@@ -17,7 +17,7 @@ public abstract class UndoableCommand extends Command {
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
     /**
-     * Stores the current state of {@code model#addressBook}.
+     * Stores the current state of {@code model#organizer}.
      */
     private void saveOrganizerSnapshot() {
         requireNonNull(model);
@@ -33,7 +33,7 @@ public abstract class UndoableCommand extends Command {
     /**
      * Reverts the Organizer to the state before this command
      * was executed and updates the filtered task list to
-     * show all persons.
+     * show all tasks.
      */
     protected final void undo() {
         requireAllNonNull(model, previousOrganizer);
@@ -43,7 +43,7 @@ public abstract class UndoableCommand extends Command {
 
     /**
      * Executes the command and updates the filtered task
-     * list to show all persons.
+     * list to show all tasks.
      */
     protected final void redo() {
         requireNonNull(model);

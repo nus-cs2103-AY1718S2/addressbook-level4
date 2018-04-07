@@ -60,7 +60,7 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
-        OrganizerStorage organizerStorage = new XmlOrganizerStorage(userPrefs.getAddressBookFilePath());
+        OrganizerStorage organizerStorage = new XmlOrganizerStorage(userPrefs.getOrganizerFilePath());
         storage = new StorageManager(organizerStorage, userPrefsStorage);
 
         initLogging(config);

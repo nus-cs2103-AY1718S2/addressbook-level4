@@ -32,14 +32,14 @@ public interface OrganizerStorage {
 
     /**
      * Saves the given {@link ReadOnlyOrganizer} to the storage.
-     * @param addressBook cannot be null.
+     * @param organizer cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveOrganizer(ReadOnlyOrganizer addressBook) throws IOException;
+    void saveOrganizer(ReadOnlyOrganizer organizer) throws IOException;
 
     /**
      * @see #saveOrganizer(ReadOnlyOrganizer)
      */
-    void saveOrganizer(ReadOnlyOrganizer addressBook, String filePath) throws IOException;
+    void saveOrganizer(ReadOnlyOrganizer organizer, String filePath) throws IOException;
 
 }

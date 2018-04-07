@@ -1,7 +1,8 @@
-package seedu.organizer.model.task;
+package seedu.organizer.model.task.predicates;
 
 import java.util.function.Predicate;
 
+import seedu.organizer.model.task.Task;
 import seedu.organizer.model.user.User;
 
 //@@author dominickenn

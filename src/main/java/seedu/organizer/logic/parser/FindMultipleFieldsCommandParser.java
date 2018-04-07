@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import seedu.organizer.logic.commands.FindMultipleFieldsCommand;
 import seedu.organizer.logic.parser.exceptions.ParseException;
-import seedu.organizer.model.task.MultipleFieldsContainsKeywordsPredicate;
+import seedu.organizer.model.task.predicates.MultipleFieldsContainsKeywordsPredicate;
 
 //@@author guekling
 /**

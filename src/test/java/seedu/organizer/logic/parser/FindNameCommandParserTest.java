@@ -9,7 +9,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import seedu.organizer.logic.commands.FindNameCommand;
-import seedu.organizer.model.task.NameContainsKeywordsPredicate;
+import seedu.organizer.model.task.predicates.NameContainsKeywordsPredicate;
 
 public class FindNameCommandParserTest {
 

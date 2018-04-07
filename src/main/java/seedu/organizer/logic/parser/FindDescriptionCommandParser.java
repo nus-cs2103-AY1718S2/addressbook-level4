@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import seedu.organizer.logic.commands.FindDescriptionCommand;
 import seedu.organizer.logic.parser.exceptions.ParseException;
-import seedu.organizer.model.task.DescriptionContainsKeywordsPredicate;
+import seedu.organizer.model.task.predicates.DescriptionContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindDescriptionCommand object

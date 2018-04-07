@@ -12,7 +12,7 @@ import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandFailur
 import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.organizer.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.organizer.logic.commands.CommandTestUtil.prepareUndoCommand;
-import static seedu.organizer.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.organizer.logic.commands.CommandTestUtil.showTaskAtIndex;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_SECOND_TASK;
 import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
@@ -71,16 +71,16 @@ public class EditCommandTest {
 
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Index indexLastPerson = Index.fromOneBased(model.getFilteredTaskList().size());
-        Task lastTask = model.getFilteredTaskList().get(indexLastPerson.getZeroBased());
+        Index indexLastTask = Index.fromOneBased(model.getFilteredTaskList().size());
+        Task lastTask = model.getFilteredTaskList().get(indexLastTask.getZeroBased());
 
-        TaskBuilder personInList = new TaskBuilder(lastTask);
-        Task editedTask = personInList.withName(VALID_NAME_STUDY).withPriority(VALID_PRIORITY_STUDY)
+        TaskBuilder taskInList = new TaskBuilder(lastTask);
+        Task editedTask = taskInList.withName(VALID_NAME_STUDY).withPriority(VALID_PRIORITY_STUDY)
                 .withTags(VALID_TAG_HUSBAND).build();
 
         EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withName(VALID_NAME_STUDY)
                 .withPriority(VALID_PRIORITY_STUDY).withTags(VALID_TAG_HUSBAND).build();
-        EditCommand editCommand = prepareCommand(indexLastPerson, descriptor);
+        EditCommand editCommand = prepareCommand(indexLastTask, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, editedTask);
 
@@ -112,7 +112,7 @@ public class EditCommandTest {
 
     @Test
     public void execute_filteredList_success() throws Exception {
-        showPersonAtIndex(model, INDEX_FIRST_TASK);
+        showTaskAtIndex(model, INDEX_FIRST_TASK);
 
         Task taskInFilteredList = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
         Task editedTask = new TaskBuilder(taskInFilteredList).withName(VALID_NAME_STUDY).build();
@@ -139,7 +139,7 @@ public class EditCommandTest {
 
     @Test
     public void execute_duplicateTaskFilteredList_failure() {
-        showPersonAtIndex(model, INDEX_FIRST_TASK);
+        showTaskAtIndex(model, INDEX_FIRST_TASK);
 
         // edit task in filtered list into a duplicate in organizer book
         Task taskInList = model.getOrganizer().getTaskList().get(INDEX_SECOND_TASK.getZeroBased());
@@ -164,7 +164,7 @@ public class EditCommandTest {
      */
     @Test
     public void execute_invalidTaskIndexFilteredList_failure() {
-        showPersonAtIndex(model, INDEX_FIRST_TASK);
+        showTaskAtIndex(model, INDEX_FIRST_TASK);
         Index outOfBoundIndex = INDEX_SECOND_TASK;
         // ensures that outOfBoundIndex is still in bounds of organizer book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getOrganizer().getTaskList().size());
@@ -191,7 +191,7 @@ public class EditCommandTest {
         editCommand.execute();
         undoRedoStack.push(editCommand);
 
-        // undo -> reverts addressbook back to previous state and filtered task list to show all persons
+        // undo -> reverts organizer back to previous state and filtered task list to show all tasks
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> same first task edited again
@@ -234,13 +234,13 @@ public class EditCommandTest {
         Model expectedModel = new ModelManager(new Organizer(model.getOrganizer()), new UserPrefs());
         expectedModel.loginUser(ADMIN_USER);
 
-        showPersonAtIndex(model, INDEX_SECOND_TASK);
+        showTaskAtIndex(model, INDEX_SECOND_TASK);
         Task taskToEdit = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
         // edit -> edits second task in unfiltered task list / first task in filtered task list
         editCommand.execute();
         undoRedoStack.push(editCommand);
 
-        // undo -> reverts addressbook back to previous state and filtered task list to show all persons
+        // undo -> reverts organizer back to previous state and filtered task list to show all tasks
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         expectedModel.updateTask(taskToEdit, editedTask);

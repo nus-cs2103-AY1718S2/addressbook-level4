@@ -29,20 +29,20 @@ public class UserPrefs {
         guiSettings = new GuiSettings(width, height, x, y);
     }
 
-    public String getAddressBookFilePath() {
+    public String getOrganizerFilePath() {
         return organizerFilePath;
     }
 
-    public void setAddressBookFilePath(String addressBookFilePath) {
-        this.organizerFilePath = addressBookFilePath;
+    public void setOrganizerFilePath(String organizerFilePath) {
+        this.organizerFilePath = organizerFilePath;
     }
 
-    public String getAddressBookName() {
+    public String getOrganizerName() {
         return organizerName;
     }
 
-    public void setOrganizerName(String addressBookName) {
-        this.organizerName = addressBookName;
+    public void setOrganizerName(String organizerName) {
+        this.organizerName = organizerName;
     }
 
     @Override

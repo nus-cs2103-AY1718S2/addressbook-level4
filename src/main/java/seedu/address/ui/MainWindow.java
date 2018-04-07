@@ -225,9 +225,8 @@ public class MainWindow extends UiPart<Stage> {
 
     //@@author aquarinte
     /**
-     * Change the theme of the application
+     * Changes the theme of Medeina.
      */
-
     @Subscribe
     public void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -249,7 +248,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Removes all existing stylesheets and add the given {@code theme} to style sheets
+     * Removes all existing stylesheets and add the given {@code theme} to style sheets.
      * Re-add Extensions.css to style sheets.
      */
     public void changeStyleSheet(String theme) {

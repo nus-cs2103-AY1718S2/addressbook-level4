@@ -25,17 +25,27 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeThemeCommand.MESSAGE_USAGE));
         }
 
-        String[] splitArgs = trimmedArgs.split(" ");
-        if (splitArgs.length > 1) {
+        if (hasMoreThanOneArgument(trimmedArgs)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeThemeCommand.MESSAGE_USAGE));
         }
 
-        if (!Theme.hasValidThemeName(splitArgs[0].toLowerCase())) {
+        if (!Theme.hasValidThemeName(trimmedArgs)) {
             throw new ParseException(Theme.MESSAGE_THEME_CONSTRAINTS);
         }
 
-        return new ChangeThemeCommand(new Theme(splitArgs[0].toLowerCase()));
+        return new ChangeThemeCommand(new Theme(trimmedArgs.toLowerCase()));
+    }
+
+    /**
+     * Returns true if {@code trimmedArgs} contains more than 1 argument/word (separated by space).
+     */
+    private boolean hasMoreThanOneArgument(String trimmedArgs) {
+        String[] splitArgs = trimmedArgs.split(" ");
+        if (splitArgs.length > 1) {
+            return true;
+        }
+        return false;
     }
 
 }

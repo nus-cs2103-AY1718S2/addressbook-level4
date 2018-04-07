@@ -8,7 +8,7 @@ import seedu.address.model.theme.Theme;
 
 //@@author aquarinte
 /**
- * Change the theme of Medeina
+ * Changes the theme of Medeina.
  */
 public class ChangeThemeCommand extends Command {
     public static final String COMMAND_WORD = "theme";

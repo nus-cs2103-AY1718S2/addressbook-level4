@@ -21,6 +21,9 @@ public class AliasCommandParser implements Parser<AliasCommand> {
     public AliasCommand parse(String args) throws ParseException {
         args = args.trim();
         String[] trimmedArgs = args.split("\\s+");
+        if (trimmedArgs.length == 1 && trimmedArgs[0].equals(AliasCommand.LIST_ALIAS_COMMAND_WORD)) {
+            return new AliasCommand();
+        }
         if (trimmedArgs.length != 2) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));

@@ -6,7 +6,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 //@@author jingyinno
 /**
  * Represents a Alias in the address book.
- * Guarantees: immutable; name is valid as declared in {@link #isValidAliasName(String)}
+ * Guarantees: immutable; name is valid as declared in {@link #isValidAliasParameter(String)}
  */
 public class Alias {
 
@@ -23,7 +23,7 @@ public class Alias {
      */
     public Alias(String command, String aliasName) {
         requireNonNull(aliasName);
-        checkArgument(isValidAliasName(aliasName), MESSAGE_ALIAS_CONSTRAINTS);
+        checkArgument(isValidAliasParameter(aliasName), MESSAGE_ALIAS_CONSTRAINTS);
         this.aliasName = aliasName;
         this.command = command;
     }
@@ -39,7 +39,7 @@ public class Alias {
     /**
      * Returns true if a given string is a valid alias name.
      */
-    public static boolean isValidAliasName(String test) {
+    public static boolean isValidAliasParameter(String test) {
         return test.matches(ALIAS_VALIDATION_REGEX);
     }
 

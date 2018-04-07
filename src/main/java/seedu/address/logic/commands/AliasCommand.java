@@ -16,6 +16,7 @@ import seedu.address.model.alias.exceptions.DuplicateAliasException;
 public class AliasCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "alias";
+    public static final String LIST_ALIAS_COMMAND_WORD = "list";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows list of alias or creates new alias.\n"
             + "Parameters: [COMMAND] [NEW_ALIAS]\n"
             + "Example: " + COMMAND_WORD + " add a";
@@ -45,9 +46,19 @@ public class AliasCommand extends UndoableCommand {
         toAdd = alias;
     }
 
+    /**
+     * Creates a default AliasCommand
+     */
+    public AliasCommand() {
+        toAdd = null;
+    }
+
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
+        if (toAdd == null) {
+            return new CommandResult(model.getAliasList().toString());
+        }
         if (!commands.contains(toAdd.getCommand())) {
             throw new CommandException(
                     String.format(AliasCommand.MESSAGE_INVALID_COMMAND,
@@ -57,6 +68,7 @@ public class AliasCommand extends UndoableCommand {
                     String.format(AliasCommand.MESSAGE_INVALID_ALIAS,
                             AliasCommand.MESSAGE_INVALID_ALIAS_DESCRIPTION));
         }
+
         try {
             model.addAlias(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));

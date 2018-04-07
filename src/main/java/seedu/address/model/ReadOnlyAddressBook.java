@@ -1,5 +1,7 @@
 package seedu.address.model;
 
+import java.util.HashMap;
+
 import javafx.collections.ObservableList;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.person.Person;
@@ -28,6 +30,12 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate aliases.
      */
     ObservableList<Alias> getAliasList();
+
+    /**
+     * Returns hash map of the aliases list.
+     * This list will not contain any duplicate aliases.
+     */
+    HashMap<String, String> getAliasMapping();
 
     /**
      * Resets the alias list to an empty list

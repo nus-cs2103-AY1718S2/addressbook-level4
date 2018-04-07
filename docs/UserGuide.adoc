@@ -75,8 +75,10 @@ A person can have any number of tags (including 0)
 [NOTE]
 ====
 * Birthday must be in DDMMYYYY format
-* Timetable must be a valid NUSMods shortened link
+* Timetable must either be a valid NUSMods shortened link or left empty (in which a empty timetable will be created)
 ====
+
+For more information on how to get a valid link, refer to <<FAQ>>.
 
 Examples:
 
@@ -174,9 +176,9 @@ Displays a list that contains all the birthdays of all contacts ordered by date 
 Or display a notification of the birthdays today +
 Format: `birthdays [ADDITIONAL_PARAMETER]`
 
+The following parameters can be inputted into the [ADDITIONAL_PARAMETER] field +
 ****
-* There is an optional field of [ADDITIONAL_PARAMETER]
-* You can input `todays` in that field to show a notification of the birthdays today instead
+* `todays`: Shows a notification of the birthdays occurring today +
 ****
 
 Examples:
@@ -215,6 +217,31 @@ Examples:
 * `free p/John Doe p/Han Tan` +
 Displays the combined timetable for John Doe and Han Tan.
 
+=== Adding a command alias: `alias` (since v1.1)
+
+Creates customized aliases for any valid command. +
+Format: `alias [COMMAND] [ALIAS]`
+
+Examples:
+
+* `alias history hist`
+* `alias find f`
+* `alias alias al`
+
+=== Listing all aliases: `alias list` (since v1.4)
+
+Lists all created aliases. +
+Format: `alias list`
+
+=== Removing a currently existing alias: `unalias` (since v1.3)
+
+Removes a previously created alias. +
+Format: `unalias [CURRENT_ALIAS]`
+
+Examples:
+
+* `unalias hist`
+
 === Vacant study rooms finder : `vacant` (since v1.3)
 
 Displays a list of rooms in the specified building and whether each room is vacant or not, in blocks of 1 hours. +
@@ -236,6 +263,7 @@ Launches Google Maps with the specified location(s).
 Format: `map LOCATION` or `map LOCATION/LOCATION...`
 
 ****
+* NUS building name is case insensitive e.g. `COM1` or `com1` gets the same output
 * If only one location is provided, the location will be displayed on the map.
 * If more than one location is provided, directions to each location, starting from the first one, will be displayed.
 * Typing "map LOCATION_START to LOCATION_DESTINATION" can work as well only if neither locations specified are NUS buildings.
@@ -249,31 +277,6 @@ Displays the location of BIZ1 (which is an NUS building name).
 Displays the directions from `Tampines Mall` to `COM1`.
 * `map Tampines Mall/COM1/Airport Blvd` +
 Displays the directions from `Tampines Mall` to `COM1` to `Airport Blvd`.
-
-=== Adding a command alias: `alias` (since v1.1)
-
-Creates customized aliases for any valid command. +
-Format: `alias [COMMAND] [ALIAS]`
-
-Examples:
-
-* `alias history hist` +
-Adds the alias `hist` as a shortcut for `history`
-* `alias find f` +
-Adds the alias `f` as a shortcut for `find`
-* `alias alias al` +
-Adds the alias `al` as a shortcut for `alias`
-
-
-=== Removing a currently existing alias: `unalias` (since v1.3)
-
-Removes a previously created alias. +
-Format: `unalias [CURRENT_ALIAS]`
-
-Examples:
-
-* `unalias hist` +
-Removes the alias `hist`.
 
 === Listing entered commands : `history`
 
@@ -414,16 +417,14 @@ There is no need to save manually.
 
 *Q*: How do I transfer my data to another Computer? +
 *A*:
-*Method 1*
-Replaces the other computer's data completely
+*Method 1*: Replaces the other computer's data completely
 ****
 .  In the folder that `StardyTogether.jar` is in, find the `data` folder
 .  Copy the `addressbook.xml` storage file inside
 .  Transfer that file to the other computer
 .  Place it in the `data` folder of `StardyTogether.jar`, on the other computer
 ****
-*Method 2*
-Merges the contacts of both computers
+*Method 2*: Merges the contacts of both computers
 ****
 .  In the folder that `StardyTogether.jar` is in, find the `data` folder
 .  Copy the `addressbook.xml` storage file inside
@@ -434,14 +435,29 @@ Merges the contacts of both computers
 .  Press Enter
 ****
 
+*Q*: How do I import my timetable from NUSMods? +
+*A*: When adding or editing a person, you can input his/her NUSMods shortened link in the tt/TIMETABLE field
+****
+.   Go to NUSMods
+.   Click `Share/Sync` at the bottom right hand corner
++
+image::NUSMods_Screenshot_First.PNG[width="790"]
++
+.   Copy the link in the window that appeared
++
+image::NUSMods_Screenshot_Second.PNG[width="790"]
++
+.   Paste it in StardyTogether at the tt/TIMETABLE field
+****
 
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/010195 t/friend t/colleague`
-* *Alias* `alias [COMMAND] [ALIAS]` +
+* *Alias* `alias COMMAND ALIAS` +
 e.g. `alias history hist`
-* *Birthday List*: `birthdays`
+* *Alias List* `alias list` +
+* *Birthday List*: `birthdays [todays]`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`

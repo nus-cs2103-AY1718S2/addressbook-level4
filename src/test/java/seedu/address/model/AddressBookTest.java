@@ -82,7 +82,8 @@ public class AddressBookTest {
 
         private final ObservableList<Photo> photos = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags, Collection<? extends Photo> photos) {
+        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags,
+                        Collection<? extends Photo> photos) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
             this.photos.setAll(photos);

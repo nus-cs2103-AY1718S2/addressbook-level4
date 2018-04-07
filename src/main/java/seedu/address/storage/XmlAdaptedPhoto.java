@@ -1,9 +1,9 @@
 package seedu.address.storage;
+//@@author crizyli
+import javax.xml.bind.annotation.XmlValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.photo.Photo;
-
-import javax.xml.bind.annotation.XmlValue;
 
 /**
  * JAXB-friendly adapted version of the Photo.

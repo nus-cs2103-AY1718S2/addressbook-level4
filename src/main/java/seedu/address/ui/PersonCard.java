@@ -1,6 +1,11 @@
 //@@author IzHoBX
 package seedu.address.ui;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -11,12 +16,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import seedu.address.logic.commands.AddPhotoCommand;
 import seedu.address.model.person.Person;
-import seedu.address.model.photo.Photo;
-
-import java.io.File;
-import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * An UI component that displays information of a {@code Person}.

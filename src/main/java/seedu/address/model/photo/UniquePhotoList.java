@@ -1,17 +1,24 @@
 package seedu.address.model.photo;
+//@@author crizyli
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
+/**
+ * A list of photos that enforces no nulls and uniqueness between its elements.
+ *
+ * Supports minimal set of list operations for the app's features.
+ *
+ * @see Photo#equals(Object)
+ */
 public class UniquePhotoList implements Iterable<Photo> {
 
     private final ObservableList<Photo> internalList = FXCollections.observableArrayList();

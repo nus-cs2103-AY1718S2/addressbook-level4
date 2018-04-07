@@ -21,9 +21,9 @@ import seedu.address.commons.events.ui.ResetPersonCardsEvent;
 import seedu.address.commons.events.ui.ShowFileChooserEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
-import seedu.address.model.photo.Photo;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.photo.Photo;
 
 /**
  * Adds a photo to an employee.

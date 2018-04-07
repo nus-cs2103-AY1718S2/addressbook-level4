@@ -14,8 +14,6 @@ import javafx.scene.text.Text;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitLoginRequestEvent;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.HelpCommand;
 import seedu.address.login.Login;
 import seedu.address.login.UserPass;
 

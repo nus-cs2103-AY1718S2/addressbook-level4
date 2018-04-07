@@ -100,8 +100,8 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.logic.parser.TokenType.PREFIXAMOUNT;
-import static seedu.address.logic.parser.TokenType.PREFIXNAME;
+import static A_PREFIX;
+import static N_PREFIX;
 
 import org.junit.Test;
 

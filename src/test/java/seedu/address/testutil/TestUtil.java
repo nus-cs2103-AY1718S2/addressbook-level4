@@ -35,7 +35,7 @@ public class TestUtil {
     public static final String EQUALS_STRING = "=";
     public static final Token EQUALS_TOKEN = new Token(TokenType.COMPARATOR, EQUALS_STRING);
     public static final String PREFIX_STRING = "a/";
-    public static final Token PREFIX_TOKEN = new Token(TokenType.PREFIXAMOUNT, PREFIX_STRING);
+    public static final Token PREFIX_TOKEN = new Token(TokenType.PREFIX_AMOUNT, PREFIX_STRING);
     public static final String NUM_STRING = "999";
     public static final Token NUM_TOKEN = new Token(TokenType.NUM, NUM_STRING);
     public static final String STRING_STRING = "TESTING";

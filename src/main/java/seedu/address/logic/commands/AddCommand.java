@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.TokenType.PREFIXNAME;
-import static seedu.address.logic.parser.TokenType.PREFIXTAG;
+import static seedu.address.logic.parser.TokenType.PREFIX_NAME;
+import static seedu.address.logic.parser.TokenType.PREFIX_TAG;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.coin.Coin;
@@ -18,12 +18,12 @@ public class AddCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a coin to the coin book. "
             + "Parameters: "
-            + PREFIXNAME + "NAME "
-            + "[" + PREFIXTAG + "TAG]...\n"
+            + PREFIX_NAME + "NAME "
+            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIXNAME + "BTC "
-            + PREFIXTAG + "fav "
-            + PREFIXTAG + "fastTransfer";
+            + PREFIX_NAME + "BTC "
+            + PREFIX_TAG + "fav "
+            + PREFIX_TAG + "fastTransfer";
 
     public static final String MESSAGE_SUCCESS = "New coin added: %1$s";
     public static final String MESSAGE_DUPLICATE_COIN = "This coin already exists in the coin book";

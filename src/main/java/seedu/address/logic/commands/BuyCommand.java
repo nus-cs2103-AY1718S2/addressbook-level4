@@ -2,7 +2,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.TokenType.PREFIXAMOUNT;
+import static seedu.address.logic.parser.TokenType.PREFIX_AMOUNT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_COINS;
 
 import java.util.List;
@@ -25,8 +25,8 @@ public class BuyCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add value to the coin account identified "
             + "by the index number used in the last coin listing or its code. "
             + "Parameters: TARGET "
-            + PREFIXAMOUNT + "AMOUNT\n"
-            + "Example: " + COMMAND_WORD + " 1 " + PREFIXAMOUNT + "50.0";
+            + PREFIX_AMOUNT + "AMOUNT\n"
+            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_AMOUNT + "50.0";
 
     public static final String MESSAGE_BUY_COIN_SUCCESS = "Bought: %1$s";
     public static final String MESSAGE_NOT_BOUGHT = "Invalid code or amount entered.";

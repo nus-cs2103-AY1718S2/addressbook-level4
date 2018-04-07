@@ -28,7 +28,7 @@ public class ArgumentTokenizer {
     };
 
     private static String getCapturingGroupRegexPatternFromTokenType(TokenType type) {
-        return String.format(CAPTURING_GROUP_REGEX_PATTERN, type.name(), type.regex);
+        return String.format(CAPTURING_GROUP_REGEX_PATTERN, type.typeName, type.regex);
     }
 
     private static String getDefaultRegexPatternString() {
@@ -71,10 +71,10 @@ public class ArgumentTokenizer {
         Matcher m = pattern.matcher(args);
         while (m.find()) {
             for (TokenType type : typeList) {
-                if (m.group(type.name()) == null) {
+                if (m.group(type.typeName) == null) {
                     continue;
                 }
-                tokenList.add(new Token(type, m.group(type.name())));
+                tokenList.add(new Token(type, m.group(type.typeName)));
             }
         }
         // Add in an EOF type Token as a delimiter.

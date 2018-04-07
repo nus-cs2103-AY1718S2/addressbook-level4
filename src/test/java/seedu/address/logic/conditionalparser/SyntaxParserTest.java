@@ -19,7 +19,7 @@ public class SyntaxParserTest {
     private static final Token LEFTPARENTHESES = new Token(TokenType.LEFTPARENTHESES, "");
     private static final Token RIGHTPARENTHESES = new Token(TokenType.RIGHTPARENTHESES, "");
     private static final Token COMPARATOR = new Token(TokenType.COMPARATOR, "");
-    private static final Token PREFIXAMOUNT = new Token(TokenType.PREFIXAMOUNT, "");
+    private static final Token PREFIXAMOUNT = new Token(TokenType.PREFIX_AMOUNT, "");
     private static final Token NUM = new Token(TokenType.NUM, "");
     private static final Token STRING = new Token(TokenType.STRING, "");
     private static final Token SLASH = new Token(TokenType.SLASH, "");

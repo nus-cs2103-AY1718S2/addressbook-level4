@@ -3,7 +3,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.TokenType.PREFIXAMOUNT;
+import static seedu.address.logic.parser.TokenType.PREFIX_AMOUNT;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.BuyCommand;
@@ -24,15 +24,15 @@ public class BuyCommandParser implements Parser<BuyCommand> {
     public BuyCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenizeToArgumentMultimap(args, PREFIXAMOUNT);
-        if (!argMultimap.arePrefixesPresent(PREFIXAMOUNT)
+                ArgumentTokenizer.tokenizeToArgumentMultimap(args, PREFIX_AMOUNT);
+        if (!argMultimap.arePrefixesPresent(PREFIX_AMOUNT)
                 || argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, BuyCommand.MESSAGE_USAGE));
         }
 
         try {
             CommandTarget target = ParserUtil.parseTarget(argMultimap.getPreamble());
-            double amountToAdd = ParserUtil.parseDouble(argMultimap.getValue(PREFIXAMOUNT).get());
+            double amountToAdd = ParserUtil.parseDouble(argMultimap.getValue(PREFIX_AMOUNT).get());
             return new BuyCommand(target, amountToAdd);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, BuyCommand.MESSAGE_USAGE));

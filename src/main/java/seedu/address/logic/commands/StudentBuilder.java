@@ -233,14 +233,16 @@ public class StudentBuilder {
         UniqueTaskList taskList = milestone.getTaskList();
         Task completedTask = taskList.get(taskIndex);
 
-        Task updatedTask = new Task(completedTask.getName(), completedTask.getDescription(), true);
-        Progress updatedProgress = new Progress(milestone.getProgress().getTotalTasks(),
-                milestone.getProgress().getNumCompletedTasks() + 1);
+        if (!completedTask.isCompleted()) {
+            Task updatedTask = new Task(completedTask.getName(), completedTask.getDescription(), true);
+            Progress updatedProgress = new Progress(milestone.getProgress().getTotalTasks(),
+                    milestone.getProgress().getNumCompletedTasks() + 1);
 
-        taskList.setTask(completedTask, updatedTask);
-        Milestone updatedMilestone = new Milestone(milestone.getDueDate(), taskList, updatedProgress,
-                milestone.getDescription());
-        dashboard.getMilestoneList().setMilestone(milestone, updatedMilestone);
+            taskList.setTask(completedTask, updatedTask);
+            Milestone updatedMilestone = new Milestone(milestone.getDueDate(), taskList, updatedProgress,
+                    milestone.getDescription());
+            dashboard.getMilestoneList().setMilestone(milestone, updatedMilestone);
+        }
 
         return this;
     }

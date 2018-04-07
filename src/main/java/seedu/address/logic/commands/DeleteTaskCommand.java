@@ -91,7 +91,7 @@ public class DeleteTaskCommand extends UndoableCommand {
     }
 
     /**
-     * Creates {@code editedStudent} which is a copy of {@code targetStudent} but with the {@code targetTask} removed
+     * Creates {@code editedStudent} which is a copy of {@code targetStudent}, but with the {@code targetTask} removed
      * from the {@code targetMilestone}
      */
     private void createEditedStudent()
@@ -114,5 +114,14 @@ public class DeleteTaskCommand extends UndoableCommand {
         targetStudent = lastShownList.get(targetStudentIndex.getZeroBased());
         targetMilestone = targetStudent.getDashboard().getMilestoneList().get(targetMilestoneIndex);
         targetTask = targetMilestone.getTaskList().get(targetTaskIndex);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+            || (other instanceof DeleteTaskCommand // instanceof handles null
+            && ((DeleteTaskCommand) other).targetStudentIndex == this.targetStudentIndex
+            && ((DeleteTaskCommand) other).targetMilestoneIndex == this.targetMilestoneIndex
+            && ((DeleteTaskCommand) other).targetTaskIndex == this.targetTaskIndex);
     }
 }

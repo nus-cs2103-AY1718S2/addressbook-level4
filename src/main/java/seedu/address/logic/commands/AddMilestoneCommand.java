@@ -11,13 +11,12 @@ import java.util.List;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.util.CheckIndexesUtil;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.dashboard.Milestone;
 import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneException;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
-
-
 
 //@@author yapni
 /**
@@ -27,11 +26,11 @@ public class AddMilestoneCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addMS";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a milestone to a student's dashboard."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a milestone to a student's dashboard.\n"
             + " Parameters: "
             + PREFIX_INDEX + "STUDENT'S INDEX "
             + PREFIX_DATE + "DATE "
-            + PREFIX_DESCRIPTION + "DESCRIPTION "
+            + PREFIX_DESCRIPTION + "DESCRIPTION\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_INDEX + "1 "
             + PREFIX_DATE + "17/05/2018 23:59 "
@@ -71,10 +70,9 @@ public class AddMilestoneCommand extends UndoableCommand {
 
     @Override
     public void preprocessUndoableCommand() throws CommandException {
-
         try {
             setTargetStudent();
-            editedStudent = createEditedStudent(targetStudent, newMilestone);
+            createEditedStudent();
         } catch (DuplicateMilestoneException e) {
             throw new CommandException(MESSAGE_DUPLICATE_MILESTONE);
         } catch (IllegalValueException e) {
@@ -83,30 +81,26 @@ public class AddMilestoneCommand extends UndoableCommand {
     }
 
     /**
-     * Creates and return a copy of {@code Student} with the new Milestone added to its Dashboard.
+     * Creates {@code editedStudent} which is a copy of {@code targetStudent}, but with the {@code newMilestone} added
+     * to the {@code dashboard}.
      */
-    private Student createEditedStudent(Student studentToEdit, Milestone newMilestone)
-            throws DuplicateMilestoneException {
-        requireAllNonNull(studentToEdit, newMilestone);
-
-        return new StudentBuilder(studentToEdit).withNewMilestone(newMilestone).build();
+    private void createEditedStudent() throws DuplicateMilestoneException {
+        editedStudent = new StudentBuilder(targetStudent).withNewMilestone(newMilestone).build();
     }
 
 
     /**
-     * Sets the {@code targetStudent} object
+     * Sets the {@code targetStudent} of this command object
      * @throws IllegalValueException if the studentIndex is invalid
      */
     private void setTargetStudent() throws IllegalValueException {
         List<Student> lastShownList = model.getFilteredStudentList();
 
-        if (studentIndex.getZeroBased() >= lastShownList.size() || studentIndex.getZeroBased() < 0) {
+        if (!CheckIndexesUtil.isStudentIndexValid(lastShownList, studentIndex)) {
             throw new IllegalValueException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
         }
 
-
         targetStudent = lastShownList.get(studentIndex.getZeroBased());
-
     }
 
     @Override

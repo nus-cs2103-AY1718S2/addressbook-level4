@@ -1,13 +1,15 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.util.CheckIndexesUtil;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
@@ -27,21 +29,22 @@ public class FavouriteCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "Student added to favourites: %1$s";
     public static final String MESSAGE_DUPLICATE_STUDENT = "This student already exists in the address book.";
 
-    private final Index targetIndex;
+    private final Index targetStudentIndex;
 
-    private Student studentToFavourite;
+    private Student targetStudent;
     private Student editedStudent;
 
-    public FavouriteCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
+    public FavouriteCommand(Index targetStudentIndex) {
+        requireNonNull(targetStudentIndex);
+        this.targetStudentIndex = targetStudentIndex;
     }
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        requireAllNonNull(studentToFavourite, editedStudent);
+        requireAllNonNull(targetStudent, editedStudent);
 
         try {
-            model.updateStudent(studentToFavourite, editedStudent);
+            model.updateStudent(targetStudent, editedStudent);
         } catch (StudentNotFoundException pnfe) {
             throw new AssertionError("The target student cannot be missing");
         } catch (DuplicateStudentException e) {
@@ -53,30 +56,41 @@ public class FavouriteCommand extends UndoableCommand {
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        List<Student> lastShownList = model.getFilteredStudentList();
-
-        if (targetIndex.getZeroBased() >= lastShownList.size() || targetIndex.getZeroBased() < 0) {
-            throw new CommandException(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+        try {
+            setTargetStudent();
+            createEditedStudent();
+        } catch (IllegalValueException e) {
+            throw new CommandException(e.getMessage());
         }
-
-        studentToFavourite = lastShownList.get(targetIndex.getZeroBased());
-        editedStudent = createEditedStudent(studentToFavourite);
     }
 
     /**
-     * Create and return a copy of the target {@Code Student} to favourite with its' Favourite attribute set to true.
+     * Creates {@code editedStudent} which is a copy of {@code targetStudent}, but with the {@code favourite}
+     * attribute set to true.
      */
-    private static Student createEditedStudent(Student target) {
-        requireNonNull(target);
+    private void createEditedStudent() {
+        editedStudent = new StudentBuilder(targetStudent).withFavourite(true).build();
+    }
 
-        return new StudentBuilder(target).withFavourite(true).build();
+    /**
+     * Sets the {@code targetStudent} of this command object
+     * @throws IllegalValueException if the studentIndex is invalid
+     */
+    private void setTargetStudent() throws IllegalValueException {
+        List<Student> lastShownList = model.getFilteredStudentList();
+
+        if (!CheckIndexesUtil.isStudentIndexValid(lastShownList, targetStudentIndex)) {
+            throw new IllegalValueException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+        }
+
+        targetStudent = lastShownList.get(targetStudentIndex.getZeroBased());
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof FavouriteCommand // instanceof handles null
-                && ((FavouriteCommand) other).targetIndex == this.targetIndex);
+                && ((FavouriteCommand) other).targetStudentIndex == this.targetStudentIndex);
 
     }
 }

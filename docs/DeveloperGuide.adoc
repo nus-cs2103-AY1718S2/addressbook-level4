@@ -494,51 +494,177 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+=== UniqueActivityList
+`UniqueActivityList` resides in the `model` component of the application.
+
+*_Figure 17_* below shows the relationship between `UniqueActivityList` and its relevant components.
+
+.Class Diagram for UniqueActivityList
+image::UniqueActivityListClassDiagram.png[width="550"]
+
+==== Design Consideration
+
+There are two ways to store information of events and tasks in UniqueActivityList:
+
+* ** Alternative 1 (Current Choice):**
+Use the `Activity` Class as a place holder for events and tasks to be stored. Hence, we create two new
+Class `Task` and `Event` to store the information and Both classes inherit from the `Activity` Class.
+** Pros:
+Minor changes to the original structure of the application (except some renaming).
+** Cons:
+It would be a harder to retrieve information as the parameters `Task` and `Event` contain are different.
+Extra accessor methods will also be required for `Event`.
+
+* **Alternative 2 :**
+Have two different class completely: `Task` and `Event`. As such, we will also have two different class
+`UniqueTaskList` and `UniqueEventList`. Relevant interface and access method will also be modified to
+cope with the change.
+** Pros:
+Clear distinction between the two classes.
+** Cons:
+Since the interface is now completely changed, a lot more coding will be required to cope with the change.
+
+Since there are overlaps between the two classes in terms of parameters, we decided that the first approach
+would be the more efficient and preferred way of implementing the structure of the application. Also, taking
+the first approach allows us to practice incremental programming which allows us to have a working release
+every week.
+{empty} +
+{empty} +
+
+==== Autosorting feature
+Following is a snippet which illustrates the function of `UniqueActivityList`:
+
+[source,java]
+----
+    private final ObservableList<Activity> internalList = FXCollections.observableArrayList();
+
+    /...some irrelavant code.../
+
+    public void add(Activity toAdd) throws DuplicateActivityException {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicateActivityException();
+        }
+        internalList.add(toAdd);
+        Collections.sort(internalList, dateTimeComparator);
+    }
+----
+`UniqueActivityList` contains a list of unique activities which is either a `Task` or an `Event` and they
+ is stored in `internalList`. Each time an `Activity` is added to or edited in `UniqueActivityList`,
+ `internalList` will be sorted according to its `DateTime`. Note that for events, its `DateTime` refers
+ to the event's starting time.
+
 === Task
-Task refer to a piece of work to be done that can be added by a student user using the application. After being added, tasks can be edited and deleted. When a task is not completed within the deadline
-, it will be automatically be marked as overdue.
+Task refer to a piece of work to be done that can be added by a user of the application. After being added,
+tasks can be edited, completed or removed. When a task is not completed within the deadline, it will be
+automatically be marked as overdue.
 
 ==== Current Implementation
 
-*_Figure17_* below shows how `Task` is represented in the application.
+*_Figure 18_* below shows how `Task` is represented in the application.
 
-.UML Diagram for Task
-image::UML diagram for task.png[width="450"]
+.UML Class Diagram for Task
+image::TaskUMLDiagram.png[width="550"]
 
-A brief description of each of the attributes of `Task`is given below:
+A brief description of each of the attributes of `Task` is given below:
 
 * Name: Represents the name of the task
-* DateTime: Represents the due date and time of the task.
-* Remark: Represents a short description or reminder pertaining to the task.
+* dueDateTime: Represents the due date and time of the task
+* Remark: Represents a short description or reminder pertaining to the task
 * Tags: Groupings or representation for the task
 
-Operation that manipulates the `task` object can been done using `task`, `complete`, `delete`, `edit` commands.
-These commands are described in more detail below.
+Operations that manipulate a `task` class object can been done using `TaskCommand`, `CompleteCommand`,
+`RemoveCommand`, `EditCommand` commands. These commands are described in more detail below.
 
-===== Task
+Operations that manipulate the GUI with respect to `Task` class includes `ListCommand`, `OverdueCommand`.
 
-===== Complete
+===== Adding tasks
+Tasks can be added through the use of the `TaskCommand`.
 
-===== Delete
+The following is a snippet shows how the `executeUndoableCommand()` of `TaskCommand` updates `UniqueActivityList`
+residing in model of CLIndar by adding `toAdd`. Note that `toAdd` will not be added if a duplicate task
+has been found or the `Name` or `DateTime` field is left empty.
 
-===== Edit
+[source,java]
+----
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.addActivity(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (DuplicateActivityException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
+        }
+    }
+----
+If the task is successfully added, it will be reflected in the CLIndar GUI itself.
 
-===== Find
+===== Completing Tasks
+Tasks can be completed through the use of the `CompleteCommand` by specifying the task's index reflected
+in the GUI. Note that `CompleteCommand` can only be applied to `Task`.
+
+Below is a snippet of how the `executeUndoableCommand()` of `CompleteCommand` updates the respective task
+to completed.
+[source,java]
+----
+    public CommandResult executeUndoableCommand() {
+        requireNonNull(activityToComplete);
+        try {
+            Activity completedActivity = activityToComplete.getCompletedCopy();
+            model.updateActivity(activityToComplete, completedActivity);
+        } catch (ActivityNotFoundException pnfe) {
+            throw new AssertionError("The target activity cannot be missing");
+        } catch (DuplicateActivityException dae) {
+            throw new AssertionError("The completed activity cannot be duplicated");
+        }
+        return new CommandResult(String.format(MESSAGE_COMPLETE_TASK_SUCCESS, activityToComplete));
+    }
+----
+If `CompleteCommand` is successful, 'Uncompleted' will be updated to 'Completed', which will be reflected in the GUI.
+
+===== Removing Tasks
+Tasks can be removed through the use of the `RemoveCommand` by specifying the index of the task reflected
+ in the GUI.
+
+The following snippet shows the `executeUndoableCommand()` of the `RemoveCommand` class.
+`UniqueActivityList` resides in the `model` will be updated by having `activityToDelete` deleted from it.
+If the index of an activity is not found, an `ActivityNotFoundException` will be thrown.
+
+[source,java]
+----
+    public CommandResult executeUndoableCommand() {
+        requireNonNull(activityToDelete);
+        try {
+            model.deleteActivity(activityToDelete);
+        } catch (ActivityNotFoundException pnfe) {
+            throw new AssertionError("The target activity cannot be missing");
+        }
+
+        /...some code.../
+    }
+----
+If `RemoveCommand` is successful, the relavant `Task`  with the specified index will be removed which
+will be reflected in the GUI.
+
+===== Edit Tasks
 
 ===== Overdue
 
-The user is able to list down overdue tasks by using the `overdue` command. Note that overdue only lists down overdue tasks; overdue events are marked as
-completed automatically.
+Overdue tasks can be viewed through the use of the `OverdueCommand`. Note that the `OverdueCommand` only
+lists down overdue tasks; overdue events are marked as completed automatically.
 
-We will be making use of the LocalDateTime class in Java. The class has a `now` method, which allows us to obtain the current system clock.
+`OverdueCommand` makes use of the LocalDateTime class in Java to check if an ongoing task becomes overdue
+or not.
 
-There will be a class in the Model component, which has access to the UniqueActivityList class in that component. The class will go through the UniqueActivityList and obtain
-the DateTime of Task, and the end DateTime of Event. It will then perform a check of the DateTime with `LocalDateTime.now()` and if it is overdue (for tasks), it will mark the task
-as overdue, while if it is overdue (for Event), it will mark it as completed.
+There will be a class in the Model component, which has access to the UniqueActivityList class in that
+component. The class will go through the UniqueActivityList and obtain the DateTime of Task, and the end
+DateTime of Event. It will then perform a check of the DateTime with `LocalDateTime.now()` and if it is
+overdue (for tasks), it will mark the task as overdue, while if it is overdue (for Event), it will mark
+it as completed.
 {empty} +
 {empty} +
 
-==== Design Considerations
+===== Design Considerations
 
 * **Alternative 1**: Put the checking method together with UniqueActivityList class
 ** Pros: Less one class and it is easier for the developer to understand
@@ -551,59 +677,132 @@ overdue correctly.
 {empty} +
 {empty} +
 
+===== List Task
+`ListCommand` allows the user to only view `Task` only in the GUI.
+{empty} +
+{empty} +
+
+===== Design Considerations
+
+`Task` and `Event` needs to be displayed in the GUI and there are 2 possible implementations to do so:
+
+* **Alternative 1:** Have 1 panel which will display the 2 classes.
+** Pros: The coding required for this approach is much lesser.
+** Cons: The UI will be messier and less appealing.
+
+* ** Alternative 2 (current choice):** Have 2 panels which will display the 2 classes separately.
+** Pros: The backend coding will be neater as the 2 classes do not have the same number of compulsory
+information tags. The design of the UI will be much more intuitive too.
+** Cons: A lot more coding is required to create the 2 separate panel.
+{empty} +
+{empty} +
+
+We preferred the second alternative as it adheres more closely with fundamental design principles. The GUI
+has to be made as intuitive as possible to bring convenience and comfort to the user. As such, the second alternative is
+definitely the preferred approach here.
+{empty} +
+{empty} +
+
+===== Implementation
+The following snippet shows how `execute()` of `ListCommand` displays `Task` on the GUI. If an invalid
+request for `ListCommand` happens, a `CommandException` will be thrown.
+
+[source,java]
+----
+    public CommandResult execute() throws CommandException {
+
+        switch(commandRequest)  {
+        case "task":
+            EventsCenter.getInstance().post(new ShowTaskOnlyRequestEvent());
+            return new CommandResult(MESSAGE_SUCCESS_TASK);
+
+        /..some code../
+
+        default:
+            throw new CommandException(String.format(Messages.MESSAGE_INVALID_LIST_REQUEST, commandRequest));
+        }
+    }
+----
+If `ListCommand` is successful, only `Task` will be shown on the GUI.
+
+=== Event
+Event refer to a thing that is about to happen, especially one of importance that can be added by a user
+of the application. After being added, events can be edited and deleted. Events past the end date of the
+event is automatically completed.
+
+==== Current Implementation
+
+*_Figure 19_* below shows how `Event` is represented in the application.
+
+.UML Class Diagram for Event
+image::EventUMLDiagram.png[width="550"]
+
+A brief description of each of the attributes of `Event` is given below:
+
+* Name: Represents the name of the event
+* startDateTime: Represents the start date and time of the event
+* endDateTime: Represents the end date and time of the event
+* Location: Represents the location of the event that is going to happen
+* Remark: Represents a short description or reminder pertaining to the event
+* Tags: Groupings or representation for the event
+
+Operations that manipulate a `task` class object can been done using
+`EventCommand`, `RemoveCommand`, `EditCommand` commands.
+These commands are described in more detail below.
+
+Operations that manipulate the GUI with respect to `Task` class includes
+`ListCommand`.
+
+===== Add Event
+Events can be added through the use of the `EventCommand`.
+
+The way events are added to `UniqueActivityList` is the same as tasks. Note that for events, an exception
+will tbe thrown if the `Name`, `DateTime` or, `Location` field is left empty.
+
+If the event is successfully added, it will be reflected in the CLIndar GUI itself.
+
+
+===== Remove Event
+Events can be removed through the use of the `RemoveCommand` by specifying the index of the event reflected
+in the GUI. `UniqueActivityList` residing in the `model` will be updated by having `activityToDelete` deleted from it.
+
+The way events are deleted from `UniqueActivityList` is the same as task.
+
+If the `RemoveCommand` is successful, the relavant `Event` with the specified index will be removed which
+will be reflected in the GUI.
+
+===== List Event
+`ListCommand` allows the user to only view `Event` only in the GUI.
+
+The following snippet shows how `execute()` of `ListCommand` displays `Event` on the GUI. If an invalid
+request for `ListCommand` happens, a `CommandException` will be thrown.
+
+[source,java]
+----
+    public CommandResult execute() throws CommandException {
+
+        switch(commandRequest)  {
+
+        /...some code.../
+
+        case "event":
+            EventsCenter.getInstance().post(new ShowEventOnlyRequestEvent());
+            return new CommandResult(MESSAGE_SUCCESS_EVENT);
+
+        /...some code.../
+
+        default:
+            throw new CommandException(String.format(MESSAGE_INVALID_LIST_REQUEST, commandRequest));
+        }
+    }
+----
+If `ListCommand` is successful, only `Event` will be shown on the GUI.
+
 [[Implementation-Configuration]]
-=== Configuration
+=== Storage for Task and Event
 
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
-{empty} +
-{empty} +
-
-
-=== Model
-
-The `Model` component was originally implemented to store personal contact details.
-As we modified the application to `CLIndar` we need to store information of activities instead.
-
-The original application `Address Book` store information in the `Person` class.
-
-Since we now need to store information of events and tasks in the memory, the `Person` class needs to modified to store the record.
-
-The `UniquePersonList` needs to be modified to store list of `Task` and `Activity`.
-{empty} +
-{empty} +
-
-==== Design Consideration
-
-* ** Alternative 1 (Current Choice):**
-Use the `Activity` Class as a place holder for events and tasks to be stored.
-Hence we created two new Class `Task` and `Event` to store the information.
-Both classes were iherited  from the `Activity` Class.
-** Pros:
-No need to make major change to the current interface (except some renaming).
-** Cons:
-It would be a hassle to retrieve information about information stored in other class
-Since `Task` and `Event` contains extra information and hence have extra excess method.
-Need to cast the object to retrieve the information.
-
-* **Alternative 2 :**
-Replace the `Person` Class with two different class completely: `Task` and `Event`.
-Instead of only `UniquePersonList` Class, we create two different class `UniqueTaskList` and `UniqueEventList`.
-Relevant interface and access method will also be modified to cope with the change.
-** Pros:
-Other component can easily distinguish two types of record.
-** Cons:
-Since the interface is now completely changed, other component would now required to change a lot of coding to coped with the change.
-{empty} +
-{empty} +
-
-While either implementations has its pros and cons.
-For the purpose of having incremental modification. We choose Alternative 1.
-As such we can modified the implementation without modification to Interface, hence other component would be unaffected.
-This would allow us to have a working release every week.
-
-=== Storage
-
-Our application deals with 2 main classes: Task and Event. Hence, when we store the data, we need to differentiate between these 2 classes. Our team came up with 2 possible implementations to store the data:
+Our application deals with 2 main classes: Task and Event. Hence, when we store the data, we need to
+differentiate between these 2 classes. Our team came up with 2 possible implementations to store the data:
 {empty} +
 {empty} +
 
@@ -613,40 +812,19 @@ Our application deals with 2 main classes: Task and Event. Hence, when we store 
 ** Cons: Whenever we want to perform an operation on an object stored, we need to check its class.
 
 * **Alternative 2 (current choice):** Use 2 lists to store objects of the 2 classes separately
-** Pros: When we want to perform an operation on all the objects stored in a list, each object can be treated equally as they are from the same class.
+** Pros: When we want to perform an operation on all the objects stored in a list, each object can be
+treated the same as they are from the same class.
 ** Cons: More effort is required to create 2 separate lists.
 {empty} +
 {empty} +
 
-While both alternatives have advantages and disadvantages, we feel that the second alternative's advantages outweigh its disadvantages in the long run. It is easier to maintain the 2 separate lists of objects, whereby each list contains objects of the same class, especially as we make the 2 classes more specialized. The inconvenience of creating 2 separate lists will be counterbalanced by the convenience in the long run.
+While both alternatives have advantages and disadvantages, we feel that the second alternative's
+advantages outweigh its disadvantages in the long run. It is easier to maintain the 2 separate lists of
+objects, whereby each list contains objects of the same class, especially as we make the 2 classes more
+specialized. The inconvenience of creating 2 separate lists will be counterbalanced by the convenience in
+the long run.
 {empty} +
 {empty} +
-
-=== UI
-
-Our application deals with 2 main classes: Task and Event. These 2 classes needs to be
-displayed in the UI and our team came up with 2 possible implementations to do it:
-{empty} +
-{empty} +
-
-==== Design Consideration
-* **Alternative 1:** Have 1 panel which will display the 2 classes.
-** Pros: The coding required for this approach is much lesser.
-** Cons: The UI will be messier and less appealing.
-
-* ** Alternative 2 (current choice):** Have 2 panels which will display the 2 classes separately.
-** Pros: The backend coding will be neater as the 2 classes do not have the same number of compulsory information
-tags. The design of the UI will be much more intuitive too.
-** Cons: More effort is required to create 2 seperate lists.
-{empty} +
-{empty} +
-
-While both alternatives have advantages and disadvantages, we feel that the second alternative adheres more closely with fundamental design principles. We feel that it is the responsibility of UI designers to make the
-UI as intuitive as possible to bring convenience and comfort to the user. As such, the second alternative is
-definitely the preferred approach here.
-{empty} +
-{empty} +
-
 
 == Documentation
 

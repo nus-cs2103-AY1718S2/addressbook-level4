@@ -14,8 +14,10 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveCommand;
 import seedu.address.logic.commands.TaskCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author Kyomian
@@ -91,11 +93,11 @@ public class DeskBoardParser {
         case HelpCommand.COMMAND_ALIAS:
             return new HelpCommandParser().parse(arguments);
 
-        //case UndoCommand.COMMAND_WORD:
-            //return new UndoCommand();
+        case UndoCommand.COMMAND_WORD:
+            return new UndoCommand();
 
-        //case RedoCommand.COMMAND_WORD:
-            //return new RedoCommand();
+        case RedoCommand.COMMAND_WORD:
+            return new RedoCommand();
 
         //@@author karenfrilya97
         case ImportCommand.COMMAND_WORD:

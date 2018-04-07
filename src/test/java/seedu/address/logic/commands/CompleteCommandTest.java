@@ -65,30 +65,28 @@ public class CompleteCommandTest {
         assertCommandFailure(completeCommand, model, Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
     }
 
-    /**
-     * Test
-     */
+    @Test
     //TODO
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Activity activityToComplete = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
+        Activity activityToComplete = model.getFilteredTaskList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
         CompleteCommand completeCommand = prepareCommand(INDEX_FIRST_ACTIVITY);
         Model expectedModel = new ModelManager(model.getDeskBoard(), new UserPrefs());
 
-        // delete -> first activity deleted
+        // complete -> first activity completed
         completeCommand.execute();
         undoRedoStack.push(completeCommand);
 
         // undo -> reverts desk board back to previous state and filtered activity list to show all activities
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
-        // redo -> same first activity deleted again
-
+        // redo -> same first activity completed again
         Activity completedActivity = activityToComplete.getCompletedCopy();
         expectedModel.updateActivity(activityToComplete, completedActivity);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+
     }
 
     @Test
@@ -97,10 +95,10 @@ public class CompleteCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredActivityList().size() + 1);
-        CompleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
+        CompleteCommand completeCommandCommand = prepareCommand(outOfBoundIndex);
 
-        // execution failed -> deleteCommand not pushed into undoRedoStack
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
+        // execution failed -> completeCommandCommand not pushed into undoRedoStack
+        assertCommandFailure(completeCommandCommand, model, Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
 
         // no commands in undoRedoStack -> undoCommand and redoCommand fail
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
@@ -108,14 +106,14 @@ public class CompleteCommandTest {
     }
 
     /**
-     * 1. Deletes a {@code Activity} from a filtered list.
-     * 2. Undo the deletion.
-     * 3. The unfiltered list should be shown now. Verify that the index of the previously deleted activity in the
+     * 1. Complete a {@code Task} from a filtered list.
+     * 2. Undo the completion.
+     * 3. The unfiltered list should be shown now. Verify that the index of the previously completed activity in the
      * unfiltered list is different from the index at the filtered list.
-     * 4. Redo the deletion. This ensures {@code RedoCommand} deletes the activity object regardless of indexing.
+     * 4. Redo the completion. This ensures {@code RedoCommand} copletes the activity object regardless of indexing.
      */
     @Test
-    public void executeUndoRedo_validIndexFilteredList_samePersonDeleted() throws Exception {
+    public void executeUndoRedo_validIndexFilteredList_samePersonCompleted() throws Exception {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
@@ -124,17 +122,17 @@ public class CompleteCommandTest {
 
         showActivityAtIndex(model, INDEX_SECOND_ACTIVITY);
         Activity activityToComplete = model.getFilteredTaskList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
-        // delete -> deletes second activity in unfiltered activity list / first activity in filtered activity list
+        // complete -> completes second activity in unfiltered activity list / first activity in filtered activity list
         completeCommand.execute();
         undoRedoStack.push(completeCommand);
 
-        // undo -> reverts addressbook back to previous state and filtered activity list to show all persons
+        // undo -> reverts desk board back to previous state and filtered activity list to show all persons
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         Activity completedActivity = activityToComplete.getCompletedCopy();
         expectedModel.updateActivity(activityToComplete, completedActivity);
         assertNotEquals(activityToComplete, model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased()));
-        // redo -> deletes same second activity in unfiltered activity list
+        // redo -> completes same second activity in unfiltered activity list
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -165,7 +163,7 @@ public class CompleteCommandTest {
     }
 
     /**
-     * Returns a {@code DeleteCommand} with the parameter {@code index}.
+     * Returns a {@code CompleteCommand} with the parameter {@code index}.
      */
     private CompleteCommand prepareCommand(Index index) {
         CompleteCommand completeCommand = new CompleteCommand(index);

@@ -96,10 +96,16 @@ public class UniqueActivityList implements Iterable<Activity> {
 
         internalList.set(index, editedActivity);
 
+        //@@author karenfrilya97
+        Collections.sort(internalList, dateTimeComparator);
+
     }
 
     public void setActivity(UniqueActivityList replacement) {
         this.internalList.setAll(replacement.internalList);
+
+        //@@author karenfrilya97
+        Collections.sort(internalList, dateTimeComparator);
     }
 
     public void setActivity(List<Activity> activities) throws DuplicateActivityException {
@@ -109,6 +115,9 @@ public class UniqueActivityList implements Iterable<Activity> {
             replacement.add(activity);
         }
         setActivity(replacement);
+
+        //@@author karenfrilya97
+        Collections.sort(internalList, dateTimeComparator);
     }
 
     /**

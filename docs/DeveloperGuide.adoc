@@ -586,7 +586,7 @@ A brief description of each of the attributes of `Task` is given below:
 * Remark: Represents a short description or reminder pertaining to the task
 * Tags: Groupings or representation for the task
 
-Operations that manipulate a `task` class object can been done using `TaskCommand`, `CompleteCommand`,
+Operations that manipulate `Task` can been done using `TaskCommand`, `CompleteCommand`,
 `RemoveCommand`, `EditCommand` commands. These commands are described in more detail below.
 {empty} +
 {empty} +
@@ -676,6 +676,7 @@ is then displayed using the `TaskListPanel`. Below is an example of a `TaskListC
 image::TaskCard.png[width="550"]
 
 Operations that manipulate the GUI with respect to `Task` class includes `ListCommand`, `OverdueCommand`.
+These commands are described in more detail below.
 {empty} +
 {empty} +
 
@@ -805,7 +806,7 @@ If the `RemoveCommand` is successful, the relavant `Event` with the specified in
 will be reflected in the GUI.
 {empty} +
 {empty} +
-
+    
 ==== Displaying Event
 A single `Event` is displayed using a `EventListCard` . The list of all the `Event` added by the user
 is then displayed using the `EventListPanel`. Below is an example of a `EventListCard`.

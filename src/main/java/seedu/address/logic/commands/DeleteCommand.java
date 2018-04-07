@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.commands.EditCommand.createEditedPerson;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -139,9 +140,10 @@ public class DeleteCommand extends UndoableCommand implements PopulatableCommand
             runnerDescWCustRemoved.setAddress(actualRunner.getAddress());
             runnerDescWCustRemoved.setTags(actualRunner.getTags());
 
-            List<Person> newList = ((Runner) actualRunner).getCustomers();
-            newList.remove(personToDelete);
-            runnerDescWCustRemoved.setCustomers(newList);
+            List<Person> customers = new ArrayList<>(); //defensive copy of runner's customer list
+            customers.addAll(((Runner) actualRunner).getCustomers());
+            customers.remove(personToDelete);
+            runnerDescWCustRemoved.setCustomers(customers);
 
             Person editedRunner = createEditedPerson((Runner) actualRunner, runnerDescWCustRemoved);
             model.updatePerson(actualRunner, editedRunner);

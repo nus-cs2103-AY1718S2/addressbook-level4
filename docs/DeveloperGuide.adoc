@@ -494,6 +494,10 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+[[Implementation-Configuration]]
+=== Configuration
+Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
 === UniqueActivityList
 `UniqueActivityList` resides in the `model` component of the application.
 
@@ -501,6 +505,9 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 .Class Diagram for UniqueActivityList
 image::UniqueActivityListClassDiagram.png[width="550"]
+{empty} +
+{empty} +
+
 
 ==== Design Consideration
 
@@ -538,7 +545,7 @@ Following is a snippet which illustrates the function of `UniqueActivityList`:
 ----
     private final ObservableList<Activity> internalList = FXCollections.observableArrayList();
 
-    /...some irrelavant code.../
+    /...some code.../
 
     public void add(Activity toAdd) throws DuplicateActivityException {
         requireNonNull(toAdd);
@@ -553,11 +560,17 @@ Following is a snippet which illustrates the function of `UniqueActivityList`:
  is stored in `internalList`. Each time an `Activity` is added to or edited in `UniqueActivityList`,
  `internalList` will be sorted according to its `DateTime`. Note that for events, its `DateTime` refers
  to the event's starting time.
+{empty} +
+{empty} +
+
 
 === Task
 Task refer to a piece of work to be done that can be added by a user of the application. After being added,
 tasks can be edited, completed or removed. When a task is not completed within the deadline, it will be
 automatically be marked as overdue.
+{empty} +
+{empty} +
+
 
 ==== Current Implementation
 
@@ -575,8 +588,9 @@ A brief description of each of the attributes of `Task` is given below:
 
 Operations that manipulate a `task` class object can been done using `TaskCommand`, `CompleteCommand`,
 `RemoveCommand`, `EditCommand` commands. These commands are described in more detail below.
+{empty} +
+{empty} +
 
-Operations that manipulate the GUI with respect to `Task` class includes `ListCommand`, `OverdueCommand`.
 
 ===== Adding tasks
 Tasks can be added through the use of the `TaskCommand`.
@@ -598,6 +612,8 @@ has been found or the `Name` or `DateTime` field is left empty.
     }
 ----
 If the task is successfully added, it will be reflected in the CLIndar GUI itself.
+{empty} +
+{empty} +
 
 ===== Completing Tasks
 Tasks can be completed through the use of the `CompleteCommand` by specifying the task's index reflected
@@ -621,6 +637,8 @@ to completed.
     }
 ----
 If `CompleteCommand` is successful, 'Uncompleted' will be updated to 'Completed', which will be reflected in the GUI.
+{empty} +
+{empty} +
 
 ===== Removing Tasks
 Tasks can be removed through the use of the `RemoveCommand` by specifying the index of the task reflected
@@ -645,8 +663,21 @@ If the index of an activity is not found, an `ActivityNotFoundException` will be
 ----
 If `RemoveCommand` is successful, the relavant `Task`  with the specified index will be removed which
 will be reflected in the GUI.
+{empty} +
+{empty} +
 
-===== Edit Tasks
+//===== Edit Tasks
+
+==== Displaying Task
+A single `Task` is displayed using a `TaskListCard`. The list of all the `Task` added by the user
+is then displayed using the `TaskListPanel`. Below is an example of a `TaskListCard`.
+
+.TaskListCard example
+image::TaskCard.png[width="550"]
+
+Operations that manipulate the GUI with respect to `Task` class includes `ListCommand`, `OverdueCommand`.
+{empty} +
+{empty} +
 
 ===== Overdue
 
@@ -682,7 +713,7 @@ overdue correctly.
 {empty} +
 {empty} +
 
-===== Design Considerations
+====== Design Considerations
 
 `Task` and `Event` needs to be displayed in the GUI and there are 2 possible implementations to do so:
 
@@ -703,7 +734,7 @@ definitely the preferred approach here.
 {empty} +
 {empty} +
 
-===== Implementation
+====== Implementation
 The following snippet shows how `execute()` of `ListCommand` displays `Task` on the GUI. If an invalid
 request for `ListCommand` happens, a `CommandException` will be thrown.
 
@@ -729,6 +760,8 @@ If `ListCommand` is successful, only `Task` will be shown on the GUI.
 Event refer to a thing that is about to happen, especially one of importance that can be added by a user
 of the application. After being added, events can be edited and deleted. Events past the end date of the
 event is automatically completed.
+{empty} +
+{empty} +
 
 ==== Current Implementation
 
@@ -749,9 +782,8 @@ A brief description of each of the attributes of `Event` is given below:
 Operations that manipulate a `task` class object can been done using
 `EventCommand`, `RemoveCommand`, `EditCommand` commands.
 These commands are described in more detail below.
-
-Operations that manipulate the GUI with respect to `Task` class includes
-`ListCommand`.
+{empty} +
+{empty} +
 
 ===== Add Event
 Events can be added through the use of the `EventCommand`.
@@ -760,7 +792,8 @@ The way events are added to `UniqueActivityList` is the same as tasks. Note that
 will tbe thrown if the `Name`, `DateTime` or, `Location` field is left empty.
 
 If the event is successfully added, it will be reflected in the CLIndar GUI itself.
-
+{empty} +
+{empty} +
 
 ===== Remove Event
 Events can be removed through the use of the `RemoveCommand` by specifying the index of the event reflected
@@ -770,6 +803,18 @@ The way events are deleted from `UniqueActivityList` is the same as task.
 
 If the `RemoveCommand` is successful, the relavant `Event` with the specified index will be removed which
 will be reflected in the GUI.
+{empty} +
+{empty} +
+
+==== Displaying Event
+A single `Event` is displayed using a `EventListCard` . The list of all the `Event` added by the user
+is then displayed using the `EventListPanel`. Below is an example of a `EventListCard`.
+
+.EventListCard example
+image::EventCard.png[width='550']
+Operations that manipulate the GUI with respect to `Task` class includes `ListCommand`.
+{empty} +
+{empty} +
 
 ===== List Event
 `ListCommand` allows the user to only view `Event` only in the GUI.
@@ -797,26 +842,28 @@ request for `ListCommand` happens, a `CommandException` will be thrown.
     }
 ----
 If `ListCommand` is successful, only `Event` will be shown on the GUI.
+{empty} +
+{empty} +
 
-[[Implementation-Configuration]]
 === Storage for Task and Event
 
-Our application deals with 2 main classes: Task and Event. Hence, when we store the data, we need to
-differentiate between these 2 classes. Our team came up with 2 possible implementations to store the data:
+Storing of `Task` and `Event` data is managed by `StorageManager` within the `Storage` component. `Task`
+and `Event` is converted to `XmlAdaptedTask` and `XmlAdaptedEvent` respectively to be stored in a .xml file.
 {empty} +
 {empty} +
 
 ==== Design Consideration
+The application deals with 2 main classes: Task and Event. Hence, the data is stored, there is a need for
+differentiation between these 2 classes. There are 2 possible implementations to do this:
+
 * **Alternative 1:** Use 1 list to store objects of both classes
-** Pros: There is no need to create 2 separate lists to store the 2 different class objects.
+** Pros: Minimal coding is required as only 1 list is required to store the 2 different class objects.
 ** Cons: Whenever we want to perform an operation on an object stored, we need to check its class.
 
 * **Alternative 2 (current choice):** Use 2 lists to store objects of the 2 classes separately
 ** Pros: When we want to perform an operation on all the objects stored in a list, each object can be
 treated the same as they are from the same class.
-** Cons: More effort is required to create 2 separate lists.
-{empty} +
-{empty} +
+** Cons: More coding is required to create 2 separate lists.
 
 While both alternatives have advantages and disadvantages, we feel that the second alternative's
 advantages outweigh its disadvantages in the long run. It is easier to maintain the 2 separate lists of

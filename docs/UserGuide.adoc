@@ -222,7 +222,13 @@ Examples:
 
 * `list` +
 `addPhoto 1` +
-Adds a photo to the 1st employee in the last employees listing. Refer to Figure 8 below.
+Adds a photo to the 1st employee in the last employees listing.
+
+[NOTE]
+====
+This command will automatically copy the file you chosed to the application's resource folder if it does not exist. Once
+the photo is copied, you should not delete it from that folder manually.
+====
 
 === Listing all employees : `list`
 

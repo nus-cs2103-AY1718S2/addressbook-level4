@@ -122,7 +122,7 @@ public class GServiceManager {
             GContactsService gContactsService = new GContactsService(credential);
             gContactsService.synchronize(addressBook);
         } catch (Exception e) {
-            System.out.println("Error: " + e);
+            e.printStackTrace();
         }
 //        try {
 //            GCalendarService gCalendarService = new GCalendarService(

@@ -2,6 +2,7 @@ package seedu.address.external;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.gdata.client.contacts.ContactsService;
@@ -15,6 +16,7 @@ import com.google.gdata.data.extensions.Email;
 import com.google.gdata.data.extensions.FullName;
 import com.google.gdata.data.extensions.Name;
 import com.google.gdata.data.extensions.PhoneNumber;
+import com.google.gdata.util.PreconditionFailedException;
 import com.google.gdata.util.ServiceException;
 
 import seedu.address.model.ReadOnlyAddressBook;
@@ -89,13 +91,11 @@ public class GContactsService {
         ContactsService myService = new ContactsService(GServiceManager.APPLICATION_NAME);
         myService.setOAuth2Credentials(credential);
         URL postUrl = new URL("https://www.google.com/m8/feeds/contacts/default/full");
-
-        ContactGroupEntry studentGroupEntry =
-                getStudentGroupEntry(myService) != null
-                        ? getStudentGroupEntry(myService)
-                        : createStudentGroupEntry(myService);
-
-
+        System.out.println("here1");
+        clearAllOldContacts(myService);
+        System.out.println("here2");
+        ContactGroupEntry studentGroupEntry = createStudentGroupEntry(myService);
+        System.out.println("here3");
         for (Student student : addressBook.getStudentList()) {
             ContactEntry toBeInserted = studentToContactEntry(student);
 
@@ -104,6 +104,7 @@ public class GContactsService {
 
             myService.insert(postUrl, toBeInserted);
         }
+        System.out.println("here4");
     }
 
     /**
@@ -148,6 +149,54 @@ public class GContactsService {
         ContactGroupEntry createdGroup = myService.insert(postUrl, newGroup);
 
         return createdGroup;
+    }
+
+    public static void clearAllOldContacts(ContactsService myService)
+            throws ServiceException, IOException {
+        //ContactGroupEntry group = myService.getEntry(contactGroupURL, ContactGroupEntry.class);
+        ContactGroupEntry studentGroupEntry = getStudentGroupEntry(myService);
+        URL feedUrl = new URL("https://www.google.com/m8/feeds/contacts/default/full");
+        ContactFeed resultFeed = myService.getFeed(feedUrl, ContactFeed.class);
+
+        if (studentGroupEntry != null) {
+            for (ContactEntry entry : resultFeed.getEntries()) {
+                System.out.println("Entry: " + entry.getName().getFullName().getValue());
+//                for (GroupMembershipInfo group : entry.getGroupMembershipInfos()) {
+//                    System.out.println("Print: " + " -- " + group.getHref());
+//                }
+                if (isStudentGroup(studentGroupEntry.getSelfLink().getHref(),
+                        entry.getGroupMembershipInfos())) {
+                    try {
+                        entry.delete();
+                    } catch (PreconditionFailedException e) {
+                        // Etags mismatch: handle the exception.
+                    }
+                }
+            }
+            try {
+                // Print the results
+                studentGroupEntry.delete();
+                //studentGroupEntry.delete();
+
+            } catch (PreconditionFailedException e) {
+                // Etags mismatch: handle the exception.
+                System.out.println("Lel");
+            }
+        }
+    }
+
+    public static boolean isStudentGroup(String link, List<GroupMembershipInfo> groupMembershipInfo) {
+        String[] linkParts = link.split("/");
+
+        for (GroupMembershipInfo group : groupMembershipInfo) {
+            System.out.println("CB: " + link + " -- " + group.getHref());
+            String[] hrefParts = group.getHref().split("/");
+
+            if(hrefParts[hrefParts.length -1].equals(linkParts[linkParts.length -1])) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 

@@ -428,7 +428,8 @@ Examples:
 
 * `delete 1` +
 `list` +
-`undo` (reverses the `delete 1` command) +
+`undo` +
+reverses the `delete 1` command
 
 * `select 1` +
 `list` +

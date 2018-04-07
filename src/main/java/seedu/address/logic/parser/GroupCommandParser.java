@@ -2,12 +2,16 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.Arrays;
+
 import seedu.address.logic.commands.GroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.PersonContainsGroupsPredicate;
 
 /**
  * Parses input arguments and creates a new GroupCommand object
  */
+//@@author limzk1994
 public class GroupCommandParser implements Parser<GroupCommand> {
 
     /**
@@ -24,7 +28,7 @@ public class GroupCommandParser implements Parser<GroupCommand> {
 
         String[]groupKeywords = trimmedArgs.split("\\s+");
 
-        return new GroupCommand();
+        return new GroupCommand(new PersonContainsGroupsPredicate(Arrays.asList(groupKeywords)));
     }
 
 }

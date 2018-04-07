@@ -1,30 +1,39 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-
-import seedu.address.model.AddressBook;
+import seedu.address.model.person.PersonContainsGroupsPredicate;
 
 /**
- * Clears the address book.
+ * Groups the clients in reInsurance.
  */
-public class GroupCommand extends UndoableCommand {
+
+//@@author limzk1994
+public class GroupCommand extends Command {
 
     public static final String COMMAND_WORD = "group";
-
     public static final String COMMAND_WORD_ALIAS = "g";
-
     public static final String MESSAGE_SUCCESS = "Groups listed!";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose group attribute is"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Group all persons whose group attribute is"
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " Priority";
 
-    @Override
-    public CommandResult executeUndoableCommand() {
-        requireNonNull(model);
-        model.resetData(new AddressBook());
-        return new CommandResult(MESSAGE_SUCCESS);
+    private final PersonContainsGroupsPredicate predicate;
+
+    public GroupCommand(PersonContainsGroupsPredicate predicate) {
+        this.predicate = predicate;
     }
 
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredPersonList(predicate);
+        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof GroupCommand // instanceof handles nulls
+                && this.predicate.equals(((GroupCommand) other).predicate)); // state check
+    }
 }

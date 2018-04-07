@@ -72,6 +72,7 @@ public class GContactsService {
 
         contact.addGroupMembershipInfo(
                 new GroupMembershipInfo(false, STRING_BASE_GROUP_ATOM_ID));
+        contact.setContent(new PlainTextConstruct(student.getUniqueKey().toString()));
 
         return contact;
     }
@@ -97,6 +98,7 @@ public class GContactsService {
 
         for (Student student : addressBook.getStudentList()) {
             ContactEntry toBeInserted = studentToContactEntry(student);
+
             toBeInserted.addGroupMembershipInfo(
                     new GroupMembershipInfo(false, studentGroupEntry.getId()));
 

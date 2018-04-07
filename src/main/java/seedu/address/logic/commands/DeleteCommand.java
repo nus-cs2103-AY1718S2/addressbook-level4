@@ -185,7 +185,6 @@ public class DeleteCommand extends UndoableCommand {
             List<PetPatient> petPatientsDeleted = model.deletePetPatientDependencies(personToDelete);
             List<Appointment> appointmentsDeleted = new ArrayList<>();
             for (PetPatient pp : petPatientsDeleted) {
-                System.out.println(pp.getName());
                 appointmentsDeleted.addAll(model.deleteAppointmentDependencies(pp));
                 deleteDependenciesList += "\n" + (String.format(MESSAGE_DELETE_PET_PATIENT_SUCCESS, pp));
             }

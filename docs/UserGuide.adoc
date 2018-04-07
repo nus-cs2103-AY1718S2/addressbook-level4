@@ -11,7 +11,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-W09-B3/main/releases
 :contactsURL: https://contacts.google.com/
 :calendarURL: https://calendar.google.com/calendar/r/week
 
@@ -19,7 +19,7 @@ By: `Team W09-B3`      Since: `Mar 2018`      Licence: `MIT`
 
 == Introduction
 
-Codeducator is a desktop address book application for private programming language tutors who *prefer to use a desktop app for managing the contacts of students*. You can also use Codeducator to track the progress of your students, manage your tutoring schedule and other important information about your students. More importantly, Codeducator is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Codeducator can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Codeducator is a desktop address book and scheduling application for private programming language tutors who *prefer to use a desktop app for managing the contacts of students*. You can also use Codeducator to track the progress of your students, manage your tutoring schedule and other important information about your students. More importantly, Codeducator is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Codeducator can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -65,15 +65,15 @@ Format: `help`
 === Adding a student: `add`
 
 Adds a student to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS s/SUBJECT [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pl/PROGRAMMING_LANGUAGE [t/TAG]...`
 
 [TIP]
 A student can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 s/English`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 s/CompSci t/criminal t/NoLife`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pl/Java`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 pl/C t/criminal t/NoLife`
 
 === Listing all students : `list`
 
@@ -93,7 +93,7 @@ List all students
 === Editing a student : `edit`
 
 Edits an existing student in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SUBJECT] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pl/PROGRAMMING_LANGUAGE] [t/TAG]...`
 
 ****
 * Edits the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -560,12 +560,12 @@ _{explain how the user can enable/disable data encryption}_
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS s/SUBJECT [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 s/Math t/friend t/1stYear`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pl/PROGRAMMING_LANGUAGE [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 pl/HTML t/friend t/1stYear`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SUBJECT] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pl/PROGRAMMING_LANGUAGE] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`

@@ -1,13 +1,9 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-
-import seedu.address.model.AddressBook;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PersonContainsGroupsPredicate;
 
 /**
- * Clears the address book.
+ * Groups the clients in reInsurance.
  */
 public class GroupCommand extends Command {
 

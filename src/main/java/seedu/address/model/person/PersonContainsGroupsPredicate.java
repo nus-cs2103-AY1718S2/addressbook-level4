@@ -19,7 +19,7 @@ public class PersonContainsGroupsPredicate implements Predicate<Person> {
     @Override
     public boolean test(Person person) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getGroup().groupName,keyword));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getGroup().groupName, keyword));
     }
 
     @Override

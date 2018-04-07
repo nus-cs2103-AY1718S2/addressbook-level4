@@ -15,7 +15,6 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.AppointmentChangedEvent;
 import seedu.address.commons.events.model.BirthdayChangedEvent;
 import seedu.address.model.export.ExportType;
-import seedu.address.model.person.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;

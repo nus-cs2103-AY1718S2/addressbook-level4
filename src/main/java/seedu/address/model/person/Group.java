@@ -8,7 +8,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Guarantees: immutable; is valid as declared in {@link #isValidGroup(String)}
  */
 //@@author limzk1994
-public class Group{
+public class Group {
 
     public static final String MESSAGE_GROUP_CONSTRAINTS =
             "Person group should only contain alphanumeric characters and spaces, and it should not be blank";

@@ -17,10 +17,8 @@ import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
 
 import seedu.address.model.person.Group;
-import seedu.address.model.person.UniqueGroupList;
-import seedu.address.model.person.Appointment;
-import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.UniqueGroupList;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;

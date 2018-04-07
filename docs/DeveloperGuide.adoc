@@ -32,9 +32,9 @@ Below is an overview of this guide:
 * <<DevOps, Dev Ops>>
 * <<GetStartedProgramming, Appendices>>
 
-
-[[Computer Setup]]
+[[ComputerSetup]]
 == Computer Setup
+
 This section describes the steps needed to set up your computer before you can start developing this application further with your own code.
 {empty} +
 {empty} +
@@ -67,6 +67,7 @@ Do the following steps to set up the project in your computer.
 
 To fork the repo, click the button circled below.
 
+.Forking this repo
 image::Origin Repo.png[width="600"]
 
 Then, open Git Bash. Change the current working directory to the location where you want the cloned directory to be made. Type the following:
@@ -78,11 +79,14 @@ If the clone was successful, a new sub-directory titled 'main' appears on your l
 
 The following should appear if `git clone https://github.com/YOUR-USERNAME/main.git` at C:/Users/temp folder is executed.
 
+.Finding cloned directory
 image::git clone.png[width="600"]
+
 {empty} +
 
 *Step 2:* Open IntelliJ. If you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first, as shown in the picture below. +
 
+.Closing current project in IntelliJ
 image::Close Project.png[width="600"]
 {empty} +
 
@@ -90,32 +94,37 @@ image::Close Project.png[width="600"]
 
 *Step 3a:* Click `Configure` > `Project Defaults` > `Project Structure`.
 
-image::Configure.png[Width="400"]
+.Configuring IntelliJ settings
+image::Configure.png[width="600"]
 
 *Step 3b:* Go to the `Project` tab and under `Project SDK` section, click `New...`. Find the directory of the JDK, and then click OK. +
 
-image::Setup JDK.png[Width="400"]
+.Setting up JDK
+image::Setup JDK.png[width="600"]
 
 {empty} +
 
 *Step 4:* Click `Import Project`. +
 
-image::Import Project.png[Width="400"]
+.Importing project to IntelliJ
+image::Import Project.png[width="600"]
 {empty} +
 
 *Step 5:* Locate the `build.gradle` file in the `main` folder that you have cloned and select it. Click `OK`. +
 
-image::build.gradle.png[Width="300"]
+.Locating `build.gradle` file
+image::build.gradle.png[width="400"]
 {empty} +
 
 *Step 6:* In the `Import Project from Gradle` that appears, click `OK` again. +
 
-image::Import Project from Gradle.png[Width="400"]
+image::Import Project from Gradle.png[width="600"]
 {empty} +
 
 *Step 7:* Open the `Terminal` and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 
-This will generate all resources required by the application and tests. +
+This will generate all resources required by the application and tests.
+{empty} +
 {empty} +
 
 === Setup Verification
@@ -145,7 +154,8 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 
 After you do the steps above, the Settings window should appear as shown in the picure below.
 
-image::Import Setting.png[Width="400"]
+.Configuring IntelliJ settings for import order
+image::Import Setting.png[width="600"]
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write the code.
 
@@ -185,9 +195,9 @@ This section describes how the features in this application are implemented inte
 
 [[Design-Architecture]]
 === Architecture
-_Figure 1_ below illustrates the high-level design of the application.
+The high-level design of this application is illustrated in _Figure 9_ below.
 
-.Architecture Diagram
+.Architecture diagram
 image::Architecture.png[width="600"]
 
 Given below is a quick overview of each component.
@@ -217,14 +227,14 @@ Each of the four components:
 * defines its _API_ in an `interface` with the same name as the component; and
 * exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class. _Figure 2_ below is an overview of the Logic component.
+For example, the `Logic` component defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class. _Figure 10_ below is an overview of the `Logic` component.
 
-.The API of the Logic Component
+.The API of the `Logic` component
 image::LogicAPI.png[width="800"]
 
 ==== Events-Driven Nature of the Design
 
-_Figure 3_ below shows how the components interact in a scenario where the user issues the command `delete 1`.
+_Figure 11_ below shows how the components interact in a scenario where the user issues the command `delete 1`.
 
 .Component interactions for `delete 1` command (part 1)
 image::SDforDeleteActivity.png[width="800"]
@@ -232,7 +242,7 @@ image::SDforDeleteActivity.png[width="800"]
 [NOTE]
 Note how the `Model` simply raises a `DeskBoardChangedEvent` when the Desk Board data are changed, instead of asking the `Storage` to save the updates into the hard disk.
 
-_Figure 4_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+_Figure 12_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 .Component interactions for `delete 1` command (part 2)
 image::SDforDeleteActivityEventHandling.png[width="800"]
@@ -247,16 +257,16 @@ The sections below give more details of each component.
 [[Design-Ui]]
 === UI component
 
-_Figure 5_ below shows the architecture diagram of the UI component.
+_Figure 13_ below shows the architecture diagram of the `UI` component.
 
-.Structure of the UI Component
+.Structure of the `UI` component
 image::UiClassDiagram.png[width="800"]
 
 {empty} +
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`, `EventListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The `UI` consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`, `EventListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
 
@@ -271,14 +281,14 @@ The `UI` component:
 [[Design-Logic]]
 === Logic component
 
-_Figure 6_ below shows the architecture diagram of the Logic component.
+_Figure 14_ below shows the architecture diagram of the `Logic` component.
 [[fig-LogicClassDiagram]]
-.Structure of the Logic Component
+.Structure of the `Logic` Component
 image::LogicClassDiagram.png[width="800"]
 
-Finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>> in _Figure 7_ below.
+Finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>> in _Figure 15_ below.
 
-.Structure of Commands in the Logic Component
+.Structure of commands in the `Logic` component
 image::LogicCommandClassDiagram.png[width="800"]
 
 {empty} +
@@ -286,7 +296,7 @@ image::LogicCommandClassDiagram.png[width="800"]
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-The following describes the sequence of events executed by the `Logic` component:
+The following describes the sequence of events executed by the Logic component:
 
 .  `Logic` uses the `DeskBoardParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
@@ -295,7 +305,7 @@ The following describes the sequence of events executed by the `Logic` component
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("rm task 1")` API call.
 
-.Interactions Inside the Logic Component for the `rm task 1` Command
+.Interactions inside the `Logic` component for the `rm task 1` command
 image::DeletePersonSdForLogic.png[width="800"]
 
 {empty} +
@@ -303,9 +313,9 @@ image::DeletePersonSdForLogic.png[width="800"]
 [[Design-Model]]
 === Model component
 
-_Figure 9_ below shows the architecture diagram of the Logic component.
+_Figure 17_ below shows the architecture diagram of the `Model` component.
 
-.Structure of the Model Component
+.Structure of the `Model` component
 image::ModelClassDiagram.png[width="800"]
 
 {empty} +
@@ -325,9 +335,9 @@ The `Model` component:
 [[Design-Storage]]
 === Storage component
 
-_Figure 10_ below shows the structure of the Storage Component.
+_Figure 18_ below shows the structure of the `Storage` component.
 
-.Structure of the Storage Component
+.Structure of the `Storage` component
 image::StorageClassDiagram.png[width="800"]
 
 {empty} +
@@ -337,7 +347,7 @@ image::StorageClassDiagram.png[width="800"]
 The `Storage` component saves and reads back:
 
 * `UserPref` objects in json format, and
-* Desk Board data in xml format.
+* desk board data in xml format.
 
 {empty} +
 
@@ -362,9 +372,9 @@ It is an important class in this application as it represent each entry in the d
 In CLIndar, an entry in the desk board can be either a `Task` or an `Event`.
 
 ==== Current Implementation
-_Figure 11_ below shows the relationship between `Activity` and its relevant components.
+_Figure 19_ below shows the relationship between `Activity` and its relevant components.
 
-.Class Diagram for Activity
+.Class diagram for `Activity`
 image::UniqueActivityListClassDiagram.png[width="550"]
 
 As shown above, `Activity` is a superclass for `Task` and `Event`.
@@ -379,9 +389,9 @@ This is because an entry in the desk board must be either a `Task` or an `Event`
 `Task` represents a piece of work to be done by a certain deadline.
 Once the `Task` has been done by user, it can be mark as completed in the application.
 
-_Figure 12_ below shows how `Task` is represented in the application.
+_Figure 20_ below shows how `Task` is represented in the application.
 
-.UML Class Diagram for Task
+.UML class diagram for `Task`
 image::TaskUMLDiagram.png[width="550"]
 
 A brief description of each of the attributes of `Task` is given below:
@@ -827,7 +837,7 @@ The following are the four logging levels:
 
 * `SEVERE` means critical problem was detected which may possibly cause the termination of the application.
 * `WARNING` means application can continue, but with caution.
-* `INFO` shows noteworthy actions by the App.
+* `INFO` shows noteworthy actions by the application.
 * `FINE` gives details that are not usually noteworthy but may be useful in debugging e.g. printing the actual list instead of just its size.
 
 {empty} +

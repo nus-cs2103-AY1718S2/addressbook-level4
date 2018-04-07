@@ -66,10 +66,10 @@ public class LoginPane extends UiPart<Region> {
     private boolean checkLoginDetails(Login login) {
         try {
             isAccessPermitted = login.checkLoginDetails(
-                    new UserPass(usernameTextField.getText(),
-                            passwordField.getText()));
+                    new UserPass(usernameTextField.getText().toLowerCase(),
+                            passwordField.getText().toLowerCase()));
         } catch (Exception e) {
-            loginStatus.setText("Login Failed.");
+            loginStatus.setText("Login Failed. ");
         }
         if (isAccessPermitted) {
             loginStatus.setText("Login Successful.");
@@ -89,10 +89,13 @@ public class LoginPane extends UiPart<Region> {
         try {
             login.storeUserPass(
                     new UserPass(
-                            usernameTextField.getText(),
-                            passwordField.getText()));
+                            usernameTextField.getText().toLowerCase(),
+                            passwordField.getText().toLowerCase()));
+            loginStatus.setText("Profile for " + usernameTextField.getText().toLowerCase()
+                    + " is created. You may now log in.");
         } catch (Exception e) {
-            loginStatus.setText("Username is taken.");
+            loginStatus.setText("Username " + usernameTextField.getText().toLowerCase()
+                    + " is taken. Try another.");
         }
     }
 
@@ -111,6 +114,12 @@ public class LoginPane extends UiPart<Region> {
                 exitButton.fire();
             }
         }
+    }
+
+    @FXML
+    private void openHelp () {
+        HelpWindow helpWindow = new HelpWindow();
+        helpWindow.show();
     }
 
     @FXML

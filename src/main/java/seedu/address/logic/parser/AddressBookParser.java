@@ -115,10 +115,10 @@ public class AddressBookParser {
             return new SortCommand();
 
         case GroupCommand.COMMAND_WORD:
-            return new GroupCommand();
+            return new GroupCommandParser().parse(arguments);
 
         case PasswordCommand.COMMAND_WORD:
-            return new PasswordCommand();
+            return new PasswordCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

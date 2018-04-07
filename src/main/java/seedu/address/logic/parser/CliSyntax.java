@@ -15,4 +15,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_APPOINTMENT = new Prefix("d/");
     public static final Prefix PREFIX_GROUP = new Prefix("g/");
     public static final Prefix PREFIX_INSURANCE = new Prefix("i/");
+    public static final Prefix PREFIX_SET = new Prefix("set/");
+    public static final Prefix PREFIX_CHANGE = new Prefix("change/");
+    public static final Prefix PREFIX_REMOVE = new Prefix("remove/");
 }

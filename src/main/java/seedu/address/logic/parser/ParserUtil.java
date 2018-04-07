@@ -11,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.PasswordCommand;
 import seedu.address.model.Insurance.Insurance;
 import seedu.address.model.export.ExportType;
 import seedu.address.model.export.exceptions.IncorrectExportTypeException;
@@ -22,6 +23,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import sun.security.util.Password;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -267,6 +269,5 @@ public class ParserUtil {
             throw new IncorrectExportTypeException();
         }
         return ExportType.valueOf(trimmedExportType);
-
     }
 }

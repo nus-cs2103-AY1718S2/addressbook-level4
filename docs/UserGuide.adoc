@@ -66,12 +66,12 @@ Adds a person to reInsurance +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [d/APPOINTMENT] [t/TAG] [i/INSURANCE[COMMISSION]] [g/GROUP] ...` Alias: `a`
 
 [TIP]
-A person can have any number of tags, appointment and insurance plans (including 0)
+A person can have any number of tags, appointment and insurance plans (including 0) but only one group
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/09-12-1994 i/Health[100] g/family`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/29-10-1992 g/friends i/General t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/09-12-1994 d/05-05-2018 g/PRIORITY t/friends i/Health`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/29-10-1992 g/friends t/criminal i/General `
 
 === Listing all persons : `list`
 

@@ -14,7 +14,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.Insurance.Insurance;
 import seedu.address.model.export.ExportType;
 import seedu.address.model.export.exceptions.IncorrectExportTypeException;
-import seedu.address.model.group.Group;
+import seedu.address.model.person.Group;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Birthday;

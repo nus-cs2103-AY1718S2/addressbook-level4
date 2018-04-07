@@ -177,14 +177,19 @@ public class AddressBookParser {
             response = ConversationCommand.getMessageResponse(userInput);
             intents = response.getIntents();
             entities = response.getEntities();
-            //System.out.println("list of entities: " + entities);
+            System.out.println("list of entities: " + entities);
 
             for (int i = 0; i < intents.size(); i++) {
                 intention = intents.get(i).getIntent();
-                //entity = entities.get(i).getValue();
             }
             System.out.println("this is the intention of the user: " + intention);
-            //System.out.println("this is the value of the entity " + entity);
+
+            if (entities.size() != 0) {
+                for (int i = 0; i < intents.size(); i++) {
+                    entity = entities.get(i).getValue();
+                }
+            }
+            System.out.println("this is the value of the entity " + entity);
 
             switch (intention) {
             case "Clear":
@@ -210,6 +215,14 @@ public class AddressBookParser {
 
             case "Schedule":
                 return new ScheduleCommand();
+
+            case "Delete":
+                Command cmd = new FindCommandParser().parse(entity);
+                return cmd;
+
+            case "Select":
+                FindCommand command = new FindCommandParser().parse(entity);
+                return new SelectCommandParser().parse("1");
 
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

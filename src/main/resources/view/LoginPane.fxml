@@ -31,7 +31,12 @@
                <font>
                   <Font name="ADAM.CGPRO" size="12.0" />
                </font></Button>
-                <Button fx:id="exitButton" layoutX="355.0" layoutY="20.0" mnemonicParsing="false" onAction="#closeApplication" onKeyPressed="#handleKeyPress" text="X">
+                <Button fx:id="helpButton" layoutX="337.0" layoutY="50.0" mnemonicParsing="false" onAction="#openHelp" onKeyPressed="#handleKeyPress" text="Help">
+                    <font>
+                        <Font name="ADAM.CGPRO" size="12.0" />
+                    </font>
+                </Button>
+                <Button fx:id="exitButton" layoutX="337.0" layoutY="20.0" mnemonicParsing="false" onAction="#closeApplication" onKeyPressed="#handleKeyPress" prefHeight="23.0" prefWidth="44.0" text="X">
                <font>
                   <Font name="ADAM.CGPRO" size="12.0" />
                </font></Button>
@@ -52,7 +57,7 @@
                <font>
                   <Font size="10.0" />
                </font></Text>
-            <Text layoutX="24.0" layoutY="469.0" lineSpacing="2.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please create an account if you have not done so before previously. Usernames are unique and if taken, try another. Username and passwords are not case-sensitive. " wrappingWidth="350.93670654296875">
+            <Text layoutX="24.0" layoutY="469.0" lineSpacing="2.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please create an account if you have not done so before previously. Usernames are unique and if taken, try another. Username and passwords are not case-sensitive. Click the 'HELP' button to launch the user guide. Click the 'X' button to close application. " wrappingWidth="350.93670654296875">
                <font>
                   <Font size="10.0" />
                </font>

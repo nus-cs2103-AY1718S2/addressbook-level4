@@ -13,6 +13,7 @@ import com.calendarfx.model.Interval;
 import com.calendarfx.view.CalendarView;
 
 import com.google.common.eventbus.Subscribe;
+
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 //import javafx.event.EventHandler;
@@ -94,8 +95,8 @@ public class CalendarWindow extends UiPart<Region> {
             appointmentCounter++;
 
             Entry entry = new Entry (buildAppointment(appointment, appointmentCounter).toString());
-            System.out.println(buildAppointment(appointment, appointmentCounter).toString());
-            entry.setInterval(new Interval(ldt, ldt.plusMinutes(60)));
+
+            entry.setInterval(new Interval(ldt, ldt.plusMinutes(30)));
 
             styleNumber++;
             styleNumber = styleNumber % 7;

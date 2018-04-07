@@ -177,8 +177,8 @@ Format: `unlock PASSWORD`
 ====
 
 ****
-* Unlock the Employees Tracker with the PASSWORD which match the application's unlock password.
-* PASSWORD is requiered.
+* Unlock Employees Tracker with the PASSWORD which match the application's unlock password.
+* PASSWORD is required.
 * The PASSWORD is a string that can contain any character.
 * The default PASSWORD is `admin`.
 ****
@@ -464,7 +464,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 // end::undoredo[]
 
 
-=== Locking the Employees Tracker: `lock`
+=== Locking Employees Tracker: `lock`
 
 Locks Employees Tracker, so that the data is protected without the need of closing the program or shutting down your computer. +
 Format: `lock`

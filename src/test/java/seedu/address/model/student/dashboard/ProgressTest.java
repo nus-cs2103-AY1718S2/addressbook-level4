@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import seedu.address.testutil.Assert;
 
+//@@author yapni
 public class ProgressTest {
     @Test
     public void constructor_null_throwsNullPointerException() {

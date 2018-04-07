@@ -421,7 +421,7 @@ Once the task is successfully added, it will be reflected in the CLIndar GUI its
 `Event` is the second and last type of entries in the desk board in CLIndar.
 `Event` represents an activity with fixed start and end times, such as a test, doctor appointment etc.
 
-_Figure 13_ below shows how `Event` is implemented in the application.
+_Figure 19_ below shows how `Event` is implemented in the application.
 
 .UML Class Diagram for Event
 image::EventUMLDiagram.png[width="550"]

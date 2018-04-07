@@ -27,14 +27,14 @@ public class Theme {
      */
     public Theme(String themeName) {
         requireNonNull(themeName);
-        checkArgument(isValidThemeName(themeName.toLowerCase()), MESSAGE_THEME_CONSTRAINTS);
+        checkArgument(hasValidThemeName(themeName.toLowerCase()), MESSAGE_THEME_CONSTRAINTS);
         selectedThemePath = themesLocation[Arrays.asList(themes).indexOf(themeName.toLowerCase())];
     }
 
     /**
      * Returns true if a given string is a valid theme name.
      */
-    public static boolean isValidThemeName(String themeName) {
+    public static boolean hasValidThemeName(String themeName) {
         boolean isValid = Arrays.stream(themes).anyMatch(themeName::equals);
         return isValid;
     }

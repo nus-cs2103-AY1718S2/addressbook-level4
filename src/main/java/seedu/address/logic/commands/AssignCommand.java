@@ -89,13 +89,12 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
             model.updatePerson(personToEdit, editedPerson);
-
+            deletePrevRunnerCustomer();
             int i = 0;
             for (Person c : newCustomers) {
                 model.updatePerson(c, updatedCustomers.get(i));
                 i++;
             }
-            deletePrevRunnerCustomer();
 
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);

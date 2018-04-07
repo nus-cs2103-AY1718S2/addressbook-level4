@@ -117,12 +117,12 @@ public class CalendarWindow extends UiPart<Region> {
         final StringBuilder builder = new StringBuilder();
         builder.append(appointmentCounter)
             .append(". ")
-            .append(appointment.getPetPatientName().toString())
-            .append(" (")
-            .append(appointment.getOwnerNric())
-            .append(") ");
+            //.append(appointment.getPetPatientName().toString())
+            //.append(" (")
+            .append(appointment.getOwnerNric() + " ");
+            //.append(") ");
         appointment.getAppointmentTags().forEach(builder::append);
-        builder.append(appointment.getRemark().toString());
+        //builder.append(appointment.getRemark().toString());
         return builder;
     }
 

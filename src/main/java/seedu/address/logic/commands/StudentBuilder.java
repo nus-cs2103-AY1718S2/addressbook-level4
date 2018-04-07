@@ -163,7 +163,7 @@ public class StudentBuilder {
     }
 
     /**
-     * Adds a new {@code milestone} to the {@code dashboard} of the {@code Student} that we are building.
+     * Adds a new {@code Milestone} to the {@code Dashboard} of the {@code Student} that we are building.
      *
      * @throws DuplicateMilestoneException if the new milestone is a duplicate of an existing milestone
      */
@@ -173,7 +173,7 @@ public class StudentBuilder {
     }
 
     /**
-     * Removes the {@code milestone} from the {@code dashboard} of the {@code Student} that we are building.
+     * Removes the {@code Milestone} from the {@code Dashboard} of the {@code Student} that we are building.
      *
      * @throws MilestoneNotFoundException if the specified milestone is not found in the dashboard
      */
@@ -183,7 +183,7 @@ public class StudentBuilder {
     }
 
     /**
-     * Adds a new {@code task} to the specified milestone in the {@code dashboard}
+     * Adds a new {@code Task} to the specified Milestone in the {@code Dashboard}
      * of the {@code Student} we are building.
      *
      * @throws DuplicateTaskException if the new task is a duplicate of an existing task
@@ -203,7 +203,28 @@ public class StudentBuilder {
     }
 
     /**
-     * Marks a specified {@code task} of a milestone in the {@code dashboard} of the {@code Student}
+     * Removes the {@code Task} from the specified {@code Milestone} in the {@code Dashboard} of the {@code Student}
+     * we are building
+     * @throws TaskNotFoundException if the specified task is not found in the milestone
+     */
+    public StudentBuilder withoutTask(Index milestoneIndex, Task task) throws TaskNotFoundException,
+            DuplicateMilestoneException, MilestoneNotFoundException {
+        Milestone milestone = dashboard.getMilestoneList().get(milestoneIndex);
+        milestone.getTaskList().remove(task);
+
+        int numCompletedTaskChange = task.isCompleted() ? -1 : 0;
+
+        Progress updatedProgress = new Progress(milestone.getProgress().getTotalTasks() - 1,
+                milestone.getProgress().getNumCompletedTasks() + numCompletedTaskChange);
+        Milestone updatedMilestone = new Milestone(milestone.getDueDate(), milestone.getTaskList(), updatedProgress,
+                milestone.getDescription());
+        dashboard.getMilestoneList().setMilestone(milestone, updatedMilestone);
+
+        return this;
+    }
+
+    /**
+     * Marks a specified {@code Task} from a {@code Milestone} in the {@code Dashboard} of the {@code Student}
      * we are building as completed.
      */
     public StudentBuilder withTaskCompleted(Index milestoneIndex, Index taskIndex) throws DuplicateTaskException,

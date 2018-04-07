@@ -27,18 +27,6 @@ public class FileUtil {
         }
     }
 
-    //@@author RyanAngJY
-    /**
-     * Creates a directory if it does not exist.
-     * @throws IOException if the directory cannot be created.
-     */
-    public static void createDirectoryIfMissing(File file) throws IOException {
-        if (!isFileExists(file)) {
-            createDirs(file);
-        }
-    }
-    //@@author
-
     /**
      * Creates a file if it does not exist along with its missing parent directories
      *

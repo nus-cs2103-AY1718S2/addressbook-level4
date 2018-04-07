@@ -25,7 +25,7 @@ public class ImageStorage {
     public static void saveAllImageFiles(ReadOnlyRecipeBook recipeBook, String filePath) throws IOException {
         String imageFolderPath = filePath.replaceAll(RECIPE_BOOK_FILENAME, IMAGE_FOLDER);
         File imageFolder = new File(imageFolderPath);
-        FileUtil.createDirectoryIfMissing(imageFolder);
+        FileUtil.createDirs(imageFolder);
 
         for (int i = 0; i < recipeBook.getRecipeList().size(); i++) {
             Image recipeImage = recipeBook.getRecipeList().get(i).getImage();

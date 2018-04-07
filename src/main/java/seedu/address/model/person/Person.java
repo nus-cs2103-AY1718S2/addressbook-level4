@@ -126,7 +126,7 @@ public class Person {
             }
             // Check that if the student has at least one subject in each L1R5 category, else return error message
             if (checkLowest(subjectsToCheck, subjects) == 10) {
-                throw new InvalidSubjectCombinationException("Subjects taken do not fulfil the L1R5 requirements.");
+                throw new InvalidSubjectCombinationException();
             } else {
                 score += checkLowest(subjectsToCheck, subjects);
             }

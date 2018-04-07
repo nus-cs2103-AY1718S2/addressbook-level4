@@ -108,8 +108,8 @@ Sorts the list of students by tag in alphabetical and numerical order (case inse
 
 === Editing a student : `edit` or `e`
 Edits an existing student in _EduBuddy_.The existing fields will then be updated accordingly. +
-Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
-Abbreviation Format: `e INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]`
+Format: `edit INDEX [n/NAME] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
+Abbreviation Format: `e INDEX [n/NAME] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]`
 
 [NOTE]
 Edits the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. +

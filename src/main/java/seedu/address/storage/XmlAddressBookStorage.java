@@ -163,7 +163,9 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         AddressBook addressBook = new AddressBook();
         addressBook.setPersons(filteredPersons);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
-        SecurityUtil.encryptFile(file, password);
+        if (password != null) {
+            SecurityUtil.encryptFile(file, password);
+        }
     }
     //@@author
 

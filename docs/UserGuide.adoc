@@ -466,11 +466,11 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Locking the Employees Tracker: `lock`
 
-Locks Employee Tracker, so that the data is protected without the need of closing the program or shutting down your computer. +
+Locks Employees Tracker, so that the data is protected without the need of closing the program or shutting down your computer. +
 Format: `lock`
 
 ****
-* Employee Tracker will not respond to any command other than `unlock` when it is locked.
+* Employees Tracker will not respond to any command other than `unlock` when it is locked.
 ****
 
 Examples:

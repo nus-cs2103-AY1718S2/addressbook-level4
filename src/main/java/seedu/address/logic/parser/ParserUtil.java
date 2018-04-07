@@ -267,6 +267,5 @@ public class ParserUtil {
             throw new IncorrectExportTypeException();
         }
         return ExportType.valueOf(trimmedExportType);
-
     }
 }

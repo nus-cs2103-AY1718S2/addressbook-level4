@@ -13,6 +13,7 @@ public class UserPrefs {
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "InsuranceBook";
     private String exportPortfolioFilePath = "data/portfolio.csv";
+    private String passwordFilePath = "data/password.txt";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -52,6 +53,14 @@ public class UserPrefs {
 
     public void setExportPortfolioFilePath(String exportPortfolioFilePath) {
         this.exportPortfolioFilePath = exportPortfolioFilePath;
+    }
+
+    public String getPasswordFilePath() {
+        return passwordFilePath;
+    }
+
+    public void setPasswordFilePath(String passwordFilePath) {
+        this.passwordFilePath = passwordFilePath;
     }
 
     @Override

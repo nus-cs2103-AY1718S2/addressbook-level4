@@ -275,6 +275,22 @@ Exports the data in the portfolio to a .csv file
 * Coming in v2.0, the user will be able to specify what the created calendar is called.
 ====
 
+=== Group entries : `group`
+
+Group all entries under the same group from reInsurance. +
+Format: `group` Alias: `g`
+
+Examples:
+
+* `group friends` +
+All entries under the group friends will be returned to the user as a list.
+
+
+=== Password : `password`
+
+Set a password for reInsurance as desired. No password required to access the program. +
+Format: `password` Alias: `pw`
+
 === Exiting the program : `exit`
 
 Exits the program. +
@@ -283,13 +299,7 @@ Format: `exit`
 === Saving the data
 
 reInsurance data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
-
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+There is no need to save manually. Data will be encrypted.
 
 == FAQ
 
@@ -314,3 +324,6 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Export* : `export`
+* *Group* : `group`
+* *Password* : `password`

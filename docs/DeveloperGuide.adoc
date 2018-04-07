@@ -407,7 +407,7 @@ Birthday prefix "b/" has been added to the add command so that users can add the
 // tag::sort[]
 === Sort command
 
-*Since V1.4*
+*Since V1.5*
 
 ==== Current Implementation
 The sort command allows the users to sort their clients according to the lexicographical order of their name. It is facilitated by a custom comparator. The sort command would be implemented as an not undoable command.
@@ -439,12 +439,14 @@ Suppose that the user has a list of clients in the application as shown in the d
 // end::sort[]
 
 // tag::group[]
-=== Group feature
+=== Group Command
 
-*Since V1.4*
+*Since V1.5*
 
 ==== Current Implementation
-The Group feature will allow users to group their clients according to a specified group. Users will be required to add their clients to a group when adding a new user. Users can change the grouping of their clients later on if they wish to do so.
+The Group feature will allow users to group their clients according to a specified group.
+
+Users will be required to add their clients to a group when adding a new user. Users can change the grouping of their clients later on if they wish to do so.
 
 The following sequence diagram shows how the group feature is being implemented.
 
@@ -507,7 +509,7 @@ image::InsuranceClassInModel.png[width="790"]
 // tag:: encryption[]
 === Data Encryption
 
-*Since V1.4*
+*Since V1.5*
 
 ==== Current Implementation
 Client’s data is stored in an XML file in plain text is not secure, hence the need to encrypt XML data.
@@ -520,23 +522,70 @@ The current implementation is just a proof of concept and will be improved upon 
 
 ===== Aspect: Implementation of SecretKey
 
-* **Alternative 1:** SecretKey will be stored in the same location as the XML file
-** Pros: Data Encryption will be easier for developers to implement this way.
-** Cons: Akin to not having encrypted the file since the key is exposed
-* **Alternative 2 (Prospective):** Use the Java Cryptography Extension KeyStore
+* **Alternative 1(Current):** Using a password based encryption key
+** Pros: Data Encryption will be easier for developers to implement this way. Secret key will not be exposed.
+** Cons: Password for the key is fixed and predetermined.
+* **Alternative 2(Prospective):** Use the Java Cryptography Extension KeyStore
 ** Pros: Encryption keys will not be exposed
 ** Cons: Harder for developers to code
 
 ===== Aspect: Strength of the encryption
 
-* **Alternative 1 (Current):** 256-bits encryption
-** Pros: 256-bits provide much stronger encryption
-** Cons: Requires more computation resources and might be a tad slower, albeit negligible
-* **Alternative 2 (Prospective):** 128-bits encryption
+* **Alternative 1 (Current):** 128-bits encryption
 ** Pros: Using 128-bits encryption will be much faster and requires less computation resources
 ** Cons: Less stronger but still secure encryption
+* **Alternative 2 (Prospective):** 256-bits encryption
+** Pros: 256-bits provide much stronger encryption
+** Cons: Requires more computation resources and might be a tad slower, albeit negligible
+
 
 // end:: encryption[]
+
+// tag:: password[]
+=== Password feature
+
+*Since V1.5*
+
+==== Current Implementation
+As reInsurance contains sensitive client's data, apart from encrypting the XML data files, we have to keep it away from prying eyes.
+
+As such, we could implement a password to protect the data. The password will be encrypted and store as a local copy.
+
+The password feature will be created as a class of it's own. There will be no default password for ease of use of the program.
+
+Users can decide whether to set a password. The current implementation is just a proof of concept and will be improved upon in upcoming version.
+
+
+==== Design Considerations
+
+===== Aspect: Password length and strength
+
+* **Alternative 1 (Current):** Password will be stored using Strings.
+** Pros: Users will be able to key in alphanumeric password and developers can encoded the Strings easily.
+** Cons: Harder to implement than a purely numerical password
+* **Alternative 2:** Password will be numerical
+** Pros: Developer will be able to code it easily
+** Cons: Password will be weaker, able to brute force through
+
+===== Aspect: Storage of password file
+
+* **Alternative 1 (Current):** Password will be stored in a encrypted file
+** Pros: File will be accessible but encrypted, making it safer
+** Cons: Developer will need to encrypt the file
+* **Alternative 2:** Password will be stored in a plain text file
+** Pros: Easier to store and retrieve password
+** Cons: Akin to not having a password since it is easily accessible
+
+
+*Coming in V2.0*
+In the event that the users forget their password, the current implementation does have a way for the users to recover their password.
+
+In V2.0, the user's password will be sent to the email that is linked to the user's calendar if requested.
+
+In addition the XML file will be unlocked when the password is entered to allow power users to edit the XML file.
+
+Lastly, password will be hashed and salted instead of being encrypted with a key.
+// end:: password[]
 
 === Exporting
 

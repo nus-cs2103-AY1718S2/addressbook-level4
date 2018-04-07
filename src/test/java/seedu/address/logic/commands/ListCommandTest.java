@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showCoinAtIndex;
-import static seedu.address.testutil.TypicalCoins.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalCoins.getTypicalCoinBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COIN;
 
 import org.junit.Before;
@@ -25,7 +25,7 @@ public class ListCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalCoinBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getCoinBook(), new UserPrefs());
 
         listCommand = new ListCommand();

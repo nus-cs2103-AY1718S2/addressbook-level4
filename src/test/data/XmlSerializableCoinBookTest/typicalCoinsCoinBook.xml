@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!-- CoinBook save file which contains the Coins values as in
-{@code TypicalCoins#getTypicalAddressBook()}-->
+{@code TypicalCoins#getTypicalCoinBook()}-->
 <coinbook>
     <coins>
         <code>Alice Pauline</code>

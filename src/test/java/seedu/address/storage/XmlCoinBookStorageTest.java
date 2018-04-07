@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static seedu.address.testutil.TypicalCoins.ALICE;
 import static seedu.address.testutil.TypicalCoins.HOON;
 import static seedu.address.testutil.TypicalCoins.IDA;
-import static seedu.address.testutil.TypicalCoins.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalCoins.getTypicalCoinBook;
 
 import java.io.IOException;
 
@@ -20,7 +20,7 @@ import seedu.address.model.CoinBook;
 import seedu.address.model.ReadOnlyCoinBook;
 
 public class XmlCoinBookStorageTest {
-    private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlAddressBookStorageTest/");
+    private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlCoinBookStorageTest/");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -29,12 +29,12 @@ public class XmlCoinBookStorageTest {
     public TemporaryFolder testFolder = new TemporaryFolder();
 
     @Test
-    public void readAddressBook_nullFilePath_throwsNullPointerException() throws Exception {
+    public void readCoinBook_nullFilePath_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        readAddressBook(null);
+        readCoinBook(null);
     }
 
-    private java.util.Optional<ReadOnlyCoinBook> readAddressBook(String filePath) throws Exception {
+    private java.util.Optional<ReadOnlyCoinBook> readCoinBook(String filePath) throws Exception {
         return new XmlCoinBookStorage(filePath).readCoinBook(addToTestDataPathIfNotNull(filePath));
     }
 
@@ -46,14 +46,14 @@ public class XmlCoinBookStorageTest {
 
     @Test
     public void read_missingFile_emptyResult() throws Exception {
-        assertFalse(readAddressBook("NonExistentFile.xml").isPresent());
+        assertFalse(readCoinBook("NonExistentFile.xml").isPresent());
     }
 
     @Test
     public void read_notXmlFormat_exceptionThrown() throws Exception {
 
         thrown.expect(DataConversionException.class);
-        readAddressBook("NotXmlFormatAddressBook.xml");
+        readCoinBook("NotXmlFormatCoinBook.xml");
 
         /* IMPORTANT: Any code below an exception-throwing line (like the one above) will be ignored.
          * That means you should not have more than one exception test in one method
@@ -61,64 +61,64 @@ public class XmlCoinBookStorageTest {
     }
 
     @Test
-    public void readAddressBook_invalidCoinAddressBook_throwDataConversionException() throws Exception {
+    public void readCoinBook_invalidCoinCoinBook_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
-        readAddressBook("invalidCoinAddressBook.xml");
+        readCoinBook("invalidCoinCoinBook.xml");
     }
 
     @Test
-    public void readAddressBook_invalidAndValidCoinAddressBook_throwDataConversionException() throws Exception {
+    public void readCoinBook_invalidAndValidCoinCoinBook_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
-        readAddressBook("invalidAndValidCoinAddressBook.xml");
+        readCoinBook("invalidAndValidCoinCoinBook.xml");
     }
 
     @Test
-    public void readAndSaveAddressBook_allInOrder_success() throws Exception {
-        String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
-        CoinBook original = getTypicalAddressBook();
-        XmlCoinBookStorage xmlAddressBookStorage = new XmlCoinBookStorage(filePath);
+    public void readAndSaveCoinBook_allInOrder_success() throws Exception {
+        String filePath = testFolder.getRoot().getPath() + "TempCoinBook.xml";
+        CoinBook original = getTypicalCoinBook();
+        XmlCoinBookStorage xmlCoinBookStorage = new XmlCoinBookStorage(filePath);
 
         //Save in new file and read back
-        xmlAddressBookStorage.saveCoinBook(original, filePath);
-        ReadOnlyCoinBook readBack = xmlAddressBookStorage.readCoinBook(filePath).get();
+        xmlCoinBookStorage.saveCoinBook(original, filePath);
+        ReadOnlyCoinBook readBack = xmlCoinBookStorage.readCoinBook(filePath).get();
         assertEquals(original, new CoinBook(readBack));
 
         //Modify data, overwrite exiting file, and read back
         original.addCoin(HOON);
         original.removeCoin(ALICE);
-        xmlAddressBookStorage.saveCoinBook(original, filePath);
-        readBack = xmlAddressBookStorage.readCoinBook(filePath).get();
+        xmlCoinBookStorage.saveCoinBook(original, filePath);
+        readBack = xmlCoinBookStorage.readCoinBook(filePath).get();
         assertEquals(original, new CoinBook(readBack));
 
         //Save and read without specifying file path
         original.addCoin(IDA);
-        xmlAddressBookStorage.saveCoinBook(original); //file path not specified
-        readBack = xmlAddressBookStorage.readCoinBook().get(); //file path not specified
+        xmlCoinBookStorage.saveCoinBook(original); //file path not specified
+        readBack = xmlCoinBookStorage.readCoinBook().get(); //file path not specified
         assertEquals(original, new CoinBook(readBack));
 
     }
 
     @Test
-    public void saveAddressBook_nullAddressBook_throwsNullPointerException() {
+    public void saveCoinBook_nullCoinBook_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        saveAddressBook(null, "SomeFile.xml");
+        saveCoinBook(null, "SomeFile.xml");
     }
 
     /**
-     * Saves {@code addressBook} at the specified {@code filePath}.
+     * Saves {@code coinBook} at the specified {@code filePath}.
      */
-    private void saveAddressBook(ReadOnlyCoinBook addressBook, String filePath) {
+    private void saveCoinBook(ReadOnlyCoinBook coinBook, String filePath) {
         try {
-            new XmlCoinBookStorage(filePath).saveCoinBook(addressBook, addToTestDataPathIfNotNull(filePath));
+            new XmlCoinBookStorage(filePath).saveCoinBook(coinBook, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }
     }
 
     @Test
-    public void saveAddressBook_nullFilePath_throwsNullPointerException() throws IOException {
+    public void saveCoinBook_nullFilePath_throwsNullPointerException() throws IOException {
         thrown.expect(NullPointerException.class);
-        saveAddressBook(new CoinBook(), null);
+        saveCoinBook(new CoinBook(), null);
     }
 
 

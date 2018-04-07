@@ -2,7 +2,7 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalCoins.ALICE;
-import static seedu.address.testutil.TypicalCoins.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalCoins.getTypicalCoinBook;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,25 +25,25 @@ public class CoinBookTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final CoinBook addressBook = new CoinBook();
+    private final CoinBook coinBook = new CoinBook();
 
     @Test
     public void constructor() {
-        assertEquals(Collections.emptyList(), addressBook.getCoinList());
-        assertEquals(Collections.emptyList(), addressBook.getTagList());
+        assertEquals(Collections.emptyList(), coinBook.getCoinList());
+        assertEquals(Collections.emptyList(), coinBook.getTagList());
     }
 
     @Test
     public void resetData_null_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        addressBook.resetData(null);
+        coinBook.resetData(null);
     }
 
     @Test
-    public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        CoinBook newData = getTypicalAddressBook();
-        addressBook.resetData(newData);
-        assertEquals(newData, addressBook);
+    public void resetData_withValidReadOnlyCoinBook_replacesData() {
+        CoinBook newData = getTypicalCoinBook();
+        coinBook.resetData(newData);
+        assertEquals(newData, coinBook);
     }
 
     @Test
@@ -54,19 +54,19 @@ public class CoinBookTest {
         CoinBookStub newData = new CoinBookStub(newCoins, newTags);
 
         thrown.expect(AssertionError.class);
-        addressBook.resetData(newData);
+        coinBook.resetData(newData);
     }
 
     @Test
     public void getCoinList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        addressBook.getCoinList().remove(0);
+        coinBook.getCoinList().remove(0);
     }
 
     @Test
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        addressBook.getTagList().remove(0);
+        coinBook.getTagList().remove(0);
     }
 
     /**

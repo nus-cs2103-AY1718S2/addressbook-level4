@@ -3,7 +3,7 @@ package seedu.address.storage;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalCoins.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalCoins.getTypicalCoinBook;
 
 import java.io.IOException;
 
@@ -56,25 +56,25 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void addressBookReadSave() throws Exception {
+    public void coinBookReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
-         * {@link XmlAddressBookStorage} class.
-         * More extensive testing of UserPref saving/reading is done in {@link XmlAddressBookStorageTest} class.
+         * {@link XmlCoinBookStorage} class.
+         * More extensive testing of UserPref saving/reading is done in {@link XmlCoinBookStorageTest} class.
          */
-        CoinBook original = getTypicalAddressBook();
+        CoinBook original = getTypicalCoinBook();
         storageManager.saveCoinBook(original);
         ReadOnlyCoinBook retrieved = storageManager.readCoinBook().get();
         assertEquals(original, new CoinBook(retrieved));
     }
 
     @Test
-    public void getAddressBookFilePath() {
+    public void getCoinBookFilePath() {
         assertNotNull(storageManager.getCoinBookFilePath());
     }
 
     @Test
-    public void handleAddressBookChangedEvent_exceptionThrown_eventRaised() {
+    public void handleCoinBookChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlCoinBookStorageExceptionThrowingStub("dummy"),
                                              new XmlRuleBookStorage("dummy"),

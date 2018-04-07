@@ -355,10 +355,10 @@ public class SyncCommand extends Command {
 ``` java
     /**
      * Saves the given {@link ReadOnlyCoinBook} to a fixed temporary location.
-     * @param addressBook cannot be null.
+     * @param coinBook cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void backupCoinBook(ReadOnlyCoinBook addressBook) throws IOException;
+    void backupCoinBook(ReadOnlyCoinBook coinBook) throws IOException;
 ```
 ###### \java\seedu\address\storage\StorageManager.java
 ``` java
@@ -370,8 +370,8 @@ public class SyncCommand extends Command {
 ###### \java\seedu\address\storage\XmlCoinBookStorage.java
 ``` java
     @Override
-    public void backupCoinBook(ReadOnlyCoinBook addressBook) throws IOException {
-        saveCoinBook(addressBook, backupFilePath);
+    public void backupCoinBook(ReadOnlyCoinBook coinBook) throws IOException {
+        saveCoinBook(coinBook, backupFilePath);
     }
 ```
 ###### \java\seedu\address\ui\MainWindow.java

@@ -98,7 +98,7 @@ public class MainApp extends Application {
             if (!coinBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample CoinBook");
             }
-            initialCoins = coinBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialCoins = coinBookOptional.orElseGet(SampleDataUtil::getSampleCoinBook);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty CoinBook");
             initialCoins = new CoinBook();
@@ -211,7 +211,7 @@ public class MainApp extends Application {
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping Address Book ] =============================");
+        logger.info("============================ [ Stopping Coin Book ] =============================");
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);

@@ -18,7 +18,7 @@ import seedu.address.model.CoinBook;
 import seedu.address.storage.XmlAdaptedCoin;
 import seedu.address.storage.XmlAdaptedTag;
 import seedu.address.storage.XmlSerializableCoinBook;
-import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.CoinBookBuilder;
 import seedu.address.testutil.CoinBuilder;
 import seedu.address.testutil.TestUtil;
 
@@ -27,11 +27,11 @@ public class XmlUtilTest {
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlUtilTest/");
     private static final File EMPTY_FILE = new File(TEST_DATA_FOLDER + "empty.xml");
     private static final File MISSING_FILE = new File(TEST_DATA_FOLDER + "missing.xml");
-    private static final File VALID_FILE = new File(TEST_DATA_FOLDER + "validAddressBook.xml");
+    private static final File VALID_FILE = new File(TEST_DATA_FOLDER + "validCoinBook.xml");
     private static final File MISSING_COIN_FIELD_FILE = new File(TEST_DATA_FOLDER + "missingCoinField.xml");
     private static final File INVALID_COIN_FIELD_FILE = new File(TEST_DATA_FOLDER + "invalidCoinField.xml");
     private static final File VALID_COIN_FILE = new File(TEST_DATA_FOLDER + "validCoin.xml");
-    private static final File TEMP_FILE = new File(TestUtil.getFilePathInSandboxFolder("tempAddressBook.xml"));
+    private static final File TEMP_FILE = new File(TestUtil.getFilePathInSandboxFolder("tempCoinBook.xml"));
 
     private static final String VALID_NAME = "ABC";
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
@@ -115,7 +115,7 @@ public class XmlUtilTest {
         XmlSerializableCoinBook dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableCoinBook.class);
         assertEquals(dataToWrite, dataFromFile);
 
-        AddressBookBuilder builder = new AddressBookBuilder(new CoinBook());
+        CoinBookBuilder builder = new CoinBookBuilder(new CoinBook());
         dataToWrite = new XmlSerializableCoinBook(
                 builder.withCoin(new CoinBuilder().build()).withTag("Friends").build());
 

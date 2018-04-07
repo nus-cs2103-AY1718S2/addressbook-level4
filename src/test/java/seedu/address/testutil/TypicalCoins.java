@@ -46,7 +46,7 @@ public class TypicalCoins {
     /**
      * Returns an {@code CoinBook} with all the typical coins.
      */
-    public static CoinBook getTypicalAddressBook() {
+    public static CoinBook getTypicalCoinBook() {
         CoinBook ab = new CoinBook();
         for (Coin coin : getTypicalCoins()) {
             try {

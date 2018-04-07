@@ -48,7 +48,7 @@ import seedu.address.ui.ResultDisplay;
  * A system test class for CoinBook, which provides access to handles of GUI components and helper methods
  * for test verification.
  */
-public abstract class AddressBookSystemTest {
+public abstract class CoinBookSystemTest {
     @ClassRule
     public static ClockRule clockRule = new ClockRule();
 
@@ -90,7 +90,7 @@ public abstract class AddressBookSystemTest {
      * Returns the data to be loaded into the file in {@link #getDataFileLocation()}.
      */
     protected CoinBook getInitialData() {
-        return TypicalCoins.getTypicalAddressBook();
+        return TypicalCoins.getTypicalCoinBook();
     }
 
     /**
@@ -185,7 +185,7 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
-        assertEquals(expectedModel.getCoinBook(), testApp.readStorageAddressBook());
+        assertEquals(expectedModel.getCoinBook(), testApp.readStorageCoinBook());
         assertListMatching(getCoinListPanel(), expectedModel.getFilteredCoinList());
     }
 

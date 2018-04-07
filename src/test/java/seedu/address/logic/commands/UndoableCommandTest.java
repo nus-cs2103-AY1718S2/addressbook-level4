@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstCoin;
 import static seedu.address.logic.commands.CommandTestUtil.showCoinAtIndex;
-import static seedu.address.testutil.TypicalCoins.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalCoins.getTypicalCoinBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COIN;
 
 import org.junit.Test;
@@ -17,10 +17,10 @@ import seedu.address.model.coin.Coin;
 import seedu.address.model.coin.exceptions.CoinNotFoundException;
 
 public class UndoableCommandTest {
-    private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private final Model model = new ModelManager(getTypicalCoinBook(), new UserPrefs());
     private final DummyCommand dummyCommand = new DummyCommand(model);
 
-    private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model expectedModel = new ModelManager(getTypicalCoinBook(), new UserPrefs());
 
     @Test
     public void executeUndo() throws Exception {
@@ -32,7 +32,7 @@ public class UndoableCommandTest {
 
         // undo() should cause the model's filtered list to show all coins
         dummyCommand.undo();
-        expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        expectedModel = new ModelManager(getTypicalCoinBook(), new UserPrefs());
         assertEquals(expectedModel, model);
     }
 

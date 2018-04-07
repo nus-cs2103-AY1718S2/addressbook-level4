@@ -21,7 +21,7 @@ public class XmlSerializableRuleBook {
     private List<XmlAdaptedRule> rules;
 
     /**
-     * Creates an empty XmlSerializableAddressBook.
+     * Creates an empty XmlSerializableCoinBook.
      * This empty constructor is required for marshalling.
      */
     public XmlSerializableRuleBook() {

@@ -13,7 +13,7 @@ import seedu.address.model.coin.Coin;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.TestUtil;
 
-public class SampleDataTest extends AddressBookSystemTest {
+public class SampleDataTest extends CoinBookSystemTest {
     /**
      * Returns null to force test app to load data of the file in {@code getDataFileLocation()}.
      */
@@ -44,7 +44,7 @@ public class SampleDataTest extends AddressBookSystemTest {
     }
 
     @Test
-    public void addressBook_dataFileDoesNotExist_loadSampleData() {
+    public void coinBook_dataFileDoesNotExist_loadSampleData() {
         Coin[] expectedList = SampleDataUtil.getSampleCoins();
         assertListMatching(getCoinListPanel(), expectedList);
     }

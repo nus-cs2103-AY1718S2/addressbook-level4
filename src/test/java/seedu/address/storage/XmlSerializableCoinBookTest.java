@@ -16,10 +16,10 @@ import seedu.address.testutil.TypicalCoins;
 
 public class XmlSerializableCoinBookTest {
 
-    private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlSerializableAddressBookTest/");
-    private static final File TYPICAL_COINS_FILE = new File(TEST_DATA_FOLDER + "typicalCoinsAddressBook.xml");
-    private static final File INVALID_COIN_FILE = new File(TEST_DATA_FOLDER + "invalidCoinAddressBook.xml");
-    private static final File INVALID_TAG_FILE = new File(TEST_DATA_FOLDER + "invalidTagAddressBook.xml");
+    private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlSerializableCoinBookTest/");
+    private static final File TYPICAL_COINS_FILE = new File(TEST_DATA_FOLDER + "typicalCoinsCoinBook.xml");
+    private static final File INVALID_COIN_FILE = new File(TEST_DATA_FOLDER + "invalidCoinCoinBook.xml");
+    private static final File INVALID_TAG_FILE = new File(TEST_DATA_FOLDER + "invalidTagCoinBook.xml");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -29,7 +29,7 @@ public class XmlSerializableCoinBookTest {
         XmlSerializableCoinBook dataFromFile = XmlUtil.getDataFromFile(TYPICAL_COINS_FILE,
                 XmlSerializableCoinBook.class);
         CoinBook addressBookFromFile = dataFromFile.toModelType();
-        CoinBook typicalCoinsAddressBook = TypicalCoins.getTypicalAddressBook();
+        CoinBook typicalCoinsAddressBook = TypicalCoins.getTypicalCoinBook();
         assertEquals(addressBookFromFile, typicalCoinsAddressBook);
     }
 

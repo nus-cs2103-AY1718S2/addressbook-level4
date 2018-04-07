@@ -54,10 +54,10 @@ public class XmlRuleBookStorage implements RuleBookStorage {
             return Optional.empty();
         }
 
-        XmlSerializableRuleBook xmlAddressBook =
+        XmlSerializableRuleBook xmlCoinBook =
                 XmlFileStorage.loadDataFromSaveFile(new File(filePath), XmlSerializableRuleBook.class);
         try {
-            return Optional.of(xmlAddressBook.toModelType());
+            return Optional.of(xmlCoinBook.toModelType());
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + addressBookFile + ": " + ive.getMessage());
             throw new DataConversionException(ive);

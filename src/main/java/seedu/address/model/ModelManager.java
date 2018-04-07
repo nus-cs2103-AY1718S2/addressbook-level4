@@ -73,7 +73,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyCoinBook newData) {
         coinBook.resetData(newData);
-        indicateAddressBookChanged();
+        indicateCoinBookChanged();
     }
 
     @Override
@@ -82,21 +82,21 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /** Raises an event to indicate the model has changed */
-    private void indicateAddressBookChanged() {
+    private void indicateCoinBookChanged() {
         raise(new CoinBookChangedEvent(coinBook));
     }
 
     @Override
     public synchronized void deleteCoin(Coin target) throws CoinNotFoundException {
         coinBook.removeCoin(target);
-        indicateAddressBookChanged();
+        indicateCoinBookChanged();
     }
 
     @Override
     public synchronized void addCoin(Coin coin) throws DuplicateCoinException {
         coinBook.addCoin(coin);
         updateFilteredCoinList(PREDICATE_SHOW_ALL_COINS);
-        indicateAddressBookChanged();
+        indicateCoinBookChanged();
     }
 
     @Override
@@ -105,7 +105,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedCoin);
 
         coinBook.updateCoin(target, editedCoin);
-        indicateAddressBookChanged();
+        indicateCoinBookChanged();
     }
 
     //@@author laichengyu
@@ -115,7 +115,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(newData);
 
         coinBook.syncAll(newData);
-        indicateAddressBookChanged();
+        indicateCoinBookChanged();
     }
 
     /** Returns an unmodifiable view of the code list */

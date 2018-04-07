@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_JOE;
-import static seedu.address.testutil.TypicalCoins.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalCoins.getTypicalCoinBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COIN;
 
 import org.junit.Rule;
@@ -20,7 +20,7 @@ import seedu.address.testutil.TypicalCoins;
 
 public class CommandTargetTest {
 
-    private static final ObservableList<Coin> coinList = new ModelManager(getTypicalAddressBook(),
+    private static final ObservableList<Coin> coinList = new ModelManager(getTypicalCoinBook(),
             new UserPrefs()).getFilteredCoinList();
 
     @Rule

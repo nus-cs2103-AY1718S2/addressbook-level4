@@ -7,28 +7,28 @@ import seedu.address.model.coin.exceptions.DuplicateCoinException;
 import seedu.address.model.tag.Tag;
 
 /**
- * A utility class to help with building Addressbook objects.
+ * A utility class to help with building Coinbook objects.
  * Example usage: <br>
- *     {@code CoinBook ab = new AddressBookBuilder().withCoin("John", "Doe").withTag("Friend").build();}
+ *     {@code CoinBook ab = new CoinBookBuilder().withCoin("John", "Doe").withTag("Friend").build();}
  */
-public class AddressBookBuilder {
+public class CoinBookBuilder {
 
-    private CoinBook addressBook;
+    private CoinBook coinBook;
 
-    public AddressBookBuilder() {
-        addressBook = new CoinBook();
+    public CoinBookBuilder() {
+        coinBook = new CoinBook();
     }
 
-    public AddressBookBuilder(CoinBook addressBook) {
-        this.addressBook = addressBook;
+    public CoinBookBuilder(CoinBook coinBook) {
+        this.coinBook = coinBook;
     }
 
     /**
      * Adds a new {@code Coin} to the {@code CoinBook} that we are building.
      */
-    public AddressBookBuilder withCoin(Coin coin) {
+    public CoinBookBuilder withCoin(Coin coin) {
         try {
-            addressBook.addCoin(coin);
+            coinBook.addCoin(coin);
         } catch (DuplicateCoinException dpe) {
             throw new IllegalArgumentException("coin is expected to be unique.");
         }
@@ -38,9 +38,9 @@ public class AddressBookBuilder {
     /**
      * Parses {@code tagName} into a {@code Tag} and adds it to the {@code CoinBook} that we are building.
      */
-    public AddressBookBuilder withTag(String tagName) {
+    public CoinBookBuilder withTag(String tagName) {
         try {
-            addressBook.addTag(new Tag(tagName));
+            coinBook.addTag(new Tag(tagName));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tagName is expected to be valid.");
         }
@@ -48,6 +48,6 @@ public class AddressBookBuilder {
     }
 
     public CoinBook build() {
-        return addressBook;
+        return coinBook;
     }
 }

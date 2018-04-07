@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.showCoinAtIndex;
-import static seedu.address.testutil.TypicalCoins.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalCoins.getTypicalCoinBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COIN;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_COIN;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_COIN;
@@ -36,7 +36,7 @@ public class SelectCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalCoinBook(), new UserPrefs());
     }
 
     @Test

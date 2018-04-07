@@ -13,7 +13,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.coin.NameContainsKeywordsPredicate;
-import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.CoinBookBuilder;
 
 public class ModelManagerTest {
     @Rule
@@ -28,8 +28,8 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        CoinBook addressBook = new AddressBookBuilder().withCoin(ALICE).withCoin(BENSON).build();
-        CoinBook differentAddressBook = new CoinBook();
+        CoinBook addressBook = new CoinBookBuilder().withCoin(ALICE).withCoin(BENSON).build();
+        CoinBook differentCoinBook = new CoinBook();
         UserPrefs userPrefs = new UserPrefs();
 
         // same values -> returns true
@@ -47,7 +47,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(5));
 
         // different addressBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(differentCoinBook, userPrefs)));
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getCode().fullName.split("\\s+");

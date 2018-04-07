@@ -156,7 +156,7 @@ The _Sequence Diagram_ below (Fig. 3) shows the interaction between the various 
 image::SDforDeleteCoin.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises `AddressBookChangedEvent` when the data is changed, instead of asking `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises `CoinBookChangedEvent` when the data is changed, instead of asking `Storage` to save the updates to the hard disk.
 
 Fig. 4 below shows how `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 

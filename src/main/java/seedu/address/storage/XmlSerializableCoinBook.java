@@ -23,7 +23,7 @@ public class XmlSerializableCoinBook {
     private List<XmlAdaptedTag> tags;
 
     /**
-     * Creates an empty XmlSerializableAddressBook.
+     * Creates an empty XmlSerializableCoinBook.
      * This empty constructor is required for marshalling.
      */
     public XmlSerializableCoinBook() {

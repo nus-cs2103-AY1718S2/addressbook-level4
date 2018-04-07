@@ -2,7 +2,7 @@
 <coinbook>
     <!-- Valid Coin -->
     <coins>
-        <code>Hans Muster</code>
+        <code>BTC</code>
     </coins>
     <!-- Coin with invalid code field -->
     <coins>

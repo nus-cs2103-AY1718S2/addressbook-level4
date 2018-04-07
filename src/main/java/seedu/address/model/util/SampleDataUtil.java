@@ -31,7 +31,7 @@ public class SampleDataUtil {
         };
     }
 
-    public static ReadOnlyCoinBook getSampleAddressBook() {
+    public static ReadOnlyCoinBook getSampleCoinBook() {
         try {
             CoinBook sampleAb = new CoinBook();
             for (Coin sampleCoin : getSampleCoins()) {

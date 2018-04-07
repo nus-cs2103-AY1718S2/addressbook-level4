@@ -12,16 +12,16 @@ import seedu.address.model.ReadOnlyCoinBook;
  * Represents a command which can be undone and redone.
  */
 public abstract class UndoableCommand extends Command {
-    private ReadOnlyCoinBook previousAddressBook;
+    private ReadOnlyCoinBook previousCoinBook;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
     /**
      * Stores the current state of {@code model#addressBook}.
      */
-    private void saveAddressBookSnapshot() {
+    private void saveCoinBookSnapshot() {
         requireNonNull(model);
-        this.previousAddressBook = new CoinBook(model.getCoinBook());
+        this.previousCoinBook = new CoinBook(model.getCoinBook());
     }
 
     /**
@@ -36,8 +36,8 @@ public abstract class UndoableCommand extends Command {
      * show all coins.
      */
     protected final void undo() {
-        requireAllNonNull(model, previousAddressBook);
-        model.resetData(previousAddressBook);
+        requireAllNonNull(model, previousCoinBook);
+        model.resetData(previousCoinBook);
         model.updateFilteredCoinList(PREDICATE_SHOW_ALL_COINS);
     }
 
@@ -58,7 +58,7 @@ public abstract class UndoableCommand extends Command {
 
     @Override
     public final CommandResult execute() throws CommandException {
-        saveAddressBookSnapshot();
+        saveCoinBookSnapshot();
         preprocessUndoableCommand();
         return executeUndoableCommand();
     }

@@ -54,9 +54,9 @@ public class StatusBarFooterTest extends GuiUnitTest {
 
         statusBarFooterHandle = new StatusBarFooterHandle(statusBarFooter.getRoot());
 
-        CoinBook tempAddressBook = new CoinBook();
-        tempAddressBook.addCoin(TypicalCoins.ALICE);
-        eventADDED = new CoinBookChangedEvent(tempAddressBook);
+        CoinBook tempCoinBook = new CoinBook();
+        tempCoinBook.addCoin(TypicalCoins.ALICE);
+        eventADDED = new CoinBookChangedEvent(tempCoinBook);
     }
 
     @Test

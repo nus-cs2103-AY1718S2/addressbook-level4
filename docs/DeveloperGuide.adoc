@@ -32,9 +32,9 @@ Below is an overview of this guide:
 * <<DevOps, Dev Ops>>
 * <<GetStartedProgramming, Appendices>>
 
-
-[[Computer Setup]]
+[[ComputerSetup]]
 == Computer Setup
+
 This section describes the steps needed to set up your computer before you can start developing this application further with your own code.
 {empty} +
 {empty} +
@@ -95,30 +95,30 @@ image::Close Project.png[width="600"]
 *Step 3a:* Click `Configure` > `Project Defaults` > `Project Structure`.
 
 .Configuring IntelliJ settings
-image::Configure.png[Width="400"]
+image::Configure.png[width="600"]
 
 *Step 3b:* Go to the `Project` tab and under `Project SDK` section, click `New...`. Find the directory of the JDK, and then click OK. +
 
 .Setting up JDK
-image::Setup JDK.png[Width="400"]
+image::Setup JDK.png[width="600"]
 
 {empty} +
 
 *Step 4:* Click `Import Project`. +
 
 .Importing project to IntelliJ
-image::Import Project.png[Width="400"]
+image::Import Project.png[width="600"]
 {empty} +
 
 *Step 5:* Locate the `build.gradle` file in the `main` folder that you have cloned and select it. Click `OK`. +
 
 .Locating `build.gradle` file
-image::build.gradle.png[Width="300"]
+image::build.gradle.png[width="400"]
 {empty} +
 
 *Step 6:* In the `Import Project from Gradle` that appears, click `OK` again. +
 
-image::Import Project from Gradle.png[Width="400"]
+image::Import Project from Gradle.png[width="600"]
 {empty} +
 
 *Step 7:* Open the `Terminal` and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
@@ -155,7 +155,7 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 After you do the steps above, the Settings window should appear as shown in the picure below.
 
 .Configuring IntelliJ settings for import order
-image::Import Setting.png[Width="400"]
+image::Import Setting.png[width="600"]
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write the code.
 

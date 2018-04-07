@@ -16,7 +16,7 @@ By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 
 [[Introduction]]
 == Introduction
-CLIndar is a desktop application that helps university computing students to manage their tasks and events.
+CLIndar is a desktop application that helps university computing students to manage their schedules.
 CLIndar is *Common-Line Interface (CLI) based and uses Linux-style commands*, which computing students are familiar with.
 
 This guide provides information on the core functionalities of CLIndar and their implementation, so that a developer can
@@ -34,8 +34,8 @@ Below is an overview of this guide:
 
 
 [[SettingUp]]
-== Setting up
-Follow the section below to set up the application on your computer.
+== Setting Up
+This section describes the steps needed to set up your computer before you can start developing this application further with your own code.
 {empty} +
 {empty} +
 
@@ -58,9 +58,9 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 {empty} +
 {empty} +
 
-=== Setting up the project in your computer
+=== Setup Procedures
 
-Follow the following steps to set up the project.
+Do the following steps to set up the project in your computer.
 
 
 *Step 1:* Fork this repo, and clone the fork to your computer.
@@ -69,99 +69,95 @@ To fork the repo, click the button circled below.
 
 image::Origin Repo.png[width="600"]
 
-Then open Git Bash. Change the current working directory to the location where you want the cloned directory to be made. And type the following:
-=
+Then, open Git Bash. Change the current working directory to the location where you want the cloned directory to be made. Type the following:
+
 ----
-git clone https://github.com/YOUR-USERNAME/REPOSITORY.git
+git clone https://github.com/YOUR-USERNAME/main.git
 ----
-If the clone was successful, a new sub-directory appears on your local drive. This directory has the same name as the repository that you have cloned. The clone contains the files and metadata that Git requires to maintain the changes you make to the source files.
-{empty} +
+If the clone was successful, a new sub-directory titled 'main' appears on your local drive. This directory contains the files and metadata that Git requires to maintain the changes you make to the source files. +
+
+The following should appear if `git clone https://github.com/YOUR-USERNAME/main.git` at C:/Users/temp folder is executed.
+
+image::git clone.png[width="600"]
 {empty} +
 
-
-The following should appear if `git clone https://github.com/YOUR-USERNAME/addressbook-level4.git` at C:/Users/temp folder is executed.
-
-image::git clone.jpg[width="600"]
-{empty} +
-
-*Step 2:* Open IntelliJ. If you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first, as shown in the picture below.
-{empty} +
-{empty} +
+*Step 2:* Open IntelliJ. If you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first, as shown in the picture below. +
 
 image::Close Project.png[width="600"]
 {empty} +
-{empty} +
 
-
-*Step 3:* Set up the correct JDK version for Gradle.
+*Step 3:* Set up the correct JDK version for Gradle using the following steps, as illustrated by the pictures.
 
 *Step 3a:* Click `Configure` > `Project Defaults` > `Project Structure`.
 
 image::Configure.png[Width="400"]
 
-*Step 3b:* Click `New...` and find the directory of the JDK.
-{empty} +
-{empty} +
+*Step 3b:* Go to the `Project` tab and under `Project SDK` section, click `New...`. Find the directory of the JDK, and then click OK. +
 
+image::Setup JDK.png[Width="400"]
 
-
-*Step 4:* Click `Import Project`.
-{empty} +
 {empty} +
 
+*Step 4:* Click `Import Project`. +
 
-*Step 5:* Locate the `build.gradle` file and select it. Click `OK`.
-{empty} +
-{empty} +
-
-
-*Step 6:* Click `Open as Project`.
-{empty} +
+image::Import Project.png[Width="400"]
 {empty} +
 
+*Step 5:* Locate the `build.gradle` file in the `main` folder that you have cloned and select it. Click `OK`. +
 
-*Step 7:* Click `OK` to accept the default settings.
-{empty} +
-{empty} +
-
-
-*Step 8:* Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
-
-This will generate all resources required by the application and tests.
-{empty} +
+image::build.gradle.png[Width="300"]
 {empty} +
 
-=== Verifying the setup
+*Step 6:* In the `Import Project from Gradle` that appears, click `OK` again. +
+
+image::Import Project from Gradle.png[Width="400"]
+{empty} +
+
+*Step 7:* Open the `Terminal` and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+
+This will generate all resources required by the application and tests. +
+{empty} +
+
+=== Setup Verification
+
+Do the following steps to verify that the project has been successfully set up in your computer:
 
 . Run the `seedu.address.MainApp` and try a few commands.
-. <<Testing,Run the tests>> to ensure they all pass.
+. <<Testing,Run the tests>> to ensure that they all pass.
 {empty} +
 {empty} +
 
 
-=== Configurations to do before writing code
+=== Configurations to Do Before Writing Code
 
-==== Configuring the coding style
+After you set up the project in your own computer, you still need to do the the configurations described in the following sections before you can start developing this application further with your own code.
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+==== Coding Style Configuration
+
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify, do the following steps:
 
 . Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
 . Select `Editor` > `Code Style` > `Java`.
-. Click on the `Imports` tab to set the order.
+. Click on the `Imports` tab.
 
 * For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
 * For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
-Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
+After you do the steps above, the Settings window should appear as shown in the picure below.
 
-==== Updating documentation to match your fork
+image::Import Setting.png[Width="400"]
+
+
+Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write the code.
+
+==== Documentation Updating
 
 After forking the repo, links in the documentation will still point to the `CS2103JAN2018-W13-B3/main` repo. If you plan to develop this as a separate product, you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 
-==== Setting up CI
+==== CI Setup
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+Travis needs to be set up to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
 After setting up Travis, you can optionally set up coverage reporting for your team fork (see <<UsingCoveralls#, UsingCoveralls.adoc>>).
 
@@ -173,25 +169,24 @@ Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingA
 [NOTE]
 Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based).
 
-==== Getting started with coding
+==== Steps to Get Started with Coding
 
-Follow the steps below when you are ready to start coding.
+Follow the steps below when you are ready to start coding:
 
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
 {empty} +
 {empty} +
 
-
 [[Design]]
 == Design
-This section describes the way the application is designed.
+This section describes how the features in this application are implemented internally.
 {empty} +
 {empty} +
 
 [[Design-Architecture]]
 === Architecture
-*_Figure 1_* below explains the high-level design of the App.
+_Figure 1_ below illustrates the high-level design of the application.
 
 .Architecture Diagram
 image::Architecture.png[width="600"]
@@ -203,59 +198,62 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* At app launch: initializing the components in the correct sequence and connecting them up with each other.
-* At shut down: shutting down the components and invoking cleanup method where necessary.
+* at app launch: initializing the components in the correct sequence and connecting them up with each other; and
+* at shut down: shutting down the components and invoking cleanup method where necessary.
 
-<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level:
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
-* `LogsCenter` : This class is used by many classes to write log messages to the App's log file.
+* `EventsCenter`: This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
+* `LogsCenter`: This class is used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components:
+The rest of the application consists of four components:
 
-* <<Design-Ui,*`UI`*>>: the UI of the App
-* <<Design-Logic,*`Logic`*>>: the command executor
-* <<Design-Model,*`Model`*>>: holds the data of the App in-memory
-* <<Design-Storage,*`Storage`*>>: reads data from, and writes data to, the hard disk
-
+* <<Design-Ui,*`UI`*>>: This component controls the UI of the application.
+* <<Design-Logic,*`Logic`*>>: This is the command executor.
+* <<Design-Model,*`Model`*>>: This component holds the data of the App in-memory.
+* <<Design-Storage,*`Storage`*>>: This component reads data from, and writes data to, the hard disk.
 
 Each of the four components:
 
-* defines its _API_ in an `interface` with the same name as the Component, and
+* defines its _API_ in an `interface` with the same name as the component; and
 * exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class. _Figure 2_ below is an overview of the Logic component.
 
 .The API of the Logic Component
 image::LogicAPI.png[width="800"]
 
-==== Events-Driven nature of the design
+==== Events-Driven Nature of the Design
 
-*_Figure 3_* below shows how the components interact for the scenario where the user issues the command `delete 1`.
+_Figure 3_ below shows how the components interact in a scenario where the user issues the command `delete 1`.
 
 .Component interactions for `delete 1` command (part 1)
-image::SDforDeletePerson.png[width="800"]
+image::SDforDeleteActivity.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `DeskBoardChangedEvent` when the Desk Board data are changed, instead of asking the `Storage` to save the updates into the hard disk.
 
-*_Figure 4_* below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+_Figure 4_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 .Component interactions for `delete 1` command (part 2)
-image::SDforDeletePersonEventHandling.png[width="800"]
+image::SDforDeleteActivityEventHandling.png[width="800"]
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
 The sections below give more details of each component.
 
+{empty} +
+
 [[Design-Ui]]
 === UI component
 
-*_Figure 5_* below shows the architecture diagram of the UI component.
+_Figure 5_ below shows the architecture diagram of the UI component.
 
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
+
+{empty} +
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -263,29 +261,33 @@ The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `Re
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
 
-The `UI` component
+The `UI` component:
 
-* executes user commands using the `Logic` component,
-* binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change, and
+* executes user commands using the `Logic` component;
+* binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change; and
 * responds to events raised from various parts of the App and updates the UI accordingly.
+
+{empty} +
 
 [[Design-Logic]]
 === Logic component
 
-*_Figure 6_* below shows the UML of the Logic component.
+_Figure 6_ below shows the architecture diagram of the Logic component.
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
 image::LogicClassDiagram.png[width="800"]
-{empty} +
-{empty} +
 
-*_Figure 7_* below shows finer details of the Logic component.
+Finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>> in _Figure 7_ below.
 
-.Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
+.Structure of Commands in the Logic Component
 image::LogicCommandClassDiagram.png[width="800"]
+
+{empty} +
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+
+The following describes the sequence of events executed by the `Logic` component:
 
 .  `Logic` uses the `DeskBoardParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
@@ -297,49 +299,68 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 .Interactions Inside the Logic Component for the `rm task 1` Command
 image::DeletePersonSdForLogic.png[width="800"]
 
+{empty} +
+
 [[Design-Model]]
 === Model component
+
+_Figure 9_ below shows the architecture diagram of the Logic component.
+
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
+{empty} +
+
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`
+The `Model` component:
 
 * stores a `UserPref` object that represents the user's preferences,
-* stores the Desk Board data,
-* use two class to store information about 'Event' and 'Task' separately,
-* exposes an unmodifiable `ObservableList<Activity>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change, and
+* stores the Desk Board data;
+* uses two classes to store information about `Event` and `Task` separately;
+* exposes an unmodifiable `ObservableList<Activity>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change; and
 * does not depend on any of the other three components.
 
+{empty} +
 
 [[Design-Storage]]
 === Storage component
 
-*_Figure 10_* below shows the structure of the Storage Component.
+_Figure 10_ below shows the structure of the Storage Component.
 
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
 
+{empty} +
+
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The `Storage` component can save the following and read them back:
+The `Storage` component saves and reads back:
 
 * `UserPref` objects in json format, and
 * Desk Board data in xml format.
+
+{empty} +
 
 [[Design-Commons]]
 === Common classes
 
 Classes used by multiple components are in the `seedu.address.commons` package.
 
+{empty} +
+
 [[Implementation]]
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+{empty} +
+{empty} +
 
 // tag::undoredo[]
 === Undo/Redo feature
+
+The current implementation and design considerations for the undo/redo feature are explained in this section.
+
 ==== Current Implementation
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the desk board (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
@@ -432,6 +453,8 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ==== Design Considerations
 
+This section describes various design considerations related to the implementation of undo/redo feature. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
+
 ===== Aspect: Implementation of `UndoableCommand`
 
 * **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`
@@ -443,10 +466,10 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: How undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire desk board.
+* **Alternative 1 (current choice):** Saves the entire desk board
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
-* **Alternative 2:** Individual command knows how to undo/redo by itself.
+* **Alternative 2:** Individual command knows how to undo/redo by itself
 ** Pros: Will use less memory (e.g. for `delete`, just save the activity being deleted).
 ** Cons: We must ensure that the implementation of each individual command are correct.
 

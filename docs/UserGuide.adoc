@@ -39,7 +39,7 @@ This app will not work with earlier versions of Java 8.
 .  Run the MainApp scripts / jar file and await for the GUI to open
 .  A login screen such as the one below should appear.
 +
-image::LoginScreen2.png[width="300"]
+image::LoginScreen2.PNG[width="300"]
 +
 . Create a profile with desired username and password if using for the first time.
 If profile has previously already been created, or after creation of profile, click login.

@@ -55,9 +55,13 @@ public class UserPrefs {
         this.exportPortfolioFilePath = exportPortfolioFilePath;
     }
 
-    public String getPasswordFilePath() { return passwordFilePath;}
+    public String getPasswordFilePath() {
+        return passwordFilePath;
+    }
 
-    public void setPasswordFilePath(String passwordFilePath){ this.passwordFilePath = passwordFilePath; }
+    public void setPasswordFilePath(String passwordFilePath) {
+        this.passwordFilePath = passwordFilePath;
+    }
 
     @Override
     public boolean equals(Object other) {

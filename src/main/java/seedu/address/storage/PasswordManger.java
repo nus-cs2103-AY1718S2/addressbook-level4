@@ -20,7 +20,7 @@ public class PasswordManger {
      * @param password user's password
      * @throws IOException if file could not be found or created
      */
-    public static void savePassword(String password) throws IOException{
+    public static void savePassword(String password) throws IOException {
         requireNonNull(password);
         File file = new File(getFilePath());
         FileUtil.createIfMissing(file);
@@ -36,7 +36,7 @@ public class PasswordManger {
      */
     public static boolean verifyPassword(String password) throws IOException {
         boolean unlock = passwordCheck(password);
-        if(unlock){
+        if (unlock) {
            EventsCenter.getInstance().post(new PasswordAcceptedEvent());
         }
         return unlock;
@@ -49,7 +49,7 @@ public class PasswordManger {
      */
     public static void removePassword(String password) throws IOException, WrongPasswordException {
         File file = new File(getFilePath());
-        if(passwordCheck(password) && FileUtil.isFileExists(file)){
+        if (passwordCheck(password) && FileUtil.isFileExists(file)) {
             file.delete();
         } else {
             throw new WrongPasswordException();
@@ -60,7 +60,7 @@ public class PasswordManger {
      * @param password to be checked against records
      * @return true if password exists, vice-versa
      */
-    public static boolean passwordCheck(String password) throws IOException{
+    public static boolean passwordCheck(String password) throws IOException {
         String storedPassword = getPassword();
         return storedPassword.equals(password);
     }
@@ -68,7 +68,7 @@ public class PasswordManger {
      * Check if the password exists
      * @return true if password exists, vice-versa
      */
-    public static boolean passwordExists(){
+    public static boolean passwordExists() {
         File file = new File(getFilePath());
         return FileUtil.isFileExists(file);
     }
@@ -89,7 +89,7 @@ public class PasswordManger {
      * Method to get the file path of password
      * @return file path
      */
-    public static String getFilePath(){
+    public static String getFilePath() {
         UserPrefs userPrefs = new UserPrefs();
         String filePath = userPrefs.getPasswordFilePath();
 

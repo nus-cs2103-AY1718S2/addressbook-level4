@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-
 import java.io.IOException;
 
 import seedu.address.commons.exceptions.WrongPasswordException;
@@ -13,8 +12,6 @@ public class PasswordCommand extends Command {
 
     public static final String COMMAND_WORD = "password";
     public static final String COMMAND_WORD_ALIAS = "pw";
-    private final PasswordMode mode;
-
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Set, change or remove password\n"
             + "Set Password Parameters:" + COMMAND_WORD + " set/yourchosenpassword\n"
             + "Change Password Parameters:" + COMMAND_WORD + " change/yournewpassword\n"
@@ -27,10 +24,12 @@ public class PasswordCommand extends Command {
     public static final String MESSAGE_NO_PASSWORD_EXISTS = "No password!";
     public static final String MESSAGE_WRONG_PASSWORD = "Wrong password!";
 
+    private final PasswordMode mode;
+
     /**
      * Creates an PasswordCommand
      */
-    public PasswordCommand(PasswordMode mode ) {
+    public PasswordCommand(PasswordMode mode) {
         this.mode = mode;
     }
 
@@ -48,13 +47,13 @@ public class PasswordCommand extends Command {
      * Set password if it does not exists
      */
     public static class setPassword extends PasswordMode {
-        public setPassword(String password){
+        public setPassword(String password) {
             super(password);
         }
 
         @Override
         public CommandResult execute() throws IOException, CommandException {
-            if (passExists()){
+            if (passExists()) {
                 throw new CommandException(MESSAGE_PASSWORD_EXISTS);
             } else {
                 PasswordManger.savePassword(getPass());
@@ -67,13 +66,13 @@ public class PasswordCommand extends Command {
      * Removes password if it exists
      */
     public static class clearPassword extends PasswordMode {
-        public clearPassword(String password){
+        public clearPassword(String password) {
             super(password);
         }
 
         @Override
         public CommandResult execute() throws IOException, CommandException {
-            if (passExists()){
+            if (passExists()) {
                 try {
                     PasswordManger.removePassword(getPass());
                 } catch (WrongPasswordException e) {
@@ -92,14 +91,14 @@ public class PasswordCommand extends Command {
     public static class changePassword extends PasswordMode {
 
         private String newPass;
-        public changePassword(String newPassword){
+        public changePassword(String newPassword) {
             super(newPassword);
             newPass = newPassword;
         }
 
         @Override
         public CommandResult execute() throws IOException {
-            if (passExists()){
+            if (passExists()) {
                 PasswordManger.savePassword(newPass);
                 return new CommandResult(MESSAGE_PASSWORD_CHANGE);
             } else {

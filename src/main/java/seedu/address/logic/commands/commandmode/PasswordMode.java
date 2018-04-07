@@ -11,15 +11,15 @@ public abstract class PasswordMode {
 
     private String pass;
 
-    public PasswordMode(String pass){
+    public PasswordMode(String pass) {
         this.pass = pass;
     }
 
-    public String getPass(){
+    public String getPass() {
         return pass;
     }
 
-    protected boolean passExists(){
+    protected boolean passExists() {
         return PasswordManger.passwordExists();
     }
 

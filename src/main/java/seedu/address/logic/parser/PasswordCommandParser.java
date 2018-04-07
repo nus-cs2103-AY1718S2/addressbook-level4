@@ -12,21 +12,20 @@ import seedu.address.logic.commands.PasswordCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author limzk1994
-public class PasswordCommandParser implements Parser<PasswordCommand>{
+public class PasswordCommandParser implements Parser<PasswordCommand> {
 
 
     @Override
     public PasswordCommand parse(String args) throws ParseException {
 
-        ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args,PREFIX_SET,PREFIX_CHANGE,PREFIX_REMOVE);
+        ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SET, PREFIX_CHANGE, PREFIX_REMOVE);
 
-        if (arePrefixesPresent(argumentMultimap,PREFIX_SET)){
+        if (arePrefixesPresent(argumentMultimap, PREFIX_SET)) {
             return new PasswordCommand(new PasswordCommand.setPassword(argumentMultimap.getValue(PREFIX_SET).get()));
-        }
-        else if (arePrefixesPresent(argumentMultimap,PREFIX_REMOVE)){
-            return new PasswordCommand(new PasswordCommand.clearPassword(argumentMultimap.getValue(PREFIX_REMOVE).get()));
-        }
-        else if (arePrefixesPresent(argumentMultimap, PREFIX_CHANGE)) {
+        } else if (arePrefixesPresent(argumentMultimap, PREFIX_REMOVE)) {
+            return new PasswordCommand(new PasswordCommand.clearPassword(
+                    argumentMultimap.getValue(PREFIX_REMOVE).get()));
+        } else if (arePrefixesPresent(argumentMultimap, PREFIX_CHANGE)) {
             final String newPassword = argumentMultimap.getValue(PREFIX_CHANGE).get();
             requireNonNull(newPassword);
             if (newPassword.length() == 0) {

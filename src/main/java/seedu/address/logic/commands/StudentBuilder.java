@@ -154,6 +154,7 @@ public class StudentBuilder {
                 profilePicturePath);
     }
 
+    //@@author yapni
     /**
      * Sets the {@code dashboard} of the {@code Student} that we are building.
      */
@@ -168,7 +169,7 @@ public class StudentBuilder {
      * @throws DuplicateMilestoneException if the new milestone is a duplicate of an existing milestone
      */
     public StudentBuilder withNewMilestone(Milestone milestone) throws DuplicateMilestoneException {
-        dashboard.getMilestoneList().add(milestone);
+        this.dashboard = new DashboardBuilder(this.dashboard).withNewMilestone(milestone).build();
         return this;
     }
 
@@ -178,48 +179,31 @@ public class StudentBuilder {
      * @throws MilestoneNotFoundException if the specified milestone is not found in the dashboard
      */
     public StudentBuilder withoutMilestone(Milestone milestone) throws MilestoneNotFoundException {
-        dashboard.getMilestoneList().remove(milestone);
+        this.dashboard = new DashboardBuilder(this.dashboard).withoutMilestone(milestone).build();
         return this;
     }
 
     /**
-     * Adds a new {@code Task} to the specified Milestone in the {@code Dashboard}
+     * Adds a new {@code Task} to the specified {@code Milestone} in the {@code Dashboard}
      * of the {@code Student} we are building.
      *
-     * @throws DuplicateTaskException if the new task is a duplicate of an existing task
+     * @throws DuplicateTaskException if the new task is a duplicate of an existing task in the milestone
      */
     public StudentBuilder withNewTask(Index milestoneIndex, Task task) throws DuplicateTaskException,
             DuplicateMilestoneException, MilestoneNotFoundException {
-        Milestone milestone = dashboard.getMilestoneList().get(milestoneIndex);
-
-        milestone.getTaskList().add(task);
-        Progress updatedProgress = new Progress(milestone.getProgress().getTotalTasks() + 1,
-                milestone.getProgress().getNumCompletedTasks());
-        Milestone updatedMilestone = new Milestone(milestone.getDueDate(), milestone.getTaskList(),
-                updatedProgress, milestone.getDescription());
-        dashboard.getMilestoneList().setMilestone(milestone, updatedMilestone);
-
+        this.dashboard = new DashboardBuilder(this.dashboard).withNewTask(milestoneIndex, task).build();
         return this;
     }
 
     /**
      * Removes the {@code Task} from the specified {@code Milestone} in the {@code Dashboard} of the {@code Student}
      * we are building
+     *
      * @throws TaskNotFoundException if the specified task is not found in the milestone
      */
     public StudentBuilder withoutTask(Index milestoneIndex, Task task) throws TaskNotFoundException,
             DuplicateMilestoneException, MilestoneNotFoundException {
-        Milestone milestone = dashboard.getMilestoneList().get(milestoneIndex);
-        milestone.getTaskList().remove(task);
-
-        int numCompletedTaskChange = task.isCompleted() ? -1 : 0;
-
-        Progress updatedProgress = new Progress(milestone.getProgress().getTotalTasks() - 1,
-                milestone.getProgress().getNumCompletedTasks() + numCompletedTaskChange);
-        Milestone updatedMilestone = new Milestone(milestone.getDueDate(), milestone.getTaskList(), updatedProgress,
-                milestone.getDescription());
-        dashboard.getMilestoneList().setMilestone(milestone, updatedMilestone);
-
+        this.dashboard = new DashboardBuilder(this.dashboard).withoutTask(milestoneIndex, task).build();
         return this;
     }
 
@@ -229,21 +213,7 @@ public class StudentBuilder {
      */
     public StudentBuilder withTaskCompleted(Index milestoneIndex, Index taskIndex) throws DuplicateTaskException,
             TaskNotFoundException, DuplicateMilestoneException, MilestoneNotFoundException {
-        Milestone milestone = dashboard.getMilestoneList().get(milestoneIndex);
-        UniqueTaskList taskList = milestone.getTaskList();
-        Task completedTask = taskList.get(taskIndex);
-
-        if (!completedTask.isCompleted()) {
-            Task updatedTask = new Task(completedTask.getName(), completedTask.getDescription(), true);
-            Progress updatedProgress = new Progress(milestone.getProgress().getTotalTasks(),
-                    milestone.getProgress().getNumCompletedTasks() + 1);
-
-            taskList.setTask(completedTask, updatedTask);
-            Milestone updatedMilestone = new Milestone(milestone.getDueDate(), taskList, updatedProgress,
-                    milestone.getDescription());
-            dashboard.getMilestoneList().setMilestone(milestone, updatedMilestone);
-        }
-
+        this.dashboard = new DashboardBuilder(this.dashboard).withTaskCompleted(milestoneIndex, taskIndex).build();
         return this;
     }
 

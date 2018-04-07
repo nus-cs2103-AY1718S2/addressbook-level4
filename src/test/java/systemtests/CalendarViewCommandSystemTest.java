@@ -23,7 +23,7 @@ public class CalendarViewCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Performs verification for command to calendarview
+     * Performs verification for command to calendarView
      */
     private void assertCommandSuccess(String command, String message) {
         executeCommand(command);

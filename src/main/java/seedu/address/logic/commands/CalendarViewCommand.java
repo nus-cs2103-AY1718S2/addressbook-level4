@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
 
-//@@author Robert-Peng
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarViewEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author Robert-Peng
 /**
  * Command to switch between calendar views such as day, week, month and year
  */

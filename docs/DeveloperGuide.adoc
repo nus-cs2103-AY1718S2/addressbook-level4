@@ -25,6 +25,8 @@ Make sure you follow this section carefully so that you get to work on Employees
 
 === Prerequisites
 
+To develop Employees Tracker, you are supposed to have following preparations. +
+
 . *JDK `1.8.0_60`* or later
 +
 [NOTE]

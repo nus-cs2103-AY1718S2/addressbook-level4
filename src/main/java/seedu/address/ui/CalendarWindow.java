@@ -118,9 +118,9 @@ public class CalendarWindow extends UiPart<Region> {
         builder.append(appointmentCounter)
             .append(". ")
             //.append(appointment.getPetPatientName().toString())
-            //.append(" (")
+            // .append(" (")
             .append(appointment.getOwnerNric() + " ");
-            //.append(") ");
+        //.append(") ");
         appointment.getAppointmentTags().forEach(builder::append);
         //builder.append(appointment.getRemark().toString());
         return builder;

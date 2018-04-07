@@ -41,6 +41,25 @@ public class CheckIndexesUtil {
     }
 
     /**
+     * Returns true if the specified indexes are valid, else returns false.
+     */
+    public static boolean areIndexesValid(List<Student> studentList, Index studentIndex, Index milestoneIndex) {
+        requireAllNonNull(studentList, studentIndex, milestoneIndex);
+
+        if (!isStudentIndexValid(studentList, studentIndex)) {
+            return false;
+        }
+
+        UniqueMilestoneList milestoneList = studentList.get(studentIndex.getZeroBased())
+                .getDashboard().getMilestoneList();
+        if (!isMilestoneIndexValid(milestoneList, milestoneIndex)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Returns true if the student index is valid, else returns false.
      */
     public static boolean isStudentIndexValid(List<Student> studentList, Index studentIndex) {

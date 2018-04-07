@@ -9,6 +9,7 @@ import seedu.address.model.notification.exceptions.TimetableEntryNotFoundExcepti
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.photo.Photo;
 
 /**
  * The API of the Model component.
@@ -46,6 +47,8 @@ public interface Model {
 
     /** Gets the password */
     String getPassword();
+
+    ObservableList<Photo> getPhotoList();
 
     //@@author Yoochard
     /** Sort existing employees by any field in alphabetical order */

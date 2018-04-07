@@ -136,7 +136,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
             DuplicatePersonException {
         List<Person> pl = model.getAddressBook().getPersonList();
         for (Person c : newCustomers) {
-            Runner r = ((Customer) c).getRunner();
+            Person r = ((Customer) c).getRunner();
             if (pl.contains(r)) {
                 //generate editPersonDescriptor with c removed from runner's customer list
                 EditPersonDescriptor runnerDescWCustRemoved = new EditPersonDescriptor();
@@ -147,7 +147,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
                 runnerDescWCustRemoved.setAddress(r.getAddress());
                 runnerDescWCustRemoved.setTags(r.getTags());
 
-                List<Person> newList = r.getCustomers();
+                List<Person> newList = ((Runner) r).getCustomers();
                 newList.remove(c);
                 runnerDescWCustRemoved.setCustomers(newList);
 
@@ -276,7 +276,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
                     .orElse(((Customer) personToEdit).getStandardInterest());
             LateInterest lateInterest = editPersonDescriptor.getLateInterest().orElse(((Customer) personToEdit)
                     .getLateInterest());
-            Runner runner = editPersonDescriptor.getRunner().orElse(((Customer) personToEdit)
+            Person runner = editPersonDescriptor.getRunner().orElse(((Customer) personToEdit)
                     .getRunner());
 
             return new Customer(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, moneyBorrowed,
@@ -361,7 +361,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         private Date oweDueDate;
         private StandardInterest standardInterest;
         private LateInterest lateInterest;
-        private Runner runner;
+        private Person runner;
 
         //Runner fields
         private List<Person> customers;
@@ -461,10 +461,10 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
             return Optional.ofNullable(lateInterest);
         }
 
-        public void setRunner(Runner runner) {
+        public void setRunner(Person runner) {
             this.runner = runner;
         }
-        public Optional<Runner> getRunner() {
+        public Optional<Person> getRunner() {
             return Optional.ofNullable(runner);
         }
 

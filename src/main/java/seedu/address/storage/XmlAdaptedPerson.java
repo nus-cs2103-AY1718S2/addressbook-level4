@@ -57,7 +57,7 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private Date oweDueDate;
     @XmlElement(required = true)
-    private Runner runner;
+    private XmlAdaptedPerson runner;
 
     //Runner fields
     @XmlElement(required = true)
@@ -105,7 +105,7 @@ public class XmlAdaptedPerson {
             lateInterest = ((Customer) source).getLateInterest();
             oweStartDate = ((Customer) source).getOweStartDate();
             oweDueDate = ((Customer) source).getOweDueDate();
-            runner = ((Customer) source).getRunner();
+            runner = new XmlAdaptedPerson(((Customer) source).getRunner());
         }
 
         if (source instanceof Runner) {
@@ -204,8 +204,16 @@ public class XmlAdaptedPerson {
             //TODO: write valid regex check
             final LateInterest lateInterest = this.lateInterest;
 
+            //runner
+            if (this.runner == null) {
+                throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, LateInterest.class
+                        .getSimpleName()));
+            }
+            //TODO: write valid regex check
+            final Person runner = this.runner.toModelType();
+
             return new Customer(name, phone, email, address, tags, moneyBorrowed, oweStartDate, oweDueDate,
-                    standardInterest, lateInterest, new Runner());
+                    standardInterest, lateInterest, runner);
 
         } else if (this.personType == Person.PersonType.RUNNER) {
             if (this.customers == null) {

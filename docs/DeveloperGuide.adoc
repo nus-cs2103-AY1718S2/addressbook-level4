@@ -78,7 +78,7 @@ If the clone was successful, a new sub-directory titled 'main' appears on your l
 
 The following should appear if `git clone https://github.com/YOUR-USERNAME/main.git` at C:/Users/temp folder is executed.
 
-image::git clone.png[width="600"]
+image::git clone.jpg[width="600"]
 {empty} +
 
 *Step 2:* Open IntelliJ. If you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first, as shown in the picture below. +
@@ -234,11 +234,13 @@ Note how the `Model` simply raises a `DeskBoardChangedEvent` when the Desk Board
 
 _Figure 4_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
-.Component interactions for `delete 1` command (part 2)
+//TODO: image change
+.Component interactions for `delete task 1` command (part 2)
 image::SDforDeleteActivityEventHandling.png[width="800"]
 
 [NOTE]
-Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI`
+without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
 The sections below give more details of each component.
 

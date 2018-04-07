@@ -6,4 +6,7 @@ package seedu.address.model.appointment.exceptions;
  */
 
 public class AppointmentDependencyNotEmptyException extends Exception {
+    public AppointmentDependencyNotEmptyException(String message) {
+        super(message);
+    }
 }

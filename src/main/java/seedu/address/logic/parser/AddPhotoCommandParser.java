@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses arguments for the AddPhotoCommand'
  */
-public class AddPhotoCommandParser {
+public class AddPhotoCommandParser implements Parser<AddPhotoCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the AddPhotoCommand
      * and returns an AddPhotoCommand object for execution.

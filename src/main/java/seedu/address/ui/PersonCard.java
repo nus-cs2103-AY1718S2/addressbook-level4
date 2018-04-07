@@ -1,6 +1,11 @@
 //@@author IzHoBX
 package seedu.address.ui;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -9,8 +14,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import seedu.address.logic.commands.AddPhotoCommand;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Photo;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -58,8 +63,16 @@ public class PersonCard extends UiPart<Region> {
         rating.setText(person.getRatingDisplay());
         rating.setTextFill(Color.RED);
         initTags(person);
-        Image image = new Image(Photo.DEFAULT_PHOTO_FOLDER + person.getPhotoName(),
-                88, 88, false, false);
+        Path currentRelativePath = Paths.get("");
+        String s = currentRelativePath.toAbsolutePath().toString();
+        File file = new File(s + AddPhotoCommand.IMAGE_FOLDER + person.getPhotoName());
+        Image image = null;
+        try {
+            image = new Image(file.toURI().toURL().toExternalForm(),
+                    88, 88, false, false);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         photo.setImage(image);
         photo.preserveRatioProperty().set(true);
 

@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.photo;
 //@@author crizyli
 /**
  * Represents a Person's photo.
@@ -6,7 +6,9 @@ package seedu.address.model.person;
  */
 public class Photo {
 
-    public static final String DEFAULT_PHOTO_FOLDER = "/images/";
+    public static final String DEFAULT_PHOTO_FOLDER = "/images/personphoto/";
+
+    public static final String MESSAGE_PHOTO_CONSTRAINTS = "only accepts jpg, jpeg, png and bmp.";
 
     public final String path;
 

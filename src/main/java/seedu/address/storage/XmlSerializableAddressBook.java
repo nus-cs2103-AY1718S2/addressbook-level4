@@ -23,6 +23,8 @@ public class XmlSerializableAddressBook {
     @XmlElement
     private List<XmlAdaptedTag> tags;
     @XmlElement
+    private List<XmlAdaptedPhoto> photos;
+    @XmlElement
     private List<XmlAdaptedNotification> notifications;
     @XmlElement
     private Integer nextId;
@@ -36,6 +38,7 @@ public class XmlSerializableAddressBook {
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
+        photos = new ArrayList<>();
         notifications = new ArrayList<>();
         nextId = 0;
         password = "admin";
@@ -48,6 +51,7 @@ public class XmlSerializableAddressBook {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        photos.addAll(src.getPhotoList().stream().map(XmlAdaptedPhoto::new).collect(Collectors.toList()));
         for (Notification t: src.getNotificationsList()) {
             notifications.add(new XmlAdaptedNotification(t.getTitle(), t.getCalendarId(), t.getId(), t
                     .getEndDate(),
@@ -68,6 +72,11 @@ public class XmlSerializableAddressBook {
         for (XmlAdaptedTag t : tags) {
             addressBook.addTag(t.toModelType());
         }
+        //@@author crizyli
+        for (XmlAdaptedPhoto p : photos) {
+            addressBook.addPhoto(p.toModelType());
+        }
+        //@@author
         for (XmlAdaptedPerson p : persons) {
             addressBook.addPerson(p.toModelType());
         }
@@ -94,6 +103,7 @@ public class XmlSerializableAddressBook {
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
         return persons.equals(otherAb.persons)
                 && tags.equals(otherAb.tags)
+                && photos.equals(otherAb.photos)
                 && notifications.equals(otherAb.notifications);
     }
 }

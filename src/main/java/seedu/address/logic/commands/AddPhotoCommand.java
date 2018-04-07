@@ -4,6 +4,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,9 +21,9 @@ import seedu.address.commons.events.ui.ResetPersonCardsEvent;
 import seedu.address.commons.events.ui.ShowFileChooserEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Photo;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.photo.Photo;
 
 /**
  * Adds a photo to an employee.
@@ -31,7 +32,7 @@ public class AddPhotoCommand extends Command {
 
     public static final String COMMAND_WORD = "addPhoto";
 
-    public static final String IMAGE_FOLDER = "\\src\\main\\resources\\images\\";
+    public static final String IMAGE_FOLDER = "\\src\\main\\resources\\images\\personphoto\\";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a photo to an employee.\n"
             + "Choose a photo in the file chooser. Acceptable photo file type are jpg, jprg, png, bmp."
@@ -75,7 +76,20 @@ public class AddPhotoCommand extends Command {
 
         String photoNameWithExtension = path.substring(path.lastIndexOf("\\") + 1);
 
-        copyPhotoFileToStorage(photoNameWithExtension);
+        if (!model.getPhotoList().contains(new Photo(photoNameWithExtension))) {
+            copyPhotoFileToStorage(photoNameWithExtension);
+        }
+
+        File folder = new File("C:\\repos\\main\\src\\main\\resources\\images\\personphoto");
+        File[] listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                System.out.println("File " + listOfFiles[i].getName());
+            } else if (listOfFiles[i].isDirectory()) {
+                System.out.println("Directory " + listOfFiles[i].getName());
+            }
+        }
 
         Person editedPerson = createEditedPerson(targetPerson, photoNameWithExtension);
 
@@ -143,7 +157,7 @@ public class AddPhotoCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof AddPhotoCommand // instanceof handles nulls
                 && targetIndex.equals(((AddPhotoCommand) other).targetIndex)
-                && path.equals(((AddPhotoCommand) other).path));
+                && (path == null || path.equals(((AddPhotoCommand) other).path)));
     }
 
     protected void registerAsAnEventHandler(Object handler) {

@@ -74,13 +74,15 @@ public class GServiceManager {
         if (credential != null) {
             throw new CredentialsException("You are already logged in.");
         }
-        // Build flow and trigger user authorization request.
-        GoogleAuthorizationCodeFlow flow =
+            // Build flow and trigger user authorization request.
+        try {
+            GoogleAuthorizationCodeFlow flow =
                 new GoogleAuthorizationCodeFlow.Builder(
-                        httpTransport, JSON_FACTORY, clientSecrets, SCOPES)
+                        httpTransport, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, SCOPES)
+                        .setDataStoreFactory(DATA_STORE_FACTORY)
                         .setAccessType("offline")
                         .build();
-        try {
+
             credential = new AuthorizationCodeInstalledApp(
                     flow, new LocalServerReceiver()).authorize("user");
         } catch (Exception e) {
@@ -95,10 +97,19 @@ public class GServiceManager {
      */
     public void logout() throws CredentialsException {
         // Delete credentials from data store directory
-        if (credential == null) {
+        File dataStoreDirectory = DATA_STORE_FACTORY.getDataDirectory();
+        if (dataStoreDirectory.list().length == 0 || credential == null) {
             throw new CredentialsException("You are not logged in");
         }
         credential = null;
+        for (File file : dataStoreDirectory.listFiles()) {
+            file.delete();
+        }
+        try {
+            DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

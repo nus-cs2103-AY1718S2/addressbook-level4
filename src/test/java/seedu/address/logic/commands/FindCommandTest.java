@@ -29,11 +29,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.appointment.exceptions.AppointmentDependencyNotEmptyException;
 import seedu.address.model.person.Person;
 import seedu.address.model.petpatient.PetPatient;
-import seedu.address.model.petpatient.exceptions.PetPatientNotFoundException;
-import seedu.address.testutil.TypicalPetPatients;
 
 //@@author wynonaK
 /**

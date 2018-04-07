@@ -1,7 +1,6 @@
 package seedu.address.logic;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -61,11 +60,16 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
+    /**
+     * Checks with the PasswordManger on whether to unlock the program
+     * @param commandText password provided
+     * @throws CommandException if password file is corrupted
+     */
     private void tryUnlock(String commandText) throws  CommandException {
 
         try {
             isLocked = !PasswordManger.verifyPassword(commandText);
-        } catch (IOException ioe){
+        } catch (IOException ioe) {
             throw new CommandException("Unable to open password file");
         }
     }

@@ -13,6 +13,10 @@ import seedu.address.commons.util.FileUtil;
 import seedu.address.model.UserPrefs;
 
 //@@author limzk1994
+
+/**
+ * Accesses the password file stored on the hard disk
+ */
 public class PasswordManger {
 
     /**
@@ -37,7 +41,7 @@ public class PasswordManger {
     public static boolean verifyPassword(String password) throws IOException {
         boolean unlock = passwordCheck(password);
         if (unlock) {
-           EventsCenter.getInstance().post(new PasswordAcceptedEvent());
+            EventsCenter.getInstance().post(new PasswordAcceptedEvent());
         }
         return unlock;
     }

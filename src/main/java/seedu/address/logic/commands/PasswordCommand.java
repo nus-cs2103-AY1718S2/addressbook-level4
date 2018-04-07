@@ -8,6 +8,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.storage.PasswordManger;
 
 //@@author limzk1994
+
+/**
+ * Contain methods to modify the password
+ */
 public class PasswordCommand extends Command {
 
     public static final String COMMAND_WORD = "password";

@@ -12,6 +12,10 @@ import seedu.address.logic.commands.PasswordCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author limzk1994
+
+/**
+ * Parses the inputs and create a PasswordCommand object
+ */
 public class PasswordCommandParser implements Parser<PasswordCommand> {
 
 

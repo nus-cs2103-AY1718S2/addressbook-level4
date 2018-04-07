@@ -7,6 +7,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.storage.PasswordManger;
 
 //@@author limzk1994-reused
+
+/**
+ * Represents the different modes for PasswordCommand
+ */
 public abstract class PasswordMode {
 
     private String pass;

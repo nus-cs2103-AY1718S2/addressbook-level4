@@ -161,7 +161,7 @@ public class AddressBookParser {
             return new CheckTaskCommandParser().parse(arguments);
 
         default:
-            //@@chweeee
+            //@@author chweeee
             /**
              * aims to decipher user intention and returns the command required
              */
@@ -214,7 +214,7 @@ public class AddressBookParser {
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
             }
-            //@@
+            //@@ author
         }
     }
 }

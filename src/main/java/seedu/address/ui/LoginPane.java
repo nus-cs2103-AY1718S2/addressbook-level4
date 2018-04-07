@@ -91,10 +91,11 @@ public class LoginPane extends UiPart<Region> {
                     new UserPass(
                             usernameTextField.getText().toLowerCase(),
                             passwordField.getText().toLowerCase()));
-            loginStatus.setText("Profile for "+
-                    usernameTextField.getText().toLowerCase()+" is created. You may now log in.");
+            loginStatus.setText("Profile for " + usernameTextField.getText().toLowerCase()
+                    + " is created. You may now log in.");
         } catch (Exception e) {
-            loginStatus.setText("Username "+usernameTextField.getText().toLowerCase()+" is taken. Try another.");
+            loginStatus.setText("Username " + usernameTextField.getText().toLowerCase()
+                    + " is taken. Try another.");
         }
     }
 

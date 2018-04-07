@@ -43,9 +43,6 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnfavouriteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-//import seedu.address.logic.commands.CommandResult;
-//import seedu.address.ui.ResultDisplay;
-
 /**
  * Parses user input.
  */
@@ -217,12 +214,10 @@ public class AddressBookParser {
                 return new ScheduleCommand();
 
             case "Delete":
-                Command cmd = new FindCommandParser().parse(entity);
-                return cmd;
+                return new FindAndDeleteCommandParser().parse(entity);
 
             case "Select":
-                FindCommand command = new FindCommandParser().parse(entity);
-                return new SelectCommandParser().parse("1");
+                return new FindAndSelectCommandParser().parse(entity);
 
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

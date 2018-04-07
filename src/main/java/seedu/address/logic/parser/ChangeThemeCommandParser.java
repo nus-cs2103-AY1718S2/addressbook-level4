@@ -30,7 +30,7 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeThemeCommand.MESSAGE_USAGE));
         }
 
-        if (!Theme.hasValidThemeName(trimmedArgs)) {
+        if (!Theme.hasValidThemeName(trimmedArgs.toLowerCase())) {
             throw new ParseException(Theme.MESSAGE_THEME_CONSTRAINTS);
         }
 

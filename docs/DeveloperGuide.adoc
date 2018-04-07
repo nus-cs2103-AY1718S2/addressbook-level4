@@ -418,10 +418,10 @@ Once the task is successfully added, it will be reflected in the CLIndar GUI its
 
 ===== Adding an event
 
-`Event` is the second and last type of entries in the desk board in CLIndar.
-`Event` represents an activity with fixed start and end times, such as a test, doctor appointment etc.
+`Event` is the second and last type of entry in the desk board in CLIndar.
+`Event` represents an activity with fixed start and end times, such as a test or a doctor appointment etc.
 
-_Figure 19_ below shows how `Event` is implemented in the application.
+_Figure 13_ below shows how `Event` is implemented in the application.
 
 .UML Class Diagram for Event
 image::EventUMLDiagram.png[width="550"]
@@ -485,17 +485,17 @@ automatically be marked as overdue.
 
 ==== Current Implementation
 
-*_Figure 18_* below shows how `Task` is represented in the application.
+*_Figure 14_* below shows how `Task` is represented in the application.
 
 .UML Class Diagram for Task
 image::TaskUMLDiagram.png[width="550"]
 
 A brief description of each of the attributes of `Task` is given below:
 
-* Name: Represents the name of the task
-* dueDateTime: Represents the due date and time of the task
-* Remark: Represents a short description or reminder pertaining to the task
-* Tags: Groupings or representation for the task
+* Name: name of the task. This attribute is compulsory.
+* dueDateTime: due date and time of the task. This attribute is compulsory.
+* Remark: a short description or reminder pertaining to the task.
+* Tags: Groupings or representation for the task.
 
 Operations that manipulate `Task` can been done using `TaskCommand`, `CompleteCommand`,
 `RemoveCommand`, `EditCommand` commands. These commands are described in more detail below.
@@ -509,7 +509,6 @@ Tasks can be added through the use of the `TaskCommand`.
 The following is a snippet shows how the `executeUndoableCommand()` of `TaskCommand` updates `UniqueActivityList`
 residing in model of CLIndar by adding `toAdd`. Note that `toAdd` will not be added if a duplicate task
 has been found or the `Name` or `DateTime` field is left empty.
-
 
 [source,java]
 ----
@@ -531,7 +530,7 @@ will be reflected in the GUI.
 
 ===== Completing a task
 `Task` objects can be completed through the use of the `CompleteCommand` by specifying the `Task`'s index reflected
-in the GUI. Note that `CompleteCommand` can only be applied to `Task` objects.
+in the GUI. Note that `CompleteCommand` can only be applied to `Task`.
 
 Below is a snippet of how the `executeUndoableCommand()` of `CompleteCommand` updates the respective task
 to completed.
@@ -556,12 +555,14 @@ If `CompleteCommand` is successful, 'Uncompleted' will be replaced by 'Completed
 
 ==== Design Considerations
 
-There are two ways to represent tasks and events in the application. The following shows the pros and cons for each alternative:
+There are two ways to represent tasks and events in the application. The following shows the pros and cons for each
+alternative:
 
 * ** Alternative 1 (Current Choice):**
 Use a single class `Activity` as a superclass for `Task` and `Event` +
 ** Pros:
-As both `Task` and `Event` can be treated equally in most contexts other than their creation, this can simplify the code significantly.
+As both `Task` and `Event` can be treated equally in most contexts other than their creation,this can simplify the
+code significantly.
 ** Cons:
 It might be a harder to retrieve information as `Event` contains extra attributes that `Task` does not have.
 Extra accessor methods will also be required for `Event`.
@@ -572,7 +573,8 @@ Simply have two different class `Task` and `Event`
 ** Pros:
 There is a clear distinction between the two classes.
 ** Cons:
-We will need to write codes for classes and methods related to `Task` and `Event` separately, when these could have been simplified by having classes and methods related to the superclass only.
+We will need to write codes for classes and methods related to `Task` and `Event` separately, when these could have
+been simplified by having classes and methods related to the superclass only.
 {empty} +
 {empty} +
 
@@ -582,12 +584,14 @@ This section describes implementation of features related to the GUI.
 
 ==== Current Implementation
 
-There are two types of commands related to the GUI: `list` and `overdue`. The following sections will describe the implementation for each comman.
+There are two types of commands related to the GUI: `list` and `overdue`. The following sections will describe the
+implementation for each comman.
 
 ===== Listing of tasks and events
 
-A single `Task` or `Event` is displayed using a `TaskListCard` or `EventListCard` respectively. The list of all the `Task` objects added by the user
-is then displayed using the `TaskListPanel`, while `Event` objects added by user are displayed using `EventListPanel`. Below are examples of a `TaskListCard` and an `EventListCard`.
+A single `Task` or `Event` is displayed using a `TaskListCard` or `EventListCard` respectively. The list of all the
+`Task` objects added by the user is then displayed using the `TaskListPanel`, while `Event` objects added by user
+are displayed using `EventListPanel`. Below are examples of a `TaskListCard` and an `EventListCard`.
 
 .TaskListCard example
 image::TaskCard.png[width="550"]
@@ -616,7 +620,8 @@ If the current date and time is past an `Event` `s `endDateTime`, the `Event` wi
 
 ==== Design Considerations
 
-This section describes various design considerations related to the GUI features. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
+This section describes various design considerations related to the GUI features. For each aspect, we will discuss the
+2 alternatives considered and the pros and cons for each alternative.
 
 ===== Aspect: Implementation of `ListCommand`
 
@@ -723,16 +728,6 @@ The following sequence diagram shows how the undo operation works:
 
 .'Undo' and 'Redo' Stack Sequence Diagram
 image::UndoRedoSequenceDiagram.png[width="800"]
-
-
-If the `RemoveCommand` is successful, the relavant `Event` with the specified index will be removed which
-will be reflected in the GUI.
-{empty} +
-{empty} +
-    
-==== Displaying Event
-A single `Event` is displayed using a `EventListCard` . The list of all the `Event` added by the user
-is then displayed using the `EventListPanel`. Below is an example of a `EventListCard`.
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 

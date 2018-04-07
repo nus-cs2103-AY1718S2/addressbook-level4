@@ -18,20 +18,18 @@ public class ThemeTest {
 
     @Test
     public void constructor_invalidThemeName_throwsIllegalArgumentException() {
-        String invalidTagName = "";
         Assert.assertThrows(IllegalArgumentException.class, () -> new Theme(INVALID_THEME_PINK));
     }
 
     @Test
     public void isValidThemeName() {
         // null theme name
-        Assert.assertThrows(NullPointerException.class, () -> Theme.isValidThemeName(null));
+        Assert.assertThrows(NullPointerException.class, () -> Theme.hasValidThemeName(null));
     }
 
     @Test
     public void getThemePath() {
-
-        //Valid themes (case insensitive)
+        // Valid themes (case insensitive)
         assertEquals(VALID_THEME_PATH_DARK, new Theme("dark").getThemePath());
         assertEquals(VALID_THEME_PATH_DARK, new Theme("dArK").getThemePath());
         assertEquals(VALID_THEME_PATH_LIGHT, new Theme("light").getThemePath());

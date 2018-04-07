@@ -54,9 +54,11 @@ public class AddressBookParser {
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
 
+        //@@author Robert-Peng
         case CalendarViewCommand.COMMAND_ALIAS:
         case CalendarViewCommand.COMMAND_WORD:
             return new CalendarViewCommandParser().parse(arguments);
+        //@@author
 
         case EditCommand.COMMAND_ALIAS:
         case EditCommand.COMMAND_WORD:

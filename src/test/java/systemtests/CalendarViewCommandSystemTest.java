@@ -1,6 +1,5 @@
 package systemtests;
 
-//@@author Robert-Peng
 import static org.junit.Assert.assertEquals;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -11,7 +10,7 @@ import seedu.address.logic.commands.CalendarViewCommand;
 
 
 
-
+//@@author Robert-Peng
 public class CalendarViewCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void changeCalendarView() {

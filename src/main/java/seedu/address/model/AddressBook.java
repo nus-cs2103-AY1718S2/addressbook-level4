@@ -371,7 +371,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         for (Appointment appointment : appointments) {
             if (appointment.getPetPatientName().equals(key.getName())
                     && appointment.getOwnerNric().equals(key.getOwner())) {
-                throw new AppointmentDependencyNotEmptyException();
+                throw new AppointmentDependencyNotEmptyException("Appointment dependency still exist!");
             }
         }
     }
@@ -382,7 +382,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private void petPatientDependenciesExist(Person key) throws PetDependencyNotEmptyException {
         for (PetPatient petPatient : petPatients) {
             if (petPatient.getOwner().equals(key.getNric())) {
-                throw new PetDependencyNotEmptyException();
+                throw new PetDependencyNotEmptyException("Pet Patient dependency still exist!");
             }
         }
     }

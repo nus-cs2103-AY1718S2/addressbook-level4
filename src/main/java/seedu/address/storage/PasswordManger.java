@@ -8,6 +8,7 @@ import java.io.IOException;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.PasswordAcceptedEvent;
 import seedu.address.commons.exceptions.WrongPasswordException;
+import seedu.address.commons.util.EncryptionUtil;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.UserPrefs;
 
@@ -24,6 +25,7 @@ public class PasswordManger {
         File file = new File(getFilePath());
         FileUtil.createIfMissing(file);
         FileUtil.writeToFile(file, password);
+        EncryptionUtil.encrypt(file);
     }
 
     /**
@@ -77,7 +79,10 @@ public class PasswordManger {
      */
     public static String getPassword() throws IOException {
         File file = new File(getFilePath());
-        return FileUtil.readFromFile(file);
+        EncryptionUtil.decrypt(file);
+        String password = FileUtil.readFromFile(file);
+        EncryptionUtil.encrypt(file);
+        return password;
     }
 
     /**

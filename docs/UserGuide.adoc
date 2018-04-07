@@ -17,7 +17,16 @@ By: `T16-B2`
 
 == Introduction
 
-Pigeons (AB4) is for those who *prefer to use a desktop app for managing their delivery process*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Pigeons is a delivery-tracking tool for both business-owners and delivery drivers who *prefer to use a desktop app for managing their delivery process*.
+Pigeons is *optimized for those who prefer to work with a Command Line Interface* (CLI)
+while still having the benefits of a Graphical User Interface (GUI).
+If you can type fast, Pigeons can get your delivery management tasks done faster than traditional GUI apps.
+
+The recommended way to use Pigeons is to first load in the delivery data by a centralised administrator for each delivery driver,
+and then allow each driver to login to their own account and filter by today's date to retrieve the route for the deliveries
+they have for the day.
+
+Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -30,7 +39,7 @@ This app will not work with earlier versions of Java 8.
 .  Run the MainApp scripts / jar file and await for the GUI to open
 .  A login screen such as the one below should appear.
 +
-image::LoginScreen.png[width="300"]
+image::LoginScreen2.PNG[width="300"]
 +
 . Create a profile with desired username and password if using for the first time.
 If profile has previously already been created, or after creation of profile, click login.
@@ -137,7 +146,7 @@ Filers the list of people by date (only one date)
 Format: `filter DATE`
 
 ****
-* Date format should be YYYY-MM-DD
+* Recommended date format is YYYY-MM-DD
 ****
 
 When you filter by date the back end of the program will create an optimized route
@@ -309,8 +318,11 @@ You will not see data from that of another user profile.
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
+Users may be able to encrypt/decrypt their Pigeons addressbook files from v2.0 onwards.
 // end::dataencryption[]
+
+=== Centralised loading in of data `[coming in v2.0]`
+Users may be able to load in large amounts of addressees into their Pigeons addressbook files from v2.0 onwards.
 
 == FAQ
 

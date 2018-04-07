@@ -12,7 +12,7 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFolderPath = "data/";
     private String addressBookFilePath = "addressbook.xml";
-    private String addressBookName = "'s Address Book";
+    private String addressBookName = "Address Book";
 
     public UserPrefs() {
         this.setGuiSettings(1200, 800, 0, 0);

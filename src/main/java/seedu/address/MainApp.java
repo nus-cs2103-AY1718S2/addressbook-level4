@@ -98,6 +98,7 @@ public class MainApp extends Application {
         AddressBookStorage addressBookStorage =
                 new XmlAddressBookStorage(userPrefs.getAddressBookFolderPath() +
                         profile + userPrefs.getAddressBookFilePath());
+        userPrefs.setAddressBookName(profile);
         storage = new StorageManager(addressBookStorage, userPrefsStorage, userPassStorage);
         model = initModelManager(storage, userPrefs);
         logic = new LogicManager(model);

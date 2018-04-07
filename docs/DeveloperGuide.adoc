@@ -16,7 +16,7 @@ By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 
 [[Introduction]]
 == Introduction
-CLIndar is a desktop application that helps university computing students to manage their tasks and events.
+CLIndar is a desktop application that helps university computing students to manage their schedules.
 CLIndar is *Common-Line Interface (CLI) based and uses Linux-style commands*, which computing students are familiar with.
 
 This guide provides information on the core functionalities of CLIndar and their implementation, so that a developer can
@@ -24,18 +24,18 @@ get started customising and contributing to the application.
 
 Below is an overview of this guide:
 
-* <<SettingUp, Setting Up>>
+* <<Computer Setup, Computer Setup>>
 * <<Design, Design>>
 * <<Implementation, Implementation>>
 * <<Documentation, Documentation>>
-* <<Testing, Testing>>
+* <<Testing, Testing Procedures>>
 * <<DevOps, Dev Ops>>
 * <<GetStartedProgramming, Appendices>>
 
 
-[[SettingUp]]
-== Setting up
-Follow the section below to set up the application on your computer.
+[[Computer Setup]]
+== Computer Setup
+This section describes the steps needed to set up your computer before you can start developing this application further with your own code.
 {empty} +
 {empty} +
 
@@ -58,9 +58,9 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 {empty} +
 {empty} +
 
-=== Setting up the project in your computer
+=== Setup Procedures
 
-Follow the following steps to set up the project.
+Do the following steps to set up the project in your computer.
 
 
 *Step 1:* Fork this repo, and clone the fork to your computer.
@@ -69,99 +69,94 @@ To fork the repo, click the button circled below.
 
 image::Origin Repo.png[width="600"]
 
-Then open Git Bash. Change the current working directory to the location where you want the cloned directory to be made. And type the following:
-=
+Then, open Git Bash. Change the current working directory to the location where you want the cloned directory to be made. Type the following:
+
 ----
-git clone https://github.com/YOUR-USERNAME/REPOSITORY.git
+git clone https://github.com/YOUR-USERNAME/main.git
 ----
-If the clone was successful, a new sub-directory appears on your local drive. This directory has the same name as the repository that you have cloned. The clone contains the files and metadata that Git requires to maintain the changes you make to the source files.
-{empty} +
+If the clone was successful, a new sub-directory titled 'main' appears on your local drive. This directory contains the files and metadata that Git requires to maintain the changes you make to the source files. +
+
+The following should appear if `git clone https://github.com/YOUR-USERNAME/main.git` at C:/Users/temp folder is executed.
+
+image::git clone.png[width="600"]
 {empty} +
 
-
-The following should appear if `git clone https://github.com/YOUR-USERNAME/addressbook-level4.git` at C:/Users/temp folder is executed.
-
-image::git clone.jpg[width="600"]
-{empty} +
-
-*Step 2:* Open IntelliJ. If you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first, as shown in the picture below.
-{empty} +
-{empty} +
+*Step 2:* Open IntelliJ. If you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first, as shown in the picture below. +
 
 image::Close Project.png[width="600"]
 {empty} +
-{empty} +
 
-
-*Step 3:* Set up the correct JDK version for Gradle.
+*Step 3:* Set up the correct JDK version for Gradle using the following steps, as illustrated by the pictures.
 
 *Step 3a:* Click `Configure` > `Project Defaults` > `Project Structure`.
 
 image::Configure.png[Width="400"]
 
-*Step 3b:* Click `New...` and find the directory of the JDK.
-{empty} +
-{empty} +
+*Step 3b:* Go to the `Project` tab and under `Project SDK` section, click `New...`. Find the directory of the JDK, and then click OK. +
 
+image::Setup JDK.png[Width="400"]
 
-
-*Step 4:* Click `Import Project`.
-{empty} +
 {empty} +
 
+*Step 4:* Click `Import Project`. +
 
-*Step 5:* Locate the `build.gradle` file and select it. Click `OK`.
-{empty} +
-{empty} +
-
-
-*Step 6:* Click `Open as Project`.
-{empty} +
+image::Import Project.png[Width="400"]
 {empty} +
 
+*Step 5:* Locate the `build.gradle` file in the `main` folder that you have cloned and select it. Click `OK`. +
 
-*Step 7:* Click `OK` to accept the default settings.
-{empty} +
-{empty} +
-
-
-*Step 8:* Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
-
-This will generate all resources required by the application and tests.
-{empty} +
+image::build.gradle.png[Width="300"]
 {empty} +
 
-=== Verifying the setup
+*Step 6:* In the `Import Project from Gradle` that appears, click `OK` again. +
+
+image::Import Project from Gradle.png[Width="400"]
+{empty} +
+
+*Step 7:* Open the `Terminal` and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+
+This will generate all resources required by the application and tests. +
+{empty} +
+
+=== Setup Verification
+
+Do the following steps to verify that the project has been successfully set up in your computer:
 
 . Run the `seedu.address.MainApp` and try a few commands.
-. <<Testing,Run the tests>> to ensure they all pass.
+. <<Testing,Run the tests>> to ensure that they all pass.
 {empty} +
 {empty} +
 
 
-=== Configurations to do before writing code
+=== Configurations to Do Before Writing Code
 
-==== Configuring the coding style
+After you set up the project in your own computer, you still need to do the the configurations described in the following sections before you can start developing this application further with your own code.
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+==== Coding Style Configuration
+
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify, do the following steps:
 
 . Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
 . Select `Editor` > `Code Style` > `Java`.
-. Click on the `Imports` tab to set the order.
+. Click on the `Imports` tab.
 
 * For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
 * For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
-Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
+After you do the steps above, the Settings window should appear as shown in the picure below.
 
-==== Updating documentation to match your fork
+image::Import Setting.png[Width="400"]
+
+Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write the code.
+
+==== Documentation Updating
 
 After forking the repo, links in the documentation will still point to the `CS2103JAN2018-W13-B3/main` repo. If you plan to develop this as a separate product, you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 
-==== Setting up CI
+==== CI Setup
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+Travis needs to be set up to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
 After setting up Travis, you can optionally set up coverage reporting for your team fork (see <<UsingCoveralls#, UsingCoveralls.adoc>>).
 
@@ -173,25 +168,24 @@ Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingA
 [NOTE]
 Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based).
 
-==== Getting started with coding
+==== Steps to Get Started with Coding
 
-Follow the steps below when you are ready to start coding.
+Follow the steps below when you are ready to start coding:
 
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
 {empty} +
 {empty} +
 
-
 [[Design]]
 == Design
-This section describes the way the application is designed.
+This section describes how the features in this application are implemented internally.
 {empty} +
 {empty} +
 
 [[Design-Architecture]]
 === Architecture
-*_Figure 1_* below explains the high-level design of the App.
+_Figure 1_ below illustrates the high-level design of the application.
 
 .Architecture Diagram
 image::Architecture.png[width="600"]
@@ -203,59 +197,62 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* At app launch: initializing the components in the correct sequence and connecting them up with each other.
-* At shut down: shutting down the components and invoking cleanup method where necessary.
+* at app launch: initializing the components in the correct sequence and connecting them up with each other; and
+* at shut down: shutting down the components and invoking cleanup method where necessary.
 
-<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level:
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
-* `LogsCenter` : This class is used by many classes to write log messages to the App's log file.
+* `EventsCenter`: This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
+* `LogsCenter`: This class is used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components:
+The rest of the application consists of four components:
 
-* <<Design-Ui,*`UI`*>>: the UI of the App
-* <<Design-Logic,*`Logic`*>>: the command executor
-* <<Design-Model,*`Model`*>>: holds the data of the App in-memory
-* <<Design-Storage,*`Storage`*>>: reads data from, and writes data to, the hard disk
-
+* <<Design-Ui,*`UI`*>>: This component controls the UI of the application.
+* <<Design-Logic,*`Logic`*>>: This is the command executor.
+* <<Design-Model,*`Model`*>>: This component holds the data of the App in-memory.
+* <<Design-Storage,*`Storage`*>>: This component reads data from, and writes data to, the hard disk.
 
 Each of the four components:
 
-* defines its _API_ in an `interface` with the same name as the Component, and
+* defines its _API_ in an `interface` with the same name as the component; and
 * exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class. _Figure 2_ below is an overview of the Logic component.
 
 .The API of the Logic Component
 image::LogicAPI.png[width="800"]
 
-==== Events-Driven nature of the design
+==== Events-Driven Nature of the Design
 
-*_Figure 3_* below shows how the components interact for the scenario where the user issues the command `delete 1`.
+_Figure 3_ below shows how the components interact in a scenario where the user issues the command `delete 1`.
 
 .Component interactions for `delete 1` command (part 1)
-image::SDforDeletePerson.png[width="800"]
+image::SDforDeleteActivity.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `DeskBoardChangedEvent` when the Desk Board data are changed, instead of asking the `Storage` to save the updates into the hard disk.
 
-*_Figure 4_* below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+_Figure 4_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 .Component interactions for `delete 1` command (part 2)
-image::SDforDeletePersonEventHandling.png[width="800"]
+image::SDforDeleteActivityEventHandling.png[width="800"]
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
 The sections below give more details of each component.
 
+{empty} +
+
 [[Design-Ui]]
 === UI component
 
-*_Figure 5_* below shows the architecture diagram of the UI component.
+_Figure 5_ below shows the architecture diagram of the UI component.
 
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
+
+{empty} +
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -263,29 +260,33 @@ The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `Re
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
 
-The `UI` component
+The `UI` component:
 
-* executes user commands using the `Logic` component,
-* binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change, and
+* executes user commands using the `Logic` component;
+* binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change; and
 * responds to events raised from various parts of the App and updates the UI accordingly.
+
+{empty} +
 
 [[Design-Logic]]
 === Logic component
 
-*_Figure 6_* below shows the UML of the Logic component.
+_Figure 6_ below shows the architecture diagram of the Logic component.
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
 image::LogicClassDiagram.png[width="800"]
-{empty} +
-{empty} +
 
-*_Figure 7_* below shows finer details of the Logic component.
+Finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>> in _Figure 7_ below.
 
-.Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
+.Structure of Commands in the Logic Component
 image::LogicCommandClassDiagram.png[width="800"]
+
+{empty} +
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+
+The following describes the sequence of events executed by the `Logic` component:
 
 .  `Logic` uses the `DeskBoardParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
@@ -297,49 +298,357 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 .Interactions Inside the Logic Component for the `rm task 1` Command
 image::DeletePersonSdForLogic.png[width="800"]
 
+{empty} +
+
 [[Design-Model]]
 === Model component
+
+_Figure 9_ below shows the architecture diagram of the Logic component.
+
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
+{empty} +
+
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`
+The `Model` component:
 
 * stores a `UserPref` object that represents the user's preferences,
-* stores the Desk Board data,
-* use two class to store information about 'Event' and 'Task' separately,
-* exposes an unmodifiable `ObservableList<Activity>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change, and
+* stores the Desk Board data;
+* uses two classes to store information about `Event` and `Task` separately;
+* exposes an unmodifiable `ObservableList<Activity>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change; and
 * does not depend on any of the other three components.
 
+{empty} +
 
 [[Design-Storage]]
 === Storage component
 
-*_Figure 10_* below shows the structure of the Storage Component.
+_Figure 10_ below shows the structure of the Storage Component.
 
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
 
+{empty} +
+
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The `Storage` component can save the following and read them back:
+The `Storage` component saves and reads back:
 
 * `UserPref` objects in json format, and
 * Desk Board data in xml format.
+
+{empty} +
 
 [[Design-Commons]]
 === Common classes
 
 Classes used by multiple components are in the `seedu.address.commons` package.
 
+{empty} +
+
 [[Implementation]]
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+{empty} +
+{empty} +
+
+[[Implementation-Activity]]
+=== Activity
+`Activity` resides in the `Model` component of the application.
+It is an important class in this application as it represent each entry in the desk board.
+In CLIndar, an entry in the desk board can be either a `Task` or an `Event`.
+
+==== Current Implementation
+_Figure 11_ below shows the relationship between `Activity` and its relevant components.
+
+.Class Diagram for Activity
+image::UniqueActivityListClassDiagram.png[width="550"]
+
+As shown above, `Activity` is a superclass for `Task` and `Event`.
+`Activity` is made abstract so that it cannot be instantiated.
+This is because an entry in the desk board must be either a `Task` or an `Event` and cannot simply be an `Activity`.
+{empty} +
+{empty} +
+
+===== Adding a task
+//TODO: Should add a diagram to show how a task is added
+`Task` is one of the two types of entries in the desk board in CLIndar.
+`Task` represents a piece of work to be done by a certain deadline.
+Once the `Task` has been done by user, it can be mark as completed in the application.
+
+_Figure 12_ below shows how `Task` is represented in the application.
+
+.UML Class Diagram for Task
+image::TaskUMLDiagram.png[width="550"]
+
+A brief description of each of the attributes of `Task` is given below:
+
+* `name`: name of the task. This attribute is compulsory.
+* `dueDateTime`: deadline of the task which includes date and time. This attribute is compulsory.
+* `remark`: a short description or any other comments pertaining to the task. This attribute is optional.
+* `tags`: groupings for the task. This attribute is optional and a `Task` object can have multiple `tags`.
+
+A `Task` object can be added to the desk board through the use of the `TaskCommand`.
+A `TaskCommand` is associated with a `Task` object to be added.
+When a `TaskCommand` object calls the method `executeUndoableCommand()`,
+the `Task` object is added into `UniqueActivityList` in the `DeskBoard`.
+Note that the `Task` object will not be added if an equivalent `Task`
+is found in the desk board or the `name` or `dueDateTime` field is left empty.
+
+The following is a snippet of code for `TaskCommand` 's  `executeUndoableCommand()` method.
+
+[source,java]
+----
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.addActivity(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (DuplicateActivityException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
+        }
+    }
+----
+Once the task is successfully added, it will be reflected in the CLIndar GUI itself.
+{empty} +
+{empty} +
+
+===== Adding an event
+
+`Event` is the second and last type of entries in the desk board in CLIndar.
+`Event` represents an activity with fixed start and end times, such as a test, doctor appointment etc.
+
+_Figure 19_ below shows how `Event` is implemented in the application.
+
+.UML Class Diagram for Event
+image::EventUMLDiagram.png[width="550"]
+
+A brief description of each of the attributes of `Event` is given below:
+
+* `name`: name of the event. This attribute is compulsory.
+* `startDateTime`: start date and time of the event. This attribute is compulsory.
+* `endDateTime`: end date and time of the event. This attribute is compulsory.
+* `location`: location of the event. This attribute is optional.
+* `remark`: a short description or any other comments pertaining to the event. This attribute is optional.
+* `tags`: groupings for the event. This attribute is optional and an `Event` object can have multiple `tags`.
+
+An `Event` object can be added to the desk board through the use of the `EventCommand`.
+The way `Event` objects are added to `UniqueActivityList` is the same as `Task` objects.
+Note that the `Event` object will not be added if an equivalent `Event`
+is found in the desk board or the `name`, `startDateTime` or `endDateTime` field is left empty.
+
+Once the `Event` is successfully added, it will be reflected in the CLIndar GUI itself.
+{empty} +
+{empty} +
+
+===== Autosorting feature
+In the GUI, the `Task` and `Event` objects will always be shown sorted in terms of their `dueDateTime` and `startDateTime` respectively.
+This is achieved through the `UniqueActivityList` which contains a list of unique activities which is either a `Task` or an `Event`
+stored in an `internalList`.
+Each time an `Activity` is added to or edited in the `UniqueActivityList`,
+`internalList` will be sorted according to its `dateTime` attribute.
+Note `dateTime` refers to `dueDateTime` for `Task` and `startDateTime` for `Event`.
+
+Following is a snippet which illustrates the function of `UniqueActivityList`:
+
+[source,java]
+----
+    private final ObservableList<Activity> internalList = FXCollections.observableArrayList();
+
+    /...some code.../
+
+    public void add(Activity toAdd) throws DuplicateActivityException {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicateActivityException();
+        }
+        internalList.add(toAdd);
+        Collections.sort(internalList, dateTimeComparator);
+    }
+----
+{empty} +
+
+===== Removing a task or an event
+`Task` and `Event` objects can be removed through the use of the `RemoveCommand`
+by specifying the `Task` or `Event` and the index of the task/event reflected in the GUI.
+
+The following snippet shows the `executeUndoableCommand()` of the `RemoveCommand` class.
+`UniqueActivityList` resides in the `Model` will be updated by having `activityToDelete` deleted from it.
+If the index of an activity is not found, an `ActivityNotFoundException` will be thrown.
+
+[source,java]
+----
+    public CommandResult executeUndoableCommand() {
+        requireNonNull(activityToDelete);
+        try {
+            model.deleteActivity(activityToDelete);
+        } catch (ActivityNotFoundException pnfe) {
+            throw new AssertionError("The target activity cannot be missing");
+        }
+
+        /...some code.../
+    }
+----
+If `RemoveCommand` is successful, the relevant `Task` or `Event` at the specified index will be removed which
+will be reflected in the GUI.
+{empty} +
+{empty} +
+
+===== Completing a task
+`Task` objects can be completed through the use of the `CompleteCommand` by specifying the `Task`'s index reflected
+in the GUI. Note that `CompleteCommand` can only be applied to `Task` objects.
+
+Below is a snippet of how the `executeUndoableCommand()` of `CompleteCommand` updates the respective task
+to completed.
+[source,java]
+----
+    public CommandResult executeUndoableCommand() {
+        requireNonNull(activityToComplete);
+        try {
+            Activity completedActivity = activityToComplete.getCompletedCopy();
+            model.updateActivity(activityToComplete, completedActivity);
+        } catch (ActivityNotFoundException pnfe) {
+            throw new AssertionError("The target activity cannot be missing");
+        } catch (DuplicateActivityException dae) {
+            throw new AssertionError("The completed activity cannot be duplicated");
+        }
+        return new CommandResult(String.format(MESSAGE_COMPLETE_TASK_SUCCESS, activityToComplete));
+    }
+----
+If `CompleteCommand` is successful, 'Uncompleted' will be replaced by 'Completed' in the GUI.
+{empty} +
+{empty} +
+
+==== Design Considerations
+
+There are two ways to represent tasks and events in the application. The following shows the pros and cons for each alternative:
+
+* ** Alternative 1 (Current Choice):**
+Use a single class `Activity` as a superclass for `Task` and `Event` +
+** Pros:
+As both `Task` and `Event` can be treated equally in most contexts other than their creation, this can simplify the code significantly.
+** Cons:
+It might be a harder to retrieve information as `Event` contains extra attributes that `Task` does not have.
+Extra accessor methods will also be required for `Event`.
+
+* **Alternative 2 :**
+Simply have two different class `Task` and `Event`
+
+** Pros:
+There is a clear distinction between the two classes.
+** Cons:
+We will need to write codes for classes and methods related to `Task` and `Event` separately, when these could have been simplified by having classes and methods related to the superclass only.
+{empty} +
+{empty} +
+
+=== GUI
+
+This section describes implementation of features related to the GUI.
+
+==== Current Implementation
+
+There are two types of commands related to the GUI: `list` and `overdue`. The following sections will describe the implementation for each comman.
+
+===== Listing of tasks and events
+
+A single `Task` or `Event` is displayed using a `TaskListCard` or `EventListCard` respectively. The list of all the `Task` objects added by the user
+is then displayed using the `TaskListPanel`, while `Event` objects added by user are displayed using `EventListPanel`. Below are examples of a `TaskListCard` and an `EventListCard`.
+
+.TaskListCard example
+image::TaskCard.png[width="550"]
+
+.EventListCard example
+image::EventCard.png[width='550']
+
+`ListCommand` allows the user to only view `Task` only, `Event` only or both in the GUI.
+
+The following snippet shows how `execute()` of `ListCommand` displays `Task` and/or `Event` objects in the GUI.
+If an invalid request for `ListCommand` happens, a `CommandException` will be thrown.
+
+[source,java]
+----
+    public CommandResult execute() throws CommandException {
+
+        switch(commandRequest)  {
+        case "task":
+            EventsCenter.getInstance().post(new ShowTaskOnlyRequestEvent());
+            return new CommandResult(MESSAGE_SUCCESS_TASK);
+        case "event":
+            EventsCenter.getInstance().post(new ShowEventOnlyRequestEvent());
+            return new CommandResult(MESSAGE_SUCCESS_EVENT);
+        /..some code../
+
+        default:
+            throw new CommandException(String.format(Messages.MESSAGE_INVALID_LIST_REQUEST, commandRequest));
+        }
+    }
+----
+If `ListCommand` is successful:
+
+* `list task` will show only `Task` objects;
+* `list event` will show only `Event` objects; and
+* `list` will show both `Task` and `Event` objects.
+{empty} +
+{empty} +
+
+===== Overdue
+
+Overdue tasks can be viewed through the use of the `OverdueCommand`. Note that the `OverdueCommand` only
+lists down overdue tasks; overdue events are marked as completed automatically.
+
+`OverdueCommand` makes use of the `LocalDateTime` class in Java to check if an ongoing task becomes overdue
+or not.
+
+There will be a class in the `Model` component, which has access to the `UniqueActivityList` class in that
+component. The class will go through the `UniqueActivityList` and obtain the `dueDateTime` of `Task`, and the `end
+DateTime` of `Event`. It will then perform a check of the `DateTime` with `LocalDateTime.now()`. If a `Task` is overdue, it will be marked so in the GUI.
+If the current date and time is past an `Event` `s `endDateTime`, the `Event` will be marked as completed.
+{empty} +
+{empty} +
+
+==== Design Considerations
+
+This section describes various design considerations related to the GUI features. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
+
+===== Aspect: Implementation of `ListCommand`
+
+* **Alternative 1:** Have 1 panel which will display the 2 classes.
+** Pros: The coding required for this approach is much lesser.
+** Cons: The UI will be messier and less appealing.
+
+* ** Alternative 2 (current choice):** Have 2 panels which will display the 2 classes separately.
+** Pros: The backend coding will be neater as the 2 classes do not have the same number of compulsory
+information tags. The design of the UI will be much more intuitive too.
+** Cons: A lot more coding is required to create the 2 separate panel.
+{empty} +
+{empty} +
+
+We preferred the second alternative as it adheres more closely with fundamental design principles. The GUI
+has to be made as intuitive as possible to bring convenience and comfort to the user. As such, the second alternative is
+definitely the preferred approach here.
+{empty} +
+{empty} +
+
+===== Aspect: Implementation of `OverdueCommand`
+
+* **Alternative 1**: Put the checking method in the `UniqueActivityList` class.
+** Pros: There will be one fewer classes and it will be easier for the developer to understand the code.
+** Cons: This violates Single Responsibility Principle (SRP). The `UniqueAcitivtyList` class should not perform the checking.
+
+* **Alternative 2**: Use Google Maps API to obtain current time.
+** Pros: `LocalDateTime.now()` is reliant on system clock. Thus, if the system clock is in error, tasks that are overdue will not be marked correctly.
+** Cons: Reliant on Google Maps API, and might be difficult for the developer to understand.
+{empty} +
+{empty} +
 
 // tag::undoredo[]
 === Undo/Redo feature
+
+The current implementation and design considerations for the undo/redo feature are explained in this section.
+
 ==== Current Implementation
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the desk board (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
@@ -432,435 +741,68 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ==== Design Considerations
 
+This section describes various design considerations related to the implementation of undo/redo feature. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
+
 ===== Aspect: Implementation of `UndoableCommand`
 
-* **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`
+* **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`.
 ** Pros: We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
-** Cons: Hard for new developers to understand the template pattern.
-* **Alternative 2:** Just override `execute()`
-** Pros: Does not involve the template pattern, easier for new developers to understand.
+** Cons: It will be hard for new developers to understand the template pattern.
+* **Alternative 2:** Just override `execute()`.
+** Pros: This does not involve the template pattern, easier for new developers to understand.
 ** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
-===== Aspect: How undo & redo executes
+===== Aspect: Execution of undo and redo
 
-* **Alternative 1 (current choice):** Saves the entire desk board.
-** Pros: Easy to implement.
-** Cons: May have performance issues in terms of memory usage.
-* **Alternative 2:** Individual command knows how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for `delete`, just save the activity being deleted).
+* **Alternative 1 (current choice):** Save the entire desk board.
+** Pros: This is easy to implement.
+** Cons: There may be performance issues in terms of memory usage.
+* **Alternative 2:** Make individual command know how to undo/redo itself.
+** Pros: This will use less memory (e.g. for `delete`, just save the activity being deleted).
 ** Cons: We must ensure that the implementation of each individual command are correct.
 
 
 ===== Aspect: Type of commands that can be undone/redone
 
 * **Alternative 1 (current choice):** Only include commands that modifies the desk board (`add`, `clear`, `edit`).
-** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
-** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
+** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost).
+** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`.
 * **Alternative 2:** Include all commands.
-** Pros: Might be more intuitive for the user.
-** Cons: User have no way of skipping such commands if he or she just want to reset the state of the remark * book and not the view.
+** Pros: This might be more intuitive to the user.
+** Cons: User has no way of skipping such commands if he or she just want to reset the state of the desk board and not the view.
+
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 
 ===== Aspect: Data structure to support the undo/redo commands
 
-* **Alternative 1 (current choice):** Use separate stack for undo and redo
-** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
-** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
-* **Alternative 2:** Use `HistoryManager` for undo/redo
+* **Alternative 1 (current choice):** Use separate stack for undo and redo.
+** Pros: This is easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
+** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `UndoRedoStack`.
+* **Alternative 2:** Use `HistoryManager` for undo/redo.
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
-** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
+** Cons: This requires dealing with commands that have already been undone: We must remember to skip these commands. This violates SRP and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
-
-_{Explain here how the data encryption feature will be implemented}_
-
-// end::dataencryption[]
-
-=== Logging
-
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
-
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
-* Currently log messages are output through: `Console` and to a `.log` file.
-
-*Logging Levels*
-
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
-
-[[Implementation-Configuration]]
-=== Configuration
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
-
-=== UniqueActivityList
-`UniqueActivityList` resides in the `model` component of the application.
-
-*_Figure 17_* below shows the relationship between `UniqueActivityList` and its relevant components.
-
-.Class Diagram for UniqueActivityList
-image::UniqueActivityListClassDiagram.png[width="550"]
-{empty} +
-{empty} +
-
-
-==== Design Consideration
-
-There are two ways to store information of events and tasks in UniqueActivityList:
-
-* ** Alternative 1 (Current Choice):**
-Use the `Activity` Class as a place holder for events and tasks to be stored. Hence, we create two new
-Class `Task` and `Event` to store the information and Both classes inherit from the `Activity` Class.
-** Pros:
-Minor changes to the original structure of the application (except some renaming).
-** Cons:
-It would be a harder to retrieve information as the parameters `Task` and `Event` contain are different.
-Extra accessor methods will also be required for `Event`.
-
-* **Alternative 2 :**
-Have two different class completely: `Task` and `Event`. As such, we will also have two different class
-`UniqueTaskList` and `UniqueEventList`. Relevant interface and access method will also be modified to
-cope with the change.
-** Pros:
-Clear distinction between the two classes.
-** Cons:
-Since the interface is now completely changed, a lot more coding will be required to cope with the change.
-
-Since there are overlaps between the two classes in terms of parameters, we decided that the first approach
-would be the more efficient and preferred way of implementing the structure of the application. Also, taking
-the first approach allows us to practice incremental programming which allows us to have a working release
-every week.
-{empty} +
-{empty} +
-
-==== Autosorting feature
-Following is a snippet which illustrates the function of `UniqueActivityList`:
-
-[source,java]
-----
-    private final ObservableList<Activity> internalList = FXCollections.observableArrayList();
-
-    /...some code.../
-
-    public void add(Activity toAdd) throws DuplicateActivityException {
-        requireNonNull(toAdd);
-        if (contains(toAdd)) {
-            throw new DuplicateActivityException();
-        }
-        internalList.add(toAdd);
-        Collections.sort(internalList, dateTimeComparator);
-    }
-----
-`UniqueActivityList` contains a list of unique activities which is either a `Task` or an `Event` and they
- is stored in `internalList`. Each time an `Activity` is added to or edited in `UniqueActivityList`,
- `internalList` will be sorted according to its `DateTime`. Note that for events, its `DateTime` refers
- to the event's starting time.
-{empty} +
-{empty} +
-
-
-=== Task
-Task refer to a piece of work to be done that can be added by a user of the application. After being added,
-tasks can be edited, completed or removed. When a task is not completed within the deadline, it will be
-automatically be marked as overdue.
-{empty} +
-{empty} +
-
-
-==== Current Implementation
-
-*_Figure 18_* below shows how `Task` is represented in the application.
-
-.UML Class Diagram for Task
-image::TaskUMLDiagram.png[width="550"]
-
-A brief description of each of the attributes of `Task` is given below:
-
-* Name: Represents the name of the task
-* dueDateTime: Represents the due date and time of the task
-* Remark: Represents a short description or reminder pertaining to the task
-* Tags: Groupings or representation for the task
-
-Operations that manipulate a `task` class object can been done using `TaskCommand`, `CompleteCommand`,
-`RemoveCommand`, `EditCommand` commands. These commands are described in more detail below.
-{empty} +
-{empty} +
-
-
-===== Adding tasks
-Tasks can be added through the use of the `TaskCommand`.
-
-The following is a snippet shows how the `executeUndoableCommand()` of `TaskCommand` updates `UniqueActivityList`
-residing in model of CLIndar by adding `toAdd`. Note that `toAdd` will not be added if a duplicate task
-has been found or the `Name` or `DateTime` field is left empty.
-
-[source,java]
-----
-    public CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(model);
-        try {
-            model.addActivity(toAdd);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicateActivityException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_TASK);
-        }
-    }
-----
-If the task is successfully added, it will be reflected in the CLIndar GUI itself.
-{empty} +
-{empty} +
-
-===== Completing Tasks
-Tasks can be completed through the use of the `CompleteCommand` by specifying the task's index reflected
-in the GUI. Note that `CompleteCommand` can only be applied to `Task`.
-
-Below is a snippet of how the `executeUndoableCommand()` of `CompleteCommand` updates the respective task
-to completed.
-[source,java]
-----
-    public CommandResult executeUndoableCommand() {
-        requireNonNull(activityToComplete);
-        try {
-            Activity completedActivity = activityToComplete.getCompletedCopy();
-            model.updateActivity(activityToComplete, completedActivity);
-        } catch (ActivityNotFoundException pnfe) {
-            throw new AssertionError("The target activity cannot be missing");
-        } catch (DuplicateActivityException dae) {
-            throw new AssertionError("The completed activity cannot be duplicated");
-        }
-        return new CommandResult(String.format(MESSAGE_COMPLETE_TASK_SUCCESS, activityToComplete));
-    }
-----
-If `CompleteCommand` is successful, 'Uncompleted' will be updated to 'Completed', which will be reflected in the GUI.
-{empty} +
-{empty} +
-
-===== Removing Tasks
-Tasks can be removed through the use of the `RemoveCommand` by specifying the index of the task reflected
- in the GUI.
-
-The following snippet shows the `executeUndoableCommand()` of the `RemoveCommand` class.
-`UniqueActivityList` resides in the `model` will be updated by having `activityToDelete` deleted from it.
-If the index of an activity is not found, an `ActivityNotFoundException` will be thrown.
-
-[source,java]
-----
-    public CommandResult executeUndoableCommand() {
-        requireNonNull(activityToDelete);
-        try {
-            model.deleteActivity(activityToDelete);
-        } catch (ActivityNotFoundException pnfe) {
-            throw new AssertionError("The target activity cannot be missing");
-        }
-
-        /...some code.../
-    }
-----
-If `RemoveCommand` is successful, the relavant `Task`  with the specified index will be removed which
-will be reflected in the GUI.
-{empty} +
-{empty} +
-
-//===== Edit Tasks
-
-==== Displaying Task
-A single `Task` is displayed using a `TaskListCard`. The list of all the `Task` added by the user
-is then displayed using the `TaskListPanel`. Below is an example of a `TaskListCard`.
-
-.TaskListCard example
-image::TaskCard.png[width="550"]
-
-Operations that manipulate the GUI with respect to `Task` class includes `ListCommand`, `OverdueCommand`.
-{empty} +
-{empty} +
-
-===== Overdue
-
-Overdue tasks can be viewed through the use of the `OverdueCommand`. Note that the `OverdueCommand` only
-lists down overdue tasks; overdue events are marked as completed automatically.
-
-`OverdueCommand` makes use of the LocalDateTime class in Java to check if an ongoing task becomes overdue
-or not.
-
-There will be a class in the Model component, which has access to the UniqueActivityList class in that
-component. The class will go through the UniqueActivityList and obtain the DateTime of Task, and the end
-DateTime of Event. It will then perform a check of the DateTime with `LocalDateTime.now()` and if it is
-overdue (for tasks), it will mark the task as overdue, while if it is overdue (for Event), it will mark
-it as completed.
-{empty} +
-{empty} +
-
-===== Design Considerations
-
-* **Alternative 1**: Put the checking method together with UniqueActivityList class
-** Pros: Less one class and it is easier for the developer to understand
-** Cons: Violates Single Responsibility Principle (SRP). The UniqueAcitivtyList class should not perform the checking.
-
-* **Alternative 2**: Using Google Maps API to obtain current time
-** Pros: `LocalDateTime.now()` is reliant on system clock, thus if the system clock is in error, tasks that are overdue will not be marked as
-overdue correctly.
-** Cons: Reliant on Google Maps API, and might be difficult for the developer to understand.
-{empty} +
-{empty} +
-
-===== List Task
-`ListCommand` allows the user to only view `Task` only in the GUI.
-{empty} +
-{empty} +
-
-====== Design Considerations
-
-`Task` and `Event` needs to be displayed in the GUI and there are 2 possible implementations to do so:
-
-* **Alternative 1:** Have 1 panel which will display the 2 classes.
-** Pros: The coding required for this approach is much lesser.
-** Cons: The UI will be messier and less appealing.
-
-* ** Alternative 2 (current choice):** Have 2 panels which will display the 2 classes separately.
-** Pros: The backend coding will be neater as the 2 classes do not have the same number of compulsory
-information tags. The design of the UI will be much more intuitive too.
-** Cons: A lot more coding is required to create the 2 separate panel.
-{empty} +
-{empty} +
-
-We preferred the second alternative as it adheres more closely with fundamental design principles. The GUI
-has to be made as intuitive as possible to bring convenience and comfort to the user. As such, the second alternative is
-definitely the preferred approach here.
-{empty} +
-{empty} +
-
-====== Implementation
-The following snippet shows how `execute()` of `ListCommand` displays `Task` on the GUI. If an invalid
-request for `ListCommand` happens, a `CommandException` will be thrown.
-
-[source,java]
-----
-    public CommandResult execute() throws CommandException {
-
-        switch(commandRequest)  {
-        case "task":
-            EventsCenter.getInstance().post(new ShowTaskOnlyRequestEvent());
-            return new CommandResult(MESSAGE_SUCCESS_TASK);
-
-        /..some code../
-
-        default:
-            throw new CommandException(String.format(Messages.MESSAGE_INVALID_LIST_REQUEST, commandRequest));
-        }
-    }
-----
-If `ListCommand` is successful, only `Task` will be shown on the GUI.
-
-=== Event
-Event refer to a thing that is about to happen, especially one of importance that can be added by a user
-of the application. After being added, events can be edited and deleted. Events past the end date of the
-event is automatically completed.
-{empty} +
-{empty} +
-
-==== Current Implementation
-
-*_Figure 19_* below shows how `Event` is represented in the application.
-
-.UML Class Diagram for Event
-image::EventUMLDiagram.png[width="550"]
-
-A brief description of each of the attributes of `Event` is given below:
-
-* Name: Represents the name of the event
-* startDateTime: Represents the start date and time of the event
-* endDateTime: Represents the end date and time of the event
-* Location: Represents the location of the event that is going to happen
-* Remark: Represents a short description or reminder pertaining to the event
-* Tags: Groupings or representation for the event
-
-Operations that manipulate a `task` class object can been done using
-`EventCommand`, `RemoveCommand`, `EditCommand` commands.
-These commands are described in more detail below.
-{empty} +
-{empty} +
-
-===== Add Event
-Events can be added through the use of the `EventCommand`.
-
-The way events are added to `UniqueActivityList` is the same as tasks. Note that for events, an exception
-will tbe thrown if the `Name`, `DateTime` or, `Location` field is left empty.
-
-If the event is successfully added, it will be reflected in the CLIndar GUI itself.
-{empty} +
-{empty} +
-
-===== Remove Event
-Events can be removed through the use of the `RemoveCommand` by specifying the index of the event reflected
-in the GUI. `UniqueActivityList` residing in the `model` will be updated by having `activityToDelete` deleted from it.
-
-The way events are deleted from `UniqueActivityList` is the same as task.
-
-If the `RemoveCommand` is successful, the relavant `Event` with the specified index will be removed which
-will be reflected in the GUI.
-{empty} +
-{empty} +
-
-==== Displaying Event
-A single `Event` is displayed using a `EventListCard` . The list of all the `Event` added by the user
-is then displayed using the `EventListPanel`. Below is an example of a `EventListCard`.
-
-.EventListCard example
-image::EventCard.png[width='550']
-Operations that manipulate the GUI with respect to `Task` class includes `ListCommand`.
-{empty} +
-{empty} +
-
-===== List Event
-`ListCommand` allows the user to only view `Event` only in the GUI.
-
-The following snippet shows how `execute()` of `ListCommand` displays `Event` on the GUI. If an invalid
-request for `ListCommand` happens, a `CommandException` will be thrown.
-
-[source,java]
-----
-    public CommandResult execute() throws CommandException {
-
-        switch(commandRequest)  {
-
-        /...some code.../
-
-        case "event":
-            EventsCenter.getInstance().post(new ShowEventOnlyRequestEvent());
-            return new CommandResult(MESSAGE_SUCCESS_EVENT);
-
-        /...some code.../
-
-        default:
-            throw new CommandException(String.format(MESSAGE_INVALID_LIST_REQUEST, commandRequest));
-        }
-    }
-----
-If `ListCommand` is successful, only `Event` will be shown on the GUI.
-{empty} +
 {empty} +
 
 === Storage for Task and Event
 
-Storing of `Task` and `Event` data is managed by `StorageManager` within the `Storage` component. `Task`
-and `Event` is converted to `XmlAdaptedTask` and `XmlAdaptedEvent` respectively to be stored in a .xml file.
-{empty} +
-{empty} +
+This section describes the implementation and design considerations for the storage of Task and Event.
 
-==== Design Consideration
-The application deals with 2 main classes: Task and Event. Hence, the data is stored, there is a need for
+==== Current Implementation
+Storing of `Task` and `Event` data is managed by `StorageManager` within the `Storage` component.
+`Task` and `Event` is converted to `XmlAdaptedTask` and `XmlAdaptedEvent` respectively to be stored in a .xml file.
+
+==== Design Considerations
+The application deals with 2 main classes: Task and Event. Hence, when the data is stored, there is a need for
 differentiation between these 2 classes. There are 2 possible implementations to do this:
 
-* **Alternative 1:** Use 1 list to store objects of both classes
+* **Alternative 1:** Use 1 list to store objects of both classes.
 ** Pros: Minimal coding is required as only 1 list is required to store the 2 different class objects.
 ** Cons: Whenever we want to perform an operation on an object stored, we need to check its class.
 
-* **Alternative 2 (current choice):** Use 2 lists to store objects of the 2 classes separately
+* **Alternative 2 (current choice):** Use 2 lists to store objects of the 2 classes separately.
 ** Pros: When we want to perform an operation on all the objects stored in a list, each object can be
 treated the same as they are from the same class.
 ** Cons: More coding is required to create 2 separate lists.
@@ -873,12 +815,36 @@ the long run.
 {empty} +
 {empty} +
 
+=== Logging
+
+We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations as follows:
+
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>).
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level.
+* Currently log messages are output through: `Console` and to a `.log` file.
+
+The following are the four logging levels:
+
+* `SEVERE` means critical problem was detected which may possibly cause the termination of the application.
+* `WARNING` means application can continue, but with caution.
+* `INFO` shows noteworthy actions by the App.
+* `FINE` gives details that are not usually noteworthy but may be useful in debugging e.g. printing the actual list instead of just its size.
+
+{empty} +
+
+[[Implementation-Configuration]]
+=== Configuration
+Certain properties of the application (e.g. App name, logging level) can be controlled through the configuration file (default: `config.json`).
+
+{empty} +
+
+
 == Documentation
 
 We use asciidoc for writing documentation.
 
 [NOTE]
-We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+We choose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
 === Editing Documentation
 
@@ -893,7 +859,7 @@ See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to dep
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
-Here are the steps to convert the project documentation files to PDF format.
+Here are the steps to convert the project documentation files to PDF format:
 
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
 .  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
@@ -903,11 +869,13 @@ Here are the steps to convert the project documentation files to PDF format.
 .Saving documentation as PDF files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
 
+{empty} +
+
 [[Testing]]
-== Testing
+== Testing Procedures
 This sections describes the different ways to do testing on the application.
 
-=== Running Tests
+=== Methods for Running Tests
 
 There are three ways to run tests.
 
@@ -916,77 +884,107 @@ The most reliable way to run tests is the 3rd one. The first two methods might f
 
 *Method 1: Using IntelliJ JUnit test runner*
 
-* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+You can choose to run all tests or only a subset of tests.
+
+* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`.
+* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`.
+
+{empty} +
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+To run tests using gradle, open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`).
 
 [NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
+
+{empty} +
 
 *Method 3: Using Gradle (headless)*
 
 Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`).
 
-=== Types of tests
+{empty} +
 
-We have two types of tests:
+=== Test Types
 
-.  *GUI Tests* - These are tests involving the GUI. They include,
-.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
-.. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
-.  *Non-GUI Tests* - These are tests not involving the GUI. They include,
-..  _Unit tests_ targeting the lowest level methods/classes. +
-e.g. `seedu.adress.commons.StringUtilTest`
-..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
-e.g. `seedu.address.storage.StorageManagerTest`
-..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
-e.g. `seedu.address.logic.LogicManagerTest`
+We have two types of tests, based on whether the tests involve the GUI:
 
+.  *GUI tests* which include:
+.. _System Tests_ +
+These test the entire App by simulating user actions on the GUI. System tests are in the `systemtests` package.
+.. _Unit tests_ +
+These test the individual components. They can be found in `seedu.address.ui` package.
+.  *Non-GUI tests* which include:
+..  _Unit tests_ +
+These target the lowest level methods/classes. +
+Example: `seedu.adress.commons.StringUtilTest`.
+..  _Integration tests_
+These check the integration of multiple code units which are assumed to be working. +
+Example: `seedu.address.storage.StorageManagerTest`.
+..  Hybrids of unit and integration tests +
+These tests check multiple code units as well as how the are connected together. +
+Example: `seedu.address.logic.LogicManagerTest`.
 
-=== Troubleshooting Testing
-**Problem: `HelpWindowTest` fails with a `NullPointerException`.**
+{empty} +
 
-* Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
-* Solution: Execute Gradle task `processResources`.
+=== Troubleshooting Test
+The following describes an example of troubleshooting test:
+
+* **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
+
+** Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
+** Solution: Execute Gradle task `processResources`.
 
 [[DevOps]]
 == Dev Ops
 This sections features softwares which can be used to track the progress of the application development.
 
+{empty} +
+
 === Build Automation
 
 See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
+
+{empty} +
 
 === Continuous Integration
 
 We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
+{empty} +
+
 === Coverage Reporting
 
 We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
 
+{empty} +
+
 === Documentation Previews
 When a pull request has changes to asciidoc files, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
-=== Making a Release
+{empty} +
 
-Here are the steps to create a new release.
+=== Release Creation
+
+Here are the steps to create a new release:
 
 .  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
-.  Tag the repo with the version number. e.g. `v0.1`
+.  Tag the repo with the version number e.g. `v0.1`.
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
-=== Managing Dependencies
+{empty} +
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
-a. Include those libraries in the repo (this bloats the repo size) +
-b. Require developers to download those libraries manually (this creates extra work for developers)
+=== Dependencies Management
+
+A project often depends on third-party libraries. For example, this application depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives: +
+a. including those libraries in the repo (this bloats the repo size); and +
+b. requiring developers to download those libraries manually (this creates extra work for developers)
+
+{empty} +
 
 [[GetStartedProgramming]]
 [appendix]

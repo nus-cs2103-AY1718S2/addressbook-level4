@@ -18,6 +18,7 @@ import seedu.organizer.model.task.Status;
 import seedu.organizer.model.task.predicates.TaskByStatusPredicate;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
 //@@author dominicekenn
 /**
@@ -44,6 +45,8 @@ public class ListUncompletedTasksCommandTest {
             throw new AssertionError("Admin user does not exist");
         } catch (CurrentlyLoggedInException e) {
             throw new AssertionError("A user should not be currently logged in");
+        } catch (UserPasswordWrongException e) {
+            e.printStackTrace();
         }
 
         listCommand = new ListUncompletedTasksCommand();

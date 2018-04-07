@@ -22,6 +22,7 @@ import seedu.organizer.model.ModelManager;
 import seedu.organizer.model.UserPrefs;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
 public class RedoCommandTest {
     private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
@@ -52,6 +53,8 @@ public class RedoCommandTest {
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        } catch (UserPasswordWrongException e) {
             e.printStackTrace();
         }
 

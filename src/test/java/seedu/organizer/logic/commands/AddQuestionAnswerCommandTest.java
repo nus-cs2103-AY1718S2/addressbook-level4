@@ -18,6 +18,7 @@ import seedu.organizer.model.UserPrefs;
 import seedu.organizer.model.user.UserWithQuestionAnswer;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
 //@@author dominickenn
 /**
@@ -39,6 +40,8 @@ public class AddQuestionAnswerCommandTest {
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        } catch (UserPasswordWrongException e) {
             e.printStackTrace();
         }
     }

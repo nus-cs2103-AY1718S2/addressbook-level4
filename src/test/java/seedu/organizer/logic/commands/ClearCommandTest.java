@@ -14,6 +14,7 @@ import seedu.organizer.model.UserPrefs;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.DuplicateUserException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
 public class ClearCommandTest {
 
@@ -29,6 +30,8 @@ public class ClearCommandTest {
             e.printStackTrace();
         } catch (DuplicateUserException e) {
             e.printStackTrace();
+        } catch (UserPasswordWrongException e) {
+            e.printStackTrace();
         }
         assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, model);
     }
@@ -41,6 +44,8 @@ public class ClearCommandTest {
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        } catch (UserPasswordWrongException e) {
             e.printStackTrace();
         }
         assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, model);

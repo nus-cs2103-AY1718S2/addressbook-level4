@@ -33,6 +33,7 @@ import seedu.organizer.model.UserPrefs;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 import seedu.organizer.testutil.EditTaskDescriptorBuilder;
 import seedu.organizer.testutil.TaskBuilder;
 
@@ -50,6 +51,8 @@ public class EditCommandTest {
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        } catch (UserPasswordWrongException e) {
             e.printStackTrace();
         }
     }
@@ -104,6 +107,8 @@ public class EditCommandTest {
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        } catch (UserPasswordWrongException e) {
             e.printStackTrace();
         }
 

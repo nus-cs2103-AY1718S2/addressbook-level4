@@ -26,6 +26,7 @@ import seedu.organizer.model.ModelManager;
 import seedu.organizer.model.UserPrefs;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 import seedu.organizer.ui.testutil.EventsCollectorRule;
 
 /**
@@ -45,6 +46,8 @@ public class SelectCommandTest {
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        } catch (UserPasswordWrongException e) {
             e.printStackTrace();
         }
     }

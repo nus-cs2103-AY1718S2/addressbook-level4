@@ -24,6 +24,7 @@ import seedu.organizer.model.user.UserWithQuestionAnswer;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.DuplicateUserException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
 /**
  * Wraps all data at the organizer-book level
@@ -106,7 +107,8 @@ public class Organizer implements ReadOnlyOrganizer {
     /**
      * Sets currentLoggedInUser of the organizer
      */
-    public void loginUser(User user) throws UserNotFoundException, CurrentlyLoggedInException {
+    public void loginUser(User user)
+            throws UserNotFoundException, CurrentlyLoggedInException, UserPasswordWrongException {
         requireNonNull(user);
         users.setCurrentLoggedInUser(user);
     }

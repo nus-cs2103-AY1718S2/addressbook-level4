@@ -20,6 +20,7 @@ import seedu.organizer.logic.commands.exceptions.CommandException;
 import seedu.organizer.model.task.predicates.NameContainsKeywordsPredicate;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindNameCommand}.
@@ -33,6 +34,8 @@ public class FindNameCommandTest extends FindCommandTest<FindNameCommand> {
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        } catch (UserPasswordWrongException e) {
             e.printStackTrace();
         }
     }

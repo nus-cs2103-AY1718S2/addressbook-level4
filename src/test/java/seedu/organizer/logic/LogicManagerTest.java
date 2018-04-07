@@ -21,6 +21,7 @@ import seedu.organizer.model.UserPrefs;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.DuplicateUserException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
 
 public class LogicManagerTest {
@@ -43,6 +44,8 @@ public class LogicManagerTest {
             throw new AssertionError("Admin user should exist");
         } catch (CurrentlyLoggedInException e) {
             throw new AssertionError("No user should be logged in");
+        } catch (UserPasswordWrongException e) {
+            e.printStackTrace();
         }
     }
 
@@ -114,6 +117,8 @@ public class LogicManagerTest {
             throw new AssertionError("Admin user should exist");
         } catch (CurrentlyLoggedInException e) {
             throw new AssertionError("No user should be logged in");
+        } catch (UserPasswordWrongException e) {
+            e.printStackTrace();
         }
         assertCommandBehavior(expectedException, inputCommand, expectedMessage, expectedModel);
     }

@@ -2,6 +2,7 @@ package seedu.organizer.model.user;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.util.AppUtil.checkArgument;
+import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
 
 //@@author dominickenn
 /**
@@ -48,6 +49,27 @@ public class User {
         return test.matches(PASSWORD_VALIDATION_REGEX);
     }
 
+    /**
+     * Used in login feature
+     * Used to check if two users' username matches
+     */
+    public static boolean usernameMatches(User user1, User user2) {
+        requireAllNonNull(user1, user2);
+        return user1.username.equals(user2.username);
+    }
+
+    /**
+     * Used in login feature
+     * Used to check if two users' password matches
+     */
+    public static boolean passwordMatches(User user1, User user2) {
+        requireAllNonNull(user1, user2);
+        return user1.password.equals(user2.password);
+    }
+
+    /**
+     * Used to ensure no duplicate users, since users with the same username are considered duplicates
+     */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

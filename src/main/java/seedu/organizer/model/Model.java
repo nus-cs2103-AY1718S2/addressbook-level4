@@ -12,6 +12,7 @@ import seedu.organizer.model.user.UserWithQuestionAnswer;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.DuplicateUserException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
 /**
  * The API of the Model component.
@@ -39,7 +40,7 @@ public interface Model {
     void addUser(User user) throws DuplicateUserException;
 
     /** Login a user */
-    void loginUser(User user) throws UserNotFoundException, CurrentlyLoggedInException;
+    void loginUser(User user) throws UserNotFoundException, CurrentlyLoggedInException, UserPasswordWrongException;
 
     /** Logout from organizer */
     void logout();

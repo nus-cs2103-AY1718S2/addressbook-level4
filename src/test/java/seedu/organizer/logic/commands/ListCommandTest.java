@@ -16,6 +16,7 @@ import seedu.organizer.model.ModelManager;
 import seedu.organizer.model.UserPrefs;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -36,6 +37,8 @@ public class ListCommandTest {
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        } catch (UserPasswordWrongException e) {
             e.printStackTrace();
         }
 

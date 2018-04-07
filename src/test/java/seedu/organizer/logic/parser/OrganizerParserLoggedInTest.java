@@ -59,6 +59,7 @@ import seedu.organizer.model.task.predicates.MultipleFieldsContainsKeywordsPredi
 import seedu.organizer.model.task.predicates.NameContainsKeywordsPredicate;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 import seedu.organizer.testutil.EditTaskDescriptorBuilder;
 import seedu.organizer.testutil.TaskBuilder;
 import seedu.organizer.testutil.TaskUtil;
@@ -82,6 +83,8 @@ public class OrganizerParserLoggedInTest {
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        } catch (UserPasswordWrongException e) {
             e.printStackTrace();
         }
     }

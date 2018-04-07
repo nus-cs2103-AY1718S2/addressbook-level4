@@ -19,6 +19,7 @@ import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
 public class UndoableCommandTest {
     private final Model model = new ModelManager(getTypicalOrganizer(), new UserPrefs());
@@ -34,6 +35,8 @@ public class UndoableCommandTest {
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        } catch (UserPasswordWrongException e) {
             e.printStackTrace();
         }
     }

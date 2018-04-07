@@ -23,6 +23,7 @@ import seedu.organizer.model.UserPrefs;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
@@ -32,7 +33,7 @@ public class ToggleCommandTest {
     private Model model = new ModelManager(getTypicalOrganizer(), new UserPrefs());
 
     @Before
-    public void setUp() throws UserNotFoundException, CurrentlyLoggedInException {
+    public void setUp() throws UserNotFoundException, CurrentlyLoggedInException, UserPasswordWrongException {
         model.loginUser(ADMIN_USER);
     }
 

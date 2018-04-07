@@ -20,6 +20,7 @@ import seedu.organizer.logic.commands.exceptions.CommandException;
 import seedu.organizer.model.task.predicates.DeadlineContainsKeywordsPredicate;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
 //@@author guekling
 /**
@@ -34,6 +35,8 @@ public class FindDeadlineCommandTest extends FindCommandTest<FindDeadlineCommand
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        } catch (UserPasswordWrongException e) {
             e.printStackTrace();
         }
     }

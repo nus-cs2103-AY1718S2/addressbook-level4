@@ -2,6 +2,8 @@ package seedu.organizer.model.user;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.organizer.model.user.User.passwordMatches;
+import static seedu.organizer.model.user.User.usernameMatches;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -14,6 +16,7 @@ import seedu.organizer.commons.util.CollectionUtil;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.DuplicateUserException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
 //@@author dominickenn
 /**
@@ -47,15 +50,40 @@ public class UniqueUserList implements Iterable<User> {
     /**
      * Sets currentLoggedInUser to user
      */
-    public void setCurrentLoggedInUser(User userToLogIn) throws UserNotFoundException, CurrentlyLoggedInException {
+    public void setCurrentLoggedInUser(User userToLogIn)
+            throws UserNotFoundException,
+            CurrentlyLoggedInException,
+            UserPasswordWrongException {
+
         requireNonNull(userToLogIn);
         if (currentLoggedInUser != null) {
             throw new CurrentlyLoggedInException();
         }
-        if (!internalList.contains(userToLogIn)) {
+
+        User userFound = null;
+        for (User user : internalList) {
+            userFound = attemptToMatchUser(userToLogIn, user);
+        }
+        if (userFound == null) {
             throw new UserNotFoundException();
         }
         this.currentLoggedInUser = userToLogIn;
+    }
+
+    /**
+     * Attempts to match {@code userToLogin} and {@code user}
+     * Both password and username have to match before a user is returned
+     */
+    private User attemptToMatchUser(User userToLogIn, User user) throws UserPasswordWrongException {
+        User userFound = null;
+        if (usernameMatches(user, userToLogIn)) {
+            if (passwordMatches(user, userToLogIn)) {
+                userFound = user;
+            } else {
+                throw new UserPasswordWrongException();
+            }
+        }
+        return userFound;
     }
 
     public void setCurrentLoggedInUserToNull() {
@@ -171,16 +199,6 @@ public class UniqueUserList implements Iterable<User> {
         return other == this // short circuit if same object
                 || (other instanceof UniqueUserList // instanceof handles nulls
                 && this.internalList.equals(((UniqueUserList) other).internalList));
-    }
-
-    /**
-     * Returns true if the element in this list is equal to the elements in {@code other}.
-     * The elements do not have to be in the same order.
-     */
-    public boolean equalsOrderInsensitive(UniqueUserList other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        assert CollectionUtil.elementsAreUnique(other.internalList);
-        return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
     }
 
     @Override

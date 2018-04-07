@@ -31,6 +31,7 @@ import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
 public class AddSubtaskCommandTest {
 
@@ -43,6 +44,8 @@ public class AddSubtaskCommandTest {
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        } catch (UserPasswordWrongException e) {
             e.printStackTrace();
         }
     }

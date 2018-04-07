@@ -18,6 +18,7 @@ import seedu.organizer.model.ModelManager;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.DuplicateUserException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
 public class CommandBoxTest extends GuiUnitTest {
 
@@ -40,6 +41,8 @@ public class CommandBoxTest extends GuiUnitTest {
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        } catch (UserPasswordWrongException e) {
             e.printStackTrace();
         }
         Logic logic = new LogicManager(model);

@@ -22,6 +22,7 @@ import seedu.organizer.model.user.UserWithQuestionAnswer;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.DuplicateUserException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
 /**
  * Represents the in-memory model of the organizer book data.
@@ -97,7 +98,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void loginUser(User user) throws UserNotFoundException, CurrentlyLoggedInException {
+    public synchronized void loginUser(User user)
+            throws UserNotFoundException, CurrentlyLoggedInException, UserPasswordWrongException {
         organizer.loginUser(user);
         currentlyLoggedInUser = organizer.getCurrentLoggedInUser();
         updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);

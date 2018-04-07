@@ -88,8 +88,8 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
-            model.updatePerson(personToEdit, editedPerson);
             deletePrevRunnerCustomer();
+            model.updatePerson(personToEdit, editedPerson);
             int i = 0;
             for (Person c : newCustomers) {
                 model.updatePerson(c, updatedCustomers.get(i));
@@ -134,24 +134,33 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
     private void deletePrevRunnerCustomer() throws CommandException, PersonNotFoundException,
             DuplicatePersonException {
         List<Person> pl = model.getAddressBook().getPersonList();
+        //List<Person> allCustomers = new ArrayList<>();
+        //allCustomers.addAll(oldCustomers);
+        //allCustomers.addAll(newCustomers);
         for (Person c : newCustomers) {
-            Person r = ((Customer) c).getRunner();
-            if (pl.contains(r)) {
+            Person r = ((Customer) c).getRunner(); //not getting a runner from pl but an incomplete copy
+            int indexOfActualPerson = pl.indexOf(r);
+
+            if (indexOfActualPerson >= 0) {
+                //the conditional check is necessary so that I'm only modifying valid existing runners
+
+                Person actualRunner =  pl.get(indexOfActualPerson); //getting the actual complete runner from pl
+
                 //generate editPersonDescriptor with c removed from runner's customer list
                 EditPersonDescriptor runnerDescWCustRemoved = new EditPersonDescriptor();
 
-                runnerDescWCustRemoved.setName(r.getName());
-                runnerDescWCustRemoved.setPhone(r.getPhone());
-                runnerDescWCustRemoved.setEmail(r.getEmail());
-                runnerDescWCustRemoved.setAddress(r.getAddress());
-                runnerDescWCustRemoved.setTags(r.getTags());
+                runnerDescWCustRemoved.setName(actualRunner.getName());
+                runnerDescWCustRemoved.setPhone(actualRunner.getPhone());
+                runnerDescWCustRemoved.setEmail(actualRunner.getEmail());
+                runnerDescWCustRemoved.setAddress(actualRunner.getAddress());
+                runnerDescWCustRemoved.setTags(actualRunner.getTags());
 
-                List<Person> newList = ((Runner) r).getCustomers();
+                List<Person> newList = ((Runner) actualRunner).getCustomers();
                 newList.remove(c);
                 runnerDescWCustRemoved.setCustomers(newList);
 
-                Person editedPrevRunner = createEditedPerson((Runner) r, runnerDescWCustRemoved);
-                model.updatePerson(r, editedPrevRunner);
+                Person editedPrevRunner = createEditedPerson((Runner) actualRunner, runnerDescWCustRemoved);
+                model.updatePerson(actualRunner, editedPrevRunner);
             }
         }
     }
@@ -207,7 +216,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
                 throw new CommandException("invalid customer index");
             }
             if (oldCustomers.indexOf(p) >= 0) {
-                throw new CommandException(String.format("customer at index %d, already assigned to runner",
+                throw new CommandException(String.format("one or more customers already assigned to runner",
                         index.getOneBased()));
             }
             if (newCustomers.indexOf(p) >= 0) {

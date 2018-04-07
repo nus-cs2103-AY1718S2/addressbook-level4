@@ -127,10 +127,10 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 
 The rest of the App consists of four components.
 
-* <<Design-Ui,*`UI`*>>: The UI of the App.
-* <<Design-Logic,*`Logic`*>>: The command executor.
-* <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
-* <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
+* <<Design-Ui,*`UI`*>>: the UI of the App
+* <<Design-Logic,*`Logic`*>>: the command executor
+* <<Design-Model,*`Model`*>>: the holder of Employees Tracker's data in-memory
+* <<Design-Storage,*`Storage`*>>: the communicator between Employees Tracker and hard disk to read and write data
 
 Each of the four components
 
@@ -335,7 +335,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
 ** Cons: Hard for new developers to understand the template pattern.
 * **Alternative 2:** Just override `execute()`.
-** Pros: Does not involve the template pattern, easier for new developers to understand.
+** Pros: Template pattern is not involved when developing, so it is easier for new developers to understand.
 ** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
 ===== Aspect: How undo & redo executes

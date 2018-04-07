@@ -95,10 +95,9 @@ public class MainApp extends Application {
         String profile = login.getUsername();
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(profile + config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
+        userPrefs.setAddressBookFileName(profile);
         AddressBookStorage addressBookStorage =
-                new XmlAddressBookStorage(userPrefs.getAddressBookFolderPath()
-                        + profile + userPrefs.getAddressBookFilePath());
-        userPrefs.setAddressBookName(profile);
+                new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage, userPassStorage);
         model = initModelManager(storage, userPrefs);
         logic = new LogicManager(model);

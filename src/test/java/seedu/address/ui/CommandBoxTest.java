@@ -133,11 +133,9 @@ public class CommandBoxTest extends GuiUnitTest {
     public void handleKeyPressTab() {
 
         // no entry
-        assertInputHistory(KeyCode.TAB, AddCommand.COMMAND_SYNTAX);
+        assertInputHistory(KeyCode.TAB, "");
 
         // partial input
-        commandBoxHandle.enterCommand("e");
-        assertInputHistory(KeyCode.TAB, EditCommand.COMMAND_SYNTAX);
         commandBoxHandle.enterCommand("ex");
         assertInputHistory(KeyCode.TAB, ExitCommand.COMMAND_WORD);
         commandBoxHandle.enterCommand("h");

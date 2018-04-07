@@ -86,7 +86,7 @@ public class CommandBox extends UiPart<Region> {
             prevText = text;
             tabNumber = 0;
         }
-
+        
         CommandList commandListObj = new CommandList();
 
         List<String> matchedCommands = commandListObj.commandList.stream().filter(u -> u.startsWith(prevText))

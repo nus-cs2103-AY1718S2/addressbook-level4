@@ -34,9 +34,19 @@ public class TypicalPetPatients {
             .withSpecies("Cat")
             .withBreed("Domestic Shorthair")
             .withColour("Brown and White")
-            .withBloodType("O")
+            .withBloodType("A")
             .withOwnerNric(TypicalPersons.BENSON.getNric().toString())
             .withTags(new String[]{}).build();
+
+    // Pet patient with tags
+    public static final PetPatient JENN = new PetPatientBuilder()
+            .withName("Jenn")
+            .withSpecies("Dog")
+            .withBreed("Golden Retriever")
+            .withColour("Golden")
+            .withBloodType("DEA 4+")
+            .withOwnerNric(TypicalPersons.BENSON.getNric().toString())
+            .withTags("3Legged").build();
 
     // Manually added
     public static final PetPatient KARUPIN = new PetPatientBuilder()
@@ -61,6 +71,6 @@ public class TypicalPetPatients {
     private TypicalPetPatients() {}
 
     public static List<PetPatient> getTypicalPetPatients() {
-        return new ArrayList<>(Arrays.asList(JOKER, JEWEL));
+        return new ArrayList<>(Arrays.asList(JOKER, JEWEL, JENN));
     }
 }

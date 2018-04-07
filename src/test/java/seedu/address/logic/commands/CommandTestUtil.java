@@ -144,6 +144,8 @@ public class CommandTestUtil {
     public static final String OPTION_APPOINTMENT = " -a";
 
     // themes
+    public static final String VALID_THEME_LIGHT = "light";
+    public static final String VALID_THEME_DARK = "dark";
     public static final String VALID_THEME_PATH_LIGHT = "/view/LightTheme.css";
     public static final String VALID_THEME_PATH_DARK = "/view/DarkTheme.css";
 

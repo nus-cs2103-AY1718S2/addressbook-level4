@@ -5,6 +5,8 @@ import seedu.address.model.person.PersonContainsGroupsPredicate;
 /**
  * Groups the clients in reInsurance.
  */
+
+//@@author limzk1994
 public class GroupCommand extends Command {
 
     public static final String COMMAND_WORD = "group";

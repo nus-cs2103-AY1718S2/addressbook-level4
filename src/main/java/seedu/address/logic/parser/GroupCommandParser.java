@@ -11,6 +11,7 @@ import seedu.address.model.person.PersonContainsGroupsPredicate;
 /**
  * Parses input arguments and creates a new GroupCommand object
  */
+//@@author limzk1994
 public class GroupCommandParser implements Parser<GroupCommand> {
 
     /**

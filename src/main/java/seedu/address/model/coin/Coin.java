@@ -168,16 +168,19 @@ public class Coin {
         this.totalDollarsBought.addValue(addAmount * price.getValue());
     }
 
-    public Double getTotalProfit() {
-        return totalAmountSold.getValue() - totalAmountBought.getValue();
+    public Amount getTotalProfit() {
+        return new Amount(totalAmountSold.getValue() - totalAmountBought.getValue());
     }
 
-    public Double getDollarsWorth() {
-        return price.getValue() * getCurrentAmountHeld().getValue();
+    public Amount getDollarsWorth() {
+        return new Amount(price.getValue() * getCurrentAmountHeld().getValue());
     }
 
-    public Double getProfitability() {
-        return getDollarsWorth() + ((getProfitability() > 0) ? 0 : getProfitability());
+    public Amount getProfitability() {
+        Amount profitability = new Amount(0);
+        profitability.addValue(getDollarsWorth());
+        profitability.addValue((getTotalProfit().getValue() > 0) ? getTotalProfit().getValue() : 0);
+        return profitability;
     }
 
     public Amount getTotalDollarsSold() {
@@ -191,7 +194,7 @@ public class Coin {
     //@@author ewaldhew
     /**
      * Gets the difference between two coins and makes a new coin record with that change.
-     * @return (final - initial) as a coin, where the final coin is this
+     * @return (final minus initial) as a coin, where the final coin is this
      */
     public Coin getChangeFrom(Coin initialCoin) {
         return null;

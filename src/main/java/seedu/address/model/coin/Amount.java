@@ -38,12 +38,30 @@ public class Amount {
     }
 
     /**
+     * Adds addAmount to the current value.
+     *
+     * @param addAmount amount to be added.
+     */
+    public void addValue(Amount addAmount) {
+        this.value += addAmount.getValue();
+    }
+
+    /**
      * Subtracts subtractAmount to the current value.
      *
      * @param subtractAmount amount to be subtracted.
      */
     public void subtractValue(Double subtractAmount) {
         this.value -= subtractAmount;
+    }
+
+    /**
+     * Subtracts subtractAmount to the current value.
+     *
+     * @param subtractAmount amount to be subtracted.
+     */
+    public void subtractValue(Amount subtractAmount) {
+        this.value -= subtractAmount.getValue();
     }
 
     public Double getValue() {

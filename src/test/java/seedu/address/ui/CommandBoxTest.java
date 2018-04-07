@@ -13,8 +13,6 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.person.AddCommand;
-import seedu.address.logic.commands.person.EditCommand;
 import seedu.address.logic.commands.person.ListCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;

@@ -184,43 +184,19 @@ public class ParserUtilTest {
     @Test
     public void parseSubject_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parseSubject(null);
+        ParserUtil.parseSubject(null, null);
     }
 
     @Test
     public void parseSubject_invalidSubjectName_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseSubject(INVALID_SUBJECT_NAME);
+        ParserUtil.parseSubject(INVALID_SUBJECT_NAME_SET, null);
     }
 
     @Test
     public void parseSubject_invalidSubjectGrade_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseSubject(INVALID_SUBJECT_GRADE);
-    }
-
-    @Test
-    public void parseSubjectAndSubjectSet_null_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        ParserUtil.parseSubject(null, null);
-    }
-
-    @Test
-    public void parseSubjectAndSubjectSet_invalidSubjectName_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseSubject(INVALID_SUBJECT_NAME_SET, null);
-    }
-
-    @Test
-    public void parseSubjectAndSubjectSet_invalidSubjectGrade_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
         ParserUtil.parseSubject(INVALID_SUBJECT_GRADE_SET, null);
-    }
-
-    @Test
-    public void parseSubjects_collectionWithInvalidSubjects_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseSubjects(Arrays.asList(VALID_SUBJECT_1, INVALID_SUBJECT_GRADE));
     }
 
     @Test

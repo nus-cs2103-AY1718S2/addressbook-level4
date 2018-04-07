@@ -73,6 +73,7 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
 
+    //@@author chuakunhong
     /**
      * Parses a {@code String nric} into a {@code Nric}.
      * Leading and trailing whitespaces will be trimmed.
@@ -97,6 +98,7 @@ public class ParserUtil {
         return nric.isPresent() ? Optional.of(parseNric(nric.get())) : Optional.empty();
     }
 
+    //@@author
     /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
@@ -136,26 +138,7 @@ public class ParserUtil {
         return tagSet;
     }
 
-    /**
-     * Splits a {@code String subject} into {@code String subjectName} and {@code String subjectGrade}
-     * Parses {@code String subjectName} and {@code String subjectGrade}into a {@code Subject}.
-     *
-     * @throws IllegalValueException if the given {@code subject} is invalid.
-     */
-    public static Subject parseSubject(String subject) throws IllegalValueException {
-        requireNonNull(subject);
-        String[] splitSubjectStr = subject.trim().split("\\s+");
-        String subjectName = splitSubjectStr[0];
-        String subjectGrade = splitSubjectStr[1];
-        if (!Subject.isValidSubjectName(subjectName)) {
-            throw new IllegalValueException(Subject.MESSAGE_SUBJECT_NAME_CONSTRAINTS);
-        }
-        if (!Subject.isValidSubjectGrade(subjectGrade)) {
-            throw new IllegalValueException(Subject.MESSAGE_SUBJECT_GRADE_CONSTRAINTS);
-        }
-        return new Subject(subjectName, subjectGrade);
-    }
-
+    //@@author TeyXinHui
     /**
      * Splits a {@code String subjects} into {@code String subjectName} and {@code String subjectGrade}
      * Parses {@code String subjectName} and {@code String subjectGrade}into a {@code Subject}.
@@ -187,14 +170,11 @@ public class ParserUtil {
         final Set<Subject> subjectSet = new HashSet<>();
         if (subjects.size() == 1) {
             parseSubject(subjects, subjectSet);
-        } else {
-            for (String subject : subjects) {
-                subjectSet.add(parseSubject(subject));
-            }
         }
         return subjectSet;
     }
 
+    //@@author
     /**
      * Parses a {@code String remark} into a {@code Remark}.
      * Leading and trailing whitespaces will be trimmed.

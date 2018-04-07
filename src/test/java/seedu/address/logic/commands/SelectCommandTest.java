@@ -113,8 +113,8 @@ public class SelectCommandTest {
         int score = 0;
         try {
             score = selectedPerson.calculateL1R5();
-        } catch (InvalidSubjectCombinationException error) {
-            //do nothing
+        } catch (InvalidSubjectCombinationException isce) {
+            throw new IllegalArgumentException("Execution of command should not fail.");
         }
 
         try {

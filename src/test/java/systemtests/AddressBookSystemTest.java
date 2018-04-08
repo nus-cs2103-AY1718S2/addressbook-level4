@@ -1,10 +1,9 @@
 package systemtests;
 
-//import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-//import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
+
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 //import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
@@ -68,7 +67,6 @@ public abstract class AddressBookSystemTest {
         testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
-        //waitUntilBrowserLoaded(getBrowserPanel());
         assertApplicationStartingStateIsCorrect();
     }
 
@@ -120,9 +118,6 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    //    public BrowserPanelHandle getBrowserPanel() {
-    //        return mainWindowHandle.getBrowserPanel();
-    //    }
 
     //@@author Robert-Peng
     public CalendarPanelHandle getCalendarPanel() {
@@ -150,7 +145,6 @@ public abstract class AddressBookSystemTest {
 
         mainWindowHandle.getCommandBox().run(command);
 
-        //waitUntilBrowserLoaded(getBrowserPanel());
     }
 
     /**
@@ -201,12 +195,12 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Calls {@code BrowserPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
+     * Calls {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
      * their current state.
      */
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
-        //getBrowserPanel().rememberUrl();
+
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
@@ -216,12 +210,12 @@ public abstract class AddressBookSystemTest {
 
 
     /**
-     * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
+     * Asserts that the selected card in the person list panel remain unchanged.
      *
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
-        //assertFalse(getBrowserPanel().isUrlChanged());
+
         assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
     }
 
@@ -270,7 +264,7 @@ public abstract class AddressBookSystemTest {
             assertListMatching(getPersonListPanel(),
                 getModel().getFilteredPersonList());
             //assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE),
-            // getBrowserPanel().getLoadedUrl());
+
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {

@@ -38,7 +38,7 @@ public class AddEntryCommand extends UndoableCommand {
             + PREFIX_END_DATE + "END_DATE "
             + "[" + PREFIX_START_TIME + "START_TIME] "
             + PREFIX_END_TIME + "END_TIME\n"
-            + "Example: " + COMMAND_WORD + " 1 "
+            + "Example: " + COMMAND_WORD + " "
             + PREFIX_ENTRY_TITLE + "Meeting with Boss "
             + PREFIX_START_DATE + "05-05-2018 "
             + PREFIX_END_DATE + "05-05-2018 "

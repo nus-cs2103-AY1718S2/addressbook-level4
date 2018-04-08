@@ -175,8 +175,10 @@ Selects the 1st person in the results of the `find` command.
 Displays a list that contains all the birthdays of all contacts ordered by date +
 Or display a notification of the birthdays today +
 Format: `birthdays [ADDITIONAL_PARAMETER]`
-
 The following parameters can be inputted into the [ADDITIONAL_PARAMETER] field +
+
+image::birthdaysToday.png[width="790"]
+
 ****
 * `todays`: Shows a notification of the birthdays occurring today +
 ****
@@ -192,6 +194,8 @@ Displays a window with the birthdays today
 
 Displays the timetable of a person for Odd or Even Week. +
 Format: `timetable INDEX ODD/EVEN`
+
+image::timetable.png[width="790"]
 
 ****
 * The Odd or Even is case insensitive. e.g `odd` or `Odd` gets the same output
@@ -247,6 +251,8 @@ Examples:
 Displays a list of rooms in the specified building and whether each room is vacant or not, in blocks of 1 hours. +
 Format: `vacant BUILDING`
 
+image::vacant.png[width="790"]
+
 ****
 * Finds vacant study rooms in the specified `BUILDING`.
 * The building must be in NUS venue format, e.g. `COM1`, `S17`, `E2`
@@ -260,13 +266,16 @@ Finds the vacancy status of study rooms in COM1 building.
 === Google maps display : `map` (since v1.4)
 
 Launches Google Maps with the specified location(s).
-Format: `map LOCATION` or `map LOCATION/LOCATION...`
+Format: `map LOCATION` or `map LOCATION/LOCATION/...`
+
+image::map.png[width="790"]
 
 ****
+* All locations specified cannot contains `/`. e.g. Changi/Airport is not a valid location.
 * NUS building name is case insensitive e.g. `COM1` or `com1` gets the same output
 * If only one location is provided, the location will be displayed on the map.
 * If more than one location is provided, directions to each location, starting from the first one, will be displayed.
-* Typing "map LOCATION_START to LOCATION_DESTINATION" can work as well only if neither locations specified are NUS buildings.
+* Typing `map LOCATION_START to LOCATION_DESTINATION` can work as well for two locations input, only if neither locations specified are NUS buildings.
 ****
 
 Examples:

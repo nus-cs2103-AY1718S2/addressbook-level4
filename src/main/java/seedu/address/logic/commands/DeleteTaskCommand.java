@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_INDEXES;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MILESTONE_INDEX;
@@ -108,7 +109,7 @@ public class DeleteTaskCommand extends UndoableCommand {
 
         if (!CheckIndexesUtil.areIndexesValid(lastShownList, targetStudentIndex, targetMilestoneIndex,
                 targetTaskIndex)) {
-            throw new IllegalValueException("One or more of the provided indexes are invalid");
+            throw new IllegalValueException(MESSAGE_INVALID_INDEXES);
         }
 
         targetStudent = lastShownList.get(targetStudentIndex.getZeroBased());

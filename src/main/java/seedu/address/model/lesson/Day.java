@@ -39,7 +39,7 @@ public class Day implements Comparable<Day> {
     public static final String MESSAGE_DAY_CONSTRAINTS = "Day should be of the format: first 3 letters of Day"
             + "(not case sensitive) i,e.\n"
             + STRING_MON + ", " + STRING_TUE + ", " + STRING_WED + ", " + STRING_THU + ", "
-            + STRING_FRI + ", " + STRING_SAT + ", " + STRING_SUN + "\";\n\n";
+            + STRING_FRI + ", " + STRING_SAT + ", " + STRING_SUN + "\n\n";
 
     private static final HashMap<String, Integer> dayToIntMap = new HashMap<>();
     private static final HashMap<String, String> dayToFullDayMap = new HashMap<>();

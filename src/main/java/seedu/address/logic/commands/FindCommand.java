@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
+import seedu.address.model.activity.EventOnlyPredicate;
 import seedu.address.model.activity.NameContainsKeywordsPredicate;
+import seedu.address.model.activity.TaskOnlyPredicate;
 
 /**
  * Finds and lists all activies in address book whose name contains any of the argument keywords.
@@ -24,6 +26,8 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredActivityList(predicate);
+        model.updateFilteredActivityList(predicate.or(new TaskOnlyPredicate()));
+        model.updateFilteredActivityList(predicate.or(new EventOnlyPredicate()));
         return new CommandResult(getMessageForActivityListShownSummary(model.getFilteredActivityList().size()));
     }
 

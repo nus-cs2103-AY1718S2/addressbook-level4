@@ -123,10 +123,42 @@ public class CommandTestUtil {
     public static final String INVALID_BUILDING_1 = "ERC*";
     public static final String INVALID_BUILDING_2 = "COM1 COM2";
     public static final String INVALID_BUILDING_3 = "Building";
+    public static final String MIXED_CASE_VACANT_COMMAND_WORD = "VaCaNt";
 
     public static final String VALID_UNALIAS = VALID_ALIAS_ADD;
 
     public static final String INVALID_UNALIAS_DESC = "alias!";
+
+    public static final String VALID_LOCATION_BUILDING_UPPERCASE_1 = "EA";
+    public static final String VALID_LOCATION_BUILDING_UPPERCASE_2 = "COM1";
+    public static final String VALID_LOCATION_BUILDING_LOWERCASE = "ea";
+    public static final String VALID_LOCATION_POSTAL_1 = "677743";
+    public static final String VALID_LOCATION_POSTAL_2 = "819643";
+    public static final String VALID_LOCATION_ADDRESS_1 = "Changi Airport Singapore";
+    public static final String VALID_LOCATION_ADDRESS_2 = "Serangoon block 413";
+
+    //EA to COM1
+    public static final String VALID_TWO_LOCATIONS_BUILDING = VALID_LOCATION_BUILDING_UPPERCASE_1 + "/"
+            + VALID_LOCATION_BUILDING_UPPERCASE_2;
+    //677743 to 819643
+    public static final String VALID_TWO_LOCATIONS_POSTAL = VALID_LOCATION_POSTAL_1 + "/"
+            + VALID_LOCATION_POSTAL_2;
+    //Changi Airport Terminal to Serangoon block 413
+    public static final String VALID_TWO_LOCATIONS_ADDRESS = VALID_LOCATION_ADDRESS_1 + "/"
+            + VALID_LOCATION_ADDRESS_2;
+    //building, postal
+    public static final String VALID_TWO_LOCATIONS_1 = VALID_LOCATION_BUILDING_UPPERCASE_1 + "/"
+            + VALID_LOCATION_POSTAL_1;
+    //building, address
+    public static final String VALID_TWO_LOCATIONS_2 = VALID_LOCATION_BUILDING_UPPERCASE_1 + "/"
+            + VALID_LOCATION_ADDRESS_1;
+    //postal, address
+    public static final String VALID_TWO_LOCATIONS_3 = VALID_LOCATION_POSTAL_1 + "/"
+            + VALID_LOCATION_ADDRESS_1;
+
+    public static final String VALID_THREE_LOCATIONS = VALID_LOCATION_ADDRESS_1 + "/"
+            + VALID_LOCATION_BUILDING_LOWERCASE + "/" + VALID_LOCATION_POSTAL_2;
+
     //@@author
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;

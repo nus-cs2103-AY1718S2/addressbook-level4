@@ -16,9 +16,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 public class MapCommand extends Command {
     public static final String COMMAND_WORD = "map";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds the location of the specified address(es) \n"
-            + "Parameters: [ADDRESS] or \n"
-            + "Parameters: [ADDRESS_START]/[ADDRESS_DESTINATION] \n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds the location of the specified address(es). "
+            + "Parameters: [ADDRESS] or [ADDRESS_START]/[ADDRESS_DESTINATION] \n"
             + "Example: " + COMMAND_WORD + " Tampines Mall/COM2 \n"
             + "Example: " + COMMAND_WORD + " 119077/117417 ";
 
@@ -48,7 +47,7 @@ public class MapCommand extends Command {
             locations = String.join("/", locationsArray);
             isOneLocation = false;
         } else {
-            locations = Arrays.toString(locationsArray);
+            locations = locationsArray[0];
             isOneLocation = true;
         }
 

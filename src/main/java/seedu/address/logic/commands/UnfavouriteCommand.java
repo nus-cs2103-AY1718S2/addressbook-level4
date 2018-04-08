@@ -68,7 +68,7 @@ public class UnfavouriteCommand extends UndoableCommand {
      * attribute set to false.
      */
     private void createEditedStudent() {
-        assert editedStudent != null;
+        assert targetStudent != null;
         editedStudent = new StudentBuilder(targetStudent).withFavourite(false).build();
     }
 

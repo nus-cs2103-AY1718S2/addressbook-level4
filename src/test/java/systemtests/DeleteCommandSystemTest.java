@@ -7,7 +7,7 @@ import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_STUDENT_
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
 import static seedu.address.testutil.TestUtil.getStudent;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_STUDENT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalStudents.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
@@ -32,9 +32,9 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: delete the first student in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
-        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_STUDENT.getOneBased()
+        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST.getOneBased()
                 + "       ";
-        Student deletedStudent = removeStudent(expectedModel, INDEX_FIRST_STUDENT);
+        Student deletedStudent = removeStudent(expectedModel, INDEX_FIRST);
         String expectedResultMessage = String.format(MESSAGE_DELETE_STUDENT_SUCCESS, deletedStudent);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
@@ -62,7 +62,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: filtered student list, delete index within bounds of address book and student list -> deleted */
         showStudentsWithName(KEYWORD_MATCHING_MEIER);
-        Index index = INDEX_FIRST_STUDENT;
+        Index index = INDEX_FIRST;
         assertTrue(index.getZeroBased() < getModel().getFilteredStudentList().size());
         assertCommandSuccess(index);
 

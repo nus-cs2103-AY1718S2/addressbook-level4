@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_STUDENT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalStudents.getTypicalAddressBook;
 
 import org.junit.Test;
@@ -23,9 +23,9 @@ public class UnfavouriteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
-        Student targetStudent = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
+        Student targetStudent = model.getFilteredStudentList().get(INDEX_FIRST.getZeroBased());
         Student unfavouriteTargetStudent = new StudentBuilder(targetStudent).withFavourite(false).build();
-        UnfavouriteCommand unfavouriteCommand = prepareCommand(INDEX_FIRST_STUDENT);
+        UnfavouriteCommand unfavouriteCommand = prepareCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(UnfavouriteCommand.MESSAGE_SUCCESS, unfavouriteTargetStudent);
 

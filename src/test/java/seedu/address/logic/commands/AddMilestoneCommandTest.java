@@ -5,9 +5,9 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_STUDENT_DISPLA
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showStudentAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_EIGHTH_STUDENT;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_STUDENT;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_STUDENT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_EIGHTH;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalStudents.getTypicalAddressBook;
 
 import org.junit.Before;
@@ -62,7 +62,7 @@ public class AddMilestoneCommandTest {
         Student targetStudent = new StudentBuilder().build();
         Student updatedTargetStudent = new StudentBuilder().withNewMilestone(validMilestone).build();
 
-        Index unfilteredTargetStudentIndex = INDEX_EIGHTH_STUDENT;
+        Index unfilteredTargetStudentIndex = INDEX_EIGHTH;
 
         model.addStudent(targetStudent);
         showStudentAtIndex(model, unfilteredTargetStudentIndex);
@@ -72,7 +72,7 @@ public class AddMilestoneCommandTest {
         showStudentAtIndex(expectedModel, unfilteredTargetStudentIndex);
         expectedModel.updateStudent(expectedModel.getFilteredStudentList().get(0), updatedTargetStudent);
 
-        assertCommandSuccess(prepareCommand(INDEX_FIRST_STUDENT, validMilestone, model), model,
+        assertCommandSuccess(prepareCommand(INDEX_FIRST, validMilestone, model), model,
                 String.format(AddMilestoneCommand.MESSAGE_SUCCESS, validMilestone), expectedModel);
     }
 
@@ -97,8 +97,8 @@ public class AddMilestoneCommandTest {
 
     @Test
     public void execute_invalidStudentIndexFilteredList_failure() {
-        showStudentAtIndex(model, INDEX_FIRST_STUDENT);
-        Index outOfBoundIndex = INDEX_SECOND_STUDENT;
+        showStudentAtIndex(model, INDEX_FIRST);
+        Index outOfBoundIndex = INDEX_SECOND;
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getStudentList().size());
 

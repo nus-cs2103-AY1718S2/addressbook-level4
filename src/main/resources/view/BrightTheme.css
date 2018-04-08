@@ -1,13 +1,13 @@
 /* @@author Yoochard */
 .background {
-    -fx-background-color: derive(floralwhite, 20%);
-    background-color: white; /* Used in the default.html file */
+    -fx-background-color: derive(saddlebrown, 20%);
+    background-color: beige; /* Used in the default.html file */
 }
 
 .label {
     -fx-font-size: 13pt;
     -fx-font-family: "Helvetica";
-    -fx-text-fill: #555555;
+    -fx-text-fill: saddlebrown;
     -fx-opacity: 0.9;
 }
 
@@ -42,9 +42,9 @@
 }
 
 .table-view {
-    -fx-base: #1d1d1d;
-    -fx-control-inner-background: #1d1d1d;
-    -fx-background-color: #1d1d1d;
+    -fx-base: saddlebrown;
+    -fx-control-inner-background: saddlebrown;
+    -fx-background-color: saddlebrown;
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-padding: 5;
@@ -76,17 +76,19 @@
 
 .table-view:focused .table-row-cell:filled:focused:selected {
     -fx-background-color: -fx-focus-color;
+    -fx-text-fill: white;
 }
 
+/* vertical color bar between person card and info*/
 .split-pane:horizontal .split-pane-divider {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-border-color: transparent transparent transparent #4d4d4d;
+    -fx-background-color: derive(beige, 20%);
+    -fx-border-color: orange;
 }
 
 .split-pane {
     -fx-border-radius: 1;
     -fx-border-width: 1;
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(beige, 0%);
 }
 
 .list-view {
@@ -102,22 +104,23 @@
 }
 
 .list-cell:filled:even {
-    -fx-background-color: blue;
+    -fx-background-color: derive(orange, 70%);
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: cornflowerblue;
+    -fx-background-color: derive(lightsalmon, 80%);
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: royalblue;
+    -fx-background-color: lightskyblue;
 }
 
 .list-cell:filled:selected #cardPane {
-    -fx-border-color: #3e7b91;
-    -fx-border-width: 1;
+    -fx-border-color: beige;
+    -fx-border-width: 5;
 }
 
+/* @@author IzHoBX*/
 .notification-scroll-pane > .viewport {
     -fx-background-color: #3366cc;
 }
@@ -149,35 +152,40 @@
     -fx-text-fill: #000000;
     -fx-opacity: 1;
 }
+/* @@author Yoochard*/
 
 .cell_big_label {
-    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-family: "sans-serif";
     -fx-font-size: 16px;
-    -fx-text-fill: white;
+    -fx-text-fill: ActiveBorder;
 }
 
 .cell_small_label {
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "cursive";
     -fx-font-size: 13px;
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
 
+/* @@author IzHoBX*/
 .cell_small_label_rating {
     -fx-font-family: "Segoe UI";
     -fx-font-size: 13px;
     -fx-text-fill: #FFFF00;
 }
+/* @@author Yoochard*/
 
 .anchor-pane {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(Beige, 30%);
 }
 
+/*Here changed, color outside of command box*/
 .pane-with-border {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-border-color: derive(#1d1d1d, 10%);
+    -fx-background-color: derive(Beige, 0%);
+    -fx-border-color: derive(orange, 30%);
     -fx-border-top-width: 1px;
 }
 
+/* Nothing to change here*/
 .status-bar {
     -fx-background-color: derive(#1d1d1d, 20%);
     -fx-text-fill: #1d1d1d;
@@ -185,9 +193,9 @@
 
 .result-display {
     -fx-background-color: transparent;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: ".SF NS Text";
     -fx-font-size: 13pt;
-    -fx-text-fill: white;
+    -fx-text-fill: darkred;
 }
 
 .result-display .label {
@@ -209,37 +217,39 @@
     -fx-text-fill: white;
 }
 
+/*Below changed, pane color.*/
 .grid-pane {
-    -fx-background-color: derive(#1d1d1d, 30%);
-    -fx-border-color: derive(#1d1d1d, 30%);
+    -fx-background-color: derive(Beige, 30%);
+    -fx-border-color: derive(Beige, 30%);
     -fx-border-width: 1px;
 }
 
 .grid-pane .anchor-pane {
-    -fx-background-color: derive(#1d1d1d, 30%);
+    -fx-background-color: derive(#d06651, 30%);
 }
 
 .context-menu {
-    -fx-background-color: derive(#1d1d1d, 50%);
+    -fx-background-color: derive(salmon, 50%);
 }
 
 .context-menu .label {
-    -fx-text-fill: white;
+    -fx-text-fill: salmon;
 }
 
 .menu-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(orange, 50%);
 }
 
 .menu-bar .label {
     -fx-font-size: 15pt;
-    -fx-font-family: "Times New Roman";
-    -fx-text-fill: black;
+    -fx-font-family: ".SF NS Display";
+    -fx-font-weight: bold;
+    -fx-text-fill: #0000bf;
     -fx-opacity: 0.95;
 }
 
 .menu .left-container {
-    -fx-background-color: mediumslateblue;
+    -fx-background-color: beige;
 }
 
 /*
@@ -264,7 +274,7 @@
 }
 
 .button:pressed, .button:default:hover:pressed {
-    -fx-background-color: white;
+    -fx-background-color: beige;
     -fx-text-fill: #1d1d1d;
 }
 
@@ -317,12 +327,12 @@
 }
 
 .scroll-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(lightblue, 0%);
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: derive(#1d1d1d, 50%);
-    -fx-background-insets: 3;
+    -fx-background-color: derive(floralwhite, 50%);
+    -fx-background-insets: 1;
 }
 
 .scroll-bar .increment-button, .scroll-bar .decrement-button {
@@ -353,23 +363,28 @@
 }
 
 #commandTextField {
-    -fx-background-color: transparent #383838 transparent #383838;
+    -fx-background-color: transparent;
     -fx-background-insets: 0;
-    -fx-border-color: #383838 #383838 #ffffff #383838;
+    -fx-border-color: orange orange orange orange;
     -fx-border-insets: 0;
     -fx-border-width: 2;
-    -fx-font-family: "Courier New";
-    -fx-font-size: 15pt;
-    -fx-text-fill: darkorange;
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 17pt;
+    -fx-text-fill: #0000bf;
 }
 
 #filterField, #personListPanel, #personWebpage {
-    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+    -fx-effect: innershadow(gaussian, beige, 10, 0, 0, 0);
 }
 
+/*No need to change*/
 #resultDisplay .content {
-    -fx-background-color: transparent, #383838, transparent, #383838;
-    -fx-background-radius: 0;
+    -fx-background-color: antiquewhite;
+    -fx-background-radius: 10;
+}
+
+#reviews {
+    -fx-vgap: 10;
 }
 
 #tags {
@@ -385,7 +400,7 @@
 }
 
 #tags .red {
-    -fx-text-fill: black;
+    -fx-text-fill: white;
     -fx-background-color: red;
 }
 

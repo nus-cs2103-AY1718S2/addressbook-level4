@@ -29,6 +29,8 @@ public class LogicManager extends ComponentManager implements Logic {
         history = new CommandHistory();
         deskBoardParser = new DeskBoardParser();
         undoRedoStack = new UndoRedoStack();
+
+        DateTimeScheduler.initialise(model);
     }
 
     @Override

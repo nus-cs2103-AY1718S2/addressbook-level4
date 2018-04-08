@@ -29,7 +29,7 @@ import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Edits the details of an existing activity in the remark book.
+ * Edits the details of an existing activity in the desk board.
  */
 //TODO: This command need a lot of rework
 public class EditCommand extends UndoableCommand {

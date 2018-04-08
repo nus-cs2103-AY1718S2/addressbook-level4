@@ -305,7 +305,7 @@ public class MainWindow extends UiPart<Stage> {
             cssFileName = BRIGHT_THEME_CSS_FILE_NAME;
             break;
         default:
-            cssFileName = DARK_THEME_CSS_FILE_NAME;
+            cssFileName = BRIGHT_THEME_CSS_FILE_NAME;
             //Theme.changeTheme(primaryStage, changeThemeEvent.getTheme());
         }
 

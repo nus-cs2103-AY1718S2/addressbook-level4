@@ -8,7 +8,7 @@
       "y" : 100,
       "z" : 99
     },
-    "theme": "dark"
+    "theme": "bright"
   },
   "addressBookFilePath" : "addressbook.xml",
   "addressBookName" : "TypicalAddressBookName"

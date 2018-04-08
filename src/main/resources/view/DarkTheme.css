@@ -92,10 +92,10 @@
 }
 
 .list-view {
-     -fx-background-insets: 0;
-     -fx-padding: 0;
-     -fx-background-color: derive(#1d1d1d, 20%);
- }
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
 
 .list-cell {
     -fx-label-padding: 0 0 0 0;
@@ -104,11 +104,11 @@
 }
 
 .list-cell:filled:even {
-    -fx-background-color: #424d5f;
+    -fx-background-color: #005588;
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: steelblue;
+    -fx-background-color: #3366cc;
 }
 
 .list-cell:filled:selected {
@@ -130,9 +130,9 @@
 }
 
 .notification-card-first-stage {
-     -fx-background-color: #3399ff;
-     -fx-text-fill: #000000;
-     -fx-opacity: 0.8;
+    -fx-background-color: #3399ff;
+    -fx-text-fill: #000000;
+    -fx-opacity: 0.8;
 }
 
 .notification-card-second-stage {
@@ -152,7 +152,7 @@
     -fx-text-fill: #000000;
     -fx-opacity: 1;
 }
-/* @@author */
+/* @@author Yoochard*/
 
 .cell_big_label {
     -fx-font-family: "sans-serif";
@@ -172,7 +172,7 @@
     -fx-font-size: 13px;
     -fx-text-fill: #FFFF00;
 }
-/* @@author */
+/* @@author Yoochard*/
 
 .anchor-pane {
     -fx-background-color: derive(#1d1d1d, 20%);
@@ -395,13 +395,13 @@
 }
 
 #tags .red {
-    -fx-text-fill: black;
+    -fx-text-fill: white;
     -fx-background-color: red;
 }
 
 #tags .yellow {
-    -fx-background-color: yellow;
     -fx-text-fill: black;
+    -fx-background-color: yellow;
 }
 
 #tags .blue {
@@ -410,7 +410,7 @@
 }
 
 #tags .orange {
-    -fx-text-fill: black;
+    -fx-text-fill: white;
     -fx-background-color: orange;
 }
 
@@ -420,6 +420,6 @@
 }
 
 #tags .green {
-    -fx-text-fill: black;
+    -fx-text-fill: white;
     -fx-background-color: green;
 }

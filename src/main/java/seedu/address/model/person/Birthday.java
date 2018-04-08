@@ -11,7 +11,6 @@ import java.time.LocalDate;
  */
 public class Birthday {
 
-
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthday date can only contain numbers, and should follow the DDMMYYYY format";
     public static final String MESSAGE_INVALID_BIRTHDAY =
@@ -30,7 +29,6 @@ public class Birthday {
     /**
      * Constructs a {@code Birthday}.
      *  @param birthday A valid birthday number.
-     *
      */
     public Birthday(String birthday) {
         requireNonNull(birthday);
@@ -131,7 +129,7 @@ public class Birthday {
     }
 
     /**
-     * Static method to parse Day from Birthday string
+     * Parses Day from Birthday string
      * isValidBirthday() should be called before this method
      * @param birthday assumed to be of format DDMMYYYY
      * @return integer Day
@@ -141,7 +139,7 @@ public class Birthday {
     }
 
     /**
-     * Static method to parse Month from Birthday string
+     * Parses Month from Birthday string
      * isValidBirthday() should be called before this method
      * @param birthday assumed to be of format DDMMYYYY
      * @return integer Month
@@ -151,7 +149,7 @@ public class Birthday {
     }
 
     /**
-     * Static method to parse Year from Birthday string
+     * Parses Year from Birthday string
      * isValidBirthday() should be called before this method
      * @param birthday assumed to be of format DDMMYYYY
      * @return integer Year

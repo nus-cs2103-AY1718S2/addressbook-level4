@@ -649,19 +649,24 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 
 // tag::calendarEntries[]
-=== Calendar and Event tracking
+=== Calendar and Entry tracking
 
-Events refer to meetings, deadlines and order deliveries created by users in ContactSails.
-Users can create, edit and delete events, and existing events are displayed in a calendar interface within the application.
+Entries refer to meetings, deadlines and order deliveries created by users in ContactSails.
+Users can create, edit and delete entries.
+ContactSails has a calendar interface that displays existing entries for better visualisation of the user's schedule.
 
 ==== Current Implementation
 
-`CalendarEvent` represents an event created by users.
+ContactSails uses CalendarFX's calendar interface. The `Model` component manages a list of entries, and this list of entries will synchronise with
+the calendar's internal list of entries.
 
-A `CalendarEvent` is implemented in the following manner:
+===== Calendar Entries
+`CalendarEntry` represents an entry created by users.
+
+A `CalendarEntry` is implemented in the following manner:
 [source,java]
 ----
-public class CalendarEvent {
+public class CalendarEntry {
 
     private final String entryTitle;
     private final StartDate startDate;
@@ -670,56 +675,72 @@ public class CalendarEvent {
     private final EndTime endTime;
 
 
-    // ... Order attribute getters and setters ...
+    // ... CalendarEntry attribute getters and setters ...
 
 }
 ----
 
-The following is a brief description of the attributes of `CalendarEvent`:
+The following is a brief description of the attributes of `CalendarEntry`:
 
-* entryTitle: Represents title of event.
-* startDate: Represents starting date of the event in DD-MM-YYYY format.
-* endDate: Represents ending date of the event in DD-MM-YYYY format.
-* startTime: Represents starting time of the event in HH:MM format (24-Hour format).
-* endTime: Represents ending time of the event in HH:MM format (24-Hour format).
+* entryTitle: Represents title of entry.
+* startDate: Represents starting date of the entry in DD-MM-YYYY format.
+* endDate: Represents ending date of the entry in DD-MM-YYYY format.
+* startTime: Represents starting time of the entry in HH:MM format (24-Hour format).
+* endTime: Represents ending time of the entry in HH:MM format (24-Hour format).
 
-Events management is facilitated by `ModelManager`, which resides inside `Model`.
-It is supported by `UserEventsManager` residing inside `UserEvents`, which supports the adding, removing and editing of `CalendarEvent`(e.g. `addEvent`, `deleteEvent`).
-Orders of a person will also appear as `CalendarEvent` based on the `DeliveryDate` attribute of the `Order`.
+Entry management is facilitated by `CalendarManager` residing in `ModelManager`.
+It supports the adding, removing and editing of `CalendarEntry`(e.g. `addEntry`, `deleteEntry`) and maintains a `UniqueCalendarEntryList` to store `CalendarEntry`.
+Ongoing orders of a person will also appear as `CalendarEntry` based on the `DeliveryDate` attribute of the `Order`.
 
-The following diagram shows class diagram of `Model` Component related to `CalendarEvent`.
+The following diagram shows class diagram of `Model` Component related to `CalendarEntry`.
 
-.`Model` Component showing classes related to events management
-image::UserEventClassDiagram.png[width="800" align="center"]
+.Classes related to entry management in `Model` and `Commons`
+image::CalendarEntryClassDiagram.png[width="800" align="center"]
 
-In the Figure 22, `ModelManager` creates an instance of `UserEvents` interface, which provides the `UserEvents` API for `ModelManager` to implement.
-`UserEventsManager` implements methods used by users to add, edit or delete `CalendarEvent`, which contains information of an event. `CalendarEvent` is stored in the `UniqueEventList`. +
+In the Figure 22, `ModelManager` contains an instance of `CalendarManager`. `ModelManager` calls the functions in `CalendarManager` to manage `CalendarEntries` stored in it.
+`CalendarManager` in turn calls methods in `UniqueCalendarEntryList` to add, remove or edit `CalendarEntries` stored in it.
+`CalendarManager` contains an instance of `Calendar` belonging to CalendarFX's library. `Calendar` stores `Entry`, as defined in CalendarFX's library.
+`CalendarEntry` is converted to `Entry` before they can be added to `Calendar` via `CalendarUtil` in the `Commons` class.
 
-`Logic` Component contains the commands required to manage user's events (e.g. `AddEventCommand`, `deleteEventCommand`).
+`Logic` Component contains the commands required to manage user's entries (e.g. `AddEntryCommand`, `DeleteEntryCommand`).
 
-The sequence diagram below shows how add event operation works:
+The sequence diagram below shows how adding an entry works:
 
-.Sequence Diagram for adding of an event into ContactSails
-image::AddEventSD.png[width="800" align="center]
+.Sequence Diagram for adding of an entry into ContactSails
+image::AddEntrySD.png[width="800" align="center]
 
-In Figure 23, when a user enters the command to add an event, `AddEventCommand` will call `addEvent()` in `ModelManager`.
-`ModelManager` in turn calls `addEvent()` in `UserEventsManager`, which creates a new `CalendarEvent` containing the information given by user.
-`UserEventsManager` will then add `CalendarEvent` to `UniqueEventList`. If addition of event is a success, control is eventually returned from `UserEventsManager` to `AddEventCommand`.
+In Figure 23, when a user enters the command to add an entry, `AddEntryCommandParser` is invoked which creates a `CalendarEntry` based on user input. The parser then creates `AddEntryCommand` passing the `CalendarEntry` to it.
+When AddEntryCommand is executed, `CalendarEntry` is passed from `AddEntryCommand` to `ModelManager` and to `CalendarManager`, which adds it to `UniqueCalendarEntryList`.
+The `CalendarEntry` is then converted to `Entry` to be added to `Calendar` and control is eventually returned to the user.
 
-Events added, removed or modified by users will have their intended results displayed by the `CalendarUi` residing inside `Ui` Component.
-The `CalendarUi` can display dates in a week, month and year format, depending on user inputs. +
-Storing of `CalendarEvent` data is managed by `CalendarStorage` within `Storage` Component, converting `CalendarEvent` to `XmlAdaptedEvent` to store in a .xml file.
+Storing of `CalendarEvent` data is managed by `CalendarManagerStorage` within `Storage` Component, converting `CalendarEntry` to `XmlAdaptedCalendarEntry` to store in a .xml file.
+This file is separate from the one storing `Person` and `Order`.
+
+===== Calendar Interface
+
+`CalendarView` within CalendarFX's library uses the `Calendar` within `CalendarManager` in `Model` to display all entries stored within `Calendar`.
+`CalendarPanel` residing in `Ui` component creates an instance of `CalendarView` to manage the display of the calendar.
+The panel responds to events related to the calendar, such as changing the viewing format or changing the current date displayed.
+Any changes made to `Calendar` in `Model` will automatically be shown via the `CalendarView`.
+
+
 
 ==== Design Considerations
 
-===== Aspect: Implementation of feature as a whole
-* **Alternative 1 (current choice):** Creates a localised version of Calendar where all data related to it is stored locally.
-** Pros: Does not require constant Internet access to manage data of Calendar.
-** Cons: Disallows quick synchronisation between this Calendar and other Calendar applications, such as Google Calendar, that users might use. There are much more areas in the code that potentially contains hidden bugs.
+===== Aspect: Implementation of calendar interface
+* **Alternative 1 (current choice):** Integrate CalendarFX to display entries while all entry data is stored locally.
+** Pros: Doing so does not require constant Internet access to manage data of Calendar. CalendarFX can also synchronise with certain calendar applications such as Google Calendar.
+As less code is written to implement it, the effort required to maintain or debug is potentially lesser.
+** Cons: CalendarFX has many features that are currently not used in ContactSails. Developers who intend to use them need to decide and learn how to implement such features by themselves.
+Developers cannot customise the calendar itself to implement features not present in the library or modify existing features.
+Bugs present in the library cannot be easily fixed by developers.
 
-* **Alternative 2:** Uses a third-party library such as Google Calendar API to manage.
-** Pros: Does not require substantial maintenance of related code as less code is required to implement the feature. Some third-party libraries allows users to access some existing calendar applications, saving time required to transfer their calendar events.
-** Cons: Some third-party libraries use REST APIs, which would require users to have Internet access to edit their Calendars. Some libraries will periodically prompt for authentication of user to continue to use their API, which can be a problematic if authentication process is changed in the future.
+
+* **Alternative 2:** Create a calendar using JavaFX to manage entries.
+** Pros: This option offers greater potential for customisation as code is entirely managed by developers.
+** Cons: There is greater probability of bugs created as implementation have to be created from scratch.
+As compared to using third-party libraries, substantial lines of code has to be written, thus debugging may be harder.
+Design of features of the calendar have to be decided by developers themselves, which requires more time and effort to implement the features.
 // end::calendarEntries[]
 
 [[Implementation-Configuration]]

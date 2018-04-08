@@ -21,7 +21,8 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
     public void clear() {
         final Model defaultModel = getModel();
         String password = defaultModel.getPassword();
-        UnlockCommand testUnlockCommand = new UnlockCommand(password);
+        UnlockCommand testUnlockCommand = new UnlockCommand();
+        testUnlockCommand.setTestMode();
         testUnlockCommand.setData(defaultModel, new CommandHistory(), new UndoRedoStack());
         testUnlockCommand.execute();
 

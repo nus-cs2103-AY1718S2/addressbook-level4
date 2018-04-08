@@ -34,7 +34,8 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         String command = "   " + FindCommand.COMMAND_WORD + " n/" + KEYPHRASE_MATCHING_MEIER + "   ";
         Model expectedModel = getModel();
         String password = expectedModel.getPassword();
-        UnlockCommand testUnlockCommand = new UnlockCommand(password);
+        UnlockCommand testUnlockCommand = new UnlockCommand();
+        testUnlockCommand.setTestMode();
         testUnlockCommand.setData(expectedModel, new CommandHistory(), new UndoRedoStack());
         testUnlockCommand.execute();
 

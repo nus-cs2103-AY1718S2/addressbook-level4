@@ -168,25 +168,22 @@ This section lists all Employees Tracker's command.
 
 === Logging in : `unlock`
 Unlocks Employees Tracker. +
-Format: `unlock PASSWORD`
+Format: `unlock`
 
 [NOTE]
 ====
 * Employees Tracker is locked when Employees Tracker is opened.
-* The initial default password is 'admin', refer to <<Setting the application unlock password: `setPassword` `[Since v1.3]`>> if you want to change your password.
+* You need to enter the password in a pop-up dialog, and it must match the application's unlock password.
+* The initial default unlock password is 'admin', refer to <<Setting the application unlock password: `setPassword` `[Since v1.3]`>> if you want to change your password.
 ====
-
-****
-* Unlock Employees Tracker with the PASSWORD which match the application's unlock password.
-* PASSWORD is required.
-* The PASSWORD is a string that can contain any character.
-* The default PASSWORD is `admin`.
-****
 
 Examples:
 
-* `unlock 123` +
-Unlocks Employees Tracker with password: 123 (which is also the application's unlock password)
+* `unlock` +
+A dialog will pop up like below in Figure 8. Fill in the input box with matched unlock password to unlock ET.
+
+.Pop-up unlock dialog
+image::unlock_dialog.png[width="790"][height="200"]
 
 === Viewing help : `help`
 
@@ -517,17 +514,21 @@ image::todolist.png[width="300"][height="400"]
 === Setting the application unlock password: `setPassword`
 
 Sets Employees Tracker's unlock password. +
-Format: `setPassword OLD_PASSWORD NEW_PASSWORD`
+Format: `setPassword`
 
-****
-* OLD_PASSWORD and NEW_PASSWORD are requiered, and OLD_PASSWORD should match current application unlock password.
-* OLD_PASSWORD and NEW_PASSWORD can contain any character.
-****
+[NOTE]
+====
+* You need to enter both old adn new password in a pop-up dialog, and old password must match the application's unlock password.
+* The new password can contain any character EXCEPT comma(,).
+====
 
 Examples:
 
-* `setPassword 123 qwe` +
-Sets Employees Tracker's password from '123' (current application password) to 'qwe'.
+* `setPassword` +
+A dialog will pop up like below in Figure 12. Fill in the input boxes with matched old password and new password to set it as new password.
+
+.Pop-up set password dialog
+image::setPassword_dialog.png[width="790"][height="200"]
 
 === Sorting the employees by any existing field: `sort`
 

@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
@@ -20,43 +19,30 @@ import seedu.address.model.UserPrefs;
  */
 public class SetPasswordCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    @Before
-    public void setUp() {
-        model.setPassword("admin");
-        LogicManager logicManager = new LogicManager(model);
-    }
-
     @Test
     public void equals() {
 
-        SetPasswordCommand firstCommand = new SetPasswordCommand("admin", "qwe");
-        SetPasswordCommand secondCommand = new SetPasswordCommand("admin", "123");
-        SetPasswordCommand thirdCommand = new SetPasswordCommand("test", "12345");
+        SetPasswordCommand firstCommand = new SetPasswordCommand();
 
         // same object -> returns true
         assertTrue(firstCommand.equals(firstCommand));
-
-        // same values -> returns true
-        SetPasswordCommand secondCommandcopy = new SetPasswordCommand("admin", "123");
-        assertTrue(secondCommand.equals(secondCommandcopy));
 
         // different types -> returns false
         assertFalse(firstCommand.equals(1));
 
         // null -> returns false
         assertFalse(firstCommand.equals(null));
-
-        // different value -> returns false
-        assertFalse(firstCommand.equals(secondCommand));
-        assertFalse(thirdCommand.equals(secondCommand));
     }
 
     @Test
     public void setPasswordFail() {
         //incorrect old password entered.
-        SetPasswordCommand command = new SetPasswordCommand("123", "qwe");
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        LogicManager logicManager = new LogicManager(model);
+        LogicManager.setPassword("psw");
+        model.setPassword("psw");
+        SetPasswordCommand command = new SetPasswordCommand();
+        command.setTestMode();
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         String expectedMessage = SetPasswordCommand.MESSAGE_INCORRECT_OLDPASSWORD;
         CommandResult commandResult = command.execute();
@@ -68,7 +54,12 @@ public class SetPasswordCommandTest {
     @Test
     public void setPasswordSuccess() {
 
-        SetPasswordCommand command = new SetPasswordCommand("admin", "qwe");
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        LogicManager logicManager = new LogicManager(model);
+        LogicManager.setPassword("admin");
+        model.setPassword("admin");
+        SetPasswordCommand command = new SetPasswordCommand();
+        command.setTestMode();
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         String expectedMessage = SetPasswordCommand.MESSAGE_SUCCESS;
         CommandResult commandResult = command.execute();

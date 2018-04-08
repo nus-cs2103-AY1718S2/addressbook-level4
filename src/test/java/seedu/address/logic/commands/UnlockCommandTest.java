@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
-
+//@@author crizyli
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -24,24 +24,16 @@ public class UnlockCommandTest {
     @Test
     public void equals() {
 
-        UnlockCommand firstUnlockCommand = new UnlockCommand("nopassword");
-        UnlockCommand secondUnlockCommand = new UnlockCommand("12345");
+        UnlockCommand firstUnlockCommand = new UnlockCommand();
 
         // same object -> returns true
         assertTrue(firstUnlockCommand.equals(firstUnlockCommand));
-
-        // same values -> returns true
-        UnlockCommand secondUnlockCommandcopy = new UnlockCommand("12345");
-        assertTrue(secondUnlockCommand.equals(secondUnlockCommandcopy));
 
         // different types -> returns false
         assertFalse(firstUnlockCommand.equals(1));
 
         // null -> returns false
         assertFalse(firstUnlockCommand.equals(null));
-
-        // different value -> returns false
-        assertFalse(firstUnlockCommand.equals(secondUnlockCommand));
     }
 
     @Test
@@ -51,8 +43,9 @@ public class UnlockCommandTest {
         LockCommand testLockCommand = new LockCommand();
         testLockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         testLockCommand.execute();
-        UnlockCommand testUnlockCommand = new UnlockCommand("admin");
+        UnlockCommand testUnlockCommand = new UnlockCommand();
         testUnlockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        testUnlockCommand.setTestMode();
         String expectedMessage = UnlockCommand.MESSAGE_SUCCESS;
         CommandResult commandResult = testUnlockCommand.execute();
 
@@ -66,8 +59,9 @@ public class UnlockCommandTest {
         LockCommand testLockCommand = new LockCommand();
         testLockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         testLockCommand.execute();
-        UnlockCommand testUnlockCommand = new UnlockCommand("admin");
+        UnlockCommand testUnlockCommand = new UnlockCommand();
         testUnlockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        testUnlockCommand.setTestMode();
         String expectedMessage = UnlockCommand.MESSAGE_INCORRECT_PASSWORD;
         CommandResult commandResult = testUnlockCommand.execute();
 

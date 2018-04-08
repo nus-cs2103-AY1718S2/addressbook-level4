@@ -7,6 +7,7 @@ import static seedu.address.ui.NotificationCard.NOTIFICATION_CARD_WIDTH;
 
 import java.io.File;
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
@@ -35,13 +36,17 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.logic.FileChoosedEvent;
+import seedu.address.commons.events.logic.PasswordEnteredEvent;
+import seedu.address.commons.events.logic.SetPasswordEnteredEvent;
 import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowFileChooserEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowMyCalendarEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;
+import seedu.address.commons.events.ui.ShowPasswordFieldEvent;
 import seedu.address.commons.events.ui.ShowReviewDialogEvent;
+import seedu.address.commons.events.ui.ShowSetPasswordDialogEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.theme.Theme;
@@ -443,5 +448,29 @@ public class MainWindow extends UiPart<Stage> {
             filePath = "NoFileChoosed";
         }
         raise(new FileChoosedEvent(filePath));
+    }
+
+    @FXML
+    @Subscribe
+    protected void handleShowPasswordFieldEvent(ShowPasswordFieldEvent event) {
+        PasswordDialog passwordDialog = new PasswordDialog();
+        Optional<String> input = passwordDialog.showAndWait();
+        if (input.isPresent()) {
+            raise(new PasswordEnteredEvent(input.get()));
+        } else {
+            raise(new PasswordEnteredEvent("nopassword"));
+        }
+    }
+
+    @FXML
+    @Subscribe
+    protected void handleShowSetPasswordDialogEvent(ShowSetPasswordDialogEvent event) {
+        SetPasswordDialog setPasswordDialog = new SetPasswordDialog();
+        Optional<String> input = setPasswordDialog.showAndWait();
+        if (input.isPresent() && !input.get().equals("incomplete")) {
+            raise(new SetPasswordEnteredEvent(input.get()));
+        } else {
+            raise(new SetPasswordEnteredEvent("incomplete"));
+        }
     }
 }

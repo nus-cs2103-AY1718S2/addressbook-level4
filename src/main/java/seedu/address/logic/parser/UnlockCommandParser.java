@@ -1,6 +1,5 @@
 package seedu.address.logic.parser;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.logic.commands.UnlockCommand;
@@ -17,12 +16,10 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public UnlockCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        if (args.isEmpty()) {
+        if (!args.trim().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlockCommand.MESSAGE_USAGE));
         }
-        String trimmedArgs = args.trim();
 
-        return new UnlockCommand(trimmedArgs);
+        return new UnlockCommand();
     }
 }

@@ -2,11 +2,14 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import seedu.address.model.person.Person;
 import seedu.address.storage.DisplayPicStorage;
 
@@ -56,7 +59,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
     @FXML
-    private ImageView displayPic;
+    private Circle displayPic;
 
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
@@ -70,7 +73,12 @@ public class PersonCard extends UiPart<Region> {
         participation.setText(person.getParticipation().toDisplay());
         initTags(person);
         Image image = DisplayPicStorage.fetchDisplay(person.getDisplayPic());
-        displayPic.setImage(image);
+        displayPic.setFill(new ImagePattern(image));
+        if (person.getParticipation().getMarks() > 50) {
+            displayPic.setEffect(new DropShadow(+25d, 0d, +2d, Color.CHARTREUSE));
+        } else {
+            displayPic.setEffect(new DropShadow(+25d, 0d, +2d, Color.MAROON));
+        }
     }
 
     /**

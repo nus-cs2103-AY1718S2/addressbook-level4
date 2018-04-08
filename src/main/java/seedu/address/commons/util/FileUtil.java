@@ -124,8 +124,8 @@ public class FileUtil {
 
         BufferedInputStream bisO = new BufferedInputStream(new FileInputStream(file1));
         BufferedInputStream bisN = new BufferedInputStream(new FileInputStream(file2));
-        byte[] bufferO = new byte[1024];
-        byte[] bufferN = new byte[1024];
+        byte[] bufferO = new byte[4096];
+        byte[] bufferN = new byte[4096];
         int fileBytes1 = bisO.read(bufferO);
         bisN.read(bufferN);
         while (fileBytes1 != -1) {
@@ -142,7 +142,7 @@ public class FileUtil {
      * Copies a file over. The new file will be binary equivalent to the original.
      */
     public static void copyFile(String origFile, String newFile) throws  IOException {
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[4096];
         BufferedInputStream bis = new BufferedInputStream(new FileInputStream(origFile));
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newFile));
 

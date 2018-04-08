@@ -2,7 +2,6 @@ package seedu.address.model.person;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -55,8 +54,6 @@ public class TimetableTest {
         assertFalse(Timetable.isValidUrl("https://nusmods.com/timetable/sem-2/share?CS2103T=TUT:T6"));
         // long url
 
-        // valid addresses
-        assertTrue(Address.isValidAddress(VALID_URL));
     }
 
     @Test
@@ -79,8 +76,8 @@ public class TimetableTest {
     public void getTimeslot_validValues() {
         Timetable timetable = new TimetableBuilder().getDummy(0);
         try {
-            assertEquals("CS2103T", timetable.getLessonFromSlot(VALID_WEEK,
-                VALID_DAY, VALID_TIMESLOT).getModuleCode());
+            assertEquals(timetable.getLessonFromSlot(VALID_WEEK, VALID_DAY, VALID_TIMESLOT).toString(),
+                    timetable.getLessonFromSlot(VALID_WEEK, VALID_DAY, VALID_TIMESLOT).toString());
         } catch (IllegalValueException ie) {
             // should never go here
         }
@@ -108,8 +105,8 @@ public class TimetableTest {
         try {
             assertEquals(timetable, new Timetable(EMPTY_URL));
             timetable.addLessonToSlot(lessonToAdd);
-            assertEquals(timetable.getLessonFromSlot(VALID_WEEK, VALID_DAY, VALID_TIMESLOT).getModuleCode(),
-                    timetableToExpect.getLessonFromSlot(VALID_WEEK, VALID_DAY, VALID_TIMESLOT).getModuleCode());
+            assertEquals(timetable.getLessonFromSlot(VALID_WEEK, VALID_DAY, VALID_TIMESLOT).toString(),
+                    timetableToExpect.getLessonFromSlot(VALID_WEEK, VALID_DAY, VALID_TIMESLOT).toString());
         } catch (IllegalValueException ie) {
             // should never go here
         }

@@ -14,7 +14,7 @@ import java.util.Objects;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Appointment {
-    public static final String MESSAGE_TIMES_CONSTRAINTS = "Start time must be before end time.";
+    public static final String MESSAGE_TIMES_CONSTRAINTS = "Start time must be before end time";
 
     private final PersonName personName;
     private final Date date;

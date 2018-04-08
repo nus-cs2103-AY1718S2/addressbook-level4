@@ -51,5 +51,13 @@ public abstract class Command {
     protected void raise(BaseEvent event) {
         EventsCenter.getInstance().post(event);
     }
+
+    /**
+     * Registers the command object as an event handler at the {@link EventsCenter}
+     * @param handler usually {@code this}
+     */
+    protected void registerAsAnEventHandler(Object handler) {
+        EventsCenter.getInstance().registerHandler(handler);
+    }
     //@@author
 }

@@ -8,6 +8,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -19,6 +22,7 @@ import seedu.progresschecker.commons.core.GuiSettings;
 import seedu.progresschecker.commons.core.LogsCenter;
 import seedu.progresschecker.commons.events.ui.ExitAppRequestEvent;
 import seedu.progresschecker.commons.events.ui.ShowHelpRequestEvent;
+import seedu.progresschecker.commons.events.ui.TabLoadChangedEvent;
 import seedu.progresschecker.commons.util.AppUtil;
 import seedu.progresschecker.logic.Logic;
 import seedu.progresschecker.model.UserPrefs;
@@ -31,6 +35,8 @@ public class MainWindow extends UiPart<Region> {
 
     private static final String FXML = "MainWindow.fxml";
     private static final String ICON = "/images/progress_checker_32.png";
+    private static final String DARK_THEME = "view/DarkTheme.css";
+    private static final String DAY_THEME = "view/DayTheme.css";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
 
@@ -41,6 +47,7 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private Browser2Panel browser2Panel;
     private ExerciseListPanel exerciseListPanel;
     private PersonListPanel personListPanel;
     private Config config;
@@ -48,6 +55,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane browserPlaceholder;
+
+    @FXML
+    private StackPane browser2Placeholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -66,6 +76,19 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private TabPane tabPlaceholder;
+
+    @FXML
+    private Tab profilePlaceholder;
+
+    @FXML
+    private Tab taskPlaceholder;
+
+    @FXML
+    private Tab exercisePlaceholder;
+
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -133,6 +156,9 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
+        browser2Panel = new Browser2Panel();
+        browser2Placeholder.getChildren().add(browser2Panel.getRoot());
+
         exerciseListPanel = new ExerciseListPanel(logic.getFilteredExerciseList());
         exerciseListPanelPlaceholder.getChildren().add(exerciseListPanel.getRoot());
 
@@ -193,7 +219,7 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     public void handleNightTheme() {
         Scene scene = primaryStage.getScene();
-        scene.getStylesheets().setAll("view/DarkTheme.css");
+        scene.getStylesheets().setAll(DARK_THEME);
         primaryStage.setScene(scene);
         show();
     }
@@ -204,7 +230,7 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     public void handleDayTheme() {
         Scene scene = primaryStage.getScene();
-        scene.getStylesheets().setAll("view/DayTheme.css");
+        scene.getStylesheets().setAll(DAY_THEME);
         primaryStage.setScene(scene);
         show();
     }
@@ -228,6 +254,7 @@ public class MainWindow extends UiPart<Region> {
 
     void releaseResources() {
         browserPanel.freeResources();
+        browser2Panel.freeResources();
     }
 
     @Subscribe
@@ -252,5 +279,24 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setMinHeight(MIN_HEIGHT);
         primaryStage.setMinWidth(MIN_WIDTH);
     }
-    //@@author
+
+    //@@author iNekox3
+    @Subscribe
+    private void handleTabLoadChangedEvent(TabLoadChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        SingleSelectionModel<Tab> selectionModel = tabPlaceholder.getSelectionModel();
+        switch (event.getTabName()) {
+        case "profile":
+            selectionModel.select(profilePlaceholder);
+            break;
+        case "task":
+            selectionModel.select(taskPlaceholder);
+            break;
+        case "exercise":
+            selectionModel.select(exercisePlaceholder);
+            break;
+        default:
+            selectionModel.select(selectionModel.getSelectedItem());
+        }
+    }
 }

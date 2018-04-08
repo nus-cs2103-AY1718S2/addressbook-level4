@@ -32,7 +32,7 @@ import seedu.progresschecker.model.tag.Tag;
 import seedu.progresschecker.model.tag.UniqueTagList;
 
 /**
- * Wraps all data at the progresschecker-book level
+ * Wraps all data at the progresschecker
  * Duplicates are not allowed (by .equals comparison)
  */
 public class ProgressChecker implements ReadOnlyProgressChecker {

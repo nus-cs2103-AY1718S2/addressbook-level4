@@ -1,46 +1,41 @@
 package seedu.progresschecker.logic.commands;
 
 import seedu.progresschecker.commons.core.EventsCenter;
-import seedu.progresschecker.commons.core.index.Index;
-import seedu.progresschecker.commons.events.ui.PageLoadChangedEvent;
+import seedu.progresschecker.commons.events.ui.TabLoadChangedEvent;
 
+//@@author iNekox3
 /**
- * View the web view of outcomes of a particular week.
+ * Change view of the tab pane in main window based on categories.
  */
 public class ViewCommand extends Command {
 
-    public static final int MIN_WEEK_NUMBER = 2;
-    public static final int MAX_WEEK_NUMBER = 13;
-
     public static final String COMMAND_WORD = "view";
     public static final String COMMAND_ALIAS = "v";
-    public static final String COMMAND_FORMAT = COMMAND_WORD + " WEEK-NUMBER";
+    public static final String COMMAND_FORMAT = COMMAND_WORD + " TYPE";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            // TODO: change description and parameter range when appropriate
-            + ": Toggle view to display outcomes in the specified week.\n"
-            + "Parameters: INDEX (must be a positive integer ranging from "
-            + MIN_WEEK_NUMBER + " to " + MAX_WEEK_NUMBER + ")\n"
-            + "Example: " + COMMAND_WORD + " 2";
+            + ": Change the tab view to profiles, tasks or exercises.\n"
+            + "Parameters: TYPE (must be either 'profile', 'task', or 'exercise')\n"
+            + "Example: " + COMMAND_WORD + " exercise";
 
-    public static final String MESSAGE_SUCCESS = "Viewing week %1$s";
+    public static final String MESSAGE_SUCCESS = "Viewing tab %1$s";
 
-    private final Index targetIndex;
+    private final String type;
 
-    public ViewCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
+    public ViewCommand(String type) {
+        this.type = type;
     }
 
     @Override
     public CommandResult execute() {
-        EventsCenter.getInstance().post(new PageLoadChangedEvent(targetIndex));
-        return new CommandResult(String.format(MESSAGE_SUCCESS, targetIndex.getOneBased()));
+        EventsCenter.getInstance().post(new TabLoadChangedEvent(type));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, type));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ViewCommand // instanceof handles nulls
-                && this.targetIndex.equals(((ViewCommand) other).targetIndex)); // state check
+                && this.type.equals(((ViewCommand) other).type)); // state check
     }
 }

@@ -214,8 +214,7 @@ public abstract class ProgressCheckerSystemTest {
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
         URL expectedUrl;
         try {
-            expectedUrl = new URL(BrowserPanel.MODULE_PAGE_URL + BrowserPanel.OUTCOMES_PAGE_PATH
-                    + BrowserPanel.CURRENT_WEEK + BrowserPanel.OUTCOMES_PAGE_DOCUMENT);
+            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + selectedCardName.replaceAll(" ", "%20"));
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }

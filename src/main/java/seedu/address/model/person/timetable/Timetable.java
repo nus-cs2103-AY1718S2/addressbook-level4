@@ -33,17 +33,18 @@ public class Timetable {
 
     public Timetable(String url) {
         requireNonNull(url);
-        this.value = url;
+        String trimmedUrl = url.trim();
+        this.value = trimmedUrl;
         // Create new empty timetable if url is empty or a dummy link
-        if (url.equals("") || url.equals(DUMMY_LINK_ONE) || url.equals(DUMMY_LINK_TWO)) {
+        if (trimmedUrl.equals("") || trimmedUrl.equals(DUMMY_LINK_ONE) || trimmedUrl.equals(DUMMY_LINK_TWO)) {
             this.data = new TimetableData();
             return;
         }
 
-        checkArgument(isValidUrl(url), MESSAGE_URL_CONSTRAINTS);
+        checkArgument(isValidUrl(trimmedUrl), MESSAGE_URL_CONSTRAINTS);
 
         try {
-            this.data = parseUrl(url);
+            this.data = parseUrl(trimmedUrl);
         } catch (ParseException pe) {
             this.data = new TimetableData(); // Create new empty timetable if url fails
         }
@@ -52,7 +53,8 @@ public class Timetable {
     /**
      * Checks if string is a valid shortened NUSMods url
      * @param test
-     * @return
+     * @return true if it follows the format of a valid shortened NUSMods url
+     *         false if it doesn't
      */
     public static boolean isValidUrl(String test) {
         Matcher matcher = Pattern.compile(URL_HOST_REGEX).matcher(test);

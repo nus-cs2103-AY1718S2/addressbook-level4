@@ -32,7 +32,7 @@ public class QueuePanel extends UiPart<Region> {
 
     private void setConnections(ObservableList<Patient> queueList, ObservableList<Integer> indexNoList) {
         ObservableList<QueueCard> mappedList = EasyBind.map(queueList, (patient) -> new QueueCard(patient,
-                indexNoList.get(queueList.indexOf(patient) + 1)));
+                indexNoList.get(queueList.indexOf(patient)) + 1));
 
         queueCardListView.setItems(mappedList);
         queueCardListView.setCellFactory(listView -> new QueueListViewCell());

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-import com.google.api.Service;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.gdata.client.contacts.ContactsService;
 import com.google.gdata.data.PlainTextConstruct;
@@ -31,6 +30,8 @@ public class GContactsService {
     public static final String STRING_BASE_GROUP_ATOM_ID =
             "http://www.google.com/m8/feeds/groups/codeducatorapp%40gmail.com/base/6";
 
+    private Credential credential;
+
     public GContactsService() {}
 
     public GContactsService(Credential credential) {
@@ -44,8 +45,6 @@ public class GContactsService {
     public Credential getCredential() {
         return credential;
     }
-
-    private Credential credential;
 
     /**
      * Converts a Student object to a ContactEntry for insertion
@@ -189,7 +188,7 @@ public class GContactsService {
         for (GroupMembershipInfo group : groupMembershipInfo) {
             String[] hrefParts = group.getHref().split("/");
 
-            if(hrefParts[hrefParts.length -1].equals(linkParts[linkParts.length -1])) {
+            if (hrefParts[hrefParts.length - 1].equals(linkParts[linkParts.length - 1])) {
                 return true;
             }
         }
@@ -203,8 +202,8 @@ public class GContactsService {
      * @throws ServiceException
      * @throws IOException
      */
-    public static void deleteAllStudentContactsWithStudentGroup
-            (String studentGroupHref, ContactFeed resultFeed) throws ServiceException, IOException {
+    public static void deleteAllStudentContactsWithStudentGroup(
+            String studentGroupHref, ContactFeed resultFeed) throws ServiceException, IOException {
         for (ContactEntry entry : resultFeed.getEntries()) {
             if (isStudentGroup(studentGroupHref, entry.getGroupMembershipInfos())) {
                 entry.delete();

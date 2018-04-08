@@ -18,6 +18,7 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventAttendee;
 import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
+
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
 import seedu.address.model.lesson.Day;
@@ -91,10 +92,10 @@ public class GCalendarService {
          */
         try {
             deleteExistingCalendarCopy(service);
-            String newCalenderID = createStudentLessonCalendar(service);
+            String newCalenderId = createStudentLessonCalendar(service);
             for (Lesson lesson : schedule.getSchedule()) {
                 Event newEvent = lessonToCalendarEvent(lesson, addressBook);
-                Event insertedEvent = service.events().insert(newCalenderID, newEvent).execute();
+                Event insertedEvent = service.events().insert(newCalenderId, newEvent).execute();
                 System.out.printf("Event created: %s\n", insertedEvent.getHtmlLink());
             }
         } catch (IOException e) {
@@ -187,8 +188,8 @@ public class GCalendarService {
         newCalendar.setTimeZone(SINGAPORE_TIME_ZONE);
         newCalendar.setDescription(STRING_STUDENT_CALENDAR_DESCRIPTION);
 
-        com.google.api.services.calendar.model.Calendar createdCalendar
-                = service.calendars().insert(newCalendar).execute();
+        com.google.api.services.calendar.model.Calendar createdCalendar =
+                service.calendars().insert(newCalendar).execute();
         System.out.println(createdCalendar.getId());
         return createdCalendar.getId();
     }

@@ -2,8 +2,6 @@ package seedu.address.external;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,7 +39,7 @@ public class GServiceManager {
     private static final String CLIENT_ID = "126472549776-8cd9bk56sfubm9rkacjivecikppte982.apps.googleusercontent.com";
     private static final String CLIENT_SECRET = "nyBpzm1OjnKNZOd0-kT1uo7W";
 
-    private static FileDataStoreFactory DATA_STORE_FACTORY;
+    private static FileDataStoreFactory dataStoreFactory;
     private static final JsonFactory JSON_FACTORY =
             JacksonFactory.getDefaultInstance();
 
@@ -58,7 +56,7 @@ public class GServiceManager {
     static {
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-            DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
+            dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -74,14 +72,14 @@ public class GServiceManager {
         if (credential != null) {
             throw new CredentialsException("You are already logged in.");
         }
-            // Build flow and trigger user authorization request.
+        // Build flow and trigger user authorization request.
         try {
             GoogleAuthorizationCodeFlow flow =
-                new GoogleAuthorizationCodeFlow.Builder(
-                        httpTransport, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, SCOPES)
-                        .setDataStoreFactory(DATA_STORE_FACTORY)
-                        .setAccessType("offline")
-                        .build();
+                    new GoogleAuthorizationCodeFlow.Builder(
+                            httpTransport, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, SCOPES)
+                            .setDataStoreFactory(dataStoreFactory)
+                            .setAccessType("offline")
+                            .build();
 
             credential = new AuthorizationCodeInstalledApp(
                     flow, new LocalServerReceiver()).authorize("user");
@@ -97,7 +95,7 @@ public class GServiceManager {
      */
     public void logout() throws CredentialsException {
         // Delete credentials from data store directory
-        File dataStoreDirectory = DATA_STORE_FACTORY.getDataDirectory();
+        File dataStoreDirectory = dataStoreFactory.getDataDirectory();
         if (dataStoreDirectory.list().length == 0 || credential == null) {
             throw new CredentialsException("You are not logged in");
         }
@@ -106,7 +104,7 @@ public class GServiceManager {
             file.delete();
         }
         try {
-            DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
+            dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
         } catch (IOException e) {
             e.printStackTrace();
         }

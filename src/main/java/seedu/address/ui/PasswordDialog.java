@@ -8,6 +8,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
+/**
+ * Pop-up dialog to prompt user to enter unlock password.
+ */
 public class PasswordDialog extends Dialog<String> {
 
     private PasswordField passwordField;
@@ -37,12 +40,12 @@ public class PasswordDialog extends Dialog<String> {
         getDialogPane().setContent(hBox);
 
         Platform.runLater(() -> passwordField.requestFocus());
-         setResultConverter(dialogButton -> {
-             if (dialogButton == unlockButton) {
-                 return passwordField.getText();
-             }
-             return null;
-         });
+        setResultConverter(dialogButton -> {
+            if (dialogButton == unlockButton) {
+                return passwordField.getText();
+            }
+            return null;
+        });
     }
 
     public PasswordField getPasswordField() {

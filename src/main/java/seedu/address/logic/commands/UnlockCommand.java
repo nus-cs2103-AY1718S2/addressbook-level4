@@ -1,12 +1,12 @@
 package seedu.address.logic.commands;
+//@@author crizyli
+import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.logic.AddressBookUnlockedEvent;
 import seedu.address.commons.events.logic.PasswordEnteredEvent;
 import seedu.address.commons.events.ui.ShowPasswordFieldEvent;
 import seedu.address.logic.LogicManager;
-
-import com.google.common.eventbus.Subscribe;
 
 /**
  * Unlocks ET
@@ -26,8 +26,6 @@ public class UnlockCommand extends Command {
     private String password;
 
     private boolean isTestMode;
-
-    private boolean isFail = false;
 
     public UnlockCommand() {
         isTestMode = false;

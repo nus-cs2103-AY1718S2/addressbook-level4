@@ -430,29 +430,22 @@ The old `Review` value is obtained from `Person` _personToEdit_.
 
 === Lock and unlock Employees Tracker
 
-`lock` command and `unlock` command are implemented in a similar manner. Both have the same command format.
-
-The implementation of `lock` and `unlock` command in the Logic component involves 5 objects: +
-
-. Command: LockCommand.
-. Command: UnlockCommand.
-. CommandParser: LockCommandParser or UnlockCommandParser.
-. AddressBookParser.
-. LogicManager.
+`lock` command is used to lock the application and hide information.
 
 The details of implementation of `lock` command are as follow:
 
 . `AddressBookParser` is used to let the application accept `lock` command.
-. `LockCommandParser` extracts the password from user input.
-. `LockCommand` is used to set the password in LogicManager.
+. `LockCommand` is used to set the state of the application to be locked, and post an event to indicate the application is locked and should not
+show any information now.
 . `LogicManager` is used to decide whether the application is locked or not, and decide the logic flow accordingly.
 
-The details of implementation of `unlock` command are similar to `lock` command and are as follow:
+`unlock` command is used to unlock the application.
+
+The details of implementation of `unlock` command are as follow:
 
 . `AddressBookParser` is used to let the application accept `unlock` command.
-. `UnlockCommandParser` extracts the password from user input.
-. `UnlockCommand` is used to compare the user input password to the password stored in LogicManager by last `lock` caommand,
-if they are the same, unlock the application, otherwise, inform incorrect password.
+. `UnlockCommand` is used to post an event to pop up a password input dialog, get the password entered by user, and
+compare it with the application's unlock password to decide whether the unlock process is successful.
 . `LogicManager` is used to decide whether the application is locked or not, and decide the logic flow accordingly.
 
 === Assign a timetable to every employee

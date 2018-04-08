@@ -168,20 +168,14 @@ This section lists all Employees Tracker's command.
 
 === Logging in : `unlock`
 Unlocks Employees Tracker. +
-Format: `unlock PASSWORD`
+Format: `unlock`
 
 [NOTE]
 ====
 * Employees Tracker is locked when Employees Tracker is opened.
-* The initial default password is 'admin', refer to <<Setting the application unlock password: `setPassword` `[Since v1.3]`>> if you want to change your password.
+* You need to enter the password in a pop-up dialog, and it must match the application's unlock password.
+* The initial default unlock password is 'admin', refer to <<Setting the application unlock password: `setPassword` `[Since v1.3]`>> if you want to change your password.
 ====
-
-****
-* Unlock Employees Tracker with the PASSWORD which match the application's unlock password.
-* PASSWORD is required.
-* The PASSWORD is a string that can contain any character.
-* The default PASSWORD is `admin`.
-****
 
 Examples:
 

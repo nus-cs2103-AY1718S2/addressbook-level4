@@ -118,9 +118,7 @@ public class Coin {
         }
 
         Coin otherCoin = (Coin) other;
-        return otherCoin.getCode().equals(this.getCode())
-                && otherCoin.getCurrentAmountHeld().equals(this.getCurrentAmountHeld())
-                && otherCoin.getPrice().equals(this.getPrice());
+        return otherCoin.getCode().equals(this.getCode());
     }
 
     @Override

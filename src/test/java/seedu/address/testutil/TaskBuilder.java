@@ -8,18 +8,18 @@ import seedu.address.model.student.dashboard.Task;
  */
 public class TaskBuilder {
 
-    private final String DEFAULT_NAME = "Learn syntax";
-    private final String DEFAULT_DESCRIPTION = "Refer to coding website";
-    private final boolean DEFAULT_IS_COMPLETED = false;
+    private final String defaultName = "Learn syntax";
+    private final String defaultDescription = "Refer to coding website";
+    private final boolean defaultIsCompleted = false;
 
     private String name;
     private String description;
     private boolean isCompleted;
 
     public TaskBuilder() {
-        name = DEFAULT_NAME;
-        description = DEFAULT_DESCRIPTION;
-        isCompleted = DEFAULT_IS_COMPLETED;
+        name = defaultName;
+        description = defaultDescription;
+        isCompleted = defaultIsCompleted;
     }
 
     /**

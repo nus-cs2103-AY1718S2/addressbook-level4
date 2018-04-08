@@ -42,6 +42,11 @@ public class MilestoneBuilder {
         return this;
     }
 
+    /**
+     * Removes the {@code Task} from the {@code Milestone} we are building.
+     *
+     * @throws TaskNotFoundException if the task is not found in the milestone.
+     */
     public MilestoneBuilder withoutTask(Task task) throws TaskNotFoundException {
         taskList.remove(task);
         if (task.isCompleted()) {

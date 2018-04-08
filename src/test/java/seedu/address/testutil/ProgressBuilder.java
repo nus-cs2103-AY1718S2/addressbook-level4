@@ -22,6 +22,9 @@ public class ProgressBuilder {
         setProgressPercentAndValue();
     }
 
+    /**
+     * Initializes the ProgressBuilder with the data of {@code progressToCopy}.
+     */
     public ProgressBuilder(Progress progressToCopy) {
         totalTasks = progressToCopy.getTotalTasks();
         numCompletedTasks = progressToCopy.getNumCompletedTasks();
@@ -39,6 +42,9 @@ public class ProgressBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code numCompletedTask} of the {@code Progress} we are building
+     */
     public ProgressBuilder withNumCompletedTasks(int numCompletedTasks) {
         this.numCompletedTasks = numCompletedTasks;
         setProgressPercentAndValue();

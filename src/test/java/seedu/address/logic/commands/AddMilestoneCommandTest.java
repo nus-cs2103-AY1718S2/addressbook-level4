@@ -77,7 +77,7 @@ public class AddMilestoneCommandTest {
     }
 
     @Test
-    public void execute_duplicate_milestone_throwsCommandException() throws Exception {
+    public void execute_duplicateMilestone_throwsCommandException() throws Exception {
         Milestone duplicateMilestone = new MilestoneBuilder().build();
         Student targetStudent = new StudentBuilder().withNewMilestone(duplicateMilestone).build();
         model.addStudent(targetStudent);

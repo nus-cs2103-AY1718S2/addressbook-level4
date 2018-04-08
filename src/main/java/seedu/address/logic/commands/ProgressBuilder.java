@@ -13,6 +13,9 @@ public class ProgressBuilder {
     private int progressInPercent;
     private String value;
 
+    /**
+     * Initializes the ProgressBuilder with the data of {@code progressToCopy}.
+     */
     public ProgressBuilder(Progress progressToCopy) {
         totalTasks = progressToCopy.getTotalTasks();
         numCompletedTasks = progressToCopy.getNumCompletedTasks();

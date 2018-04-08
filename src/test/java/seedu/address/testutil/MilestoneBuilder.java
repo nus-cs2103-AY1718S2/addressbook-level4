@@ -16,11 +16,11 @@ import seedu.address.model.student.dashboard.exceptions.TaskNotFoundException;
  * A utility class to help with building Milestone objects.
  */
 public class MilestoneBuilder {
-    
-    private final Date DEFAULT_DATE = new Date("23/05/2018 23:59");
-    private final UniqueTaskList DEFAULT_TASK_LIST = setDefaultTaskList();
-    private final Progress DEFAULT_PROGRESS = new ProgressBuilder().build();
-    private final String DEFAULT_DESCRIPTION = "Arrays";
+
+    private final Date defaultDate = new Date("23/05/2018 23:59");
+    private final UniqueTaskList defaultTaskList = setDefaultTaskList();
+    private final Progress defaultProgress = new ProgressBuilder().build();
+    private final String defaultDescription = "Arrays";
 
     private Date dueDate;
     private UniqueTaskList taskList;
@@ -28,10 +28,10 @@ public class MilestoneBuilder {
     private String description;
 
     public MilestoneBuilder() {
-        dueDate = DEFAULT_DATE;
-        taskList = DEFAULT_TASK_LIST;
-        progress = DEFAULT_PROGRESS;
-        description = DEFAULT_DESCRIPTION;
+        dueDate = defaultDate;
+        taskList = defaultTaskList;
+        progress = defaultProgress;
+        description = defaultDescription;
     }
 
     /**
@@ -93,6 +93,11 @@ public class MilestoneBuilder {
         return this;
     }
 
+    /**
+     * Removes the {@code Task} from the {@code Milestone} we are building
+     *
+     * @throws TaskNotFoundException if the task is not found in the milestone.
+     */
     public MilestoneBuilder withoutTask(Task task) throws TaskNotFoundException {
         taskList.remove(task);
         if (task.isCompleted()) {
@@ -136,7 +141,7 @@ public class MilestoneBuilder {
             taskList.add(TypicalTasks.TASK_1);
             taskList.add(TypicalTasks.TASK_2);
             taskList.add(TypicalTasks.TASK_3);
-        } catch(DuplicateTaskException e) {
+        } catch (DuplicateTaskException e) {
             throw new AssertionError("Cannot have duplicate task in test");
         }
 

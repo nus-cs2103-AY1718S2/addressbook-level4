@@ -45,8 +45,8 @@ public class CheckTaskCommandTest {
     public void execute_checkTaskNotCompleted_success() throws Exception {
         Task validTaskNotCompleted = TypicalTasks.TASK_4;
         Milestone validTargetMilestone = new MilestoneBuilder().withNewTask(validTaskNotCompleted).build();
-        Milestone validUpdatedTargetMilestone = new MilestoneBuilder().withNewTask(validTaskNotCompleted).
-                withTaskCompleted(INDEX_FOURTH).build();
+        Milestone validUpdatedTargetMilestone = new MilestoneBuilder().withNewTask(validTaskNotCompleted)
+                .withTaskCompleted(INDEX_FOURTH).build();
 
         Student targetStudent = new StudentBuilder().withNewMilestone(validTargetMilestone).build();
         Student updatedTargetStudent = new StudentBuilder().withNewMilestone(validUpdatedTargetMilestone).build();
@@ -65,8 +65,8 @@ public class CheckTaskCommandTest {
     @Test
     public void execute_checkTaskAlreadyCompleted_messageTaskAlreadyCompleted() throws Exception {
         Task validTaskAlreadyCompleted = new TaskBuilder(TypicalTasks.TASK_4).asCompleted().build();
-        Milestone validTargetMilestone = new MilestoneBuilder().withNewTask(validTaskAlreadyCompleted).
-                withProgress(new Progress("1/4")).build();
+        Milestone validTargetMilestone = new MilestoneBuilder().withNewTask(validTaskAlreadyCompleted)
+                .withProgress(new Progress("1/4")).build();
 
         Student targetStudent = new StudentBuilder().withNewMilestone(validTargetMilestone).build();
 

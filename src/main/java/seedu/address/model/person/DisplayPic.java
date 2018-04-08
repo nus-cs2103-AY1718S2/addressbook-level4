@@ -6,7 +6,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
-import seedu.address.commons.util.NamingUtil;
+import seedu.address.commons.util.HashUtil;
 import seedu.address.storage.DisplayPicStorage;
 
 /**
@@ -39,7 +39,7 @@ public class DisplayPic {
                 Messages.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
         checkArgument(DisplayPicStorage.isValidImage(trimmedFilePath), Messages.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
         String fileType = FileUtil.getFileType(trimmedFilePath);
-        String uniqueFileName = NamingUtil.generateUniqueName(personDetails);
+        String uniqueFileName = HashUtil.generateUniqueName(personDetails);
         this.value = DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType;
     }
 

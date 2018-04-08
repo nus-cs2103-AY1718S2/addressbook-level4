@@ -4,7 +4,9 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A list of filepaths that enforces uniqueness between its elements and does not allow nulls.
@@ -16,7 +18,7 @@ import java.util.List;
 //@@author Alaru
 public class UniqueItemList {
 
-    private final ArrayList<String> internalList = new ArrayList<>();
+    private final Set<String> internalList = new HashSet<>();
 
     /**
      * Returns true if the list contains an equivalent item/filepath as the given argument.
@@ -45,8 +47,6 @@ public class UniqueItemList {
     }
 
     public void setItemList(List<String> replacement) {
-        requireNonNull(replacement);
-        this.internalList.clear();
         this.internalList.addAll(replacement);
     }
 
@@ -55,7 +55,8 @@ public class UniqueItemList {
     }
 
     public List<String> getItemList() {
-        return Collections.unmodifiableList(internalList);
+        List<String> toReturn = new ArrayList<>(internalList);
+        return Collections.unmodifiableList(toReturn);
     }
 
     @Override

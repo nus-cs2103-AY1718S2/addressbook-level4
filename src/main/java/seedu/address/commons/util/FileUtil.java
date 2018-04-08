@@ -3,12 +3,14 @@ package seedu.address.commons.util;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-
-import javax.imageio.ImageIO;
+import java.util.Arrays;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
@@ -109,15 +111,62 @@ public class FileUtil {
     }
 
     /**
+     * Checks if the two given files are binary equivalent.
+     * @param file1 is a file on harddisk
+     * @param file2 is a different file from @code file1 on the harddisk
+     * @return whether the two files given are equal
+     * @throws IOException when there is an issue reading from either file
+     */
+    public static boolean isSameFile(File file1, File file2) throws IOException {
+        if (file1.length() != file2.length()) {
+            return false;
+        }
+
+        BufferedInputStream bisO = new BufferedInputStream(new FileInputStream(file1));
+        BufferedInputStream bisN = new BufferedInputStream(new FileInputStream(file2));
+        byte[] bufferO = new byte[1024];
+        byte[] bufferN = new byte[1024];
+        int fileBytes1 = bisO.read(bufferO);
+        bisN.read(bufferN);
+        while (fileBytes1 != -1) {
+            if (!Arrays.equals(bufferO, bufferN)) {
+                return false;
+            }
+            fileBytes1 = bisO.read(bufferO);
+            bisN.read(bufferN);
+        }
+        return true;
+    }
+
+    /**
+     * Copies a file over. The new file will be binary equivalent to the original.
+     */
+    public static void copyFile(String origFile, String newFile) throws  IOException {
+        byte[] buffer = new byte[1024];
+        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(origFile));
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newFile));
+
+        int fileBytes = bis.read(buffer);
+        while (fileBytes != -1) {
+            bos.write(buffer, 0, fileBytes);
+            fileBytes = bis.read(buffer);
+        }
+
+        bis.close();
+        bos.close();
+    }
+
+    /**
      * Copies an image from the filepath provided to the specified destination
      */
-    public static void copyImage(BufferedImage image, String fileType, String destPath) throws IllegalValueException {
+    public static void copyImage(String image, String fileType, String destPath) throws IllegalValueException {
         try {
-            File newImage = new File(destPath);
-            createIfMissing(newImage);
-            ImageIO.write(image, fileType, newImage);
+            //File newImage = new File(destPath);
+            copyFile(image, destPath);
+            //ImageIO.write(image, fileType, newImage);
         } catch (IOException ioe) {
             throw new IllegalValueException("IMAGE FILE COULD NOT BE COPIED.");
         }
     }
+
 }

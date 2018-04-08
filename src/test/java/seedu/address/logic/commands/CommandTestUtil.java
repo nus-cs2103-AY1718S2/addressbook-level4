@@ -26,13 +26,17 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.descriptors.EditAppointmentDescriptor;
 import seedu.address.logic.descriptors.EditPersonDescriptor;
+import seedu.address.logic.descriptors.EditPetPatientDescriptor;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.petpatient.exceptions.PetDependencyNotEmptyException;
+import seedu.address.testutil.EditAppointmentDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.EditPetPatientDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -139,6 +143,18 @@ public class CommandTestUtil {
     public static final String COLOUR_DESC_NERO = " " + PREFIX_COLOUR + VALID_COLOUR_NERO;
     public static final String BLOODTYPE_DESC_NERO = " " + PREFIX_BLOODTYPE + VALID_BLOODTYPE_NERO;
 
+    // PetPatient: Hazel
+    public static final String VALID_NAME_HAZEL = "Hazel";
+    public static final String VALID_SPECIES_HAZEL = "dog";
+    public static final String VALID_BREED_HAZEL = "Poodle";
+    public static final String VALID_COLOUR_HAZEL = "White";
+    public static final String VALID_BLOODTYPE_HAZEL = "A";
+    public static final String NAME_DESC_HAZEL = " " + PREFIX_NAME + VALID_NAME_HAZEL;
+    public static final String SPECIES_DESC_HAZEL = " " + PREFIX_SPECIES + VALID_SPECIES_HAZEL;
+    public static final String BREED_DESC_HAZEL = " " + PREFIX_BREED + VALID_BREED_HAZEL;
+    public static final String COLOUR_DESC_HAZEL = " " + PREFIX_COLOUR + VALID_COLOUR_HAZEL;
+    public static final String BLOODTYPE_DESC_HAZEL = " " + PREFIX_BLOODTYPE + VALID_BLOODTYPE_HAZEL;
+
     // options
     public static final String OPTION_OWNER = " -o";
     public static final String OPTION_PET = " -p";
@@ -172,6 +188,12 @@ public class CommandTestUtil {
     public static final EditPersonDescriptor DESC_AMY;
     public static final EditPersonDescriptor DESC_BOB;
 
+    public static final EditPetPatientDescriptor DESC_JOKER;
+    public static final EditPetPatientDescriptor DESC_NERO;
+
+    public static final EditAppointmentDescriptor DESC_APPOINTMENT_ONE;
+    public static final EditAppointmentDescriptor DESC_APPOINTMENT_TWO;
+
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
@@ -181,6 +203,20 @@ public class CommandTestUtil {
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withNric(VALID_NRIC_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+        DESC_JOKER = new EditPetPatientDescriptorBuilder().withName(VALID_NAME_JOKER)
+                .withSpecies(VALID_SPECIES_JOKER).withBreed(VALID_BREED_JOKER).withColour(VALID_COLOUR_JOKER)
+                .withBloodType(VALID_BLOODTYPE_JOKER).withOwnerNric(VALID_NRIC_AMY)
+                .withTags(VALID_TAG_DEPRESSION).build();
+        DESC_NERO = new EditPetPatientDescriptorBuilder().withName(VALID_NAME_NERO)
+                .withSpecies(VALID_SPECIES_NERO).withBreed(VALID_BREED_NERO).withColour(VALID_COLOUR_NERO)
+                .withBloodType(VALID_BLOODTYPE_NERO).withOwnerNric(VALID_NRIC_FION)
+                .withTags(VALID_TAG_FIV).build();
+        DESC_APPOINTMENT_ONE = new EditAppointmentDescriptorBuilder().withOwnerNric(VALID_NRIC_AMY)
+                .withLocalDateTime(VALID_DATE_ONE).withPetPatientName(VALID_NAME_JOKER)
+                .withRemark(VALID_REMARK_ONE).withTags(VALID_TAG_CHECKUP).build();
+        DESC_APPOINTMENT_TWO = new EditAppointmentDescriptorBuilder().withOwnerNric(VALID_NRIC_FION)
+                .withLocalDateTime(VALID_DATE_TWO).withPetPatientName(VALID_NAME_NERO)
+                .withRemark(VALID_REMARK_TWO).withTags(VALID_TAG_VACCINATION).build();
     }
 
     /**
@@ -189,7 +225,7 @@ public class CommandTestUtil {
      * - the {@code actualModel} matches {@code expectedModel}
      */
     public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
-            Model expectedModel) {
+                                            Model expectedModel) {
         try {
             CommandResult result = command.execute();
             assertEquals(expectedMessage, result.feedbackToUser);

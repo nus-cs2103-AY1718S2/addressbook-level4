@@ -528,7 +528,8 @@ Format: `logout`
 
 ==== Syncing data with your Google Account
 
-Updates both Google Contacts and Google Calendar with Addressbook and Schedule. +
+Updates both Google Contacts and Google Calendar with Addressbook and Schedule. Deletes the old data that Codeducator
+has written before, and uploads the new updated copy, correct as of time of entering the `sync` command.+
 
 [NOTE]
 You must first be logged in to sync your data

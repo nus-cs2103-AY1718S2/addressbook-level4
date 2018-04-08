@@ -238,7 +238,7 @@ public class StorageManager extends ComponentManager implements Storage {
     public void handleScheduleChangedEvent(ScheduleChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local schedule data changed, saving to file"));
         try {
-            saveSchedule(event.data);
+            saveSchedule(event.getLessons());
 
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));

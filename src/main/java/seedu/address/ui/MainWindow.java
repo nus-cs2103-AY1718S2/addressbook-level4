@@ -57,6 +57,9 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    @FXML
+    private StackPane calendarPlaceholder;
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
 
@@ -117,7 +120,8 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         infoPanel = new InfoPanel();
-        infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
+        CalendarPanel calendarPanel = new CalendarPanel(logic.getSchedule());
+        infoPanelPlaceholder.getChildren().add(calendarPanel.getRoot());
 
         studentListPanel = new StudentListPanel(logic.getFilteredStudentList());
         studentListPanelPlaceholder.getChildren().add(studentListPanel.getRoot());
@@ -130,6 +134,8 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+//        calendarPlaceholder.getChildren().add(calendarPanel.getRoot());
     }
 
     void hide() {

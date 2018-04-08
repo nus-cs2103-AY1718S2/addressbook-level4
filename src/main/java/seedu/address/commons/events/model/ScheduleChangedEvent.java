@@ -6,7 +6,7 @@ import seedu.address.model.ReadOnlySchedule;
 /** Indicates the AddressBook in the model has changed*/
 public class ScheduleChangedEvent extends BaseEvent {
 
-    public final ReadOnlySchedule data;
+    private final ReadOnlySchedule data;
 
     public ScheduleChangedEvent(ReadOnlySchedule data) {
         this.data = data;
@@ -15,5 +15,9 @@ public class ScheduleChangedEvent extends BaseEvent {
     @Override
     public String toString() {
         return "number of lessons " + data.getSchedule().size();
+    }
+
+    public final ReadOnlySchedule getLessons() {
+        return this.data;
     }
 }

@@ -64,8 +64,8 @@
 
         <!--@@author Kyholmes -->
         <StackPane VBox.vgrow="NEVER" fx:id="queueList" styleClass="pane-with-border"
-                   minHeight="80" prefHeight="100" maxHeight="80">
-          <HBox minHeight="70" prefHeight="70">
+                   minHeight="50" prefHeight="100" maxHeight="60">
+          <HBox minHeight="50" prefHeight="60">
             <padding>
               <Insets top="5" right="10" bottom="5" left="10" />
             </padding>

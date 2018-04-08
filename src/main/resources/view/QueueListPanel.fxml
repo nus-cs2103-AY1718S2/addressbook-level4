@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--@@author Kyholmes -->
+
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="45.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ListView fx:id="queueCardListView" orientation="HORIZONTAL" HBox.hgrow="ALWAYS" />
    </children>

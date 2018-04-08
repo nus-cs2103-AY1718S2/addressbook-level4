@@ -29,7 +29,12 @@ public class TimetableParserUtilTest {
     }
 
     @Test
-    public void parseUrl_invalidUrl_throwsParseException() {
+    public void parseUrl_emptyUrl_throwsIllegalArgumentException() {
+        Assert.assertThrows(IllegalArgumentException.class, () -> TimetableParserUtil.parseUrl(EMPTY_URL));
+    }
+
+    @Test
+    public void parseUrl_invalidUrl_throwsIllegalArgumentAndParseException() {
         Assert.assertThrows(IllegalArgumentException.class, () -> TimetableParserUtil.parseUrl(INVALID_OTHER_URL));
         Assert.assertThrows(ParseException.class, () -> TimetableParserUtil.parseUrl(INVALID_NUSMODS_URL));
     }

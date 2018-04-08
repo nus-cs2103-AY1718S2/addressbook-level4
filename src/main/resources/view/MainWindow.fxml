@@ -62,6 +62,7 @@
           </StackPane>
         </SplitPane>
 
+        <!--@@author Kyholmes -->
         <StackPane VBox.vgrow="NEVER" fx:id="queueList" styleClass="pane-with-border"
                    minHeight="80" prefHeight="100" maxHeight="80">
           <HBox minHeight="70" prefHeight="70">
@@ -72,6 +73,7 @@
           </HBox>
         </StackPane>
 
+        <!--@@author -->
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
       </VBox>
     </Scene>

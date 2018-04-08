@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import java.util.List;
-
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
@@ -9,7 +7,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.student.NameContainsKeywordsPredicate;
-import seedu.address.model.student.Student;
 
 //@@author chweeee
 /**

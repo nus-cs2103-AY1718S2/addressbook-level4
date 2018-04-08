@@ -5,7 +5,6 @@ import static seedu.organizer.testutil.TypicalTasks.KEYWORD_MATCHING_SPRING;
 
 import org.junit.Test;
 
-import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.logic.commands.ClearCommand;
 import seedu.organizer.logic.commands.RedoCommand;
 import seedu.organizer.logic.commands.UndoCommand;
@@ -17,39 +16,27 @@ public class ClearCommandSystemTest extends OrganizerSystemTest {
     public void clear() {
         final Model defaultModel = getModel();
 
-        /* Case: clear non-empty organizer book, command with leading spaces and trailing alphanumeric characters and
+        /* Case: clear non-empty organizer, command with leading spaces and trailing alphanumeric characters and
          * spaces -> cleared
          */
         assertCommandSuccess("   " + ClearCommand.COMMAND_WORD + " ab12   ");
-        assertSelectedCardUnchanged();
 
-        /* Case: undo clearing organizer book -> original organizer book restored */
+        /* Case: undo clearing organizer -> original organizer restored */
         String command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, expectedResultMessage, defaultModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: redo clearing organizer book -> cleared */
+        /* Case: redo clearing organizer -> cleared */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, expectedResultMessage);
-        assertSelectedCardUnchanged();
 
-        /* Case: selects first card in task list and clears organizer book -> cleared and no card selected */
-        executeCommand(UndoCommand.COMMAND_WORD); // restores the original organizer book
-        selectTask(Index.fromOneBased(1));
-        assertCommandSuccess(ClearCommand.COMMAND_WORD);
-        assertSelectedCardDeselected();
-
-        /* Case: filters the task list before clearing -> entire organizer book cleared */
-        executeCommand(UndoCommand.COMMAND_WORD); // restores the original organizer book
+        /* Case: filters the task list before clearing -> entire organizer cleared */
+        executeCommand(UndoCommand.COMMAND_WORD); // restores the original organizer
         showTasksWithName(KEYWORD_MATCHING_SPRING);
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
-        assertSelectedCardUnchanged();
 
-        /* Case: clear empty organizer book -> cleared */
+        /* Case: clear empty organizer -> cleared */
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
-        assertSelectedCardUnchanged();
 
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("ClEaR", MESSAGE_UNKNOWN_COMMAND);
@@ -115,7 +102,6 @@ public class ClearCommandSystemTest extends OrganizerSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }

@@ -151,7 +151,7 @@ public class Organizer implements ReadOnlyOrganizer {
     //// task-level operations
 
     /**
-     * Adds a task to the organizer book.
+     * Adds a task to the organizer.
      * Also checks the new task's tags and updates {@link #tags} with any new tags found,
      * and updates the Tag objects in the task to point to those in {@link #tags}.
      *

@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 //@@author natania
 /**
- * Represents a Task's dateCompleted in the organizer book.
+ * Represents a Task's dateCompleted in the organizer.
  * Guarantees: immutable;
  */
 public class DateCompleted {

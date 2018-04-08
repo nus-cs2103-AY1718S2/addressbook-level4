@@ -25,7 +25,7 @@ import seedu.organizer.model.user.exceptions.UserNotFoundException;
 import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
 /**
- * Represents the in-memory model of the organizer book data.
+ * Represents the in-memory model of the organizer data.
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
@@ -44,7 +44,7 @@ public class ModelManager extends ComponentManager implements Model {
         super();
         requireAllNonNull(organizer, userPrefs);
 
-        logger.fine("Initializing with organizer book: " + organizer + " and user prefs " + userPrefs);
+        logger.fine("Initializing with organizer: " + organizer + " and user prefs " + userPrefs);
 
         this.organizer = new Organizer(organizer);
         currentlyLoggedInUser = this.organizer.getCurrentLoggedInUser();

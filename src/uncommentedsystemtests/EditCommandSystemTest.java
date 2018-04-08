@@ -112,7 +112,7 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
-        /* Case: filtered task list, edit index within bounds of organizer book and task list -> edited */
+        /* Case: filtered task list, edit index within bounds of organizer and task list -> edited */
         showTasksWithName(KEYWORD_MATCHING_SPRING);
         index = INDEX_FIRST_TASK;
         assertTrue(index.getZeroBased() < getModel().getFilteredTaskList().size());
@@ -121,34 +121,13 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         editedTask = new TaskBuilder(taskToEdit).withName(VALID_NAME_EXAM).build();
         assertCommandSuccess(command, index, editedTask);
 
-        /* Case: filtered task list, edit index within bounds of organizer book but out of bounds of task list
+        /* Case: filtered task list, edit index within bounds of organizer but out of bounds of task list
          * -> rejected
          */
         showTasksWithName(KEYWORD_MATCHING_SPRING);
         int invalidIndex = getModel().getOrganizer().getTaskList().size();
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_EXAM,
                 Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void edit_taskCardSelected() {
-        Index index;
-        String command;
-
-        /* --------------------- Performing edit operation while a task card is selected -------------------------- */
-
-        /* Case: selects first card in the task list, edit a task -> edited, card selection remains unchanged but
-         * browser url changes
-         */
-        showAllTasks();
-        index = INDEX_FIRST_TASK;
-        selectTask(index);
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased()
-                + NAME_DESC_STUDY + PRIORITY_DESC_STUDY + DEADLINE_DESC_STUDY
-                + DESCRIPTION_DESC_STUDY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        // this can be misleading: card selection actually remains unchanged but the
-        // browser's url is updated to reflect the new task's name
-        assertCommandSuccess(command, index, STUDY, index);
     }
 
     @Test
@@ -273,7 +252,6 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
      * {@code OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      *
      * @see OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see OrganizerSystemTest#assertSelectedCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
                                       Index expectedSelectedCardIndex) {
@@ -281,11 +259,6 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
         expectedModel.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
-        if (expectedSelectedCardIndex != null) {
-            assertSelectedCardChanged(expectedSelectedCardIndex);
-        } else {
-            assertSelectedCardUnchanged();
-        }
         assertStatusBarUnchangedExceptSyncStatus();
     }
 
@@ -306,7 +279,6 @@ public class EditCommandSystemTest extends OrganizerSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }

@@ -13,8 +13,6 @@ import seedu.organizer.ui.TaskCard;
 public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
     public static final String PERSON_LIST_VIEW_ID = "#taskListView";
 
-    private Optional<TaskCard> lastRememberedSelectedTaskCard;
-
     public TaskListPanelHandle(ListView<TaskCard> taskListPanelNode) {
         super(taskListPanelNode);
     }
@@ -96,34 +94,6 @@ public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
      */
     public void select(int index) {
         getRootNode().getSelectionModel().select(index);
-    }
-
-    /**
-     * Remembers the selected {@code TaskCard} in the list.
-     */
-    public void rememberSelectedTaskCard() {
-        List<TaskCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
-
-        if (selectedItems.size() == 0) {
-            lastRememberedSelectedTaskCard = Optional.empty();
-        } else {
-            lastRememberedSelectedTaskCard = Optional.of(selectedItems.get(0));
-        }
-    }
-
-    /**
-     * Returns true if the selected {@code TaskCard} is different from the value remembered by the most recent
-     * {@code rememberSelectedTaskCard()} call.
-     */
-    public boolean isSelectedTaskCardChanged() {
-        List<TaskCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
-
-        if (selectedItems.size() == 0) {
-            return lastRememberedSelectedTaskCard.isPresent();
-        } else {
-            return !lastRememberedSelectedTaskCard.isPresent()
-                    || !lastRememberedSelectedTaskCard.get().equals(selectedItems.get(0));
-        }
     }
 
     /**

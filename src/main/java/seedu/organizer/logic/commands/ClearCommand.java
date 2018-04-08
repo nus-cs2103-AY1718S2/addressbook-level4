@@ -3,7 +3,7 @@ package seedu.organizer.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Clears the organizer book.
+ * Clears the organizer.
  */
 public class ClearCommand extends UndoableCommand {
 

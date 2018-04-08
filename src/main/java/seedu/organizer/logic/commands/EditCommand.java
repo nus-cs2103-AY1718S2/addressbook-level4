@@ -31,7 +31,7 @@ import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
 
 /**
- * Edits the details of an existing task in the organizer book.
+ * Edits the details of an existing task in the organizer.
  */
 public class EditCommand extends UndoableCommand {
 

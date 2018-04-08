@@ -1,7 +1,7 @@
 package seedu.organizer.model.task;
 
 /**
- * Represents a Task's status in the organizer book.
+ * Represents a Task's status in the organizer.
  */
 public class Status {
 

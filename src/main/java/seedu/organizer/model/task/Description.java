@@ -5,7 +5,7 @@ import static seedu.organizer.commons.util.AppUtil.checkArgument;
 
 //@@author guekling
 /**
- * Represents a Task's description in the organizer book.
+ * Represents a Task's description in the organizer.
  * Guarantees: immutable; is valid as declared in {@link #isValidDescription(String)}
  */
 public class Description {

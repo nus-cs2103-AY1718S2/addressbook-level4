@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 //@@author dominickenn
 /**
- * Represents a Task's dateAdded in the organizer book.
+ * Represents a Task's dateAdded in the organizer.
  * Guarantees: immutable; is valid as declared in {@link #isValidDeadline(String)}
  */
 public class DateAdded {

@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Task's name in the organizer book.
+ * Represents a Task's name in the organizer.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Name {

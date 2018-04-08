@@ -16,7 +16,7 @@ import seedu.organizer.model.tag.UniqueTagList;
 import seedu.organizer.model.user.User;
 
 /**
- * Represents a Task in the organizer book.
+ * Represents a Task in the organizer.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Task {

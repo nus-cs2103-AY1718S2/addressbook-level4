@@ -4,7 +4,7 @@ import seedu.organizer.model.task.predicates.MultipleFieldsContainsKeywordsPredi
 
 //@@author guekling
 /**
- * Finds and lists all tasks in organizer book whose name, descriptions or deadline contains any of the argument
+ * Finds and lists all tasks in organizer whose name, descriptions or deadline contains any of the argument
  * keywords.
  * Keyword matching is not case sensitive.
  */

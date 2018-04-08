@@ -12,14 +12,14 @@ import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 
 /**
- * Adds a task to the organizer book.
+ * Adds a task to the organizer.
  */
 public class AddCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "add";
     public static final String COMMAND_ALIAS = "a";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the organizer book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the organizer. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PRIORITY + "PRIORITY "
@@ -35,7 +35,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_TAG + "owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
-    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the organizer book";
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the organizer";
 
     private final Task toAdd;
 

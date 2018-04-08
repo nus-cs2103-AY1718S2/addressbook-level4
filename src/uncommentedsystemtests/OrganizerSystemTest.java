@@ -33,11 +33,9 @@ import guitests.guihandles.TaskListPanelHandle;
 //import seedu.organizer.MainApp;
 import seedu.organizer.TestApp;
 import seedu.organizer.commons.core.EventsCenter;
-import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.logic.commands.ClearCommand;
 import seedu.organizer.logic.commands.FindNameCommand;
 import seedu.organizer.logic.commands.ListCommand;
-import seedu.organizer.logic.commands.SelectCommand;
 import seedu.organizer.model.Model;
 import seedu.organizer.model.Organizer;
 import seedu.organizer.testutil.TypicalTasks;
@@ -138,7 +136,7 @@ public abstract class OrganizerSystemTest {
     }
 
     /**
-     * Displays all tasks in the organizer book.
+     * Displays all tasks in the organizer.
      */
     protected void showAllTasks() {
         executeCommand(ListCommand.COMMAND_WORD);
@@ -154,15 +152,7 @@ public abstract class OrganizerSystemTest {
     }
 
     /**
-     * Selects the task at {@code index} of the displayed list.
-     */
-    protected void selectTask(Index index) {
-        executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
-        assertEquals(index.getZeroBased(), getTaskListPanel().getSelectedCardIndex());
-    }
-
-    /**
-     * Deletes all tasks in the organizer book.
+     * Deletes all tasks in the organizer.
      */
     protected void deleteAllTasks() {
         executeCommand(ClearCommand.COMMAND_WORD);
@@ -191,49 +181,6 @@ public abstract class OrganizerSystemTest {
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberTotalTasksStatus();
         statusBarFooterHandle.rememberSyncStatus();
-        getTaskListPanel().rememberSelectedTaskCard();
-    }
-
-    /**
-     * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
-     * of the previously selected task.
-     *
-     * @see CalendarPanelHandle#isUrlChanged()
-     */
-    protected void assertSelectedCardDeselected() {
-        /*assertFalse(getCalendarPanel().isUrlChanged());
-        assertFalse(getTaskListPanel().isAnyCardSelected());*/
-    }
-
-    /**
-     * Asserts that the browser's url is changed to display the details of the task in the task list panel at
-     * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
-     *
-     * @see CalendarPanelHandle#isUrlChanged()
-     * @see TaskListPanelHandle#isSelectedTaskCardChanged()
-     */
-    protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
-        /*String selectedCardName = getTaskListPanel().getHandleToSelectedCard().getName();
-        URL expectedUrl;
-        try {
-            expectedUrl = new URL(CalendarPanel.SEARCH_PAGE_URL + selectedCardName.replaceAll(" ", "%20"));
-        } catch (MalformedURLException mue) {
-            throw new AssertionError("URL expected to be valid.");
-        }
-        assertEquals(expectedUrl, getCalendarPanel().getLoadedUrl());
-
-        assertEquals(expectedSelectedCardIndex.getZeroBased(), getTaskListPanel().getSelectedCardIndex());*/
-    }
-
-    /**
-     * Asserts that the browser's url and the selected card in the task list panel remain unchanged.
-     *
-     * @see CalendarPanelHandle#isUrlChanged()
-     * @see TaskListPanelHandle#isSelectedTaskCardChanged()
-     */
-    protected void assertSelectedCardUnchanged() {
-        /*assertFalse(getCalendarPanel().isUrlChanged());
-        assertFalse(getTaskListPanel().isSelectedTaskCardChanged());*/
     }
 
     /**

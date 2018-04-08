@@ -25,7 +25,7 @@ public class XmlFileStorage {
     }
 
     /**
-     * Returns organizer book in the file or an empty organizer book
+     * Returns organizer in the file or an empty organizer
      */
     public static XmlSerializableOrganizer loadDataFromSaveFile(File file) throws DataConversionException,
                                                                             FileNotFoundException {

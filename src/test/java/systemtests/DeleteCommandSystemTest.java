@@ -93,23 +93,6 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
         assertCommandFailure(command, MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
 
         */
-/* --------------------- Performing delete operation while a task card is selected ------------------------ *//*
-
-
-        */
-/* Case: delete the selected task -> task list panel selects the task before the deleted task *//*
-
-        showAllTasks();
-        expectedModel = getModel();
-        Index selectedIndex = getLastIndex(expectedModel);
-        Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
-        selectTask(selectedIndex);
-        command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
-        deletedTask = removeTask(expectedModel, selectedIndex);
-        expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedTask);
-        assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
-
-        */
 /* --------------------------------- Performing invalid delete operation ------------------------------------ *//*
 
 
@@ -151,7 +134,7 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
 
     */
 /**
-     * Removes the {@code Task} at the specified {@code index} in {@code model}'s organizer book.
+     * Removes the {@code Task} at the specified {@code index} in {@code model}'s organizer.
      *
      * @return the removed task
      *//*
@@ -208,20 +191,12 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
      * and selected card are expected to update accordingly depending on the card at {@code expectedSelectedCardIndex}.
      *
      * @see DeleteCommandSystemTest#assertCommandSuccess(String, Model, String)
-     * @see OrganizerSystemTest#assertSelectedCardChanged(Index)
      *//*
 
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
                                       Index expectedSelectedCardIndex) {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-
-        if (expectedSelectedCardIndex != null) {
-            assertSelectedCardChanged(expectedSelectedCardIndex);
-        } else {
-            assertSelectedCardUnchanged();
-        }
-
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarChangedExceptSaveLocation();
     }
@@ -245,7 +220,6 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }

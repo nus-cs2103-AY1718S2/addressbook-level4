@@ -122,7 +122,7 @@ public class CommandTestUtil {
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - the organizer book and the filtered task list in the {@code actualModel} remain unchanged
+     * - the organizer and the filtered task list in the {@code actualModel} remain unchanged
      */
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
@@ -142,7 +142,7 @@ public class CommandTestUtil {
 
     /**
      * Updates {@code model}'s filtered list to show only the task at the given {@code targetIndex} in the
-     * {@code model}'s organizer book.
+     * {@code model}'s organizer.
      */
     public static void showTaskAtIndex(Model model, Index targetIndex) {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredTaskList().size());
@@ -155,7 +155,7 @@ public class CommandTestUtil {
     }
 
     /**
-     * Deletes the first task in {@code model}'s filtered list from {@code model}'s organizer book.
+     * Deletes the first task in {@code model}'s filtered list from {@code model}'s organizer.
      */
     public static void deleteFirstTask(Model model) {
         Task firstTask = model.getFilteredTaskList().get(0);

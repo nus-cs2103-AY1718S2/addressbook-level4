@@ -12,7 +12,7 @@ import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
 
 /**
- * Deletes a task identified using it's last displayed index from the organizer book.
+ * Deletes a task identified using it's last displayed index from the organizer.
  */
 public class DeleteCommand extends UndoableCommand {
 

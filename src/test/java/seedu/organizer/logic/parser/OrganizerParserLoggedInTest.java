@@ -42,7 +42,6 @@ import seedu.organizer.logic.commands.LogoutCommand;
 import seedu.organizer.logic.commands.NextMonthCommand;
 import seedu.organizer.logic.commands.PreviousMonthCommand;
 import seedu.organizer.logic.commands.RedoCommand;
-import seedu.organizer.logic.commands.SelectCommand;
 import seedu.organizer.logic.commands.ToggleCommand;
 import seedu.organizer.logic.commands.ToggleSubtaskCommand;
 import seedu.organizer.logic.commands.UndoCommand;
@@ -289,16 +288,6 @@ public class OrganizerParserLoggedInTest {
                 ListCompletedTasksCommand.COMMAND_ALIAS + " 3") instanceof ListCompletedTasksCommand);
     }
     //@@author
-
-    @Test
-    public void parseCommand_select() throws Exception {
-        SelectCommand command = (SelectCommand) parser.parseCommand(
-                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased());
-        SelectCommand commandAlias = (SelectCommand) parser.parseCommand(
-                SelectCommand.COMMAND_ALIAS + " " + INDEX_FIRST_TASK.getOneBased());
-        assertEquals(new SelectCommand(INDEX_FIRST_TASK), command);
-        assertEquals(new SelectCommand(INDEX_FIRST_TASK), commandAlias);
-    }
 
     @Test
     public void parseCommand_toggle() throws Exception {

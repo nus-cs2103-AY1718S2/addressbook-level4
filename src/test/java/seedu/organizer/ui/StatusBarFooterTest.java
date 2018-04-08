@@ -62,7 +62,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
         assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION, SYNC_STATUS_INITIAL,
             String.format(TOTAL_TASKS_STATUS, INITIAL_TOTAL_TASKS));
 
-        // after organizer book is updated
+        // after organizer is updated
         postNow(EVENT_STUB);
         assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
             String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()),

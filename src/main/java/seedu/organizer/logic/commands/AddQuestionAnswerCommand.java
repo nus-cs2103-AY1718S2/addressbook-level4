@@ -56,12 +56,11 @@ public class AddQuestionAnswerCommand extends UndoableCommand {
      */
     private UserWithQuestionAnswer createEditedUser() {
         requireNonNull(userToEdit);
-        UserWithQuestionAnswer user = new UserWithQuestionAnswer(
+        return new UserWithQuestionAnswer(
                 userToEdit.username,
                 userToEdit.password,
                 question,
                 answer);
-        return user;
     }
 
     @Override

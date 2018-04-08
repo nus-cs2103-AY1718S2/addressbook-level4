@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 //@@author guekling
 /**
- * Represents a Task's deadline in the organizer book.
+ * Represents a Task's deadline in the organizer.
  * Guarantees: immutable; is valid as declared in {@link #isValidDeadline(String)}
  */
 public class Deadline {

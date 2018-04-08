@@ -3,7 +3,7 @@ package seedu.organizer.logic.commands;
 import seedu.organizer.model.task.predicates.DescriptionContainsKeywordsPredicate;
 
 /**
- * Finds and lists all tasks in organizer book whose name contains any of the argument keywords.
+ * Finds and lists all tasks in organizer whose name contains any of the argument keywords.
  * Keyword matching is not case sensitive.
  */
 public class FindDescriptionCommand extends Command {

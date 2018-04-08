@@ -92,7 +92,7 @@ public class DeleteCommandTest {
         showTaskAtIndex(model, INDEX_FIRST_TASK);
 
         Index outOfBoundIndex = INDEX_SECOND_TASK;
-        // ensures that outOfBoundIndex is still in bounds of organizer book list
+        // ensures that outOfBoundIndex is still in bounds of organizer list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getOrganizer().getTaskList().size());
 
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);

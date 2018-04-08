@@ -46,7 +46,7 @@ public class AnswerCommandTest {
     }
 
     @Test
-    public void execute_existingUser_answer() throws Exception {
+    public void execute_existingUser_success() throws Exception {
         UserWithQuestionAnswer editedUser = new UserWithQuestionAnswer(
                 "admin",
                 "admin",

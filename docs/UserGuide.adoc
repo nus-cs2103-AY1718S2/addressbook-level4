@@ -507,31 +507,6 @@ Returns any task having deadlines `2018-03-17`, `2018-09-04`, or `2018-03-21`.
 
 _Locate all tasks with a common tag_
 
-=== Selecting a task : `select` or `s`
-
-Select the task identified by the index number used in the last task listing. +
-
-[.format]
-====
-[format-title]#Format:# `select INDEX`
-====
-
-* Selects the task and shows full details of the task at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* (i.e. `1, 2, 3, ...`).
-
-[.example]
-====
-[example-title]#Examples:#
-
-* [example]#`list`# +
-[example]#`select 2`# +
-Selects the 2nd task in the PrioriTask.
-* [example]#`find Developer`# +
-[example]#`select 1`# +
-Selects the 1st task in the results of the `find` command.
-====
-
 === Mark task as complete: `toggle` or `t` `[since v1.2]`
 
 Toggle the status of the task identified by the index number used in the last task listing
@@ -881,8 +856,6 @@ e.g. [example-no-box]#`findn Developer User`#
 e.g. [example-no-box]#`finddes study update`#
 ** *Find Deadline* : [format-no-box]#`findd KEYWORD [MORE_KEYWORDS]` or `fd KEYWORDS [MORE_KEYWORDS]`# +
 e.g. [example-no-box]#`findd 2018-03-17 2018-09-07`#
-* *Select* : [format-no-box]#`select INDEX`# +
-e.g.[example-no-box]#`select 2`#
 * *Toggle* : [format-no-box]#`toggle INDEX`# +
 e.g.[example-no-box]#`toggle 3`#
 * *Clear* : [format-no-box]#`clear`#

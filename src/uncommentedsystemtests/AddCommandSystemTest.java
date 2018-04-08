@@ -36,7 +36,6 @@ import org.junit.Test;
 
 import guitests.GuiRobot;
 import seedu.organizer.commons.core.Messages;
-import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.logic.commands.AddCommand;
 import seedu.organizer.logic.commands.RedoCommand;
 import seedu.organizer.logic.commands.UndoCommand;
@@ -89,7 +88,7 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
 
         /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
 
-        /* Case: add a task with all fields same as another task in the organizer book except name -> added */
+        /* Case: add a task with all fields same as another task in the organizer except name -> added */
         toAdd = new TaskBuilder().withName(VALID_NAME_STUDY)
                 .withPriority(VALID_PRIORITY_EXAM).withDeadline(VALID_DEADLINE_EXAM)
                 .withDescription(VALID_DESCRIPTION_EXAM).withTags(VALID_TAG_FRIEND).build();
@@ -98,7 +97,7 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a task with all fields same as another task in the organizer book except priority -> added */
+        /* Case: add a task with all fields same as another task in the organizer except priority -> added */
         toAdd = new TaskBuilder().withName(VALID_NAME_EXAM)
                 .withPriority(VALID_PRIORITY_STUDY).withDeadline(VALID_DEADLINE_EXAM)
                 .withDescription(VALID_DESCRIPTION_EXAM).withTags(VALID_TAG_FRIEND).build();
@@ -107,7 +106,7 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a task with all fields same as another task in the organizer book except deadline -> added */
+        /* Case: add a task with all fields same as another task in the organizer except deadline -> added */
         toAdd = new TaskBuilder().withName(VALID_NAME_EXAM)
                 .withPriority(VALID_PRIORITY_EXAM).withDeadline(VALID_DEADLINE_STUDY)
                 .withDescription(VALID_DESCRIPTION_EXAM).withTags(VALID_TAG_FRIEND).build();
@@ -116,7 +115,7 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a task with all fields same as another task in the organizer book except description -> added */
+        /* Case: add a task with all fields same as another task in the organizer except description -> added */
         toAdd = new TaskBuilder().withName(VALID_NAME_EXAM)
                 .withPriority(VALID_PRIORITY_EXAM).withDeadline(VALID_DEADLINE_EXAM)
                 .withDescription(VALID_DESCRIPTION_STUDY).withTags(VALID_TAG_FRIEND).build();
@@ -133,7 +132,7 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
 
         /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
 
-        /* Case: add to empty organizer book -> added */
+        /* Case: add to empty organizer -> added */
         deleteAllTasks();
         assertCommandSuccess(GROCERY);
 
@@ -167,11 +166,6 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
         showTasksWithName(KEYWORD_MATCHING_SPRING);
         assertCommandSuccess(INTERVIEWPREP);
 
-        /* ------------------------ Perform add operation while a task card is selected --------------------------- */
-
-        /* Case: selects first card in the task list, add a task -> added, card selection remains unchanged */
-        selectTask(Index.fromOneBased(1));
-        assertCommandSuccess(STUDY);
     }
 
     @Test
@@ -282,7 +276,6 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
         executeCommand(command);
         guiRobot.pause();
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarChangedExceptSaveLocation();
     }
@@ -304,7 +297,6 @@ public class AddCommandSystemTest extends OrganizerSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }

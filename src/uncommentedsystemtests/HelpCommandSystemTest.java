@@ -13,8 +13,8 @@ import guitests.GuiRobot;
 import guitests.guihandles.HelpWindowHandle;
 import seedu.organizer.logic.commands.DeleteCommand;
 import seedu.organizer.logic.commands.HelpCommand;
-import seedu.organizer.logic.commands.SelectCommand;
 //import seedu.organizer.ui.CalendarPanel;
+import seedu.organizer.logic.commands.ListCommand;
 import seedu.organizer.ui.StatusBarFooter;
 
 /**
@@ -60,7 +60,7 @@ public class HelpCommandSystemTest extends OrganizerSystemTest {
         getMainWindowHandle().focus();
 
         // assert that while the help window is open the UI updates correctly for a command execution
-        executeCommand(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased());
+        executeCommand(ListCommand.COMMAND_WORD);
         assertEquals("", getCommandBox().getInput());
         assertCommandBoxShowsDefaultStyle();
         assertNotEquals(HelpCommand.SHOWING_HELP_MESSAGE, getResultDisplay().getText());

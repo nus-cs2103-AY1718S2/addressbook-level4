@@ -16,7 +16,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Adds a person to the address book.
+ * Updates a student's participation mark in Your TA.
  */
 //@@author Alaru
 public class MarkCommand extends UndoableCommand {
@@ -82,6 +82,8 @@ public class MarkCommand extends UndoableCommand {
         assert personToMark != null;
 
         Integer newMarks = marks + personToMark.getParticipation().getMarks();
+
+        newMarks = (newMarks > 100) ? 100 : newMarks;
 
         Participation updatedPart = new Participation(newMarks);
 

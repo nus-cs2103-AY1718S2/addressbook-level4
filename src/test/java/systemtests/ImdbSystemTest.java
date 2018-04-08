@@ -36,6 +36,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Imdb;
 import seedu.address.model.Model;
 import seedu.address.testutil.TypicalPatients;
@@ -166,8 +167,8 @@ public abstract class ImdbSystemTest {
      * Selects the patient at {@code index} of the displayed list.
      */
     protected void selectPerson(Index index) {
-        //executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
-        //assertEquals(index.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
+        executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
+        assertEquals(index.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
     /**
      * Deletes all persons in the address book.
@@ -188,7 +189,7 @@ public abstract class ImdbSystemTest {
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getImdb(), testApp.readStorageAddressBook());
-        assertListMatching(getPersonListPanel(), expectedModel.getVisitingQueue());
+        assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
     }
 
     /**
@@ -289,11 +290,11 @@ public abstract class ImdbSystemTest {
         try {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
-            assertListMatching(getPersonListPanel(), getModel().getVisitingQueue());
+            assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
-            assertEquals(String.format(RECORD_NUMBER_STATUS, getModel().getImdb().getUniquePatientQueue().size()),
+            assertEquals(String.format(RECORD_NUMBER_STATUS, getModel().getImdb().getPersonList().size()),
                     getStatusBarFooter().getRecordNumber());
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);
@@ -313,7 +314,7 @@ public abstract class ImdbSystemTest {
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
         assertEquals(expectedSyncStatus, statusBarFooterHandle.getSyncStatus());
 
-        final int totalRecords = testApp.getModel().getImdb().getUniquePatientQueue().size();
+        final int totalRecords = testApp.getModel().getImdb().getPersonList().size();
         assertEquals(String.format(RECORD_NUMBER_STATUS, totalRecords), statusBarFooterHandle.getRecordNumber());
 
         assertFalse(statusBarFooterHandle.isSaveLocationChanged());

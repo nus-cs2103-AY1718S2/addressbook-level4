@@ -56,7 +56,15 @@
            <tabs>
              <Tab text="Profile" />
              <Tab text="Task">
-                 <StackPane fx:id="browserPlaceholder"/>
+             <!-- @@author -->
+                 <!-- @@author EdwardKSG -->
+                 <SplitPane id="taskPane" fx:id="taskPane" dividerPositions="0.2" orientation="VERTICAL" VBox.vgrow="ALWAYS">
+                  <items>
+                     <StackPane fx:id="browser2Placeholder"  prefHeight="40.0" />
+                     <StackPane fx:id="browserPlaceholder" prefHeight="160.0" />
+                  </items>
+                 </SplitPane>
+                 <!-- @@author -->
              </Tab>
                <Tab text="Exercise">
                    <StackPane fx:id="exerciseListPanelPlaceholder" VBox.vgrow="ALWAYS"/>

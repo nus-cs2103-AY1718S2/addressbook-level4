@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.ClashingAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.email.Template;
 import seedu.address.model.email.exceptions.TemplateNotFoundException;
@@ -70,7 +71,7 @@ public interface Model {
     void deleteAppointment(Appointment appointment) throws AppointmentNotFoundException;
 
     /** Adds the given appointment */
-    void addAppointment(Appointment appointment) throws DuplicateAppointmentException;
+    void addAppointment(Appointment appointment) throws DuplicateAppointmentException, ClashingAppointmentException;
 
     /** Returns an unmodifiable view of the filtered appointment list */
     ObservableList<Appointment> getFilteredAppointmentList();

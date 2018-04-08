@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.ClashingAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.email.Template;
 import seedu.address.model.email.UniqueTemplateList;
@@ -72,7 +73,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //@@author jlks96
-    public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
+    public void setAppointments(List<Appointment> appointments)
+            throws DuplicateAppointmentException, ClashingAppointmentException {
         this.appointments.setAppointments(appointments);
     }
     //@@author
@@ -125,6 +127,8 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new AssertionError("AddressBooks should not have duplicate appointments");
         } catch (DuplicateTemplateException e) {
             throw new AssertionError("AddressBooks should not have duplicate templates");
+        } catch (ClashingAppointmentException e) {
+            throw new AssertionError("AddressBooks should not have clashing appointments");
         }
     }
 
@@ -222,8 +226,10 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Adds an appointment to the address book.
      *
      * @throws DuplicateAppointmentException if an equivalent appointment already exists.
+     * @throws ClashingAppointmentException if a clashing appointment already exists.
      */
-    public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+    public void addAppointment(Appointment appointment)
+            throws DuplicateAppointmentException, ClashingAppointmentException {
         appointments.add(appointment);
     }
 

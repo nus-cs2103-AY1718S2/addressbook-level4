@@ -17,6 +17,7 @@ import seedu.address.commons.events.model.AppointmentDeletedEvent;
 import seedu.address.commons.events.model.NewAppointmentAddedEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.ClashingAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.email.Template;
 import seedu.address.model.email.exceptions.TemplateNotFoundException;
@@ -124,7 +125,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+    public synchronized void addAppointment(Appointment appointment)
+            throws DuplicateAppointmentException, ClashingAppointmentException {
         addressBook.addAppointment(appointment);
         updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
         indicateAppointmentAdded(appointment);

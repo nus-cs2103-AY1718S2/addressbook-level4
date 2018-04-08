@@ -18,7 +18,7 @@ import seedu.address.model.activity.TaskOnlyPredicate;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 
-//@@author YuanQQLer
+//@@author YuanQLLer
 /**
  * Represents the in-memory model of the desk board data.
  * All changes to any model should be synchronized.

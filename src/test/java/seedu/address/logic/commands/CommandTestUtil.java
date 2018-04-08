@@ -171,6 +171,19 @@ public class CommandTestUtil {
         }
     }
 
+    //@@author YuanQLLer
+    /**
+     * Removes the first activity in {@code model}'s filtered list from {@code model}'s desk board.
+     */
+    public static void removeFirstTask(Model model) {
+        Activity firstActivity = model.getFilteredTaskList().get(0);
+        try {
+            model.deleteActivity(firstActivity);
+        } catch (ActivityNotFoundException pnfe) {
+            throw new AssertionError("Activity in filtered list must exist in model.", pnfe);
+        }
+    }
+
     //@@author
     /**
      * Returns an {@code UndoCommand} with the given {@code model} and {@code undoRedoStack} set.

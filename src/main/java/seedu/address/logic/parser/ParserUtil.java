@@ -154,8 +154,10 @@ public class ParserUtil {
         requireNonNull(birthday);
         String trimmedBirthday = birthday.trim();
 
-        if (!Birthday.isValidBirthday(trimmedBirthday)) {
-            throw new IllegalValueException(Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
+        try {
+            Birthday.isValidBirthday(trimmedBirthday);
+        } catch (IllegalArgumentException iae) {
+            throw new IllegalValueException(iae.getMessage());
         }
         return new Birthday(trimmedBirthday);
     }

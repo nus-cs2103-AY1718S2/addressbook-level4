@@ -128,8 +128,10 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Birthday.class.getSimpleName()));
         }
-        if (!Birthday.isValidBirthday(this.birthday)) {
-            throw new IllegalValueException(Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
+        try {
+            Birthday.isValidBirthday(this.birthday);
+        } catch (IllegalArgumentException iae) {
+            throw new IllegalValueException(iae.getMessage());
         }
         final Birthday birthday = new Birthday(this.birthday);
 

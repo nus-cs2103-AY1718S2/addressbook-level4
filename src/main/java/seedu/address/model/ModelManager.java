@@ -115,7 +115,7 @@ public class ModelManager extends ComponentManager implements Model {
         return dependenciesDeleted;
     }
 
-    //@@author
+    //@@author chialejing
     @Override
     public synchronized void addPetPatient(PetPatient petPatient) throws DuplicatePetPatientException {
         addressBook.addPetPatient(petPatient);
@@ -281,7 +281,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Filtered Pet Patient List Accessors =============================================================
 
-    //@@author
+    //@@author chialejing
     /**
      * Returns an unmodifiable view of the list of {@code PetPatient} backed by the internal list of
      * {@code addressBook}
@@ -297,6 +297,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPetPatients.setPredicate(predicate);
     }
 
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

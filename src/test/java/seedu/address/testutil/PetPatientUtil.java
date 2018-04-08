@@ -41,10 +41,10 @@ public class PetPatientUtil {
     public static String getPetPatientDetails(PetPatient petPatient) {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + petPatient.getName().fullName + " ");
-        sb.append(PREFIX_SPECIES + petPatient.getSpecies() + " ");
-        sb.append(PREFIX_BREED + petPatient.getBreed() + " ");
-        sb.append(PREFIX_COLOUR + petPatient.getColour() + " ");
-        sb.append(PREFIX_BLOODTYPE + petPatient.getBloodType() + " ");
+        sb.append(PREFIX_SPECIES + petPatient.getSpecies().species + " ");
+        sb.append(PREFIX_BREED + petPatient.getBreed().breed + " ");
+        sb.append(PREFIX_COLOUR + petPatient.getColour().colour + " ");
+        sb.append(PREFIX_BLOODTYPE + petPatient.getBloodType().bloodType + " ");
         petPatient.getTags().stream().forEach(s -> sb.append(PREFIX_TAG + s.tagName + " "));
         return sb.toString();
     }

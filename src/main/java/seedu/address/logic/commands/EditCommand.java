@@ -45,8 +45,12 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.petpatient.BloodType;
+import seedu.address.model.petpatient.Breed;
+import seedu.address.model.petpatient.Colour;
 import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
+import seedu.address.model.petpatient.Species;
 import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
 import seedu.address.model.petpatient.exceptions.PetPatientNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -398,10 +402,10 @@ public class EditCommand extends UndoableCommand {
         assert petPatientToEdit != null;
 
         PetPatientName updatedName = editPetPatientDescriptor.getName().orElse(petPatientToEdit.getName());
-        String updatedSpecies = editPetPatientDescriptor.getSpecies().orElse(petPatientToEdit.getSpecies());
-        String updatedBreed = editPetPatientDescriptor.getBreed().orElse(petPatientToEdit.getBreed());
-        String updatedColour = editPetPatientDescriptor.getColour().orElse(petPatientToEdit.getColour());
-        String updatedBloodType = editPetPatientDescriptor.getBloodType().orElse(petPatientToEdit.getBloodType());
+        Species updatedSpecies = editPetPatientDescriptor.getSpecies().orElse(petPatientToEdit.getSpecies());
+        Breed updatedBreed = editPetPatientDescriptor.getBreed().orElse(petPatientToEdit.getBreed());
+        Colour updatedColour = editPetPatientDescriptor.getColour().orElse(petPatientToEdit.getColour());
+        BloodType updatedBloodType = editPetPatientDescriptor.getBloodType().orElse(petPatientToEdit.getBloodType());
         Nric updatedOwnerNric = editPetPatientDescriptor.getOwnerNric().orElse(petPatientToEdit.getOwner());
         Set<Tag> updatedTags = editPetPatientDescriptor.getTags().orElse(petPatientToEdit.getTags());
 
@@ -585,10 +589,10 @@ public class EditCommand extends UndoableCommand {
      */
     public static class EditPetPatientDescriptor {
         private PetPatientName name;
-        private String species;
-        private String breed;
-        private String colour;
-        private String bloodType;
+        private Species species;
+        private Breed breed;
+        private Colour colour;
+        private BloodType bloodType;
         private Nric ownerNric;
         private Set<Tag> tags;
 
@@ -624,35 +628,35 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(name);
         }
 
-        public void setSpecies(String species) {
+        public void setSpecies(Species species) {
             this.species = species;
         }
 
-        public Optional<String> getSpecies() {
+        public Optional<Species> getSpecies() {
             return Optional.ofNullable(species);
         }
 
-        public void setBreed(String breed) {
+        public void setBreed(Breed breed) {
             this.breed = breed;
         }
 
-        public Optional<String> getBreed() {
+        public Optional<Breed> getBreed() {
             return Optional.ofNullable(breed);
         }
 
-        public void setColour(String colour) {
+        public void setColour(Colour colour) {
             this.colour = colour;
         }
 
-        public Optional<String> getColour() {
+        public Optional<Colour> getColour() {
             return Optional.ofNullable(colour);
         }
 
-        public void setBloodType(String bloodType) {
+        public void setBloodType(BloodType bloodType) {
             this.bloodType = bloodType;
         }
 
-        public Optional<String> getBloodType() {
+        public Optional<BloodType> getBloodType() {
             return Optional.ofNullable(bloodType);
         }
 

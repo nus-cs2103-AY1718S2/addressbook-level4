@@ -44,10 +44,10 @@ public class PetPatientCard extends UiPart<Region> {
         this.petPatient = petPatient;
         id.setText(displayedIndex + ". ");
         name.setText(petPatient.getName().toString());
-        species.setText(petPatient.getSpecies());
-        breed.setText(petPatient.getBreed());
-        colour.setText(petPatient.getColour());
-        bloodType.setText(petPatient.getBloodType());
+        species.setText(petPatient.getSpecies().toString());
+        breed.setText(petPatient.getBreed().toString());
+        colour.setText(petPatient.getColour().toString());
+        bloodType.setText(petPatient.getBloodType().toString());
         ownerNric.setText(petPatient.getOwner().toString());
         createTags(petPatient);
     }

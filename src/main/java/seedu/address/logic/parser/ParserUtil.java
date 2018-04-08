@@ -291,7 +291,7 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the given {@code name} is invalid.
      */
-    public static Cca parseCca(String cca) throws IllegalValueException {
+    public static Cca parseCca(String cca) {
         requireNonNull(cca);
         String trimmedCca = cca.trim();
         return new Cca(trimmedCca);
@@ -301,7 +301,7 @@ public class ParserUtil {
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Cca> parseCca(Optional<String> cca) throws IllegalValueException {
+    public static Optional<Cca> parseCca(Optional<String> cca) {
         requireNonNull(cca);
         return cca.isPresent() ? Optional.of(parseCca(cca.get())) : Optional.empty();
     }

@@ -318,6 +318,7 @@ _This section explains what a *Task* is, and the commands to manage them._
 * [parameters]#`DEADLINE`#
 ** A deadline is in the format of *YYYY-MM-DD*.
 ** Deadlines should not be invalid (e.g. `2018-02-31` is an invalid dateline as there is no such date).
+** It accepts dates that have already passed. Priority levels will automatically be set to *9* (the highest level) when the task is added / updated.
 ** It is *compulsory* to have a deadline.
 * [parameters]#`SUBTASK`#
 ** A task can have any number of subtasks (including 0).
@@ -326,6 +327,9 @@ _This section explains what a *Task* is, and the commands to manage them._
 * [parameters]#`TAG`#
 ** A task can have any number of tags (including 0).
 ** It is *optional* to have tags.
+** Tag labels are coloured. However, please note:
+*** Two different tags may have labels of the same colour.
+*** After closing and re-opening the application, the same tag label may have a different colour.
 
 ====
 

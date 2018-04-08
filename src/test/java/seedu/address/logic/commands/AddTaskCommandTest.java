@@ -46,7 +46,6 @@ public class AddTaskCommandTest {
         Task validTask = TypicalTasks.TASK_4;
         Milestone validTargetMilestone = new MilestoneBuilder().build();
         Milestone validUpdatedTargetMilestone = new MilestoneBuilder().withNewTask(validTask).build();
-        Index validTargetMilestoneIndex = Index.fromOneBased(1);
 
         Student targetStudent = new StudentBuilder().withNewMilestone(validTargetMilestone).build();
         Student updatedTargetStudent = new StudentBuilder().withNewMilestone(validUpdatedTargetMilestone).build();
@@ -58,7 +57,7 @@ public class AddTaskCommandTest {
         expectedModel.updateStudent(targetStudent, updatedTargetStudent);
 
         assertCommandSuccess(prepareCommand(Index.fromOneBased(expectedModel.getFilteredStudentList().size()),
-                validTargetMilestoneIndex, validTask, model), model,
+                INDEX_FIRST, validTask, model), model,
                 String.format(AddTaskCommand.MESSAGE_SUCCESS, validTask), expectedModel);
     }
 
@@ -67,7 +66,6 @@ public class AddTaskCommandTest {
         Task validTask = TypicalTasks.TASK_4;
         Milestone validTargetMilestone = new MilestoneBuilder().build();
         Milestone validUpdatedTargetMilestone = new MilestoneBuilder().withNewTask(validTask).build();
-        Index validTargetMilestoneIndex = Index.fromOneBased(1);
 
         Student targetStudent = new StudentBuilder().withNewMilestone(validTargetMilestone).build();
         Student updatedTargetStudent = new StudentBuilder().withNewMilestone(validUpdatedTargetMilestone).build();
@@ -82,7 +80,7 @@ public class AddTaskCommandTest {
         showStudentAtIndex(expectedModel, unfilteredTargetStudentIndex);
         expectedModel.updateStudent(expectedModel.getFilteredStudentList().get(0), updatedTargetStudent);
 
-        assertCommandSuccess(prepareCommand(INDEX_FIRST, validTargetMilestoneIndex, validTask, model), model,
+        assertCommandSuccess(prepareCommand(INDEX_FIRST, INDEX_FIRST, validTask, model), model,
                 String.format(AddTaskCommand.MESSAGE_SUCCESS, validTask), expectedModel);
     }
 
@@ -135,6 +133,7 @@ public class AddTaskCommandTest {
     public void execute_invalidMilestoneIndex_failure() {
         Task validTask = TypicalTasks.TASK_4;
 
+        // INDEX_FIRST student has 0 milestones
         assertCommandFailure(prepareCommand(INDEX_FIRST, INDEX_FIRST, validTask, model), model,
                 MESSAGE_INVALID_INDEXES);
     }

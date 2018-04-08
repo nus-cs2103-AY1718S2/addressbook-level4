@@ -1,5 +1,7 @@
 package systemtests;
 
+import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -44,6 +46,6 @@ public class SampleDataTest extends ImdbSystemTest {
     @Test
     public void addressBook_dataFileDoesNotExist_loadSampleData() {
         Patient[] expectedList = SampleDataUtil.getSamplePersons();
-        //assertListMatching(getPersonListPanel(), expectedList);
+        assertListMatching(getPersonListPanel(), expectedList);
     }
 }

@@ -182,7 +182,7 @@ public class SecurityUtil {
      */
     public static void encryptFile (File file, Password password) throws IOException, WrongPasswordException {
         if (password != null && password.getPassword() != null) {
-                encrypt(file, password.getPassword());
+            encrypt(file, password.getPassword());
         }
     }
     /**

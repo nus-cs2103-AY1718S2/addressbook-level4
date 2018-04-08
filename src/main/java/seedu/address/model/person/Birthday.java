@@ -62,12 +62,10 @@ public class Birthday {
         } else {
             throw new IllegalArgumentException(MESSAGE_BIRTHDAY_CONSTRAINTS);
         }
-
         // Check for valid year
         if (today.getYear() < testYear) {
             throw new IllegalArgumentException(MESSAGE_FUTURE_BIRTHDAY);
         }
-
         // Check for valid day
         if (testDay == 0) {
             throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
@@ -75,63 +73,27 @@ public class Birthday {
 
         // Check for valid month and day
         switch (testMonth) {
-        case 1: // Jan
-            if (testDay > 31) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
-            }
-            break;
-        case 2: // Feb
-            if (testDay > 28) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
-            }
-            break;
-        case 3: // Mar
+        case 1:     // Jan
+        case 3:     // Mar
+        case 5:     // May
+        case 7:     // Jul
+        case 8:     // Aug
+        case 10:    // Oct
+        case 12:    // Dec
             if (testDay > 31) {
                 throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
             }
             break;
         case 4: // Apr
-            if (testDay > 30) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
-            }
-            break;
-        case 5: // May
-            if (testDay > 31) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
-            }
-            break;
         case 6: // Jun
-            if (testDay > 30) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
-            }
-            break;
-        case 7: // Jul
-            if (testDay > 31) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
-            }
-            break;
-        case 8: // Aug
-            if (testDay > 31) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
-            }
-            break;
         case 9: // Sep
-            if (testDay > 30) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
-            }
-            break;
-        case 10: // Oct
-            if (testDay > 31) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
-            }
-            break;
         case 11: // Nov
             if (testDay > 30) {
                 throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
             }
             break;
-        case 12: // Dec
-            if (testDay > 31) {
+        case 2: // Feb
+            if (testDay > 28) {
                 throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
             }
             break;

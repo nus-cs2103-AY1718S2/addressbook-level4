@@ -4,7 +4,6 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -46,21 +45,29 @@ public class AddPhotoCommand extends Command {
     public static final String MESSAGE_PHOTO_NOT_CHOSEN = "You have not chosen one photo!";
 
     private final Index targetIndex;
+
     private String path;
+
+    private boolean isTestMode;
 
     /**
      * Creates an AddPhotoCommand to add the specified {@code Photo}
      */
     public AddPhotoCommand(Index index) {
         this.targetIndex = index;
+        isTestMode = false;
         registerAsAnEventHandler(this);
     }
 
     @Override
     public CommandResult execute() throws CommandException {
 
-        EventsCenter.getInstance().post(new ShowFileChooserEvent());
-
+        if (!isTestMode) {
+            EventsCenter.getInstance().post(new ShowFileChooserEvent());
+        } else {
+            String currentDir = System.getProperty("user.dir");
+            path = currentDir + "\\src\\main\\java\\resources\\images\\personphoto\\DefaultPerson.png";
+        }
         //check if the photo is chosen.
         if (path.equals("NoFileChoosed")) {
             return new CommandResult(MESSAGE_PHOTO_NOT_CHOSEN);
@@ -161,5 +168,9 @@ public class AddPhotoCommand extends Command {
     @Subscribe
     private void handleFileChoosedEvent(FileChoosedEvent event) {
         this.path = event.getFilePath();
+    }
+
+    public void setTestMode() {
+        this.isTestMode = true;
     }
 }

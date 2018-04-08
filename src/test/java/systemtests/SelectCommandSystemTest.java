@@ -26,7 +26,8 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
     public void select() {
 
         String password = getModel().getPassword();
-        UnlockCommand testUnlockCommand = new UnlockCommand(password);
+        UnlockCommand testUnlockCommand = new UnlockCommand();
+        testUnlockCommand.setTestMode();
         testUnlockCommand.setData(getModel(), new CommandHistory(), new UndoRedoStack());
         testUnlockCommand.execute();
 

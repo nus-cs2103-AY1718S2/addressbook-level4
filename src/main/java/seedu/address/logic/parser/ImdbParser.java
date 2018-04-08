@@ -62,7 +62,7 @@ public class ImdbParser {
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
 
-        if (state == LoginManager.NO_USER) {
+        if (state == LoginManager.NO_USER_STATE) {
             switch (commandWord) {
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();

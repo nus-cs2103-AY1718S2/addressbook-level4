@@ -2,7 +2,6 @@
 package seedu.address.logic.login;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,26 +12,29 @@ import seedu.address.MainApp;
  * LoginManager class to store login state and handle login attempts
  */
 public final class LoginManager {
-    public static final int NO_USER = 0;
+    public static final int NO_USER_STATE = 0;
     public static final int DOCTOR_LOGIN = 1;
     public static final int MEDICAL_STAFF_LOGIN = 2;
+    public static final String NO_USER_STRING = null;
 
-    private static LoginState currLoginState = new LoginState(NO_USER);
+    private static LoginState currLoginState = new LoginState(NO_USER_STATE, NO_USER_STRING);
     private static String passwordPath = "/data/passwords.csv";
 
     private LoginManager() {
-        currLoginState = new LoginState(NO_USER);
+        currLoginState = new LoginState(NO_USER_STATE, NO_USER_STRING);
     }
 
     public static int getUserState() {
         return currLoginState.getState();
     }
 
+    public static String getUserName() { return currLoginState.getUser(); }
+
     /**
      * Utility function for tests
      */
     public static void logout() {
-        currLoginState.updateState(NO_USER);
+        currLoginState.updateState(NO_USER_STATE, NO_USER_STRING);
     }
 
     /**
@@ -42,8 +44,6 @@ public final class LoginManager {
     public static boolean authenticate (String username, String password) {
         boolean match = false;
         int loginStateIndex = 0;
-
-        File file = new File(passwordPath);
 
         try {
             InputStreamReader isr = new InputStreamReader(MainApp.class.getResourceAsStream(passwordPath));
@@ -69,7 +69,7 @@ public final class LoginManager {
         }
 
         if (match) {
-            currLoginState.updateState(loginStateIndex);
+            currLoginState.updateState(loginStateIndex, username);
             return true;
         }
 

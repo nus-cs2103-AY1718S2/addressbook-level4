@@ -1,7 +1,10 @@
 package seedu.address.model.person;
 
+import java.time.LocalDate;
+
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
+
+
 
 //@@author AzuraAiR
 /**
@@ -13,6 +16,12 @@ public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthday date can only contain numbers, and should follow the DDMMYYYY format";
+    public static final String MESSAGE_INVALID_DAY =
+            "Birthday day is invalid";
+    public static final String MESSAGE_INVALID_MONTH =
+            "Birthday month is invalid";
+    public static final String MESSAGE_FUTURE_BIRTHDAY =
+            "Birthday is set in the future";
     public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{8,8}";
     public final String value;
 
@@ -27,30 +36,123 @@ public class Birthday {
      */
     public Birthday(String birthday) {
         requireNonNull(birthday);
-        checkArgument(isValidBirthday(birthday), MESSAGE_BIRTHDAY_CONSTRAINTS);
-        this.value = birthday;
-        this.day = parseDay(birthday);
-        this.month = parseMonth(birthday);
-        this.year = parseYear(birthday);
+
+        if (isValidBirthday(birthday)){
+            this.value = birthday;
+            this.day = parseDay(birthday);
+            this.month = parseMonth(birthday);
+            this.year = parseYear(birthday);
+        } else {
+            this.value = null;
+        }
+
+
     }
 
     /**
      * Returns true if a given string is a valid person birthday.
      */
-    public static boolean isValidBirthday(String test) {
-        int testDay = 0;
-        int testMonth = 0;
+    public static boolean isValidBirthday(String test) throws IllegalArgumentException {
+        LocalDate today = LocalDate.now();
+        int testDay;
+        int testMonth;
+        int testYear;
 
-        // Initial check for DDMMYYYY format
+        // Check for DDMMYYYY format
         if (test.matches(BIRTHDAY_VALIDATION_REGEX)) {
             testDay = parseDay(test);
             testMonth = parseMonth(test);
+            testYear = parseYear(test);
         } else {
-            return false;
+            throw new IllegalArgumentException(MESSAGE_BIRTHDAY_CONSTRAINTS);
         }
 
-        // Secondary check for valid day and month
-        return (testDay <= 31) && (testDay != 0) && (testMonth <= 12) && (testMonth != 0);
+        // Check for valid year
+        if (today.getYear() < testYear) {
+            throw new IllegalArgumentException(MESSAGE_FUTURE_BIRTHDAY);
+        }
+
+        // Check for valid day
+        if (testDay == 0) {
+            throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+        }
+
+        // Check for valid month and day
+        switch (testMonth){
+        case 1: // Jan
+            if (testDay > 31) {
+                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+            }
+            break;
+        case 2: // Feb
+            if (testDay > 28) {
+                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+            }
+            break;
+        case 3: // Mar
+            if (testDay > 31) {
+                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+            }
+            break;
+        case 4: // Apr
+            if (testDay > 30) {
+                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+            }
+            break;
+        case 5: // May
+            if (testDay > 31) {
+                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+            }
+            break;
+        case 6: // Jun
+            if (testDay > 30) {
+                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+            }
+            break;
+        case 7: // Jul
+            if (testDay > 31) {
+                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+            }
+            break;
+        case 8: // Aug
+            if (testDay > 31) {
+                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+            }
+            break;
+        case 9: // Sep
+            if (testDay > 30) {
+                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+            }
+            break;
+        case 10: // Oct
+            if (testDay > 31) {
+                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+            }
+            break;
+        case 11: // Nov
+            if (testDay > 30) {
+                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+            }
+            break;
+        case 12: // Dec
+            if (testDay > 31) {
+                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+            }
+            break;
+        default:
+            throw new IllegalArgumentException(MESSAGE_INVALID_MONTH);
+        }
+
+        // Check for future date
+        if (today.getYear() == testYear) {
+            if (today.getMonthValue() < testMonth) {
+                throw new IllegalArgumentException(MESSAGE_FUTURE_BIRTHDAY);
+            } else if (today.getMonthValue() == testMonth && today.getDayOfMonth() < testDay) {
+                throw new IllegalArgumentException(MESSAGE_FUTURE_BIRTHDAY);
+            }
+        }
+
+        return true;
     }
 
     @Override

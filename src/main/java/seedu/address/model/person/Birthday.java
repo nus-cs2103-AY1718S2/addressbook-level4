@@ -1,8 +1,8 @@
 package seedu.address.model.person;
 
-import java.time.LocalDate;
-
 import static java.util.Objects.requireNonNull;
+
+import java.time.LocalDate;
 
 //@@author AzuraAiR
 /**
@@ -35,7 +35,7 @@ public class Birthday {
     public Birthday(String birthday) {
         requireNonNull(birthday);
 
-        if (isValidBirthday(birthday)){
+        if (isValidBirthday(birthday)) {
             this.value = birthday;
             this.day = parseDay(birthday);
             this.month = parseMonth(birthday);
@@ -43,8 +43,6 @@ public class Birthday {
         } else {
             this.value = null;
         }
-
-
     }
 
     /**
@@ -76,7 +74,7 @@ public class Birthday {
         }
 
         // Check for valid month and day
-        switch (testMonth){
+        switch (testMonth) {
         case 1: // Jan
             if (testDay > 31) {
                 throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);

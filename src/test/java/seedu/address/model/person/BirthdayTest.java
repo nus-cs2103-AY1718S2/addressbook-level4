@@ -1,16 +1,16 @@
 package seedu.address.model.person;
 
 import static org.junit.Assert.assertTrue;
+import static seedu.address.model.person.Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS;
+import static seedu.address.model.person.Birthday.MESSAGE_FUTURE_BIRTHDAY;
 import static seedu.address.model.person.Birthday.MESSAGE_INVALID_BIRTHDAY;
 import static seedu.address.model.person.Birthday.MESSAGE_INVALID_BIRTHMONTH;
-import static seedu.address.model.person.Birthday.MESSAGE_FUTURE_BIRTHDAY;
-import static seedu.address.model.person.Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS;
+
+import java.time.LocalDate;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import java.time.LocalDate;
 
 import seedu.address.testutil.Assert;
 
@@ -113,9 +113,9 @@ public class BirthdayTest {
     }
 
     @Test
-    public void isValidBirthday_validBirthday_success(){
+    public void isValidBirthday_validBirthday_success() {
         try {
-        assertTrue(Birthday.isValidBirthday("01011995"));
+            assertTrue(Birthday.isValidBirthday("01011995"));
         } catch (IllegalArgumentException iae) {
             // Should never go here
         }

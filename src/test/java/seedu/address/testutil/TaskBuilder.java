@@ -1,4 +1,4 @@
-package seedu.address.logic.commands;
+package seedu.address.testutil;
 
 import seedu.address.model.student.dashboard.Task;
 
@@ -8,9 +8,19 @@ import seedu.address.model.student.dashboard.Task;
  */
 public class TaskBuilder {
 
+    public static final String DEFAULT_NAME = "Learn syntax";
+    public static final String DEFAULT_DESCRIPTION = "Refer to coding website";
+    public static final boolean DEFAULT_IS_COMPLETED = false;
+
     private String name;
     private String description;
     private boolean isCompleted;
+
+    public TaskBuilder() {
+        name = DEFAULT_NAME;
+        description = DEFAULT_DESCRIPTION;
+        isCompleted = DEFAULT_IS_COMPLETED;
+    }
 
     /**
      * Initializes the TaskBuilder with the data of {@code taskToCopy}.
@@ -19,6 +29,22 @@ public class TaskBuilder {
         name = taskToCopy.getName();
         description = taskToCopy.getDescription();
         isCompleted = taskToCopy.isCompleted();
+    }
+
+    /**
+     * Sets the {@code name} of the {@code Task} we are building
+     */
+    public TaskBuilder withName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    /**
+     * Sets the {@code description} of the {@code Task} we are building
+     */
+    public TaskBuilder withDescription(String description) {
+        this.description = description;
+        return this;
     }
 
     /**

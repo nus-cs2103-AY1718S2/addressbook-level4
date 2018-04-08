@@ -1,4 +1,4 @@
-package seedu.address.logic.commands;
+package seedu.address.testutil;
 
 import seedu.address.model.student.dashboard.Progress;
 
@@ -8,16 +8,42 @@ import seedu.address.model.student.dashboard.Progress;
  */
 public class ProgressBuilder {
 
+    public static final int DEFAULT_TOTAL_TASKS = 3;
+    public static final int DEFAULT_NUM_COMPLETED_TASKS = 0;
+
     private int totalTasks;
     private int numCompletedTasks;
     private int progressInPercent;
     private String value;
+
+    public ProgressBuilder() {
+        totalTasks = DEFAULT_TOTAL_TASKS;
+        numCompletedTasks = DEFAULT_NUM_COMPLETED_TASKS;
+        setProgressPercentAndValue();
+    }
 
     public ProgressBuilder(Progress progressToCopy) {
         totalTasks = progressToCopy.getTotalTasks();
         numCompletedTasks = progressToCopy.getNumCompletedTasks();
         progressInPercent = progressToCopy.getProgressInPercent();
         value = progressToCopy.getValue();
+    }
+
+    /**
+     * Sets the {@code totalTasks} of the {@code Progress} we are building
+     */
+    public ProgressBuilder withTotalTask(int totalTasks) {
+        this.totalTasks = totalTasks;
+        setProgressPercentAndValue();
+
+        return this;
+    }
+
+    public ProgressBuilder withNumCompletedTasks(int numCompletedTasks) {
+        this.numCompletedTasks = numCompletedTasks;
+        setProgressPercentAndValue();
+
+        return this;
     }
 
     /**

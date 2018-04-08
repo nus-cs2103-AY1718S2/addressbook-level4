@@ -216,5 +216,5 @@ public class StudentBuilder {
         this.dashboard = new DashboardBuilder(this.dashboard).withTaskCompleted(milestoneIndex, taskIndex).build();
         return this;
     }
-
+    //@@author
 }

@@ -13,7 +13,6 @@ import seedu.address.logic.conditions.PriceCondition;
 import seedu.address.logic.conditions.TagCondition;
 import seedu.address.logic.conditions.WorthCondition;
 import seedu.address.model.coin.Amount;
-import seedu.address.model.coin.Code;
 import seedu.address.model.coin.Coin;
 import seedu.address.model.coin.Price;
 import seedu.address.model.tag.Tag;
@@ -127,8 +126,7 @@ public class ConditionGenerator {
             return new WorthCondition(new Amount(specifiedAmount), amountComparator);
 
         case PREFIX_CODE:
-            Code code = new Code(tokenStack.popToken().getPattern());
-            return new CodeCondition(code);
+            return new CodeCondition(tokenStack.popToken().getPattern());
 
         case PREFIX_TAG:
             Tag tag = ParserUtil.parseTag(tokenStack.popToken().getPattern());

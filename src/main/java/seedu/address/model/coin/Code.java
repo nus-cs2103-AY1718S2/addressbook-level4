@@ -38,6 +38,9 @@ public class Code {
         return test.matches(NAME_VALIDATION_REGEX);
     }
 
+    public boolean contains(String substring) {
+        return fullName.contains(substring);
+    }
 
     @Override
     public String toString() {

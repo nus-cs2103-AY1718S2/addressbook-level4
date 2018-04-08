@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.TokenType.STRING;
 import java.util.function.Predicate;
 
 import seedu.address.logic.parser.TokenType;
-import seedu.address.model.coin.Code;
 import seedu.address.model.coin.Coin;
 
 //@@author Eldon-Chung
@@ -18,14 +17,14 @@ public class CodeCondition implements Predicate<Coin> {
     public static final TokenType PREFIX = PREFIX_CODE;
     public static final TokenType PARAMETER_TYPE = STRING;
 
-    private Code code;
+    private String substring;
 
-    public CodeCondition(Code code) {
-        this.code = code;
+    public CodeCondition(String substring) {
+        this.substring = substring;
     }
 
     @Override
     public boolean test(Coin coin) {
-        return coin.getCode().equals(code);
+        return coin.getCode().contains(substring);
     }
 }

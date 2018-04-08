@@ -16,9 +16,9 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
     public static final String COMMAND_ALIAS = "f";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all coins specified by the conditions.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all coins specified by the conditions."
             + "Parameters: CONDITION "
-            + "Example: " + COMMAND_WORD + " " + PREFIX_CODE + "BTC AND" + PREFIX_PRICE + ">50";
+            + "Example: " + COMMAND_WORD + " " + PREFIX_CODE + "BTC AND " + PREFIX_PRICE + ">50";
 
     private final Predicate<Coin> coinCondition;
 

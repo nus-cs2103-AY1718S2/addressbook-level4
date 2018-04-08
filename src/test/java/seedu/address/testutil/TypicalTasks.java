@@ -18,6 +18,8 @@ public class TypicalTasks {
             .build();
     public static final Task TASK_3 = new TaskBuilder().withName("Learn framework").withDescription("Can be any one")
             .build();
+    public static final Task TASK_4 = new TaskBuilder().withName("Hands on practice").withDescription("Go to lab")
+            .build(); // Extra task not added to any default task list of a milestone
 
     public List<Task> getTypicalTasks() {
         return new ArrayList<>(Arrays.asList(TASK_1, TASK_2, TASK_3));

@@ -18,10 +18,10 @@ import seedu.address.model.student.dashboard.exceptions.TaskNotFoundException;
  */
 public class MilestoneBuilder {
     
-    public static final Date DEFAULT_DATE = new Date("23/05/2018 23:59");
-    public static final UniqueTaskList DEFAULT_TASK_LIST = setDefaultTaskList();
-    public static final Progress DEFAULT_PROGRESS = new ProgressBuilder().build();
-    public static final String DEFAULT_DESCRIPTION = "Arrays";
+    private final Date DEFAULT_DATE = new Date("23/05/2018 23:59");
+    private final UniqueTaskList DEFAULT_TASK_LIST = setDefaultTaskList();
+    private final Progress DEFAULT_PROGRESS = new ProgressBuilder().build();
+    private final String DEFAULT_DESCRIPTION = "Arrays";
 
     private Date dueDate;
     private UniqueTaskList taskList;

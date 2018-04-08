@@ -8,9 +8,9 @@ import seedu.address.model.student.dashboard.Task;
  */
 public class TaskBuilder {
 
-    public static final String DEFAULT_NAME = "Learn syntax";
-    public static final String DEFAULT_DESCRIPTION = "Refer to coding website";
-    public static final boolean DEFAULT_IS_COMPLETED = false;
+    private final String DEFAULT_NAME = "Learn syntax";
+    private final String DEFAULT_DESCRIPTION = "Refer to coding website";
+    private final boolean DEFAULT_IS_COMPLETED = false;
 
     private String name;
     private String description;

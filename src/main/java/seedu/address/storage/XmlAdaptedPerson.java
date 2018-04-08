@@ -35,9 +35,9 @@ public class XmlAdaptedPerson {
     private List<XmlAdaptedSubject> subjects = new ArrayList<>();
     @XmlElement(required = true)
     private String remark;
-    @XmlElement(required = true)
+    @XmlElement
     private String cca;
-    @XmlElement(required = true)
+    @XmlElement
     private String injuriesHistory;
 
     /**

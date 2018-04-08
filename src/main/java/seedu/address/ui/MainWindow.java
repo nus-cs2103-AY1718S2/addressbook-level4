@@ -251,7 +251,7 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Removes all existing stylesheets and add the given {@code theme} to style sheets.
-     * Re-add Extensions.css to style sheets.
+     * Re-adds Extensions.css to style sheets.
      */
     public void changeStyleSheet(String theme) {
         String extensions = this.getClass().getResource("/view/Extensions.css").toExternalForm();

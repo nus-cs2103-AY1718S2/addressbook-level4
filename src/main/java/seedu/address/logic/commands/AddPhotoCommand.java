@@ -74,21 +74,15 @@ public class AddPhotoCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
         Person targetPerson = lastShownList.get(targetIndex.getZeroBased());
 
-        String photoNameWithExtension = path.substring(path.lastIndexOf("\\") + 1);
+        String photoNameWithExtension;
+        if (!path.contains("/"))  {
+            photoNameWithExtension = path.substring(path.lastIndexOf("\\") + 1);
+        } else {
+            photoNameWithExtension = path.substring(path.lastIndexOf("/") + 1);
+        }
 
         if (!model.getPhotoList().contains(new Photo(photoNameWithExtension))) {
             copyPhotoFileToStorage(photoNameWithExtension);
-        }
-
-        File folder = new File("C:\\repos\\main\\src\\main\\resources\\images\\personphoto");
-        File[] listOfFiles = folder.listFiles();
-
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                System.out.println("File " + listOfFiles[i].getName());
-            } else if (listOfFiles[i].isDirectory()) {
-                System.out.println("Directory " + listOfFiles[i].getName());
-            }
         }
 
         Person editedPerson = createEditedPerson(targetPerson, photoNameWithExtension);

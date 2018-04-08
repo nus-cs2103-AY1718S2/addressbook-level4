@@ -37,8 +37,8 @@ public class ParserUtilTest {
     private static final String INVALID_DEADLINE = "20180203";
     private static final String INVALID_TAG = "#friend";
 
-    private static final String VALID_USERNAME = "B0B";
-    private static final String VALID_PASSWORD = "BR4G";
+    private static final String VALID_USERNAME = "B0BBY";
+    private static final String VALID_PASSWORD = "BR4GGY";
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PRIORITY = "1";
     private static final String VALID_DESCRIPTION = "Study for CS2103T";
@@ -344,19 +344,16 @@ public class ParserUtilTest {
     public void parseUsername_validValueWithoutWhitespace_returnsUsername() throws Exception {
         String expectedUsername = VALID_USERNAME;
         assertEquals(expectedUsername, ParserUtil.parseUsername(VALID_USERNAME));
-        assertEquals(Optional.of(expectedUsername), ParserUtil.parseUsername(Optional.of(VALID_USERNAME)));
     }
 
     @Test
     public void parsePassword_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePassword((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePassword((Optional<String>) null));
     }
 
     @Test
     public void parsePassword_invalidValue_throwsIllegalValueException() {
         Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parsePassword(INVALID_PASSWORD));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parsePassword(Optional.of(INVALID_PASSWORD)));
     }
 
     @Test
@@ -368,7 +365,6 @@ public class ParserUtilTest {
     public void parsePassword_validValueWithoutWhitespace_returnsPassword() throws Exception {
         String expectedPassword = VALID_PASSWORD;
         assertEquals(expectedPassword, ParserUtil.parsePassword(VALID_PASSWORD));
-        assertEquals(Optional.of(expectedPassword), ParserUtil.parsePassword(Optional.of(VALID_PASSWORD)));
     }
     //@@author
 }

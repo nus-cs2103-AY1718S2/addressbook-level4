@@ -9,24 +9,7 @@ public class UserWithQuestionAnswerTest {
 
     @Test
     public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new UserWithQuestionAnswer(null, null));
         Assert.assertThrows(NullPointerException.class, () -> new UserWithQuestionAnswer(null, null, null, null));
-    }
-
-    @Test
-    public void constructor_invalidUsername_throwsIllegalArgumentException() {
-        String invalidUsername = "";
-        String validPassword = "validPass";
-        Assert.assertThrows(IllegalArgumentException.class, () ->
-                new UserWithQuestionAnswer(invalidUsername, validPassword));
-    }
-
-    @Test
-    public void constructor_invalidPassword_throwsIllegalArgumentException() {
-        String validUsername = "validUsername";
-        String invalidPassword = "";
-        Assert.assertThrows(IllegalArgumentException.class, () ->
-                new UserWithQuestionAnswer(validUsername, invalidPassword));
     }
 
     @Test

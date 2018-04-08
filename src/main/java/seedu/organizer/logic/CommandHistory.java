@@ -29,4 +29,15 @@ public class CommandHistory {
     public List<String> getHistory() {
         return new LinkedList<>(userInputHistory);
     }
+
+    //@@author dominickenn
+    /**
+     * Clears the command history
+     * Used in logout command so that users cannot access each other's history
+     * Used in login command so that any commands entered before login cannot be accessed
+     */
+    public void clear() {
+        userInputHistory.clear();
+    }
+    //@@authop
 }

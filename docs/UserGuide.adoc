@@ -155,6 +155,19 @@ In the following sections, you will be introduced to several commands and their 
 
 _This section explains the commands specific to command inquiry and *User* account management._
 
+[.noteblock]
+====
+[noteblock-title]#*User Parameters*#
+
+* [parameters]#`USERNAME`#
+** A username can only be alphanumeric characters, must be a minimum of length 5, and must not contain spaces.
+** It is *compulsory* to set a username.
+* [parameters]#`PASSWORD`#
+** A password can only be alphanumeric characters, must be a minimum of length 5, and must not contain spaces.
+** It is *compulsory* to set a password.
+
+====
+
 === Viewing help : `help`
 
 [.format]
@@ -207,7 +220,7 @@ Logout of PrioriTask. +
 
 === Adding question: `addqa` `[since v1.4]`
 
-Add a question for password retrieval. +
+Add a question answer set for password retrieval. If one currently exists, the new question answer set will replace the current set. +
 
 [NOTE]
 ====
@@ -229,7 +242,7 @@ Must be currently logged in to a user account on PrioriTask.
 
 === Retrieving question for user's password: `forgotpassword` or `fp` `[since v1.4]`
 
-Retrieve question for user's password +
+Retrieve question for user's password. +
 
 [.format]
 ====
@@ -246,7 +259,7 @@ Retrieve question for user's password +
 
 === Answering question: `answer` or `ans` `[since v1.4]`
 
-Answer a user's question to retrieve the password +
+Answer a user's question to retrieve the password. The question need not be retrieved before an attempt at answering the question. +
 
 [.format]
 ====

@@ -4,6 +4,7 @@ import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_ANSWER;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_USERNAME;
 
+import seedu.organizer.logic.commands.exceptions.CommandException;
 import seedu.organizer.model.user.User;
 import seedu.organizer.model.user.UserWithQuestionAnswer;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
@@ -28,6 +29,7 @@ public class AnswerCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Answer correct!\nPassword: %1$s";
     public static final String MESSAGE_NO_QUESTION = "User %1$s does not have a question";
     public static final String MESSAGE_WRONG_ANSWER = "Answer is incorrect";
+    public static final String MESSAGE_USER_DOES_NOT_EXIST = "User does not exist";
 
     private String username;
     private String answer;
@@ -39,12 +41,12 @@ public class AnswerCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         User user;
         try {
             user = model.getUserByUsername(username);
         } catch (UserNotFoundException e) {
-            throw new AssertionError("User does not exist");
+            throw new CommandException(MESSAGE_USER_DOES_NOT_EXIST);
         }
         if (user instanceof UserWithQuestionAnswer) {
             String answer = ((UserWithQuestionAnswer) user).answer;

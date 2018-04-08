@@ -78,7 +78,7 @@ public class LoginCommandTest {
     @Test
     public void equals() {
         User alice = new User("alice", "alice123");
-        User bob = new User("bob", "bob123");
+        User bob = new User("bobby", "bobby123");
         LoginCommand loginAliceCommand = new LoginCommand(alice);
         LoginCommand loginBobCommand = new LoginCommand(bob);
 

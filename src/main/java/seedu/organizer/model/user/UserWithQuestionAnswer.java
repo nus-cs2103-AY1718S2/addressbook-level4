@@ -9,8 +9,10 @@ import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
  */
 public class UserWithQuestionAnswer extends User {
 
-    public static final String MESSAGE_QUESTION_ANSWER_CONSTRAINTS =
-            "Questions and answers can take any values, but cannot be blank";
+    public static final String MESSAGE_QUESTION_CONSTRAINTS =
+            "Questions can take any values, but cannot be blank";
+    public static final String MESSAGE_ANSWER_CONSTRAINTS =
+            "Answers can take any values, but cannot be blank";
 
     /*
      * The first character must not be a whitespace, otherwise " " (a blank string) becomes a valid input.
@@ -26,26 +28,14 @@ public class UserWithQuestionAnswer extends User {
      *
      * @param username A valid username.
      * @param password A valid password.
-     */
-    public UserWithQuestionAnswer(String username, String password) {
-        super(username, password);
-        question = null;
-        answer = null;
-    }
-
-    /**
-     * Constructs a {@code UserWithQuestionAnswer}.
-     *
-     * @param username A valid username.
-     * @param password A valid password.
      * @param question A valid question.
      * @param answer A valid answer.
      */
     public UserWithQuestionAnswer(String username, String password, String question, String answer) {
         super(username, password);
         requireAllNonNull(question, answer);
-        checkArgument(isValidQuestion(question), MESSAGE_QUESTION_ANSWER_CONSTRAINTS);
-        checkArgument(isValidAnswer(answer), MESSAGE_QUESTION_ANSWER_CONSTRAINTS);
+        checkArgument(isValidQuestion(question), MESSAGE_QUESTION_CONSTRAINTS);
+        checkArgument(isValidAnswer(answer), MESSAGE_ANSWER_CONSTRAINTS);
         this.question = question;
         this.answer = answer;
     }

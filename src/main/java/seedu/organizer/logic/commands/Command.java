@@ -39,5 +39,7 @@ public abstract class Command {
      */
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
         this.model = model;
+        this.history = history;
+        this.undoRedoStack = undoRedoStack;
     }
 }

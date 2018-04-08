@@ -47,6 +47,7 @@ public class LoginCommand extends Command {
         requireNonNull(model);
         try {
             model.loginUser(toLogin);
+            history.clear();
             return new CommandResult(String.format(MESSAGE_SUCCESS, toLogin));
         } catch (UserNotFoundException unf) {
             throw new CommandException(MESSAGE_USER_NOT_FOUND);
@@ -55,7 +56,6 @@ public class LoginCommand extends Command {
         } catch (UserPasswordWrongException e) {
             throw new CommandException(MESSAGE_WRONG_PASSWORD);
         }
-
     }
 
     @Override

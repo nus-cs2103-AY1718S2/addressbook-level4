@@ -1,8 +1,11 @@
 package seedu.organizer.logic.commands;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.fail;
+import static seedu.organizer.logic.commands.AnswerCommand.MESSAGE_USER_DOES_NOT_EXIST;
 import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -60,7 +63,7 @@ public class AnswerCommandTest {
     @Test
     public void execute_nonExistingUser_noSuchUserFound() {
         answerCommand = new AnswerCommand("noSuchUser", "answer");
-        assertCommandFailure(answerCommand);
+        assertCommandFailure(answerCommand, MESSAGE_USER_DOES_NOT_EXIST);
     }
 
     /**
@@ -80,10 +83,14 @@ public class AnswerCommandTest {
      * Asserts that {@code command} is successfully executed, and<br>
      * - Exception is thrown
      */
-    protected void assertCommandFailure(AnswerCommand command) {
+    protected void assertCommandFailure(AnswerCommand command, String expectedMessage) {
         answerCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        exception.expect(AssertionError.class);
-        command.execute();
+        try {
+            command.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException e) {
+            Assert.assertEquals(expectedMessage, e.getMessage());
+        }
     }
 }
 

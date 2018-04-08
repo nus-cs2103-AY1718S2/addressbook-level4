@@ -15,9 +15,9 @@ public class LoginCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        User expectedUser = new User("bob", "bob");
+        User expectedUser = new User("bobby", "bobby");
 
-        assertParseSuccess(parser, " u/bob p/bob", new LoginCommand(expectedUser));
+        assertParseSuccess(parser, " u/bobby p/bobby", new LoginCommand(expectedUser));
     }
 
     @Test
@@ -25,21 +25,33 @@ public class LoginCommandParserTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE);
 
         // missing username prefix
-        assertParseFailure(parser, " bob p/b0b", expectedMessage);
+        assertParseFailure(parser, " bobby p/b0bby", expectedMessage);
 
         // missing password prefix
-        assertParseFailure(parser, " u/bob b0b", expectedMessage);
+        assertParseFailure(parser, " u/bobby b0bby", expectedMessage);
 
         // all prefixes missing
-        assertParseFailure(parser, " bob b0b", expectedMessage);
+        assertParseFailure(parser, " bobby b0bby", expectedMessage);
     }
 
     @Test
     public void parse_invalidValue_failure() {
-        // invalid username
-        assertParseFailure(parser, " u/b@b p/bob", User.MESSAGE_USER_CONSTRAINTS);
+        // invalid username : contains special character
+        assertParseFailure(parser, " u/b@bby p/bobby", User.MESSAGE_USERNAME_CONSTRAINTS);
 
-        // invalid password
-        assertParseFailure(parser, " u/bob p/b@b", User.MESSAGE_USER_CONSTRAINTS);
+        // invalid password : contains special character
+        assertParseFailure(parser, " u/bobby p/b@bby", User.MESSAGE_PASSWORD_CONSTRAINTS);
+
+        // invalid username : length < 5
+        assertParseFailure(parser, " u/bobb p/bobby", User.MESSAGE_USERNAME_CONSTRAINTS);
+
+        // invalid password : length < 5
+        assertParseFailure(parser, " u/bobby p/bobb", User.MESSAGE_PASSWORD_CONSTRAINTS);
+
+        // invalid username : blank
+        assertParseFailure(parser, " u/ p/bobby", User.MESSAGE_USERNAME_CONSTRAINTS);
+
+        // invalid password : blank
+        assertParseFailure(parser, " u/bobby p/ ", User.MESSAGE_PASSWORD_CONSTRAINTS);
     }
 }

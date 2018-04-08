@@ -18,8 +18,8 @@ public class AddQuestionAnswerCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addqa";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a question and answer to the current user."
-            + "Existing values will be overwritten by the input values.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a question answer set to the current user."
+            + "The existing question answer set will be overwritten by the input values.\n"
             + "Parameters: "
             + PREFIX_QUESTION + "QUESTION "
             + PREFIX_ANSWER + "ANSWER\n"
@@ -27,7 +27,7 @@ public class AddQuestionAnswerCommand extends UndoableCommand {
             + PREFIX_QUESTION + "What cats do you like? "
             + PREFIX_ANSWER + "All cats ";
 
-    public static final String MESSAGE_ADD_QUESTION_ANSWER_SUCCESS = "Added question and answer to user: %1$s";
+    public static final String MESSAGE_ADD_QUESTION_ANSWER_SUCCESS = "Added question answer set to user: %1$s";
 
     private User userToEdit;
     private UserWithQuestionAnswer editedUser;

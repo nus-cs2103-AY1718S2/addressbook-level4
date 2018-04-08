@@ -13,10 +13,14 @@ import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
  */
 public class User {
 
-    public static final String MESSAGE_USER_CONSTRAINTS = "Username and password should be alphanumeric"
-                                                            + " and must not contain spaces";
-    public static final String USERNAME_VALIDATION_REGEX = "\\p{Alnum}+";
-    public static final String PASSWORD_VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String MESSAGE_USERNAME_CONSTRAINTS = "Username should be alphanumeric, "
+                                                            + "be at least of length 5, "
+                                                            + "and must not contain spaces";
+    public static final String MESSAGE_PASSWORD_CONSTRAINTS = "Password should be alphanumeric"
+            + ", be at least of length 5, "
+            + " and must not contain spaces";
+    public static final String USERNAME_VALIDATION_REGEX = "\\p{Alnum}{5,}+";
+    public static final String PASSWORD_VALIDATION_REGEX = "\\p{Alnum}{5,}+";
 
     public final String username;
     public final String password;
@@ -29,8 +33,8 @@ public class User {
      */
     public User(String username, String password) {
         requireNonNull(username, password);
-        checkArgument(isValidUsername(username), MESSAGE_USER_CONSTRAINTS);
-        checkArgument(isValidPassword(password), MESSAGE_USER_CONSTRAINTS);
+        checkArgument(isValidUsername(username), MESSAGE_USERNAME_CONSTRAINTS);
+        checkArgument(isValidPassword(password), MESSAGE_PASSWORD_CONSTRAINTS);
         this.username = username;
         this.password = password;
     }

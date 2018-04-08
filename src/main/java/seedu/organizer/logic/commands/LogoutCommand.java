@@ -15,7 +15,7 @@ public class LogoutCommand extends Command {
     @Override
     public CommandResult execute() {
         model.logout();
-
+        history.clear();
         return new CommandResult(MESSAGE_LOGOUT_ACKNOWLEDGEMENT);
     }
 

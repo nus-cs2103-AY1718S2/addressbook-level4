@@ -68,7 +68,7 @@ public class SignUpCommandTest {
     @Test
     public void equals() {
         User alice = new User("alice", "alice123");
-        User bob = new User("bob", "bob123");
+        User bob = new User("bobby", "bobby123");
         SignUpCommand signUpAliceCommand = new SignUpCommand(alice);
         SignUpCommand signUpBobCommand = new SignUpCommand(bob);
 

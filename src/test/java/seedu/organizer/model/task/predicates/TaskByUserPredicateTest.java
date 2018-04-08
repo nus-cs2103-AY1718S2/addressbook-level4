@@ -13,8 +13,8 @@ public class TaskByUserPredicateTest {
 
     @Test
     public void equals() {
-        User firstPredicate = new User("bob", "bob");
-        User secondPredicate = new User("mary", "mary");
+        User firstPredicate = new User("bobby", "bobby");
+        User secondPredicate = new User("mary123", "mary123");
 
         TaskByUserPredicate firstUserPredicate = new TaskByUserPredicate(firstPredicate);
         TaskByUserPredicate secondUserPredicate = new TaskByUserPredicate(secondPredicate);

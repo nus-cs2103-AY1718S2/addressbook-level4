@@ -12,7 +12,7 @@ import seedu.organizer.model.user.exceptions.DuplicateUserException;
 /**
  * Adds a user to the organizer.
  */
-public class SignUpCommand extends UndoableCommand {
+public class SignUpCommand extends Command {
 
     public static final String COMMAND_WORD = "signup";
     public static final String COMMAND_ALIAS = "su";
@@ -39,7 +39,7 @@ public class SignUpCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
         try {
             model.addUser(toAdd);

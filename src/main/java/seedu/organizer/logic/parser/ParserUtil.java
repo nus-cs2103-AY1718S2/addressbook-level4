@@ -93,7 +93,7 @@ public class ParserUtil {
         requireNonNull(name);
         String trimmedUsername = name.trim();
         if (!User.isValidUsername(trimmedUsername)) {
-            throw new IllegalValueException(User.MESSAGE_USER_CONSTRAINTS);
+            throw new IllegalValueException(User.MESSAGE_USERNAME_CONSTRAINTS);
         }
         return name;
     }
@@ -117,7 +117,7 @@ public class ParserUtil {
         requireNonNull(password);
         String trimmedPassword = password.trim();
         if (!User.isValidPassword(trimmedPassword)) {
-            throw new IllegalValueException(User.MESSAGE_USER_CONSTRAINTS);
+            throw new IllegalValueException(User.MESSAGE_PASSWORD_CONSTRAINTS);
         }
         return password;
     }
@@ -141,7 +141,7 @@ public class ParserUtil {
         requireNonNull(question);
         String trimmedQuestion = question.trim();
         if (!UserWithQuestionAnswer.isValidQuestion(trimmedQuestion)) {
-            throw new IllegalValueException(UserWithQuestionAnswer.MESSAGE_QUESTION_ANSWER_CONSTRAINTS);
+            throw new IllegalValueException(UserWithQuestionAnswer.MESSAGE_QUESTION_CONSTRAINTS);
         }
         return question;
     }
@@ -165,7 +165,7 @@ public class ParserUtil {
         requireNonNull(answer);
         String trimmedAnswer = answer.trim();
         if (!UserWithQuestionAnswer.isValidAnswer(trimmedAnswer)) {
-            throw new IllegalValueException(UserWithQuestionAnswer.MESSAGE_QUESTION_ANSWER_CONSTRAINTS);
+            throw new IllegalValueException(UserWithQuestionAnswer.MESSAGE_ANSWER_CONSTRAINTS);
         }
         return answer;
     }
@@ -177,6 +177,30 @@ public class ParserUtil {
     public static Optional<String> parseAnswer(Optional<String> answer) throws IllegalValueException {
         requireNonNull(answer);
         return answer.isPresent() ? Optional.of(parseAnswer(answer.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String priority} into a {@code Priority}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code priority} is invalid.
+     */
+    public static Priority parsePriority(String priority) throws IllegalValueException {
+        requireNonNull(priority);
+        String trimmedPriority = priority.trim();
+        if (!Priority.isValidPriority(trimmedPriority)) {
+            throw new IllegalValueException(Priority.MESSAGE_PRIORITY_CONSTRAINTS);
+        }
+        return new Priority(trimmedPriority);
+    }
+
+    /**
+     * Parses a {@code Optional<String> priority} into an {@code Optional<Priority>} if {@code priority} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Priority> parsePriority(Optional<String> priority) throws IllegalValueException {
+        requireNonNull(priority);
+        return priority.isPresent() ? Optional.of(parsePriority(priority.get())) : Optional.empty();
     }
     //@@author
 
@@ -202,30 +226,6 @@ public class ParserUtil {
     public static Optional<Name> parseName(Optional<String> name) throws IllegalValueException {
         requireNonNull(name);
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
-    }
-
-    /**
-     * Parses a {@code String priority} into a {@code Priority}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code priority} is invalid.
-     */
-    public static Priority parsePriority(String priority) throws IllegalValueException {
-        requireNonNull(priority);
-        String trimmedPriority = priority.trim();
-        if (!Priority.isValidPriority(trimmedPriority)) {
-            throw new IllegalValueException(Priority.MESSAGE_PRIORITY_CONSTRAINTS);
-        }
-        return new Priority(trimmedPriority);
-    }
-
-    /**
-     * Parses a {@code Optional<String> priority} into an {@code Optional<Priority>} if {@code priority} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Priority> parsePriority(Optional<String> priority) throws IllegalValueException {
-        requireNonNull(priority);
-        return priority.isPresent() ? Optional.of(parsePriority(priority.get())) : Optional.empty();
     }
 
     /**

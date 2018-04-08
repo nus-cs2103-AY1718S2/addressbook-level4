@@ -4,8 +4,6 @@ import java.time.LocalDate;
 
 import static java.util.Objects.requireNonNull;
 
-
-
 //@@author AzuraAiR
 /**
  * Represents a Person's birthday in the address book.
@@ -16,9 +14,9 @@ public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthday date can only contain numbers, and should follow the DDMMYYYY format";
-    public static final String MESSAGE_INVALID_DAY =
+    public static final String MESSAGE_INVALID_BIRTHDAY =
             "Birthday day is invalid";
-    public static final String MESSAGE_INVALID_MONTH =
+    public static final String MESSAGE_INVALID_BIRTHMONTH =
             "Birthday month is invalid";
     public static final String MESSAGE_FUTURE_BIRTHDAY =
             "Birthday is set in the future";
@@ -74,73 +72,73 @@ public class Birthday {
 
         // Check for valid day
         if (testDay == 0) {
-            throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+            throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
         }
 
         // Check for valid month and day
         switch (testMonth){
         case 1: // Jan
             if (testDay > 31) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
             }
             break;
         case 2: // Feb
             if (testDay > 28) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
             }
             break;
         case 3: // Mar
             if (testDay > 31) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
             }
             break;
         case 4: // Apr
             if (testDay > 30) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
             }
             break;
         case 5: // May
             if (testDay > 31) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
             }
             break;
         case 6: // Jun
             if (testDay > 30) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
             }
             break;
         case 7: // Jul
             if (testDay > 31) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
             }
             break;
         case 8: // Aug
             if (testDay > 31) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
             }
             break;
         case 9: // Sep
             if (testDay > 30) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
             }
             break;
         case 10: // Oct
             if (testDay > 31) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
             }
             break;
         case 11: // Nov
             if (testDay > 30) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
             }
             break;
         case 12: // Dec
             if (testDay > 31) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_DAY);
+                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
             }
             break;
         default:
-            throw new IllegalArgumentException(MESSAGE_INVALID_MONTH);
+            throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHMONTH);
         }
 
         // Check for future date

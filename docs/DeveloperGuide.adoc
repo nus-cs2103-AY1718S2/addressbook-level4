@@ -518,11 +518,11 @@ The `updatePriority` method returns a new `Task` with a new `Priority` based on 
 
 The new `Priority` level will remain within the range of 0 - 9. The new `Priority` is calculated as such :
 
-* If the current date is equal to the `AddedDate`
+* If the current date is equal to the `AddedDate`, and the current date is equals or after the `Deadline`.
 ** `Priority` remains the same.
-* If the current date is past the `Deadline`
+* If the current date is past the `Deadline`.
 ** `Priority` is set to the `HIGHEST_SETTABLE_PRIORITY_LEVEL` : 9
-* If the current date is before the `Deadline` and not equal to the `AddedDate`
+* If the current date is before the `Deadline` and not equal to the `AddedDate`.
 ** `Priority` is calculated via the following formula :
 
 [source,java]

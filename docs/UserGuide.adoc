@@ -305,7 +305,13 @@ _This section explains what a *Task* is, and the commands to manage them._
 ** A priority level can range from *0* (lowest) to *9* (highest).
 ** It is *optional* to set a priority level. If the user does not specify a priority level, PrioriTask will automatically set it to its *default level* : *0*.
 ** Priority levels are automatically updated by gradual incremental steps, based on the date added, current date, and deadline.
-** If a task is still uncompleted after the deadline has passed, its priority level will be at the *maximum level* : *9*.
+*** If the current date is equal to the date added, and the current date is equals or after the deadline.
+**** The priority level remains the same.
+*** If the current date is past the `Deadline`.
+**** The priority level is set to its *maximum level : 9*.
+*** If the current date is before the deadline and not equal to the date added.
+**** The priority level is set based on how close the current date is to the deadline, and the time span between the date added and the deadline.
+
 * [parameters]#`DESCRIPTION`#
 ** A description can be of any value (i.e. alphabet, numbers, special symbols).
 ** It is *optional* to have a description.

@@ -43,7 +43,7 @@ public class AddOrderCommand extends UndoableCommand {
             + PREFIX_ORDER_INFORMATION + "Books "
             + PREFIX_PRICE + "10.00 "
             + PREFIX_QUANTITY + "2 "
-            + PREFIX_DELIVERY_DATE + "12/12/2018\n";
+            + PREFIX_DELIVERY_DATE + "12-12-2018\n";
 
     public static final String MESSAGE_ADD_ORDER_SUCCESS = "Added order to %1$s:\n[%2$s]";
     public static final String MESSAGE_ORDER_NOT_ADDED = "Could not add order to Person.";

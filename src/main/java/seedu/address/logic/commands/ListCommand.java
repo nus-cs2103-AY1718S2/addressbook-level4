@@ -64,9 +64,9 @@ public class ListCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        EventsCenter.getInstance().post(new SwitchToBookListRequestEvent());
         model.updateBookListFilter(filterDescriptor.buildCombinedFilter());
         model.updateBookListSorter(bookComparator);
-        EventsCenter.getInstance().post(new SwitchToBookListRequestEvent());
         return new CommandResult(String.format(MESSAGE_SUCCESS, model.getDisplayBookList().size()));
     }
 

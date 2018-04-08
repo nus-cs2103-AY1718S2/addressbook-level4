@@ -18,6 +18,7 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
 import guitests.GuiRobot;
+import guitests.guihandles.AliasListPanelHandle;
 import guitests.guihandles.BookDetailsPanelHandle;
 import guitests.guihandles.BookListPanelHandle;
 import guitests.guihandles.BookReviewsPanelHandle;
@@ -37,6 +38,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.book.Book;
+import seedu.address.testutil.TestUtil;
 import seedu.address.testutil.TypicalBooks;
 import seedu.address.ui.CommandBox;
 
@@ -87,7 +89,7 @@ public abstract class BibliotekSystemTest {
      * Returns the directory of the data file.
      */
     protected String getDataFileLocation() {
-        return TestApp.SAVE_LOCATION_FOR_TESTING;
+        return TestUtil.getFilePathInSandboxFolder("sampleData.xml");
     }
 
     public MainWindowHandle getMainWindowHandle() {
@@ -120,6 +122,10 @@ public abstract class BibliotekSystemTest {
 
     public BookReviewsPanelHandle getBookReviewsPanel() {
         return mainWindowHandle.getBookReviewsPanel();
+    }
+
+    public AliasListPanelHandle getAliasListPanel() {
+        return mainWindowHandle.getAliasListPanel();
     }
 
     public StatusBarFooterHandle getStatusBarFooter() {
@@ -244,6 +250,13 @@ public abstract class BibliotekSystemTest {
         if (getRecentBooksPanel().isVisible()) {
             assertListMatching(getRecentBooksPanel(), expectedModel.getRecentBooksList());
         }
+    }
+
+    /**
+     * Asserts that the alias list panel displays the aliases in the model correctly.
+     */
+    protected void assertAliasListDisplaysExpected(Model expectedModel) {
+        assertListMatching(getAliasListPanel(), expectedModel.getDisplayAliasList());
     }
 
     /**
@@ -415,6 +428,8 @@ public abstract class BibliotekSystemTest {
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getBookListPanel(), getModel().getDisplayBookList());
             assertFalse(getBookDetailsPanel().isVisible());
+            assertFalse(getBookReviewsPanel().isVisible());
+            assertFalse(getAliasListPanel().isVisible());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {

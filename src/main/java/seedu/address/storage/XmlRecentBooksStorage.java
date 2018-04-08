@@ -53,7 +53,7 @@ public class XmlRecentBooksStorage implements RecentBooksStorage {
             return Optional.empty();
         }
 
-        XmlSerializableBookShelf xmlRecentBooksList = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
+        XmlSerializableBookShelf xmlRecentBooksList = XmlFileStorage.loadBookShelfDataFromFile(new File(filePath));
         try {
             return Optional.of(xmlRecentBooksList.toModelType());
         } catch (IllegalValueException ive) {
@@ -77,6 +77,6 @@ public class XmlRecentBooksStorage implements RecentBooksStorage {
 
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
-        XmlFileStorage.saveDataToFile(file, new XmlSerializableBookShelf(recentBooksList));
+        XmlFileStorage.saveBookShelfDataToFile(file, new XmlSerializableBookShelf(recentBooksList));
     }
 }

@@ -46,17 +46,20 @@ public class BookListPanel extends UiPart<Region> {
                 });
     }
 
+    protected void clearSelection() {
+        bookListView.getSelectionModel().clearSelection();
+    }
+
+    protected void scrollToTop() {
+        bookListView.scrollTo(0);
+    }
+
     /**
      * Scrolls to the {@code Book} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
         bookListView.scrollTo(index);
         bookListView.getSelectionModel().clearAndSelect(index);
-    }
-
-    protected void clearSelectionAndScrollToTop() {
-        bookListView.getSelectionModel().clearSelection();
-        bookListView.scrollTo(0);
     }
 
     @Subscribe

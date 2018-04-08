@@ -492,7 +492,71 @@ The left and right panels are now empty.
 
 image::ClearCommand.png[width="700"]
 
-=== Changing application theme [since v1.2]
+=== Adding a command alias : `addalias` [since v1.5]
+
+If there is a command that you use frequently, and you find typing out the entire command to be too tedious,
+you can add a command alias to reduce the amount of typing needed. +
+Format: `addalias ALIAS_NAME cmd/COMMAND`
+
+****
+* Adds a command alias for the specified `COMMAND`.
+* `COMMAND` should refer to a default, built-in command, and can optionally include command parameters.
+* `ALIAS_NAME` is case-insensitive, and must not contain any spaces or tabs.
+* If there is an existing alias with the same name as `ALIAS_NAME`, the existing alias will be overwritten.
+****
+
+WARNING: If `COMMAND` does not specify a valid built-in command, you will
+get an `Unknown command` message when you attempt to use the command alias.
+
+[TIP]
+You can use command aliases to specify default named parameters (parameters with a prefix, such as `t/TITLE`). +
+For example, if you want a custom `list` command that sorts by title (in reverse alphabetical order) by default,
+you can add a command alias using `addalias ls cmd/list by/titled`. +
+You can override this default sort mode by specifying a different sort mode, e.g. `ls by/status`.
+
+Examples:
+
+* `addalias rm cmd/delete` +
+Adds a command alias with the name `rm`. +
+You can then use `rm INDEX` in place of `delete INDEX`.
+
+* `addalias read cmd/edit s/read p/none` +
+Adds a command alias with the name `read`. +
+You can then use `read INDEX` in place of `edit INDEX s/read p/none`.
+
+=== Listing command aliases : `aliases` [since v1.5]
+
+If you have forgotten some of your command aliases, and need a quick refresher, you can use
+the `aliases` command to view all your command aliases. +
+Format: `aliases`
+
+****
+* Lists all command aliases.
+****
+
+After entering the `aliases` command, Bibliotek shows `Listed xx aliases.` to indicate that the command was successful.
+The right panel will display a list of all your command aliases.
+
+image::AliasesCommand.png[width="700"]
+
+=== Delete a command alias : `deletealias` [since v1.5]
+
+If you no longer require a command alias, you can remove it using `deletealias`. +
+Format: `deletealias ALIAS_NAME`
+
+****
+* Deletes the command alias specified by the `ALIAS_NAME`.
+* `ALIAS_NAME` is case-insensitive, and must match the name of an existing alias.
+****
+
+Examples:
+
+* `deletealias rm` +
+Deletes the command alias with the name `rm`.
+* `deletealias read` +
+Deletes the command alias with the name `read`.
+
+=== Changing theme : `theme` [since v1.2]
 
 If you don't like the default theme used by Bibliotek, you can change it using `theme`. +
 Format: `theme THEME_NAME`
@@ -518,28 +582,6 @@ And `theme dark`:
 image::ThemeDark.png[width="700"]
 
 === Changing settings: `settings` [coming in v1.5]
-
-==== Command alias [coming in v1.5]
-
-If you don't like the word for a command or think it is too long, you can add a
-command alias to make the command more intuitive or reduce typing. +
-Format: `settings alias/COMMAND: ALIAS`
-
-****
-* Change the alias of the given command.
-* Each command can have 1 alias.
-* By default, all commands have no alias.
-****
-
-TIP: Remove the alias using `settings alias/COMMAND:`
-
-Examples:
-
-* `settings alias/add: a` +
-Change the command alias of `add` to `a`.
-
-* `settings alias/add:` +
-Remove the command alias of `add`.
 
 [[settings-library]]
 ==== Library [coming in v2.0]
@@ -631,14 +673,19 @@ Format: `import SOURCE`
 
 == Command Summary
 
-[width="70%",options="header",]
+[width="72%",options="header",]
 |=======================================================================
 |Command |Syntax
 |*Add* |`add INDEX`
 
 e.g. `add 1`
+|*Add Alias* |`addalias ALIAS_NAME cmd/COMMAND`
+
+e.g. `addalias read cmd/edit s/read p/none`
+|*Aliases* |`aliases`
 |*Clear* |`clear`
 |*Delete* |`delete INDEX`
+|*Delete Alias* |`deletealias ALIAS_NAME`
 |*Edit* |`edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]`
 
 e.g. `edit 2 s/READ r/5`

@@ -63,15 +63,14 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
      * 1. Command box displays an empty string.<br>
      * 2. Command box has the default style class.<br>
      * 3. Result display box displays the load successful message.<br>
-     * 4. {@code Model}, {@code Storage}, {@code BookListPanel}, {@code SearchResultsPanel},
-     * and {@code RecentBooksPanel} remain unchanged.<br>
-     * 5. Selected books card remain unchanged.<br>
+     * 4. {@code Model} and {@code Storage} remain unchanged.<br>
+     * 5. Any selections in {@code BookListPanel}, {@code SearchResultsPanel},
+     *    and {@code RecentBooksPanel} are all deselected.<br>
      * 6. {@code BookReviewsPanel} is visible and {@code BookDetailsPanel} is hidden.
      * 7. Status bar remains unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see BibliotekSystemTest#assertSelectedBookListCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Book toLoad) {
         Model expectedModel = getModel();
@@ -82,10 +81,9 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
         String expectedResultMessage = String.format(ReviewsCommand.MESSAGE_SUCCESS, toLoad);
 
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertSelectedBookListCardUnchanged();
-        assertSelectedSearchResultsCardUnchanged();
-        assertSelectedRecentBooksCardUnchanged();
-        assertCommandBoxShowsDefaultStyle();
+        assertSelectedBookListCardDeselected();
+        assertSelectedSearchResultsCardDeselected();
+        assertSelectedRecentBooksCardDeselected();
         assertBookReviewsPanelVisible();
         assertStatusBarUnchanged();
     }

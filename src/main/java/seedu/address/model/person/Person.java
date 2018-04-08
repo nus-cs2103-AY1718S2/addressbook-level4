@@ -32,11 +32,13 @@ public class Person {
     private final UniqueSubjectList subjects;
     private final Remark remark;
     private final Cca cca;
+    private final InjuriesHistory injuriesHistory;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Nric nric, Set<Tag> tags, Set<Subject> subjects, Remark remark, Cca cca) {
+    public Person(Name name, Nric nric, Set<Tag> tags, Set<Subject> subjects, Remark remark, Cca cca,
+                  InjuriesHistory injuriesHistory) {
         requireAllNonNull(name, nric, tags, subjects, cca);
         this.name = name;
         this.nric = nric;
@@ -45,6 +47,7 @@ public class Person {
         this.subjects = new UniqueSubjectList(subjects);
         this.remark = remark;
         this.cca = cca;
+        this.injuriesHistory = injuriesHistory;
     }
 
     public Name getName() {
@@ -59,7 +62,13 @@ public class Person {
         return remark;
     }
 
-    public Cca getCca() { return cca; }
+    public Cca getCca() {
+        return cca;
+    }
+
+    public InjuriesHistory getInjuriesHistory() {
+        return injuriesHistory;
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -180,7 +189,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, nric, tags, subjects, remark, cca);
+        return Objects.hash(name, nric, tags, subjects, remark, cca, injuriesHistory);
     }
 
     @Override
@@ -196,6 +205,7 @@ public class Person {
         builder.append(" Remarks: ")
                .append(getRemark());
         builder.append(" Cca: ").append(getCca());
+        builder.append(" InjuriesHistory: ").append(getInjuriesHistory());
         return builder.toString();
     }
 

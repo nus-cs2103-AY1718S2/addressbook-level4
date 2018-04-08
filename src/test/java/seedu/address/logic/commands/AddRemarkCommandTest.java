@@ -259,18 +259,18 @@ public class AddRemarkCommandTest {
         private EditPersonDescriptor descriptor;
 
         public EditPersonDescriptorBuilder() {
-            descriptor = new EditPersonDescriptor();
+            descriptor = new seedu.address.logic.commands.EditPersonDescriptorBuilder().createEditPersonDescriptor();
         }
 
         public EditPersonDescriptorBuilder(EditPersonDescriptor descriptor) {
-            this.descriptor = new EditPersonDescriptor(descriptor);
+            this.descriptor = new seedu.address.logic.commands.EditPersonDescriptorBuilder().setToCopy(descriptor).createEditPersonDescriptor();
         }
 
         /**
          * Returns an {@code EditPersonDescriptor} with fields containing {@code person}'s details
          */
         public EditPersonDescriptorBuilder(Person person) {
-            descriptor = new EditPersonDescriptor();
+            descriptor = new seedu.address.logic.commands.EditPersonDescriptorBuilder().createEditPersonDescriptor();
             descriptor.setName(person.getName());
             descriptor.setNric(person.getNric());
             descriptor.setTags(person.getTags());

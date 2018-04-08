@@ -36,7 +36,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
         String password = expectedModel.getPassword();
-        UnlockCommand testUnlockCommand = new UnlockCommand(password);
+        UnlockCommand testUnlockCommand = new UnlockCommand();
+        testUnlockCommand.setTestMode();
         testUnlockCommand.setData(expectedModel, new CommandHistory(), new UndoRedoStack());
         testUnlockCommand.execute();
 
@@ -48,7 +49,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         /* Case: delete the last person in the list -> deleted */
         Model modelBeforeDeletingLast = getModel();
         password = modelBeforeDeletingLast.getPassword();
-        testUnlockCommand = new UnlockCommand(password);
+        testUnlockCommand = new UnlockCommand();
+        testUnlockCommand.setTestMode();
         testUnlockCommand.setData(modelBeforeDeletingLast, new CommandHistory(), new UndoRedoStack());
         testUnlockCommand.execute();
 

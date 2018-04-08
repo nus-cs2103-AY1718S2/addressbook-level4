@@ -18,13 +18,11 @@ public class UnlockCommandParserTest {
 
     @Test
     public void parse_invalidArgs() {
-        // no agrs provided command
-        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlockCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " 2", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlockCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_validArgs_returnsLockCommand() {
-        // agrs provided command
-        assertParseSuccess(parser, " 1234", new UnlockCommand("1234"));
+        assertParseSuccess(parser, "   ", new UnlockCommand());
     }
 }

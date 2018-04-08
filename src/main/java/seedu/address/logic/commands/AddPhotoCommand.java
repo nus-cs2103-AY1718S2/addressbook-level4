@@ -81,7 +81,12 @@ public class AddPhotoCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
         Person targetPerson = lastShownList.get(targetIndex.getZeroBased());
 
-        String photoNameWithExtension = path.substring(path.lastIndexOf("\\") + 1);
+        String photoNameWithExtension;
+        if (!path.contains("/"))  {
+            photoNameWithExtension = path.substring(path.lastIndexOf("\\") + 1);
+        } else {
+            photoNameWithExtension = path.substring(path.lastIndexOf("/") + 1);
+        }
 
         if (!model.getPhotoList().contains(new Photo(photoNameWithExtension))) {
             copyPhotoFileToStorage(photoNameWithExtension);

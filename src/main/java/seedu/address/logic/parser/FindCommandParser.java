@@ -267,7 +267,8 @@ public class FindCommandParser implements Parser<FindCommand> {
         if ((arePrefixesPresent(argMultimapPetPatient, PREFIX_BLOODTYPE))) {
             String[] stringKeywords = getStringKeyword(argMultimapPetPatient, PREFIX_BLOODTYPE);
             Predicate<PetPatient> stringPredicate =  petPatient -> Arrays.stream(stringKeywords)
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getBloodType().bloodType, keyword));
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(
+                            petPatient.getBloodType().bloodType, keyword));
             if (finalPredicate == null) {
                 finalPredicate = stringPredicate;
             } else {

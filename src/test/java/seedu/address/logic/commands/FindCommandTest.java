@@ -414,7 +414,8 @@ public class FindCommandTest {
     private FindCommand preparePetBloodTypeCommand(String userInput) {
         Predicate<PetPatient> predicate = forPetPatient -> Arrays.asList(userInput.split("\\s+"))
                 .stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPetPatient.getBloodType().bloodType, keyword));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(
+                        forPetPatient.getBloodType().bloodType, keyword));
         FindCommand command =
                 new FindCommand(predicate, 2);
         command.setData(model, new CommandHistory(), new UndoRedoStack());

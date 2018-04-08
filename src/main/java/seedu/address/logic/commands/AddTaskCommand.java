@@ -35,7 +35,7 @@ public class AddTaskCommand extends UndoableCommand {
             + PREFIX_INDEX + "STUDENT'S INDEX "
             + PREFIX_MILESTONE_INDEX + "MILESTONE'S INDEX "
             + PREFIX_NAME + "NAME OF TASK "
-            + PREFIX_DESCRIPTION + "DESCRIPTION\n"
+            + PREFIX_DESCRIPTION + "DESCRIPTION OF TASK\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_INDEX + "1 "
             + PREFIX_MILESTONE_INDEX + "2 "

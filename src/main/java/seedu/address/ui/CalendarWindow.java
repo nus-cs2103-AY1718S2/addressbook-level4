@@ -11,7 +11,10 @@ import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
 import com.calendarfx.view.CalendarView;
+import com.calendarfx.view.DayView;
 
+import com.calendarfx.view.DayViewBase;
+import com.calendarfx.view.WeekView;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
@@ -56,6 +59,8 @@ public class CalendarWindow extends UiPart<Region> {
 
     @FXML
     private CalendarView calendarView;
+    private DayView dayView;
+    private WeekView weekView;
 
     /**
      *
@@ -65,13 +70,25 @@ public class CalendarWindow extends UiPart<Region> {
         super(DEFAULT_PAGE);
 
         this.appointmentList = appointmentList;
-
         calendarView = new CalendarView();
 
+
+        setView();
         setTime();
         setCalendar();
         disableViews();
         registerAsAnEventHandler(this);
+
+    }
+
+    private void setView() {
+        this.dayView = calendarView.getDayPage().getDetailedDayView().getDayView();
+        dayView.setHoursLayoutStrategy(DayViewBase.HoursLayoutStrategy.FIXED_HOUR_HEIGHT);
+        dayView.setHourHeight(150);
+
+        this.weekView = calendarView.getWeekPage().getDetailedWeekView().getWeekView();
+        weekView.setHoursLayoutStrategy(DayViewBase.HoursLayoutStrategy.FIXED_HOUR_HEIGHT);
+        weekView.setHourHeight(150);
     }
 
     private void setTime() {
@@ -89,8 +106,11 @@ public class CalendarWindow extends UiPart<Region> {
         CalendarSource calendarSource = new CalendarSource("Appointments");
         int styleNumber = 0;
         int appointmentCounter = 0;
+
         for (Appointment appointment : appointmentList) {
+
             Calendar calendar = createCalendar(styleNumber, appointment);
+            calendar.setReadOnly(true);
             calendarSource.getCalendars().add(calendar);
 
             LocalDateTime ldt = appointment.getDateTime();
@@ -98,7 +118,7 @@ public class CalendarWindow extends UiPart<Region> {
 
             Entry entry = new Entry (buildAppointment(appointment, appointmentCounter).toString());
 
-            entry.setInterval(new Interval(ldt, ldt.plusMinutes(30)));
+            entry.setInterval(new Interval(ldt, ldt.plusMinutes(60)));
 
             styleNumber++;
             styleNumber = styleNumber % 7;
@@ -119,12 +139,12 @@ public class CalendarWindow extends UiPart<Region> {
         final StringBuilder builder = new StringBuilder();
         builder.append(appointmentCounter)
             .append(". ")
-            //.append(appointment.getPetPatientName().toString())
-            // .append(" (")
-            .append(appointment.getOwnerNric() + " ");
-        //.append(") ");
-        appointment.getAppointmentTags().forEach(builder::append);
-        //builder.append(appointment.getRemark().toString());
+            .append(appointment.getPetPatientName().toString() + "\n")
+            .append("Owner Nric: " + appointment.getOwnerNric() + "\n")
+            .append("Appointment type: " + appointment.getTagString());
+
+        builder.append("\n");
+        builder.append("Remarks: " + appointment.getRemark().toString());
         return builder;
     }
 
@@ -153,6 +173,8 @@ public class CalendarWindow extends UiPart<Region> {
         calendarView.setShowPrintButton(false);
         calendarView.setShowSourceTrayButton(false);
         calendarView.showDayPage();
+        calendarView.setShowSourceTray(false);
+        calendarView.setShowPageToolBarControls(false);
     }
 
     /**

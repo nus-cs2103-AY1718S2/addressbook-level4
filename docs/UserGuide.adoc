@@ -1,5 +1,6 @@
 = ContactSails - User Guide
 :toc:
+:toclevels: 5
 :toc-title:
 :toc-placement: preamble
 :sectnums:
@@ -54,6 +55,10 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to <<Features>> for details of each command.
 
+== ContactSails UI
+
+// explain where each panel is and what it does
+
 [[Features]]
 == Features
 
@@ -75,13 +80,17 @@ For example, typing `ad` in the command box and then pressing `TAB` will automat
 === Viewing help : `help`
 
 Format: `help` +
-Alias: `?`
+Command Alias: `?`
 
-=== Adding a person: `add`
+=== Managing Persons
 
-Adds a person to ContactSails +
+This section describes commands you can use to manage person entries in ContactSails.
+
+==== Adding a person : `add`
+
+Adds a person to ContactSails. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [g/GROUP]... [pr/PREFERENCE]...` +
-Alias: `a`
+Command Alias: `a`
 
 [TIP]
 A person can have any number of groups and preferences (including 0)
@@ -90,20 +99,14 @@ Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pr/notebooks` OR +
 `a n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pr/notebooks` +
-* `add n/Betsy Crowe g/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 g/criminal` OR +
-`a n/Betsy Crowe g/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 g/criminal`
+Adds a contact `John Doe`, with `98765432` as phone number, `johnd@example.com` as email, `John street, block 123, #01-01` as address,
+and `notebooks` as a preference tag.
 
-=== Listing all persons : `list`
-
-Shows a list of all persons in ContactSails. +
-Format: `list` +
-Alias: `l`
-
-=== Editing a person : `edit`
+==== Editing a person : `edit`
 
 Edits an existing person in ContactSails. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [g/GROUP]... [pr/PREFERENCE]...` +
-Alias: `e`
+Command Alias: `e`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -123,11 +126,65 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 `e 2 n/Betsy Crower g/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing groups.
 
-=== Locating persons by name: `find`
+==== Deleting a person : `delete`
+
+Deletes the specified person from ContactSails. +
+Format: `delete INDEX` +
+Command Alias: `d`
+
+****
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`delete 2` OR `d 2` +
+Deletes the 2nd person in ContactSails.
+
+* `find Betsy` +
+`delete 1`  OR `d 1` +
+Deletes the 1st person in the results of the `find` command.
+
+==== Listing all persons : `list`
+
+Shows a list of all persons in ContactSails. +
+Format: `list` +
+Command Alias: `l`
+
+==== Selecting a person : `select`
+
+Selects the person identified by the index number used in the last person listing. +
+Format: `select INDEX` +
+Command Alias: `s`
+
+****
+* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`select 2` OR `s 2` +
+Selects the 2nd person in ContactSails.
+
+* `find Betsy` +
+`select 1` OR `s 1` +
+Selects the 1st person in the results of the `find` command.
+
+=== Finding Persons
+
+This section describes commands you can use to find person entries using various query types in ContactSails.
+
+==== Finding persons by name : `find`
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]` +
-Alias: `f KEYWORD [MORE KEYWORDS]`
+Command Alias: `f`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -147,11 +204,11 @@ Returns `john` and `John Doe`
 `f Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Locating persons by groups: `groupfind` `since v1.2`
+==== Finding persons by groups : `groupfind` `since v1.2`
 
 Finds persons whose groups matches any of the given keywords. +
 Format: `groupfind KEYWORD [MORE_KEYWORDS]` +
-Alias: `gf KEYWORD [MORE_KEYWORDS]`
+Command Alias: `gf`
 
 ****
 * The search is case insensitive. e.g `Friends` will match `friends`
@@ -170,11 +227,11 @@ Returns `John Doe`
 `gf neighbours friends colleagues` +
 Returns any person having groups `neighbours`, `friends`, or `colleagues`
 
-=== Locating persons by preferences: `preffind` `since v1.2`
+==== Finding persons by preferences : `preffind` `since v1.2`
 
 Finds persons whose preferences matches any of the given keywords. +
 Format: `preffind KEYWORD [MORE_KEYWORDS]` +
-Alias: `pf KEYWORD [MORE_KEYWORDS]`
+Command Alias: `pf`
 
 ****
 * The search is case insensitive. e.g `Computers` will match `computers`
@@ -193,33 +250,15 @@ Returns `John Doe`
 `pf computers shoes necklaces` +
 Returns any person having preferences `computers`, `shoes`, or `necklaces`
 
-=== Deleting a person : `delete`
+=== Managing Groups and Preferences
 
-Deletes the specified person from ContactSails. +
-Format: `delete INDEX` +
-Alias: `d INDEX`
+This section describes commands you can use to manage preference and group tags in ContactSails.
 
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`delete 2` OR `d 2` +
-Deletes the 2nd person in ContactSails.
-
-* `find Betsy` +
-`delete 1`  OR `d 1` +
-Deletes the 1st person in the results of the `find` command.
-
-=== Deleting a group : `groupdelete` `since v1.2`
+==== Deleting a group : `groupdelete` `since v1.2`
 
 Deletes the specified group from ContactSails. +
 Format: `groupdelete GROUP_NAME` +
-Alias: `gd GROUP_NAME`
+Command Alias: `gd`
 
 ****
 * Deletes the group specified by `GROUP_NAME`.
@@ -233,11 +272,11 @@ Examples:
 `gd friends`+
 All persons in ContactSails with the group `friends` will have the group removed.
 
-=== Deleting a preference : `prefdelete` `since v1.2`
+==== Deleting a preference : `prefdelete` `since v1.2`
 
 Deletes the specified preference from ContactSails. +
 Format: `prefdelete PREFERENCE_NAME` +
-Alias: `pd PREFERENCE_NAME`
+Command Alias: `pd`
 
 ****
 * Deletes the preference specified by `PREFERENCE_NAME`.
@@ -251,33 +290,15 @@ Examples:
 `pd computers`+
 All persons in ContactSails with the preference [computers] will have the preference removed.
 
-=== Selecting a person : `select`
+=== Managing Orders
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX` +
-Alias: `s INDEX`
+This section describes commands you can use to manage order entries in ContactSails.
 
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`select 2` OR `s 2` +
-Selects the 2nd person in ContactSails.
-
-* `find Betsy` +
-`select 1` OR `s 1` +
-Selects the 1st person in the results of the `find` command.
-
-=== Adding an order : `orderadd` `since v1.2`
+==== Adding an order : `orderadd` `since v1.2`
 
 Adds an order to the person specified by the index number used in the last person listing. +
 Format: `orderadd INDEX i/ORDER INFORMATION pr/PRICE q/QUANTITY d/DELIVERY DATE` +
-Alias: `oa`
+Command Alias: `oa`
 
 [NOTE]
 For now, orders are added to the list of all orders and not the person selected.
@@ -295,11 +316,11 @@ Adds the 'Chocolates' order to the 1st person in ContactSails.
 `oa 2 i/Books pr/20.00 q/2 d/04-11-2018` +
 Adds the 'Books' order to 2nd person in the results of the `find` command.
 
-=== Editing an order : `orderedit` `since v1.2`
+==== Editing an order : `orderedit` `since v1.2`
 
 Edits the order specified by the index number used in the order listing. +
 Format: `orderedit INDEX [i/ORDER INFORMATION] [pr/PRICE] [q/QUANTITY] [d/DELIVERY DATE]` +
-Alias: `oe`
+Command Alias: `oe`
 
 ****
 * Edits the order at the specified `INDEX`. The index refers to the index number shown in the last order listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -310,14 +331,30 @@ Alias: `oe`
 Examples:
 
 * `orderedit 1 q/10` OR +
-`or 1 q/10` +
+`oe 1 q/10` +
 Edits the quantity field of the 1st order to be 10.
 
-=== Deleting an order : `orderdelete` `since v1.2`
+==== Changing the order status : `orderstatus` `since v1.4`
+
+Changes the order status of the order specified by the index number used in the order listing. +
+Format: `orderstatus INDEX os/ORDER STATUS` +
+Command Alias: `os`
+
+****
+* Orders can be marked as `ongoing` and `done` only.
+****
+
+Examples:
+
+* `orderstatus 2 os/done` OR +
+`os 2 os/done`
+Marks the order status of the 2nd order in the most recent order listing as 'done'.
+
+==== Deleting an order : `orderdelete` `since v1.2`
 
 Deletes the order specified by the index number used in the order listing. +
 Format: `orderdelete INDEX` +
-Alias: `od`
+Command Alias: `od`
 
 ****
 * Deletes the order at the specified `INDEX`.
@@ -331,28 +368,173 @@ Examples:
 `od 3` +
 Deletes the 3rd order of the order list in ContactSails.
 
-=== Listing all orders : `orderlist` `Since v1.4`
+==== Listing all orders : `orderlist` `Since v1.4`
 
 Shows a list of all orders in ContactSails. +
 Format: `orderlist` +
-Alias: `ol`
+Command Alias: `ol`
 
-=== Listing entered commands : `history`
+=== Viewing Calendar
+
+This section describes commands related to viewing the calendar in ContactSails.
+
+==== Displaying the calendar : `calendar` `since v1.3`
+
+Displays the Calendar at centre of window in specified viewing format. +
+Format: `calendar [VIEW_FORMAT]` +
+Command Alias: `cal`
+
+****
+* Calendar has 3 views; Day, Week, and Month.
+* `VIEW_FORMAT` only accepts the keywords, `day`, `week` and `month` to display the calendar in the respective format.
+* Calendar shows current day by default if no parameters are entered or invalid parameters are entered.
+* Calendar will display all incoming entries within timeframe of the specified view.
+****
+
+Examples:
+
+* `calendar` OR +
+`cal` +
+Shows Calendar in Day-View.
+
+* `calendar month` OR +
+`cal month` +
+Shows Calendar in Month-View.
+
+==== Go to next page in the calendar : `calendarnext` `coming in v1.5`
+
+Goes to the next page in Calendar. +
+Format: `calendarnext` +
+Command Alias: `calnext`
+
+****
+* Depending on the current day/week/month calendar is displaying, this command will display the next day/week/month.
+****
+
+==== Go to previous page in the calendar : `calendarprev` `coming in v1.5`
+
+Goes to the previous page in Calendar. +
+Format: `calendarprev` +
+Command Alias: `calprev`
+
+****
+* Depending on the current day/week/month calendar is displaying, this command will display the previous day/week/month.
+****
+
+==== Display current day in the calendar : `calendarnow` `coming in v1.5`
+
+Displays today's date in Calendar. +
+Format: `calendarnow` +
+Command Alias: `calnow`
+
+****
+* If calendar is displaying in day-view, command displays today's date in day-view.
+* If calendar is displaying in week-view, command displays the current week of today in week-view.
+* If calendar is displaying in month-view, command displays current month of today in month-view.
+****
+
+=== Managing Calendar Entries
+
+This section describes commands you can use to manage calendar entries in ContactSails.
+
+==== Adding entries to calendar entry list : `entryadd` `since v1.3`
+
+Adds an entry to the Calendar entry list. +
+Format: `entryadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
+Command Alias: `ea` +
+
+****
+* If input does not contain START_DATE, it is assumed that START DATE is the same as END_DATE.
+* If input does not contain START_TIME, it is assumed that START_TIME is 00:00.
+* TITLE is alphanumeric and accepts white space. TITLE accepts maximum of 40 characters.
+* START_DATE and END_DATE must follow the format: DD-MM-YYYY (E.g. 04-04-2020 represents 4 April 2020)
+* START_TIME and END_TIME must follow the 24-Hour format: HH:MM (E.g. 23:59)
+****
+
+Examples:
+
+* `entryadd t/meet with boss ed/05-05-2020 st/10:00 et/12:00` OR +
+`ea t/meet with boss ed/05-05-2020 st/10:00 et/12:00` +
+Creates a calendar entry with listed title, starts from 1000 and ends at 1200 on 5 May 2020. +
+Entry appears on specified date in the Calendar.
+
+* `entryadd t/roadshow sd/01-01-2019 ed/10-01-2019 st/09:00 et/18:00` OR +
+`ea t/roadshow sd/01-01-2019 ed/10-01-2019 st/09:00 et/18:00` +
+Entry starting from 1 Jan 2019 1000 and ending at 10 Jan 2019 1800 appears at the specified time period in Calendar.
+
+==== Editing entries in calendar entry list : `entryedit` `coming in v1.5`
+
+Edits an existing entry in the Calendar entry List. +
+Format: `entryedit e/ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` +
+Command Alias: `ee` +
+
+****
+* Edits the entry at specified ENTRY_INDEX. The index refers to the index number shown in the last entry listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+****
+
+Examples:
+
+* `entryedit e/1 t/meet with bosses et/1400` OR +
+`ee e/1 t/meet with bosses et/1400` +
+Edits title and end time of 1st entry in entry list to "meet with bosses" and 1400 respectively. +
+Changes reflect on the Calendar.
+
+* `entryedit e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800` OR +
+`ee e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800` +
+Edits starting date and time, ending date and time of the 3rd entry in entry list.
+
+==== Deleting entries in calendar entry list : `entrydelete` `since v1.4`
+
+Deletes an existing entry in Calendar entry list. +
+Format: `entrydelete ENTRY_INDEX` +
+Command Alias: `ed` +
+
+****
+* Deletes entry at specified ENTRY_INDEX of entry list.
+* The index refers to index number shown in the most recent entry listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `entrydelete 1` OR +
+`ed 1` +
+Deletes the entry at index 1 of most recent entry listing. +
+Entry is removed from the Calendar.
+
+==== Listing all calendar entries : `entrylist` `since v1.4`
+
+Shows a list of all calendar entries in ContactSails. +
+Format: `entrylist` +
+Command Alias: `el`
+
+==== Clearing all entries in list of entries : `entryclear` `coming in v1.5`
+
+Clears all entry list entries from ContactSails. +
+Format: `entryclear` +
+Command Alias: `ec`
+
+=== Miscellaneous Commands
+
+This section describes other commands you can use in ContactSails.
+
+==== Viewing command history : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history` +
-Alias: `h`
+Command Alias: `h`
 
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-=== Changing the theme : `theme` `since v1.3`
+==== Changing the theme : `theme` `since v1.3`
 
 Changes the theme of the application. +
 Format: `theme THEME_TYPE` +
-Alias: `t`
+Command Alias: `t`
 
 ****
 * Currently, you can choose between 'dark' and 'light' themes only.
@@ -364,28 +546,12 @@ Examples:
 `t light` +
 Changes the theme of the application to the light theme.
 
-=== Changing the order status : `orderstatus` `since v1.4`
-
-Changes the order status of the order specified by the index number used in the order listing.
-Format: `orderstatus INDEX os/ORDER STATUS`
-Alias: `os`
-
-****
-* Orders can be marked as `ongoing` and `done` only.
-****
-
-Examples:
-
-* `orderstatus 2 os/done` OR +
-`os 2 os/done`
-Marks the order status of the 2nd order in the most recent order listing as 'done'.
-
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+==== Undoing previous command : `undo`
 
 Restores ContactSails to the state before the previous _undoable_ command was executed. +
 Format: `undo` +
-Alias: `u`
+Command Alias: `u`
 
 [NOTE]
 ====
@@ -408,10 +574,11 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` OR `u` (reverses the `clear` command) +
 `undo` OR `u` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+==== Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `redo` +
+Command Alias: `r`
 
 Examples:
 
@@ -431,157 +598,30 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` OR `r` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Displaying Calendar : `calendar` `since v1.3`
-
-Displays the Calendar at centre of window in specified viewing format. +
-Format: `calendar [VIEW_FORMAT]` +
-Alias: `cal` +
-
-****
-* Calendar has 3 views; Day, Week, and Month.
-* `VIEW_FORMAT` only accepts the keywords, `day`, `week` and `month` to display the calendar in the respective format.
-* Calendar shows current day by default if no parameters are entered or invalid parameters are entered.
-* Calendar will display all incoming entries within timeframe of the specified view.
-****
-
-Examples:
-
-* `calendar` OR +
-`cal` +
-Shows Calendar in Day-View.
-
-* `calendar month` OR +
-`cal month` +
-Shows Calendar in Month-View.
-
-=== Go to next page in Calendar : `calendarnext` `coming in v1.5`
-
-Goes to the next page in Calendar.
-Format: `calendarnext` +
-Alias: `calnext` +
-
-****
-* Depending on the current day/week/month calendar is displaying, this command will display the next day/week/month.
-****
-
-=== Go to previous page in Calendar : `calendarprev` `coming in v1.5`
-
-Goes to the previous page in Calendar.
-Format: `calendarprev` +
-Alias: `calprev` +
-
-****
-* Depending on the current day/week/month calendar is displaying, this command will display the previous day/week/month.
-****
-
-=== Display current day in Calendar : `calendarnow` `coming in v1.5`
-
-Displays today's date in Calendar.
-Format: `calendarnow` +
-Alias: `calnow` +
-
-****
-* If calendar is displaying in day-view, command displays today's date in day-view.
-* If calendar is displaying in week-view, command displays the current week of today in week-view.
-* If calendar is displaying in month-view, command displays current month of today in month-view.
-****
-
-=== Adding entries to calendar entry list : `entryadd` `Since v1.3`
-
-Adds an entry to the Calendar entry list. +
-Format: `entryadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
-Alias: `ea t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
-
-****
-* If input does not contain START_DATE, it is assumed that START DATE is the same as END_DATE.
-* If input does not contain START_TIME, it is assumed that START_TIME is 00:00.
-* TITLE is alphanumeric and accepts white space. TITLE accepts maximum of 40 characters.
-* START_DATE and END_DATE must follow the format: DD-MM-YYYY (E.g. 04-04-2020 represents 4 April 2020)
-* START_TIME and END_TIME must follow the 24-Hour format: HH:MM (E.g. 23:59)
-****
-
-Examples:
-
-* `entryadd t/meet with boss ed/05-05-2020 st/10:00 et/12:00` OR +
-`ea t/meet with boss ed/05-05-2020 st/10:00 et/12:00` +
-Creates a calendar entry with listed title, starts from 1000 and ends at 1200 on 5 May 2020. +
-Entry appears on specified date in the Calendar.
-
-* `entryadd t/roadshow sd/01-01-2019 ed/10-01-2019 st/09:00 et/18:00` OR +
-`ea t/roadshow sd/01-01-2019 ed/10-01-2019 st/09:00 et/18:00` +
-Entry starting from 1 Jan 2019 1000 and ending at 10 Jan 2019 1800 appears at the specified time period in Calendar.
-
-
-=== editing entries in calendar entry list : `entryedit` `Coming in v1.5`
-
-Edits an existing entry in the Calendar entry List. +
-Format: `entryedit e/ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` +
-Alias: `ee e/ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` +
-
-****
-* Edits the entry at specified ENTRY_INDEX. The index refers to the index number shown in the last entry listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-****
-
-Examples:
-
-* `entryedit e/1 t/meet with bosses et/1400` OR +
-`ee e/1 t/meet with bosses et/1400` +
-Edits title and end time of 1st entry in entry list to "meet with bosses" and 1400 respectively. +
-Changes reflect on the Calendar.
-
-* `entryedit e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800` OR +
-`ee e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800` +
-Edits starting date and time, ending date and time of the 3rd entry in entry list.
-
-=== Deleting entries in calendar entry list : `entrydelete` `Since v1.4`
-
-Deletes an existing entry in Calendar entry list. +
-Format: `entrydelete ENTRY_INDEX` +
-Alias: `ed ENTRY_INDEX` +
-
-****
-* Deletes entry at specified ENTRY_INDEX of entry list.
-* The index refers to index number shown in the most recent entry listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `entrydelete 1` OR +
-`ed 1` +
-Deletes the entry at index 1 of most recent entry listing. +
-Entry is removed from the Calendar.
-
-=== Listing all calendar entries : `entrylist` `Since v1.4`
-
-Shows a list of all calendar entries in ContactSails. +
-Format: `entrylist` +
-Alias: `el`
-
-=== Clearing all entries in entryList : `entryclear` `coming in v1.5`
-
-Clears all entry list entries from ContactSails. +
-Format: `entryclear` +
-Alias: `ec`
-
-=== Clearing all entries : `clear`
+==== Clearing all entries : `clear`
 
 Clears all entries from ContactSails. +
 Format: `clear` +
-Alias: `c`
+Command Alias: `c`
 
-=== Exiting the program : `exit`
+==== Saving the data
+
+Address book data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
+
+==== Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit` +
-Alias: `q`
+Command Alias: `q`
 
-=== Viewing top customers : `topcustomers` `coming in v2.0`
+=== Coming in v2.0
+
+==== Viewing top customers : `topcustomers` `coming in v2.0`
 
 Displays a list of the top customers based on the frequency their contacts are accessed. +
 Format: `topcustomers NUMBER` +
-Alias: `tc`
+Command Alias: `tc`
 
 ****
 * The command will display the top `NUMBER` amount of people, sorted by most frequently contacted to the least.
@@ -594,11 +634,11 @@ Examples:
 `tc 10` +
 Displays the list of the top ten persons in ContactSails based on how frequently you access these contacts.
 
-=== Viewing top customers : `topitems` `coming in v2.0`
+==== Viewing top customers : `topitems` `coming in v2.0`
 
 Displays a list of the top items based on amount of items that have been sold to customers. +
 Format: `topitems NUMBER` +
-Alias: `ti`
+Command Alias: `ti`
 
 ****
 * The command will display the top `NUMBER` amount of items, sorted by most bought item to the least.
@@ -611,11 +651,11 @@ Examples:
 `ti 10` +
 Displays the list of the top ten items in ContactSails based on how many of the items have been sold.
 
-=== Sending promotions based on group : `sendpromogroup` `coming in v2.0`
+==== Sending promotions based on group : `sendpromogroup` `coming in v2.0`
 
 Opens a promotion email draft in the browser, which can be sent to multiple persons having the same group tags.
 Format: `sendpromogroup GROUP... [sub/SUBJECT] [b/BODY]`
-Alias: `spg`
+Command Alias: `spg`
 
 ****
 * The email draft will use the Default Email Service Provider on your local device.
@@ -630,11 +670,11 @@ Examples:
 `spg friends sub/New Offer on Sunglasses` +
 Opens an email draft in the browser with recipients as all persons tagged as 'friends' and subject as 'New Offer on Sunglasses'. +
 
-=== Sending promotions based on preference : `sendpromopref` `coming in v2.0`
+==== Sending promotions based on preference : `sendpromopref` `coming in v2.0`
 
 Opens a promotion email draft in the browser, which can be sent to multiple persons having the same preference tags.
 Format: `sendpromopref PREFERENCE... [sub/SUBJECT] [b/BODY]`
-Alias: `spp`
+Command Alias: `spp`
 
 ****
 * The email draft will use the Default Email Service Provider on your local device.
@@ -649,11 +689,6 @@ Examples:
 `spp books sub/Books on SALE` +
 Opens an email draft in the browser with recipients as all persons tagged with 'books' and subject as 'Books on SALE'. +
 
-=== Saving the data
-
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -661,108 +696,77 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [g/GROUP]... [pr/PREFERENCE]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 g/friend g/colleague pr/computers`
-* *Calendar* : `calendar [VIEW_FORMAT]` +
-e.g. `calendar week`
-* *Calendar Next `coming in v1.5`* : `calendarnext`
-* *Calendar Previous `coming in v1.5`* : `calendarprev`
-* *Calendar Today `coming in v1.5`* : `calendarnow`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *GroupDelete* : `groupdelete GROUP_NAME` +
-e.g. `groupdelete friends`
-* *PreferenceDelete*: `prefdelete PREFERENCE_NAME` +
-e.g. `prefdelete computers`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [g/GROUP]... [pr/PREFERENCE]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *EntryAdd* : `entryadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
-e.g. `entryadd t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800`
-* *EntryEdit `coming in v1.5`* : `entryedit e/ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` +
-e.g. `entryedit e/2 t/meeting with Jason ed/20-20-2020`
-* *EntryDelete* : `entrydelete INDEX` +
-e.g. `entrydelete 2`
-* *EntryList* : `entrylist`
-* *EntryListClear `coming in v1.5`* : `entryclear`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *GroupFind* : `groupfind KEYWORD [MORE_KEYWORDS]` +
-e.g. `groupfind friends`
-* *PrefFind* : `preffind KEYWORD [MORE_KEYWORDS]` +
-e.g. `preffind computers`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *OrderAdd* : `orderadd INDEX i/ORDER INFORMATION pr/PRICE q/QUANTITY d/DELIVERY DATE` +
-e.g. `orderadd 1 i/NBA 2k18 pr/229.99 q/1 d/11-09-2018`
-* *OrderEdit* : `orderedit INDEX [i/ORDER INFORMATION] [pr/PRICE] [q/QUANTITY] [d/DELIVERY DATE]` +
-e.g. `orderedit 1 pr/15.00 d/05-03-2018`
-* *OrderDelete* : `orderdelete INDEX` +
-e.g. `orderdelete 5`
-* *OrderList* : `orderlist`
-* *History* : `history`
-* *Theme* : `theme THEME_TYPE`
-* *OrderStatus* : `orderstatus INDEX os/ORDER STATUS`
-* *Undo* : `undo`
-* *Redo* : `redo`
-* *TopCustomers `coming in v2.0`* : `topcustomers NUMBER`
-* *TopItems `coming in v2.0`* : `topitems NUMBER`
-* *SendPromoGroup `coming in v2.0`* : `sendpromogroup GROUP... [sub/SUBJECT] [b/BODY]`
-* *SendPromoPref `coming in v2.0`* : `sendpromopref PREFERENCE... [sub/SUBJECT] [b/BODY]`
-* *Exit* : `exit`
+=== Managing Persons
+[width="99%",cols="25%,25%,25%,25%",options="header",]
+|===
+|Function |Command |Alias |Example
+|Add a person. |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [g/GROUP]... [pr/PREFERENCE]...` |`a` |`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pr/notebooks`
+|Edit an existing person. |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [g/GROUP]... [pr/PREFERENCE]...` |`e` |`edit 2 n/James Lee e/jameslee@example.com`
+|Delete an existing person. |`delete INDEX` |`d` |`delete 2`
+|Show a list of all persons. |`list` |`l` |`list`
+|Select a person. |`select INDEX` |`s` |`select 3`
+|===
 
-== Command Alias Summary
+=== Finding Persons
+[width="99%",cols="25%,25%,25%,25%",options="header",]
+|===
+|Function |Command |Alias |Example
+|Find persons by name. |`find KEYWORD [MORE_KEYWORDS]` |`f` |`find John`
+|Find persons by group. |`groupfind KEYWORD [MORE_KEYWORDS]` |`gf` |`groupfind friends`
+|Finds persons by preference. |`preffind KEYWORD [MORE_KEYWORDS]` |`gf` |`preffind notebooks`
+|===
 
-* *Add* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [g/GROUP]... [pr/PREFERENCE]...` +
-e.g. `a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 g/friend g/colleague pr/computers`
-* *Calendar* : `cal [VIEW_FORMAT]` +
-e.g. `cal week`
-* *Calendar Next `coming in v1.5`* : `calnext`
-* *Calendar Previous `coming in v1.5`* : `calprev`
-* *Calendar Today `coming in v1.5`* : `calnow`
-* *Clear* : `c`
-* *Delete* : `d INDEX` +
-e.g. `d 3`
-* *GroupDelete* : `gd GROUP_NAME` +
-e.g. `gd friends`
-* *PreferenceDelete*: `pd PREFERENCE_NAME` +
-e.g. `pd computers`
-* *Edit* : `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [g/GROUP]... [pr/PREFERENCE]...` +
-e.g. `e 2 n/James Lee e/jameslee@example.com`
-* *EntryAdd* : `ea t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
-e.g. `ea t/roadshow sd/01-01-2019 ed/10-01-2019 st/0900 et/1800`
-* *EntryEdit `coming in v1.5`* : `ee e/ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` +
-e.g. `ee e/2 t/meeting with Jason ed/20-20-2020`
-* *EntryDelete* : `ed INDEX` +
-e.g. `ed 2`
-* *EntryList* : `el`
-* *EntryListClear `coming in v1.5`* : `elc`
-* *Find* : `f KEYWORD [MORE_KEYWORDS]` +
-e.g. `f James Jake`
-* *GroupFind* : `gf KEYWORD [MORE_KEYWORDS]` +
-e.g. `gf friends`
-* *PrefFind* : `pf KEYWORD [MORE_KEYWORDS]` +
-e.g. `pf computers`
-* *List* : `l`
-* *Help* : `?`
-* *Select* : `s INDEX` +
-e.g. `s 2`
-* *OrderAdd* : `oa INDEX i/ORDER INFORMATION pr/PRICE q/QUANTITY d/DELIVERY DATE` +
-e.g. `oa 1 i/NBA 2k18 pr/229.99 q/1 d/11-09-2018`
-* *OrderEdit* : `oe [i/ORDER INFORMATION] [pr/PRICE] [q/QUANTITY] [d/DELIVERY DATE]` +
-e.g. `oe 1 pr/15.00 d/05-03-2018`
-* *OrderDelete* : `od INDEX` +
-e.g. `od 5`
-* *OrderList* : `ol`
-* *History* : `h`
-* *Theme* : `t THEME_TYPE`
-* *OrderStatus* : `os INDEX os/ORDER STATUS`
-* *Undo* : `u`
-* *Redo* : `r`
-* *TopCustomers `coming in v2.0`* : `tc NUMBER`
-* *TopItems `coming in v2.0`* : `ti NUMBER`
-* *SendPromoGroup `coming in v2.0`* : `spg GROUP... [sub/SUBJECT] [b/BODY]`
-* *SendPromoPref `coming in v2.0`* : `spp PREFERENCE... [sub/SUBJECT] [b/BODY]`
-* *Exit* : `q`
+=== Managing Groups and Preferences
+[width="99%",cols="25%,25%,25%,25%",options="header",]
+|===
+|Function |Command |Alias |Example
+|Delete a group. |`groupdelete GROUP_NAME` |`gd` | `groupdelete friends`
+|Delete a preference. |`prefdelete PREFERENCE_NAME` |`pd` |`prefdelete books`
+|===
+
+=== Managing Orders
+[width="99%",cols="25%,25%,25%,25%",options="header",]
+|===
+|Function |Command |Alias |Example
+|Add an order. |`orderadd INDEX i/ORDER_INFORMATION pr/PRICE q/QUANTITY d/DELIVERY_DATE` |`oa` |`orderadd 1 i/Chocolates pr/10.00 q/5 d/12-08-2018`
+|Edit an existing order. |`orderedit INDEX [i/ORDER_INFORMATION] [pr/PRICE] [q/QUANTITY] [d/DELIVERY_DATE]` |`oe` |`orderedit 1 q/10`
+|Change status of existing order. |`orderstatus INDEX os/ORDER_STATUS` |`os` |`orderstatus 2 os/done`
+|Delete an existing order. |`orderdelete INDEX` |`od` |`orderdelete 2`
+|===
+
+=== Viewing Calendar
+[width="99%",cols="25%,25%,25%,25%",options="header",]
+|===
+|Function |Command |Alias |Example
+|Display the calendar. |`calendar [VIEW_FORMAT]` |`cal` |`calendar month`
+|Go to the next page of the calendar. |`calendarnext` |`calnext` |`calendarnext`
+|Go to the previous page of the calendar. |`calendarprev` |`calprev` |`calendarprev`
+|Go to the current day. |`calendarnow` |`calnow` |`calendarnow`
+|===
+
+=== Managing Calendar Entries
+[width="99%",cols="25%,25%,25%,25%",options="header",]
+|===
+|Function |Command |Alias |Example
+|Add a calendar entry. |`entryadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` |`ea` |`entryadd t/meet with boss ed/05-05-2020 st/10:00 et/12:00`
+|Edit an existing calendar entry. |`entryedit e/ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` |`ee` |`entryedit e/1 t/meet with bosses et/1400`
+|Delete an existing calendar entry. |`entrydelete ENTRY_INDEX` |`ed` |`entrydelete 1`
+|List all calendar entries. |`entrylist` |`el` |`entrylist`
+|Clear all calendar entries. |`entryclear`  |`ec` |`entryclear`
+|===
+
+=== Miscellaneous Commands
+[width="99%",cols="25%,25%,25%,25%",options="header",]
+|===
+|Function |Command |Alias |Example
+|View command history. |`history` |`h` |`history`
+|Change theme. |`theme THEME_TYPE` |`t` |`theme light`
+|Undo previous command. |`undo` |`u` |`undo`
+|Redo previous command. |`redo` |`r` |`redo`
+|Clear all data. |`clear` |`c` |`clear`
+|Exit ContactSails. |`exit` |`q` |`exit`
+|===
+
+== Glossary
+
+// add terms: CommandBox, Group, Preference, Orders, Entries, PersonPanel, CalendarPanel, OrderListPanel, EntryListPanel, etc.

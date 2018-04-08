@@ -2,8 +2,6 @@ package seedu.address.logic.parser;
 //@@author crizyli
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.util.Scanner;
-
 import seedu.address.logic.commands.SetPasswordCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 

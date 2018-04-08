@@ -8,6 +8,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
+/**
+ * Pop-up dialog to prompt user to enter old and new password for SetPasswordCommand.
+ */
 public class SetPasswordDialog extends Dialog<String> {
 
     private PasswordField oldPsw;

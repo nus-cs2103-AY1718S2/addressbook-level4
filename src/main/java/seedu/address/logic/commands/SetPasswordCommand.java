@@ -1,11 +1,11 @@
 package seedu.address.logic.commands;
+//@@author crizyli
+import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.logic.SetPasswordEnteredEvent;
 import seedu.address.commons.events.ui.ShowSetPasswordDialogEvent;
 import seedu.address.logic.LogicManager;
-
-import com.google.common.eventbus.Subscribe;
 
 /**
  * Set the application password

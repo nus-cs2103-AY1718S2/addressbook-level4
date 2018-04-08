@@ -371,6 +371,9 @@ Format: `addLesson INDEX [d/DAY] [st/START_TIME] [et/END_TIME]`
 * Lessons will be added in chronological order to your `Schedule`
 ****
 
+[NOTE]
+Overnight lessons i.e. `st/23:30 et/00:30` cannot be held. It is assumed that people lead normal lives and work between 00:00 and 23:59 fo the same day.
+
 Examples:
 
 * `list` +

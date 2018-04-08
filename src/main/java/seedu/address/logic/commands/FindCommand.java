@@ -1,7 +1,11 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.parser.TokenType.PREFIX_NAME;
+import static seedu.address.logic.parser.TokenType.PREFIX_CODE;
 import static seedu.address.logic.parser.TokenType.PREFIX_PRICE;
+
+import java.util.function.Predicate;
+
+import seedu.address.model.coin.Coin;
 
 /**
  * Finds and lists all coins in address book whose name contains any of the argument keywords.
@@ -14,20 +18,29 @@ public class FindCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all coins specified by the conditions.\n"
             + "Parameters: CONDITION "
-            + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "BTC AND" + PREFIX_PRICE + ">50";
+            + "Example: " + COMMAND_WORD + " " + PREFIX_CODE + "BTC AND" + PREFIX_PRICE + ">50";
+
+    private final Predicate<Coin> coinCondition;
 
     //@@author Eldon-Chung
-    public FindCommand() {
-        ;
-    }
-
-    @Override
-    public CommandResult execute() {
-        return new CommandResult("Command acknowledged! Results are still a WIP");
+    public FindCommand(Predicate<Coin> coinCondition) {
+        this.coinCondition = coinCondition;
     }
 
     @Override
     public boolean equals(Object other) {
-        return (other instanceof FindCommand); // short circuit if same class
+        /*
+         * Note: there isn't a good way to evaluate equality.
+         * There are ways around it, but it is not clear whether those drastic measures are needed.
+         * So we will always return false instead.
+         */
+        return false;
     }
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredCoinList(coinCondition);
+        return new CommandResult(getMessageForCoinListShownSummary(model.getFilteredCoinList().size()));
+    }
+    //@@author
 }

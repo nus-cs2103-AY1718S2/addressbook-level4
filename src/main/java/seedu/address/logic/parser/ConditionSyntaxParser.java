@@ -1,18 +1,16 @@
-//@@author Eldon-Chung
-package seedu.address.logic.conditionalparser;
-
-import seedu.address.logic.parser.TokenStack;
-import seedu.address.logic.parser.TokenType;
+package seedu.address.logic.parser;
 
 /**
  * Parses tokenized boolean logic statements to verify correctness
  */
-public class SyntaxParser {
+//@@author Eldon-Chung
+public class ConditionSyntaxParser {
 
     private TokenStack tokenStack;
 
-    public SyntaxParser(TokenStack tokenStack) {
+    public ConditionSyntaxParser(TokenStack tokenStack) {
         this.tokenStack = tokenStack;
+        this.tokenStack.resetStack();
     }
 
     public TokenType getExpectedType() {
@@ -75,9 +73,10 @@ public class SyntaxParser {
         }
 
         tokenStack.matchAndPopTokenType(TokenType.COMPARATOR);
-        tokenStack.matchAndPopTokenType(TokenType.COMPARATOR);
 
-        return (tokenStack.matchAndPopTokenType(TokenType.NUM) || tokenStack.matchAndPopTokenType(TokenType.STRING));
+        return tokenStack.matchAndPopTokenType(TokenType.NUM)
+                || tokenStack.matchAndPopTokenType(TokenType.STRING)
+                || tokenStack.matchAndPopTokenType(TokenType.DECIMAL);
     }
 
     /**
@@ -88,6 +87,8 @@ public class SyntaxParser {
             tokenStack.popToken();
             return true;
         }
+        // If it was not a PREFIX, we do this to set the last expected type to some PREFIX type.
+        tokenStack.matchTokenType(TokenType.PREFIX_AMOUNT);
         return false;
     }
 

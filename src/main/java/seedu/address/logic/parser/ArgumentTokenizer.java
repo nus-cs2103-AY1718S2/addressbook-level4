@@ -1,4 +1,3 @@
-//@@author Eldon-Chung
 
 package seedu.address.logic.parser;
 

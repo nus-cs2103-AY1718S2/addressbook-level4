@@ -1,4 +1,3 @@
-//@@author Eldon-Chung
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -14,6 +13,7 @@ import seedu.address.logic.commands.BuyCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandTarget;
 
+//@@author Eldon-Chung
 public class BuyCommandParserTest {
     private static final String INDEX_AS_STRING = "1";
     private static final String INT_AS_STRING = "50";

@@ -6,12 +6,15 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.CommandTarget;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.coin.Code;
+import seedu.address.model.coin.Coin;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -26,7 +29,10 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_NUMBER = "Argument is not a valid number.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_CONDITION_ARGUMENT_INVALID_SYNTAX = "%s structure of the argument is invalid:"
+            + " Expected %s but instead I got %s.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -92,7 +98,7 @@ public class ParserUtil {
     public static double parseDouble(String value) throws IllegalValueException {
         String trimmedValue = value.trim();
         if (!StringUtil.isValidNumber(trimmedValue)) {
-            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+            throw new IllegalValueException(MESSAGE_INVALID_NUMBER);
         }
         return Double.parseDouble(trimmedValue);
     }
@@ -123,4 +129,39 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
+    //@@author Eldon-Chung
+    /**
+     * Parses a {@code String condition} into a {@code Predicate<Coin>}.
+     * @param argumentTokenStack a {@code TokenStack} representing the tokenized argument.
+     * @return a predicate representing the argument
+     * @throws IllegalValueException if the given tag names or numbers as parameters are invalid
+     *          and if the argument is either syntactically or semantically invalid.
+     */
+    public static Predicate<Coin> parseCondition(TokenStack argumentTokenStack)
+            throws IllegalValueException {
+        requireNonNull(argumentTokenStack);
+        TokenType expectedTokenType;
+        TokenType actualTokenType;
+
+        ConditionSyntaxParser conditionSyntaxParser = new ConditionSyntaxParser(argumentTokenStack);
+        if (!conditionSyntaxParser.parse()) {
+            expectedTokenType = conditionSyntaxParser.getExpectedType();
+            actualTokenType = conditionSyntaxParser.getActualType();
+            throw new ParseException(String.format(MESSAGE_CONDITION_ARGUMENT_INVALID_SYNTAX, "Syntactic",
+                    expectedTokenType.description, actualTokenType.description));
+        }
+
+        ConditionSemanticParser conditionSemanticParser = new ConditionSemanticParser(argumentTokenStack);
+        if (!conditionSemanticParser.parse()) {
+            expectedTokenType = conditionSemanticParser.getExpectedType();
+            actualTokenType = conditionSemanticParser.getActualType();
+            throw new ParseException(String.format(MESSAGE_CONDITION_ARGUMENT_INVALID_SYNTAX, "Semantic",
+                    expectedTokenType.description, actualTokenType.description));
+        }
+
+        ConditionGenerator conditionGenerator = new ConditionGenerator(argumentTokenStack);
+        return conditionGenerator.generate();
+    }
+    //author@@
 }

@@ -72,7 +72,7 @@ public class StringUtil {
     /**
      * Returns true if {@code s} represents a valid numeric double precision floating point value
      * Will return false for any other non-null string input
-     * e.g. empty string, "-1", "0", "+1", "3 0" (contains whitespace), "1 a" (contains letters)
+     * e.g. empty string, "3 0" (contains whitespace), "1 a" (contains letters)
      * @throws NullPointerException if {@code s} is null.
      */
     public static boolean isValidNumber(String s) {
@@ -80,7 +80,7 @@ public class StringUtil {
 
         try {
             double value = Double.parseDouble(s);
-            return !(value < 0) && !s.matches(".*[-+\\p{Alpha}].*");
+            return !s.matches(".*[+\\p{Alpha}].*");
         } catch (NumberFormatException nfe) {
             return false;
         }

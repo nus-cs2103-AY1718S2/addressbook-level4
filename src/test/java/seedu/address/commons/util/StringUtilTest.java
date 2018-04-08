@@ -74,7 +74,7 @@ public class StringUtilTest {
         assertTrue(StringUtil.isValidNumber("00.12"));
 
         // EP: signed numbers
-        assertFalse(StringUtil.isValidNumber("-1.0"));
+        assertTrue(StringUtil.isValidNumber("-1.0"));
         assertFalse(StringUtil.isValidNumber("+1.0"));
         assertFalse(StringUtil.isValidNumber("1+2.0"));
 

@@ -1,10 +1,24 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.TokenType.PREFIX_AMOUNT;
+import static seedu.address.logic.parser.TokenType.PREFIX_BOUGHT;
+import static seedu.address.logic.parser.TokenType.PREFIX_CODE;
+import static seedu.address.logic.parser.TokenType.PREFIX_EARNED;
+import static seedu.address.logic.parser.TokenType.PREFIX_HELD;
+import static seedu.address.logic.parser.TokenType.PREFIX_MADE;
+import static seedu.address.logic.parser.TokenType.PREFIX_NAME;
+import static seedu.address.logic.parser.TokenType.PREFIX_PRICE;
+import static seedu.address.logic.parser.TokenType.PREFIX_SOLD;
+import static seedu.address.logic.parser.TokenType.PREFIX_TAG;
+import static seedu.address.logic.parser.TokenType.PREFIX_WORTH;
 
+import java.util.function.Predicate;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.conditionalparser.SyntaxParser;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.coin.Coin;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -12,11 +26,17 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class FindCommandParser implements Parser<FindCommand> {
 
     private static final TokenType[] EXPECTED_TOKEN_TYPES = {
-        TokenType.PREFIX_AMOUNT,
-        TokenType.PREFIX_NAME,
-        TokenType.PREFIX_PRICE,
-        TokenType.PREFIX_EARNED,
-        TokenType.PREFIX_TAG
+        PREFIX_AMOUNT,
+        PREFIX_BOUGHT,
+        PREFIX_CODE,
+        PREFIX_EARNED,
+        PREFIX_HELD,
+        PREFIX_MADE,
+        PREFIX_NAME,
+        PREFIX_PRICE,
+        PREFIX_SOLD,
+        PREFIX_TAG,
+        PREFIX_WORTH
     };
 
     /**
@@ -26,13 +46,13 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     public FindCommand parse(String args) throws ParseException {
         ArgumentTokenizer lexicalAnalyzer = new ArgumentTokenizer();
-        TokenStack tokenList = ArgumentTokenizer.tokenizeToTokenStack(args, EXPECTED_TOKEN_TYPES);
-        SyntaxParser syntaxParser = new SyntaxParser(tokenList);
-        if (!syntaxParser.parse()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        TokenStack tokenStack = ArgumentTokenizer.tokenizeToTokenStack(args, EXPECTED_TOKEN_TYPES);
+        try {
+            Predicate<Coin> coinCondition = ParserUtil.parseCondition(tokenStack);
+            return new FindCommand(coinCondition);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
-        return new FindCommand();
     }
 
 }

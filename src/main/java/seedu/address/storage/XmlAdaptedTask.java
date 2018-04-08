@@ -9,6 +9,7 @@ import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Priority;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.TaskDescription;
+import seedu.address.model.task.Title;
 
 /**
  * JAXB-friendly version of the Person.
@@ -16,7 +17,8 @@ import seedu.address.model.task.TaskDescription;
 public class XmlAdaptedTask {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Task's %s field is missing!";
-
+    @XmlElement(required = true)
+    private String title;
     @XmlElement(required = true)
     private String taskDescription;
     @XmlElement(required = true)
@@ -33,7 +35,8 @@ public class XmlAdaptedTask {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedTask(String taskDescription, String deadline, String priority) {
+    public XmlAdaptedTask(String title, String taskDescription, String deadline, String priority) {
+        this.title = title;
         this.taskDescription = taskDescription;
         this.deadline = deadline;
         this.priority = priority;
@@ -61,6 +64,10 @@ public class XmlAdaptedTask {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                 TaskDescription.class.getSimpleName()));
         }
+        if (!TaskDescription.isValidDescription(this.title)) {
+            throw new IllegalValueException(Title.MESSAGE_TITLE_CONSTRAINTS);
+        }
+        final Title title = new Title(this.title);
         if (!TaskDescription.isValidDescription(this.taskDescription)) {
             throw new IllegalValueException(TaskDescription.MESSAGE_DESCRIPTION_CONSTRAINTS);
         }
@@ -86,7 +93,7 @@ public class XmlAdaptedTask {
         }
         final Priority priority = new Priority(this.priority);
 
-        return new Task(taskDesc, deadline, priority);
+        return new Task(title, taskDesc, deadline, priority);
     }
 
     @Override
@@ -100,7 +107,8 @@ public class XmlAdaptedTask {
         }
 
         XmlAdaptedTask otherTask = (XmlAdaptedTask) other;
-        return Objects.equals(taskDescription, otherTask.taskDescription)
+        return Objects.equals(title, otherTask.title)
+                && Objects.equals(taskDescription, otherTask.taskDescription)
                 && Objects.equals(deadline, otherTask.deadline)
                 && Objects.equals(priority, otherTask.priority);
     }

@@ -26,6 +26,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -97,6 +98,9 @@ public class AddCommandTest {
     /**
      * A default model stub that have all of the methods failing.
      */
+    /**
+     * A default model stub that have all of the methods failing.
+     */
     private class ModelStub implements Model {
         @Override
         public void addPerson(Person person) throws DuplicatePersonException {
@@ -105,6 +109,14 @@ public class AddCommandTest {
 
         @Override
         public void addTask(Task task) {
+        }
+
+        @Override
+        public void deleteTask(Task target) throws TaskNotFoundException {
+        }
+
+        @Override
+        public void updateTask(Task target, Task editedTask) throws TaskNotFoundException {
         }
 
         @Override

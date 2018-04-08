@@ -97,6 +97,7 @@ public class DeleteTaskCommand extends UndoableCommand {
      */
     private void createEditedStudent()
             throws DuplicateMilestoneException, MilestoneNotFoundException, TaskNotFoundException {
+        assert targetStudent != null && targetMilestoneIndex != null && targetTaskIndex != null;
         editedStudent = new StudentBuilder(targetStudent).withoutTask(targetMilestoneIndex, targetTask).build();
     }
 
@@ -105,8 +106,9 @@ public class DeleteTaskCommand extends UndoableCommand {
      * @throws IllegalValueException if any of the target indexes are invalid
      */
     private void setTargetObjects() throws IllegalValueException {
-        List<Student> lastShownList = model.getFilteredStudentList();
+        assert targetStudentIndex != null && targetMilestoneIndex != null && targetTaskIndex != null;
 
+        List<Student> lastShownList = model.getFilteredStudentList();
         if (!CheckIndexesUtil.areIndexesValid(lastShownList, targetStudentIndex, targetMilestoneIndex,
                 targetTaskIndex)) {
             throw new IllegalValueException(MESSAGE_INVALID_INDEXES);

@@ -85,6 +85,7 @@ public class AddMilestoneCommand extends UndoableCommand {
      * to the {@code dashboard}.
      */
     private void createEditedStudent() throws DuplicateMilestoneException {
+        assert targetStudent != null && newMilestone != null;
         editedStudent = new StudentBuilder(targetStudent).withNewMilestone(newMilestone).build();
     }
 
@@ -94,8 +95,9 @@ public class AddMilestoneCommand extends UndoableCommand {
      * @throws IllegalValueException if the studentIndex is invalid
      */
     private void setTargetStudent() throws IllegalValueException {
-        List<Student> lastShownList = model.getFilteredStudentList();
+        assert studentIndex != null;
 
+        List<Student> lastShownList = model.getFilteredStudentList();
         if (!CheckIndexesUtil.isStudentIndexValid(lastShownList, studentIndex)) {
             throw new IllegalValueException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
         }

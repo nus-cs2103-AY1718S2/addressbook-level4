@@ -69,6 +69,7 @@ public class FavouriteCommand extends UndoableCommand {
      * attribute set to true.
      */
     private void createEditedStudent() {
+        assert targetStudent != null;
         editedStudent = new StudentBuilder(targetStudent).withFavourite(true).build();
     }
 
@@ -77,8 +78,9 @@ public class FavouriteCommand extends UndoableCommand {
      * @throws IllegalValueException if the studentIndex is invalid
      */
     private void setTargetStudent() throws IllegalValueException {
-        List<Student> lastShownList = model.getFilteredStudentList();
+        assert targetStudentIndex != null;
 
+        List<Student> lastShownList = model.getFilteredStudentList();
         if (!CheckIndexesUtil.isStudentIndexValid(lastShownList, targetStudentIndex)) {
             throw new IllegalValueException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
         }

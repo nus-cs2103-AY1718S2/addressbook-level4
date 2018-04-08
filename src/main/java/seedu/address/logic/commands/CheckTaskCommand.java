@@ -109,8 +109,9 @@ public class CheckTaskCommand extends UndoableCommand {
      * @throws IllegalValueException if any of the target indexes are invalid
      */
     private void setTargetObjects() throws IllegalValueException {
-        List<Student> lastShownList = model.getFilteredStudentList();
+        assert targetStudentIndex != null && targetMilestoneIndex != null && targetTaskIndex != null;
 
+        List<Student> lastShownList = model.getFilteredStudentList();
         if (!CheckIndexesUtil.areIndexesValid(lastShownList, targetStudentIndex, targetMilestoneIndex,
                 targetTaskIndex)) {
             throw new IllegalValueException("One or more of the provided indexes are invalid");
@@ -127,6 +128,7 @@ public class CheckTaskCommand extends UndoableCommand {
      */
     private void createEditedStudent() throws DuplicateTaskException, TaskNotFoundException,
             DuplicateMilestoneException, MilestoneNotFoundException {
+        assert targetStudent != null && targetMilestoneIndex != null && targetTaskIndex != null;
         editedStudent = new StudentBuilder(targetStudent)
                 .withTaskCompleted(targetMilestoneIndex, targetTaskIndex).build();
     }

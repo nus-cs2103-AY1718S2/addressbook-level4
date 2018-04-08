@@ -82,6 +82,7 @@ public class DeleteMilestoneCommand extends UndoableCommand {
      * removed from the {@code dashboard}.
      */
     private void createEditedStudent() throws MilestoneNotFoundException {
+        assert targetStudent != null && targetMilestone != null;
         editedStudent = new StudentBuilder(targetStudent).withoutMilestone(targetMilestone).build();
     }
 
@@ -90,8 +91,9 @@ public class DeleteMilestoneCommand extends UndoableCommand {
      * @throws IllegalValueException if any of the targetStudentIndex or targetMilestoneIndex are invalid
      */
     private void setTargetObjects() throws IllegalValueException {
-        List<Student> lastShownList = model.getFilteredStudentList();
+        assert targetStudentIndex != null && targetMilestoneIndex != null;
 
+        List<Student> lastShownList = model.getFilteredStudentList();
         if (!CheckIndexesUtil.areIndexesValid(lastShownList, targetStudentIndex, targetMilestoneIndex)) {
             throw new IllegalValueException(MESSAGE_INVALID_INDEXES);
         }

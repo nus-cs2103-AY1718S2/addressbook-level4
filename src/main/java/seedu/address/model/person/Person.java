@@ -134,6 +134,8 @@ public class Person implements Comparable<Person> {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Participation marks: ")
+                .append(getParticipation())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

@@ -30,16 +30,12 @@ public class Participation {
         threshold = 50;
     }
 
-    public void addParticipation(int marks) {
-        value = (value + marks) % 101;
-    }
-
     public Integer getMarks() {
         return value;
     }
 
     public boolean overThreshold() {
-        return (value > threshold);
+        return (value >= threshold);
     }
 
     public static boolean isValidParticipation(String value) {

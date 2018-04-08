@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DISPLAY_PIC;
+import static seedu.address.logic.parser.EditCommandParser.PLACE_HOLDER_HASH;
 
 import java.util.NoSuchElementException;
 
@@ -10,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.UpdateDisplayCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.DisplayPic;
 
 
 /**
@@ -37,13 +39,16 @@ public class UpdateDisplayCommandParser implements Parser<UpdateDisplayCommand> 
         }
 
         try {
-            String filePath = argMultimap.getValue(PREFIX_DISPLAY_PIC).get();
-            return new UpdateDisplayCommand(index, filePath);
-        } catch (IllegalArgumentException iae) {
-            throw new ParseException(iae.getMessage(), iae);
+            DisplayPic dp = ParserUtil.parseEditDisplayPic(argMultimap.getValue(PREFIX_DISPLAY_PIC),
+                    PLACE_HOLDER_HASH).get();
+            return new UpdateDisplayCommand(index, dp);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
         } catch (NoSuchElementException nsee) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateDisplayCommand.MESSAGE_USAGE));
         }
+
+
     }
 
 }

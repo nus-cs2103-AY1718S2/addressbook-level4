@@ -71,14 +71,8 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         participation.setText(person.getParticipation().toDisplay());
+        initDisplay();
         initTags(person);
-        Image image = DisplayPicStorage.fetchDisplay(person.getDisplayPic());
-        displayPic.setFill(new ImagePattern(image));
-        if (person.getParticipation().getMarks() > 50) {
-            displayPic.setEffect(new DropShadow(+25d, 0d, +2d, Color.CHARTREUSE));
-        } else {
-            displayPic.setEffect(new DropShadow(+25d, 0d, +2d, Color.MAROON));
-        }
     }
 
     /**
@@ -114,6 +108,19 @@ public class PersonCard extends UiPart<Region> {
             tagLabel.getStyleClass().add(getTagColorStyleFor(tag.tagName));
             tags.getChildren().add(tagLabel);
         });
+    }
+
+    /**
+     * Initializes the display picture for (@code person)
+     */
+    private void initDisplay() {
+        Image image = DisplayPicStorage.fetchDisplay(person.getDisplayPic());
+        displayPic.setFill(new ImagePattern(image));
+        if (this.person.getParticipation().overThreshold()) {
+            displayPic.setEffect(new DropShadow(+25d, 0d, +2d, Color.CHARTREUSE));
+        } else {
+            displayPic.setEffect(new DropShadow(+25d, 0d, +2d, Color.MAROON));
+        }
     }
 
     @Override

@@ -4,8 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Nric;
+import seedu.address.model.petpatient.BloodType;
+import seedu.address.model.petpatient.Breed;
+import seedu.address.model.petpatient.Colour;
 import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
+import seedu.address.model.petpatient.Species;
 import seedu.address.model.tag.Tag;
 
 import seedu.address.model.util.SampleDataUtil;
@@ -24,19 +28,19 @@ public class PetPatientBuilder {
     public static final String DEFAULT_TAGS = "Injured";
 
     private PetPatientName name;
-    private String species;
-    private String breed;
-    private String colour;
-    private String bloodType;
+    private Species species;
+    private Breed breed;
+    private Colour colour;
+    private BloodType bloodType;
     private Nric ownerNric;
     private Set<Tag> tags;
 
     public PetPatientBuilder() {
         name = new PetPatientName(DEFAULT_NAME);
-        species = DEFAULT_SPECIES;
-        breed = DEFAULT_BREED;
-        colour = DEFAULT_COLOUR;
-        bloodType = DEFAULT_BLOODTYPE;
+        species = new Species(DEFAULT_SPECIES);
+        breed = new Breed(DEFAULT_BREED);
+        colour = new Colour(DEFAULT_COLOUR);
+        bloodType = new BloodType(DEFAULT_BLOODTYPE);
         ownerNric = new Nric(DEFAULT_OWNER);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
@@ -74,7 +78,7 @@ public class PetPatientBuilder {
      * Sets the species of the {@code PetPatient} that we are building.
      */
     public PetPatientBuilder withSpecies(String species) {
-        this.species = species;
+        this.species = new Species(species);
         return this;
     }
 
@@ -82,7 +86,7 @@ public class PetPatientBuilder {
      * Sets the breed of the {@code PetPatient} that we are building.
      */
     public PetPatientBuilder withBreed(String breed) {
-        this.breed = breed;
+        this.breed = new Breed(breed);
         return this;
     }
 
@@ -90,7 +94,7 @@ public class PetPatientBuilder {
      * Sets the colour of the {@code PetPatient} that we are building.
      */
     public PetPatientBuilder withColour(String colour) {
-        this.colour = colour;
+        this.colour = new Colour(colour);
         return this;
     }
 
@@ -98,7 +102,7 @@ public class PetPatientBuilder {
      * Sets the blood type of the {@code PetPatient} that we are building.
      */
     public PetPatientBuilder withBloodType(String bloodType) {
-        this.bloodType = bloodType;
+        this.bloodType = new BloodType(bloodType);
         return this;
     }
 

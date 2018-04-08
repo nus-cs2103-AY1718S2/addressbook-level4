@@ -375,7 +375,7 @@ public class FindCommandTest {
     private FindCommand preparePetSpeciesCommand(String userInput) {
         Predicate<PetPatient> predicate = forPetPatient -> Arrays.asList(userInput.split("\\s+"))
                 .stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPetPatient.getSpecies(), keyword));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPetPatient.getSpecies().species, keyword));
         FindCommand command =
                 new FindCommand(predicate, 2);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
@@ -388,7 +388,7 @@ public class FindCommandTest {
     private FindCommand preparePetBreedCommand(String userInput) {
         Predicate<PetPatient> predicate = forPetPatient -> Arrays.asList(userInput.split("\\s+"))
                 .stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPetPatient.getBreed(), keyword));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPetPatient.getBreed().breed, keyword));
         FindCommand command =
                 new FindCommand(predicate, 2);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
@@ -401,7 +401,7 @@ public class FindCommandTest {
     private FindCommand preparePetColorCommand(String userInput) {
         Predicate<PetPatient> predicate = forPetPatient -> Arrays.asList(userInput.split("\\s+"))
                 .stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPetPatient.getColour(), keyword));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPetPatient.getColour().colour, keyword));
         FindCommand command =
                 new FindCommand(predicate, 2);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
@@ -414,7 +414,7 @@ public class FindCommandTest {
     private FindCommand preparePetBloodTypeCommand(String userInput) {
         Predicate<PetPatient> predicate = forPetPatient -> Arrays.asList(userInput.split("\\s+"))
                 .stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPetPatient.getBloodType(), keyword));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPetPatient.getBloodType().bloodType, keyword));
         FindCommand command =
                 new FindCommand(predicate, 2);
         command.setData(model, new CommandHistory(), new UndoRedoStack());

@@ -20,8 +20,12 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicateNricException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.petpatient.BloodType;
+import seedu.address.model.petpatient.Breed;
+import seedu.address.model.petpatient.Colour;
 import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
+import seedu.address.model.petpatient.Species;
 import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
 import seedu.address.model.tag.Tag;
 
@@ -56,27 +60,37 @@ public class SampleDataUtil {
         };
     }
 
+    //@@author
     public static PetPatient[] getSamplePetPatients() {
         return new PetPatient[] {
-            new PetPatient(new PetPatientName("Ane"), "Cat", "Siamese",
-                    "Brown", "A", new Nric("S0123456B"), getTagSet("Hostile")),
-            new PetPatient(new PetPatientName("Bei"), "Cat", "British Shorthair",
-                    "Grey", "B", new Nric("T0123456C"), getTagSet("Overfriendly")),
-            new PetPatient(new PetPatientName("Nei"), "Cat", "Maine Coon",
-                    "Black", "AB", new Nric("T0123456C"), getTagSet("Aggressive")),
-            new PetPatient(new PetPatientName("Chae"), "Cat", "Russian Blue",
-                    "Grey", "A", new Nric("G0123456A"), getTagSet("Naive")),
-            new PetPatient(new PetPatientName("Don"), "Dog", "German Shepherd",
-                    "Brown", "DEA 4", new Nric("F0123456B"), getTagSet("Aggressive")),
-            new PetPatient(new PetPatientName("Este"), "Dog", "Golden Retriever",
-                    "Golden", "DEA 6", new Nric("S0163456E"), getTagSet("Overfriendly")),
-            new PetPatient(new PetPatientName("Famm"), "Dog", "Pug",
-                    "Golden", "DEA 1.1-", new Nric("F0123056T"), getTagSet("3legged")),
-            new PetPatient(new PetPatientName("Plan"), "Dog", "Siberian Husky",
-                    "White", "DEA 1.1+", new Nric("F0123056T"), getTagSet("Hostile")),
+                new PetPatient(new PetPatientName("Ane"), new Species("Cat"), new Breed("Siamese"),
+                        new Colour("Brown"), new BloodType("A"), new Nric("S0123456B"),
+                        getTagSet("Hostile")),
+                new PetPatient(new PetPatientName("Bei"), new Species("Cat"), new Breed("British Shorthair"),
+                        new Colour("Grey"), new BloodType("B"), new Nric("T0123456C"),
+                        getTagSet("Overfriendly")),
+                new PetPatient(new PetPatientName("Nei"), new Species("Cat"), new Breed("Maine Coon"),
+                        new Colour("Black"), new BloodType("AB"), new Nric("T0123456C"),
+                        getTagSet("Aggressive")),
+                new PetPatient(new PetPatientName("Chae"), new Species("Cat"), new Breed("Russian Blue"),
+                        new Colour("Grey"), new BloodType("A"), new Nric("G0123456A"),
+                        getTagSet("Naive")),
+                new PetPatient(new PetPatientName("Don"), new Species("Dog"), new Breed("German Shepherd"),
+                        new Colour("Brown"), new BloodType("DEA 4"), new Nric("F0123456B"),
+                        getTagSet("Aggressive")),
+                new PetPatient(new PetPatientName("Este"), new Species("Dog"), new Breed("Golden Retriever"),
+                        new Colour("Golden"), new BloodType("DEA 6"), new Nric("S0163456E"),
+                        getTagSet("Overfriendly")),
+                new PetPatient(new PetPatientName("Famm"), new Species("Dog"), new Breed("Pug"),
+                        new Colour("Golden"), new BloodType("DEA 1.1-"), new Nric("F0123056T"),
+                        getTagSet("3legged")),
+                new PetPatient(new PetPatientName("Plan"), new Species("Dog"), new Breed("Siberian Husky"),
+                        new Colour("White"), new BloodType("DEA 1.1+"), new Nric("F0123056T"),
+                        getTagSet("Hostile")),
         };
     }
 
+    //@@author wynonaK
     public static Appointment[] getSampleAppointments() {
         return new Appointment[] {
             new Appointment(new Nric("S0123456B"), new PetPatientName("Ane"), new Remark("nil"),

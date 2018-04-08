@@ -130,6 +130,7 @@ public class Organizer implements ReadOnlyOrganizer {
         users.setCurrentLoggedInUserToNull();
     }
 
+    @Override
     public User getCurrentLoggedInUser() {
         return users.getCurrentLoggedInUser();
     }

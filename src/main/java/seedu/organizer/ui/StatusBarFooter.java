@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.organizer.commons.core.LogsCenter;
 import seedu.organizer.commons.events.model.OrganizerChangedEvent;
+import seedu.organizer.model.user.User;
 
 /**
  * A ui for the status bar that is displayed at the footer of the application.
@@ -21,7 +22,8 @@ public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
-    public static final String TOTAL_TASKS_STATUS = "%d task(s) total";
+    public static final String CURRENT_USER_STATUS_UPDATED = "Logged in as: %s";
+    public static final String CURRENT_USER_STATUS_INITIAL = "Not logged in";
 
     /**
      * Used to generate time stamps.
@@ -42,13 +44,13 @@ public class StatusBarFooter extends UiPart<Region> {
     @FXML
     private StatusBar saveLocationStatus;
     @FXML
-    private StatusBar totalTasksStatus;
+    private StatusBar currentUserStatus;
 
-    public StatusBarFooter(String saveLocation, int totalTasks) {
+    public StatusBarFooter(String saveLocation) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
-        setTotalTasks(totalTasks);
+        setCurrentUserStatus(CURRENT_USER_STATUS_INITIAL);
         registerAsAnEventHandler(this);
     }
 
@@ -74,8 +76,8 @@ public class StatusBarFooter extends UiPart<Region> {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
 
-    private void setTotalTasks(int totalTasks) {
-        Platform.runLater(() -> this.totalTasksStatus.setText(String.format(TOTAL_TASKS_STATUS, totalTasks)));
+    private void setCurrentUserStatus(String status) {
+        Platform.runLater(() -> this.currentUserStatus.setText(status));
     }
 
     @Subscribe
@@ -84,6 +86,11 @@ public class StatusBarFooter extends UiPart<Region> {
         String lastUpdated = new Date(now).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(oce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
-        setTotalTasks(oce.data.getCurrentUserTaskList().size());
+        User currentUser = oce.data.getCurrentLoggedInUser();
+        if (currentUser == null) {
+            setCurrentUserStatus(CURRENT_USER_STATUS_INITIAL);
+        } else {
+            setCurrentUserStatus(String.format(CURRENT_USER_STATUS_UPDATED, currentUser.username));
+        }
     }
 }

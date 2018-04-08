@@ -34,4 +34,9 @@ public interface ReadOnlyOrganizer {
      */
     ObservableList<User> getUserList();
 
+    /**
+     * Returns the currently logged in user
+     */
+    User getCurrentLoggedInUser();
+
 }

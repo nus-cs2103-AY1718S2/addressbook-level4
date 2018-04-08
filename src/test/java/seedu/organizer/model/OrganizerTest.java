@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_UNUSED;
+import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
 import static seedu.organizer.testutil.TypicalTasks.EXAM;
 import static seedu.organizer.testutil.TypicalTasks.GROCERY;
 import static seedu.organizer.testutil.TypicalTasks.REVISION;
@@ -168,6 +169,11 @@ public class OrganizerTest {
         @Override
         public ObservableList<User> getUserList() {
             return users;
+        }
+
+        @Override
+        public User getCurrentLoggedInUser() {
+            return ADMIN_USER;
         }
     }
 

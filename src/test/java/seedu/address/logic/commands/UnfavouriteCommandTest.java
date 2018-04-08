@@ -18,6 +18,10 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.student.Student;
 import seedu.address.testutil.StudentBuilder;
 
+//@@author yapni
+/**
+ * Contains integration tests (interaction with the Model) for {@code UnfavouriteCommand}.
+ */
 public class UnfavouriteCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new Schedule());
 

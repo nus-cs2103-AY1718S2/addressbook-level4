@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-//@@author yapni
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_INDEXES;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -28,7 +26,7 @@ import seedu.address.model.student.dashboard.Task;
 import seedu.address.testutil.MilestoneBuilder;
 import seedu.address.testutil.TypicalTasks;
 
-
+//@@author yapni
 /**
  * Contains integration tests (interaction with the Model) for {@code DeleteTaskCommand}.
  */

@@ -137,8 +137,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 .withTimetable(VALID_TIMETABLE_BOB).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TIMETABLE_DESC_BOB + TAG_DESC_FRIEND;
-        expectedResultMessage = AddCommand.MESSAGE_DUPLICATE_PERSON;
-        assertCommandFailure(command, expectedResultMessage);
+        assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty address book -> added */
         deleteAllPersons();

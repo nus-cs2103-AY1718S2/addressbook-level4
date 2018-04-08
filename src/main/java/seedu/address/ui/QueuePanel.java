@@ -18,7 +18,7 @@ import seedu.address.model.patient.Patient;
  */
 public class QueuePanel extends UiPart<Region> {
 
-    private static final String FXML = "";
+    private static final String FXML = "QueueListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(QueuePanel.class);
 
     @FXML

@@ -1,10 +1,9 @@
 //@@author Kyholmes
 package seedu.address.ui;
 
-import javax.swing.plaf.synth.Region;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -31,17 +30,14 @@ public class QueueCard extends UiPart<Region> {
 
     @Override
     public boolean equals(Object other) {
-        // short circuit if same object
         if (other == this) {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof QueueCard)) {
             return false;
         }
 
-        // state check
         QueueCard card = (QueueCard) other;
         return index.getText().equals(card.index.getText())
                 && patient.equals(card.patient);

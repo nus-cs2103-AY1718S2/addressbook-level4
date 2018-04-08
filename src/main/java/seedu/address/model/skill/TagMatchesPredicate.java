@@ -31,7 +31,9 @@ public class TagMatchesPredicate implements Predicate<Person> {
     private String getTagsAsString(Set<Skill> skills) {
         Iterator tagsIterator = skills.iterator();
         StringBuilder sb = new StringBuilder();
-        sb.append(tagsIterator.next());
+        if (tagsIterator.hasNext()) {
+            sb.append(tagsIterator.next());
+        }
         while (tagsIterator.hasNext()) {
             sb.append(" " + tagsIterator.next());
         }

@@ -3,7 +3,6 @@ package seedu.address.testutil;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.TaskBuilder;
 import seedu.address.model.student.dashboard.Date;
 import seedu.address.model.student.dashboard.Milestone;
 import seedu.address.model.student.dashboard.Progress;
@@ -89,7 +88,7 @@ public class MilestoneBuilder {
      */
     public MilestoneBuilder withNewTask(Task newTask) throws DuplicateTaskException {
         taskList.add(newTask);
-        progress = new seedu.address.logic.commands.ProgressBuilder(progress).withOneNewIncompletedTaskToTotal().build();
+        progress = new ProgressBuilder(progress).withOneNewIncompletedTaskToTotal().build();
 
         return this;
     }
@@ -97,9 +96,9 @@ public class MilestoneBuilder {
     public MilestoneBuilder withoutTask(Task task) throws TaskNotFoundException {
         taskList.remove(task);
         if (task.isCompleted()) {
-            progress = new seedu.address.logic.commands.ProgressBuilder(progress).withOneLessCompletedTaskFromTotal().build();
+            progress = new ProgressBuilder().withOneLessCompletedTaskFromTotal().build();
         } else {
-            progress = new seedu.address.logic.commands.ProgressBuilder(progress).withOneLessIncompletedTaskFromTotal().build();
+            progress = new ProgressBuilder(progress).withOneLessIncompletedTaskFromTotal().build();
         }
 
         return this;

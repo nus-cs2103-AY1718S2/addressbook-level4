@@ -48,6 +48,7 @@ public class CheckTaskCommand extends UndoableCommand {
     private Student editedStudent;
     private Milestone targetMilestone;
     private Task targetTask;
+    private boolean taskWasAlreadyCompleted;
 
     private final Index targetStudentIndex;
     private final Index targetMilestoneIndex;
@@ -63,10 +64,9 @@ public class CheckTaskCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        requireAllNonNull(targetStudent, editedStudent);
-
-        if (targetStudent != editedStudent) {
+        if (!taskWasAlreadyCompleted) {
             try {
+                requireAllNonNull(targetStudent, editedStudent);
                 model.updateStudent(targetStudent, editedStudent);
             } catch (DuplicateStudentException e) {
                 /* DuplicateStudentException caught will mean that the task list is the same as before */
@@ -85,7 +85,12 @@ public class CheckTaskCommand extends UndoableCommand {
     protected void preprocessUndoableCommand() throws CommandException {
         try {
             setTargetObjects();
-            createEditedStudent();
+            if (!targetTask.isCompleted()) {
+                taskWasAlreadyCompleted = false;
+                createEditedStudent();
+            } else {
+                taskWasAlreadyCompleted = true;
+            }
         } catch (DuplicateTaskException e) {
             throw new AssertionError("The task cannot be duplicated");
         } catch (TaskNotFoundException e) {

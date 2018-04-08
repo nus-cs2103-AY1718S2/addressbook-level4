@@ -159,11 +159,9 @@ public class FileUtil {
     /**
      * Copies an image from the filepath provided to the specified destination
      */
-    public static void copyImage(String image, String fileType, String destPath) throws IllegalValueException {
+    public static void copyImage(String image, String destPath) throws IllegalValueException {
         try {
-            //File newImage = new File(destPath);
             copyFile(image, destPath);
-            //ImageIO.write(image, fileType, newImage);
         } catch (IOException ioe) {
             throw new IllegalValueException("IMAGE FILE COULD NOT BE COPIED.");
         }

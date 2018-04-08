@@ -14,7 +14,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Participation;
 
 /**
- * Parses input arguments and creates a new AddTaskCommand object
+ * Parses input arguments and creates a new MarkCommand object
  */
 //@@author Alaru
 public class MarkCommandParser implements Parser<MarkCommand> {

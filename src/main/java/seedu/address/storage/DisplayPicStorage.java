@@ -76,7 +76,6 @@ public class DisplayPicStorage {
         try {
             boolean sameFile = false;
             File input = new File(filePath);
-            BufferedImage image = ImageIO.read(input);
             String uniqueFileName = HashUtil.generateUniqueName(name);
             File toSave = new File(DisplayPic.DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType);
             while (FileUtil.isFileExists(toSave)) {
@@ -88,7 +87,7 @@ public class DisplayPicStorage {
                 toSave = new File(DisplayPic.DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType);
             }
             if (!sameFile) {
-                FileUtil.copyImage(filePath, fileType, SAVE_LOCATION + uniqueFileName + '.' + fileType);
+                FileUtil.copyImage(filePath, SAVE_LOCATION + uniqueFileName + '.' + fileType);
             }
             return uniqueFileName;
         } catch (IOException | IllegalValueException exc) {

@@ -76,8 +76,8 @@ public class MarkCommand extends UndoableCommand {
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Creates and returns a {@code Person} with the details of {@code personToMark}
+     * edited with the new marks.
      */
     private Person createUpdatedPerson(Person personToMark) {
         assert personToMark != null;

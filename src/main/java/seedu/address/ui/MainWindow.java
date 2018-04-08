@@ -45,6 +45,7 @@ public class MainWindow extends UiPart<Stage> {
     private UserPrefs prefs;
     private PatientAppointmentPanel patientAppointmentPanel;
     private CalendarPanel calendarPanel;
+    private QueuePanel queuePanel
 
     @FXML
     private StackPane browserPlaceholder;
@@ -145,6 +146,9 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        //@@author Kyholmes
+        queuePanel = new QueuePanel(logic.getPatientVisitingQueue(), logic.getPatientIndexInQueue());
     }
 
     void hide() {

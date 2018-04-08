@@ -78,4 +78,7 @@ public interface Model {
     void addPatientAppointment(Patient patient, String dateTimeString) throws
             UniqueAppointmentList.DuplicatedAppointmentException,
             UniqueAppointmentEntryList.DuplicatedAppointmentEntryException;
+
+    /** Get list index of patient in the queue*/
+    ObservableList<Integer> getPatientListIndexInQueue();
 }

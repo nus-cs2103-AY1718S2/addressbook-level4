@@ -172,6 +172,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public ObservableList<Integer> getPatientListIndexInQueue() {
+        return imdb.getUniquePatientQueueNo();
+    }
+
+    @Override
     public synchronized Patient addPatientToQueue(NameContainsKeywordsPredicate predicate) throws
             DuplicatePatientException, PatientNotFoundException {
         requireNonNull(predicate);

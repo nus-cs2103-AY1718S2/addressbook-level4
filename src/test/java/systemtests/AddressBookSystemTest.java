@@ -200,13 +200,28 @@ public abstract class AddressBookSystemTest {
      */
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
-
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
     }
 
+    /**
+     * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
+     * of the previously selected person.
+     *
+     */
+    protected void assertSelectedCardDeselected() {
 
+        assertFalse(getPersonListPanel().isAnyCardSelected());
+    }
+
+    /**
+     * Assert that the selected index is changed
+     * @see PersonListPanelHandle#isSelectedPersonCardChanged()
+     */
+    protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
+        assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
+    }
 
 
     /**

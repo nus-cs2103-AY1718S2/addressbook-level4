@@ -126,7 +126,7 @@ public class MainWindow extends UiPart<Stage> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        patientListPanel = new PatientListPanel(logic.getPatientVisitingQueue());
+        patientListPanel = new PatientListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(patientListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
@@ -135,7 +135,7 @@ public class MainWindow extends UiPart<Stage> {
         //@@author Kyholmes-reused
         //Reused from https://github.com/se-edu/addressbook-level4/pull/799/files with minor modifications
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
-                logic.getPatientVisitingQueue().size());
+                logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);

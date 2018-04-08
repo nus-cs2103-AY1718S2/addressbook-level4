@@ -149,8 +149,10 @@ public class MainWindow extends UiPart<Stage> {
 
         //@@author Kyholmes
         queuePanel = new QueuePanel(logic.getPatientVisitingQueue(), logic.getPatientIndexInQueue());
+        queuePanelPlaceholder.getChildren().add(queuePanel.getRoot());
     }
 
+    //@@author
     void hide() {
         primaryStage.hide();
     }

@@ -3,14 +3,13 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import javax.swing.plaf.synth.Region;
-
 import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.patient.Patient;
 
@@ -48,7 +47,7 @@ public class QueuePanel extends UiPart<Region> {
         protected void updateItem(QueueCard queueCard, boolean empty) {
             super.updateItem(queueCard, empty);
 
-             if (empty || queueCard == null) {
+            if (empty || queueCard == null) {
                 setGraphic(null);
                 setText(null);
             } else {

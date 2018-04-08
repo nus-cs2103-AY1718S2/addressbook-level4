@@ -50,7 +50,7 @@ public class GitIssueList implements Iterable<Issue> {
     /**
      * Initialises github credentials
      */
-    public void initialiseCredentials(GitDetails gitdetails) throws CommandException {
+    public void initialiseCredentials(GitDetails gitdetails) throws CommandException, IOException {
         repoName = gitdetails.getRepository().toString();
         userLogin = gitdetails.getUsername().toString();
         userAuthentication = gitdetails.getPasscode().toString();
@@ -60,7 +60,7 @@ public class GitIssueList implements Iterable<Issue> {
     /**
      * Authorises with github
      */
-    private void authoriseGithub () throws CommandException {
+    private void authoriseGithub () throws CommandException, IOException {
         try {
             github = GitHub.connectUsingPassword(userLogin, userAuthentication);
             if (!github.isCredentialValid()) {
@@ -115,8 +115,8 @@ public class GitIssueList implements Iterable<Issue> {
             labelsList.add(new Labels(label.getName()));
         }
 
-        return new Issue(new Title(issue.getTitle()), assigneesList, existingMilestone,
-                existingBody, labelsList);
+        return new Issue(new Title(issue.getTitle()), assigneesList, new Milestone("v1.2"), 
+                new Body(""), labelsList);
     }
 
     /**
@@ -152,7 +152,8 @@ public class GitIssueList implements Iterable<Issue> {
         }
         createdIssue.setAssignees(listOfUsers);
         createdIssue.setLabels(listOfLabels.toArray(new String[0]));
-        updateInternalList();
+        //updateInternalList();
+        internalList.add(toAdd);
     }
 
     /**
@@ -165,7 +166,7 @@ public class GitIssueList implements Iterable<Issue> {
             throw new CommandException("Issue #" + index.getOneBased() + " is already open");
         }
         issue.reopen();
-        updateInternalList();
+        //updateInternalList();
     }
 
     /**
@@ -179,7 +180,7 @@ public class GitIssueList implements Iterable<Issue> {
             throw new CommandException("Issue #" + index.getOneBased() + " is already closed");
         }
         issue.close();
-        updateInternalList();
+       // updateInternalList();
     }
 
     /**
@@ -226,6 +227,7 @@ public class GitIssueList implements Iterable<Issue> {
         toEdit.setBody(editedIssue.getBody().toString());
         toEdit.setAssignees(listOfUsers);
         toEdit.setLabels(listOfLabels.toArray(new String[0]));
+        
     }
 
     /**

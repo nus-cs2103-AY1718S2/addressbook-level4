@@ -61,6 +61,9 @@
                <Tab text="Exercise">
                    <StackPane fx:id="exerciseListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
                </Tab>
+               <Tab text="Issues">
+                   <StackPane fx:id="issuePanelPlaceholder" />
+               </Tab>
            </tabs>
          </TabPane>
             <!-- @@author -->

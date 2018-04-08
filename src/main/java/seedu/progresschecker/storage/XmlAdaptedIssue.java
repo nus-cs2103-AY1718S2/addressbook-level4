@@ -25,7 +25,7 @@ public class XmlAdaptedIssue {
     private String title;
     @XmlElement(required = true)
     private String body;
-    @XmlElement(required = true)
+    @XmlElement
     private String milestone;
 
     @XmlElement

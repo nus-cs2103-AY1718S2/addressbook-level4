@@ -263,7 +263,7 @@ Deletes the 4th milestone from the dashboard of the 3rd student in the results o
 === Add a task to a milestone: `addTask`
 
 Adds a task to an existing milestone in a dashboard. +
-Format: `addTask i/STUDENT_INDEX m/MILESTONE_INDEX n/NAME o/DESCRIPTION`
+Format: `addTask i/STUDENT_INDEX m/MILESTONE_INDEX n/NAME_OF_TASK o/DESCRIPTION_OF_TASK`
 
 ****
 * Adds a task to the milestone at the specified `MILESTONE_INDEX`

@@ -38,7 +38,7 @@ public class CheckTaskCommand extends UndoableCommand {
             + PREFIX_TASK_INDEX + "TASK'S INDEX\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_INDEX + "1 "
-            + PREFIX_MILESTONE_INDEX + "2"
+            + PREFIX_MILESTONE_INDEX + "2 "
             + PREFIX_TASK_INDEX + "3";
 
     public static final String MESSAGE_SUCCESS = "Task %1$s marked as completed in milestone %2$s";

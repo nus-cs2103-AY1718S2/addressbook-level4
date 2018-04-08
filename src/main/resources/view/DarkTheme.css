@@ -363,7 +363,8 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
-//@@author AJZ1995
+
+/*@@author AJZ1995*/
 #cardPane {
     -fx-background-color: transparent;
     -fx-border-width: 0;
@@ -374,7 +375,7 @@
 }
 
 #personPanel #name {
-    -fx-font-size: 50pt;
+    -fx-font-size: 40pt;
     -fx-text-fill: #FFFFFF;
 }
 

@@ -365,3 +365,35 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+
+#cardPane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+#cardPane #name, #cardPane #id, #cardPane #orderInformation, #cardPane #entryTitle {
+    -fx-font-size: 15pt;
+}
+
+#personPanel #name {
+    -fx-font-size: 40pt;
+    -fx-text-fill: #000000;
+}
+
+#cardPane #tags .label {
+    -fx-font-size: 12pt;
+}
+
+#personPanel #tags .label {
+    -fx-font-size: 20pt;
+}
+
+#personPanel #address, #personPanel #email, #personPanel #phone {
++   -fx-font-size: 15pt;
+    -fx-text-fill: #000000;
+}
+
+#personPanel .split-pane-divider {
+    -fx-background-color: derive(#e8e8e8, 50%);
+}

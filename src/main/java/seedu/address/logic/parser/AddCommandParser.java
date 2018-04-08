@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CreateNewCalendar;
+import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
@@ -49,9 +50,13 @@ public class AddCommandParser implements Parser<AddCommand> {
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             String calendarId;
-            try {
-                calendarId = CreateNewCalendar.execute(name.fullName);
-            } catch (IOException e) { //not signed in
+            if (!LogicManager.isLocked()) {
+                try {
+                    calendarId = CreateNewCalendar.execute(name.fullName);
+                } catch (IOException e) { //not signed in
+                    calendarId = "";
+                }
+            } else {
                 calendarId = "";
             }
 

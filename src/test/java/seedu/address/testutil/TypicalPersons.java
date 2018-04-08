@@ -62,6 +62,7 @@ public class TypicalPersons {
             .withNric(VALID_NRIC_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+    public static final String NRIC_KEYWORD_MATCHING_MEIER = "T0123456L" + " " + "S0123456Q";
 
     private TypicalPersons() {} // prevents instantiation
 
@@ -80,10 +81,6 @@ public class TypicalPersons {
             }
         }
         return ab;
-    }
-
-    public static List<Person> getTypicalPersonsForDelete() {
-        return new ArrayList<>(Arrays.asList(ALICE, BOB));
     }
 
     public static List<Person> getTypicalPersons() {

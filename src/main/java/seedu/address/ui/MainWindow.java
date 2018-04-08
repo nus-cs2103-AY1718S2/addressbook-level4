@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 //import com.calendarfx.view.CalendarView;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -76,6 +77,7 @@ public class MainWindow extends UiPart<Stage> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
+        setWindowDefaultTheme(prefs);
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -161,16 +163,30 @@ public class MainWindow extends UiPart<Stage> {
             primaryStage.setX(prefs.getGuiSettings().getWindowCoordinates().getX());
             primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
         }
+        getRoot().getScene().getStylesheets().add(prefs.getGuiSettings().getApplicationTheme());
+    }
+
+    //@@author aquarinte
+    /**
+     * Sets the default theme based on user preferences.
+     */
+    private void setWindowDefaultTheme(UserPrefs prefs) {
+        getRoot().getScene().getStylesheets().add(prefs.getGuiSettings().getApplicationTheme());
     }
 
     /**
-     * Returns the current size and the position of the main Window.
+     * Returns the current size, position, and theme of the main Window.
      */
     GuiSettings getCurrentGuiSetting() {
+        ObservableList<String> cssFiles = getRoot().getScene().getStylesheets();
+        assert cssFiles.size() == 2 : "There should only be 2 stylesheets used in main Window.";
+
+        String theme = cssFiles.stream().filter(c -> !c.contains("/view/Extensions.css")).findFirst().get();
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
+                (int) primaryStage.getX(), (int) primaryStage.getY(), theme);
     }
 
+    //@@author
     /**
      * Opens the help window.
      */
@@ -209,21 +225,22 @@ public class MainWindow extends UiPart<Stage> {
 
     //@@author aquarinte
     /**
-     * Change the theme of the application
+     * Changes the theme of Medeina.
      */
-
     @Subscribe
     public void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
-        String style = this.getClass().getResource(event.theme.getThemePath()).toExternalForm();
-        if (!isCurrentStyleSheet(style)) {
-            changeStyleSheet(style);
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        String userSelectedTheme = event.theme.getThemePath();
+        String userSelectedStyleSheet = this.getClass().getResource(userSelectedTheme).toExternalForm();
+        if (!hasStyleSheet(userSelectedStyleSheet)) {
+            changeStyleSheet(userSelectedStyleSheet);
         }
     }
 
     /**
-     * Returns true if none of the current stylesheets contains {@code String} theme
+     * Checks whether {@code theme} is already in use by the application.
      */
-    public Boolean isCurrentStyleSheet(String theme) {
+    public Boolean hasStyleSheet(String theme) {
         if (getRoot().getScene().getStylesheets().contains(theme)) {
             return true;
         }
@@ -231,13 +248,14 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Removes all existing stylesheets and add the given {@code String} theme to style sheets
+     * Removes all existing stylesheets and add the given {@code theme} to style sheets.
      * Re-add Extensions.css to style sheets.
      */
     public void changeStyleSheet(String theme) {
         String extensions = this.getClass().getResource("/view/Extensions.css").toExternalForm();
-        getRoot().getScene().getStylesheets().clear(); //removes all style sheets
-        getRoot().getScene().getStylesheets().add(theme);
+        getRoot().getScene().getStylesheets().clear();
         getRoot().getScene().getStylesheets().add(extensions); //re-add Extensions.css
+        boolean isChanged = getRoot().getScene().getStylesheets().add(theme);
+        assert isChanged == true : "Medeina's theme is not successfully changed.";
     }
 }

@@ -47,16 +47,33 @@ public class DeleteCommandTest {
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
-
+    //@@author wynonaK
     @Test
     public void executeDeleteForceOwner_validIndexUnfilteredList_success() throws Exception {
-        model.addPetPatient(TypicalPetPatients.JOKER);
         Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = prepareDeleteForceOwnerCommand(INDEX_FIRST_PERSON);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deletePerson(personToDelete);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void executeDeleteForceOwnerWithTiedPet_validIndexUnfilteredList_success() throws Exception {
+        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        PetPatient petPatientDependent = TypicalPetPatients.JEWEL;
+        model.addPetPatient(petPatientDependent);
+        DeleteCommand deleteCommand = prepareDeleteForceOwnerCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete)
+                + "\n"
+                + String.format(DeleteCommand.MESSAGE_DELETE_PET_PATIENT_SUCCESS, petPatientDependent);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deletePetPatient(petPatientDependent);
         expectedModel.deletePerson(personToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
@@ -80,14 +97,31 @@ public class DeleteCommandTest {
     @Test
     public void executeDeleteForcePetPatient_validIndexUnfilteredList_success() throws Exception {
         model.addPetPatient(TypicalPetPatients.JEWEL);
-        model.addPetPatient(TypicalPetPatients.JOKER);
-        model.addAppointment(TypicalAppointments.BENSON_APP);
         PetPatient petPatientToDelete = model.getFilteredPetPatientList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = prepareDeleteForcePetPatientCommand(INDEX_FIRST_PERSON);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PET_PATIENT_SUCCESS, petPatientToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deletePetPatient(petPatientToDelete);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void executeDeleteForcePetPatientWithTiedApppointment_validIndexUnfilteredList_success() throws Exception {
+        model.addPetPatient(TypicalPetPatients.JOKER);
+        Appointment appointment = TypicalAppointments.BENSON_APP;
+        model.addAppointment(TypicalAppointments.BENSON_APP);
+        PetPatient petPatientToDelete = model.getFilteredPetPatientList().get(INDEX_FIRST_PERSON.getZeroBased());
+        DeleteCommand deleteCommand = prepareDeleteForcePetPatientCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PET_PATIENT_SUCCESS, petPatientToDelete)
+                + "\n"
+                + String.format(DeleteCommand.MESSAGE_DELETE_APPOINTMENT_SUCCESS, appointment);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteAppointment(appointment);
         expectedModel.deletePetPatient(petPatientToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
@@ -109,7 +143,7 @@ public class DeleteCommandTest {
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
-
+    //@@author
     @Test
     public void executeDeleteOwner_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
@@ -118,6 +152,7 @@ public class DeleteCommandTest {
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
     }
 
+    //@@author wynonaK
     @Test
     public void executeDeleteForceOwner_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
@@ -149,7 +184,7 @@ public class DeleteCommandTest {
 
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
     }
-
+    //@@author
     @Test
     public void execute_validIndexFilteredList_success() throws Exception {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
@@ -166,6 +201,23 @@ public class DeleteCommandTest {
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
+    //@@author wynonaK
+    @Test
+    public void executeForce_validIndexFilteredList_success() throws Exception {
+        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+
+        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        DeleteCommand deleteCommand = prepareDeleteForceOwnerCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deletePerson(personToDelete);
+        showNoPerson(expectedModel);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+    //@@author
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
@@ -178,7 +230,20 @@ public class DeleteCommandTest {
 
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
     }
+    //@@author wynonaK
+    @Test
+    public void executeForce_invalidIndexFilteredList_throwsCommandException() {
+        showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
+        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        DeleteCommand deleteCommand = prepareDeleteForceOwnerCommand(outOfBoundIndex);
+
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+    }
+    //@@author
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
@@ -272,6 +337,7 @@ public class DeleteCommandTest {
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
     }
 
+    //@@author wynonaK
     /**
      * Returns a {@code DeleteCommand} with the parameter {@code index}.
      */
@@ -317,8 +383,9 @@ public class DeleteCommandTest {
         return deleteCommand;
     }
 
+    //@@author
     /**
-     * Updates {@code model}'s filtered list to show no one.
+     * Updates {@code model}'s filtered list to show no person.
      */
     private void showNoPerson(Model model) {
         model.updateFilteredPersonList(p -> false);

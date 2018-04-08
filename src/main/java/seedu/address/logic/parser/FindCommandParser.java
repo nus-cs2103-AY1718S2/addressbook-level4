@@ -76,9 +76,10 @@ public class FindCommandParser implements Parser<FindCommand> {
                 ArgumentTokenizer.tokenize(personInfo, PREFIX_NAME, PREFIX_NRIC, PREFIX_TAG);
         if ((!arePrefixesPresent(argMultimapOwner, PREFIX_NAME)
                 && !arePrefixesPresent(argMultimapOwner, PREFIX_NRIC)
-                && !arePrefixesPresent(argMultimapOwner, PREFIX_TAG))) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    "Unknown prefix parameters!"));
+                && !arePrefixesPresent(argMultimapOwner, PREFIX_TAG)
+                || !argMultimapOwner.getPreamble().isEmpty())) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
         Predicate<Person> finalPredicate = null;
@@ -215,9 +216,10 @@ public class FindCommandParser implements Parser<FindCommand> {
                 && !arePrefixesPresent(argMultimapPetPatient, PREFIX_BREED)
                 && !arePrefixesPresent(argMultimapPetPatient, PREFIX_COLOUR)
                 && !arePrefixesPresent(argMultimapPetPatient, PREFIX_BLOODTYPE)
-                && !arePrefixesPresent(argMultimapPetPatient, PREFIX_TAG))) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    "Unknown prefix parameters!"));
+                && !arePrefixesPresent(argMultimapPetPatient, PREFIX_TAG)
+                || !argMultimapPetPatient.getPreamble().isEmpty())) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
         Predicate<PetPatient> finalPredicate = null;

@@ -259,9 +259,9 @@ public class CommandBoxTest extends GuiUnitTest {
 
     @Test
     public void commandBox_autocompleteTag() {
-        testAutocompleteForUserInput("add t/", 1, "add t/Depression");
+        testAutocompleteForUserInput("add t/", 2, "add t/Depression");
         testAutocompleteForUserInput("add t/F", 1, "add t/friends");
-        testAutocompleteForUserInput("add t/", 2, "add t/Test");
+        testAutocompleteForUserInput("add t/", 3, "add t/Test");
         testAutocompleteForUserInput("add t/ow", 2, "add t/owesMoney");
     }
 

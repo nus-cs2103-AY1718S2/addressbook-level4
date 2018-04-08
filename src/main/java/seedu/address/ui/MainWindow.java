@@ -45,7 +45,7 @@ public class MainWindow extends UiPart<Stage> {
     private UserPrefs prefs;
     private PatientAppointmentPanel patientAppointmentPanel;
     private CalendarPanel calendarPanel;
-    private QueuePanel queuePanel
+    private QueuePanel queuePanel;
 
     @FXML
     private StackPane browserPlaceholder;

@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTTIME;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.ClashingAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 
 //@@author jlks96
@@ -36,6 +37,8 @@ public class AddAppointmentCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New appointment added: %1$s";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the address book";
+    public static final String MESSAGE_CLASHING_APPOINTMENT =
+            "This appointment clashes with another appointment in the address book";
 
     private final Appointment toAdd;
 
@@ -55,8 +58,9 @@ public class AddAppointmentCommand extends UndoableCommand {
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateAppointmentException e) {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
+        } catch (ClashingAppointmentException e) {
+            throw new CommandException(MESSAGE_CLASHING_APPOINTMENT);
         }
-
     }
 
     @Override

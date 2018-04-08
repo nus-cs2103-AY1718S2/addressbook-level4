@@ -1,5 +1,9 @@
 package seedu.address.model.appointment;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -10,6 +14,8 @@ import java.util.Objects;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Appointment {
+    public static final String MESSAGE_TIMES_CONSTRAINTS = "Start time must be before end time";
+
     private final PersonName personName;
     private final Date date;
     private final StartTime startTime;
@@ -20,6 +26,7 @@ public class Appointment {
      * Every field must be present and not null.
      */
     public Appointment(PersonName personName, Date date, StartTime startTime, EndTime endTime, Location location) {
+        checkArgument(areValidTimes(startTime, endTime), MESSAGE_TIMES_CONSTRAINTS);
         this.personName = personName;
         this.date = date;
         this.startTime = startTime;
@@ -45,6 +52,29 @@ public class Appointment {
 
     public Location getLocation() {
         return location;
+    }
+
+    /**
+     * Checks if a given {@code startTime} is before a given {@code endTime}.
+     * @param startTime A startTime to check.
+     * @param endTime An endTime to check.
+     * @return {@code true} if a given start time is before a given end time.
+     */
+    public static boolean areValidTimes(StartTime startTime, EndTime endTime) {
+        SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
+        timeFormatter.setLenient(false);
+        java.util.Date startTimeDate;
+        java.util.Date endTimeDate;
+
+        try {
+            startTimeDate = timeFormatter.parse(startTime.time);
+            endTimeDate = timeFormatter.parse(endTime.time);
+        } catch (java.text.ParseException e) { //if fail return false
+            return false;
+        }
+        requireNonNull(startTimeDate);
+        requireNonNull(endTimeDate);
+        return startTimeDate.before(endTimeDate);
     }
 
     @Override

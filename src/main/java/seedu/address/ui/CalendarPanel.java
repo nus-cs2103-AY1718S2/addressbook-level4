@@ -20,6 +20,9 @@ import seedu.address.commons.events.logic.ZoomInEvent;
 import seedu.address.commons.events.logic.ZoomOutEvent;
 import seedu.address.commons.events.model.AppointmentDeletedEvent;
 import seedu.address.commons.events.model.NewAppointmentAddedEvent;
+import seedu.address.commons.events.ui.MaxZoomInEvent;
+import seedu.address.commons.events.ui.MaxZoomOutEvent;
+import seedu.address.commons.events.ui.ZoomSuccessEvent;
 import seedu.address.model.appointment.Appointment;
 
 //@@author jlks96
@@ -134,9 +137,15 @@ public class CalendarPanel extends UiPart<CalendarView> {
     }
 
     /**
-     * Zooms in on the calendar if possible
+     * Zooms in on the calendar if possible and provides feedback to the {@code ZoomInCommand}
      */
     private void zoomIn() {
+        if (pageBase.equals(calendarView.getDayPage())) {
+            raise(new MaxZoomInEvent());
+        } else {
+            raise(new ZoomSuccessEvent());
+        }
+
         if (pageBase.equals(calendarView.getYearPage())) {
             calendarView.showMonthPage();
         } else if (pageBase.equals(calendarView.getMonthPage())) {
@@ -157,9 +166,15 @@ public class CalendarPanel extends UiPart<CalendarView> {
     }
 
     /**
-     * Zooms out on the calendar if possible
+     * Zooms out on the calendar if possible and provides feedback to the {@code ZoomOutCommand}
      */
     private void zoomOut() {
+        if (pageBase.equals(calendarView.getYearPage())) {
+            raise(new MaxZoomOutEvent());
+        } else {
+            raise(new ZoomSuccessEvent());
+        }
+
         if (pageBase.equals(calendarView.getDayPage())) {
             calendarView.showWeekPage();
         } else if (pageBase.equals(calendarView.getWeekPage())) {

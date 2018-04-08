@@ -123,7 +123,9 @@ public class Appointment {
         getAppointmentTags().forEach(builder::append);
         return builder.toString();
     }
+    //@@author
 
+    //@@author Robert-Peng
     /**
      * Returns a list of tags as a string
      */
@@ -140,4 +142,5 @@ public class Appointment {
         tagString.append(tag.tagName);
         return tagString.toString().trim();
     }
+    //@@author
 }

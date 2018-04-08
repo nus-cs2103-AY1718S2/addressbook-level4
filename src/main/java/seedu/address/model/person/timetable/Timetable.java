@@ -18,6 +18,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class Timetable {
 
+    public static final String EMPTY_LINK = "";
     public static final String DUMMY_LINK_ONE = "http://modsn.us/aaaaa";
     public static final String DUMMY_LINK_TWO = "http://modsn.us/bbbbb";
     public static final String NUSMODS_SHORT = "modsn.us";
@@ -36,7 +37,7 @@ public class Timetable {
         String trimmedUrl = url.trim();
         this.value = trimmedUrl;
         // Create new empty timetable if url is empty or a dummy link
-        if (trimmedUrl.equals("") || trimmedUrl.equals(DUMMY_LINK_ONE) || trimmedUrl.equals(DUMMY_LINK_TWO)) {
+        if (trimmedUrl.equals(EMPTY_LINK) || trimmedUrl.equals(DUMMY_LINK_ONE) || trimmedUrl.equals(DUMMY_LINK_TWO)) {
             this.data = new TimetableData();
             return;
         }

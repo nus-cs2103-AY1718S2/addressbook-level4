@@ -138,7 +138,6 @@ public class SecretKeyUtil {
      * @param secretKey Secret key to save into file
      * @param fileName File name to store
      */
-    
     private static void saveSecretKey(SecretKey secretKey, String fileName) throws IOException{
 
         byte[] keyBytes = secretKey.getEncoded();
@@ -171,7 +170,6 @@ public class SecretKeyUtil {
      *
      * @throws Exception
      */
-    
     private static void addKeyStore(String storeFile, String keyFile) throws Exception {
         FileInputStream fis = null;
         KeyStore keyStore = KeyStore.getInstance("JKS");

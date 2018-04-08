@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -241,7 +242,8 @@ public class MainWindow extends UiPart<Stage> {
      * Checks whether {@code theme} is already in use by the application.
      */
     public Boolean hasStyleSheet(String theme) {
-        if (getRoot().getScene().getStylesheets().contains(theme)) {
+        List<String> styleSheetsInUsed = getRoot().getScene().getStylesheets();
+        if (styleSheetsInUsed.contains(theme)) {
             return true;
         }
         return false;
@@ -249,7 +251,7 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Removes all existing stylesheets and add the given {@code theme} to style sheets.
-     * Re-add Extensions.css to style sheets.
+     * Re-adds Extensions.css to style sheets.
      */
     public void changeStyleSheet(String theme) {
         String extensions = this.getClass().getResource("/view/Extensions.css").toExternalForm();

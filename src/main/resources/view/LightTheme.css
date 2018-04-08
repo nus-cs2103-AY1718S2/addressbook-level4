@@ -1,3 +1,4 @@
+/* @@author aquarinte */
 .background {
     -fx-background-color: derive(white, 20%);
     background-color: white; /* Used in the default.html file */
@@ -107,13 +108,9 @@
     -fx-background-color: white;
 }
 
-.list-cell:filled:selected {
-    -fx-background-color: #424d5f;
-}
-
-.list-cell:filled:selected #cardPane {
-    -fx-border-color: #3e7b91;
-    -fx-border-width: 1;
+.list-cell:empty {
+    /* Empty cells will not have alternating colours */
+    -fx-background: white;
 }
 
 .list-cell .label {
@@ -143,7 +140,7 @@
 }
 
 .status-bar {
-    -fx-background-color: derive(white, 20%);
+    -fx-background-color: #f7f1dc;
     -fx-text-fill: black;
 }
 
@@ -165,7 +162,7 @@
 }
 
 .status-bar-with-border {
-    -fx-background-color: derive(white, 30%);
+    -fx-background-color: #f7f1dc;
     -fx-border-color: derive(white, 25%);
     -fx-border-width: 1px;
 }
@@ -181,7 +178,7 @@
 }
 
 .grid-pane .anchor-pane {
-    -fx-background-color: white;
+    -fx-background-color: #f7f1dc;
 }
 
 .context-menu {
@@ -220,12 +217,12 @@
     -fx-background-color: #1d1d1d;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
-    -fx-text-fill: black;
+    -fx-text-fill: #1d1d1d;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
 .button:hover {
-    -fx-background-color: #dce2f7;
+    -fx-background-color: #1d1d1d;
 }
 
 .button:pressed, .button:default:hover:pressed {
@@ -281,12 +278,16 @@
     -fx-text-fill: #1d1d1d;
 }
 
+.pane {
+	-fx-background-color: white;
+}
+
 .scroll-bar {
-    -fx-background-color: derive(#f7f1dc, 20%);
+    -fx-background-color: white;
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: derive(#f7f1dc, 50%);
+    -fx-background-color: derive(#f7f1dc, 20%);
     -fx-background-insets: 3;
 }
 
@@ -309,7 +310,8 @@
 
 #cardPane {
     -fx-background-color: transparent;
-    -fx-border-width: 0;
+    -fx-border-width: 0 0 1 0;
+	-fx-border-color: #dce2f7;
 }
 
 #commandTypeLabel {
@@ -329,13 +331,14 @@
 }
 
 #filterField, #personListPanel, #personWebpage {
-    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+    -fx-effect: innershadow(gaussian, white, 10, 0, 0, 0);
 }
 
 #resultDisplay .content {
     -fx-background-color: transparent, white, transparent, white;
     -fx-background-radius: 0;
 }
+
 
 #tags {
     -fx-hgap: 7;
@@ -355,51 +358,51 @@
  *https://github.com/se-edu/addressbook-level4/pull/798/commits/167b3d0b4f7ad34296d2fbf505f9ae71f983f53c
  */
 #tags .teal {
-    -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
+    -fx-text-fill: black;
+    -fx-background-color: #cbf9e5;
 }
 
 #tags .red {
-    -fx-text-fill: black;
-    -fx-background-color: red;
+    -fx-text-fill: white;
+    -fx-background-color: #d84951;
 }
 
 #tags .yellow {
-    -fx-background-color: yellow;
+    -fx-background-color: #ffed82;
     -fx-text-fill: black;
 }
 
 #tags .blue {
     -fx-text-fill: white;
-    -fx-background-color: blue;
+    -fx-background-color: #408ec9;
 }
 
 #tags .orange {
     -fx-text-fill: black;
-    -fx-background-color: orange;
+    -fx-background-color: #f9ae58;
 }
 
 #tags .brown {
     -fx-text-fill: white;
-    -fx-background-color: brown;
+    -fx-background-color: #a07b7b;
 }
 
 #tags .green {
     -fx-text-fill: black;
-    -fx-background-color: green;
+    -fx-background-color: #e1f7d5;
 }
 
 #tags .pink {
     -fx-text-fill: black;
-    -fx-background-color: pink;
+    -fx-background-color: #f1cbff;
 }
 
 #tags .black {
     -fx-text-fill: white;
-    -fx-background-color: black;
+    -fx-background-color: #343434;
 }
 
 #tags .grey {
     -fx-text-fill: black;
-    -fx-background-color: grey;
+    -fx-background-color: #cdc6cd;
 }

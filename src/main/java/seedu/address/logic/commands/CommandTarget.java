@@ -43,8 +43,7 @@ public class CommandTarget {
 
         case CODE:
             // Also throws IndexOutOfBoundsException if code isn't found.
-            return Index.fromOneBased(coinList.filtered(coin -> coin.getCode().equals(code)).size());
-
+            return Index.fromZeroBased(coinList.filtered(coin -> coin.getCode().equals(code)).getSourceIndex(0));
         case INDEX:
             if (index.getZeroBased() >= coinList.size()) {
                 throw new IndexOutOfBoundsException();

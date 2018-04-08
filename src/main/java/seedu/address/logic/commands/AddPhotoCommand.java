@@ -46,21 +46,29 @@ public class AddPhotoCommand extends Command {
     public static final String MESSAGE_PHOTO_NOT_CHOSEN = "You have not chosen one photo!";
 
     private final Index targetIndex;
+
     private String path;
+
+    private boolean isTestMode;
 
     /**
      * Creates an AddPhotoCommand to add the specified {@code Photo}
      */
     public AddPhotoCommand(Index index) {
         this.targetIndex = index;
+        isTestMode = false;
         registerAsAnEventHandler(this);
     }
 
     @Override
     public CommandResult execute() throws CommandException {
 
-        EventsCenter.getInstance().post(new ShowFileChooserEvent());
-
+        if (!isTestMode) {
+            EventsCenter.getInstance().post(new ShowFileChooserEvent());
+        } else {
+            String currentDir = System.getProperty("user.dir");
+            path = currentDir + "\\src\\main\\java\\resources\\images\\personphoto\\DefaultPerson.png";
+        }
         //check if the photo is chosen.
         if (path.equals("NoFileChoosed")) {
             return new CommandResult(MESSAGE_PHOTO_NOT_CHOSEN);
@@ -78,17 +86,6 @@ public class AddPhotoCommand extends Command {
 
         if (!model.getPhotoList().contains(new Photo(photoNameWithExtension))) {
             copyPhotoFileToStorage(photoNameWithExtension);
-        }
-
-        File folder = new File("C:\\repos\\main\\src\\main\\resources\\images\\personphoto");
-        File[] listOfFiles = folder.listFiles();
-
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                System.out.println("File " + listOfFiles[i].getName());
-            } else if (listOfFiles[i].isDirectory()) {
-                System.out.println("Directory " + listOfFiles[i].getName());
-            }
         }
 
         Person editedPerson = createEditedPerson(targetPerson, photoNameWithExtension);
@@ -167,5 +164,9 @@ public class AddPhotoCommand extends Command {
     @Subscribe
     private void handleFileChoosedEvent(FileChoosedEvent event) {
         this.path = event.getFilePath();
+    }
+
+    public void setTestMode() {
+        this.isTestMode = true;
     }
 }

@@ -278,7 +278,10 @@ The `redo` command fails as there are no `undo` commands executed previously.
 // end::undoredo[]
 
 === Predict: `predict`
-Predict the potential spending of the of a new customer.
+Predict the potential spending of the of a new customer. Some of the customers have
+their "actual spending" recorded down while some don't have because they have
+not spent anything yet on the insurance policy. Hence this command is to
+predict how much they will spend based on the information from the existing customers
 
 Examples:
 
@@ -307,20 +310,39 @@ to divergent solution. Also, certain value might be too large to be captured
 even with double. Hence in situations like this, an message of "Divergent solution"
 would be presented with no prediction.
 
-Test input: +
-    1. `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/30000 as/1500 age/20` +
-    2. `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/15000 as/750 age/20` +
-    3. `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/10000  age/20` +
+* Like "help" command, the design is fault-tolerant. If you type extra text such
+as `predict abcde` or `predict nothing please`, those are not valid command since
+`predict` takes no other argument. But they will still be accepted as `predict`
 
-    ==>  predict =>> Person3 now shows expected spending of 500
+Test input: +
+    1. `add n/John One p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/30000 as/1500 age/20` +
+    2. `add n/John Two p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/15000 as/750 age/20` +
+    3. `add n/John Three p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/10000  age/20` +
+    4. `predict` +
+
+    ==>  John Three now shows expected spending of 500
 
 Test Input 2: +
-    1. `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/12345678000 as/150 age/20` +
-    2. `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/15000 as/750 age/20` +
+    0. `clear` +
+    1. `add n/John One p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/30000 as/1000 age/20` +
+    2. `add n/John Two  p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/9000 as/300 age/20` +
+    3. `add n/John Three p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/20000  age/20` +
+    4. `predict` +
 
-    ==> predict ==> divergent solution
+    ==>  John Three should have 666.67 expected spending
+
+Test Input 3: +
+    0. `clear` +
+    1. `add n/John One p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/12345678000 as/150 age/20` +
+    2. `add n/John Two  p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/15000 as/750 age/20` +
+    3. `predict`
+
+    ==>  divergent solution
 
 this is to illustrate unrealistic extreme values might lead to divergent solution.
+
+
+
 
 
 === Add a policy : `add_policy`

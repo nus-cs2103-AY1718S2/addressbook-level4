@@ -9,8 +9,12 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Nric;
+import seedu.address.model.petpatient.BloodType;
+import seedu.address.model.petpatient.Breed;
+import seedu.address.model.petpatient.Colour;
 import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
+import seedu.address.model.petpatient.Species;
 import seedu.address.model.tag.Tag;
 
 //@@author chialejing
@@ -75,10 +79,10 @@ public class XmlAdaptedPetPatient {
      */
     public XmlAdaptedPetPatient(PetPatient source) {
         name = source.getName().fullName;
-        species = source.getSpecies();
-        breed = source.getBreed();
-        colour = source.getColour();
-        bloodType = source.getBloodType();
+        species = source.getSpecies().species;
+        breed = source.getBreed().breed;
+        colour = source.getColour().colour;
+        bloodType = source.getBloodType().bloodType;
         ownerNric = source.getOwner().toString();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
@@ -107,20 +111,39 @@ public class XmlAdaptedPetPatient {
         final PetPatientName name = new PetPatientName(this.name);
 
         if (this.species == null) {
-            throw new IllegalValueException(String.format(MISSING_SPECIES_FIELD_MESSAGE_FORMAT));
+            throw new IllegalValueException(
+                    String.format(MISSING_SPECIES_FIELD_MESSAGE_FORMAT, Species.class.getSimpleName()));
         }
+        if (!Species.isValidSpecies(this.species)) {
+            throw new IllegalValueException(Species.MESSAGE_PET_SPECIES_CONSTRAINTS);
+        }
+        final Species species = new Species(this.species);
 
         if (this.breed == null) {
-            throw new IllegalValueException(String.format(MISSING_BREED_FIELD_MESSAGE_FORMAT));
+            throw new IllegalValueException(
+                    String.format(MISSING_BREED_FIELD_MESSAGE_FORMAT, Breed.class.getSimpleName()));
         }
+        if (!Breed.isValidBreed(this.breed)) {
+            throw new IllegalValueException(Breed.MESSAGE_PET_BREED_CONSTRAINTS);
+        }
+        final Breed breed = new Breed(this.breed);
 
         if (this.colour == null) {
-            throw new IllegalValueException(String.format(MISSING_COLOUR_FIELD_MESSAGE_FORMAT));
+            throw new IllegalValueException(
+                    String.format(MISSING_COLOUR_FIELD_MESSAGE_FORMAT, Colour.class.getSimpleName()));
         }
+        if (!Colour.isValidColour(this.colour)) {
+            throw new IllegalValueException(Colour.MESSAGE_PET_COLOUR_CONSTRAINTS);
+        }
+        final Colour colour = new Colour(this.colour);
 
         if (this.bloodType == null) {
             throw new IllegalValueException(String.format(MISSING_BLOODTYPE_FIELD_MESSAGE_FORMAT));
         }
+        if (!BloodType.isValidBloodType(this.bloodType)) {
+            throw new IllegalValueException(BloodType.MESSAGE_PET_BLOODTYPE_CONSTRAINTS);
+        }
+        final BloodType bloodType = new BloodType(this.bloodType);
 
         if (this.ownerNric == null) {
             throw new IllegalValueException(

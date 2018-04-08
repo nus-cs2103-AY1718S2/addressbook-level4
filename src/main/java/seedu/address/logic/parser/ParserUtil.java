@@ -19,7 +19,11 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Phone;
+import seedu.address.model.petpatient.BloodType;
+import seedu.address.model.petpatient.Breed;
+import seedu.address.model.petpatient.Colour;
 import seedu.address.model.petpatient.PetPatientName;
+import seedu.address.model.petpatient.Species;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -280,6 +284,7 @@ public class ParserUtil {
         return new PetPatientName(formattedName.trim());
     }
 
+    //@@author chialejing
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -290,61 +295,67 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String species} into a {@code String}.
+     * Parses a {@code String species} into a {@code Species}.
      * Leading and trailing whitespaces will be trimmed.
      */
-    public static String parseSpecies(String species) {
+    public static Species parseSpecies(String species) throws IllegalValueException {
         requireNonNull(species);
         String trimmedSpecies = species.trim();
-        // check for valid species incomplete
-        return trimmedSpecies;
+        if (!Species.isValidSpecies(trimmedSpecies)) {
+            throw new IllegalValueException(Species.MESSAGE_PET_SPECIES_CONSTRAINTS);
+        }
+        return new Species(trimmedSpecies);
     }
 
     /**
-     * Parses a {@code Optional<String> species} into an {@code Optional<String>} if {@code species} is present.
+     * Parses a {@code Optional<String> species} into an {@code Optional<Species>} if {@code species} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<String> parseSpecies(Optional<String> species) throws IllegalValueException {
+    public static Optional<Species> parseSpecies(Optional<String> species) throws IllegalValueException {
         requireNonNull(species);
         return species.isPresent() ? Optional.of(parseSpecies(species.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code String breed} into a {@code String}.
+     * Parses a {@code String breed} into a {@code Breed}.
      * Leading and trailing whitespaces will be trimmed.
      */
-    public static String parseBreed(String breed) {
+    public static Breed parseBreed(String breed) throws IllegalValueException {
         requireNonNull(breed);
         String trimmedBreed = breed.trim();
-        // check for valid breed incomplete
-        return trimmedBreed;
+        if (!Breed.isValidBreed(trimmedBreed)) {
+            throw new IllegalValueException(Breed.MESSAGE_PET_BREED_CONSTRAINTS);
+        }
+        return new Breed(trimmedBreed);
     }
 
     /**
-     * Parses a {@code Optional<String> breed} into an {@code Optional<String>} if {@code breed} is present.
+     * Parses a {@code Optional<String> breed} into an {@code Optional<Breed>} if {@code breed} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<String> parseBreed(Optional<String> breed) throws IllegalValueException {
+    public static Optional<Breed> parseBreed(Optional<String> breed) throws IllegalValueException {
         requireNonNull(breed);
         return breed.isPresent() ? Optional.of(parseBreed(breed.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code String colour} into a {@code String}.
+     * Parses a {@code String colour} into a {@code Colour}.
      * Leading and trailing whitespaces will be trimmed.
      */
-    public static String parseColour(String colour) {
+    public static Colour parseColour(String colour) throws IllegalValueException {
         requireNonNull(colour);
         String trimmedColour = colour.trim();
-        // check for valid colour incomplete
-        return trimmedColour;
+        if (!Colour.isValidColour(trimmedColour)) {
+            throw new IllegalValueException(Colour.MESSAGE_PET_COLOUR_CONSTRAINTS);
+        }
+        return new Colour(trimmedColour);
     }
 
     /**
-     * Parses a {@code Optional<String> colour} into an {@code Optional<String>} if {@code colour} is present.
+     * Parses a {@code Optional<String> colour} into an {@code Optional<Colour>} if {@code colour} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<String> parseColour(Optional<String> colour) throws IllegalValueException {
+    public static Optional<Colour> parseColour(Optional<String> colour) throws IllegalValueException {
         requireNonNull(colour);
         return colour.isPresent() ? Optional.of(parseColour(colour.get())) : Optional.empty();
     }
@@ -353,18 +364,20 @@ public class ParserUtil {
      * Parses a {@code String bloodType} into a {@code String}.
      * Leading and trailing whitespaces will be trimmed.
      */
-    public static String parseBloodType(String bloodType) {
+    public static BloodType parseBloodType(String bloodType) throws IllegalValueException {
         requireNonNull(bloodType);
         String trimmedBloodType = bloodType.trim();
-        // check for valid blood type incomplete
-        return trimmedBloodType;
+        if (!BloodType.isValidBloodType(trimmedBloodType)) {
+            throw new IllegalValueException(BloodType.MESSAGE_PET_BLOODTYPE_CONSTRAINTS);
+        }
+        return new BloodType(trimmedBloodType);
     }
 
     /**
-     * Parses a {@code Optional<String> bloodType} into an {@code Optional<String>} if {@code bloodType} is present.
+     * Parses a {@code Optional<String> bloodType} into an {@code Optional<BloodType>} if {@code bloodType} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<String> parseBloodType(Optional<String> bloodType) throws IllegalValueException {
+    public static Optional<BloodType> parseBloodType(Optional<String> bloodType) throws IllegalValueException {
         requireNonNull(bloodType);
         return bloodType.isPresent() ? Optional.of(parseBloodType(bloodType.get())) : Optional.empty();
     }

@@ -31,8 +31,12 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.petpatient.BloodType;
+import seedu.address.model.petpatient.Breed;
+import seedu.address.model.petpatient.Colour;
 import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
+import seedu.address.model.petpatient.Species;
 import seedu.address.model.tag.Tag;
 
 //@@author aquarinte
@@ -126,10 +130,10 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         try {
             PetPatientName name = ParserUtil.parsePetPatientName(argMultimap.getValue(PREFIX_NAME)).get();
-            String species = ParserUtil.parseSpecies(argMultimap.getValue(PREFIX_SPECIES)).get();
-            String breed = ParserUtil.parseBreed(argMultimap.getValue(PREFIX_BREED)).get();
-            String color = ParserUtil.parseColour(argMultimap.getValue(PREFIX_COLOUR)).get();
-            String bloodType = ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE)).get();
+            Species species = ParserUtil.parseSpecies(argMultimap.getValue(PREFIX_SPECIES)).get();
+            Breed breed = ParserUtil.parseBreed(argMultimap.getValue(PREFIX_BREED)).get();
+            Colour color = ParserUtil.parseColour(argMultimap.getValue(PREFIX_COLOUR)).get();
+            BloodType bloodType = ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             PetPatient petPatient = new PetPatient(name, species, breed, color, bloodType, tagList);

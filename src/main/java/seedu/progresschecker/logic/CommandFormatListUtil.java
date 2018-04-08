@@ -12,6 +12,7 @@ import seedu.progresschecker.logic.commands.EditCommand;
 import seedu.progresschecker.logic.commands.EditIssueCommand;
 import seedu.progresschecker.logic.commands.ExitCommand;
 import seedu.progresschecker.logic.commands.FindCommand;
+import seedu.progresschecker.logic.commands.GitLoginCommand;
 import seedu.progresschecker.logic.commands.HelpCommand;
 import seedu.progresschecker.logic.commands.ListCommand;
 import seedu.progresschecker.logic.commands.RedoCommand;
@@ -59,6 +60,7 @@ public final class CommandFormatListUtil {
         commandFormatList.add(EditIssueCommand.COMMAND_FORMAT);
         commandFormatList.add(ReopenIssueCommand.COMMAND_FORMAT);
         commandFormatList.add(CloseIssueCommand.COMMAND_FORMAT);
+        commandFormatList.add(GitLoginCommand.COMMAND_FORMAT);
 
         //sorting the commandFormatList
         Collections.sort(commandFormatList);

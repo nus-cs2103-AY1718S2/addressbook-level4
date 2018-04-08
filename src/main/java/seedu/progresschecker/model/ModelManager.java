@@ -15,7 +15,9 @@ import seedu.progresschecker.commons.core.LogsCenter;
 import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.commons.events.model.ProgressCheckerChangedEvent;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
+import seedu.progresschecker.model.credentials.GitDetails;
 import seedu.progresschecker.model.exercise.Exercise;
+import seedu.progresschecker.model.exercise.exceptions.ExerciseNotFoundException;
 import seedu.progresschecker.model.issues.Issue;
 import seedu.progresschecker.model.person.Person;
 import seedu.progresschecker.model.person.exceptions.DuplicatePersonException;
@@ -84,6 +86,11 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@author adityaa1998
     @Override
+    public synchronized void loginGithub(GitDetails gitdetails) throws IOException, CommandException {
+        progressChecker.loginGithub(gitdetails);
+        indicateProgressCheckerChanged();
+    }
+    @Override
     public synchronized void closeIssueOnGithub(Index index) throws IOException, CommandException {
         progressChecker.closeIssueOnGithub(index);
         indicateProgressCheckerChanged();
@@ -117,6 +124,16 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         progressChecker.updatePerson(target, editedPerson);
+        indicateProgressCheckerChanged();
+    }
+
+    //@@author iNekox3
+    @Override
+    public void updateExercise(Exercise target, Exercise editedExercise)
+            throws ExerciseNotFoundException {
+        requireAllNonNull(target, editedExercise);
+
+        progressChecker.updateExercise(target, editedExercise);
         indicateProgressCheckerChanged();
     }
 
@@ -202,6 +219,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ObservableList<Issue> getFilteredIssueList() {
         return FXCollections.unmodifiableObservableList(filteredIssues);
+    }
+
+    @Override
+    public void updateFilteredExerciseList(Predicate<Exercise> predicate) {
+        requireNonNull(predicate);
+        filteredExercises.setPredicate(predicate);
     }
 
 }

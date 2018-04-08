@@ -6,7 +6,9 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
+import seedu.progresschecker.model.credentials.GitDetails;
 import seedu.progresschecker.model.exercise.Exercise;
+import seedu.progresschecker.model.exercise.exceptions.ExerciseNotFoundException;
 import seedu.progresschecker.model.issues.Issue;
 import seedu.progresschecker.model.person.Person;
 import seedu.progresschecker.model.person.exceptions.DuplicatePersonException;
@@ -21,6 +23,9 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
     Predicate<Issue> PREDICATE_SHOW_ALL_ISSUES = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<Exercise> PREDICATE_SHOW_ALL_EXERCISES = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyProgressChecker newData);
@@ -38,6 +43,8 @@ public interface Model {
     void sort();
 
     //@@author adityaa1998
+    /** authenticates git using password */
+    void loginGithub(GitDetails gitdetails) throws IOException, CommandException;
 
     /** creates an issue on github */
     void createIssueOnGitHub(Issue issue) throws IOException, CommandException;
@@ -81,6 +88,14 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredIssueList(Predicate<Issue> predicate);
+    //@@author iNekox3
+    /**
+     * Replaces the given exercise {@code target} with {@code editedExercise}.
+     *
+     * @throws ExerciseNotFoundException if {@code target} could not be found in the list.
+     */
+    void updateExercise(Exercise target, Exercise editedExercise)
+            throws ExerciseNotFoundException;
 
     /** Returns an unmodifiable view of the filtered exercise list */
     ObservableList<Exercise> getFilteredExerciseList();
@@ -88,6 +103,13 @@ public interface Model {
     /** Returns unmodifiable view of the filtered issue list */
     ObservableList<Issue> getFilteredIssueList();
 
+    /**
+     * Updates the filter of the filtered exercise list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredExerciseList(Predicate<Exercise> predicate);
+
+    //@@author
     /** Uploads the given photo with given path */
     void uploadPhoto(Person target, String path)
             throws PersonNotFoundException, DuplicatePersonException;

@@ -81,31 +81,76 @@ public class SampleDataUtil {
     //@@author iNekox3
     public static Exercise[] getSampleExercises() {
         return new Exercise[] {
-            new Exercise(new QuestionIndex("3.1.1"), new QuestionType("choice"),
-                new Question("Choose the correct statements\n"
-                    + "\n"
-                    + "a. Refactoring can improve understandability\n"
-                    + "b. Refactoring can uncover bugs\n"
-                    + "c. Refactoring can result in better performance\n"
-                    + "d. Refactoring can change the number of methods/classes"),
+            // week 11
+            new Exercise(new QuestionIndex("11.1.1"), new QuestionType("choice"),
+                new Question("What is the main difference between a class diagram and and an OO domain model?\n"
+                        + "a. One is about the problem domain while the other is about the solution domain.\n"
+                        + "b. One has more classes than the other.\n"
+                        + "c. One shows more details than the other.\n"
+                        + "d. One is a UML diagram, while the other is not a UML diagram."),
                 new StudentAnswer(""),
-                new ModelAnswer("a b c d. (a, b, c) Although the primary aim of refactoring is to improve"
-                    + "internal code structure, there are other secondary benefits. (d) Some refactorings"
-                    + "result in adding/removing methods/classes.")),
-            new Exercise(new QuestionIndex("3.1.2"), new QuestionType("text"),
-                new Question("Do you agree with the following statement? Justify your answer.\n"
-                    + "\n"
-                    + "Statement: Whenever we refactor code to fix bugs,"
-                    + "we need not do regression testing if the bug fix was minor."),
+                new ModelAnswer("a. Both are UML diagrams, and use the class diagram notation."
+                        + "While it is true that often a class diagram may have more classes and more details,"
+                        + "the main difference is that the OO domain model describes the problem domain"
+                        + "while the class diagram describes the solution.")),
+            new Exercise(new QuestionIndex("11.3.1"), new QuestionType("text"),
+                new Question("Here are some common elements of a design pattern: "
+                        + "Name, Context, Problem, Solution, Anti-patterns (optional), Consequences (optional),"
+                        + "other useful information (optional).\n"
+                        + "\n"
+                        + "Using similar elements, describe a pattern that is not a design pattern."
+                        + "It must be a pattern you have noticed, not a pattern already documented by others."
+                        + "You may also give a pattern not related to software.\n"
+                        + "\n"
+                        + "Some examples:\n"
+                        + "- A pattern for testing textual UIs.\n"
+                        + "- A pattern for striking a good bargain at a mall such as Sim-Lim Square."),
                 new StudentAnswer(""),
-                new ModelAnswer("DISAGREE. Even a minor change can have major repercussions on the system."
-                    + "We MUST do regression testing after each change, no matter how minor it is."
-                    + "Fixing bugs is technically not refactoring.")),
-            new Exercise(new QuestionIndex("3.1.3"), new QuestionType("text"),
-                new Question("Explain what is refactoring and "
-                    + "why it is not the same as rewriting, bug fixing, or adding features."),
+                new ModelAnswer("No suggested answer.")),
+            new Exercise(new QuestionIndex("11.4.1"), new QuestionType("choice"),
+                new Question("Applying the heuristics covered so far, we can determine the precise number of "
+                        + "test cases required to test any given SUT effectively.\n"
+                        + "\n"
+                        + "a. True\n"
+                        + "b. False"),
                 new StudentAnswer(""),
-                new ModelAnswer(""))
+                new ModelAnswer("b. False. These heuristics are, well, heuristics only."
+                        + "They will help you to make better decisions about test case design."
+                        + "However, they are speculative in nature (especially, when testing in black-box fashion)"
+                        + "and cannot give you precise number of test cases.")),
+            new Exercise(new QuestionIndex("11.4.2"), new QuestionType("choice"),
+                new Question("Which of these contradict the heuristics recommended "
+                        + "when creating test cases with multiple inputs?\n"
+                        + "\n"
+                        + "a. All invalid test inputs must be tested together.\n"
+                        + "b. It is ok to combine valid values for different inputs.\n"
+                        + "c. No more than one invalid test input should be in a given test case.\n"
+                        + "d. Each valid test input should appear at least once "
+                        + "in a test case that doesn’t have any invalid inputs."),
+                new StudentAnswer(""),
+                new ModelAnswer("a. If you test all invalid test inputs together,"
+                        + "you will not know if each one of the invalid inputs are handled correctly by the SUT. "
+                        + "This is because most SUTs return an error message "
+                        + "upon encountering the first invalid input.")),
+            new Exercise(new QuestionIndex("11.6.1"), new QuestionType("choice"),
+                new Question("Choose the correct statements about agile processes.\n"
+                        + "\n"
+                        + "a. They value working software over comprehensive documentation.\n"
+                        + "b. They value responding to change over following a plan.\n"
+                        + "c. They may not be suitable for some type of projects.\n"
+                        + "d. XP and Scrum are agile processes."),
+                new StudentAnswer(""),
+                new ModelAnswer("a b c d.")),
+            new Exercise(new QuestionIndex("11.7.1"), new QuestionType("choice"),
+                new Question("Choose the correct statements about the unified process.\n"
+                        + "\n"
+                        + "a. It was conceived by the three amigos who also created UML.\n"
+                        + "b. The Unified process requires the use of UML.\n"
+                        + "c. The Unified process is actually a process framework rather than a fixed process.\n"
+                        + "d. The Unified process can be iterative and incremental"),
+                new StudentAnswer(""),
+                new ModelAnswer("a c d. Although UP was created by the same three amigos who created UML,"
+                        + "the UP does not require UML."))
         };
     }
 

@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import seedu.progresschecker.logic.commands.AddCommand;
 import seedu.progresschecker.logic.commands.AddDefaultTasksCommand;
+import seedu.progresschecker.logic.commands.AnswerCommand;
 import seedu.progresschecker.logic.commands.ClearCommand;
 import seedu.progresschecker.logic.commands.CloseIssueCommand;
 import seedu.progresschecker.logic.commands.Command;
@@ -19,6 +20,7 @@ import seedu.progresschecker.logic.commands.EditCommand;
 import seedu.progresschecker.logic.commands.EditIssueCommand;
 import seedu.progresschecker.logic.commands.ExitCommand;
 import seedu.progresschecker.logic.commands.FindCommand;
+import seedu.progresschecker.logic.commands.GitLoginCommand;
 import seedu.progresschecker.logic.commands.HelpCommand;
 import seedu.progresschecker.logic.commands.HistoryCommand;
 import seedu.progresschecker.logic.commands.ListCommand;
@@ -80,6 +82,10 @@ public class ProgressCheckerParser {
         case AddCommand.COMMAND_WORD:
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
+
+        case AnswerCommand.COMMAND_WORD:
+        case AnswerCommand.COMMAND_ALIAS:
+            return new AnswerCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:
@@ -151,6 +157,10 @@ public class ProgressCheckerParser {
         case CloseIssueCommand.COMMAND_WORD:
         case CloseIssueCommand.COMMAND_ALIAS:
             return new CloseIssueCommandParser().parse(arguments);
+
+        case GitLoginCommand.COMMAND_WORD:
+        case GitLoginCommand.COMMAND_ALIAS:
+            return new GitLoginCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

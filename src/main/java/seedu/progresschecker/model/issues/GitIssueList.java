@@ -23,6 +23,7 @@ import javafx.collections.ObservableList;
 import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.commons.util.CollectionUtil;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
+import seedu.progresschecker.model.credentials.GitDetails;
 import seedu.progresschecker.model.person.Person;
 
 //@@author adityaa1998
@@ -37,9 +38,9 @@ import seedu.progresschecker.model.person.Person;
 public class GitIssueList implements Iterable<Issue> {
 
     private final ObservableList<Issue> internalList = FXCollections.observableArrayList();
-    private final String repoName = new String("AdityaA1998/samplerepo-pr-practice");
-    private final String userLogin = new String("adityaa1998");
-    private final String userAuthentication = new String("Aditya@123");
+    private String repoName;
+    private String userLogin;
+    private String userAuthentication;
     private GitHub github;
     private GHRepository repository;
     private GHIssueBuilder issueBuilder;
@@ -47,11 +48,24 @@ public class GitIssueList implements Iterable<Issue> {
     private GHIssue toEdit;
 
     /**
+     * Initialises github credentials
+     */
+    public void initialiseCredentials(GitDetails gitdetails) throws CommandException {
+        repoName = gitdetails.getRepository().toString();
+        userLogin = gitdetails.getUsername().toString();
+        userAuthentication = gitdetails.getPasscode().toString();
+        authoriseGithub();
+    }
+
+    /**
      * Authorises with github
      */
-    private void authoriseGithub () throws IOException, CommandException {
+    private void authoriseGithub () throws CommandException {
         try {
             github = GitHub.connectUsingPassword(userLogin, userAuthentication);
+            if (!github.isCredentialValid()) {
+                throw new IOException();
+            }
         } catch (IOException ie) {
             throw new CommandException("Enter correct username and password");
         }
@@ -111,8 +125,7 @@ public class GitIssueList implements Iterable<Issue> {
      * @throws IOException if there is any problem creating an issue on github;
      */
     public void createIssue(Issue toAdd) throws IOException, CommandException {
-
-        authoriseGithub();
+        checkGitAuthentication();
         issueBuilder = repository.createIssue(toAdd.getTitle().toString());
         issueBuilder.body(toAdd.getBody().toString());
 
@@ -146,9 +159,7 @@ public class GitIssueList implements Iterable<Issue> {
      * Reopens an issue on github
      */
     public void reopenIssue(Index index) throws IOException, CommandException {
-
-        authoriseGithub();
-        //checkGitAuthentication();
+        checkGitAuthentication();
         issue = repository.getIssue(index.getOneBased());
         if (issue.getState() == GHIssueState.OPEN) {
             throw new CommandException("Issue #" + index.getOneBased() + " is already open");
@@ -176,7 +187,8 @@ public class GitIssueList implements Iterable<Issue> {
      */
     private void checkGitAuthentication() throws CommandException {
         if (github == null) {
-            throw new CommandException("Github not authenticated. Use logn command to authenticate github first");
+            throw new CommandException("Github not authenticated. "
+                    + "Use 'gitlogin' command to first authenticate your github account");
         }
     }
 

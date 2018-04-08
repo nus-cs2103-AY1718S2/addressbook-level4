@@ -124,12 +124,12 @@ public class GServiceManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        try {
-//            GCalendarService gCalendarService = new GCalendarService(
-//                    credential, httpTransport, JSON_FACTORY);
-//            gCalendarService.synchronize(schedule, addressBook);
-//        } catch (Exception e) {
-//            System.out.println("Error: " + e);
-//        }
+        try {
+            GCalendarService gCalendarService = new GCalendarService(
+                    credential, httpTransport, JSON_FACTORY);
+            gCalendarService.synchronize(schedule, addressBook);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
     }
 }

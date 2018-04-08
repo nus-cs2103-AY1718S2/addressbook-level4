@@ -196,6 +196,13 @@ public class GContactsService {
         return false;
     }
 
+    /**
+     * Deletes all the Student contacts under Contact Group "Students"
+     * @param studentGroupHref
+     * @param resultFeed
+     * @throws ServiceException
+     * @throws IOException
+     */
     public static void deleteAllStudentContactsWithStudentGroup
             (String studentGroupHref, ContactFeed resultFeed) throws ServiceException, IOException {
         for (ContactEntry entry : resultFeed.getEntries()) {

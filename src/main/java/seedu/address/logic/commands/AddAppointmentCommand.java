@@ -37,8 +37,8 @@ public class AddAppointmentCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New appointment added: %1$s";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the address book";
-    public static final String MESSAGE_CLASHING_APPOINTMENT
-            = "This appointment clashes with another appointment in the address book";
+    public static final String MESSAGE_CLASHING_APPOINTMENT =
+            "This appointment clashes with another appointment in the address book";
 
     private final Appointment toAdd;
 

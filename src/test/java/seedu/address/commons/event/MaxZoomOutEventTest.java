@@ -9,6 +9,6 @@ public class MaxZoomOutEventTest {
     @Test
     public void toString_comparedWithClassName_success() {
         MaxZoomOutEvent event = new MaxZoomOutEvent();
-        assert(event.toString().equals("MaxZoomInEvent"));
+        assert(event.toString().equals("MaxZoomOutEvent"));
     }
 }

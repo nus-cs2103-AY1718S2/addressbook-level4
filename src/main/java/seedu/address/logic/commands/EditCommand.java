@@ -22,16 +22,12 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PET_PATIENTS;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.descriptors.EditAppointmentDescriptor;
 import seedu.address.logic.descriptors.EditPersonDescriptor;

@@ -48,7 +48,4 @@ public class PasswordDialog extends Dialog<String> {
         });
     }
 
-    public PasswordField getPasswordField() {
-        return passwordField;
-    }
 }

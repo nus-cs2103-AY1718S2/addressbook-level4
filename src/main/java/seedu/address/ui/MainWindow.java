@@ -37,6 +37,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.logic.FileChoosedEvent;
 import seedu.address.commons.events.logic.PasswordEnteredEvent;
+import seedu.address.commons.events.logic.SetPasswordEnteredEvent;
 import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowFileChooserEvent;
@@ -45,6 +46,7 @@ import seedu.address.commons.events.ui.ShowMyCalendarEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;
 import seedu.address.commons.events.ui.ShowPasswordFieldEvent;
 import seedu.address.commons.events.ui.ShowReviewDialogEvent;
+import seedu.address.commons.events.ui.ShowSetPasswordDialogEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.theme.Theme;
@@ -457,6 +459,18 @@ public class MainWindow extends UiPart<Stage> {
             raise(new PasswordEnteredEvent(input.get()));
         } else {
             raise(new PasswordEnteredEvent("nopassword"));
+        }
+    }
+
+    @FXML
+    @Subscribe
+    protected void handleShowSetPasswordDialogEvent(ShowSetPasswordDialogEvent event) {
+        SetPasswordDialog setPasswordDialog = new SetPasswordDialog();
+        Optional<String> input = setPasswordDialog.showAndWait();
+        if (input.isPresent() && !input.get().equals("incomplete")) {
+            raise(new SetPasswordEnteredEvent(input.get()));
+        } else {
+            raise(new SetPasswordEnteredEvent("incomplete"));
         }
     }
 }

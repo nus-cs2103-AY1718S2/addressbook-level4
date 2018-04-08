@@ -514,8 +514,8 @@ Sets Employees Tracker's unlock password. +
 Format: `setPassword OLD_PASSWORD NEW_PASSWORD`
 
 ****
+* OLD_PASSWORD and NEW_PASSWORD can contain any character, EXCEPT comma(,).
 * OLD_PASSWORD and NEW_PASSWORD are requiered, and OLD_PASSWORD should match current application unlock password.
-* OLD_PASSWORD and NEW_PASSWORD can contain any character.
 ****
 
 Examples:

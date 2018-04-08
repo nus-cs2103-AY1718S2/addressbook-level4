@@ -14,7 +14,7 @@ public class UserPrefs {
     private String addressBookName = "MyAddressBook";
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0, "dark theme");
+        this.setGuiSettings(500, 500, 0, 0, "bright");
     }
 
     public GuiSettings getGuiSettings() {

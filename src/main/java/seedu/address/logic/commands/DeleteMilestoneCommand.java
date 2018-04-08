@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_INDEXES;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MILESTONE_INDEX;
@@ -93,7 +93,7 @@ public class DeleteMilestoneCommand extends UndoableCommand {
         List<Student> lastShownList = model.getFilteredStudentList();
 
         if (!CheckIndexesUtil.areIndexesValid(lastShownList, targetStudentIndex, targetMilestoneIndex)) {
-            throw new IllegalValueException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+            throw new IllegalValueException(MESSAGE_INVALID_INDEXES);
         }
 
         targetStudent = lastShownList.get(targetStudentIndex.getZeroBased());

@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_STUDENT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalStudents.getTypicalAddressBook;
 
 import org.junit.Test;
@@ -18,15 +18,19 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.student.Student;
 import seedu.address.testutil.StudentBuilder;
 
+//@@author yapni
+/**
+ * Contains integration tests (interaction with the Model) for {@code FavouriteCommand}.
+ */
 public class FavouriteCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new Schedule());
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
-        Student targetStudent = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
+        Student targetStudent = model.getFilteredStudentList().get(INDEX_FIRST.getZeroBased());
         Student favouritedTargetStudent = new StudentBuilder(targetStudent).withFavourite(true).build();
-        FavouriteCommand favouriteCommand = prepareCommand(INDEX_FIRST_STUDENT);
+        FavouriteCommand favouriteCommand = prepareCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(FavouriteCommand.MESSAGE_SUCCESS, favouritedTargetStudent);
 

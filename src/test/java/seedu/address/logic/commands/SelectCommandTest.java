@@ -5,9 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.showStudentAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_STUDENT;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_STUDENT;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_STUDENT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD;
 import static seedu.address.testutil.TypicalStudents.getTypicalAddressBook;
 
 import org.junit.Before;
@@ -44,8 +44,8 @@ public class SelectCommandTest {
     public void execute_validIndexUnfilteredList_success() {
         Index lastStudentIndex = Index.fromOneBased(model.getFilteredStudentList().size());
 
-        assertExecutionSuccess(INDEX_FIRST_STUDENT);
-        assertExecutionSuccess(INDEX_THIRD_STUDENT);
+        assertExecutionSuccess(INDEX_FIRST);
+        assertExecutionSuccess(INDEX_THIRD);
         assertExecutionSuccess(lastStudentIndex);
     }
 
@@ -58,16 +58,16 @@ public class SelectCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showStudentAtIndex(model, INDEX_FIRST_STUDENT);
+        showStudentAtIndex(model, INDEX_FIRST);
 
-        assertExecutionSuccess(INDEX_FIRST_STUDENT);
+        assertExecutionSuccess(INDEX_FIRST);
     }
 
     @Test
     public void execute_invalidIndexFilteredList_failure() {
-        showStudentAtIndex(model, INDEX_FIRST_STUDENT);
+        showStudentAtIndex(model, INDEX_FIRST);
 
-        Index outOfBoundsIndex = INDEX_SECOND_STUDENT;
+        Index outOfBoundsIndex = INDEX_SECOND;
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getStudentList().size());
 
@@ -76,14 +76,14 @@ public class SelectCommandTest {
 
     @Test
     public void equals() {
-        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_STUDENT);
-        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_STUDENT);
+        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST);
+        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND);
 
         // same object -> returns true
         assertTrue(selectFirstCommand.equals(selectFirstCommand));
 
         // same values -> returns true
-        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_STUDENT);
+        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST);
         assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
 
         // different types -> returns false

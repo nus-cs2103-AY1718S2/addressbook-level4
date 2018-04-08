@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstStudent;
 import static seedu.address.logic.commands.CommandTestUtil.showStudentAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_STUDENT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalStudents.getTypicalAddressBook;
 
 import org.junit.Test;
@@ -29,7 +29,7 @@ public class UndoableCommandTest {
         deleteFirstStudent(expectedModel);
         assertEquals(expectedModel, model);
 
-        showStudentAtIndex(model, INDEX_FIRST_STUDENT);
+        showStudentAtIndex(model, INDEX_FIRST);
 
         // undo() should cause the model's filtered list to show all students
         dummyCommand.undo();
@@ -39,7 +39,7 @@ public class UndoableCommandTest {
 
     @Test
     public void redo() {
-        showStudentAtIndex(model, INDEX_FIRST_STUDENT);
+        showStudentAtIndex(model, INDEX_FIRST);
 
         // redo() should cause the model's filtered list to show all students
         dummyCommand.redo();

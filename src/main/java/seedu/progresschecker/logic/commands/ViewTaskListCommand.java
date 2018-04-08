@@ -20,6 +20,7 @@ import com.google.api.services.tasks.model.Task;
 import seedu.progresschecker.commons.core.EventsCenter;
 import seedu.progresschecker.commons.events.ui.LoadBarEvent;
 import seedu.progresschecker.commons.events.ui.LoadTaskEvent;
+import seedu.progresschecker.commons.events.ui.TabLoadChangedEvent;
 import seedu.progresschecker.commons.util.FileUtil;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.task.MyTaskList;
@@ -39,17 +40,16 @@ public class ViewTaskListCommand extends Command {
     public static final String PROGRESS_CHECKER_PAGE = "/view/progresschecker.html";
     public static final String FILE_FAILURE = "Something is wrong with the file system.";
     public static final String BAR_FAILURE = "Fail to get the progress bar.";
-    public static final String COMMAND_FORMAT = COMMAND_WORD + "TASKLIST-TITLE";
+    public static final String COMMAND_FORMAT = COMMAND_WORD;
     public static final String MESSAGE_TITLE_CONSTRAINTS = "The title of a task list should not exceed "
             + "49 characters (as specified by Google Task.";
+    public static final String TASK_TAB = "task";
     public static final int MAX_TITLE_LENGTH = 49;
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             // TODO: change description and parameter range when appropriate
-            + ": Toggle view to display the task list with the given name.\n"
-            + "Parameters: TASKLIST-TITLE (max "
-            + MAX_TITLE_LENGTH
-            + " characters)\n"
+            + ": View the default task list.\n"
+            + "Parameters: No parameters\n"
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "Viewing task list: %1$s";
@@ -73,6 +73,7 @@ public class ViewTaskListCommand extends Command {
         File htmlCheckerFile = new File(DATA_FOLDER + CHECKER_PAGE);
         writeToHtmlChecker(htmlCheckerFile);
         try {
+            EventsCenter.getInstance().post(new TabLoadChangedEvent(TASK_TAB));
             EventsCenter.getInstance().post(new LoadBarEvent(readFile(htmlBarFile.getAbsolutePath(),
                     StandardCharsets.UTF_8)));
             EventsCenter.getInstance().post(new LoadTaskEvent(readFile(htmlFile.getAbsolutePath(),

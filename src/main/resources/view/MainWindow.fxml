@@ -55,7 +55,7 @@
          <TabPane fx:id="tabPlaceholder" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
            <tabs>
              <Tab fx:id="profilePlaceholder" text="Profile" />
-             <Tab text="Task">
+             <Tab fx:id="taskPlaceholder" text="Task">
              <!-- @@author -->
                  <!-- @@author EdwardKSG -->
                  <SplitPane id="taskPane" fx:id="taskPane" dividerPositions="0.2" orientation="VERTICAL" VBox.vgrow="ALWAYS">

@@ -151,11 +151,12 @@ public class ParserUtil {
         String[] splitSubjectStr = subjectsStr.trim().split("\\s+");
         for (int i = 0; i < splitSubjectStr.length; i++) {
             String subjectName = splitSubjectStr[i];
-            i += 1;
-            String subjectGrade = splitSubjectStr[i];
             if (!Subject.isValidSubjectName(subjectName)) {
                 throw new IllegalValueException(Subject.MESSAGE_SUBJECT_NAME_CONSTRAINTS);
-            } else if (!Subject.isValidSubjectGrade(subjectGrade)) {
+            }
+            i += 1;
+            String subjectGrade = splitSubjectStr[i];
+            if (!Subject.isValidSubjectGrade(subjectGrade)) {
                 throw new IllegalValueException(Subject.MESSAGE_SUBJECT_GRADE_CONSTRAINTS);
             }
             subjectSet.add(new Subject(subjectName, subjectGrade));

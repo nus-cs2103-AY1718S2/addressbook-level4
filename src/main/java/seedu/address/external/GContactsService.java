@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
+import com.google.api.Service;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.gdata.client.contacts.ContactsService;
 import com.google.gdata.data.PlainTextConstruct;
@@ -151,45 +152,41 @@ public class GContactsService {
         return createdGroup;
     }
 
+    /**
+     * Clears all old contacts that were uploaded, then overwrites them with current data.
+     * @param myService
+     * @throws ServiceException
+     * @throws IOException
+     */
     public static void clearAllOldContacts(ContactsService myService)
             throws ServiceException, IOException {
-        //ContactGroupEntry group = myService.getEntry(contactGroupURL, ContactGroupEntry.class);
+
         ContactGroupEntry studentGroupEntry = getStudentGroupEntry(myService);
         URL feedUrl = new URL("https://www.google.com/m8/feeds/contacts/default/full");
         ContactFeed resultFeed = myService.getFeed(feedUrl, ContactFeed.class);
 
         if (studentGroupEntry != null) {
-            for (ContactEntry entry : resultFeed.getEntries()) {
-                System.out.println("Entry: " + entry.getName().getFullName().getValue());
-//                for (GroupMembershipInfo group : entry.getGroupMembershipInfos()) {
-//                    System.out.println("Print: " + " -- " + group.getHref());
-//                }
-                if (isStudentGroup(studentGroupEntry.getSelfLink().getHref(),
-                        entry.getGroupMembershipInfos())) {
-                    try {
-                        entry.delete();
-                    } catch (PreconditionFailedException e) {
-                        // Etags mismatch: handle the exception.
-                    }
-                }
-            }
+            deleteAllStudentContactsWithStudentGroup(
+                    studentGroupEntry.getSelfLink().getHref(), resultFeed);
             try {
-                // Print the results
                 studentGroupEntry.delete();
-                //studentGroupEntry.delete();
-
             } catch (PreconditionFailedException e) {
-                // Etags mismatch: handle the exception.
-                System.out.println("Lel");
+                System.out.println("Student Group does not Exists!");
+                e.printStackTrace();
             }
         }
     }
 
+    /**
+     * Returns true if the list of Groups of a Student in GroupMemberShipInfo has the "Student" Group
+     * @param link
+     * @param groupMembershipInfo
+     * @return
+     */
     public static boolean isStudentGroup(String link, List<GroupMembershipInfo> groupMembershipInfo) {
         String[] linkParts = link.split("/");
 
         for (GroupMembershipInfo group : groupMembershipInfo) {
-            System.out.println("CB: " + link + " -- " + group.getHref());
             String[] hrefParts = group.getHref().split("/");
 
             if(hrefParts[hrefParts.length -1].equals(linkParts[linkParts.length -1])) {
@@ -197,6 +194,15 @@ public class GContactsService {
             }
         }
         return false;
+    }
+
+    public static void deleteAllStudentContactsWithStudentGroup
+            (String studentGroupHref, ContactFeed resultFeed) throws ServiceException, IOException {
+        for (ContactEntry entry : resultFeed.getEntries()) {
+            if (isStudentGroup(studentGroupHref, entry.getGroupMembershipInfos())) {
+                entry.delete();
+            }
+        }
     }
 }
 

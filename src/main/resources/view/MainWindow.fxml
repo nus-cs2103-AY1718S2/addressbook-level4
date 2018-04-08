@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.layout.HBox?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="450" minHeight="600">
   <icons>
@@ -60,6 +61,16 @@
             </padding>
           </StackPane>
         </SplitPane>
+
+        <StackPane VBox.vgrow="NEVER" fx:id="queueList" styleClass="pane-with-border"
+                   minHeight="80" prefHeight="100" maxHeight="80">
+          <HBox minHeight="70" prefHeight="70">
+            <padding>
+              <Insets top="5" right="10" bottom="5" left="10" />
+            </padding>
+            <StackPane fx:id="queuePanelPlaceholder" HBox.hgrow="ALWAYS"/>
+          </HBox>
+        </StackPane>
 
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
       </VBox>

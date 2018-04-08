@@ -17,8 +17,9 @@ public class AliasCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "alias";
     public static final String LIST_ALIAS_COMMAND_WORD = "list";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows list of alias or creates new alias.\n"
-            + "Parameters: [COMMAND] [NEW_ALIAS]\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows list of alias or creates new alias. "
+            + "Parameters for creating new alias: [COMMAND] [NEW_ALIAS] \n"
+            + "Parameters for listing aliases: list \n"
             + "Example: " + COMMAND_WORD + " add a";
 
     public static final String MESSAGE_SUCCESS = "New alias added";

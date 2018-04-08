@@ -14,6 +14,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AppointmentChangedEvent;
 import seedu.address.commons.events.model.ImdbChangedEvent;
+import seedu.address.commons.events.model.QueueChangedEvent;
 import seedu.address.commons.events.ui.ShowCalendarViewRequestEvent;
 import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.appointment.UniqueAppointmentEntryList;
@@ -77,6 +78,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void indicateCalendarChanged() {
         raise(new ShowCalendarViewRequestEvent(imdb.getAppointmentEntryList()));
+    }
+
+    private void indicateQueueChanged() {
+        raise(new QueueChangedEvent(imdb));
     }
 
     @Override
@@ -182,7 +187,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         int patientIndex = getPatientIndex(predicate);
         imdb.addPatientToQueue(patientIndex);
-        indicateAddressBookChanged();
+        indicateQueueChanged();
 
         return filteredPatients.get(patientIndex);
     }
@@ -190,7 +195,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized Patient removePatientFromQueue() throws PatientNotFoundException {
         int patientIndexToRemove = imdb.removePatientFromQueue();
-        indicateAddressBookChanged();
+        indicateQueueChanged();
         return filteredPatients.get(patientIndexToRemove);
     }
 

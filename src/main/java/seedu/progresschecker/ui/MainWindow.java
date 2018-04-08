@@ -8,6 +8,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -19,6 +22,7 @@ import seedu.progresschecker.commons.core.GuiSettings;
 import seedu.progresschecker.commons.core.LogsCenter;
 import seedu.progresschecker.commons.events.ui.ExitAppRequestEvent;
 import seedu.progresschecker.commons.events.ui.ShowHelpRequestEvent;
+import seedu.progresschecker.commons.events.ui.TabLoadChangedEvent;
 import seedu.progresschecker.commons.util.AppUtil;
 import seedu.progresschecker.logic.Logic;
 import seedu.progresschecker.model.UserPrefs;
@@ -72,6 +76,19 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private TabPane tabPlaceholder;
+
+    @FXML
+    private Tab profilePlaceholder;
+
+    @FXML
+    private Tab taskPlaceholder;
+
+    @FXML
+    private Tab exercisePlaceholder;
+
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -262,5 +279,24 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setMinHeight(MIN_HEIGHT);
         primaryStage.setMinWidth(MIN_WIDTH);
     }
-    //@@author
+
+    //@@author iNekox3
+    @Subscribe
+    private void handleTabLoadChangedEvent(TabLoadChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        SingleSelectionModel<Tab> selectionModel = tabPlaceholder.getSelectionModel();
+        switch (event.getTabName()) {
+        case "profile":
+            selectionModel.select(profilePlaceholder);
+            break;
+        case "task":
+            selectionModel.select(taskPlaceholder);
+            break;
+        case "exercise":
+            selectionModel.select(exercisePlaceholder);
+            break;
+        default:
+            selectionModel.select(selectionModel.getSelectedItem());
+        }
+    }
 }

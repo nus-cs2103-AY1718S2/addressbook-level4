@@ -100,7 +100,8 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com m/Computer Engineering p/1234567 y/3 t/criminal`
 * `a n/Betsy Crowe t/friend e/betsycrowe@example.com m/Information Security y/2 p/1234567 t/criminal`
 
-=== Answering and saving an exercise : `answer` `[since v1.4rc]`
+// tag::answer[]
+=== Answering and saving an exercise : `answer` `[since v1.4r]`
 
 Answer an exercise based off the given question number. +
 Format: `answer INDEX ANSWER`
@@ -114,6 +115,7 @@ Format: `answer INDEX ANSWER`
 Examples:
 
 * `answer 2.1.1 Procedural languages work at simple data structures and functions level`
+// end::answer[]
 
 === Logging into Github: `gitlogin OR gl`
 
@@ -468,6 +470,24 @@ The `undo` command fails as there are no undoable commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `u` (reverses the `delete 1` command)
+// end::undoredo[]
+
+// tag::view[]
+=== Viewing a different tab : `view OR v`
+
+Change the tab view to show either profiles, tasks, or exercises. +
+Format: `view TYPE OR v TYPE`
+
+****
+* Change the tab view to specified `TYPE`.
+* The type refers to the tab name.
+* The tab name must be `profile`, `task`, or `exercise`.
+****
+
+Examples:
+
+* `view exercise`
+// end::view[]
 
 === Saving the data
 
@@ -533,8 +553,8 @@ e.g.`select 2`
 * *Sort* : `sort`
 * *Theme* : `theme` OR `t`
 * *Undo* : `undo` OR `u`
-* *View* : `view INDEX` OR `v INDEX` +
-e.g. `view 5` +
+* *View* : `view TYPE` OR `v TYPE` +
+e.g. `view exercise` +
 {sp}+
 
 Back to <<Introduction>>

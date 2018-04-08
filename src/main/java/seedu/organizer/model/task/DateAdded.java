@@ -8,7 +8,7 @@ import java.time.LocalDate;
 //@@author dominickenn
 /**
  * Represents a Task's dateAdded in the organizer.
- * Guarantees: immutable; is valid as declared in {@link #isValidDeadline(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidDateAdded(String)}
  */
 public class DateAdded {
 
@@ -64,8 +64,8 @@ public class DateAdded {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Deadline // instanceof handles nulls
-                && this.date.equals(((Deadline) other).date)); // state check
+                || (other instanceof DateAdded // instanceof handles nulls
+                && this.date.equals(((DateAdded) other).date)); // state check
     }
 
     @Override

@@ -21,40 +21,40 @@ public class DateAddedTest {
     @Test
     public void constructor_invalidDateAdded_throwsIllegalArgumentException() {
         String invalidDateAdded = "2018";
-        Assert.assertThrows(IllegalArgumentException.class, () -> new Deadline(invalidDateAdded));
+        Assert.assertThrows(IllegalArgumentException.class, () -> new DateAdded(invalidDateAdded));
     }
 
     @Test
     public void isValidDateAdded() {
-        // null deadline
-        Assert.assertThrows(NullPointerException.class, () -> Deadline.isValidDeadline(null));
+        // null DateAdded
+        Assert.assertThrows(NullPointerException.class, () -> DateAdded.isValidDateAdded(null));
 
         // blank dateadded
-        assertTrue(Deadline.isValidDeadline("")); // empty string
-        assertFalse(Deadline.isValidDeadline(" ")); // spaces only
+        assertFalse(DateAdded.isValidDateAdded("")); // empty string
+        assertFalse(DateAdded.isValidDateAdded(" ")); // spaces only
 
         // missing parts
-        assertFalse(Deadline.isValidDeadline("2018-02")); // missing date
-        assertFalse(Deadline.isValidDeadline("12-02")); // missing year
-        assertFalse(Deadline.isValidDeadline("2019")); // missing month and date
-        assertFalse(Deadline.isValidDeadline("12")); // missing year and date
+        assertFalse(DateAdded.isValidDateAdded("2018-02")); // missing date
+        assertFalse(DateAdded.isValidDateAdded("12-02")); // missing year
+        assertFalse(DateAdded.isValidDateAdded("2019")); // missing month and date
+        assertFalse(DateAdded.isValidDateAdded("12")); // missing year and date
 
         // invalid parts
-        assertFalse(Deadline.isValidDeadline("17-12-12")); // invalid year
-        assertFalse(Deadline.isValidDeadline("2019-20-09")); // invalid month
-        assertFalse(Deadline.isValidDeadline("2016-02-40")); // invalid date
-        assertFalse(Deadline.isValidDeadline("2017-2-09")); // single numbered months should be declared '0x'
-        assertFalse(Deadline.isValidDeadline("2017-02-9")); // single numbered dates should be declared '0x'
-        assertFalse(Deadline.isValidDeadline("12-30-2017")); // wrong format of MM-DD-YYYY
-        assertFalse(Deadline.isValidDeadline("30-12-2017")); // wrong format of DD-MM-YYYY
-        assertFalse(Deadline.isValidDeadline(" 2017-08-09")); // leading space
-        assertFalse(Deadline.isValidDeadline("2017-08-09 ")); // trailing space
-        assertFalse(Deadline.isValidDeadline("2017/09/09")); // wrong symbol
+        assertFalse(DateAdded.isValidDateAdded("17-12-12")); // invalid year
+        assertFalse(DateAdded.isValidDateAdded("2019-20-09")); // invalid month
+        assertFalse(DateAdded.isValidDateAdded("2016-02-40")); // invalid date
+        assertFalse(DateAdded.isValidDateAdded("2017-2-09")); // single numbered months should be declared '0x'
+        assertFalse(DateAdded.isValidDateAdded("2017-02-9")); // single numbered dates should be declared '0x'
+        assertFalse(DateAdded.isValidDateAdded("12-30-2017")); // wrong format of MM-DD-YYYY
+        assertFalse(DateAdded.isValidDateAdded("30-12-2017")); // wrong format of DD-MM-YYYY
+        assertFalse(DateAdded.isValidDateAdded(" 2017-08-09")); // leading space
+        assertFalse(DateAdded.isValidDateAdded("2017-08-09 ")); // trailing space
+        assertFalse(DateAdded.isValidDateAdded("2017/09/09")); // wrong symbol
 
         // valid dateadded
-        assertTrue(Deadline.isValidDeadline("2018-03-11"));
-        assertTrue(Deadline.isValidDeadline("2017-02-31"));  // dates that have already passed
-        assertTrue(Deadline.isValidDeadline("3000-03-23"));   // dates in the far future
+        assertTrue(DateAdded.isValidDateAdded("2018-03-11"));
+        assertTrue(DateAdded.isValidDateAdded("2017-02-31"));  // dates that have already passed
+        assertTrue(DateAdded.isValidDateAdded("3000-03-23"));   // dates in the far future
     }
 
     @Test

@@ -25,12 +25,20 @@ public class DeadlineTest {
     }
 
     @Test
-    public void isValidDeadline() {
+    public void isValidDeadline_true() {
+        // valid deadline
+        assertTrue(Deadline.isValidDeadline("2018-03-11"));
+        assertTrue(Deadline.isValidDeadline("2017-03-30"));  // dates that have already passed
+        assertTrue(Deadline.isValidDeadline("3000-03-23"));  // dates in the far future
+    }
+
+    @Test
+    public void isValidDeadline_false() {
         // null deadline
         Assert.assertThrows(NullPointerException.class, () -> Deadline.isValidDeadline(null));
 
-        // blank deadline
-        assertTrue(Deadline.isValidDeadline("")); // empty string
+        // empty deadline
+        assertFalse(Deadline.isValidDeadline("")); // empty string
         assertFalse(Deadline.isValidDeadline(" ")); // spaces only
 
         // missing parts
@@ -50,11 +58,18 @@ public class DeadlineTest {
         assertFalse(Deadline.isValidDeadline(" 2017-08-09")); // leading space
         assertFalse(Deadline.isValidDeadline("2017-08-09 ")); // trailing space
         assertFalse(Deadline.isValidDeadline("2017/09/09")); // wrong symbol
+    }
 
-        // valid deadline
-        assertTrue(Deadline.isValidDeadline("2018-03-11"));
-        assertTrue(Deadline.isValidDeadline("2017-02-31"));  // dates that have already passed
-        assertTrue(Deadline.isValidDeadline("3000-03-23"));   // dates in the far future
+    @Test
+    public void isValidDate_true() {
+        assertTrue(Deadline.isValidDate("2018-02-28"));
+        assertTrue(Deadline.isValidDate("2020-02-29")); // leap year
+    }
+
+    @Test
+    public void isValidDate_false() {
+        assertFalse(Deadline.isValidDate("2018-02-31")); // not leap year
+        assertFalse(Deadline.isValidDate("2018-04-31"));
     }
 
     @Test

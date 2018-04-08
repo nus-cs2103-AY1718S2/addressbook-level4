@@ -97,8 +97,8 @@ public class DateCompleted {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Deadline // instanceof handles nulls
-                && this.date.equals(((Deadline) other).date)); // state check
+                || (other instanceof DateCompleted // instanceof handles nulls
+                && this.date.equals(((DateCompleted) other).date)); // state check
     }
 
     @Override

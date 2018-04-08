@@ -246,7 +246,7 @@ Retrieve question for user's password. +
 
 [.format]
 ====
-[format-title]#Format:# `forgotpassword u/USERNAME `
+[format-title]#Format:# `forgotpassword u/USERNAME`
 ====
 
 [.example]
@@ -307,7 +307,7 @@ _This section explains what a *Task* is, and the commands to manage them._
 ** Priority levels are automatically updated by gradual incremental steps, based on the date added, current date, and deadline.
 ** If a task is still uncompleted after the deadline has passed, its priority level will be at the *maximum level* : *9*.
 * [parameters]#`DESCRIPTION`#
-** A description can be any value (i.e. alphabet, numbers, special symbols).
+** A description can be of any value (i.e. alphabet, numbers, special symbols).
 ** It is *optional* to have a description.
 * [parameters]#`DATEADDED`#
 ** A date added is in the format of *YYYY-MM-DD*.
@@ -316,7 +316,8 @@ _This section explains what a *Task* is, and the commands to manage them._
 ** A date completed is in the format of *YYYY-MM-DD*.
 ** It is automatically set upon toggling a task's completion.
 * [parameters]#`DEADLINE`#
-** A deadline is in the format of YYYY-MM-DD.
+** A deadline is in the format of *YYYY-MM-DD*.
+** Deadlines should not be invalid (e.g. `2018-02-31` is an invalid dateline as there is no such date).
 ** It is *compulsory* to have a deadline.
 * [parameters]#`SUBTASK`#
 ** A task can have any number of subtasks (including 0).
@@ -434,7 +435,7 @@ Depending on the suffix (or lack of) at the end of the `find` command, you can f
 
 ==== Locating tasks: `find` or `f`
 
-Find tasks whose names, descriptions and deadlines contain any of the given keywords. +
+Find tasks whose names, descriptions or deadlines contain any of the given keywords. +
 
 [.format]
 ====
@@ -762,7 +763,7 @@ Undoable commands: those commands that modify the PrioriTask's content (`add`, `
 [example]#`list`# +
 [example]#`undo`# (reverses the `delete 1` command) +
 
-* [example]#`select 1`# +
+* [example]#`completed`# +
 [example]#`list`# +
 [example]#`undo`# +
 The `undo` command fails as there are no undoable commands executed previously.

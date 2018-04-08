@@ -12,6 +12,8 @@ import java.util.Set;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.Parser;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
@@ -70,8 +72,8 @@ public class AddInjuriesHistoryCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_REMARK_PERSON_SUCCESS, editPersonDescriptor.getRemark().get(),
-                                                personToEdit.getName()));
+        return new CommandResult(String.format(MESSAGE_REMARK_PERSON_SUCCESS, editPersonDescriptor.getInjuriesHistory()
+                        .get(), personToEdit.getName()));
     }
 
     @Override
@@ -93,15 +95,14 @@ public class AddInjuriesHistoryCommand extends UndoableCommand {
     private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Nric updatedNric = editPersonDescriptor.getNric().orElse(personToEdit.getNric());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
-        Remark updatedRemark = parseRemark(((personToEdit.getRemark()).toString() + "\n"
-                                            + editPersonDescriptor.getRemark().get().toString()));
-        Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
-        InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
-                                                    .orElse(personToEdit.getInjuriesHistory());
+        Name updatedName = personToEdit.getName();
+        Nric updatedNric = personToEdit.getNric();
+        Set<Tag> updatedTags = personToEdit.getTags();
+        Set<Subject> updatedSubjects = personToEdit.getSubjects();
+        Remark updatedRemark = personToEdit.getRemark();
+        Cca updatedCca = personToEdit.getCca();
+        InjuriesHistory updatedInjuriesHistory = ParserUtil.parseInjuriesHistory(editPersonDescriptor
+                .getInjuriesHistory().get().toString() + "\n" + personToEdit.getInjuriesHistory());
 
         return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
                         updatedInjuriesHistory);

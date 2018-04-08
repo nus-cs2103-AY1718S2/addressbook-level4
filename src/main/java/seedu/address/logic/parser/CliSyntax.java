@@ -10,6 +10,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_NRIC = new Prefix("ic/");
     public static final Prefix PREFIX_REMARK = new Prefix("r/");
     public static final Prefix PREFIX_CCA = new Prefix("cca/");
+    public static final Prefix PREFIX_INJURIES_HISTORY = new Prefix("injuries/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_SUBJECT = new Prefix("sub/");
     public static final Prefix PREFIX_DATE = new Prefix("d/");

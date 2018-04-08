@@ -48,6 +48,16 @@ public interface Model {
     void addPerson(Person person) throws DuplicatePersonException;
 
     /**
+     * Replaces the given job {@code target} with {@code editedJob}.
+     *
+     * @throws DuplicateJobException if updating the person's details causes the job to be equivalent to
+     *      another existing job in the list.
+     * @throws JobNotFoundException if {@code target} could not be found in the list.
+     */
+    void updateJob(Job target, Job editedJob)
+            throws DuplicateJobException, JobNotFoundException;
+
+    /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to

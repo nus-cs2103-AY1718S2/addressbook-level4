@@ -271,6 +271,26 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the given job {@code target} with {@code editedJob}.
+     *
+     * @throws DuplicateJobException if updating the person's details causes the job to be equivalent to
+     *      another existing job in the list.
+     * @throws JobNotFoundException if {@code target} could not be found in the list.
+     *
+     * @see #syncJobWithMasterSkillList(Job)
+     */
+    void updateJob(Job target, Job editedJob)
+            throws DuplicateJobException, JobNotFoundException {
+        requireNonNull(editedJob);
+
+        Job syncedEditedJob = syncJobWithMasterSkillList(editedJob);
+        // TODO: the skills master list will be updated even though the below line fails.
+        // This can cause the skills master list to have additional skills that are not tagged to any person
+        // in the person list.
+        jobs.setJob(target, syncedEditedJob);
+    }
+
+    /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws JobNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */

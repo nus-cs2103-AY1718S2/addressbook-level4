@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- @@author yapni -->
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -10,13 +11,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane prefHeight="800.0" prefWidth="800.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="800.0" prefWidth="900.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane layoutX="8.0" layoutY="5.0" prefWidth="800.0">
          <children>
             <Text layoutX="14.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard">
                <font>
-                  <Font name="Rockwell Extra Bold" size="20.0" />
+                  <Font name="Segoe UI Black" size="20.0" />
                </font>
             </Text>
             <Text layoutX="14.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Milestones">
@@ -24,14 +25,14 @@
                   <Font name="Rockwell" size="20.0" />
                </font>
             </Text>
-            <Label fx:id="studentName" layoutX="14.0" layoutY="27.0" styleClass="cell_big_label" text="studentName">
+            <Label fx:id="studentName" layoutX="14.0" layoutY="27.0" style="-fx-font-size: 18; -fx-font-family: Bookman Old Style; -fx-text-fill: black;" text="studentName">
                <font>
                   <Font name="Bookman Old Style Bold" size="20.0" />
                </font>
             </Label>
             <VBox layoutX="14.0" layoutY="97.0" prefHeight="200.0" prefWidth="769.0">
                <children>
-                  <ListView fx:id="milestoneListView" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="406.0" prefWidth="769.0" style="-fx-border-color: black; -fx-background-color: white;">
+                  <ListView fx:id="milestoneListView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="406.0" prefWidth="900.0" style="-fx-border-color: black; -fx-background-color: white; -fx-background-insets: 0;">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>

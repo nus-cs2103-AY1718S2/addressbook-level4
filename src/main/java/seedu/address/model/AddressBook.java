@@ -222,6 +222,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @param key
      * @return Student object matching
      */
+    @Override
     public Student findStudentByKey(UniqueKey key) {
         Student student;
         try {

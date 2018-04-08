@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalStudents.CARL;
@@ -40,10 +39,8 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         // associated web page of a student
         postNow(browserEventStub);
-        URL expectedStudentUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + CARL.getAddress().urlstyle()
-                + "?dg=dbrw&newdg=1");
+        URL expectedStudentUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + CARL.getAddress().urlstyle());
 
-        waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedStudentUrl, browserPanelHandle.getLoadedUrl());
     }
 }

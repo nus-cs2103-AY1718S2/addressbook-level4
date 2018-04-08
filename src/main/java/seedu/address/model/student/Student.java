@@ -213,6 +213,7 @@ public class Student {
                    ProgrammingLanguage programmingLanguage,
                    Set<Tag> tags, Favourite fav, Dashboard dashboard) {
         requireAllNonNull(uniqueKey, name, phone, email, address, tags, fav);
+        this.uniqueKey = uniqueKey;
         this.name = name;
         this.phone = phone;
         this.email = email;

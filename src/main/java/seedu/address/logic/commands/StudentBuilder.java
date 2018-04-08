@@ -16,9 +16,7 @@ import seedu.address.model.student.Student;
 import seedu.address.model.student.UniqueKey;
 import seedu.address.model.student.dashboard.Dashboard;
 import seedu.address.model.student.dashboard.Milestone;
-import seedu.address.model.student.dashboard.Progress;
 import seedu.address.model.student.dashboard.Task;
-import seedu.address.model.student.dashboard.UniqueTaskList;
 import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneException;
 import seedu.address.model.student.dashboard.exceptions.DuplicateTaskException;
 import seedu.address.model.student.dashboard.exceptions.MilestoneNotFoundException;
@@ -146,10 +144,15 @@ public class StudentBuilder {
         return this;
     }
 
+    /**
+     * Creates and returns the Student object with the current attributes.
+     */
     public Student build() {
-        return new Student(name, phone, email, address, programmingLanguage, tags, favourite, profilePicturePath);
+        return new Student(uniqueKey, name, phone, email, address, programmingLanguage, tags, favourite, dashboard,
+                profilePicturePath);
     }
 
+    //@@author yapni
     /**
      * Sets the {@code dashboard} of the {@code Student} that we are building.
      */
@@ -159,65 +162,57 @@ public class StudentBuilder {
     }
 
     /**
-     * Adds a new {@code milestone} to the {@code dashboard} of the {@code Student} that we are building.
+     * Adds a new {@code Milestone} to the {@code Dashboard} of the {@code Student} that we are building.
      *
      * @throws DuplicateMilestoneException if the new milestone is a duplicate of an existing milestone
      */
     public StudentBuilder withNewMilestone(Milestone milestone) throws DuplicateMilestoneException {
-        dashboard.getMilestoneList().add(milestone);
+        this.dashboard = new DashboardBuilder(this.dashboard).withNewMilestone(milestone).build();
         return this;
     }
 
     /**
-     * Removes the {@code milestone} from the {@code dashboard} of the {@code Student} that we are building.
+     * Removes the {@code Milestone} from the {@code Dashboard} of the {@code Student} that we are building.
      *
      * @throws MilestoneNotFoundException if the specified milestone is not found in the dashboard
      */
     public StudentBuilder withoutMilestone(Milestone milestone) throws MilestoneNotFoundException {
-        dashboard.getMilestoneList().remove(milestone);
+        this.dashboard = new DashboardBuilder(this.dashboard).withoutMilestone(milestone).build();
         return this;
     }
 
     /**
-     * Adds a new {@code task} to the specified milestone in the {@code dashboard}
+     * Adds a new {@code Task} to the specified {@code Milestone} in the {@code Dashboard}
      * of the {@code Student} we are building.
      *
-     * @throws DuplicateTaskException if the new task is a duplicate of an existing task
+     * @throws DuplicateTaskException if the new task is a duplicate of an existing task in the milestone
      */
     public StudentBuilder withNewTask(Index milestoneIndex, Task task) throws DuplicateTaskException,
             DuplicateMilestoneException, MilestoneNotFoundException {
-        Milestone milestone = dashboard.getMilestoneList().get(milestoneIndex);
-
-        milestone.getTaskList().add(task);
-        Progress updatedProgress = new Progress(milestone.getProgress().getTotalTasks() + 1,
-                milestone.getProgress().getNumCompletedTasks());
-        Milestone updatedMilestone = new Milestone(milestone.getDueDate(), milestone.getTaskList(),
-                updatedProgress, milestone.getDescription());
-        dashboard.getMilestoneList().setMilestone(milestone, updatedMilestone);
-
+        this.dashboard = new DashboardBuilder(this.dashboard).withNewTask(milestoneIndex, task).build();
         return this;
     }
 
     /**
-     * Marks a specified {@code task} of a milestone in the {@code dashboard} of the {@code Student}
+     * Removes the {@code Task} from the specified {@code Milestone} in the {@code Dashboard} of the {@code Student}
+     * we are building
+     *
+     * @throws TaskNotFoundException if the specified task is not found in the milestone
+     */
+    public StudentBuilder withoutTask(Index milestoneIndex, Task task) throws TaskNotFoundException,
+            DuplicateMilestoneException, MilestoneNotFoundException {
+        this.dashboard = new DashboardBuilder(this.dashboard).withoutTask(milestoneIndex, task).build();
+        return this;
+    }
+
+    /**
+     * Marks a specified {@code Task} from a {@code Milestone} in the {@code Dashboard} of the {@code Student}
      * we are building as completed.
      */
     public StudentBuilder withTaskCompleted(Index milestoneIndex, Index taskIndex) throws DuplicateTaskException,
             TaskNotFoundException, DuplicateMilestoneException, MilestoneNotFoundException {
-        Milestone milestone = dashboard.getMilestoneList().get(milestoneIndex);
-        UniqueTaskList taskList = milestone.getTaskList();
-        Task completedTask = taskList.get(taskIndex);
-
-        Task updatedTask = new Task(completedTask.getName(), completedTask.getDescription(), true);
-        Progress updatedProgress = new Progress(milestone.getProgress().getTotalTasks(),
-                milestone.getProgress().getNumCompletedTasks() + 1);
-
-        taskList.setTask(completedTask, updatedTask);
-        Milestone updatedMilestone = new Milestone(milestone.getDueDate(), taskList, updatedProgress,
-                milestone.getDescription());
-        dashboard.getMilestoneList().setMilestone(milestone, updatedMilestone);
-
+        this.dashboard = new DashboardBuilder(this.dashboard).withTaskCompleted(milestoneIndex, taskIndex).build();
         return this;
     }
-
+    //@@author
 }

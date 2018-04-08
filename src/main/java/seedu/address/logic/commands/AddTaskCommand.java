@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_MILESTONE_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_INDEXES;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
@@ -11,16 +10,17 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.util.CheckIndexesUtil;
 import seedu.address.model.student.Student;
+import seedu.address.model.student.dashboard.Milestone;
 import seedu.address.model.student.dashboard.Task;
-import seedu.address.model.student.dashboard.UniqueMilestoneList;
 import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneException;
 import seedu.address.model.student.dashboard.exceptions.DuplicateTaskException;
 import seedu.address.model.student.dashboard.exceptions.MilestoneNotFoundException;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
-
 
 //@@author yapni
 /**
@@ -35,8 +35,8 @@ public class AddTaskCommand extends UndoableCommand {
             + PREFIX_INDEX + "STUDENT'S INDEX "
             + PREFIX_MILESTONE_INDEX + "MILESTONE'S INDEX "
             + PREFIX_NAME + "NAME OF TASK "
-            + PREFIX_DESCRIPTION + "DESCRIPTION "
-            + "\nExample: " + COMMAND_WORD + " "
+            + PREFIX_DESCRIPTION + "DESCRIPTION OF TASK\n"
+            + "Example: " + COMMAND_WORD + " "
             + PREFIX_INDEX + "1 "
             + PREFIX_MILESTONE_INDEX + "2 "
             + PREFIX_NAME + "Learn syntax of arrays "
@@ -45,18 +45,19 @@ public class AddTaskCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_TASK = "Task already exists in the milestone";
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
 
-    private final Index studentIndex;
-    private final Index milestoneIndex;
-    private final Task newTask;
-
     private Student targetStudent;
     private Student editedStudent;
+    private Milestone targetMilestone;
 
-    public AddTaskCommand(Index studentIndex, Index milestoneIndex, Task newTask) {
-        requireAllNonNull(studentIndex, milestoneIndex, newTask);
+    private final Task newTask;
+    private final Index targetStudentIndex;
+    private final Index targetMilestoneIndex;
 
-        this.studentIndex = studentIndex;
-        this.milestoneIndex = milestoneIndex;
+    public AddTaskCommand(Index targetStudentIndex, Index targetMilestoneIndex, Task newTask) {
+        requireAllNonNull(targetStudentIndex, targetMilestoneIndex, newTask);
+
+        this.targetStudentIndex = targetStudentIndex;
+        this.targetMilestoneIndex = targetMilestoneIndex;
         this.newTask = newTask;
     }
 
@@ -78,47 +79,52 @@ public class AddTaskCommand extends UndoableCommand {
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        List<Student> lastShownList = model.getFilteredStudentList();
-
-        if (studentIndex.getZeroBased() >= lastShownList.size() || studentIndex.getZeroBased() < 0) {
-            throw new CommandException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
-        }
-
-        targetStudent = lastShownList.get(studentIndex.getZeroBased());
-        UniqueMilestoneList milestoneList = targetStudent.getDashboard().getMilestoneList();
-
-        if (milestoneIndex.getZeroBased() >= milestoneList.size() || milestoneIndex.getZeroBased() < 0) {
-            throw new CommandException(MESSAGE_INVALID_MILESTONE_DISPLAYED_INDEX);
-        }
-
         try {
-            editedStudent = createEditedStudent(targetStudent, newTask, milestoneIndex);
+            setTargetObjects();
+            createEditedStudent();
         } catch (DuplicateTaskException e) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         } catch (DuplicateMilestoneException e) {
             throw new AssertionError("Milestone cannot be duplicated");
         } catch (MilestoneNotFoundException e) {
             throw new AssertionError("Milestone cannot be missing");
+        } catch (IllegalValueException e) {
+            throw new CommandException(e.getMessage());
         }
     }
 
     /**
-     * Creates and return a copy of {@code Student} with the new task added to its targeted milestone in the Dashboard.
+     * Creates {@code editedStudent} which is a copy of {@code targetStudent}, but with the {@code newTask} added
+     * to the {@code targetMilestone}.
      */
-    private Student createEditedStudent(Student studentToEdit, Task newTask, Index targetMilestoneIndex)
+    private void createEditedStudent()
             throws DuplicateTaskException, DuplicateMilestoneException, MilestoneNotFoundException {
-        requireAllNonNull(studentToEdit, newTask);
+        assert targetStudent != null && targetMilestoneIndex != null && newTask != null;
+        editedStudent = new StudentBuilder(targetStudent).withNewTask(targetMilestoneIndex, newTask).build();
+    }
 
-        return new StudentBuilder(studentToEdit).withNewTask(targetMilestoneIndex, newTask).build();
+    /**
+     * Sets the {@code targetStudent} and {@code targetMilestone} of this command object.
+     * @throws IllegalValueException if any of the target indexes are invalid
+     */
+    private void setTargetObjects() throws IllegalValueException {
+        assert targetStudentIndex != null && targetMilestoneIndex != null;
 
+        List<Student> lastShownList = model.getFilteredStudentList();
+        if (!CheckIndexesUtil.areIndexesValid(lastShownList, targetStudentIndex, targetMilestoneIndex)) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEXES);
+        }
+
+        targetStudent = lastShownList.get(targetStudentIndex.getZeroBased());
+        targetMilestone = targetStudent.getDashboard().getMilestoneList().get(targetMilestoneIndex);
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddTaskCommand // instanceof handles null
-                && ((AddTaskCommand) other).studentIndex == this.studentIndex
-                && ((AddTaskCommand) other).milestoneIndex  == this.milestoneIndex
+                && ((AddTaskCommand) other).targetStudentIndex == this.targetStudentIndex
+                && ((AddTaskCommand) other).targetMilestoneIndex == this.targetMilestoneIndex
                 && ((AddTaskCommand) other).newTask == this.newTask);
     }
 }

@@ -1,8 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_MILESTONE_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MILESTONE_INDEX;
@@ -13,9 +10,10 @@ import java.util.List;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.util.CheckIndexesUtil;
 import seedu.address.model.student.Student;
-import seedu.address.model.student.dashboard.UniqueMilestoneList;
-import seedu.address.model.student.dashboard.UniqueTaskList;
+import seedu.address.model.student.dashboard.Milestone;
+import seedu.address.model.student.dashboard.Task;
 import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneException;
 import seedu.address.model.student.dashboard.exceptions.DuplicateTaskException;
 import seedu.address.model.student.dashboard.exceptions.MilestoneNotFoundException;
@@ -32,14 +30,15 @@ public class CheckTaskCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "checkTask";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks a Task in a Milestone as completed.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Marks a task from a milestone in a student's dashboard as completed.\n"
             + "Parameters: "
             + PREFIX_INDEX + "STUDENT'S INDEX "
             + PREFIX_MILESTONE_INDEX + "MILESTONE'S INDEX "
             + PREFIX_TASK_INDEX + "TASK'S INDEX\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_INDEX + "1 "
-            + PREFIX_MILESTONE_INDEX + "2"
+            + PREFIX_MILESTONE_INDEX + "2 "
             + PREFIX_TASK_INDEX + "3";
 
     public static final String MESSAGE_SUCCESS = "Task %1$s marked as completed in milestone %2$s";
@@ -47,6 +46,9 @@ public class CheckTaskCommand extends UndoableCommand {
 
     private Student targetStudent;
     private Student editedStudent;
+    private Milestone targetMilestone;
+    private Task targetTask;
+    private boolean taskWasAlreadyCompleted;
 
     private final Index targetStudentIndex;
     private final Index targetMilestoneIndex;
@@ -62,10 +64,9 @@ public class CheckTaskCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        requireAllNonNull(targetStudent, editedStudent);
-
-        if (targetStudent != editedStudent) {
+        if (!taskWasAlreadyCompleted) {
             try {
+                requireAllNonNull(targetStudent, editedStudent);
                 model.updateStudent(targetStudent, editedStudent);
             } catch (DuplicateStudentException e) {
                 /* DuplicateStudentException caught will mean that the task list is the same as before */
@@ -83,70 +84,53 @@ public class CheckTaskCommand extends UndoableCommand {
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
         try {
-            checkIfIndexesAreValid();
-        } catch (IllegalValueException ive) {
-            throw new CommandException(ive.getMessage());
-        }
-
-        List<Student> lastShownList = model.getFilteredStudentList();
-        targetStudent = lastShownList.get(targetStudentIndex.getZeroBased());
-
-        /* Only create new edited student if the task has not been marked as completed */
-        if (!targetStudent.getDashboard().getMilestoneList().get(targetMilestoneIndex).getTaskList()
-                .get(targetTaskIndex).isCompleted()) {
-            try {
-                editedStudent = createEditedStudent(targetStudent, targetMilestoneIndex, targetTaskIndex);
-            } catch (DuplicateTaskException e) {
-                throw new AssertionError("The task cannot be duplicated");
-            } catch (TaskNotFoundException e) {
-                throw new AssertionError("The target task cannot be missing");
-            } catch (DuplicateMilestoneException e) {
-                throw new AssertionError("The milestone cannot be duplicated");
-            } catch (MilestoneNotFoundException e) {
-                throw new AssertionError("The milestone cannot be missing");
+            setTargetObjects();
+            if (!targetTask.isCompleted()) {
+                taskWasAlreadyCompleted = false;
+                createEditedStudent();
+            } else {
+                taskWasAlreadyCompleted = true;
             }
-        } else {
-            editedStudent = targetStudent;
+        } catch (DuplicateTaskException e) {
+            throw new AssertionError("The task cannot be duplicated");
+        } catch (TaskNotFoundException e) {
+            throw new AssertionError("The target task cannot be missing");
+        } catch (DuplicateMilestoneException e) {
+            throw new AssertionError("The milestone cannot be duplicated");
+        } catch (MilestoneNotFoundException e) {
+            throw new AssertionError("The milestone cannot be missing");
+        } catch (IllegalValueException e) {
+            throw new CommandException(e.getMessage());
         }
     }
 
     /**
-     * Creates and return a copy of {@code Student} with the task in the specified milestone marked as completed.
+     * Sets the {@code targetStudent}, {@code targetMilestone} and {@code targetTask }of this command object.
+     * @throws IllegalValueException if any of the target indexes are invalid
      */
-    private Student createEditedStudent(Student studentToEdit, Index milestoneIndex, Index taskIndex)
-            throws DuplicateTaskException, TaskNotFoundException,
-            DuplicateMilestoneException, MilestoneNotFoundException {
-        requireAllNonNull(studentToEdit, milestoneIndex, taskIndex);
+    private void setTargetObjects() throws IllegalValueException {
+        assert targetStudentIndex != null && targetMilestoneIndex != null && targetTaskIndex != null;
 
-
-        return new StudentBuilder(studentToEdit).withTaskCompleted(milestoneIndex, taskIndex).build();
-    }
-
-    /**
-     * Checks if the student index, milestone index and task index are valid
-     * @throws IllegalValueException if any of the indexes are invalid
-     */
-    private void checkIfIndexesAreValid() throws IllegalValueException {
-        requireAllNonNull(targetStudentIndex, targetMilestoneIndex, targetTaskIndex);
-
-        /* Check if student index is valid */
         List<Student> lastShownList = model.getFilteredStudentList();
-        if (targetStudentIndex.getZeroBased() < 0 || targetStudentIndex.getZeroBased() >= lastShownList.size()) {
-            throw new IllegalValueException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+        if (!CheckIndexesUtil.areIndexesValid(lastShownList, targetStudentIndex, targetMilestoneIndex,
+                targetTaskIndex)) {
+            throw new IllegalValueException("One or more of the provided indexes are invalid");
         }
 
-        /* Check if milestone index is valid */
-        Student student = lastShownList.get(targetStudentIndex.getZeroBased());
-        UniqueMilestoneList milestoneList = student.getDashboard().getMilestoneList();
-        if (targetMilestoneIndex.getZeroBased() < 0 || targetMilestoneIndex.getZeroBased() >= milestoneList.size()) {
-            throw new IllegalValueException(MESSAGE_INVALID_MILESTONE_DISPLAYED_INDEX);
-        }
+        targetStudent = lastShownList.get(targetStudentIndex.getZeroBased());
+        targetMilestone = targetStudent.getDashboard().getMilestoneList().get(targetMilestoneIndex);
+        targetTask = targetMilestone.getTaskList().get(targetTaskIndex);
+    }
 
-        /*  Check if task index is valid */
-        UniqueTaskList taskList = milestoneList.get(targetMilestoneIndex).getTaskList();
-        if (targetTaskIndex.getZeroBased() < 0 || targetTaskIndex.getZeroBased() >= taskList.size()) {
-            throw new IllegalValueException(MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-        }
+    /**
+     * Creates {@code editedStudent} which is a copy of {@code targetStudent}, but with the {@code targetTask} marked
+     * as completed in the {@code targetMilestone}.
+     */
+    private void createEditedStudent() throws DuplicateTaskException, TaskNotFoundException,
+            DuplicateMilestoneException, MilestoneNotFoundException {
+        assert targetStudent != null && targetMilestoneIndex != null && targetTaskIndex != null;
+        editedStudent = new StudentBuilder(targetStudent)
+                .withTaskCompleted(targetMilestoneIndex, targetTaskIndex).build();
     }
 
     @Override

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- @@author yapni -->
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -11,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="cardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="769.0" style="-fx-border-color: white; -fx-background-color: #e0dedc;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="cardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="900.0" style="-fx-border-color: black; -fx-background-color: #e0dedc;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox prefHeight="21.0" prefWidth="600.0">
          <children>
@@ -23,12 +25,12 @@
                   <Insets left="5.0" top="5.0" />
                </HBox.margin>
             </Text>
-            <Label fx:id="index" style="-fx-text-fill: #0000091; -fx-font-family: Segoe UI; -fx-font-size: 14; -fx-font-style: bold;" text="idx" textFill="#00000091">
+            <Label fx:id="index" style="-fx-text-fill: #4a4d4f; -fx-font-weight: bold;" text="idx" textFill="#585858">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="13.0" />
                </font>
                <HBox.margin>
-                  <Insets left="5.0" top="6.0" />
+                  <Insets left="5.0" top="4.0" />
                </HBox.margin>
             </Label>
          </children>
@@ -89,7 +91,7 @@
                   <Insets left="10.0" top="5.0" />
                </HBox.margin>
             </Text>
-            <ListView fx:id="taskListView" prefHeight="150.0" prefWidth="650.0">
+            <ListView fx:id="taskListView" prefHeight="150.0" prefWidth="700.0">
                <HBox.margin>
                   <Insets left="10.0" top="5.0" />
                </HBox.margin>
@@ -109,14 +111,19 @@
                   <Insets left="10.0" top="5.0" />
                </HBox.margin>
             </Text>
-            <Label fx:id="progress" style="-fx-font-family: Segoe UI; -fx-font-size: 14; -fx-text-fill: #030303;" text="progress">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <ProgressBar fx:id="progress" prefWidth="200.0" progress="0.0" />
+                  <Label fx:id="progressPercent" style="-fx-text-fill: black;" text="percent">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+               </children>
                <HBox.margin>
-                  <Insets left="10.0" top="5.0" />
+                  <Insets left="5.0" top="8.0" />
                </HBox.margin>
-            </Label>
+            </StackPane>
          </children>
          <effect>
             <Blend />

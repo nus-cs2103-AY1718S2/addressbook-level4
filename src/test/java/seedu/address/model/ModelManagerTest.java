@@ -26,6 +26,7 @@ public class ModelManagerTest {
         modelManager.getFilteredPersonList().remove(0);
     }
 
+    //@@author Kyholmes-test
     @Test
     public void getVisitingQueue_modifyQueue_throwsUnsupportedOperationException() {
         ModelManager modelManager = new ModelManager();
@@ -33,6 +34,7 @@ public class ModelManagerTest {
         modelManager.getVisitingQueue().remove(0);
     }
 
+    //@@author
     @Test
     public void equals() {
         Imdb imdb = new ImdbBuilder().withPerson(ALICE).withPerson(BENSON).build();

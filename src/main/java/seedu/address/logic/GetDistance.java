@@ -15,7 +15,7 @@ public class GetDistance {
     //@@author ncaminh
     public DistanceMatrix getMatrix(String origin, String destination) {
         GeoApiContext context = new GeoApiContext.Builder()
-                .apiKey("AIzaSyDga8lhEq6jOcAm03b4GGWR65GhWOrbOxg")
+                .apiKey("AIzaSyBWyCJkCym1dSouzHX_FxLk6Tj11C7F0Ao")
                 .build();
 
         String[] origins = {origin};

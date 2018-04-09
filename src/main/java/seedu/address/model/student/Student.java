@@ -176,7 +176,7 @@ public class Student {
         this.favourite = new Favourite(false); // Default value
         this.dashboard = new Dashboard();
         this.profilePicturePath = new ProfilePicturePath(ProfilePicturePath.DEFAULT_PROFILE_PICTURE);
-        this.miscellaneousInfo = miscellaneousInfo;
+        this.miscellaneousInfo = new MiscellaneousInfo();
     }
 
     /**

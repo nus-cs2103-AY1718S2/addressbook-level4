@@ -67,7 +67,7 @@ public class SampleDataUtil {
 
     //@@author emer7
     /**
-     * Returns a tag set containing the list of strings given.
+     * Returns a review set containing the list of strings given.
      */
     public static Set<Review> getReviewSet(String... strings) {
         HashSet<Review> reviews = new HashSet<>();

@@ -8,6 +8,9 @@ import java.nio.file.Paths;
 
 import org.junit.Test;
 
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.util.SampleDataUtil;
@@ -46,6 +49,11 @@ public class SampleDataTest extends AddressBookSystemTest {
     @Test
     public void addressBook_dataFileDoesNotExist_loadSampleData() {
         Person[] expectedList = SampleDataUtil.getSamplePersons();
+        UnlockCommand testUnlockCommand = new UnlockCommand();
+        testUnlockCommand.setTestMode();
+        testUnlockCommand.setData(getModel(), new CommandHistory(), new UndoRedoStack());
+        testUnlockCommand.execute();
+        showAllPersons();
         assertListMatching(getPersonListPanel(), expectedList);
     }
 }

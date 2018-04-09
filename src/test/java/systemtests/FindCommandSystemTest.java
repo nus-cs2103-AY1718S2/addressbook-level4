@@ -38,6 +38,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         testUnlockCommand.setTestMode();
         testUnlockCommand.setData(expectedModel, new CommandHistory(), new UndoRedoStack());
         testUnlockCommand.execute();
+        showAllPersons();
 
         ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL); // first names of Benson and Daniel are "Meier"
         assertCommandSuccess(command, expectedModel);

@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 //@@author crizyli
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
 import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.EventsCenter;
@@ -51,6 +53,9 @@ public class UnlockCommand extends Command {
         if (this.password.compareTo(LogicManager.getPassword()) == 0) {
             LogicManager.unLock();
             EventsCenter.getInstance().post(new AddressBookUnlockedEvent());
+            //@@author emer7
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            //@@author crizyli
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
             return new CommandResult(MESSAGE_INCORRECT_PASSWORD);

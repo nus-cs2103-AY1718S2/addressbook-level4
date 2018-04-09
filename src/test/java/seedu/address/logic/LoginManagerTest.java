@@ -31,6 +31,6 @@ public class LoginManagerTest {
 
         assertEquals(expectFail, false);
         System.out.println(loginState);
-        assertEquals(loginState, LoginManager.NO_USER);
+        assertEquals(loginState, LoginManager.NO_USER_STATE);
     }
 }

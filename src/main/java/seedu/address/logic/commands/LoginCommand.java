@@ -2,6 +2,7 @@
 package seedu.address.logic.commands;
 
 import javafx.stage.Stage;
+import seedu.address.logic.login.LoginManager;
 import seedu.address.logic.login.LoginWindow;
 
 /**
@@ -13,7 +14,6 @@ public class LoginCommand extends Command {
 
     public static final String MESSAGE_ALREADY_LOGGED_IN = "Already logged in";
     public static final String MESSAGE_LOGIN_SUCCESS = "Successfully logged in as ";
-    public static final String MESSAGE_LOGIN_FAIL = "Wrong username and password! Please try again.";
 
     public static final String MESSAGE_NOT_LOGGED_IN = "Not logged in!\n%1$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Allows user to login to the system "
@@ -29,7 +29,8 @@ public class LoginCommand extends Command {
         LoginWindow loginWindow = new LoginWindow();
         Stage stage = new Stage();
         loginWindow.start(stage);
-        return new CommandResult("");
+
+        return new CommandResult(MESSAGE_LOGIN_SUCCESS + LoginManager.getUserName());
     }
 
     @Override

@@ -396,7 +396,7 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_printCommand() throws Exception {
-        LoginManager.authenticate("bob", "password456");
+        LoginManager.authenticate("alice", "password123");
         PrintCommand command = (PrintCommand) parser.parseCommand(
                 PrintCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new PrintCommand(INDEX_FIRST_PERSON), command);
@@ -404,7 +404,7 @@ public class ImdbParserTest {
 
     @Test
     public void parseCommand_printCommandAlias() throws Exception {
-        LoginManager.authenticate("bob", "password456");
+        LoginManager.authenticate("alice", "password123");
         PrintCommand command = (PrintCommand) parser.parseCommand(
                 PrintCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new PrintCommand(INDEX_FIRST_PERSON), command);

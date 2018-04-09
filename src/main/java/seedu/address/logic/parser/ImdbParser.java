@@ -1,6 +1,8 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_STATE;
+import static seedu.address.commons.core.Messages.MESSAGE_NO_PERMISSION;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import java.util.regex.Matcher;
@@ -62,7 +64,7 @@ public class ImdbParser {
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
 
-        if (state == LoginManager.NO_USER) {
+        if (state == LoginManager.NO_USER_STATE) {
             switch (commandWord) {
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
@@ -501,17 +503,17 @@ public class ImdbParser {
                 return new DeleteConditionCommandParser().parse(arguments);
 
             case PrintCommand.COMMAND_WORD:
-                return new PrintCommandParser().parse(arguments);
+                throw new ParseException(MESSAGE_NO_PERMISSION);
 
             case PrintCommand.COMMAND_ALIAS:
-                return new PrintCommandParser().parse(arguments);
+                throw new ParseException(MESSAGE_NO_PERMISSION);
 
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
             }
         } else {
             // should never get here, this is just for bug detection
-            throw new ParseException("Invalid State!");
+            throw new ParseException(MESSAGE_INVALID_STATE);
         }
     }
 }

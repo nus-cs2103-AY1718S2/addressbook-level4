@@ -33,7 +33,7 @@ public class LoginWindow extends Application {
         // Prevent the window resizing
         this.primaryStage.setResizable(false);
 
-        initRootLayout();
+        // initRootLayout();
 
         showLoginForm();
     }
@@ -70,7 +70,7 @@ public class LoginWindow extends Application {
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
-            primaryStage.show();
+            primaryStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }

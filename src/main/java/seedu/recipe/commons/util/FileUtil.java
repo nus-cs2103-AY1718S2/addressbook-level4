@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import javax.imageio.ImageIO;
+
 /**
  * Writes and reads files
  */
@@ -29,6 +31,13 @@ public class FileUtil {
         if (!isFileExists(file) || file.isDirectory()) {
             return false;
         } else {
+            try {
+                if (ImageIO.read(file) == null) {
+                    return false;
+                }
+            } catch (IOException exception) {
+                System.out.println("Error reading file");
+            }
             return true;
         }
     }

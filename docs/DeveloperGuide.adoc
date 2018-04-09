@@ -537,7 +537,8 @@ Since it is optional for a person in the address book to apply to a contract, th
 of `Optional<Policy>`. This is technically breaking a java convention, because Optional
 should not be used for class fields, but it was a very easy and logical way to implement
 this. Optional fields should be avoided in the first place, but when it is too cumbersome
-to do so, the `Optional<T>` type is very handy.
+to do so, the `Optional<T>` type is very handy. The Policy field is persistent. It is stored via `XmlElement` in
+`XmlAdaptedPerson`.
 
 ==== Adding a Policy
 In order to add a Policy to a Person in the address book, it is required to use the `add_policy` command. This command

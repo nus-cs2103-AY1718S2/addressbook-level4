@@ -140,7 +140,10 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author Caijun7
     /**
      * Imports the specified {@code AddressBook} from the filepath to the current {@code AddressBook}.
+     * And decrypts the imported file with the {@code password} if password is not null.
+     *
      * @param filepath
+     * @param password
      */
     @Override
     public void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
@@ -154,7 +157,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Exports the current view of {@code AddressBook} to the filepath.
+     * And encrypts the exported file with the {@code password} if the password is not null
+     *
      * @param filepath
+     * @param password
      */
     @Override
     public void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException {
@@ -169,8 +175,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Uploads the current view of {@code AddressBook} to the filepath in Google Drive.
+     * Exports the current view of {@code AddressBook} to the googledrive folder of local storage.
+     * And encrypts the exported file with the {@code password} if the password is not null.
+     * Uploads the exported file to the specified filepath in Google Drive.
+     *
      * @param filepath
+     * @param password
      */
     @Override
     public void uploadAddressBook(String filepath, Password password) throws IOException, WrongPasswordException {
@@ -200,6 +210,16 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Vacant Room Finder ==========================================================================
 
     //@@author Caijun7
+
+    /**
+     * Retrieves weekday schedule of all {@code Room}s in the {@code Building} in an ArrayList of ArrayList.
+     *
+     * @param building
+     * @return
+     * @throws BuildingNotFoundException
+     * @throws CorruptedVenueInformationException
+     * @throws NoRoomsInBuildingException
+     */
     @Override
     public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
             CorruptedVenueInformationException, NoRoomsInBuildingException {

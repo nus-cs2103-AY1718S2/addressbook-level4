@@ -20,12 +20,12 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Preconditions;
-import com.google.api.client.util.store.DataStoreFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 
+//@@author Caijun7-reused
 /**
  * A class to read and write files stored in the user's Google Drive storage.
  */
@@ -108,7 +108,6 @@ public class GoogleDriveStorage {
      * Uploads a file using direct media upload.
      */
     public File uploadFile() throws IOException {
-        System.out.println("Starting uploading");
         File fileMetadata = new File();
         fileMetadata.setTitle(uploadFile.getName());
 

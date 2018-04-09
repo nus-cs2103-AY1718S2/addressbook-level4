@@ -107,7 +107,6 @@ public class Timetable {
         for (Timetable timetable : timetables) {
             t.add(timetable.data);
         }
-        
         return TimetableData.unionTimeTable(t);
     }
 

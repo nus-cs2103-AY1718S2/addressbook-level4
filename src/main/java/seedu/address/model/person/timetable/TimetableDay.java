@@ -102,8 +102,8 @@ public class TimetableDay {
             for (TimetableDay timetable : timetables) {
                 TimetableSlot t = timetable.timetableSlots[i];
                 if (t.toString() != "") {
-                   checker = true;
-                   break;
+                    checker = true;
+                    break;
                 }
             }
 

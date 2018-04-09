@@ -147,23 +147,23 @@ public class TimetableWeek {
 
             ArrayList<String> dailyTimeTable = TimetableDay.unionTimetableDay(t);
             switch (i) {
-                case 0:
-                    dailyTimeTable.add(0, MONDAY_IDENTIFIER);
-                    break;
-                case 1:
-                    dailyTimeTable.add(0, TUESDAY_IDENTIFIER);
-                    break;
-                case 2:
-                    dailyTimeTable.add(0, WEDNESDAY_IDENTIFIER);
-                    break;
-                case 3:
-                    dailyTimeTable.add(0, THURSDAY_IDENTIFIER);
-                    break;
-                case 4:
-                    dailyTimeTable.add(0, FRIDAY_IDENTIFIER);
-                    break;
-                default:
-                    break;
+            case 0:
+                dailyTimeTable.add(0, MONDAY_IDENTIFIER);
+                break;
+            case 1:
+                dailyTimeTable.add(0, TUESDAY_IDENTIFIER);
+                break;
+            case 2:
+                dailyTimeTable.add(0, WEDNESDAY_IDENTIFIER);
+                break;
+            case 3:
+                dailyTimeTable.add(0, THURSDAY_IDENTIFIER);
+                break;
+            case 4:
+                dailyTimeTable.add(0, FRIDAY_IDENTIFIER);
+                break;
+            default:
+                break;
             }
             commonTimetable.add(dailyTimeTable);
         }

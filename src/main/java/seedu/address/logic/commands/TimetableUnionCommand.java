@@ -25,8 +25,8 @@ public class TimetableUnionCommand extends Command {
     public static final String COMMAND_WORD = "union";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the unified timetable of the persons entered\n"
-            + "Parameters: INDEX ODD/EVEN INDEX1 INDEX2 INDEX3..." +
-            "(indexes must be positive integers and separated by one space)\n"
+            + "Parameters: INDEX ODD/EVEN INDEX1 INDEX2 INDEX3..."
+            + "(indexes must be positive integers and separated by one space)\n"
             + "Example: " + COMMAND_WORD + "Odd " + "1 " + "2 " + "3";
 
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "%1$s Combined Timetable: %2$s";
@@ -77,7 +77,7 @@ public class TimetableUnionCommand extends Command {
             personsToShow.add(lastShownList.get(targetIndex.getZeroBased()));
         }
 
-        for(Person person : personsToShow) {
+        for (Person person : personsToShow) {
             timetablesToShow.add(person.getTimetable());
         }
 
@@ -89,7 +89,7 @@ public class TimetableUnionCommand extends Command {
     protected String printNames() {
         StringBuilder sb = new StringBuilder();
 
-        for(int i = 0; i < personsToShow.size(); i++) {
+        for (int i = 0; i < personsToShow.size(); i++) {
             sb.append(personsToShow.get(i).getName());
             if (i != personsToShow.size() - 1) {
                 sb.append(", ");

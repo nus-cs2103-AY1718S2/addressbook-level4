@@ -34,9 +34,12 @@ public class AddCommand extends UndoableCommand {
             + "[" + PREFIX_TAG + "CONDITION]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
+            + PREFIX_NRIC + "S1234567A "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
+            + PREFIX_DOB + "11/11/1991 "
+            + PREFIX_BLOODTYPE + "A+ "
             + PREFIX_TAG + "peanuts "
             + PREFIX_TAG + "G6PD";
 

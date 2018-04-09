@@ -93,7 +93,7 @@ public class Authentication {
      * @throws IOException
      */
     public static com.google.api.services.calendar.Calendar
-    getCalendarService() throws IOException {
+        getCalendarService() throws IOException {
         Credential credential = authorize();
         return new com.google.api.services.calendar.Calendar.Builder(
                 httpTransport, JSON_FACTORY, credential)
@@ -101,6 +101,10 @@ public class Authentication {
                 .build();
     }
 
+    /**
+     * authenticate the service and return its state.
+     * @return authentication success or not
+     */
     public static boolean authen() {
         com.google.api.services.calendar.Calendar service =
                 null;

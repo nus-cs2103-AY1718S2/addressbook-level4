@@ -2,6 +2,9 @@ package seedu.address.logic.commands;
 //@@author crizyli
 import seedu.address.logic.Authentication;
 
+/**
+ * To authorize ET.
+ */
 public class AuthenCommand extends Command {
 
     public static final String COMMAND_WORD = "authenET";

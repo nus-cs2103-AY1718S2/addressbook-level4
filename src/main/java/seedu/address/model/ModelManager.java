@@ -80,10 +80,12 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ShowCalendarViewRequestEvent(imdb.getAppointmentEntryList()));
     }
 
+    //@@author Kyholmes
     private void indicateQueueChanged() {
         raise(new QueueChangedEvent(imdb));
     }
 
+    //@@author
     @Override
     public synchronized void deletePerson(Patient target) throws PatientNotFoundException {
         imdb.removePerson(target);

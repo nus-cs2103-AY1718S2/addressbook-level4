@@ -38,6 +38,7 @@ public interface Storage extends ImdbStorage, UserPrefsStorage {
      */
     void handleAddressBookChangedEvent(ImdbChangedEvent abce);
 
+    //@@author Kyholmes
     /**
      * Saves the current version of the IMDB to the hard disk.
      *   Creates the data file if it is missing.

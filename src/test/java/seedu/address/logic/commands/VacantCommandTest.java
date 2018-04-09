@@ -173,6 +173,11 @@ public class VacantCommandTest {
         }
 
         @Override
+        public void uploadAddressBook(String filepath, Password password) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void addAlias(Alias alias) throws DuplicateAliasException {
             fail("This method should not be called.");
         }

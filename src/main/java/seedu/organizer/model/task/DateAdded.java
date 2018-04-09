@@ -26,17 +26,17 @@ public class DateAdded {
     /**
      * Constructs an {@code DateAdded}.
      *
-     * @param dateadded A valid date.
+     * @param dateAdded A valid date.
      */
-    public DateAdded(String dateadded) {
-        requireNonNull(dateadded);
-        checkArgument(isValidDateAdded(dateadded), MESSAGE_DATEADDED_CONSTRAINTS);
+    public DateAdded(String dateAdded) {
+        requireNonNull(dateAdded);
+        checkArgument(isValidDateAdded(dateAdded), MESSAGE_DATEADDED_CONSTRAINTS);
         //temporary fix for xml file bug due to PrioriTask's dependence on the current date
-        if (dateadded.equals("current_date")) {
+        if (dateAdded.equals("current_date")) {
             this.date = LocalDate.now();
         } else {
             //actual code that is run when tests are not running
-            this.date = LocalDate.parse(dateadded);
+            this.date = LocalDate.parse(dateAdded);
         }
     }
 

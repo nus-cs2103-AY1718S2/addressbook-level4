@@ -32,16 +32,10 @@ public class DateCompleted {
     public DateCompleted(String dateCompleted) {
         requireNonNull(dateCompleted);
         checkArgument(isValidDateCompleted(dateCompleted), MESSAGE_DATECOMPLETED_CONSTRAINTS);
-        //temporary fix for xml file bug due to PrioriTask's dependence on the current date
-        if (dateCompleted.equals("current_date")) {
-            this.date = LocalDate.now();
+        if (dateCompleted.equals(TASK_NOTCOMPLETED)) {
+            this.date = null;
         } else {
-            //actual code that is run when tests are not running
-            if (dateCompleted.equals(TASK_NOTCOMPLETED)) {
-                this.date = null;
-            } else {
-                this.date = LocalDate.parse(dateCompleted);
-            }
+            this.date = LocalDate.parse(dateCompleted);
         }
     }
 

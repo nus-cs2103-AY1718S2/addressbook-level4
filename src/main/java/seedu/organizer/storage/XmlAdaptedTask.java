@@ -162,7 +162,7 @@ public class XmlAdaptedTask {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, DateAdded.class.getSimpleName
                     ()));
         }
-        if (!DateAdded.isValidDateAdded(this.deadline)) {
+        if (!DateAdded.isValidDateAdded(this.dateadded)) {
             throw new IllegalValueException(DateAdded.MESSAGE_DATEADDED_CONSTRAINTS);
         }
         final DateAdded dateadded = new DateAdded(this.dateadded);
@@ -171,7 +171,7 @@ public class XmlAdaptedTask {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     DateCompleted.class.getSimpleName()));
         }
-        if (!DateCompleted.isValidDateCompleted(this.deadline)) {
+        if (!DateCompleted.isValidDateCompleted(this.datecompleted)) {
             throw new IllegalValueException(DateCompleted.MESSAGE_DATECOMPLETED_CONSTRAINTS);
         }
         final DateCompleted datecompleted = new DateCompleted(this.datecompleted);

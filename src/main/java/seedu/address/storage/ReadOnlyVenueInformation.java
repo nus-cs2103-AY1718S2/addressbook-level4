@@ -9,7 +9,7 @@ import seedu.address.model.building.Room;
 
 //@@author Caijun7
 /**
- * Represents a storage for {@link seedu.address.model.building.Room}.
+ * Represents a storage for venue information.
  */
 public interface ReadOnlyVenueInformation {
 

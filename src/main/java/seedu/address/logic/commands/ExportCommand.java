@@ -16,8 +16,8 @@ public class ExportCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "export";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports an address book "
-            + "from filepath to the existing address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports the current view of address book "
+            + "to specified filepath. "
             + "Parameters: FILEPATH PASSWORD\n"
             + "Example: " + COMMAND_WORD + " "
             + "data/addressbookbackup.xml "

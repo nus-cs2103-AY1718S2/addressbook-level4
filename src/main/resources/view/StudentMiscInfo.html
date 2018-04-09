@@ -111,7 +111,7 @@ function loadAddressBook() {
 
 	}
 	document.getElementById("tags").innerHTML = showTags;
-	
+
 // -------------------------- Reading profile picture --------------------------
 
 	var profilePicturePath = studentInfo[index].getElementsByTagName("profilePicturePath")[0].childNodes[0].nodeValue;
@@ -133,13 +133,13 @@ function loadAddressBook() {
 
 	var allergies = "<b>Alleriges</b> : " + miscInfo[0].getElementsByTagName("allergies")[0].childNodes[0].nodeValue;
 	document.getElementById("allergies").innerHTML = allergies;
-	
+
 	var nextOfKinName = "<b>Next Of Kin Name</b> : " + miscInfo[0].getElementsByTagName("nextOfKinName")[0].childNodes[0].nodeValue;
 	document.getElementById("nextOfKinName").innerHTML = nextOfKinName;
-	
+
 	var nextOfKinPhone = "<b>Next Of Kin Phone</b> : " + miscInfo[0].getElementsByTagName("nextOfKinPhone")[0].childNodes[0].nodeValue;
 	document.getElementById("nextOfKinPhone").innerHTML = nextOfKinPhone;
-	
+
 	var remarks = "<b>Remarks</b> : " + miscInfo[0].getElementsByTagName("remarks")[0].childNodes[0].nodeValue;
 	document.getElementById("remarks").innerHTML = remarks;
 

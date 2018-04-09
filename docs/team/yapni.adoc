@@ -1,0 +1,67 @@
+= Yap Ni - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Codeducator
+
+---
+
+== Overview
+
+Codeducator is a desktop address book application for private programming language tutors.
+Users are able to track the progress of their students, manage their tutoring schedule and other important information about their students. +
+
+Codeducator has a graphical user interface built with JavaFX but most of the user interactions are done using command line interface. It is written in Java and has about 10 kLoC. +
+
+This project is based on the https://github.com/se-edu/addressbook-level4[AddressBook-Level4] created by the SE-EDU initiative.
+
+== Summary of contributions
+
+* *Major enhancement*: added a *dashboard* feature
+
+** What it does:
+*** The dashboard aims to help tutors track the progress of each of their student.
+*** Each student will have a dashboard.
+*** Tutors are able to add milestones they want their students to achieve to their dashboards. Each milestone signifies a significant accomplishment in the development of the student's learning progress.
+*** Tutors are able to add a list of tasks to each milestone. A task is a piece of work that needs to be done to be closer to achieving the milestone.
+*** Tutors are able to mark each task as completed, which updates the progress of the milestone.
+*** Tutors are able to delete milestone and delete task.
+
+** Justification: Besides managing their student contacts, tutors will also need to manage the learning progress of their students so that they can tutor them better. If they have a large number of students they tutor,
+it is hard to keep track of what needs to be done for each of them. Hence, this feature not only allows tutors to manage both their student contacts and student progress all in one place, it also provide them ease in documenting
+and tracking their students' learning development.
+
+* *Minor enhancement*: added a *favourites* feature
+
+** What it does: Allows users to add students to favourites and view the list of students in favourites.
+
+** Justification: Tutors may have some students that they wish to take note of. This feature helps tutors highlight these students.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W09-B3/main/blob/master/collated/functional/yapni.md[Functional code]] [https://github.com/CS2103JAN2018-W09-B3/main/tree/master/collated/test[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed release `v1.4` on GitHub
+** Modification to original AddressBook-Level4 code base:
+*** Refactored the name of some classes in the context of Codeducator (e.g. changed the name of `Person` to `Student` and `Subject` to `ProgrammingLanguage`.
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=favUnfav]
+
+include::../UserGuide.adoc[tag=dashboard]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=favourites]
+
+include::../DeveloperGuide.adoc[tag=dashboard]

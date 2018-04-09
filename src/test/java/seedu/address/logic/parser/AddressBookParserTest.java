@@ -32,6 +32,8 @@ import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.GoBackwardCommand;
+import seedu.address.logic.commands.GoForwardCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -166,6 +168,30 @@ public class AddressBookParserTest {
     public void parseCommand_zoomOutAlias() throws Exception {
         assertTrue(parser.parseCommand(ZoomOutCommand.COMMAND_ALIAS) instanceof ZoomOutCommand);
         assertTrue(parser.parseCommand(ZoomOutCommand.COMMAND_ALIAS + " 3") instanceof ZoomOutCommand);
+    }
+
+    @Test
+    public void parseCommand_goForward() throws Exception {
+        assertTrue(parser.parseCommand(GoForwardCommand.COMMAND_WORD) instanceof GoForwardCommand);
+        assertTrue(parser.parseCommand(GoForwardCommand.COMMAND_WORD + " 3") instanceof GoForwardCommand);
+    }
+
+    @Test
+    public void parseCommand_goForwardAlias() throws Exception {
+        assertTrue(parser.parseCommand(GoForwardCommand.COMMAND_ALIAS) instanceof GoForwardCommand);
+        assertTrue(parser.parseCommand(GoForwardCommand.COMMAND_ALIAS + " 3") instanceof GoForwardCommand);
+    }
+
+    @Test
+    public void parseCommand_goBackward() throws Exception {
+        assertTrue(parser.parseCommand(GoBackwardCommand.COMMAND_WORD) instanceof GoBackwardCommand);
+        assertTrue(parser.parseCommand(GoBackwardCommand.COMMAND_WORD + " 3") instanceof GoBackwardCommand);
+    }
+
+    @Test
+    public void parseCommand_goBackwardAlias() throws Exception {
+        assertTrue(parser.parseCommand(GoBackwardCommand.COMMAND_ALIAS) instanceof GoBackwardCommand);
+        assertTrue(parser.parseCommand(GoBackwardCommand.COMMAND_ALIAS + " 3") instanceof GoBackwardCommand);
     }
     //@@author
 

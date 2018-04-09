@@ -18,6 +18,8 @@ import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.ExportContactsCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.GoBackwardCommand;
+import seedu.address.logic.commands.GoForwardCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ImportContactsCommand;
@@ -180,6 +182,18 @@ public class AddressBookParser {
 
         case ZoomOutCommand.COMMAND_ALIAS:
             return new ZoomOutCommand();
+
+        case GoBackwardCommand.COMMAND_WORD:
+            return new GoBackwardCommand();
+
+        case GoBackwardCommand.COMMAND_ALIAS:
+            return new GoBackwardCommand();
+
+        case GoForwardCommand.COMMAND_WORD:
+            return new GoForwardCommand();
+
+        case GoForwardCommand.COMMAND_ALIAS:
+            return new GoForwardCommand();
         //@@author
 
         default:

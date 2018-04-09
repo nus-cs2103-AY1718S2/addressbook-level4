@@ -28,6 +28,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.storage.GoogleDriveStorage;
 import seedu.address.storage.XmlAddressBookStorage;
 
 /**
@@ -165,6 +166,17 @@ public class ModelManager extends ComponentManager implements Model {
         } catch (DuplicatePersonException e) {
             throw new AssertionError();
         }
+    }
+
+    /**
+     * Uploads the current view of {@code AddressBook} to the filepath in Google Drive.
+     * @param filepath
+     */
+    @Override
+    public void uploadAddressBook(String filepath, Password password) throws IOException, WrongPasswordException {
+        exportAddressBook("googledrive/" + filepath, password);
+        GoogleDriveStorage googleDriveStorage = new GoogleDriveStorage("googledrive/" + filepath);
+        googleDriveStorage.uploadFile();
     }
     //@@author
 

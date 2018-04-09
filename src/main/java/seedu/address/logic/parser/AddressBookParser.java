@@ -28,6 +28,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.TimeTableCommand;
 import seedu.address.logic.commands.UnaliasCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UploadCommand;
 import seedu.address.logic.commands.VacantCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.UniqueAliasList;
@@ -104,6 +105,9 @@ public class AddressBookParser {
 
         case ExportCommand.COMMAND_WORD:
             return new ExportCommandParser().parse(arguments);
+
+        case UploadCommand.COMMAND_WORD:
+            return new UploadCommandParser().parse(arguments);
 
         case AliasCommand.COMMAND_WORD:
             return new AliasCommandParser().parse(arguments);

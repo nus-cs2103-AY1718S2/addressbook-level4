@@ -86,6 +86,12 @@ public interface Model {
      * @param filepath
      */
     void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException;
+
+    /**
+     * Uploads the current view of {@code AddressBook} to the filepath in Google Drive.
+     * @param filepath
+     */
+    void uploadAddressBook(String filepath, Password password) throws IOException, WrongPasswordException;
     //@@author
 
     //@@author yeggasd

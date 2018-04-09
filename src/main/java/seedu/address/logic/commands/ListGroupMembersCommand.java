@@ -6,7 +6,6 @@ import java.util.List;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.MembersInGroupPredicate;
-import seedu.address.model.person.UniquePersonList;
 
 /**
  * Lists all persons in the address book to the user under the same group.
@@ -29,7 +28,7 @@ public class ListGroupMembersCommand extends Command {
     private Group groupToList;
     private Group groupToBeListed;
 
-    public ListGroupMembersCommand(MembersInGroupPredicate predicate,Group groupToList) {
+    public ListGroupMembersCommand(MembersInGroupPredicate predicate, Group groupToList) {
         this.predicate = predicate;
         this.groupToList = groupToList;
     }
@@ -38,11 +37,10 @@ public class ListGroupMembersCommand extends Command {
     public CommandResult execute() throws CommandException {
 
         List<Group> groupList = model.getFilteredGroupList();
-        if(!groupList.contains(groupToList)) {
+        if (!groupList.contains(groupToList)) {
             throw new CommandException(MESSAGE_NO_SUCH_GROUP);
-        }
-        else {
-            for(Group group : groupList) {
+        } else {
+            for (Group group : groupList) {
                 if (groupToList.getInformation().equals(group.getInformation())) {
                     groupToBeListed = group;
                 }

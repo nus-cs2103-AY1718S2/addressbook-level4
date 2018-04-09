@@ -20,7 +20,7 @@ public class MembersInGroupPredicate implements Predicate<Person> {
     @Override
     public boolean test(Person person) {
         UniquePersonList personList = group.getPersonList();
-        if(personList.contains(person)) {
+        if (personList.contains(person)) {
             return true;
         }
         return false;
@@ -32,6 +32,4 @@ public class MembersInGroupPredicate implements Predicate<Person> {
                 || (other instanceof MembersInGroupPredicate // instanceof handles nulls
                 && this.group.equals(((MembersInGroupPredicate) other).group)); // state check
     }
-
-    
 }

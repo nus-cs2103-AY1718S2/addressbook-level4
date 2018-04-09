@@ -32,8 +32,8 @@ public class ListGroupMembersCommandParser implements Parser<ListGroupMembersCom
         try {
             Information information = ParserUtil.parseInformation(args);
             Group group = new Group(information);
-            return new ListGroupMembersCommand(new MembersInGroupPredicate(group),group);
-        } catch(IllegalValueException ive) {
+            return new ListGroupMembersCommand(new MembersInGroupPredicate(group), group);
+        } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
     }

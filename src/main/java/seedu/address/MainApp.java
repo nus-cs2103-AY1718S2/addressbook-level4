@@ -258,7 +258,7 @@ public class MainApp extends Application {
     }
 
     /**
-     * Helper method to open birthday notification
+     * Opens birthday notification
      * Called after UI is called
      */
     private void autoOpenBirthdayNotification() {

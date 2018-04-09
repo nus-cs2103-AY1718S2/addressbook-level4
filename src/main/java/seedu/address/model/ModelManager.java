@@ -26,6 +26,7 @@ import seedu.address.model.person.Nric;
 
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.InvalidSubjectCombinationException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
@@ -71,18 +72,39 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void addPage(Person person) throws IOException {
 
-        String path = new File("../resources/main/StudentPage/template.html").getAbsolutePath();
+        String path = new File("src/main/resources/StudentPage/template.html").getAbsolutePath();
         File htmlTemplateFile = new File(path);
         String htmlString = FileUtils.readFileToString(htmlTemplateFile);
+
         Name titleName = person.getName();
         String title = titleName.toString();
+        htmlString = htmlString.replace("$title", title);
+
         Nric identityNumberClass = person.getNric();
         String identityNumber = identityNumberClass.toString();
-        htmlString = htmlString.replace("$title", title);
         htmlString = htmlString.replace("$identityNumber", identityNumber);
 
-        String newPath = new File("../resources/main/resources/StudentPage/" + title + ".html").getAbsolutePath();
+        //ADD TAG
 
+
+       String L1R5 = Integer.toString(person.calculateL1R5());
+       htmlString = htmlString.replace("No Result Information", L1R5);
+
+
+        List<Subject> subjectList = person.getSubjectArray();
+        int listSize = subjectList.size();
+        int i = 0;
+        while (i < listSize) {
+            String iString = Integer.toString(i + 1);
+            htmlString = htmlString.replace("$subject" + iString, subjectList.get(i).nameToString());
+            htmlString = htmlString.replace("$percent" + iString, subjectList.get(i).gradeToPercent());
+            htmlString = htmlString.replace("$grade" + iString, subjectList.get(i).gradeToString());
+            i++;
+        }
+        System.out.println("HIHI!!");
+
+
+        String newPath = new File("src/main/resources/StudentPage/" + title + ".html").getAbsolutePath();
         File newHtmlFile = new File(newPath);
         FileUtils.writeStringToFile(newHtmlFile, htmlString);
         //updatePage(person);
@@ -97,16 +119,19 @@ public class ModelManager extends ComponentManager implements Model {
     public void updatePage(Person person) throws IOException {
 
         // When Edit Command is being called, run this method
+        System.out.println("HERE");
         Name titleName = person.getName();
         String title = titleName.toString();
         File htmlTemplateFile = new File("/Users/johnnychan/Documents/"
-                + "GitHub/main/src/main/resources/StudentPage/" + title + ".html");
+                + "GitHub/main/src/main/resources/StudentPage/" + "template.html");
         String htmlString = FileUtils.readFileToString(htmlTemplateFile);
-        //htmlTemplateFile.delete();
         List<Subject> subjectList = person.getSubjectArray();
         int listSize = subjectList.size();
-        //System.out.println(subjectList.toString());
-        //System.out.println(subjectList);
+        Nric identityNumberClass = person.getNric();
+        String identityNumber = identityNumberClass.toString();
+        htmlString = htmlString.replace("$title", title);
+        htmlString = htmlString.replace("$identityNumber", identityNumber);
+
         int i = 0;
         while (i < listSize) {
             String iString = Integer.toString(i + 1);

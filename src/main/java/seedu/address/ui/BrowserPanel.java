@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -43,9 +45,14 @@ public class BrowserPanel extends UiPart<Region> {
     /**
     * To load person page according to person name
     */
-    public void loadPersonPage(Person person)  {
+    public void loadPersonPage(Person person) throws IOException {
+       // InputStream personPage = getClass().getResourceAsStream(PROFILE_DIRECTORY + person.getName().fullName + PERSON_PAGE);
         URL personPage = MainApp.class.getResource(PROFILE_DIRECTORY + person.getName().fullName + PERSON_PAGE);
+        //URL personPage = MainApp.class.getResource(PROFILE_DIRECTORY + "Johnny Chan.html");
         loadPage(personPage.toExternalForm());
+       // String stringPage = convertStreamToString(personPage);
+
+        //loadPage(stringPage);
         //TimeUnit.MINUTES.sleep(1);
         //loadPersonPage(person);
     }
@@ -70,7 +77,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) throws IOException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }

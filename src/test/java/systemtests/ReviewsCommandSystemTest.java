@@ -1,7 +1,5 @@
 package systemtests;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
@@ -66,7 +64,7 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
      * 4. {@code Model} and {@code Storage} remain unchanged.<br>
      * 5. Any selections in {@code BookListPanel}, {@code SearchResultsPanel},
      *    and {@code RecentBooksPanel} are all deselected.<br>
-     * 6. {@code BookReviewsPanel} is visible and {@code BookDetailsPanel} is hidden.
+     * 6. {@code BookReviewsPanel} is visible.
      * 7. Status bar remains unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
@@ -86,14 +84,5 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
         assertSelectedRecentBooksCardDeselected();
         assertBookReviewsPanelVisible();
         assertStatusBarUnchanged();
-    }
-
-    /**
-     * Checks that {@code BookReviewsPanel} is visible and {@code BookDetailsPanel}
-     * is not visible.
-     */
-    private void assertBookReviewsPanelVisible() {
-        assertTrue(getBookReviewsPanel().isVisible());
-        assertFalse(getBookDetailsPanel().isVisible());
     }
 }

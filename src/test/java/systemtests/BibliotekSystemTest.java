@@ -20,6 +20,7 @@ import org.junit.ClassRule;
 import guitests.GuiRobot;
 import guitests.guihandles.AliasListPanelHandle;
 import guitests.guihandles.BookDetailsPanelHandle;
+import guitests.guihandles.BookInLibraryPanelHandle;
 import guitests.guihandles.BookListPanelHandle;
 import guitests.guihandles.BookReviewsPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
@@ -42,6 +43,7 @@ import seedu.address.model.book.Book;
 import seedu.address.testutil.TestUtil;
 import seedu.address.testutil.TypicalBooks;
 import seedu.address.ui.CommandBox;
+import seedu.address.ui.WebViewManager;
 
 /**
  * A system test class for Bibliotek, which provides access to handles of GUI components and helper methods
@@ -74,9 +76,10 @@ public abstract class BibliotekSystemTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         setupHelper.tearDownStage();
         EventsCenter.clearSubscribers();
+        WebViewManager.getInstance().cleanUp();
     }
 
     /**
@@ -127,6 +130,10 @@ public abstract class BibliotekSystemTest {
 
     public BookReviewsPanelHandle getBookReviewsPanel() {
         return mainWindowHandle.getBookReviewsPanel();
+    }
+
+    public BookInLibraryPanelHandle getBookInLibraryPanel() {
+        return mainWindowHandle.getBookInLibraryPanel();
     }
 
     public AliasListPanelHandle getAliasListPanel() {
@@ -373,6 +380,26 @@ public abstract class BibliotekSystemTest {
     protected void assertSelectedRecentBooksCardUnchanged() {
         assertFalse(getBookDetailsPanel().isIsbnChanged());
         assertFalse(getRecentBooksPanel().isSelectedBookCardChanged());
+    }
+
+    /**
+     * Checks that {@code BookReviewsPanel} is visible, {@code BookDetailsPanel} and {@code BookInLibraryPanel}
+     * is not visible.
+     */
+    protected void assertBookReviewsPanelVisible() {
+        assertTrue(getBookReviewsPanel().isVisible());
+        assertFalse(getBookDetailsPanel().isVisible());
+        assertFalse(getBookInLibraryPanel().isVisible());
+    }
+
+    /**
+     * Checks that {@code BookInLibraryPanel} is visible, {@code BookDetailsPanel} and {@code BookReviewsPanel}
+     * is not visible.
+     */
+    protected void assertBookInLibraryPanelVisible() {
+        assertTrue(getBookInLibraryPanel().isVisible());
+        assertFalse(getBookDetailsPanel().isVisible());
+        assertFalse(getBookReviewsPanel().isVisible());
     }
 
     /**

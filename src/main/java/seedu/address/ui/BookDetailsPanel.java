@@ -107,6 +107,10 @@ public class BookDetailsPanel extends UiPart<Region> {
         getRoot().setVisible(false);
     }
 
+    protected void show() {
+        getRoot().setVisible(true);
+    }
+
     @Subscribe
     private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

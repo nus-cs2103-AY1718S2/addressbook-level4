@@ -17,6 +17,7 @@ import seedu.address.model.BookShelf;
 import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.book.Book;
 import seedu.address.network.api.google.GoogleBooksApi;
+import seedu.address.network.library.NlbCatalogueApi;
 import seedu.address.testutil.TestUtil;
 import seedu.address.testutil.TypicalBooks;
 
@@ -26,16 +27,22 @@ public class NetworkManagerTest {
     private static final String PARAM_SUCCESS = "12345";
     private static final String PARAM_FAILURE = "failure";
 
+    private static final Book BOOK_SUCESS = TypicalBooks.ARTEMIS;
+    private static final String BOOK_SUCCESS_RESULT = "Success";
+    private static final Book BOOK_FAILURE = TypicalBooks.BABYLON_ASHES;
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     private NetworkManager networkManager;
     private GoogleBooksApi mockGoogleBooksApi;
+    private NlbCatalogueApi mockNlbCatalogueApi;
 
     @Before
     public void setUp() {
         mockGoogleBooksApi = mock(GoogleBooksApi.class);
-        networkManager = new NetworkManager(mock(HttpClient.class), mockGoogleBooksApi);
+        mockNlbCatalogueApi = mock(NlbCatalogueApi.class);
+        networkManager = new NetworkManager(mock(HttpClient.class), mockGoogleBooksApi, mockNlbCatalogueApi);
     }
 
     @Test
@@ -95,4 +102,27 @@ public class NetworkManagerTest {
         book.get();
     }
 
+    //@@author qiu-siqi
+    @Test
+    public void nlbCatalogueApiSearchForBooks_success() throws Exception {
+        when(mockNlbCatalogueApi.searchForBook(BOOK_SUCESS))
+                .thenReturn(CompletableFuture.completedFuture(BOOK_SUCCESS_RESULT));
+
+        String result = networkManager.searchLibraryForBook(BOOK_SUCESS).get();
+
+        verify(mockNlbCatalogueApi).searchForBook(BOOK_SUCESS);
+        assertEquals(BOOK_SUCCESS_RESULT, result);
+    }
+
+    @Test
+    public void nlbCatalogueApiSearchForBooks_failure() throws Exception {
+        when(mockNlbCatalogueApi.searchForBook(BOOK_FAILURE))
+                .thenReturn(TestUtil.getFailedFuture());
+
+        CompletableFuture<String> result = networkManager.searchLibraryForBook(BOOK_FAILURE);
+        verify(mockNlbCatalogueApi).searchForBook(BOOK_FAILURE);
+
+        thrown.expect(ExecutionException.class);
+        result.get();
+    }
 }

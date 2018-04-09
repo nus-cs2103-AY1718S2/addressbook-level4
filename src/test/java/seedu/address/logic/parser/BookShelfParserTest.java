@@ -27,6 +27,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.LibraryCommand;
 import seedu.address.logic.commands.ReviewsCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -122,6 +123,12 @@ public class BookShelfParserTest {
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
+    }
+
+    @Test
+    public void parseCommand_library() throws Exception {
+        LibraryCommand command = (LibraryCommand) parser.parseCommand(LibraryCommand.COMMAND_WORD + " 1");
+        assertEquals(new LibraryCommand(INDEX_FIRST_BOOK), command);
     }
 
     @Test

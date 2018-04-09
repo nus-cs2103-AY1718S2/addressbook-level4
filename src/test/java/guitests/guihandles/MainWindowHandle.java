@@ -21,6 +21,7 @@ public class MainWindowHandle extends StageHandle {
     private final WelcomePanelHandle welcomePanel;
     private final BookDetailsPanelHandle bookDetailsPanel;
     private final BookReviewsPanelHandle bookReviewsPanel;
+    private final BookInLibraryPanelHandle bookInLibraryPanel;
     private final AliasListPanelHandle aliasListPanel;
 
     public MainWindowHandle(Stage stage) {
@@ -38,6 +39,8 @@ public class MainWindowHandle extends StageHandle {
         welcomePanel = new WelcomePanelHandle(getChildNode(WelcomePanelHandle.WELCOME_PANEL_ID));
         bookDetailsPanel = new BookDetailsPanelHandle(getChildNode(BookDetailsPanelHandle.BOOK_DETAILS_PANE_ID));
         bookReviewsPanel = new BookReviewsPanelHandle(getChildNode(BookReviewsPanelHandle.BOOK_REVIEWS_PANE_ID));
+        bookInLibraryPanel =
+                new BookInLibraryPanelHandle(getChildNode(BookInLibraryPanelHandle.BOOK_IN_LIBRARY_PANEL_ID));
         aliasListPanel = new AliasListPanelHandle(getChildNode(AliasListPanelHandle.ALIAS_LIST_PANEL_ID));
     }
 
@@ -81,6 +84,9 @@ public class MainWindowHandle extends StageHandle {
         return bookReviewsPanel;
     }
 
+    public BookInLibraryPanelHandle getBookInLibraryPanel() {
+        return bookInLibraryPanel;
+    }
     public AliasListPanelHandle getAliasListPanel() {
         return aliasListPanel;
     }

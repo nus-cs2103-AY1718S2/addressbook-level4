@@ -11,5 +11,6 @@
   <StatusBar styleClass="anchor-pane" fx:id="syncStatus" />
   <!-- @@author jas5469 -->
   <StatusBar styleClass="anchor-pane" fx:id="totalPersonsStatus" GridPane.columnIndex="1" />
+  <!-- @@author -->
   <StatusBar styleClass="anchor-pane" fx:id="saveLocationStatus" GridPane.columnIndex="2" nodeOrientation="RIGHT_TO_LEFT" />
 </GridPane>

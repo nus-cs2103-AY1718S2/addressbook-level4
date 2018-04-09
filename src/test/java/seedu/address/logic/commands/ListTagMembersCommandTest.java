@@ -26,9 +26,9 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.TagContainKeywordsPredicate;
 
 /**
- * Contains integration tests (interaction with the Model) for {@code ListGroupMembersCommand}.
+ * Contains integration tests (interaction with the Model) for {@code ListTagMembersCommand}.
  */
-public class ListGroupMembersCommandTest {
+public class ListTagMembersCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
@@ -38,14 +38,14 @@ public class ListGroupMembersCommandTest {
         TagContainKeywordsPredicate secondPredicate =
                 new TagContainKeywordsPredicate(Collections.singletonList("second"));
 
-        ListGroupMembersCommand findFirstCommand = new ListGroupMembersCommand(firstPredicate);
-        ListGroupMembersCommand findSecondCommand = new ListGroupMembersCommand(secondPredicate);
+        ListTagMembersCommand findFirstCommand = new ListTagMembersCommand(firstPredicate);
+        ListTagMembersCommand findSecondCommand = new ListTagMembersCommand(secondPredicate);
 
         // same object -> returns true
         assertTrue(findFirstCommand.equals(findFirstCommand));
 
         // same values -> returns true
-        ListGroupMembersCommand findFirstCommandCopy = new ListGroupMembersCommand(firstPredicate);
+        ListTagMembersCommand findFirstCommandCopy = new ListTagMembersCommand(firstPredicate);
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
 
         // different types -> returns false
@@ -61,23 +61,23 @@ public class ListGroupMembersCommandTest {
     @Test
     public void execute_zeroKeywords_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        ListGroupMembersCommand command = prepareCommand(" ");
+        ListTagMembersCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
-        ListGroupMembersCommand command = prepareCommand("CS3230 owesMoney");
+        ListTagMembersCommand command = prepareCommand("CS3230 owesMoney");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON));
     }
 
     /**
-     * Parses {@code userInput} into a {@code ListGroupMembersCommand}.
+     * Parses {@code userInput} into a {@code ListTagMembersCommand}.
      */
-    private ListGroupMembersCommand prepareCommand(String userInput) {
-        ListGroupMembersCommand command =
-                new ListGroupMembersCommand(new TagContainKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+    private ListTagMembersCommand prepareCommand(String userInput) {
+        ListTagMembersCommand command =
+                new ListTagMembersCommand(new TagContainKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -88,7 +88,7 @@ public class ListGroupMembersCommandTest {
      *     - the {@code FilteredList<Person>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(ListGroupMembersCommand command, String expectedMessage,
+    private void assertCommandSuccess(ListTagMembersCommand command, String expectedMessage,
                                       List<Person> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();

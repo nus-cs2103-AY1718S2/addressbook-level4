@@ -9,6 +9,7 @@ import seedu.address.model.email.UniqueTemplateList;
 import seedu.address.model.email.exceptions.DuplicateTemplateException;
 import seedu.address.model.email.exceptions.TemplateNotFoundException;
 
+//@@author ng95junwei
 
 public class UniqueTemplateListTest {
     @Rule
@@ -38,3 +39,5 @@ public class UniqueTemplateListTest {
     }
 
 }
+
+//@@author

@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+//@@author ng95junwei
+
 public class TemplateTest {
     private final String purpose = "purpose";
     private final String title = "title";
@@ -29,3 +31,5 @@ public class TemplateTest {
     }
 
 }
+
+//@@author

@@ -202,7 +202,7 @@ public class RecordCommandTest {
     }
 
     @Test
-    public void equals() throws Exception {
+    public void equals() {
         final RecordCommand standardCommand = prepareCommand(INDEX_FIRST_PERSON, 1);
 
         // same values -> returns true

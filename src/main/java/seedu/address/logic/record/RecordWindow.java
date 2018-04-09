@@ -18,18 +18,6 @@ import seedu.address.model.patient.Record;
  */
 public class RecordWindow extends Application {
 
-    @FXML
-    private TextField dateField;
-
-    @FXML
-    private TextField symptomField;
-
-    @FXML
-    private TextField illnessField;
-
-    @FXML
-    private TextField treatmentField;
-
     private Stage primaryStage;
     private AnchorPane rootLayout;
     private Record record;

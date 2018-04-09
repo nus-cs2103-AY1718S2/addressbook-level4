@@ -52,7 +52,6 @@ public class RemarkCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        //throw new CommandException("Index: " + index.getOneBased() + " Remark: " + remark);
         requireNonNull(patientToEdit);
         requireNonNull(editedPatient);
 
@@ -129,9 +128,6 @@ public class RemarkCommand extends UndoableCommand {
     }
     public Remark getRemark() {
         return remark;
-    }
-    public Patient getToEdit() {
-        return patientToEdit;
     }
     public Patient getEdited() {
         return editedPatient;

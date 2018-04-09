@@ -36,13 +36,13 @@ public class AddressBookBuilder {
     }
 
     /**
-     * Parses {@code tagName} into a {@code Tag} and adds it to the {@code AddressBook} that we are building.
+     * Parses {@code name} into a {@code Tag} and adds it to the {@code AddressBook} that we are building.
      */
     public AddressBookBuilder withTag(String tagName) {
         try {
             addressBook.addTag(new Tag(tagName));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("tagName is expected to be valid.");
+            throw new IllegalArgumentException("name is expected to be valid.");
         }
         return this;
     }

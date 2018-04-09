@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Fastis-Meetup Manager - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,14 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-W15-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W15-B3`      Since: `February 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+image:FASTIS.png[ align="center"] +
+Fastis is a desktop application that aims to help students who are studying at National University of Singapore (NUS) manage their group projects effectively. The application enables students to keep track of group members’ timetables, information, meetups agendas, to-dos and schedule suitable meetup time.
 
 == Quick Start
 
@@ -50,6 +51,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
+* Some commands have an alias, which you can also use to execute the command e.g. to add a person to the address book, you can type either `add n/John Doe` or `a n/John Doe`.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
@@ -63,32 +65,37 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Alias: `a` +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/TIMETABLE_LINK d/DETAIL [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of groups (including 0)
+[TIP]
+Timetable link refers to the NUSMods link of the person
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 l/http://modsn.us/MYwiD d/Likes tennis`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 l/http://modsn.us/56Dn9 d/Likes tennis t/criminal`
 
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
+Alias: `l` +
 Format: `list`
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Alias: `e` +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [l/TIMETABLE_LINK] [d/DETAIL] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing groups, the existing groups of the person will be removed i.e adding of groups is not cumulative.
+* You can remove all the person's groups by typing `t/` without specifying any groups after it.
 ****
 
 Examples:
@@ -96,11 +103,12 @@ Examples:
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing groups.
 
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
+Alias: `f` +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -121,6 +129,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
+Alias: `d` +
 Format: `delete INDEX`
 
 ****
@@ -138,13 +147,14 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a person to show timetable : `select`
 
 Selects the person identified by the index number used in the last person listing. +
+Alias: `s` +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the NUSMods timetable of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -158,9 +168,13 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+image:SelectCommandExample.png[width="700"] +
+Figure 1. Example of timetable when selecting a person
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
+Alias: `h` +
 Format: `history`
 
 [NOTE]
@@ -168,10 +182,22 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-// tag::undoredo[]
+=== Change a group's color: `changeTagColor`
+
+Change a specific group color to one of the supported colors. +
+Alias: `color` +
+Format `changeTagColor TAG COLOR`
+
+****
+* The TAG specified must belong to one of the people in the address book
+* Available COLORS are: teal, red, yellow, blue, orange, brown, green, pink, black, grey
+****
+
+// group::undoredo[]
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
+Alias: `u` +
 Format: `undo`
 
 [NOTE]
@@ -198,6 +224,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
+Alias: `r` +
 Format: `redo`
 
 Examples:
@@ -218,9 +245,198 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Adding an event: `addEvent`
+
+Adds an event to the address book and display it on the calendar +
+Format: `addEvent n/NAME v/VENUE d/DATE st/STARTTIME et/ENDTIME`
+
+[TIP]
+DATE must be in the format of DD/MM/YYYY
+[TIP]
+TIME must be in the format of HHmm
+
+Examples:
+
+* `addEvent addEvent n/CS2103 Meetup v/School of Computing d/7/4/2018 st/1000 et/1300`
+
+image:AddEventCommandExample.png[width="500"] +
+Figure 2. Example of an event shown on the calendar
+
+=== Adding a to-do: `addToDo`
+
+Adds a to-do to the address book +
+Alias: `aTD` +
+Format: `addToDo CONTENT`
+
+[TIP]
+A to-do should not have an empty content
+
+Examples:
+
+* `addToDo Do homework before next Wednesday`
+* `aTD Swim like a fish`
+
+image:AddToDoCommandExample.png[width="500"] +
+Figure 3. Example of to-dos
+
+=== Check a to-do as done: `check`
+
+Checks a to-do in the address book as done +
+Format: `check INDEX`
+
+[TIP]
+INDEX should not be 0 or larger then the size of the to-do list
+
+Examples:
+
+* `check 1`
+
+=== Uncheck a to-do as undone: `uncheck`
+
+Unchecks a to-do in the address book as undone +
+Format: `uncheck INDEX`
+
+[TIP]
+INDEX should not be 0 or larger then the size of the to-do list
+
+Examples:
+
+* `uncheck 1`
+
+=== Editing a to-do's content : `editToDo`
+
+Edits an existing to-do's content in the address book. +
+Alias: `eTD` +
+Format: `editToDo INDEX [c/CONTENT]`
+
+****
+* Edits the to-do's content at the specified `INDEX`. The index refers to the index number shown in the last to-do listing. The index *must be a positive integer* 1, 2, 3, ...
+* Existing content will be updated to the input values.
+****
+
+Examples:
+
+* `editToDo 1 c/Swim like a fish` +
+Edits the content of the 1st to-do to be `Swim like a fish`.
+
+=== Deleting a to-do : `deleteToDo`
+
+Deletes the specified to-do from the address book. +
+Alias: `dTD` +
+Format: `deleteToDo INDEX`
+
+****
+* Deletes the to-do at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+`deleteToDo 2` +
+Deletes the 2nd to-do in the address book.
+
+=== List Tag Members: `listTagMembers`
+
+List out all persons with the given keywords(group tags). +
+Alias: `ltm` +
+Format: `listTagMembers INPUT`
+
+****
+* The search is case insensitive. e.g `cs1010` will match `CS1010`
+* Only the name is searched.
+****
+
+Examples:
+
+* `listTagMembers CS3230 CS1010` +
+Returns any person having group tags `CS3230`, `CS1010`
+Refer to Figure 4 for example.
+
+image:lgmExample.png[width="500"] +
+
+Figure 4. Example of ListTagMembers
+
+
+=== Add Group: `addGroup`
+
+Creates a group named `KEYWORD` +
+Alias: `aG` +
+Format: `addGroup KEYWORD[KEYWORDS]`
+
+[NOTE]
+====
+Keyword cannot be an empty input.
+====
+
+Examples:
+
+* `addGroups CS2101 Oral Presentation` +
+New Group `CS2101 Oral Presentation` added, refer to Figure 5. +
+image:addGroupExample.png[width ="500"] +
+Figure 5. Example of add Group
+// end:AddGroup[]
+
+=== Add Member To Group: `addGroupMember`
+
+Adds a person named `KEYWORD`  that exists in Fastis into a group `GROUP_NAME` that already exist in Fastis. +
+Alias: `aGM` +
+Format: `addGroupMember g/GROUP_NAME n/KEYWORD`
+
+[NOTE]
+====
+GROUP_NAME cannot be an empty input. +
+KEYWORD cannot be an empty input. +
+KEYWORD must be the exact name of the person and it must be case-sensitive. +
+This command is undoable.
+====
+
+Examples:
+
+* `addGroupMember g/CS2010 n/David Li` +
+Added person `David Li` into group `CS2010`  refer to Figure 6. +
+image:addGroupMembersToGroupExample.png[width ="800"] +
+Figure 6. Example of addMembersToGroup +
+
+If person already added, Fastis will output already added person in group.
+* `addGroupMember g/CS2010 n/David Li` +
+Refer to Figure 7. +
+image:addGroupMembersToGroupFailExample.png[width ="800"] +
+Figure 7. Example of addMembersToGroup +
+// end:AddGroup[]
+
+=== Display Calendar : `display` `[coming in v2.0]`
+
+Show all the group meeting in list in Calendar in time order. +
+Alias: `d` +
+Format: `display`
+
+=== Schedule suitable time : `schedule` `[coming in v2.0]`
+
+Compute a time suitable for all group members to meet. +
+Alias: `s` +
+Format: `schedule GROUP`
+
+****
+* GROUP refers the name of group which you want to work with.
+* The name of the group entered must already exist in FASTIS or saved by your previously.
+****
+
+=== Edit a person's group : `modify` `[coming in v2.0]`
+
+Modify the group that the person belongs to. +
+Alias: `m` +
+Format: `modify INDEX`
+
+****
+* INDEX refers to the index of the person you are trying to update his group.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
+Alias: `c` +
 Format: `clear`
 
 === Exiting the program : `exit`
@@ -233,10 +449,14 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
+// group::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
+Personal log in page that requires saved password. +
+Sign up with `username` and `password`. +
+Creation of password should use at least 1 lower case ,1 upper case and 1 number. +
+Sign in with saved username and password to be able to use the secured application. +
+Data files created by FASTIS will be encrypted using the `password` you have provided. +
 // end::dataencryption[]
 
 == FAQ
@@ -244,10 +464,31 @@ _{explain how the user can enable/disable data encryption}_
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+== Appendix
+
+=== Timetable Links
+
+Timetable links can be retrieved from the NUSmods website. To retrieve it simply go the the NUSMods website `nusmods.com` and click the *share* button.
+image:nusModsShare.png[width ="500"]
+
+image:nusModsLinkResult.png[width ="500"]
+
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *AddToDo* `addToDo CONTENT` +
+e.g. `addToDo Do home work`
+* *CheckToDo* : `check INDEX` +
+e.g. `check 3`
+* *UnCheckToDo* : `uncheck INDEX` +
+e.g. `uncheck 3`
+* *EditToDo* : `editToDo INDEX [c/CONTENT]` +
+e.g. `editToDo 2 c/Swim like a fish`
+* *DeleteToDo* : `deleteToDo INDEX` +
+e.g. `deleteToDo 3`
+* *AddEvent* `addEvent n/NAME v/VENUE d/DATE st/STARTTIME et/ENDTIME` +
+e.g. `addEvent n/F1 Race v/Marina Bay Street Circuit d/19/07/2017 st/1000 et/1300`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`

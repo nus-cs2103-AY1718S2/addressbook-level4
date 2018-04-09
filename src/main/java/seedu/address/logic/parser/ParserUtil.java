@@ -10,11 +10,16 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.event.Event;
+import seedu.address.model.group.Information;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Detail;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.TimeTableLink;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.todo.Content;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -41,6 +46,30 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Parses a {@code String content} into a {@code Content}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code content} is invalid.
+     */
+    public static Content parseContent(String content) throws IllegalValueException {
+        requireNonNull(content);
+        String trimmedContent = content.trim();
+        if (!Content.isValidContent(trimmedContent)) {
+            throw new IllegalValueException(Content.MESSAGE_CONTENT_CONSTRAINTS);
+        }
+        return new Content(trimmedContent);
+    }
+
+    /**
+     * Parses a {@code Optional<String> content} into an {@code Optional<Content>} if {@code content} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Content> parseContent(Optional<String> content) throws IllegalValueException {
+        requireNonNull(content);
+        return content.isPresent() ? Optional.of(parseContent(content.get())) : Optional.empty();
     }
 
     /**
@@ -140,6 +169,54 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String link} into an {@code TimeTableLink}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code link} is invalid.
+     */
+    public static TimeTableLink parseTimeTableLink(String link) throws IllegalValueException {
+        requireNonNull(link);
+        String trimmedLink = link.trim();
+        if (!TimeTableLink.isValidLink(trimmedLink)) {
+            throw new IllegalValueException(TimeTableLink.MESSAGE_TIMETABLE_LINK_CONSTRAINTS);
+        }
+        return new TimeTableLink(trimmedLink);
+    }
+
+    /**
+     * Parses a {@code Optional<String> link} into an {@code Optional<TimeTableLink>} if {@code link} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<TimeTableLink> parseTimeTableLink(Optional<String> link) throws IllegalValueException {
+        requireNonNull(link);
+        return  link.isPresent() ? Optional.of(parseTimeTableLink(link.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String detail} into a {@code Detail}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code detail} is invalid.
+     */
+    public static Detail parseDetail(String detail) throws IllegalValueException {
+        requireNonNull(detail);
+        String trimmedDetail = detail.trim();
+        if (!Detail.isValidDetail(trimmedDetail)) {
+            throw new IllegalValueException(Detail.MESSAGE_DETAIL_CONSTRAINTS);
+        }
+        return new Detail(trimmedDetail);
+    }
+
+    /**
+     * Parses a {@code Optional<String> detail} into an {@code Optional<Detail>} if {@code detail} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Detail> parseDetail(Optional<String> detail) throws IllegalValueException {
+        requireNonNull(detail);
+        return detail.isPresent() ? Optional.of(parseDetail(detail.get())) : Optional.empty();
+    }
+
+    /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -154,6 +231,7 @@ public class ParserUtil {
         return new Tag(trimmedTag);
     }
 
+
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
@@ -164,5 +242,99 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String content} into a {@code Content}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code content} is invalid.
+     */
+    public static Information parseInformation(String information) throws IllegalValueException {
+        requireNonNull(information);
+        String trimmedInformation = information.trim();
+        if (!Content.isValidContent(trimmedInformation)) {
+            throw new IllegalValueException(Information.MESSAGE_INFORMATION_CONSTRAINTS);
+        }
+        return new Information(trimmedInformation);
+    }
+
+    //@@author LeonidAgarth
+    /**
+     * Parses a {@code String phone} into a {@code Phone}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code phone} is invalid.
+     */
+    public static String parseColor(String color) throws IllegalValueException {
+        requireNonNull(color);
+        if (Tag.isValidTagColor(color)) {
+            return color;
+        } else {
+            throw new IllegalValueException(Tag.MESSAGE_TAG_COLOR_CONSTRAINTS);
+        }
+    }
+
+
+    /**
+     * Parses a {@code String name} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static String parseEventName(String name) throws IllegalValueException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!Event.isValidName(trimmedName)) {
+            throw new IllegalValueException(Event.MESSAGE_NAME_CONSTRAINTS);
+        }
+        return trimmedName;
+    }
+
+    /**
+     * Parses a {@code String venue} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code venue} is invalid.
+     */
+    public static String parseVenue(String venue) throws IllegalValueException {
+        requireNonNull(venue);
+        String trimmedVenue = venue.trim();
+        if (!Event.isValidName(trimmedVenue)) {
+            throw new IllegalValueException(Event.MESSAGE_VENUE_CONSTRAINTS);
+        }
+        return trimmedVenue;
+    }
+
+    /**
+     * Parses a {@code String date} into a {@code String}.
+     * Date must follow DD/MM/YYYY format
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code date} is invalid.
+     */
+    public static String parseDate(String date) throws IllegalValueException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        if (!Event.isValidDate(trimmedDate)) {
+            throw new IllegalValueException(Event.MESSAGE_DATE_CONSTRAINTS);
+        }
+        return trimmedDate;
+    }
+
+    /**
+     * Parses a {@code String time} into a {@code String}.
+     * Time must follow HHmm format
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code date} is invalid.
+     */
+    public static String parseTime(String time) throws IllegalValueException {
+        requireNonNull(time);
+        String trimmedTime = time.trim();
+        if (!Event.isValidTime(trimmedTime)) {
+            throw new IllegalValueException(Event.MESSAGE_TIME_CONSTRAINTS);
+        }
+        return trimmedTime;
     }
 }

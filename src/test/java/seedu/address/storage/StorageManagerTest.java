@@ -67,6 +67,30 @@ public class StorageManagerTest {
         assertEquals(original, new AddressBook(retrieved));
     }
 
+    //@@author LeonidAgarth
+    @Test
+    public void backupAddressBook_typicalAddressBook() throws Exception {
+        /*
+         * Note: This is an integration test that verifies the StorageManager is properly wired to the
+         * {@link XmlAddressBookStorage} class.
+         * More extensive testing of UserPref saving/reading is done in {@link XmlAddressBookStorageTest} class.
+         */
+        AddressBook original = getTypicalAddressBook();
+        storageManager.backupAddressBook(original);
+        ReadOnlyAddressBook backedUp = storageManager.readAddressBookBackup().get();
+        assertEquals(original, new AddressBook(backedUp));
+    }
+
+    @Test
+    public void backupAddressBook_withFilePath_typicalAddressBook() throws Exception {
+        AddressBook original = getTypicalAddressBook();
+        String filePath = storageManager.getAddressBookFilePath();
+        storageManager.backupAddressBook(original, filePath);
+        ReadOnlyAddressBook backedUp = storageManager.readAddressBookBackup(filePath).get();
+        assertEquals(original, new AddressBook(backedUp));
+    }
+
+    //@@author
     @Test
     public void getAddressBookFilePath() {
         assertNotNull(storageManager.getAddressBookFilePath());

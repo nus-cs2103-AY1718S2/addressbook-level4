@@ -17,7 +17,7 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     }
 
     /**
-     * Returns the text in the command box.
+     * Returns the text in the command node.
      */
     public String getInput() {
         return getRootNode().getText();
@@ -38,7 +38,7 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     }
 
     /**
-     * Returns the list of style classes present in the command box.
+     * Returns the list of style classes present in the command node.
      */
     public ObservableList<String> getStyleClass() {
         return getRootNode().getStyleClass();

@@ -10,6 +10,7 @@
         <city></city>
     </persons>
     <tags>
-        <name>Friends</name>
+        <name>friends</name>
+        <color>undefined</color>
     </tags>
 </addressbook>

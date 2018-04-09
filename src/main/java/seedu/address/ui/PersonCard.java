@@ -13,7 +13,13 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    //@@author jas5469
+    private static final String[] TAG_COLOR_STYLES =
+        {"teal", "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey"};
 
+    /**
+     * Define tag colour styles
+     */
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -37,6 +43,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label detail;
+    @FXML
     private FlowPane tags;
 
     public PersonCard(Person person, int displayedIndex) {
@@ -47,7 +55,32 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        detail.setText(person.getDetail().detail);
+        initTags(person);
+    }
+
+    /**
+     * Returns the color style for {@code name}'s label.
+     */
+    private String getTagColorStyleFor(String tagName) {
+        // use the hash code of the tag name to generate a random color, so that the color remain consistent
+        // between different runs of the program while still making it random enough between tags.
+        return TAG_COLOR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOR_STYLES.length];
+    }
+
+    /**
+     * Creates the tag labels for {@code person}.
+     */
+    private void initTags(Person person) {
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.name);
+            if (tag.color.equals("undefined")) {
+                tagLabel.getStyleClass().add(getTagColorStyleFor(tag.name));
+            } else {
+                tagLabel.getStyleClass().add(tag.color);
+            }
+            tags.getChildren().add(tagLabel);
+        });
     }
 
     @Override

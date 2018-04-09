@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Fastis-Meetup Manager - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,11 +10,16 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W15-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W15-B3`      Since: `February 2018`      Licence: `MIT`
+
+== Introduction
+image:FASTIS.png[width="500"] +
+Fastis is a desktop Event Manager application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface). This application is for students with group projects to keep track of their teammates' timetable, in order to schedule the most suitable meetup time. Users can store person's timetables, arrange persons in groups and generate a suitable meetup time.
 
 == Setting up
+The following steps will guide you on the set up of FASTIS.
 
 === Prerequisites
 
@@ -68,7 +73,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-W15-B3/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103JAN2018-W15-B3/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -358,12 +363,114 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+// tag::addToDo[]
+=== Add ToDo feature
+==== Current Implementation
 
-_{Explain here how the data encryption feature will be implemented}_
+The add todos mechanism is facilitated by `AddToDoCommand`, which resides inside `Logic` component. It supports adding ToDo objects to the address book. AddToDoCommand inherits from `UndoableCommand`.
 
-// end::dataencryption[]
+Hence, AddToDoCommand can be undone using `UndoRedoStack`.
+With the extra layer, the AddToDoCommand that is undoable is implemented this way:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class AddToDoCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... delete logic ...
+    }
+}
+----
+
+The to-dos in the to-do list are facilitated by `ToDo` class. Each `ToDo` object have a `Content` object, representing the content of the to-do.
+Address book stores all to-dos in `UniqueToDoList`.
+`ToDo`,`Content` and `UniqueToDoList` class reside inside `Model` component. The following is the class diagram showing the relationship between `ToDo` and `Content`:
+
+image::ToDoContentClassDiagram.png[width="800"]
+
+Suppose that the user has just launched the application. The `UniqueToDoList` in the address book will be empty if no to-dos have been added previously.
+
+The user executes a new `AddToDoCommand` with `Content`, to add a new to-do to the address book.
+The new to-do is added to the `UniqueToDoList` and the current state of the address book is saved.
+The following sequence diagram shows how the addToDo operation works:
+
+image::AddToDoSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `AddToDoCommand`
+
+* **Alternative 1 (current choice):** Add a new abstract method `executeAddToDoCommand()`
+** Pros: We will not lose any addToDo functionality as it is now part of the default behaviour. Classes that deal with `AddToDoCommand` do not have to know that `executeAddToDoCommand()` exist.
+** Cons: Hard for new developers to understand the template pattern.
+* **Alternative 2:** Just override `execute()`
+** Pros: Does not involve the template pattern, easier for new developers to understand.
+** Cons: Classes that inherit from `AddToDoCommand` must remember to call `super.execute()`, or lose the ability to addToDo.
+
+// end::addToDo[]
+
+// tag::checkToDo[]
+=== Check/UnCheck ToDo feature
+==== Current Implementation
+
+The check/uncheck todos mechanism is facilitated by `CheckToDoCommand` and `UnCheckToDoCommand`, which resides inside `Logic` component. It supports modifying Status objects within ToDo objects. CheckToDoCommand and UnCheckToDoCommand inherit from `UndoableCommand`.
+
+Hence, CheckToDoCommand and UnCheckToDoCommand can be undone using `UndoRedoStack`.
+With the extra layer, the CheckToDoCommand and UnCheckToDoCommand that are undoable are implemented this way:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class CheckToDoCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... check to-do logic ...
+    }
+}
+
+public class UnCheckToDoCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... uncheck to-do logic ...
+    }
+}
+----
+
+Similar to `Content` object, each `ToDo` object have a `Status` object, representing the status of the to-do.
+The status of a to-do can be either `done` or `undone`.
+`Status` class resides inside `Model` component. The following is the class diagram showing the relationship between `ToDo` and `Status`:
+
+image::ToDoStatusClassDiagram.png[width="800"]
+
+When user check/uncheck an existing to-do if specific `Index`, a new `ToDo` is created, with the existing `ToDo`'s `Content` and appropriate new `Status`.
+
+The existing to-do is replaced by the new to-do in the `UniqueToDoList` and the current state of the address book is saved.
+
+==== Design Considerations
+
+===== Aspect: Implementation of `AddToDoCommand`
+
+* **Alternative 1 (current choice):** Add a new method `setStatus(Status newStatus)` in `ToDo`
+** Pros: We do not need to create a new `ToDo` object to replace the existing to-do.
+** Cons: The implementation does not follow the Single Responsibility Principle.
+
+// end::checkToDo[]
+
 
 === Logging
 
@@ -384,6 +491,188 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+=== NUSmods Integration
+==== Current Implementation
+
+Fastis uses the available `NUSmods API` to retrieve module information from the API server.
+
+On startup, the network component makes a connection to the API server and checks the `lastmodified` field of the `JSON` file on the server. If the `lastmodified` date is more recent that the `JSON` file held in storage, the network component will download and overwrite the existing file on disk.
+
+The `Storage` component then converts the JSON file into a hashMap of modules to be held in the `Model`
+
+When a the schedule of a `Person` is needed, the `Model` component will pass the person's `TimeTableLink` to the `Network` component. The `Network` component will make a `URLConnection` to the short URL in the `TimeTableLink` to retrieve the query of the full URL.
+
+`QueryParser` then takes the query and parses them into modules and lessons, which get passed back to the `Model` component. `ModelManager` then searches for these modules and lessons and returns a list of `Events`
+
+==== Design Considerations
+
+===== Aspect: Storage of Module information
+
+* **Alternative 1 (current choice):** Store a complete dataset of all modules
+** Pros: Information still available offline
+** Cons: Requires more memory space
+* **Alternative 2:** Store nothing, retrieve only module information of single module each time.
+** Pros: No storage and small memory needed
+** Cons: Reliant on good internet connection
+
+//tag::ListTagMembers[]
+=== List Tag Members Feature
+
+Fastis lists all persons in Fastis that have tags similar to input.
+
+==== Current Implementation
+Fastis uses `ListTagMembersCommand` ,which resides under `Logic` to facilitate the listing of members under the same
+tag.
+
+image:listGroupMemberSequenceDiagram.png[width="800"] +
+When user types in command line `ListTagMembers` or `ltm` , Fastis will use the keyword provided to search for the
+tag and list out all members under the same  tag.
+
+==== Design Considerations
+* **Alternative 1 (current choice):** Use a command to list out the group members.
+** Pros: Easy to change the methods called by command.
+** Cons: Unable to link to group class.
+* **Alternative 2:** Add a new abstract method `ListTagMembersCommand(`
+** Pros: Edit `ListTagMembersCommand()` easily to suit our needs
+** Cons: Hard for new developers to understand the template pattern.
+
+//tag::Calendar[]
+=== Calendar Feature
+==== Current Implementation
+
+Fastis uses a stand-alone `Calendar` class, adapted from `javafx-calendar` by SirGoose3432 (https://github.com/SirGoose3432/javafx-calendar).
+
+Two instances of calendar are implemented:
+
+* A monthly calendar to keep track of upcoming events and deadlines.
+* A weekly timetable to facilitate scheduling a suitable meet-up.
+
+The current time is retrieved upon startup, and both calendars base on that point in time to display the appropriate time frame.
+
+Both calendars utilize the `Event` class to determine which slots in the schedule are occupied.
+Users can associate each event to a `Person` or a `Group`, and can modify these events through commands.
+
+The details of these event, e.g. time, location, people involved, are saved locally in `.xml` file format.
+It is also retrieved upon start up by the `Storage` component and saved within the `Model` for the whole process.
+
+The weekly component of the `Calendar` is dependent on the `NUSMods` component for importing the timetable.
+
+==== Design Considerations
+
+===== Aspect: Implementation of the Calendar
+
+* **Alternative 1 (current choice):** Implement a stand-alone `Calendar` class
+** Pros:
+*** Easy to manipulate data.
+*** Easy to customize apperance.
+** Cons:
+*** Implementation is likely not optimized.
+*** Might not be aesthetically pleasing.
+* **Alternative 2:** Import external libraries/API
+** Choices:
+*** https://developers.google.com/calendar/[Google Calendar API]
+*** https://github.com/dlemmermann/CalendarFX[CalendarFX]
+** Pros:
+*** Likely optimized algorithms.
+*** Aesthetically pleasing.
+** Cons:
+*** Restricted to what the libraries/API offer.
+*** Need a firm understanding of the whole API to implement well.
+
+===== Aspect: Implementation of the `Event` class
+* **Alternative 1 (current choice):** One `Event` class for both monthly and weekly calendars.
+** Pros: The codes are concise and can be used interchangeably.
+** Cons: Prone to flawed and buggy implementations where methods are used where they are not supposed to.
+* **Alternative 2:** One `Event` interface with 2 classes implementing it accordingly.
+** Pros: The codes are modularized and safe from buggy behaviours.
+** Cons: There is likely a lot of code to write.
+
+// tag::addGroup[]
+=== Add Group feature
+
+Fastis adds a group named by the user from input.
+
+==== Current Implementation
+
+The add groups mechanism is facilitated by `AddGroupCommand`, which resides inside `Logic` component. It supports adding Group objects to the address book. AddGroupCommand inherits from `UndoableCommand`.
+
+Hence, AddGroupCommand can be undone using `UndoRedoStack`.
+With the extra layer, the AddGroupCommand that is undoable is implemented this way:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class AddGroupCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... delete logic ...
+    }
+}
+----
+
+The groups in the group list are facilitated by `Group` class. Each `Group` object have a `Information` object, representing the information of the group.
+Address book stores all groups in `UniqueGroupList`.
+`Group`,`Information` and `UniqueGroupList` class reside inside `Model` component. The following is the class diagram showing the relationship between `Group` and `Information`:
+
+image:GroupInformationClassDiagram.png[width ="800"]
+
+Suppose that the user has just launched the application. The `UniqueGroupList` in the address book will be empty if no groups have been added before.
+
+The user executes a new `AddGroupCommand` with `Information`, to add a new group to the address book.
+The new group is added to the `UniqueGroupList` and the current state of the address book is saved.
+The following sequence diagram shows how the addGroup operation works:
+
+image:AddGroupSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `AddGroupCommand`
+* **Alternative 1 (current choice):** Add a new command method `AddGroupCommand()`
+** Pros: It is easy for developers to modify method to suit what they want
+* **Alternative 2:** Add a new abstract method `executeAddGroupCommand()`
+** Pros: It is not able to lose any addGroup functionality as it is now part of the default behaviour. Classes that deal with `AddGroupCommand` do not have to know that `executeAddGroupCommand()` exist.
+** Cons: It is hard for new developers to understand the template pattern.
+
+// end::addGroup[]
+
+// tag::addMemberToGroup[]
+=== Add Member To Group feature
+
+Fastis adds a person from the existing contact list to an existing group.
+
+==== Current Implementation
+
+The add members to groups mechanism is facilitated by `AddMembersToGroupCommand`, which resides inside `Logic` component.
+It supports adding a member to Group objects to the address book.
+
+The list of members in the group list are facilitated by `Group` class. Each `Group` object have a `UniquePersonList` object, representing the list of persons in the group.
+Address book stores all members added to the group using XmlAdaptedPersons as person object storage.
+The following sequence diagram shows how the addMembersToGroup operates.
+
+image:aGMSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `AddGroupCommand`
+* **Alternative 1 (current choice):** Add a new command method `AddMembersToGroupCommand()`
+** Pros: It is easy for developers to modify method to suit what they want
+
+// end::addMembersToGroup[]
+
+// tag::dataencryption[]
+=== [Proposed] Data Encryption
+
+_{Explain here how the data encryption feature will be implemented}_
+
+// end::dataencryption[]
 
 == Documentation
 
@@ -577,7 +866,7 @@ image::getting-started-ui-tag-after.png[width="300"]
 +
 ****
 * Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
+** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.name)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
 ** Use the .css attribute `-fx-background-color` to add a color.
 ** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
 * Solution
@@ -605,7 +894,7 @@ image::getting-started-ui-result-after.png[width="200"]
 ** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
 ** You can write two different kinds of tests to ensure that the functionality works:
 *** The unit tests for `ResultDisplay` can be modified to include verification of the color.
-*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
+*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxAndResultDisplayShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxAndResultDisplayShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
 ** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
 *** Do read the commits one at a time if you feel overwhelmed.
 ****
@@ -780,15 +1069,59 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user profile*:
+*Target user profile*: Computing Students
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* Have a number of events to keep track of:
+** Talks
+** Career Fairs
+** Interviewws
+** Consultations
+** etc.
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+* Prefer desktop apps over other types
+* Can type fast
+* (Many) prefers typing over mouse input
+* Are reasonably comfortable using CLI apps
+
+*Value proposition*: Help students manage the humongous amount of events that they might have
+
+*Feature contribution*
+
+* Detail field for person (minor):
+** Detail for person is additional information such as remark, hobbies, comments, etc
+** Detail allows user to add information that does not fall unser categories such as phone, email, etc
+** Detail allows storing person information to become more flexible
+
+* Timetable link field for person (minor):
+** Timetable link for person is an NUSMods website link
+** Timetable link displays the actual link of NUSMods website shown when person is selected
+** Timetable link allows user to manage NUSMods link of person
+
+* Customizable tags color (minor):
+** User can set color of specific tags
+** Customizable tags color allows user to better personalise the application
+
+* Dark color theme for application bar and background (minor):
+** Application bar and background are changed to dark grey color
+** Dark color theme makes the application comfortable to use in different light conditions
+
+* Personal To-do list (major):
+** User can add to-dos, notes, upcomming tasks and organize them in the todo-list
+** To-do list serves to remind user of important tasks, events in group projects
+
+* Meetup Time Generator (major):
+** Generator parses information from persons' NUSMods timetables and generate a suitable project meetup time
+** Meetup Time Generator allows user to quickly decide meetup time without manually checcking timetables
+
+* Meetup Calendar (major):
+** User can add meetups with specific start, end time and display meetups on the calendar
+** Meetup Calendar allows user to visualise and remember upcomming group events/meetups
+
+* Organize persons in groups (major):
+** User can store specific persons in project groups
+** User can have a group list and display persons in each group
+** Groups allows user to manage persons based on the project groups they belongs to
+
 
 [appendix]
 == User Stories
@@ -798,35 +1131,186 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |Student with group project |Add person with project group tag |I know which person belongs to which project groups
 
-|`* * *` |user |add a new person |
+|`* * *` |Student that is finished with a group project |Delete the group tag of a finished group project| I will not see the group in the application anymore
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |Student who forget teammates’ information |Find a person by name|I can find out more details of the person such as location, contact number
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |Student who made a mistake in recording a group tag |Edit a person’s group tag|I can change the group tag accordingly
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |Student who recorded the wrong personal information |Edit a person|I can correct the details of the person
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |Student who wants to know which teammates are in the project group |Print out the list of teammates under the same group tag |I know which teammates I am meeting
+
+|`* * *` |Student with arranged meet-ups  |Add meet-ups with title, time, venue to the calendar |Have the summary of upcoming meet-ups in a quick glance
+
+|`* * *` |Student using CLI |Press up button to copy the previous command|I do not need to retype duplicate commands
+
+|`* * *` |Student that is involved with multiple groups |search events by its title|I can get details of a particular meet-up
+
+|`* * *` |Student who wants to arrange meet-ups |Search meet-ups by its title|I can get details such as time and place of a particular meet-up
+
+|`* *` |Student who wants to know the location of teammates |Find the location of teammates’ address via google maps |Decide on a appropriate meeting location for all teammates considering their home address
+
+|`* * *` |Student adding teammates’ information |Add the link to teammates’ timetable |I can see teammates’ timetables to arrange meet-ups
+
+|`* * *` |Student working with new teammates |Add their contact information |I can contact them if the need arises
+
+|`* * *` |user |add info of the members involved in events|So that I know who I would need to talk to
+
+|`* * *` |Student first time using the application |See the usage instructions |Learn how to use the application
+
+|`* *` |Student that does not leave applications open |See an overview of the week’s meetup right away when the application opens |Do not have to type in any commands when I first open the application
+
+|`* * *` |Student who have unused contacts |Delete a teammate from the application |I can free up storage for my application
+
+|`* * *` |Busy student with busy schedule |Have a reminder of the upcoming project meeting |I can be reminded of impending project with the details of group members printed on it
+
+|`* *` |Student who would like different colours tag for different projects |Have customizable coloured tags for different groups |Easily differentiate the groups via colour tags
+
+|`*` |Student who is too lazy to eyeball through the timetables |Have an appropriate meet-up time generated for a group |I do not have to manually come up with time for meetup
+
+|`* * *` |Student who created a group |Show teammates from a group |I can see the information of the teammates from the group
+
+|`* * *` |Student who has multiple group projects |Retrieve a list of all my groups |I can see all my groups at once
+
+|`* * *` |Student who is finished with a project |Delete everyone in a group in one go |I do not have to delete contacts one by one
+
+|`* * *` |Student who is too lazy to type |Use a shorter version of a command |Use the app faster
+
+|`*` |Student who uses NUSMODS |Use my nusmods link to add my schedule into Fastis |I don’t have to manually input my timetable
+
+|`* *` |User with accessibility problems |Increase the font size of the application |I can read and see more easily
+
+|`*` |Students who likes other colours on the interface |Change color scheme |Personalise the app
+
+|`*` |Student who wants to call an absent teammate |Open teammates’ WHATSAPP page within the application e |I can alert teammates of the meeting
+
+|`*` |Student who do not how to reach the destination of the meet-up |Have the venue of the meet-up shown on google map |I can know the direction to the meetup
+
+|`*` |user |find the road that travels the shortest distance to the location of event|So that I can rely on the, map while driving
+
+|`*` |user |link an event with another |So that events that are related can be linked together so that i know which events are related
+
+|`*` |user |play music fromn address book |So that I can listen to music i want
+
+|`*` |user |play videos from youtube |So that I can watch videos i want
+=======
+
 |=======================================================================
-
-_{More to be added}_
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Fastis` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Add Meet up
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to add a meet up by entering information
+2.  Fastis adds the meet up to the calendar
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Meet up clashes with an existing event.
++
+[none]
+** 2a1. Fastis notifies user and asks for confirmation.
+** 2a2. User enters confirmation.
++
+Use case resumes from 2.
+
+[discrete]
+=== Use case: Delete Meet up
+
+*MSS*
+
+1.  User requests to lists all meet ups.
+2.  Fastis shows all event, listed with indexes.
+3.  User requests to delete a specific meet up in the list.
+4.  Fastis deletes the meet up.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Calendar is empty.
++
+[none]
+** 2a1. Fastis notifies user that the calendar is empty.
++
+Use case ends.
+
+* 3a. Index given is invalid.
++
+[none]
+** 3a1. Fastis notifies user that the index was invalid.
++
+Use case resumes from 3.
+
+[discrete]
+=== Use case: Group multiple persons into a group
+
+*MSS*
+
+1. User requests to list all persons.
+2. Fastis shows all persons, listed with an index.
+3. User requests to add a group tag to a few specified persons on the list.
+4. Fastis adds the new group to the group list.
++
+Use case ends.
+
+*Extensions*
+[none]
+* 2.a Index given is invalid.
+[none]
+** 2a1. Fastis notifies user that the index given was invalid.
++
+Use case resumes from 1.
+
+[discrete]
+=== Use case: List all persons/groups
+
+*MSS*
+
+1.  User requests to list all persons or all groups in Fastis.
+2.  Fastis lists all persons or all groups.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The persons list is empty.
++
+[none]
+** 2a1. Fastis notifies user that the persons list is empty.
++
+Use case ends.
+
+* 2b. No group tags were found.
++
+[none]
+** 2b1. Fastis notifies user that no groups were found.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete all persons in a group
+
+*MSS*
+
+1.  User requests list all groups.
+2.  Fastis shows a list of all groups.
+3. User requests to delete all persons in a specific group in the list
+4. Fastis deletes all persons in the group, and deletes the group tag
 +
 Use case ends.
 
@@ -835,23 +1319,127 @@ Use case ends.
 [none]
 * 2a. The list is empty.
 +
+[none]
+** 2a1. Fastis notifies user that no groups were found.
++
 Use case ends.
 
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Fastis shows an error message.
 +
-Use case resumes at step 2.
+Use case resumes from 2.
+
+[discrete]
+=== Use case: Show a person's timetable
+
+*MSS*
+
+1.  User requests to show the timetable of the specified person.
+2.  Fastis show the timetable for the person.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The specified person has no timetable
+[none]
+** 2a1. Fastis notifies the user that the person has no timetable
++
+Use case ends.
+
+[discrete]
+=== Use case: Print out all teammates under the same group
+
+*MSS*
+
+1.  User requests to list the teammates for a particular group
+2.  Fastis shows the table with group heading and lists all members in it.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is no such group in Fastis.
++
+[none]
+** 2a1. Fastis notifies user that no group was found.
++
+Use case ends.
+
+[discrete]
+=== Use case: Help
+
+*MSS*
+
+1.  User requests to see all commands
+2.  Fastis shows all commands, sorted by name
+3.  User types in which command they want to view
+4.  Fastis shows the manual of that command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Command name given is invalid.
++
+[none]
+** 2a1. Fastis notifies user that the command was invalid.
++
+Use case resumes from 3.
+
+[discrete]
+=== Use case: Copy Previous Command
+
+*MSS*
+
+1.  User enters keystroke to navigate to previously entered command
+2.  Fastis copies the previous command into the input field
++
+Use case ends.
+
+[discrete]
+=== Use case: Change Tag Color
+
+*MSS*
+
+1. User enter command to change a specific tag color
+2. Fastis changes the color accordingly and display it
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The tag specified doesn't exist within the address book
+** 2a1. Fastis notifies the user.
++
+Use case ends
+
+[none]
+* 3a. The color specified is not supported by Fastis
+** 3a1. Fastis notifies the user.
++
+Use case ends
 
 _{More to be added}_
 
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Fastis should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
+.  Fastis should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Fastis should usable without the need of a mouse.
+.  Fastis should be usable solely via a command line interface.
+.  Fastis should respond within 2 seconds.
+.  Fastis should have an easy to follow user guide.
+.  Fastis should open the help page when user enters an invalid entry.
+.  Fastis should be possible to fixed and debugged in the event of malfunction.
 
 _{More to be added}_
 
@@ -863,6 +1451,10 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[event]] Event::
+a set of scheduled activity that user needs to attend at a specific time
+E.g.: Interviews, parties, CCAs, talks, coding challenges, assignments, etc
 
 [appendix]
 == Product Survey

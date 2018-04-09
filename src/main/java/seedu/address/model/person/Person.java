@@ -88,8 +88,7 @@ public class Person {
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
                 && otherPerson.getAddress().equals(this.getAddress())
-                && otherPerson.getBirthday().equals(this.getBirthday())
-                && otherPerson.getTimetable().equals(this.getTimetable());
+                && otherPerson.getBirthday().equals(this.getBirthday());
     }
 
     @Override

@@ -181,7 +181,7 @@ public class ParserUtil {
         requireNonNull(timetableUrl);
         String trimmedUrl = timetableUrl.trim();
 
-        if (!Timetable.isValidUrl(timetableUrl)) {
+        if (!trimmedUrl.equals(Timetable.EMPTY_LINK) && !Timetable.isValidUrl(timetableUrl)) {
             throw new IllegalValueException(Timetable.MESSAGE_URL_CONSTRAINTS);
         }
         return new Timetable(trimmedUrl);

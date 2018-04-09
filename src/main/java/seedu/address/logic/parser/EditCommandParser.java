@@ -55,6 +55,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage(), e);
         }
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {

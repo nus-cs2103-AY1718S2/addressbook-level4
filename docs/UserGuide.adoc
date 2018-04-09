@@ -357,7 +357,7 @@ These can be added later with `edit_policy`
 Examples:
 
 * `add_policy 1 beg/01/04/2018 exp/02/04/2020 pr/140 is/car_damage is/theft`
-* `add_policy 3 beg/01/02/2018 exp/31/02/2018 pr/120`
+* `add_policy 3 beg/01/02/2018 exp/28/02/2018 pr/120`
 
 === Edit a policy : `edit_policy`
 Edit the policy of a person in the address book.

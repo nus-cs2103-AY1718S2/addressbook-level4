@@ -532,6 +532,39 @@ The updated queue is shown in the figure below.
 .The queue after a patient is removed
 image::patientInQueueRemoveState.png[width="800"]
 
+==== Design Considerations
+
+The following is an exploration of possible alternative implementations, the various aspects of
+each implementation and the pros and cons of each implementation:
+
+===== Aspect: Data structure to support the AddPatientQueue and RemovePatientQueue command
+
+* **Alternative 1 (current choice):** Using LinkedList as queue to store patients
+** Pros: Will be easy to implement due to existing utility methods.
+** Cons: May have utility limitation.
+* **Alternative 2:** Create a data structure class like linked list to store patient in a queue
+** Pros: Can customise functionalities of the data structure.
+** Cons: Will require time and more knowledge to do.
+
+===== Aspect: Implementation of `AddPatientQueueCommand`
+
+* **Alternative 1 (current choice):** Patient will only added at the back of the list
+** Pros: Easy to implement.
+** Cons: User cannot add patient in the position they want in the queue.
+* **Alternative 2:** Patient can be added in any position in the queue
+** Pros: Will improve the functionality of AddPatientQueue command.
+** Cons: Will require another implentation to add patient in the specified position in the queue.
+
+===== Aspect: Implementation of `RemovePatientQueueCommand`
+
+* **Alternative 1 (current choice):** Patient will only removed from the top of the list
+** Pros: Easy to implement.
+** Cons: Cannot remove a patient in a certain position.
+* **Alternative 2:** Patient can be removed from the queue no matter which position the patient is in the queue
+** Pros: Improve the functionality of RemovePatientQueue command.
+** Cons: Will require another implentation to remove patient in the specified position from the queue.
+// end::addqremoveq
+
 // tag::record[]
 === Edit records feature
 ==== Current Implementation
@@ -587,40 +620,6 @@ each implementation and the pros and cons of each implementation:
 ** Pros: Will use less memory (no need to create new record object).
 ** Cons: Will require a method in Patient to update and verify validity of record. Violates Single Responsibility Principle and Separation of Concerns as `Patient` now needs to do two different things.
 // end::record[]
-
-
-==== Design Considerations
-
-The following is an exploration of possible alternative implementations, the various aspects of
-each implementation and the pros and cons of each implementation:
-
-===== Aspect: Data structure to support the AddPatientQueue and RemovePatientQueue command
-
-* **Alternative 1 (current choice):** Using LinkedList as queue to store patients
-** Pros: Will be easy to implement due to existing utility methods.
-** Cons: May have utility limitation.
-* **Alternative 2:** Create a data structure class like linked list to store patient in a queue
-** Pros: Can customise functionalities of the data structure.
-** Cons: Will require time and more knowledge to do.
-
-===== Aspect: Implementation of `AddPatientQueueCommand`
-
-* **Alternative 1 (current choice):** Patient will only added at the back of the list
-** Pros: Easy to implement.
-** Cons: User cannot add patient in the position they want in the queue.
-* **Alternative 2:** Patient can be added in any position in the queue
-** Pros: Will improve the functionality of AddPatientQueue command.
-** Cons: Will require another implentation to add patient in the specified position in the queue.
-
-===== Aspect: Implementation of `RemovePatientQueueCommand`
-
-* **Alternative 1 (current choice):** Patient will only removed from the top of the list
-** Pros: Easy to implement.
-** Cons: Cannot remove a patient in a certain position.
-* **Alternative 2:** Patient can be removed from the queue no matter which position the patient is in the queue
-** Pros: Improve the functionality of RemovePatientQueue command.
-** Cons: Will require another implentation to remove patient in the specified position from the queue.
-// end::addqremoveq
 
 // tag::login[]
 === Login System

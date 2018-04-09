@@ -5,8 +5,8 @@ package seedu.organizer.model.task;
  */
 public class Status {
 
-    public static final String LABEL_FOR_DONE = "Done";
-    public static final String LABEL_FOR_NOT_DONE = "Not done";
+    public static final String LABEL_FOR_DONE = "Completed";
+    public static final String LABEL_FOR_NOT_DONE = "Not Completed";
 
     public final boolean value;
 

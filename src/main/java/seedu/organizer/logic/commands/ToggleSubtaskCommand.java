@@ -31,9 +31,9 @@ public class ToggleSubtaskCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "toggle-subtask";
     public static final String COMMAND_ALIAS = "ts";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a subttask to a task. "
-            + "Parameters: TASK_INDEX (must be a positive integer) SUBTASK_INDEX (must be a positive integer)";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Toggle a task's subtask status. "
+            + "Parameters: TASK_INDEX (must be a positive integer) SUBTASK_INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " " + "1 1";
 
     public static final String MESSAGE_EDIT_SUBTASK_SUCCESS = "Toogled Subtask: %1$s";
 

@@ -30,7 +30,9 @@ public class ToggleCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "toggle";
     public static final String COMMAND_ALIAS = "t";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Toggle task status\n";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Toggle task status. "
+            + "Parameters: INDEX (must be a positive integer).\n"
+            + "Example: " + COMMAND_WORD + " " + "1";
 
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the organizer.";
     public static final String MESSAGE_EDIT_TASK_SUCCESS = "Toggled Task: %1$s";

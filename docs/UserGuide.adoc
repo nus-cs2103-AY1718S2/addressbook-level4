@@ -1,3 +1,4 @@
+
 = PrioriTask - User Guide
 :linkcss:
 :icons: font
@@ -534,7 +535,7 @@ _Locate all tasks with a common tag_
 === Mark task as complete: `toggle` or `t` `[since v1.2]`
 
 Toggle the status of the task identified by the index number used in the last task listing
-between `Done` and `Not Done`. +
+between `Completed` and `Not Completed`. +
 
 [.format]
 ====
@@ -634,7 +635,7 @@ _Edit the name of a subtask_
 === Mark subtask as complete: `toggle-subtask` or `ts` `[since v1.3]`
 
 Toggle the status of the subtask identified by the index number used in the last subtask listing
-between `Done` and `Not Done`. +
+between `Completed` and `Not Completed`. +
 
 [.format]
 ====

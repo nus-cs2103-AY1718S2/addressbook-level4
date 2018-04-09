@@ -156,7 +156,7 @@ Format: `clear` or `c`
 
 ==== Exiting the program : `exit` or `x`
 
-Exits the program. +
+Exits the program. This also logs the user out of the IMDB. +
 Format: `exit` or `x`
 
 // tag::dataencryption[]
@@ -174,6 +174,10 @@ IMDB will be able to switch from standalone mode to server/client mode in v2.0 t
 ==== Searching for drug information from a drug information website `[coming in v2.0]`
 
 IMDB will be able to search for relevant drug information from an official website so that doctors will not administer the wrong drug.
+
+==== Adding doctor and medical staff accounts `[coming in v2.0]`
+
+There will be an administrator role which can add a new username and password to the IMDB, which will allow a new doctor or medical staff to log into the system.
 
 === Patient Commands
 
@@ -375,9 +379,9 @@ Examples:
 `remover 1 in/1` +
 Deletes the first medical record for the first person in the result of the list command.
 
-==== Printing a patient's formatted medical records : `print` [coming in v1.4]
+==== Printing a patient's formatted medical records : `print` [since v1.4]
 
-Formats and prints a patient's medical records into a pdf. +
+Formats and prints a patient's medical records into a pdf. The pdf file is located in the same directory as the IMDB application. +
 *This command is only accessible to doctors.* +
 Format: `print INDEX`
 

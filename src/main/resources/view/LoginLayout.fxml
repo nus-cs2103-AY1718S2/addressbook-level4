@@ -25,8 +25,8 @@
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password" GridPane.rowIndex="1" />
-            <TextField fx:id="usernameField" prefHeight="25.0" prefWidth="175.0" GridPane.columnIndex="1" />
-            <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="usernameField" onKeyPressed="#handleKeyAction" prefHeight="25.0" prefWidth="175.0" GridPane.columnIndex="1" />
+            <PasswordField fx:id="passwordField" onKeyPressed="#handleKeyAction" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <Button layoutX="238.0" layoutY="140.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Login" textAlignment="CENTER" />

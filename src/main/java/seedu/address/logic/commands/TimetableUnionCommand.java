@@ -35,7 +35,7 @@ public class TimetableUnionCommand extends Command {
     private final String oddEven;
     private ArrayList<Person> personsToShow;
     private ArrayList<Timetable> timetablesToShow;
-    
+
     public TimetableUnionCommand(ArrayList<Index> targetIndexes, String oddEven) {
         requireNonNull(targetIndexes);
         requireNonNull(oddEven);

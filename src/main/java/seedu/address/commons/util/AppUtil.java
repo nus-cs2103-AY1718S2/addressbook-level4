@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import javafx.scene.image.Image;
 import seedu.address.MainApp;
 
+
 /**
  * A container for App specific utility functions
  */
@@ -21,7 +22,10 @@ public class AppUtil {
      * @throws IllegalArgumentException if {@code condition} is false.
      */
     public static void checkArgument(Boolean condition) {
+
         if (!condition) {
+
+
             throw new IllegalArgumentException();
         }
     }

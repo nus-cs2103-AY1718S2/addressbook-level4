@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Catalogue save file which contains the same Book values as in
+{@code TypicalBooks#getTypicalCatalogue()}-->
+<catalogue>
+    <books>
+        <title>Animal Farm</title>
+        <author>George Orwell</author>
+        <isbn>9780736692427</isbn>
+        <avail>Available</avail>
+        <tagged>political</tagged>
+        <tagged>satire</tagged>
+    </books>
+    <books>
+        <title>Breaking Dawn</title>
+        <author>Stephenie Meyer</author>
+        <isbn>9780316067928</isbn>
+        <avail>Available</avail>
+        <tagged>fiction</tagged>
+    </books>
+    <books>
+        <title>California Girl</title>
+        <author>Jefferson Parker</author>
+        <isbn>9780060562373</isbn>
+        <avail>Available</avail>
+        <tagged>unlabelled</tagged>
+    </books>
+    <books>
+        <title>Delirium</title>
+        <author>Lauren Oliver</author>
+        <isbn>9780061726835</isbn>
+        <avail>Available</avail>
+    </books>
+    <books>
+        <title>Emma</title>
+        <author>Jane Austen</author>
+        <isbn>9780141439587</isbn>
+        <avail>Available</avail>
+    </books>
+    <books>
+        <title>Fateful</title>
+        <author>Claudia Gray</author>
+        <isbn>9780062006202</isbn>
+        <avail>Available</avail>
+    </books>
+    <books>
+        <title>Gone Girl</title>
+        <author>Gillian Flynn</author>
+        <isbn>9780753827666</isbn>
+        <avail>Available</avail>
+    </books>
+    <tagged>political</tagged>
+    <tagged>satire</tagged>
+    <tagged>fiction</tagged>
+    <tagged>unlabelled</tagged>
+</catalogue>

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Catalogue - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,25 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-T16-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team CS2103JAN2018-T16-B1`      Since: `Jan 2018`      Licence: `MIT`
+
+== Default Account
+```
+Username: admin
+Password: admin
+```
+You can login the default account with this command: 'login admin admin'
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Catalogue is for *NUS students* who prefer to use a desktop app for finding, borrowing and returning books at the Central Library
+Catalogue is for *NUS librarian* who prefer to use a desktop app for managing books, students accounts and loans at the Central Library.
+More importantly, Catalogue is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI).
+If you can type fast, Catalogue can get your contact management tasks done faster than traditional GUI apps.
+This guide will help you and give you an overview of the different features of Catalogue.
+Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -27,8 +39,8 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `catalogue.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your Catalogue.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -37,9 +49,9 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* *`list`* : lists all books
+* **`add`**`n/Animal Farm a/George Orwell p/9780736692427 e/Borrowed and Reserved ` : adds a book titled `Animal Farm` to the Catalogue.
+* **`delete`**`3` : deletes the 3rd book shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
@@ -50,81 +62,100 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/TITLE`, `TITLE` is a parameter which can be used as `add n/Animal Farm`.
+* Items in square brackets are optional e.g `n/TITLE [t/TAG]` can be used as `n/Animal Farm t/satire` or as `n/Animal Farm`.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/satire`, `t/satire t/political` etc.
+* Parameters can be in any order e.g. if the command specifies `n/TITLE p/ISBN`, `p/ISBN n/TITLE` is also acceptable.
 ====
+
+=== Login as Student/Librarian : `Login`
+
+Format: `login [username] [password]` +
+Privilege Level: 0(Guest)
+
+[NOTE]
+Different accounts might have different privilege levels. A command can only be executed when the privilege level of the current user is greater or equal to the command's required level. The default admin account can be logged in with 'login admin admin'
 
 === Viewing help : `help`
 
-Format: `help`
+Format: `help` +
+Privilege Level: 0(Guest)
 
-=== Adding a person: `add`
+=== Adding a book: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+
+Adds a book to the catalogue +
+Format: `add n/TITLE a/AUTHOR p/ISBN e/AVAIL  [t/TAG]...`
+Privilege Level: 2(Librarian)
 
 [TIP]
-A person can have any number of tags (including 0)
+A book can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Animal Farm a/George Orwell p/9780736692427 e/Borrowed and Reserved`
+* `add n/Breaking Dawn t/fiction e/Borrowed and Reserved a/Stephenie Meyer p/9780316067928 t/young adults`
 
-=== Listing all persons : `list`
+=== Listing all books : `list`
 
-Shows a list of all persons in the address book. +
-Format: `list`
 
-=== Editing a person : `edit`
+Shows a list of all books in the catalogue. +
+Format: `list` +
+Privilege Level: 0(Guest)
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+
+=== Editing a book : `edit`
+
+Edits an existing book in the catalogue. +
+Format: `edit INDEX [n/TITLE] [a/AUTHOR] [p/ISBN] [e/AVAIL] [t/TAG]...` +
+Privilege Level: 2(Librarian)
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the book at the specified `INDEX`. The index refers to the index number shown in the last book listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the book will be removed i.e adding of tags is not cumulative.
+* You can remove all the book's tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 1 p/9780736692426 e/Borrowed and Reserved` +
+Edits the isbn number and availability author of the 1st book to be `9780736692426` and `Available` respectively.
+* `edit 2 n/Breaking Dawn t/` +
+Edits the title of the 2nd book to be `Breaking Dawn` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating books by title: `find`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds books whose titles contain any of the given keywords. +
+Format: `find KEYWORD [MORE_KEYWORDS]` +
+ Privilege Level: 0(Guest)
+
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is case insensitive. e.g `girl` will match `Girl`
+* The order of the keywords does not matter. e.g. `Dawn Girl` will match `Girl Dawn`
+* Only the title is searched.
+* Only full words will be matched e.g. `gir` will not match `Girl`
+* Books matching at least one keyword will be returned (i.e. `OR` search). e.g. `Farm Dawn` will return `Animal Farm`, `Breaking Dawn`
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find Animal` +
+Returns `Animal Farm`
+* `find Animal, Breaking, California` +
+Returns any book having titles `Animal`, `Breaking`, or `California`
 
-=== Deleting a person : `delete`
+=== Deleting a book : `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Deletes the specified book from the catalogue. +
+Format: `delete INDEX` +
+Privilege Level: 2(Librarian)
+
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the book at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -133,18 +164,19 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
+Deletes the 2nd book in the catalogue.
+* `find Breaking` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st book in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a book : `select`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Selects the book identified by the index number used in the last book listing. +
+Format: `select INDEX` +
+Privilege Level: 0(Guest)
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the book and loads the Google search page the book at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -153,15 +185,16 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
+Selects the 2nd book in the catalogue.
+* `find Breaking` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st book in the results of the `find` command.
 
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `history` +
+Privilege Level: 2(Librarian)
 
 [NOTE]
 ====
@@ -171,12 +204,13 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Restores the catalogue to the state before the previous _undoable_ command was executed. +
+Format: `undo` +
+Privilege Level: 2(Librarian)
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the catalogue's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -198,7 +232,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `redo` +
+Privilege Level: 2(Librarian)
 
 Examples:
 
@@ -218,19 +253,58 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all books : `clear`
 
-Clears all entries from the address book. +
-Format: `clear`
+
+Clears all books from the catalogue. +
+Format: `clear` +
+Privilege Level: 2(Librarian)
+
+=== Borrow a book: `borrow`[TO BE IMPLEMENTED]
+
+Borrow the specified book from the catalogue. +
+Format: `borrow INDEX` +
+Privilege Level: 2(Librarian)
+
+****
+* Borrow the book at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`borrow 2` +
+Borrow the 2nd book in the catalogue.
+
+=== Clearing all accounts : `cleara`[TO BE IMPLEMENTED]
+
+Clears all accounts from AccountList. +
+Format: `clear` +
+Privilege Level: 2(Librarian)
+
+=== Return a book : `return`[TO BE IMPLEMENTED]
+
+Return a specified book to the catalogue +
+Format: `return INDEX` +
+Privilege Level: 2(Librarian)
+
+****
+* Return the book at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
 
 === Exiting the program : `exit`
 
 Exits the program. +
-Format: `exit`
+Format: `exit` +
+Privilege Level: 2(Librarian)
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Catalogue data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
@@ -242,19 +316,19 @@ _{explain how the user can enable/disable data encryption}_
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Catalogue folder.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/TITLE a/AUTHOR p/ISBN e/AVAIL [t/TAG]...` +
+e.g. `add n/Animal Farm a/George Orwell p/9780736692427 e/Borrowed and Reserved t/political t/satire`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Edit* : `edit INDEX [n/TITLE] [a/AUTHOR] [p/ISBN] [e/AVAIL] [t/TAG]...` +
+e.g. `edit 2 n/Animal Farm e/Available`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+e.g. `find Animal Dawn`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
@@ -262,3 +336,7 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Borrow* : `borrow INDEX` +
+e.g. `borrow 1`
+* *Return* : `return INDEX` +
+e.g. `delete 2`

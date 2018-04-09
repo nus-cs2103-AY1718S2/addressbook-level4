@@ -13,6 +13,8 @@ public class TimetableDay {
 
     public static final int NUM_OF_SLOTS = 24;
     public static final String MESSAGE_INVALID_TIMESLOT = "Time slot is invalid";
+    public static final String TITLE_OCCUPIED = "Occupied";
+    public static final String EMPTY_SLOT_STRING = "";
 
     // Cut into 24-h slots. 0000 being timetableSlots[0] and 2300 being timetableSlots[23]
     private TimetableSlot[] timetableSlots;
@@ -101,16 +103,16 @@ public class TimetableDay {
             checker = false;
             for (TimetableDay timetable : timetables) {
                 TimetableSlot t = timetable.timetableSlots[i];
-                if (t.toString() != "") {
+                if (t.toString().equals(EMPTY_SLOT_STRING)) {
                     checker = true;
                     break;
                 }
             }
 
             if (checker) {
-                commonTimetable.add("Occupied");
+                commonTimetable.add(TITLE_OCCUPIED);
             } else {
-                commonTimetable.add("");
+                commonTimetable.add(EMPTY_SLOT_STRING);
             }
         }
         return commonTimetable;

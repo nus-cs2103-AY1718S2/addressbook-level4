@@ -17,16 +17,17 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.timetable.Timetable;
 
-//@@author yeggasd
+//@@author AzuraAiR
 /**
- * Retrieves the timetable of a person identified using it's last displayed index from the address book.
+ * Retrieves the unified timetable of the persons identified using it's last displayed index from StardyTogether
  */
 public class TimetableUnionCommand extends Command {
     public static final String COMMAND_WORD = "union";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the unified timetable of the persons entered\n"
-            + "Parameters: INDEX (must be a positive integer) ODD/EVEN\n"
-            + "Example: " + COMMAND_WORD + " 1 Odd " + "2 Odd " + "3 Even";
+            + "Parameters: INDEX ODD/EVEN INDEX1 INDEX2 INDEX3..." +
+            "(indexes must be positive integers and separated by one space)\n"
+            + "Example: " + COMMAND_WORD + "Odd " + "1 " + "2 " + "3";
 
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "%1$s Combined Timetable: %2$s";
 
@@ -88,9 +89,11 @@ public class TimetableUnionCommand extends Command {
     protected String printNames() {
         StringBuilder sb = new StringBuilder();
 
-        for(Person person : personsToShow) {
-            sb.append(person.getName());
-            sb.append(" ");
+        for(int i = 0; i < personsToShow.size(); i++) {
+            sb.append(personsToShow.get(i).getName());
+            if (i != personsToShow.size() - 1) {
+                sb.append(", ");
+            }
         }
 
         sb.append("\n");

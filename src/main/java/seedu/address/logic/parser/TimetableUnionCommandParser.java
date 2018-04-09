@@ -9,9 +9,9 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 import java.util.ArrayList;
 
-//@@author yeggasd
+//@@author AzuraAiR
 /**
- * Parses input arguments and creates a new TimeTableCommand object
+ * Parses input arguments and creates a new TimetableUnionCommand object
  */
 public class TimetableUnionCommandParser implements Parser<TimetableUnionCommand> {
     private static final String SPLIT_TOKEN = " ";
@@ -25,7 +25,7 @@ public class TimetableUnionCommandParser implements Parser<TimetableUnionCommand
         try {
             String trimmedArgs = args.trim();
             String[] splitArgs = trimmedArgs.split(SPLIT_TOKEN);
-            if (splitArgs.length < 2) {
+            if (splitArgs.length < 3) {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, TimetableUnionCommand.MESSAGE_USAGE));
             }

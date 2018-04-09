@@ -45,8 +45,8 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_RATING_AMY = "-1";
     public static final String VALID_RATING_BOB = "5";
-    public static final String VALID_REVIEW_LAZY = "supervisor@example.com";
-    public static final String VALID_REVIEWER_SUPERVISOR = "Lazy";
+    public static final String VALID_REVIEW_LAZY = "Lazy";
+    public static final String VALID_REVIEWER_SUPERVISOR = "supervisor@example.com";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_EVENT_TITLE = "Test Event";

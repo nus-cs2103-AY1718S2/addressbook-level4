@@ -24,6 +24,9 @@ import seedu.address.model.person.Person;
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
+
+//@@author ng95junwei
+
 public class EmailCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -87,3 +90,5 @@ public class EmailCommandTest {
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
 }
+
+//@@author

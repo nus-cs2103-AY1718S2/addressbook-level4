@@ -349,7 +349,7 @@ Format: `listTagMembers INPUT`
 
 Examples:
 
-* `ListTagMembers CS3230 CS1010` +
+* `listTagMembers CS3230 CS1010` +
 Returns any person having group tags `CS3230`, `CS1010`
 Refer to Figure 4 for example.
 

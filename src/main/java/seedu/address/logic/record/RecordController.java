@@ -57,10 +57,12 @@ public class RecordController {
                 messageText.setText("Success! Please close this window.");
                 closeButtonAction();
             } else {
-                if(!DateOfBirth.isValidDob(date)) {
-                    messageText.setText("Date should only contain digits and slashes, in the following format DD/MM/YYYY");
+                if (!DateOfBirth.isValidDob(date)) {
+                    messageText.setText("Date should only contain digits and"
+                            + "slashes, in the following format DD/MM/YYYY");
                 } else {
-                    messageText.setText("Text field should only contain visible characters and spaces, and it should not be blank");
+                    messageText.setText("Text field should only contain"
+                            + "visible characters and spaces, and it should not be blank");
                 }
             }
         }

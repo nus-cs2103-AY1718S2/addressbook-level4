@@ -3,7 +3,6 @@ package seedu.address.model.patient;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ILLNESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SYMPTOM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TREATMENT;

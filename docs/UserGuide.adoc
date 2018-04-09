@@ -15,6 +15,7 @@ endif::[]
 
 By: `T16-B2`
 
+// tag::introductionSK[]
 == Introduction
 
 Pigeons is a delivery-tracking tool for both business-owners and delivery drivers who *prefer to use a desktop app for managing their delivery process*.
@@ -25,10 +26,10 @@ If you can type fast, Pigeons can get your delivery management tasks done faster
 The recommended way to use Pigeons is to first load in the delivery data by a centralised administrator for each delivery driver,
 and then allow each driver to login to their own account and filter by today's date to retrieve the route for the deliveries
 they have for the day.
+// end::introductionSK[]
 
 * Users will be able to add individuals to the address book and route out deliveries based on the day
 * The program will return attributes that will make the delivery mans life easier such as distance to destination and best time to leave
-
 
 Jump to the <<Quick Start>> to get started. Enjoy!
 
@@ -40,6 +41,7 @@ Jump to the <<Quick Start>> to get started. Enjoy!
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
+// tag::quickStartModification[]
 .  Run the MainApp scripts / jar file and await for the GUI to open
 .  A login screen such as the one below should appear.
 +
@@ -56,6 +58,8 @@ The application should open into the following screen:
 +
 image::Ui.png[width="790"]
 +
+
+// end::quickStartModification[]
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
@@ -327,8 +331,11 @@ You will not see data from that of another user profile.
 Users may be able to encrypt/decrypt their Pigeons addressbook files from v2.0 onwards.
 // end::dataencryption[]
 
+// tag::centralisedLoading[]
+
 === Centralised loading in of data `[coming in v2.0]`
 Users may be able to load in large amounts of addressees into their Pigeons addressbook files from v2.0 onwards.
+// end::centralisedLoading[]
 
 == FAQ
 

@@ -94,7 +94,7 @@
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(beige, 20%);
 }
 
 .list-cell {
@@ -187,7 +187,7 @@
 
 /* Nothing to change here*/
 .status-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(beige, 20%);
     -fx-text-fill: #1d1d1d;
 }
 
@@ -208,7 +208,7 @@
 }
 
 .status-bar-with-border {
-    -fx-background-color: derive(#1d1d1d, 30%);
+    -fx-background-color: derive(beige, 30%);
     -fx-border-color: derive(#1d1d1d, 25%);
     -fx-border-width: 1px;
 }

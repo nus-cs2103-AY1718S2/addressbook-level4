@@ -44,8 +44,14 @@ This app will not work with earlier versions of Java 8.
 .Graphical User Interface (GUI)
 image::Ui.png[width="790"]
 +
-. To use ET, you have to unlock it with the default password "admin". Type `unlock admin` and press kbd:[Enter].
-.  After logging in, you can use ET by typing the commands kbd:[Enter] to execute it. +
+. To use ET, you have to unlock it with the default password "admin". Type command `unlock`, enter the password in the pop-up dialog and press kbd:[Enter] on keyboard.
+. If it is your first time to use ET, you are supposed to authorize ET to access your Google Calendar. Type command `authenET`, a web page will be opened in your default browser,
+and you need to log in with your working google account and give the permission. Refer to Figure 2 below.
++
+.Authorizing ET
+image::authorize_ET.png[width="790"]
++
+.  After logging in and authorizing, you can use ET by typing the commands kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 ****
@@ -226,6 +232,11 @@ Adds a photo to the 1st employee in the last employees listing.
 This command will automatically copy the file you chosed to the application's resource folder if it does not exist. Once
 the photo is copied, you should not delete it from that folder manually.
 ====
+
+=== Authorizes Employees Tracker : `authenET`
+
+Get the permission to allow Employees Tracker to access your google calendar. +
+Format: `authenET`
 
 === Listing all employees : `list`
 
@@ -665,6 +676,7 @@ This section summarizes the usage of all Employees Tracker's commands.
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *AddEvent* : `addEvent INDEX title/TITLE loca/LOCATION stime/STRATTIME etime/ENDTIME descrip/DESCRIPTION` +
 e.g. `addEvent 2 title/Test Event loca/NUS, Singapore stime/2017-04-09T19:00:00 etime/2018-04-09T21:00:00 descrip/A Test Event`
+* *Authentication* : `authenET`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`

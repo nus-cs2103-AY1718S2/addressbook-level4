@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= AddSurance - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -160,7 +160,8 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `CalendarPanel` etc.
+All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -168,7 +169,8 @@ The `UI` component,
 
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-* Responds to events raised from various parts of the App and updates the UI accordingly.
+* Responds to events raised from various parts of the App and updates the UI accordingly. For example, the `CalendarPanel`
+reponds to the `ZoomInEvent` and zooms in the `CalendarView` accordingly.
 
 [[Design-Logic]]
 === Logic component
@@ -183,10 +185,10 @@ image::LogicCommandClassDiagram.png[width="800"]
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+*  `Logic` uses the `AddressBookParser` class to parse the user command.
+*  This results in a `Command` object which is executed by the `LogicManager`.
+*  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+*  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
@@ -203,10 +205,11 @@ image::ModelClassDiagram.png[width="800"]
 
 The `Model`,
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* Stores a `UserPref` object that represents the user's preferences.
+* Stores the Address Book data.
+* Exposes an unmodifiable `ObservableList<Person>` and an unmodifiable `ObservableList<Appointment>` that can be 'observed',
+e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* Does not depend on any of the other three components.
 
 [[Design-Storage]]
 === Storage component
@@ -218,8 +221,8 @@ image::StorageClassDiagram.png[width="800"]
 
 The `Storage` component,
 
-* can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* Can save `UserPref` objects in json format and read it back.
+* Can save the Address Book data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -438,17 +441,14 @@ In general, the implementation of this module follows closely to the current arc
 This is to ensure consistency in the design of the system to keep it simple as _simplicity is consistency_.
 
 A number of Software Engineering Principles are used in the implementation of this module, namely *OOP*, *SOLID*, *YAGNI*, *DRY* principles.
-
-The following is the activity diagram that summarises the actions that can be taken by a user with regards to the scheduling function.
-
-=> Attach activity diagram
+Besides, the commands related to this module is also implemented using the Command design pattern.
 
 ==== Appointment Model
 ===== Current Implementation
 The `Appointment` model is created to support the scheduling feature of the address book. It stores the information of appointments
 arranged by the user. The class diagram for the Appointment is as follows:
 
-=> Insert class diagram
+image::AppointmentClassDiagram.png[width="900"]
 
 Similar to the `Person` model, the `Appointment` model consists of an `Appointment` class which has its attributes implemented as separate classes to
 observe the *Single Responsibility Principle*. The attributes include:
@@ -556,6 +556,9 @@ with its associated `AddAppointmentCommandParser` class. This function supports 
 The `AddAppointmentCommand` inherits from the `UndoableCommand` to allow user to undo the addition of an `Appointment`. The
 implementation of the `AddAppointmentCommand` is similar to that of the `AddCommand`.
 
+To enhance the logic of this function, checks are implemented to ensure that `StartTime` of an appointment must precede the `EndTime`.
+Besides, the function also disallows creation of appointments clashing in time.
+
 Following is a sequence diagram describing how the add appointment function works:
 
 image::AddAppointmentSequenceDiagram.png[width="900"]
@@ -592,8 +595,12 @@ the `DeleteAppointmentCommand`
 
 ==== Calendar Zooming Function
 ===== Current Implementation
-The calendar zooming function is implemented by the `ZoomInCommand` and `ZoomOutCommand`. These `Command` classes are kept simple,
-only responsible for raising `ZoomInEvent` and `ZoomOutEvent`. The `ZoomInEvent` and `ZoomOutEvent` are created to support this function.
+The calendar zooming function is implemented by the `ZoomInCommand` and `ZoomOutCommand`. These `Command` classes are responsible
+for raising the `ZoomInEvent` and `ZoomOutEvent`. In turn, `ZoomInEvent` and `ZoomOutEvent` are created to support this function.
+
+If a user tries to zoom in or out when the zoom level is at its maximum, an error message will be shown. To facilitate this,
+the `CalendarPanel` contains logic that will raise the `MaxZoomInEvent` or `MaxZoomOutEvent` for such situations. `ZoomInCommand`
+and `ZoomOutCommand` will then handle these events raised by throwing a `CommandException` containing the error message.
 
 The actual implementation of the `ZoomInCommand` is as follows:
 [source,java]
@@ -603,32 +610,42 @@ public class ZoomInCommand extends Command {
     public static final String COMMAND_ALIAS = "zi";
 
     public static final String MESSAGE_SUCCESS = "Calendar zoomed in";
+    public static final String MESSAGE_MAX_ZOOM_IN = "The calendar is already zoomed in to the maximum level";
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private boolean receivedFeedback = false;
+    private boolean isSuccessful = false;
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
+        registerAsAnEventHandler(this);
         raise(new ZoomInEvent());
-        return new CommandResult(MESSAGE_SUCCESS);
+        while (!receivedFeedback);
+
+        if (isSuccessful) {
+            return new CommandResult(MESSAGE_SUCCESS);
+        } else {
+            throw new CommandException(MESSAGE_MAX_ZOOM_IN);
+        }
+    }
+
+    @Subscribe
+    private void handleMaxZoomInEvent(MaxZoomInEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        receivedFeedback = true;
+        isSuccessful = false;
+    }
+
+    @Subscribe
+    private void handleZoomSuccessEvent(ZoomSuccessEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        receivedFeedback = true;
+        isSuccessful = true;
     }
 }
 ----
 
-The actual implementation of the `ZoomOutCommand` is as follows:
-[source,java]
-----
-public class ZoomOutCommand extends Command {
-    public static final String COMMAND_WORD = "zoomout";
-    public static final String COMMAND_ALIAS = "zo";
-
-    public static final String MESSAGE_SUCCESS = "Calendar zoomed out";
-
-    @Override
-    public CommandResult execute() {
-        raise(new ZoomOutEvent());
-        return new CommandResult(MESSAGE_SUCCESS);
-    }
-}
-----
-
+The implementation for `ZoomOutCommand` is higher similar to that of `ZoomInCommand`.
 
 ===== Design Considerations
 ====== Aspect: Where should the event raising be implemented
@@ -1121,7 +1138,11 @@ Major Enhancement :
 *** Implementing a calendar reflecting the scheduled appointments
 *** Implementing `Appointment` objects and their storage
 *** Implementing `addappointment` command to support the creation of new appointments
-*** Implementing `removeappointment` command to support the removal of appointments
+*** Implementing `deleteappointment` command to support the removal of appointments
+*** Implementing `zoomin` command to support zooming in of calendar view
+*** Implementing `zoomout` command to support zooming out of calendar view
+*** Implementing `gobackward` command to support making the calendar view go backward in time from the currently displaying date
+*** Implementing `goforward` command to support making the calendar view go forward in time from the currently displaying date
 
 *Ng Jun Wei*
 
@@ -1141,7 +1162,7 @@ Major Enhancement :
 
 Minor Enhancement :
 
-** Upgrades the command box to show hints dynamically
+** Sort persons by name alphabetically.
 
 Major Enhancement :
 
@@ -1163,43 +1184,41 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |user |delete old, inactive contacts in batches |clear up space for new contacts
-
 |`* * *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
-
-|`* * *` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`* * *` |user |undo an action |revert to the previous state when I make an unwanted action
 
 |`* * *` |user |redo an action |revert to the later state
 
-|`* * *` |user |manage appointment dates and details in a calendar |keep track of them systematically
-
-|`* * *` |user |send email using customised templates |easily follow up with clients
-
-|`* * *` |user |export the contacts to CSV format files |further make use of them
-
-|`* * *` |user |import contacts from CSV format files |speed up the process of adding new contacts
-
 |`* * *` |user |add multiple entries under the same contact category for the same client |avoid creating multiple contacts for the same client
 
-|`* * *` |user |set reminders |be reminded about appointments and events
+|`* * *` |user with many unwanted dated contacts |delete old, inactive contacts in batches |clear up space for new contacts
 
-|`* * *` |user |include client photos in their contact details |recognise them more easily
+|`* * *` |user with many persons in the address book |sort persons by name |locate a person easily
 
-|`* * *` |user |enjoy autocomplete when typing commands |save time
+|`* * *` |busy user |use truncated commands |save time by not having to type commands in full
 
-|`* * *` |user |use truncated commands |remove entries that I no longer need
+|`* * *` |busy user |enjoy autocomplete when typing commands |save time
 
-|`* * *` |user |customise the colour of the tags |view the different tags more clearly
+|`* * *` |busy user |customise the colour of the tags |view the different tags more clearly
 
-|`* * *` |user |replace an existing tag with a new tag |update tags effectively
+|`* * *` |busy user |replace an existing tag with a new tag |update tags effectively
 
-|`* * *` |user |delete a tag from everyone in the address book |save time
+|`* * *` |busy user |delete a tag from everyone in the address book |save time
+
+|`* * *` |user with many <<appointment, appointments>> |manage appointment dates and details in a calendar |keep track of them systematically
+
+|`* * *` |user with many <<appointment, appointments>> |set reminders |be reminded about appointments and events
+
+|`* * *` |user with many <<client, clients>> |send email using customised templates |easily follow up with clients
+
+|`* * *` |user with many <<client, clients>> |export the contacts to CSV format files |further make use of them
+
+|`* * *` |user with many <<client, clients>> |import contacts from CSV format files |speed up the process of adding new contacts
+
+|`* * *` |user with many <<client, clients>> |include client photos in their contact details |recognise them more easily
 
 |`* *` |user |prioritise clients |single out the more profitable clients
-
-|`* *` |user |email clients from the address book |make arrangements with them
 
 |`* *` |user |change the font and font size of the words in the address book |better read off the application
 
@@ -1215,13 +1234,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |pull my contacts from LinkedIn |synchronize my contacts across platforms
 
-|`*` |user |link to the clients' social media page |find out more about them
+|`*` |user |link to the <<client, clients'>> social media page |find out more about them
 
 |`*` |user |add in new commands to the address book |have the added functionalities I desire
 
 |=======================================================================
 
-_{More to be added}_
 
 [appendix]
 == Use Cases
@@ -1356,24 +1374,18 @@ Use case resumes from step 3.
 Use case ends.
 
 
-_{More to be added}_
-
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 5000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-. Must be aesthetically appealing
-. Search must be relatively fast
-. Customisable theme
-. Must be less than 10MB in size
-. Data must be backed up
-. Should be able to be extended into a mobile application
-. CRUD operations must be relatively fast
-
-
-_{More to be added}_
+.  Must be aesthetically appealing which follows Googles Material Design principles
+.  Customisable theme
+.  Must be less than 15MB in size
+.  Data must be backed up and saved before exiting the application
+.  Should be able to be extended into a mobile application
+.  CRUD operations must be relatively fast, less than 1ms per operation on average
 
 [appendix]
 == Glossary
@@ -1387,24 +1399,9 @@ A contact detail that is not meant to be shared with others
 [[client]] Client::
 A person who has (potential) business relationship with the insurance agent whose contact needs to be saved
 
+[[appointment]] Appointment::
+An appointment that the user is having with a person, who needs not exist as a contact in the address book
 
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
 
 [appendix]
 == Instructions for Manual Testing

@@ -123,7 +123,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
          */
         showAllStudents();
         index = INDEX_FIRST_STUDENT;
-        selectStudent(index);
+        //selectStudent(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the

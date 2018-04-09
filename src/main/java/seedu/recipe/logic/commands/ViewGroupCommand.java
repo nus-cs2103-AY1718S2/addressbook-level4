@@ -28,7 +28,15 @@ public class ViewGroupCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredRecipeList(groupPredicate);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, groupName));
+
+        String commandResult;
+        if (model.getFilteredRecipeList().size() > 0) {
+            commandResult = String.format(MESSAGE_SUCCESS, groupName);
+        } else {
+            commandResult = MESSAGE_FAILURE;
+        }
+
+        return new CommandResult(commandResult);
     }
 
     @Override

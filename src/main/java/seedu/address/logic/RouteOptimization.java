@@ -112,6 +112,14 @@ public class RouteOptimization {
     }
 
     //@@author meerakanani10
+
+    /**
+     * Recursive function to get the distance between addresses
+     * @param filteredAddresses - list of addresses
+     * @param origin - starting point
+     * @param optimizedRoute - optimized route that recursively get modified until completely optimized
+     * @return
+     */
     public List<String> getDistances(List<String> filteredAddresses, String origin, List<String> optimizedRoute) {
         Map<String, Double> paths = new LinkedHashMap<>();
         Map<String, Double> dummy = new HashMap<>();

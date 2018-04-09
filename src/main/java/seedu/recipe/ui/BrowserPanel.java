@@ -134,8 +134,9 @@ public class BrowserPanel extends UiPart<Region> {
             URL loadedUrl = null;
             try {
                 loadedUrl = new URL(loadedUrlString);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
+            } catch (MalformedURLException murle) {
+                throw new AssertionError("Something wrong happened when the app is trying to read the "
+                        + "url loaded inside BrowserPanel. This should not happen.", murle);
             }
             boolean isLightThemeLoaded = loadedUrl.equals(lightTheme);
             boolean isDarkThemeLoaded = loadedUrl.equals(darkTheme);

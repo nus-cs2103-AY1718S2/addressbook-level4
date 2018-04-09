@@ -3,6 +3,7 @@ package systemtests;
 
 import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_RECIPE;
 import static seedu.recipe.testutil.TypicalIndexes.INDEX_SECOND_RECIPE;
+import static seedu.recipe.testutil.TypicalIndexes.INDEX_THIRD_RECIPE;
 import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipeBook;
 import static seedu.recipe.testutil.WikiaRecipes.MOBILE_WIKIA_UGANDAN_ADD_COMMAND;
 import static seedu.recipe.testutil.WikiaRecipes.WIKIA_CHICKEN_ADD_COMMAND;
@@ -33,6 +34,12 @@ public class ParseCommandSystemTest extends RecipeBookSystemTest {
         executeCommand(command);
 
         assertCommandSuccess(MOBILE_WIKIA_UGANDAN_ADD_COMMAND);
+
+        // Not supported site
+        command = SelectCommand.COMMAND_WORD + " " + INDEX_THIRD_RECIPE.getOneBased();
+        executeCommand(command);
+
+        assertCommandSuccess("");
     }
 
     /**

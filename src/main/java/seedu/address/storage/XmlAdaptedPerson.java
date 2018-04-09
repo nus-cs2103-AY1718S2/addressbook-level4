@@ -9,8 +9,8 @@ import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import seedu.address.logic.parser.ParserUtil;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Age;
 import seedu.address.model.person.Email;
@@ -201,16 +201,14 @@ public class XmlAdaptedPerson {
         final Age age = new Age(this.age);
 
         Optional<Policy> policy;
-        if(this.policyBegDate == null || this.policyExpDate == null || this.policyPrice == null) {
+        if (this.policyBegDate == null || this.policyExpDate == null || this.policyPrice == null) {
             policy = Optional.empty();
-        }
-
-        else {
+        } else {
             final Date begDate = ParserUtil.parsePolicyDate(policyBegDate);
             final Date expDate = ParserUtil.parsePolicyDate(policyExpDate);
 
             List<Issue> issues = new ArrayList<>();
-            for(String issueString : policyIssues) {
+            for (String issueString : policyIssues) {
                 issues.add(Issue.valueOf(issueString));
             }
             final Coverage coverage = new Coverage(issues);

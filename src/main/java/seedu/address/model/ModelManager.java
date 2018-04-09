@@ -96,9 +96,9 @@ public class ModelManager extends ComponentManager implements Model {
         int i = 0;
         while (i < listSize) {
             String iString = Integer.toString(i + 1);
-            htmlString = htmlString.replace("$subject" + iString, subjectList.get(i).nameToString());
+            htmlString = htmlString.replace("Subject " + iString, subjectList.get(i).nameToString());
             htmlString = htmlString.replace("$percent" + iString, subjectList.get(i).gradeToPercent());
-            htmlString = htmlString.replace("$grade" + iString, subjectList.get(i).gradeToString());
+            htmlString = htmlString.replace("Grade " + iString, subjectList.get(i).gradeToString());
             i++;
         }
 
@@ -111,6 +111,11 @@ public class ModelManager extends ComponentManager implements Model {
 
         String remark = person.getRemark().toString();
         htmlString = htmlString.replace("Remarks to facilitate teaching should be included here.", remark);
+
+
+        //ADD INJURY
+        String injury = person.getInjuriesHistory().toString();
+        htmlString = htmlString.replace("Insert injury history here", injury);
 
         String newPath = new File("src/main/resources/StudentPage/" + title + ".html").getAbsolutePath();
         File newHtmlFile = new File(newPath);

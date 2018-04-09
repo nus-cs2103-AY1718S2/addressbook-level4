@@ -30,6 +30,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         testUnlockCommand.setTestMode();
         testUnlockCommand.setData(getModel(), new CommandHistory(), new UndoRedoStack());
         testUnlockCommand.execute();
+        showAllPersons();
 
         /* ------------------------ Perform select operations on the shown unfiltered list -------------------------- */
 

@@ -87,7 +87,6 @@ public class LogicManager extends ComponentManager implements Logic {
                 command.setData(model, history, undoRedoStack);
                 result = command.execute();
                 undoRedoStack.push(command);
-
             }
             return result;
         } finally {

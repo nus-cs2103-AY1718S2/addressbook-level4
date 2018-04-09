@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-import com.google.common.eventbus.Subscribe;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -100,8 +99,8 @@ public class PersonCard extends UiPart<Region> {
         cardPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
-                    if(mouseEvent.getClickCount() == 2){
+                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                    if (mouseEvent.getClickCount() == 2) {
                         raise(new PersonCardDoubleClick(person));
                     }
                 }

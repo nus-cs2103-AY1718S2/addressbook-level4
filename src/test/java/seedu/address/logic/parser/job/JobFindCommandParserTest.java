@@ -19,7 +19,8 @@ public class JobFindCommandParserTest {
     private JobFindCommandParser parser = new JobFindCommandParser();
     @Test
     public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, JobFindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                JobFindCommand.MESSAGE_USAGE));
 
         assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, JobFindCommand.MESSAGE_USAGE));
     }
@@ -49,9 +50,11 @@ public class JobFindCommandParserTest {
 
         assertParseFailure(parser, " s/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, JobFindCommand.MESSAGE_USAGE));
 
-        assertParseFailure(parser, " p/ s/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, JobFindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " p/ s/", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                JobFindCommand.MESSAGE_USAGE));
 
-        assertParseFailure(parser, " s/ p/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, JobFindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " s/ p/", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                JobFindCommand.MESSAGE_USAGE));
     }
 
 }

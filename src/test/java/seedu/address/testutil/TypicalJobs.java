@@ -40,7 +40,9 @@ public class TypicalJobs {
     public static final Job DATA_SCIENTIST = new JobBuilder().withPosition("Data Scientist").withTeam("Data Science")
             .withLocation("Singapore").withNumberOfPositions("1").withSkills("Analysis").build();
 
-    public static final String KEYWORD_MATCHING_ENGINEER = "Engineer"; // A keyword that matches Engineer
+    public static final String KEYWORD_MATCHING_POSITION_ENGINEER = "Engineer"; // A keyword that matches Engineer
+    public static final String KEYWORD_MATCHING_LOCATION_SINGAPORE = "Singapore"; // A keyword that matches Singapore
+    public static final String KEYWORD_MATCHING_SKILL_JAVA = "Java"; // A keyword that matches Java
 
     private TypicalJobs() {} // prevents instantiation
 

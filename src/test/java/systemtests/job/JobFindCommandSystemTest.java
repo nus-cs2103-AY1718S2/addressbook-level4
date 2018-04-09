@@ -1,43 +1,51 @@
-package systemtests;
+// @@author kush1509
+package systemtests.job;
 
 import static org.junit.Assert.assertFalse;
 import static seedu.address.commons.core.Messages.MESSAGE_JOBS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalJobs.KEYWORD_MATCHING_ENGINEER;
+import static seedu.address.testutil.TypicalJobs.DEVOPS_ENGINEER;
+import static seedu.address.testutil.TypicalJobs.KEYWORD_MATCHING_LOCATION_SINGAPORE;
+import static seedu.address.testutil.TypicalJobs.KEYWORD_MATCHING_POSITION_ENGINEER;
+import static seedu.address.testutil.TypicalJobs.KEYWORD_MATCHING_SKILL_JAVA;
 import static seedu.address.testutil.TypicalJobs.MARKETING_INTERN;
 import static seedu.address.testutil.TypicalJobs.PRODUCT_MANAGER;
 import static seedu.address.testutil.TypicalJobs.SOFTWARE_ENGINEER;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.job.JobDeleteCommand;
 import seedu.address.logic.commands.job.JobFindCommand;
 import seedu.address.model.Model;
-import seedu.address.model.skill.Skill;
+import systemtests.AddressBookSystemTest;
+import systemtests.ModelHelper;
 
 public class JobFindCommandSystemTest extends AddressBookSystemTest {
 
     @Test
-    public void find() {
+    public void findByPosition() {
         /* Case: find multiple jobs in address book, command with leading spaces and trailing spaces
          * -> 2 jobs found
          */
-        String command = "   " + JobFindCommand.COMMAND_WORD + " p/" + KEYWORD_MATCHING_ENGINEER + "   ";
+        String command = "   " + JobFindCommand.COMMAND_WORD + " p/" + KEYWORD_MATCHING_POSITION_ENGINEER + "   ";
         Model expectedModel = getModel();
-        ModelHelper.setFilteredJobList(expectedModel, SOFTWARE_ENGINEER); // position contains Engineer"
+        ModelHelper.setFilteredJobList(expectedModel, SOFTWARE_ENGINEER, DEVOPS_ENGINEER); // position contains Engineer
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: repeat previous find command where job list is displaying the jobs we are finding
          * -> 2 jobs found
          */
-        command = JobFindCommand.COMMAND_WORD + " p/" + KEYWORD_MATCHING_ENGINEER;
+        command = JobFindCommand.COMMAND_WORD + " p/" + KEYWORD_MATCHING_POSITION_ENGINEER;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find same jobs in address book after deleting 1 of them -> 1 job found */
+        executeCommand(JobDeleteCommand.COMMAND_WORD + " 1");
+        assertFalse(getModel().getAddressBook().getJobList().contains(SOFTWARE_ENGINEER));
+        command = JobFindCommand.COMMAND_WORD + " p/" + KEYWORD_MATCHING_POSITION_ENGINEER;
+        expectedModel = getModel();
+        ModelHelper.setFilteredJobList(expectedModel, DEVOPS_ENGINEER);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -53,105 +61,240 @@ public class JobFindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-//        /* Case: find multiple jobs in address book, 2 keywords in reversed order -> 2 jobs found */
-//        command = JobFindCommand.COMMAND_WORD + " p/Daniel Benson";
-//        assertCommandSuccess(command, expectedModel);
-//        assertSelectedCardUnchanged();
-//
-//        /* Case: find multiple jobs in address book, 2 keywords with 1 repeat -> 2 jobs found */
-//        command = JobFindCommand.COMMAND_WORD + " p/Daniel Benson Daniel";
-//        assertCommandSuccess(command, expectedModel);
-//        assertSelectedCardUnchanged();
-//
-//        /* Case: find multiple jobs in address book, 2 matching keywords and 1 non-matching keyword
-//         * -> 2 jobs found
-//         */
-//        command = JobFindCommand.COMMAND_WORD + " p/Daniel Benson NonMatchingKeyWord";
-//        assertCommandSuccess(command, expectedModel);
-//        assertSelectedCardUnchanged();
-//
-//        /* Case: undo previous find command -> rejected */
-//        command = UndoCommand.COMMAND_WORD;
-//        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
-//        assertCommandFailure(command, expectedResultMessage);
-//
-//        /* Case: redo previous find command -> rejected */
-//        command = RedoCommand.COMMAND_WORD;
-//        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
-//        assertCommandFailure(command, expectedResultMessage);
-//
-//        /* Case: find same jobs in address book after deleting 1 of them -> 1 job found */
-//        executeCommand(JobDeleteCommand.COMMAND_WORD + " 1");
-//        assertFalse(getModel().getAddressBook().getJobList().contains(BENSON));
-//        command = JobFindCommand.COMMAND_WORD + " p/" + KEYWORD_MATCHING_ENGINEER;
-//        expectedModel = getModel();
-//        ModelHelper.setFilteredJobList(expectedModel, DANIEL);
-//        assertCommandSuccess(command, expectedModel);
-//        assertSelectedCardUnchanged();
-//
-//        /* Case: find job in address book, keyword is same as name but of different case -> 1 job found */
-//        command = JobFindCommand.COMMAND_WORD + " p/MeIeR";
-//        assertCommandSuccess(command, expectedModel);
-//        assertSelectedCardUnchanged();
-//
-//        /* Case: find job in address book, keyword is substring of name -> 0 jobs found */
-//        command = JobFindCommand.COMMAND_WORD + " p/Mei";
-//        ModelHelper.setFilteredJobList(expectedModel);
-//        assertCommandSuccess(command, expectedModel);
-//        assertSelectedCardUnchanged();
-//
-//        /* Case: find job in address book, name is substring of keyword -> 0 jobs found */
-//        command = JobFindCommand.COMMAND_WORD + " p/Meiers";
-//        ModelHelper.setFilteredJobList(expectedModel);
-//        assertCommandSuccess(command, expectedModel);
-//        assertSelectedCardUnchanged();
-//
-//        /* Case: find job not in address book -> 0 jobs found */
-//        command = JobFindCommand.COMMAND_WORD + " p/Mark";
-//        assertCommandSuccess(command, expectedModel);
-//        assertSelectedCardUnchanged();
-//
-//        /* Case: find phone number of job in address book -> 0 jobs found */
-//        command = JobFindCommand.COMMAND_WORD + " p/" + DANIEL.getPhone().value;
-//        assertCommandSuccess(command, expectedModel);
-//        assertSelectedCardUnchanged();
-//
-//        /* Case: find address of job in address book -> 0 jobs found */
-//        command = JobFindCommand.COMMAND_WORD + " p/" + DANIEL.getAddress().value;
-//        assertCommandSuccess(command, expectedModel);
-//        assertSelectedCardUnchanged();
-//
-//        /* Case: find email of job in address book -> 0 jobs found */
-//        command = JobFindCommand.COMMAND_WORD + " p/" + DANIEL.getEmail().value;
-//        assertCommandSuccess(command, expectedModel);
-//        assertSelectedCardUnchanged();
-//
-//        /* Case: find skills of job in address book -> 0 jobs found */
-//        List<Skill> skills = new ArrayList<>(DANIEL.getSkills());
-//        command = JobFindCommand.COMMAND_WORD + " p/" + skills.get(0).skillName;
-//        assertCommandSuccess(command, expectedModel);
-//        assertSelectedCardUnchanged();
-//
-//        /* Case: find while a job is selected -> selected card deselected */
-//        showAllJobs();
-//        selectJob(Index.fromOneBased(1));
-//        assertFalse(getJobListPanel().getHandleToSelectedCard().getName().equals(DANIEL.getName().fullName));
-//        command = JobFindCommand.COMMAND_WORD + " p/Daniel";
-//        ModelHelper.setFilteredJobList(expectedModel, DANIEL);
-//        assertCommandSuccess(command, expectedModel);
-//        assertSelectedCardDeselected();
-//
-//        /* Case: find job in empty address book -> 0 jobs found */
-//        deleteAllJobs();
-//        command = JobFindCommand.COMMAND_WORD + " p/" + KEYWORD_MATCHING_ENGINEER;
-//        expectedModel = getModel();
-//        ModelHelper.setFilteredJobList(expectedModel, DANIEL);
-//        assertCommandSuccess(command, expectedModel);
-//        assertSelectedCardUnchanged();
-//
-//        /* Case: mixed case command word -> rejected */
-//        command = "FiNd p/Meier";
-//        assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
+        /* Case: find multiple jobs in address book, 2 keywords in reversed order -> 2 jobs found */
+        command = JobFindCommand.COMMAND_WORD + " p/Manager Intern";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple jobs in address book, 2 keywords with 1 repeat -> 2 jobs found */
+        command = JobFindCommand.COMMAND_WORD + " p/Manager Intern Manager";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple jobs in address book, 2 matching keywords and 1 non-matching keyword
+         * -> 2 jobs found
+         */
+        command = JobFindCommand.COMMAND_WORD + " p/Manager Intern NonMatchingKeyWord";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find job in address book, keyword is same as position but of different case -> 1 job found */
+        command = JobFindCommand.COMMAND_WORD + " p/EnGINeeR";
+        ModelHelper.setFilteredJobList(expectedModel, DEVOPS_ENGINEER);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find job in address book, keyword is substring of position -> 0 jobs found */
+        command = JobFindCommand.COMMAND_WORD + " p/Engin";
+        ModelHelper.setFilteredJobList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find job in address book, position is substring of keyword -> 0 jobs found */
+        command = JobFindCommand.COMMAND_WORD + " p/Engineers";
+        ModelHelper.setFilteredJobList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find job not in address book -> 0 jobs found */
+        command = JobFindCommand.COMMAND_WORD + " p/Analyst";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find job in empty address book -> 0 jobs found */
+        deleteAllPersonsAndJobs();
+        command = JobFindCommand.COMMAND_WORD + " p/" + KEYWORD_MATCHING_POSITION_ENGINEER;
+        expectedModel = getModel();
+        ModelHelper.setFilteredJobList(expectedModel, SOFTWARE_ENGINEER);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: mixed case command word -> rejected */
+        command = "FiNdjOB p/eNGIneeR";
+        assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
+    }
+
+    @Test
+    public void findByLocation() {
+        /* Case: find multiple jobs in address book, command with leading spaces and trailing spaces
+         * -> 2 jobs found
+         */
+        String command = "   " + JobFindCommand.COMMAND_WORD + " l/" + KEYWORD_MATCHING_LOCATION_SINGAPORE + "   ";
+        Model expectedModel = getModel();
+        ModelHelper.setFilteredJobList(expectedModel, SOFTWARE_ENGINEER, DEVOPS_ENGINEER); // position contains Engineer
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: repeat previous find command where job list is displaying the jobs we are finding
+         * -> 2 jobs found
+         */
+        command = JobFindCommand.COMMAND_WORD + " l/" + KEYWORD_MATCHING_LOCATION_SINGAPORE;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find same jobs in address book after deleting 1 of them -> 1 job found */
+        executeCommand(JobDeleteCommand.COMMAND_WORD + " 1");
+        assertFalse(getModel().getAddressBook().getJobList().contains(SOFTWARE_ENGINEER));
+        command = JobFindCommand.COMMAND_WORD + " l/" + KEYWORD_MATCHING_LOCATION_SINGAPORE;
+        expectedModel = getModel();
+        ModelHelper.setFilteredJobList(expectedModel, DEVOPS_ENGINEER);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find job where job list is not displaying the job we are finding -> 1 job found */
+        command = JobFindCommand.COMMAND_WORD + " l/India";
+        ModelHelper.setFilteredJobList(expectedModel, PRODUCT_MANAGER);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple jobs in address book, 2 keywords -> 2 jobs found */
+        command = JobFindCommand.COMMAND_WORD + " l/Malaysia India";
+        ModelHelper.setFilteredJobList(expectedModel, MARKETING_INTERN, PRODUCT_MANAGER);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple jobs in address book, 2 keywords in reversed order -> 2 jobs found */
+        command = JobFindCommand.COMMAND_WORD + " l/India Malaysia";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple jobs in address book, 2 keywords with 1 repeat -> 2 jobs found */
+        command = JobFindCommand.COMMAND_WORD + " l/India Malaysia India";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple jobs in address book, 2 matching keywords and 1 non-matching keyword
+         * -> 2 jobs found
+         */
+        command = JobFindCommand.COMMAND_WORD + " l/India Malaysia NonMatchingKeyWord";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find job in address book, keyword is same as location but of different case -> 1 job found */
+        command = JobFindCommand.COMMAND_WORD + " l/SinGAPoRe";
+        ModelHelper.setFilteredJobList(expectedModel, DEVOPS_ENGINEER);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find job in address book, keyword is substring of location -> 0 jobs found */
+        command = JobFindCommand.COMMAND_WORD + " l/Singa";
+        ModelHelper.setFilteredJobList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find job in address book, location is substring of keyword -> 0 jobs found */
+        command = JobFindCommand.COMMAND_WORD + " l/Singaporecity";
+        ModelHelper.setFilteredJobList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find job not in address book -> 0 jobs found */
+        command = JobFindCommand.COMMAND_WORD + " l/Vietnam";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find job in empty address book -> 0 jobs found */
+        deleteAllPersonsAndJobs();
+        command = JobFindCommand.COMMAND_WORD + " l/" + KEYWORD_MATCHING_LOCATION_SINGAPORE;
+        expectedModel = getModel();
+        ModelHelper.setFilteredJobList(expectedModel, SOFTWARE_ENGINEER);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: mixed case command word -> rejected */
+        command = "FiNdjOB l/SingaporE";
+        assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
+    }
+
+    @Test
+    public void findBySkill() {
+        /* Case: find multiple jobs in address book, command with leading spaces and trailing spaces
+         * -> 2 jobs found
+         */
+        String command = "   " + JobFindCommand.COMMAND_WORD + " s/" + KEYWORD_MATCHING_SKILL_JAVA + "   ";
+        Model expectedModel = getModel();
+        ModelHelper.setFilteredJobList(expectedModel, SOFTWARE_ENGINEER); // position contains Engineer"
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: repeat previous find command where job list is displaying the jobs we are finding
+         * -> 2 jobs found
+         */
+        command = JobFindCommand.COMMAND_WORD + " s/" + KEYWORD_MATCHING_SKILL_JAVA;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find same jobs in address book after deleting 1 of them -> 1 job found */
+        executeCommand(JobDeleteCommand.COMMAND_WORD + " 1");
+        assertFalse(getModel().getAddressBook().getJobList().contains(SOFTWARE_ENGINEER));
+        command = JobFindCommand.COMMAND_WORD + " s/" + KEYWORD_MATCHING_SKILL_JAVA;
+        expectedModel = getModel();
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find job where job list is not displaying the job we are finding -> 1 job found */
+        command = JobFindCommand.COMMAND_WORD + " s/Testing";
+        ModelHelper.setFilteredJobList(expectedModel, PRODUCT_MANAGER);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple jobs in address book, 2 keywords -> 2 jobs found */
+        command = JobFindCommand.COMMAND_WORD + " s/Excel Testing";
+        ModelHelper.setFilteredJobList(expectedModel, MARKETING_INTERN, PRODUCT_MANAGER);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple jobs in address book, 2 keywords in reversed order -> 2 jobs found */
+        command = JobFindCommand.COMMAND_WORD + " s/Testing Excel";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple jobs in address book, 2 keywords with 1 repeat -> 2 jobs found */
+        command = JobFindCommand.COMMAND_WORD + " s/Excel Testing Excel";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple jobs in address book, 2 matching keywords and 1 non-matching keyword
+         * -> 2 jobs found
+         */
+        command = JobFindCommand.COMMAND_WORD + " s/Excel Testing NonMatchingKeyWord";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find job in address book, keyword is same as location but of different case -> 1 job found */
+        command = JobFindCommand.COMMAND_WORD + " s/ExCEl";
+        ModelHelper.setFilteredJobList(expectedModel, MARKETING_INTERN);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find job in address book, keyword is substring of location -> 0 jobs found */
+        command = JobFindCommand.COMMAND_WORD + " s/Exc";
+        ModelHelper.setFilteredJobList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find job in address book, location is substring of keyword -> 0 jobs found */
+        command = JobFindCommand.COMMAND_WORD + " s/Excels";
+        ModelHelper.setFilteredJobList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find job not in address book -> 0 jobs found */
+        command = JobFindCommand.COMMAND_WORD + " s/C++";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find job in empty address book -> 0 jobs found */
+        deleteAllPersonsAndJobs();
+        command = JobFindCommand.COMMAND_WORD + " s/" + KEYWORD_MATCHING_SKILL_JAVA;
+        expectedModel = getModel();
+        ModelHelper.setFilteredJobList(expectedModel, SOFTWARE_ENGINEER);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: mixed case command word -> rejected */
+        command = "FiNdjOB s/JaVA";
+        assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
 
     /**

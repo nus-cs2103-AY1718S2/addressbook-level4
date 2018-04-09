@@ -3,8 +3,6 @@ package seedu.address.ui;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import javax.mail.MessagingException;
-
 import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
@@ -72,13 +70,14 @@ public class EmailPanel extends UiPart<Region> {
             GmailClient client = GmailClient.getInstance();
             client.sendEmail(gmailMessage.getEmailContent());
 
-            showAlertDialogAndWait("Success", "Email has been sent successfully!");
+            showAlertDialogAndWait("Email sent", "Email has been sent successfully!");
 
             clearAllFields();
 
-        } catch (MessagingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            showAlertDialogAndWait("Error", "Email was not sent. Please try again.");
+            showAlertDialogAndWait("Email not sent",
+                    "Please ensure you are connected to the internet and has logged into google");
         }
 
     }

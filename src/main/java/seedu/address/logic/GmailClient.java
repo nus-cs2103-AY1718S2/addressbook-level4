@@ -6,10 +6,12 @@ import java.io.IOException;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.util.Base64;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Message;
+
+import seedu.address.logic.commands.exceptions.GoogleAuthenticationException;
 //@@author KevinCJH
 /**
  * Creates an authorized Gmail client for all services that uses Gmail API.
@@ -21,10 +23,12 @@ public class GmailClient {
     private static GmailClient instance = null;
     private static Gmail service;
 
+    private static final GoogleAuthentication googleAuthentication = new GoogleAuthentication();
+
     private GmailClient() {
         try {
             service = createGmailClientService();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -41,10 +45,11 @@ public class GmailClient {
      * @return an authorized Gmail client service
      * @throws IOException
      */
-    public static Gmail createGmailClientService() throws IOException {
-        Credential credential = GmailAuthentication.authorize();
-        return new Gmail.Builder(GmailAuthentication.getHttpTransport(),
-                GmailAuthentication.getJsonFactory(), credential)
+    public static Gmail createGmailClientService() throws IOException, GoogleAuthenticationException {
+        String token = googleAuthentication.getToken();
+        GoogleCredential credential = googleAuthentication.getCredential(token);
+        return new Gmail.Builder(googleAuthentication.getHttpTransport(),
+                googleAuthentication.getJsonFactory(), credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }

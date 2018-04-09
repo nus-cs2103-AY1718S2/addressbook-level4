@@ -31,10 +31,5 @@ public class AddPatientQueueCommandParser implements Parser<AddPatientQueueComma
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddPatientQueueCommand.MESSAGE_USAGE));
         }
-
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                   String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPatientQueueCommand.MESSAGE_USAGE));
-        }
     }
 }

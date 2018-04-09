@@ -56,7 +56,7 @@ public interface Model {
 
     /** Adds patient into visiting queue
      * @throws NullPointerException if {@code Patient} is null.*/
-    Patient addPatientToQueue(NameContainsKeywordsPredicate predicate) throws DuplicatePatientException,
+    Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException,
             PatientNotFoundException;
 
     /** Remove a patient from the visiting queue*/

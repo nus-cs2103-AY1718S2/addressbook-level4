@@ -19,7 +19,6 @@ import seedu.address.commons.events.ui.ShowCalendarViewRequestEvent;
 import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.appointment.UniqueAppointmentEntryList;
 import seedu.address.model.appointment.UniqueAppointmentList;
-import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -143,19 +142,6 @@ public class ModelManager extends ComponentManager implements Model {
         return null;
     }
 
-    private int getPatientIndex(Predicate<Patient> predicate) throws PatientNotFoundException {
-
-        filteredPatients.setPredicate(predicate);
-        int patientIndex;
-        if (filteredPatients.size() > 0) {
-            patientIndex = filteredPatients.getSourceIndex(0);
-            updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            return patientIndex;
-        }
-
-        throw new PatientNotFoundException();
-    }
-
     @Override
     public synchronized boolean deletePatientAppointment(Patient patient, Index index) {
         requireAllNonNull(patient, index);
@@ -184,14 +170,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized Patient addPatientToQueue(NameContainsKeywordsPredicate predicate) throws
-            DuplicatePatientException, PatientNotFoundException {
-        requireNonNull(predicate);
-        int patientIndex = getPatientIndex(predicate);
+    public synchronized Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException {
+        requireNonNull(targetIndex);
+        int patientIndex = filteredPatients.getSourceIndex(targetIndex.getZeroBased());
         imdb.addPatientToQueue(patientIndex);
         indicateQueueChanged();
 
-        return filteredPatients.get(patientIndex);
+        return filteredPatients.get(targetIndex.getZeroBased());
     }
 
     @Override

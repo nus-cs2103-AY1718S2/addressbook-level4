@@ -88,4 +88,31 @@ public class TimetableDay {
         }
         return timetable;
     }
+
+    /**
+     * Returns the unified Timetable
+     * @return ArrayList with the Time Table
+     */
+    public static ArrayList<String> unionTimetableDay(ArrayList<TimetableDay> timetables) {
+        ArrayList<String> commonTimetable = new ArrayList<>();
+        boolean checker;
+
+        for (int i = 8; i < 22; i++) {
+            checker = false;
+            for (TimetableDay timetable : timetables) {
+                TimetableSlot t = timetable.timetableSlots[i];
+                if (t.toString() != "") {
+                   checker = true;
+                   break;
+                }
+            }
+
+            if (checker) {
+                commonTimetable.add("Occupied");
+            } else {
+                commonTimetable.add("");
+            }
+        }
+        return commonTimetable;
+    }
 }

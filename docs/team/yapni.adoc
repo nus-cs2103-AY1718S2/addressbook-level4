@@ -28,7 +28,7 @@ This project is based on the https://github.com/se-edu/addressbook-level4[Addres
 *** Tutors are able to delete milestone and delete task.
 
 ** Justification: Besides managing their student contacts, tutors will also need to manage the learning progress of their students so that they can tutor them better. If they have a large number of students they tutor,
-it is hard to keep track of what needs to be done for each of them. Hence, this feature not only allows tutors to manage both their student contacts and student progress all in one place, it also provide them ease in documenting
+it is hard to keep track of what needs to be done for each of them. Hence, this feature not only allows tutors to manage both their student contacts and student progress all in one place, it also provides them ease in documenting
 and tracking their students' learning development.
 
 * *Minor enhancement*: added a *favourites* feature

@@ -2,6 +2,7 @@ package seedu.recipe.ui;
 
 import java.awt.Desktop;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -70,8 +71,13 @@ public class BrowserPanel extends UiPart<Region> {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
 
+    public void loadContent(String content) {
+        Platform.runLater(() -> browser.getEngine().loadContent(content));
+    }
+
     /**
      * Loads a website on the user's external default browser based on the
+     *
      * @param url provided, if it is valid.
      */
     public void loadPageExternalBrowser(String url) {
@@ -88,27 +94,54 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     //@@author RyanAngJY
+
     /**
      * Loads the text recipe onto the browser
      */
     private void loadLocalRecipe(Recipe recipe) {
         browser.getEngine().loadContent(HtmlFormatter.getHtmlFormat(recipe));
     }
-    //@@author
+
+    //@@author kokonguyen191
 
     /**
      * Loads a default HTML file with a background that matches the general theme.
+     *
      * @param isDarkTheme true if the app is using dark theme
      */
     public void loadDefaultPage(boolean isDarkTheme) {
-        URL defaultPage;
-        if (isDarkTheme) {
-            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_DARK);
-        } else {
-            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_LIGHT);
+        if (!isLoaded()) {
+            URL defaultPage;
+            if (isDarkTheme) {
+                defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_DARK);
+            } else {
+                defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_LIGHT);
+            }
+            loadPage(defaultPage.toExternalForm());
         }
-        loadPage(defaultPage.toExternalForm());
     }
+
+    /**
+     * Returns true if BrowserPanel is loaded with a page that is neither null nor default
+     */
+    private boolean isLoaded() {
+        URL lightTheme = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_LIGHT);
+        URL darkTheme = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_DARK);
+
+        String loadedUrlString = browser.getEngine().getLocation();
+        if (loadedUrlString == null) {
+            return false;
+        } else {
+            URL loadedUrl = null;
+            try {
+                loadedUrl = new URL(loadedUrlString);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            return !(loadedUrl.equals(lightTheme) || loadedUrl.equals(darkTheme));
+        }
+    }
+    //@@author
 
     /**
      * Frees resources allocated to the browser.

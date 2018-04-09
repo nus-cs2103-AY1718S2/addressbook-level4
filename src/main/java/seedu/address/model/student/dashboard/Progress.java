@@ -65,7 +65,7 @@ public class Progress {
      * Returns if a given Progress attributes are valid
      */
     public static boolean isValidProgress(int totalTasks, int numCompletedTasks) {
-        return totalTasks >= numCompletedTasks;
+        return totalTasks >= 0 && numCompletedTasks >= 0 && totalTasks >= numCompletedTasks;
     }
 
     /**

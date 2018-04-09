@@ -24,8 +24,8 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         /* Case: select the first card in the student list, command with leading spaces and trailing spaces
          * -> selected
          */
-        String command = "   " + SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_STUDENT.getOneBased() + "   ";
-        assertCommandSuccess(command, INDEX_FIRST_STUDENT);
+        String command = "   " + SelectCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased() + "   ";
+        assertCommandSuccess(command, INDEX_FIRST);
 
         /* Case: select the last card in the student list -> selected */
         Index studentCount = Index.fromOneBased(getTypicalStudents().size());

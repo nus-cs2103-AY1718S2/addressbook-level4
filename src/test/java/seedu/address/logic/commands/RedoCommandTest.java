@@ -4,8 +4,8 @@ import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstStudent;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_STUDENT;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_STUDENT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalStudents.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -26,8 +26,8 @@ public class RedoCommandTest {
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
 
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new Schedule());
-    private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_STUDENT);
-    private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_SECOND_STUDENT);
+    private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST);
+    private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_SECOND);
 
     @Before
     public void setUp() throws Exception {

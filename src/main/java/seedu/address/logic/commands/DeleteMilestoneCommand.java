@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_MILESTONE_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_INDEXES;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MILESTONE_INDEX;
@@ -11,9 +10,9 @@ import java.util.List;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.util.CheckIndexesUtil;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.dashboard.Milestone;
-import seedu.address.model.student.dashboard.UniqueMilestoneList;
 import seedu.address.model.student.dashboard.exceptions.MilestoneNotFoundException;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
@@ -37,17 +36,17 @@ public class DeleteMilestoneCommand extends UndoableCommand {
 
     public static final String MESSAGE_DELETE_MILESTONE_SUCCESS = "Deleted milestone: %1$s";
 
-    private final Index studentIndex;
-    private final Index milestoneIndex;
+    private final Index targetStudentIndex;
+    private final Index targetMilestoneIndex;
 
     private Student targetStudent;
     private Student editedStudent;
     private Milestone targetMilestone;
 
-    public DeleteMilestoneCommand(Index studentIndex, Index milestoneIndex) {
-        requireAllNonNull(studentIndex, milestoneIndex);
-        this.studentIndex = studentIndex;
-        this.milestoneIndex = milestoneIndex;
+    public DeleteMilestoneCommand(Index targetStudentIndex, Index targetMilestoneIndex) {
+        requireAllNonNull(targetStudentIndex, targetMilestoneIndex);
+        this.targetStudentIndex = targetStudentIndex;
+        this.targetMilestoneIndex = targetMilestoneIndex;
     }
 
     @Override
@@ -70,7 +69,7 @@ public class DeleteMilestoneCommand extends UndoableCommand {
     protected void preprocessUndoableCommand() throws CommandException {
         try {
             setTargetObjects();
-            editedStudent = createEditedStudent(targetStudent, targetMilestone);
+            createEditedStudent();
         } catch (MilestoneNotFoundException e) {
             throw new AssertionError("Milestone cannot be missing");
         } catch (IllegalValueException e) {
@@ -79,43 +78,35 @@ public class DeleteMilestoneCommand extends UndoableCommand {
     }
 
     /**
-     * Creates and return a copy of {@code Student} with the specified {@code milestone} removed from the dashboard
+     * Creates {@code editedStudent} which is a copy of {@code targetStudent}, but with the {@code targetMilestone}
+     * removed from the {@code dashboard}.
      */
-    private Student createEditedStudent(Student targetStudent, Milestone milestoneToDelete)
-            throws MilestoneNotFoundException {
-        requireAllNonNull(targetStudent, milestoneToDelete);
-
-        return new StudentBuilder(targetStudent).withoutMilestone(milestoneToDelete).build();
+    private void createEditedStudent() throws MilestoneNotFoundException {
+        assert targetStudent != null && targetMilestone != null;
+        editedStudent = new StudentBuilder(targetStudent).withoutMilestone(targetMilestone).build();
     }
 
     /**
      * Sets the {@code targetStudent} and {@code targetMilestone} objects
-     * @throws IllegalValueException if any of the studentIndex or milestoneIndex are invalid
+     * @throws IllegalValueException if any of the targetStudentIndex or targetMilestoneIndex are invalid
      */
     private void setTargetObjects() throws IllegalValueException {
-        requireAllNonNull(studentIndex, milestoneIndex);
+        assert targetStudentIndex != null && targetMilestoneIndex != null;
 
-        List<Student> lastShownList  = model.getFilteredStudentList();
-
-        if (studentIndex.getZeroBased() >=  lastShownList.size() || studentIndex.getZeroBased() < 0) {
-            throw new IllegalValueException(MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+        List<Student> lastShownList = model.getFilteredStudentList();
+        if (!CheckIndexesUtil.areIndexesValid(lastShownList, targetStudentIndex, targetMilestoneIndex)) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEXES);
         }
 
-        targetStudent = lastShownList.get(studentIndex.getZeroBased());
-        UniqueMilestoneList milestoneList = targetStudent.getDashboard().getMilestoneList();
-
-        if (milestoneIndex.getZeroBased() >= milestoneList.size() || milestoneIndex.getZeroBased() < 0) {
-            throw new IllegalValueException(MESSAGE_INVALID_MILESTONE_DISPLAYED_INDEX);
-        }
-
-        targetMilestone = milestoneList.get(milestoneIndex);
+        targetStudent = lastShownList.get(targetStudentIndex.getZeroBased());
+        targetMilestone = targetStudent.getDashboard().getMilestoneList().get(targetMilestoneIndex);
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeleteMilestoneCommand // instanceof handles null
-                && ((DeleteMilestoneCommand) other).studentIndex == this.studentIndex
-                && ((DeleteMilestoneCommand) other).milestoneIndex == this.milestoneIndex);
+                && ((DeleteMilestoneCommand) other).targetStudentIndex == this.targetStudentIndex
+                && ((DeleteMilestoneCommand) other).targetMilestoneIndex == this.targetMilestoneIndex);
     }
 }

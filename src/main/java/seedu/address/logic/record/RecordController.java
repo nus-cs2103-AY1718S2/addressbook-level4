@@ -9,6 +9,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import seedu.address.model.patient.DateOfBirth;
 import seedu.address.model.patient.Record;
 
 /**
@@ -49,7 +50,11 @@ public class RecordController {
                 messageText.setText("Success! Please close this window.");
                 closeButtonAction();
             } else {
-                messageText.setText("Invalid entries!");
+                if(!DateOfBirth.isValidDob(date)) {
+                    messageText.setText("Date should only contain digits and slashes, and it should not be blank");
+                } else {
+                    messageText.setText("Text field should only contain alphanumeric characters and spaces, and it should not be blank");
+                }
             }
         }
     }

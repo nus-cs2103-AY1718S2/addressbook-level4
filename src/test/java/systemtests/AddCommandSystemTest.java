@@ -151,7 +151,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
 
         /* Case: add to empty address book -> added */
-        deleteAllPersons();
+        deleteAllPersonsAndJobs();
         assertCommandSuccess(ALICE);
 
         /* Case: add a person with tags, command with parameters in random order -> added */

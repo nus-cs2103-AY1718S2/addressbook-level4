@@ -28,6 +28,7 @@ import seedu.address.logic.commands.appointment.YearCommand;
 import seedu.address.logic.commands.job.JobAddCommand;
 import seedu.address.logic.commands.job.JobDeleteCommand;
 import seedu.address.logic.commands.job.JobEditCommand;
+import seedu.address.logic.commands.job.JobFindCommand;
 import seedu.address.logic.commands.job.JobMatchCommand;
 import seedu.address.logic.commands.person.AddCommand;
 import seedu.address.logic.commands.person.ClearCommand;
@@ -47,7 +48,11 @@ import seedu.address.logic.parser.appointment.YearCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.job.JobAddCommandParser;
 import seedu.address.logic.parser.job.JobDeleteCommandParser;
+<<<<<<< HEAD
 import seedu.address.logic.parser.job.JobEditCommandParser;
+=======
+import seedu.address.logic.parser.job.JobFindCommandParser;
+>>>>>>> 38a97653784f711ca1750d809840fe8eae81c704
 import seedu.address.logic.parser.job.JobMatchCommandParser;
 import seedu.address.logic.parser.person.AddCommandParser;
 import seedu.address.logic.parser.person.DeleteCommandParser;
@@ -152,6 +157,9 @@ public class AddressBookParser {
 
         case JobDeleteCommand.COMMAND_WORD:
             return new JobDeleteCommandParser().parse(arguments);
+
+        case JobFindCommand.COMMAND_WORD:
+            return new JobFindCommandParser().parse(arguments);
 
         case AddAppointmentCommand.COMMAND_WORD:
             return new AddAppointmentCommandParser().parse(arguments);

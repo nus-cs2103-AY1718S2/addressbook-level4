@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import javax.activation.MimetypesFileTypeMap;
-
 /**
  * Writes and reads files
  */
@@ -31,8 +29,7 @@ public class FileUtil {
         if (!isFileExists(file) || file.isDirectory()) {
             return false;
         } else {
-            String mimeType = new MimetypesFileTypeMap().getContentType(file);
-            return mimeType.substring(0, 5).equalsIgnoreCase(TYPE_IMAGE);
+            return true;
         }
     }
     //@@author

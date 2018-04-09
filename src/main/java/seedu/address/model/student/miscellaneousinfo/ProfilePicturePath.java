@@ -6,6 +6,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+//@@author samuel
 /**
  * Represents a Student's profile picture's pathname in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidPath(String)}
@@ -70,3 +71,4 @@ public class ProfilePicturePath {
         return profilePicturePath.toString();
     }
 }
+//@@author

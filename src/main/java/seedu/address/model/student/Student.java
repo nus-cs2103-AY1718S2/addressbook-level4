@@ -8,6 +8,7 @@ import java.util.Set;
 
 import seedu.address.model.programminglanguage.ProgrammingLanguage;
 import seedu.address.model.student.dashboard.Dashboard;
+import seedu.address.model.student.miscellaneousinfo.MiscellaneousInfo;
 import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -28,9 +29,11 @@ public class Student {
     private UniqueKey uniqueKey;
     private final UniqueTagList tags;
     private ProfilePicturePath profilePicturePath;
+    private MiscellaneousInfo miscellaneousInfo;
 
     /**
-     * Every field must be present and not null. For when dashboard, favourite and profilePicturePath is not initialised
+     * Every field must be present and not null. For when dashboard, favourite, profilePicturePath and miscellaneous
+     * info is not initialised
      */
     public Student(Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
                    Set<Tag> tags) {
@@ -45,13 +48,15 @@ public class Student {
         this.favourite = new Favourite(false); // Default value
         this.dashboard = new Dashboard();
         this.profilePicturePath = new ProfilePicturePath(ProfilePicturePath.DEFAULT_PROFILE_PICTURE);
+        this.miscellaneousInfo = new MiscellaneousInfo();
     }
 
     /**
      * Every field must be present and not null. For when dashboard is not initialised
      */
     public Student(Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
-                   Set<Tag> tags, Favourite fav, ProfilePicturePath profilePicturePath) {
+                   Set<Tag> tags, Favourite fav, ProfilePicturePath profilePicturePath,
+                   MiscellaneousInfo miscellaneousInfo) {
         requireAllNonNull(name, phone, email, address, tags, fav);
         this.name = name;
         this.phone = phone;
@@ -63,13 +68,14 @@ public class Student {
         this.favourite = fav;
         this.dashboard = new Dashboard();
         this.profilePicturePath = profilePicturePath;
+        this.miscellaneousInfo = miscellaneousInfo;
     }
 
     /**
      *Every field must be present and not null. For when {@code profilePicturePath} is not initialised.
      */
     public Student(Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
-                   Set<Tag> tags, Favourite fav, Dashboard dashboard) {
+                   Set<Tag> tags, Favourite fav, Dashboard dashboard, MiscellaneousInfo miscellaneousInfo) {
         requireAllNonNull(name, phone, email, address, tags, fav);
         this.name = name;
         this.phone = phone;
@@ -81,6 +87,27 @@ public class Student {
         this.favourite = fav;
         this.dashboard = dashboard;
         this.profilePicturePath = new ProfilePicturePath(ProfilePicturePath.DEFAULT_PROFILE_PICTURE);
+        this.miscellaneousInfo = miscellaneousInfo;
+    }
+
+    /**
+     * Every field must be present and not null. For when {@code miscellaneousInfo} is not initialised.
+     */
+    public Student(Name name, Phone phone, Email email,
+                   Address address, ProgrammingLanguage programmingLanguage, Set<Tag> tags, Favourite fav,
+                   Dashboard dashboard, ProfilePicturePath profilePicturePath) {
+        requireAllNonNull(name, phone, email, address, tags, fav);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.programmingLanguage = programmingLanguage;
+        this.tags = new UniqueTagList(tags);
+        this.favourite = fav;
+        this.dashboard = dashboard;
+        this.profilePicturePath = profilePicturePath;
+        this.miscellaneousInfo = new MiscellaneousInfo();
     }
 
 
@@ -90,7 +117,7 @@ public class Student {
      */
     public Student(Name name, Phone phone, Email email, Address address, ProgrammingLanguage programmingLanguage,
                    Set<Tag> tags, Favourite fav, Dashboard dashboard,
-                   ProfilePicturePath profilePicturePath) {
+                   ProfilePicturePath profilePicturePath, MiscellaneousInfo miscellaneousInfo) {
         requireAllNonNull(name, phone, email, address, tags, fav);
         this.name = name;
         this.phone = phone;
@@ -102,6 +129,7 @@ public class Student {
         this.favourite = fav;
         this.dashboard = dashboard;
         this.profilePicturePath = profilePicturePath;
+        this.miscellaneousInfo = miscellaneousInfo;
     }
 
     /**
@@ -111,7 +139,8 @@ public class Student {
      * Every field must be present and not null. For when dashboard and favourite is not initialised
      */
     public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email, Address address,
-                   ProgrammingLanguage programmingLanguage, Set<Tag> tags, ProfilePicturePath profilePicturePath) {
+                   ProgrammingLanguage programmingLanguage, Set<Tag> tags, ProfilePicturePath profilePicturePath,
+                   MiscellaneousInfo miscellaneousInfo) {
         requireAllNonNull(uniqueKey, name, phone, email, address, tags);
         this.uniqueKey = uniqueKey;
         this.name = name;
@@ -124,14 +153,17 @@ public class Student {
         this.favourite = new Favourite(false); // Default value
         this.dashboard = new Dashboard();
         this.profilePicturePath = profilePicturePath;
+        this.miscellaneousInfo = miscellaneousInfo;
     }
+
+
 
     /**
      * Every field must be present and not null. For when dashboard, favourite and profilePicturePath
      * is not initialised
      */
     public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email, Address address,
-                   ProgrammingLanguage programmingLanguage, Set<Tag> tags) {
+                   ProgrammingLanguage programmingLanguage, Set<Tag> tags, MiscellaneousInfo miscellaneousInfo){
         requireAllNonNull(uniqueKey, name, phone, email, address, tags);
         this.uniqueKey = uniqueKey;
         this.name = name;
@@ -144,6 +176,7 @@ public class Student {
         this.favourite = new Favourite(false); // Default value
         this.dashboard = new Dashboard();
         this.profilePicturePath = new ProfilePicturePath(ProfilePicturePath.DEFAULT_PROFILE_PICTURE);
+        this.miscellaneousInfo = miscellaneousInfo;
     }
 
     /**
@@ -151,7 +184,8 @@ public class Student {
      * is not initialised
      */
     public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email, Address address,
-                   ProgrammingLanguage programmingLanguage, Set<Tag> tags, Favourite fav) {
+                   ProgrammingLanguage programmingLanguage, Set<Tag> tags, Favourite fav,
+                   MiscellaneousInfo miscellaneousInfo) {
         requireAllNonNull(uniqueKey, name, phone, email, address, tags);
         this.uniqueKey = uniqueKey;
         this.name = name;
@@ -164,6 +198,7 @@ public class Student {
         this.favourite = fav;
         this.dashboard = new Dashboard();
         this.profilePicturePath = new ProfilePicturePath(ProfilePicturePath.DEFAULT_PROFILE_PICTURE);
+        this.miscellaneousInfo = miscellaneousInfo;
     }
 
     /**
@@ -171,7 +206,7 @@ public class Student {
      */
     public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email, Address address,
                    ProgrammingLanguage programmingLanguage, Set<Tag> tags,
-                   ProfilePicturePath profilePicturePath, Favourite fav) {
+                   ProfilePicturePath profilePicturePath, Favourite fav, MiscellaneousInfo miscellaneousInfo) {
         requireAllNonNull(uniqueKey, name, phone, email, address, tags, fav);
         this.uniqueKey = uniqueKey;
         this.name = name;
@@ -184,15 +219,16 @@ public class Student {
         this.favourite = fav;
         this.dashboard = new Dashboard();
         this.profilePicturePath = profilePicturePath;
+        this.miscellaneousInfo = miscellaneousInfo;
     }
 
-    /** TODO RequireNonNull for uniquekey
+    /**
      * Every field must be present and not null. For when all attributes can be passed in as parameters
      */
     public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email,
                    Address address, ProgrammingLanguage programmingLanguage, Set<Tag> tags, Favourite fav,
-                   Dashboard dashboard, ProfilePicturePath profilePicturePath) {
-        requireAllNonNull(name, phone, email, address, tags, fav);
+                   Dashboard dashboard, ProfilePicturePath profilePicturePath, MiscellaneousInfo miscellaneousInfo) {
+        requireAllNonNull(uniqueKey, name, phone, email, address, tags, fav);
         this.uniqueKey = uniqueKey;
         this.name = name;
         this.phone = phone;
@@ -204,6 +240,7 @@ public class Student {
         this.favourite = fav;
         this.dashboard = dashboard;
         this.profilePicturePath = profilePicturePath;
+        this.miscellaneousInfo = miscellaneousInfo;
     }
 
     /**
@@ -211,7 +248,7 @@ public class Student {
      */
     public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email, Address address,
                    ProgrammingLanguage programmingLanguage,
-                   Set<Tag> tags, Favourite fav, Dashboard dashboard) {
+                   Set<Tag> tags, Favourite fav, Dashboard dashboard, MiscellaneousInfo miscellaneousInfo) {
         requireAllNonNull(uniqueKey, name, phone, email, address, tags, fav);
         this.uniqueKey = uniqueKey;
         this.name = name;
@@ -224,6 +261,28 @@ public class Student {
         this.favourite = fav;
         this.dashboard = dashboard;
         this.profilePicturePath = new ProfilePicturePath(ProfilePicturePath.DEFAULT_PROFILE_PICTURE);
+        this.miscellaneousInfo = miscellaneousInfo;
+    }
+
+    /**
+     * Every field must be present and not null. For when {@code miscellaneousInfo} is not initialised.
+     */
+    public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email,
+                   Address address, ProgrammingLanguage programmingLanguage, Set<Tag> tags, Favourite fav,
+                   Dashboard dashboard, ProfilePicturePath profilePicturePath) {
+        requireAllNonNull(uniqueKey, name, phone, email, address, tags, fav);
+        this.uniqueKey = uniqueKey;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.programmingLanguage = programmingLanguage;
+        this.tags = new UniqueTagList(tags);
+        this.favourite = fav;
+        this.dashboard = dashboard;
+        this.profilePicturePath = profilePicturePath;
+        this.miscellaneousInfo = new MiscellaneousInfo();
     }
 
 
@@ -259,6 +318,9 @@ public class Student {
         return profilePicturePath;
     }
 
+    public MiscellaneousInfo getMiscellaneousInfo() {
+        return miscellaneousInfo;
+    }
 
     /**
      * Returns true if Student is in favourites, else returns false.
@@ -301,13 +363,16 @@ public class Student {
                 && otherStudent.getEmail().equals(this.getEmail())
                 && otherStudent.getAddress().equals(this.getAddress())
                 && otherStudent.getProgrammingLanguage().equals(this.getProgrammingLanguage())
-                && otherStudent.getDashboard().equals(this.getDashboard());
+                && otherStudent.getDashboard().equals(this.getDashboard())
+                && otherStudent.getProfilePicturePath().equals(this.getProfilePicturePath())
+                && otherStudent.getMiscellaneousInfo().equals(this.getMiscellaneousInfo());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, programmingLanguage, dashboard);
+        return Objects.hash(name, phone, email, address, tags, programmingLanguage, dashboard, profilePicturePath,
+                miscellaneousInfo);
     }
 
     @Override
@@ -326,8 +391,10 @@ public class Student {
         getTags().forEach(builder::append);
         builder.append(" Favourite: ")
                 .append(getFavourite())
-                .append(" ProfilePicturePath: ")
+                .append(" Profile Picture Path: ")
                 .append(getProfilePicturePath())
+                .append(" Miscellaneous Info: ")
+                .append(getMiscellaneousInfo())
                 .append(" Dashboard: ")
                 .append(getDashboard());
 
@@ -355,8 +422,10 @@ public class Student {
         getTags().forEach(builder::append);
         builder.append(" Favourite: ")
                 .append(getFavourite())
-                .append(" ProfilePicturePath: ")
+                .append(" Profile Picture Path: ")
                 .append(getProfilePicturePath())
+                .append(" Miscellaneous Info: ")
+                .append(getMiscellaneousInfo())
                 .append(" Dashboard: ")
                 .append(getDashboard());
         return builder.toString();

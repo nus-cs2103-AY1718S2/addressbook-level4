@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -21,6 +22,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.person.Cca;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 
@@ -84,12 +86,10 @@ public class ModelManager extends ComponentManager implements Model {
         String identityNumber = identityNumberClass.toString();
         htmlString = htmlString.replace("$identityNumber", identityNumber);
 
-        //ADD TAG
+        Set<Tag> tagList = person.getTags();
+        htmlString = htmlString.replace("Class not Included", tagList.toString());
 
-
-       String L1R5 = Integer.toString(person.calculateL1R5());
-       htmlString = htmlString.replace("No Result Information", L1R5);
-
+        //ADD L1R5
 
         List<Subject> subjectList = person.getSubjectArray();
         int listSize = subjectList.size();
@@ -101,8 +101,16 @@ public class ModelManager extends ComponentManager implements Model {
             htmlString = htmlString.replace("$grade" + iString, subjectList.get(i).gradeToString());
             i++;
         }
-        System.out.println("HIHI!!");
 
+        // ADD CCA
+        Cca ccaList = person.getCca();
+        String ccaString = ccaList.toString();
+        htmlString = htmlString.replace("CCA", ccaString);
+
+        // ADD REMARK
+
+        String remark = person.getRemark().toString();
+        htmlString = htmlString.replace("Remarks to facilitate teaching should be included here.", remark);
 
         String newPath = new File("src/main/resources/StudentPage/" + title + ".html").getAbsolutePath();
         File newHtmlFile = new File(newPath);

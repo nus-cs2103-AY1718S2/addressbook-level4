@@ -28,18 +28,23 @@ public class Person {
     private final UniqueTagList tags;
     private final UniqueSubjectList subjects;
     private final Remark remark;
+    private final Cca cca;
+    private final InjuriesHistory injuriesHistory;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Nric nric, Set<Tag> tags, Set<Subject> subjects, Remark remark) {
-        requireAllNonNull(name, nric, tags, subjects);
+    public Person(Name name, Nric nric, Set<Tag> tags, Set<Subject> subjects, Remark remark, Cca cca,
+                  InjuriesHistory injuriesHistory) {
+        requireAllNonNull(name, nric, tags, subjects, cca);
         this.name = name;
         this.nric = nric;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.subjects = new UniqueSubjectList(subjects);
         this.remark = remark;
+        this.cca = cca;
+        this.injuriesHistory = injuriesHistory;
     }
 
     public Name getName() {
@@ -52,6 +57,14 @@ public class Person {
 
     public Remark getRemark() {
         return remark;
+    }
+
+    public Cca getCca() {
+        return cca;
+    }
+
+    public InjuriesHistory getInjuriesHistory() {
+        return injuriesHistory;
     }
 
     /**
@@ -71,6 +84,7 @@ public class Person {
         list.addAll(set);
         return list;
     }
+
 
     //@@author TeyXinHui
     /**
@@ -374,7 +388,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, nric, tags, subjects, remark);
+        return Objects.hash(name, nric, tags, subjects, remark, cca, injuriesHistory);
     }
 
     @Override
@@ -389,6 +403,8 @@ public class Person {
         getSubjects().forEach(builder::append);
         builder.append(" Remarks: ")
                .append(getRemark());
+        builder.append(" Cca: ").append(getCca());
+        builder.append(" InjuriesHistory: ").append(getInjuriesHistory());
         return builder.toString();
     }
 

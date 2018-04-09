@@ -374,28 +374,29 @@ _{Explain here how the data encryption feature will be implemented}_
 
 To facilitate the favourite/unfavourite feature, an association with a new `Favourite` class is added to the `Student` class:
 
-image::StudentClassDiagram.png[width="800"]
+image::StudentClassDiagram.png[width="500"]
 
-Since the implementation of the favourite and unfavourite command are similar, we will talk about the implementation of the favourite command only.
+Since the implementation of the favourite and unfavourite command are similar, we will describe the implementation of the favourite command only.
 
-The logic part of the favourite command will be executed by the `FavouriteCommand` class.
+The following sequence diagram shows how the favourite command works:
+
+image::FavouriteCommandSequenceDiagram.png[width="800"]
+
+. The `FavouriteCommandParser` parses the user input to obtain the target student index and constructs a new `FavouriteCommand` with this index.
+. The logic portion of the favourite command will be executed by the `FavouriteCommand` class.
 To mark a `Student` object called "studentToFavourite" as favourite:
-
-* A Student object called "editedStudent" will be returned by `FavouriteCommand.createEditedStudent(Student)` to the `FavouriteCommand.preprocess()` method.
-`FavouriteCommand.createEditedStudent(Student)` is implemented as such:
-
+.. The `preprocessUndoableCommand()` method calls `setTargetStudent()` which will set the "studentToFavourite" object based on the provided student index.
+.. `preprocessUndoableCommand()` will then call the `createEditedStudent()` method which will create a `Student` object called "editedStudent". "editedStudent" will have the attributes of "studentToFavourite", except that its `Favourite` attribute will be set to "true". +
+`createEditedStudent()` is implemented as such:
 [source, java]
 ----
-    private static Student createEditedStudent(Student target) {
-        requireNonNull(target);
-
-        return new StudentBuilder(target).withFavourite(true).build();
+    private void createEditedStudent() {
+        assert targetStudent != null;
+        editedStudent = new StudentBuilder(target).withFavourite(true).build();
     }
 ----
-
-* editedStudent will have the attributes of studentToFavourite, except that its `Favourite` attribute will be set to "true"
-
-In the `FavouriteCommand.execute()` method, `Model.updateStudent(Student, Student)` is called to replace studentToFavourite with editedStudent in the Address Book in-memory.
+[start=3]
+. In the `executeUndoableCommand()` method, `Model.updateStudent(Student, Student)` is called to replace "studentToFavourite" with "editedStudent" in the Address Book in-memory.
 
 ==== Design Considerations
 
@@ -611,24 +612,46 @@ The constructor for `Dashboard` is implemented this way:
     }
 ----
 
+===== Implementation for commands that modify the Dashboard
+
 The `AddMilestoneCommand`, `AddTaskCommand`, `CheckTaskCommand` and `ShowDashboardCommand` commands facilitate operations to the dashboard.
 A common implementation for commands that modify the dashboard (e.g. `AddMilestoneCommand`) is that a new copy of `Dashboard` is created with the new modification.
 
 For example, in the `AddMilestoneCommand`, to add a new milestone object to the dashboard of a `Student` Object called "targetStudent":
 
-* A `Student` object called "editedStudent" will be returned by the `AddMilestoneCommand.createEditedStudent(Student, Milestone)` method to the `AddMilestoneCommand.preprocess()` method.
-`AddMilestoneCommand.createEditedStudent(Student, Milestone)` is implemented as such:
+. `AddMilestoneCommand.preprocessUndoableCommand()` calls the `AddMilestoneCommand.createEditedStudent()` method which will create a `Student` object called "editedStudent".
+"editedStudent" is created with the same attributes of "targetStudent", but with a new `Dashboard` object containing the new milestone. +
+`AddMilestoneCommand.createEditedStudent()` is implemented as such:
 [source, java]
 ----
-    private Student createEditedStudent(Student studentToEdit, Milestone newMilestone) throws DuplicateMilestoneException {
+    private void createEditedStudent() throws DuplicateMilestoneException {
         requireAllNonNull(studentToEdit, newMilestone);
-
-        return new StudentBuilder(studentToEdit).withNewMilestone(newMilestone).build();
+        editedStudent = new StudentBuilder(targetStudent).withNewMilestone(newMilestone).build();
     }
 ----
-* "editedStudent" is created with the same attributes of "targetStudent", but with a new `Dashboard` object containing the new milestone
+[start=2]
+. In the `AddMilestoneCommand.executeUndoableCommand()` method, `Model.updateStudent(Student, Student)` is called to replace "targetStudent" with "editedStudent" in the Address Book in-memory
 
-In the `AddMilestoneCommand.execute()` method, `Model.updateStudent(Student, Student)` is called to replace "targetStudent" with "editedStudent" in the Address Book in-memory
+===== Implementation for displaying the dashboard
+
+The `ShowDashboardCommand` facilitates the displaying of a student's dashboard. The `ShowDashboardCommand.execute()` method is implemented this way:
+[source, java]
+----
+    public CommandResult execute() throws CommandException {
+        // ... check whether targetIndex is valid ...
+        EventsCenter.getInstance().post(new ShowStudentDashboardEvent(lastShownList.get(targetIndex.getZeroBased())));
+        // ... return command result ...
+    }
+----
+As seen from the above code snippet, `ShowDashboardCommand.execute()` raises a `ShowStudentDashboardEvent`. The sequence diagram below shows how the `EventsCenter` reacts to that event.
+
+image::ShowDashboardCommandSequenceDiagram.png[width="800"]
+
+As seen from the above diagram,
+
+* `InfoPanel` handles the `ShowStudentInDashboard` event. +
+* `InfoPanel` then raises the `ShowStudentNameInDashboard` which is handled by `DashboardPanel` to display the name of the student in the dashboard. +
+* Finally, `InfoPanel` raises the `ShowMilestoneEvent` which is also handled by `DashboardPanel` to display the milestones of the student in the dashboard.
 
 ==== Design Considerations
 
@@ -639,6 +662,8 @@ In the `AddMilestoneCommand.execute()` method, `Model.updateStudent(Student, Stu
 * *Alternative 2*: Add a new `UniqueDashboardList` association to `AddressBook`
 ** Pro: Able to modify the dashboard easily if it is not made immutable.
 ** Con: We will have to sync the `UniqueDashboardList` with the `UniqueStudentList` since `Dashboard` will be associated to a `Student`.
+
+// end::dashboard[]
 
 === Logging
 

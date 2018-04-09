@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddPatientQueueCommand;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 
@@ -21,11 +22,10 @@ public class AddPatientQueueCommandParserTest {
     }
 
     @Test
-    public void parse_validArgs_returnsAddPatientQueueCommand() {
-        AddPatientQueueCommand expectedCommand = new AddPatientQueueCommand(
-                new NameContainsKeywordsPredicate(Arrays.asList("Alice")));
-        assertParseSuccess(parser, "Alice", expectedCommand);
+    public void parse_validArgs_returnsAddPatientQueueCommand() throws IllegalValueException {
+        AddPatientQueueCommand expectedCommand = new AddPatientQueueCommand(ParserUtil.parseIndex("1"));
+        assertParseSuccess(parser, "1", expectedCommand);
 
-        assertParseSuccess(parser, "\n Alice \n", expectedCommand);
+        assertParseSuccess(parser, "\n 1 \n", expectedCommand);
     }
 }

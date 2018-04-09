@@ -144,7 +144,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public Patient addPatientToQueue(NameContainsKeywordsPredicate predicate) throws DuplicatePatientException {
+        public Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException, PatientNotFoundException {
             fail("This method should not be called.");
             return null;
         }
@@ -157,31 +157,36 @@ public class AddCommandTest {
 
         @Override
         public ObservableList<Patient> getVisitingQueue() {
+            fail("This method should not be called.");
             return null;    //update later
         }
 
         @Override
         public Patient getPatientFromList(Predicate<Patient> predicate) {
+            fail("This method should not be called.");
             return null;
         }
 
         @Override
         public boolean deletePatientAppointment(Patient patient, Index index) {
+            fail("This method should not be called.");
             return false;
         }
 
         @Override
         public ObservableList<AppointmentEntry> getAppointmentEntryList() {
+            fail("This method should not be called.");
             return null;
         }
 
         @Override
         public void addPatientAppointment(Patient patient, String dateTimeString) {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public ObservableList<Integer> getPatientListIndexInQueue() {
+            fail("This method should not be called.");
             return null;
         }
     }

@@ -359,21 +359,17 @@ public class ImdbParserTest {
     @Test
     public void parseCommand_addPatientQueue() throws Exception {
         LoginManager.authenticate("bob", "password456");
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
         AddPatientQueueCommand command = (AddPatientQueueCommand) parser.parseCommand(
-                AddPatientQueueCommand.COMMAND_WORD + " " + keywords.stream()
-                        .collect(Collectors.joining(" ")));
-        assertEquals(new AddPatientQueueCommand(new NameContainsKeywordsPredicate(keywords)), command);
+                AddPatientQueueCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new AddPatientQueueCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test
     public void parseCommand_addPatientQueueAlias() throws Exception {
         LoginManager.authenticate("bob", "password456");
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
         AddPatientQueueCommand command = (AddPatientQueueCommand) parser.parseCommand(
-                AddPatientQueueCommand.COMMAND_ALIAS + " " + keywords.stream()
-                        .collect(Collectors.joining(" ")));
-        assertEquals(new AddPatientQueueCommand(new NameContainsKeywordsPredicate(keywords)), command);
+                AddPatientQueueCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new AddPatientQueueCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test

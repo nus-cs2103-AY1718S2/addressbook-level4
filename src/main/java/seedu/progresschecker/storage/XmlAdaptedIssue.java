@@ -23,14 +23,14 @@ public class XmlAdaptedIssue {
 
     @XmlElement(required = true)
     private String title;
-    @XmlElement(required = true)
+    @XmlElement(required = false)
     private String body;
-    @XmlElement
+    @XmlElement(required = false)
     private String milestone;
 
     @XmlElement
     private List<XmlAdaptedAssignee> assignees = new ArrayList<>();
-    
+
     @XmlElement
     private List<XmlAdaptedLabel> labelled = new ArrayList<>();
 
@@ -44,12 +44,12 @@ public class XmlAdaptedIssue {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedIssue(
-            String title, String body, String milestone, 
+            String title, String body, String milestone,
             List<XmlAdaptedAssignee> assignees, List<XmlAdaptedLabel> labelled) {
         this.title = title;
         this.body = body;
         this.milestone = milestone;
-        
+
         if (assignees != null) {
             this.assignees = new ArrayList<>(assignees);
         }
@@ -66,7 +66,11 @@ public class XmlAdaptedIssue {
     public XmlAdaptedIssue(Issue source) {
         title = source.getTitle().fullMessage;
         body = source.getBody().fullBody;
-        milestone = source.getMilestone().fullMilestone;
+        if (source.getMilestone() == null) {
+            milestone = "";
+        } else {
+            milestone = source.getMilestone().fullMilestone;
+        }
         assignees = new ArrayList<>();
         for (Assignees assignee : source.getAssignees()) {
             assignees.add(new XmlAdaptedAssignee(assignee));
@@ -91,7 +95,7 @@ public class XmlAdaptedIssue {
         for (XmlAdaptedLabel labelIssue : labelled) {
             issueLabels.add(labelIssue.toModelType());
         }
-        
+
         if (this.title == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Title.class.getSimpleName()));
         }
@@ -99,11 +103,11 @@ public class XmlAdaptedIssue {
             throw new IllegalValueException(Title.MESSAGE_TITLE_CONSTRAINTS);
         }
         final Title title = new Title(this.title);
-        
+
         final Body body = new Body(this.body);
-        
+
         final Milestone milestone = new Milestone(this.milestone);
-        
+
         return new Issue(title, issueAssignees, milestone, body, issueLabels);
     }
 

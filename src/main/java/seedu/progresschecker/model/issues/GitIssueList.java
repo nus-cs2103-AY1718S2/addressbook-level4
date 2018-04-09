@@ -74,14 +74,14 @@ public class GitIssueList implements Iterable<Issue> {
         } catch (IOException ie) {
             throw new CommandException("Enter correct repository name");
         }
-        //updateInternalList();
+        updateInternalList();
     }
 
     /**
      * Updates the internal list by fetching data from github
      */
     private void updateInternalList() throws IOException {
-
+        internalList.remove(0, internalList.size());
         List<GHIssue> gitIssues = repository.getIssues(GHIssueState.OPEN);
         for (GHIssue issueOnGit : gitIssues) {
             Issue toBeAdded = convertToIssue(issueOnGit);
@@ -99,10 +99,11 @@ public class GitIssueList implements Iterable<Issue> {
         List<Assignees> assigneesList = new ArrayList<>();
         List<Labels> labelsList = new ArrayList<>();
         Milestone existingMilestone = null;
-        Body existingBody = new Body("");
+        Body existingBody = new Body(i.getBody());
+        Title title = new Title(i.getTitle());
 
         if (i.getMilestone() == null) {
-            existingMilestone = null;
+            existingMilestone = new Milestone("");
         } else {
             existingMilestone = new Milestone(i.getMilestone().getTitle());
         }
@@ -115,8 +116,8 @@ public class GitIssueList implements Iterable<Issue> {
             labelsList.add(new Labels(label.getName()));
         }
 
-        return new Issue(new Title(issue.getTitle()), assigneesList, new Milestone("v1.2"), 
-                new Body(""), labelsList);
+        return new Issue(title, assigneesList, existingMilestone,
+                existingBody, labelsList);
     }
 
     /**
@@ -152,8 +153,7 @@ public class GitIssueList implements Iterable<Issue> {
         }
         createdIssue.setAssignees(listOfUsers);
         createdIssue.setLabels(listOfLabels.toArray(new String[0]));
-        //updateInternalList();
-        internalList.add(toAdd);
+        updateInternalList();
     }
 
     /**
@@ -166,7 +166,7 @@ public class GitIssueList implements Iterable<Issue> {
             throw new CommandException("Issue #" + index.getOneBased() + " is already open");
         }
         issue.reopen();
-        //updateInternalList();
+        updateInternalList();
     }
 
     /**
@@ -180,7 +180,7 @@ public class GitIssueList implements Iterable<Issue> {
             throw new CommandException("Issue #" + index.getOneBased() + " is already closed");
         }
         issue.close();
-       // updateInternalList();
+        updateInternalList();
     }
 
     /**
@@ -227,7 +227,7 @@ public class GitIssueList implements Iterable<Issue> {
         toEdit.setBody(editedIssue.getBody().toString());
         toEdit.setAssignees(listOfUsers);
         toEdit.setLabels(listOfLabels.toArray(new String[0]));
-        
+
     }
 
     /**

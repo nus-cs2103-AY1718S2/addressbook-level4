@@ -44,11 +44,11 @@
                         </rowConstraints>
                         <children>
                             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
-                            <Label fx:id="phone" styleClass="cell_small_label" text="\$title" GridPane.columnIndex="1" />
+                            <Label fx:id="title" styleClass="cell_small_label" text="\$title" GridPane.columnIndex="1" />
                             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Body" GridPane.rowIndex="1" />
-                            <Label fx:id="email" styleClass="cell_small_label" text="\$body" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <Label fx:id="body" styleClass="cell_small_label" text="\$body" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Milestone" GridPane.rowIndex="2" />
-                            <Label fx:id="username" styleClass="cell_small_label" text="\$milestone" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            <Label fx:id="milestone" styleClass="cell_small_label" text="\$milestone" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         </children>
                     </GridPane>
                 </VBox>

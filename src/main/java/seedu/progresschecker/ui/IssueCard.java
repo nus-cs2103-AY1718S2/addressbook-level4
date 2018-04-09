@@ -13,8 +13,7 @@ import seedu.progresschecker.model.issues.Issue;
 public class IssueCard extends UiPart<Region> {
 
     private static final String FXML = "IssueListCard.fxml";
-    private static final String[] LABEL_COLORS =
-            { "red", "orange", "yellow", "green", "blue", "purple" };
+    private static final String[] LABEL_COLORS = { "red", "orange", "yellow", "green", "blue", "purple" };
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -37,7 +36,6 @@ public class IssueCard extends UiPart<Region> {
     private Label milestone;
     @FXML
     private FlowPane labelOfIssue;
-   
 
     public IssueCard(Issue issue, int displayedIndex) {
         super(FXML);
@@ -46,11 +44,11 @@ public class IssueCard extends UiPart<Region> {
         title.setText(issue.getTitle().toString());
         body.setText(issue.getBody().fullBody);
         milestone.setText(issue.getMilestone().fullMilestone);
-        issue.getLabelsList().forEach(labels -> {
-            Label label = new Label(labels.fullLabels);
-            label.getStyleClass().add(getTagColor(labels.fullLabels));
-            labelOfIssue.getChildren().add(label);
-        });
+//        issue.getLabelsList().forEach(labels -> {
+//            Label label = new Label(labels.fullLabels);
+//            label.getStyleClass().add(getTagColor(labels.fullLabels));
+//            labelOfIssue.getChildren().add(label);
+//        });
     }
 
     /**

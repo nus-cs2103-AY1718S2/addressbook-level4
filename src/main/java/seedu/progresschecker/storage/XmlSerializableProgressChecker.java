@@ -68,9 +68,9 @@ public class XmlSerializableProgressChecker {
         for (XmlAdaptedExercise e : exercises) {
             progressChecker.addExercise(e.toModelType());
         }
-        for (XmlAdaptedIssue i : issues) {
-            progressChecker.createIssueOnGitHub(i.toModelType());
-        }
+//        for (XmlAdaptedIssue i : issues) {
+//            progressChecker.createIssueOnGitHub(i.toModelType());
+//        }
         return progressChecker;
     }
 

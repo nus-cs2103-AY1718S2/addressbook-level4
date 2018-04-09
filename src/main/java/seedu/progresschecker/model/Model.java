@@ -22,6 +22,8 @@ import seedu.progresschecker.model.photo.exceptions.DuplicatePhotoException;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
     Predicate<Issue> PREDICATE_SHOW_ALL_ISSUES = unused -> true;
 
     /** {@code Predicate} that always evaluate to true */
@@ -62,6 +64,14 @@ public interface Model {
      */
     void updateIssue(Index index, Issue editedIssue) throws IOException;
 
+    /** Returns unmodifiable view of the filtered issue list */
+    ObservableList<Issue> getFilteredIssueList();
+
+    /**
+     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredIssueList(Predicate<Issue> predicate);
     //@@author
 
     /**
@@ -83,11 +93,6 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
-    /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
-     */
-    void updateFilteredIssueList(Predicate<Issue> predicate);
     //@@author iNekox3
     /**
      * Replaces the given exercise {@code target} with {@code editedExercise}.
@@ -99,9 +104,6 @@ public interface Model {
 
     /** Returns an unmodifiable view of the filtered exercise list */
     ObservableList<Exercise> getFilteredExerciseList();
-    
-    /** Returns unmodifiable view of the filtered issue list */
-    ObservableList<Issue> getFilteredIssueList();
 
     /**
      * Updates the filter of the filtered exercise list to filter by the given {@code predicate}.

@@ -97,6 +97,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
         try {
             setPersons(syncedPersonList);
             setExercises(newData.getExerciseList());
+            
         } catch (DuplicatePersonException e) {
             throw new AssertionError("ProgressChecker should not have duplicate persons");
         } catch (DuplicateExerciseException e) {
@@ -332,7 +333,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     public ObservableList<Issue> getIssueList() {
         return issues.asObservableList();
     }
-    
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

@@ -164,11 +164,24 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author adityaa1998
+    //=========== Filtered Issue List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Issue} backed by the internal list of
+     * {@code progressChecker}
+     */
+    @Override
+    public ObservableList<Issue> getFilteredIssueList() {
+        return FXCollections.unmodifiableObservableList(filteredIssues);
+    }
+
     @Override
     public void updateFilteredIssueList(Predicate<Issue> predicate) {
         requireNonNull(predicate);
         filteredIssues.setPredicate(predicate);
     }
+    //@@author
 
     //@@author Livian1107
     @Override
@@ -215,16 +228,10 @@ public class ModelManager extends ComponentManager implements Model {
     public ObservableList<Exercise> getFilteredExerciseList() {
         return FXCollections.unmodifiableObservableList(filteredExercises);
     }
-    
-    @Override
-    public ObservableList<Issue> getFilteredIssueList() {
-        return FXCollections.unmodifiableObservableList(filteredIssues);
-    }
 
     @Override
     public void updateFilteredExerciseList(Predicate<Exercise> predicate) {
         requireNonNull(predicate);
         filteredExercises.setPredicate(predicate);
     }
-
 }

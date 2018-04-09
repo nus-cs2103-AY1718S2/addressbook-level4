@@ -4,10 +4,9 @@ import javax.xml.bind.annotation.XmlValue;
 
 import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.model.issues.Assignees;
-import seedu.progresschecker.model.tag.Tag;
 
 /**
- * JAXB-friendly adapted version of the Tag.
+ * JAXB-friendly adapted version of the Assignee.
  */
 public class XmlAdaptedAssignee {
 

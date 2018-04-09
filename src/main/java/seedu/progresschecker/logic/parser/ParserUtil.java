@@ -210,9 +210,6 @@ public class ParserUtil {
     public static Milestone parseMilestone(String milestone) throws IllegalValueException {
         requireNonNull(milestone);
         String trimmedMilestone = milestone.trim();
-        if (!Milestone.isValidMilestone(trimmedMilestone)) {
-            throw new IllegalValueException(Milestone.MESSAGE_MILESTONE_CONSTRAINTS);
-        }
         return new Milestone(trimmedMilestone);
     }
 

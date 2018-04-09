@@ -74,10 +74,6 @@ public class UpdateDisplayCommand extends UndoableCommand {
         } catch (IllegalValueException ive) {
             throw new CommandException(ive.getMessage());
         }
-        if (!personToUpdate.getDisplayPic().isDefault()) {
-            model.addDeleteItem(personToUpdate.getDisplayPic().toString());
-        }
-        model.addDeleteItem(updatedPerson.getDisplayPic().toString());
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
         return new CommandResult(String.format(MESSAGE_SUCCESS, personToUpdate.getName().toString()));

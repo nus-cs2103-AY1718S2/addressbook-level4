@@ -39,9 +39,6 @@ public interface Model {
     /** Adds the given task */
     void addTask(Task task);
 
-    /** Adds an item to be deleted */
-    void addDeleteItem(String filepath);
-
     /** Clears the list of items to be deleted */
     void clearDeleteItems();
 

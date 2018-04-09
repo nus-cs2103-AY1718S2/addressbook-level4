@@ -37,7 +37,7 @@ and tracking their students' learning development.
 
 ** Justification: Tutors may have some students that they wish to take note of. This feature helps tutors highlight these students.
 
-* *Code contributed*: [https://github.com/CS2103JAN2018-W09-B3/main/blob/master/collated/functional/yapni.md[Functional code]] [https://github.com/CS2103JAN2018-W09-B3/main/tree/master/collated/test[Test code]]
+* *Code contributed*: [https://github.com/CS2103JAN2018-W09-B3/main/blob/master/collated/functional/yapni.md[Functional code]] [https://github.com/CS2103JAN2018-W09-B3/main/blob/master/collated/test/yapni.md[Test code]]
 
 * *Other contributions*:
 

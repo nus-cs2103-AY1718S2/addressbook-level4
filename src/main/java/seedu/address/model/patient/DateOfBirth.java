@@ -3,6 +3,11 @@ package seedu.address.model.patient;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Represents a Patient's DOB in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidDob(String)}
@@ -16,8 +21,6 @@ public class DateOfBirth {
      * The first character of the DOB must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String DOB_VALIDATION_REGEX =
-            "[\\p{Digit}]{2}[\\p{Punct}][\\p{Digit}]{2}[\\p{Punct}][\\p{Digit}]{4}";
 
     public final String value;
 
@@ -36,7 +39,14 @@ public class DateOfBirth {
      * Returns true if a given string is a valid patient DOB.
      */
     public static boolean isValidDob(String test) {
-        return test.matches(DOB_VALIDATION_REGEX);
+        try {
+            DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+            sourceFormat.setLenient(false);
+            Date date = sourceFormat.parse(test);
+            return true;
+        } catch (ParseException pe) {
+            return false;
+        }
     }
 
 

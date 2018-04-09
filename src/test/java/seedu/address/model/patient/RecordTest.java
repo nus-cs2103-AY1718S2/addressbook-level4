@@ -27,6 +27,6 @@ public class RecordTest {
 
         // valid records
         assertTrue(Record.isValidRecord(new Record("01/04/2018", "High temperature", "Fever", "Antibiotics")));
-        assertTrue(Record.isValidRecord(new Record("99/99/9999", "b", "c", "d"))); // one character
+        assertTrue(Record.isValidRecord(new Record("11/11/1991", "b", "c", "d"))); // one character
     }
 }

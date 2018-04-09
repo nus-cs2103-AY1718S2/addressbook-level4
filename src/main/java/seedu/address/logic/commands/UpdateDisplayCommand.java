@@ -25,6 +25,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.storage.DisplayPicStorage;
 
 /**
  * Updates a student's display picture in Your TA.
@@ -109,19 +110,8 @@ public class UpdateDisplayCommand extends UndoableCommand {
         Phone updatedPhone = personToUpdate.getPhone();
         Email updatedEmail = personToUpdate.getEmail();
         Address updatedAddress = personToUpdate.getAddress();
-        DisplayPic updatedDisplay = dp;
-        updatedDisplay.updateDisplay(personToUpdate.getDetails());
-        if (!updatedDisplay.equals(personToUpdate.getDisplayPic())) {
-            try {
-                updatedDisplay.saveDisplay(updatedName.toString() + updatedPhone.toString()
-                        + updatedEmail.toString());
-                updatedDisplay.updateDisplay(updatedName.toString() + updatedPhone.toString()
-                        + updatedEmail.toString());
-
-            } catch (IllegalValueException ive) {
-                updatedDisplay.updateToDefault();
-            }
-        }
+        DisplayPic updatedDisplay = DisplayPicStorage.toSaveDisplay(dp,
+                personToUpdate.getDisplayPic(), personToUpdate.getDetails());
         Participation updatedPart = personToUpdate.getParticipation();
         Set<Tag> updatedTags = personToUpdate.getTags();
 

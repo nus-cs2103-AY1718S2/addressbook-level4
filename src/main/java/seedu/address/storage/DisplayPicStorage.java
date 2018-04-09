@@ -87,7 +87,7 @@ public class DisplayPicStorage {
                 toSave = new File(DisplayPic.DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType);
             }
             if (!sameFile) {
-                FileUtil.copyImage(filePath, SAVE_LOCATION + uniqueFileName + '.' + fileType);
+                FileUtil.copyImage(filePath, toSave);
             }
             return uniqueFileName;
         } catch (IOException | IllegalValueException exc) {
@@ -111,6 +111,24 @@ public class DisplayPicStorage {
             File input = new File(dp.toString());
             return new Image(input.toURI().toString());
         }
+    }
+
+    /**
+     * Checks whether the display picture filepath between 2 DisplayPic objects are the same.
+     * If they are not the same, the new display picture (in @code display1) will be updated and save.
+     */
+    public static DisplayPic toSaveDisplay(DisplayPic display1, DisplayPic display2, String details) {
+        if (!display1.equals(display2)) {
+            try {
+                display1.saveDisplay(details);
+                display1.updateDisplay(details);
+                return display1;
+            } catch (IllegalValueException ive) {
+                display1.updateToDefault();
+                return display1;
+            }
+        }
+        return display1;
     }
 
 }

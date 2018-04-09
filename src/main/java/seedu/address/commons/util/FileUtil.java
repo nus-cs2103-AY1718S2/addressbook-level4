@@ -141,10 +141,11 @@ public class FileUtil {
     /**
      * Copies a file over. The new file will be binary equivalent to the original.
      */
-    public static void copyFile(String origFile, String newFile) throws  IOException {
+    public static void copyFile(String origFile, File outputFile) throws  IOException {
         byte[] buffer = new byte[4096];
+        createIfMissing(outputFile);
         BufferedInputStream bis = new BufferedInputStream(new FileInputStream(origFile));
-        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newFile));
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(outputFile));
 
         int fileBytes = bis.read(buffer);
         while (fileBytes != -1) {
@@ -159,9 +160,9 @@ public class FileUtil {
     /**
      * Copies an image from the filepath provided to the specified destination
      */
-    public static void copyImage(String image, String destPath) throws IllegalValueException {
+    public static void copyImage(String image, File toSave) throws IllegalValueException {
         try {
-            copyFile(image, destPath);
+            copyFile(image, toSave);
         } catch (IOException ioe) {
             throw new IllegalValueException("IMAGE FILE COULD NOT BE COPIED.");
         }

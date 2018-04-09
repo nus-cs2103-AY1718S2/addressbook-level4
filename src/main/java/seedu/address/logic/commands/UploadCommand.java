@@ -7,6 +7,7 @@ import java.io.IOException;
 import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Password;
+import seedu.address.storage.exceptions.GoogleAuthorizationException;
 
 //@@author Caijun7
 /**
@@ -28,6 +29,8 @@ public class UploadCommand extends UndoableCommand {
     public static final String MESSAGE_FILE_UNABLE_TO_SAVE = "Unable to save or overwrite to given filepath. "
             + "Please give another filepath.";
     public static final String MESSAGE_INVALID_PASSWORD = "Password is in invalid format for Addressbook file.";
+    public static final String MESSAGE_NO_AUTHORIZATION = "Unable to access your Google Drive. "
+            + "Please grant authorization.";
 
     private final String filepath;
     private final Password password;
@@ -59,6 +62,8 @@ public class UploadCommand extends UndoableCommand {
         try {
             model.uploadAddressBook(filepath, password);
             return new CommandResult(String.format(MESSAGE_SUCCESS));
+        } catch (GoogleAuthorizationException e) {
+            throw new CommandException(MESSAGE_NO_AUTHORIZATION);
         } catch (IOException ioe) {
             throw new CommandException(MESSAGE_FILE_UNABLE_TO_SAVE);
         } catch (WrongPasswordException e) {

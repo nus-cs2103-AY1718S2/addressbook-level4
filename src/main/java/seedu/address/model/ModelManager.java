@@ -30,6 +30,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.storage.GoogleDriveStorage;
 import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.exceptions.GoogleAuthorizationException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -147,7 +148,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
-                                                                            WrongPasswordException {
+                                                                           WrongPasswordException {
         requireNonNull(filepath);
 
         XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
@@ -183,9 +184,10 @@ public class ModelManager extends ComponentManager implements Model {
      * @param password
      */
     @Override
-    public void uploadAddressBook(String filepath, Password password) throws IOException, WrongPasswordException {
-        exportAddressBook("googledrive/" + filepath, password);
+    public void uploadAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
+                                                                             GoogleAuthorizationException {
         GoogleDriveStorage googleDriveStorage = new GoogleDriveStorage("googledrive/" + filepath);
+        exportAddressBook("googledrive/" + filepath, password);
         googleDriveStorage.uploadFile();
     }
     //@@author

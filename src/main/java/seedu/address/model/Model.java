@@ -19,6 +19,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.storage.exceptions.GoogleAuthorizationException;
 
 /**
  * The API of the Model component.
@@ -83,7 +84,7 @@ public interface Model {
      * @param password
      */
     void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
-            WrongPasswordException;
+                                                                    WrongPasswordException;
 
     /**
      * Exports the current view of {@code AddressBook} to the filepath.
@@ -102,7 +103,8 @@ public interface Model {
      * @param filepath
      * @param password
      */
-    void uploadAddressBook(String filepath, Password password) throws IOException, WrongPasswordException;
+    void uploadAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
+                                                                      GoogleAuthorizationException;
     //@@author
 
     //@@author yeggasd

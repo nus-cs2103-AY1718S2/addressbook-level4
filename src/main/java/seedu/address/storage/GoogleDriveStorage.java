@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Collections;
+import java.util.logging.Logger;
+
+import javax.naming.AuthenticationException;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -24,6 +27,9 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
+
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.storage.exceptions.GoogleAuthorizationException;
 
 //@@author Caijun7-reused
 /**
@@ -49,41 +55,24 @@ public class GoogleDriveStorage {
      */
     private static Drive drive;
 
+    private static final Logger logger = LogsCenter.getLogger(GoogleDriveStorage.class);
+
     private final String uploadFilePath;
     private final java.io.File uploadFile;
 
-    public GoogleDriveStorage(String uploadFilePath) {
+    public GoogleDriveStorage(String uploadFilePath) throws GoogleAuthorizationException {
         this.uploadFilePath = uploadFilePath;
         uploadFile = new java.io.File(uploadFilePath);
         userAuthorize();
     }
 
     /**
-     * Authorizes the installed application to access user's protected data.
-     */
-    private Credential authorize() throws Exception {
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
-                new InputStreamReader(GoogleDriveStorage.class.getResourceAsStream("/json/client_secret.json")));
-        if (clientSecrets.getDetails().getClientId().startsWith("Enter")
-                || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
-            System.out.println(
-                    "Enter Client ID and Secret from https://code.google.com/apis/console/?api=drive "
-                            + "into /src/main/resources/json/client_secret.json");
-            System.exit(1);
-        }
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                httpTransport, JSON_FACTORY, clientSecrets,
-                Collections.singleton(DriveScopes.DRIVE_FILE)).setDataStoreFactory(dataStoreFactory)
-                .build();
-
-        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
-    }
-
-    /**
      * Opens Google authentication link in user's default browser and request for authorization.
-     * Sets up an instance of Google Drive API client after user authorised the application.
+     * Sets up an instance of Google Drive API client after user authorized the application.
+     *
+     * @throws GoogleAuthorizationException     When application is unable to gain user's authorization
      */
-    private void userAuthorize() {
+    private void userAuthorize() throws GoogleAuthorizationException {
         Preconditions.checkArgument(
                 !uploadFilePath.startsWith("Enter ") && !DIR_FOR_DOWNLOADS.startsWith("Enter "),
                 "Please enter the upload file path and download directory in %s", GoogleDriveStorage.class);
@@ -97,11 +86,31 @@ public class GoogleDriveStorage {
                     APPLICATION_NAME).build();
             return;
         } catch (IOException e) {
-            System.err.println(e.getMessage());
-        } catch (Throwable t) {
-            t.printStackTrace();
+            logger.warning(e.getMessage());
+            throw new GoogleAuthorizationException();
+        } catch (Exception e) {
+            logger.warning(e.getMessage());
         }
-        System.exit(1);
+    }
+
+    /**
+     * Authorizes the installed application to access user's protected data.
+     */
+    private Credential authorize() throws IOException {
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
+                new InputStreamReader(GoogleDriveStorage.class.getResourceAsStream("/json/client_secret.json")));
+        if (clientSecrets.getDetails().getClientId().startsWith("Enter")
+                || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
+            System.out.println(
+                    "Enter Client ID and Secret from https://code.google.com/apis/console/?api=drive "
+                            + "into /src/main/resources/json/client_secret.json");
+        }
+        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+                httpTransport, JSON_FACTORY, clientSecrets,
+                Collections.singleton(DriveScopes.DRIVE_FILE)).setDataStoreFactory(dataStoreFactory)
+                .build();
+
+        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 
     /**

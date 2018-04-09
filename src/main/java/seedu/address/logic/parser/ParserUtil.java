@@ -16,6 +16,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.person.Cca;
+import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Remark;
@@ -265,4 +267,46 @@ public class ParserUtil {
         return endTime.isPresent() ? Optional.of(parseEndTime(endTime.get())) : Optional.empty();
     }
 
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static Cca parseCca(String cca) {
+        requireNonNull(cca);
+        String trimmedCca = cca.trim();
+        return new Cca(trimmedCca);
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Cca> parseCca(Optional<String> cca) {
+        requireNonNull(cca);
+        return cca.isPresent() ? Optional.of(parseCca(cca.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static InjuriesHistory parseInjuriesHistory(String injuriesHistory) {
+        requireNonNull(injuriesHistory);
+        String trimmedInjuriesHistory = injuriesHistory.trim();
+        return new InjuriesHistory(trimmedInjuriesHistory);
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<InjuriesHistory> parseInjuriesHistory(Optional<String> injuriesHistory) {
+        requireNonNull(injuriesHistory);
+        return injuriesHistory.isPresent() ? Optional.of(parseInjuriesHistory(injuriesHistory.get()))
+                : Optional.empty();
+    }
 }

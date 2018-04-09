@@ -12,8 +12,8 @@ Media Socializer is a desktop address book application used to help social media
 
 == Summary of contributions
 
-* *Major enhancement*: Added *the ability to manage the social media profiles of each person*
-** What it does: Allows the user to manage each person's social media platforms. The user can add the associated social media platforms to the specified person by typing in the link to the relevant profile page or remove them by entering the names of the platforms.
+* *Major enhancement*: Added *the ability to manage the social media platforms of each person*
+** What it does: Allows the user to add the associated social media platforms to the specified person by typing in the links to the relevant profile pages or remove them by entering the names of the platforms.
 ** Justification: This feature improves the product significantly because a user can have the application keep track of all the social media profiles of their contacts.
 ** Highlights: This enhancement affects the overall feel of the product, since it is a core feature of the application. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required touching upon multiple components to properly realise such a feature.
 

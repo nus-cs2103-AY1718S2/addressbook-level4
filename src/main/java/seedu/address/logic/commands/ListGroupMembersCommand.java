@@ -19,7 +19,6 @@ public class ListGroupMembersCommand extends Command {
         + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
         + "Parameters: KEYWORD \n"
         + "Example: " + COMMAND_WORD + " CS1010";
-        
     public static final String MESSAGE_SUCCESS = "Listed all persons under group %1$s";
     public static final String MESSAGE_NO_SUCH_GROUP = "No such group exist.";
 
@@ -55,8 +54,8 @@ public class ListGroupMembersCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-        || (other instanceof ListGroupMembersCommand // instanceof handles nulls
-        && this.predicate.equals(((ListGroupMembersCommand) other).predicate)); // state check
+            || (other instanceof ListGroupMembersCommand // instanceof handles nulls
+            && this.predicate.equals(((ListGroupMembersCommand) other).predicate)); // state check
     }
 }
 

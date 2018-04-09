@@ -44,19 +44,6 @@ public class PersonPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    /**
-     * Frees resources allocated to the person panel.
-     */
-    public void freeResources() {
-        panel = null;
-        name = null;
-        phone = null;
-        address = null;
-        email = null;
-        groups = null;
-        preferences = null;
-    }
-
     @Subscribe
     private void loadPersonPage(Person person) {
         name.setText(person.getName().fullName);

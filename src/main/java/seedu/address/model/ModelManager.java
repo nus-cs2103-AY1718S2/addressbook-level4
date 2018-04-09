@@ -80,11 +80,12 @@ public class ModelManager extends ComponentManager implements Model {
         return calendarManager;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /** Raises an event to indicate address book has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    /** Raises an event to indicate calendar manager has changed */
     private void indicateCalendarManagerChanged() {
         raise(new CalendarManagerChangedEvent(calendarManager));
     }

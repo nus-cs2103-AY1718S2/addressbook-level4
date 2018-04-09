@@ -28,8 +28,6 @@ public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_NRIC = "+651234";
     private static final String INVALID_TAG = "#friend";
-    private static final String INVALID_SUBJECT_NAME = "efwjblkjnwef A1";
-    private static final String INVALID_SUBJECT_GRADE = "English B2";
     private static final Collection<String> INVALID_SUBJECT_NAME_SET = Arrays.asList("efwjblkjnwef A1");
     private static final Collection<String> INVALID_SUBJECT_GRADE_SET = Arrays.asList("English B2");
 
@@ -37,8 +35,6 @@ public class ParserUtilTest {
     private static final String VALID_NRIC = "S1234561Z";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
-    private static final String VALID_SUBJECT_1 = "English A1";
-    private static final String VALID_SUBJECT_2 = "Hist A1";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -181,6 +177,7 @@ public class ParserUtilTest {
         assertEquals(expectedTagSet, actualTagSet);
     }
 
+    //@@author TeyXinHui
     @Test
     public void parseSubject_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
@@ -203,5 +200,6 @@ public class ParserUtilTest {
     public void parseSubjects_emptyCollection_returnsEmptySet() throws Exception {
         assertTrue(ParserUtil.parseSubjects(Collections.emptyList()).isEmpty());
     }
+    //@@author
 
 }

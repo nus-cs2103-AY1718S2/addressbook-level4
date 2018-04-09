@@ -13,6 +13,7 @@ import seedu.address.logic.commands.AddRemarkCommand;
 import seedu.address.logic.commands.AppointmentCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.DeleteCcaCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteInjuriesHistoryCommand;
 import seedu.address.logic.commands.DeleteRemarkCommand;
@@ -63,6 +64,9 @@ public class AddressBookParser {
 
         case AddCcaCommand.COMMAND_WORD:
             return new AddCcaCommandParser().parse(arguments);
+
+        case DeleteCcaCommand.COMMAND_WORD:
+            return new DeleteCcaCommandParser().parse(arguments);
 
         case AddInjuriesHistoryCommand.COMMAND_WORD:
             return new AddInjuriesHistoryCommandParser().parse(arguments);

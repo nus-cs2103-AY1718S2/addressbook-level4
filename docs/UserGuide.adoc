@@ -26,6 +26,10 @@ The recommended way to use Pigeons is to first load in the delivery data by a ce
 and then allow each driver to login to their own account and filter by today's date to retrieve the route for the deliveries
 they have for the day.
 
+* Users will be able to add individuals to the address book and route out deliveries based on the day
+* The program will return attributes that will make the delivery mans life easier such as distance to destination and best time to leave
+
+
 Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start

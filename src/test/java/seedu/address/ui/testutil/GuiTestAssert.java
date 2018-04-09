@@ -18,6 +18,7 @@ import seedu.address.ui.PersonCard;
  */
 public class GuiTestAssert {
     private static final String LABEL_DEFAULT_STYLE = "label";
+    private static final String[] TAG_COLOR = {"red", "green", "blue"};
 
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
@@ -65,28 +66,7 @@ public class GuiTestAssert {
      * @see PersonCard#fromTagNameToColor(String)
      */
     private static String getTagColorStyleFor(String tag) {
-        switch (tag) {
-        case "neighbours":
-        case "colleagues":
-        case "priority":
-        case "fragile":
-            return "red";
-
-        case "friend":
-        case "husband":
-        case "repeat":
-            return "blue";
-
-        case "friends":
-        case "owesMoney":
-        case "classmates":
-        case "family":
-            return "green";
-
-        default:
-            fail(tag + " does not have a color assigned.");
-            return "";
-        }
+        return TAG_COLOR[Math.abs(tag.toLowerCase().hashCode()) % TAG_COLOR.length];
     }
 
     /**

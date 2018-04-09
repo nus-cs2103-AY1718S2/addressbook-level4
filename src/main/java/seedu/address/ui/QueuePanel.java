@@ -5,12 +5,15 @@ import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.QueueChangedEvent;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -36,6 +39,11 @@ public class QueuePanel extends UiPart<Region> {
 
         queueCardListView.setItems(mappedList);
         queueCardListView.setCellFactory(listView -> new QueueListViewCell());
+    }
+
+    @Subscribe
+    public void handleQueueChangedEvent(QueueChangedEvent qce) {
+        setConnections(qce.data.getUniquePatientQueue(), qce.data.getUniquePatientQueueNo());
     }
 
     /**

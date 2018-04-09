@@ -237,7 +237,10 @@ public class MainApp extends Application {
             Runtime.getRuntime().exec("wscript src\\main\\resources\\scripts\\Welcome.vbs");
         } catch (IOException e) {
             try {
-                Runtime.getRuntime().exec("osascript src\\main\\resources\\scripts\\WelcomeMac.scpt");
+                //Runtime.getRuntime().exec("osascript src\\main\\resources\\scripts\\WelcomeMac.scpt");
+                String[] args = {"osascript ", "say \"Welcome user\" using \"Alex\" speaking rate 140 "
+                        + "pitch 42 modulation 60"};
+                Runtime.getRuntime().exec(args);
             } catch (IOException e1) {
                 logger.warning("Unable to load welcome message.");
             }

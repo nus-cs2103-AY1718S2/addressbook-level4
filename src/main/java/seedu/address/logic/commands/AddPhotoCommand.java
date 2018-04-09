@@ -31,7 +31,9 @@ public class AddPhotoCommand extends Command {
 
     public static final String COMMAND_WORD = "addPhoto";
 
-    public static final String IMAGE_FOLDER = "\\src\\main\\resources\\images\\personphoto\\";
+    public static final String IMAGE_FOLDER_WINDOWS = "\\src\\main\\resources\\images\\personphoto\\";
+
+    public static final String IMAGE_FOLDER_OTHER = "/src/main/resources/images/personphoto/";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a photo to an employee.\n"
             + "Choose a photo in the file chooser. Acceptable photo file type are jpg, jprg, png, bmp."
@@ -50,6 +52,8 @@ public class AddPhotoCommand extends Command {
 
     private boolean isTestMode;
 
+    private int osType;
+
     /**
      * Creates an AddPhotoCommand to add the specified {@code Photo}
      */
@@ -62,12 +66,14 @@ public class AddPhotoCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
+        //check if it is test mode.
         if (!isTestMode) {
             EventsCenter.getInstance().post(new ShowFileChooserEvent());
         } else {
             String currentDir = System.getProperty("user.dir");
             path = currentDir + "\\src\\main\\java\\resources\\images\\personphoto\\DefaultPerson.png";
         }
+
         //check if the photo is chosen.
         if (path.equals("NoFileChoosed")) {
             return new CommandResult(MESSAGE_PHOTO_NOT_CHOSEN);
@@ -82,9 +88,11 @@ public class AddPhotoCommand extends Command {
         Person targetPerson = lastShownList.get(targetIndex.getZeroBased());
 
         String photoNameWithExtension;
-        if (!path.contains("/"))  {
+        if (!path.contains("/"))  { //windows
+            this.osType = 1;
             photoNameWithExtension = path.substring(path.lastIndexOf("\\") + 1);
         } else {
+            this.osType = 0;
             photoNameWithExtension = path.substring(path.lastIndexOf("/") + 1);
         }
 
@@ -131,7 +139,12 @@ public class AddPhotoCommand extends Command {
         String s = currentRelativePath.toAbsolutePath().toString();
 
         String src = path;
-        String dest = s + IMAGE_FOLDER + photoNameWithExtension;
+        String dest;
+        if (osType == 1) {
+            dest = s + IMAGE_FOLDER_WINDOWS + photoNameWithExtension;
+        } else {
+            dest = s + IMAGE_FOLDER_OTHER + photoNameWithExtension;
+        }
 
         byte[] buffer = new byte[1024];
         try {

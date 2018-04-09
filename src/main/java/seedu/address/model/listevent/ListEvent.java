@@ -9,12 +9,12 @@ public class ListEvent {
 
     private String title;
     private String location;
-    private DateTime endTime;
+    private DateTime startTime;
 
-    public ListEvent(String title, String location, DateTime endTime) {
+    public ListEvent(String title, String location, DateTime startTime) {
         this.setTitle(title);
         this.setLocation(location);
-        this.setEndTime(endTime);
+        this.setStartTime(startTime);
     }
 
     public String getTitle() {
@@ -34,24 +34,26 @@ public class ListEvent {
     }
 
     public DateTime getEndTime() {
-        return endTime;
+        return startTime;
     }
 
-    public void setEndTime(DateTime endTime) {
-        this.endTime = endTime;
+    public void setStartTime(DateTime startTime) {
+        this.startTime = startTime;
     }
 
     @Override
     public String toString() {
         String toReturn = "";
         if (title != null) {
-            toReturn += "Event: " + title;
+            toReturn += "EVENT: " + title + "  ||  ";
         }
         if (location != null) {
-            toReturn += " Location: " + location;
+            toReturn += " LOCATION: " + location + "  ||  ";
         }
-        if (endTime != null) {
-            toReturn += " End at: " + endTime.toString();
+        if (startTime != null) {
+            toReturn += " START AT: "
+                    + startTime.toString().substring(0, startTime.toString()
+                    .lastIndexOf("+")).replaceAll("T", " ");
         }
         return toReturn;
     }

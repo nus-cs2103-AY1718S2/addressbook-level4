@@ -176,7 +176,8 @@ public class StreamCommandTest {
     }
     /**
      *
-     * Executes a {@code StreamCommand} with the given {@code index} and {@code type}, and checks that a {@code CommandException}
+     * Executes a {@code StreamCommand} with the given {@code index} and {@code type},
+     * and checks that a {@code CommandException}
      * is thrown with the {@code expectedMessage}.
      */
     private void assertExecutionFailure(Index index, int type, String expectedMessage) {

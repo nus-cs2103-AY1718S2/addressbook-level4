@@ -47,7 +47,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 5, 2, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -95,7 +95,9 @@ public class MainApp extends Application {
         String profile = login.getUsername();
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(profile + config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new XmlAddressBookStorage(profile + userPrefs.getAddressBookFilePath());
+        userPrefs.setAddressBookFileName(profile);
+        AddressBookStorage addressBookStorage =
+                new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage, userPassStorage);
         model = initModelManager(storage, userPrefs);
         logic = new LogicManager(model);
@@ -235,7 +237,10 @@ public class MainApp extends Application {
             Runtime.getRuntime().exec("wscript src\\main\\resources\\scripts\\Welcome.vbs");
         } catch (IOException e) {
             try {
-                Runtime.getRuntime().exec("osascript src\\main\\resources\\scripts\\WelcomeMac.scpt");
+                //Runtime.getRuntime().exec("osascript src\\main\\resources\\scripts\\WelcomeMac.scpt");
+                String[] args = {"osascript ", "say \"Welcome user\" using \"Alex\" speaking rate 140 "
+                        + "pitch 42 modulation 60"};
+                Runtime.getRuntime().exec(args);
             } catch (IOException e1) {
                 logger.warning("Unable to load welcome message.");
             }

@@ -54,9 +54,9 @@ public class LoginManager extends ComponentManager implements Login {
      * Returns a boolean to verify password is valid
      */
     public boolean checkPassword() {
-        String username = userpass.getUsername();
-        String passwordInput = userpass.getPassword();
-        String passwordExpected = userPassStorage.get(username);
+        String username = userpass.getUsername().toLowerCase();
+        String passwordInput = userpass.getPassword().toLowerCase();
+        String passwordExpected = userPassStorage.get(username).toLowerCase();
         return passwordInput.equals(passwordExpected);
     }
 
@@ -74,6 +74,7 @@ public class LoginManager extends ComponentManager implements Login {
             e.printStackTrace();
         }
         storage.setUserPassStorage(userPassStorage);
+
     }
 
     /**

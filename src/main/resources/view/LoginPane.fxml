@@ -11,47 +11,67 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="loginPanePlaceholder" maxHeight="600.0" maxWidth="400.0" minHeight="600.0" minWidth="400.0" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="loginPanePlaceholder" minHeight="650.0" minWidth="400.0" prefHeight="650.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane blendMode="DARKEN" cache="true" depthTest="ENABLE" maxHeight="600.0" maxWidth="400.0" minHeight="600.0" minWidth="400.0" pickOnBounds="false" prefHeight="600.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Pane blendMode="DARKEN" cache="true" depthTest="ENABLE" maxHeight="650.0" maxWidth="400.0" minHeight="650.0" minWidth="400.0" pickOnBounds="false" prefHeight="650.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <TextField fx:id="usernameTextField" layoutX="161.0" layoutY="271.0" promptText="Enter Username Here">
+                <TextField fx:id="usernameTextField" layoutX="165.0" layoutY="221.0" promptText="Enter Username Here">
                <font>
                   <Font name="ADAM.CGPRO" size="12.0" />
                </font></TextField>
-                <PasswordField fx:id="passwordField" layoutX="161.0" layoutY="306.0" onKeyPressed="#handleKeyPress" promptText="ENTER PASSWORD HERE">
+                <PasswordField fx:id="passwordField" layoutX="165.0" layoutY="256.0" onKeyPressed="#handleKeyPress" promptText="ENTER PASSWORD HERE">
                <font>
                   <Font name="ADAM.CGPRO" size="12.0" />
                </font></PasswordField>
-                <Button fx:id="loginButton" layoutX="137.0" layoutY="379.0" mnemonicParsing="false" onAction="#checkLoginDetails" onKeyPressed="#handleKeyPress" prefHeight="25.0" prefWidth="127.0" text="Login">
+                <Button fx:id="loginButton" layoutX="141.0" layoutY="299.0" mnemonicParsing="false" onAction="#checkLoginDetails" onKeyPressed="#handleKeyPress" prefHeight="25.0" prefWidth="127.0" text="Login">
                <font>
                   <Font name="ADAM.CGPRO" size="12.0" />
                </font></Button>
-                <Button fx:id="createButton" layoutX="137.0" layoutY="417.0" mnemonicParsing="false" onAction="#createNewAccount" onKeyPressed="#handleKeyPress" prefHeight="25.0" prefWidth="127.0" text="Create Account">
+                <Button fx:id="createButton" layoutX="141.0" layoutY="333.0" mnemonicParsing="false" onAction="#createNewAccount" onKeyPressed="#handleKeyPress" prefHeight="25.0" prefWidth="127.0" text="Create Account">
                <font>
                   <Font name="ADAM.CGPRO" size="12.0" />
                </font></Button>
-                <Button fx:id="exitButton" layoutX="355.0" layoutY="20.0" mnemonicParsing="false" onAction="#closeApplication" onKeyPressed="#handleKeyPress" text="X">
-               <font>
-                  <Font name="ADAM.CGPRO" size="12.0" />
-               </font></Button>
-                <ImageView blendMode="SOFT_LIGHT" cacheHint="QUALITY" depthTest="ENABLE" fitHeight="225.0" fitWidth="251.0" layoutX="85.0" layoutY="43.0" preserveRatio="true">
+                <Button fx:id="exitButton" layoutX="337.0" layoutY="20.0" mnemonicParsing="false" onAction="#closeApplication" onKeyPressed="#handleKeyPress" prefHeight="23.0" prefWidth="44.0" text="X">
+                    <font>
+                        <Font name="ADAM.CGPRO" size="12.0" />
+                    </font></Button>
+                <Button fx:id="helpButton" layoutX="337.0" layoutY="50.0" mnemonicParsing="false" onAction="#openHelp" onKeyPressed="#handleKeyPress" text="Help">
+                    <font>
+                        <Font name="ADAM.CGPRO" size="12.0" />
+                    </font>
+                </Button>
+                <ImageView blendMode="SOFT_LIGHT" cacheHint="QUALITY" depthTest="ENABLE" fitHeight="195.0" fitWidth="251.0" layoutX="105.0" layoutY="20.0" preserveRatio="true">
                     <image>
                         <Image url="@PigeonsLogoDigital.png" />
                     </image>
                 </ImageView>
-                <Text layoutX="76.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username: ">
+                <Text layoutX="80.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username: ">
                <font>
                   <Font name="ADAM.CGPRO" size="12.0" />
                </font></Text>
-                <Text layoutX="76.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:">
+                <Text layoutX="80.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:">
                <font>
                   <Font name="ADAM.CGPRO" size="12.0" />
                </font></Text>
-            <Text fx:id="loginStatus" boundsType="VISUAL" layoutX="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Status: " textOrigin="CENTER" translateX="18.0" translateY="10.0" wrappingWidth="126.99999809265137" x="137.0" y="464.0">
+            <Text fx:id="loginStatus" boundsType="VISUAL" layoutX="24.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nil." textOrigin="CENTER" wrappingWidth="350.9367108345032">
                <font>
-                  <Font name="ADAM.CGPRO" size="12.0" />
+                  <Font size="10.0" />
                </font></Text>
+            <Text layoutX="24.0" layoutY="469.0" lineSpacing="2.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please create an account if you have not done so before previously. Usernames are unique and if taken, try another. Username and passwords are not case-sensitive. Click the 'HELP' button to launch the user guide. Click the 'X' button to close application. " wrappingWidth="350.93670654296875">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Text>
+            <Text layoutX="24.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Status Information: ">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Text>
+            <Text layoutX="24.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Help Information:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Text>
             </children>
         </Pane>
     </children>

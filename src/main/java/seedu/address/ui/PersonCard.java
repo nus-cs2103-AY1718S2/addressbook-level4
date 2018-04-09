@@ -101,7 +101,7 @@ public class PersonCard extends UiPart<Region> {
     private String fromTagNameToColor(String tagName) {
         // use hashCode to hash the tagName into an integer
         // this help keeping the label colors consistency through every run
-        return TAG_COLOR[Math.abs(tagName.hashCode()) % TAG_COLOR.length];
+        return TAG_COLOR[Math.abs(tagName.toLowerCase().hashCode()) % TAG_COLOR.length];
     }
 
     @Override

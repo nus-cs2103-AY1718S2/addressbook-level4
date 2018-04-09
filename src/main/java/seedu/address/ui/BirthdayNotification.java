@@ -18,6 +18,9 @@ import seedu.address.commons.events.ui.BirthdayNotificationEvent;
  */
 public class BirthdayNotification extends UiPart<Region> {
 
+    public static final String NOTIFICATION_TITLE = "Birthdays Today";
+    public static final String NOTIFICATION_HEADER_TEXT = "Birthday(s) on ";
+
     private static final String FXML = "BirthdayList.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -34,8 +37,8 @@ public class BirthdayNotification extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
-        alert.setTitle("Birthdays Today");
-        alert.setHeaderText("It's their birthdays today (" + dtf.format(event.getCurrentDate()) + ")\n");
+        alert.setTitle(NOTIFICATION_TITLE);
+        alert.setHeaderText(NOTIFICATION_HEADER_TEXT + dtf.format(event.getCurrentDate()));
         alert.setContentText(event.getBirthdayList());
         alert.getDialogPane().setId("birthdayDialogPane");
         alert.showAndWait();

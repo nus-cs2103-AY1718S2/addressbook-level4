@@ -84,7 +84,7 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
         BirthdayNotificationHandle alertDialog = new BirthdayNotificationHandle(guiRobot
                 .getStage("Birthdays Today"));
 
-        assertEquals("", alertDialog.getContentText());
+        assertEquals(BirthdaysCommand.MESSAGE_NO_BIRTHDAY_TODAY, alertDialog.getContentText());
     }
 
     /**

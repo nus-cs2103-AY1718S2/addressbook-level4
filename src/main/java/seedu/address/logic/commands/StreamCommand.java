@@ -54,7 +54,8 @@ public class StreamCommand extends Command {
     }
 
     /**
-     * Returns a {@String result} message according to the subject combination of {@Person selectedPerson} and {@int type}.
+     * Returns a {@String result} message according to the subject combination
+     * of {@Person selectedPerson} and {@int type}.
      * @return message to user
      */
     public static String scoreCalculation(Person selectedPerson, int type) {

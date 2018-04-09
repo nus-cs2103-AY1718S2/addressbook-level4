@@ -184,7 +184,7 @@ Format: `unfav INDEX`
 
 ****
 * Removes the student at specified `INDEX` from your favourites.
-* The index referes to the index number in the most recent listing.
+* The index refers to the index number in the most recent listing.
 ****
 
 Examples:
@@ -210,7 +210,7 @@ Format: `showDB INDEX`
 ****
 
 [TIP]
-A dashboard provides at-a-glance view of your student's progress. Each dashboard contains a list of milestones and tasks that you can set for your student.
+A dashboard provides an at-a-glance view of your student's progress. Each dashboard contains a list of milestones and tasks that you can set for your student.
 
 Examples:
 
@@ -274,7 +274,7 @@ Format: `addTask i/STUDENT_INDEX m/MILESTONE_INDEX n/NAME_OF_TASK o/DESCRIPTION_
 ****
 * Adds a task to the milestone at the specified `MILESTONE_INDEX`
 * The milestone is in the dashboard of the student at the specified `STUDENT_INDEX`
-* Both indexes refers to the index number shown in the most recent listing.
+* Both indexes refer to the index number shown in the most recent listing.
 * Both indexes *must be a positive integer* 1, 2, 3, ...
 ****
 
@@ -322,7 +322,7 @@ Format: `checkTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX`
 * Marks the task at the specified `TASK_INDEX` as completed
 * The task is in the milestone at the specified `MILESTONE_INDEX`
 * The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
-* All indexes refers to the index number shown in the most recent listing.
+* All indexes refer to the index number shown in the most recent listing.
 * All indexes *must be a positive integer* 1, 2, 3, ...
 ****
 

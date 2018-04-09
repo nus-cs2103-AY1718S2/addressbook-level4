@@ -36,7 +36,7 @@ public class ReviewCommand extends UndoableCommand {
 
     public static final String MESSAGE_REVIEW_PERSON_SUCCESS = "Reviewed Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "Both INDEX and REVIEW must be provided.";
-    public static final String MESSAGE_DUPLICATE_REVIEW = "Review must be different.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
     private final EditCommand.EditPersonDescriptor editPersonDescriptor;
@@ -61,7 +61,7 @@ public class ReviewCommand extends UndoableCommand {
         try {
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_REVIEW);
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
@@ -103,11 +103,7 @@ public class ReviewCommand extends UndoableCommand {
         while (iterator.hasNext()) {
             Review oldReview = iterator.next();
             String oldReviewer = oldReview.reviewer;
-            String oldValue = oldReview.value;
-            if (oldReviewer.equals(newReviewer) && oldValue.equals(newValue)) {
-                throw new CommandException(MESSAGE_DUPLICATE_REVIEW);
-            } else if (oldReviewer.equals(newReviewer)) {
-            } else {
+            if (!oldReviewer.equals(newReviewer)) {
                 updatedReviews.add(oldReview);
             }
         }

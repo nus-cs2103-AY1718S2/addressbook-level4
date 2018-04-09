@@ -3,6 +3,7 @@
 package seedu.address.model.review;
 
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.model.person.Email.EMAIL_VALIDATION_REGEX;
 
 /**
  * Represents a Person's review in the address book.
@@ -11,8 +12,6 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Review {
     public static final String MESSAGE_REVIEW_CONSTRAINTS =
             "Person reviewer and review can take any values, and they should not be blank.";
-    public static final String REVIEWER_VALIDATION_REGEX = "[^\\s].*";
-    public static final String REVIEW_VALIDATION_REGEX = "[^\\s].*";
     private static final String DEFAULT_REVIEWER = "-";
     private static final String DEFAULT_REVIEW = "-";
 
@@ -34,31 +33,23 @@ public class Review {
      */
     public Review(String combined) {
         checkArgument(isValidCombined(combined), MESSAGE_REVIEW_CONSTRAINTS);
-        this.reviewer = combined.split("[\\r\\n]+")[0].trim();
-        this.value = combined.split("[\\r\\n]+")[1].trim();
-    }
-
-    /**
-     * Returns true if a given string is a valid reviewer.
-     */
-    public static boolean isValidReviewer(String test) {
-        return test.matches(REVIEWER_VALIDATION_REGEX);
-    }
-
-    /**
-     * Returns true if a given string is a valid review.
-     */
-    public static boolean isValidReview(String test) {
-        return test.matches(REVIEW_VALIDATION_REGEX);
+        this.reviewer = combined.split("[\\r\\n]+", 2)[0].trim();
+        this.value = combined.split("[\\r\\n]+", 2)[1].trim();
     }
 
     /**
      * Returns true if a given string is a valid combined reviewer and review.
      */
     public static boolean isValidCombined(String test) {
-        return test.split("[\\r\\n]+").length == 2 && (
-                isValidReviewer(test.split("[\\r\\n]+")[0].trim())
-                && isValidReview(test.split("[\\r\\n]+")[1].trim()));
+        return test.split("[\\r\\n]+", 2).length == 2
+                && (isValidReviewer(test.split("[\\r\\n]+", 2)[0].trim()));
+    }
+
+    /**
+     * Returns true if a given string is a valid reviewer.
+     */
+    public static boolean isValidReviewer(String test) {
+        return test.matches(EMAIL_VALIDATION_REGEX);
     }
 
     @Override

@@ -10,13 +10,13 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class BloodType {
 
     public static final String MESSAGE_BLOODTYPE_CONSTRAINTS =
-            "Patient blood types should only contain alphabets and punctuations, and it should not be blank";
+            "Patient blood types should only be A, B, O, or AB, must be either + or -, and it should not be blank";
 
     /*
      * The first character of the blood type must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String BLOODTYPE_VALIDATION_REGEX = "[\\p{Alpha}]{1,2}[\\p{Punct}]?";
+    public static final String BLOODTYPE_VALIDATION_REGEX = "(A|B|AB|O)[+-]";
 
     public final String value;
 

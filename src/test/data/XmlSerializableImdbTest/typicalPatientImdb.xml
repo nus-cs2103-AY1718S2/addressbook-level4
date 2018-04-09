@@ -9,7 +9,7 @@
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
         <dob>11/11/1991</dob>
-        <bloodType>A</bloodType>
+        <bloodType>A+</bloodType>
         <remark></remark>
         <recordList></recordList>
         <tagged>friends</tagged>
@@ -58,7 +58,7 @@
         <email>werner@example.com</email>
         <address>michegan ave</address>
         <dob>07/07/1987</dob>
-        <bloodType>O</bloodType>
+        <bloodType>O+</bloodType>
         <remark></remark>
         <recordList></recordList>
         <tagged>friends</tagged>

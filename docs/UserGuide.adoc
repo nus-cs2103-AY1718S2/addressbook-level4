@@ -181,7 +181,7 @@ There will be an administrator role which can add a new username and password to
 
 === Patient Commands
 
-The commands listed in this section are commands that pertain to the patient entries of IMDB.
+The commands listed in this section are commands for managing a patient's details and records.
 
 ==== Adding a patient: `add` or `a`
 
@@ -267,23 +267,23 @@ Format: `addc` or `ac`
 
 Examples:
 
-* `addc 1 aspirin` +
+* `addc 1 c/aspirin` +
 `aspirin` will be added to the list of conditions that the patient at index `1` has.
 
-* `ac 2 asthma` +
+* `ac 2 c/asthma` +
 `asthma` will be added to the list of conditions that the patient at index `2` has.
 
-==== Removing the condition of an existing patient: `delc` [since in v1.4]
+==== Removing the condition of an existing patient: `delc` [since v1.4]
 
 Removes a medical condition to an existing patient.
 Format: `delc` or `dc`
 
 Examples:
 
-* `delc 1 aspirin` +
+* `delc 1 c/aspirin` +
 `aspirin` will be removed from the list of conditions that the patient at index `1` has.
 
-* `dc 2 asthma` +
+* `dc 2 c/asthma` +
 `asthma` will be removed from the list of conditions that the patient at index `2` has.
 
 ==== Listing all patients : `list` or `ls`

@@ -33,12 +33,13 @@ public class Person {
     private final Remark remark;
     private final Cca cca;
     private final InjuriesHistory injuriesHistory;
+    //private final NextOfKin nextOfKin;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Nric nric, Set<Tag> tags, Set<Subject> subjects, Remark remark, Cca cca,
-                  InjuriesHistory injuriesHistory) {
+                  InjuriesHistory injuriesHistory/*, NextOfKin nextOfKin*/) {
         requireAllNonNull(name, nric, tags, subjects, cca);
         this.name = name;
         this.nric = nric;
@@ -48,6 +49,7 @@ public class Person {
         this.remark = remark;
         this.cca = cca;
         this.injuriesHistory = injuriesHistory;
+        //this.nextOfKin = nextOfKin;
     }
 
     public Name getName() {
@@ -69,7 +71,11 @@ public class Person {
     public InjuriesHistory getInjuriesHistory() {
         return injuriesHistory;
     }
-
+/*
+    public NextOfKin getNextOfKin() {
+        return nextOfKin;
+    }
+*/
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -206,6 +212,7 @@ public class Person {
                .append(getRemark());
         builder.append(" Cca: ").append(getCca());
         builder.append(" InjuriesHistory: ").append(getInjuriesHistory());
+        //builder.append("  NextOfKin: ").append(getNextOfKin());
         return builder.toString();
     }
 

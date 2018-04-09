@@ -78,8 +78,11 @@ public class EditCommandParser implements Parser<EditCommand> {
                 Resume processedResume = ResumeUtil.process(parsedResume.get());
                 editPersonDescriptor.setResume(processedResume);
             }
-            parseProfileImageForEdit(argMultimap.getValue(PREFIX_IMAGE))
-                    .ifPresent(editPersonDescriptor::setProfileImage);
+            Optional<ProfileImage> parsedProfileImage = parseProfileImageForEdit(argMultimap.getValue(PREFIX_IMAGE));
+            if (parsedProfileImage.isPresent()) {
+                ProfileImage processedProfileImage = ProfileImageUtil.process(parsedProfileImage.get());
+                editPersonDescriptor.setProfileImage(processedProfileImage);
+            }
             parseCommentForEdit(argMultimap.getValue(PREFIX_COMMENT)).ifPresent(editPersonDescriptor::setComment);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         } catch (IllegalValueException ive) {

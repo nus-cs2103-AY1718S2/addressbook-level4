@@ -50,7 +50,7 @@ public class PersonUtil {
             sb.append(PREFIX_RESUME + person.getResume().userInput + " ");
         }
         if (!isNull(person.getProfileImage().value)) {
-            sb.append(PREFIX_IMAGE + person.getProfileImage().value + " ");
+            sb.append(PREFIX_IMAGE + person.getProfileImage().userInput + " ");
         }
         if (!isNull(person.getComment().value)) {
             sb.append(PREFIX_COMMENT + person.getComment().value + " ");

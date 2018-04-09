@@ -11,7 +11,7 @@ import seedu.address.commons.core.LogsCenter;
 /**
  * Handles file operation for resume folder
  */
-public class ResumeFileStorage {
+public class DataFileStorage {
     private static final String JAR_FOLDER = System.getProperty("user.dir");
     private static final String DATA_FOLDER = JAR_FOLDER + File.separator + "data";
 
@@ -49,15 +49,15 @@ public class ResumeFileStorage {
     }
 
     /**
-     * Deletes the unreferenced resume
-     * @param resumeFileName
+     * Deletes the unreferenced data file
+     * @param dataFileName
      */
-    public static void deleteUnreferencedResume(String resumeFileName) {
-        File unreferencedResume = new File(JAR_FOLDER + File.separator + resumeFileName);
-        assert(unreferencedResume.exists() && unreferencedResume.isFile());
-        boolean isDeleted = unreferencedResume.delete();
+    public static void deleteUnreferencedDataFile(String dataFileName) {
+        File unreferencedDataFile = new File(JAR_FOLDER + File.separator + dataFileName);
+        assert(unreferencedDataFile.exists() && unreferencedDataFile.isFile());
+        boolean isDeleted = unreferencedDataFile.delete();
         if (!isDeleted) {
-            LogsCenter.getLogger(ResumeFileStorage.class)
+            LogsCenter.getLogger(DataFileStorage.class)
                     .warning("Clean up of Unreferenced Resume file unsuccessful.");
         }
     }

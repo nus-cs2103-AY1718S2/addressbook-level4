@@ -86,6 +86,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                     ParserUtil.parseProfileImage(argMultimap.getValue(PREFIX_IMAGE));
             ProfileImage profileImage = profileImageOptional.isPresent()
                     ? profileImageOptional.get() : new ProfileImage(null);
+            profileImage = ProfileImageUtil.process(profileImage);
 
             Optional<Comment> commentOptional =
                     ParserUtil.parseComment(argMultimap.getValue(PREFIX_COMMENT));

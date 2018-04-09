@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.logic.parser.ProfileImageUtil;
 import seedu.address.logic.parser.ResumeUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Comment;
@@ -92,6 +93,11 @@ public class PersonBuilder {
             throw new AssertionError("Testing environment should not be read only!");
         }
         profileImage = new ProfileImage(formImagePathFromFileName(DEFAULT_PROFILE_IMAGE));
+        try {
+            profileImage = ProfileImageUtil.process(profileImage);
+        } catch (IOException ioe) {
+            throw new AssertionError("Testing environment should not be read only!");
+        }
         comment = new Comment(DEFAULT_COMMENT);
         interviewDate = new InterviewDate();
         status = new Status();
@@ -238,6 +244,19 @@ public class PersonBuilder {
      * Sets the {@code ProfileImage} of the {@code Person} that we are building.
      */
     public PersonBuilder withProfileImage(String profileImage) {
+        this.profileImage = new ProfileImage(profileImage);
+        try {
+            this.profileImage = ProfileImageUtil.process(this.profileImage);
+        } catch (IOException ioe) {
+            throw new AssertionError("Testing environment should not be read only!");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code ProfileImage} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withProfileImageLazy(String profileImage) {
         this.profileImage = new ProfileImage(profileImage);
         return this;
     }

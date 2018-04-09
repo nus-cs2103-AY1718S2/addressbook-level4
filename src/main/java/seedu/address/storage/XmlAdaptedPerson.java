@@ -269,7 +269,7 @@ public class XmlAdaptedPerson {
         if (!isNull(this.profileImage) && !ProfileImage.isValidFile(this.profileImage)) {
             profileImage = new ProfileImage(null);
         } else {
-            profileImage = new ProfileImage(this.profileImage);
+            profileImage = new ProfileImage(this.profileImage, this.profileImage);
         }
 
         final Comment comment;

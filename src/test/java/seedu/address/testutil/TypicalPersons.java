@@ -59,12 +59,12 @@ public class TypicalPersons {
             .withRating("2.7", "3.9",
                     "2.5", "2.5")
             .withResumeLazy(formPathFromFileName("alice.pdf"))
-            .withProfileImage(formImagePathFromFileName("elon.jpg"))
+            .withProfileImageLazy(formImagePathFromFileName("elon.jpg"))
             .withComment("Alice!")
             .withInterviewDate(LocalDateTime.of(2018, Month.APRIL, 2, 14, 0, 0))
             .withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
-            .withAddress("311, Clementi Ave 2, #02-25").withResume(formPathFromFileName(null))
+            .withAddress("311, Clementi Ave 2, #02-25").withResumeLazy(formPathFromFileName(null))
             .withEmail("johnd@example.com").withPhone("98765432").withUniversity("NTU")
             .withExpectedGraduationYear("2021")
             .withMajor("Computer Engineering")
@@ -72,7 +72,7 @@ public class TypicalPersons {
             .withJobApplied("Software Engineer")
             .withRating("4", "4.5",
                     "3", "3.5")
-            .withProfileImage(formImagePathFromFileName("gates.jpg"))
+            .withProfileImageLazy(formImagePathFromFileName("gates.jpg"))
             .withComment("Benson!")
             .withInterviewDate(LocalDateTime.of(2018, Month.APRIL, 6, 16, 0, 0))
             .withStatus(2).withTags("owesMoney", "friends").build();
@@ -84,7 +84,7 @@ public class TypicalPersons {
             .withJobApplied("Front-end Developer")
             .withRating("-1", "-1",
                     "-1", "-1")
-            .withProfileImage(null).withComment(null).build();
+            .withProfileImageLazy(null).withComment(null).build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street").withUniversity("SUTD")
             .withExpectedGraduationYear("2020")
@@ -93,9 +93,9 @@ public class TypicalPersons {
             .withJobApplied("Web Security Researcher")
             .withRating("-1", "-1",
                     "-1", "-1")
-            .withProfileImage(formImagePathFromFileName("jobs.jpg"))
+            .withProfileImageLazy(formImagePathFromFileName("jobs.jpg"))
             .withComment("Daniel!")
-            .withResume(formPathFromFileName("daniel.pdf")).build();
+            .withResumeLazy(formPathFromFileName("daniel.pdf")).build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave").withUniversity("NUS")
             .withExpectedGraduationYear("2018")
@@ -104,7 +104,7 @@ public class TypicalPersons {
             .withJobApplied("Big Data Analyst")
             .withRating("-1", "-1",
                     "-1", "-1")
-            .withProfileImage(formImagePathFromFileName("larry.jpg"))
+            .withProfileImageLazy(formImagePathFromFileName("larry.jpg"))
             .withComment("Elle!").withStatus(7).build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo").withUniversity("NUS")
@@ -114,7 +114,7 @@ public class TypicalPersons {
             .withJobApplied("Software Engineer")
             .withRating("-1", "-1",
                     "-1", "-1")
-            .withProfileImage(formImagePathFromFileName("mark.jpg"))
+            .withProfileImageLazy(formImagePathFromFileName("mark.jpg"))
             .withComment("Fiona!").withStatus(1).build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street").withUniversity("NYU")
@@ -124,8 +124,8 @@ public class TypicalPersons {
             .withJobApplied("Software Engineer")
             .withRating("-1", "-1",
                     "-1", "-1")
-            .withResume(formPathFromFileName("george.pdf")).withStatus(6)
-            .withProfileImage(null).withComment(null).build();
+            .withResumeLazy(formPathFromFileName("george.pdf")).withStatus(6)
+            .withProfileImageLazy(null).withComment(null).build();
     public static final Person ALICE_WITHOUT_TAG = new PersonBuilder(ALICE).withTags().build();
     public static final Person BENSON_WITH_FRIENDS_TAG_REMOVED = new PersonBuilder(BENSON)
             .withTags("owesMoney").build();
@@ -139,8 +139,8 @@ public class TypicalPersons {
             .withGradePointAverage("3.75")
             .withRating("-1", "-1",
                     "-1", "-1")
-            .withResume(formPathFromFileName("hoon.pdf"))
-            .withProfileImage(null).withComment(null).build();
+            .withResumeLazy(formPathFromFileName("hoon.pdf"))
+            .withProfileImageLazy(null).withComment(null).build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
             .withEmail("hans@example.com").withAddress("chicago ave").withUniversity("NUS")
             .withExpectedGraduationYear("2018")
@@ -148,7 +148,7 @@ public class TypicalPersons {
             .withGradePointAverage("3.11")
             .withRating("-1", "-1",
                     "-1", "-1")
-            .withProfileImage(null).withComment(null).build();
+            .withProfileImageLazy(null).withComment(null).build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
@@ -158,20 +158,20 @@ public class TypicalPersons {
             .withGradePointAverage(VALID_GRADE_POINT_AVERAGE_AMY)
             .withRating(VALID_TECHNICAL_SKILLS_SCORE_AMY, VALID_COMMUNICATION_SKILLS_SCORE_AMY,
                     VALID_PROBLEM_SOLVING_SKILLS_SCORE_AMY, VALID_EXPERIENCE_SCORE_AMY)
-            .withResume(VALID_RESUME_AMY)
-            .withProfileImage(VALID_PROFILE_IMAGE_AMY).withComment(VALID_COMMENT_AMY)
+            .withResumeLazy(VALID_RESUME_AMY)
+            .withProfileImageLazy(VALID_PROFILE_IMAGE_AMY).withComment(VALID_COMMENT_AMY)
             .withTags(VALID_TAG_FRIEND).build();
 
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withUniversity(VALID_UNIVERSITY_BOB)
-            .withResume(VALID_RESUME_BOB)
+            .withResumeLazy(VALID_RESUME_BOB)
             .withExpectedGraduationYear(VALID_EXPECTED_GRADUATION_YEAR_BOB)
             .withMajor(VALID_MAJOR_BOB)
             .withGradePointAverage(VALID_GRADE_POINT_AVERAGE_BOB)
             .withJobApplied(VALID_JOB_APPLIED_BOB)
             .withRating(VALID_TECHNICAL_SKILLS_SCORE_BOB, VALID_COMMUNICATION_SKILLS_SCORE_BOB,
                     VALID_PROBLEM_SOLVING_SKILLS_SCORE_BOB, VALID_EXPERIENCE_SCORE_BOB)
-            .withProfileImage(VALID_PROFILE_IMAGE_BOB).withComment(VALID_COMMENT_BOB)
+            .withProfileImageLazy(VALID_PROFILE_IMAGE_BOB).withComment(VALID_COMMENT_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER

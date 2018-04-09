@@ -60,11 +60,16 @@ public class LogicManager extends ComponentManager implements Logic {
     /**
      * Deletes unreferenced resume files for disk space optimisation
      */
-    public void cleanUnusedResume() {
-        HashSet<String> usedResume = new HashSet<String>();
+    public void cleanUnusedResumeAndProfilePic(String addressBookXmlFilePath) {
+        HashSet<String> usedFiles = new HashSet<String>();
         for (Person p: model.getFilteredPersonList()) {
             if (p.getResume().value != null) {
-                usedResume.add(p.getResume().value.substring(5)); //"data\..."
+                usedFiles.add(p.getResume().value.substring(5)); //"data\..."
+            }
+        }
+        for (Person p: model.getFilteredPersonList()) {
+            if (p.getProfileImage().value != null) {
+                usedFiles.add(p.getProfileImage().value.substring(5)); //"data\..."
             }
         }
         String userDir = System.getProperty("user.dir");
@@ -74,10 +79,7 @@ public class LogicManager extends ComponentManager implements Logic {
             return;
         }
         for (File child : dataDirList) {
-            if (child.getName().equals("addressbook.xml")) {
-                break;
-            }
-            if (!usedResume.contains(child.getName())) {
+            if (child.getName().lastIndexOf(".") == -1 && !usedFiles.contains(child.getName())) {
                 child.delete();
             }
         }

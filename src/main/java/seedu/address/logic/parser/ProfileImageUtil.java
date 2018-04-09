@@ -10,29 +10,29 @@ import java.sql.Timestamp;
 
 import javax.xml.bind.DatatypeConverter;
 
-import seedu.address.model.person.Resume;
+import seedu.address.model.person.ProfileImage;
 import seedu.address.storage.DataFileStorage;
 
 /**
- * Handles resume file in the data folder
+ * Resolves the unreferenced profile image files in data folder
  */
-public class ResumeUtil {
+public class ProfileImageUtil {
     /**
-     * Processes the resume into the correct resume name
-     * @param resume
-     * @return processed resume
+     * Processes the profileImage into the correct profileImage name
+     * @param profileImage
+     * @return processed profileImage
      * @throws IOException
      */
-    public static Resume process(Resume resume) throws IOException {
-        String filePath = resume.value;
+    public static ProfileImage process(ProfileImage profileImage) throws IOException {
+        String filePath = profileImage.value;
         if (filePath == null) {
-            return new Resume(null);
+            return new ProfileImage(null);
         }
         String fullPath = System.getProperty("user.dir") + File.separator + filePath;
         assert(new File(fullPath).exists());
         String newFileName = getNewFileName(fullPath);
-        transferResumeFileToDataFolder(fullPath, newFileName);
-        return new Resume("data" + File.separator + newFileName, resume.value);
+        transferProfileImageFileToDataFolder(fullPath, newFileName);
+        return new ProfileImage("data" + File.separator + newFileName, profileImage.value);
     }
     private static String getNewFileName(String fullPath) {
         MessageDigest md = null;
@@ -42,8 +42,8 @@ public class ResumeUtil {
             throw new AssertionError("This should never happen.");
         }
         assert(md != null);
-        File currResumeFile = new File(fullPath);
-        assert(currResumeFile.exists() && currResumeFile.isFile());
+        File currprofileImageFile = new File(fullPath);
+        assert(currprofileImageFile.exists() && currprofileImageFile.isFile());
         try {
             md.update(Files.readAllBytes(Paths.get(fullPath)));
         } catch (IOException ioe) {
@@ -53,17 +53,17 @@ public class ResumeUtil {
         return Long.toString(new Timestamp(System.currentTimeMillis()).getTime())
                 + "_" + DatatypeConverter.printHexBinary(digest).toUpperCase();
     }
-    private static void transferResumeFileToDataFolder(String fullPath, String newFileName) throws IOException {
+    private static void transferProfileImageFileToDataFolder(String fullPath, String newFileName) throws IOException {
         DataFileStorage.copyResumeFileToDataFolder(fullPath, newFileName);
     }
 
     /**
      * cleans Data Folder when there is a DuplicatePersonException
-     * @param resume the resume to be deleted in folder
+     * @param profileImage the resume to be deleted in folder
      */
-    public static void cleanUpDataFolder(Resume resume) {
-        if (resume.isHashed()) {
-            DataFileStorage.deleteUnreferencedDataFile(resume.value);
+    public static void cleanUpDataFolder(ProfileImage profileImage) {
+        if (profileImage.isHashed()) {
+            DataFileStorage.deleteUnreferencedDataFile(profileImage.value);
         }
     }
 }

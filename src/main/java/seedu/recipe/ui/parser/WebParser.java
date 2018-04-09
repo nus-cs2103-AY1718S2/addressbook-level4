@@ -31,28 +31,28 @@ public abstract class WebParser {
 
         if (!name.equals("")) {
             StringBuilder commandBuilder = new StringBuilder();
-            commandBuilder.append(COMMAND_WORD);
-            commandBuilder.append(LF);
-            commandBuilder.append(PREFIX_NAME);
-            commandBuilder.append(name);
+            commandBuilder.append(COMMAND_WORD)
+                    .append(LF)
+                    .append(PREFIX_NAME)
+                    .append(name);
             if (!ingredient.equals("")) {
-                commandBuilder.append(LF);
-                commandBuilder.append(PREFIX_INGREDIENT);
-                commandBuilder.append(ingredient);
+                commandBuilder.append(LF)
+                    .append(PREFIX_INGREDIENT)
+                    .append(ingredient);
             }
             if (!instruction.equals("")) {
-                commandBuilder.append(LF);
-                commandBuilder.append(PREFIX_INSTRUCTION);
-                commandBuilder.append(instruction);
+                commandBuilder.append(LF)
+                    .append(PREFIX_INSTRUCTION)
+                    .append(instruction);
             }
             if (!imageUrl.equals("")) {
-                commandBuilder.append(LF);
-                commandBuilder.append(PREFIX_IMG);
-                commandBuilder.append(imageUrl);
+                commandBuilder.append(LF)
+                    .append(PREFIX_IMG)
+                    .append(imageUrl);
             }
-            commandBuilder.append(LF);
-            commandBuilder.append(PREFIX_URL);
-            commandBuilder.append(url);
+            commandBuilder.append(LF)
+                .append(PREFIX_URL)
+                .append(url);
             return commandBuilder.toString();
         }
         return null;

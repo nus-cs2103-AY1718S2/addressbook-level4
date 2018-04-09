@@ -26,9 +26,9 @@ import java.util.regex.Pattern;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditCommand.EditAppointmentDescriptor;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.address.logic.commands.EditCommand.EditPetPatientDescriptor;
+import seedu.address.logic.descriptors.EditAppointmentDescriptor;
+import seedu.address.logic.descriptors.EditPersonDescriptor;
+import seedu.address.logic.descriptors.EditPetPatientDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
@@ -77,6 +77,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
     }
 
+    //@@author
     /**
      * Parses the given {@code personInfo} of arguments in the context of the EditCommand
      * and returns an EditCommand object for execution.
@@ -115,6 +116,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         return new EditCommand(index, editPersonDescriptor);
     }
 
+    //@@author chialejing
     /**
      * Parses the given {@code petPatientInfo} of arguments in the context of the EditCommand
      * and returns an EditCommand object for execution.
@@ -199,8 +201,11 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditCommand(index, editAppointmentDescriptor);    }
+        return new EditCommand(index, editAppointmentDescriptor);
 
+    }
+
+    //@@author
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
      * If {@code tags} contain only one element which is an empty string, it will be parsed into a

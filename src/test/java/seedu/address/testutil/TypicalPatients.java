@@ -52,7 +52,7 @@ public class TypicalPatients {
                     .withPhone("85355255")
                     .withTags("friends")
                     .withNric("S1234567A")
-                    .withBloodType("A")
+                    .withBloodType("A+")
                     .withDob("11/11/1991")
                     .build();
         } catch (ParseException pe) {
@@ -115,7 +115,7 @@ public class TypicalPatients {
             temp = new PatientBuilder().withName("Elle Meyer").withPhone("9482224")
                     .withEmail("werner@example.com").withAddress("michegan ave")
                     .withNric("S5673412E")
-                    .withBloodType("O")
+                    .withBloodType("O+")
                     .withDob("07/07/1987").build();
         } catch (ParseException pe) {
             try {

@@ -12,7 +12,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class TextField {
 
     public static final String MESSAGE_TEXTFIELD_CONSTRAINTS =
-            "Patient text field should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Patient text field should only contain visible characters and spaces, and it should not be blank";
 
     /*
      * TextField must not be null and it can only contain alphanumeric characters and spaces.

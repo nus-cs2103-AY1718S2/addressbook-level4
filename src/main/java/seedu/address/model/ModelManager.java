@@ -164,6 +164,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAppointmentChanged(patient);
     }
 
+    //@@author Kyholmes
     @Override
     public ObservableList<Integer> getPatientListIndexInQueue() {
         return imdb.getUniquePatientQueueNo();
@@ -191,6 +192,7 @@ public class ModelManager extends ComponentManager implements Model {
         return imdb.getUniquePatientQueue();
     }
 
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

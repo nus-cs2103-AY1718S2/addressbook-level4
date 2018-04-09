@@ -104,6 +104,7 @@ public class ImdbTest {
         imdb.getTagList().remove(0);
     }
 
+    //@@author Kyholmes-test
     @Test
     public void getVisitingQueue_modifyQueue_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
@@ -156,6 +157,7 @@ public class ImdbTest {
         imdbWithAmyAndBob.removePatientFromQueue();
     }
 
+    //@@author
     /**
      * A stub ReadOnlyImdb whose patients and tags lists can violate interface constraints.
      */
@@ -181,6 +183,7 @@ public class ImdbTest {
             return tags;
         }
 
+        //@@author Kyholmes-test
         @Override
         public ObservableList<AppointmentEntry> getAppointmentEntryList() {
             return appointments;

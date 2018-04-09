@@ -287,16 +287,6 @@ public class ImdbParserTest {
     }
 
     @Test
-    public void parseCommand_viewAppointment() throws Exception {
-        LoginManager.authenticate("bob", "password456");
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        ViewAppointmentCommand command = (ViewAppointmentCommand) parser.parseCommand(
-                ViewAppointmentCommand.COMMAND_WORD + " " + keywords.stream()
-                        .collect(Collectors.joining(" ")));
-        assertEquals(new ViewAppointmentCommand(new NameContainsKeywordsPredicate(keywords)), command);
-    }
-
-    @Test
     public void record_returnsRecordCommand() throws Exception {
         LoginManager.authenticate("alice", "password123");
         assertTrue(parser.parseCommand(RecordCommand.COMMAND_WORD + " "
@@ -322,6 +312,17 @@ public class ImdbParserTest {
         LoginManager.authenticate("alice", "password123");
         assertTrue(parser.parseCommand(RemoveRecordCommand.COMMAND_ALIAS + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_INDEX + "1") instanceof RemoveRecordCommand);
+    }
+
+    //@@author Kyholmes-test
+    @Test
+    public void parseCommand_viewAppointment() throws Exception {
+        LoginManager.authenticate("bob", "password456");
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        ViewAppointmentCommand command = (ViewAppointmentCommand) parser.parseCommand(
+                ViewAppointmentCommand.COMMAND_WORD + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")));
+        assertEquals(new ViewAppointmentCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test
@@ -390,6 +391,7 @@ public class ImdbParserTest {
         assertEquals(new RemovePatientQueueCommand(), command);
     }
 
+    //@@author
     @Test
     public void parseCommand_printCommand() throws Exception {
         LoginManager.authenticate("alice", "password123");

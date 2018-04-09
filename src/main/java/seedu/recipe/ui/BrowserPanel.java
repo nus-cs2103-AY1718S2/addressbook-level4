@@ -71,10 +71,6 @@ public class BrowserPanel extends UiPart<Region> {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
 
-    public void loadContent(String content) {
-        Platform.runLater(() -> browser.getEngine().loadContent(content));
-    }
-
     /**
      * Loads a website on the user's external default browser based on the
      *
@@ -118,6 +114,9 @@ public class BrowserPanel extends UiPart<Region> {
                 defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_LIGHT);
             }
             loadPage(defaultPage.toExternalForm());
+            logger.info("BrowserPanel is empty, changed theme and reloaded BrowserPanel.");
+        } else {
+            logger.info("BrowserPanel is not empty, changed theme without reloading BrowserPanel.");
         }
     }
 
@@ -138,7 +137,12 @@ public class BrowserPanel extends UiPart<Region> {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-            return !(loadedUrl.equals(lightTheme) || loadedUrl.equals(darkTheme));
+            boolean isLightThemeLoaded = loadedUrl.equals(lightTheme);
+            boolean isDarkThemeLoaded = loadedUrl.equals(darkTheme);
+
+            boolean isBlankPageLoaded = isLightThemeLoaded || isDarkThemeLoaded;
+
+            return !isBlankPageLoaded;
         }
     }
     //@@author

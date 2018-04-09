@@ -54,6 +54,15 @@ public class WikiaParser extends WebParser {
 
     @Override
     public String getIngredient() {
+        Elements[] arrayOfElementsOfIngredients = getElementsOfIngredient();
+        return getIngredientString(arrayOfElementsOfIngredients);
+    }
+
+    /**
+     * Returns an array of size 2 of Elements. The first contains all Element with class "a", which contain a link.
+     * The second contains all Element with class "li", which contain the whole ingredient line.
+     */
+    private Elements[] getElementsOfIngredient() {
         Elements elements = contentText.select("h2,ul");
         Iterator<Element> eleIte = elements.iterator();
         while (eleIte.hasNext() && !eleIte.next().text().startsWith("Ingredient")) {
@@ -70,6 +79,16 @@ public class WikiaParser extends WebParser {
             elementsWithIngredient.addAll(nextElement.select("li"));
             elementsWithIngredientWithLink.addAll(nextElement.select("a"));
         }
+
+        return new Elements[] {elementsWithIngredientWithLink, elementsWithIngredient};
+    }
+
+    /**
+     * Returns a Ingredient string that can be used in an add command from the list of ingredients.
+     */
+    private String getIngredientString(Elements[] arrayOfElementsOfIngredients) {
+        Elements elementsWithIngredientWithLink = arrayOfElementsOfIngredients[0];
+        Elements elementsWithIngredient = arrayOfElementsOfIngredients[1];
 
         List<String> ingredientList;
         if (elementsWithIngredientWithLink.isEmpty()) {

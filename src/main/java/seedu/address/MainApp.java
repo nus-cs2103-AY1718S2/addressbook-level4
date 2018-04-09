@@ -240,7 +240,7 @@ public class MainApp extends Application {
             createScriptIfNeeded();
             readWelcomeScript();
         } catch (IOException e) {
-            logger.warning("Cannot read Welcome script");
+            logger.warning("Unable to read Welcome script");
         }
     }
 

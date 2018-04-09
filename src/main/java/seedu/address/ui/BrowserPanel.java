@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.List;
 import java.util.logging.Logger;
@@ -82,15 +84,43 @@ public class BrowserPanel extends UiPart<Region> {
      */
     private void readPersonName(Person person) {
         try {
-            Runtime.getRuntime().exec("wscript src\\main\\resources\\scripts\\ClickOnNameCard.vbs"
-                    + " " + person.getName().fullName);
+            createFolderIfNeeded();
+            createScriptIfNeeded();
+            readPersonNameScript(person);
         } catch (IOException e) {
-            try {
-                Runtime.getRuntime().exec("osascript src\\main\\resources\\scripts\\ClickOnNameCardMac.scpt"
-                        + " " + person.getName().fullName);
-            } catch (IOException e1) {
-                logger.warning("Unable to load welcome message.");
-            }
+            logger.warning("Unable to read Introduce person script");
+        }
+    }
+
+    private void readPersonNameScript(Person person) throws IOException {
+        logger.info("Running welcome script");
+        Runtime.getRuntime().exec("wscript.exe script\\ReadPersonName.vbs"
+                + " " + person.getName().fullName);
+    }
+
+    private void createScriptIfNeeded() throws IOException {
+        File f = new File("script\\ReadPersonName.vbs");
+        if (!f.exists()) {
+            File file1 = new File("script\\ReadPersonName.txt");
+            logger.info("Creating script ReadPersonName.txt");
+            file1.createNewFile();
+            logger.info("Writing to ReadPersonName.txt");
+            PrintWriter writer = new PrintWriter("script\\ReadPersonName.txt", "UTF-8");
+            writer.println("name = WScript.Arguments(0)");
+            writer.println("speaks=\"This is \" + name");
+            writer.println("CreateObject(\"sapi.spvoice\").Speak speaks");
+            writer.close();
+            logger.info("Converting ReadPersonName.txt to ReadPersonName.vbs");
+            File file2 = new File("script\\ReadPersonName.vbs");
+            file1.renameTo(file2);
+        }
+    }
+
+    private void createFolderIfNeeded() {
+        File dir = new File("script");
+        if (!dir.exists()) {
+            logger.info("Creating script directory");
+            boolean successful = dir.mkdirs();
         }
     }
     //@@author

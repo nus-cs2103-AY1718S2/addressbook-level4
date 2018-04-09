@@ -110,7 +110,7 @@ public class EditMiscCommand extends UndoableCommand {
         assert studentToEdit != null;
 
         UniqueKey uniqueKey = studentToEdit.getUniqueKey();
-        Name name =studentToEdit.getName();
+        Name name = studentToEdit.getName();
         Phone phone = studentToEdit.getPhone();
         Email email = studentToEdit.getEmail();
         Address address = studentToEdit.getAddress();

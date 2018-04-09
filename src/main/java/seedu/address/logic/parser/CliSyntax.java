@@ -23,6 +23,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_TASK_INDEX = new Prefix("tk/");
     public static final Prefix PREFIX_ALLERGIES = new Prefix("al/");
     public static final Prefix PREFIX_NEXTOFKINNAME = new Prefix("nokn/");
-    public static final Prefix PREFIX_NEXTOFKINPHONE= new Prefix("nokp/");
+    public static final Prefix PREFIX_NEXTOFKINPHONE = new Prefix("nokp/");
     public static final Prefix PREFIX_REMARKS = new Prefix("r/");
 }

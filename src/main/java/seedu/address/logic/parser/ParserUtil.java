@@ -379,7 +379,6 @@ public class ParserUtil {
         }
         return new Remarks(remarks);
     }
-
     /**
      * Parses a {@code Optional<String> remarks} into a {@code Optional<Remarks>} instance
      * if {@code remarks} is present.
@@ -390,10 +389,6 @@ public class ParserUtil {
         requireNonNull(remarks);
         return remarks.isPresent() ? Optional.of(parseRemarks(remarks.get())) : Optional.empty();
     }
-
-
-
-
-// @@ author
+    // @@ author
 }
 

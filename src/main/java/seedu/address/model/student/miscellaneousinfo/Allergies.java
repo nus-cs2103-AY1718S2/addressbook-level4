@@ -33,7 +33,7 @@ public class Allergies {
      *
      * @param allergies A valid name string of allergies.
      */
-    public Allergies(String allergies){
+    public Allergies(String allergies) {
         requireNonNull(allergies);
         checkArgument(isValidAllergies(allergies), MESSAGE_ALLERGIES_CONSTRAINTS);
         this.value = allergies;

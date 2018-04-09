@@ -14,32 +14,32 @@ import seedu.address.model.student.miscellaneousinfo.Remarks;
  */
 public class XmlAdaptedMiscInfo {
 
-        public static final String MISSING_FIELD_MESSAGE_FORMAT = "Student's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Student's %s field is missing!";
 
-        @XmlElement(required = true)
-        private String allergies;
-        @XmlElement(required = true)
-        private String nextOfKinName;
-        @XmlElement(required = true)
-        private String nextOfKinPhone;
-        @XmlElement(required = true)
-        private String remarks;
+    @XmlElement(required = true)
+    private String allergies;
+    @XmlElement(required = true)
+    private String nextOfKinName;
+    @XmlElement(required = true)
+    private String nextOfKinPhone;
+    @XmlElement(required = true)
+    private String remarks;
 
-        /**
-         * Constructs a {@code XmlAdaptedMiscInfo}.
-         * This is the no-arg constructor that is required by JAXB.
-         */
-        public XmlAdaptedMiscInfo() {}
+    /**
+     * Constructs a {@code XmlAdaptedMiscInfo}.
+     * This is the no-arg constructor that is required by JAXB.
+     */
+    public XmlAdaptedMiscInfo() {}
 
-        /**
-         * Constructs a {@code XmlAdaptedMiscInfo} with the given student details.
-         */
-        public XmlAdaptedMiscInfo(String allergies, String nextOfKinName, String nextOfKinPhone, String remarks) {
-            this.allergies = allergies;
-            this.nextOfKinName = nextOfKinName;
-            this.nextOfKinPhone = nextOfKinPhone;
-            this.remarks = remarks;
-        }
+    /**
+     * Constructs a {@code XmlAdaptedMiscInfo} with the given student details.
+     */
+    public XmlAdaptedMiscInfo(String allergies, String nextOfKinName, String nextOfKinPhone, String remarks) {
+        this.allergies = allergies;
+        this.nextOfKinName = nextOfKinName;
+        this.nextOfKinPhone = nextOfKinPhone;
+        this.remarks = remarks;
+    }
 
     /**
      * Converts a given Milestone into this class for JAXB use.

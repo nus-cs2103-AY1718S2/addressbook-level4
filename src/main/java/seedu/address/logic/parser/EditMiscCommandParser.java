@@ -35,7 +35,8 @@ public class EditMiscCommandParser implements Parser<EditMiscCommand> {
 
         EditMiscDescriptor editMiscDescriptor = new EditMiscDescriptor();
         try {
-            ParserUtil.parseAllergies(argMultimap.getValue(PREFIX_ALLERGIES)).ifPresent(editMiscDescriptor::setAllergies);
+            ParserUtil.parseAllergies(argMultimap.getValue(PREFIX_ALLERGIES))
+                    .ifPresent(editMiscDescriptor::setAllergies);
             ParserUtil.parseNextOfKinName(argMultimap.getValue(PREFIX_NEXTOFKINNAME))
                     .ifPresent(editMiscDescriptor::setNextOfKinName);
             ParserUtil.parseNextOfKinPhone(argMultimap.getValue(PREFIX_NEXTOFKINPHONE))

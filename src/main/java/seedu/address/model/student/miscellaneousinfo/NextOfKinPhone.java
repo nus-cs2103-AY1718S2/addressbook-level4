@@ -3,6 +3,7 @@ package seedu.address.model.student.miscellaneousinfo;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author samuel
 /**
  * Represents a Student's next of kin phone number component of his/her miscellaneous information.
  * Guarantees: immutable; is valid as declared in {@link #isValidPath(String)}
@@ -27,7 +28,7 @@ public class NextOfKinPhone {
      *
      * @param nextOfKinPhone A valid next of kin phone number.
      */
-    public NextOfKinPhone(String nextOfKinPhone){
+    public NextOfKinPhone(String nextOfKinPhone) {
         requireNonNull(nextOfKinPhone);
         checkArgument(isValidNextOfKinPhone(nextOfKinPhone), MESSAGE_NEXTOFKINPHONE_CONSTRAINTS);
         this.value = nextOfKinPhone;
@@ -52,3 +53,4 @@ public class NextOfKinPhone {
                 && this.value.equals(((NextOfKinPhone) other).value)); // state check
     }
 }
+//author

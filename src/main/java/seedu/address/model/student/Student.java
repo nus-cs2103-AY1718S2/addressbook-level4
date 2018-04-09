@@ -163,7 +163,7 @@ public class Student {
      * and miscellaneous info is not initialised
      */
     public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email, Address address,
-                   ProgrammingLanguage programmingLanguage, Set<Tag> tags){
+                   ProgrammingLanguage programmingLanguage, Set<Tag> tags) {
         requireAllNonNull(uniqueKey, name, phone, email, address, tags);
         this.uniqueKey = uniqueKey;
         this.name = name;

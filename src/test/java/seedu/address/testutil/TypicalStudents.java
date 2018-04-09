@@ -38,7 +38,7 @@ public class TypicalStudents {
             .withPhone("85355255")
             .withTags("friends").withProgrammingLanguage("Java").build();
 
-    public static final Student BENSON = buildStudentWithFilledDashboard();
+    public static final Student  BENSON = buildStudentWithFilledDashboard();
 
     public static final Student CARL = new StudentBuilder().withKey("8e90ba").withName("Carl Kurz")
             .withPhone("95352563").withEmail("heinz@example.com").withAddress("wall street")
@@ -109,7 +109,8 @@ public class TypicalStudents {
                     .withEmail("johnd@example.com").withPhone("98765432")
                     .withTags("owesMoney", "friends").withProgrammingLanguage("Java")
                     .withNewMilestone(new Milestone(new Date("31/12/2018 23:59"), "Arrays"))
-                    .withNewTask(Index.fromOneBased(1), new Task("Learn Array syntax", "Refer to textbook"))
+                    .withNewTask(Index.fromOneBased(1),
+                            new Task("Learn Array syntax", "Refer to textbook"))
                     .build();
         } catch (DuplicateMilestoneException e) {
             throw new AssertionError("Should not have duplicated milestone");

@@ -33,7 +33,7 @@ public class Remarks {
      *
      * @param remarks A valid string of remarks.
      */
-    public Remarks(String remarks){
+    public Remarks(String remarks) {
         requireNonNull(remarks);
         checkArgument(isValidRemarks(remarks), MESSAGE_REMARKS_CONSTRAINTS);
         this.value = remarks;

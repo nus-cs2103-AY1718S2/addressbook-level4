@@ -3,6 +3,7 @@ package seedu.address.model.student.miscellaneousinfo;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@author samuel
 /**
  * Represents a Student's next of kin's name component of his/her miscellaneous information.
  * Guarantees: immutable; is valid as declared in {@link #isValidNextOfKinName(String)}
@@ -32,7 +33,7 @@ public class NextOfKinName {
      *
      * @param nextOfKinName A valid next of kin name.
      */
-    public NextOfKinName(String nextOfKinName){
+    public NextOfKinName(String nextOfKinName) {
         requireNonNull(nextOfKinName);
         checkArgument(isValidNextOfKinName(nextOfKinName), MESSAGE_NEXTOFKINNAME_CONSTRAINTS);
         this.value = nextOfKinName;
@@ -57,3 +58,4 @@ public class NextOfKinName {
                 && this.value.equals(((NextOfKinName) other).value)); // state check
     }
 }
+//@author

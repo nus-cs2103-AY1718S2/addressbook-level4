@@ -18,6 +18,9 @@ public class ProfilePicturePath {
     public static final String DEFAULT_PROFILE_PICTURE =
             "profile_photo_placeholder.png";
 
+    public static final String DEFAULT_PROFILE_PICTURE_FOR_TEST =
+            "src/main/resources/view/profile_photo_placeholder.png";
+
     public final Path profilePicturePath;
 
     public ProfilePicturePath(String filePath) {

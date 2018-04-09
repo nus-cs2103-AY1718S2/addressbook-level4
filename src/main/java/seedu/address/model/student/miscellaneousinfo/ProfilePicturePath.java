@@ -18,8 +18,6 @@ public class ProfilePicturePath {
     public static final String DEFAULT_PROFILE_PICTURE =
             "profile_photo_placeholder.png";
 
-    public static final String DEFAULT_PROFILE_PICTURE_FOR_TEST =
-            "src/main/resources/view/profile_photo_placeholder.png";
 
     public final Path profilePicturePath;
 
@@ -72,6 +70,14 @@ public class ProfilePicturePath {
     @Override
     public String toString() {
         return profilePicturePath.toString();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ProfilePicturePath // instanceof handles nulls
+                && this.profilePicturePath.equals(((ProfilePicturePath) other)
+                .profilePicturePath)); // state check
     }
 }
 //@@author

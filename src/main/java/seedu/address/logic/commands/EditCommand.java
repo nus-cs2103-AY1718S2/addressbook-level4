@@ -1,11 +1,11 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -56,7 +56,7 @@ public class EditCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult executeUndoableCommand() {
         requireAllNonNull(bookToEdit, editedBook);
 
         try {
@@ -71,17 +71,31 @@ public class EditCommand extends UndoableCommand {
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
+        requireNonNull(model);
+
+        checkActiveListType();
+        checkValidIndex();
+
+        bookToEdit = model.getActiveList().get(index.getZeroBased());
+        editedBook = createEditedBook(bookToEdit, editDescriptor);
+    }
+
+    /**
+     * Throws a {@link CommandException} if the active list type is not supported by this command.
+     */
+    private void checkActiveListType() throws CommandException {
         if (model.getActiveListType() != ActiveListType.BOOK_SHELF) {
             throw new CommandException(MESSAGE_WRONG_ACTIVE_LIST);
         }
+    }
 
-        List<Book> lastShownList = model.getDisplayBookList();
-        if (index.getZeroBased() >= lastShownList.size()) {
+    /**
+     * Throws a {@link CommandException} if the given index is not valid.
+     */
+    private void checkValidIndex() throws CommandException {
+        if (index.getZeroBased() >= model.getActiveList().size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
         }
-
-        bookToEdit = lastShownList.get(index.getZeroBased());
-        editedBook = createEditedBook(bookToEdit, editDescriptor);
     }
 
     /**

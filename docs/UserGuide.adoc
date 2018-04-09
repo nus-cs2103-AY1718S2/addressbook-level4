@@ -314,11 +314,11 @@ Examples:
 `deleteToDo 2` +
 Deletes the 2nd to-do in the address book.
 
-=== List Group Members: `listGroupMembers`
+=== List Tag Members: `listTagMembers`
 
 List out all persons with the given keywords(group tags). +
-Alias: `lgm` +
-Format: `listGroupMembers INPUT`
+Alias: `ltm` +
+Format: `listTagMembers INPUT`
 
 ****
 * The search is case insensitive. e.g `cs1010` will match `CS1010`
@@ -327,12 +327,12 @@ Format: `listGroupMembers INPUT`
 
 Examples:
 
-* `ListGroupMembers CS3230 CS1010` +
+* `ListTagpMembers CS3230 CS1010` +
 Returns any person having group tags `CS3230`, `CS1010`
 Refer to Figure 3 for example.
 
 image:lgmExample.png[width="500"] +
-Figure 3. Example of ListGroupMembers
+Figure 3. Example of ListTagMembers
 
 === Add Group: `addGroup`
 

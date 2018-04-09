@@ -34,7 +34,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.ListGroupMembersCommand;
+import seedu.address.logic.commands.ListTagMembersCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SwitchCommand;
@@ -309,17 +309,17 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_listGroupMembers() throws Exception {
         List<String> keywords = Arrays.asList("friends", "CS3230");
-        ListGroupMembersCommand command = (ListGroupMembersCommand) parser.parseCommand(
-                ListGroupMembersCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new ListGroupMembersCommand(new TagContainKeywordsPredicate(keywords)), command);
+        ListTagMembersCommand command = (ListTagMembersCommand) parser.parseCommand(
+                ListTagMembersCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new ListTagMembersCommand(new TagContainKeywordsPredicate(keywords)), command);
     }
 
     @Test
     public void parseCommand_listGroupMembersAlias() throws Exception {
         List<String> keywords = Arrays.asList("friends", "CS3230");
-        ListGroupMembersCommand command = (ListGroupMembersCommand) parser.parseCommand(
-                ListGroupMembersCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new ListGroupMembersCommand(new TagContainKeywordsPredicate(keywords)), command);
+        ListTagMembersCommand command = (ListTagMembersCommand) parser.parseCommand(
+                ListTagMembersCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new ListTagMembersCommand(new TagContainKeywordsPredicate(keywords)), command);
     }
 
     @Test

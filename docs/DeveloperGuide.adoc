@@ -516,25 +516,25 @@ When a the schedule of a `Person` is needed, the `Model` component will pass the
 ** Pros: No storage and small memory needed
 ** Cons: Reliant on good internet connection
 
-//tag::ListGroupMembers[]
-=== List Group Members Feature
+//tag::ListTagMembers[]
+=== List Tag Members Feature
 
 Fastis lists all persons in Fastis that have tags similar to input.
 
 ==== Current Implementation
-Fastis uses `ListGroupMembersCommand` ,which resides under `Logic` to facilitate the listing of members under the same
+Fastis uses `ListTagMembersCommand` ,which resides under `Logic` to facilitate the listing of members under the same
 tag.
 
 image:listGroupMemberSequenceDiagram.png[width="800"] +
-When user types in command line `ListGroupMembers` or `lgm` , Fastis will use the keyword provided to search for the
-group tag and list out all members under the same group tag.
+When user types in command line `ListTagMembers` or `ltm` , Fastis will use the keyword provided to search for the
+tag and list out all members under the same  tag.
 
 ==== Design Considerations
 * **Alternative 1 (current choice):** Use a command to list out the group members.
 ** Pros: Easy to change the methods called by command.
 ** Cons: Unable to link to group class.
-* **Alternative 2:** Add a new abstract method `ListGroupMembersCommand(`
-** Pros: Edit `ListGroupMembersCommand()` easily to suit our needs
+* **Alternative 2:** Add a new abstract method `ListTagMembersCommand(`
+** Pros: Edit `ListTagMembersCommand()` easily to suit our needs
 ** Cons: Hard for new developers to understand the template pattern.
 
 //tag::Calendar[]

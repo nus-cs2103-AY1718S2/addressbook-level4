@@ -16,6 +16,8 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.logic.CalendarGoBackwardEvent;
+import seedu.address.commons.events.logic.CalendarGoForwardEvent;
 import seedu.address.commons.events.logic.ZoomInEvent;
 import seedu.address.commons.events.logic.ZoomOutEvent;
 import seedu.address.commons.events.model.AppointmentDeletedEvent;
@@ -183,6 +185,26 @@ public class CalendarPanel extends UiPart<CalendarView> {
             calendarView.showYearPage();
         }
         pageBase = calendarView.getSelectedPage();
+    }
+
+    /**
+     * Handles the event where user tries to make the calendar view go backward in time from the currently displaying
+     * date
+     */
+    @Subscribe
+    private void handleCalendarGoBackwardEvent(CalendarGoBackwardEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        calendarView.getSelectedPage().goBack();
+    }
+
+    /**
+     * Handles the event where user tries to make the calendar view go forward in time from the currently displaying
+     * date
+     */
+    @Subscribe
+    private void handleCalendarGoForwardEvent(CalendarGoForwardEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        calendarView.getSelectedPage().goForward();
     }
 
     /**

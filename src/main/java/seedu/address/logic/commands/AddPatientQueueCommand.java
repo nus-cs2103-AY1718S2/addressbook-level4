@@ -4,7 +4,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
-import java.util.Objects;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -16,7 +15,7 @@ import seedu.address.model.patient.exceptions.PatientNotFoundException;
 /**
  * Add patient to visiting queue (registration)
  */
-public class AddPatientQueueCommand extends UndoableCommand {
+public class AddPatientQueueCommand extends Command {
 
     public static final String COMMAND_WORD = "addq";
     public static final String COMMAND_ALIAS = "aq";
@@ -41,7 +40,13 @@ public class AddPatientQueueCommand extends UndoableCommand {
     }
 
     @Override
-    protected CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
+
+        List<Patient> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
 
         Patient toQueue;
 
@@ -57,19 +62,9 @@ public class AddPatientQueueCommand extends UndoableCommand {
     }
 
     @Override
-    protected void preprocessUndoableCommand() throws CommandException {
-        List<Patient> lastShownList = model.getFilteredPersonList();
-
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-    }
-
-    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddPatientQueueCommand // instanceof handles nulls
-                && targetIndex.equals(((AddPatientQueueCommand) other).targetIndex)
-                && Objects.equals(this.targetIndex, ((AddPatientQueueCommand) other).targetIndex));
+                && this.targetIndex.equals(((AddPatientQueueCommand) other).targetIndex));
     }
 }

@@ -41,12 +41,12 @@ public class ModelHelper {
         model.updateFilteredJobList(predicate.orElse(PREDICATE_MATCHING_NO_JOBS));
     }
 
-    //    /**
-    //     * @see ModelHelper#setFilteredJobList(Model, List)
-    //     */
-    //    public static void setFilteredJobList(Model model, Job... toDisplay) {
-    //        setFilteredJobList(model, Arrays.asList(toDisplay));
-    //    }
+    /**
+     * @see ModelHelper#setFilteredJobList(Model, List)
+     */
+    public static void setFilteredJobList(Model model, Job... toDisplay) {
+        setFilteredJobList(model, Arrays.asList(toDisplay));
+    }
 
     /**
      * Returns a predicate that evaluates to true if this {@code Person} equals to {@code other}.

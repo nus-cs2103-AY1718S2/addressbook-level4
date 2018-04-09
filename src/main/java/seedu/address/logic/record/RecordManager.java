@@ -34,7 +34,6 @@ public final class RecordManager {
     public static boolean authenticate (String date, String symptom, String illness, String treatment) {
         if (!DateOfBirth.isValidDob(date) || !TextField.isValidTextField(symptom)
                 || !TextField.isValidTextField(illness) || !TextField.isValidTextField(treatment)) {
-            //currently all non-null strings are valid
             return false;
         }
         currRecord = new Record(date, symptom, illness, treatment);

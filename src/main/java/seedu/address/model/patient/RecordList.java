@@ -14,9 +14,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class RecordList {
 
-    public static final String MESSAGE_RECORDLIST_CONSTRAINTS =
-            "Patient record list can take any values, but each field must be populated";
-
     private ArrayList<Record> recordList;
     private int numRecord;
 
@@ -56,7 +53,7 @@ public class RecordList {
 
     public ArrayList<Record> getRecordList() {
         return recordList;
-    } //currently not very defensive
+    }
 
     @Override
     public boolean equals(Object other) {

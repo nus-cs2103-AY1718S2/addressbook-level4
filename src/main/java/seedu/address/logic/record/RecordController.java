@@ -9,6 +9,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import seedu.address.model.patient.DateOfBirth;
 import seedu.address.model.patient.Record;
 
 /**
@@ -42,6 +43,13 @@ public class RecordController {
         String symptom = this.symptomField.getText();
         String illness = this.illnessField.getText();
         String treatment = this.treatmentField.getText();
+        closeWindow(date, symptom, illness, treatment);
+    }
+
+    /**
+     * Handles the events required when a close window event occurs.
+     */
+    private void closeWindow(String date, String symptom, String illness, String treatment) {
         if (date.equals("") || symptom.equals("") || illness.equals("") || treatment.equals("")) {
             messageText.setText("Please fill in all fields.");
         } else {
@@ -49,7 +57,13 @@ public class RecordController {
                 messageText.setText("Success! Please close this window.");
                 closeButtonAction();
             } else {
-                messageText.setText("Invalid entries!");
+                if (!DateOfBirth.isValidDob(date)) {
+                    messageText.setText("Date should only contain digits and"
+                            + "slashes, in the following format DD/MM/YYYY");
+                } else {
+                    messageText.setText("Text field should only contain"
+                            + "visible characters and spaces, and it should not be blank");
+                }
             }
         }
     }
@@ -78,16 +92,7 @@ public class RecordController {
         String symptom = this.symptomField.getText();
         String illness = this.illnessField.getText();
         String treatment = this.treatmentField.getText();
-        if (date.equals("") || symptom.equals("") || illness.equals("") || treatment.equals("")) {
-            messageText.setText("Please fill in all fields.");
-        } else {
-            if (RecordManager.authenticate(date, symptom, illness, treatment)) {
-                messageText.setText("Success! Please close this window.");
-                closeButtonAction();
-            } else {
-                messageText.setText("Invalid entries!");
-            }
-        }
+        closeWindow(date, symptom, illness, treatment);
         event.consume();
     }
 

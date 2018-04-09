@@ -238,6 +238,7 @@ Edits the phone number and email address of the 1st patient to be `91234567` and
 * `e 2 n/Betsy Crower c/` +
 Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing conditions.
 
+// tag::remark[]
 ==== Editing remarks for a patient : `remark` or `rk` [since v1.2]
 
 Edits the remark for a patient specified by the index number used in the last patient listing. +
@@ -257,6 +258,7 @@ Edits the remark for the first patient to Likes to drink coffee.
 * `find Betsy` +
 `remark 1 r/` +
 Removes the remark for the first patient.
+// end::remark[]
 
 ==== Adding a condition to an existing patient: `addc` [since v1.3]
 
@@ -342,6 +344,7 @@ Selects the 2nd patient in the IMDB.
 `s 1` +
 Selects the 1st patient in the results of the `find` command.
 
+// tag::record[]
 ==== Viewing and editing the medical records for a patient : `record` [since in v1.4]
 
 Views all the medical records for a patient specified by the index number used in the last patient listing. +
@@ -378,6 +381,7 @@ Examples:
 * `list` +
 `remover 1 in/1` +
 Deletes the first medical record for the first person in the result of the list command.
+// end::record[]
 
 ==== Printing a patient's formatted medical records : `print` [since v1.4]
 

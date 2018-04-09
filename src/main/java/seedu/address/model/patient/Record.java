@@ -3,7 +3,6 @@ package seedu.address.model.patient;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ILLNESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SYMPTOM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TREATMENT;
@@ -24,9 +23,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Record {
-
-    public static final String MESSAGE_RECORD_CONSTRAINTS =
-            "Patient record can take any values, but each field must be populated";
 
     private final DateOfBirth date;
     private final TextField symptom;
@@ -152,27 +148,6 @@ public class Record {
                 .append(" Illness: ")
                 .append(getIllness())
                 .append(" Treatment: ")
-                .append(getTreatment());
-        return builder.toString();
-    }
-
-    /**
-     * The is an outdated method that was utilised when there was only 1 record per patient.
-     * It returns the string that is equivalent to the command that created this class.
-     */
-    public String toCommandString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("1 ") //as the command will not be executed, we will be placing a dummy index
-                .append(PREFIX_DATE)
-                .append(getDate())
-                .append(" ")
-                .append(PREFIX_SYMPTOM)
-                .append(getSymptom())
-                .append(" ")
-                .append(PREFIX_ILLNESS)
-                .append(getIllness())
-                .append(" ")
-                .append(PREFIX_TREATMENT)
                 .append(getTreatment());
         return builder.toString();
     }

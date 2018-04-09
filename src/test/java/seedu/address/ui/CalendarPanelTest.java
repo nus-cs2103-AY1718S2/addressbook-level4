@@ -6,7 +6,11 @@ import static seedu.address.testutil.TypicalPersonsAndAppointments.getTypicalAdd
 import org.junit.Before;
 import org.junit.Test;
 
+import com.calendarfx.view.page.PageBase;
+
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.logic.CalendarGoBackwardEvent;
+import seedu.address.commons.events.logic.CalendarGoForwardEvent;
 import seedu.address.commons.events.logic.ZoomInEvent;
 import seedu.address.commons.events.logic.ZoomOutEvent;
 
@@ -57,6 +61,24 @@ public class CalendarPanelTest extends GuiUnitTest {
         assertEquals(calendarPanel.getCalendarView().getMonthPage(), calendarPanel.getPageBase());
     }
 
+    @Test
+    public void handleCalendarGoBackwardEvent_valid_success() {
+        calendarPanel.getPageBase().goBack();
+        PageBase pageBase = calendarPanel.getPageBase();
+        calendarPanel.getPageBase().goForward();
+        raiseCalendarGoBackwardEvent();
+        assertEquals(pageBase, calendarPanel.getPageBase());
+    }
+
+    @Test
+    public void handleCalendarGoForwardEvent_valid_success() {
+        calendarPanel.getPageBase().goForward();
+        PageBase pageBase = calendarPanel.getPageBase();
+        calendarPanel.getPageBase().goBack();
+        raiseCalendarGoForwardEvent();
+        assertEquals(pageBase, calendarPanel.getPageBase());
+    }
+
     /**
      * Raises a {@code ZoomInEvent}
      */
@@ -69,6 +91,20 @@ public class CalendarPanelTest extends GuiUnitTest {
      */
     private void raiseZoomOutEvent() {
         EventsCenter.getInstance().post(new ZoomOutEvent());
+    }
+
+    /**
+     * Raises a {@code CalendarGoBackwardEvent}
+     */
+    private void raiseCalendarGoBackwardEvent() {
+        EventsCenter.getInstance().post(new CalendarGoBackwardEvent());
+    }
+
+    /**
+     * Raises a {@code CalendarGoForwardEvent}
+     */
+    private void raiseCalendarGoForwardEvent() {
+        EventsCenter.getInstance().post(new CalendarGoForwardEvent());
     }
 
 }

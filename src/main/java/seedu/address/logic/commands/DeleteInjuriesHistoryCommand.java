@@ -1,18 +1,8 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURIES_HISTORY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
@@ -24,22 +14,34 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURIES_HISTORY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.ParserUtil.parseInjuriesHistory;
+import static seedu.address.logic.parser.ParserUtil.parseRemark;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
 //@@author chuakunhong
 
 /**
  * Edits the details of an existing person in the address book.
  */
-public class AddInjuriesHistoryCommand extends UndoableCommand {
+public class DeleteInjuriesHistoryCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "addinjuries";
+    public static final String COMMAND_WORD = "deleteinjuries";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a injuries history to the student that you want. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Delete injuries history from the " +
+                                                                "student that you want. "
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_INJURIES_HISTORY + "INJURYHISTORY\n"
+            + PREFIX_INJURIES_HISTORY + "INJURIES_HISTORY...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_INJURIES_HISTORY + "Torn ligament" + "\n";
+            + PREFIX_INJURIES_HISTORY + "Torn Ligament" + "\n";
 
-    public static final String MESSAGE_REMARK_PERSON_SUCCESS = "Injuries History added: %1$s\nPerson: %2$s";
+    public static final String MESSAGE_REMARK_PERSON_SUCCESS = "Injuries Deleted: %1$s\nPerson: %2$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
@@ -53,12 +55,12 @@ public class AddInjuriesHistoryCommand extends UndoableCommand {
      * @param index of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public AddInjuriesHistoryCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public DeleteInjuriesHistoryCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(index);
         requireNonNull(editPersonDescriptor);
 
         this.index = index;
-        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.editPersonDescriptor = editPersonDescriptor;
     }
 
     @Override
@@ -91,20 +93,34 @@ public class AddInjuriesHistoryCommand extends UndoableCommand {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor)
+                    throws CommandException {
         assert personToEdit != null;
 
-        Name updatedName = personToEdit.getName();
-        Nric updatedNric = personToEdit.getNric();
-        Set<Tag> updatedTags = personToEdit.getTags();
-        Set<Subject> updatedSubjects = personToEdit.getSubjects();
-        Remark updatedRemark = personToEdit.getRemark();
-        Cca updatedCca = personToEdit.getCca();
-        InjuriesHistory updatedInjuriesHistory = ParserUtil.parseInjuriesHistory(editPersonDescriptor
-                .getInjuriesHistory().get().toString() + "\n" + personToEdit.getInjuriesHistory());
-
-        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
-                        updatedInjuriesHistory);
+        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+        Nric updatedNric = editPersonDescriptor.getNric().orElse(personToEdit.getNric());
+        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
+        Remark updatedRemark = editPersonDescriptor.getRemark().orElse((personToEdit.getRemark()));
+        Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
+        String[] injuriesHistoryArray = personToEdit.getInjuriesHistory().toString().split("\n");
+        String updateInjuriesHistory = "";
+        boolean injuriesHistoryIsFound = false;
+        for (String injuriesHistory : injuriesHistoryArray) {
+            if (!injuriesHistory.contains(editPersonDescriptor.getInjuriesHistory().get().toString())) {
+                updateInjuriesHistory = updateInjuriesHistory + injuriesHistory + "\n";
+            } else {
+                editPersonDescriptor.setInjuriesHistory(parseInjuriesHistory(injuriesHistory));
+                injuriesHistoryIsFound = true;
+            }
+        }
+        if (injuriesHistoryIsFound) {
+            InjuriesHistory updatedInjuriesHistory = parseInjuriesHistory(updateInjuriesHistory);
+            return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
+                    updatedInjuriesHistory);
+        } else {
+            throw new CommandException("The target injuriesHistory cannot be missing.");
+        }
     }
 
     @Override
@@ -115,12 +131,12 @@ public class AddInjuriesHistoryCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddInjuriesHistoryCommand)) {
+        if (!(other instanceof DeleteInjuriesHistoryCommand)) {
             return false;
         }
 
         // state check
-        AddInjuriesHistoryCommand e = (AddInjuriesHistoryCommand) other;
+        DeleteInjuriesHistoryCommand e = (DeleteInjuriesHistoryCommand) other;
         return index.equals(e.index)
                 && editPersonDescriptor.equals(e.editPersonDescriptor)
                 && Objects.equals(personToEdit, e.personToEdit);

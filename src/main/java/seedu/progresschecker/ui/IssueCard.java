@@ -35,7 +35,9 @@ public class IssueCard extends UiPart<Region> {
     @FXML
     private Label milestone;
     @FXML
-    private FlowPane labelOfIssue;
+    private FlowPane labelled;
+    @FXML
+    private FlowPane assignees;
 
     public IssueCard(Issue issue, int displayedIndex) {
         super(FXML);
@@ -44,11 +46,16 @@ public class IssueCard extends UiPart<Region> {
         title.setText(issue.getTitle().toString());
         body.setText(issue.getBody().fullBody);
         milestone.setText(issue.getMilestone().fullMilestone);
-//        issue.getLabelsList().forEach(labels -> {
-//            Label label = new Label(labels.fullLabels);
-//            label.getStyleClass().add(getTagColor(labels.fullLabels));
-//            labelOfIssue.getChildren().add(label);
-//        });
+        issue.getLabelsList().forEach(labels -> {
+            Label label = new Label(labels.fullLabels);
+            label.getStyleClass().add(getTagColor(labels.fullLabels));
+            labelled.getChildren().add(label);
+        });
+        issue.getAssignees().forEach(assignee -> {
+            Label label = new Label(assignee.fullAssignees);
+            label.getStyleClass().add(getTagColor(assignee.fullAssignees));
+            assignees.getChildren().add(label);
+        });
     }
 
     /**

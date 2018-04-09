@@ -138,9 +138,6 @@ public class ParserUtil {
     public static Title parseTitle(String title) throws IllegalValueException {
         requireNonNull(title);
         String trimmedTitle = title.trim();
-        if (!Title.isValidTitle(trimmedTitle)) {
-            throw new IllegalValueException(Title.MESSAGE_TITLE_CONSTRAINTS);
-        }
         return new Title(trimmedTitle);
     }
 

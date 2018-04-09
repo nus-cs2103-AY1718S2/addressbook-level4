@@ -18,7 +18,7 @@
         </columnConstraints>
         <HBox prefHeight="140.0" prefWidth="216.0">
             <children>
-                <VBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="140.0" prefWidth="380.0">
+                <VBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="140.0" prefWidth="216.0">
                     <padding>
                         <Insets bottom="5" left="15" right="5" top="5" />
                     </padding>
@@ -29,26 +29,26 @@
                                 <Region fx:constant="USE_PREF_SIZE" />
                             </minWidth>
                         </Label>
-                        <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
+                        <Label fx:id="title" styleClass="cell_big_label" text="\$first" />
                     </HBox>
-                    <FlowPane fx:id="labels" />
-                    <GridPane prefHeight="80.0" prefWidth="199.0">
+                    <FlowPane fx:id="labelled" />
+                    <GridPane prefHeight="80.0" prefWidth="332.0">
                         <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="99.0" minWidth="0.0" prefWidth="7.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="270.0" minWidth="10.0" prefWidth="263.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="10.0" prefWidth="74.0" />
+                            <ColumnConstraints hgrow="ALWAYS" maxWidth="300.0" minWidth="10.0" prefWidth="200.0" />
                         </columnConstraints>
                         <rowConstraints>
                             <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
                             <RowConstraints maxHeight="21.0" minHeight="0.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="23.0" minHeight="7.0" prefHeight="20.0" vgrow="SOMETIMES" />
                         </rowConstraints>
                         <children>
-                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
-                            <Label fx:id="title" styleClass="cell_small_label" text="\$title" GridPane.columnIndex="1" />
-                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Body" GridPane.rowIndex="1" />
-                            <Label fx:id="body" styleClass="cell_small_label" text="\$body" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Milestone" GridPane.rowIndex="2" />
-                            <Label fx:id="milestone" styleClass="cell_small_label" text="\$milestone" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Body: " />
+                            <Label fx:id="body" styleClass="cell_small_label" text="\$body" GridPane.columnIndex="1" />
+                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Assignees: " GridPane.rowIndex="2" />
+                            <FlowPane fx:id="assignees" prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Milestone: " GridPane.rowIndex="1" />
+                            <Label fx:id="milestone" styleClass="cell_small_label" text="\$milestone" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         </children>
                     </GridPane>
                 </VBox>

@@ -1,3 +1,5 @@
+//@@author ValerianRey
+
 package seedu.address.model.policy;
 
 import static seedu.address.commons.util.AppUtil.checkArgument;

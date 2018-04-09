@@ -49,7 +49,9 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            //@author SoilChang
             + "[" + PREFIX_INCOME + "INCOME] "
+            //@author
             + "[" + PREFIX_ACTUALSPENDING + "ACTUALSPENDING] "
             + "[" + PREFIX_AGE + "AGE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
@@ -116,15 +118,19 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        //@author SoilChang
         Income updatedIncome = editPersonDescriptor.getIncome().orElse(personToEdit.getIncome());
         Expenditure updatedActualSpending = editPersonDescriptor.getActualSpending()
                 .orElse((personToEdit.getActualSpending()));
         Expenditure updatedExpectedSpending = editPersonDescriptor.getExpectedSpending()
                 .orElse((personToEdit.getExpectedSpending()));
+        //@author
         Age updatedAge = editPersonDescriptor.getAge().orElse(personToEdit.getAge());
 
+        //@author SoilChang
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
                 updatedIncome, updatedActualSpending, updatedExpectedSpending, updatedAge, personToEdit.getPolicy());
+        //@author
     }
 
     @Override
@@ -156,9 +162,11 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        //@author SoilChang
         private Income income;
         private Expenditure actualSpending;
         private Expenditure expectedSpending;
+        //@author
         private Age age;
 
         public EditPersonDescriptor() {
@@ -174,19 +182,23 @@ public class EditCommand extends UndoableCommand {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
+            //@author SoilChang
             setIncome(toCopy.income);
             setActualSpending(toCopy.actualSpending);
             setExpectedSpending(toCopy.expectedSpending);
+            //@author
             setAge(toCopy.age);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
+        //@author SoilChang
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags,
                     this.income, this.actualSpending, this.expectedSpending, this.age);
         }
+        //@author
 
         public void setName(Name name) {
             this.name = name;
@@ -220,6 +232,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        //@author SoilChang
         public void setIncome(Income income) {
             this.income = income;
         }
@@ -243,6 +256,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Expenditure> getExpectedSpending() {
             return Optional.ofNullable(expectedSpending);
         }
+        //@author
 
         public void setAge(Age age) {
             this.age = age;

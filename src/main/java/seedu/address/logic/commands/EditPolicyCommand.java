@@ -1,3 +1,5 @@
+//@@author ValerianRey
+
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -13,6 +15,7 @@ import java.util.Optional;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
@@ -92,8 +95,14 @@ public class EditPolicyCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_PERSON_NOT_ENROLLED);
         }
 
+        Policy editedPolicy;
+
         Policy policyToEdit = personToEnroll.getPolicy().get();
-        Policy editedPolicy = createEditedPolicy(policyToEdit, editPolicyDescriptor);
+        try {
+            editedPolicy = createEditedPolicy(policyToEdit, editPolicyDescriptor);
+        } catch (IllegalValueException ive) {
+            throw new CommandException(ive.getMessage());
+        }
         editedPerson = createPersonWithPolicy(personToEnroll, editedPolicy);
     }
 
@@ -101,13 +110,18 @@ public class EditPolicyCommand extends UndoableCommand {
      * Creates and returns a {@code Policy} with the details of {@code policyToEdit}
      * edited with {@code editPolicyDescriptor}.
      */
-    private static Policy createEditedPolicy(Policy policyToEdit, EditPolicyDescriptor editPolicyDescriptor) {
+    private static Policy createEditedPolicy(Policy policyToEdit, EditPolicyDescriptor editPolicyDescriptor)
+        throws IllegalValueException {
         assert policyToEdit != null;
 
         Date updatedBeginning = editPolicyDescriptor.getBeginning().orElse(policyToEdit.getBeginning());
         Date updatedExpiration = editPolicyDescriptor.getExpiration().orElse(policyToEdit.getExpiration());
         Price updatedPrice = editPolicyDescriptor.getPrice().orElse(policyToEdit.getPrice());
         Coverage updatedCoverage = editPolicyDescriptor.getCoverage().orElse(policyToEdit.getCoverage());
+
+        if (!Policy.isValidDuration(updatedBeginning, updatedExpiration)) {
+            throw new IllegalValueException(Policy.DURATION_CONSTRAINTS);
+        }
 
         return new Policy(updatedPrice, updatedCoverage, updatedBeginning, updatedExpiration);
     }

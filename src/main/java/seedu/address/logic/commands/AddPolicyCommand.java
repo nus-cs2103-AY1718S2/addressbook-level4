@@ -1,3 +1,5 @@
+//@@author ValerianRey
+
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -42,6 +44,8 @@ public class AddPolicyCommand extends UndoableCommand {
 
     public static final String MESSAGE_POLICY_ADDED_SUCCESS = "Added policy";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_ALREADY_ENROLLED = "This person already applied to a policy "
+            + "(use edit_policy instead).";
 
     private final Index index;
     private final Policy policy;
@@ -83,6 +87,11 @@ public class AddPolicyCommand extends UndoableCommand {
         }
 
         personToEnroll = lastShownList.get(index.getZeroBased());
+
+        if (personToEnroll.getPolicy().isPresent()) {
+            throw new CommandException(MESSAGE_ALREADY_ENROLLED);
+        }
+
         editedPerson = createPersonWithPolicy(personToEnroll, policy);
     }
 
@@ -97,7 +106,9 @@ public class AddPolicyCommand extends UndoableCommand {
                 personToEdit.getEmail(),
                 personToEdit.getAddress(),
                 personToEdit.getTags(),
+                //@author SoilChang
                 personToEdit.getIncome(),
+                //@author
                 personToEdit.getActualSpending(),
                 personToEdit.getExpectedSpending(),
                 personToEdit.getAge(),

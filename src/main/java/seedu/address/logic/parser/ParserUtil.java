@@ -245,6 +245,7 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
     }
 
+    //@author SoilChang
     /**
      * Parses a {@code String value} into an {@code value}.
      * Leading and trailing whitespaces will be trimmed.
@@ -296,6 +297,7 @@ public class ParserUtil {
         return actualSpending.isPresent()
                 ? Optional.of(parseActualSpending(actualSpending.get())) : Optional.empty();
     }
+    //@author
 
 
     /**
@@ -349,6 +351,7 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author ValerianRey
     /**
      * Parses a {@code String value} into a {@code Price}.
      * Leading and trailing whitespaces will be trimmed.
@@ -442,4 +445,6 @@ public class ParserUtil {
         }
         return issuesList;
     }
+
+    //@@author
 }

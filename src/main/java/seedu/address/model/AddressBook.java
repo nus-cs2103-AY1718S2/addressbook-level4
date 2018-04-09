@@ -189,10 +189,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         // Rebuild the list of person tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        //@author SoilChang
         return new Person(
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
                 correctTagReferences, person.getIncome(), person.getActualSpending(),
                 person.getExpectedSpending(), person.getAge(), person.getPolicy());
+        //@author
     }
 
     /**

@@ -22,6 +22,18 @@ public class AddPatientQueueCommandParserTest {
     }
 
     @Test
+    public void parse_invalidArgsString_throwsParseException() {
+        assertParseFailure(parser, "alice", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AddPatientQueueCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidArgsNegativeIndex_throwsParseException() {
+        assertParseFailure(parser, "-1", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AddPatientQueueCommand.MESSAGE_USAGE));
+    }
+
+    @Test
     public void parse_validArgs_returnsAddPatientQueueCommand() throws IllegalValueException {
         AddPatientQueueCommand expectedCommand = new AddPatientQueueCommand(ParserUtil.parseIndex("1"));
         assertParseSuccess(parser, "1", expectedCommand);

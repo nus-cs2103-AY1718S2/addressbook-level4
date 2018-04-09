@@ -1,6 +1,7 @@
 //@@author hoangduong1607
 package seedu.recipe.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_GROUP_NAME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INDEX;
 
@@ -16,7 +17,7 @@ import seedu.recipe.model.recipe.Recipe;
 /**
  * Groups selected recipes.
  */
-public class GroupCommand extends Command {
+public class GroupCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "group";
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -35,12 +36,15 @@ public class GroupCommand extends Command {
     private Set<Index> targetIndices;
 
     public GroupCommand(GroupName groupName, Set<Index> targetIndices) {
+        requireNonNull(groupName);
+        requireNonNull(targetIndices);
         this.targetIndices = targetIndices;
         this.groupName = groupName;
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
         List<Recipe> lastShownList = model.getFilteredRecipeList();
 
         for (Index index : targetIndices) {

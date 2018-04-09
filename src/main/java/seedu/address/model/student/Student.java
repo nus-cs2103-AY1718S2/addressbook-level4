@@ -159,11 +159,11 @@ public class Student {
 
 
     /**
-     * Every field must be present and not null. For when dashboard, favourite and profilePicturePath
-     * is not initialised
+     * Every field must be present and not null. For when dashboard, favourite, profilePicturePath
+     * and miscellaneous info is not initialised
      */
     public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email, Address address,
-                   ProgrammingLanguage programmingLanguage, Set<Tag> tags, MiscellaneousInfo miscellaneousInfo){
+                   ProgrammingLanguage programmingLanguage, Set<Tag> tags){
         requireAllNonNull(uniqueKey, name, phone, email, address, tags);
         this.uniqueKey = uniqueKey;
         this.name = name;
@@ -228,7 +228,7 @@ public class Student {
     public Student(UniqueKey uniqueKey, Name name, Phone phone, Email email,
                    Address address, ProgrammingLanguage programmingLanguage, Set<Tag> tags, Favourite fav,
                    Dashboard dashboard, ProfilePicturePath profilePicturePath, MiscellaneousInfo miscellaneousInfo) {
-        requireAllNonNull(uniqueKey, name, phone, email, address, tags, fav);
+        requireAllNonNull(name, phone, email, address, tags, fav);
         this.uniqueKey = uniqueKey;
         this.name = name;
         this.phone = phone;

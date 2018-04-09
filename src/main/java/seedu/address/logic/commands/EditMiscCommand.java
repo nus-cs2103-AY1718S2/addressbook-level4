@@ -23,6 +23,8 @@ import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.UniqueKey;
 import seedu.address.model.student.dashboard.Dashboard;
+import seedu.address.model.student.exceptions.DuplicateStudentException;
+import seedu.address.model.student.exceptions.StudentNotFoundException;
 import seedu.address.model.student.miscellaneousinfo.Allergies;
 import seedu.address.model.student.miscellaneousinfo.MiscellaneousInfo;
 import seedu.address.model.student.miscellaneousinfo.NextOfKinName;
@@ -90,7 +92,14 @@ public class EditMiscCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        return null;
+        try {
+            model.updateStudent(studentToEdit, editedStudent);
+        } catch (DuplicateStudentException duplicateStudentError) {
+            throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
+        } catch (StudentNotFoundException studentNotFoundError) {
+            throw new AssertionError("The target student cannot be missing");
+        }
+        return new CommandResult(String.format(MESSAGE_EDIT_STUDENT_SUCCESS, editedStudent));
     }
 
     /**

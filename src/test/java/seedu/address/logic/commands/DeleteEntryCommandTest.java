@@ -33,7 +33,7 @@ public class DeleteEntryCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
-        CalendarEntry entryToDelete = model.getFilteredCalendarEventList().get(INDEX_FIRST_ENTRY.getZeroBased());
+        CalendarEntry entryToDelete = model.getFilteredCalendarEntryList().get(INDEX_FIRST_ENTRY.getZeroBased());
         DeleteEntryCommand deleteEntryCommand = prepareCommand(INDEX_FIRST_ENTRY);
 
         String expectedMessage = String.format(DeleteEntryCommand.MESSAGE_DELETE_ENTRY_SUCCESS, entryToDelete);
@@ -58,7 +58,7 @@ public class DeleteEntryCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        CalendarEntry entryToDelete = model.getFilteredCalendarEventList().get(INDEX_FIRST_ENTRY.getZeroBased());
+        CalendarEntry entryToDelete = model.getFilteredCalendarEntryList().get(INDEX_FIRST_ENTRY.getZeroBased());
         DeleteEntryCommand deleteEntryCommand = prepareCommand(INDEX_FIRST_ENTRY);
         Model expectedModel = new ModelManager(model.getAddressBook(), model.getCalendarManager(), new UserPrefs());
 
@@ -79,7 +79,7 @@ public class DeleteEntryCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredCalendarEventList().size() + 1);
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredCalendarEntryList().size() + 1);
         DeleteEntryCommand deleteEntryCommand = prepareCommand(outOfBoundIndex);
 
         // execution failed -> deleteEntryCommand not pushed into undoRedoStack

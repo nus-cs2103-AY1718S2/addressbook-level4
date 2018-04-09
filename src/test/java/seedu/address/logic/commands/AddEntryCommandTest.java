@@ -69,7 +69,7 @@ public class AddEntryCommandTest {
         CalendarEntry validEvent = new CalendarEntryBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddEntryCommand.MESSAGE_DUPLICATE_EVENT);
+        thrown.expectMessage(AddEntryCommand.MESSAGE_DUPLICATE_ENTRY);
 
         getAddEntryCommandForCalendarEvent(validEvent, modelStub).execute();
     }
@@ -151,7 +151,7 @@ public class AddEntryCommandTest {
         }
 
         @Override
-        public ObservableList<CalendarEntry> getFilteredCalendarEventList() {
+        public ObservableList<CalendarEntry> getFilteredCalendarEntryList() {
             fail("This method should not be called.");
             return null;
         }
@@ -225,6 +225,12 @@ public class AddEntryCommandTest {
         public void deleteCalendarEntry(CalendarEntry entryToDelete) throws CalendarEntryNotFoundException {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void updateCalendarEntry(CalendarEntry entryToEdit, CalendarEntry editedEntry)
+                throws DuplicateCalendarEntryException, CalendarEntryNotFoundException {
+            fail("This method should not be called.");
+        }
     }
 
     /**
@@ -266,7 +272,7 @@ public class AddEntryCommandTest {
 
         /* To fix later on */
         @Override
-        public ObservableList<CalendarEntry> getFilteredCalendarEventList() {
+        public ObservableList<CalendarEntry> getFilteredCalendarEntryList() {
             return null;
         }
 

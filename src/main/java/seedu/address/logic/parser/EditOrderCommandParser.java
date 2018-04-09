@@ -38,7 +38,7 @@ public class EditOrderCommandParser implements Parser<EditOrderCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditOrderCommand.MESSAGE_USAGE));
         }
 
-        EditOrderCommand.EditOrderDescriptor editOrderDescriptor = new EditOrderDescriptor();
+        EditOrderDescriptor editOrderDescriptor = new EditOrderDescriptor();
         try {
             ParserUtil.parseOrderInformation(argMultimap.getValue(PREFIX_ORDER_INFORMATION))
                     .ifPresent(editOrderDescriptor::setOrderInformation);

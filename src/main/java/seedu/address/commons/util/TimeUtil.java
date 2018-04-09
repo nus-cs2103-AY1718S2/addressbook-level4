@@ -1,5 +1,7 @@
 package seedu.address.commons.util;
 
+import static java.util.Objects.requireNonNull;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -19,6 +21,7 @@ public class TimeUtil {
      * Returns true if given string is a valid time.
      */
     public static boolean isValidTime(String test) {
+        requireNonNull(test);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(TIME_VALIDATION_FORMAT);
         simpleDateFormat.setLenient(false);
 
@@ -35,6 +38,7 @@ public class TimeUtil {
      * Converts given string to a {@code LocalTime}.
      */
     public static LocalTime convertStringToTime(String time) throws DateTimeParseException {
+        requireNonNull(time);
         DateTimeFormatter format = DateTimeFormatter.ofPattern(TIME_PATTERN);
         LocalTime convertedTime = LocalTime.parse(time, format);
 

@@ -54,7 +54,7 @@ public class DeleteEntryCommand extends UndoableCommand {
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        List<CalendarEntry> lastShownList = model.getFilteredCalendarEventList();
+        List<CalendarEntry> lastShownList = model.getFilteredCalendarEntryList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_ENTRY_DISPLAYED_INDEX);

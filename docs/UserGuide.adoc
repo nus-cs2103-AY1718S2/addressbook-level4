@@ -462,10 +462,10 @@ Entry appears on specified date in the Calendar.
 `ea t/roadshow sd/01-01-2019 ed/10-01-2019 st/09:00 et/18:00` +
 Entry starting from 1 Jan 2019 1000 and ending at 10 Jan 2019 1800 appears at the specified time period in Calendar.
 
-==== Editing entries in calendar entry list : `entryedit` `coming in v1.5`
+==== Editing entries in calendar entry list : `entryedit` `since v1.5rc`
 
 Edits an existing entry in the Calendar entry List. +
-Format: `entryedit e/ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` +
+Format: `entryedit ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` +
 Command Alias: `ee` +
 
 ****
@@ -475,13 +475,13 @@ Command Alias: `ee` +
 
 Examples:
 
-* `entryedit e/1 t/meet with bosses et/1400` OR +
-`ee e/1 t/meet with bosses et/1400` +
+* `entryedit 1 t/meet with bosses et/1400` OR +
+`ee 1 t/meet with bosses et/1400` +
 Edits title and end time of 1st entry in entry list to "meet with bosses" and 1400 respectively. +
 Changes reflect on the Calendar.
 
-* `entryedit e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800` OR +
-`ee e/3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800` +
+* `entryedit 3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800` OR +
+`ee 3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800` +
 Edits starting date and time, ending date and time of the 3rd entry in entry list.
 
 ==== Deleting entries in calendar entry list : `entrydelete` `since v1.4`
@@ -749,7 +749,7 @@ Opens an email draft in the browser with recipients as all persons tagged with '
 |===
 |Function |Command |Alias |Example
 |Add a calendar entry. |`entryadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` |`ea` |`entryadd t/meet with boss ed/05-05-2020 st/10:00 et/12:00`
-|Edit an existing calendar entry. |`entryedit e/ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` |`ee` |`entryedit e/1 t/meet with bosses et/1400`
+|Edit an existing calendar entry. |`entryedit ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` |`ee` |`entryedit 1 t/meet with bosses et/1400`
 |Delete an existing calendar entry. |`entrydelete ENTRY_INDEX` |`ed` |`entrydelete 1`
 |List all calendar entries. |`entrylist` |`el` |`entrylist`
 |Clear all calendar entries. |`entryclear`  |`ec` |`entryclear`

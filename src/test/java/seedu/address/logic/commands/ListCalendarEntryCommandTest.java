@@ -18,6 +18,7 @@ import seedu.address.model.UserPrefs;
  */
 //@@author SuxianAlicia
 public class ListCalendarEntryCommandTest {
+
     private Model model;
     private Model expectedModel;
     private ListCalendarEntryCommand listCalendarEntryCommand;

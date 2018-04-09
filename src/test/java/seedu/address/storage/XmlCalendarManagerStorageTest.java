@@ -6,6 +6,7 @@ import static seedu.address.testutil.TypicalCalendarEntries.WORKSHOP;
 import static seedu.address.testutil.TypicalCalendarEntries.getTypicalCalendarManagerWithEntries;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,7 +35,7 @@ public class XmlCalendarManagerStorageTest {
         readCalendarManager(null);
     }
 
-    private java.util.Optional<ReadOnlyCalendarManager> readCalendarManager(String filePath) throws Exception {
+    private Optional<ReadOnlyCalendarManager> readCalendarManager(String filePath) throws Exception {
         return new XmlCalendarManagerStorage(filePath).readCalendarManager(addToTestDataPathIfNotNull(filePath));
     }
 

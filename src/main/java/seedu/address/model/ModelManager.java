@@ -156,6 +156,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateCalendarManagerChanged();
     }
 
+    @Override
+    public void updateCalendarEntry(CalendarEntry entryToEdit, CalendarEntry editedEntry)
+            throws DuplicateCalendarEntryException, CalendarEntryNotFoundException {
+        requireAllNonNull(entryToEdit, editedEntry);
+        calendarManager.updateCalendarEntry(entryToEdit, editedEntry);
+        indicateCalendarManagerChanged();
+    }
+
     //@@author
 
     //@@author amad-person
@@ -215,7 +223,7 @@ public class ModelManager extends ComponentManager implements Model {
     // ========== Filtered Calendar Entry List Accessors ==================================
     //@@author SuxianAlicia
     @Override
-    public ObservableList<CalendarEntry> getFilteredCalendarEventList() {
+    public ObservableList<CalendarEntry> getFilteredCalendarEntryList() {
         return FXCollections.unmodifiableObservableList(filteredEvents);
     }
 

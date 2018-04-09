@@ -7,6 +7,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.model.theme.Theme.LIGHT_THEME_KEYWORD;
 import static seedu.address.testutil.TypicalGroups.FRIENDS;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ENTRY;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPreferences.COMPUTERS;
@@ -20,31 +21,42 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddEntryCommand;
 import seedu.address.logic.commands.AddOrderCommand;
 import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteEntryCommand;
 import seedu.address.logic.commands.DeleteGroupCommand;
 import seedu.address.logic.commands.DeleteOrderCommand;
 import seedu.address.logic.commands.DeletePreferenceCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditEntryCommand;
+import seedu.address.logic.commands.EditEntryCommand.EditEntryDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindGroupCommand;
 import seedu.address.logic.commands.FindPreferenceCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCalendarEntryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListOrderCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.ViewCalendarCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.event.CalendarEntry;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.GroupsContainKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PreferencesContainKeywordsPredicate;
+import seedu.address.testutil.CalendarEntryBuilder;
+import seedu.address.testutil.CalendarEntryUtil;
+import seedu.address.testutil.EditEntryDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.OrderBuilder;
 import seedu.address.testutil.OrderUtil;
@@ -89,6 +101,24 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_addEntry() throws Exception {
+        CalendarEntry calendarEntry = new CalendarEntryBuilder().build();
+        AddEntryCommand command = (AddEntryCommand) parser.parseCommand(CalendarEntryUtil
+                .getAddEntryCommand(calendarEntry));
+
+        assertEquals(new AddEntryCommand(calendarEntry), command);
+    }
+
+    @Test
+    public void parseCommand_addEntryAlias() throws Exception {
+        CalendarEntry calendarEntry = new CalendarEntryBuilder().build();
+        AddEntryCommand command = (AddEntryCommand) parser.parseCommand(AddEntryCommand.COMMAND_ALIAS
+                + " " + CalendarEntryUtil.getCalendarEntryDetails(calendarEntry));
+
+        assertEquals(new AddEntryCommand(calendarEntry), command);
+    }
+
+    @Test
     public void parseCommand_changeTheme() throws Exception {
         ChangeThemeCommand command = (ChangeThemeCommand) parser.parseCommand(
                 ChangeThemeCommand.COMMAND_WORD + " " + LIGHT_THEME_KEYWORD);
@@ -96,7 +126,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_changeTheseAliad() throws Exception {
+    public void parseCommand_changeThemeAlias() throws Exception {
         ChangeThemeCommand command = (ChangeThemeCommand) parser.parseCommand(
                 ChangeThemeCommand.COMMAND_ALIAS + " " + LIGHT_THEME_KEYWORD);
         assertEquals(new ChangeThemeCommand(LIGHT_THEME_KEYWORD), command);
@@ -171,6 +201,20 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_deleteEntry() throws Exception {
+        DeleteEntryCommand command = (DeleteEntryCommand) parser.parseCommand(DeleteEntryCommand.COMMAND_WORD
+                + " " + INDEX_FIRST_ENTRY.getOneBased());
+        assertEquals(new DeleteEntryCommand(INDEX_FIRST_ENTRY), command);
+    }
+
+    @Test
+    public void parseCommand_deleteEntryAlias() throws Exception {
+        DeleteEntryCommand command = (DeleteEntryCommand) parser.parseCommand(DeleteEntryCommand.COMMAND_ALIAS
+                + " " + INDEX_FIRST_ENTRY.getOneBased());
+        assertEquals(new DeleteEntryCommand(INDEX_FIRST_ENTRY), command);
+    }
+
+    @Test
     public void parseCommand_edit() throws Exception {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
@@ -186,6 +230,24 @@ public class AddressBookParserTest {
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_ALIAS + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_editEntry() throws Exception {
+        CalendarEntry entry = new CalendarEntryBuilder().build();
+        EditEntryDescriptor descriptor = new EditEntryDescriptorBuilder(entry).build();
+        EditEntryCommand command = (EditEntryCommand) parser.parseCommand(EditEntryCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_ENTRY.getOneBased() + " " + CalendarEntryUtil.getCalendarEntryDetails(entry));
+        assertEquals(new EditEntryCommand(INDEX_FIRST_ENTRY, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_editEntryAlias() throws Exception {
+        CalendarEntry entry = new CalendarEntryBuilder().build();
+        EditEntryDescriptor descriptor = new EditEntryDescriptorBuilder(entry).build();
+        EditEntryCommand command = (EditEntryCommand) parser.parseCommand(EditEntryCommand.COMMAND_ALIAS + " "
+                + INDEX_FIRST_ENTRY.getOneBased() + " " + CalendarEntryUtil.getCalendarEntryDetails(entry));
+        assertEquals(new EditEntryCommand(INDEX_FIRST_ENTRY, descriptor), command);
     }
 
     @Test
@@ -290,7 +352,6 @@ public class AddressBookParserTest {
         }
     }
 
-
     @Test
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
@@ -301,6 +362,34 @@ public class AddressBookParserTest {
     public void parseCommand_listAlias() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_calendarEntryList() throws Exception {
+        assertTrue(parser.parseCommand(ListCalendarEntryCommand.COMMAND_WORD) instanceof ListCalendarEntryCommand);
+        assertTrue(parser.parseCommand(
+                ListCalendarEntryCommand.COMMAND_WORD + " 3") instanceof ListCalendarEntryCommand);
+    }
+
+    @Test
+    public void parseCommand_calendarEntryListAlias() throws Exception {
+        assertTrue(parser.parseCommand(ListCalendarEntryCommand.COMMAND_ALIAS) instanceof ListCalendarEntryCommand);
+        assertTrue(parser.parseCommand(
+                ListCalendarEntryCommand.COMMAND_ALIAS + " 3") instanceof ListCalendarEntryCommand);
+    }
+
+    @Test
+    public void parseCommand_orderList() throws Exception {
+        assertTrue(parser.parseCommand(ListOrderCommand.COMMAND_WORD) instanceof ListOrderCommand);
+        assertTrue(parser.parseCommand(
+                ListOrderCommand.COMMAND_WORD + " 3") instanceof ListOrderCommand);
+    }
+
+    @Test
+    public void parseCommand_orderListAlias() throws Exception {
+        assertTrue(parser.parseCommand(ListOrderCommand.COMMAND_ALIAS) instanceof ListOrderCommand);
+        assertTrue(parser.parseCommand(
+                ListOrderCommand.COMMAND_ALIAS + " 3") instanceof ListOrderCommand);
     }
 
     @Test
@@ -340,6 +429,18 @@ public class AddressBookParserTest {
     public void parseCommand_undoCommandWordAlias_returnsUndoCommand() throws Exception {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS) instanceof UndoCommand);
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
+    }
+
+    @Test
+    public void parseCommand_viewCalendarCommand_returnsViewCalendarCommand() throws Exception {
+        assertTrue(parser.parseCommand(ViewCalendarCommand.COMMAND_WORD) instanceof ViewCalendarCommand);
+        assertTrue(parser.parseCommand("calendar DAY") instanceof ViewCalendarCommand);
+    }
+
+    @Test
+    public void parseCommand_viewCalendarCommandAlias_returnsViewCalendarCommand() throws Exception {
+        assertTrue(parser.parseCommand(ViewCalendarCommand.COMMAND_ALIAS) instanceof ViewCalendarCommand);
+        assertTrue(parser.parseCommand("cal DAY") instanceof ViewCalendarCommand);
     }
 
     @Test

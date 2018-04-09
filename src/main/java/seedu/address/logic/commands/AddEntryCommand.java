@@ -31,7 +31,7 @@ public class AddEntryCommand extends UndoableCommand {
             + PREFIX_START_TIME + "[START_TIME] "
             + PREFIX_END_TIME + "END_TIME";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event entry to the calendar.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a calendar entry to the calendar.\n"
             + "Parameters: "
             + PREFIX_ENTRY_TITLE + "ENTRY_TITLE "
             + "[" + PREFIX_START_DATE + "START_DATE] "
@@ -46,7 +46,7 @@ public class AddEntryCommand extends UndoableCommand {
             + PREFIX_END_TIME + "12:30";
 
     public static final String MESSAGE_ADD_ENTRY_SUCCESS = "Added Entry [%1$s]";
-    public static final String MESSAGE_DUPLICATE_EVENT = "This entry already exists in calendar.";
+    public static final String MESSAGE_DUPLICATE_ENTRY = "This entry already exists in the calendar.";
 
     private final CalendarEntry calEntryToAdd;
 
@@ -67,7 +67,7 @@ public class AddEntryCommand extends UndoableCommand {
             EventsCenter.getInstance().post(new DisplayCalendarEntryListEvent());
             return new CommandResult(String.format(MESSAGE_ADD_ENTRY_SUCCESS, calEntryToAdd));
         } catch (DuplicateCalendarEntryException dcee) {
-            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
+            throw new CommandException(MESSAGE_DUPLICATE_ENTRY);
         }
     }
 

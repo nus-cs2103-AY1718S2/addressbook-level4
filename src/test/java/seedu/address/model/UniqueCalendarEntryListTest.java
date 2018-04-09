@@ -56,7 +56,7 @@ public class UniqueCalendarEntryListTest {
     }
 
     @Test
-    public void asUniqueList_addDuplicateCalendarEvents_throwsDuplicateCalendarEventException()
+    public void asUniqueList_addDuplicateCalendarEntries_throwsDuplicateCalendarEntryException()
             throws DuplicateCalendarEntryException {
 
         UniqueCalendarEntryList calendarEntriesList = new UniqueCalendarEntryList();

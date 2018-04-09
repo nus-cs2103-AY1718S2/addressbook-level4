@@ -15,6 +15,7 @@ public class DateUtil {
     public static final String DATE_VALIDATION_REGEX = "\\d{2}-\\d{2}-\\d{4}"; // format
     public static final String DATE_VALIDATION_FORMAT = "dd-MM-yyyy"; // legal dates
     public static final String DATE_PATTERN = "dd-MM-yyyy";
+
     /**
      * Returns true if given string is a valid date.
      */
@@ -33,8 +34,6 @@ public class DateUtil {
 
     /**
      * Converts given string to a {@code LocalDate}.
-     * @param date
-     * @return
      */
     public static LocalDate convertStringToDate(String date) throws DateTimeParseException {
         DateTimeFormatter format = DateTimeFormatter.ofPattern(DATE_PATTERN);

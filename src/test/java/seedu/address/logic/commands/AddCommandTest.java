@@ -162,7 +162,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public ObservableList<CalendarEntry> getFilteredCalendarEventList() {
+        public ObservableList<CalendarEntry> getFilteredCalendarEntryList() {
             fail("This method should not be called.");
             return null;
         }
@@ -222,6 +222,12 @@ public class AddCommandTest {
 
         @Override
         public void deleteCalendarEntry(CalendarEntry entryToDelete) throws CalendarEntryNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateCalendarEntry(CalendarEntry entryToEdit, CalendarEntry editedEntry)
+                throws DuplicateCalendarEntryException, CalendarEntryNotFoundException {
             fail("This method should not be called.");
         }
     }

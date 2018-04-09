@@ -16,6 +16,7 @@ import seedu.address.logic.commands.DeleteGroupCommand;
 import seedu.address.logic.commands.DeleteOrderCommand;
 import seedu.address.logic.commands.DeletePreferenceCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditEntryCommand;
 import seedu.address.logic.commands.EditOrderCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -59,6 +60,7 @@ public final class CommandSyntaxListUtil {
         commandSyntaxList.add(DeleteOrderCommand.COMMAND_WORD);
         commandSyntaxList.add(DeletePreferenceCommand.COMMAND_WORD);
         commandSyntaxList.add(EditCommand.COMMAND_SYNTAX);
+        commandSyntaxList.add(EditEntryCommand.COMMAND_SYNTAX);
         commandSyntaxList.add(EditOrderCommand.COMMAND_SYNTAX);
         commandSyntaxList.add(ExitCommand.COMMAND_WORD);
         commandSyntaxList.add(FindCommand.COMMAND_SYNTAX);

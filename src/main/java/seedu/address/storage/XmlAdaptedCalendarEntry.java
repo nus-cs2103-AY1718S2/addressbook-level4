@@ -1,6 +1,6 @@
 package seedu.address.storage;
 
-import static java.time.temporal.ChronoUnit.MINUTES;
+import static seedu.address.commons.util.EntryTimeConstraintsUtil.checkCalendarEntryTimeConstraints;
 
 import java.util.Objects;
 
@@ -23,13 +23,6 @@ import seedu.address.model.event.StartTime;
 public class XmlAdaptedCalendarEntry {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "CalendarEntry's %s field is missing!";
-    public static final String START_AND_END_DATE_CONSTRAINTS = "Start Date cannot be later than End Date.";
-    public static final String START_AND_END_TIME_CONSTRAINTS =
-            "Start Time cannot be later than End Time if Event ends on same date.";
-    public static final String EVENT_DURATION_CONSTRAINTS =
-            "Event must last at least 15 minutes if ending in same day."; //Constraint of CalendarFX entries
-
-    private static final int MINIMAL_DURATION = 15; //Constraint of CalendarFX entries
 
     @XmlElement
     private String entryTitle;
@@ -128,23 +121,7 @@ public class XmlAdaptedCalendarEntry {
 
         final EndTime endTime = new EndTime(this.endTime);
 
-        // Exception thrown if Start Date is later than End Date
-        if (startDate.getLocalDate().isAfter(endDate.getLocalDate())) {
-            throw new IllegalValueException(START_AND_END_DATE_CONSTRAINTS);
-        }
-
-        // Check for cases when Start Date is equal to End Date
-        if (startDate.getLocalDate().equals(endDate.getLocalDate())) {
-            // Check if start time is later than end time
-            if (startTime.getLocalTime().isAfter(endTime.getLocalTime())) {
-                throw new IllegalValueException(START_AND_END_TIME_CONSTRAINTS);
-            }
-
-            // Check if duration of event is less than 15 minutes
-            if (MINUTES.between(startTime.getLocalTime(), endTime.getLocalTime()) < MINIMAL_DURATION) {
-                throw new IllegalValueException(EVENT_DURATION_CONSTRAINTS);
-            }
-        }
+        checkCalendarEntryTimeConstraints(startDate, endDate, startTime, endTime);
 
 
         return new CalendarEntry(entryTitle, startDate, endDate, startTime, endTime);

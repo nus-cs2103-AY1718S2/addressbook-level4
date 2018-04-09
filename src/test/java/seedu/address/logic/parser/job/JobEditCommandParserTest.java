@@ -36,7 +36,6 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.job.JobEditCommand;
 import seedu.address.logic.commands.job.JobEditCommand.EditJobDescriptor;
-import seedu.address.logic.parser.job.JobEditCommandParser;
 import seedu.address.model.job.Location;
 import seedu.address.model.job.NumberOfPositions;
 import seedu.address.model.job.Position;

@@ -45,6 +45,7 @@ public class MainWindow extends UiPart<Stage> {
     private UserPrefs prefs;
     private PatientAppointmentPanel patientAppointmentPanel;
     private CalendarPanel calendarPanel;
+    private QueuePanel queuePanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -64,6 +65,11 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    //@@author Kyholmes
+    @FXML
+    private StackPane queuePanelPlaceholder;
+
+    //@@author
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
 
@@ -140,8 +146,13 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        //@@author Kyholmes
+        queuePanel = new QueuePanel(logic.getPatientVisitingQueue(), logic.getPatientIndexInQueue());
+        queuePanelPlaceholder.getChildren().add(queuePanel.getRoot());
     }
 
+    //@@author
     void hide() {
         primaryStage.hide();
     }

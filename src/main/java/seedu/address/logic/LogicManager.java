@@ -59,4 +59,9 @@ public class LogicManager extends ComponentManager implements Logic {
     public ObservableList<Patient> getPatientVisitingQueue() {
         return model.getVisitingQueue();
     }
+
+    @Override
+    public ObservableList<Integer> getPatientIndexInQueue() {
+        return model.getPatientListIndexInQueue();
+    }
 }

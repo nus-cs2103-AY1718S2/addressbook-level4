@@ -179,6 +179,11 @@ public class AddCommandTest {
         public void addPatientAppointment(Patient patient, String dateTimeString) {
 
         }
+
+        @Override
+        public ObservableList<Integer> getPatientListIndexInQueue() {
+            return null;
+        }
     }
 
     /**

@@ -8,6 +8,7 @@ import java.io.File;
 import java.net.URL;
 
 import seedu.recipe.MainApp;
+import seedu.recipe.commons.util.FileUtil;
 
 /**
  * Represents a Recipe's image in the address book.
@@ -18,7 +19,8 @@ public class Image {
     public static final String NULL_IMAGE_REFERENCE = "-";
     public static final String FILE_PREFIX = "file:";
     public static final String IMAGE_STORAGE_FOLDER = "data/images/";
-    public static final String MESSAGE_IMAGE_CONSTRAINTS = "Image path should be valid";
+    public static final String MESSAGE_IMAGE_CONSTRAINTS = "Image path should be valid,"
+            + " file should be a valid image file";
     public static final URL VALID_IMAGE = MainApp.class.getResource("/images/clock.png");
     public static final String VALID_IMAGE_PATH = VALID_IMAGE.toExternalForm().substring(5);
     private String value;
@@ -59,10 +61,7 @@ public class Image {
             return true;
         }
         File image = new File(testImagePath);
-        if (image.exists() && !image.isDirectory()) {
-            return true;
-        }
-        return false;
+        return FileUtil.isImageFile(image);
     }
 
     /**

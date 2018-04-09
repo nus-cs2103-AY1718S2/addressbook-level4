@@ -122,8 +122,8 @@ public class MainWindow extends UiPart<Stage> {
          * in CommandBox or ResultDisplay.
          */
         getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if ((event.getTarget() instanceof TextInputControl || event.getTarget() instanceof ListView) &&
-                    keyCombination.match(event)) {
+            if ((event.getTarget() instanceof TextInputControl || event.getTarget() instanceof ListView)
+                    && keyCombination.match(event)) {
                 menuItem.getOnAction().handle(new ActionEvent());
                 event.consume();
             }

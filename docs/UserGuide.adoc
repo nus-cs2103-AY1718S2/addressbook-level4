@@ -293,10 +293,10 @@ Examples:
 * `zo` +
 If the calendar panel is previously showing the Day View, it will now be showing the Week View.
 
-=== Going back on calendar view : `goback` or `gb` `[Coming in v1.5]`
+=== Going back on calendar view : `gobackward` or `gb` `[Coming in v1.5]`
 
-Makes the calendar view go back in time from the currently displaying date. +
-Format: `goback` or `gb`
+Makes the calendar view go backward in time from the currently displaying date. +
+Format: `gobackward` or `gb`
 
 Examples:
 
@@ -471,7 +471,7 @@ e.g. `addappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate`
 e.g. `deleteappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate`
 * *Zoom In* : `zoomin`
 * *Zoom Out* : `zoomout`
-* *Calendar Go Back* : `goback`
+* *Calendar Go Back* : `gobackward`
 * *Calendar Go Forward* : `goforward`
 * *Find Appointment*: `findappointment KEYWORD...` +
 e.g. `findappointment 12/12/2018`

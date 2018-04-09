@@ -14,7 +14,7 @@ public class DelivDate {
      * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}
      */
 
-    public static final String MESSAGE_ADDRESS_CONSTRAINTS =
+    public static final String MESSAGE_DATE_CONSTRAINTS =
             "Person delivery date can take dates in the form YYYY-MM-DD, in only the valid date range, and it should not be blank";
 
     /*
@@ -33,7 +33,7 @@ public class DelivDate {
      */
     public DelivDate(String date) {
         requireNonNull(date);
-        checkArgument(isValidDate(date), MESSAGE_ADDRESS_CONSTRAINTS);
+        checkArgument(isValidDate(date), MESSAGE_DATE_CONSTRAINTS);
         this.value = date;
     }
 

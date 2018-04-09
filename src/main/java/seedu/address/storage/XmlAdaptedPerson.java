@@ -124,7 +124,7 @@ public class XmlAdaptedPerson {
                     DelivDate.class.getSimpleName()));
         }
         if (!DelivDate.isValidDate(this.date)) {
-            throw new IllegalValueException(DelivDate.MESSAGE_ADDRESS_CONSTRAINTS);
+            throw new IllegalValueException(DelivDate.MESSAGE_DATE_CONSTRAINTS);
         }
         final DelivDate date = new DelivDate(this.date);
 

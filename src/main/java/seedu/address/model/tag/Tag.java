@@ -20,7 +20,6 @@ public class Tag {
      * @param tagName A valid tag name.
      */
     public Tag(String tagName) {
-        tagName = tagName.toLowerCase();
         requireNonNull(tagName);
         checkArgument(isValidTagName(tagName), MESSAGE_TAG_CONSTRAINTS);
         this.tagName = tagName;

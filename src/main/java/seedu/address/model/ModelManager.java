@@ -85,7 +85,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         File newHtmlFile = new File(newPath);
         FileUtils.writeStringToFile(newHtmlFile, htmlString);
-        updatePage(person);
+        //updatePage(person);
     }
 
     /**

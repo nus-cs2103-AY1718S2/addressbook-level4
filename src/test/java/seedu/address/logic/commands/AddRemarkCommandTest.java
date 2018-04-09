@@ -13,7 +13,6 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.AddRemarkCommand.EditPersonDescriptor;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -259,18 +258,18 @@ public class AddRemarkCommandTest {
         private EditPersonDescriptor descriptor;
 
         public EditPersonDescriptorBuilder() {
-            descriptor = new EditPersonDescriptor();
+            descriptor = new seedu.address.logic.commands.EditPersonDescriptor();
         }
 
         public EditPersonDescriptorBuilder(EditPersonDescriptor descriptor) {
-            this.descriptor = new EditPersonDescriptor(descriptor);
+            this.descriptor = new seedu.address.logic.commands.EditPersonDescriptor();
         }
 
         /**
          * Returns an {@code EditPersonDescriptor} with fields containing {@code person}'s details
          */
         public EditPersonDescriptorBuilder(Person person) {
-            descriptor = new EditPersonDescriptor();
+            descriptor = new seedu.address.logic.commands.EditPersonDescriptor();
             descriptor.setName(person.getName());
             descriptor.setNric(person.getNric());
             descriptor.setTags(person.getTags());

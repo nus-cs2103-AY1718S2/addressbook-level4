@@ -16,6 +16,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.person.Cca;
+import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Remark;
@@ -73,6 +75,7 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
 
+    //@@author chuakunhong
     /**
      * Parses a {@code String nric} into a {@code Nric}.
      * Leading and trailing whitespaces will be trimmed.
@@ -97,6 +100,7 @@ public class ParserUtil {
         return nric.isPresent() ? Optional.of(parseNric(nric.get())) : Optional.empty();
     }
 
+    //@@author
     /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
@@ -136,26 +140,7 @@ public class ParserUtil {
         return tagSet;
     }
 
-    /**
-     * Splits a {@code String subject} into {@code String subjectName} and {@code String subjectGrade}
-     * Parses {@code String subjectName} and {@code String subjectGrade}into a {@code Subject}.
-     *
-     * @throws IllegalValueException if the given {@code subject} is invalid.
-     */
-    public static Subject parseSubject(String subject) throws IllegalValueException {
-        requireNonNull(subject);
-        String[] splitSubjectStr = subject.trim().split("\\s+");
-        String subjectName = splitSubjectStr[0];
-        String subjectGrade = splitSubjectStr[1];
-        if (!Subject.isValidSubjectName(subjectName)) {
-            throw new IllegalValueException(Subject.MESSAGE_SUBJECT_NAME_CONSTRAINTS);
-        }
-        if (!Subject.isValidSubjectGrade(subjectGrade)) {
-            throw new IllegalValueException(Subject.MESSAGE_SUBJECT_GRADE_CONSTRAINTS);
-        }
-        return new Subject(subjectName, subjectGrade);
-    }
-
+    //@@author TeyXinHui
     /**
      * Splits a {@code String subjects} into {@code String subjectName} and {@code String subjectGrade}
      * Parses {@code String subjectName} and {@code String subjectGrade}into a {@code Subject}.
@@ -168,11 +153,12 @@ public class ParserUtil {
         String[] splitSubjectStr = subjectsStr.trim().split("\\s+");
         for (int i = 0; i < splitSubjectStr.length; i++) {
             String subjectName = splitSubjectStr[i];
-            i += 1;
-            String subjectGrade = splitSubjectStr[i];
             if (!Subject.isValidSubjectName(subjectName)) {
                 throw new IllegalValueException(Subject.MESSAGE_SUBJECT_NAME_CONSTRAINTS);
-            } else if (!Subject.isValidSubjectGrade(subjectGrade)) {
+            }
+            i += 1;
+            String subjectGrade = splitSubjectStr[i];
+            if (!Subject.isValidSubjectGrade(subjectGrade)) {
                 throw new IllegalValueException(Subject.MESSAGE_SUBJECT_GRADE_CONSTRAINTS);
             }
             subjectSet.add(new Subject(subjectName, subjectGrade));
@@ -187,14 +173,11 @@ public class ParserUtil {
         final Set<Subject> subjectSet = new HashSet<>();
         if (subjects.size() == 1) {
             parseSubject(subjects, subjectSet);
-        } else {
-            for (String subject : subjects) {
-                subjectSet.add(parseSubject(subject));
-            }
         }
         return subjectSet;
     }
 
+    //@@author
     /**
      * Parses a {@code String remark} into a {@code Remark}.
      * Leading and trailing whitespaces will be trimmed.
@@ -284,4 +267,46 @@ public class ParserUtil {
         return endTime.isPresent() ? Optional.of(parseEndTime(endTime.get())) : Optional.empty();
     }
 
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static Cca parseCca(String cca) {
+        requireNonNull(cca);
+        String trimmedCca = cca.trim();
+        return new Cca(trimmedCca);
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Cca> parseCca(Optional<String> cca) {
+        requireNonNull(cca);
+        return cca.isPresent() ? Optional.of(parseCca(cca.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static InjuriesHistory parseInjuriesHistory(String injuriesHistory) {
+        requireNonNull(injuriesHistory);
+        String trimmedInjuriesHistory = injuriesHistory.trim();
+        return new InjuriesHistory(trimmedInjuriesHistory);
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<InjuriesHistory> parseInjuriesHistory(Optional<String> injuriesHistory) {
+        requireNonNull(injuriesHistory);
+        return injuriesHistory.isPresent() ? Optional.of(parseInjuriesHistory(injuriesHistory.get()))
+                : Optional.empty();
+    }
 }

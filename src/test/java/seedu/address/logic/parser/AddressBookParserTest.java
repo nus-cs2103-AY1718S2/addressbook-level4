@@ -19,7 +19,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -27,6 +27,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.StreamCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -187,6 +188,13 @@ public class AddressBookParserTest {
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
     }
 
+    //@@author TeyXinHui
+    @Test
+    public void parseCommand_stream() throws Exception {
+        StreamCommand command = (StreamCommand) parser.parseCommand(
+                StreamCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " 1");
+        assertEquals(new StreamCommand(INDEX_FIRST_PERSON, 1), command);
+    }
     //@@author
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {

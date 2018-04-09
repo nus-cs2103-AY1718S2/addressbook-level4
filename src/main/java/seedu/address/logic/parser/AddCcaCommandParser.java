@@ -2,47 +2,48 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddRemarkCommand;
+import seedu.address.logic.commands.AddCcaCommand;
 import seedu.address.logic.commands.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author chuakunhong
+
 /**
  * Parses input arguments and creates a new EditCommand object
  */
-public class AddRemarkCommandParser implements Parser<AddRemarkCommand> {
+public class AddCcaCommandParser implements Parser<AddCcaCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
      * and returns an EditCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public AddRemarkCommand parse(String args) throws ParseException {
+    public AddCcaCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_REMARK);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_CCA);
 
-        if (!argMultimap.arePrefixesPresent(PREFIX_REMARK)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemarkCommand.MESSAGE_USAGE));
+        if (!argMultimap.arePrefixesPresent(PREFIX_CCA)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCcaCommand.MESSAGE_USAGE));
         }
         Index index;
 
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemarkCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCcaCommand.MESSAGE_USAGE));
         }
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
-        if (ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get().toString().isEmpty()) {
-            throw new ParseException((String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemarkCommand.MESSAGE_USAGE)));
+        if (ParserUtil.parseCca(argMultimap.getValue(PREFIX_CCA)).get().toString().isEmpty()) {
+            throw new ParseException((String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCcaCommand.MESSAGE_USAGE)));
         } else {
-            ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).ifPresent(editPersonDescriptor::setRemark);
+            ParserUtil.parseCca(argMultimap.getValue(PREFIX_CCA)).ifPresent(editPersonDescriptor::setCca);
         }
-        return new AddRemarkCommand(index, editPersonDescriptor);
+        return new AddCcaCommand(index, editPersonDescriptor);
     }
     //@@author
 }

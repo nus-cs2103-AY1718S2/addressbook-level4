@@ -146,7 +146,7 @@ public class TodoListCommand extends Command {
             }
             List<Event> items = events.getItems();
             for (Event event : items) {
-                eventList.add(new ListEvent(event.getSummary(), event.getLocation(), event.getEnd().getDateTime()));
+                eventList.add(new ListEvent(event.getSummary(), event.getLocation(), event.getStart().getDateTime()));
             }
             pageToken = events.getNextPageToken();
         } while (pageToken != null);

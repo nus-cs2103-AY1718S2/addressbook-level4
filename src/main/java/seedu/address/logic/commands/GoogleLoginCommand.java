@@ -26,9 +26,9 @@ public class GoogleLoginCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        String authenticationUrl = googleAuthentication.getAuthorizationUrl();
-        EventsCenter.getInstance().post(new SwitchTabRequestEvent(TAB_ID));
+        String authenticationUrl = googleAuthentication.getAuthenticationUrl();
         EventsCenter.getInstance().post(new LoadGoogleLoginEvent(authenticationUrl));
+        EventsCenter.getInstance().post(new SwitchTabRequestEvent(TAB_ID));
 
         return new CommandResult(String.format(MESSAGE_SUCCESS));
     }

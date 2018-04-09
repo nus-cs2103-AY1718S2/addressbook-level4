@@ -40,16 +40,16 @@ public class GoogleAuthentication {
     /** The url which user will be redirected to after logging in successfully. */
     private String redirectUrl = "https://www.google.com.sg";
 
-    private String authorizationUrl;
+    private String authenticationUrl;
 
     public GoogleAuthentication() {
         //Builds a Google OAuth2 URL
-        this.authorizationUrl = new GoogleBrowserClientRequestUrl(clientId, redirectUrl, SCOPES).build();
+        this.authenticationUrl = new GoogleBrowserClientRequestUrl(clientId, redirectUrl, SCOPES).build();
     }
 
     //Get the OAuth URL for user to login
-    public String getAuthorizationUrl() {
-        return authorizationUrl;
+    public String getAuthenticationUrl() {
+        return authenticationUrl;
     }
 
     /**
@@ -62,17 +62,17 @@ public class GoogleAuthentication {
             LoadGoogleLoginRedirectEvent event = new LoadGoogleLoginRedirectEvent();
             EventsCenter.getInstance().post(event);
             String url = event.getRedirectUrl();
+            //@@author KevinCJH-reused
             validToken = checkTokenIndex(url.indexOf("token="));
             if (validToken) {
                 token = url.substring(url.indexOf("token=") + 6, url.indexOf("&"));
             } else {
                 throw new StringIndexOutOfBoundsException();
             }
+            //@@author KevinCJH
         } catch (Exception e) {
             throw new GoogleAuthenticationException("Google login has failed. Please try again.");
         }
-
-        System.out.println("TOKEN " + token);
 
         return token;
     }

@@ -1,0 +1,71 @@
+= Kushagra Goyal - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: ContactHeRo
+
+---
+
+== Overview
+
+Welcome to contactHeRo! contactHeRo is the perfect contact management solution for recruiters across companies who need a quick and efficient way to manage the contact details and profiles of their potential recruits. It is a Command Line Interface(CLI) application with intuitive usage and effective features. You can manage details of prospective employees and job openings in your company through easy to use add, delete and edit features. Matching jobs to employees is also a great feature that makes the hiring process easy for you. Other than that, you can also view the linkedIn profiles of your potential employees, send emails and arrange meetings.
+
+== Summary of contributions
+
+* *Major enhancement*: added *job openings section*
+** What it does: allows the user to maintain a list of current job openings using add, delete, find and edit commands and match these job openings to potential employees using skill-matching.
+** Justification: A recruiter needs the list of the job openings in the company so he/she knows what are the current job openings and what skillsets to look for in people. This way, the user can better search for potential employees. Hence, this feature is an essential feature of any recruitment-management software.
+** Highlights: This enhancement required addition of a lot of new commands that required 
+
+* *Minor enhancement*: added a Contact-Details and LinkedIn-Search display.
+** Justification: Viewing the contact details in a separate focused panel makes them easier to read for the user as the Person card can now just contain limited information like the person’s name, current position and company, also allowing more number of contacts to be displayed at a time since amount of information is reduced. Moreover, recruiters need to keep a track of the professional progress of his/her potential recruits and having easy access to their LinkedIn profiles will help them do this efficiently.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W09-B2/main/blob/master/collated/functional/kush1509.md[Functional code]] [https://github.com/CS2103JAN2018-W09-B2/main/blob/master/collated/test/kush1509.md[Test code]] _{give links to collated code files}_
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+** Enhancements to existing features:
+*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+** Documentation:
+*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
+*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
+*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
+** Tools:
+*** Integrated a third party library (Natty) to the project (https://github.com[#42])
+*** Integrated a new Github plugin (CircleCI) to the team repo
+
+_{you can add/remove categories in the list above}_
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=undoredo]
+
+include::../UserGuide.adoc[tag=dataencryption]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=undoredo]
+
+include::../DeveloperGuide.adoc[tag=dataencryption]
+
+
+== PROJECT: PowerPointLabs
+
+---
+
+_{Optionally, you may include other projects in your portfolio.}_

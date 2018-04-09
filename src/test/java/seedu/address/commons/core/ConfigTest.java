@@ -14,7 +14,7 @@ public class ConfigTest {
 
     @Test
     public void toString_defaultObject_stringReturned() {
-        String defaultConfigAsString = "App title : Address App\n"
+        String defaultConfigAsString = "App title : Your Trustworthy Pigeons AddressBook brought to you by T16-B2\n"
                 + "Current log level : INFO\n"
                 + "Preference file Location : preferences.json\n"
                 + "UserPass file Location : userpass.json";

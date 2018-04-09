@@ -23,32 +23,17 @@ By: `CS2103JAN2018-W13-B4`      Since: `March 2018`      Licence: `MIT`
 
 == Introduction
 
-PrioriTask is a desktop task management application. It is not just any task management application, but a combination of the to-do list, calendar and reminder features, with an added bonus of an automatic updating and sorting of your tasks based on priority levels. It helps you keep track of your tasks, while providing you with at-a-glance views of upcoming tasks by day, week or month.
+PrioriTask is a desktop task management application. It is not just any task management application, but a combination of a to-do list, calendar and reminder features, with the added bonus of an automatic updating and sorting of your tasks based on priority levels. It helps you keep track of your tasks, while providing you with at-a-glance views of upcoming tasks.
 
-PrioriTask is a fairly new application that has much room for improvement. We welcome any form of contributions to the PrioriTask project, be it from beginners or seasoned Java developers. Whether you're a new developer or an experienced contributor, this guide can serve as a helpful reference and source for information about writing code for the PrioriTask project.
-
-This developer's guide consists of the following sections.
-
-* <<Getting Started>>
-* <<Design>>
-* <<Implementation>>
-* <<Documentation>>
-* <<Testing>>
-* <<Dev Ops>>
+PrioriTask is a fairly new application that has much room for improvement. We welcome any form of contributions to PrioriTask project, be it from beginners or seasoned Java developers. Experienced or not, this guide can serve as a helpful reference and source for information for those who hope to contribute to the project.
 
 == Getting Started
 
-This section contains information to help you get started developing for PrioriTask. The simple list below will ensure that you get up and running with the application in no time.
-
-* <<Installing prerequisites>>
-* <<Setting up the project in your computer>>
-* <<Verifying the setup>>
-* <<Configuring the project before writing code>>
-* <<Getting started with developing>>
+This section contains a list of steps to help you get started with developing for PrioriTask in no time.
 
 === Installing prerequisites
 
-Before working on PrioriTask, ensure that you have the following software installed.
+Before working on PrioriTask, ensure that you have the following software installed:
 
 . *JDK `1.8.0_60`* or later
 +
@@ -63,9 +48,9 @@ It will not work with earlier versions of Java 8.
 PrioriTask requires Gradle and JavaFX plugins. +
 IntelliJ has both plugins installed by default. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
-=== Setting up the project in your computer
+=== Setting up the project on your computer
 
-After you've ensured that you've met all requirements, follow the steps below to setup this project in your computer.
+Follow these steps to setup the project on your computer:
 
 [NOTE]
 The following steps are written for IntelliJ IDEA `2017.3.5` (Ultimate Edition). +
@@ -73,10 +58,11 @@ There may be slight variations in the steps if using other versions of IntelliJ.
 
 . Fork this repo, and clone the fork to your computer.
 . Open IntelliJ. You should see the welcome screen (refer to <<fig-GettingStarted1>>).
-.. If you do not see the welcome screen, select `File` > `Close Project` to close the existing project dialog first.
+[NOTE]
+If you do not see the welcome screen, select `File` > `Close Project` to close the existing project dialog before continuing.
 
 [[fig-GettingStarted1]]
-.IntelliJ's Welcome Screen
+.IntelliJ's welcome screen
 image::DeveloperGettingStarted1.png[width="600"]
 
 [start=3]
@@ -96,7 +82,7 @@ image::DeveloperGettingStarted3.png[width="600"]
 
 [start=6]
 . Fill up the necessary information as follows, and click `Next`. You will be directed to the next window.
-. Click `Next` until to reach the window to select the project SDK (refer to <<fig-GettingStarted4>>).
+. Click `Next` repeatedly, until the window to select the project SDK appears (refer to <<fig-GettingStarted4>>).
 
 [[fig-GettingStarted4]]
 .Selecting project SDK in the `Import Project` window
@@ -104,11 +90,12 @@ image::DeveloperGettingStarted4.png[width="600"]
 
 [start=8]
 . Click on the JDK `1.8` folder in the left pane and click `Next`.
-.. If you do not see a JDK `1.8` folder, click on `+` > `JDK`, and find the directory of the JDK.
+[NOTE]
+If you do not see a JDK `1.8` folder, click on `+` > `JDK`, and find the directory of the JDK.
 . Click `Next` until you reach the last window. Click `Finish` to complete the import of the project. The project will be loaded and you will be brought to the main project window (refer to <<fig-GettingStarted5>>).
 
 [[fig-GettingStarted5]]
-.Main Project Window
+.Main project window
 image::DeveloperGettingStarted5.png[width="600"]
 
 [start=10]
@@ -119,33 +106,36 @@ image::DeveloperGettingStarted5.png[width="600"]
 .`Import Module from Gradle` Window
 image::DeveloperGettingStarted6.png[width="600"]
 
+[start=12]
 . Click `OK` to accept the default settings.
 . Open the `Terminal` (select `Tool Windows` > `Terminal`) and run the command `gradlew processResources` (run `./gradlew processResources` for Mac/Linux users). It should finish with the `BUILD SUCCESSFUL` message. +
-This will generate all resources required by the application and tests.
+This generates all the resources required by the application and its tests.
 
 === Verifying the setup
 
-After setting up the project, do the following steps to verify that the project has been correctly set up.
+Follow these steps to verify that the project has been correctly set up:
 
-. Run the `seedu.organizer.MainApp` and try a few commands. You may refer to the <<UserGuide#, UserGuide.adoc>> for more information about the commands.
+. Run `seedu.organizer.MainApp` and try a few commands. You may refer to the <<UserGuide#, UserGuide.adoc>> for more information about the commands.
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configuring the project before writing code
 
-Before you begin developing, there are a few configurations to be done to ensure that the code you write meets our project standards.
+Before you begin development, there are a few configurations to be done to ensure that the code you write meets our project standards.
 
 ==== Configuring the coding style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with the mentioned standard, but uses a different import order.
+
+Follow these steps to ensure that your code adheres to the required coding standards:
 
 . Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (Mac).
 . Select `Editor` > `Code Style` > `Java`.
-. Click on the `Imports` tab to set the order.
+. Click on the `Imports` tab to set the import order.
+* Set `Class count to use import with '\*'` to `999`. This prevents the contraction of import statements.
+* Set `Names count to use static import with '*'` to `999`. This prevents the contraction of import statements.
+* Set the following order in `Import Layout`: `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
-
-Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write the code.
+Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check for style-compliance as you write code.
 
 ==== Setting up CI
 
@@ -154,19 +144,19 @@ This project relies heavily on Travis to perform Continuous Integration (CI). Yo
 After setting up Travis, you can optionally set up coverage reporting for your team fork (see <<UsingCoveralls#, UsingCoveralls.adoc>>).
 
 [NOTE]
-Coverage reporting could be useful for a team repository that hosts the final version, but is not that useful for your personal fork.
+Coverage reporting could be useful for a team repository that hosts the final version, but is not particularly useful for your personal fork.
 
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
 Having both Travis and AppVeyor ensures the application works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based).
 
-=== Getting started with developing
+=== Getting started with development
 
-When you are ready to start developing,
+When you are ready to start development:
 
-1. Read <<Design-Architecture>> to get some sense of the overall design.
-2. Look at <<Implementation>> to find out more about the major features, and better understand how you can contribute enhancements to those features.
+1. Read <<Design-Architecture>> to get an understanding of the overall design.
+2. Read <<Implementation>> to find out more about the major features, and how you can contribute enhancements to those features.
 
 == Design
 
@@ -175,42 +165,47 @@ PrioriTask consists of multiple components written in Java, with data being writ
 [[Design-Architecture]]
 === Architecture
 
-The *_Architecture Diagram_* given below explains the high-level design of the application.
+The *_Architecture Diagram_* given below (<<fig-ArchitectureDiagram>>) provides an overview of the high-level design of the application.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-.Architecture Diagram
+[[fig-ArchitectureDiagram]]
+.Architecture diagram
 image::Architecture.png[width="600"]
 
-Given below is a quick overview of each component. The two main components of the application includes:
+==== Primary components
 
-. `Main`, with only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+There are two primary components of the application:
 
-.. Initializing the components in the correct sequence, and connecting them up with each other at application launch.
-.. Shutting down the components and invoking cleanup method where necessary during shut down.
+. `Main`, which contains only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-. <<Design-Commons,*`Commons`*>>, representing a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+.. Initializing all components in the correct sequence, and connecting them with each other at application launch.
+.. Shutting down all components and invoking the cleanup method where necessary during application shut down.
+
+. <<Design-Commons,*`Commons`*>>, contains a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
 .. `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
 .. `LogsCenter` : This class is used by many classes to write log messages to the application's log file.
 
-The rest of the application consists of four components:
+==== Secondary components
 
-. <<Design-Ui,*`UI`*>>: Represents the UI of the application
-. <<Design-Logic,*`Logic`*>>: Executes commands
-. <<Design-Model,*`Model`*>>: Holds the data of the application in-memory
-. <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk
+The rest of the application comprises of four components:
 
-Each of the four components,
+. <<Design-Ui,*`UI`*>>: Represents the UI of the application.
+. <<Design-Logic,*`Logic`*>>: Executes commands.
+. <<Design-Model,*`Model`*>>: Holds the data of the application in-memory.
+. <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
+
+Each of the four components:
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (refer to <<fig-LogicComponent>>) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, `Logic` (refer to <<fig-LogicComponent>>) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 [[fig-LogicComponent]]
-.Class Diagram of the Logic Component
+.Class diagram of `Logic`
 image::LogicClassDiagram.png[width="800"]
 
 [.infoblock]
@@ -220,16 +215,18 @@ image::LogicClassDiagram.png[width="800"]
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_ (refer to <<fig-SDforDeleteTask>>) shows how the components interact in a scenario where the user issues the command `delete 1`.
 
+[[fig-SDforDeleteTask]]
 .Component interactions for `delete 1` command (part 1)
 image::SDforDeleteTask.png[width="800"]
 
 [NOTE]
 Note how the `Model` simply raises a `OrganizerChangedEvent` when the Organizer data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+The following diagram (refer to <<fig-SDforDeleteTaskEventHandling>>) below shows how the `EventsCenter` reacts to that event. This eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
+[[fig-SDforDeleteTaskEventHandling]]
 .Component interactions for `delete 1` command (part 2)
 image::SDforDeleteTaskEventHandling.png[width="800"]
 
@@ -237,76 +234,87 @@ image::SDforDeleteTaskEventHandling.png[width="800"]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 ====
 
-The sections below give more details of each component.
+The following sections will provide more details on each of the 4 secondary components.
 
 [[Design-Ui]]
 === UI component
 
-The UI consists of a `MainWindow` that is made up of numerous parts (e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`, `StatusBarFooter`, `CalendarPanel`, etc.). All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+`UI` consists of a `MainWindow` that is made up of numerous parts (e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`, `StatusBarFooter`, `CalendarPanel`, etc.).
+These parts, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The class diagram below describes the structure of the `UI` component.
+The class diagram below (refer to <<fig-UIClassDiagram>>) describes the structure of `UI`.
 
-.Structure of the UI Component
+[[fig-UIClassDiagram]]
+.Structure of `UI`
 image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/organizer/ui/Ui.java[`Ui.java`]
 
-The `UI` component uses JavaFX UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The JavaFX UI framework is used to build this component.
+The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
 
-The `UI` component,
+`UI`:
 
-* Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-* Responds to events raised from various parts of the App and updates the UI accordingly.
+* Executes user commands using `Logic`.
+* Binds itself to some data in `Model` so that the UI can auto-update when data in the `Model` changes.
+* Responds to events raised from various parts of the application and updates the UI accordingly.
 
 [[Design-Logic]]
 === Logic component
 
-The `Logic` component consists of the commands and their respective parsers (if necessary). For commands requiring parsers, they are defined in `.java` files prefixed with _'-Parser'_ that are in the `src/main/java/logic/parser` folder. For example, the parser for `AddCommand` is specified in `AddCommandParser.java`.
+`Logic` consists of the commands and their respective parsers (if necessary).
+Parser classes are defined in `.java` files suffixed with _'Parser'_, and are found in the `src/main/java/logic/parser` folder.
+For example, the parser for `AddCommand` is defined in `AddCommandParser.java`.
 
-The class diagram below gives an overview of the structure of the `Logic` component.
+The class diagram below (refer to <<fig-LogicClassDiagram>>) gives an overview of the structure of `Logic`.
 
 [[fig-LogicClassDiagram]]
-.Structure of the Logic Component
+.Structure of `Logic`
 image::LogicClassDiagram.png[width="800"]
 
 *API* :
 link:{repoURL}/src/main/java/seedu/organizer/logic/Logic.java[`Logic.java`]
 
-There are two types of commands. Commands that modify the state of the organizer inherit from the `UndoableCommand` class, to be used by the undo/redo mechanism (see <<Undo/Redo feature>> for more information). Commands that do not modify the state of the organizer, and cannot be undone, inherit from the `Command` class instead.
+There are two types of commands.
+Commands that modify the state of the organizer inherit from the `UndoableCommand` class, and are used by the undo/redo mechanism (see <<Undo/Redo feature>> for more information).
+Commands that do not modify the state of the organizer, and cannot be undone, inherit from the `Command` class instead.
 
-The class diagram below gives a more detailed overview of how the command system in the `Logic` component works. It shows the finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>.
+The class diagram below (refer to <<fig-CommandsDiagram>>) gives a more detailed overview of how the command system in `Logic` works. It shows the finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>.
 
 [[fig-CommandsDiagram]]
-.Structure of Commands in the Logic Component
+.Structure of commands in `Logic`
 image::LogicCommandClassDiagram.png[width="800"]
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Given below (refer to <<fig-LogicSequenceDiagram>>) is the sequence diagram for interactions within `Logic` for the `execute("delete 1")` API call.
 
 [[fig-LogicSequenceDiagram]]
-.Interactions Inside the Logic Component for the `delete 1` Command
+.Interactions inside `Logic` for the `delete 1` command
 image::DeleteTaskSdForLogic.png[width="800"]
 
-The sequence flow is as follows:
+The sequence flows as such:
 
 .  `Logic` uses the `OrganizerParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a task) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `UI`.
+.  `Command` object is created.
+.  `Command` object is executed by the `LogicManager`.
+[NOTE]
+The command execution can affect the `Model` (e.g. adding a task) and/or raise events.
+.  `CommandResult` object is created as an encapsulation of the result of the command execution.
+.  `CommandResult` object is passed to `UI`.
 
 [[Design-Model]]
 === Model component
 
-The `Model` component consists of a `UniqueTaskList` and `UniqueTagList` that contains and manipulates the data within the application using an `ObservableList`. The component also includes `Task`, and its respective parameters (e.g. `Name`, `Priority`, `Date Added`, etc.).
+`Model` consists of a `UniqueTaskList`, `UniqueTagList`, and `UniqueUserList` that contains and manipulates the data within the application using an `ObservableList`. The component also includes `Task`, and its respective parameters (e.g. `Name`, `Priority`, `Date Added`, etc.).
 
-The class diagram below gives an overview of the structure of the `Model` component.
+The class diagram below (refers to <<fig-ModelComponent>>) gives an overview of the structure of `Model`.
 
-.Structure of the Model Component
+[[fig-ModelComponent]]
+.Structure of `Model`
 image::ModelClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/organizer/model/Model.java[`Model.java`]
 
-The `Model`,
+The `Model`:
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Organizer data.
@@ -318,24 +326,24 @@ The `Model`,
 [[Design-Storage]]
 === Storage component
 
-The `Storage` component consists of the `XmlOrganizerStorage`, which reads data from, and writes data to, the hard disk. Data is stored in XML format, and can be retrieved from `data` > `organizer.xml`. The component also contains the `UserPrefsStorage`, which stores user preferences (e.g. the application window's preferred height and width) in a JSON file. The file is titled `preferences.json`, and can be retrieved from the main folder.
+`Storage` consists of the `XmlOrganizerStorage`, which reads data from, and writes data to, the hard disk.
+Data is stored in XML format, and can be retrieved from `data` > `organizer.xml`.
+This component also contains the `UserPrefsStorage`, which stores user preferences (e.g. the application window's preferred height and width) in a JSON file. The file is titled `preferences.json`, and can be retrieved from the main folder.
 
-The class diagram below gives an overview of the structure of the `Storage` component.
+The class diagram below (refer to <<fig-StorageClassDiagram>>) gives an overview of the structure of `Storage`.
 
-.Structure of the Storage Component
+[[fig-StorageClassDiagram]]
+.Structure of `Storage`
 image::StorageClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/organizer/storage/Storage.java[`Storage.java`]
 
-The `Storage` component,
+`Storage`:
 
 * saves `UserPref` objects in JSON format and reads it back.
 * saves the Organizer data in XML format and reads it back.
 
 [[Design-Commons]]
-=== Common classes
-
-Classes used by multiple components are in the `seedu.organizer.commons` package. Such classes include the `EventsCenter` and `LogsCenter`.
 
 == Implementation
 
@@ -343,17 +351,19 @@ PrioriTask consists of many different features. This section describes some note
 
 === Undo/Redo feature
 
-The `undo` feature restores the PrioriTask to the state before the previous undoable command was executed. Undoable commands are defined as commands that modify the PrioriTask’s content (e.g. `add`, `delete`, `edit` and `clear`).
+The `undo` feature restores PrioriTask to the state before the previous undoable command was executed. Undoable commands are defined as commands that modify PrioriTask’s content (e.g. `add`, `delete`, `edit` and `clear`).
 
 The `redo` feature does the opposite - it reverses the most recent `undo` command.
 
-==== Current Implementation
+==== Current implementation
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the organizer (e.g. `add`, `edit`). Such commands inherit from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone inherit from `Command` instead.
+The following diagram (refer to <<fig-LogicCommandClassDiagram>>) shows the inheritance diagram for commands:
 
-.Structure of Commands in the Logic Component
+[[fig-LogicCommandClassDiagram]]
+.Structure of commands in the `Logic`
 image::LogicCommandClassDiagram.png[width="800"]
 
 `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the organizer before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while child classes implement the details of how to execute the class-specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
@@ -402,8 +412,9 @@ image::UndoRedoStartingStackDiagram.png[width="800"]
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/Study ...` to add a new task.
 
-The diagram below illustrates how the execution of the `add n/Study` command affects the `UndoRedoStack`.
+The diagram below (refers to <<fig-UndoRedoNewCommand1StackDiagram>>) illustrates how the execution of the `add n/Study` command affects the `UndoRedoStack`.
 
+[[fig-UndoRedoNewCommand1StackDiagram]]
 .UndoRedoStack `add n/Study ...` command execution
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
@@ -414,28 +425,31 @@ The user now decides that adding the task was a mistake, and decides to undo tha
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the organizer to the state before the `add` command executed.
 
-The diagram below illustrates the process of the execution of the `undo` command on the `UndoRedoStack`.
+The diagram below (refer to <<fig-UndoRedoExecuteUndoStackDiagram>>) illustrates the process of the execution of the `undo` command on the `UndoRedoStack`.
 
+[[fig-UndoRedoExecuteUndoStackDiagram]]
 .UndoRedoStack `undo` command execution
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
-The following sequence diagram shows how the undo operation works:
+The following sequence diagram (refer to <<fig-UndoRedoSequenceDiagram>>) shows how the undo operation works:
 
+[[fig-UndoRedoSequenceDiagram]]
 .UndeRedoStack sequence diagram
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-Redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the organizer to the state after the command is executed).
+Redo does the exact opposite (pops from `redoStack`, pushes to `undoStack`, and restores the organizer to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/Study` command (this is the behavior that most modern desktop applications follow).
 
-The diagram below illustrates how the execution of the `clear` command affects the `UndoRedoStack`.
+The diagram below (refer to <<fig-UndoRedoNewCommand2StackDiagram>>) illustrates how the execution of the `clear` command affects the `UndoRedoStack`.
 
+[[fig-UndoRedoNewCommand2StackDiagram]]
 .UndoRedoStack `clear` command execution
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
@@ -445,8 +459,9 @@ Commands that are not undoable are not added into the `undoStack`. For example, 
 .UndoRedoStack `list` command execution
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
-The following activity diagram summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
+The following activity diagram (refer to <<fig-UndoRedoActivityDiagram>>) summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
 
+[[fig-UndoRedoActivityDiagram]]
 .UndoRedoStack activity diagram
 image::UndoRedoActivityDiagram.png[width="650"]
 
@@ -456,29 +471,29 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 * **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`
 ** Pros: Any undone/redone functionality is not lost as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
-** Cons: Hard for new developers to understand the template pattern.
+** Cons: It is hard for new developers to understand the template pattern.
 * **Alternative 2:** Just override `execute()`
-** Pros: Does not involve the template pattern, easier for new developers to understand.
+** Pros: It does not involve the template pattern, easier for new developers to understand.
 ** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
 ===== Aspect: How undo & redo executes
 
 * **Alternative 1 (current choice):** Saves the entire organizer
-** Pros: Easy to implement.
-** Cons: May have performance issues in terms of memory usage.
+** Pros: It is easy to implement.
+** Cons: There may be performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself
-** Pros: Will use less memory (e.g. for `delete`, just save the task being deleted).
-** Cons: Need to ensure that the implementation of the counter to each command is correct.
+** Pros: It will use less memory (e.g. for `delete`, just save the task being deleted).
+** Cons: There is a need to ensure that the implementation of the counter to each command is correct.
 
 
 ===== Aspect: Type of commands that can be undone/redone
 
 * **Alternative 1 (current choice):** Only include commands that modifies the organizer (`add`, `clear`, `edit`).
-** Pros: Only reverts changes that are hard to change back (the view can easily be re-modified as no data are * lost).
-** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
+** Pros: It only reverts changes that are hard to change back (the view can easily be re-modified as no data are * lost).
+** Cons: A user might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
 * **Alternative 2:** Include all commands.
-** Pros: Might be more intuitive for the user.
-** Cons: User have no way of skipping such commands if he or she just want to reset the state of the organizer and not the view.
+** Pros: It might be more intuitive for the user.
+** Cons: A user has no way of skipping such commands if he or she just want to reset the state of the organizer and not the view.
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 
@@ -555,18 +570,21 @@ The `sortTasks` method makes use of the `ObservableList` class’s `sort` method
 
 Consider an `addTask` method call by the `Organizer`. The current date is 2018-03-19.
 
-The following is a sequence diagram which represents the `Organizer` adding a Study `Task`.
+The following is a sequence diagram (refer to <<fig-OrganizerAddTaskSequenceDiagram>>) which represents the `Organizer` adding a Study `Task`.
 
+[[fig-OrganizerAddTaskSequenceDiagram]]
 .addTask(Study) method execution sequence diagram
 image::OrganizerAddTaskSequenceDiagram.png[width="800"]
 
-Suppose the `tasks` currently contains the following two `Task` s.
+Suppose the `tasks` currently contains the following two `Task` s as shown in <<fig-OrganizerAddTaskDiagram1>>.
 
+[[fig-OrganizerAddTaskDiagram1]]
 .`tasks` 's initial `Task` s
 image::OrganizerAddTaskDiagram1.png[width="600"]
 
-The following figure represents the "Study" `Task`.
+<<fig-OrganizerAddTaskDiagram2>> represents the "Study" `Task`.
 
+[[fig-OrganizerAddTaskDiagram2]]
 ."Study" `Task`
 image::OrganizerAddTaskDiagram2.png[width="200"]
 
@@ -585,62 +603,67 @@ priorityToIncrease = 9 * ((31 - 14) / 31) = 4
 newPriority = 0 + 4 = 4
 ----
 
-A new "Study" `Task` is created and added to the `internalList`.
+A new "Study" `Task` is created and added to the `internalList` as shown in <<fig-OrganizeAddTaskDiagram3>>.
 
+[[fig-OrganizeAddTaskDiagram3]]
 .`internalList` after "Study" `Task` is added
 image::OrganizerAddTaskDiagram3.png[width="600"]
 
-The `sortTasks` method is then called, which calls the `priorityCompartor` method, and uses the `Comparator` returned to sort the `Task` s. This results in the following `UniqueTaskList`.
+The `sortTasks` method is then called, which calls the `priorityCompartor` method, and uses the `Comparator` returned to sort the `Task` s. This results in the following `UniqueTaskList` as show in <<fig-OrganizerAddTaskDiagram4>>.
 
+[[fig-OrganizerAddTaskDiagram4]]
 .`internalList` after `sortTasks` is called
 image::OrganizerAddTaskDiagram4.png[width="600"]
 
 ==== Design Considerations
+
 ===== Aspect : Implementation of `updatePriority`
 
 * Alternative 1 (current choice): Add a new method `updatePriority` in UniqueTaskList’s `add`
-** Pros : Convenient to update the priority during this method call; since during initialization of `Organizer`, `add` is called for every `Task` to initialize the `UniqueTaskList`.
-** Cons : Possible violation of Single Responsibility Principle and Separation of Concerns as `UniqueTaskList` now updates `Task` priorities and stores `Task` s.
+** Pros : It is convenient to update the priority during this method call; since during initialization of `Organizer`, `add` is called for every `Task` to initialize the `UniqueTaskList`.
+** Cons : There is a possible violation of Single Responsibility Principle and Separation of Concerns as `UniqueTaskList` now updates `Task` priorities and stores `Task` s.
 * Alternative 2 : Add a new class `UpdatedUniqueTaskList` which extends `UniqueTaskList`
-** Pros : Removes violation of Single Responsibility Principle and Separation of Concerns in Alternative 1.
-** Cons : Repeats the logic in `UniqueTaskList` while adding one method.
+** Pros : This prevents the violation of Single Responsibility Principle and Separation of Concerns in Alternative 1.
+** Cons : This repeats the logic in `UniqueTaskList` by adding one method.
 
 ===== Aspect : How `updatePriority` executes
 
 * Alternative 1 (current choice) : Return a new `Task` with new `Priority`
-** Pros : Easy to implement.
+** Pros : It is easy to implement.
 ** Cons : A new object is created twice during every addition, even if `Priority` is not updated; Hence slightly inefficient.
 * Alternative 2 : Edit the `Priority` parameter of the `Task`
 ** Pros : No new objects are created.
-** Cons : Requires major overhaul of `Task` and it’s parameters to be mutable.
+** Cons : It requires a major overhaul of `Task` and it’s parameters to be mutable.
 
 ===== Aspect : Scope of `updatePriority` and `sortTasks`
 
 * Alternative 1 (current choice) : Implement within `Model`
-** Pros : No need to deal with commands, and fits with the idea of automation.
-** Cons : Concern of updating priorities and sorting tasks may not lie with `Model` but `Logic`.
+** Pros : There is no need to deal with commands, and fits with the idea of automation.
+** Cons : The concern of updating priorities and sorting tasks may not lie with `Model` but `Logic`.
 * Alternative 2 : Implement within `Logic`
-** Pros : Fits with the concern of updating priorities and sorting tasks.
-** Cons : Requires development of commands and extra command calls to be automatically called upon start of application; unnecessary trouble for same feature.
+** Pros : It fits with the concern of updating priorities and sorting tasks.
+** Cons : It requires development of commands and extra command calls to be automatically called upon start of application; unnecessary trouble for same feature.
 
 // end::taskpriority[]
 
 // tag::calendar[]
 === Calendar Feature
 
-The `Calendar` resides mainly in the `UI` component, constantly interacting with the `Logic` and `Model` components to complete its tasks. It allows users to have a chronic overview of the deadlines of all their tasks. Tasks on the calendar changes according to the last task listing. By default, users will view the current month when they first open PrioriTask.
+The `Calendar` resides mainly in the `UI` component, constantly interacting with the `Logic` and `Model` components to complete its tasks. It allows users to have a chronological overview of the deadlines of all their tasks. Tasks on the calendar changes according to the last task listing. By default, users will view the current month when they first open PrioriTask.
 
-The calendar feature is currently still in its early stages of implementation. At present, it only supports the switching between months, and is best viewed fully-maximised on a 13” computer screen.
+The calendar feature is currently in its early stages of implementation. At present, it only supports the switching between months, and is best viewed fully-maximised on a 13” computer screen.
 
 ==== Current Implementation
 
-The calendar feature is facilitated by the `MonthView` class, which supports the `CalendarPanel`. The `MonthView` is responsible for displaying a monthly calendar view to the users through the `CalendarPanel`. The following diagram illustrates the structure of the calendar feature system:
+The calendar feature is facilitated by the `MonthView` class, which supports the `CalendarPanel`. The `MonthView` is responsible for displaying a monthly calendar view to the users through the `CalendarPanel`. The following diagram (refer to <<fig-CalendarComponentClassDiagram>>) illustrates the structure of the calendar feature system:
 
+[[fig-CalendarComponentClassDiagram]]
 .Structure of the Calendar Feature
 image::CalendarComponentClassDiagram.png[width="700"]
 
-The following sequence diagram illustrates how the different classes work together to display the calendar when users first run the application.
+The following sequence diagram (refer to <<fig-CalendarSequenceDiagram>>) illustrates how the different classes work together to display the calendar when users first run the application.
 
+[[fig-CalendarSequenceDiagram]]
 .Calendar Sequence Diagram
 image::CalendarSequenceDiagram.png[width="700"]
 
@@ -669,8 +692,9 @@ An `EntryCard` will be added to a specific date which reflects the deadline of t
 * Adding the tasks’ entries onto the calendar, according to the last task listing. The calendar is also updated every time an undoable command is executed (refer to <<Undo/Redo feature>> for more details about an undoable command).
 * Aiding the `Logic` component by switching the month view accordingly when users execute the respective calendar feature commands (e.g. `pmonth`, `nmonth`, etc.). A calendar feature command is defined as a command that changes the display of the calendar. For the full list of calendar feature commands, head to <<UserGuide#calendar-features, User Guide: Calendar Features>>.
 
-`MonthView` interacts very closely with its corresponding FXML file, `MonthView.fxml` to execute its tasks. The FXML file reflects the basic layout of the calendar feature, which is illustrated by the diagram below.
+`MonthView` interacts very closely with its corresponding FXML file, `MonthView.fxml` to execute its tasks. The FXML file reflects the basic layout of the calendar feature, which is illustrated by <<fig-MonthViewLayoutDiagram>>.
 
+[[fig-MonthViewLayoutDiagram]]
 .Basic Calendar Layout
 image::MonthViewLayoutDiagram.png[width="600"]
 
@@ -774,8 +798,9 @@ private void createMainView() {
 
 ==== Scenario
 
-Suppose the user executes a calendar feature command. Given below is the sequence diagram for interactions within the `Logic` and `UI` components for the execute(“nmonth”) API call.
+Suppose the user executes a calendar feature command. <<fig-CalendarCommandExecutionSequenceDiagram>> shows the interactions within the `Logic` and `UI` components for the execute(“nmonth”) API call.
 
+[[fig-CalendarCommandExecutionSequenceDiagram]]
 .Calendar Sequence Diagram
 image::CalendarCommandExecutionSequenceDiagram.png[width="700"]
 
@@ -790,19 +815,19 @@ The sequence flow is slightly similar to that of the execution of a normal comma
 
 ===== Aspect: Implementation of calendar feature
 * *Alternative 1 (current choice):* Draw the calendar manually using the JavaFX library
-** Pros: Feature is customised for the PrioriTask application.
-** Cons: Too much time invested in creating a feature that has been already been developed and freely available.
+** Pros: The feature is customised for PrioriTask.
+** Cons: There is a need to invest a lot of time into creating a feature that has been already been developed and freely available.
 * *Alternative 2:* Use a third-party framework / library
-** Pros: Speed up development, especially if it has already been thoroughly tested and does not have many bugs.
-** Cons: Not customised for the application, and may require much time to tweak or work around the framework / library to suit the application.
+** Pros: This speeds up development, especially if it has already been thoroughly tested and does not have many bugs.
+** Cons: It is not customised for the application, and may require much time to tweak or work around the framework / library to suit the application.
 
 ===== Aspect: Updating of tasks’ entries on the calendar
 * *Alternative 1 (current choice):* Clears the calendar, and draws everything (i.e. the dates and entries) again
-** Pros: Easy to implement.
-** Cons: May have performance issues. There may be a lag after an undoable is executed.
+** Pros: It is easy to implement.
+** Cons: There may be performance issues (there may be lag during execution of undoable commands).
 * *Alternative 2:* Track the `Task` that is being added / modified, and update the calendar accordingly
-** Pros: Update of the calendar will be almost instantaneous. Chances of a lag is rare.
-** Cons: Difficult to implement. Need to ensure that the tracking of `Task`s added / modified is accurate.
+** Pros: The update of the calendar will be almost instantaneous. The chances of lag is rare.
+** Cons: It is difficult to implement. There is a need to ensure that the tracking of `Task` s added / modified is accurate.
 // end::calendar[]
 
 // tag::subtask[]
@@ -811,8 +836,9 @@ The sequence flow is slightly similar to that of the execution of a normal comma
 ==== Current Implementation
 
 Subtask feature allows user to split their tasks into multiple subtasks. This feature allows user to better
-manage their task. It is implemented using `Subtask` class and `UniqueSubtaskList` class as shown by the diagram below:
+manage their task. It is implemented using `Subtask` class and `UniqueSubtaskList` class as shown by <<fig-SubtaskComponentDiagram>> below:
 
+[[fig-SubtaskComponentDiagram]]
 .Subtask UML Class Diagram
 image::SubtaskComponentDiagram.png[width="400"]
 
@@ -822,25 +848,25 @@ image::SubtaskComponentDiagram.png[width="400"]
 
 To manage the subtasks (Add, edit, etc), a copy of the `Task` object is created, since `Task` is immutable.
 
-==== Design Consideration
+==== Design Considerations
 ===== Aspect: Implementation of `Subtask`
 * **Alternative 1 (current implementation):** Add a new class `Subtask`
-** Pros: Better isolation and easier modification to `Subtask` if needed.
-** Cons: Restricts the possibility of having a subtask that has subtasks.
+** Pros: There is better isolation, and allows for easier modification to `Subtask` if needed.
+** Cons: It restricts the possibility of having a subtask that has subtasks.
 
 * **Alternative 2:** Use current `Task` class
-** Pros: Easier to implement and subtask will share the same properties with `Task`.
-** Cons: Possibility of having a cyclic subtask (a task that is also a subtask of it self) if not handled carefully.
+** Pros: It is easier to implement and subtask will share the same properties with `Task`.
+** Cons: There is a ossibility of having a cyclic subtask (a task that is also a subtask of it self) if not handled carefully.
 
 ===== Aspect: Implementation of `UniqueSubtaskList`
 * **Alternative 1 (current implementation):** Use `List` to store subtasks.
-** Pros: Easier to implement.
-** Cons: Performance issues when data is large, since most operations in `UniqueSubtaskList`
+** Pros: It is easier to implement.
+** Cons: There will be performance issues when data is large, since most operations in `UniqueSubtaskList`
 is `O(n)`.
 
 * **Alternative 2 (Planned for implementation):** Use a combination of BBST and LinkedList to store subtasks.
-** Pros: Faster than the first alternative since each operation is `O(log n)`.
-** Cons: Harder to implement and more robust testing is required since it is more bug prone.
+** Pros: If is faster than the first alternative since each operation is `O(log n)`.
+** Cons: It is harder to implement and more robust testing is required since it is more bug prone.
 
 // end::subtask[]
 
@@ -853,6 +879,8 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * Currently log messages are output through the `Console` and to a `.log` file.
 
 *Logging Levels*
+
+The following are breif descriptions of different logging levels:
 
 * `SEVERE` : A message level indicating a _serious_ failure (e.g. failure resulting in application termination).
 * `WARNING` : A message level indicating a _potential_ problem (e.g. application can still continue, but do so with caution).
@@ -890,8 +918,9 @@ The following are the steps to convert the project documentation files to PDF fo
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
 .  Access the generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
 .  Within Chrome, click on the `Print` option in Chrome's menu.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For the best results, use the settings indicated in the screenshot below.
+.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For the best results, use the settings indicated in <<fig-chrome_save_as_pdf>>.
 
+[[fig-chrome_save_as_pdf]]
 .Saving documentation as PDF files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
 
@@ -908,20 +937,21 @@ The most reliable way to run tests is the third method. The first two methods mi
 *Method 1: Using IntelliJ JUnit test runner*
 
 * To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`.
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`.
+* To run a subset of tests, right-click on a test package, test class, or a test and choose `Run 'ABC'`.
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`).
+Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`).
 
 [NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
 
 *Method 3: Using Gradle (headless)*
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library, GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. This means that the developer is free to do something else while the tests are running.
+Open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
 
-To run the tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`).
+[NOTE]
+Thanks to the https://github.com/TestFX/TestFX[TestFX] library, GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. This means that the developer is free to do something else while the tests are running.
 
 === Types of tests
 
@@ -974,8 +1004,8 @@ The following are steps to create a new release:
 === Managing Dependencies
 
 A project often depends on third-party libraries. For example, PrioriTask depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than the following alternatives: +
-a. Include those libraries in the repo (this bloats the repo size) +
-b. Require developers to download those libraries manually (this creates extra work for developers)
+a. Including those libraries in the repo (this bloats the repo size) +
+b. Requiring developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
 == Product Scope

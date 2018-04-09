@@ -127,6 +127,7 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(DelivDate.MESSAGE_ADDRESS_CONSTRAINTS);
         }
         final DelivDate date = new DelivDate(this.date);
+
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, date, tags);
     }

@@ -37,7 +37,6 @@ public class RouteOptimization {
                 optimizedRoute.add(addressWithoutUnit);
             }
         } else {
-            //need to figure out what the key should be to make sure we know what the hashmap is storing
             for (int i = 0; i < lastShownList.size(); i++) {
                 Address address = lastShownList.get(i).getAddress();
                 if (isFindableAddress(address)) {

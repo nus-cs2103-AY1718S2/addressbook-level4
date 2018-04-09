@@ -15,13 +15,14 @@ public class DelivDate {
      */
 
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
-            "Person delivery date can take dates in the from YYYY-MM-DD, and it should not be blank";
+            "Person delivery date can take dates in the form YYYY-MM-DD, in only the valid date range, and it should not be blank";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String DATE_VALIDATION_REGEX = "\\d{4}-\\d{2}-\\d{2}";
+    //public static final String DATE_VALIDATION_REGEX = "\\d{4}-\\d{2}-\\d{2}";
+    public static final String DATE_VALIDATION_REGEX = "((19|2[0-9])[0-9]{2})-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])";
 
     public final String value;
 

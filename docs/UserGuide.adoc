@@ -156,7 +156,7 @@ Format: `clear` or `c`
 
 ==== Exiting the program : `exit` or `x`
 
-Exits the program. +
+Exits the program. This also logs the user out of the IMDB. +
 Format: `exit` or `x`
 
 // tag::dataencryption[]

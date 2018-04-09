@@ -28,7 +28,9 @@ public final class LoginManager {
         return currLoginState.getState();
     }
 
-    public static String getUserName() { return currLoginState.getUser(); }
+    public static String getUserName() {
+        return currLoginState.getUser();
+    }
 
     /**
      * Utility function for tests

@@ -8,15 +8,14 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}
  */
 public class DelivDate {
-
     /**
      * Represents a Person's address in the address book.
      * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}
      */
 
     public static final String MESSAGE_DATE_CONSTRAINTS =
-            "Person delivery date can take dates in the form YYYY-MM-DD, in only the valid date range, and it should not be blank";
-
+            "Person delivery date can take dates in the form YYYY-MM-DD, "
+                    + "in only the valid date range, and it should not be blank";
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.

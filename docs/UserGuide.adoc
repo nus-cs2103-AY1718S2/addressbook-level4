@@ -399,11 +399,11 @@ using the web browser. +
 Format: `googlelogin`
 
 ****
-* Opens up the `Google` tab. This is contactHeRo's built in browser for Google logins. Simply enter your email and password to login.
+* Opens up the `Google` tab. This is contactHeRo's built-in browser for Google logins. Simply enter your email and password to login.
 * You will have to login in order to use the `Email` command to send email.
 * *IMPORTANT*: Please do not go to other webpage in the `Google` tab after you have logged in. +
 +
-This is because contactHeRo has to use the login information from the webpage after you have login to send email.
+This is because contactHeRo has to use the login information from the webpage after you have login to send your email.
 
 * *NOTE*: We do not save or log any of your Google credentials or information as we respect your privacy.
 Therefore, everytime you restart contactHeRo, you will have to login again.
@@ -422,7 +422,7 @@ You should also see the login screen as shown below.
 image::googlelogin1.PNG[width="600"]
 
 [NOTE]
-Please do not go to any other webpage in the `Google` tab after you have logged in.
+Please do not go to any other webpages in the `Google` tab after you have logged in.
 
 Now that you have logged in, you are ready to use the `Email` feature to send out emails!
 // end::googlelogin[]

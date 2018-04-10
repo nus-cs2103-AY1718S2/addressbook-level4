@@ -34,6 +34,20 @@ public class UniqueToDoList implements Iterable<ToDo> {
     }
 
     /**
+     * Returns the ratio of done to-dos over the total number of to-dos in the list.
+     */
+    public double getCompleteRatio() {
+        int numberOfDoneToDos = 0;
+        for (ToDo todo: internalList) {
+            if (todo.getStatus().toString().equals("done")) {
+                numberOfDoneToDos++;
+            }
+        }
+        double completeRatio = ((double) numberOfDoneToDos)/((double) internalList.size());
+        return completeRatio;
+    }
+
+    /**
      * Adds a to-do to the list.
      *
      * @throws DuplicateToDoException if the to-do to add is a duplicate of an existing to-do in the list.

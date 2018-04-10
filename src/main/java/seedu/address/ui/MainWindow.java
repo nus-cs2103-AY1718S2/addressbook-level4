@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -41,6 +42,7 @@ public class MainWindow extends UiPart<Stage> {
     private Timetable timetable;
     private PersonListPanel personListPanel;
     private ToDoListPanel todoListPanel;
+    private ProgressIndicator progressIndicator;
     private Config config;
     private UserPrefs prefs;
 
@@ -134,6 +136,8 @@ public class MainWindow extends UiPart<Stage> {
 
         todoListPanel = new ToDoListPanel(logic.getFilteredToDoList());
         todoListPanelPlaceholder.getChildren().add(todoListPanel.getRoot());
+
+        progressIndicator = new ProgressIndicator(0);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());

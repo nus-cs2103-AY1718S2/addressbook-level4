@@ -45,7 +45,6 @@ SellIT is a desktop address book application used for businessman doing his busi
 *** Integrated a third party library (Natty) to the project (https://github.com[#42])
 *** Integrated a new Github plugin (CircleCI) to the team repo
 
-_{you can add/remove categories in the list above}_
 
 == Contributions to the User Guide
 

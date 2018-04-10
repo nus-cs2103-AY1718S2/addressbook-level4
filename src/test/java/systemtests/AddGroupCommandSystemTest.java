@@ -29,7 +29,8 @@ public class AddGroupCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid keyword -> rejected */
         command = "addsGroup " + GroupUtil.getGroupDetails(addGroup);
-        assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure(command,
+                Messages.MESSAGE_UNKNOWN_COMMAND + Messages.MESSAGE_DID_YOU_MEAN + AddGroupCommand.COMMAND_WORD);
 
         /* Case: add a duplicate group -> rejected */
         command = GroupUtil.getAddGroupCommand(GROUP_A);

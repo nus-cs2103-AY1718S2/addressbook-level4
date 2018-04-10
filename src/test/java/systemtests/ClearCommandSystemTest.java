@@ -1,5 +1,6 @@
 package systemtests;
 
+import static seedu.address.commons.core.Messages.MESSAGE_DID_YOU_MEAN;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
@@ -53,7 +54,7 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: mixed case command word -> rejected */
-        assertCommandFailure("ClEaR", MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure("ClEaR", MESSAGE_UNKNOWN_COMMAND + MESSAGE_DID_YOU_MEAN + ClearCommand.COMMAND_WORD);
     }
 
     /**

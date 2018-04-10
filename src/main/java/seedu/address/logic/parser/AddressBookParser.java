@@ -3,9 +3,13 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import me.xdrop.fuzzywuzzy.FuzzySearch;
+import me.xdrop.fuzzywuzzy.model.ExtractedResult;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.AddGroupCommand;
@@ -41,6 +45,34 @@ public class    AddressBookParser {
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
+    private static final List<String> COMMAND_WORDS = Arrays.asList(new String[]{
+        AddCommand.COMMAND_WORD,
+        AddEventCommand.COMMAND_WORD,
+        AddGroupCommand.COMMAND_WORD,
+        AddMembersToGroupCommand.COMMAND_WORD,
+        AddToDoCommand.COMMAND_WORD,
+        ChangeTagColorCommand.COMMAND_WORD,
+        CheckToDoCommand.COMMAND_WORD,
+        ClearCommand.COMMAND_WORD,
+        DeleteCommand.COMMAND_WORD,
+        DeleteToDoCommand.COMMAND_WORD,
+        AddCommand.COMMAND_WORD,
+        EditCommand.COMMAND_WORD,
+        EditToDoCommand.COMMAND_WORD,
+        ExitCommand.COMMAND_WORD,
+        FindCommand.COMMAND_WORD,
+        HelpCommand.COMMAND_WORD,
+        HistoryCommand.COMMAND_WORD,
+        ListCommand.COMMAND_WORD,
+        ListTagMembersCommand.COMMAND_WORD,
+        RedoCommand.COMMAND_WORD,
+        SelectCommand.COMMAND_WORD,
+        SwitchCommand.COMMAND_WORD,
+        UnCheckToDoCommand.COMMAND_WORD,
+        UndoCommand.COMMAND_WORD
+    });
+
 
     /**
      * Parses user input into command for execution.
@@ -149,7 +181,12 @@ public class    AddressBookParser {
             return new SwitchCommand();
         //@@author
         default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            ExtractedResult guess = FuzzySearch.extractOne(commandWord, COMMAND_WORDS);
+            if (guess.getScore() >= 75) {
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND + "\n Did you mean: " + guess.getString());
+            } else {
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
         }
     }
 

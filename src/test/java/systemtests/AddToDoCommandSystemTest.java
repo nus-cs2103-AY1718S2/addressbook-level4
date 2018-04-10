@@ -28,7 +28,8 @@ public class AddToDoCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid keyword -> rejected */
         command = "addsToDo " + ToDoUtil.getToDoDetails(toAdd);
-        assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure(command,
+                Messages.MESSAGE_UNKNOWN_COMMAND + Messages.MESSAGE_DID_YOU_MEAN + AddToDoCommand.COMMAND_WORD);
 
         /* Case: add a duplicate to-do -> rejected */
         command = ToDoUtil.getAddToDoCommand(TODO_E);

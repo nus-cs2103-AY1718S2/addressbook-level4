@@ -383,9 +383,8 @@ image::UndoRedoActivityDiagram.png[width="650", align="center"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-// tag::dataencryption[]
 
+// tag::details[]
 === Details Panel Implementation
 
 The `select` command shows the contact details of the person in a separate panel while the `linkedIn` command shows the LinkedIn search of the person.
@@ -1090,14 +1089,16 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
+// tag::product[]
 *Target users:*
 
 The application is targeted towards Human Resources Managers at companies, especially those responsible for recruitment. Such recruiters have a lot of contacts to +
-manage which include contact details and profiles of potential employees. It is essential for them to have a quick and easy access to these contacts. Hence, contactHero aims to make their lives easier by helping them to store and manage their contacts efficiently.
+manage which include contact details and profiles of potential employees, job openings and appointments. +
+It is essential for them to have a quick and easy access to these contacts. Hence, contactHero aims to make their lives easier by helping them to store and manage their contacts efficiently.
 
 *User Profile*:
 
-* Recruiters who have a significant number of contacts and profiles to manage
+* Recruiters who have a significant number of contacts and job openings to manage
 * Recruiters who prefer desktop apps
 * Recruiters who are good at typing and hence prefer CLI apps
 
@@ -1120,6 +1121,7 @@ manage which include contact details and profiles of potential employees. It is 
  ** Major Feature: A recruiter needs the list of the job openings in the company so he knows what are the current job openings and what tagsets to look for in people. This way, the user can better search for potential employees.
  ** Major Feature: A recruiter needs the list of the job openings in the company so he knows what are the current job openings and what tagsets to look for in people. This way, the user can better search for potential employees.
  ** Minor Feature: Viewing the contact details in a separate focused panel makes them easier to read for the user as the Person card can now just contain limited information like the person's name, current position and company, also allowing more number of contacts to be displayed at a time since amount of information is reduced. Moreover, recruiters need to keep a track of the professional progress of his/her potential recruits and having easy access to their LinkedIn profiles will help them do this efficiently.
+// end::product[]
 
 2. Do Andre Khoi Nguyen
  * Major Feature: Calendar

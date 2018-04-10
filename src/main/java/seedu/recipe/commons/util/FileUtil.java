@@ -20,8 +20,7 @@ public class FileUtil {
         return file.exists() && file.isFile();
     }
 
-    //@@author RyanAngJY - reused
-
+    //@@author RyanAngJY
     /**
      * Checks if a given file is an image file.
      *

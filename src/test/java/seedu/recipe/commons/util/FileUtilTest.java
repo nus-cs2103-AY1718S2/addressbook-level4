@@ -38,11 +38,12 @@ public class FileUtilTest {
     @Test
     public void isImageFile() {
         // file is not an image file
-        File file = new File(MainApp.class.getResource("/view/bootstrap.css").toExternalForm());
+        File file = new File(MainApp.class.getResource("/view/DarkTheme.css").toExternalForm()
+                .substring(5));
         assertFalse(FileUtil.isImageFile(file));
 
         // file is directory
-        file = new File(MainApp.class.getResource("/view").toExternalForm());
+        file = new File(MainApp.class.getResource("/view").toExternalForm().substring(5));
         assertFalse(FileUtil.isImageFile(file));
 
         // file is null pointer

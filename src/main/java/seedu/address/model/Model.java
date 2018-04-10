@@ -59,8 +59,11 @@ public interface Model {
     Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException,
             PatientNotFoundException;
 
-    /** Remove a patient from the visiting queue*/
+    /** Remove the first patient from the visiting queue*/
     Patient removePatientFromQueue() throws PatientNotFoundException;
+
+    /** Remove a specific patient from the visiting queue*/
+    Patient removePatientFromQueueByIndex(Index targetIndex) throws PatientNotFoundException;
 
     /** Get patient visiting queue*/
     ObservableList<Patient> getVisitingQueue();

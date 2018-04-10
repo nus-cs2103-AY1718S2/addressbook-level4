@@ -45,7 +45,7 @@ public class UniquePatientVisitingQueue implements Iterable<Integer> {
     }
 
     /**
-     * Removes a patient from the visiting queue.
+     * Removes the first patient from the visiting queue.
      *
      * @throws PatientNotFoundException if the queue is empty.
      */
@@ -57,6 +57,25 @@ public class UniquePatientVisitingQueue implements Iterable<Integer> {
         return visitingQueue.removeFirst();
     }
 
+    /**
+     * Removes a specific patient from the visiting queue.
+     *
+     * @throws PatientNotFoundException if the queue is empty.
+     */
+    public void removePatient(int index) throws PatientNotFoundException {
+        if (visitingQueue.isEmpty()) {
+            throw new PatientNotFoundException();
+        }
+
+        if (!contains(index)) {
+            throw new PatientNotFoundException();
+        }
+
+        Integer targetIndex = index;
+
+        visitingQueue.remove(targetIndex);
+    }
+
     public LinkedList<Integer> getVisitingQueue() {
         return visitingQueue;
     }
@@ -66,6 +85,7 @@ public class UniquePatientVisitingQueue implements Iterable<Integer> {
      */
     public boolean contains(int toCheck) {
         requireNonNull(toCheck);
+        boolean exist = visitingQueue.contains(toCheck);
         return visitingQueue.contains(toCheck);
     }
 

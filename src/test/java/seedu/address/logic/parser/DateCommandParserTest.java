@@ -28,5 +28,7 @@ public class DateCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, DateCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "01-04-2018",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, DateCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "2018-29-02",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DateCommand.MESSAGE_USAGE));
     }
 }

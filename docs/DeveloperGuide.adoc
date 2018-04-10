@@ -22,7 +22,7 @@ Let's get started!
 
 == Setting up
 
-Before you start to develop contactHeRo, let's us help you to set up.
+Before you start contributing to contactHeRo, let us help you to set up.
 
 === Setting up your environment
 Given below are the required environment for you to start your journey.
@@ -61,7 +61,7 @@ You can follow the steps below to set up contactHeRo in your computer.
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
-You can double check whether your setup is right or not by:
+You can double check whether your setup is right or not by following the steps below.
 
 . Run the `seedu.address.MainApp` and try a few commands
 . <<Testing,Run the tests>> to ensure they all pass.
@@ -101,15 +101,15 @@ Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingA
 [NOTE]
 Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
 
-=== Starting your journey.
+=== Getting started with coding.
 
 Now you are ready to start coding. +
-Here are some tips to get started with developing contactHeRo:
+    Here are some tips to get started with contributing to contactHeRo:
 
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
 
-Thanks for joining us in developing contactHeRo! Have fun!
+Thanks for joining us in contributing to contactHeRo! Have fun!
 
 == Design
 

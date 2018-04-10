@@ -48,7 +48,8 @@ public class ImportCommandParserTest {
         assertParseFailure(parser, INVALID_FILE_PATH_DESC, FilePath.MESSAGE_FILE_PATH_CONSTRAINTS);
 
         // multiple file paths, the last one being invalid
-        assertParseFailure(parser, FILE_PATH_DESC_VALID + INVALID_FILE_PATH_DESC, FilePath.MESSAGE_FILE_PATH_CONSTRAINTS);
+        assertParseFailure(parser, FILE_PATH_DESC_VALID + INVALID_FILE_PATH_DESC,
+                FilePath.MESSAGE_FILE_PATH_CONSTRAINTS);
 
         // non-empty preamble
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + FILE_PATH_DESC_VALID,

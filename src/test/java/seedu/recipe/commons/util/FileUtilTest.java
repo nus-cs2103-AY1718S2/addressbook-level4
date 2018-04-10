@@ -47,7 +47,8 @@ public class FileUtilTest {
         assertFalse(FileUtil.isImageFile(file));
 
         // file is null pointer
-        Assert.assertThrows(NullPointerException.class, () -> FileUtil.isImageFile(null));
+        File nullFile = null;
+        Assert.assertThrows(NullPointerException.class, () -> FileUtil.isImageFile(nullFile));
 
         // valid image file
         file = new File(Image.VALID_IMAGE_PATH);

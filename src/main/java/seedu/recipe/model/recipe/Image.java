@@ -9,6 +9,7 @@ import java.net.URL;
 
 import seedu.recipe.MainApp;
 import seedu.recipe.commons.util.FileUtil;
+import seedu.recipe.storage.ImageDownloader;
 
 /**
  * Represents a Recipe's image in the address book.
@@ -23,6 +24,7 @@ public class Image {
             + " file should be a valid image file";
     public static final URL VALID_IMAGE = MainApp.class.getResource("/images/clock.png");
     public static final String VALID_IMAGE_PATH = VALID_IMAGE.toExternalForm().substring(5);
+
     private String value;
     private String imageName;
 
@@ -34,6 +36,9 @@ public class Image {
     public Image(String imagePath) {
         requireNonNull(imagePath);
         checkArgument(isValidImage(imagePath), MESSAGE_IMAGE_CONSTRAINTS);
+        if (ImageDownloader.isValidImageUrl(imagePath)) {
+            imagePath = ImageDownloader.downloadImage(imagePath);
+        }
         this.value = imagePath;
         setImageName();
     }
@@ -53,16 +58,37 @@ public class Image {
         return imageName;
     }
 
+    //@@author kokonguyen191
+
     /**
-     *  Returns true if a given string is a valid file path, or no file path has been assigned
+     * Returns true if a given string is a valid file path, or no file path has been assigned
      */
-    public static boolean isValidImage(String testImagePath) {
-        if (testImagePath.equals(NULL_IMAGE_REFERENCE)) {
+    public static boolean isValidImage(String testImageInput) {
+        if (testImageInput.equals(NULL_IMAGE_REFERENCE)) {
             return true;
+        } else {
+            boolean isValidImageStringInput = isValidImageStringInput(testImageInput);
+            boolean isValidImagePath = FileUtil.isImageFile(testImageInput);
+            boolean isValidImageUrl = ImageDownloader.isValidImageUrl(testImageInput);
+
+            boolean isValidImage = isValidImageStringInput && (isValidImagePath || isValidImageUrl);
+
+            return isValidImage;
         }
-        File image = new File(testImagePath);
-        return FileUtil.isImageFile(image);
     }
+
+    /**
+     * Returns true if the input is a valid input syntax-wise
+     */
+    private static boolean isValidImageStringInput(String testString) {
+        String trimmedTestImagePath = testString.trim();
+        if (trimmedTestImagePath.equals("")) {
+            return false;
+        }
+        return true;
+    }
+
+    //@@author RyanAngJY
 
     /**
      * Sets image path to follow internal image storage folder

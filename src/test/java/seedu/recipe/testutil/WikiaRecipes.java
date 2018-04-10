@@ -8,6 +8,8 @@ import static seedu.recipe.logic.parser.CliSyntax.PREFIX_INSTRUCTION;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.recipe.logic.parser.CliSyntax.PREFIX_URL;
 
+import seedu.recipe.model.recipe.Recipe;
+
 /**
  * A utility class containing a list of {@code Recipe} objects parsed from Wikia to be used in tests.
  */
@@ -39,6 +41,17 @@ public class WikiaRecipes {
             "http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice?useskin=wikiamobile";
     public static final String MOBILE_CHICKEN_RICE_IMAGE_URL = "https://vignette.wikia.nocookie.net/recipes/images/d/d3"
             + "/Chickenrice2.jpg/revision/latest/scale-to-width-down/340?cb=20080516004325";
+    public static final Recipe HAINANESE_CHICKEN_RICE = new RecipeBuilder()
+            .withName(CHICKEN_NAME)
+            .withIngredient(CHICKEN_INGREDIENT)
+            .withInstruction(CHICKEN_INSTRUCTION)
+            .withCookingTime("-")
+            .withPreparationTime("-")
+            .withCalories("-")
+            .withServings("-")
+            .withUrl(WIKIA_RECIPE_URL_CHICKEN)
+            .withImage("-")
+            .withTags().build();
 
     public static final String UGANDAN_NAME = "Ugandan Chicken Stew";
     public static final String UGANDAN_INGREDIENT = "chicken, oil, onion, tomatoes, potatoes, salt, pepper";
@@ -49,6 +62,17 @@ public class WikiaRecipes {
     public static final String WIKIA_RECIPE_URL_UGANDAN = "http://recipes.wikia.com/wiki/Ugandan_Chicken_Stew";
     public static final String MOBILE_WIKIA_RECIPE_URL_UGANDAN =
             "http://recipes.wikia.com/wiki/Ugandan_Chicken_Stew?useskin=wikiamobile";
+    public static final Recipe UGANDAN_CHICKEN_STEW = new RecipeBuilder()
+            .withName(UGANDAN_NAME)
+            .withIngredient(UGANDAN_INGREDIENT)
+            .withInstruction(UGANDAN_INSTRUCTION)
+            .withCookingTime("-")
+            .withPreparationTime("-")
+            .withCalories("-")
+            .withServings("-")
+            .withUrl(MOBILE_WIKIA_RECIPE_URL_UGANDAN)
+            .withImage("-")
+            .withTags().build();
 
     public static final String WIKIA_RECIPE_URL_BEEF =
             "http://recipes.wikia.com/wiki/Beef_Tenderloin_with_Madeira_Sauce";

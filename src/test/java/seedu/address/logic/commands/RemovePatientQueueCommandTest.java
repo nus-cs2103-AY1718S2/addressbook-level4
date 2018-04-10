@@ -55,7 +55,8 @@ public class RemovePatientQueueCommandTest {
     }
 
     @Test
-    public void execute_emptyQueueRemoveByIndex_throwsCommandException() throws IllegalValueException, CommandException {
+    public void execute_emptyQueueRemoveByIndex_throwsCommandException() throws IllegalValueException,
+            CommandException {
         RemovePatientQueueCommand command = prepareCommandEmptyQueueIndex("2");
         thrown.expect(CommandException.class);
         thrown.expectMessage(RemovePatientQueueCommand.MESSAGE_QUEUE_EMPTY);

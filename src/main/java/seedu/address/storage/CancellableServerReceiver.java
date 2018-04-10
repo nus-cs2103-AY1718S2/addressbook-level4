@@ -3,6 +3,7 @@ package seedu.address.storage;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -26,9 +27,7 @@ import com.google.api.client.repackaged.com.google.common.base.Throwables;
 class CancellableServerReceiver implements VerificationCodeReceiver {
 
     private static final String LOCALHOST = "localhost";
-
     private static final String CALLBACK_PATH = "/Callback";
-    public static final String REQUEST_CANCELLED_STRING = "Request cancelled.";
 
     /**
      * Server or {@code null} before {@link #getRedirectUri()}.
@@ -38,22 +37,22 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
     /**
      * Verification code or {@code null} for none.
      */
-    String code;
+    private String code;
 
     /**
      * Error code or {@code null} for none.
      */
-    String error;
+    private String error;
 
     /**
      * Lock on the code and error.
      */
-    final Lock lock = new ReentrantLock();
+    private final Lock lock = new ReentrantLock();
 
     /**
      * Condition for receiving an authorization response.
      */
-    final Condition gotAuthorizationResponse = lock.newCondition();
+    private final Condition gotAuthorizationResponse = lock.newCondition();
 
     /**
      * Port to use or {@code -1} to select an unused port in {@link #getRedirectUri()}.
@@ -141,17 +140,25 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
      */
     @Override
     public String waitForCode() throws IOException {
-        long startTime = System.currentTimeMillis();
-        while (code == null && error == null) {
-            long elapsed = System.currentTimeMillis() - startTime;
-            if (elapsed > 10000) {
-                throw new RuntimeException("Request timeout (" + error + ")");
+        lock.lock();
+        try {
+            long startTime = System.currentTimeMillis();
+            while (code == null && error == null) {
+                long elapsed = System.currentTimeMillis() - startTime;
+                if (elapsed > 10000) {
+                    throw new RuntimeException("Request timeout (" + error + ")");
+                }
+                gotAuthorizationResponse.await(10, TimeUnit.SECONDS);
             }
+            if (error != null) {
+                throw new IOException("User authorization failed (" + error + ")");
+            }
+            return code;
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Request timeout (" + error + ")");
+        } finally {
+            lock.unlock();
         }
-        if (error != null) {
-            throw new IOException("User authorization failed (" + error + ")");
-        }
-        return code;
     }
 
     @Override
@@ -165,7 +172,6 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
             }
             lock.lock();
             try {
-                error = REQUEST_CANCELLED_STRING;
                 code = null;
                 gotAuthorizationResponse.signal();
             } finally {

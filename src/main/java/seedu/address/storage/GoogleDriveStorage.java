@@ -112,6 +112,8 @@ public class GoogleDriveStorage {
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 httpTransport, JSON_FACTORY, clientSecrets,
                 Collections.singleton(DriveScopes.DRIVE_FILE)).setDataStoreFactory(dataStoreFactory)
+                .setAccessType("offline")
+                .setApprovalPrompt("force")
                 .build();
 
 

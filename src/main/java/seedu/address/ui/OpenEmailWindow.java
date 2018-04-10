@@ -72,7 +72,6 @@ public class OpenEmailWindow {
     /**
      * Parses the message content into a string.
      * @param message is the email message packet
-     * @return String with message contents
      */
     private void setContent (Message message) {
         String content = "";
@@ -83,7 +82,7 @@ public class OpenEmailWindow {
                 Multipart multipart = (Multipart) message.getContent();
                 if (multipart.getCount() > 0) {
                     int i;
-                    for( i = 0; i < multipart.getCount(); i++ ) {
+                    for (i = 0; i < multipart.getCount(); i++) {
                         content += multipart.getBodyPart(i).getContent().toString();
                     }
                     msgContent.setText(content);
@@ -103,11 +102,11 @@ public class OpenEmailWindow {
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-            case ESCAPE:
-                puWindow.close();
-                break;
-            default:
-                // let JavaFx handle the keypress
+        case ESCAPE:
+            puWindow.close();
+            break;
+        default:
+            // let JavaFx handle the keypress
         }
     }
 

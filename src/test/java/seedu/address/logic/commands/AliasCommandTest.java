@@ -40,6 +40,9 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AliasBuilder;
 
 //@@author jingyinno
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for AliasCommand.
+ */
 public class AliasCommandTest {
 
     @Rule
@@ -133,9 +136,6 @@ public class AliasCommandTest {
         return command;
     }
 
-    /**
-     * A default model stub that have all of the methods failing.
-     */
     /**
      * A default model stub that have all of the methods failing.
      */

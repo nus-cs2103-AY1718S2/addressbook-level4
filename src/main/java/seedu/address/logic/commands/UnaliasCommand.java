@@ -12,7 +12,7 @@ import seedu.address.model.alias.exceptions.AliasNotFoundException;
 public class UnaliasCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "unalias";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes alias for previously aliased command.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes alias for previously aliased command. "
             + "Parameters: [CURRENT_ALIAS]\n"
             + "Example: " + COMMAND_WORD + " a";
 

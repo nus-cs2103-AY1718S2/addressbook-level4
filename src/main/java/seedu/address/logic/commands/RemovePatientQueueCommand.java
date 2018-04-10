@@ -66,8 +66,7 @@ public class RemovePatientQueueCommand extends Command {
             return new CommandResult(String.format(MESSAGE_REMOVE_SUCCESS, patientToRemove.getName().toString()));
         } catch (PatientNotFoundException e) {
 
-            if (model.getVisitingQueue().size() > 0)
-            {
+            if (model.getVisitingQueue().size() > 0) {
                 throw new CommandException(MESSAGE_PERSON_NOT_FOUND_QUEUE);
             }
 

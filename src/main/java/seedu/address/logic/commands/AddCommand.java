@@ -25,8 +25,8 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
     public static final String COMMAND_ALIAS = "a";
 
     public static final String MESSAGE_USAGE =
-            COMMAND_WORD + " | Adds a Customer or Runner. "
-            + "Refer to the User Guide for help with using this command!"
+            COMMAND_WORD + " | Adds a Customer or Runner with the specified details. "
+            + "Refer to the User Guide (press \"F1\") for detailed information about this command."
             + "\n\t"
             + "Parameters:\t"
             + PREFIX_TYPE + " r(or c) "
@@ -41,22 +41,22 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
             + "[" + PREFIX_TAG + " TAG] ... "
 
             + "\n\t\t"
-            + "1. Start and due dates can be specified in natural language."
+            + "1. The start and due dates can be specified in natural language (eg. \"today\", \"this Friday\", etc)."
             + "\n\t\t"
-            + "2. Interest is compounded weekly, because how else to make money??"
+            + "2. Interest will be compounded weekly."
 
             + "\n\t"
             + "Example:\t\t" + COMMAND_WORD + " "
             + PREFIX_TYPE + " c "
-            + PREFIX_NAME + " Ah Meng "
+            + PREFIX_NAME + " Xiao Ming "
             + PREFIX_PHONE + " 88888888 "
-            + PREFIX_EMAIL + " fatcai@axa.com "
-            + PREFIX_ADDRESS + " Pulau Tekong "
-            + PREFIX_MONEYOWED + " 1000000 "
-            + PREFIX_INTEREST + " 9.71 "
+            + PREFIX_EMAIL + " xiao@ming.com "
+            + PREFIX_ADDRESS + " W Hotel "
             + PREFIX_OWESTARTDATE + " today "
             + PREFIX_OWEDUEDATE + " 5 May 2018 "
-            + PREFIX_TAG + " richboy";
+            + PREFIX_MONEYOWED + " 31415926535897 "
+            + PREFIX_INTEREST + " 9.71 "
+            + PREFIX_TAG + " richxiaoming";
 
     public static final String MESSAGE_SUCCESS = "New person added!\n%1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";

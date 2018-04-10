@@ -20,9 +20,9 @@ By: `Huat Ah Finance Pte Ltd`      Since: `Feb 2018`      Licence: `MIT`
 If you:
 
 * are a 21st Century modern loan shark boss,
-* prefers to use a desktop app for managing operations,
-* prefers to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI),
-* can type fast,
+* prefer to use a desktop app for managing operations,
+* prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI),
+* can type fast and prefer a keyboard as your main input method,
 
 LoanShark Tycoon can get your operations management tasks done faster than traditional GUI apps. Interested? Jump to <<Quick Start>> to get
 started. Enjoy!
@@ -107,7 +107,7 @@ is specified when adding a customer.
 
 |edit (`e`)
 |kbd:[Ctrl+E]
-|`edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
+|`edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] ...`
 
 |find (`f`)
 |kbd:[Ctrl+F]
@@ -237,6 +237,7 @@ _Edits the name of the second person to be `Betsy Crower` and clears all existin
 ====
 * This command searches for relevant persons with the specified information.
 * Name, phone, email, address and tags are searched by default (no `SPECIFIER` or `-all` `SPECIFIERS`)
+* `Customer` and `Runner` specific fields cannot be searched.
 * Only one `SPECIFIER` can be used at a time.
 * If more than one `SPECIFIER` is specified, only the first will be considered. The others will be ignored.
 * Description of `SPECIFIERS`:
@@ -282,6 +283,7 @@ _Returns all persons with phone number "91234567"._
 [NOTE]
 ====
 * This command identifies a person by name, email, phone or tags and displays their address using Google Maps.
+* For details on the specifiers and parameters, refer to the <<Searching for relevant persons : `find` [since v1.1], find command section>>.
 * Alternatively, this command displays the given address and displays the person associated with that address in the PersonListPanel.
 ====
 
@@ -414,6 +416,8 @@ _Assigns customer at `INDEX2` to Runner at `INDEX1` based on the last shown list
 // tag::dataencryption[]
 * Adding multiple persons from an input file
 // end::dataencryption[]
+* Editing `Customer` and `Runner` specific fields.
+* Searching `Customer` and `Runner` specific fields.
 * Adding visitation history to `Customers`
 * Adding job history to `Runners`
 * Scheduling jobs for `Runners`

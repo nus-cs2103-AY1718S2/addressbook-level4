@@ -1,3 +1,4 @@
+//@@author Kyholmes
 package seedu.address.model.appointment;
 
 import static java.util.Objects.requireNonNull;

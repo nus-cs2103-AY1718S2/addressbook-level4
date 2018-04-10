@@ -1,3 +1,4 @@
+//@@author Kyholmes
 package seedu.address.model.appointment;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;

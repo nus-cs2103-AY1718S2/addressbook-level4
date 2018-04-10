@@ -103,7 +103,7 @@ public class TimetableDay {
             checker = false;
             for (TimetableDay timetable : timetables) {
                 TimetableSlot t = timetable.timetableSlots[i];
-                if (t.toString().equals(EMPTY_SLOT_STRING)) {
+                if (!t.toString().equals(EMPTY_SLOT_STRING)) {
                     checker = true;
                     break;
                 }

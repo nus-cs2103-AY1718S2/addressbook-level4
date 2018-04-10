@@ -33,7 +33,14 @@ public class TimetableUnionCommandParser implements Parser<TimetableUnionCommand
             String oddEven = ParserUtil.parseOddEven(splitArgs[ODD_EVEN_INDEX]);
 
             for (int i = ODD_EVEN_INDEX + 1; i < splitArgs.length; i++) {
-                indexes.add(ParserUtil.parseIndex(splitArgs[i]));
+                Index indexToAdd = ParserUtil.parseIndex(splitArgs[i]);
+                if (!indexes.contains(indexToAdd)) {
+                    indexes.add(indexToAdd);
+                } else {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                            TimetableUnionCommand.MESSAGE_USAGE));
+                }
+
             }
 
             return new TimetableUnionCommand(indexes, oddEven);

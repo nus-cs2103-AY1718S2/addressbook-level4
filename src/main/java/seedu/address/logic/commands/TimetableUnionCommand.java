@@ -26,7 +26,7 @@ public class TimetableUnionCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the unified timetable of the persons entered\n"
             + "Parameters: INDEX ODD/EVEN INDEX1 INDEX2 INDEX3..."
-            + "(indexes must be positive integers and separated by one space)\n"
+            + "(indexes must be unique positive integers and separated by one space)\n"
             + "Example: " + COMMAND_WORD + "Odd " + "1 " + "2 " + "3";
 
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "%1$s Combined Timetable: %2$s";

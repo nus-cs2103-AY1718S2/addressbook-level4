@@ -42,7 +42,8 @@ public class SelectCommand extends Command {
         }
 
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex, StringUtil.getOddEven(oddEven)));
-        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased(), oddEven));
+        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased(),
+                StringUtil.capitalize(oddEven)));
 
     }
 
@@ -50,6 +51,7 @@ public class SelectCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof SelectCommand // instanceof handles nulls
-                && this.targetIndex.equals(((SelectCommand) other).targetIndex)); // state check
+                && this.targetIndex.equals(((SelectCommand) other).targetIndex)
+                && this.oddEven.equalsIgnoreCase(((SelectCommand) other).oddEven)); // state check
     }
 }

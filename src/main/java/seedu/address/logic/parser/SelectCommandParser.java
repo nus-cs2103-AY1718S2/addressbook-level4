@@ -23,6 +23,10 @@ public class SelectCommandParser implements Parser<SelectCommand> {
         try {
             String trimmedArgs = args.trim();
             String[] argsArray = trimmedArgs.split("\\s+");
+            if (argsArray.length != 2) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+            }
 
             Index index = ParserUtil.parseIndex(argsArray[0]);
             if (!StringUtil.isOddEven(argsArray[1])) {

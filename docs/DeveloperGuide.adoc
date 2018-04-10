@@ -14,11 +14,13 @@ endif::[]
 
 By: `Team W09-B2`      Since: `Mar 2018`      Licence: `MIT`
 
+// tag::intro[]
 == Intro
 
 Welcome to contactHeRo developer guide! This guide contains all the information you need to quickly get started in developing contactHeRo. +
 If you notice any mistakes or if there are any missing vital information then please let us know via contactHeRo@gmail.com. +
 Let's get started!
+// end::intro[]
 
 == Setting up
 
@@ -480,7 +482,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
-
+// tag::profilepicture[]
 === Profile Picture Feature
 Profile picture feature allows to show persons' profile pictures.
 
@@ -591,7 +593,7 @@ https://docs.oracle.com/javafx/2/api/javafx/scene/image/Image.html
 * **Alternative 2:** Store the image path and retrieve the image from the path when necessary.
 ** Pros: Less memory consumption.
 ** Cons: Original Image may be lost.
-
+// end::profilepicture[]
 // tag::email[]
 
 === Emailing a contact using Google API

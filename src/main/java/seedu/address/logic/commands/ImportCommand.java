@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.DeskBoard;
+import seedu.address.model.FilePath;
 import seedu.address.model.ReadOnlyDeskBoard;
 import seedu.address.storage.XmlDeskBoardStorage;
 
@@ -24,35 +26,34 @@ public class ImportCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_FILE_PATH + "C:\\Users\\Karen\\IdeaProjects\\main\\data\\deskboard.xml";
 
-    public static final String MESSAGE_DUPLICATE_ACTIVITY = "The following entry already exists in the desk board: %s";
     public static final String MESSAGE_FILE_NOT_FOUND = "Desk board file %s not found";
     public static final String MESSAGE_ILLEGAL_VALUES_IN_FILE = "Illegal values found in file: %s";
     public static final String MESSAGE_SUCCESS = "Data imported from: %1$s";
 
-    private final String filePath;
-    private ReadOnlyDeskBoard toImport;
+    private final FilePath filePath;
 
     /**
      * Creates an ImportCommand to import data from the specified {@code filePath}.
      */
-    public ImportCommand(String filePath) {
+    public ImportCommand(FilePath filePath) {
         requireNonNull(filePath);
         this.filePath = filePath;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
         try {
-            toImport = new XmlDeskBoardStorage(filePath).readDeskBoard()
+            ReadOnlyDeskBoard toImport = new XmlDeskBoardStorage(filePath.value).readDeskBoard()
                     .orElseThrow(() -> new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, filePath)));
+
+            model.addActivities(toImport);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, filePath));
         } catch (IOException ioe) {
             throw new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, filePath));
         } catch (DataConversionException dce) {
             throw new CommandException(String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, dce.getMessage()));
         }
-        requireNonNull(model);
-        model.addActivities(toImport);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, filePath));
     }
 
     @Override

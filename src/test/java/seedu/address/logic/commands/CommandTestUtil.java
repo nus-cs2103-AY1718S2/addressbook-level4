@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FILE_PATH;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -60,6 +61,17 @@ public class CommandTestUtil {
 
     // ============================= EVENT =============================================
     //TODO: Tedious
+
+    //@@author karenfrilya97
+    // ============================= IMPORT ============================================
+    public static final String TEST_DATA_FOLDER = "src\\test\\data\\ImportCommandTest\\";
+    public static final String ASSIGNMENT3_DEMO1_FILE_PATH = TEST_DATA_FOLDER + "validImportFile.xml";
+    public static final String MISSING_FILE_PATH = TEST_DATA_FOLDER + "missing.xml";
+    public static final String ILLEGAL_VALUES_FILE_PATH = TEST_DATA_FOLDER + "illegalValues.xml";
+    public static final String DUPLICATE_ACTIVITY_FILE_PATH = TEST_DATA_FOLDER + "duplicateActivity.xml";
+    public static final String FILE_PATH_DESC_VALID = " " + PREFIX_FILE_PATH + ASSIGNMENT3_DEMO1_FILE_PATH;
+    public static final String FILE_PATH_DESC_DUPLICATE = " " + PREFIX_FILE_PATH + DUPLICATE_ACTIVITY_FILE_PATH;
+    public static final String INVALID_FILE_PATH_DESC = " " + PREFIX_FILE_PATH + "no.xmlAtTheEnd";
 
     //@@author
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";

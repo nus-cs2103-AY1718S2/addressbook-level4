@@ -3,6 +3,11 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.ASSIGNMENT3_DEMO1_FILE_PATH;
+import static seedu.address.logic.commands.CommandTestUtil.DUPLICATE_ACTIVITY_FILE_PATH;
+import static seedu.address.logic.commands.CommandTestUtil.ILLEGAL_VALUES_FILE_PATH;
+import static seedu.address.logic.commands.CommandTestUtil.MISSING_FILE_PATH;
+import static seedu.address.logic.commands.CommandTestUtil.TEST_DATA_FOLDER;
 import static seedu.address.logic.commands.ImportCommand.MESSAGE_FILE_NOT_FOUND;
 import static seedu.address.logic.commands.ImportCommand.MESSAGE_ILLEGAL_VALUES_IN_FILE;
 import static seedu.address.testutil.TypicalActivities.ASSIGNMENT3;
@@ -13,22 +18,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.commons.util.FileUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.FilePath;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
 //@@author karenfrilya97
 public class ImportCommandTest {
-
-    private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/ImportCommandTest/");
-    private static final String ASSIGNMENT3_DEMO1_FILE_PATH = TEST_DATA_FOLDER + "validImportFile.xml";
-    private static final String MISSING_FILE_PATH = TEST_DATA_FOLDER + "missing.xml";
-    private static final String ILLEGAL_VALUES_FILE_PATH = TEST_DATA_FOLDER + "illegalValues.xml";
-    private static final String DUPLICATE_ACTIVITY_FILE_PATH = TEST_DATA_FOLDER + "duplicateActivity.xml";
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -84,8 +83,8 @@ public class ImportCommandTest {
 
     @Test
     public void equals() {
-        String filePath = TEST_DATA_FOLDER + "deskBoard.xml";
-        String differentFilePath = TEST_DATA_FOLDER + "differentDeskBoard.xml";
+        FilePath filePath = new FilePath(TEST_DATA_FOLDER + "deskBoard.xml");
+        FilePath differentFilePath = new FilePath(TEST_DATA_FOLDER + "differentDeskBoard.xml");
 
         ImportCommand importCommand = new ImportCommand(filePath);
         ImportCommand differentImportCommand = new ImportCommand(differentFilePath);
@@ -110,8 +109,8 @@ public class ImportCommandTest {
     /**
      * Generates a new ImportCommand with the given file path.
      */
-    private ImportCommand getImportCommandForGivenFilePath(String filePath, Model model) {
-        ImportCommand command = new ImportCommand(filePath);
+    private ImportCommand getImportCommandForGivenFilePath(String filePathString, Model model) {
+        ImportCommand command = new ImportCommand(new FilePath(filePathString));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

@@ -1,4 +1,6 @@
 package seedu.address.logic.parser;
+//@@author crizyli
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -14,8 +16,9 @@ public class LockCommandParser implements Parser<LockCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public LockCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-
+        if (!args.trim().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LockCommand.MESSAGE_USAGE));
+        }
 
         return new LockCommand();
     }

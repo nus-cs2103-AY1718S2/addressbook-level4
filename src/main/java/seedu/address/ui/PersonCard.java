@@ -65,7 +65,7 @@ public class PersonCard extends UiPart<Region> {
         initTags(person);
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
-        File file = new File(s + AddPhotoCommand.IMAGE_FOLDER_WINDOWS + person.getPhotoName());
+        File file = new File(s + AddPhotoCommand.IMAGE_FOLDER_OTHER + person.getPhotoName());
         Image image = null;
         try {
             image = new Image(file.toURI().toURL().toExternalForm(),

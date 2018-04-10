@@ -33,7 +33,7 @@ public class ListEvent {
         this.location = location;
     }
 
-    public DateTime getEndTime() {
+    public DateTime getStartTime() {
         return startTime;
     }
 

@@ -10,8 +10,9 @@ import seedu.address.model.AddressBook;
 public class ClearCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "clear";
-    public static final String MESSAGE_SUCCESS = "Address book has been cleared!";
+    public static final String MESSAGE_SUCCESS = "Employees Tracker has been cleared!";
 
+    public static final String MESSAGE_USAGE = "clear all employees from Employees Tracker. (undoable)";
 
     @Override
     public CommandResult executeUndoableCommand() {

@@ -437,20 +437,20 @@ Bernice Lee will be added into the visiting queue as shown in Figure 3 below.
 [caption="Figure 3: "]
 image::addq_duplicate.PNG[width="990"]
 
-==== Removing a patient from the visiting queue with patient name: `removeq` [since v1.2]
+==== Removing a patient from the visiting queue: `removeq` [since v1.2]
 
 Removes the first patient from the visiting queue (check-out).
 
-*This command is only accessible to medical staffs.* +
+*This command is only accessible to medical staffs and is not undoable.* +
 
 Format: `removeq` or `rq`
 
 Examples:
 
-* `removeq Betsy` +
+* `removeq` +
 Betsy will be removed if she is the first patient in the queue.
 
-* `rq John` +
+* `rq` +
 John will be removed if he is the first patient in the queue.
 
 ==== Viewing visiting queue: `viewq` [since v1.2]

@@ -7,10 +7,10 @@ import java.util.Set;
 
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.Cca;
+import seedu.address.model.person.CcaPosition;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameOfKin;
-import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Remark;
 import seedu.address.model.subject.Subject;
@@ -28,6 +28,7 @@ public class EditPersonDescriptor {
     private Set<Subject>  subjects;
     private Remark remark;
     private Cca cca;
+    private CcaPosition ccaPosition;
     private InjuriesHistory injuriesHistory;
     private NameOfKin nameOfKin;
 
@@ -46,6 +47,7 @@ public class EditPersonDescriptor {
         setCca(toCopy.cca);
         setInjuriesHistory(toCopy.injuriesHistory);
         setNameOfKin(toCopy.nameOfKin);
+        setCcaPosition(toCopy.ccaPosition);
     }
 
     /**
@@ -119,6 +121,21 @@ public class EditPersonDescriptor {
         return Optional.ofNullable(remark);
     }
 
+    /**
+     * Sets {@code cca} to this object's {@code cca}.
+     * A defensive copy of {@code cca} is used internally.
+     */
+    public void setCcaPosition(CcaPosition ccaPosition) {
+        this.ccaPosition = ccaPosition;
+    }
+
+    /**
+     * Sets {@code cca} to this object's {@code cca}.
+     * A defensive copy of {@code cca} is used internally.
+     */
+    public Optional<CcaPosition> getCcaPosition() {
+        return Optional.ofNullable(ccaPosition);
+    }
     /**
      * Sets {@code cca} to this object's {@code cca}.
      * A defensive copy of {@code cca} is used internally.

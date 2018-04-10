@@ -13,6 +13,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.Cca;
+import seedu.address.model.person.CcaPosition;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameOfKin;
@@ -99,15 +100,17 @@ public class AddCcaCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
         Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
-        Cca updatedCca = ParserUtil.parseCca(personToEdit.getCca().toString() + "\n" +
-                editPersonDescriptor.getCca().get().toString());
+        Cca updatedCca = ParserUtil.parseCca(personToEdit.getCca().toString() + "\n"
+                + editPersonDescriptor.getCca().get().toString());
         InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
                 .orElse(personToEdit.getInjuriesHistory());
         NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin()
                 .orElse(personToEdit.getNameOfKin());
+        CcaPosition updatedCcaPosition = editPersonDescriptor.getCcaPosition()
+                .orElse(personToEdit.getCcaPosition());
 
         return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
-                            updatedInjuriesHistory, updatedNameOfKin);
+                            updatedInjuriesHistory, updatedNameOfKin, updatedCcaPosition);
     }
 
     @Override

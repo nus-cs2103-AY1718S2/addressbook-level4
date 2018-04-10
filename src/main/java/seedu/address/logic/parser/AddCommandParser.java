@@ -15,6 +15,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Cca;
+import seedu.address.model.person.CcaPosition;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameOfKin;
@@ -39,7 +40,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_NRIC, PREFIX_TAG, PREFIX_SUBJECT, PREFIX_REMARK,
                         PREFIX_NOK);
 
-        if (!(argMultimap.arePrefixesPresent(PREFIX_NAME, PREFIX_NRIC))
+        if (!(argMultimap.arePrefixesPresent(PREFIX_NAME, PREFIX_NRIC, PREFIX_NOK))
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
@@ -50,7 +51,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Set<Subject> subjectList = ParserUtil.parseSubjects(argMultimap.getAllValues(PREFIX_SUBJECT));
             Remark remark;
-            Cca cca = ParserUtil.parseCca(" : ");
+            Cca cca = ParserUtil.parseCca(" ");
             InjuriesHistory injuriesHistory = ParserUtil.parseInjuriesHistory(" ");
             NameOfKin nameOfKin = ParserUtil.parseNameOfKin(argMultimap.getValue(PREFIX_NOK)).get();
             if (!(argMultimap.getValue(PREFIX_REMARK)).isPresent()) {
@@ -58,7 +59,9 @@ public class AddCommandParser implements Parser<AddCommand> {
             } else {
                 remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
             }
-            Person person = new Person(name, nric, tagList, subjectList, remark, cca, injuriesHistory, nameOfKin);
+            CcaPosition ccaPosition = ParserUtil.parseCcaPosition(" ");
+            Person person = new Person(name, nric, tagList, subjectList, remark, cca, injuriesHistory, nameOfKin,
+                    ccaPosition);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

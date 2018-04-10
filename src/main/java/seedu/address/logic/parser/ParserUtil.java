@@ -17,16 +17,15 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Cca;
+import seedu.address.model.person.CcaPosition;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameOfKin;
-import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Remark;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 
-import javax.naming.NamingEnumeration;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -221,6 +220,28 @@ public class ParserUtil {
         requireNonNull(remark);
         return remark.isPresent() ? Optional.of(parseRemark(remark.get())) : Optional.empty();
     }
+
+    /**
+     * Parses a {@code String ccaPosition} into a {@code CcaPosition}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code CcaPosition} is invalid.
+     */
+    public static CcaPosition parseCcaPosition(String ccaPosition) {
+        requireNonNull(ccaPosition);
+        String trimmedCcaPosition = ccaPosition.trim();
+        return new CcaPosition(trimmedCcaPosition);
+    }
+
+    /**
+     * Parses a {@code Optional<String> ccaPosition} into an {@code Optional<CcaPosition>} if
+     * {@code ccaPosition} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<CcaPosition> parseCcaPosition(Optional<String> ccaPosition) {
+        requireNonNull(ccaPosition);
+        return ccaPosition.isPresent() ? Optional.of(parseCcaPosition(ccaPosition.get())) : Optional.empty();
+    }
     /**
      * Parses a {@code String date} into a {@code String}.
      * Leading and trailing whitespaces will be trimmed.
@@ -340,7 +361,7 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the given {@code name} is invalid.
      */
-    public static NameOfKin parseNameOfKin(String nameOfKin) throws IllegalValueException{
+    public static NameOfKin parseNameOfKin(String nameOfKin) throws IllegalValueException {
         requireNonNull(nameOfKin);
         String trimmedNameOfKin = nameOfKin.trim();
         if (!NameOfKin.isValidName(trimmedNameOfKin)) {

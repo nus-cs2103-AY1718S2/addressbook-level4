@@ -1,13 +1,22 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA;
+import static seedu.address.logic.parser.ParserUtil.parseCca;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Cca;
+import seedu.address.model.person.CcaPosition;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameOfKin;
-import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
@@ -15,17 +24,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-
-import com.google.api.services.calendar.Calendar;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA;
-import static seedu.address.logic.parser.ParserUtil.parseCca;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 //@@author chuakunhong
 
@@ -108,6 +106,8 @@ public class DeleteCcaCommand extends UndoableCommand {
         String[] ccaArray = personToEdit.getCca().toString().split("\n");
         String updateCca = "";
         NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin().orElse(personToEdit.getNameOfKin());
+        CcaPosition updatedCcaPosition = editPersonDescriptor.getCcaPosition()
+                .orElse(personToEdit.getCcaPosition());
         boolean ccaIsFound = false;
         for (String cca : ccaArray) {
             if (!cca.contains(editPersonDescriptor.getCca().get().toString())) {
@@ -120,7 +120,7 @@ public class DeleteCcaCommand extends UndoableCommand {
         if (ccaIsFound) {
             Cca updatedCca = parseCca(updateCca);
             return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
-                    updatedInjuriesHistory, updatedNameOfKin);
+                    updatedInjuriesHistory, updatedNameOfKin, updatedCcaPosition);
         } else {
             throw new CommandException("The target cca cannot be missing.");
         }

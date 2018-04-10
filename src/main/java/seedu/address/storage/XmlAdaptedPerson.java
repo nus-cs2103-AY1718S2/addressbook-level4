@@ -9,12 +9,11 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.Cca;
+import seedu.address.model.person.CcaPosition;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameOfKin;
-import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
@@ -44,6 +43,8 @@ public class XmlAdaptedPerson {
     private String injuriesHistory;
     @XmlElement
     private String nameOfKin;
+    @XmlElement
+    private String ccaPosition;
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -55,7 +56,7 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String nric, List<XmlAdaptedTag> tagged, List<XmlAdaptedSubject> subjects,
-                            String remark, String cca, String injuriesHistory, String nameOfKin) {
+                            String remark, String cca, String injuriesHistory, String nameOfKin, String ccaPosition) {
         this.name = name;
         this.nric = nric;
         this.remark = remark;
@@ -68,6 +69,7 @@ public class XmlAdaptedPerson {
         this.cca = cca;
         this.injuriesHistory = injuriesHistory;
         this.nameOfKin = nameOfKin;
+        this.ccaPosition = ccaPosition;
     }
 
     /**
@@ -90,6 +92,7 @@ public class XmlAdaptedPerson {
         cca = source.getCca().value;
         injuriesHistory = source.getInjuriesHistory().value;
         nameOfKin = source.getNameOfKin().fullName;
+        ccaPosition = source.getCcaPosition().value;
     }
 
     /**
@@ -150,7 +153,14 @@ public class XmlAdaptedPerson {
 
         final NameOfKin nameOfKin = new NameOfKin(this.nameOfKin);
 
-        return new Person(name, nric, tags, subjects, remark, cca, injuriesHistory, nameOfKin);
+        if (this.ccaPosition == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    NameOfKin.class.getSimpleName()));
+        }
+
+        final CcaPosition ccaPosition = new CcaPosition(this.ccaPosition);
+
+        return new Person(name, nric, tags, subjects, remark, cca, injuriesHistory, nameOfKin, ccaPosition);
     }
 
     @Override

@@ -28,7 +28,7 @@ public class AddCommand extends UndoableCommand {
             + "[" + PREFIX_TAG + "TAG] "
             + "[" + PREFIX_REMARK + "REMARK] "
             + "[" + PREFIX_SUBJECT + "SUBJECT_NAME SUBJECT_GRADE]"
-            + "[" + PREFIX_NOK + "NEXT_OF_KIN\n"
+            + PREFIX_NOK + "NEXT_OF_KIN\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_NRIC + "S9876543H "

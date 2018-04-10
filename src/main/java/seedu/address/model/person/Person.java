@@ -34,12 +34,13 @@ public class Person {
     private final Cca cca;
     private final InjuriesHistory injuriesHistory;
     private final NameOfKin nameOfKin;
+    private final CcaPosition ccaPosition;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Nric nric, Set<Tag> tags, Set<Subject> subjects, Remark remark, Cca cca,
-                  InjuriesHistory injuriesHistory, NameOfKin nameOfKin) {
+                  InjuriesHistory injuriesHistory, NameOfKin nameOfKin, CcaPosition ccaPosition) {
         requireAllNonNull(name, nric, tags, subjects, cca);
         this.name = name;
         this.nric = nric;
@@ -50,6 +51,7 @@ public class Person {
         this.cca = cca;
         this.injuriesHistory = injuriesHistory;
         this.nameOfKin = nameOfKin;
+        this.ccaPosition = ccaPosition;
     }
 
     public Name getName() {
@@ -66,6 +68,10 @@ public class Person {
 
     public Cca getCca() {
         return cca;
+    }
+
+    public CcaPosition getCcaPosition() {
+        return ccaPosition;
     }
 
     public InjuriesHistory getInjuriesHistory() {
@@ -195,7 +201,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, nric, tags, subjects, remark, cca, injuriesHistory, nameOfKin);
+        return Objects.hash(name, nric, tags, subjects, remark, cca, injuriesHistory, nameOfKin, ccaPosition);
     }
 
     @Override
@@ -211,6 +217,7 @@ public class Person {
         builder.append(" Remarks: ")
                .append(getRemark());
         builder.append(" Cca: ").append(getCca());
+        builder.append(" CcaPosition: ").append(getCcaPosition());
         builder.append(" InjuriesHistory: ").append(getInjuriesHistory());
         builder.append("  NextOfKin: ").append(getNameOfKin());
         return builder.toString();

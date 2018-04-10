@@ -4,7 +4,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-//import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -14,7 +13,6 @@ import org.junit.Test;
 
 import javafx.collections.ObservableList;
 
-//import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
@@ -71,34 +69,6 @@ public class SortCommandTest {
         return isSorted;
     }
 
-    /**
-     *  helper function to set up model and import contacts to sort
-
-    public void setupModelWithImportedContacts() throws Exception {
-        try {
-        } catch (CommandException cr) {
-            System.out.println("Failed in setupModelWithImportedContacts");
-        }
-        testModel = icc.model;
-    }
-
-    @Test
-    public void sortAddressBookCallingModel_functionCallWithImportedData_personsAreInCorrectOrder()
-            throws Exception {
-        ImportContactsCommand icc = new ImportContactsCommand("data/Test_contacts_unsorted.csv");
-        icc.model = new ModelManager();
-
-        try {
-            icc.executeUndoableCommand();
-        } catch (CommandException cr) {
-            System.out.println("Failed in setupModelWithImportedContacts\n" + cr.getStackTrace());
-        }
-
-        assertFalse(checkSorted(icc.model));
-        icc.model.sortAddressBookAlphabeticallyByName();
-        assertTrue(checkSorted(icc.model));
-    }
-*/
     @Test
     public void executeUndoableCommand_sortImportedPersons_personsCorrectlySorted() throws Exception {
         PersonBuilder pb = new PersonBuilder();

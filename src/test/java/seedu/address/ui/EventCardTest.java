@@ -11,7 +11,6 @@ import guitests.guihandles.EventCardHandle;
 import seedu.address.model.activity.Activity;
 import seedu.address.testutil.EventBuilder;
 
-
 //@@author jasmoon
 public class EventCardTest extends GuiUnitTest {
 

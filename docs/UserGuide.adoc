@@ -190,20 +190,23 @@ Displays a list of all birthdays
 Displays a window with the birthdays today
 
 === NUS Commands
-==== Viewing common time slots in timetable: `free` (coming in v2.0)
+==== Viewing common time slots in timetable: `union` (coming in v2.0)
 
-Displays the common free time of two people in StardyTogether. +
-Format: `free p/[PERSON1] p/[PERSON2]`
+Displays the common free time of multiple people in StardyTogether.(Minimum: 2) +
+Format: `free ODD/EVEN INDEX INDEX [INDEX]...`
 
 ****
-* Only full names will be matched e.g. `Han` will not match `Han Tan`
-* Overlap of the two persons' timetables will be displayed.
+* Only indexes of the current filtered list are valid
+* Overlap of the persons' timetables will be displayed.
 ****
 
 Examples:
 
-* `free p/John Doe p/Han Tan` +
-Displays the combined timetable for John Doe and Han Tan.
+* `free Odd 1 2 3` +
+Displays the combined odd timetable for persons at Index 1, 2 and 3.
+
+* `free Even 1 2` +
+Displays the combined even timetable for persons at Index 1 and 2.
 
 // tag::vacant[]
 ==== Vacant study rooms finder : `vacant` (since v1.3)
@@ -480,5 +483,6 @@ image::NUSMods_Screenshot_Second.PNG[width="790"]
 |Select|select INDEX|select 2
 |Unalias|unalias CURRENT_ALIAS|unalias hist
 |Undo|undo|
+|Union|union EVEN/ODD INDEX INDEX [INDEX]|union Odd 1 2 3
 |Vacant|vacant BUILDING|vacant COM1
 |=======================================================================

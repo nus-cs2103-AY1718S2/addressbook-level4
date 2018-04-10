@@ -26,6 +26,22 @@ import seedu.address.model.person.timetable.TimetableData;
  */
 public class TimetableParserUtil {
 
+    public static final String URL_BACKSLASH_REGEX = "/";
+    public static final String URL_QUESTION_MARK_REGEX = "\\?";
+    public static final String URL_AND_SIGN_REGEX = "&";
+    public static final String URL_EQUALS_SIGN_REGEX = "=";
+    public static final String URL_MINUS_SIGN_REGEX = "-";
+    public static final String URL_COMMA_SIGN_REGEX = ",";
+    public static final String URL_COLON_REGEX = ":";
+    public static final int SEMSTER_NUMBER_URL_INDEX = 4;
+    public static final int SEMSTER_NUMBER_INTEGER_INDEX = 1;
+    public static final int LAST_STRING_URL_INDEX = 5;
+    public static final int MODULE_STRING_INDEX = 1;
+    public static final int MODULE_CODE_INDEX = 0;
+    public static final int LESSON_STRING_INDEX = 1;
+    public static final int LESSON_TYPE_INDEX = 0;
+    public static final int LESSON_NUMBER_INDEX = 1;
+
     /**
      * Parses a shortened NUSMods url and creates TimetableData
      * @param url shortened NUSMods url
@@ -81,13 +97,16 @@ public class TimetableParserUtil {
      * @throws ParseException
      */
     public static TimetableData parseLongUrl(String url) throws ParseException {
-        String[] urlParts = url.split("/"); // Obtain the last part of url
+        String[] urlParts = url.split(URL_BACKSLASH_REGEX); // Obtain the last part of url
         ArrayList<Lesson> totalLessonList = new ArrayList<Lesson>();
         ArrayList<Lesson> lessonsToAddFromModule;
 
-        String semNum = urlParts[4];    // Normally found at the fifth part
-        String[] toParse = urlParts[5].split("\\?");    // Seperate "share" out of last part of url
-        String[] modules = toParse[1].split("&");   // Seperate the modules in last part of url
+        // Seperate semester number normally found at the fifth part
+        String semNum = urlParts[SEMSTER_NUMBER_URL_INDEX];
+        // Seperate "share" out of last part of url
+        String[] toParse = urlParts[LAST_STRING_URL_INDEX].split(URL_QUESTION_MARK_REGEX);
+        // Seperate the modules in last part of url
+        String[] modules = toParse[MODULE_STRING_INDEX].split(URL_AND_SIGN_REGEX);
 
         // Loop to find the modules taken and create the Lessons taken to add into Timetable
         for (String module: modules) {
@@ -110,18 +129,18 @@ public class TimetableParserUtil {
         ArrayList<Lesson> lessonListFromApi;
         ArrayList<Lesson> lessonsTakenList;
         lessonsTakenList = new ArrayList<Lesson>();
-        String[] moduleInfo = module.split("=");
-        String[] semNumToParse = semNum.split("-");
-        int semNumInt = Integer.parseInt(semNumToParse[1]);
-        String moduleCode = moduleInfo[0];
-        String[] lessonsTaken = moduleInfo[1].split(",");
+        String[] moduleInfo = module.split(URL_EQUALS_SIGN_REGEX);
+        String[] semNumToParse = semNum.split(URL_MINUS_SIGN_REGEX);
+        int semNumInt = Integer.parseInt(semNumToParse[SEMSTER_NUMBER_INTEGER_INDEX]);
+        String moduleCode = moduleInfo[MODULE_CODE_INDEX];
+        String[] lessonsTaken = moduleInfo[LESSON_STRING_INDEX].split(URL_COMMA_SIGN_REGEX);
 
         lessonListFromApi = obtainModuleInfoFromApi(moduleCode, semNumInt);
 
         for (String lessonTaken : lessonsTaken) {
-            String[] lessonToParse = lessonTaken.split(":");
-            String lessonType = convertShortFormToLong(lessonToParse[0]);
-            String lessonNum = lessonToParse[1];
+            String[] lessonToParse = lessonTaken.split(URL_COLON_REGEX);
+            String lessonType = convertShortFormToLong(lessonToParse[LESSON_TYPE_INDEX]);
+            String lessonNum = lessonToParse[LESSON_NUMBER_INDEX];
 
             for (Lesson lessonFromApi: lessonListFromApi) {
                 if (lessonType.equalsIgnoreCase(lessonFromApi.getLessonType())
@@ -169,8 +188,7 @@ public class TimetableParserUtil {
             ArrayList<Lesson> lessons = new ArrayList<>();
             for (HashMap<String, String> lesson : lessonInfo) {
                 Lesson lessonToAdd = new Lesson(moduleCode, lesson.get("ClassNo"), lesson.get("LessonType"),
-                        lesson.get("WeekText"), lesson.get("DayText"),
-                        lesson.get("StartTime"), lesson.get("EndTime"));
+                        lesson.get("WeekText"), lesson.get("DayText"), lesson.get("StartTime"), lesson.get("EndTime"));
                 lessons.add(lessonToAdd);
             }
 

@@ -8,7 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROFILE_PICTURE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILL;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Collections;
@@ -34,7 +34,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ProfilePicture;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.skill.Skill;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -52,7 +52,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_CURRENT_POSITION + "] "
             + "[" + PREFIX_COMPANY + "] "
             + "[" + PREFIX_PROFILE_PICTURE + "] "
-            + "[" + PREFIX_TAG + "TAG]...";
+            + "[" + PREFIX_SKILL + "SKILL]...";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
@@ -65,7 +65,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_CURRENT_POSITION + "CURRENT_POSITION] "
             + "[" + PREFIX_COMPANY + "COMPANY] "
             + "[" + PREFIX_PROFILE_PICTURE + "PROFILE PICTURE NAME] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_SKILL + "SKILL]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -133,10 +133,10 @@ public class EditCommand extends UndoableCommand {
         Company updatedCompany = editPersonDescriptor.getCompany().orElse(personToEdit.getCompany());
         ProfilePicture updatedProfilePicture =
                 editPersonDescriptor.getProfilePicture().orElse(personToEdit.getProfilePicture());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Skill> updatedSkills = editPersonDescriptor.getSkills().orElse(personToEdit.getSkills());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCurrentPosition,
-                updatedCompany, updatedProfilePicture, updatedTags);
+                updatedCompany, updatedProfilePicture, updatedSkills);
     }
 
     @Override
@@ -170,13 +170,13 @@ public class EditCommand extends UndoableCommand {
         private CurrentPosition currentPosition;
         private Company company;
         private ProfilePicture profilePicture;
-        private Set<Tag> tags;
+        private Set<Skill> skills;
 
         public EditPersonDescriptor() {}
 
         /**
          * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
+         * A defensive copy of {@code skills} is used internally.
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
@@ -186,7 +186,7 @@ public class EditCommand extends UndoableCommand {
             setCurrentPosition(toCopy.currentPosition);
             setCompany(toCopy.company);
             setProfilePicture(toCopy.profilePicture);
-            setTags(toCopy.tags);
+            setSkills(toCopy.skills);
         }
 
         /**
@@ -194,7 +194,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.currentPosition,
-                    this.company, this.profilePicture, this.tags);
+                    this.company, this.profilePicture, this.skills);
         }
 
         public void setName(Name name) {
@@ -254,20 +254,20 @@ public class EditCommand extends UndoableCommand {
         }
 
         /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
+         * Sets {@code skills} to this object's {@code skills}.
+         * A defensive copy of {@code skills} is used internally.
          */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
+        public void setSkills(Set<Skill> skills) {
+            this.skills = (skills != null) ? new HashSet<>(skills) : null;
         }
 
         /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+         * Returns an unmodifiable skill set, which throws {@code UnsupportedOperationException}
          * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
+         * Returns {@code Optional#empty()} if {@code skills} is null.
          */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        public Optional<Set<Skill>> getSkills() {
+            return (skills != null) ? Optional.of(Collections.unmodifiableSet(skills)) : Optional.empty();
         }
 
         @Override
@@ -292,7 +292,7 @@ public class EditCommand extends UndoableCommand {
                     && getCurrentPosition().equals(e.getCurrentPosition())
                     && getCompany().equals(e.getCompany())
                     && getProfilePicture().equals(e.getProfilePicture())
-                    && getTags().equals(e.getTags());
+                    && getSkills().equals(e.getSkills());
         }
     }
 }

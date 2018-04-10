@@ -3,6 +3,7 @@
 <?import com.calendarfx.view.CalendarView?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9">
+<!-- @@author trafalgarandre -->
+<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9" mouseTransparent="true">
     <CalendarView fx:id="calendarView" />
 </StackPane>

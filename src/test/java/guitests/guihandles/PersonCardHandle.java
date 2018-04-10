@@ -13,16 +13,14 @@ import javafx.scene.layout.Region;
 public class PersonCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
     private static final String NAME_FIELD_ID = "#name";
-    private static final String ADDRESS_FIELD_ID = "#address";
-    private static final String PHONE_FIELD_ID = "#phone";
-    private static final String EMAIL_FIELD_ID = "#email";
-    private static final String TAGS_FIELD_ID = "#tags";
+    private static final String CURRENT_POSITION_FIELD_ID = "#currentPosition";
+    private static final String COMPANY_FIELD_ID = "#company";
+    private static final String TAGS_FIELD_ID = "#skills";
 
     private final Label idLabel;
     private final Label nameLabel;
-    private final Label addressLabel;
-    private final Label phoneLabel;
-    private final Label emailLabel;
+    private final Label currentPositionLabel;
+    private final Label companyLabel;
     private final List<Label> tagLabels;
 
     public PersonCardHandle(Node cardNode) {
@@ -30,9 +28,8 @@ public class PersonCardHandle extends NodeHandle<Node> {
 
         this.idLabel = getChildNode(ID_FIELD_ID);
         this.nameLabel = getChildNode(NAME_FIELD_ID);
-        this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
-        this.phoneLabel = getChildNode(PHONE_FIELD_ID);
-        this.emailLabel = getChildNode(EMAIL_FIELD_ID);
+        this.currentPositionLabel = getChildNode(CURRENT_POSITION_FIELD_ID);
+        this.companyLabel = getChildNode(COMPANY_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
         this.tagLabels = tagsContainer
@@ -50,31 +47,28 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return nameLabel.getText();
     }
 
-    public String getAddress() {
-        return addressLabel.getText();
+    public String getCurrentPosition() {
+        return currentPositionLabel.getText();
     }
 
-    public String getPhone() {
-        return phoneLabel.getText();
+    public String getCompany() {
+        return companyLabel.getText();
     }
 
-    public String getEmail() {
-        return emailLabel.getText();
-    }
-
-    public List<String> getTags() {
+    public List<String> getSkills() {
         return tagLabels
                 .stream()
                 .map(Label::getText)
                 .collect(Collectors.toList());
     }
 
-    public List<String> getTagStyleClasses(String tag) {
+    //@@author KevinCJH
+    public List<String> getSkillStyleClasses(String tag) {
         return tagLabels
                 .stream()
                 .filter(label -> label.getText().equals(tag))
                 .map(Label::getStyleClass)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No such tag."));
+                .orElseThrow(() -> new IllegalArgumentException("No such skill."));
     }
 }

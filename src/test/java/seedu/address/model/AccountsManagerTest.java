@@ -1,3 +1,4 @@
+//@@author Jason1im
 package seedu.address.model;
 
 import org.junit.Rule;

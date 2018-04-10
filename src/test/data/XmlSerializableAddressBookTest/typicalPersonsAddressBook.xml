@@ -31,6 +31,8 @@
         <currentPosition>Marketing Intern</currentPosition>
         <company>Facebook</company>
         <profilePicture>./src/test/data/images/carl.jpeg</profilePicture>
+        <tagged>Writing</tagged>
+        <tagged>Excel</tagged>
     </persons>
     <persons>
         <name>Daniel Meier</name>
@@ -47,6 +49,8 @@
         <address>michegan ave</address>
         <currentPosition>HR Associate</currentPosition>
         <company>ABC Consultants</company>
+        <tagged>Writing</tagged>
+        <tagged>Excel</tagged>
     </persons>
     <persons>
         <name>Fiona Kunz</name>
@@ -55,6 +59,8 @@
         <address>little tokyo</address>
         <currentPosition>Analyst</currentPosition>
         <company>DBS Bank</company>
+        <tagged>Java</tagged>
+        <tagged>Excel</tagged>
     </persons>
     <persons>
         <name>George Best</name>
@@ -64,7 +70,11 @@
         <currentPosition>Computer Science Student</currentPosition>
         <company>NTU</company>
         <profilePicture>./src/test/data/images/george.jpeg</profilePicture>
+        <tagged>Java</tagged>
     </persons>
-    <tags>friends</tags>
-    <tags>owesMoney</tags>
+    <skills>friends</skills>
+    <skills>owesMoney</skills>
+    <tagged>Writing</tagged>
+    <tagged>Excel</tagged>
+    <tagged>Java</tagged>
 </addressbook>

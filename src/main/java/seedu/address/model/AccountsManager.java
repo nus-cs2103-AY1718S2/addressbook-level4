@@ -1,3 +1,4 @@
+//@@author Jason1im
 package seedu.address.model;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
@@ -9,6 +10,8 @@ import javafx.collections.ObservableList;
 
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.exception.DuplicateUsernameException;
+import seedu.address.model.exception.InvalidPasswordException;
+import seedu.address.model.exception.InvalidUsernameException;
 
 
 /**
@@ -45,6 +48,34 @@ public class AccountsManager implements ReadOnlyAccountsManager {
         }
         Account newAccount = new Account(inputUsername, inputPassword);
         accountList.add(newAccount);
+    }
+
+    /**
+     * Checks for validity of username and password.
+     * @return the user account that matches the inputs.
+     * @throws InvalidUsernameException if the input username cannot be found
+     * @throws InvalidPasswordException if the input password does not match with the username
+     */
+    public Account login(String inputUsername, String inputPassword)
+            throws InvalidUsernameException, InvalidPasswordException {
+        requireAllNonNull(inputUsername, inputPassword);
+        Account result = null;
+        boolean isValidUsername = false;
+        for (Account acc : accountList) {
+            if (checkUsername(inputUsername, acc)) {
+                if (checkPassword(inputPassword, acc)) {
+                    isValidUsername = true;
+                    result = acc;
+                } else {
+                    throw new InvalidPasswordException();
+                }
+            }
+        }
+        if (isValidUsername) {
+            return result;
+        } else {
+            throw new InvalidUsernameException();
+        }
     }
 
     @Override

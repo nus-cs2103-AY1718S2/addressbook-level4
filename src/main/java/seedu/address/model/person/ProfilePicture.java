@@ -9,6 +9,7 @@ import java.util.Date;
 
 import javafx.scene.image.Image;
 
+//@@author trafalgarandre
 /**
  * Represents a ProfilePicture in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -16,15 +17,15 @@ import javafx.scene.image.Image;
 public class ProfilePicture {
     public static final String MESSAGE_PROFILEPICTURE_CONSTRAINTS =
             "Profile picture name should be a valid image name,"
-                    + " and it should end with either jpeg, jpg, png, gif or bmp";
+                    + " and it should end with either jpeg, jpg, png, gif or bmp. "
+                    + " If no string is given after 'pp/', profile picture will be set to default profile picture.";
     public static final String MESSAGE_PROFILEPICTURE_NOT_EXISTS =
             "Profile picture does not exist. Please give another profile picture";
 
     // alphanumeric and special characters
-    public static final String PROFILE_PICTURE_VALIDATION_REGEX = "^$|([^\\s]+(\\.(?i)(jpeg|jpg|png|gif|bmp))$)";
-    public static final String DEFAULT_IMG_URL = "file:src/test/data/images/default.png";
+    public static final String PROFILE_PICTURE_VALIDATION_REGEX = "^$|(.+(\\.(?i)(jpeg|jpg|png|gif|bmp))$)";
     public static final String PROFILE_PICTURE_FOLDER =
-            "./src/main/resources/ProfilePictures/";
+            "./ProfilePictures/";
 
     public final String filePath;
     public final String url;
@@ -35,19 +36,19 @@ public class ProfilePicture {
      * @param profilePicture A valid image path.
      */
     public ProfilePicture(String... profilePicture) {
-        if (profilePicture.length != 0 && profilePicture[0] != null) {
+        if (profilePicture.length != 0 && profilePicture[0] != null && profilePicture[0].length() != 0) {
             checkArgument(isValidProfilePicture(profilePicture[0]), MESSAGE_PROFILEPICTURE_CONSTRAINTS);
             checkArgument(hasValidProfilePicture(profilePicture[0]), MESSAGE_PROFILEPICTURE_NOT_EXISTS);
             if (profilePicture[0].length() > 37
-                    && profilePicture[0].substring(0, 37).equals("./src/main/resources/ProfilePictures/")) {
+                    && profilePicture[0].substring(0, 37).equals("./ProfilePictures/")) {
                 this.filePath = profilePicture[0];
             } else {
                 this.filePath = copyImageToProfilePictureFolder(profilePicture[0]);
             }
             this.url = "file:".concat(this.filePath.substring(2));
         } else {
-            this.url = DEFAULT_IMG_URL;
-            this.filePath = DEFAULT_IMG_URL.replace("file:", "./");
+            this.url = null;
+            this.filePath = null;
         }
     }
 
@@ -65,7 +66,7 @@ public class ProfilePicture {
      */
     public static boolean hasValidProfilePicture(String profilePicture) {
         File file = new File(profilePicture);
-        return file.exists() && !file.isDirectory();
+        return (file.exists() && !file.isDirectory()) || profilePicture.length() == 0;
     }
 
     public Image getImage() {

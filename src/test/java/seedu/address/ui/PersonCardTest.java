@@ -16,7 +16,7 @@ public class PersonCardTest extends GuiUnitTest {
     @Test
     public void display() {
         // no tags
-        Person personWithNoTags = new PersonBuilder().withTags(new String[0]).build();
+        Person personWithNoTags = new PersonBuilder().withSkills(new String[0]).build();
         PersonCard personCard = new PersonCard(personWithNoTags, 1);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithNoTags, 1);
@@ -26,6 +26,18 @@ public class PersonCardTest extends GuiUnitTest {
         personCard = new PersonCard(personWithTags, 2);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithTags, 2);
+
+        // no profilePicture
+        Person personWithNoProfilePicture = new PersonBuilder().withProfilePicture(new String[0]).build();
+        personCard = new PersonCard(personWithNoProfilePicture, 3);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithNoProfilePicture, 3);
+
+        // with profilePicture
+        Person personWithProfilePicture = new PersonBuilder().build();
+        personCard = new PersonCard(personWithProfilePicture, 4);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithProfilePicture, 4);
     }
 
     @Test

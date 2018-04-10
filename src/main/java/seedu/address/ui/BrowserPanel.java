@@ -23,7 +23,7 @@ public class BrowserPanel extends UiPart<Region> {
             "https://www.linkedin.com/search/results/index/?keywords=";
     private static final String FXML = "BrowserPanel.fxml";
     private static final String CHROME_41_USER_AGENT =
-            "Mozilla/5.0 (Linux; <Android Version>; <Build Tag etc.>) AppleWebKit/<WebKit Rev> (KHTML, like Gecko) "
+            "Mozilla/5.0 (Linux; <Android Version>; <Build Skill etc.>) AppleWebKit/<WebKit Rev> (KHTML, like Gecko) "
             + "Chrome/<Chrome Rev> Mobile Safari/<WebKit Rev>\n";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());

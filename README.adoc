@@ -5,13 +5,13 @@ image:https://travis-ci.org/CS2103JAN2018-W09-B2/main.svg?branch=master["Build S
 image:https://coveralls.io/repos/github/CS2103JAN2018-W09-B2/main/badge.svg?branch=master["Coverage Status", link="https://coveralls.io/github/CS2103JAN2018-W09-B2/main"]
 
 ifdef::env-github[]
-image::docs/images/Ui.png[width="600"]
+image::docs/images/Ui.png[width="600", align="center"]
 endif::[]
 
 ifndef::env-github[]
-image::images/Ui.png[width="600"]
+.contactHeRo on launch
+image::docs/images/Ui.png[width="600", align="center"]
 endif::[]
-
 
 *Welcome to contactHeRo!*
 

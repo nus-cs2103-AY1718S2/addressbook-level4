@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- @@author kush1509 -->
 <!-- Person with an invalid phone field -->
 <person>
     <name>Hans Muster</name>
@@ -8,5 +9,5 @@
     <currentPosition>Software Engineer</currentPosition>
     <company>Google</company>
     <profilePicture>./src/test/data/images/hans.jpeg</profilePicture>
-    <tagged>friends</tagged>
+    <tagged>Java</tagged>
 </person>

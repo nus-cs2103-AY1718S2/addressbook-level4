@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- @@author kush1509 -->
+<!-- AddressBook save file which contains the same Job values as in
+{@code TypicalJobs#getTypicalAddressBook()}-->
+<addressbook>
+    <jobs>
+        <position>Software Engineer</position>
+        <team>Cloud Services</team>
+        <location>Singapore</location>
+        <numberOfPositions>2</numberOfPositions>
+        <tagged>Java</tagged>
+        <tagged>Algorithms</tagged>
+    </jobs>
+    <jobs>
+        <position>Marketing Intern</position>
+        <team>Marketing</team>
+        <location>Kuala Lampur, Malaysia</location>
+        <numberOfPositions>1</numberOfPositions>
+        <tagged>Excel</tagged>
+        <tagged>Writing</tagged>
+    </jobs>
+    <jobs>
+        <position>DevOps Engineer</position>
+        <team>DevOps</team>
+        <location>Singapore</location>
+        <numberOfPositions>3</numberOfPositions>
+        <tagged>AWS</tagged>
+        <tagged>SQL-Server</tagged>
+    </jobs>
+    <jobs>
+        <position>Product Manager</position>
+        <team>Mobile Products</team>
+        <location>India</location>
+        <numberOfPositions>1</numberOfPositions>
+        <tagged>UI/UX</tagged>
+        <tagged>Testing</tagged>
+    </jobs>
+    <skills>Java</skills>
+    <skills>Algorithms</skills>
+    <skills>Excel</skills>
+    <skills>Writing</skills>
+    <skills>AWS</skills>
+    <skills>SQL-Server</skills>
+    <skills>UI/UX</skills>
+    <skills>Testing</skills>
+</addressbook>

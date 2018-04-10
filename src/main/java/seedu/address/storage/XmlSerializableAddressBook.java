@@ -20,7 +20,9 @@ public class XmlSerializableAddressBook {
     @XmlElement
     private List<XmlAdaptedPerson> persons;
     @XmlElement
-    private List<XmlAdaptedTag> tags;
+    private List<XmlAdaptedSkill> skills;
+    @XmlElement
+    private List<XmlAdaptedAppointment> appointments;
     @XmlElement
     private List<XmlAdaptedJob> jobs;
 
@@ -30,7 +32,8 @@ public class XmlSerializableAddressBook {
      */
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
-        tags = new ArrayList<>();
+        skills = new ArrayList<>();
+        appointments = new ArrayList<>();
         jobs = new ArrayList<>();
     }
 
@@ -40,7 +43,9 @@ public class XmlSerializableAddressBook {
     public XmlSerializableAddressBook(ReadOnlyAddressBook src) {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
-        tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        skills.addAll(src.getSkillList().stream().map(XmlAdaptedSkill::new).collect(Collectors.toList()));
+        appointments.addAll(src.getAppointmentList().stream()
+                .map(XmlAdaptedAppointment::new).collect(Collectors.toList()));
         jobs.addAll(src.getJobList().stream().map(XmlAdaptedJob::new).collect(Collectors.toList()));
     }
 
@@ -48,15 +53,18 @@ public class XmlSerializableAddressBook {
      * Converts this addressbook into the model's {@code AddressBook} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
-     * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag} or {@code XmlAdaptedJob}.
+     * {@code XmlAdaptedPerson} or {@code XmlAdaptedSkill} or {@code XmlAdaptedJob}.
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
-        for (XmlAdaptedTag t : tags) {
-            addressBook.addTag(t.toModelType());
+        for (XmlAdaptedSkill t : skills) {
+            addressBook.addSkill(t.toModelType());
         }
         for (XmlAdaptedPerson p : persons) {
             addressBook.addPerson(p.toModelType());
+        }
+        for (XmlAdaptedAppointment a : appointments) {
+            addressBook.addAppointment(a.toModelType());
         }
         for (XmlAdaptedJob j : jobs) {
             addressBook.addJob(j.toModelType());
@@ -75,6 +83,7 @@ public class XmlSerializableAddressBook {
         }
 
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags) && jobs.equals(otherAb.jobs);
+        return persons.equals(otherAb.persons) && skills.equals(otherAb.skills)
+                && appointments.equals(otherAb.appointments) && jobs.equals(otherAb.jobs);
     }
 }

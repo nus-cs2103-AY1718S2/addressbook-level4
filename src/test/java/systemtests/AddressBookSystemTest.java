@@ -202,6 +202,14 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
+     * Deletes all jobs in the address book.
+     */
+    protected void deleteAllJobs() {
+        executeCommand(ClearCommand.COMMAND_WORD);
+        assertEquals(0, getModel().getAddressBook().getJobList().size());
+    }
+
+    /**
      * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
      * {@code expectedResultMessage}, the model and storage contains the same person objects as {@code expectedModel}
      * and the person list panel displays the persons in the model correctly.

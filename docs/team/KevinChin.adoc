@@ -16,7 +16,7 @@ recruiters in a company.
 
 * *Major enhancement*: added *the ability to send out email* in contactHeRo, using the Google API. Also provided a *framework to integrate Google API*.
 ** What it does: allows the user to send email to their contact, using an in-app editor. To use the Google API to send email, users will have to login to Google. Our app provides a built-in browser to handle the user login and a framework to integrate Google API.
-** Justification: As we all know, recruiters will usually send out emails to potential employees to inform them of their job application progress or arranging for interview.
+** Justification: As we all know, recruiters will usually send out emails to potential employees to inform them of their job application progress or arranging for interviews.
 This feature lets user take advantage of the fact that the information of the potential employees are already in the app, therefore it will be easier to draft an email than using other email applications.
 It also provides a better user experience as users do not need to switch to another application.
 ** Highlights: This enhancement provides a framework for future feature which requires Google API, like Google Contacts, Google Drive or Google Calendar.

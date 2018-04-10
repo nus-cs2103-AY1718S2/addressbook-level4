@@ -116,6 +116,9 @@ public class InfoPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Person person = event.getNewSelection().person;
+        venuePlaceholder.toBack();
+        mapsPlaceholder.toBack();
+        birthdayPlaceholder.toBack();
 
         personDetailsCard.update(person,0);
         userDetailsPlaceholder.toFront();

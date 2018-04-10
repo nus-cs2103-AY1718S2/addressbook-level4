@@ -1,0 +1,20 @@
+.background {
+    -fx-background-color: derive(#1d1d1d, 20%);
+    background-color: #383838; /* Used in the default.html file */
+}
+
+.root * {
+    base: black;
+    accent: #141E30;
+    light: white;
+    -fx-background-color: transparent;
+    -fx-text-fill: light;
+}
+
+#details {
+    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%,#020b02, #595200);
+}
+
+#commandBoxPlaceholder {
+    -fx-border-color: transparent transparent light transparent;
+}

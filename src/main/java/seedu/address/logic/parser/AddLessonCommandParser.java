@@ -49,7 +49,7 @@ public class AddLessonCommandParser implements Parser<AddLessonCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
-        //day = new Day("mon");
+
         return new AddLessonCommand(index, day, startTime, endTime);
     }
 

@@ -59,8 +59,8 @@ public class Lesson implements Comparable<Lesson> {
     public boolean clashesWith(Lesson other) {
         return this.getDay().compareTo(other.getDay()) == 0
                 ? ((this.getStartTime().compareTo(other.getStartTime()) >= 0    //Same day
-                && this.getStartTime().compareTo(other.getEndTime()) <= 0)
-                || (this.getEndTime().compareTo(other.getStartTime()) >= 0
+                && this.getStartTime().compareTo(other.getEndTime()) < 0)
+                || (this.getEndTime().compareTo(other.getStartTime()) > 0
                 && this.getEndTime().compareTo(other.getEndTime()) <= 0))
                 : this.getDay().compareTo(other.getDay()) == 0; //Different day
     }

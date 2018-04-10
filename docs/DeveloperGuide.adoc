@@ -1130,7 +1130,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 Minor Enhancement :
 
 ** Implements the delete dated persons, aka `DeleteBefore`, function which allows the user to delete persons added before a
-date who matches all tags specified by the user
+date who match all tags specified by the user
 
 Major Enhancement :
 

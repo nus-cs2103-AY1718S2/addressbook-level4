@@ -1,0 +1,165 @@
+= Joshua Lee Kai Sheng - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: AddSurance
+
+---
+
+== Overview
+
+*AddSurance* is a desktop address book application. It targets technologically savvy insurance agents who wish to maintain
+a huge list of contacts, at the same time, manage appointments with (potential) clients. On top of a list panel showing contacts,
+it also has an integrated calendar UI which displays the appointments saved in the address book.
+
+Interaction with this application is largely based on the Command Line Interface, aided by a simple GUI.
+
+This application is written in Java and has about 20 kLoC. Some of the tools and technologies used for this project include
+Intellij, Github, SourceTree, SceneBuilder, JAVAFX, CalendarFX 8 by Dirk Lemmermann and Gmail API.
+
+== Summary of contributions
+
+*Major enhancement*:
+
+** Implemented a package of scheduling functions to manage user's appointments. This includes:
+*** Implementing a `Calendar` reflecting the scheduled appointments
+*** Implementing `Appointment` objects and their storage
+*** Implementing `addappointment` command to support the creation of new appointments
+*** Implementing `deleteappointment` command to support the removal of appointments
+*** Implementing `zoomin` command to support zooming in of calendar view
+*** Implementing `zoomout` command to support zooming out of calendar view
+*** Implementing `gobackward` command to support making the calendar view go backward in time from the currently displaying date
+*** Implementing `goforward` command to support making the calendar view go forward in time from the currently displaying date
+
+** *What it does*:
+*** Allows the user to manage his/her upcoming appointments with (potential) clients and and keep track of past appointments.
+
+** *Justification*:
+*** Insurance agents tend to have many appointment arrangement with their huge list of (potential) clients. This necessitates an appointment
+management function for the address book.
+
+** *Highlights*:
+*** This enhancement requires good  understanding of and adherence to the existing architecture of the application as it touches *all components*
+of the architecture. A new `Appointment` model was created to support the storage of appointments in the address book. Besides, many commands were implemented
+for this feature. The most challenging part of all is the integration of third party calendar libraries, provided by
+*CalendarFX 8*, into the application.
+Most importantly, these implementations follow closely a number of Software Engineering principles such as OOP, SOLID and YAGNI.
+
+* Credits: https://github.com/dlemmermann/CalendarFX[CalendarFX 8]
+
+*Minor enhancement*:
+
+** Implemented a delete dated persons, aka `DeleteBefore`, function which allows the user to delete persons added before a
+   date who match all tags specified by the user.
+
+** *Justification*:
+*** Insurance agents tend to have many obsolete contacts especially those of non-clients. With this function, insurance agents
+can delete a group of people, as indicated by some tags, that is added before a date to clear up some space in the address book.
+
+** *Highlights*:
+*** This enhancement requires in-depth, cross-component implementation despite being a minor enhancement. The Single Responsibility
+Principle is closely adhered to by implementing the necessary parts at the right places without breaking the wheel of the current
+implementation.
+
+*Code contributed*: [https://github.com/CS2103JAN2018-W10-B4/main/blob/master/collated/functional/jlks96.md[Functional code]][https://github.com/CS2103JAN2018-W10-B4/main/blob/master/collated/functional/jlks96-reused.md[Adapted Functional code]][https://github.com/CS2103JAN2018-W10-B4/main/blob/master/collated/test/jlks96.md[Test code]]
+
+
+*Other contributions*:
+
+
+** *Project management*:
+
+*** Team Lead
+
+*** Set up team repository on GitHub
+
+*** Set up important tools for the project like Travis and Coveralls
+
+*** Maintained the team repository:
+**** Managed the team workflow (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/94[#94])
+**** Managed continual integration of project (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/56[#56])
+**** In charge of reviewing and merging Pull Requests
+**** Managed issue tracking and milestones which includes creation and maintenance of labels and milestones, backtracking of issues,
+labelling and assignment of issues (https://github.com/CS2103JAN2018-W10-B4/main/milestones[Milestones],
+https://github.com/CS2103JAN2018-W10-B4/main/labels[Labels], https://github.com/CS2103JAN2018-W10-B4/main/issues[Issues])
+
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+
+*** Managed deliverables, deadlines and scheduling of tasks
+
+
+** *Documentation*:
+
+*** Managed the Developer Guide:
+**** Change the title of the Developer Guide (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/154[#154])
+**** Updated the Product Scope, User Stories, Use Cases, Non Functional Requirements and Glossary sections (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/31[#31],
+https://github.com/CS2103JAN2018-W10-B4/main/pull/154[#154])
+**** Updated diagrams to match the current implementation (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/154[#154])
+
+*** Managed the User Guide:
+**** Change the title of the User Guide (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/38[#38])
+**** Updated the Introduction section to match the current user profile (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/38[#38],
+https://github.com/CS2103JAN2018-W10-B4/main/pull/162[#162])
+**** Rearrange the features into three logical sections for better clarity (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/162[#162])
+**** Tidied up the Command Summary section (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/162[#162])
+
+*** Updated README to match the current value proposition (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/38[#38],
+https://github.com/CS2103JAN2018-W10-B4/main/pull/92[#92],
+
+
+** *Repackaging of the product*:
+
+*** Renamed the address book (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/123[#123])
+
+*** Changed the logo of the address book (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/123[#123])
+
+*** Changed the theme of the address book (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/161[#161])
+
+*** Rearranged the UI parts of the the address book (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/161[#161])
+
+
+** *Enhancements to existing features*:
+
+*** Created command aliases for all existing commands with creation and update of associated tests (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/34[#34])
+
+
+** *Community*:
+
+*** Reviewed PRs for teammates with non-trivial review comments: (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/36[#36],
+https://github.com/CS2103JAN2018-W10-B4/main/pull/46[#46], https://github.com/CS2103JAN2018-W10-B4/main/pull/77[#77],
+https://github.com/CS2103JAN2018-W10-B4/main/pull/81[#81], https://github.com/CS2103JAN2018-W10-B4/main/pull/153[#153],
+https://github.com/CS2103JAN2018-W10-B4/main/pull/163[#163])
+
+*** Reported bugs and suggestions for other teams during mock User Acceptance Testing
+
+
+** *Tools*:
+*** Integrated a third party library (CalendarFX) to the project (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/48[#48],
+https://github.com/CS2103JAN2018-W10-B4/main/pull/83[#83])
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=introduction]
+
+include::../UserGuide.adoc[tag=uiexplanations]
+
+include::../UserGuide.adoc[tag=deletebefore]
+
+include::../UserGuide.adoc[tag=scheduling]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=deletebefore]
+
+include::../DeveloperGuide.adoc[tag=scheduling]
+

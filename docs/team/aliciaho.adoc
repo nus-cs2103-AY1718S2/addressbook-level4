@@ -1,0 +1,59 @@
+= Alicia Ho Sor Sian - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: ContactSails
+
+---
+
+== Overview
+
+ContactSails is built upon AddressBook - Level 4, a desktop address book application used for teaching Software Engineering principles.
+It has new features that serve to meet the needs of salespersons from small companies or home-grown businesses with customers from various social media platforms.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: The ability to *display a calendar within the application and manage calendar entries.*
+** What it does: It allows the user to create, delete and edit entries, which represent events such as meetings or deadlines.
+Existing entries are displayed in the calendar interface at their respective time slots.
+The user can switch between calendar views to view entries within a day, a week or a month.
+** Justification: The calendar can be used to display any incoming events or deadlines to help salespersons to plan their schedules carefully.
+It provides a quicker way for salespersons, who prefer typing to using a mouse, to manage their calendar entries.
+** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
+** Credits: CalendarFX is used to provide the calendar to display entries.
+
+* *Minor enhancement*: Separation of Tag class into child classes, Group and Preference, and ability to find persons based on their groups and preferences.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W13-B1/main/blob/master/collated/functional/SuxianAlicia.md[Functional code]] [https://github.com/CS2103JAN2018-W13-B1/main/blob/master/collated/test/SuxianAlicia.md[Test code]]
+
+* *Other contributions*:
+
+** Enhancements to existing features:
+*** Removed unused tags in tag list of address book (Pull request https://github.com/CS2103JAN2018-W13-B1/main/pull/38[#38])
+** Documentation:
+*** Updated images used in Developer Guide. (Pull request https://github.com/CS2103JAN2018-W13-B1/main/pull/173[#173])
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W13-B1/main/pull/165[#165], https://github.com/CS2103JAN2018-W13-B1/main/pull/98[#98], https://github.com/CS2103JAN2018-W13-B1/main/pull/83[#83], https://github.com/CS2103JAN2018-W13-B1/main/pull/52[#52]
+*** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2103JAN2018-W11-B3/main/issues/120[Issue #120], https://github.com/CS2103JAN2018-W11-B3/main/issues/128[Issue #128], https://github.com/CS2103JAN2018-W11-B3/main/issues/104[Issue #104])
+** Tools:
+*** Integrated a third party library (CalendarFX) to the project (https://github.com[#42])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=calendarentries]
+
+

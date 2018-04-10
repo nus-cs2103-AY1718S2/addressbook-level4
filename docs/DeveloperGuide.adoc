@@ -648,7 +648,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
 
-// tag::calendarEntries[]
+// tag::calendarentries[]
 === Calendar and Entry tracking
 
 Entries refer to meetings, deadlines and order deliveries created by users in ContactSails.
@@ -741,7 +741,7 @@ Bugs present in the library cannot be easily fixed by developers.
 ** Cons: There is greater probability of bugs created as implementation have to be created from scratch.
 As compared to using third-party libraries, substantial lines of code has to be written, thus debugging may be harder.
 Design of features of the calendar have to be decided by developers themselves, which requires more time and effort to implement the features.
-// end::calendarEntries[]
+// end::calendarentries[]
 
 [[Implementation-Configuration]]
 === Configuration
@@ -1040,8 +1040,8 @@ If customers have any issues regarding their orders, salespersons will be able t
 ** *Minor Feature*: Since ContactSails has a lot of personal details of customers, the owner of the address book would want to encrypt the application data file to prevent outside access to sensitive information.
 
 2. *Alicia Ho Sor Sian*
-* *Major Feature*: Ability to manage events which are displayed in a calendar.
-** Allows users to add, edit or delete events, which can represent meetings or deadlines including order deliveries.
+* *Major Feature*: Ability to manage entries which are displayed in a calendar.
+** Allows users to add, edit or delete entries, which can represent events or deadlines including order deliveries.
 ** Once set, the event will be displayed in ContactSails' calendar, which shows all incoming events for the current month and after.
 ** Orders set by users will automatically appear in the calendar without the user having to create an event for it.
 * *Minor Feature*: Classifying tags into two categories, groups and preferences.

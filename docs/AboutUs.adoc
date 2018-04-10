@@ -19,7 +19,7 @@ Responsibilities: Logic, Documentation, Deliverables and Deadlines
 
 === Alicia Ho Sor Sian
 image::suxianalicia.JPG[width="150", align="left"]
-{empty}[https://github.com/SuxianAlicia[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/SuxianAlicia[github]] [<<aliciaho#, portfolio>>]
 
 Role: Developer +
 Responsibilities: In charge of Model Component, Code Quality

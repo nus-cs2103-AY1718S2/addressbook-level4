@@ -181,7 +181,7 @@ public class ImdbParser {
             case RemarkCommand.COMMAND_ALIAS:
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
                         LoginCommand.MESSAGE_USAGE));
-
+            //@@author Kyholmes
             case ViewAppointmentCommand.COMMAND_WORD:
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
                         LoginCommand.MESSAGE_USAGE));
@@ -205,7 +205,7 @@ public class ImdbParser {
             case RemovePatientQueueCommand.COMMAND_ALIAS:
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
                         LoginCommand.MESSAGE_USAGE));
-
+            //@@author
             case AddConditionCommand.COMMAND_WORD:
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
                         LoginCommand.MESSAGE_USAGE));
@@ -327,13 +327,13 @@ public class ImdbParser {
 
             case RemarkCommand.COMMAND_ALIAS:
                 return new RemarkCommandParser().parse(arguments);
-
+            //@@author Kyholmes
             case ViewAppointmentCommand.COMMAND_WORD:
                 return new ViewAppointmentCommandParser().parse(arguments);
 
             case ViewAppointmentCommand.COMMAND_ALIAS:
                 return new ViewAppointmentCommandParser().parse(arguments);
-
+            //@@author
             case RecordCommand.COMMAND_WORD:
                 return new RecordCommandParser().parse(arguments);
 
@@ -461,7 +461,7 @@ public class ImdbParser {
 
             case RemarkCommand.COMMAND_ALIAS:
                 return new RemarkCommandParser().parse(arguments);
-
+            //@@author Kyholmes
             case ViewAppointmentCommand.COMMAND_WORD:
                 return new ViewAppointmentCommandParser().parse(arguments);
 
@@ -489,7 +489,7 @@ public class ImdbParser {
 
             case RemovePatientQueueCommand.COMMAND_ALIAS:
                 return new RemovePatientQueueCommandParser().parse(arguments);
-
+            //@@author
             case AddConditionCommand.COMMAND_WORD:
                 return new AddConditionCommandParser().parse(arguments);
 

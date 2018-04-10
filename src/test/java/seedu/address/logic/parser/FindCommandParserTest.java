@@ -32,7 +32,7 @@ public class FindCommandParserTest {
         assertParseFailure(parser, "     ",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
-    
+
     //@@author wynonaK
     @Test
     public void parse_onlyOwnerOption_throwsParseException() {

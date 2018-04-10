@@ -21,7 +21,7 @@ public class MailServer {
     private static String password = "gloriacs2103";
     private static String host = "smtp.gmail.com";
 
-    public MailServer(String[] recipient, String subject, String msg) {
+    public MailServer(String[] recipient, String subject, String msg) throws MessagingException {
         sendEmail(recipient, subject, msg);
     }
 
@@ -55,24 +55,19 @@ public class MailServer {
      * @param subject    - user chooses subject
      * @param msg        - contents the user types
      */
-    private static void sendEmail(String[] recipients, String subject, String msg) {
+    private static void sendEmail(String[] recipients, String subject, String msg) throws MessagingException {
         Session session = startSession();
         //create the message
-        try {
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
-            for (String recipient : recipients) {
-                message.addRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
-            }
-            message.setSubject(subject);
-            message.setText(msg);
-            //send the message
-            Transport.send(message);
-
-        } catch (MessagingException e) {
-            System.out.println("Messaging Exception Detected");
-            System.out.println(e.getCause());
+        MimeMessage message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(username));
+        for (String recipient : recipients) {
+            message.addRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
         }
+        message.setSubject(subject);
+        message.setText(msg);
+        //send the message
+        Transport.send(message);
+
 
     }
 }

@@ -305,6 +305,7 @@ Wildcard search matches:
 
 ****
 
+// tag::filter[]
 === Filter persons by multiple fields: `filter` `[since v1.3]`
 
 Filters persons whose keyword is within the specified range.
@@ -325,6 +326,7 @@ Returns all persons whose graduation year between 2019 and 2021, and whose ratin
 
 Since v1.4, filter command supports filtering by cGPA and interview date. It now takes the format:
 `Format: `filter [y/KEYWORD_RANGE] [r/KEYWORD_RANGE] [g/CGPA_RANGE] [d/INTERVIEW_DATE_RANGE]`
+// end::filter[]
 
 === Deleting a person : `delete`
 
@@ -423,6 +425,7 @@ Examples:
 * `rating-delete 1` +
 Deletes the rating of the first applicant in HR+.
 
+// tag::status[]
 === Update applicant's status: `status` [Since v1.3]
 Updates the status of an applicant. +
 Format: `status INDEX STATUS_INDEX`
@@ -440,6 +443,7 @@ Format: `status INDEX STATUS_INDEX`
 7. Accepted
 8. Withdrawn
 ****
+// end::status[]
 
 === Listing entered commands : `history`
 

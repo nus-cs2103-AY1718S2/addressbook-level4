@@ -196,6 +196,7 @@ public class MainApp extends Application {
         } catch (IOException e) {
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
         }
+        logic.cleanUnusedResumeAndProfilePic(userPrefs.getAddressBookFilePath());
         Platform.exit();
         System.exit(0);
     }

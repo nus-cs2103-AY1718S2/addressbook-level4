@@ -27,6 +27,8 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ProfileImageUtil;
+import seedu.address.logic.parser.ResumeUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
@@ -101,8 +103,21 @@ public class EditCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
+            /*
+            if(editedPerson.getResume().value == null) {
+                if(personToEdit.getResume().value != null) {
+                    ResumeUtil.cleanUpDataFolder(personToEdit.getResume());
+                }
+            }else {
+                if (!editedPerson.getResume().value.equals(personToEdit.getResume().value)) {
+                    ResumeUtil.cleanUpDataFolder(personToEdit.getResume());
+                }
+            }
+            */
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
+            ResumeUtil.cleanUpDataFolder(editedPerson.getResume());
+            ProfileImageUtil.cleanUpDataFolder(editedPerson.getProfileImage());
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");

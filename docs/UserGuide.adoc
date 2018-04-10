@@ -105,6 +105,13 @@ Alias: `la`
 
 Sorts all persons in the address book based on alphabetical order of their full names. +
 Format: `sort`
+Alias: `so`
+
+=== Export all persons : `export`
+
+Exports all persons in the address book based to a csv file. +
+Format: `export`
+Alias: `ep`
 
 === Listing all clients tagged with one or more specific tag (union): `listtag` `Coming in v2.0`
 

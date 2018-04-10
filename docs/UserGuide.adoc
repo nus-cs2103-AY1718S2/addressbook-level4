@@ -99,7 +99,7 @@ is specified when adding a customer.
 
 |add (`a`)
 |kbd:[Ctrl+Space]
-|`add n: NAME ty: r(or c) [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
+|`add n: NAME ty: r(or c) [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] ...`
 
 |delete (`d`)
 |kbd:[Ctrl+D]
@@ -152,22 +152,32 @@ is specified when adding a customer.
 * This command adds a new `Customer` or `Runner` with the specified details.
 * A person can have any number of tags (including 0).
 * `NAME` and `TYPE` must be provided. The other details are optional.
+* The additional details after type and name can be entered in any order.
+* The start and end dates can be specified in natural language (eg. "today", "this Friday", etc).
+* Interest will be compounded weekly.
 ====
 
 *Usage examples:*
 
 ====
- add n: John Doe ty: c p: 98765432 e: johnd@example.com a: John street, block 123, #01-01
+ add ty: c n: Xiao Ming p: 88888888 e: xiao@ming.com a: W Hotel s: today d: 5 May 2018 m: 31415926535897 i: 9.71 t: richxiaoming
 
-_Adds a new `Customer` named "John Doe", with phone number "98765432", email address "johnd@example.com"
-and address "John street, block 123, #01-01"._
+_Adds a new `Customer` named "Xiao Ming", with phone number "88888888", email address "xiao@ming.com", address "W Hotel",
+and tag "richxiaoming", who borrows $31 415 926 535 897 at a weekly interest rate of 9.71% on the date this command is
+entered and is due to return the full amount on 5 May 2018._
 ====
 
 ====
- add n: Betsy Crowe ty: r t: friend e: betsycrowe@example.com a: Newgate Prison p: 1234567 t: criminal
+ add ty: c  p: 88888888 n: Xiao Ming e: xiao@ming.com s: today a: W Hotel d: 5 May 2018 m: 31415926535897 i: 9.71 t: richxiaoming
 
-_Adds a new `Runner` named "Betsy Crowe", with phone number "1234567", email address "betsycrowe@example.com"
-and address "Newgate Prison"._
+_Adds the same `Customer` as above, just with values specified in a different order._
+====
+
+====
+ add ty: r n: Ping An p: 93698369 e: pingan@houseofahlong.com a: Ang Mo Kio Police Divison HQ t: undercoverrunner t: tripleagent
+
+_Adds a new `Runner` named "Ping An", with phone number "93698369", email address "pingan@houseofahlong.com",
+address "Ang Mo Kio Police Divison HQ" and tags "undercoverrunner" and "tripleagent"._
 ====
 ***
 === Deleting a person : `delete`

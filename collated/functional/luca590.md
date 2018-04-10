@@ -7,6 +7,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -30,8 +31,8 @@ import seedu.address.model.person.Person;
  */
 public class ExportContactsCommand extends UndoableCommand {
 
+    public static final String FS = File.separator;
     public static final String SUCCESS = "Contacts successfully exported.\n";
-
     public static final String COMMAND_WORD = "export_contacts";
     public static final String COMMAND_ALIAS = "ec";
 
@@ -106,7 +107,7 @@ public class ExportContactsCommand extends UndoableCommand {
     }
 
     public Path getDefaultPath() {
-        Path defaultPath = FileSystems.getDefault().getPath("data/exportToExisting.csv");
+        Path defaultPath = FileSystems.getDefault().getPath("data" + FS + "exportToExisting.csv");
         return defaultPath;
     }
 
@@ -294,6 +295,37 @@ public final class ImportContactsCommand extends UndoableCommand {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\SortCommand.java
+``` java
+
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+
+/**
+ * SortCommand is called from AddressBookParser and implements the a sorting mechanism
+ * so that the user may sort contacts in the addressBook by name, alphabetically
+ */
+public class SortCommand extends UndoableCommand {
+    public static final String COMMAND_WORD = "sort_by_name";
+    public static final String COMMAND_ALIAS = "sort";
+
+    @Override
+    protected CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.sortAddressBookAlphabeticallyByName();
+        } catch (DuplicatePersonException e) {
+            e.printStackTrace();
+        }
+        return new CommandResult("Contacts successfully sorted alphabetically by name.");
+    }
+}
+
+```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case ImportContactsCommand.COMMAND_WORD: //import contacts from csv
@@ -309,6 +341,12 @@ public final class ImportContactsCommand extends UndoableCommand {
 
         case ExportContactsCommand.COMMAND_ALIAS:
             return new ExportContactsCommandParser().parse(arguments);
+
+        case SortCommand.COMMAND_WORD:
+            return new SortCommand();
+
+        case SortCommand.COMMAND_ALIAS:
+            return new SortCommand();
 ```
 ###### \java\seedu\address\logic\parser\ExportContactsCommandParser.java
 ``` java
@@ -374,6 +412,66 @@ public class ImportContactsCommandParser implements Parser<ImportContactsCommand
         } catch (Exception e) {
             throw new ParseException(FAILED_TO_PARSE, e);
         }
+    }
+}
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    /**
+     * This function is intended to be called from ModelManager to protect
+     * the private {@code UniquePersonList persons} variable
+     */
+    public void sortAddressBookAlphabeticallyByName() throws DuplicatePersonException {
+        //persons is UniquePersonList implements Iterable
+        //setPersons(List<Persons> ...)
+        List list = Lists.newArrayList(persons);
+        Collections.sort(list, new PersonCompare());
+        setPersons((List<Person>) list);
+
+    }
+
+```
+###### \java\seedu\address\model\Model.java
+``` java
+    /**
+     * Sorts the addressbook lexographically by users' first name
+     * @throws Exception if {@code predicate} is null.
+     */
+    void sortAddressBookAlphabeticallyByName() throws DuplicatePersonException;
+
+}
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    //============ Sorting algo ===========================================================
+    @Override
+    public void sortAddressBookAlphabeticallyByName() throws DuplicatePersonException {
+        addressBook.sortAddressBookAlphabeticallyByName();
+    }
+
+    //======================================================================================
+```
+###### \java\seedu\address\model\person\PersonCompare.java
+``` java
+
+package seedu.address.model.person;
+
+import java.util.Comparator;
+
+/**
+ * PersonCompare class to compare Persons by first name
+ */
+public class PersonCompare implements Comparator<Person> {
+
+    /**
+     * Default person comparison is by name,
+     * may modify below function to compare by Tag, Address, etc
+     * Necessary for sorting
+     * @return int will return 1 of p1 > p2
+     */
+    @Override
+    public int compare(Person p1, Person p2) {
+        return p1.getName().toString().compareTo(p2.getName().toString());
     }
 }
 ```

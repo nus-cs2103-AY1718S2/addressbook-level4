@@ -1,4 +1,28 @@
 # jlks96
+###### \java\seedu\address\commons\events\logic\CalendarGoBackwardEvent.java
+``` java
+/** Indicates the user is trying to make the calendar view go backward in time from the currently displaying date*/
+public class CalendarGoBackwardEvent extends BaseEvent {
+    public CalendarGoBackwardEvent() { }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\logic\CalendarGoForwardEvent.java
+``` java
+/** Indicates the user is trying to make the calendar view go forward in time from the currently displaying date*/
+public class CalendarGoForwardEvent extends BaseEvent {
+    public CalendarGoForwardEvent() { }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
 ###### \java\seedu\address\commons\events\logic\ZoomInEvent.java
 ``` java
 /** Indicates the user is trying to zoom in on the calendar*/
@@ -70,6 +94,45 @@ public class NewAppointmentAddedEvent extends BaseEvent {
     }
 }
 ```
+###### \java\seedu\address\commons\events\ui\MaxZoomInEvent.java
+``` java
+/** Indicates that the calendar is already zoomed in to the maximum level (showing {@code DayPage})*/
+public class MaxZoomInEvent extends BaseEvent {
+
+    public MaxZoomInEvent() { }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\MaxZoomOutEvent.java
+``` java
+/** Indicates that the calendar is already zoomed out to the maximum level (showing {@code YearPage})*/
+public class MaxZoomOutEvent extends BaseEvent {
+
+    public MaxZoomOutEvent() { }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\ZoomSuccessEvent.java
+``` java
+/** Indicates that the calendar is already zoomed in to the maximum level (showing {@code DayPage})*/
+public class ZoomSuccessEvent extends BaseEvent {
+
+    public ZoomSuccessEvent() { }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\AddAppointmentCommand.java
 ``` java
 /**
@@ -96,6 +159,8 @@ public class AddAppointmentCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New appointment added: %1$s";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the address book";
+    public static final String MESSAGE_CLASHING_APPOINTMENT =
+            "This appointment clashes with another appointment in the address book";
 
     private final Appointment toAdd;
 
@@ -115,8 +180,9 @@ public class AddAppointmentCommand extends UndoableCommand {
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateAppointmentException e) {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
+        } catch (ClashingAppointmentException e) {
+            throw new CommandException(MESSAGE_CLASHING_APPOINTMENT);
         }
-
     }
 
     @Override
@@ -135,6 +201,14 @@ public class AddAppointmentCommand extends UndoableCommand {
      */
     protected void raise(BaseEvent event) {
         EventsCenter.getInstance().post(event);
+    }
+
+    /**
+     * Registers the command object as an event handler at the {@link EventsCenter}
+     * @param handler usually {@code this}
+     */
+    protected void registerAsAnEventHandler(Object handler) {
+        EventsCenter.getInstance().registerHandler(handler);
     }
 ```
 ###### \java\seedu\address\logic\commands\DeleteAppointmentCommand.java
@@ -254,6 +328,44 @@ public class  DeleteBeforeCommand extends UndoableCommand {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\GoBackwardCommand.java
+``` java
+/**
+ * Makes the calendar view go backward in time from the currently displaying date
+ */
+public class GoBackwardCommand extends Command {
+
+    public static final String COMMAND_WORD = "gobackward";
+    public static final String COMMAND_ALIAS = "gb";
+
+    public static final String MESSAGE_SUCCESS = "Calendar view moved backward in time";
+
+    @Override
+    public CommandResult execute() {
+        raise(new CalendarGoBackwardEvent());
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+```
+###### \java\seedu\address\logic\commands\GoForwardCommand.java
+``` java
+/**
+ * Makes the calendar view go forward in time from the currently displaying date
+ */
+public class GoForwardCommand extends Command {
+
+    public static final String COMMAND_WORD = "goforward";
+    public static final String COMMAND_ALIAS = "gf";
+
+    public static final String MESSAGE_SUCCESS = "Calendar view moved forward in time";
+
+    @Override
+    public CommandResult execute() {
+        raise(new CalendarGoForwardEvent());
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\ZoomInCommand.java
 ``` java
 /**
@@ -264,11 +376,43 @@ public class ZoomInCommand extends Command {
     public static final String COMMAND_ALIAS = "zi";
 
     public static final String MESSAGE_SUCCESS = "Calendar zoomed in";
+    public static final String MESSAGE_MAX_ZOOM_IN = "The calendar is already zoomed in to the maximum level";
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private boolean receivedFeedback = false;
+    private boolean isSuccessful = false;
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
+        registerAsAnEventHandler(this);
         raise(new ZoomInEvent());
-        return new CommandResult(MESSAGE_SUCCESS);
+        while (!receivedFeedback);
+
+        if (isSuccessful) {
+            return new CommandResult(MESSAGE_SUCCESS);
+        } else {
+            throw new CommandException(MESSAGE_MAX_ZOOM_IN);
+        }
+    }
+
+    /**
+     * Handles the event where the calendar is already zoomed in to the maximum level
+     */
+    @Subscribe
+    private void handleMaxZoomInEvent(MaxZoomInEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        receivedFeedback = true;
+        isSuccessful = false;
+    }
+
+    /**
+     * Handles the event where the calendar is successfully zoomed in
+     */
+    @Subscribe
+    private void handleZoomSuccessEvent(ZoomSuccessEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        receivedFeedback = true;
+        isSuccessful = true;
     }
 }
 ```
@@ -282,11 +426,43 @@ public class ZoomOutCommand extends Command {
     public static final String COMMAND_ALIAS = "zo";
 
     public static final String MESSAGE_SUCCESS = "Calendar zoomed out";
+    public static final String MESSAGE_MAX_ZOOM_OUT = "The calendar is already zoomed out to the maximum level";
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private boolean receivedFeedback = false;
+    private boolean isSuccessful = false;
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
+        registerAsAnEventHandler(this);
         raise(new ZoomOutEvent());
-        return new CommandResult(MESSAGE_SUCCESS);
+        while (!receivedFeedback);
+
+        if (isSuccessful) {
+            return new CommandResult(MESSAGE_SUCCESS);
+        } else {
+            throw new CommandException(MESSAGE_MAX_ZOOM_OUT);
+        }
+    }
+
+    /**
+     * Handles the event where the calendar is already zoomed out to the maximum level
+     */
+    @Subscribe
+    private void handleMaxZoomOutEvent(MaxZoomOutEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        receivedFeedback = true;
+        isSuccessful = false;
+    }
+
+    /**
+     * Handles the event where the calendar is successfully zoomed in
+     */
+    @Subscribe
+    private void handleZoomSuccessEvent(ZoomSuccessEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        receivedFeedback = true;
+        isSuccessful = true;
     }
 }
 ```
@@ -329,7 +505,7 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
             Appointment appointment = new Appointment(name, date, startTime, endTime, location);
 
             return new AddAppointmentCommand(appointment);
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | java.lang.IllegalArgumentException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
     }
@@ -386,6 +562,18 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
 
         case ZoomOutCommand.COMMAND_ALIAS:
             return new ZoomOutCommand();
+
+        case GoBackwardCommand.COMMAND_WORD:
+            return new GoBackwardCommand();
+
+        case GoBackwardCommand.COMMAND_ALIAS:
+            return new GoBackwardCommand();
+
+        case GoForwardCommand.COMMAND_WORD:
+            return new GoForwardCommand();
+
+        case GoForwardCommand.COMMAND_ALIAS:
+            return new GoForwardCommand();
 ```
 ###### \java\seedu\address\logic\parser\DeleteAppointmentCommandParser.java
 ``` java
@@ -628,7 +816,8 @@ public class DeleteBeforeCommandParser implements Parser<DeleteBeforeCommand> {
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
-    public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
+    public void setAppointments(List<Appointment> appointments)
+            throws DuplicateAppointmentException, ClashingAppointmentException {
         this.appointments.setAppointments(appointments);
     }
 ```
@@ -650,8 +839,10 @@ public class DeleteBeforeCommandParser implements Parser<DeleteBeforeCommand> {
      * Adds an appointment to the address book.
      *
      * @throws DuplicateAppointmentException if an equivalent appointment already exists.
+     * @throws ClashingAppointmentException if a clashing appointment already exists.
      */
-    public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+    public void addAppointment(Appointment appointment)
+            throws DuplicateAppointmentException, ClashingAppointmentException {
         appointments.add(appointment);
     }
 
@@ -681,6 +872,8 @@ public class DeleteBeforeCommandParser implements Parser<DeleteBeforeCommand> {
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Appointment {
+    public static final String MESSAGE_TIMES_CONSTRAINTS = "Start time must be before end time";
+
     private final PersonName personName;
     private final Date date;
     private final StartTime startTime;
@@ -691,6 +884,7 @@ public class Appointment {
      * Every field must be present and not null.
      */
     public Appointment(PersonName personName, Date date, StartTime startTime, EndTime endTime, Location location) {
+        checkArgument(areValidTimes(startTime, endTime), MESSAGE_TIMES_CONSTRAINTS);
         this.personName = personName;
         this.date = date;
         this.startTime = startTime;
@@ -716,6 +910,29 @@ public class Appointment {
 
     public Location getLocation() {
         return location;
+    }
+
+    /**
+     * Checks if a given {@code startTime} is before a given {@code endTime}.
+     * @param startTime A startTime to check.
+     * @param endTime An endTime to check.
+     * @return {@code true} if a given start time is before a given end time.
+     */
+    public static boolean areValidTimes(StartTime startTime, EndTime endTime) {
+        SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
+        timeFormatter.setLenient(false);
+        java.util.Date startTimeDate;
+        java.util.Date endTimeDate;
+
+        try {
+            startTimeDate = timeFormatter.parse(startTime.time);
+            endTimeDate = timeFormatter.parse(endTime.time);
+        } catch (java.text.ParseException e) { //if fail return false
+            return false;
+        }
+        requireNonNull(startTimeDate);
+        requireNonNull(endTimeDate);
+        return startTimeDate.before(endTimeDate);
     }
 
     @Override
@@ -858,6 +1075,13 @@ public class EndTime extends Time {
  * Signals that the operation is unable to find the specified appointment.
  */
 public class AppointmentNotFoundException extends Exception {}
+```
+###### \java\seedu\address\model\appointment\exceptions\ClashingAppointmentException.java
+``` java
+/**
+ * Signals that the operation will result in clashing Appointment objects.
+ */
+public class ClashingAppointmentException extends IllegalArgumentException {}
 ```
 ###### \java\seedu\address\model\appointment\exceptions\DuplicateAppointmentException.java
 ``` java
@@ -1083,15 +1307,62 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     }
 
     /**
+     * Returns true if the list contains an appointment that clashes in time with the given argument.
+     */
+    public boolean clashesWith(Appointment toCheck) {
+        requireNonNull(toCheck);
+        if (!internalList.isEmpty()) {
+            return internalList.stream().filter(appointment -> checkClashes(appointment, toCheck)).count() > 0;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if the arguments clashes in time.
+     */
+    public boolean checkClashes(Appointment firstAppointment, Appointment secondAppointment) {
+        SimpleDateFormat timeFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        timeFormatter.setLenient(false);
+        java.util.Date firstStartTime;
+        java.util.Date firstEndTime;
+        java.util.Date secondStartTime;
+        java.util.Date secondEndTime;
+
+        try {
+            firstStartTime = timeFormatter.parse(
+                    firstAppointment.getDate().date + " " + firstAppointment.getStartTime().time);
+            firstEndTime = timeFormatter.parse(
+                    firstAppointment.getDate().date + " " + firstAppointment.getEndTime().time);
+            secondStartTime = timeFormatter.parse(
+                    secondAppointment.getDate().date + " " + secondAppointment.getStartTime().time);
+            secondEndTime = timeFormatter.parse(
+                    secondAppointment.getDate().date + " " + secondAppointment.getEndTime().time);
+        } catch (ParseException e) { //this should not happen
+            return false;
+        }
+        if (firstStartTime.compareTo(secondEndTime) < 0 && secondStartTime.compareTo(firstEndTime) < 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Adds a appointment to the list.
      *
      * @throws DuplicateAppointmentException if the appointment to add is a duplicate of an existing appointment
      * in the list.
+     * @throws ClashingAppointmentException if the appointment to add clashes with an existing appointment
+     * in the list.
      */
-    public void add(Appointment toAdd) throws DuplicateAppointmentException {
+    public void add(Appointment toAdd) throws DuplicateAppointmentException, ClashingAppointmentException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
             throw new DuplicateAppointmentException();
+        }
+        if (clashesWith(toAdd)) {
+            throw new ClashingAppointmentException();
         }
         internalList.add(toAdd);
     }
@@ -1114,7 +1385,8 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         this.internalList.setAll(replacement.internalList);
     }
 
-    public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
+    public void setAppointments(List<Appointment> appointments)
+            throws DuplicateAppointmentException, ClashingAppointmentException {
         requireAllNonNull(appointments);
         final UniqueAppointmentList replacement = new UniqueAppointmentList();
         for (final Appointment appointment : appointments) {
@@ -1154,7 +1426,7 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     void deleteAppointment(Appointment appointment) throws AppointmentNotFoundException;
 
     /** Adds the given appointment */
-    void addAppointment(Appointment appointment) throws DuplicateAppointmentException;
+    void addAppointment(Appointment appointment) throws DuplicateAppointmentException, ClashingAppointmentException;
 
     /** Returns an unmodifiable view of the filtered appointment list */
     ObservableList<Appointment> getFilteredAppointmentList();
@@ -1196,7 +1468,8 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     }
 
     @Override
-    public synchronized void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+    public synchronized void addAppointment(Appointment appointment)
+            throws DuplicateAppointmentException, ClashingAppointmentException {
         addressBook.addAppointment(appointment);
         updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
         indicateAppointmentAdded(appointment);
@@ -1400,6 +1673,99 @@ public class UniqueTagListContainsTagsPredicate  implements Predicate<Person> {
 
 }
 ```
+###### \java\seedu\address\model\util\SampleDataUtil.java
+``` java
+            new Person(new Name("Michelle Yeoh"), new Phone("87098807"), new Email("michelleyeoh@example.com"),
+                new Address("Blk 30 High Street 29, #06-40"), new DateAdded("02/02/2018"),
+                getTagSet("client", "friend")),
+            new Person(new Name("Damien Yu"), new Phone("99274458"), new Email("damienyu@example.com"),
+                new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), new DateAdded("04/01/2018"),
+                getTagSet("nonclient", "friend")),
+            new Person(new Name("Dan Brown"), new Phone("93340283"), new Email("dan@example.com"),
+                new Address("Blk 11 Honalulu Street 74, #11-04"), new DateAdded("15/02/2018"),
+                getTagSet("nonclient")),
+            new Person(new Name("Howard Sern"), new Phone("92431282"), new Email("howard@example.com"),
+                new Address("Blk 436 Lollipop Street 26, #16-43"), new DateAdded("01/03/2018"),
+                getTagSet("nonclient")),
+            new Person(new Name("Yusof Ibrahim"), new Phone("92202021"), new Email("yusof@example.com"),
+                new Address("Blk 47 Tampines Street 20, #17-35"), new DateAdded("31/08/2017"),
+                getTagSet("nonclient")),
+            new Person(new Name("Chris Hayman"), new Phone("91224417"), new Email("hayman@example.com"),
+                new Address("Blk 45 Danver Road, #11-31"), new DateAdded("25/10/2017"),
+                getTagSet("client", "owesmoney", "friend")),
+            new Person(new Name("Han Some"), new Phone("92423021"), new Email("hs@example.com"),
+                new Address("Blk 987 Tampines Street 20, #17-35"), new DateAdded("31/08/2017"),
+                getTagSet("nonclient")),
+            new Person(new Name("Krishnan"), new Phone("92214417"), new Email("kk@example.com"),
+                new Address("Blk 100 Aljunied Street 85, #11-31"), new DateAdded("25/10/2017"),
+                getTagSet("client", "owesmoney")),
+            new Person(new Name("Michelle Lim"), new Phone("82391207"), new Email("michelle@example.com"),
+                new Address("Blk 30 Low Street, #06-40"), new DateAdded("02/03/2018"),
+                getTagSet("client", "friend")),
+            new Person(new Name("Damien Siao"), new Phone("91274458"), new Email("siaod@example.com"),
+                new Address("Blk 30 Park Lane, #07-18"), new DateAdded("04/01/2018"),
+                getTagSet("nonclient", "friend")),
+            new Person(new Name("Danny Lim"), new Phone("9334176"), new Email("danny@example.com"),
+                new Address("Blk 11 Honalulu Street 74, #11-04"), new DateAdded("15/02/2018"),
+                getTagSet("nonclient")),
+            new Person(new Name("Dr Ananda"), new Phone("92432342"), new Email("watislife@example.com"),
+                new Address("12 Golden Street"), new DateAdded("01/03/2018"),
+                getTagSet("nonclient")),
+            new Person(new Name("Yusof Ishak"), new Phone("92215121"), new Email("yusofishak@example.com"),
+                new Address("Blk 47 Tampines Road, #17-12"), new DateAdded("31/08/2017"),
+                getTagSet("nonclient")),
+            new Person(new Name("Cayman Hugh"), new Phone("91224127"), new Email("cayman@example.com"),
+                new Address("Blk 45 New York Road, #11-31"), new DateAdded("25/10/2017"),
+                getTagSet("client", "friend")),
+```
+###### \java\seedu\address\model\util\SampleDataUtil.java
+``` java
+    public static Appointment[] getSampleAppointments() {
+        return new Appointment[] {
+            new Appointment(new PersonName("Alex Yeoh"), new Date("15/03/2018"), new StartTime("10:30"),
+                    new EndTime("11:30"), new Location("Kent Ridge MRT")),
+            new Appointment(new PersonName("Bernice Yu"), new Date("25/03/2018"), new StartTime("10:30"),
+                    new EndTime("11:30"), new Location("Buona Vista MRT")),
+            new Appointment(new PersonName("Charlotte Oliveiro"), new Date("31/03/2018"), new StartTime("10:30"),
+                    new EndTime("11:30"), new Location("Bukit Panjang MRT")),
+            new Appointment(new PersonName("David Li"), new Date("01/04/2018"), new StartTime("10:30"),
+                    new EndTime("11:30"), new Location("Beauty World MRT")),
+            new Appointment(new PersonName("Irfan Ibrahim"), new Date("02/04/2018"), new StartTime("10:30"),
+                    new EndTime("11:30"), new Location("Paya Lebar MRT")),
+            new Appointment(new PersonName("Roy Balakrishnan"), new Date("03/04/2018"), new StartTime("10:30"),
+                    new EndTime("11:30"), new Location("Bugis MRT")),
+            new Appointment(new PersonName("Alice Yeoh"), new Date("15/04/2018"), new StartTime("10:30"),
+                    new EndTime("11:30"), new Location("Kent Ridge MRT")),
+            new Appointment(new PersonName("Bernard Yu"), new Date("15/04/2018"), new StartTime("11:30"),
+                    new EndTime("12:30"), new Location("Buona Vista MRT")),
+            new Appointment(new PersonName("Charlie Oliver"), new Date("30/04/2018"), new StartTime("10:30"),
+                    new EndTime("11:30"), new Location("Bukit Panjang MRT")),
+            new Appointment(new PersonName("David Sim"), new Date("11/04/2018"), new StartTime("10:30"),
+                    new EndTime("11:30"), new Location("Beauty World MRT")),
+            new Appointment(new PersonName("Irfan Ibrahim"), new Date("11/04/2018"), new StartTime("11:30"),
+                    new EndTime("12:30"), new Location("Paya Lebar MRT")),
+            new Appointment(new PersonName("Ranald Lim"), new Date("03/04/2018"), new StartTime("15:30"),
+                    new EndTime("16:30"), new Location("Bugis MRT")),
+            new Appointment(new PersonName("Yusof Ibrahim"), new Date("02/05/2018"), new StartTime("12:30"),
+                    new EndTime("13:30"), new Location("Paya Lebar MRT")),
+            new Appointment(new PersonName("Ramli Ishak"), new Date("12/04/2018"), new StartTime("10:30"),
+                    new EndTime("11:30"), new Location("Bugis MRT")),
+            new Appointment(new PersonName("Alex Yeoh"), new Date("12/04/2018"), new StartTime("11:30"),
+                    new EndTime("12:30"), new Location("Kent Ridge MRT")),
+            new Appointment(new PersonName("Bernice Hao"), new Date("12/04/2018"), new StartTime("12:30"),
+                    new EndTime("13:30"), new Location("Buona Vista MRT")),
+            new Appointment(new PersonName("Charlotte Oliveiro"), new Date("29/03/2018"), new StartTime("10:30"),
+                    new EndTime("11:30"), new Location("Bukit Panjang MRT")),
+            new Appointment(new PersonName("Dave Lee"), new Date("01/04/2018"), new StartTime("12:30"),
+                    new EndTime("13:30"), new Location("Beauty World MRT")),
+            new Appointment(new PersonName("Chris Chrissy"), new Date("11/04/2018"), new StartTime("15:30"),
+                    new EndTime("16:30"), new Location("Paya Lebar MRT")),
+            new Appointment(new PersonName("Leonard Highman"), new Date("15/04/2018"), new StartTime("14:30"),
+                    new EndTime("15:30"), new Location("Bugis MRT")),
+
+        };
+    }
+```
 ###### \java\seedu\address\storage\XmlAdaptedAppointment.java
 ``` java
 /**
@@ -1564,6 +1930,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
      */
     private void initializeCalendar() {
         calendar = new Calendar("Appointments");
+        calendar.setStyle(Calendar.Style.STYLE2);
     }
 
     /**
@@ -1577,6 +1944,11 @@ public class CalendarPanel extends UiPart<CalendarView> {
 
         calendarView.setRequestedTime(LocalTime.now());
         calendarView.showMonthPage();
+        calendarView.setShowPageToolBarControls(false);
+        calendarView.setShowAddCalendarButton(false);
+        calendarView.setShowPrintButton(false);
+        calendarView.setShowSourceTrayButton(false);
+        calendarView.setShowSearchField(false);
         pageBase = calendarView.getSelectedPage();
     }
 
@@ -1637,9 +2009,15 @@ public class CalendarPanel extends UiPart<CalendarView> {
     }
 
     /**
-     * Zooms in on the calendar if possible
+     * Zooms in on the calendar if possible and provides feedback to the {@code ZoomInCommand}
      */
     private void zoomIn() {
+        if (pageBase.equals(calendarView.getDayPage())) {
+            raise(new MaxZoomInEvent());
+        } else {
+            raise(new ZoomSuccessEvent());
+        }
+
         if (pageBase.equals(calendarView.getYearPage())) {
             calendarView.showMonthPage();
         } else if (pageBase.equals(calendarView.getMonthPage())) {
@@ -1660,9 +2038,15 @@ public class CalendarPanel extends UiPart<CalendarView> {
     }
 
     /**
-     * Zooms out on the calendar if possible
+     * Zooms out on the calendar if possible and provides feedback to the {@code ZoomOutCommand}
      */
     private void zoomOut() {
+        if (pageBase.equals(calendarView.getYearPage())) {
+            raise(new MaxZoomOutEvent());
+        } else {
+            raise(new ZoomSuccessEvent());
+        }
+
         if (pageBase.equals(calendarView.getDayPage())) {
             calendarView.showWeekPage();
         } else if (pageBase.equals(calendarView.getWeekPage())) {
@@ -1671,6 +2055,26 @@ public class CalendarPanel extends UiPart<CalendarView> {
             calendarView.showYearPage();
         }
         pageBase = calendarView.getSelectedPage();
+    }
+
+    /**
+     * Handles the event where user tries to make the calendar view go backward in time from the currently displaying
+     * date
+     */
+    @Subscribe
+    private void handleCalendarGoBackwardEvent(CalendarGoBackwardEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        calendarView.getSelectedPage().goBack();
+    }
+
+    /**
+     * Handles the event where user tries to make the calendar view go forward in time from the currently displaying
+     * date
+     */
+    @Subscribe
+    private void handleCalendarGoForwardEvent(CalendarGoForwardEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        calendarView.getSelectedPage().goForward();
     }
 
     /**

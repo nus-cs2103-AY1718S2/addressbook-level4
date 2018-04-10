@@ -1,4 +1,11 @@
 # luca590
+###### \java\seedu\address\logic\commands\AddCommandTest.java
+``` java
+        @Override
+        public void sortAddressBookAlphabeticallyByName() throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+```
 ###### \java\seedu\address\logic\commands\ExportContactsCommandTest.java
 ``` java
 
@@ -7,6 +14,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.nio.file.Path;
@@ -23,9 +31,9 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.PersonBuilder;
 
 public class ExportContactsCommandTest {
-
-    public static final String VALID_NEW_FILE_PATH = "data/exportToNew.csv";
-    public static final String VALID_EXISTING_FILE_PATH = "data/exportToExisting.csv";
+    public static final String FS = File.separator;
+    public static final String VALID_NEW_FILE_PATH = "data" + FS + "exportToNew.csv";
+    public static final String VALID_EXISTING_FILE_PATH = "data" + FS + "exportToExisting.csv";
 
     //featureUnderTest_testScenario_expectedBehavior()
 
@@ -39,7 +47,7 @@ public class ExportContactsCommandTest {
         ExportContactsCommand a = eccp.parse("");
         ExportContactsCommand b = eccp.parse("exampleFile.csv");
 
-        assertEquals(a.getWriteToPath().toString(), "data/exportToExisting.csv");
+        assertEquals(a.getWriteToPath().toString(), "data" + FS + "exportToExisting.csv");
         assertEquals(b.getWriteToPath().toString(), "exampleFile.csv");
     }
 
@@ -70,7 +78,7 @@ public class ExportContactsCommandTest {
     @Test
     public void getDefaultPath_callWithoutArgs_returnsCorrectString() throws Exception {
         Path x = exportDefaultPath.getDefaultPath();
-        assertEquals(x.toString(), "data/exportToExisting.csv");
+        assertEquals(x.toString(), "data" + FS + "exportToExisting.csv");
     }
 
     @Test
@@ -96,7 +104,7 @@ public class ExportContactsCommandTest {
     public void getDefaultPath_noPathGiven_throwsNoExceptionsAndReturnsPath() {
         Path path = null;
         path = exportDefaultPath.getDefaultPath();
-        assertEquals(path.toString(), "data/exportToExisting.csv");
+        assertEquals(path.toString(), "data" + FS + "exportToExisting.csv");
     }
 
     @Test
@@ -166,10 +174,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -186,10 +190,8 @@ import seedu.address.logic.parser.FindCommandParser;
 import seedu.address.logic.parser.ImportContactsCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ModelManager;
-import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 
@@ -295,16 +297,6 @@ public class ImportContactsCommandTest {
 
         requireNonNull(personToAdd);
 
-        String name;
-        String email;
-        String phone;
-        String address;
-        Set<Tag> tagSet = new HashSet<>();
-
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date();
-        DateAdded addDate;
-
         //initialize UniquePersonList for test case
         UniquePersonList upl = new UniquePersonList();
 
@@ -314,7 +306,6 @@ public class ImportContactsCommandTest {
             throw new CommandException("Failed to add person in ImportContactsCommand, execute()\n"
                     + e);
         }
-
     }
 
     @Test
@@ -365,4 +356,216 @@ public class ImportContactsCommandTest {
                 + "ed@edible.com Address: 909 grey st ");
     }
 }
+```
+###### \java\seedu\address\logic\commands\SortCommandTest.java
+``` java
+
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Iterator;
+
+import org.junit.Test;
+
+import javafx.collections.ObservableList;
+
+import seedu.address.logic.parser.AddressBookParser;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Person;
+import seedu.address.testutil.PersonBuilder;
+
+public class SortCommandTest {
+
+    //featureUnderTest_testScenario_expectedBehavior()
+
+    /**
+     * helper function to print people given model parameter
+     * useful for debugging
+     */
+    public void printPeople(Model printModel) throws Exception {
+        ReadOnlyAddressBook myBook = printModel.getAddressBook();
+        ObservableList<Person> myPersonList = myBook.getPersonList();
+        Iterator personIterator = myPersonList.iterator();
+
+        Person p;
+        while (personIterator.hasNext()) {
+            p = (Person) personIterator.next();
+            System.out.println(p.getName() + ", " + p.getEmail() + ", "
+                    + p.getAddress() + ", " + p.getPhone());
+        }
+    }
+
+    /**
+     * helper function to check if PersonList in model is sorted
+     * this function is contingent on importing "data/Test_contacts_unsorted.csv"
+     * and not another file
+     */
+    public boolean checkSorted(Model myModel) {
+        boolean isSorted = true;
+        requireNonNull(myModel);
+        Object[] parray = myModel.getFilteredPersonList().toArray();
+
+        if (parray.length < 1) {
+            return false;
+        }
+
+        if (!parray[0].toString().substring(0, 1).equals("A")) {
+            isSorted = false;
+        }
+        if (!parray[1].toString().substring(0, 1).equals("B")) {
+            isSorted = false;
+        }
+        if (!parray[2].toString().substring(0, 1).equals("C")) {
+            isSorted = false;
+        }
+
+        return isSorted;
+    }
+
+    @Test
+    public void executeUndoableCommand_sortImportedPersons_personsCorrectlySorted() throws Exception {
+        PersonBuilder pb = new PersonBuilder();
+        pb.withName("Aal");
+        Person p1 = pb.build();
+        pb.withName("Ccar");
+        Person p2 = pb.build();
+        pb.withName("Bbob");
+        Person p3 = pb.build();
+
+        SortCommand sc = new SortCommand();
+        sc.model = new ModelManager();
+
+        sc.model.addPerson(p1);
+        sc.model.addPerson(p2);
+        sc.model.addPerson(p3);
+
+        assertFalse(checkSorted(sc.model));
+        CommandResult cr = sc.executeUndoableCommand();
+        assertTrue(checkSorted(sc.model));
+    }
+
+    @Test
+    public void callSortParser_createAddressBookParser_returnSortCommand() throws ParseException {
+        AddressBookParser abp = new AddressBookParser();
+        Command sc1 = abp.parseCommand("sort");
+        Command sc2 = abp.parseCommand("sort_by_name");
+
+        requireNonNull(sc1);
+        requireNonNull(sc2);
+    }
+
+}
+```
+###### \java\seedu\address\model\AddressBookTest.java
+``` java
+    /**
+     * helper function to print contacts in the addressBook
+     * useful for debugging!
+     */
+    public void printAddressBook() {
+        ObservableList<Person> myPersonList = addressBook.getPersonList();
+        Iterator personIterator = myPersonList.iterator();
+
+        Person p;
+        while (personIterator.hasNext()) {
+            p = (Person) personIterator.next();
+            System.out.println(p.getName() + ", " + p.getEmail() + ", "
+                    + p.getAddress() + ", " + p.getPhone());
+        }
+    }
+```
+###### \java\seedu\address\model\AddressBookTest.java
+``` java
+    @Test public void sortAddressBookAlphabeticallByName_simpleFunctionCallFixedData_correctSort() throws Exception {
+        PersonBuilder pb = new PersonBuilder();
+        Person p1 = pb.build();
+        pb.withName("Car");
+        Person p2 = pb.build();
+        pb.withName("Bob");
+        Person p3 = pb.build();
+
+        addressBook.addPerson(p1);
+        addressBook.addPerson(p2);
+        addressBook.addPerson(p3);
+
+        addressBook.sortAddressBookAlphabeticallyByName();
+
+        Object[] parray = addressBook.getPersonList().toArray();
+        assertTrue(parray.length > 0);
+
+        //substrings are used in testing to avoid the Date Added parameter
+        assertEquals(parray[0].toString().substring(0, 5), "Alice");
+        assertEquals(parray[1].toString().substring(0, 3), "Bob");
+        assertEquals(parray[2].toString().substring(0, 3), "Car");
+
+    }
+```
+###### \java\seedu\address\model\ModelManagerTest.java
+``` java
+    @Test
+    public void fromModelManagerSortAddressBookAlphabeticallyByName_simpleFunctionCallWithValidData_sortedList()
+            throws DuplicatePersonException {
+        ModelManager testModel = new ModelManager();
+
+        PersonBuilder pb = new PersonBuilder();
+        Person p1 = pb.build();
+        testModel.addPerson(p1);
+
+        pb.withName("Car");
+        Person p2 = pb.build();
+        testModel.addPerson(p2);
+
+        pb.withName("Bob");
+        Person p3 = pb.build();
+        testModel.addPerson(p3);
+
+
+        testModel.sortAddressBookAlphabeticallyByName();
+
+        Object[] parray = testModel.getFilteredPersonList().toArray();
+        assertTrue(parray.length > 0);
+
+        //substrings are used in testing to avoid the Date Added parameter
+        assertEquals(parray[0].toString().substring(0, 5), "Alice");
+        assertEquals(parray[1].toString().substring(0, 3), "Bob");
+        assertEquals(parray[2].toString().substring(0, 3), "Car");
+    }
+    //@@ author
+
+    @Test
+    public void equals() throws DuplicateAppointmentException, AppointmentNotFoundException {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON)
+                .withAppointment(ALICE_APPT).withAppointment(BENSON_APPT).build();
+        AddressBook differentAddressBook = new AddressBook();
+        UserPrefs userPrefs = new UserPrefs();
+
+        // same values -> returns true
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        ModelManager modelManagerCopy = new ModelManager(addressBook, userPrefs);
+        assertTrue(modelManager.equals(modelManagerCopy));
+
+        // same object -> returns true
+        assertTrue(modelManager.equals(modelManager));
+
+        // null -> returns false
+        assertFalse(modelManager.equals(null));
+
+        // different types -> returns false
+        assertFalse(modelManager.equals(5));
+
+        // different addressBook -> returns false
+        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, userPrefs)));
+
+        // different filteredPersonList -> returns false
+        String[] keywords = ALICE.getName().fullName.split("\\s+");
+        modelManager.updateFilteredPersonList(new NameContainsFullKeywordsPredicate(Arrays.asList(keywords)));
+        assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
+
 ```

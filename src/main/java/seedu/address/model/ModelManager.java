@@ -12,12 +12,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.logic.GetEmployeesRequestEvent;
 import seedu.address.commons.events.logic.RequestToDeleteNotificationEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.AddressBookPasswordChangedEvent;
 import seedu.address.commons.events.model.NotificationAddedEvent;
 import seedu.address.commons.events.model.NotificationDeletedEvent;
+import seedu.address.commons.events.model.ReturnedEmployeesEvent;
 import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.notification.exceptions.TimetableEntryNotFoundException;
@@ -210,5 +213,10 @@ public class ModelManager extends ComponentManager implements Model {
             indicateNotificationAdded(n);
         }
     }
-    //@@author
+
+    //@@author crizyli
+    @Subscribe
+    public void handleGetEmployeesRequestEvent(GetEmployeesRequestEvent event) {
+        EventsCenter.getInstance().post(new ReturnedEmployeesEvent(addressBook.getPersonList()));
+    }
 }

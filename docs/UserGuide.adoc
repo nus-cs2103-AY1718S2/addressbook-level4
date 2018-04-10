@@ -278,6 +278,20 @@ Edits the phone number and email address of the 1^st^ employee to be `91234567` 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2^nd^ employee to be `Betsy Crower` and clears all existing tags.
 
+=== Exporting the employees : `export`
+
+Exports current employees in ET to a csv(Excel) file named "employees.csv" inside data folder. +
+Format: `export`
+
+****
+* Make sure that the employees.csv is not open in your computer before excute `export`.
+****
+
+Examples:
+
+* `export` +
+Current employees in ET will be exported.
+
 === Rating an employee : `rate`
 
 Updates the rating of an existing employee in Employees Tracker. +

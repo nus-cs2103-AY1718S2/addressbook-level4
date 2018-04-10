@@ -12,6 +12,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.logic.GetEmployeesRequestEvent;
+import seedu.address.commons.events.model.ReturnedEmployeesEvent;
 import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.notification.exceptions.TimetableEntryNotFoundException;
@@ -23,6 +26,8 @@ import seedu.address.model.photo.Photo;
 import seedu.address.model.photo.UniquePhotoList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+
+import com.google.common.eventbus.Subscribe;
 
 /**
  * Wraps all data at the address-book level
@@ -265,6 +270,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ObservableList<Photo> getPhotoList() {
         return photos.asObservableList();
     }
+    //@@author
 
     @Override
     public LinkedList<Notification> getNotificationsList() {

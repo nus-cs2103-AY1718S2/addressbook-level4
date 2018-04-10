@@ -289,8 +289,8 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
     class CallbackHandler extends AbstractHandler {
 
         @Override
-        public void handle(String target, HttpServletRequest request, HttpServletResponse response,
-                           int dispatch) throws IOException {
+        public void handle(String target, HttpServletRequest request, HttpServletResponse response, int dispatch)
+                throws IOException {
             if (!CALLBACK_PATH.equals(target)) {
                 return;
             }
@@ -315,6 +315,12 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
             response.flushBuffer();
         }
 
+        /**
+         * Produces the landing html page after user accept the authorization request
+         *
+         * @param response
+         * @throws IOException
+         */
         private void writeLandingHtml(HttpServletResponse response) throws IOException {
             response.setStatus(HttpServletResponse.SC_OK);
             response.setContentType("text/html");

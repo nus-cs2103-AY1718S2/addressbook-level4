@@ -1,6 +1,5 @@
 package seedu.address.model;
 
-import java.io.IOException;
 import java.util.Properties;
 
 import javax.mail.MessagingException;
@@ -23,6 +22,8 @@ public class GmailMessage {
     private static String bodyText;
     private static String receiver;
 
+    private static final String SENDER_EMAIL = "me"; //unique identifier recognized by Google
+
     public GmailMessage(String receiver, String subject, String bodyText) {
         GmailClient client = GmailClient.getInstance();
         service = client.getGmailService();
@@ -32,10 +33,8 @@ public class GmailMessage {
         this.bodyText = bodyText;
 
         try {
-            emailContent = createEmailContent(receiver, getSenderEmail(), subject, bodyText);
+            emailContent = createEmailContent(receiver, SENDER_EMAIL, subject, bodyText);
         } catch (MessagingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -67,15 +66,6 @@ public class GmailMessage {
         emailContent.setSubject(subject);
         emailContent.setContent(bodyText, "text/html; charset=utf-8");
         return emailContent;
-    }
-
-    /**
-     * Get the email address of the authenticated user.
-     * @return String of the email address
-     * @throws IOException
-     */
-    private static String getSenderEmail() throws IOException {
-        return service.users().getProfile("me").execute().getEmailAddress();
     }
 
     public static MimeMessage getEmailContent() {

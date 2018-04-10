@@ -108,6 +108,9 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD: case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
 
+        case ExportPersonCommand.COMMAND_WORD: case ExportPersonCommand.COMMAND_ALIAS:
+            return new ExportPersonCommand();
+
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }

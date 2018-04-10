@@ -64,8 +64,8 @@ public class FindCommandTest {
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
-    //TODO:@Test
-    private void execute_multipleKeywords_multiplePersonsFound() {
+    @Test
+    public void execute_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_ACTIVITY_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("CS2101");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ASSIGNMENT1, QUIZ, EXAM1));

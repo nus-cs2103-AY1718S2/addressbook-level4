@@ -46,7 +46,7 @@ public class TaskCommandParser implements Parser<TaskCommand> {
             Optional<Remark> optionalRemark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK));
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Task task;
-            if(optionalRemark.isPresent()) {
+            if (optionalRemark.isPresent()) {
                 task = new Task(name, datetime, optionalRemark.get(), tagList);
             } else {
                 task = new Task(name, datetime, null, tagList);

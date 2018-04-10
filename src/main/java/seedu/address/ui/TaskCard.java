@@ -41,7 +41,7 @@ public class TaskCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(this.task.getName().fullName);
         dateTime.setText(getDisplayedDateTime(this.task));
-        if(this.task.getRemark() != null) {
+        if (this.task.getRemark() != null) {
             remark.setText(this.task.getRemark().value);
         } else {
             remark.setVisible(false);

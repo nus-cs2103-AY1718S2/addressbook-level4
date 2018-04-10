@@ -56,7 +56,7 @@ public abstract class XmlAdaptedActivity {
     public XmlAdaptedActivity(Activity source) {
         name = source.getName().fullName;
         dateTime = source.getDateTime().toString();
-        if(source.getRemark() != null) {
+        if (source.getRemark() != null) {
             remark = source.getRemark().value;
         }
         tagged = new ArrayList<>();

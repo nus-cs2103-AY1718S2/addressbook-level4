@@ -72,7 +72,7 @@ public class XmlAdaptedTask extends XmlAdaptedActivity {
         final DateTime dateTime = new DateTime(this.dateTime);
 
         final Remark remark;
-        if(this.remark == null) {
+        if (this.remark == null) {
             remark = null;
         } else if (!Remark.isValidRemark(this.remark)) {
             throw new IllegalValueException(Remark.MESSAGE_REMARK_CONSTRAINTS);

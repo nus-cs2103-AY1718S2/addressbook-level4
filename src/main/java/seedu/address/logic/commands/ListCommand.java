@@ -36,7 +36,7 @@ public class ListCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        //model.updateFilteredActivityList(Model.PREDICATE_SHOW_ALL_ACTIVITY);
+        model.updateFilteredActivityList(Model.PREDICATE_SHOW_ALL_ACTIVITY);
 
         if (commandRequest == null)  {
             EventsCenter.getInstance().post(new ShowActivityRequestEvent());

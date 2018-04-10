@@ -95,7 +95,7 @@ public class RecordList {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         for (int i = 0; i < numRecord; i++) {
-            builder.append("Index: ")
+            builder.append("Record number: ")
                     .append((i + 1) + " ")
                     .append(recordList.get(i).toString())
                     .append("\n");

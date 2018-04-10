@@ -67,7 +67,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedStudent);
 
-        /* Case: undo editing the last student in the list -> last student restored */
+        /* Case: undo editing the last student in the list -> last student restored. */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
@@ -123,7 +123,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
          */
         showAllStudents();
         index = INDEX_FIRST;
-        selectStudent(index);
+        //selectStudent(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
@@ -252,7 +252,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         if (expectedSelectedCardIndex != null) {
-            // assertSelectedCardChanged(expectedSelectedCardIndex);
+            //assertSelectedCardChanged(expectedSelectedCardIndex);
         } else {
             assertSelectedCardUnchanged();
         }

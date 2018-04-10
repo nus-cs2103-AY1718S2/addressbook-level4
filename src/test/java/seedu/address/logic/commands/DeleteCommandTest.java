@@ -8,8 +8,8 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.showStudentAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_STUDENT;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_STUDENT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalStudents.getTypicalAddressBook;
 
 import org.junit.Test;
@@ -35,8 +35,8 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
-        Student studentToDelete = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_STUDENT);
+        Student studentToDelete = model.getFilteredStudentList().get(INDEX_FIRST.getZeroBased());
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_STUDENT_SUCCESS, studentToDelete);
 
@@ -56,10 +56,10 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() throws Exception {
-        showStudentAtIndex(model, INDEX_FIRST_STUDENT);
+        showStudentAtIndex(model, INDEX_FIRST);
 
-        Student studentToDelete = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_STUDENT);
+        Student studentToDelete = model.getFilteredStudentList().get(INDEX_FIRST.getZeroBased());
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_STUDENT_SUCCESS, studentToDelete);
 
@@ -72,9 +72,9 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showStudentAtIndex(model, INDEX_FIRST_STUDENT);
+        showStudentAtIndex(model, INDEX_FIRST);
 
-        Index outOfBoundIndex = INDEX_SECOND_STUDENT;
+        Index outOfBoundIndex = INDEX_SECOND;
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getStudentList().size());
 
@@ -88,8 +88,8 @@ public class DeleteCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Student studentToDelete = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_STUDENT);
+        Student studentToDelete = model.getFilteredStudentList().get(INDEX_FIRST.getZeroBased());
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST);
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), new Schedule());
 
         // delete -> first student deleted
@@ -132,11 +132,11 @@ public class DeleteCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_STUDENT);
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST);
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), new Schedule());
 
-        showStudentAtIndex(model, INDEX_SECOND_STUDENT);
-        Student studentToDelete = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
+        showStudentAtIndex(model, INDEX_SECOND);
+        Student studentToDelete = model.getFilteredStudentList().get(INDEX_FIRST.getZeroBased());
         // delete -> deletes second student in unfiltered student list / first student in filtered student list
         deleteCommand.execute();
         undoRedoStack.push(deleteCommand);
@@ -145,21 +145,21 @@ public class DeleteCommandTest {
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         expectedModel.deleteStudent(studentToDelete);
-        assertNotEquals(studentToDelete, model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased()));
+        assertNotEquals(studentToDelete, model.getFilteredStudentList().get(INDEX_FIRST.getZeroBased()));
         // redo -> deletes same second student in unfiltered student list
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void equals() throws Exception {
-        DeleteCommand deleteFirstCommand = prepareCommand(INDEX_FIRST_STUDENT);
-        DeleteCommand deleteSecondCommand = prepareCommand(INDEX_SECOND_STUDENT);
+        DeleteCommand deleteFirstCommand = prepareCommand(INDEX_FIRST);
+        DeleteCommand deleteSecondCommand = prepareCommand(INDEX_SECOND);
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteCommand deleteFirstCommandCopy = prepareCommand(INDEX_FIRST_STUDENT);
+        DeleteCommand deleteFirstCommandCopy = prepareCommand(INDEX_FIRST);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // one command preprocessed when previously equal -> returns false

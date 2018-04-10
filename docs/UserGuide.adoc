@@ -103,6 +103,9 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pl/PROGRAMMING_LAN
 * You can remove all the student's tags by typing `t/` without specifying any tags after it.
 ****
 
+[NOTE]
+The `edit` command currently does not support editing of student's dashboard.
+
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
@@ -154,6 +157,7 @@ Returns `John Doe`
 * `findTag friends owesMoney` +
 Returns any student having tags `friends`, `owesMoney`, i.e. `John Doe` and `Betsy`
 
+// tag::favUnfav[]
 === Adding a student to favourites : `fav`
 
 Adds an existing student in the address book to your favourites. +
@@ -180,7 +184,7 @@ Format: `unfav INDEX`
 
 ****
 * Removes the student at specified `INDEX` from your favourites.
-* The index referes to the index number in the most recent listing.
+* The index refers to the index number in the most recent listing.
 ****
 
 Examples:
@@ -191,7 +195,9 @@ Removes the 2nd student in the address book from favourites.
 * `find Betsey` +
 `unfav 1` +
 Removes the 1st student in the results of the `find` command from favourites
+// end::favUnfav[]
 
+// tag::dashboard[]
 === Show the dashboard of a student: `showDB`
 
 Shows the dashboard of an existing student in the address book. +
@@ -204,7 +210,7 @@ Format: `showDB INDEX`
 ****
 
 [TIP]
-A dashboard provides at-a-glance view of your student's progress. Each dashboard contains a list of milestones and tasks that you can set for your student.
+A dashboard provides an at-a-glance view of your student's progress. Each dashboard contains a list of milestones and tasks that you can set for your student.
 
 Examples:
 
@@ -218,13 +224,13 @@ Shows the dashboard of the 1st student the favourites list.
 === Add a milestone to a student's dashboard: `addMS`
 
 Adds a milestone to the dashboard of an existing student in the address book. +
-Format: `addMS i/STUDENT_INDEX d/DUE_DATE o/DESCRIPTION`
+Format: `addMS i/STUDENT_INDEX d/MILESTONE_DUE_DATE o/DESCRIPTION_OF_MILESTONE`
 
 ****
 * Adds a milestone to the dashboard of a student at the specified `STUDENT_INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
-* The due date must be in this format: *DD/MM/YYYY HH:MM* where HH:MM is in 24-hour time notation
+* The milestone due date must be in this format: *DD/MM/YYYY HH:MM* where HH:MM is in 24-hour time notation
 ****
 
 [TIP]
@@ -263,12 +269,12 @@ Deletes the 4th milestone from the dashboard of the 3rd student in the results o
 === Add a task to a milestone: `addTask`
 
 Adds a task to an existing milestone in a dashboard. +
-Format: `addTask i/STUDENT_INDEX m/MILESTONE_INDEX n/NAME o/DESCRIPTION`
+Format: `addTask i/STUDENT_INDEX m/MILESTONE_INDEX n/NAME_OF_TASK o/DESCRIPTION_OF_TASK`
 
 ****
 * Adds a task to the milestone at the specified `MILESTONE_INDEX`
 * The milestone is in the dashboard of the student at the specified `STUDENT_INDEX`
-* Both indexes refers to the index number shown in the most recent listing.
+* Both indexes refer to the index number shown in the most recent listing.
 * Both indexes *must be a positive integer* 1, 2, 3, ...
 ****
 
@@ -284,6 +290,29 @@ Adds a task to the 3rd milestone in the dashboard of the 1st student in the addr
 `addTask i/2 m/1 n/Practice Recursion Exercises o/Refer to problem set` +
 Adds a task to the 1st milestone in the dashboard of the 2nd student in the results of the `find` command. The name of the task is "Practice Recursion Exercises" and the description is "Refer to problem set".
 
+=== Delete a task from a milestone: `deleteTask`
+
+Deletes a task from an existing milestone in a dashboard. +
+Format: `deleteTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX`
+
+****
+* Deletes the task at the specified `TASK_INDEX`
+* The task is in the milestone at the specified `MILESTONE_INDEX`
+* The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
+* All indexes refer to the index number shown in the most recent listing.
+* Both indexes *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`deleteTask i/1 m/2 tk/3` +
+Deletes the 3rd task in the 2nd milestone. The milestone is in the dashboard of the 1st student in the address book.
+* `find Betsey` +
+`deleteTask i/2 m/3 tk/1` +
+Deletes the 1st task in the 3rd milestone. The milestone is in the dashboard of the 2nd student in the results of the `find` command.
+
+
 === Mark a task as completed: `checkTask`
 
 Marks a task in an existing milestone as completed. +
@@ -293,7 +322,7 @@ Format: `checkTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX`
 * Marks the task at the specified `TASK_INDEX` as completed
 * The task is in the milestone at the specified `MILESTONE_INDEX`
 * The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
-* All indexes refers to the index number shown in the most recent listing.
+* All indexes refer to the index number shown in the most recent listing.
 * All indexes *must be a positive integer* 1, 2, 3, ...
 ****
 
@@ -308,6 +337,7 @@ Marks the 3rd task in the 2nd milestone as completed. The milestone is in the da
 * `find Betsey` +
 `checkTask i/2 m/3 tk/4` +
 Marks the 4th task in the 3rd milestone as completed. The milestone is in the dashboard of the 2nd student in the results of the `find` command.
+// end::dashboard[]
 
 === Deleting a student : `delete`
 
@@ -439,6 +469,22 @@ Examples:
 `editPicture i/1 pa/C:/Users/User/Desktop/test.jpg` +
 Changes the profile photo of the 1st student in the current listing to the image found at the specific file path.
 
+=== Edit the miscellaneous info of a student : `editMisc`
+
+Edits the miscellaneous information of a student in the addressbook. +
+Format: `editMisc INDEX [al/ALLERGIES] [nokn/NEXT_OF_KIN_NAME] [nokp/NEXT_OF_KIN_PHONE] [r/REMARKS]`
+
+****
+* Edits the student's miscellaneous info at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, …​ 
+* At least one optional field must be provided.
+* Existing values will be updated to and overwritten by the input values.
+****
+
+Examples:
+
+* `editMisc 1 al/Nuts r/Fast learner` +
+Edits the allergies information and remarks information of the 1st student to be `Nuts` and `Fast learner` respectively.
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -457,7 +503,8 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+* Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+* The `undo` command currently does not supports reversing dashboard commands (`addMS`, `addTask`, `deleteMS`, `deleteTask` and `checkTask`)
 ====
 
 Examples:
@@ -557,6 +604,52 @@ _{explain how the user can enable/disable data encryption}_
 
 === Track student's homework in the dashboard `[coming in v2.0]`
 
+== Interacting using free-form English
+
+Our application allows the user to use functions of the applications using everyday english sentences, without the need to remember specific command words.
+
+[NOTE]
+Only certain commands are covered: `Clear`,`Redo`,`Undo`,`Help`,`Exit`,`History`,`List`,`Schedule`,`Delete`,`Select`
+
+Examples for each command:
+
+`Clear`
+Examples: "Empty everything", "I want everyone to be gone"
+
+`Redo`
+Examples: "do it again", "reuse previous"
+
+`Undo`
+Examples: "revert", "negate the previous action"
+
+`Help`
+Examples: "I am lost", "I need assistance"
+
+
+`Exit`
+Examples: "I'm done here", "i wish to quit"
+
+`History`
+Examples: "what are my previous commands", "archives of commands entered"
+
+`List`
+Examples: "Show me all my students", "enumerate everyone"
+
+'Schedule'
+Examples: "what is my agenda", "show me my timetable"
+
+`Delete`
+[NOTE]
+Only English names are detectable by the application
+
+Examples: "Erase Susan", "Remove Jason"
+
+`Select`
+[NOTE]
+Only English names are detectable by the application
+
+Examples: "Choose Susan", "Single out Jason"
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -582,13 +675,15 @@ e.g.`select 2`
 * *Redo* : `redo`
 * *Show Dashboard*: `showDB INDEX` +
 e.g. `showDB 3`
-* *Add Milestone* : `addMS i/STUDENT_INDEX d/DUE_DATE o/DESCRIPTION` +
+* *Add Milestone* : `addMS i/STUDENT_INDEX d/MILESTONE_DUE_DATE o/DESCRIPTION_OF_MILESTONE` +
 e.g. `addMS i/1 d/23/11/2018 23:59 o/Arrays`
 * *Delete Milestone* : `deleteMS i/STUDENT_INDEX m/MILESTONE_INDEX` +
 e.g. `deleteMS i/1 m/2`
-* *Add Task* : `addTask i/STUDENT_INDEX m/MILESTONE_INDEX n/NAME o/DESCRIPTION` +
+* *Add Task* : `addTask i/STUDENT_INDEX m/MILESTONE_INDEX n/NAME_OF_TASK o/DESCRIPTION_OF_TASK` +
 e.g. `addTask i/1 m/2 n/Learn arrays syntax o/Refer to textbook`
-* *Mark Task as completed* : `checkTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX` +
+* *Delete Task* : `deleteTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX` +
+e.g. `deleteTask i/1 m/2 tk/3`
+* *Mark Task As Completed* : `checkTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX` +
 e.g. `checkTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX`
 * *View your Schedule* : `schedule`
 * *Add a Lesson* : `addLesson INDEX [d/DAY] [st/START_TIME] [et/END_TIME]` +
@@ -601,5 +696,7 @@ e.g. `deleteLesson 2`
 * *Full information page* : `moreInfo INDEX`
 * *Edit the profile picture* : `editPicture i/STUDENT_INDEX pa/FILE_PATH_OF_PICTURE` +
 e.g. `editPicture i/1 pa/C:/Users/User/Desktop/test.jpg`
+* *Edit the miscellaneous info of a student* :  `editMisc INDEX [al/ALLERGIES] [nokn/NEXT_OF_KIN_NAME] [nokp/NEXT_OF_KIN_PHONE] [r/REMARKS]
+e.g. `editMisc 2 al/seafood`
 
 

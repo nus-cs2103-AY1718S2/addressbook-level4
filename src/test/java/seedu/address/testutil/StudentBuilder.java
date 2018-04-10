@@ -19,6 +19,7 @@ import seedu.address.model.student.dashboard.Task;
 import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneException;
 import seedu.address.model.student.dashboard.exceptions.DuplicateTaskException;
 import seedu.address.model.student.dashboard.exceptions.MilestoneNotFoundException;
+import seedu.address.model.student.miscellaneousinfo.MiscellaneousInfo;
 import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
@@ -29,7 +30,7 @@ import seedu.address.model.util.SampleDataUtil;
 public class StudentBuilder {
 
     public static final String DEFAULT_KEY = "ffff00";
-    public static final String DEFAULT_NAME = "Alice Pauline";
+    public static final String DEFAULT_NAME = "James Peterson";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
@@ -48,6 +49,7 @@ public class StudentBuilder {
     private Favourite favourite;
     private Dashboard dashboard;
     private ProfilePicturePath profilePicturePath;
+    private MiscellaneousInfo miscellaneousInfo;
 
     public StudentBuilder() {
         key = new UniqueKey(DEFAULT_KEY);
@@ -60,6 +62,7 @@ public class StudentBuilder {
         favourite = new Favourite(DEFAULT_FAVOURITE);
         dashboard = new Dashboard();
         profilePicturePath = new ProfilePicturePath(ProfilePicturePath.DEFAULT_PROFILE_PICTURE);
+        miscellaneousInfo = new MiscellaneousInfo();
     }
 
     /**
@@ -76,6 +79,7 @@ public class StudentBuilder {
         favourite = studentToCopy.getFavourite();
         dashboard = studentToCopy.getDashboard();
         profilePicturePath = studentToCopy.getProfilePicturePath();
+        miscellaneousInfo = studentToCopy.getMiscellaneousInfo();
     }
 
     /**
@@ -177,6 +181,6 @@ public class StudentBuilder {
      */
     public Student build() {
         return new Student(key, name, phone, email, address, programmingLanguage, tags,
-                favourite, dashboard, profilePicturePath);
+                favourite, dashboard, profilePicturePath, miscellaneousInfo);
     }
 }

@@ -2,7 +2,7 @@ package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_STUDENT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalStudents.getTypicalStudents;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysStudent;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
@@ -21,7 +21,7 @@ public class StudentListPanelTest extends GuiUnitTest {
     private static final ObservableList<Student> TYPICAL_STUDENTS =
             FXCollections.observableList(getTypicalStudents());
 
-    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_STUDENT);
+    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND);
 
     private StudentListPanelHandle studentListPanelHandle;
 
@@ -51,7 +51,7 @@ public class StudentListPanelTest extends GuiUnitTest {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 
-        StudentCardHandle expectedCard = studentListPanelHandle.getStudentCardHandle(INDEX_SECOND_STUDENT
+        StudentCardHandle expectedCard = studentListPanelHandle.getStudentCardHandle(INDEX_SECOND
                 .getZeroBased());
         StudentCardHandle selectedCard = studentListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedCard, selectedCard);

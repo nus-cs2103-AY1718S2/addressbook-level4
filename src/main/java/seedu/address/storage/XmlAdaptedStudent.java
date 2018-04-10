@@ -18,6 +18,8 @@ import seedu.address.model.student.Phone;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.UniqueKey;
 import seedu.address.model.student.dashboard.Dashboard;
+import seedu.address.model.student.miscellaneousinfo.MiscellaneousInfo;
+import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -45,6 +47,8 @@ public class XmlAdaptedStudent {
     private String favourite;
     @XmlElement(required = true)
     private XmlAdaptedDashboard dashboard = new XmlAdaptedDashboard();
+    @XmlElement (required = true)
+    private XmlAdaptedMiscInfo miscellaneousInfo = new XmlAdaptedMiscInfo();
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -60,7 +64,7 @@ public class XmlAdaptedStudent {
      */
     public XmlAdaptedStudent(String uniqueKey, String name, String phone, String email, String address,
                              String programmingLanguage, List<XmlAdaptedTag> tagged, String favourite,
-                             XmlAdaptedDashboard dashboard) {
+                             XmlAdaptedDashboard dashboard, XmlAdaptedMiscInfo miscellaneousInfo) {
         this.key = uniqueKey;
         this.name = name;
         this.phone = phone;
@@ -70,6 +74,7 @@ public class XmlAdaptedStudent {
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
+        this.miscellaneousInfo = miscellaneousInfo;
         this.favourite = favourite;
         if (dashboard != null) {
             this.dashboard = dashboard;
@@ -90,6 +95,7 @@ public class XmlAdaptedStudent {
         programmingLanguage = source.getProgrammingLanguage().programmingLanguage;
         profilePicturePath = source.getProfilePicturePath().toString();
         tagged = new ArrayList<>();
+        miscellaneousInfo = new XmlAdaptedMiscInfo(source.getMiscellaneousInfo());
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
@@ -158,6 +164,17 @@ public class XmlAdaptedStudent {
         }
         final ProgrammingLanguage programmingLanguage = new ProgrammingLanguage(this.programmingLanguage);
 
+        if (this.profilePicturePath == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    ProfilePicturePath.class.getSimpleName()));
+        }
+        if (!ProfilePicturePath.isValidPath(this.profilePicturePath)) {
+            throw new IllegalValueException(ProfilePicturePath.MESSAGE_PICTURE_CONSTRAINTS);
+        }
+        final ProfilePicturePath profilePicturePath = new ProfilePicturePath(this.profilePicturePath);
+
+        final MiscellaneousInfo miscellaneousInfo = this.miscellaneousInfo.toModelType();
+
         if (this.favourite == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Favourite.class.getSimpleName()));
@@ -167,7 +184,9 @@ public class XmlAdaptedStudent {
         final Dashboard dashboard = this.dashboard.toModelType();
 
         final Set<Tag> tags = new HashSet<>(studentTags);
-        return new Student(uniqueKey, name, phone, email, address, programmingLanguage, tags, favourite, dashboard);
+
+        return new Student(uniqueKey, name, phone, email, address, programmingLanguage, tags, favourite, dashboard,
+                profilePicturePath, miscellaneousInfo);
     }
 
     @Override

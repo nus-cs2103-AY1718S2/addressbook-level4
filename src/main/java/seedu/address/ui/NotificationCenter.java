@@ -13,7 +13,9 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.logic.RequestToDeleteNotificationEvent;
+import seedu.address.model.notification.Notification;
 
 /**
  * Encapsulates all the information and functionalities required for Notification Center.
@@ -24,6 +26,7 @@ public class NotificationCenter {
     private static final int NOTIFICATION_CARD_HEIGHT_IN_CENTER = NotificationCard.NOTIFICATION_CARD_HEIGHT;
     private static final int NOTIFICATION_CARD_WIDTH_IN_CENTER = NotificationCard.NOTIFICATION_CARD_WIDTH;
     private LinkedList<javafx.scene.layout.Region> notificationCards;
+    private LinkedList<NotificationCard> notificationCardCopy;
     private HashMap<String, LinkedList<javafx.scene.layout.Region>> idToCard;
 
     @FXML
@@ -38,6 +41,8 @@ public class NotificationCenter {
         idToCard = new HashMap<>();
         notificationCards.add(null);
         //for 1 based index
+        notificationCardCopy = new LinkedList<>();
+        notificationCardCopy.add(null);
         this.notificationCardsBox = notificationCardsBox;
         this.notificationCenterPlaceHolder = notificationCenterPlaceHolder;
         setWidth();
@@ -78,13 +83,14 @@ public class NotificationCenter {
         NotificationCard forCenter = newNotificationCard.getCopyForCenter();
         javafx.scene.layout.Region notificationCard = forCenter.getRoot();
         LinkedList<javafx.scene.layout.Region> cards;
-        if(idToCard.get(forCenter.getId()) == null)
+        if (idToCard.get(forCenter.getId()) == null)
             cards = new LinkedList<>();
         else
             cards = idToCard.get(forCenter.getId());
         cards.add(notificationCard);
         idToCard.put(forCenter.getId(), cards);
         notificationCards.add(notificationCard);
+        notificationCardCopy.add(forCenter);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -97,10 +103,24 @@ public class NotificationCenter {
         return notificationCenterPlaceHolder;
     }
 
-    public void deleteNotification(String id) {
+    public void deleteNotification(String id) throws NullPointerException{
         for (javafx.scene.layout.Region nc: idToCard.get(id)) {
             notificationCardsBox.getChildren().remove(nc);
             notificationCards.remove(nc);
         }
+        for (NotificationCard nc: notificationCardCopy) {
+            if (nc.getId().equals(id)) {
+                notificationCardCopy.remove(nc);
+                break;
+            }
+        }
+    }
+
+    public String getIdByIndex(Index index) {
+        return notificationCardCopy.get(index.getOneBased()).getId();
+    }
+
+    public NotificationCard getNotificationCard(Index targetIndex) {
+        return notificationCardCopy.get(targetIndex.getOneBased());
     }
 }

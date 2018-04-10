@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.notification.exceptions.NotificationNotFoundException;
@@ -10,6 +11,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.photo.Photo;
+import seedu.address.ui.NotificationCard;
 import seedu.address.ui.NotificationCenter;
 
 /**
@@ -80,4 +82,7 @@ public interface Model {
 
     void setNotificationCenter(NotificationCenter notificationCenter);
 
+    NotificationCenter getNotificationCenter();
+
+    NotificationCard deleteNotificationByIndex(Index targetIndex) throws NotificationNotFoundException;
 }

@@ -414,13 +414,13 @@ The sort command allows the users to sort their clients according to the lexicog
 
 The following sequence diagram shows how the sortCommand operation works.
 
-image::sortdia.png[width="600"]
+image::sortdia.png[width="790"]
 
 In the sequence diagram, the sortCommand is passed to the AddressBookParser, which executes the parseCommand method. The Model then executes the sortedFilteredPersonList,  which sorts the internalList using a comparator.
 
 Suppose that the user has a list of clients in the application as shown in the diagram below, after executing the command, the list of clients will be as follows.
 
-image::sortedlist.png[width="600"]
+image::sortedlist.png[width="790"]
 ==== Design Considerations
 
 ===== Aspect: Implementation of SortCommand
@@ -564,7 +564,7 @@ Users can decide whether to set a password. The current implementation is just a
 
 The sequence diagram shows how the password command works. In the following diagram, the `password set/123` is executed.
 
-image::passdia.png[width="600"]
+image::passdia.png[width="790"]
 
 ==== Design Considerations
 

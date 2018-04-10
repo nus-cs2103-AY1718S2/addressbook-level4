@@ -1,6 +1,5 @@
-package seedu.address.testutil;
-
 //@@author jas5469
+package seedu.address.testutil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +15,7 @@ public class TypicalGroups {
     public static final Group GROUP_A = new GroupBuilder().withInformation("Group A").build();
     public static final Group GROUP_B = new GroupBuilder().withInformation("Group B").build();
     public static final Group GROUP_C = new GroupBuilder().withInformation("Group C").build();
-    public static final Group GROUP_D = new GroupBuilder().withInformation("Group A").build();
+    public static final Group GROUP_D = new GroupBuilder().withInformation("Group D").build();
     public static final Group GROUP_E = new GroupBuilder().withInformation("Group E").build();
 
 

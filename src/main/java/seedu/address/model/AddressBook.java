@@ -249,12 +249,25 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
-
+    //@@author jas5469
     ////Group operation
     public void addGroup(Group group) throws DuplicateGroupException {
         groups.add(group);
     }
 
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     *
+     * @throws ToDoNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeGroup(Group key) throws GroupNotFoundException {
+        if (groups.remove(key)) {
+            return true;
+        } else {
+            throw new GroupNotFoundException();
+        }
+    }
+    //@@author
     ////Event operations
     /**
      * Adds an event to the address book.

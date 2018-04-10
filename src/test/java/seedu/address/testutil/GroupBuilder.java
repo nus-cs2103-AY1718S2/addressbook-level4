@@ -34,6 +34,7 @@ public class GroupBuilder {
      */
     public GroupBuilder withInformation(String information) {
         this.information = new Information(information);
+        personList = new UniquePersonList();
         return this;
     }
 

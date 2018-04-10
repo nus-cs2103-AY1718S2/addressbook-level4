@@ -25,6 +25,7 @@ import seedu.address.logic.commands.ChangeTagColorCommand;
 import seedu.address.logic.commands.CheckToDoCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteGroupCommand;
 import seedu.address.logic.commands.DeleteToDoCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
@@ -44,6 +45,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.Information;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.TagContainKeywordsPredicate;
@@ -139,7 +141,7 @@ public class AddressBookParserTest {
                 DeleteToDoCommand.COMMAND_ALIAS + " " + INDEX_FIRST_TODO.getOneBased());
         assertEquals(new DeleteToDoCommand(INDEX_FIRST_TODO), command);
     }
-
+    //@@author jas5469
     @Test
     public void parseCommand_addGroup() throws Exception {
         Group group = new GroupBuilder().build();
@@ -148,13 +150,28 @@ public class AddressBookParserTest {
         assertEquals(new AddGroupCommand(group), command);
     }
 
-
     @Test
     public void parseCommand_addGroupAlias() throws Exception {
         Group group = new GroupBuilder().build();
         AddGroupCommand command = (AddGroupCommand) parser.parseCommand(AddGroupCommand.COMMAND_ALIAS
                 + " " + group.getInformation());
         assertEquals(new AddGroupCommand(group), command);
+    }
+
+    @Test
+    public void parseCommand_deleteGroup() throws Exception {
+        Information information = new Information("Group A");
+        DeleteGroupCommand command = (DeleteGroupCommand) parser.parseCommand(
+                DeleteGroupCommand.COMMAND_WORD + " " + "Group A");
+        assertEquals(new DeleteGroupCommand(information), command);
+    }
+
+    @Test
+    public void parseCommand_deleteGroupAlias() throws Exception {
+        Information information = new Information("Group A");
+        DeleteGroupCommand command = (DeleteGroupCommand) parser.parseCommand(
+                DeleteGroupCommand.COMMAND_ALIAS + " " + "Group A");
+        assertEquals(new DeleteGroupCommand(information), command);
     }
 
     //@@author LeonidAgarth

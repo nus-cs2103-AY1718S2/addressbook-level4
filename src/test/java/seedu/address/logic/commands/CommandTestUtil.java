@@ -129,6 +129,7 @@ public class CommandTestUtil {
     public static final String INVALID_CONTENT_DESC = " " + PREFIX_CONTENT + INVALID_CONTENT;
 
     public static final String INFORMATION_A = "Group A";
+    public static final String INFORMATION_E = "Group E";
     public static final String VALID_INFORMATION = "GROUP A";
     public static final String INVALID_INFORMATION = "Group! A"; //'!' not supported in information
 

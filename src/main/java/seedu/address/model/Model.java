@@ -25,6 +25,7 @@ public interface Model {
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
     Predicate<ToDo> PREDICATE_SHOW_ALL_TODOS = unused -> true;
     Predicate<Event> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
+    Predicate<Group> PREDICATE_SHOW_ALL_GROUPS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -37,6 +38,9 @@ public interface Model {
 
     /** Deletes the given to-do. */
     void deleteToDo(ToDo target) throws ToDoNotFoundException;
+
+    /** Deletes the given group. */
+    void deleteGroup(Group target) throws GroupNotFoundException;
 
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;

@@ -641,11 +641,13 @@ Examples: "what is my agenda", "show me my timetable"
 `Delete`
 [NOTE]
 Only English names are detectable by the application
+
 Examples: "Erase Susan", "Remove Jason"
 
 `Select`
 [NOTE]
 Only English names are detectable by the application
+
 Examples: "Choose Susan", "Single out Jason"
 
 == FAQ

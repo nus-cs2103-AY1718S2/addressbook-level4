@@ -435,7 +435,7 @@ Bernice Lee will be added into the visiting queue as shown in Figure 3 below.
 
 .Add patient to queue according to list index
 [caption="Figure 3: "]
-image::addq_duplicate.png[width="990"]
+image::addq_duplicate.PNG[width="990"]
 
 ==== Removing a patient from the visiting queue with patient name: `removeq` [since v1.2]
 

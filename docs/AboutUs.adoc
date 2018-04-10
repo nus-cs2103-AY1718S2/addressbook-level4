@@ -11,7 +11,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Joshua Lee Kai Sheng
 image::jlks96.jpg[width="150", align="left"]
-{empty}[https://github.com/jlks96[github]] [https://www.linkedin.com/in/joshua-lee-a47b94157/[portfolio]]
+{empty}[https://github.com/jlks96[github]] [https://github.com/CS2103JAN2018-W10-B4/main/blob/master/docs/team/jlks96.adoc[portfolio]]
 
 Role: Team Lead + Deliverables & Deadlines + Scheduling + Code Quality + Documentation
 Responsibilities: Logic + UI + Model + Storage + Commons
@@ -20,7 +20,7 @@ Responsibilities: Logic + UI + Model + Storage + Commons
 
 === Ng Jun Wei
 image::ng95junwei.jpg[width="150", align="left"]
-{empty}[http://github.com/ng95junwei[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/ng95junwei[github]] [https://github.com/CS2103JAN2018-W10-B4/main/blob/master/docs/team/junwei.adoc[portfolio]]
 
 Role: Integration + Code Quality + Java expert
 Responsibilities: Logic + Model + Storage

@@ -23,7 +23,7 @@ import seedu.address.model.person.Person;
 public class PersonListPanel extends UiPart<Region> {
     private static final String FXML = "PersonListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
-
+    private int oddEvenIndex;
     @FXML
     private ListView<PersonCard> personListView;
 
@@ -46,7 +46,7 @@ public class PersonListPanel extends UiPart<Region> {
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-                        raise(new PersonPanelSelectionChangedEvent(newValue));
+                        raise(new PersonPanelSelectionChangedEvent(newValue, oddEvenIndex));
                     }
                 });
     }
@@ -64,6 +64,7 @@ public class PersonListPanel extends UiPart<Region> {
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        oddEvenIndex = event.oddEvenIndex;
         scrollTo(event.targetIndex);
     }
 

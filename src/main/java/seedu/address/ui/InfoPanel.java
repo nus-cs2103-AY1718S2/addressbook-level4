@@ -115,12 +115,13 @@ public class InfoPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Person person = event.getNewSelection().person;
         venuePlaceholder.toBack();
         mapsPlaceholder.toBack();
         birthdayPlaceholder.toBack();
+        Person person = event.getNewSelection().person;
+        int oddEvenIndex = event.getOddEvenIndex();
 
-        personDetailsCard.update(person,0);
+        personDetailsCard.update(person,oddEvenIndex);
         userDetailsPlaceholder.toFront();
     }
     //@@author

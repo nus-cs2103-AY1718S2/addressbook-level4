@@ -172,6 +172,12 @@ public class AddCommandTest {
         public void addAppointment(Appointment appointment) {
             fail("This method should not be called");
         }
+
+        @Override
+        public ObservableList<Appointment> getFilteredAppointmentList() {
+            fail("This method should not be called.");
+            return null;
+        }
     }
 
     /**

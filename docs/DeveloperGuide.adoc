@@ -587,9 +587,13 @@ public static String downloadImage(String imageUrlString) {
         String md5Checksum = calculateMd5Checksum(imageData);
         String filePath = getImageFilePathFromImageName(md5Checksum);
         File file = prepareImageFile(filePath);
-        writeDataToFile(imageData, file);
-        return filePath;
-    /* Exception catching */
+        if (file != null) {
+            writeDataToFile(imageData, file);
+            return filePath;
+        } else {
+            return null;
+        }
+    /* Exceptions catching */
 ----
 
 For the detailed implementation of each step, see link:{repoURL}/src/main/java/seedu/recipe/storage/ImageDownloader.java[`ImageDownloader.java`].

@@ -65,8 +65,12 @@ public class ImageDownloader {
             String md5Checksum = calculateMd5Checksum(imageData);
             String filePath = getImageFilePathFromImageName(md5Checksum);
             File file = prepareImageFile(filePath);
-            writeDataToFile(imageData, file);
-            return filePath;
+            if (file != null) {
+                writeDataToFile(imageData, file);
+                return filePath;
+            } else {
+                return null;
+            }
         } catch (IOException ioe) {
             throw new AssertionError(
                     "Something wrong happened when the app was trying to "

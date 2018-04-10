@@ -3,6 +3,7 @@ package seedu.recipe.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -45,10 +46,15 @@ public class ImageDownloaderTest {
 
     @Test
     public void downloadImage_validUrl_returnsImageName() throws Exception {
+        // First download
         String fileName = ImageDownloader.downloadImage(VALID_IMAGE_URL);
         File file = new File(fileName);
         assertTrue(file.exists());
         assertImageCrc(file, VALID_IMAGE_CRC);
+
+        // Re-download will return null
+        assertNull(ImageDownloader.downloadImage(VALID_IMAGE_URL));
+
         // Clean up
         file.delete();
     }

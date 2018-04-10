@@ -79,6 +79,7 @@ public class CommandTestUtil {
     //@@author jingyinno
     public static final String VALID_ALIAS_ADD = "add1";
     public static final String VALID_ALIAS_ALIAS = "alias1";
+    public static final String VALID_ALIAS_BIRTHDAYS = "birthdays1";
     public static final String VALID_ALIAS_CLEAR_COMMAND = ClearCommand.COMMAND_WORD;
     public static final String VALID_ALIAS_CLEAR = "clear1";
     public static final String VALID_ALIAS_DELETE_COMMAND = DeleteCommand.COMMAND_WORD;
@@ -92,13 +93,19 @@ public class CommandTestUtil {
     public static final String VALID_ALIAS_IMPORT = "import1";
     public static final String VALID_ALIAS_LIST_COMMAND = ListCommand.COMMAND_WORD;
     public static final String VALID_ALIAS_LIST = "list1";
+    public static final String VALID_ALIAS_MAP = "map1";
+    public static final String VALID_ALIAS_PASSWORD = "password1";
     public static final String VALID_ALIAS_REDO = "redo1";
+    public static final String VALID_ALIAS_REMOVEPASSWORD = "removepassword1";
     public static final String VALID_ALIAS_SELECT = "select1";
+    public static final String VALID_ALIAS_UNALIAS = "unalias1";
     public static final String VALID_ALIAS_UNDO = "undo1";
+    public static final String VALID_ALIAS_VACANT = "vacant1";
     public static final String VALID_ALIAS_NUMBER = "9";
 
     public static final String ALIAS_DESC_ADD = AddCommand.COMMAND_WORD + " " + VALID_ALIAS_ADD;
     public static final String ALIAS_DESC_ALIAS = AliasCommand.COMMAND_WORD + " " + VALID_ALIAS_ALIAS;
+    public static final String ALIAS_DESC_BIRTHDAYS = BirthdaysCommand.COMMAND_WORD + " " + VALID_ALIAS_BIRTHDAYS;
     public static final String ALIAS_DESC_CLEAR = ClearCommand.COMMAND_WORD + " " + VALID_ALIAS_CLEAR;
     public static final String ALIAS_DESC_DELETE = DeleteCommand.COMMAND_WORD + " " + VALID_ALIAS_DELETE;
     public static final String ALIAS_DESC_EDIT = EditCommand.COMMAND_WORD + " " + VALID_ALIAS_EDIT;
@@ -108,9 +115,15 @@ public class CommandTestUtil {
     public static final String ALIAS_DESC_HISTORY = HistoryCommand.COMMAND_WORD + " " + VALID_ALIAS_HISTORY;
     public static final String ALIAS_DESC_IMPORT = ImportCommand.COMMAND_WORD + " " + VALID_ALIAS_IMPORT;
     public static final String ALIAS_DESC_LIST = ListCommand.COMMAND_WORD + " " + VALID_ALIAS_LIST;
+    public static final String ALIAS_DESC_MAP = MapCommand.COMMAND_WORD + " " + VALID_ALIAS_MAP;
+    public static final String ALIAS_DESC_PASSWORD = PasswordCommand.COMMAND_WORD + " " + VALID_ALIAS_PASSWORD;
     public static final String ALIAS_DESC_REDO = RedoCommand.COMMAND_WORD + " " + VALID_ALIAS_REDO;
+    public static final String ALIAS_DESC_REMOVEPASSWORD = RemovePasswordCommand.COMMAND_WORD + " "
+            + VALID_ALIAS_REMOVEPASSWORD;
     public static final String ALIAS_DESC_SELECT = SelectCommand.COMMAND_WORD + " " + VALID_ALIAS_SELECT;
+    public static final String ALIAS_DESC_UNALIAS = UnaliasCommand.COMMAND_WORD + " " + VALID_ALIAS_UNALIAS;
     public static final String ALIAS_DESC_UNDO = UndoCommand.COMMAND_WORD + " " + VALID_ALIAS_UNDO;
+    public static final String ALIAS_DESC_VACANT = VacantCommand.COMMAND_WORD + " " + VALID_ALIAS_VACANT;
 
     public static final String INVALID_ALIAS = "alias!";
     public static final String INVALID_ALIAS_DESC = INVALID_ALIAS + " " + VALID_ALIAS_ALIAS;

@@ -5,6 +5,8 @@ import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.ASSIGNMENT3_DEMO1_FILE_PATH;
+import static seedu.address.logic.commands.CommandTestUtil.FILE_PATH_DESC_VALID;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,9 +16,11 @@ import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.EventCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.TaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.FilePath;
 import seedu.address.model.activity.Event;
 import seedu.address.model.activity.Task;
 import seedu.address.testutil.EventBuilder;
@@ -136,6 +140,16 @@ public class DeskBoardParserTest {
 //        assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
 //    }
 //
+
+    //@@author karenfrilya97
+    @Test
+    public void parseCommand_import() throws Exception {
+        FilePath filePath = new FilePath(ASSIGNMENT3_DEMO1_FILE_PATH);
+        ImportCommand command = (ImportCommand) parser.parseCommand(ImportCommand.COMMAND_WORD + FILE_PATH_DESC_VALID);
+        assertEquals(new ImportCommand(filePath), command);
+    }
+
+    //@@author
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);

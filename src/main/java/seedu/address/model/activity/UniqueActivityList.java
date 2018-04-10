@@ -55,22 +55,6 @@ public class UniqueActivityList implements Iterable<Activity> {
         Collections.sort(internalList, dateTimeComparator);
     }
 
-    //@@author karenfrilya97
-    /**
-     * Adds all activities from another UniqueActivityList {@code activities} to the list.
-     * If an activity in {@code activities} is already in the {@code internalList},
-     * then that particular activity will not be added, but other activities will still be added to the list.
-     */
-    public void addAll(UniqueActivityList activities) {
-        requireNonNull(activities);
-        for (Activity activity : activities) {
-            if (!contains(activity)) {
-                internalList.add(activity);
-            }
-        }
-        Collections.sort(internalList, dateTimeComparator);
-    }
-
     /**
      * Replaces the activity {@code target} in the list with {@code editedActivity}.
      * If activity is a task or an event, edited in its respective list.

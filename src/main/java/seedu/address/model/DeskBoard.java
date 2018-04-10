@@ -116,6 +116,7 @@ public class DeskBoard implements ReadOnlyDeskBoard {
         }
     }
 
+    //@@author YuanQLLer
     /**
      * Replaces the given activity {@code target} in the list with {@code editedActivity}.
      * {@code DeskBoard}'s tag list will be updated with the tags of {@code editedActivity}.

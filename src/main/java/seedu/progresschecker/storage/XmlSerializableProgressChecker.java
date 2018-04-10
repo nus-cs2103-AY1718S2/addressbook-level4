@@ -25,8 +25,8 @@ public class XmlSerializableProgressChecker {
     private List<XmlAdaptedTag> tags;
     @XmlElement
     private List<XmlAdaptedExercise> exercises;
-    //@XmlElement
-    //private List<XmlAdaptedIssue> issues;
+    @XmlElement
+    private List<XmlAdaptedIssue> issues;
 
     /**
      * Creates an empty XmlSerializableProgressChecker.
@@ -36,7 +36,7 @@ public class XmlSerializableProgressChecker {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
         exercises = new ArrayList<>();
-        //issues = new ArrayList<>();
+        issues = new ArrayList<>();
     }
 
     /**
@@ -47,7 +47,7 @@ public class XmlSerializableProgressChecker {
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
         exercises.addAll(src.getExerciseList().stream().map(XmlAdaptedExercise::new).collect(Collectors.toList()));
-       // issues.addAll(src.getIssueList().stream().map(XmlAdaptedIssue::new).collect(Collectors.toList()));
+        issues.addAll(src.getIssueList().stream().map(XmlAdaptedIssue::new).collect(Collectors.toList()));
 
     }
 
@@ -68,9 +68,6 @@ public class XmlSerializableProgressChecker {
         for (XmlAdaptedExercise e : exercises) {
             progressChecker.addExercise(e.toModelType());
         }
-//        for (XmlAdaptedIssue i : issues) {
-//            progressChecker.createIssueOnGitHub(i.toModelType());
-//        }
         return progressChecker;
     }
 
@@ -85,6 +82,6 @@ public class XmlSerializableProgressChecker {
         }
 
         XmlSerializableProgressChecker otherAb = (XmlSerializableProgressChecker) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags); //&& issues.equals(otherAb.issues);
+        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags) && issues.equals(otherAb.issues);
     }
 }

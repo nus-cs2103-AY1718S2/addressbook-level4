@@ -62,7 +62,7 @@ public interface Model {
      *
      * @throws IOException if while updating the issue there is some problem in authentication
      */
-    void updateIssue(Index index, Issue editedIssue) throws IOException;
+    void updateIssue(Index index, Issue editedIssue) throws IOException, CommandException;
 
     /** Returns unmodifiable view of the filtered issue list */
     ObservableList<Issue> getFilteredIssueList();

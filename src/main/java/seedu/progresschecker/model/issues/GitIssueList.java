@@ -61,9 +61,13 @@ public class GitIssueList implements Iterable<Issue> {
      * Authorises with github
      */
     private void authoriseGithub () throws CommandException, IOException {
+        if (github != null) {
+            throw new CommandException("You have already logged in as " + userLogin + ". Please logout first.");
+        }
         try {
             github = GitHub.connectUsingPassword(userLogin, userAuthentication);
             if (!github.isCredentialValid()) {
+                github = null;
                 throw new IOException();
             }
         } catch (IOException ie) {
@@ -136,7 +140,9 @@ public class GitIssueList implements Iterable<Issue> {
         ArrayList<GHUser> listOfUsers = new ArrayList<>();
         ArrayList<String> listOfLabels = new ArrayList<>();
         MilestoneMap obj = new MilestoneMap();
-        HashMap<Milestone, Integer> getMilestone = obj.getMilestoneMap();
+        obj.setRepository(getRepository());
+        HashMap<String, GHMilestone> milestoneMap = obj.getMilestoneMap();
+        GHMilestone check = null;
 
         for (int ct = 0; ct < assigneesList.size(); ct++) {
             listOfUsers.add(github.getUser(assigneesList.get(ct).toString()));
@@ -146,9 +152,15 @@ public class GitIssueList implements Iterable<Issue> {
             listOfLabels.add(labelsList.get(ct).toString());
         }
 
-        GHIssue createdIssue = issueBuilder.create();
         if (toAdd.getMilestone() != null) {
-            GHMilestone check = repository.getMilestone(getMilestone.get(toAdd.getMilestone()));
+            if (milestoneMap.get(toAdd.getMilestone().toString()) == null) {
+                throw new CommandException("Milestone doesn't exist");
+            } else {
+                check = milestoneMap.get(toAdd.getMilestone().toString());
+            }
+        }
+        GHIssue createdIssue = issueBuilder.create();
+        if (check != null) {
             createdIssue.setMilestone(check);
         }
         createdIssue.setAssignees(listOfUsers);
@@ -199,7 +211,7 @@ public class GitIssueList implements Iterable<Issue> {
      * @throws IOException if the replacement is equivalent to another existing person in the list.
      */
     public void setIssue(Index index, Issue editedIssue)
-            throws IOException {
+            throws IOException, CommandException {
         requireNonNull(editedIssue);
         toEdit = repository.getIssue(index.getOneBased());
 
@@ -209,7 +221,7 @@ public class GitIssueList implements Iterable<Issue> {
         ArrayList<GHUser> listOfUsers = new ArrayList<>();
         ArrayList<String> listOfLabels = new ArrayList<>();
         MilestoneMap obj = new MilestoneMap();
-        HashMap<Milestone, Integer> getMilestone = obj.getMilestoneMap();
+        HashMap<String, GHMilestone> milestoneMap = obj.getMilestoneMap();
 
         for (Assignees assignee : assigneesList) {
             listOfUsers.add(github.getUser(assignee.toString()));
@@ -220,7 +232,7 @@ public class GitIssueList implements Iterable<Issue> {
         }
 
         if (editedIssue.getMilestone() != null) {
-            GHMilestone check = repository.getMilestone(getMilestone.get(editedIssue.getMilestone()));
+            GHMilestone check = milestoneMap.get(editedIssue.getMilestone().toString());
             toEdit.setMilestone(check);
         }
         toEdit.setTitle(editedIssue.getTitle().toString());
@@ -228,6 +240,20 @@ public class GitIssueList implements Iterable<Issue> {
         toEdit.setAssignees(listOfUsers);
         toEdit.setLabels(listOfLabels.toArray(new String[0]));
 
+    }
+
+    /**
+     * Returns github object
+     */
+    public GitHub getGithub() {
+        return github;
+    }
+
+    /**
+     * Returns github repository
+     */
+    public GHRepository getRepository() {
+        return repository;
     }
 
     /**

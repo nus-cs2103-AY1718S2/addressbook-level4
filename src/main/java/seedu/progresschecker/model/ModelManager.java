@@ -139,7 +139,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author adityaa1998
     @Override
-    public void updateIssue(Index index, Issue editedIssue) throws IOException {
+    public void updateIssue(Index index, Issue editedIssue) throws IOException, CommandException {
         requireAllNonNull(index, editedIssue);
 
         progressChecker.updateIssue(index, editedIssue);

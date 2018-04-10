@@ -212,7 +212,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
      * @throws IOException if there is any problem in git authentication or parameter
      *
      */
-    public void updateIssue(Index index, Issue editedIssue) throws IOException {
+    public void updateIssue(Index index, Issue editedIssue) throws IOException, CommandException {
         requireNonNull(editedIssue);
         issues.setIssue(index, editedIssue);
     }

@@ -29,5 +29,7 @@ public class DateTimeCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, DateTimeCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, DateTimeCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "2018-29-02 12:00",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DateTimeCommand.MESSAGE_USAGE));
     }
 }

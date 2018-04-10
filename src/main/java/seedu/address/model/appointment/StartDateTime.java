@@ -10,14 +10,14 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class StartDateTime {
     public static final String MESSAGE_START_DATE_TIME_CONSTRAINTS =
-            "Start date time should be a valid local date time";
+            "Start date time should be a valid local date time in format YYYY-MM-DD HH:mm";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String START_DATE_TIME_VALIDATION_REGEX =
-            "^[1-3][0-9][0-9][0-9]-(1[0-2]|0[1-9])-(0[1-9]|[1-2][0-9]|3[0-1])\\s([0-1][0-9]|2[0-4]):([0-5][0-9])$";
+            "^[1-3][0-9][0-9][0-9]-(1[0-2]|0[1-9])-(0[1-9]|[1-2][0-9]|3[0-1])\\s([0-1][0-9]|2[0-3]):([0-5][0-9])$";
 
     public final String startDateTime;
 

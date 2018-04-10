@@ -22,9 +22,9 @@ public class FindCommand extends Command {
             + " NAME or SKILL "
             + "contains any of the specified keywords (case-insensitive) "
             + "and displays them as a list with index numbers.\n"
-            + "Parameters: n/NAME_KEYWORDS [MORE_NAME_KEYWORDS] or t/SKILL_KEYWORDS [MORE_SKILL_KEYWORDS]\n"
+            + "Parameters: n/NAME_KEYWORDS [MORE_NAME_KEYWORDS] or s/SKILL_KEYWORDS [MORE_SKILL_KEYWORDS]\n"
             + "Example: " + COMMAND_WORD + " n/Alice Bob\n"
-            + "Example: " + COMMAND_WORD + " t/accountant manager";
+            + "Example: " + COMMAND_WORD + " s/accountant manager";
 
     private final Predicate<Person> predicate;
 

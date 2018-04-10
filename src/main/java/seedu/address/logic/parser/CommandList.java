@@ -3,9 +3,11 @@ package seedu.address.logic.parser;
 
 import java.util.ArrayList;
 
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ClearHistoryCommand;
 import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.GoogleLoginCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -22,7 +24,6 @@ import seedu.address.logic.commands.job.JobAddCommand;
 import seedu.address.logic.commands.job.JobDeleteCommand;
 import seedu.address.logic.commands.job.JobMatchCommand;
 import seedu.address.logic.commands.person.AddCommand;
-import seedu.address.logic.commands.person.ClearCommand;
 import seedu.address.logic.commands.person.DeleteCommand;
 import seedu.address.logic.commands.person.EditCommand;
 import seedu.address.logic.commands.person.FindCommand;
@@ -56,6 +57,7 @@ public class CommandList {
         commandList.add(EmailCommand.COMMAND_WORD);
         commandList.add(ExitCommand.COMMAND_WORD);
         commandList.add(FindCommand.COMMAND_WORD);
+        commandList.add(GoogleLoginCommand.COMMAND_WORD);
         commandList.add(HelpCommand.COMMAND_WORD);
         commandList.add(HistoryCommand.COMMAND_WORD);
         commandList.add(LinkedInCommand.COMMAND_WORD);

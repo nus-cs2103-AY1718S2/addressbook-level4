@@ -101,6 +101,7 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tz/SGT c/He can speak French`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 tz/PST c/She can speak French t/criminal`
 
+// tag::addappointment[]
 === Adding an appointment: `addappoinmtment` `Since v1.3`
 
 Adds an appointment to the address book +
@@ -152,12 +153,14 @@ Adds or modifies notes to an existing client. A text box will appear containing 
 Format: `note INDEX`
 Alias: `n`
 
+// tag::archive[]
 === Archives a client: `archive` `Since v1.2`
 
 Archives an existing client +
 Format: `archive INDEX`
 Alias: `ar`
 
+// tag::unarchive[]
 === Unarchives a client: `unarchive` `Since v1.2`
 
 Unarchives an existing client +
@@ -185,6 +188,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::editappointment[]
 === Editing an appointment : `editappointment` `Since v1.5rc`
 
 Edits an existing appointment in the address book. +
@@ -246,7 +250,8 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Deleting a person : `deleteappointment` `Since v1.4`
+// tag::deleteappointment[]
+=== Deleting an appointment : `deleteappointment` `Since v1.4`
 
 Deletes the specified appointment from the address book. +
 Format: `deleteappointment INDEX`
@@ -368,9 +373,10 @@ Clears all entries from the address book. +
 Format: `clear`
 Alias: `c`
 
+// tag::switch[]
 === Switching Theme : `switch` `Since v1.1`
 
-Switches theme from dark to light or vice versa. Persists across restarts +
+Switches theme from dark to light or vice versa. Persists across restarts. +
 Format: `switch`
 
 === Exiting the program : `exit`

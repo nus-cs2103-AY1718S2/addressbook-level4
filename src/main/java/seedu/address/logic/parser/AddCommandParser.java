@@ -49,6 +49,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
+            //@@author crizyli
             String calendarId;
             if (!LogicManager.isLocked()) {
                 try {
@@ -59,6 +60,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             } else {
                 calendarId = "";
             }
+            //@@author
 
             Person person = new Person(name, phone, email, address, tagList, calendarId);
 
@@ -68,7 +70,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
     }
 
+    //@@author crizyli
     /**
+     * overload parse method for test use.
      * Parses the given {@code String} of arguments in the context of the AddCommand
      * and returns an AddCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
@@ -107,6 +111,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             throw new ParseException(ive.getMessage(), ive);
         }
     }
+    //@@author
 
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given

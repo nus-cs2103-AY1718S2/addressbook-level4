@@ -63,6 +63,7 @@ public class PersonCard extends UiPart<Region> {
         rating.setText(person.getRatingDisplay());
         rating.setTextFill(Color.RED);
         initTags(person);
+        //@@author crizyli
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
         File file = new File(s + AddPhotoCommand.IMAGE_FOLDER_OTHER + person.getPhotoName());
@@ -75,7 +76,7 @@ public class PersonCard extends UiPart<Region> {
         }
         photo.setImage(image);
         photo.preserveRatioProperty().set(true);
-
+        //@@author
     }
 
     /**

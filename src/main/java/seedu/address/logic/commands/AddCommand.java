@@ -26,9 +26,10 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
 
     public static final String MESSAGE_USAGE =
             COMMAND_WORD + " | Adds a Customer or Runner with the specified details. "
-            + "Refer to the User Guide (press \"F1\") for detailed information about this command."
+            + "Refer to the User Guide (press \"F1\") for detailed information about this command!"
             + "\n\t"
             + "Parameters:\t"
+            + COMMAND_WORD + " "
             + PREFIX_TYPE + " r(or c) "
             + PREFIX_NAME + " NAME "
             + "[" + PREFIX_PHONE + " PHONE] "

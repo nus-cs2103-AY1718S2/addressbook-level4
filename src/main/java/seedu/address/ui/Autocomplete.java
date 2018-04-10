@@ -1,66 +1,117 @@
 package seedu.address.ui;
 
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.scene.control.TextField;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.logic.Logic;
 
 //@@author aquarinte
 /**
- * Handles case-insensitive autocompletion of command input such as command word, options, prefixes
- * and also some user input parameters: Nric, pet patient name and tag.
+ * Handles case-insensitive autocompletion of command line syntax
+ * and also some user input parameters: Nric, pet patient name, tags etc.
  */
 public class Autocomplete {
 
+    private static final Logger logger = LogsCenter.getLogger(Autocomplete.class);
     private static Autocomplete instance;
     private Logic logic;
     private String targetWord;
+    private String[] words;
 
     public static Autocomplete getInstance() {
         if (instance == null) {
             instance = new Autocomplete();
+            EventsCenter.getInstance().registerHandler(instance);
         }
         return instance;
     }
 
     /**
+     * Initalizes or updates data required for autocomplete.
+     */
+    public void init(Logic logic) {
+        this.logic = logic;
+        logic.processPersonsData();
+        logic.processPetPatientsData();
+        logic.processAppointmentsData();
+    }
+
+    /**
      * Find suggestions for current user-input in commandTextField.
      */
-    public List<String> getSuggestions(Logic logic, TextField commandTextField) {
-        this.logic = logic;
-        String userInput = commandTextField.getText().trim();
-        String[] words = userInput.split(" ");
+    public List<String> getSuggestions(TextField commandTextField) {
+        int cursorPosition = commandTextField.getCaretPosition();
+
+        if (commandTextField.getText().length() > cursorPosition) {
+            words = commandTextField.getText(0, cursorPosition + 1).split("((?<= )|(?= ))", -1);
+        } else {
+            words = commandTextField.getText(0, cursorPosition).split("((?<= )|(?= ))", -1);
+        }
+
         targetWord = words[words.length - 1].toLowerCase();
 
-        if (words.length == 1) {
-            return suggestCommandWords();
-        } else {
-            if (addReferenceOwnerNric(words) || editPetPatientOwnerNric(words) || findByPersonNric(words)) {
-                return suggestNrics();
+        String updateInput = String.join(",", words);
+        System.out.println(updateInput);
+        System.out.println("TARGET: " + targetWord);
+        System.out.println("cursor: " + cursorPosition + "\ttextlength: " + commandTextField.getText().length());
+
+        if (words.length <= 2) {
+            return getCommandWordSuggestions();
+        }
+
+        if (!targetWord.equals("")) {
+            if (hasAddCommandReferNric() || hasEditCommandReferNric() || hasFindCommandReferNric()) {
+                return getNricSuggestions();
             }
 
-            if (words[words.length - 2].equals("-p") && targetWord.startsWith("n/")) {
-                return suggestPetPatientNames();
+            if (words[words.length - 3].equals("-p") && targetWord.startsWith("n/")) {
+                return getPetPatientNameSuggestions();
+            }
+
+            if (targetWord.startsWith("s/")) {
+                return getPetPatientSpeciesSuggestions();
+            }
+
+            if (targetWord.startsWith("b/")) {
+                return getPetPatientBreedSuggestions();
+            }
+
+            if (targetWord.startsWith("c/")) {
+                return getPetPatientColourSuggestions();
+            }
+
+            if (targetWord.startsWith("bt/")) {
+                return getPetPatientBlootTypeSuggestions();
             }
 
             if (targetWord.startsWith("t/")) {
-                return suggestTagNames();
+                return getTagSuggestions();
             }
 
             if (targetWord.startsWith("-")) {
-                return suggestOptions();
+                return getOptionSuggestions();
             }
 
-            return suggestPrefixes();
+            return getPrefixSuggestions();
+
+        } else {
+            return getPrefixSuggestions();
         }
+
     }
 
     /**
      * Checks if command input is the "add" command, and whether it has the form "-o nr/" at the end.
      */
-    private boolean addReferenceOwnerNric(String[] words) {
-        if (words[0].equals("add") && words[words.length - 2].equals("-o") && targetWord.startsWith("nr/")) {
+    private boolean hasAddCommandReferNric() {
+        if (words[0].equals("add") && words[words.length - 3].equals("-o") && targetWord.startsWith("nr/")) {
             return true;
         }
         return false;
@@ -69,18 +120,30 @@ public class Autocomplete {
     /**
      * Checks if command input is the "edit -p" command, with the last word starting with "nr/".
      */
-    private boolean editPetPatientOwnerNric(String[] words) {
-        if (words[0].equals("edit") && words[1].equals("-p") && targetWord.startsWith("nr/")) {
+    private boolean hasEditCommandReferNric() {
+        if (words[0].equals("edit") && words[2].equals("-p") && targetWord.startsWith("nr/")) {
             return true;
         }
         return false;
     }
 
     /**
-     * Checks if command input is the "edit -p" command, with the last word starting with "nr/".
+     * Checks if command input is the "find -o" command, with the last word starting with "nr/".
      */
-    private boolean findByPersonNric(String[] words) {
-        if (words[0].equals("find") && words[1].equals("-o") && targetWord.startsWith("nr/")) {
+    private boolean hasFindCommandReferNric() {
+        if (words[0].equals("find") && words[2].equals("-o") && targetWord.startsWith("nr/")) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if user input is the find command.
+     */
+    private boolean isFindCommand() {
+        if (words[0].equals("find")) {
+            return true;
+        } else if (words[1].equals("find")) {
             return true;
         }
         return false;
@@ -89,16 +152,18 @@ public class Autocomplete {
     /**
      * Returns a sorted list of suggestions for tags.
      */
-    private List<String> suggestTagNames() {
+    private List<String> getTagSuggestions() {
         if (targetWord.equals("t/")) {
-            List<String> suggestions = logic.getAllTagNames().stream()
+            List<String> suggestions = logic.getAllPersonTags()
+                    .stream()
                     .sorted()
                     .collect(Collectors.toList());
             return suggestions;
         } else {
             String[] splitByPrefix = targetWord.split("/");
             String targetTag = splitByPrefix[1];
-            List<String> suggestions = logic.getAllTagNames().stream()
+            List<String> suggestions = logic.getAllPersonTags()
+                    .stream()
                     .filter(t -> t.toLowerCase().startsWith(targetTag) && !t.toLowerCase().equals(targetTag))
                     .sorted()
                     .collect(Collectors.toList());
@@ -109,17 +174,109 @@ public class Autocomplete {
     /**
      * Returns a sorted list of suggestions for pet patient names.
      */
-    private List<String> suggestPetPatientNames() {
+    private List<String> getPetPatientNameSuggestions() {
         if (targetWord.equals("n/")) {
-            List<String> suggestions = logic.getAllPetPatientNames().stream()
+            List<String> suggestions = logic.getAllPetPatientNames()
+                    .stream()
                     .sorted()
                     .collect(Collectors.toList());
             return suggestions;
         } else {
             String[] splitByPrefix = targetWord.split("/");
             String targetPetName = splitByPrefix[1];
-            List<String> suggestions = logic.getAllPetPatientNames().stream()
-                    .filter(pn -> pn.startsWith(targetPetName) && !pn.equals(targetPetName))
+            List<String> suggestions = logic.getAllPetPatientNames()
+                    .stream()
+                    .filter(pn -> pn.toLowerCase().startsWith(targetPetName) && !pn.toLowerCase().equals(targetPetName))
+                    .sorted()
+                    .collect(Collectors.toList());
+            return suggestions;
+        }
+    }
+
+    /**
+     * Returns a sorted list of suggestions for pet patient species.
+     */
+    private List<String> getPetPatientSpeciesSuggestions() {
+        if (targetWord.equals("s/")) {
+            List<String> suggestions = logic.getAllPetPatientSpecies()
+                    .stream()
+                    .sorted()
+                    .collect(Collectors.toList());
+            return suggestions;
+        } else {
+            String[] splitByPrefix = targetWord.split("/");
+            String targetSpecie = splitByPrefix[1];
+            List<String> suggestions = logic.getAllPetPatientSpecies()
+                    .stream()
+                    .filter(s -> s.toLowerCase().startsWith(targetSpecie) && !s.toLowerCase().equals(targetSpecie))
+                    .sorted()
+                    .collect(Collectors.toList());
+            return suggestions;
+        }
+    }
+
+    /**
+     * Returns a sorted list of suggestions for pet patient breeds.
+     */
+    private List<String> getPetPatientBreedSuggestions() {
+        if (targetWord.equals("b/")) {
+            List<String> suggestions = logic.getAllPetPatientBreeds()
+                    .stream()
+                    .sorted()
+                    .collect(Collectors.toList());
+            return suggestions;
+        } else {
+            String[] splitByPrefix = targetWord.split("/");
+            String targetBreed = splitByPrefix[1];
+            List<String> suggestions = logic.getAllPetPatientBreeds()
+                    .stream()
+                    .filter(b -> b.toLowerCase().startsWith(targetBreed) && !b.toLowerCase().equals(targetBreed))
+                    .sorted()
+                    .collect(Collectors.toList());
+            return suggestions;
+        }
+    }
+
+    /**
+     * Returns a sorted list of suggestions for pet patient colours.
+     */
+    private List<String> getPetPatientColourSuggestions() {
+        if (targetWord.equals("c/")) {
+            List<String> suggestions = logic.getAllPetPatientColours()
+                    .stream()
+                    .sorted()
+                    .collect(Collectors.toList());
+            return suggestions;
+        } else {
+            String[] splitByPrefix = targetWord.split("/");
+            String targetPetColour = splitByPrefix[1];
+            List<String> suggestions = logic.getAllPetPatientColours()
+                    .stream()
+                    .filter(c -> c.toLowerCase().startsWith(targetPetColour)
+                            && !c.toLowerCase().equals(targetPetColour))
+                    .sorted()
+                    .collect(Collectors.toList());
+            return suggestions;
+        }
+    }
+
+    /**
+     * Returns a sorted list of suggestions for pet patient blood types.
+     */
+    private List<String> getPetPatientBlootTypeSuggestions() {
+        if (targetWord.equals("bt/")) {
+            List<String> suggestions = logic.getAllPetPatientBloodTypes()
+                    .stream()
+                    .sorted()
+                    .collect(Collectors.toList());
+            return suggestions;
+        } else {
+            String[] splitByPrefix = targetWord.split("/");
+            String targetPetBloodType = splitByPrefix[1];
+            List<String> suggestions = logic.getAllPetPatientBloodTypes()
+                    .stream()
+                    .filter(bt -> bt.toLowerCase().startsWith(targetPetBloodType)
+                            && !bt.toLowerCase().equals(targetPetBloodType))
                     .sorted()
                     .collect(Collectors.toList());
             return suggestions;
@@ -129,9 +286,10 @@ public class Autocomplete {
     /**
      * Returns a sorted list of suggestions for Nric.
      */
-    private List<String> suggestNrics() {
+    private List<String> getNricSuggestions() {
         if (targetWord.equals("nr/")) {
-            List<String> suggestions = logic.getAllNric().stream()
+            List<String> suggestions = logic.getAllNric()
+                    .stream()
                     .sorted()
                     .collect(Collectors.toList());
             return suggestions;
@@ -139,8 +297,9 @@ public class Autocomplete {
         } else {
             String[] splitByPrefix = targetWord.split("/");
             String targetNric = splitByPrefix[1].toUpperCase();
-            List<String> suggestions = logic.getAllNric().stream()
-                    .filter(n -> n.startsWith(targetNric))
+            List<String> suggestions = logic.getAllNric()
+                    .stream()
+                    .filter(n -> n.startsWith(targetNric) && !n.equals(targetNric))
                     .sorted()
                     .collect(Collectors.toList());
             return suggestions;
@@ -150,8 +309,9 @@ public class Autocomplete {
     /**
      * Returns a sorted list of suggestions for prefixes.
      */
-    private List<String> suggestPrefixes() {
-        List<String> suggestions = logic.getAllPrefixes().stream()
+    private List<String> getPrefixSuggestions() {
+        List<String> suggestions = logic.getAllPrefixes()
+                .stream()
                 .filter(p -> p.startsWith(targetWord) && !p.equals(targetWord))
                 .sorted()
                 .collect(Collectors.toList());
@@ -161,8 +321,9 @@ public class Autocomplete {
     /**
      * Returns a sorted list of suggestions for options.
      */
-    private List<String> suggestOptions() {
-        List<String> suggestions = logic.getAllOptions().stream()
+    private List<String> getOptionSuggestions() {
+        List<String> suggestions = logic.getAllOptions()
+                .stream()
                 .filter(o -> o.startsWith(targetWord) && !o.equals(targetWord))
                 .sorted()
                 .collect(Collectors.toList());
@@ -172,11 +333,21 @@ public class Autocomplete {
     /**
      * Returns a sorted list of suggestions for command words.
      */
-    private List<String> suggestCommandWords() {
-        List<String> suggestions = logic.getAllCommandWords().stream()
+    private List<String> getCommandWordSuggestions() {
+        List<String> suggestions = logic.getAllCommandWords()
+                .stream()
                 .filter(c -> c.startsWith(targetWord) && !c.equals(targetWord))
                 .sorted()
                 .collect(Collectors.toList());
         return suggestions;
     }
+
+    @Subscribe
+    public void handleAddressBookChangedEvent(AddressBookChangedEvent a) {
+        init(this.logic);
+        logger.info(LogsCenter.getEventHandlingLogMessage(a, "Local data changed,"
+                + " update autocomplete data"));
+
+    }
+
 }

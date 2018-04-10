@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
@@ -48,11 +49,17 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.setContextMenu(suggestionBox);
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
-        // autocomplete
-        autocompleteListener = ((observable, oldValue, newValue) -> triggerAutocomplete(newValue));
-        commandTextField.textProperty().addListener(autocompleteListener);
-
         historySnapshot = logic.getHistorySnapshot();
+
+        // autocomplete
+        autocompleteLogic.init(logic);
+        autocompleteListener = new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                triggerAutocomplete(newValue);
+            }
+        };
+        commandTextField.textProperty().addListener(autocompleteListener);
     }
 
     /**
@@ -168,15 +175,16 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    //@@author aquarinte
     /**
-     * Retrieve a list of autocomplete suggestions and set the pop-up ContextMenu.
+     * Sets the pop-up ContextMenu based on the list of autocomplete suggestions retrieved.
      */
     private void triggerAutocomplete(String newValue) {
         suggestionBox.getItems().clear();
 
         if (!newValue.equals("")) {
 
-            suggestions = autocompleteLogic.getSuggestions(logic, commandTextField);
+            suggestions = autocompleteLogic.getSuggestions(commandTextField);
 
             for (String s : suggestions) {
                 MenuItem m = new MenuItem(s);
@@ -195,41 +203,45 @@ public class CommandBox extends UiPart<Region> {
      * and not 'nr/F012F0123456B'.
      */
     private void handleAutocompleteSelection(String toAdd) {
-        String[] words = commandTextField.getText().trim().split(" ");
-        String targetWord = words[words.length - 1];
+        int cursorPosition = commandTextField.getCaretPosition();
+        int userInputLength = commandTextField.getText().length();
 
-        if (containsPrefix(targetWord) || isPrefix(targetWord)) {
+        // .split() retains all whitespaces in array.
+        String[] words = commandTextField.getText(0, cursorPosition).split("((?<= )|(?= ))", -1);
+        String targetWord = words[words.length - 1];
+        String restOfInput = getRemainingInput(cursorPosition, userInputLength);
+
+        if (containsPrefix(targetWord)) {
             String[] splitByPrefix = targetWord.split("/");
             words[words.length - 1] = splitByPrefix[0] + "/" + toAdd;
-            //toAdd = toAdd.replaceFirst("(?i)" + splitByPrefix[1], "");
         } else {
-            //toAdd = toAdd.replaceFirst("(?i)"+words[words.length - 1], "");
             words[words.length - 1] = toAdd;
         }
 
-        //int cursorPos = commandTextField.getCaretPosition();
-        //commandTextField.insertText(cursorPos, toAdd);
-        String updateInput = String.join(" ", words);
-        commandTextField.setText(updateInput);
-        commandTextField.positionCaret(commandTextField.getText().length());
+        String updatedInput = String.join("", words);
+        int newCursorPosition = updatedInput.length();
+        commandTextField.setText(updatedInput + restOfInput);
+        commandTextField.positionCaret(newCursorPosition);
     }
 
     /**
-     * Returns true if {@code toCheck} contains a prefix, but is not a prefix.
+     * Returns text in {@code commandTextField} based on {@code cursorPosition} and {@code userInputLength}.
+     */
+    private String getRemainingInput(int cursorPosition, int userInputLength) {
+        String restOfInput = " ";
+        if (userInputLength > cursorPosition + 1) {
+            restOfInput += commandTextField.getText(cursorPosition, commandTextField.getText().length());
+        }
+        return restOfInput;
+    }
+
+    /**
+     * Returns true if {@code toCheck} contains a prefix or is a prefix.
      */
     private boolean containsPrefix(String toCheck) {
-        if (toCheck.contains("/") && !toCheck.substring(toCheck.length() - 1).equals("/")) {
+        if (toCheck.contains("/")) {
             return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Returns true if {@code toCheck} is a prefix (ends with '/').
-     */
-    private boolean isPrefix(String toCheck) {
-        if (toCheck.length() > 0 && toCheck.substring(toCheck.length() - 1).equals("/")) {
+        } else if (toCheck.length() > 0 && toCheck.substring(toCheck.length() - 1).equals("/")) {
             return true;
         } else {
             return false;

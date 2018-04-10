@@ -19,15 +19,20 @@ The source code is based on the  https://github.com/se-edu/addressbook-level4[Ad
 * *Major enhancement*: Data transferring which includes import, export, and upload feature
 ** What it does: Allows students to transfer StardyTogether file easily which includes importing all of the persons, tags, and aliases of StardyTogether file, exporting the selected persons in StardyTogether to a specified filepath, and upload the selected persons in StardyTogether to Google Drive.
 ** Justification: Students can transfer data between one another easily. Students can store backup in Google Drive and transfer between computers easily.
+** Credits: Uploading feature uses https://developers.google.com/drive/[Google Drive API]
 
 * *Minor enhancement*: Vacant Room Finder model and storage component
 ** What it does: Shows the list of all rooms' weekday schedule in the building that the student is searching for the day.
 ** Justification: This allows students to easily find empty rooms for them to study in with their friends. This feature displays the schedule of the rooms for the whole day so that students can find the room that is vacant for the longest time.
+** Credits: Venue information from https://nusmods.com/api/2017-2018/2/venueInformation.json[NUSMods] are used
 
 * *Other contributions*:
 *** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W11-B4/main/pull/74[#74], https://github.com/CS2103JAN2018-W11-B4/main/pull/138[#138]
+*** PRs reviewed (with non-trivial review comments): Pull Requests https://github.com/CS2103JAN2018-W11-B4/main/pull/74[#74], https://github.com/CS2103JAN2018-W11-B4/main/pull/138[#138]
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F09-B3/main/issues/177[1], https://github.com/CS2103JAN2018-F09-B3/main/issues/139[2], https://github.com/CS2103JAN2018-F09-B3/main/issues/159[3])
+** Tools:
+*** Uses a third party library (Google Drive API) for uploading feature (Pull Request https://github.com/CS2103JAN2018-W11-B4/main/pull/208[#208])
 
 == Contributions to the User Guide
 

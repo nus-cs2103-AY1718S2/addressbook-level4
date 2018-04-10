@@ -230,6 +230,32 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+//tag::Login/Logout[]
+=== Login/logout & reset password feature
+====Current Implementation
+The login/logout command feature requires the sales person to enter password whenever he/she starts to use the addressbook. This will allow for a safer address book.
+
+To lock the adress book, simply type 'lock' or the command alias 'lk'.
+
+An example of the sort command would be: lock
+
+An example of the sort command alias would be: lk
+
+To unlock the adress book, simply type 'unlock [PASSWORD]' or the command alias 'ulk [PASSWORD]'.
+
+An example of the sort command would be: unlock 123456
+
+An example of the sort command alias would be: ulk 123456
+
+The reset password command feature allows the sales person to change password. This will allow for a safer address book.
+
+To change the password, simply type 'setPassword [OLD_PASSWORD] [NEW_PASSWORD]' or the command alias 'sp [OLD_PASSWORD] [NEW_PASSWORD]'.
+
+An example of the change password command would be: setPassword 123456 123
+
+An example of the sort command alias would be: sp 123456 123
+//end::Login/logout[]
+
 //tag::SortCommand[]
 === SortCommand feature
 ==== Current Implementation
@@ -242,16 +268,28 @@ An example of the sort command would be: sort
 An example of the sort command alias would be: so
 //end::SortCommand[]
 
-// tag::DeletTag[]
-=== DeletTag feature
+//tag::ExportCommand[]
+=== ExportCommand feature
+==== Current Implementation
+The export command feature allows the sales person to export their clients to a csv file. This will allow for a more organized and neat address book.
+
+To export the adress book, simply type 'export' or the command alias 'ep'.
+
+An example of the sort command would be: export
+
+An example of the sort command alias would be: ep
+//end::ExportCommand[]
+
+// tag::DeleteTag[]
+=== DeleteTag feature
 ==== Current Implementation
 The delete tag command allows user to remove a particular tag from all persons in the AddressBook. For example, he may want to delete the tag "neigbour" from all his contacts if he is no longer staying at the place.
 
-We implement Model#deleteTag(Tag) torwards the direction of removeTag command, so that the developer dealing with the 'logic' component is able to implement such a command.
+To delete a tag, simply type 'deletetag [TAG]' or the command alias 'dt [TAG]'.
 
-==== Design Considerations
+An example of the delete tag command would be: deletetag firends
 
-===== Aspect: Implementation of time zone
+An example of the sort command alias would be: dt friends
 
 The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the AddressBook. This may cause some tests to fail.
 
@@ -914,8 +952,12 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * *Minor*: A time zone feature which allows the sales person to add the timezone details of their clients.
 
 ==== Ma Yuqian
+* *Major*: A login/logout & reset password function that allows the user to verify his/her identity when he/she starts using this APP to protect his/her privacy
 * *Minor*: A sort command that can sort in alphabetical order.
-* *Minor*: A remove tag method in model component.
+* *Minor*: A remove tag command that can remove tags from all the people in the address book.
+* *Minor*: A comment feature which allows the sales person to add the notes of their clients.
+* *Minor*: A total person at status bar to show the total number of persons in the address book.
+* *Minor*: A export command that can export all persons in the address book to a csv file.
 
 [appendix]
 == User Stories

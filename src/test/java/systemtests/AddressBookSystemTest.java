@@ -273,6 +273,7 @@ public abstract class AddressBookSystemTest {
         assertFalse(handle.isTotalPersonsStatusChanged());
     }
 
+    //@@author XavierMaYuqian
     /**
      * Asserts that the sync status in the status bar was changed to the timing of
      * {@code ClockRule#getInjectedClock()}, and total persons was changed to match the total

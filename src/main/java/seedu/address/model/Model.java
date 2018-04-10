@@ -51,6 +51,7 @@ public interface Model {
             throws DuplicateAppointmentException, AppointmentNotFoundException;
     //@@author
 
+    //@@author XavierMaYuqian
     /** Sorts the persons in AddressBook based on the alphabetical order of their names*/
     void sort();
 

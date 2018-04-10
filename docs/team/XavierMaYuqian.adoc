@@ -1,0 +1,88 @@
+= Ma Yuqian - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: SellIT
+
+---
+
+== Overview
+
+SellIT is a desktop address book application used for businessman doing his business all around the world. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the login/logout & reset password function*
+** What it does: allows the user to lock the addressbook when he/she does not need to use it and unlock the addressbook with password when he/she needs to use it. And the user can also change the password when neccessary. 
+** Justification: This feature improves the product significantly because a user may needs privacy and wants to protect his personal data. This improve the security of the APP.
+** Highlights: This enhancement does not affect existing commands and commands to be added in future. For future added features, just make sure it does not violate any requirements by this feature
+
+* *Minor enhancement*: added a sort command that can sort in alphabetical order.
+
+* *Minor enhancement*: added a remove tag command that can remove tags from all the people in the address book.
+
+* *Minor enhancement*: added a comment feature which allows the sales person to add the notes of their clients.
+
+* *Minor enhancement*: added a total person at status bar to show the total number of persons in the address book.
+
+* *Minor enhancement*: added an export command that can export all the people in the address book to a csv file.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W10-B2/main/blob/master/collated/functional/XavierMaYuqian.md[Functional code]] [https://github.com/CS2103JAN2018-W10-B2/main/blob/master/collated/test/XavierMaYuqian.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+** Enhancements to existing features:
+*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+** Documentation:
+*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
+*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
+** Tools:
+*** Integrated a third party library (Natty) to the project (https://github.com[#42])
+*** Integrated a new Github plugin (CircleCI) to the team repo
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=unlock]
+
+include::../UserGuide.adoc[tag=lock]
+
+include::../UserGuide.adoc[tag=setPassword]
+
+include::../UserGuide.adoc[tag=sort]
+
+include::../UserGuide.adoc[tag=deletetag]
+
+include::../UserGuide.adoc[tag=export]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=Login/Logout]
+
+include::../DeveloperGuide.adoc[tag=SortCommand]
+
+include::../DeveloperGuide.adoc[tag=DeleteTag]
+
+include::../DeveloperGuide.adoc[tag=TotalPersonStatusBar]
+
+include::../DeveloperGuide.adoc[tag=AddComment]
+
+include::../UserGuide.adoc[tag=ExportCommand]
+
+== PROJECT: PowerPointLabs
+
+---

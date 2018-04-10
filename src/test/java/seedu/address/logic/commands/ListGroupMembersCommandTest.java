@@ -60,7 +60,7 @@ public class ListGroupMembersCommandTest {
     }
 
     @Test
-    public void execute_GroupFound() {
+    public void execute_groupFoundSuccess() {
 
         Group groupToList = new Group(new Information("Group A"));
         String expectedMessage = String.format("0 persons listed!");

@@ -534,9 +534,9 @@ The `_HtmlFormatter_` class is responsible for the HTML formatting of a recipe.
 
 // end::displaying-a-recipe[]
 
-// tag::download-image[]
 === Downloading an image
 
+// tag::download-image[]
 ==== Current Implementation
 
 When an *`add`* or *`edit`* command has an image field input, that input will be checked if it is a valid image URL using `ImageIO` (implementation below).

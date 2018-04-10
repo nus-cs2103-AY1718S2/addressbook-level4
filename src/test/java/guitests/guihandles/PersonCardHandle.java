@@ -84,4 +84,22 @@ public class PersonCardHandle extends NodeHandle<Node> {
                 .map(Label::getText)
                 .collect(Collectors.toList());
     }
+
+    public List<String> getGroupTagStyleClasses(String tag) {
+        return groupLabels
+                .stream()
+                .filter(label -> label.getText().equals(tag))
+                .map(Label::getStyleClass)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No such tag."));
+    }
+
+    public List<String> getPreferenceTagStyleClasses(String tag) {
+        return preferenceLabels
+                .stream()
+                .filter(label -> label.getText().equals(tag))
+                .map(Label::getStyleClass)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No such tag."));
+    }
 }

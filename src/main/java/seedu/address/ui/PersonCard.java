@@ -13,7 +13,8 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-
+    private static final String[] TAG_COLOR_STYLES =
+        { "teal", "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "indigo" };
     public final Person person;
 
     @FXML
@@ -42,8 +43,45 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        person.getGroupTags().forEach(group -> groups.getChildren().add(new Label(group.tagName)));
-        person.getPreferenceTags().forEach(pref -> preferences.getChildren().add(new Label(pref.tagName)));
+        initGroupTags(person);
+        initPreferenceTags(person);
+    }
+
+    /**
+     * Returns the color style for {@code tagName}'s label.
+     */
+    public static String getPrefTagColorStyleFor(String tagName) {
+        // we use the hash code of the tag name to generate a random color, so that the color remain consistent
+        // between different runs of the program while still making it random enough between tags.
+        return TAG_COLOR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOR_STYLES.length];
+    }
+
+    public static String getGroupTagColorStyleFor(String tagName) {
+        // we use the hash code of the tag name to generate a random color, so that the color remain consistent
+        // between different runs of the program while still making it random enough between tags.
+        return TAG_COLOR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOR_STYLES.length];
+    }
+
+    /**
+     * Creates the group tag labels for {@code person}.
+     */
+    private void initGroupTags(Person person) {
+        person.getGroupTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.getStyleClass().add(getGroupTagColorStyleFor(tag.tagName));
+            groups.getChildren().add(tagLabel);
+        });
+    }
+
+    /**
+     * Creates the preference tag labels for {@code person}.
+     */
+    private void initPreferenceTags(Person person) {
+        person.getPreferenceTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.getStyleClass().add(getPrefTagColorStyleFor(tag.tagName));
+            preferences.getChildren().add(tagLabel);
+        });
     }
 
     @Override

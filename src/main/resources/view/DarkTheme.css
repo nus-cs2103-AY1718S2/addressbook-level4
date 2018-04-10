@@ -341,14 +341,11 @@
 }
 
 #groups .label {
-    -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
-
 
 #preferences {
     -fx-hgap: 7;
@@ -356,12 +353,105 @@
 }
 
 #preferences .label {
-    -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+
+#groups .teal {
+    -fx-text-fill: white;
+    -fx-background-color: #3e7b91;
+}
+
+#groups .red {
+    -fx-text-fill: black;
+    -fx-background-color: red;
+}
+
+#groups .yellow {
+    -fx-background-color: yellow;
+    -fx-text-fill: black;
+}
+
+#groups .blue {
+    -fx-text-fill: white;
+    -fx-background-color: #2980B9;
+}
+
+#groups .orange {
+    -fx-text-fill: black;
+    -fx-background-color: orange;
+}
+
+#groups .brown {
+    -fx-text-fill: white;
+    -fx-background-color: brown;
+}
+
+#groups .green {
+    -fx-text-fill: black;
+    -fx-background-color: #27AE60;
+}
+
+#groups .pink {
+    -fx-text-fill: black;
+    -fx-background-color: pink;
+}
+
+#groups .black {
+    -fx-text-fill: white;
+    -fx-background-color: black;
+}
+
+#groups .indigo {
+    -fx-text-fill: black;
+    -fx-background-color: #8E44AD;
+}
+
+#preferences .red {
+    -fx-text-fill: black;
+    -fx-background-color: red;
+}
+
+#preferences .yellow {
+    -fx-background-color: yellow;
+    -fx-text-fill: black;
+}
+
+#preferences .blue {
+    -fx-text-fill: white;
+    -fx-background-color: #2980B9;
+}
+
+#preferences .orange {
+    -fx-text-fill: black;
+    -fx-background-color: orange;
+}
+
+#preferences .brown {
+    -fx-text-fill: white;
+    -fx-background-color: brown;
+}
+
+#groups .green {
+    -fx-text-fill: black;
+    -fx-background-color: #27AE60;
+}
+
+#preferences .pink {
+    -fx-text-fill: black;
+    -fx-background-color: pink;
+}
+
+#preferences .black {
+    -fx-text-fill: white;
+    -fx-background-color: black;
+}
+
+#preferences .indigo {
+    -fx-text-fill: black;
+    -fx-background-color: #8E44AD;
 }
 
 /*@@author AJZ1995*/

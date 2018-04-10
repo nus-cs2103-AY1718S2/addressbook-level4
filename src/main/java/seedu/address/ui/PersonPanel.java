@@ -64,8 +64,16 @@ public class PersonPanel extends UiPart<Region> {
         phone.setText(person.getPhone().toString());
         address.setText(person.getAddress().toString());
         email.setText(person.getEmail().toString());
-        person.getGroupTags().forEach(group -> groups.getChildren().add(new Label(group.tagName)));
-        person.getPreferenceTags().forEach(pref -> preferences.getChildren().add(new Label(pref.tagName)));
+        person.getGroupTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.getStyleClass().add(PersonCard.getGroupTagColorStyleFor(tag.tagName));
+            groups.getChildren().add(tagLabel);
+        });
+        person.getPreferenceTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.getStyleClass().add(PersonCard.getPrefTagColorStyleFor(tag.tagName));
+            preferences.getChildren().add(tagLabel);
+        });
     }
 
     @Subscribe

@@ -66,7 +66,7 @@
 //        executeCommand(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_ACTIVITY.getOneBased());
 //        assertEquals("", getCommandBox().getInput());
 //        assertCommandBoxShowsDefaultStyle();
-//        assertNotEquals(HelpCommand.SHOWING_HELP_MESSAGE, getResultDisplay().getText());
+//        assertNotEquals(HelpCommand.SHOWN_HELP_MESSAGE, getResultDisplay().getText());
 //        assertNotEquals(BrowserPanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
 //        assertListMatching(getPersonListPanel(), getModel().getFilteredActivityList());
 //

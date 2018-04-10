@@ -8,8 +8,6 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
-import org.junit.Test;
-
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import seedu.address.model.Model;
@@ -24,6 +22,9 @@ public class OverdueCheckerTest {
     private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
     //TODO
+    /**
+     *
+     */
     public void run_markingAsOverdue_correctNumOverdueTasks() throws InterruptedException {
         ModelStub modelStub = new ModelStub();
         OverdueChecker checker = new OverdueChecker(modelStub);
@@ -65,7 +66,8 @@ public class OverdueCheckerTest {
         }
 
         @Override
-        public void updateActivity(Activity target, Activity editedActivity) throws DuplicateActivityException, ActivityNotFoundException {
+        public void updateActivity(Activity target, Activity editedActivity)
+                throws DuplicateActivityException, ActivityNotFoundException {
 
         }
 
@@ -76,7 +78,7 @@ public class OverdueCheckerTest {
 
         @Override
         public ObservableList<Activity> getFilteredTaskList() {
-           return TypicalActivities.getTypicalTasks();
+            return TypicalActivities.getTypicalTasks();
         }
 
         @Override

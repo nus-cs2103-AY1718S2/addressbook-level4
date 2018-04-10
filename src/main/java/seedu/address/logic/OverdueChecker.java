@@ -27,10 +27,10 @@ import seedu.address.model.activity.exceptions.DuplicateActivityException;
  */
 public class OverdueChecker implements Runnable {
 
+    private static int numOverdueTasks;
     private Model model;
     private ObservableList<Activity> taskList;
     private ObservableList<Activity> eventList;
-    private static int numOverdueTasks;
 
     // Constructor
     public OverdueChecker(Model model) {
@@ -39,6 +39,9 @@ public class OverdueChecker implements Runnable {
         eventList = model.getFilteredEventList();
     }
 
+    /**
+     * The run method of OverdueChecker runnable
+     */
     public void run() {
         numOverdueTasks = 0;
         LocalDateTime currentDateTime = LocalDateTime.now();
@@ -57,6 +60,10 @@ public class OverdueChecker implements Runnable {
         });
     }
 
+    /**
+     * Task that has passed its due date and is not yet completed
+     * is tagged as overdue.
+     */
     private void markingAsOverdue(ObservableList<Activity> taskList, LocalDateTime currentDateTime)
             throws ActivityNotFoundException, DuplicateActivityException {
         for (int i = 0; i < taskList.size(); i++) {
@@ -69,6 +76,9 @@ public class OverdueChecker implements Runnable {
         }
     }
 
+    /**
+     * Event that has passed its end date is tagged automatically as finished.
+     */
     private void markingAsFinished(ObservableList<Activity> eventList, LocalDateTime currentDateTime)
             throws ActivityNotFoundException, DuplicateActivityException {
         for (int i = 0; i < eventList.size(); i++) {

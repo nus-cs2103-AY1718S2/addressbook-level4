@@ -54,7 +54,8 @@ public class DateTimeSchedulerTest {
         }
 
         @Override
-        public void updateActivity(Activity target, Activity editedActivity) throws DuplicateActivityException, ActivityNotFoundException {
+        public void updateActivity(Activity target, Activity editedActivity)
+                throws DuplicateActivityException, ActivityNotFoundException {
 
         }
 

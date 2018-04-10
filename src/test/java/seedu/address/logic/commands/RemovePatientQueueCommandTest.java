@@ -32,7 +32,7 @@ public class RemovePatientQueueCommandTest {
     public void execute_emptyQueue_throwsCommandException() throws CommandException {
         RemovePatientQueueCommand removeEmptyQueueCommand = prepareEmptyQueueCommand();
         thrown.expect(CommandException.class);
-        thrown.expectMessage(RemovePatientQueueCommand.MESSAGE_PERSON_NOT_FOUND_QUEUE);
+        thrown.expectMessage(RemovePatientQueueCommand.MESSAGE_QUEUE_EMPTY);
         removeEmptyQueueCommand.execute();
     }
 
@@ -42,7 +42,33 @@ public class RemovePatientQueueCommandTest {
         RemovePatientQueueCommand command = prepareCommand();
         CommandResult commandResult = command.execute();
         assertEquals(String.format(RemovePatientQueueCommand.MESSAGE_REMOVE_SUCCESS,
-                TypicalPatients.ALICE.getName().toString()), commandResult.feedbackToUser);
+                TypicalPatients.ALICE.getName().fullName), commandResult.feedbackToUser);
+    }
+
+    @Test
+    public void execute_patientExist_removeByIndexSuccessful() throws CommandException,
+            IllegalValueException, PatientNotFoundException {
+        RemovePatientQueueCommand command = prepareCommandMorePatient("2");
+        CommandResult commandResult = command.execute();
+        assertEquals(String.format(RemovePatientQueueCommand.MESSAGE_REMOVE_SUCCESS,
+                TypicalPatients.BENSON.getName().fullName), commandResult.feedbackToUser);
+    }
+
+    @Test
+    public void execute_emptyQueueRemoveByIndex_throwsCommandException() throws IllegalValueException, CommandException {
+        RemovePatientQueueCommand command = prepareCommandEmptyQueueIndex("2");
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(RemovePatientQueueCommand.MESSAGE_QUEUE_EMPTY);
+        command.execute();
+    }
+
+    @Test
+    public void execute_patientNotExistInQueue_throwsCommandException() throws CommandException,
+            IllegalValueException, PatientNotFoundException {
+        RemovePatientQueueCommand command = prepareCommandMorePatientNotExist("2");
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(RemovePatientQueueCommand.MESSAGE_PERSON_NOT_FOUND_QUEUE);
+        command.execute();
     }
 
     private RemovePatientQueueCommand prepareEmptyQueueCommand() {
@@ -50,12 +76,44 @@ public class RemovePatientQueueCommandTest {
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
+
+    private RemovePatientQueueCommand prepareCommandEmptyQueueIndex(String userInput) throws IllegalValueException {
+        RemovePatientQueueCommand command = new RemovePatientQueueCommand(ParserUtil.parseIndex(userInput));
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
     /**
      * Parses {@code userInput} into a {@code RemovePatientQueueCommand}.
      */
     private RemovePatientQueueCommand prepareCommand() throws IllegalValueException, PatientNotFoundException {
         model.addPatientToQueue(ParserUtil.parseIndex("1"));
         RemovePatientQueueCommand command = new RemovePatientQueueCommand();
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code RemovePatientQueueCommand}.
+     */
+    private RemovePatientQueueCommand prepareCommandMorePatient(String userInput) throws IllegalValueException,
+            PatientNotFoundException {
+        model.addPatientToQueue(ParserUtil.parseIndex("1"));
+        model.addPatientToQueue(ParserUtil.parseIndex("2"));
+        model.addPatientToQueue(ParserUtil.parseIndex("3"));
+        RemovePatientQueueCommand command = new RemovePatientQueueCommand(ParserUtil.parseIndex(userInput));
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code RemovePatientQueueCommand}.
+     */
+    private RemovePatientQueueCommand prepareCommandMorePatientNotExist(String userInput) throws IllegalValueException,
+            PatientNotFoundException {
+        model.addPatientToQueue(ParserUtil.parseIndex("1"));
+        model.addPatientToQueue(ParserUtil.parseIndex("3"));
+        RemovePatientQueueCommand command = new RemovePatientQueueCommand(ParserUtil.parseIndex(userInput));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

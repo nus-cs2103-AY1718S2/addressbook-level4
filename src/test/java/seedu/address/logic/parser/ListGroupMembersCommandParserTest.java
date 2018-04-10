@@ -19,7 +19,7 @@ public class ListGroupMembersCommandParserTest {
     @Test
     public void parse_emptyArg_throwsParseException() {
         assertParseFailure(parser, "", String.format( String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                ListGroupMembersCommand.MESSAGE_USAGE));
+                ListGroupMembersCommand.MESSAGE_USAGE)));
     }
 
     @Test

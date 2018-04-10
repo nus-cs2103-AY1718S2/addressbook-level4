@@ -110,6 +110,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void logoutGithub() throws CommandException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void createIssueOnGitHub(Issue issue) throws IOException {
             fail("This method should not be called. ");
         }

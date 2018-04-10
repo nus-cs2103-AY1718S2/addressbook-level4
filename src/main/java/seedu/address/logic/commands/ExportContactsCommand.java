@@ -41,13 +41,11 @@ public class ExportContactsCommand extends UndoableCommand {
      * The other constructor takes the file path provided by user as argument
      */
     public ExportContactsCommand() {
-        //System.out.println("Contstructor called without argument");
         writeToPath = getDefaultPath();
         System.out.println(writeToPath);
     }
 
     public ExportContactsCommand(String filePath) {
-        //System.out.println("Contstructor called WTIH argument");
         requireNonNull(filePath);
         writeToPath = FileSystems.getDefault().getPath(filePath.trim());
     }

@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,7 @@ public class Autocomplete {
     private Logic logic;
     private String targetWord;
     private String[] words;
+    private Set<String> tagSet;
 
     public static Autocomplete getInstance() {
         if (instance == null) {
@@ -38,9 +40,9 @@ public class Autocomplete {
      */
     public void init(Logic logic) {
         this.logic = logic;
-        logic.processPersonsData();
-        logic.processPetPatientsData();
-        logic.processAppointmentsData();
+        logic.setAttributesForPersonObjects();
+        logic.setAttributesForPetPatientObjects();
+        logic.setAttributesForAppointmentObjects();
     }
 
     /**
@@ -48,6 +50,7 @@ public class Autocomplete {
      */
     public List<String> getSuggestions(TextField commandTextField) {
         int cursorPosition = commandTextField.getCaretPosition();
+        // retain all whitespaces in array
         words = commandTextField.getText(0, cursorPosition).split("((?<= )|(?= ))", -1);
         targetWord = words[words.length - 1].toLowerCase();
 
@@ -126,23 +129,12 @@ public class Autocomplete {
     }
 
     /**
-     * Checks if user input is the find command.
-     */
-    private boolean isFindCommand() {
-        if (words[0].equals("find")) {
-            return true;
-        } else if (words[1].equals("find")) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Returns a sorted list of suggestions for tags.
      */
     private List<String> getTagSuggestions() {
+        setTagListBasedOnOption();
         if (targetWord.equals("t/")) {
-            List<String> suggestions = logic.getAllTagsInModel()
+            List<String> suggestions = tagSet
                     .stream()
                     .sorted()
                     .collect(Collectors.toList());
@@ -150,12 +142,38 @@ public class Autocomplete {
         } else {
             String[] splitByPrefix = targetWord.split("/");
             String targetTag = splitByPrefix[1];
-            List<String> suggestions = logic.getAllTagsInModel()
+            List<String> suggestions = tagSet
                     .stream()
                     .filter(t -> t.toLowerCase().startsWith(targetTag) && !t.toLowerCase().equals(targetTag))
                     .sorted()
                     .collect(Collectors.toList());
             return suggestions;
+        }
+    }
+
+    /**
+     * Sets {@code tagList} based on last matched option.
+     * -o option will set elements of {@code tagList} to be persons' tags.
+     * -p option will set elements of {@code tagList} to be pet patients' tags.
+     * -a option will set elements of {@code tagList} to be appointments' tags.
+     */
+    private void setTagListBasedOnOption() {
+        String commandBoxInput = String.join("", words);
+        int index = commandBoxInput.lastIndexOf("-");
+        String option = commandBoxInput.substring(index, index + 2);
+
+        switch(option) {
+        case "-o":
+            tagSet = logic.getAllPersonTags();
+            break;
+        case "-p":
+            tagSet = logic.getAllPetPatientTags();
+            break;
+        case "-a":
+            tagSet = logic.getAllAppointmentTags();
+            break;
+        default:
+            tagSet = logic.getAllTagsInModel();
         }
     }
 
@@ -335,7 +353,6 @@ public class Autocomplete {
         init(this.logic);
         logger.info(LogsCenter.getEventHandlingLogMessage(a, "Local data changed,"
                 + " update autocomplete data"));
-
     }
 
 }

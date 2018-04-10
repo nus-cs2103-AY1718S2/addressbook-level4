@@ -337,5 +337,5 @@ e.g.`select 2`
 * *Redo* : `redo`
 * *Export* : `export`
 * *Group* : `group`
-* *Password* : `password`
+* *Password* : `password` +
 e.g. `password set/123`

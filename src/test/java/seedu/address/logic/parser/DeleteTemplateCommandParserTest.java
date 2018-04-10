@@ -9,6 +9,8 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.DeleteTemplateCommand;
 
+//@@author ng95junwei
+
 public class DeleteTemplateCommandParserTest {
     private DeleteTemplateCommandParser parser = new DeleteTemplateCommandParser();
 
@@ -33,3 +35,4 @@ public class DeleteTemplateCommandParserTest {
         assertParseFailure(parser, "this and that", expectedMessage);
     }
 }
+//@@author

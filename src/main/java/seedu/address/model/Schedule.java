@@ -119,6 +119,11 @@ public class Schedule implements ReadOnlySchedule {
         }
     }
 
+    /**
+     * Deletes all Lessons associated with a Student {@code UniqueKey key}
+     * @param target
+     * @throws LessonNotFoundException
+     */
     public void removeStudentLesson(Student target) throws LessonNotFoundException {
         for (Lesson lesson : lessons) {
             if (lesson.getUniqueKey().equals(target.getUniqueKey())) {

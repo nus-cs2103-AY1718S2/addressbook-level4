@@ -10,26 +10,20 @@ import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.CalendarView;
-import com.calendarfx.view.DateControl;
 import com.calendarfx.view.page.PageBase;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
-import javafx.scene.control.Label;
-import javafx.util.Callback;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.ScheduleChangedEvent;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
-import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Lesson;
-import seedu.address.model.lesson.Time;
 import seedu.address.model.student.Student;
 
-//@@author demitycho
 /**
- * The Calendar Panel of the App.
+ * @@author demitycho
+ * The Calendar Panel of Codeducator.
  */
 public class CalendarPanel extends UiPart<CalendarView> {
 
@@ -192,5 +186,4 @@ public class CalendarPanel extends UiPart<CalendarView> {
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
     }
-
 }

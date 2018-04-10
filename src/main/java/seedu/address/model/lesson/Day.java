@@ -1,8 +1,5 @@
 package seedu.address.model.lesson;
 
-import org.joda.time.DateTimeConstants;
-import org.joda.time.LocalDate;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
@@ -10,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.util.Date;
 import java.util.HashMap;
+
+import org.joda.time.LocalDate;
 
 /**
  * @@author demitycho
@@ -121,6 +120,10 @@ public class Day implements Comparable<Day> {
         return dayToFullDayMap.get(this.value);
     }
 
+    /**
+     * Gets a DateTime dateString formatted in dd/MM/yyyy
+     * @return
+     */
     public String toDateString() {
         LocalDate now = new LocalDate();
         LocalDate day = now.withDayOfWeek(dayToIntValue(this.toString()));
@@ -128,7 +131,6 @@ public class Day implements Comparable<Day> {
             SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat format2 = new SimpleDateFormat("dd/MM/yyyy");
             Date date = format1.parse(day.toString());
-            System.out.println(format2.format(date));
             return format2.format(date).toString();
         } catch (Exception e) {
             e.printStackTrace();

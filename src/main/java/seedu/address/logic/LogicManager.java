@@ -13,7 +13,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
-import seedu.address.model.lesson.Lesson;
 import seedu.address.model.student.Student;
 
 /**

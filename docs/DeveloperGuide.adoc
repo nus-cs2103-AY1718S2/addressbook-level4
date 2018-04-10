@@ -380,7 +380,7 @@ edited with the edited patient.
 Suppose that the user has just launched the application. The current patient queue is shown in the figure below.
 
 .The current queue
-image::Figure 3.2.1.1.PNG[width="800"]
+image::Figure 3.2.1.1.png[width="800"]
 
 The user now decides to edit the remarks of the first person in the list.
 
@@ -389,13 +389,13 @@ The user now decides to edit the remarks of the first person in the list.
 which will be based on the user input. This new patient will be stored as the edited patient as shown in the figure below.
 
 .The patient before and after editing
-image::Figure 3.2.1.2.PNG[width="800"]
+image::Figure 3.2.1.2.png[width="800"]
 
 `RemarkCommand` will finally call the for the utility method updatePerson under `Model`, to replace the patient to be edited with the edited patient,
 the new list will be as shown in the figure below.
 
 .The queue with updated details
-image::Figure 3.2.1.3.PNG[width="800"]
+image::Figure 3.2.1.3.png[width="800"]
 
 ==== Design Considerations
 
@@ -580,26 +580,26 @@ edited with the edited patient.
 Suppose that the user has just launched the application. The current patient queue is shown in the figure below.
 
 .The current queue
-image::Figure 3.5.1.1.PNG[width="800"]
+image::Figure 3.5.1.1.png[width="800"]
 
 The user now decides to edit the first record of the first person in the list. Upon entering the command, a new window will pop up with each field displaying the
 details of the patient's current record as shown in the figure below.
 
-.A placeholder image
-image::Figure 3.5.1.1.PNG[width="800"]
+.The medical record window
+image::Figure 3.5.1.2.png[width="800"]
 
 After the user hits the enter button or clicks on the confirm button, `RecordCommand` will search for the first person in the list and store it as the person to be edited.
 `RecordCommand` will then create a new patient with the same attributes as the patient to be edited, except for the first record
 which will be edited based on the user's input into the medical record window. This new patient will be stored as the edited patient as shown in the figure below.
 
 .The patient before and after editing
-image::Figure 3.5.1.2.PNG[width="800"]
+image::Figure 3.5.1.3.png[width="800"]
 
 `RecordCommand` will finally call the for the utility method updatePerson under `Model`, to replace the patient to be edited with the edited patient,
 the new list will be as shown in the figure below.
 
 .The queue with updated details
-image::Figure 3.5.1.3.PNG[width="800"]
+image::Figure 3.5.1.4.png[width="800"]
 
 ==== Design Considerations
 

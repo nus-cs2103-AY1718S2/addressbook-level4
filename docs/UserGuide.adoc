@@ -352,7 +352,7 @@ Export all contacts to a .csv file.
 Format: `ec f/PATH`
 
 [NOTE]
-It is not necessary to include a file path after the command. If no file path is included, `ec` will create and write to a new .csv file, _data/exportToExisting.csv_
+It is not necessary to include a file path after the command. If no file path is included, `ec` will create and write to a new .csv file, _data/exportToExisting.csv_. This is necessary for testing purposes, so we encourage the user to specify a file path.
 
 
 ****

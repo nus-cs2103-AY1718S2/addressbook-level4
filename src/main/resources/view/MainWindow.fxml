@@ -52,13 +52,21 @@
             <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
           </VBox>
             <!-- @@author Livian1107 -->
-         <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+         <TabPane fx:id="tabPlaceholder" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
            <tabs>
-             <Tab text="Profile" />
-             <Tab text="Task">
-                 <StackPane fx:id="browserPlaceholder"/>
+             <Tab fx:id="profilePlaceholder" text="Profile" />
+             <Tab fx:id="taskPlaceholder" text="Task">
+             <!-- @@author -->
+                 <!-- @@author EdwardKSG -->
+                 <SplitPane id="taskPane" fx:id="taskPane" dividerPositions="0.2" orientation="VERTICAL" VBox.vgrow="ALWAYS">
+                  <items>
+                     <StackPane fx:id="browser2Placeholder"  prefHeight="40.0" />
+                     <StackPane fx:id="browserPlaceholder" prefHeight="160.0" />
+                  </items>
+                 </SplitPane>
+                 <!-- @@author -->
              </Tab>
-               <Tab text="Exercise">
+               <Tab fx:id="exercisePlaceholder" text="Exercise">
                    <StackPane fx:id="exerciseListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
                </Tab>
                <Tab text="Issues">

@@ -42,6 +42,7 @@ import seedu.progresschecker.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_TAB_TYPE = "Given type must be 'profile', 'task', or 'exercise'";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
     /**
@@ -70,20 +71,19 @@ public class ParserUtil {
         }
         return Integer.parseInt(trimmedIndex);
     }
-    //@@author
 
+    //@@author iNekox3
     /**
-     * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
+     * Parses {@code type} into a {@code String} and returns it. Leading and trailing whitespaces will be
      * trimmed.
-     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer
-     *         and not within desired range).
+     * @throws IllegalValueException if the specified type is invalid (not of string "profile", "task", or "exercise").
      */
-    public static Index parseIndexRange(String oneBasedIndex) throws IllegalValueException {
-        String trimmedIndex = oneBasedIndex.trim();
-        if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex) || !StringUtil.isWithinRange(trimmedIndex)) {
-            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+    public static String parseTabType(String type) throws IllegalValueException {
+        String trimmedType = type.trim();
+        if (!trimmedType.equals("profile") && !trimmedType.equals("task") && !trimmedType.equals("exercise")) {
+            throw new IllegalValueException(MESSAGE_INVALID_TAB_TYPE);
         }
-        return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+        return trimmedType;
     }
 
     //@@author EdwardKSG

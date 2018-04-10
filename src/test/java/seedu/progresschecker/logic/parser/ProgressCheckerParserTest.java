@@ -6,7 +6,7 @@ import static org.junit.Assert.fail;
 import static seedu.progresschecker.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.progresschecker.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.progresschecker.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.progresschecker.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.progresschecker.testutil.TypicalTabTypes.TYPE_EXERCISE;
 
 import java.util.Arrays;
 import java.util.List;
@@ -130,6 +130,15 @@ public class ProgressCheckerParserTest {
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
     }
 
+    //@@author iNekox3
+    @Test
+    public void parseCommand_view() throws Exception {
+        ViewCommand command = (ViewCommand) parser.parseCommand(
+                ViewCommand.COMMAND_WORD + " " + TYPE_EXERCISE);
+        assertEquals(new ViewCommand(TYPE_EXERCISE), command);
+    }
+
+    //@@author
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);
@@ -143,12 +152,4 @@ public class ProgressCheckerParserTest {
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
         parser.parseCommand("unknownCommand");
     }
-
-    @Test
-    public void parseCommand_view() throws Exception {
-        ViewCommand command = (ViewCommand) parser.parseCommand(
-                ViewCommand.COMMAND_WORD + " " + INDEX_SECOND_PERSON.getOneBased());
-        assertEquals(new ViewCommand(INDEX_SECOND_PERSON), command);
-    }
-
 }

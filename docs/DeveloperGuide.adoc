@@ -383,10 +383,12 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 The Upload command will allow users to upload their preferred image to replace the default profile photo.
 
-Upload can be undoable. The following diagram shows the inheritance diagram for upload command:
+The valid photo to be upload will be copies from local path inside resources folder under /images/contact. The name of the file will be renamed according to the time that the photo is uploaded.
 
-.Structure of Commands in the Logic Component
-image::LogicCommandClassDiagram.png[width="800"]
+Upload can be undoable. The diagram below shows how the `EventsCenter` reacts to `uploadPhoto` event.
+
+.Component Interactions for `uploadPhoto` Command
+image::SDforUploadPhoto.png[width="800"]
 
 UploadCommand is implemented this way:
 [source,java]
@@ -394,21 +396,46 @@ UploadCommand is implemented this way:
 public class UploadCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(model);
+        requireNonNull(personToUpdate);
         try {
-            model.uploadPhoto(toUpload);
+            model.addPhoto(photoPath);
+            model.uploadPhoto(personToUpdate, savePath);
             return new CommandResult(MESSAGE_SUCCESS);
-        } catch (FileNotFoundException e) {
-            throw new CommandException(MESSAGE_IMAGE_NOT_FOUND);
-        } catch (IOException e) {
-            throw new CommandException("Caught IOException!");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        } catch (DuplicatePhotoException e) {
+            throw new CommandException(MESSAGE_IMAGE_DUPLICATE);
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_IMAGE_DUPLICATE);
         }
     }
 }
 ----
 
 [NOTE]
-If the path is invalid or the image cannot be found, the upload will not be successful. User will be asked to write the correct path to image again. Users are allowed to reload the image if they want to update the profile photo.
+Users are allowed to reload the image if they want to update the profile photo.
+
+Here is the code to copy the photo from local path inside resources folder.
+[source,java]
+----
+public String copyLocalPhoto(String localPath) throws IOException {
+    File localFile = new File(localPath);
+    String newPath = createSavePath(localPath);
+    if (!localFile.exists()) {
+        throw new FileNotFoundException(MESSAGE_LOCAL_PATH_CONSTRAINTS);
+    }
+    createSavedPhoto(newPath);
+    try {
+        copyFile(localPath, newPath);
+    } catch (IOException e) {
+        throw new IOException(MESSAGE_COPY_FAIL);
+    }
+    return newPath;
+}
+----
+
+[NOTE]
+If the local path is invalid or the image cannot be found, the upload will not be successful. The extension of the file can only be 'jpg', 'jpeg' or 'png'. User will be asked to write the correct path to image again.
 
 ==== Design Considerations
 
@@ -1116,7 +1143,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |search information in our module website based on keywords |navigate and reference the information I need quickly
 
-|`* * *` |user |view my to-do learning outcomes |know all the weekly deliverables and not miss them out
+|`* * *` |user |view my to-do <<learning outcomes,learning outcomes>> |know all the weekly deliverables and not miss them out
 
 |`* * *` |user |mark a to-do learning outcome as completed |focus on the tasks I have not done
 
@@ -1124,7 +1151,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |know if my answer for an exercise is correct |learn from any mistakes I made
 
-|`* * *` |user |see the list of completed/incomplete learning outcomes of my teammates |help to remind my teammate of the task or know which task to offer help with if they are having difficulties
+|`* * *` |user |see the list of completed/incomplete <<learning outcomes,learning outcomes>> of my teammates |help to remind my teammate of the task or know which task to offer help with if they are having difficulties
 
 |`* * *` |user |list issues (tasks) on GitHub |easily inform my teammates of my upcoming plans even before I send any pull requests to the team's repository
 
@@ -1429,16 +1456,19 @@ Build automation is the process of automating the creation of a software build a
 Gradle is an open-source build automation system.
 
 [[GUI]] GUI::
-Graphical User Interface
+Graphical User Interface.
+
+[[Learning-Outcomes]] Learning Outcomes::
+Exercises that need to be done through github for module CS2103/T.
 
 [[mainstream-os]] Mainstream OS::
-Windows, Linux, Unix, OS-X
+Windows, Linux, Unix, OS-X.
 
 [[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+A contact detail that is not meant to be shared with others.
 
 [[sequence-diagram]] Sequence Diagram::
-A sequence diagram shows object interactions shown in time sequence.
+A <<sequence diagram,sequence diagram>> shows object interactions shown in time sequence.
 
 [appendix]
 == Instructions for Manual Testing
@@ -1485,3 +1515,5 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+Back to <<Setting up,TOP>>

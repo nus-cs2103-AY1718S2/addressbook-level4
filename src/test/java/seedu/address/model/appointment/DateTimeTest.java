@@ -1,3 +1,4 @@
+//@@author Kyholmes-test
 package seedu.address.model.appointment;
 
 import static org.junit.Assert.assertEquals;

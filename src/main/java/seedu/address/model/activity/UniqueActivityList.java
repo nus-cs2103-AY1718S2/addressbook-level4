@@ -130,7 +130,6 @@ public class UniqueActivityList implements Iterable<Activity> {
         final boolean activityFoundAndDeleted = internalList.remove(toRemove);
         if (!activityFoundAndDeleted) {
             throw new ActivityNotFoundException();
-            //@@author jasmoon
         } else  {
             internalList.remove(toRemove);
         }

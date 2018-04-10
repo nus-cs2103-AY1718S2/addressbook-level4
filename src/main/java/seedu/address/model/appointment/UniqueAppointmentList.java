@@ -64,5 +64,12 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<Appointment> asObservableList() {
+        return FXCollections.unmodifiableObservableList(internalList);
+    }
 }
 //@@author

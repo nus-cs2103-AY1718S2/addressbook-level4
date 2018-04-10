@@ -34,9 +34,7 @@ public interface Model {
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
 
-
     void addPage(Person person) throws IOException;
-
 
     /** Adds the given appointment */
     void addAppointment(Appointment appointment) throws DuplicateAppointmentException;
@@ -55,8 +53,13 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
 
     void updatePage(Person person) throws IOException;
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
+
+    /** Returns an unmodifiable view of the filtered list of appointments */
+    ObservableList<Appointment> getFilteredAppointmentList();
+
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.

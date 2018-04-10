@@ -312,6 +312,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<Appointment> getAppointmentList() {
+        return appointments.asObservableList();
+    }
+
+    @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
     }

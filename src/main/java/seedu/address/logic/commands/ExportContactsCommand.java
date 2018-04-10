@@ -5,6 +5,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -28,8 +29,8 @@ import seedu.address.model.person.Person;
  */
 public class ExportContactsCommand extends UndoableCommand {
 
+    public static final String FS = File.separator;
     public static final String SUCCESS = "Contacts successfully exported.\n";
-
     public static final String COMMAND_WORD = "export_contacts";
     public static final String COMMAND_ALIAS = "ec";
 
@@ -104,7 +105,7 @@ public class ExportContactsCommand extends UndoableCommand {
     }
 
     public Path getDefaultPath() {
-        Path defaultPath = FileSystems.getDefault().getPath("data/exportToExisting.csv");
+        Path defaultPath = FileSystems.getDefault().getPath("data" + FS + "exportToExisting.csv");
         return defaultPath;
     }
 

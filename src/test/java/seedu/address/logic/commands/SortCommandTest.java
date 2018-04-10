@@ -93,7 +93,6 @@ public class SortCommandTest {
         testModel = icc.model;
     }
 
-
     @Test
     public void sortAddressBookCallingModel_functionCallWithImportedData_personsAreInCorrectOrder()
             throws Exception {
@@ -111,7 +110,6 @@ public class SortCommandTest {
         assertTrue(checkSorted(icc.model));
     }
 */
-
     @Test
     public void executeUndoableCommand_sortImportedPersons_personsCorrectlySorted() throws Exception {
         ImportContactsCommand icc = new ImportContactsCommand("data/Test_contacts_unsorted.csv");
@@ -129,7 +127,6 @@ public class SortCommandTest {
         assertFalse(checkSorted(sc.model));
         CommandResult cr = sc.executeUndoableCommand();
         assertTrue(checkSorted(sc.model));
-        assertEquals(cr.feedbackToUser, "Contacts successfully sorted alphabetically by name.");
     }
 
     @Test

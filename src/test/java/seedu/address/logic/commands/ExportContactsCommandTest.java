@@ -5,6 +5,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.nio.file.Path;
@@ -21,9 +22,9 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.PersonBuilder;
 
 public class ExportContactsCommandTest {
-
-    public static final String VALID_NEW_FILE_PATH = "data/exportToNew.csv";
-    public static final String VALID_EXISTING_FILE_PATH = "data/exportToExisting.csv";
+    public static final String FS = File.separator;
+    public static final String VALID_NEW_FILE_PATH = "data" + FS + "exportToNew.csv";
+    public static final String VALID_EXISTING_FILE_PATH = "data" + FS + "exportToExisting.csv";
 
     //featureUnderTest_testScenario_expectedBehavior()
 
@@ -37,7 +38,7 @@ public class ExportContactsCommandTest {
         ExportContactsCommand a = eccp.parse("");
         ExportContactsCommand b = eccp.parse("exampleFile.csv");
 
-        assertEquals(a.getWriteToPath().toString(), "data/exportToExisting.csv");
+        assertEquals(a.getWriteToPath().toString(), "data" + FS + "exportToExisting.csv");
         assertEquals(b.getWriteToPath().toString(), "exampleFile.csv");
     }
 
@@ -68,7 +69,7 @@ public class ExportContactsCommandTest {
     @Test
     public void getDefaultPath_callWithoutArgs_returnsCorrectString() throws Exception {
         Path x = exportDefaultPath.getDefaultPath();
-        assertEquals(x.toString(), "data/exportToExisting.csv");
+        assertEquals(x.toString(), "data" + FS + "exportToExisting.csv");
     }
 
     @Test
@@ -94,7 +95,7 @@ public class ExportContactsCommandTest {
     public void getDefaultPath_noPathGiven_throwsNoExceptionsAndReturnsPath() {
         Path path = null;
         path = exportDefaultPath.getDefaultPath();
-        assertEquals(path.toString(), "data/exportToExisting.csv");
+        assertEquals(path.toString(), "data" + FS + "exportToExisting.csv");
     }
 
     @Test

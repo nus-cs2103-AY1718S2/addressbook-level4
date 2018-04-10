@@ -50,6 +50,9 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane calendarPlaceholder;
 
     @FXML
+    private StackPane progressIndicatorPlaceholder;
+
+    @FXML
     private StackPane commandBoxPlaceholder;
 
     @FXML
@@ -138,6 +141,8 @@ public class MainWindow extends UiPart<Stage> {
         todoListPanelPlaceholder.getChildren().add(todoListPanel.getRoot());
 
         progressIndicator = new ProgressIndicator(0);
+        progressIndicator.setProgress(logic.getToDoListCompleteRatio());
+        progressIndicatorPlaceholder.getChildren().add(progressIndicator);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());

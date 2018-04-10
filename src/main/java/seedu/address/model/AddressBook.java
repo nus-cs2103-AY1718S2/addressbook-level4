@@ -301,6 +301,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public double getToDoListCompleteRatio() {
+        return todos.getCompleteRatio();
+    }
+
+    @Override
     public ObservableList<Group> getGroupList() {
         return groups.asObservableList();
     }

@@ -27,6 +27,9 @@ public interface Logic {
     /** Returns an unmodifiable view of the filtered list of to-dos */
     ObservableList<ToDo> getFilteredToDoList();
 
+    /** Returns the complete ratio of the filtered list of to-dos */
+    double getToDoListCompleteRatio();
+
     /** Returns an unmodifiable view of the filtered list of events */
     ObservableList<Event> getFilteredEventList();
 

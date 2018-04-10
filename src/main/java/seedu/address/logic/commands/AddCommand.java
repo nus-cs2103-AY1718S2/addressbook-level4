@@ -24,31 +24,39 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
     public static final String COMMAND_WORD = "add";
     public static final String COMMAND_ALIAS = "a";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
-            + "Parameters: "
+    public static final String MESSAGE_USAGE =
+            COMMAND_WORD + " | Adds a Customer or Runner. "
+            + "Refer to the User Guide for help with using this command!"
+            + "\n\t"
+            + "Parameters:\t"
             + PREFIX_TYPE + " r(or c) "
             + PREFIX_NAME + " NAME "
             + "[" + PREFIX_PHONE + " PHONE] "
             + "[" + PREFIX_EMAIL + " EMAIL] "
             + "[" + PREFIX_ADDRESS + " ADDRESS] "
-            + "[" + PREFIX_TAG + " TAG]...\n"
-            + "if type(ty) is 'c' then additional fields are "
-            + "[" + PREFIX_OWESTARTDATE + " OWESTARTDATE] "
-            + "[" + PREFIX_OWEDUEDATE + " OWEDUEDATE] "
-            + "[" + PREFIX_MONEYOWED + " MONEYOWED] "
-            + "[" + PREFIX_INTEREST + " INTERESTRATE]\n"
+            + "[" + PREFIX_OWESTARTDATE + " OWE_START_DATE] "
+            + "[" + PREFIX_OWEDUEDATE + " OWE_DUE_DATE] "
+            + "[" + PREFIX_MONEYOWED + " MONEY_OWED] "
+            + "[" + PREFIX_INTEREST + " INTEREST_RATE] "
+            + "[" + PREFIX_TAG + " TAG] ... "
 
-            + "\nExample: " + COMMAND_WORD + " "
+            + "\n\t\t"
+            + "1. Start and due dates can be specified in natural language."
+            + "\n\t\t"
+            + "2. Interest is compounded weekly, because how else to make money??"
+
+            + "\n\t"
+            + "Example:\t\t" + COMMAND_WORD + " "
             + PREFIX_TYPE + " c "
-            + PREFIX_NAME + " John Doe "
-            + PREFIX_PHONE + " 98765432 "
-            + PREFIX_EMAIL + " johnd@example.com "
-            + PREFIX_ADDRESS + " 311, Clementi Ave 2, #02-25 "
-            + PREFIX_MONEYOWED + " 1000 "
-            + PREFIX_INTEREST + " 2.5 "
+            + PREFIX_NAME + " Ah Meng "
+            + PREFIX_PHONE + " 88888888 "
+            + PREFIX_EMAIL + " fatcai@axa.com "
+            + PREFIX_ADDRESS + " Pulau Tekong "
+            + PREFIX_MONEYOWED + " 1000000 "
+            + PREFIX_INTEREST + " 9.71 "
             + PREFIX_OWESTARTDATE + " today "
             + PREFIX_OWEDUEDATE + " 5 May 2018 "
-            + PREFIX_TAG + " owesMoney";
+            + PREFIX_TAG + " richboy";
 
     public static final String MESSAGE_SUCCESS = "New person added!\n%1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";

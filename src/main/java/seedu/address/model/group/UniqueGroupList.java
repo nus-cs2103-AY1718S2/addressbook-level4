@@ -1,6 +1,6 @@
+//@@author jas5469
 package seedu.address.model.group;
 
-//@@author jas5469
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 

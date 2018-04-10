@@ -25,7 +25,6 @@ public class DeleteToDoCommandSystemTest extends AddressBookSystemTest {
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteToDoCommand.MESSAGE_USAGE);
 
     @Test
-
     public void deleteToDo() {
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 

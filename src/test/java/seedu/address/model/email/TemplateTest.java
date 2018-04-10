@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+//@@author ng95junwei
+
 public class TemplateTest {
     private final String purpose = "purpose";
     private final String title = "title";
@@ -27,5 +29,12 @@ public class TemplateTest {
         assertTrue(template.getTitle().equals(title));
         assertTrue(template.getMessage().equals(message));
     }
+    @Test
+    public void toString_validTemplate_success() {
+        assertTrue(template.toString().equals("Purpose: " + purpose + ", Subject: " + title + ", Message: "
+                + message));
+    }
 
 }
+
+//@@author

@@ -13,8 +13,8 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::jlks96.jpg[width="150", align="left"]
 {empty}[https://github.com/jlks96[github]] [https://www.linkedin.com/in/joshua-lee-a47b94157/[portfolio]]
 
-Role: Team Lead + Deliverables & Deadlines + Scheduling + Documentation
-Responsibilities: Logic + UI + Model
+Role: Team Lead + Deliverables & Deadlines + Scheduling + Code Quality + Documentation
+Responsibilities: Logic + UI + Model + Storage + Commons
 
 '''
 
@@ -23,7 +23,7 @@ image::ng95junwei.jpg[width="150", align="left"]
 {empty}[http://github.com/ng95junwei[github]] [<<johndoe#, portfolio>>]
 
 Role: Integration + Code Quality + Java expert
-Responsibilities: Logic + Model
+Responsibilities: Logic + Model + Storage
 
 '''
 
@@ -32,7 +32,7 @@ image::luca590.jpg[width="150", align="left"]
 {empty}[http://github.com/luca590[github]] [<<johndoe#, portfolio>>]
 
 Role: Testing + Integration + Documentation
-Responsibilities: Storage + Commons
+Responsibilities: Logic + Model
 
 '''
 

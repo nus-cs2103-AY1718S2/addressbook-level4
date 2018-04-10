@@ -6,8 +6,10 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.ClashingAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.email.Template;
+import seedu.address.model.email.exceptions.DuplicateTemplateException;
 import seedu.address.model.email.exceptions.TemplateNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -22,6 +24,9 @@ public interface Model {
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<Appointment> PREDICATE_SHOW_ALL_APPOINTMENTS = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<Template> PREDICATE_SHOW_ALL_TEMPLATES = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -59,9 +64,26 @@ public interface Model {
 
     //@@author ng95junwei
 
+    /**
+     * Updates the filter of the filtered template list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredTemplateList(Predicate<Template> predicate);
+
+    /** Deletes the given template */
+    void deleteTemplate(String purpose) throws TemplateNotFoundException;
+
+    /** Selects template based on search string */
     Template selectTemplate(String search) throws TemplateNotFoundException;
 
+    /** Adds the given template */
+    void addTemplate(Template template) throws DuplicateTemplateException;
+
+    /** Returns an unmodifiable view of all templates */
     ObservableList<Template> getAllTemplates();
+
+    /** Returns an unmodifiable view of the filtered template list */
+    ObservableList<Template> getFilteredTemplateList();
 
     //@@author
 
@@ -70,7 +92,7 @@ public interface Model {
     void deleteAppointment(Appointment appointment) throws AppointmentNotFoundException;
 
     /** Adds the given appointment */
-    void addAppointment(Appointment appointment) throws DuplicateAppointmentException;
+    void addAppointment(Appointment appointment) throws DuplicateAppointmentException, ClashingAppointmentException;
 
     /** Returns an unmodifiable view of the filtered appointment list */
     ObservableList<Appointment> getFilteredAppointmentList();

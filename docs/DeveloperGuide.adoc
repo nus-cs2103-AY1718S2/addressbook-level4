@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= AddSurance - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -160,7 +160,8 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `CalendarPanel` etc.
+All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -168,7 +169,8 @@ The `UI` component,
 
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-* Responds to events raised from various parts of the App and updates the UI accordingly.
+* Responds to events raised from various parts of the App and updates the UI accordingly. For example, the `CalendarPanel`
+reponds to the `ZoomInEvent` and zooms in the `CalendarView` accordingly.
 
 [[Design-Logic]]
 === Logic component
@@ -183,10 +185,10 @@ image::LogicCommandClassDiagram.png[width="800"]
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+*  `Logic` uses the `AddressBookParser` class to parse the user command.
+*  This results in a `Command` object which is executed by the `LogicManager`.
+*  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+*  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
@@ -203,10 +205,11 @@ image::ModelClassDiagram.png[width="800"]
 
 The `Model`,
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* Stores a `UserPref` object that represents the user's preferences.
+* Stores the Address Book data.
+* Exposes an unmodifiable `ObservableList<Person>` and an unmodifiable `ObservableList<Appointment>` that can be 'observed',
+e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* Does not depend on any of the other three components.
 
 [[Design-Storage]]
 === Storage component
@@ -218,8 +221,8 @@ image::StorageClassDiagram.png[width="800"]
 
 The `Storage` component,
 
-* can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* Can save `UserPref` objects in json format and read it back.
+* Can save the Address Book data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -231,7 +234,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 // tag::undoredo[]
-=== Undo/Redo feature
+=== Undo/Redo Feature
 ==== Current Implementation
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
@@ -358,20 +361,148 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::email[]
-=== Email feature
+// tag::emailing[]
+=== Email Feature
 ==== Current Implementation
 The email mechanism is facilitated by the `GmailUtil` which resides under the `util` package. The implementation
 uses the Gmail API which exists as an imported library.
 
-// end::email[]
+The utility function is implemented as follows:
+[source,java]
+----
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+public GmailUtil() throws IOException {
+        this.service = getGmailService();
+}
 
-_{Explain here how the data encryption feature will be implemented}_
+----
+Our Util Constructor calls getGmailService which will return a Gmail Object.
 
-// end::dataencryption[]
+[source,java]
+----
+public static Gmail getGmailService() throws IOException {
+        Credential credential = authorize();
+        return new Gmail.Builder(httpTransport, JSON_FACTORY, credential)
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+}
+----
+This is what the getGmailService looks like, which on a high level authorizes us through the Gmail API
+using our client secret and builds the Gmail object. During the authorize function, we also define our permissions
+to include sending emails.
+
+[source,java]
+----
+    private static final List<String> SCOPES = Arrays.asList(GmailScopes.GMAIL_SEND);
+
+    GoogleAuthorizationCodeFlow flow =
+                    new GoogleAuthorizationCodeFlow.Builder(
+                            httpTransport, JSON_FACTORY, clientSecrets, SCOPES)
+                            .setDataStoreFactory(dataStoreFactory)
+                            .setAccessType("offline")
+                            .build();
+----
+
+Now that we have the Gmail object, we define a class method that uses the Gmail object to send out an email
+[source,java]
+----
+public static void send(Gmail service, String recipientEmail, String ccEmail, String fromEmail, String title,
+                            String message) throws IOException, MessagingException {
+        Message m = createMessageWithEmail(createEmail(recipientEmail, ccEmail, fromEmail, title, message));
+        service.users().messages().send("me", m).execute();
+    }
+----
+
+Which of course includes troublesome things like creating MimeMessages
+[source,java]
+----
+private static MimeMessage createEmail(String to, String cc, String from, String subject, String bodyText)
+            throws MessagingException {
+        Properties props = new Properties();
+        Session session = Session.getDefaultInstance(props, null);
+
+        MimeMessage email = new MimeMessage(session);
+        InternetAddress tAddress = new InternetAddress(to);
+        InternetAddress cAddress = cc.isEmpty() ? null : new InternetAddress(cc);
+        InternetAddress fAddress = new InternetAddress(from);
+
+        email.setFrom(fAddress);
+        if (cAddress != null) {
+            email.addRecipient(javax.mail.Message.RecipientType.CC, cAddress);
+        }
+        email.addRecipient(javax.mail.Message.RecipientType.TO, tAddress);
+        email.setSubject(subject);
+        email.setText(bodyText);
+        return email;
+    }
+----
+And generating a Base64 encoded message to use as a raw input to the Message object before it can be consumed by the
+gmail service.
+
+[source,java]
+----
+private static Message createMessageWithEmail(MimeMessage email) throws MessagingException, IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        email.writeTo(baos);
+        String encodedEmail = Base64.encodeBase64URLSafeString(baos.toByteArray());
+        Message message = new Message();
+        message.setRaw(encodedEmail);
+        return message;
+    }
+
+    Message m = createMessageWithEmail(createEmail(recipientEmail, ccEmail, fromEmail, title, message));
+            service.users().messages().send("me", m).execute();
+----
+// end::emailing[]
+
+//tag::templating[]
+=== Template Feature
+
+==== Template Model
+===== Current Implementation
+The `Template` model is created to support the Emailing feature of the address book. It stores the templates of emails
+defined by the user.
+
+Similar to the `Person` model, the `Template` model consists of an `Template` class which includes three String attributes. The attributes include:
+
+i) `Purpose` => the purpose of this email template
+ii) `Subject` => the subject of this email template
+iii) `Message` => the message of this email template
+
+The `Templates` are stored in a `UniqueTemplateList` in the `AddressBook`. The existing `Model` interface is extended
+with functionality to manage the filtered list of `Template`.
+
+===== Design Considerations
+====== Aspect: Model Manager for Appointment
+* **Alternative 1 (current choice):** Implementing the attributes of `Template` using Strings
+** Pros: No need to create three new models just to hold a String, minimized code
+** Cons: The attributes are not extensible, eg. you cannot make `Subject` dynamic for an email template
+* **Alternative 2:** Create models for every attribute in Template
+** Pros: Potential Extension to the models, eg. `Message` can be dynamically change to email address
+** Cons: Not much usage for now. Extra layer of complexity for no visible enhancement to user.
+
+==== Add Template Function
+===== Current Implementation
+The add Template function is implemented as the `AddTemplateCommand` together
+with its associated `AddTemplateCommandParser` class. This function supports the adding of an `Template` to the address book.
+The implementation of the `AddTemplateCommand` is similar to that of the `AddCommand`.
+
+To enhance the logic of this function, checks are implemented to ensure that no two templates can have the same `Purpose`
+
+Following is a sequence diagram describing how the add Template function works:
+
+image::AddTemplateSequenceDiagram.png[width="900"]
+
+==== Delete Template Function
+===== Current Implementation
+The delete Template function is implemented as the `DeleteTemplateCommand` together
+with its associated `DeleteTemplateCommandParser` class. This function supports the deletion of an `Template` from the address book. The
+implementation of the `DeleteTemplateCommand` is similar to that of the `DeleteCommand`.
+
+Following is a sequence diagram describing how the delete appointment function works:
+
+image::DeleteTemplateSequenceDiagram.png[width="900"]
+//end::templating[]
 
 === Logging
 
@@ -394,8 +525,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 // tag::deletebefore[]
-=== Delete dated persons
-
+=== Delete Dated Persons Function
 ==== Current Implementation
 The delete dated persons mechanism supports deleting all persons added before a date who possess all the tags specified by the user.
 This function is facilitated by adding a `DateAdded` attribute whenever a `Person` is added to the address book. This
@@ -410,12 +540,10 @@ The implementation of this function adheres closely to the Object Oriented Princ
 
 Following is a sequence diagram describing how the delete dated persons function works:
 
-image::DeleteBeforeSequenceDiagram.png[width="900"]
+image::DeleteBeforeSequenceDiagram.png[width="900", align="center"]
 
 ==== Design Considerations
-
 ===== Aspect: Implementation of `DeleteBeforeCommand`
-
 * **Alternative 1 (current choice):** Follows the general design of the `delete` command
 ** Pros: Consistencies in implementation of commands and command parsers
 ** Cons: Requires additional methods for removing persons in the `AddressBook` and `UniquePersonList` classes
@@ -424,7 +552,6 @@ image::DeleteBeforeSequenceDiagram.png[width="900"]
 ** Cons: Needs to call the `delete` command multiple times to delete all targeted persons
 
 ===== Aspect: Implementation of `DateAdded`
-
 * **Alternative 1 (current choice):** Add `DateAdded` as an attribute of a `Person`
 ** Pros: Consistencies in implementation of the `Person` model that is in line with the OOP and Single Responsibility Principle
 ** Cons: Requires additional tests and overheads in maintaining an extra attribute
@@ -433,7 +560,6 @@ image::DeleteBeforeSequenceDiagram.png[width="900"]
 ** Cons: Reduces consistencies in the existing architecture and reduces coherence of the `Person` class
 
 ===== Aspect: Who adds the `DateAdded` attribute
-
 * **Alternative 1 (current choice):** The application automatically creates a `DateAdded` attribute for every `Person` added
 ** Pros: Avoids unnecessary errors in user-input date
 ** Cons: Additional stubs are needed to carry out tests in order to manually fix and manipulate `DateAdded`
@@ -441,6 +567,232 @@ image::DeleteBeforeSequenceDiagram.png[width="900"]
 ** Pros: The user might input the wrong date or date with invalid format
 ** Cons: Ease of implementation
 // end::deletebefore[]
+
+// tag::scheduling[]
+=== Scheduling and Calendar Module
+This entire section is dedicated to explaining the whole scheduling and calendar module in view of its scale and significance.
+
+In general, the implementation of this module follows closely to the current architecture of the system as shown in <<Design-Architecture, Section 2.1>>.
+This is to ensure consistency in the design of the system to keep it simple as _simplicity is consistency_.
+
+A number of Software Engineering Principles are used in the implementation of this module, namely *OOP*, *SOLID*, *YAGNI*, *DRY* principles.
+Besides, the commands related to this module is also implemented using the Command design pattern.
+
+==== Appointment Model
+===== Current Implementation
+The `Appointment` model is created to support the scheduling feature of the address book. It stores the information of appointments
+arranged by the user. The class diagram for the Appointment is as follows:
+
+image::AppointmentClassDiagram.png[width="600", align="center"]
+
+Similar to the `Person` model, the `Appointment` model consists of an `Appointment` class which has its attributes implemented as separate classes to
+observe the *Single Responsibility Principle*. The attributes include:
+
+i) `PersonName` => the name of the person the user is having appointment with
+ii) `Date` => the date of the appointment
+iii) `StartTime` => the start time of the appointment
+iv) `EndTime` => the end time of the appointment
+v) `Location` => the arranged location of the appointment
+
+The `Appointments` are stored in a `UniqueAppointmentList` in the `AddressBook`. The existing `Model` interface is extended
+with functionality to manage the filtered list of `Appointments`. The extension is kept as minimised as possible in light of
+the *YAGNI* Principle.
+
+===== Design Considerations
+====== Aspect: Model Manager for Appointment
+* **Alternative 1 (current choice):** The existing `ModelManager` is extended to handle the filtered list of `Appointments`
+** Pros: This design adheres to the *DRY* Principle as there will not be a duplicated `ModelManager` for the `Appointment` model
+with repeated functionality as the existing one.
+** Cons: Additional methods added to the `Model` interface might increase coupling for existing classes that are dependent on
+the `ModelManager`. For example, modifications made for `Appointment` in the `ModelManager` might now affect other commands unrelated
+to `Appointment` which call the `ModelManager`
+* **Alternative 2:** Create another `Model` interface implemented by another `ModelManager`
+** Pros: Ease of implementation and minimal impact on classes coupled with the existing `ModelManager`
+** Cons: Violates the *DRY* Principle and causes redundant codes
+
+====== Aspect: Creation of StartTime and EndTime attributes
+* **Alternative 1 (current choice):** `StartTime` and `EndTime` are created as separate classes which extends the `Time` class
+** Pros: This implementation adheres to the Polymorphism and Inheritance concepts in OOP. Both `StartTime` and `EndTime` has a
+_is a_ relationship with `Time`. The separation of `StartTime` and `EndTime` into two classes also support possible future extensions to
+these attribute classes. For example, it is possible to set different limits to the `StartTime` and `EndTime` with this implementation.
+** Cons: The `StartTime` and `EndTime` have to adhere to the Liskov Substitution Principle where `StartTime` and `EndTime` cannot be
+more restrictive than the parent `Time` class.
+* **Alternative 2:** Create `StartTime` and `EndTime` as separate unrelated classes
+** Pros: Avoids coupling between `StartTime` and `EndTime` due to an additional `Time` superclass
+** Cons: Violates the *DRY* Principle as `StartTime` and `EndTime` share some functionality, such as checking the validity
+of an input date
+
+==== Calendar UI
+===== Current Implementation
+The calendar is implemented using third party libraries provided by https://github.com/dlemmermann/CalendarFX[CalendarFX].
+The calendar panel view is shown below:
+
+image::CalendarView.png[width="800", align="center"]
+
+The setting up of the `CalendarView` is done by first creating a `Calendar` named _Appointments_ which is added to a `CalendarSource`.
+The `CalendarSource` is then added to the `CalendarView`. The implementation details are as shown in the following code snippet:
+[source,java]
+----
+CalendarView calendarView;
+Calendar calendar;
+
+calendar = new Calendar("Appointments");
+CalendarSource calendarSource = new CalendarSource("My Calendar");
+calendarSource.getCalendars().addAll(calendar);
+
+calendarView.getCalendarSources().addAll(calendarSource);
+
+calendarView.setRequestedTime(LocalTime.now());
+calendarView.showMonthPage();
+----
+
+The `Appointments` stored in the address book is loaded as `Entries` into the `Calendar` upon start up. The list of `Appointments`
+is passed into the `CalendarPanel` class. For each of these `Appointments`, the attributes are used to create an `Entry`, which is then
+added to the `Calendar`.
+
+When there are changes to the filtered list of `Appointments` due to addition or deletion of appointments, the `Calendar` is updated
+by using *Event Handlers*. An example of an event handler for the addition of a new appointment is shown below:
+[source,java]
+----
+@Subscribe
+private void handleNewAppointmentAddedEvent(NewAppointmentAddedEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    loadEntry(event.getAppointmentAdded());
+}
+----
+
+===== Design Considerations
+====== Aspect: Updating of Calendar due to addition or deletion of appointments
+* **Alternative 1 (current choice):** Use of Event Handling to update the `Calendar`
+** Pros: Event handling is suitable for UI purposes due to its flexibility
+** Cons: The flow of program is less logical and obvious
+* **Alternative 2:** The `DeleteAppointmentCommand` and `AddAppointmentCommand` call the `UIManager` to invoke the update
+** Pros: Associations between the `Logic` and `UI` components are clearer
+** Cons: This will introduce a two way dependency between the `Logic` and `UI` components which may lead to confusion and
+make the `Logic` component coupled to the `UI` component
+
+====== Aspect: Creation of Calendar
+* **Alternative 1 (current choice):** Use third party libraries
+** Pros: Readily available hence time saving
+** Cons: There might be possible bugs in the libraries provided by third parties
+
+[NOTE]
+There is an existing bug in the `YearPage` for the `Calendar`, which causes the `YearPage` to fail to scale its size according
+to the size of the container `Pane`
+
+* **Alternative 2:** Create our own `CalendarView`
+** Pros: More flexibility with the design of the `CalendarView`
+** Cons: Time consuming and manpower intensive
+
+==== Add Appointment Function
+===== Current Implementation
+The add Appointment function is implemented as the `AddAppointmentCommand` together
+with its associated `AddAppointmentCommandParser` class. This function supports the adding of an `Appointment` to the address book.
+The `AddAppointmentCommand` inherits from the `UndoableCommand` to allow user to undo the addition of an `Appointment`. The
+implementation of the `AddAppointmentCommand` is similar to that of the `AddCommand`.
+
+To enhance the logic of this function, checks are implemented to ensure that `StartTime` of an appointment must precede the `EndTime`.
+Besides, the function also disallows creation of appointments clashing in time.
+
+Following is a sequence diagram describing how the add appointment function works:
+
+image::AddAppointmentSequenceDiagram.png[width="900", , align="center"]
+
+===== Design Considerations
+====== Aspect: What `Event` to raise when adding a new `Appointment`
+* **Alternative 1 (current choice):** Raise a specially created `NewAppointmentAddedEvent`
+** Pros: Do not have to respond to unrelated or unnecessary events
+** Cons: Overhead in maintaining the new `Event` class
+* **Alternative 2:** Raise the existing `AddressBookChangedEvent`
+** Pros: Do not have to implement a new `Event` class
+** Cons: The Calendar will refresh whenever `AddressBookChangedEvent` is raised, including when only the `Person` list is changed.
+
+==== Delete Appointment Function
+===== Current Implementation
+The delete Appointment function is implemented as the `DeleteAppointmentCommand` together
+with its associated `DeleteAppointmentCommandParser` class. This function supports the deletion of an `Appointment` from the address book.
+The `DeleteAppointmentCommand` inherits from the `UndoableCommand` to allow user to undo the deletion of an `Appointment`. The
+implementation of the `DeleteAppointmentCommand` is similar to that of the `DeleteCommand`.
+
+Following is a sequence diagram describing how the delete appointment function works:
+
+image::DeleteAppointmentSequenceDiagram.png[width="900", , align="center"]
+
+===== Design Considerations
+====== Aspect: What fields to input when deleting an `Appointment`
+* **Alternative 1 (current choice):** Use all attributes of an `Appointment` as input fields to delete a matching `Appointment`
+** Pros: Certainty in deleting an `Appointment`
+** Cons: User has to input all fields which may be cumbersome
+* **Alternative 2:** Only input the `PersonName` and `Date` of the `Appointment` to be deleted
+** Pros: User does not have to input all the attributes of an `Appointment`
+** Cons: There may be more than one `Appointments` with the same `PersonName` and `Date`, which may cause unexpected behaviour by
+the `DeleteAppointmentCommand`
+
+==== Calendar Zooming Function
+===== Current Implementation
+The calendar zooming function is implemented by the `ZoomInCommand` and `ZoomOutCommand`. These `Command` classes are responsible
+for raising the `ZoomInEvent` and `ZoomOutEvent`. In turn, `ZoomInEvent` and `ZoomOutEvent` are created to support this function.
+
+If a user tries to zoom in or out when the zoom level is at its maximum, an error message will be shown. To facilitate this,
+the `CalendarPanel` contains logic that will raise the `MaxZoomInEvent` or `MaxZoomOutEvent` for such situations. `ZoomInCommand`
+and `ZoomOutCommand` will then handle these events raised by throwing a `CommandException` containing the error message.
+
+The actual implementation of the `ZoomInCommand` is as follows:
+[source,java]
+----
+public class ZoomInCommand extends Command {
+    public static final String COMMAND_WORD = "zoomin";
+    public static final String COMMAND_ALIAS = "zi";
+
+    public static final String MESSAGE_SUCCESS = "Calendar zoomed in";
+    public static final String MESSAGE_MAX_ZOOM_IN = "The calendar is already zoomed in to the maximum level";
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private boolean receivedFeedback = false;
+    private boolean isSuccessful = false;
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        registerAsAnEventHandler(this);
+        raise(new ZoomInEvent());
+        while (!receivedFeedback);
+
+        if (isSuccessful) {
+            return new CommandResult(MESSAGE_SUCCESS);
+        } else {
+            throw new CommandException(MESSAGE_MAX_ZOOM_IN);
+        }
+    }
+
+    @Subscribe
+    private void handleMaxZoomInEvent(MaxZoomInEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        receivedFeedback = true;
+        isSuccessful = false;
+    }
+
+    @Subscribe
+    private void handleZoomSuccessEvent(ZoomSuccessEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        receivedFeedback = true;
+        isSuccessful = true;
+    }
+}
+----
+
+The implementation for `ZoomOutCommand` is higher similar to that of `ZoomInCommand`.
+
+===== Design Considerations
+====== Aspect: Where should the event raising be implemented
+* **Alternative 1 (current choice):** Implement event raising in the `Command` superclass
+** Pros: Adheres to the *DRY* principle as `ZoomInCommand` and `ZoomOutCommand` do not have to implement a duplicated event
+raising functionality
+** Cons: All other command subclasses inherits the unnecessary event raising function
+* **Alternative 2:** Implement event raising in a specially created subclass of `Command`, which is in turn inherited by `ZoomInCommand` and `ZooOutCommand`
+** Pros: Commands that do not need to raise event do not need to inherit the event raising function
+** Cons: Might over complicate things for these simple commands.
+// end::scheduling[]
+
 
 === Import Contacts from CSV file
 
@@ -921,7 +1273,11 @@ Major Enhancement :
 *** Implementing a calendar reflecting the scheduled appointments
 *** Implementing `Appointment` objects and their storage
 *** Implementing `addappointment` command to support the creation of new appointments
-*** Implementing `removeappointment` command to support the removal of appointments
+*** Implementing `deleteappointment` command to support the removal of appointments
+*** Implementing `zoomin` command to support zooming in of calendar view
+*** Implementing `zoomout` command to support zooming out of calendar view
+*** Implementing `gobackward` command to support making the calendar view go backward in time from the currently displaying date
+*** Implementing `goforward` command to support making the calendar view go forward in time from the currently displaying date
 
 *Ng Jun Wei*
 
@@ -941,7 +1297,7 @@ Major Enhancement :
 
 Minor Enhancement :
 
-** Upgrades the command box to show hints dynamically
+** Sort persons by name alphabetically.
 
 Major Enhancement :
 
@@ -963,43 +1319,41 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |user |delete old, inactive contacts in batches |clear up space for new contacts
-
 |`* * *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
-
-|`* * *` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`* * *` |user |undo an action |revert to the previous state when I make an unwanted action
 
 |`* * *` |user |redo an action |revert to the later state
 
-|`* * *` |user |manage appointment dates and details in a calendar |keep track of them systematically
-
-|`* * *` |user |send email using customised templates |easily follow up with clients
-
-|`* * *` |user |export the contacts to CSV format files |further make use of them
-
-|`* * *` |user |import contacts from CSV format files |speed up the process of adding new contacts
-
 |`* * *` |user |add multiple entries under the same contact category for the same client |avoid creating multiple contacts for the same client
 
-|`* * *` |user |set reminders |be reminded about appointments and events
+|`* * *` |user with many unwanted dated contacts |delete old, inactive contacts in batches |clear up space for new contacts
 
-|`* * *` |user |include client photos in their contact details |recognise them more easily
+|`* * *` |user with many persons in the address book |sort persons by name |locate a person easily
 
-|`* * *` |user |enjoy autocomplete when typing commands |save time
+|`* * *` |busy user |use truncated commands |save time by not having to type commands in full
 
-|`* * *` |user |use truncated commands |remove entries that I no longer need
+|`* * *` |busy user |enjoy autocomplete when typing commands |save time
 
-|`* * *` |user |customise the colour of the tags |view the different tags more clearly
+|`* * *` |busy user |customise the colour of the tags |view the different tags more clearly
 
-|`* * *` |user |replace an existing tag with a new tag |update tags effectively
+|`* * *` |busy user |replace an existing tag with a new tag |update tags effectively
 
-|`* * *` |user |delete a tag from everyone in the address book |save time
+|`* * *` |busy user |delete a tag from everyone in the address book |save time
+
+|`* * *` |user with many <<appointment, appointments>> |manage appointment dates and details in a calendar |keep track of them systematically
+
+|`* * *` |user with many <<appointment, appointments>> |set reminders |be reminded about appointments and events
+
+|`* * *` |user with many <<client, clients>> |send email using customised templates |easily follow up with clients
+
+|`* * *` |user with many <<client, clients>> |export the contacts to CSV format files |further make use of them
+
+|`* * *` |user with many <<client, clients>> |import contacts from CSV format files |speed up the process of adding new contacts
+
+|`* * *` |user with many <<client, clients>> |include client photos in their contact details |recognise them more easily
 
 |`* *` |user |prioritise clients |single out the more profitable clients
-
-|`* *` |user |email clients from the address book |make arrangements with them
 
 |`* *` |user |change the font and font size of the words in the address book |better read off the application
 
@@ -1015,13 +1369,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |pull my contacts from LinkedIn |synchronize my contacts across platforms
 
-|`*` |user |link to the clients' social media page |find out more about them
+|`*` |user |link to the <<client, clients'>> social media page |find out more about them
 
 |`*` |user |add in new commands to the address book |have the added functionalities I desire
 
 |=======================================================================
 
-_{More to be added}_
 
 [appendix]
 == Use Cases
@@ -1156,24 +1509,18 @@ Use case resumes from step 3.
 Use case ends.
 
 
-_{More to be added}_
-
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 5000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-. Must be aesthetically appealing
-. Search must be relatively fast
-. Customisable theme
-. Must be less than 10MB in size
-. Data must be backed up
-. Should be able to be extended into a mobile application
-. CRUD operations must be relatively fast
-
-
-_{More to be added}_
+.  Must be aesthetically appealing which follows Googles Material Design principles
+.  Customisable theme
+.  Must be less than 15MB in size
+.  Data must be backed up and saved before exiting the application
+.  Should be able to be extended into a mobile application
+.  CRUD operations must be relatively fast, less than 1ms per operation on average
 
 [appendix]
 == Glossary
@@ -1187,24 +1534,9 @@ A contact detail that is not meant to be shared with others
 [[client]] Client::
 A person who has (potential) business relationship with the insurance agent whose contact needs to be saved
 
+[[appointment]] Appointment::
+An appointment that the user is having with a person, who needs not exist as a contact in the address book
 
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
 
 [appendix]
 == Instructions for Manual Testing

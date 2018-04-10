@@ -9,6 +9,7 @@ import seedu.address.model.email.UniqueTemplateList;
 import seedu.address.model.email.exceptions.DuplicateTemplateException;
 import seedu.address.model.email.exceptions.TemplateNotFoundException;
 
+//@@author ng95junwei
 
 public class UniqueTemplateListTest {
     @Rule
@@ -34,7 +35,9 @@ public class UniqueTemplateListTest {
     public void asObservableList_modifyList_throwsTemplateNotFoundException() throws TemplateNotFoundException {
         UniqueTemplateList uniqueTemplateList = new UniqueTemplateList();
         thrown.expect(TemplateNotFoundException.class);
-        uniqueTemplateList.remove(new Template("test", "test", "test"));
+        uniqueTemplateList.remove("test");
     }
 
 }
+
+//@@author

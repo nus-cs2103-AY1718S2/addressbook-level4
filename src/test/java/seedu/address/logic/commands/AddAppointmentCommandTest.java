@@ -55,6 +55,19 @@ public class AddAppointmentCommandTest {
     }
 
     @Test
+    public void execute_clashingAppointment_throwsCommandException() throws Exception {
+        Model modelStub = new ModelManager();
+        Appointment firstAppointment =  new AppointmentBuilder().build();
+        Appointment secondAppointment = new AppointmentBuilder().withPersonName("Bob").build();
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddAppointmentCommand.MESSAGE_CLASHING_APPOINTMENT);
+
+        getAddAppointmentCommandForAppointment(firstAppointment, modelStub).execute();
+        getAddAppointmentCommandForAppointment(secondAppointment, modelStub).execute();
+    }
+
+    @Test
     public void equals() {
         Appointment aliceAppointment = new AppointmentBuilder().withPersonName("Alice").build();
         Appointment bobAppointment = new AppointmentBuilder().withPersonName("Bob").build();

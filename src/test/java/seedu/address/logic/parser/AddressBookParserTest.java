@@ -5,6 +5,12 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.MESSAGE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.PURPOSE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.SUBJECT_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_MESSAGE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PURPOSE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SUBJECT;
 import static seedu.address.logic.parser.CommandParserTestUtil.createDate;
 import static seedu.address.testutil.TypicalDates.DATE_FIRST_JAN;
 import static seedu.address.testutil.TypicalDates.VALID_DATE_DESC;
@@ -23,15 +29,19 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddTemplateCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.commands.DeleteBeforeCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteTemplateCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.GoBackwardCommand;
+import seedu.address.logic.commands.GoForwardCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -42,6 +52,7 @@ import seedu.address.logic.commands.ZoomInCommand;
 import seedu.address.logic.commands.ZoomOutCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.email.Template;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.AppointmentBuilder;
@@ -49,6 +60,7 @@ import seedu.address.testutil.AppointmentUtil;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.TemplateBuilder;
 
 public class AddressBookParserTest {
     @Rule
@@ -166,6 +178,30 @@ public class AddressBookParserTest {
     public void parseCommand_zoomOutAlias() throws Exception {
         assertTrue(parser.parseCommand(ZoomOutCommand.COMMAND_ALIAS) instanceof ZoomOutCommand);
         assertTrue(parser.parseCommand(ZoomOutCommand.COMMAND_ALIAS + " 3") instanceof ZoomOutCommand);
+    }
+
+    @Test
+    public void parseCommand_goForward() throws Exception {
+        assertTrue(parser.parseCommand(GoForwardCommand.COMMAND_WORD) instanceof GoForwardCommand);
+        assertTrue(parser.parseCommand(GoForwardCommand.COMMAND_WORD + " 3") instanceof GoForwardCommand);
+    }
+
+    @Test
+    public void parseCommand_goForwardAlias() throws Exception {
+        assertTrue(parser.parseCommand(GoForwardCommand.COMMAND_ALIAS) instanceof GoForwardCommand);
+        assertTrue(parser.parseCommand(GoForwardCommand.COMMAND_ALIAS + " 3") instanceof GoForwardCommand);
+    }
+
+    @Test
+    public void parseCommand_goBackward() throws Exception {
+        assertTrue(parser.parseCommand(GoBackwardCommand.COMMAND_WORD) instanceof GoBackwardCommand);
+        assertTrue(parser.parseCommand(GoBackwardCommand.COMMAND_WORD + " 3") instanceof GoBackwardCommand);
+    }
+
+    @Test
+    public void parseCommand_goBackwardAlias() throws Exception {
+        assertTrue(parser.parseCommand(GoBackwardCommand.COMMAND_ALIAS) instanceof GoBackwardCommand);
+        assertTrue(parser.parseCommand(GoBackwardCommand.COMMAND_ALIAS + " 3") instanceof GoBackwardCommand);
     }
     //@@author
 
@@ -303,6 +339,46 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS) instanceof UndoCommand);
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
     }
+    //@@author ng95junwei
+    @Test
+    public void parseCommand_addTemplate() throws Exception {
+        List<String> userInput = Arrays.asList(AddTemplateCommand.COMMAND_WORD,
+                PURPOSE_DESC, MESSAGE_DESC, SUBJECT_DESC);
+        Template templateToAdd = new TemplateBuilder().withPurpose(VALID_PURPOSE).withSubject(VALID_SUBJECT)
+                .withMessage(VALID_MESSAGE).build();
+        AddTemplateCommand command = new AddTemplateCommand(templateToAdd);
+        AddTemplateCommand parsedCommand = (AddTemplateCommand) parser.parseCommand(userInput.stream()
+                .collect(Collectors.joining(" ")));
+        assertEquals(command, parsedCommand);
+    }
+
+    @Test
+    public void parseCommand_addTemplateAlias() throws Exception {
+        List<String> userInput = Arrays.asList(AddTemplateCommand.COMMAND_ALIAS,
+                PURPOSE_DESC, MESSAGE_DESC, SUBJECT_DESC);
+        Template templateToAdd = new TemplateBuilder().withPurpose(VALID_PURPOSE).withSubject(VALID_SUBJECT)
+                .withMessage(VALID_MESSAGE).build();
+        AddTemplateCommand command = new AddTemplateCommand(templateToAdd);
+        AddTemplateCommand parsedCommand = (AddTemplateCommand) parser.parseCommand(userInput.stream()
+                .collect(Collectors.joining(" ")));
+        assertEquals(command, parsedCommand);
+    }
+
+    @Test
+    public void parseCommand_deleteTemplate() throws Exception {
+        DeleteTemplateCommand command = new DeleteTemplateCommand("test");
+        DeleteTemplateCommand parsedCommand =
+                (DeleteTemplateCommand) parser.parseCommand("deletetemplate test");
+        assertEquals(command, parsedCommand);
+    }
+
+    @Test
+    public void parseCommand_deleteTemplateAlias() throws Exception {
+        DeleteTemplateCommand command = new DeleteTemplateCommand("test");
+        DeleteTemplateCommand parsedCommand =
+                (DeleteTemplateCommand) parser.parseCommand("dt test");
+        assertEquals(command, parsedCommand);
+    }
 
     @Test
     public void parseCommand_email() throws Exception {
@@ -324,6 +400,7 @@ public class AddressBookParserTest {
                 "test"), command);
     }
 
+    //@@author
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);

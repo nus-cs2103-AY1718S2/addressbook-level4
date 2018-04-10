@@ -68,7 +68,7 @@ public class NotificationCenter {
     }
 
     public int getTotalUndismmissedNotificationCards() {
-        return notificationCards.size() - 1;
+        return notificationCards.size();
     }
 
     /**

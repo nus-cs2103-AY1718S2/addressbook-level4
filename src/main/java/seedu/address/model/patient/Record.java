@@ -142,13 +142,7 @@ public class Record {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Date: ")
-                .append(getDate())
-                .append(" Symptoms: ")
-                .append(getSymptom())
-                .append(" Illness: ")
-                .append(getIllness())
-                .append(" Treatment: ")
-                .append(getTreatment());
+                .append(getDate());
         return builder.toString();
     }
 

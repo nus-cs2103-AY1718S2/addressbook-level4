@@ -78,6 +78,7 @@ public class Person {
     public Set<Subject> getSubjects() {
         return Collections.unmodifiableSet(subjects.toSet());
     }
+
     public List<Subject> getSubjectArray () {
         Set<Subject> set = getSubjects();
         List<Subject> list = new ArrayList<Subject>();

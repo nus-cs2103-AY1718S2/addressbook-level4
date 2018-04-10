@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -20,7 +21,7 @@ import seedu.address.model.person.Person;
  */
 public class BrowserPanel extends UiPart<Region> {
 
-    public static final String DEFAULT_PAGE = "CalendarDisplay.html";
+    public static final String DEFAULT_PAGE = "default.html";
     public static final String SEARCH_PAGE_URL = "https"
            + "://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
     public static final String PERSON_PAGE = ".html";
@@ -43,11 +44,9 @@ public class BrowserPanel extends UiPart<Region> {
     /**
     * To load person page according to person name
     */
-    public void loadPersonPage(Person person)  {
+    public void loadPersonPage(Person person) throws IOException {
         URL personPage = MainApp.class.getResource(PROFILE_DIRECTORY + person.getName().fullName + PERSON_PAGE);
         loadPage(personPage.toExternalForm());
-        //TimeUnit.MINUTES.sleep(1);
-        //loadPersonPage(person);
     }
 
     public void loadPage(String url) {
@@ -70,7 +69,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) throws IOException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }

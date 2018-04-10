@@ -1,0 +1,56 @@
+= Tran Nhat Quang - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Fastis - MeetUp Manager
+
+---
+
+== Overview
+
+Fastis is a desktop application that aims to help students who are studying at National University of Singapore (NUS) manage their group projects effectively. The application enables students to keep track of group members’ timetables, information, meetups agendas, to-dos and schedule suitable meetup time.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the to-do list*
+** What it does: allows the user to add to-dos and manage the to-dos with various commands: check/uncheck to-dos as done/undone, edit content of to-dos and delete to-dos. The percentage of completed to-dos is shown with a pie chart.
+** Justification: This feature helps the user keep track of deliverable and agendas in group meetings, which aims to improve team management.
+** Highlights: This enhancement makes the application be more customised and focused towards group meetings. It required an in-depth understanding of the model component. The implementation too was challenging as it required changes to the existing model component.
+
+* *Minor enhancement*: added a detail field for a person, which displays additional information and remark for the person.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W15-B3/main/tree/master/collated/functional/nhatquang3112.md[Functional code]] [https://github.com/CS2103JAN2018-W15-B3/main/blob/master/collated/test/nhatquang3112.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+*** Managed weekly milestones on GitHub
+** Enhancements to existing features:
+*** Wrote additional tests for existing features to increase coverage
+** Documentation:
+*** Update new screenshots of new commands for the User Guide
+** Community:
+*** Create weekly issues for team members
+*** Help team members fix bugs
+*** Reported bugs and suggestions
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=toDoList]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=addToDo]
+include::../DeveloperGuide.adoc[tag=checkToDo]
+
+---

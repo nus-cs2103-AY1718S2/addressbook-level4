@@ -262,6 +262,7 @@ Examples:
 image:AddEventCommandExample.png[width="500"] +
 Figure 2. Example of an event shown on the calendar
 
+// group::toDoList[]
 === Adding a to-do: `addToDo`
 
 Adds a to-do to the address book +
@@ -335,6 +336,7 @@ Examples:
 
 `deleteToDo 2` +
 Deletes the 2nd to-do in the address book.
+// end::toDoList[]
 
 === List Tag Members: `listTagMembers`
 

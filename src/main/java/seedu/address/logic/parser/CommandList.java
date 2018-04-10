@@ -23,6 +23,8 @@ import seedu.address.logic.commands.appointment.YearCommand;
 import seedu.address.logic.commands.job.JobAddCommand;
 import seedu.address.logic.commands.job.JobDeleteCommand;
 import seedu.address.logic.commands.job.JobEditCommand;
+import seedu.address.logic.commands.job.JobFindCommand;
+import seedu.address.logic.commands.job.JobListCommand;
 import seedu.address.logic.commands.job.JobMatchCommand;
 import seedu.address.logic.commands.person.AddCommand;
 import seedu.address.logic.commands.person.DeleteCommand;
@@ -59,11 +61,13 @@ public class CommandList {
         commandList.add(EmailCommand.COMMAND_WORD);
         commandList.add(ExitCommand.COMMAND_WORD);
         commandList.add(FindCommand.COMMAND_WORD);
+        commandList.add(JobFindCommand.COMMAND_WORD);
         commandList.add(GoogleLoginCommand.COMMAND_WORD);
         commandList.add(HelpCommand.COMMAND_WORD);
         commandList.add(HistoryCommand.COMMAND_WORD);
         commandList.add(LinkedInCommand.COMMAND_WORD);
         commandList.add(ListCommand.COMMAND_WORD);
+        commandList.add(JobListCommand.COMMAND_WORD);
         commandList.add(JobMatchCommand.COMMAND_WORD);
         commandList.add(RedoCommand.COMMAND_WORD);
         commandList.add(SelectCommand.COMMAND_WORD);
@@ -101,6 +105,9 @@ public class CommandList {
 
         case JobAddCommand.COMMAND_WORD:
             return JobAddCommand.COMMAND_SYNTAX;
+
+        case JobFindCommand.COMMAND_WORD:
+            return JobFindCommand.COMMAND_SYNTAX;
 
         case AddAppointmentCommand.COMMAND_WORD:
             return AddAppointmentCommand.COMMAND_SYNTAX;

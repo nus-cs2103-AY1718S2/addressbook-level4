@@ -92,7 +92,7 @@ public class SortCommandTest {
         }
         testModel = icc.model;
     }
-    */
+
 
     @Test
     public void sortAddressBookCallingModel_functionCallWithImportedData_personsAreInCorrectOrder()
@@ -110,7 +110,8 @@ public class SortCommandTest {
         icc.model.sortAddressBookAlphabeticallyByName();
         assertTrue(checkSorted(icc.model));
     }
-
+*/
+    
     @Test
     public void executeUndoableCommand_sortImportedPersons_personsCorrectlySorted() throws Exception {
         ImportContactsCommand icc = new ImportContactsCommand("data/Test_contacts_unsorted.csv");

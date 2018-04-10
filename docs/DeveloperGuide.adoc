@@ -405,7 +405,7 @@ The implementation of this function adheres closely to the Object Oriented Princ
 
 Following is a sequence diagram describing how the delete dated persons function works:
 
-image::DeleteBeforeSequenceDiagram.png[width="900"]
+image::DeleteBeforeSequenceDiagram.png[width="900", align="center"]
 
 ==== Design Considerations
 ===== Aspect: Implementation of `DeleteBeforeCommand`
@@ -448,7 +448,7 @@ Besides, the commands related to this module is also implemented using the Comma
 The `Appointment` model is created to support the scheduling feature of the address book. It stores the information of appointments
 arranged by the user. The class diagram for the Appointment is as follows:
 
-image::AppointmentClassDiagram.png[width="900"]
+image::AppointmentClassDiagram.png[width="600", align="center"]
 
 Similar to the `Person` model, the `Appointment` model consists of an `Appointment` class which has its attributes implemented as separate classes to
 observe the *Single Responsibility Principle*. The attributes include:
@@ -492,7 +492,7 @@ of an input date
 The calendar is implemented using third party libraries provided by https://github.com/dlemmermann/CalendarFX[CalendarFX].
 The calendar panel view is shown below:
 
-image::CalendarView.png[width="900"]
+image::CalendarView.png[width="800", align="center"]
 
 The setting up of the `CalendarView` is done by first creating a `Calendar` named _Appointments_ which is added to a `CalendarSource`.
 The `CalendarSource` is then added to the `CalendarView`. The implementation details are as shown in the following code snippet:
@@ -561,7 +561,7 @@ Besides, the function also disallows creation of appointments clashing in time.
 
 Following is a sequence diagram describing how the add appointment function works:
 
-image::AddAppointmentSequenceDiagram.png[width="900"]
+image::AddAppointmentSequenceDiagram.png[width="900", , align="center"]
 
 ===== Design Considerations
 ====== Aspect: What `Event` to raise when adding a new `Appointment`
@@ -581,7 +581,7 @@ implementation of the `DeleteAppointmentCommand` is similar to that of the `Dele
 
 Following is a sequence diagram describing how the delete appointment function works:
 
-image::DeleteAppointmentSequenceDiagram.png[width="900"]
+image::DeleteAppointmentSequenceDiagram.png[width="900", , align="center"]
 
 ===== Design Considerations
 ====== Aspect: What fields to input when deleting an `Appointment`

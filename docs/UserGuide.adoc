@@ -378,6 +378,7 @@ Format: `decrypt`
 
 // end::dataencryption[]
 
+// tag::datatransfer[]
 ==== Importing data : `import` (since v1.1)
 
 Imports an encrypted or unencrypted StardyTogether instance from filepath to the existing StardyTogether application. Persons, Tags, and Aliases that are not in your StardyTogether will be added. +
@@ -398,7 +399,7 @@ Imports `addressBook.xml` file at data folder using "testpassword" as the passwo
 
 ==== Exporting data : `export` (since v1.4)
 
-Exports the current view of the existing StardyTogether application with or without password encryption to the specified filepath
+Exports the current view of the existing StardyTogether application with or without password encryption to the specified filepath. +
 Format: `export FILEPATH PASSWORD`
 
 ****
@@ -410,8 +411,27 @@ Format: `export FILEPATH PASSWORD`
 
 Example:
 
-* `export data/addressBook.xml testpassword` +
-Exports the current list of StardyTogether application to the `addressBook.xml` file at data folder using "testpassword" as the password for encryption.
+* `export data/addressBookBackUp.xml testpassword` +
+Exports the current list of StardyTogether application to the `addressBook.xml` file at data folder using "testpassword" as the password for encryption. +
+
+==== Uploading data : `upload` (since v1.5rc)
+
+Uploads the current view of the existing StardyTogether application with or without password encryption to the specified filename in Google Drive.
+Format: `upload FILENAME PASSWORD`
+
+****
+* Application will redirect you to a browser url to request for access to Google Drive
+* Uploads an instance of StardyTogether with the specified `FILENAME`.
+* Encrypt that instance using the `PASSWORD` provided.
+* If no `PASSWORD` is provided, the instance will be exported without encryption.
+* The filepath refers to the filepath where the instance file will be stored.
+****
+
+Example:
+
+* `upload addressBook.xml testpassword` +
+Uploads the current list of StardyTogether application to the `addressBook.xml` file in Google Drive using "testpassword" as the password for encryption.
+// end::datatransfer[]
 
 ==== Exiting the program : `exit`
 
@@ -473,7 +493,7 @@ image::NUSMods_Screenshot_Second.PNG[width="790"]
 |Clear| clear|
 |Delete| delete INDEX | delete 3
 |Edit|edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]... |edit 2 n/James Lee e/jameslee@example.com
-|Export|Export FILEPATH PASSWORD| export data/addressBook.xml testpassword
+|Export|Export FILEPATH PASSWORD| export data/addressBookBackUp.xml testpassword
 |Find|find KEYWORD [MORE_KEYWORDS]|find James Jake
 |Help|help|
 |History|history|
@@ -487,5 +507,6 @@ image::NUSMods_Screenshot_Second.PNG[width="790"]
 |Unalias|unalias CURRENT_ALIAS|unalias hist
 |Undo|undo|
 |Union|union EVEN/ODD INDEX INDEX [INDEX]|union Odd 1 2 3
+|Upload|upload FILENAME PASSWORD|upload addressBook.xml testpassword
 |Vacant|vacant BUILDING|vacant COM1
 |=======================================================================

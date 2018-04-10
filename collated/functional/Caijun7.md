@@ -45,8 +45,8 @@ public class ExportCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "export";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports an address book "
-            + "from filepath to the existing address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports the current view of address book "
+            + "to specified filepath. "
             + "Parameters: FILEPATH PASSWORD\n"
             + "Example: " + COMMAND_WORD + " "
             + "data/addressbookbackup.xml "
@@ -57,7 +57,6 @@ public class ExportCommand extends UndoableCommand {
     public static final String MESSAGE_FILE_UNABLE_TO_SAVE = "Unable to save or overwrite to given filepath. "
             + "Please give another filepath.";
     public static final String MESSAGE_INVALID_PASSWORD = "Password is in invalid format for Addressbook file.";
-    public static final String MESSAGE_IMPOSSIBLE_ERROR = "Unexpected error has occurred.";
 
     private final String filepath;
     private final Password password;
@@ -93,8 +92,6 @@ public class ExportCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_FILE_UNABLE_TO_SAVE);
         } catch (WrongPasswordException e) {
             throw new CommandException(MESSAGE_INVALID_PASSWORD);
-        } catch (DuplicatePersonException e) {
-            throw new CommandException(MESSAGE_IMPOSSIBLE_ERROR);
         }
     }
 
@@ -115,7 +112,7 @@ public class ImportCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "import";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Imports an address book "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Imports a StardyTogether addressbook "
             + "from filepath to the existing address book. "
             + "Parameters: FILEPATH PASSWORD\n"
             + "Example: " + COMMAND_WORD + " "
@@ -123,11 +120,11 @@ public class ImportCommand extends UndoableCommand {
             + "testpassword";
 
     public static final String MESSAGE_SUCCESS = "Persons, tags, and aliases from "
-            + "Addressbook file successfully imported.";
-    public static final String MESSAGE_FILE_NOT_FOUND = "Addressbook file is not found.";
-    public static final String MESSAGE_DATA_CONVERSION_ERROR = "Addressbook file found is not in correct "
+            + "StardyTogether file successfully imported.";
+    public static final String MESSAGE_FILE_NOT_FOUND = "StardyTogether file is not found.";
+    public static final String MESSAGE_DATA_CONVERSION_ERROR = "StardyTogether file found is not in correct "
             + "format or wrong password.";
-    public static final String MESSAGE_PASSWORD_WRONG = "Password wrong for Addressbook file.";
+    public static final String MESSAGE_PASSWORD_WRONG = "Password wrong for StardyTogether file.";
 
     private final String filepath;
     private final byte[] password;
@@ -178,6 +175,80 @@ public class ImportCommand extends UndoableCommand {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\UploadCommand.java
+``` java
+/**
+ * Uploads an address book to the existing address book.
+ */
+public class UploadCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "upload";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Uploads the current view of address book "
+            + "and saves it as specified filename in Google Drive. "
+            + "Parameters: FILENAME PASSWORD\n"
+            + "Example: " + COMMAND_WORD + " "
+            + "addressbookbackup.xml "
+            + "testpassword";
+
+    public static final String MESSAGE_SUCCESS = "Current list of Persons, tags, or aliases from "
+            + "Addressbook are successfully uploaded.";
+    public static final String MESSAGE_FILE_UNABLE_TO_SAVE = "Unable to save or overwrite to given filepath. "
+            + "Please give another filepath.";
+    public static final String MESSAGE_INVALID_PASSWORD = "Password is in invalid format for Addressbook file.";
+    public static final String MESSAGE_NO_AUTHORIZATION = "Unable to access your Google Drive. "
+            + "Please grant authorization.";
+    public static final String MESSAGE_REQUEST_TIMEOUT = "Authorization request timed out. Please try again.";
+
+    private final String filepath;
+    private final Password password;
+
+    /**
+     * Creates an UploadCommand to upload the current view of {@code AddressBook} to the filepath without a password
+     */
+    public UploadCommand(String filepath) {
+        requireNonNull(filepath);
+
+        this.filepath = filepath;
+        password = null;
+    }
+
+    /**
+     * Creates an UploadCommand to upload the current view of {@code AddressBook} to the filepath with a password
+     */
+    public UploadCommand(String filepath, String password) {
+        requireNonNull(filepath);
+        requireNonNull(password);
+
+        this.filepath = filepath;
+        this.password = new Password(password);
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.uploadAddressBook(filepath, password);
+            return new CommandResult(String.format(MESSAGE_SUCCESS));
+        } catch (GoogleAuthorizationException e) {
+            throw new CommandException(MESSAGE_NO_AUTHORIZATION);
+        } catch (RequestTimeoutException e) {
+            throw new CommandException(MESSAGE_REQUEST_TIMEOUT);
+        } catch (IOException ioe) {
+            throw new CommandException(MESSAGE_FILE_UNABLE_TO_SAVE);
+        } catch (WrongPasswordException e) {
+            throw new CommandException(MESSAGE_INVALID_PASSWORD);
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UploadCommand // instanceof handles nulls
+                && filepath.equals(((UploadCommand) other).filepath));
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\ExportCommandParser.java
 ``` java
 /**
@@ -215,7 +286,7 @@ public class ExportCommandParser implements Parser<ExportCommand> {
  * Parses input arguments and creates a new ImportCommand object
  */
 public class ImportCommandParser implements Parser<ImportCommand> {
-    private static final String SPLIT_TOKEN = " ";
+    private static final String SPLIT_TOKEN = "\\s+";
     /**
      * Parses the given {@code String} of arguments in the context of the ImportCommand
      * and returns an ImportCommand object for execution.
@@ -235,6 +306,37 @@ public class ImportCommandParser implements Parser<ImportCommand> {
         } else {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+        }
+
+    }
+}
+```
+###### \java\seedu\address\logic\parser\UploadCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new UploadCommand object
+ */
+public class UploadCommandParser implements Parser<UploadCommand> {
+    private static final String SPLIT_TOKEN = " ";
+    /**
+     * Parses the given {@code String} of arguments in the context of the UploadCommand
+     * and returns an UploadCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public UploadCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
+        }
+        String[] splitArgs = trimmedArgs.split(SPLIT_TOKEN);
+        if (splitArgs.length == 1) {
+            return new UploadCommand(splitArgs[0]);
+        } else if (splitArgs.length == 2) {
+            return new UploadCommand(splitArgs[0], splitArgs[1]);
+        } else {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
         }
 
     }
@@ -404,7 +506,8 @@ public class Building {
      *
      * @throws CorruptedVenueInformationException if the room schedule format is not as expected.
      */
-    public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule() throws CorruptedVenueInformationException {
+    public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule() throws CorruptedVenueInformationException,
+                                                                          NoRoomsInBuildingException {
         ArrayList<ArrayList<String>> allRoomsSchedule = new ArrayList<>();
         ArrayList<String> allRoomsInBuilding = retrieveAllRoomsInBuilding();
         for (String roomName : allRoomsInBuilding) {
@@ -420,15 +523,16 @@ public class Building {
      *
      * @throws CorruptedVenueInformationException if the NUS Buildings and Rooms format is not as expected.
      */
-    public ArrayList<String> retrieveAllRoomsInBuilding() throws CorruptedVenueInformationException {
+    public ArrayList<String> retrieveAllRoomsInBuilding() throws CorruptedVenueInformationException,
+                                                                 NoRoomsInBuildingException {
         checkArgument(isValidBuilding(this));
         if (nusBuildingsAndRooms == null) {
             logger.warning("NUS buildings and rooms is null, venueinformation.json file is corrupted.");
             throw new CorruptedVenueInformationException();
         }
         if (nusBuildingsAndRooms.get(buildingName) == null) {
-            logger.warning("NUS buildings and rooms has some null data, venueinformation.json file is corrupted.");
-            throw new CorruptedVenueInformationException();
+            logger.warning(buildingName + " has no rooms.");
+            throw new NoRoomsInBuildingException();
         }
         return nusBuildingsAndRooms.get(buildingName);
     }
@@ -494,6 +598,17 @@ public class InvalidWeekDayScheduleException extends Exception {
 public class InvalidWeekScheduleException extends Exception {
     public InvalidWeekScheduleException() {
         super("Week Schedule is in incorrect format, venueinformation.json file is corrupted.");
+    }
+}
+```
+###### \java\seedu\address\model\building\exceptions\NoRoomsInBuildingException.java
+``` java
+/**
+ * Signals that there is no rooms available in the building.
+ */
+public class NoRoomsInBuildingException extends CommandException {
+    public NoRoomsInBuildingException() {
+        super("Building has no rooms available.");
     }
 }
 ```
@@ -876,33 +991,55 @@ public class WeekDay {
 ###### \java\seedu\address\model\Model.java
 ``` java
     /**
-     * Imports specified {@code AddressBook} from filepath to current {@code AddressBook}
+     * Imports the specified {@code AddressBook} from the filepath to the current {@code AddressBook}.
+     * And decrypts the imported file with the {@code password} if password is not null.
+     *
+     * @param filepath
+     * @param password
      */
     void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
-            WrongPasswordException;
+                                                                    WrongPasswordException;
 
     /**
      * Exports the current view of {@code AddressBook} to the filepath.
+     * And encrypts the exported file with the {@code password} if the password is not null
+     *
      * @param filepath
+     * @param password
      */
-    void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
-                                                                        DuplicatePersonException;
+    void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException;
+
+    /**
+     * Exports the current view of {@code AddressBook} to the googledrive folder of local storage.
+     * And encrypts the exported file with the {@code password} if the password is not null.
+     * Uploads the exported file to the specified filepath in Google Drive.
+     *
+     * @param filepath
+     * @param password
+     */
+    void uploadAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
+            GoogleAuthorizationException, RequestTimeoutException;
 ```
 ###### \java\seedu\address\model\Model.java
 ``` java
-    /** Returns rooms for the given building */
-    ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
-                                                                                    CorruptedVenueInformationException;
+    /**
+     * Retrieves weekday schedule of all {@code Room}s in the {@code Building} in an ArrayList of ArrayList
+     */
+    ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building)
+            throws BuildingNotFoundException, CorruptedVenueInformationException, NoRoomsInBuildingException;
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     /**
      * Imports the specified {@code AddressBook} from the filepath to the current {@code AddressBook}.
+     * And decrypts the imported file with the {@code password} if password is not null.
+     *
      * @param filepath
+     * @param password
      */
     @Override
     public void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
-                                                                            WrongPasswordException {
+                                                                           WrongPasswordException {
         requireNonNull(filepath);
 
         XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
@@ -912,23 +1049,54 @@ public class WeekDay {
 
     /**
      * Exports the current view of {@code AddressBook} to the filepath.
+     * And encrypts the exported file with the {@code password} if the password is not null
+     *
      * @param filepath
+     * @param password
      */
     @Override
-    public void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
-                                                                                DuplicatePersonException {
+    public void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException {
         requireNonNull(filepath);
+        try {
+            XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
+            xmlAddressBook.exportAddressBook(filepath, password, filteredPersons);
+            indicateAddressBookChanged();
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError();
+        }
+    }
 
-        XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
-        xmlAddressBook.exportAddressBook(filepath, password, filteredPersons);
-        indicateAddressBookChanged();
+    /**
+     * Exports the current view of {@code AddressBook} to the googledrive folder of local storage.
+     * And encrypts the exported file with the {@code password} if the password is not null.
+     * Uploads the exported file to the specified filepath in Google Drive.
+     *
+     * @param filepath
+     * @param password
+     */
+    @Override
+    public void uploadAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
+            GoogleAuthorizationException, RequestTimeoutException {
+        GoogleDriveStorage googleDriveStorage = new GoogleDriveStorage("googledrive/" + filepath);
+        exportAddressBook("googledrive/" + filepath, password);
+        googleDriveStorage.uploadFile();
     }
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
+
+    /**
+     * Retrieves weekday schedule of all {@code Room}s in the {@code Building} in an ArrayList of ArrayList.
+     *
+     * @param building
+     * @return
+     * @throws BuildingNotFoundException
+     * @throws CorruptedVenueInformationException
+     * @throws NoRoomsInBuildingException
+     */
     @Override
     public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
-            CorruptedVenueInformationException {
+            CorruptedVenueInformationException, NoRoomsInBuildingException {
         if (!Building.isValidBuilding(building)) {
             throw new BuildingNotFoundException();
         }
@@ -971,6 +1139,28 @@ public class WeekDay {
         UserPrefs.userAddressBookFilePath = userAddressBookFilePath;
     }
 ```
+###### \java\seedu\address\storage\exceptions\GoogleAuthorizationException.java
+``` java
+/**
+ * Signals that the application is unable to gain user's authorization.
+ */
+public class GoogleAuthorizationException extends CommandException {
+    public GoogleAuthorizationException() {
+        super("Unable to access your Google Drive. Please grant authorization.");
+    }
+}
+```
+###### \java\seedu\address\storage\exceptions\RequestTimeoutException.java
+``` java
+/**
+ * Signals that the authorization request has timed out.
+ */
+public class RequestTimeoutException extends CommandException {
+    public RequestTimeoutException() {
+        super("Authorization request timed out. Please try again.");
+    }
+}
+```
 ###### \java\seedu\address\storage\ReadOnlyJsonVenueInformation.java
 ``` java
 /**
@@ -996,6 +1186,7 @@ public class ReadOnlyJsonVenueInformation implements ReadOnlyVenueInformation {
 
     /**
      * Converts Json file into HashMap of NUS Rooms
+     *
      * @param venueInformationFilePath location of the data. Cannot be null.
      * @throws DataConversionException if the file format is not as expected.
      */
@@ -1010,6 +1201,7 @@ public class ReadOnlyJsonVenueInformation implements ReadOnlyVenueInformation {
 
     /**
      * Converts Json file into HashMap of NUS Buildings and Rooms
+     *
      * @param buildingsAndRoomsInformationFilePath location of the data. Cannot be null.
      * @throws DataConversionException if the file format is not as expected.
      */
@@ -1023,7 +1215,7 @@ public class ReadOnlyJsonVenueInformation implements ReadOnlyVenueInformation {
 ###### \java\seedu\address\storage\ReadOnlyVenueInformation.java
 ``` java
 /**
- * Represents a storage for {@link seedu.address.model.building.Room}.
+ * Represents a storage for venue information.
  */
 public interface ReadOnlyVenueInformation {
 
@@ -1033,13 +1225,21 @@ public interface ReadOnlyVenueInformation {
     String getVenueInformationFilePath();
 
     /**
-     * Returns VenueInformation data from storage.
-     *   Returns {@code Optional.empty()} if storage file is not found.
+     * Reads VenueInformation data from storage.
+     * Returns {@code Optional.empty()} if storage file is not found.
+     *
      * @throws DataConversionException if the data in storage is not in the expected format.
      * @throws IOException if there was any problem when reading from the storage.
      */
     Optional<Room> readVenueInformation() throws DataConversionException, IOException;
 
+    /**
+     * Reads BuildingsAndRooms data from storage.
+     * Returns {@code Optional.empty()} if storage file is not found.
+     *
+     * @throws DataConversionException if the data in storage is not in the expected format.
+     * @throws IOException if there was any problem when reading from the storage.
+     */
     Optional<Building> readBuildingsAndRoomsInformation() throws DataConversionException, IOException;
 }
 ```

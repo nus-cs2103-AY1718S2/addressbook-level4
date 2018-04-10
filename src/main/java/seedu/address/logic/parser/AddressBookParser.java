@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddTemplateCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteAppointmentCommand;
@@ -137,12 +138,20 @@ public class AddressBookParser {
 
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
-
+        //@@author ng95junwei
         case EmailCommand.COMMAND_WORD:
             return new EmailCommandParser().parse(arguments);
 
         case EmailCommand.COMMAND_ALIAS:
             return new EmailCommandParser().parse(arguments);
+
+        case AddTemplateCommand.COMMAND_WORD:
+            return new AddTemplateCommandParser().parse(arguments);
+
+        case AddTemplateCommand.COMMAND_ALIAS:
+            return new AddTemplateCommandParser().parse(arguments);
+
+        //@@author
 
         //@@author luca590
         case ExportContactsCommand.COMMAND_WORD: //export contacts from csv

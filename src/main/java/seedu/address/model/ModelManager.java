@@ -20,6 +20,7 @@ import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.ClashingAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.email.Template;
+import seedu.address.model.email.exceptions.DuplicateTemplateException;
 import seedu.address.model.email.exceptions.TemplateNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -35,6 +36,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Appointment> filteredAppointments;
+    private final FilteredList<Template> filteredTemplates;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -48,6 +50,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredAppointments = new FilteredList<>(this.addressBook.getAppointmentList());
+        filteredTemplates = new FilteredList<>(this.addressBook.getTemplateList());
     }
 
     public ModelManager() {
@@ -80,6 +83,14 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateAppointmentDeleted(ObservableList<Appointment> appointments) {
         raise(new AppointmentDeletedEvent(appointments));
     }
+    //@@author
+    //@@author ng95junwei
+    private void indicateTemplateAdded(Template template) {
+        //raise(new NewTemplateAddedEvent(template)); TO IMPLEMENT
+    }
+
+
+
     //@@author
 
     //=========== Person Mutators =============================================================
@@ -133,7 +144,17 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
     //@@author
-    //=========== Filtered Person List Accessors =============================================================
+    //========== Template Mutators ==================================================================
+    //@@author ng95junwei
+    @Override
+    public synchronized void addTemplate(Template template) throws DuplicateTemplateException {
+        addressBook.addTemplate(template);
+        updateFilteredTemplateList(PREDICATE_SHOW_ALL_TEMPLATES);
+        indicateTemplateAdded(template);
+        indicateAddressBookChanged();
+    }
+    //@@author
+    //========== Template Accessors =================================================================
     //@@author ng95junwei
     @Override
     public ObservableList<Template> getAllTemplates() {
@@ -146,6 +167,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author
+    //=========== Filtered Person List Accessors =============================================================
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
      * {@code addressBook}
@@ -161,6 +183,20 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //=========== Filtered Template List Accessors =============================================================
+    //@@author ng95junwei
+
+    @Override
+    public void updateFilteredTemplateList(Predicate<Template> predicate) {
+        requireNonNull(predicate);
+        filteredTemplates.setPredicate(predicate);
+    }
+
+    @Override
+    public ObservableList<Template> getFilteredTemplateList() {
+        return FXCollections.unmodifiableObservableList(filteredTemplates);
+    }
+    //@@author
     //=========== Filtered Appointment List Accessors =============================================================
     //@@author jlks96
     /**

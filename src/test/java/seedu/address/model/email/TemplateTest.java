@@ -29,6 +29,11 @@ public class TemplateTest {
         assertTrue(template.getTitle().equals(title));
         assertTrue(template.getMessage().equals(message));
     }
+    @Test
+    public void toString_validTemplate_success() {
+        assertTrue(template.toString().equals("Purpose: " + purpose + ", Subject: " + title + ", Message: "
+                + message));
+    }
 
 }
 

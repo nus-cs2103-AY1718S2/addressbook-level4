@@ -14,9 +14,11 @@ public class RemovePatientQueueCommand extends Command {
     public static final String COMMAND_WORD = "removeq";
     public static final String COMMAND_ALIAS = "rq";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes a patient from the visiting queue."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes the first patient from the visiting queue.";
+
+    public static final String MESSAGE_USAGE_INDEX = COMMAND_WORD + ": Removes a specific patient from the visiting queue."
             + "Parameters: "
-            + "QUEUE INDEX NO";
+            + "LIST INDEX NO";
 
     public static final String MESSAGE_REMOVE_SUCCESS = "%1$s is removed from the waiting list";
     public static final String MESSAGE_PERSON_NOT_FOUND_QUEUE = "Waiting list is empty";

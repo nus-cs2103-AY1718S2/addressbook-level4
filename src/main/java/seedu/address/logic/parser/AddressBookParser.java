@@ -48,32 +48,31 @@ public class    AddressBookParser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
-    private static final List<String> COMMAND_WORDS = Arrays.asList(new String[]{
-        AddCommand.COMMAND_WORD,
-        AddEventCommand.COMMAND_WORD,
-        AddGroupCommand.COMMAND_WORD,
-        AddMembersToGroupCommand.COMMAND_WORD,
-        AddToDoCommand.COMMAND_WORD,
-        ChangeTagColorCommand.COMMAND_WORD,
-        CheckToDoCommand.COMMAND_WORD,
-        ClearCommand.COMMAND_WORD,
-        DeleteCommand.COMMAND_WORD,
-        DeleteToDoCommand.COMMAND_WORD,
-        AddCommand.COMMAND_WORD,
-        EditCommand.COMMAND_WORD,
-        EditToDoCommand.COMMAND_WORD,
-        ExitCommand.COMMAND_WORD,
-        FindCommand.COMMAND_WORD,
-        HelpCommand.COMMAND_WORD,
-        HistoryCommand.COMMAND_WORD,
-        ListCommand.COMMAND_WORD,
-        ListTagMembersCommand.COMMAND_WORD,
-        RedoCommand.COMMAND_WORD,
-        SelectCommand.COMMAND_WORD,
-        SwitchCommand.COMMAND_WORD,
-        UnCheckToDoCommand.COMMAND_WORD,
-        UndoCommand.COMMAND_WORD
-    });
+    private static final List<String> COMMAND_WORDS = Arrays.asList(AddCommand.COMMAND_WORD,
+            AddEventCommand.COMMAND_WORD,
+            AddGroupCommand.COMMAND_WORD,
+            AddMembersToGroupCommand.COMMAND_WORD,
+            AddToDoCommand.COMMAND_WORD,
+            ChangeTagColorCommand.COMMAND_WORD,
+            CheckToDoCommand.COMMAND_WORD,
+            ClearCommand.COMMAND_WORD,
+            DeleteCommand.COMMAND_WORD,
+            DeleteToDoCommand.COMMAND_WORD,
+            DeleteGroupCommand.COMMAND_WORD,
+            AddCommand.COMMAND_WORD,
+            EditCommand.COMMAND_WORD,
+            EditToDoCommand.COMMAND_WORD,
+            ExitCommand.COMMAND_WORD,
+            FindCommand.COMMAND_WORD,
+            HelpCommand.COMMAND_WORD,
+            HistoryCommand.COMMAND_WORD,
+            ListCommand.COMMAND_WORD,
+            ListTagMembersCommand.COMMAND_WORD,
+            RedoCommand.COMMAND_WORD,
+            SelectCommand.COMMAND_WORD,
+            SwitchCommand.COMMAND_WORD,
+            UnCheckToDoCommand.COMMAND_WORD,
+            UndoCommand.COMMAND_WORD);
 
 
     /**

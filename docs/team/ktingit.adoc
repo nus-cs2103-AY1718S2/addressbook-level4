@@ -1,0 +1,64 @@
+= Kelvin Ting - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Integrated Medical DataBase
+
+---
+
+== Overview
+
+Integrated Medical DataBase(IMDB) is an application for the management of health records in private clinics digitally. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: edited existing and added new *commands that allows the user to efficiently update a patient's information.*
+** What it does: adds more medical fields to a patient's information for better record keeping, as well as allows the user to add on and remove conditions from a patient's list.
+** Justification: This feature improves the product significantly because previously the app only had basic contact information fields to fill out, while now it has proper medical fields to keep track of patient information. Moreover, users used to have to key in all the conditions a patient has all over again even if one is simply adding or removing a condition, resulting in a great loss of efficiency. This is even worse in cases where the patient has a lot of conditions to keep track of.
+** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
+** Credits: NIL
+
+* *Minor enhancement*: decluttered the patient list on the left and made it such that patient details are only displayed when a patient is selected.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W15-B2/main/blob/master/collated/functional/ktingit.md[Functional code]] [https://github.com/CS2103JAN2018-W15-B2/main/blob/master/collated/test/ktingit.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed release `v1.3` on GitHub
+** Enhancements to existing features:
+*** Updated the GUI to better make use of spacing after patient list was decluttered (Pull requests https://github.com/CS2103JAN2018-W15-B2/main/pull/199[#199])
+** Documentation:
+*** Did cosmetic tweaks to existing contents of the User Guide
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=introduction]
+
+include::../UserGuide.adoc[tag=quickstart]
+
+include::../UserGuide.adoc[tag=add]
+
+include::../UserGuide.adoc[tag=del]
+
+include::../UserGuide.adoc[tag=select]
+
+include::../UserGuide.adoc[tag=addc]
+
+include::../UserGuide.adoc[tag=delc]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=morefields]
+
+include::../DeveloperGuide.adoc[tag=addconditions]

@@ -7,35 +7,40 @@ import java.io.IOException;
 import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Password;
+import seedu.address.storage.exceptions.GoogleAuthorizationException;
+import seedu.address.storage.exceptions.RequestTimeoutException;
 
 //@@author Caijun7
 /**
- * Exports an address book to the existing address book.
+ * Uploads an address book to the existing address book.
  */
-public class ExportCommand extends UndoableCommand {
+public class UploadCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "export";
+    public static final String COMMAND_WORD = "upload";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports the current view of address book "
-            + "to specified filepath. "
-            + "Parameters: FILEPATH PASSWORD\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Uploads the current view of address book "
+            + "and saves it as specified filename in Google Drive. "
+            + "Parameters: FILENAME PASSWORD\n"
             + "Example: " + COMMAND_WORD + " "
-            + "data/addressbookbackup.xml "
+            + "addressbookbackup.xml "
             + "testpassword";
 
     public static final String MESSAGE_SUCCESS = "Current list of Persons, tags, or aliases from "
-            + "Addressbook are successfully exported.";
+            + "Addressbook are successfully uploaded.";
     public static final String MESSAGE_FILE_UNABLE_TO_SAVE = "Unable to save or overwrite to given filepath. "
             + "Please give another filepath.";
     public static final String MESSAGE_INVALID_PASSWORD = "Password is in invalid format for Addressbook file.";
+    public static final String MESSAGE_NO_AUTHORIZATION = "Unable to access your Google Drive. "
+            + "Please grant authorization.";
+    public static final String MESSAGE_REQUEST_TIMEOUT = "Authorization request timed out. Please try again.";
 
     private final String filepath;
     private final Password password;
 
     /**
-     * Creates an ExportCommand to export the current view of {@code AddressBook} to the filepath without a password
+     * Creates an UploadCommand to upload the current view of {@code AddressBook} to the filepath without a password
      */
-    public ExportCommand(String filepath) {
+    public UploadCommand(String filepath) {
         requireNonNull(filepath);
 
         this.filepath = filepath;
@@ -43,9 +48,9 @@ public class ExportCommand extends UndoableCommand {
     }
 
     /**
-     * Creates an ExportCommand to export the current view of {@code AddressBook} to the filepath with a password
+     * Creates an UploadCommand to upload the current view of {@code AddressBook} to the filepath with a password
      */
-    public ExportCommand(String filepath, String password) {
+    public UploadCommand(String filepath, String password) {
         requireNonNull(filepath);
         requireNonNull(password);
 
@@ -57,8 +62,12 @@ public class ExportCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            model.exportAddressBook(filepath, password);
+            model.uploadAddressBook(filepath, password);
             return new CommandResult(String.format(MESSAGE_SUCCESS));
+        } catch (GoogleAuthorizationException e) {
+            throw new CommandException(MESSAGE_NO_AUTHORIZATION);
+        } catch (RequestTimeoutException e) {
+            throw new CommandException(MESSAGE_REQUEST_TIMEOUT);
         } catch (IOException ioe) {
             throw new CommandException(MESSAGE_FILE_UNABLE_TO_SAVE);
         } catch (WrongPasswordException e) {
@@ -69,7 +78,7 @@ public class ExportCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof ExportCommand // instanceof handles nulls
-                && filepath.equals(((ExportCommand) other).filepath));
+                || (other instanceof UploadCommand // instanceof handles nulls
+                && filepath.equals(((UploadCommand) other).filepath));
     }
 }

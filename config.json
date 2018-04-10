@@ -1,5 +1,5 @@
 {
-  "appTitle" : "Address App",
+  "appTitle" : "StardyTogether",
   "logLevel" : "INFO",
   "userPrefsFilePath" : "preferences.json"
 }

@@ -623,19 +623,20 @@ The examples below are just for your reference. Any phrase or sentence can be us
 
 [IMPORTANT]
 Currently, the commands `Delete` and `Select` only detects English names!
-[width="100%", <40%, <40%",options="header",]
+
+[width="100%", cols=",^2m,^2e",options="header",]
 |=======================================================================
-| Example | Command
-.2+|`Clear`|"I want everyone to be gone" | "Empty everything"
-.2+|`Redo`|"do it again" | "reuse previous"
-.2+|`Undo`|"revert back" | "negate the previous action"
-.2+|`Help`|"I am lost"| "I need assistance"
-.2+|`Exit`|"I'm done here"| "i wish to quit"
-.2+|`History`|"what are my previous commands"| "archives of commands entered"
-.2+|`List`|"Show me all my students"| "enumerate everyone"
-.2+|'Schedule'|"what is my agenda"| "show me my timetable"
-.2+|`Delete`| "Erase Susan"| "Remove Jason"
-.2+|`Select`| "Choose Susan"| "Single out Jason"
+| Command 2+| Examples
+|`Clear`|"I want everyone to be gone" | "Empty everything"
+|`Redo`|"do it again" | "reuse previous"
+|`Undo`|"revert back" | "negate the previous action"
+|`Help`|"I am lost"| "I need assistance"
+|`Exit`|"I'm done here"| "i wish to quit"
+|`History`|"what are my previous commands"| "archives of commands entered"
+|`List`|"Show me all my students"| "enumerate everyone"
+|`Schedule`|"what is my agenda"|"show me my timetable"
+|`Delete`| "Erase Susan"| "Remove Jason"
+|`Select`| "Choose Susan"| "Single out Jason"
 |=======================================================================
 
 

@@ -26,7 +26,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.recipe.model.RecipeBook;
-import seedu.recipe.model.recipe.Image;
 import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.recipe.exceptions.DuplicateRecipeException;
 
@@ -177,7 +176,8 @@ public class TypicalRecipes {
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
-    private TypicalRecipes() {} // prevents instantiation
+    private TypicalRecipes() {
+    } // prevents instantiation
 
     /**
      * Returns an {@code RecipeBook} with all the typical recipes.

@@ -339,9 +339,24 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-=== Sending an email
+//tag::sendemail[]
+=== Sending an email `Since v1.5rc`
 
-Press the email of any contact for an email popup to appear. To close the window without sending, push ESC.
+Press the email of any contact on the person panel for an email popup to appear. To close the window without sending, push ESC or the cancel button.
+//end::sendemail[]
+
+//tag::replyemail[]
+=== Replying an email `[coming in v1.5]`
+
+Reply any email displayed on the email panel with the receiver and subject auto-filled, and the original contents on the bottom of the email.
+//end::replyemail[]
+
+//tag::forwardemail[]
+=== Forwarding an email `[coming in v1.5]`
+
+Forward any email displayed on the email panel with the subject auto-filled, and the original contents on the bottom of the email.
+//end::forwardemail[]
+
 
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`

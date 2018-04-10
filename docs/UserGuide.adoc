@@ -56,6 +56,13 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 == Features
 
 ====
+*UI Walkthrough*
+Before introducing the commands, a brief walkthrough of the user interface is shown in Figure 2 below.
+
+User Interface Walkthrough of IMDB
+[caption="Figure 2: "]
+image::ui_walkthrough.PNG[width="990"]
+
 *Command Format*
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.

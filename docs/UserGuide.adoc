@@ -307,6 +307,11 @@ Format: `exit`
 reInsurance data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually. Data will be encrypted.
 
+[NOTE]
+The standard version of the JRE/JDK are under export restrictions. That also includes that some cryptographic algorithms are not allowed to be shipped in the standard version.
+Replace files in library with Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files 8. Download the files http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html[Here].
+
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +

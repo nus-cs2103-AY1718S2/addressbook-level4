@@ -14,7 +14,7 @@ import org.junit.Test;
 
 import javafx.collections.ObservableList;
 
-import seedu.address.logic.commands.exceptions.CommandException;
+//import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;

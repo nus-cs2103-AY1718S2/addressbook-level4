@@ -29,10 +29,7 @@ import seedu.address.logic.commands.appointment.WeekCommand;
 import seedu.address.logic.commands.appointment.YearCommand;
 import seedu.address.logic.commands.job.JobAddCommand;
 import seedu.address.logic.commands.job.JobDeleteCommand;
-<<<<<<< HEAD
 import seedu.address.logic.commands.job.JobEditCommand;
-=======
->>>>>>> 5b28a69330f3e9952d5c3dd518aeb3878dc74261
 import seedu.address.logic.commands.job.JobFindCommand;
 import seedu.address.logic.commands.job.JobListCommand;
 import seedu.address.logic.commands.job.JobMatchCommand;
@@ -162,7 +159,7 @@ public class AddressBookParser {
 
         case JobDeleteCommand.COMMAND_WORD:
             return new JobDeleteCommandParser().parse(arguments);
-
+            
         case JobFindCommand.COMMAND_WORD:
             return new JobFindCommandParser().parse(arguments);
 

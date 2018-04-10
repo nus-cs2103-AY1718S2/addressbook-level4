@@ -45,18 +45,14 @@ public class InfoPanel extends UiPart<Region> {
 
         personDetailsCard = new PersonDetailsCard();
         userDetailsPlaceholder.getChildren().add(personDetailsCard.getRoot());
-      
         venueTable = new VenueTable();
         venuePlaceholder.getChildren().add(venueTable.getRoot());
-
         mapsDisplay = new GoogleMapsDisplay();
         mapsPlaceholder.getChildren().add(mapsDisplay.getRoot());
-
+        birthdayList = new BirthdayList();
+        birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
         placeholder.toFront();
         registerAsAnEventHandler(this);
-    }
-
-    public void freeResources() {
     }
 
     public void freeResources() {

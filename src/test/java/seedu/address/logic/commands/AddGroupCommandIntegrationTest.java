@@ -44,7 +44,6 @@ public class AddGroupCommandIntegrationTest {
         Group groupInList = model.getAddressBook().getGroupList().get(0);
         assertCommandFailure(prepareCommand(groupInList, model), model, AddGroupCommand.MESSAGE_DUPLICATE_GROUP);
     }
-    
     /**
      * Generates a new {@code AddGroupCommand} which upon execution, adds {@code group} into the {@code model}.
      */

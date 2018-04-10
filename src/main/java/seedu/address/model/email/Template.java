@@ -31,7 +31,7 @@ public class Template {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(" Purpose: ")
+        builder.append("Purpose: ")
                 .append(getPurpose())
                 .append(",")
                 .append(" Subject: ")
@@ -51,7 +51,6 @@ public class Template {
         if (!(other instanceof Template)) {
             return false;
         }
-
         Template otherTemplate = (Template) other;
         return otherTemplate.getTitle().equals(this.getTitle())
                 && otherTemplate.getPurpose().equals(this.getPurpose())

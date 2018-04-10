@@ -84,10 +84,11 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AppointmentDeletedEvent(appointments));
     }
     //@@author
+    //@@author ng95junwei
     private void indicateTemplateAdded(Template template) {
         //raise(new NewTemplateAddedEvent(template)); TO IMPLEMENT
     }
-    //@@author ng95junwei
+
 
 
     //@@author
@@ -182,12 +183,20 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //=========== Filtered Template List Accessors =============================================================
+    //@@author ng95junwei
+
     @Override
     public void updateFilteredTemplateList(Predicate<Template> predicate) {
         requireNonNull(predicate);
         filteredTemplates.setPredicate(predicate);
     }
 
+    @Override
+    public ObservableList<Template> getFilteredTemplateList() {
+        return FXCollections.unmodifiableObservableList(filteredTemplates);
+    }
+    //@@author
     //=========== Filtered Appointment List Accessors =============================================================
     //@@author jlks96
     /**

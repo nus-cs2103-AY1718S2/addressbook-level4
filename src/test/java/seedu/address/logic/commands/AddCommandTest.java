@@ -124,6 +124,15 @@ public class AddCommandTest {
 
         //@@author ng95junwei
         @Override
+        public ObservableList<Template> getFilteredTemplateList() {
+            fail("This method should not be called.");
+            return null;
+        }
+        @Override
+        public void updateFilteredTemplateList(Predicate<Template> predicate) {
+            fail("This method should not be called.");
+        }
+        @Override
         public ObservableList<Template> getAllTemplates() {
             fail("This method should not be called.");
             return null;
@@ -133,6 +142,11 @@ public class AddCommandTest {
         public Template selectTemplate(String search) {
             fail("This method should not be called.");
             return null;
+        }
+
+        @Override
+        public void addTemplate(Template template) {
+            fail("This method should not be called.");
         }
         //@@author
 

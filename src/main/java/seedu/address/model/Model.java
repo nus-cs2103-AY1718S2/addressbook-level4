@@ -79,6 +79,9 @@ public interface Model {
     /** Returns an unmodifiable view of all templates */
     ObservableList<Template> getAllTemplates();
 
+    /** Returns an unmodifiable view of the filtered template list */
+    ObservableList<Template> getFilteredTemplateList();
+
     //@@author
 
     //@@author jlks96

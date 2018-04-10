@@ -44,7 +44,7 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Try out the commands below to get a feel of the app:
 
-* *`login bob password456`*: logs you into the IMDB as Bob. Note that some commands will not work unless you are logged in.
+* *`login`*: Launches the login GUI. Enter "bob" for username and "password456" for password. This will log you into the IMDB as Bob. Note that some commands will not work unless you are logged in.
 * *`list`* : lists all patients
 * **`add`**`n/John Doe ic/S1234567A p/98765432 e/johnd@example.com a/John street, block 123, #01-01 dob/11/11/1991 b/B+` : adds a patient named `John Doe` to the IMDB.
 * **`delete`**`3` : deletes the 3rd patient shown in the current list
@@ -72,6 +72,7 @@ The commands listed in this section are general commands that do not pertain to 
 
 Format: `help` or `h`
 
+// tag::login[]
 ==== Logging into the system: `login` or `lg` [since v1.2]
 
 Opens a window for the user to log into the IMDB with a matching username and password. +
@@ -88,6 +89,7 @@ This logs the user in as alice, who is a doctor.
 Username: bob +
 Password: password456 +
 This logs the user in as bob, who is a medical staff.
+// end::login[]
 
 ==== Listing entered commands : `history` or `hi`
 
@@ -383,11 +385,13 @@ Examples:
 Deletes the first medical record for the first person in the result of the list command.
 // end::record[]
 
-==== Printing a patient's formatted medical records : `print` [since v1.4]
+// tag::print[]
+==== Printing a patient's formatted medical records : `print` or `p` [since v1.4]
 
 Formats and prints a patient's medical records into a pdf. The pdf file is located in the same directory as the IMDB application. +
 *This command is only accessible to doctors.* +
-Format: `print INDEX`
+Format: `print INDEX` or `p INDEX`
+// end::print[]
 
 ==== Attaching and viewing the X-ray scans for a patient `[coming in v2.0]`
 

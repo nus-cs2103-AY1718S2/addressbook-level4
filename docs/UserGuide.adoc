@@ -441,6 +441,7 @@ Format: `email INDEX`
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 * The collected information will be used to help you fill up details in the draft like the person's email address.
+* *NOTE*: Please ensure that you have internet connection before sending the email!
 ****
 
 Examples:
@@ -705,6 +706,7 @@ e.g.`select 2`
 * *<<redoing-the-previously-undone-command-code-redo-code, Redo>>* : `redo`
 * *<<viewing-the-linkedin-search-of-a-person-code-linkedin-code, LinkedIn>>*: `linkedIn INDEX` +
 e.g. `linkedIn 2`
+* *<<login-to-google-code-googlelogin-code, Login to Google>>* : `googlelogin` +
 * *<<emailing-your-contact-code-email-code, Email>>* : `email INDEX` +
 e.g. `email 1`
 * *<<adding-a-job-opening, Add job opening>>* : `addjob p/POSITION t/TEAM l/LOCATION n/NUMBER_OF_POSITIONS` +

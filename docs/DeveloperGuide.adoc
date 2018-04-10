@@ -361,13 +361,153 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::email[]
+// tag::emailing[]
 === Email Feature
 ==== Current Implementation
 The email mechanism is facilitated by the `GmailUtil` which resides under the `util` package. The implementation
 uses the Gmail API which exists as an imported library.
 
-// end::email[]
+The utility function is implemented as follows:
+[source,java]
+----
+
+public GmailUtil() throws IOException {
+        this.service = getGmailService();
+}
+
+----
+Our Util Constructor calls getGmailService which will return a Gmail Object.
+
+[source,java]
+----
+public static Gmail getGmailService() throws IOException {
+        Credential credential = authorize();
+        return new Gmail.Builder(httpTransport, JSON_FACTORY, credential)
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+}
+----
+This is what the getGmailService looks like, which on a high level authorizes us through the Gmail API
+using our client secret and builds the Gmail object. During the authorize function, we also define our permissions
+to include sending emails.
+
+[source,java]
+----
+    private static final List<String> SCOPES = Arrays.asList(GmailScopes.GMAIL_SEND);
+
+    GoogleAuthorizationCodeFlow flow =
+                    new GoogleAuthorizationCodeFlow.Builder(
+                            httpTransport, JSON_FACTORY, clientSecrets, SCOPES)
+                            .setDataStoreFactory(dataStoreFactory)
+                            .setAccessType("offline")
+                            .build();
+----
+
+Now that we have the Gmail object, we define a class method that uses the Gmail object to send out an email
+[source,java]
+----
+public static void send(Gmail service, String recipientEmail, String ccEmail, String fromEmail, String title,
+                            String message) throws IOException, MessagingException {
+        Message m = createMessageWithEmail(createEmail(recipientEmail, ccEmail, fromEmail, title, message));
+        service.users().messages().send("me", m).execute();
+    }
+----
+
+Which of course includes troublesome things like creating MimeMessages
+[source,java]
+----
+private static MimeMessage createEmail(String to, String cc, String from, String subject, String bodyText)
+            throws MessagingException {
+        Properties props = new Properties();
+        Session session = Session.getDefaultInstance(props, null);
+
+        MimeMessage email = new MimeMessage(session);
+        InternetAddress tAddress = new InternetAddress(to);
+        InternetAddress cAddress = cc.isEmpty() ? null : new InternetAddress(cc);
+        InternetAddress fAddress = new InternetAddress(from);
+
+        email.setFrom(fAddress);
+        if (cAddress != null) {
+            email.addRecipient(javax.mail.Message.RecipientType.CC, cAddress);
+        }
+        email.addRecipient(javax.mail.Message.RecipientType.TO, tAddress);
+        email.setSubject(subject);
+        email.setText(bodyText);
+        return email;
+    }
+----
+And generating a Base64 encoded message to use as a raw input to the Message object before it can be consumed by the
+gmail service.
+
+[source,java]
+----
+private static Message createMessageWithEmail(MimeMessage email) throws MessagingException, IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        email.writeTo(baos);
+        String encodedEmail = Base64.encodeBase64URLSafeString(baos.toByteArray());
+        Message message = new Message();
+        message.setRaw(encodedEmail);
+        return message;
+    }
+
+    Message m = createMessageWithEmail(createEmail(recipientEmail, ccEmail, fromEmail, title, message));
+            service.users().messages().send("me", m).execute();
+----
+// end::emailing[]
+
+//tag::templating[]
+=== Template Feature
+
+==== Template Model
+===== Current Implementation
+The `Template` model is created to support the Emailing feature of the address book. It stores the templates of emails
+defined by the user. The class diagram for the Template is as follows:
+
+image::TemplateClassDiagram.png[width="900"]
+
+Similar to the `Person` model, the `Template` model consists of an `Template` class which includes three String attributes. The attributes include:
+
+i) `Purpose` => the purpose of this email template
+ii) `Subject` => the subject of this email template
+iii) `Message` => the message of this email template
+
+The `Templates` are stored in a `UniqueTemplateList` in the `AddressBook`. The existing `Model` interface is extended
+with functionality to manage the filtered list of `Template`. The extension is kept as minimised as possible in light of
+the *YAGNI* Principle.
+
+===== Design Considerations
+====== Aspect: Model Manager for Appointment
+* **Alternative 1 (current choice):** Implementing the attributes of `Template` using Strings
+** Pros: No need to create three new models just to hold a String, minimized code
+** Cons: The attributes are not extensible, eg. you cannot make `Subject` dynamic for an email template
+* **Alternative 2:** Create models for every attribute in Template
+** Pros: Potential Extension to the models, eg. `Message` can be dynamically change to email address
+** Cons: Not much usage for now. Extra layer of complexity for no visible enhancement to user.
+
+==== Add Template Function
+===== Current Implementation
+The add Template function is implemented as the `AddTemplateCommand` together
+with its associated `AddTemplateCommandParser` class. This function supports the adding of an `Template` to the address book.
+The `AddTemplateCommand` inherits from the `UndoableCommand` to allow user to undo the addition of an `Template`. The
+implementation of the `AddTemplateCommand` is similar to that of the `AddCommand`.
+
+To enhance the logic of this function, checks are implemented to ensure that no two templates can have the same `Purpose`
+
+Following is a sequence diagram describing how the add Template function works:
+
+image::AddTemplateSequenceDiagram.png[width="900"]
+
+==== Delete Template Function
+===== Current Implementation
+The delete Template function is implemented as the `DeleteTemplateCommand` together
+with its associated `DeleteTemplateCommandParser` class. This function supports the deletion of an `Template` from the address book.
+The `DeleteTemplateCommand` inherits from the `UndoableCommand` to allow user to undo the deletion of an `Template`. The
+implementation of the `DeleteTemplateCommand` is similar to that of the `DeleteCommand`.
+
+Following is a sequence diagram describing how the delete appointment function works:
+
+image::DeleteTemplateSequenceDiagram.png[width="900"]
+//end::templating[]
 
 === Logging
 

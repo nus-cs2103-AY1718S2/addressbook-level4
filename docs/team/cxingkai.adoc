@@ -1,0 +1,57 @@
+= Chew Xing Kai - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Integrated Medical DataBase (IMDB)
+
+---
+
+== Overview
+
+Integrated Medical DataBase (IMDB) is a desktop application used by clinics for managing health records digitally.
+Doctors can use it to check for a patient's health profile, and medical staff can use it to manage queues and patient appointments.
+The user interacts with it using a Command Line Interface, and it has a Graphical User Interface created with JavaFX.
+It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: Added the *login command*.
+** What it does: Opens a window that allows users to log into IMDB. Some commands can only be executed when logged in as a particular user role.
+** Justification: Adds a layer of security, protecting sensitive information of patients from users without security clearance.
+** Highlights: Implementing this command was challenging as it involved handling data input from another window, using a static class LoginManager to authenticate and store login information.
+This feature can also be extended in the future by adding additional user roles such as administrator.
+
+* *Minor enhancement*: Added the *print command*.
+** What it does: Prints a selected user's medical records as a pdf file.
+** Justification: Can be used by doctors to explain a patient's medical condition.
+** Highlights: This command can be extended to include graphical information like x-ray images.
+** Credits: iText 5 was used to create the pdf file.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W15-B2/main/blob/master/collated/functional/cxingkai.md[Collated code]]
+
+* *Other contributions*:
+
+** Community:
+*** Reported bugs for other teams in the class
+
+** Tools:
+*** Integrated a third party library (iText) to the project [https://github.com/CS2103JAN2018-W15-B2/main/pull/146[#146]]
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=login]
+
+include::../UserGuide.adoc[tag=print]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=login]

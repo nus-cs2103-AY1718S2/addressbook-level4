@@ -3,14 +3,18 @@ package seedu.address.model.appointment;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.ConcurrentAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
+import seedu.address.model.appointment.exceptions.PastAppointmentException;
 
 //@@author wynonaK
 /**
@@ -37,15 +41,30 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
      *
      * @throws DuplicateAppointmentException if the person to add is a duplicate of an existing person in the list.
      */
-    public void add(Appointment toAdd) throws DuplicateAppointmentException, DuplicateDateTimeException {
+    public void add(Appointment toAdd) throws DuplicateAppointmentException, DuplicateDateTimeException,
+        PastAppointmentException, ConcurrentAppointmentException {
         requireNonNull(toAdd);
+
         if (contains(toAdd)) {
             throw new DuplicateAppointmentException();
         }
 
+        if (toAdd.getDateTime().isBefore(LocalDateTime.now())) {
+            throw new PastAppointmentException();
+        }
+
+        ArrayList<LocalDateTime> timeList = ArrayList<>;
+
         for (Appointment a : internalList) {
+            timeList.add(a.getDateTime());
             if (a.getDateTime().equals(toAdd.getDateTime())) {
                 throw new DuplicateDateTimeException();
+            }
+        }
+
+        for (LocalDateTime dateTime : timeList) {
+            if (toAdd.getDateTime().isAfter(dateTime) && toAdd.getDateTime().isAfter(dateTime.plusMinutes(30))) {
+                throw new ConcurrentAppointmentException();
             }
         }
         internalList.add(toAdd);

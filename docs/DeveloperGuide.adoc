@@ -230,11 +230,12 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-=== Rate feature
+// tag::rate[]
+=== Rate Command
 ==== Current Implementation
-The `rate` command allows campus recruiters to evaluate candidates' performance in interviews against four specific criteria, namely technical skills, communication skills, problem solving skills and experience. The format of this command is `rate INDEX t/TECHNICAL SKILLS SCORE c/COMMUNICATINO SKILLS SCORE p/PROBLEM SOLVING SKILLS SCORE e/EXPERIENCE SCORE`.
+The `rate` command allows Talent Acquisition Specialists to evaluate candidates' performance in interviews against four specific criteria, namely technical skills, communication skills, problem solving skills and experience. The format of this command is `rate INDEX t/TECHNICAL SKILLS SCORE c/COMMUNICATINO SKILLS SCORE p/PROBLEM SOLVING SKILLS SCORE e/EXPERIENCE SCORE`.
 
-In our current implementation, the `rate` command inherits from the `UndoableCommands` class. Two components, `Logic` and `Model`, are involved in the execution of this command. The `Logic` component is responsible for parsing user inputs while the `Model` component deals with updating of filtered person list.
+In our current implementation, the `rate` command inherits from the `UndoableCommand` class. Two components, `Logic` and `Model`, are involved in the execution of this command. The `Logic` component is responsible for parsing user inputs while the `Model` component deals with updating of filtered person list.
 
 Below is a sequence diagram that illustrates how these two components interact when the `rate` command is executed:
 
@@ -244,12 +245,89 @@ Figure 3.1.1.1 Sequence diagram to illustrate component interactions for the `ra
 As shown above, execution of the `rate` command comprises the following steps:
 
 . `LogicManager` invokes `parseCommand` method of `AddressbookParser`, taking user inputs as arguments.
-. During the `parseCommand` method call, an instance of `RateCommandParser` will be created when the keyword "rate" is matched. `RateCommandParser` then extracts the remaining user inputs and a `RateCommand` instance r will be return, provided that the format of user's input is correct.
-. `LogicManager` then calls `executeUndoableCommand` of the `RateCommand` r instantiated in step 2. Another component, `Model`, will be involved as the `RateCommand` requests to update the rating scores of the person.
+. During the `parseCommand` method call, an instance of `RateCommandParser` will be created when the keyword "rate" is matched. `RateCommandParser` then extracts the remaining user inputs and a `RateCommand` instance `r` will be returned provided that the format of user's input is correct.
+. `LogicManager` then calls `executeUndoableCommand` of the `RateCommand`, `r`, instantiated in step 2. Another component, `Model`, will be involved as the `RateCommand` requests to update the rating scores of the person.
 . The `Model` component gets the filtered persons list and replaces `Person` p1 with `Person` p2 which is identical to p2 except rating scores. A `CommandResult` will be generated and returned to `LogicManager`.
 
 ==== Design Considerations
-In the current implementation, adding ratings for a `Person` is done through a new command, `rate`. Alternatively, we can modify the `add` command by making it support more prefixes and accept rating scores as well. We can also update the `edit` command, allowing it to modifying rating scores of a person. However, this approach might result in very long `add` commands that are not user-friendly.
+
+===== Aspect: Implementation of adding and editing rating scores
+
+* **Alternative 1 (current choice):** Implement a new command class `RateCommand` that supports both adding and editing rating scores
+** Pros: Results in a more customisable command that can be easily modified to support more prefixes and additional rating criteria
+** Cons: Complicates the system as users need to familiarise themselves with more commands
+* **Alternative 2:** Extend the original `EditCommand` to allow it to add and modify rating scores of a student
+** Pros: Minimises the number of commands users have to remember to execute tasks, making the application more user-friendly
+** Cons: Requires substantial changes to `EditCommandParser` and hence harder to implement
+// end::rate[]
+
+// tag::sort[]
+=== Sort Command
+==== Current Implementation
+The `sort` command supports the listing of students in HR+ based on GPA, name or overall rating in ascending or descending order as specified by the user. The format of this `sort` command is `sort FIELD o/SORT ORDER`.
+
+As sorting is not undoable, this command inherits from the `Command` class instead of the `UndoableCommand` class. The sorting mechanism is mainly facilitated by `Logic` and `ModelManager`. `SortCommandParser` residing in `LogicManager` processes user inputs and creates a corresponding `SortCommand`. `ModelManager` will then invoke appropriate sorting methods in `UniquePersonList`.
+
+The following sequence diagrams depict the interactions between `LogicManager` and `ModelManager` when a user issues a request for sorting:
+
+image::SortCommandSequenceDiagram1.png[width="800"]
+image::SortCommandSequenceDiagram2.png[width="800"]
+Figure 3.2.1.1 Sequence diagrams for execution of `sort` command
+
+As seen from the sequence diagram above, `LogicManager` and `ModelManager` interact in the following way:
+
+. When a user keys in `sort gpa o/desc`, `LogicManager` calls method `parser` in `AddressBookParser`.
+. `SortCommandParser` is instantiated. If the user input is of the correct format, a `SortCommand` will be successfully created and returned back to `LogicManager`. Suppose the inputs are not valid or the format of the command is invalid, an exception will be thrown and users will see an error message.
+. `LogicManager` proceeds to invoke `execute` method of `SortCommand`.
+. `ModelManager` is in charge of sorting the list of persons through calling relevant methods provided in `AddressBook` and `UniquePersonList` according to the field to be sorted by.
+
+Currently, HR+ only allows users to sort the list of students by selected fields in ascending or descending order. This is achieved by encapsulating acceptable sorting orders and fields into `SortOrder` and `SortField` of the type `enum` respectively.
+
+In order to make Person objects comparable, additional methods need to be implemented in the `Person` class to compare different `Person` objects based on GPA, name and rating scores. The following code snippet demonstrates how these methods are implemented:
+[source,java]
+----
+/**
+ * Compares the overall ratings of two {@code Person} objects.
+ * @param p1
+ * @param p2
+ * @return 1 if p1 has a higher overall rating, 0 if p1 and p2 have equal overall rating and -1 otherwise.
+ */
+public static int compareByOverallRating(Person p1, Person p2) {
+    return Double.compare(p1.getRating().getOverallScore(),
+            p2.getRating().getOverallScore());
+}
+----
+
+To sort the list based on a particular field, we used the `sort` method from Java's `Collections` library. An example usage is shown below:
+
+[source,java]
+----
+/**
+ * Sorts the list based on GPA in ascending order
+ */
+public void sortPersonsGradePointAverageAsc() {
+    Collections.sort(internalList, Person::compareByGradePointAverage);
+}
+
+/**
+ * Sorts the list based on GPA in descending order
+ */
+public void sortPersonsGradePointAverageDesc() {
+    Collections.sort(internalList, Person::compareByGradePointAverage);
+    Collections.reverse(internalList);
+}
+----
+
+==== Design Considerations
+
+==== Aspect: Implementation of `SortCommand`
+* **Alternative 1 (current choice):** Implement a more generic `SortCommand` that sorts the list of students based on parameters supplied by the user
+** Pros: It is easier to modify `SortCommand` to support more fields to be sorted by.
+** Cons: It restricts the format of sort command to be the same and is thus less flexible.
+* **Alternative 2:** Use separate commands for each possible field, such as `gpa-sort`, `rating-sort` and `name-sort` commands
+** Pros: It allows developers to specify different command formats. For example, users might not need to specify the sorting order explicitly. `rating-sort` and `gpa-sort` can have default sorting order to be descending while results from `name-sort` can be in ascending order.
+** Cons: It increases the number of commands in HR+ and might be less user-friendly as users need to familiarise themselves with more commands.
+// end::sort[]
 
 // tag::undoredo[]
 === Undo/Redo feature

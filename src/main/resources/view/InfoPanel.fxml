@@ -15,71 +15,71 @@
 <?import javafx.scene.control.ProgressBar?>
 
 <!-- @@author Ang-YC -->
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:id="infoPaneWrapper" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-    <ScrollPane fx:id="infoMainPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" pannable="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" focusTraversable="true" />
-    <SplitPane fx:id="infoSplitPane" dividerPositions="0.5" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <ScrollPane fx:id="infoSplitMainPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" pannable="true" focusTraversable="true">
-            <VBox fx:id="infoMain">
-                <VBox fx:id="infoMainPart" opacity="0">
-                    <AnchorPane fx:id="infoMainTop">
-                        <VBox fx:id="infoMainTopLeft" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <Label fx:id="infoMainName" opacity="0"/>
-                            <Label fx:id="infoMainUniversity" opacity="0">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:id="infoPaneWrapper" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" cache="true" cacheHint="SPEED">
+    <ScrollPane fx:id="infoMainPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" pannable="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" focusTraversable="true" cache="true" cacheHint="SPEED"/>
+    <SplitPane fx:id="infoSplitPane" dividerPositions="0.5" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" cache="true" cacheHint="SPEED">
+        <ScrollPane fx:id="infoSplitMainPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" pannable="true" focusTraversable="true" cache="true" cacheHint="SPEED">
+            <VBox fx:id="infoMain" cache="true" cacheHint="SPEED">
+                <VBox fx:id="infoMainPart" opacity="0" cache="true" cacheHint="SPEED">
+                    <AnchorPane fx:id="infoMainTop" cache="true" cacheHint="SPEED">
+                        <VBox fx:id="infoMainTopLeft" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" cache="true" cacheHint="SPEED">
+                            <Label fx:id="infoMainName" opacity="0" cache="true" cacheHint="SPEED"/>
+                            <Label fx:id="infoMainUniversity" opacity="0" cache="true" cacheHint="SPEED">
                                 <VBox.margin>
                                     <Insets bottom="-2.0" />
                                 </VBox.margin>
                             </Label>
-                            <Label fx:id="infoMainMajorYear" opacity="0"/>
+                            <Label fx:id="infoMainMajorYear" opacity="0" cache="true" cacheHint="SPEED"/>
                             <padding>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </padding>
                         </VBox>
-                        <HBox fx:id="infoMainTopRight" opacity="0" alignment="CENTER_RIGHT" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <Label fx:id="infoMainCgpaLabel" text="cGPA">
+                        <HBox fx:id="infoMainTopRight" opacity="0" alignment="CENTER_RIGHT" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" cache="true" cacheHint="SPEED">
+                            <Label fx:id="infoMainCgpaLabel" text="cGPA" cache="true" cacheHint="SPEED">
                                 <HBox.margin>
                                     <Insets right="5.0" />
                                 </HBox.margin>
                             </Label>
-                            <Label fx:id="infoMainCgpa" alignment="CENTER" maxHeight="36.0" maxWidth="36.0" minHeight="36.0" minWidth="36.0" prefHeight="36.0" prefWidth="36.0">
+                            <Label fx:id="infoMainCgpa" alignment="CENTER" maxHeight="36.0" maxWidth="36.0" minHeight="36.0" minWidth="36.0" prefHeight="36.0" prefWidth="36.0" cache="true" cacheHint="SPEED">
                             </Label>
                         </HBox>
                         <VBox.margin>
                             <Insets bottom="10.0" />
                         </VBox.margin>
                     </AnchorPane>
-                    <VBox fx:id="infoMainContact">
-                        <HBox fx:id="infoMainContactEmailPane" opacity="0" alignment="CENTER_LEFT">
-                            <VBox fx:id="iconEmailOuter" alignment="CENTER" maxHeight="15.0" maxWidth="15.0" minHeight="15.0" minWidth="15.0" prefHeight="15.0" prefWidth="15.0">
-                                <Pane fx:id="iconEmail" styleClass="icon-email" maxHeight="11.4" maxWidth="15.0" minHeight="11.4" minWidth="15.0" prefHeight="11.4" prefWidth="15.0"/>
+                    <VBox fx:id="infoMainContact" cache="true" cacheHint="SPEED">
+                        <HBox fx:id="infoMainContactEmailPane" opacity="0" alignment="CENTER_LEFT" cache="true" cacheHint="SPEED">
+                            <VBox fx:id="iconEmailOuter" alignment="CENTER" maxHeight="15.0" maxWidth="15.0" minHeight="15.0" minWidth="15.0" prefHeight="15.0" prefWidth="15.0" cache="true" cacheHint="SPEED">
+                                <Pane fx:id="iconEmail" styleClass="icon-email" maxHeight="11.4" maxWidth="15.0" minHeight="11.4" minWidth="15.0" prefHeight="11.4" prefWidth="15.0" cache="true" cacheHint="SPEED"/>
                                 <HBox.margin>
                                     <Insets right="5.0" />
                                 </HBox.margin>
                             </VBox>
-                            <Label fx:id="infoMainEmail"/>
+                            <Label fx:id="infoMainEmail" cache="true" cacheHint="SPEED"/>
                             <VBox.margin>
                                 <Insets bottom="6.0" />
                             </VBox.margin>
                         </HBox>
-                        <HBox fx:id="infoMainContactAddressPane" opacity="0" alignment="CENTER_LEFT">
-                            <VBox fx:id="iconAddressOuter" alignment="CENTER" maxHeight="15.0" maxWidth="15.0" minHeight="15.0" minWidth="15.0" prefHeight="15.0" prefWidth="15.0">
-                                <Pane fx:id="iconAddress" styleClass="icon-address" maxHeight="15.0" maxWidth="9.33" minHeight="15.0" minWidth="9.33" prefHeight="15.0" prefWidth="9.33"/>
+                        <HBox fx:id="infoMainContactAddressPane" opacity="0" alignment="CENTER_LEFT" cache="true" cacheHint="SPEED">
+                            <VBox fx:id="iconAddressOuter" alignment="CENTER" maxHeight="15.0" maxWidth="15.0" minHeight="15.0" minWidth="15.0" prefHeight="15.0" prefWidth="15.0" cache="true" cacheHint="SPEED">
+                                <Pane fx:id="iconAddress" styleClass="icon-address" maxHeight="15.0" maxWidth="9.33" minHeight="15.0" minWidth="9.33" prefHeight="15.0" prefWidth="9.33" cache="true" cacheHint="SPEED"/>
                                 <HBox.margin>
                                     <Insets right="5.0" />
                                 </HBox.margin>
                             </VBox>
-                            <Label fx:id="infoMainAddress"/>
+                            <Label fx:id="infoMainAddress" cache="true" cacheHint="SPEED"/>
                             <VBox.margin>
                                 <Insets bottom="6.0" />
                             </VBox.margin>
                         </HBox>
-                        <HBox fx:id="infoMainContactPhonePane" opacity="0" alignment="CENTER_LEFT">
-                            <VBox fx:id="iconPhoneOuter" alignment="CENTER" maxHeight="15.0" maxWidth="15.0" minHeight="15.0" minWidth="15.0" prefHeight="15.0" prefWidth="15.0">
-                                <Pane fx:id="iconPhone" styleClass="icon-phone" maxHeight="15.0" maxWidth="15.0" minHeight="15.0" minWidth="15.0" prefHeight="15.0" prefWidth="15.0"/>
+                        <HBox fx:id="infoMainContactPhonePane" opacity="0" alignment="CENTER_LEFT" cache="true" cacheHint="SPEED">
+                            <VBox fx:id="iconPhoneOuter" alignment="CENTER" maxHeight="15.0" maxWidth="15.0" minHeight="15.0" minWidth="15.0" prefHeight="15.0" prefWidth="15.0" cache="true" cacheHint="SPEED">
+                                <Pane fx:id="iconPhone" styleClass="icon-phone" maxHeight="15.0" maxWidth="15.0" minHeight="15.0" minWidth="15.0" prefHeight="15.0" prefWidth="15.0" cache="true" cacheHint="SPEED"/>
                                 <HBox.margin>
                                     <Insets right="5.0" />
                                 </HBox.margin>
                             </VBox>
-                            <Label fx:id="infoMainPhone"/>
+                            <Label fx:id="infoMainPhone" cache="true" cacheHint="SPEED"/>
                         </HBox>
                         <padding>
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -88,8 +88,8 @@
                             <Insets bottom="5.0" />
                         </VBox.margin>
                     </VBox>
-                    <HBox fx:id="infoMainInterview">
-                        <GridPane fx:id="infoMainInterviewDetails" alignment="CENTER" HBox.hgrow="ALWAYS">
+                    <HBox fx:id="infoMainInterview" cache="true" cacheHint="SPEED">
+                        <GridPane fx:id="infoMainInterviewDetails" alignment="CENTER" HBox.hgrow="ALWAYS" cache="true" cacheHint="SPEED">
                             <columnConstraints>
                                 <ColumnConstraints fillWidth="false" hgrow="NEVER" />
                                 <ColumnConstraints hgrow="ALWAYS" />
@@ -98,25 +98,25 @@
                                 <RowConstraints fillHeight="false" vgrow="NEVER" />
                                 <RowConstraints fillHeight="false" vgrow="NEVER" />
                             </rowConstraints>
-                            <Label fx:id="infoMainPositionLabel" opacity="0" minWidth="-Infinity" text="Position">
+                            <Label fx:id="infoMainPositionLabel" opacity="0" minWidth="-Infinity" text="Position" cache="true" cacheHint="SPEED">
                                 <GridPane.margin>
                                     <Insets right="5.0" />
                                 </GridPane.margin>
                             </Label>
-                            <Label fx:id="infoMainStatusLabel" opacity="0" minWidth="-Infinity" text="Status" GridPane.rowIndex="1">
+                            <Label fx:id="infoMainStatusLabel" opacity="0" minWidth="-Infinity" text="Status" GridPane.rowIndex="1" cache="true" cacheHint="SPEED">
                                 <GridPane.margin>
                                     <Insets right="5.0" />
                                 </GridPane.margin>
                             </Label>
-                            <Label fx:id="infoMainPosition" opacity="0" GridPane.columnIndex="1"/>
-                            <Label fx:id="infoMainStatus" opacity="0" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                            <Label fx:id="infoMainPosition" opacity="0" GridPane.columnIndex="1" cache="true" cacheHint="SPEED"/>
+                            <Label fx:id="infoMainStatus" opacity="0" GridPane.columnIndex="1" GridPane.rowIndex="1" cache="true" cacheHint="SPEED"/>
                             <padding>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </padding>
                         </GridPane>
-                        <VBox fx:id="infoMainInterviewDatePane" opacity="0" alignment="CENTER" minWidth="-Infinity">
-                            <VBox fx:id="infoMainInterviewDateCalendar" minWidth="65.0">
-                                <Label fx:id="infoMainInterviewMonth" alignment="CENTER" maxWidth="Infinity" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="infoMainInterviewDatePane" opacity="0" alignment="CENTER" minWidth="-Infinity" cache="true" cacheHint="SPEED">
+                            <VBox fx:id="infoMainInterviewDateCalendar" minWidth="65.0" cache="true" cacheHint="SPEED">
+                                <Label fx:id="infoMainInterviewMonth" alignment="CENTER" maxWidth="Infinity" VBox.vgrow="ALWAYS" cache="true" cacheHint="SPEED">
                                     <VBox.margin>
                                         <Insets />
                                     </VBox.margin>
@@ -124,12 +124,12 @@
                                         <Insets bottom="2.0" left="8.0" right="8.0" top="2.0" />
                                     </padding>
                                 </Label>
-                                <Label fx:id="infoMainInterviewDate" alignment="CENTER" maxWidth="Infinity">
+                                <Label fx:id="infoMainInterviewDate" alignment="CENTER" maxWidth="Infinity" cache="true" cacheHint="SPEED">
                                     <VBox.margin>
                                         <Insets bottom="-5.0" />
                                     </VBox.margin>
                                 </Label>
-                                <Label fx:id="infoMainInterviewDay" alignment="CENTER" maxWidth="Infinity">
+                                <Label fx:id="infoMainInterviewDay" alignment="CENTER" maxWidth="Infinity" cache="true" cacheHint="SPEED">
                                     <VBox.margin>
                                         <Insets />
                                     </VBox.margin>
@@ -141,16 +141,16 @@
                                     <Insets bottom="3.0" />
                                 </VBox.margin>
                             </VBox>
-                            <Label fx:id="infoMainInterviewTime" alignment="CENTER" maxWidth="Infinity"/>
+                            <Label fx:id="infoMainInterviewTime" alignment="CENTER" maxWidth="Infinity" cache="true" cacheHint="SPEED"/>
                         </VBox>
                     </HBox>
-                    <VBox fx:id="infoMainCommentsPane" opacity="0">
-                        <Label fx:id="infoMainCommentsLabel" text="Comments">
+                    <VBox fx:id="infoMainCommentsPane" opacity="0" cache="true" cacheHint="SPEED">
+                        <Label fx:id="infoMainCommentsLabel" text="Comments" cache="true" cacheHint="SPEED">
                             <VBox.margin>
                                 <Insets bottom="5.0" left="5.0" />
                             </VBox.margin>
                         </Label>
-                        <Label fx:id="infoMainComments" alignment="TOP_LEFT" maxWidth="Infinity" minHeight="60.0" wrapText="true">
+                        <Label fx:id="infoMainComments" alignment="TOP_LEFT" maxWidth="Infinity" minHeight="60.0" wrapText="true" cache="true" cacheHint="SPEED">
                             <padding>
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                             </padding>
@@ -160,20 +160,20 @@
                         </VBox.margin>
                     </VBox>
                 </VBox>
-                <AnchorPane fx:id="infoMainRatings" />
+                <AnchorPane fx:id="infoMainRatings" cache="true" cacheHint="SPEED"/>
                 <padding>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </padding>
             </VBox>
         </ScrollPane>
-        <AnchorPane fx:id="infoSplitSidePane" maxWidth="300.0" minWidth="250.0">
+        <AnchorPane fx:id="infoSplitSidePane" maxWidth="300.0" minWidth="250.0" cache="true" cacheHint="SPEED">
             <padding>
                 <Insets left="16.0" right="8.0" top="8.0" />
             </padding>
-            <VBox fx:id="infoSplitRatings" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <VBox fx:id="infoSplitSide" alignment="TOP_CENTER">
-                    <AnchorPane fx:id="infoSideGraph" maxHeight="150.0" minHeight="150.0" prefHeight="150.0"/>
-                    <GridPane fx:id="infoSideRatingDetails">
+            <VBox fx:id="infoSplitRatings" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" cache="true" cacheHint="SPEED">
+                <VBox fx:id="infoSplitSide" alignment="TOP_CENTER" cache="true" cacheHint="SPEED">
+                    <AnchorPane fx:id="infoSideGraph" maxHeight="150.0" minHeight="150.0" prefHeight="150.0" cache="true" cacheHint="SPEED"/>
+                    <GridPane fx:id="infoSideRatingDetails" cache="true" cacheHint="SPEED">
                         <columnConstraints>
                             <ColumnConstraints hgrow="NEVER" />
                             <ColumnConstraints hgrow="ALWAYS" />
@@ -186,7 +186,7 @@
                             <RowConstraints vgrow="NEVER" />
                             <RowConstraints vgrow="NEVER" />
                         </rowConstraints>
-                        <Label fx:id="infoRatingTechnicalLabel" text="Technical" GridPane.halignment="RIGHT">
+                        <Label fx:id="infoRatingTechnicalLabel" text="Technical" GridPane.halignment="RIGHT" cache="true" cacheHint="SPEED">
                             <GridPane.margin>
                                 <Insets right="5.0" />
                             </GridPane.margin>
@@ -194,13 +194,13 @@
                                 <Insets bottom="5.0" />
                             </padding>
                         </Label>
-                        <ProgressBar fx:id="infoRatingTechnical" styleClass="hr-progress-bar" maxWidth="Infinity" progress="0.0" GridPane.columnIndex="1" />
-                        <Label fx:id="infoRatingTechnicalValue" GridPane.halignment="LEFT" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                        <ProgressBar fx:id="infoRatingTechnical" styleClass="hr-progress-bar" maxWidth="Infinity" progress="0.0" GridPane.columnIndex="1" cache="true" cacheHint="SPEED"/>
+                        <Label fx:id="infoRatingTechnicalValue" GridPane.halignment="LEFT" GridPane.columnIndex="2" GridPane.rowIndex="0" cache="true" cacheHint="SPEED">
                             <padding>
                                 <Insets left="5.0" />
                             </padding>
                         </Label>
-                        <Label fx:id="infoRatingCommunicationLabel" text="Communication" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                        <Label fx:id="infoRatingCommunicationLabel" text="Communication" GridPane.halignment="RIGHT" GridPane.rowIndex="1" cache="true" cacheHint="SPEED">
                             <GridPane.margin>
                                 <Insets right="5.0" />
                             </GridPane.margin>
@@ -208,13 +208,13 @@
                                 <Insets bottom="5.0" />
                             </padding>
                         </Label>
-                        <ProgressBar fx:id="infoRatingCommunication" styleClass="hr-progress-bar" maxWidth="Infinity" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label fx:id="infoRatingCommunicationValue" GridPane.halignment="LEFT" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <ProgressBar fx:id="infoRatingCommunication" styleClass="hr-progress-bar" maxWidth="Infinity" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" cache="true" cacheHint="SPEED"/>
+                        <Label fx:id="infoRatingCommunicationValue" GridPane.halignment="LEFT" GridPane.columnIndex="2" GridPane.rowIndex="1" cache="true" cacheHint="SPEED">
                             <padding>
                                 <Insets left="5.0" />
                             </padding>
                         </Label>
-                        <Label fx:id="infoRatingProblemSolvingLabel" text="Problem Solving" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                        <Label fx:id="infoRatingProblemSolvingLabel" text="Problem Solving" GridPane.halignment="RIGHT" GridPane.rowIndex="2" cache="true" cacheHint="SPEED">
                             <GridPane.margin>
                                 <Insets right="5.0" />
                             </GridPane.margin>
@@ -222,13 +222,13 @@
                                 <Insets bottom="5.0" />
                             </padding>
                         </Label>
-                        <ProgressBar fx:id="infoRatingProblemSolving" styleClass="hr-progress-bar" maxWidth="Infinity" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="infoRatingProblemSolvingValue" GridPane.halignment="LEFT" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                        <ProgressBar fx:id="infoRatingProblemSolving" styleClass="hr-progress-bar" maxWidth="Infinity" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" cache="true" cacheHint="SPEED"/>
+                        <Label fx:id="infoRatingProblemSolvingValue" GridPane.halignment="LEFT" GridPane.columnIndex="2" GridPane.rowIndex="2" cache="true" cacheHint="SPEED">
                             <padding>
                                 <Insets left="5.0" />
                             </padding>
                         </Label>
-                        <Label fx:id="infoRatingExperienceLabel" text="Experience" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                        <Label fx:id="infoRatingExperienceLabel" text="Experience" GridPane.halignment="RIGHT" GridPane.rowIndex="3" cache="true" cacheHint="SPEED">
                             <GridPane.margin>
                                 <Insets right="5.0" />
                             </GridPane.margin>
@@ -236,19 +236,19 @@
                                 <Insets bottom="5.0" />
                             </padding>
                         </Label>
-                        <ProgressBar fx:id="infoRatingExperience" styleClass="hr-progress-bar" maxWidth="Infinity" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label fx:id="infoRatingExperienceValue" GridPane.halignment="LEFT" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                        <ProgressBar fx:id="infoRatingExperience" styleClass="hr-progress-bar" maxWidth="Infinity" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" cache="true" cacheHint="SPEED"/>
+                        <Label fx:id="infoRatingExperienceValue" GridPane.halignment="LEFT" GridPane.columnIndex="2" GridPane.rowIndex="3" cache="true" cacheHint="SPEED">
                             <padding>
                                 <Insets left="5.0" />
                             </padding>
                         </Label>
-                        <Label fx:id="infoRatingOverallLabel" text="Average" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                        <Label fx:id="infoRatingOverallLabel" text="Average" GridPane.halignment="RIGHT" GridPane.rowIndex="4" cache="true" cacheHint="SPEED">
                             <GridPane.margin>
                                 <Insets right="5.0" />
                             </GridPane.margin>
                         </Label>
-                        <ProgressBar fx:id="infoRatingOverall" styleClass="hr-progress-bar" maxWidth="Infinity" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label fx:id="infoRatingOverallValue" GridPane.halignment="LEFT" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                        <ProgressBar fx:id="infoRatingOverall" styleClass="hr-progress-bar" maxWidth="Infinity" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4" cache="true" cacheHint="SPEED"/>
+                        <Label fx:id="infoRatingOverallValue" GridPane.halignment="LEFT" GridPane.columnIndex="2" GridPane.rowIndex="4" cache="true" cacheHint="SPEED">
                             <padding>
                                 <Insets left="5.0" />
                             </padding>
@@ -258,8 +258,8 @@
                         </padding>
                     </GridPane>
                 </VBox>
-                <VBox fx:id="infoSideButtons" opacity="0" alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
-                    <Button fx:id="infoSideButtonResume" styleClass="hr-button" onAction="#showResume" maxWidth="Infinity" mnemonicParsing="false" text="View Resume">
+                <VBox fx:id="infoSideButtons" opacity="0" alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS" cache="true" cacheHint="SPEED">
+                    <Button fx:id="infoSideButtonResume" styleClass="hr-button" onAction="#showResume" maxWidth="Infinity" mnemonicParsing="false" text="View Resume" cache="true" cacheHint="SPEED">
                         <padding>
                             <Insets bottom="6.0" left="8.0" right="8.0" top="6.0" />
                         </padding>

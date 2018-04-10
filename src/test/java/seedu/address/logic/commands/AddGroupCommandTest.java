@@ -27,6 +27,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -156,6 +157,11 @@ public class AddGroupCommandTest {
 
         @Override
         public void deleteToDo(ToDo target) throws ToDoNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteGroup(Group target) throws GroupNotFoundException {
             fail("This method should not be called.");
         }
 

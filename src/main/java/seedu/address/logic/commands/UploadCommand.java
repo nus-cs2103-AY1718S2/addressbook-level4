@@ -19,10 +19,10 @@ public class UploadCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "upload";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Uploads the current view of address book "
-            + "to the specified filepath in Google Drive. "
-            + "Parameters: FILEPATH PASSWORD\n"
+            + "and saves it as specified filename in Google Drive. "
+            + "Parameters: FILENAME PASSWORD\n"
             + "Example: " + COMMAND_WORD + " "
-            + "data/addressbookbackup.xml "
+            + "addressbookbackup.xml "
             + "testpassword";
 
     public static final String MESSAGE_SUCCESS = "Current list of Persons, tags, or aliases from "

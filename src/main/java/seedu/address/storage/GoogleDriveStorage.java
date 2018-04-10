@@ -156,22 +156,4 @@ public class GoogleDriveStorage {
         return insert.execute();
     }
 
-    /**
-     * Downloads a file using direct media download.
-     */
-    private void downloadFile(File uploadedFile)
-            throws IOException {
-        // create parent directory (if necessary)
-        java.io.File parentDir = new java.io.File(DIR_FOR_DOWNLOADS);
-        if (!parentDir.exists() && !parentDir.mkdirs()) {
-            throw new IOException("Unable to create parent directory");
-        }
-        OutputStream out = new FileOutputStream(new java.io.File(parentDir, uploadedFile.getTitle()));
-
-        MediaHttpDownloader downloader =
-                new MediaHttpDownloader(httpTransport, drive.getRequestFactory().getInitializer());
-        downloader.setDirectDownloadEnabled(true);
-        downloader.download(new GenericUrl(uploadedFile.getDownloadUrl()), out);
-    }
-
 }

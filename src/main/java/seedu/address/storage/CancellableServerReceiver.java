@@ -20,7 +20,6 @@ import com.google.api.client.extensions.java6.auth.oauth2.VerificationCodeReceiv
 import com.google.api.client.repackaged.com.google.common.base.Throwables;
 
 //@@author Caijun7-reused
-
 /**
  * A cancellable Server Receiver.
  */

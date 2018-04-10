@@ -461,9 +461,7 @@ private static Message createMessageWithEmail(MimeMessage email) throws Messagin
 ==== Template Model
 ===== Current Implementation
 The `Template` model is created to support the Emailing feature of the address book. It stores the templates of emails
-defined by the user. The class diagram for the Template is as follows:
-
-image::TemplateClassDiagram.png[width="900"]
+defined by the user.
 
 Similar to the `Person` model, the `Template` model consists of an `Template` class which includes three String attributes. The attributes include:
 
@@ -472,8 +470,7 @@ ii) `Subject` => the subject of this email template
 iii) `Message` => the message of this email template
 
 The `Templates` are stored in a `UniqueTemplateList` in the `AddressBook`. The existing `Model` interface is extended
-with functionality to manage the filtered list of `Template`. The extension is kept as minimised as possible in light of
-the *YAGNI* Principle.
+with functionality to manage the filtered list of `Template`.
 
 ===== Design Considerations
 ====== Aspect: Model Manager for Appointment
@@ -500,8 +497,7 @@ image::AddTemplateSequenceDiagram.png[width="900"]
 ==== Delete Template Function
 ===== Current Implementation
 The delete Template function is implemented as the `DeleteTemplateCommand` together
-with its associated `DeleteTemplateCommandParser` class. This function supports the deletion of an `Template` from the address book.
-The `DeleteTemplateCommand` inherits from the `UndoableCommand` to allow user to undo the deletion of an `Template`. The
+with its associated `DeleteTemplateCommandParser` class. This function supports the deletion of an `Template` from the address book. The
 implementation of the `DeleteTemplateCommand` is similar to that of the `DeleteCommand`.
 
 Following is a sequence diagram describing how the delete appointment function works:

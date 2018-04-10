@@ -1,12 +1,10 @@
 package seedu.address.model.listevent;
-
-import seedu.address.model.photo.Photo;
+//@@author crizyli
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import com.google.api.client.util.DateTime;
-
-import static org.junit.Assert.assertEquals;
 
 public class ListEventTest {
 
@@ -17,8 +15,8 @@ public class ListEventTest {
         assertEquals("Test Event", listEvent.getTitle());
         assertEquals("NUS", listEvent.getLocation());
         assertEquals(startTime, listEvent.getStartTime());
-        assertEquals("EVENT: Test Event  ||   LOCATION: NUS  ||   START AT: " + startTime.toString().
-                substring(0, startTime.toString().lastIndexOf("+")).replaceAll("T", " "),
+        assertEquals("EVENT: Test Event  ||   LOCATION: NUS  ||   START AT: " + startTime.toString()
+                .substring(0, startTime.toString().lastIndexOf("+")).replaceAll("T", " "),
                 listEvent.toString());
     }
 }

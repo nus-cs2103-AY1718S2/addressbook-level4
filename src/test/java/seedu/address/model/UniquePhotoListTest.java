@@ -4,13 +4,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import seedu.address.model.photo.Photo;
 import seedu.address.model.photo.UniquePhotoList;
@@ -18,10 +18,20 @@ import seedu.address.testutil.Assert;
 
 public class UniquePhotoListTest {
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     private Set<Photo> photos;
 
     private Photo photo1 = new Photo("test1.jpg");
     private Photo photo2 = new Photo("test2.jpg");
+
+    @Test
+    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
+        UniquePhotoList uniquePhotoList = new UniquePhotoList();
+        thrown.expect(UnsupportedOperationException.class);
+        uniquePhotoList.asObservableList().remove(0);
+    }
 
     @Before
     public void setUp() {
@@ -29,9 +39,6 @@ public class UniquePhotoListTest {
         photos.add(photo1);
         photos.add(photo2);
     }
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -45,14 +52,7 @@ public class UniquePhotoListTest {
     }
 
     @Test
-    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
-        UniquePhotoList uniquePhotoList = new UniquePhotoList();
-        thrown.expect(UnsupportedOperationException.class);
-        uniquePhotoList.asObservableList().remove(0);
-    }
-
-    @Test
-    public void setPhoto_and_add_success() throws UniquePhotoList.DuplicatePhotoException{
+    public void setAndAddPhoto_success() throws UniquePhotoList.DuplicatePhotoException {
         UniquePhotoList uniquePhotoList = new UniquePhotoList();
         uniquePhotoList.setPhotos(photos);
         assertEquals(photos, uniquePhotoList.toSet());

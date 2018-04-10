@@ -1,5 +1,6 @@
 package seedu.address.model.person.customer;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
@@ -122,14 +123,19 @@ public class Customer extends Person {
                 .append(getAddress() + ";")
                 .append(" Tags: ");
         getTags().forEach(builder::append);
+
+        SimpleDateFormat simpledate = new SimpleDateFormat("EEE, d MMM yyyy");
+        String oweStartDate = simpledate.format(getOweStartDate());
+        String oweDueDate = simpledate.format(getOweDueDate());
+
         builder.append("\nMoney Owed: ")
                 .append(String.format("$%.2f", getMoneyCurrentlyOwed()))
                 .append(" Weekly Interest Rate: ")
-                .append(getStandardInterest())
+                .append(getStandardInterest() + "%" + ";")
                 .append(" Start Date: ")
-                .append(getOweStartDate())
+                .append(oweStartDate + ";")
                 .append(" Due Date: ")
-                .append(getOweDueDate())
+                .append(oweDueDate)
                 .append("\nRunner Assigned: ")
                 .append(runner.getName());
         return builder.toString();

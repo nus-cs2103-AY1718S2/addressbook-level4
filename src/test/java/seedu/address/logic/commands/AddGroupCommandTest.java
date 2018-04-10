@@ -1,6 +1,5 @@
-package seedu.address.logic.commands;
-
 //@@author jas5469
+package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;

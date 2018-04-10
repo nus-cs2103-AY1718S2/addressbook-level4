@@ -6,6 +6,7 @@ import java.io.IOException;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.Model;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.todo.ToDo;
 
@@ -65,5 +66,11 @@ public class TestUtil {
      */
     public static ToDo getToDo(Model model, Index index) {
         return model.getAddressBook().getToDoList().get(index.getZeroBased());
+    }
+    /**
+     * Returns the group in the {@code model}'s group list at {@code index}.
+     */
+    public static Group getGroup(Model model, Index index) {
+        return model.getAddressBook().getGroupList().get(index.getZeroBased());
     }
 }

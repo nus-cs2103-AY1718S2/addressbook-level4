@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import seedu.recipe.commons.core.LogsCenter;
 import seedu.recipe.commons.util.FileUtil;
 import seedu.recipe.model.ReadOnlyRecipeBook;
 import seedu.recipe.model.recipe.Image;
@@ -20,6 +21,7 @@ public class ImageStorage {
 
     /**
      * Saves all image files into the images folder of the application
+     *
      * @param filePath location of the image. Cannot be null
      */
     public static void saveAllImageFiles(ReadOnlyRecipeBook recipeBook, String filePath) throws IOException {
@@ -36,7 +38,8 @@ public class ImageStorage {
 
     /**
      * Saves an image file into the data folder of the application
-     * @param imagePath location of the image. Cannot be null
+     *
+     * @param imagePath       location of the image. Cannot be null
      * @param imageFolderPath location of the image. Cannot be null
      */
     public static void saveImageFile(String imagePath, String imageFolderPath) {

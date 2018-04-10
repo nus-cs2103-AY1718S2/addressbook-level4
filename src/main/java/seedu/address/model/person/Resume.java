@@ -7,7 +7,6 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Objects;
 //@@author mhq199657
 /**
  * Represents a Person's resume's file name in the address book.

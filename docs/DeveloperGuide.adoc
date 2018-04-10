@@ -481,6 +481,7 @@ image::ImportCommandSequenceDiagram.png[width="800"]
 ** Pros: User is able to select which `Person`, `Tag` or `Alias` to be imported.
 ** Cons: User needs to indicate which `Person`, `Tag` or `Alias` to be imported.
 
+// tag::birthdays[]
 === Birthdays feature
 ==== Current Implementation
 Birthdays Command uses the existing Events system and sends an event.
@@ -518,6 +519,7 @@ image::UiComponentBirthdayListSequenceDiagram.png[width="800"]
 * **Alternative 2:** Use Natural Language Processing
 ** Pros: Users can enter their birthday in their preferred format.
 ** Cons: External API will be used. May introduce unforeseen bugs.
+// end::birthdays[]
 
 // tag::vacantroomfinder[]
 === Vacant Room Finder feature

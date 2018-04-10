@@ -45,7 +45,7 @@ public class ImageStorage {
             File pathToNewImage = new File(imageFolderPath + imageToSave.getName());
             Files.copy(imageToSave.toPath(), pathToNewImage.toPath(), REPLACE_EXISTING);
         } catch (IOException e) {
-            System.out.println("Image cannot be saved");
+            LogsCenter.getLogger(ImageStorage.class).warning("Image cannot be saved.");
         }
     }
 }

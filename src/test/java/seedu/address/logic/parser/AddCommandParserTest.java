@@ -92,10 +92,12 @@ public class AddCommandParserTest {
         assertParseSuccess(parser, NAME_DESC_BOB + MATRIC_NUMBER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + DISPLAY_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
+        //@@author Alaru
         // multiple display paths - last display accepted
         assertParseSuccess(parser, NAME_DESC_BOB + MATRIC_NUMBER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + DISPLAY_DESC_AMY + DISPLAY_DESC_BOB
                 + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+        //@@author
 
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder().withName(VALID_NAME_BOB)

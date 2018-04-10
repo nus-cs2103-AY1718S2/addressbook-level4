@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DISPLAY_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PARTICIPATION_BOB;
@@ -54,6 +55,10 @@ public class EditPersonDescriptorTest {
         assertFalse(DESC_AMY.equals(editedAmy));
 
         //@@author Alaru
+        //different display picture -> returns false
+        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withDisplayPic(VALID_DISPLAY_BOB).build();
+        assertFalse(DESC_AMY.equals(editedAmy));
+
         //different participation -> returns false
         editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withParticipation(VALID_PARTICIPATION_MARK).build();
         assertFalse(DESC_AMY.equals(editedAmy));

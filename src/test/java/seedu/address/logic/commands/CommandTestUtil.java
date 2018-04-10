@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DISPLAY_PIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MARK_PARTICIPATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MATRIC_NUMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -46,6 +47,9 @@ public class CommandTestUtil {
     public static final String VALID_PARTICIPATION_AMY = "0";
     public static final String VALID_PARTICIPATION_BOB = "0";
     public static final String VALID_PARTICIPATION_MARK = "5";
+    public static final String INVALID_PARTICIPATION_MARK = "hundred";
+    public static final String INVALID_OVER_PARTICIPATION_MARK = "105";
+    public static final Integer VALID_INT_PART_MARK = 5;
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
@@ -61,6 +65,7 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String DISPLAY_DESC_AMY = " " + PREFIX_DISPLAY_PIC + VALID_DISPLAY_AMY;
     public static final String DISPLAY_DESC_BOB = " " + PREFIX_DISPLAY_PIC + VALID_DISPLAY_BOB;
+    public static final String PARTICIPATION_DESC_MARK = " " + PREFIX_MARK_PARTICIPATION + VALID_PARTICIPATION_MARK;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
@@ -74,6 +79,8 @@ public class CommandTestUtil {
             + "src\\test\\resources\\images\\displayPic\\missing"; //Missing file
     public static final String INVALID_DISPLAY_TYPE_DESC = " " + PREFIX_DISPLAY_PIC
             + "src\\test\\resources\\images\\displayPic\\wrong.txt"; //not image file
+    public static final String INVALID_ALPHABET_MARK_DESC = " " + PREFIX_MARK_PARTICIPATION + INVALID_PARTICIPATION_MARK;
+    public static final String INVALID_OVER_MARK_DESC = " " + PREFIX_MARK_PARTICIPATION + INVALID_OVER_PARTICIPATION_MARK;
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final String INVALID_FILE = "invalidFileTest.xml";

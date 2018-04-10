@@ -75,10 +75,12 @@ public class TestUtil {
     public static ToDo getToDo(Model model, Index index) {
         return model.getAddressBook().getToDoList().get(index.getZeroBased());
     }
+    //@@author jas5469
     /**
      * Returns the group in the {@code model}'s group list at {@code index}.
      */
     public static Group getGroup(Model model, Index index) {
         return model.getAddressBook().getGroupList().get(index.getZeroBased());
     }
+    //@@author
 }

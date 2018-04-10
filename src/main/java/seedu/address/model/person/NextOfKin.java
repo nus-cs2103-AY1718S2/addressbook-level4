@@ -18,19 +18,17 @@ public class NextOfKin {
     private final Name name;
     private final Nric nric;
     private final Remark remark;
-    private final InjuriesHistory injuriesHistory;
 
     /**
      * Every field must be present and not null.
      */
 
-    public NextOfKin(Name name, Nric nric, Remark remark, InjuriesHistory injuriesHistory) {
+    public NextOfKin(Name name, Nric nric, Remark remark) {
         requireAllNonNull(name, nric);
         this.name = name;
         this.nric = nric;
         // protect internal tags from changes in the arg list
         this.remark = remark;
-        this.injuriesHistory = injuriesHistory;
     }
 
     public Name getName() {
@@ -43,10 +41,6 @@ public class NextOfKin {
 
     public Remark getRemark() {
         return remark;
-    }
-
-    public InjuriesHistory getInjuriesHistory() {
-        return injuriesHistory;
     }
 
     @Override
@@ -67,7 +61,7 @@ public class NextOfKin {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, nric, remark, injuriesHistory);
+        return Objects.hash(name, nric, remark);
     }
 
     @Override
@@ -78,7 +72,6 @@ public class NextOfKin {
                 .append(getNric());
         builder.append(" Remarks: ")
                .append(getRemark());
-        builder.append(" InjuriesHistory: ").append(getInjuriesHistory());
         return builder.toString();
     }
 

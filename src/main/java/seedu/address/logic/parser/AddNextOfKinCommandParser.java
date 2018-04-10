@@ -37,13 +37,12 @@ public class AddNextOfKinCommandParser implements Parser<AddNextOfKinCommand> {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
             Nric nric = ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC)).get();
             Remark remark;
-            InjuriesHistory injuriesHistory = ParserUtil.parseInjuriesHistory(" ");
             if (!(argMultimap.getValue(PREFIX_REMARK)).isPresent()) {
                 remark = ParserUtil.parseRemark(" ");
             } else {
                 remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
             }
-            NextOfKin nextOfKin = new NextOfKin(name, nric, remark, injuriesHistory);
+            NextOfKin nextOfKin = new NextOfKin(name, nric, remark);
 
             return new AddNextOfKinCommand(nextOfKin);
         } catch (IllegalValueException ive) {

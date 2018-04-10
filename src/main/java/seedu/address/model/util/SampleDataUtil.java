@@ -81,9 +81,7 @@ public class SampleDataUtil {
 
     public static NextOfKin[] getSampleNextOfKin() {
         return new NextOfKin[] {
-                new NextOfKin(new Name("James Yeoh"), new Nric("S9876345H"), new Remark("Father"),
-                        new InjuriesHistory(" "))
-
+                new NextOfKin(new Name("James Yeoh"), new Nric("S9876345H"), new Remark("Father"))
         };
     }
 

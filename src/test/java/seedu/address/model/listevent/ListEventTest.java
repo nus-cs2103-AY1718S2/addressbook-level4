@@ -10,7 +10,7 @@ public class ListEventTest {
 
     @Test
     public void construct_success() {
-        DateTime startTime = new DateTime("2018-04-30T18:00:00");
+        DateTime startTime = new DateTime("2018-04-30T18:00:00+08:00");
         ListEvent listEvent = new ListEvent("Test Event", "NUS", startTime);
         assertEquals("Test Event", listEvent.getTitle());
         assertEquals("NUS", listEvent.getLocation());

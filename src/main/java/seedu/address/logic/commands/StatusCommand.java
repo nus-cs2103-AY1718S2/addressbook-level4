@@ -112,6 +112,11 @@ public class StatusCommand extends UndoableCommand {
     }
 
     @Override
+    public String getParsedResult() {
+        return "Set status to: " + updatedStatus.value;
+    }
+
+    @Override
     public boolean equals(Object other) {
         // Short circuit if same object
         if (other == this) {

@@ -1,0 +1,16 @@
+= Chew Xing Kai - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Integrated Medical DataBase (IMDB)
+
+---
+
+== Overview
+
+Integrated Medical DataBase (IMDB) is a desktop application used by clinics for managing health records digitally.
+Doctors can use it to check for a patient's health profile, and medical staff can use it to manage queues and patient appointments.
+The user interacts with it using a Command Line Interface, and it has a Graphical User Interface created with JavaFX.
+It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions

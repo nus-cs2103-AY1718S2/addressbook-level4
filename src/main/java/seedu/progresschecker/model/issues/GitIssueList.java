@@ -136,7 +136,14 @@ public class GitIssueList implements Iterable<Issue> {
         }
         issue.close();
     }
-
+    /**
+     * Authorises with github
+     */
+    private void clearCredentials() throws CommandException{
+        internalList = null;
+        github = null;
+    }
+        
     /**
      * Check if the github credentials are authorised
      */

@@ -100,6 +100,11 @@ public class ModelManager extends ComponentManager implements Model {
         progressChecker.createIssueOnGitHub(issue);
         indicateProgressCheckerChanged();
     }
+    @Override
+    public synchronized void logoutGithub() {
+        progressChecker.logoutGithub();
+        indicateProgressCheckerChanged();
+    }
     //@@author
 
     @Override

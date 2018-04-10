@@ -44,8 +44,6 @@ This portfolio is to collate my contributions towards the developing of contactH
 *** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W09-B2/main/pull/173, https://github.com[#32], https://github.com/CS2103JAN2018-W09-B2/main/pull/55, https://github.com/CS2103JAN2018-W09-B2/main/pull/152, 
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F09-B1/main/issues/85, https://github.com/CS2103JAN2018-F09-B1/main/issues/95, https://github.com/CS2103JAN2018-F09-B1/main/issues/69, https://github.com/CS2103JAN2018-F09-B1/main/issues/76, https://github.com/CS2103JAN2018-F09-B1/main/issues/83)
 
-_{you can add/remove categories in the list above}_
-
 == Contributions to the User Guide
 
 
@@ -68,8 +66,8 @@ include::../DeveloperGuide.adoc[tag=details]
 include::../DeveloperGuide.adoc[tag=product]
 
 
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_
+//== PROJECT: PowerPointLabs
+//
+//---
+//
+//_{Optionally, you may include other projects in your portfolio.}_

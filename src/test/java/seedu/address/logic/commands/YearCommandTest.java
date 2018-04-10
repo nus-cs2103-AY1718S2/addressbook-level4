@@ -24,7 +24,8 @@ public class YearCommandTest {
 
     @Test
     public void execute_validYear_success() {
-        assertExecutionSuccess("2018");
+        assertExecutionNonNullSuccess("2018");
+        assertExecutionNullSuccess();
     }
 
     @Test
@@ -63,7 +64,7 @@ public class YearCommandTest {
      * Executes a {@code yearCommand} with the given {@code year}, and checks that {@code handleShowYearRequestEvent}
      * is raised with the correct month.
      */
-    private void assertExecutionSuccess(String year) {
+    private void assertExecutionNonNullSuccess(String year) {
 
         try {
             YearCommand yearCommand = prepareCommand(year);
@@ -73,6 +74,25 @@ public class YearCommandTest {
 
             ShowYearRequestEvent lastEvent = (ShowYearRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
             assertEquals(ParserUtil.parseYear(year), lastEvent.targetYear);
+        } catch (IllegalValueException e) {
+            throw new IllegalArgumentException("Execution of command should not fail.", e);
+        }
+    }
+
+    /**
+     * Executes a {@code yearCommand}, and checks that {@code handleShowYearRequestEvent}
+     * is raised with the year view.
+     */
+    private void assertExecutionNullSuccess() {
+
+        try {
+            YearCommand yearCommand = prepareCommand("");
+            CommandResult commandResult = yearCommand.execute();
+            assertEquals(String.format(YearCommand.MESSAGE_SUCCESS, ""),
+                    commandResult.feedbackToUser);
+
+            ShowYearRequestEvent lastEvent = (ShowYearRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+            assertEquals(ParserUtil.parseYear(""), lastEvent.targetYear);
         } catch (IllegalValueException e) {
             throw new IllegalArgumentException("Execution of command should not fail.", e);
         }

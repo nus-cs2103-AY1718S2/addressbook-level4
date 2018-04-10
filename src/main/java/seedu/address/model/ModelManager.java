@@ -24,6 +24,7 @@ import seedu.address.model.notification.exceptions.TimetableEntryNotFoundExcepti
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.photo.Photo;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -102,8 +103,8 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
         indicateNotificationAdded(e);
     }
-    //@@author
 
+    //@@author crizyli
     @Override
     public void setPassword(String password) {
         addressBook.setPassword(password);
@@ -112,6 +113,11 @@ public class ModelManager extends ComponentManager implements Model {
 
     public String getPassword() {
         return addressBook.getPassword();
+    }
+    //@@author
+
+    public ObservableList<Photo> getPhotoList() {
+        return addressBook.getPhotoList();
     }
 
     @Override
@@ -158,12 +164,14 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author Yoochard
     @Override
     public void sort(String field) {
         addressBook.sort(field);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {

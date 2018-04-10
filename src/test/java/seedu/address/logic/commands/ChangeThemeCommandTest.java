@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+//@@author Yoochard
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_THEME_NAME;
@@ -36,9 +38,9 @@ public class ChangeThemeCommandTest {
 
     @Test
     public void executeChangeThemeCommandSuccess() throws Exception {
-        ChangeThemeCommand changeThemeCommand = prepareCommand("dark");
+        ChangeThemeCommand changeThemeCommand = prepareCommand("bright");
 
-        String expectedMessage = String.format(ChangeThemeCommand.MESSAGE_CHANGE_THEME_SUCCESS, "dark");
+        String expectedMessage = String.format(ChangeThemeCommand.MESSAGE_CHANGE_THEME_SUCCESS, "bright");
 
         UserPrefs expectedUserPrefs = new UserPrefs();
         expectedUserPrefs.setGuiSettings(

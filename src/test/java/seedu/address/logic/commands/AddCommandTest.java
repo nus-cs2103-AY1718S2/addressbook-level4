@@ -27,6 +27,7 @@ import seedu.address.model.notification.exceptions.TimetableEntryNotFoundExcepti
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.photo.Photo;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -159,9 +160,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Photo> getPhotoList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        //@@author Yoochard
+        @Override
         public void sort(String field) {
             fail("This method should not be called.");
         }
+        //@@author
 
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {

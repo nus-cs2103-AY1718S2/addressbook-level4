@@ -1,12 +1,20 @@
 //@@author IzHoBX
 package seedu.address.ui;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import seedu.address.logic.commands.AddPhotoCommand;
 import seedu.address.model.person.Person;
 
 /**
@@ -35,25 +43,40 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
-    private Label address;
-    @FXML
     private Label email;
     @FXML
     private Label rating;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView photo;
 
+    //@@author Yoochard
+    //Part of code is referenced to Developer Guide
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         rating.setText(person.getRatingDisplay());
         rating.setTextFill(Color.RED);
         initTags(person);
+        //@@author crizyli
+        Path currentRelativePath = Paths.get("");
+        String s = currentRelativePath.toAbsolutePath().toString();
+        File file = new File(s + AddPhotoCommand.IMAGE_FOLDER_OTHER + person.getPhotoName());
+        Image image = null;
+        try {
+            image = new Image(file.toURI().toURL().toExternalForm(),
+                    88, 88, false, false);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        photo.setImage(image);
+        photo.preserveRatioProperty().set(true);
+        //@@author
     }
 
     /**

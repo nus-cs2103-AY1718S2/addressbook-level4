@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CreateNewCalendar;
+import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
@@ -48,12 +49,18 @@ public class AddCommandParser implements Parser<AddCommand> {
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
+            //@@author crizyli
             String calendarId;
-            try {
-                calendarId = CreateNewCalendar.execute(name.fullName);
-            } catch (IOException e) { //not signed in
+            if (!LogicManager.isLocked()) {
+                try {
+                    calendarId = CreateNewCalendar.execute(name.fullName);
+                } catch (IOException e) { //not signed in
+                    calendarId = "";
+                }
+            } else {
                 calendarId = "";
             }
+            //@@author
 
             Person person = new Person(name, phone, email, address, tagList, calendarId);
 
@@ -63,7 +70,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
     }
 
+    //@@author crizyli
     /**
+     * overload parse method for test use.
      * Parses the given {@code String} of arguments in the context of the AddCommand
      * and returns an AddCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
@@ -102,6 +111,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             throw new ParseException(ive.getMessage(), ive);
         }
     }
+    //@@author
 
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given

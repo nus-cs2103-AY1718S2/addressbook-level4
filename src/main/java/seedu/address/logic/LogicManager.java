@@ -56,6 +56,10 @@ public class LogicManager extends ComponentManager implements Logic {
         timerTaskToTimetableEntryMap = new HashMap<>();
     }
 
+    //@@author crizyli
+    /**
+     * Constructor for test use.
+     */
     public LogicManager(Model model, boolean initialLock) {
         this.model = model;
         history = new CommandHistory();
@@ -67,6 +71,7 @@ public class LogicManager extends ComponentManager implements Logic {
         scheduledTimerTasks = new HashMap<>();
         timerTaskToTimetableEntryMap = new HashMap<>();
     }
+    //@@author crizyli
 
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
@@ -87,7 +92,6 @@ public class LogicManager extends ComponentManager implements Logic {
                 command.setData(model, history, undoRedoStack);
                 result = command.execute();
                 undoRedoStack.push(command);
-
             }
             return result;
         } finally {
@@ -105,6 +109,7 @@ public class LogicManager extends ComponentManager implements Logic {
         return new ListElementPointer(history.getHistory());
     }
 
+    //@@author crizyli
     public static String getPassword() {
         return password;
     }
@@ -124,7 +129,6 @@ public class LogicManager extends ComponentManager implements Logic {
     public static boolean isLocked() {
         return isLocked;
     }
-
 
     //@@author IzHoBX
     @Subscribe

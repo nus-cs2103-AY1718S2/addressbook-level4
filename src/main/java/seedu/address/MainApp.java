@@ -15,6 +15,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.HideDetailPanelEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
@@ -25,6 +26,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.HideAllPersonPredicate;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
@@ -38,7 +40,7 @@ import seedu.address.ui.UiManager;
 /**
  * The main entry point to the application.
  */
-public class    MainApp extends Application {
+public class MainApp extends Application {
 
     public static final Version VERSION = new Version(0, 6, 0, true);
 
@@ -54,7 +56,7 @@ public class    MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing Employees Tracker ]===========================");
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
@@ -73,6 +75,11 @@ public class    MainApp extends Application {
         ui = new UiManager(logic, config, userPrefs);
 
         initEventsCenter();
+
+        //@@author emer7
+        model.updateFilteredPersonList(new HideAllPersonPredicate());
+        EventsCenter.getInstance().post(new HideDetailPanelEvent());
+        //@@author
     }
 
     private void initNotifications() {
@@ -95,14 +102,14 @@ public class    MainApp extends Application {
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample AddressBook");
+                logger.info("Data file not found. Will be starting with a sample Employees Tracker");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
+            logger.warning("Data file not in the correct format. Will be starting with an empty Employees Tracker");
             initialData = new AddressBook();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            logger.warning("Problem while reading from the file. Will be starting with an empty Employees Tracker");
             initialData = new AddressBook();
         }
 
@@ -167,7 +174,7 @@ public class    MainApp extends Application {
                     + "Using default user prefs");
             initializedPrefs = new UserPrefs();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            logger.warning("Problem while reading from the file. Will be starting with an empty Employees Tracker");
             initializedPrefs = new UserPrefs();
         }
 
@@ -187,14 +194,14 @@ public class    MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting Employees Tracker " + MainApp.VERSION);
         ui.start(primaryStage);
         model.findAllSavedNotifications();
     }
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping Address Book ] =============================");
+        logger.info("============================ [ Stopping Employees Tracker ] =============================");
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);

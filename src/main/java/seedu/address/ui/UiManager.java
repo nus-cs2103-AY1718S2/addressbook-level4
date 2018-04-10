@@ -129,7 +129,7 @@ public class UiManager extends ComponentManager implements Ui {
     private static void showAlertDialogAndWait(Stage owner, AlertType type, String title, String headerText,
                                                String contentText) {
         final Alert alert = new Alert(type);
-        alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
+        alert.getDialogPane().getStylesheets().add("view/BrightTheme.css");
         alert.initOwner(owner);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
@@ -227,6 +227,7 @@ public class UiManager extends ComponentManager implements Ui {
     }
     //@@author
 
+    //@@author crizyli
     @Subscribe
     private void handleShowTodoListEvent(ShowTodoListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -246,4 +247,5 @@ public class UiManager extends ComponentManager implements Ui {
             System.out.println(e2.getMessage());
         }
     }
+    //@@author
 }

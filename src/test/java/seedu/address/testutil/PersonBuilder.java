@@ -26,6 +26,7 @@ public class PersonBuilder {
     public static final String DEFAULT_CALENDARID = "null";
     public static final String DEFAULT_RATING = "-1";
     public static final String DEFAULT_REVIEWS = "-\n-";
+    public static final String DEFAULT_PHOTONAME = "DefaultPerson.png";
 
     private Name name;
     private Phone phone;
@@ -35,6 +36,7 @@ public class PersonBuilder {
     private Set<Review> reviews;
     private Set<Tag> tags;
     private String calendarId;
+    private String photoName;
 
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -46,6 +48,7 @@ public class PersonBuilder {
         reviews = new HashSet<>();
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
         calendarId = this.DEFAULT_CALENDARID;
+        photoName = this.DEFAULT_PHOTONAME;
     }
 
     /**
@@ -59,6 +62,7 @@ public class PersonBuilder {
         rating = personToCopy.getRating();
         reviews = personToCopy.getReviews();
         tags = new HashSet<>(personToCopy.getTags());
+        photoName = personToCopy.getPhotoName();
     }
 
     /**
@@ -101,13 +105,23 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author crizyli
     /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
+     * Sets the {@code calendarId} of the {@code Person} that we are building.
      */
     public PersonBuilder withCalendarId(String calendarId) {
         this.calendarId = calendarId;
         return this;
     }
+
+    /**
+     * Sets the {@code photoName} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withPhotoName(String photoName) {
+        this.photoName = photoName;
+        return this;
+    }
+    //@@author crizyli
 
     /**
      * Sets the {@code Rating} of the {@code Person} that we are building.
@@ -117,6 +131,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author emer7
     /**
      * Sets the {@code Review} of the {@code Person} that we are building.
      */
@@ -124,16 +139,19 @@ public class PersonBuilder {
         this.reviews = SampleDataUtil.getReviewSet(reviews);
         return this;
     }
+    //@@author
 
     /**
      * Build a person with the determined details
      * @return person to be built
      */
     public Person build() {
+        //@@author emer7
         Person toReturn = new Person(name, phone, email, address, tags, calendarId);
         toReturn.setRating(rating);
         toReturn.setReviews(reviews);
         return toReturn;
+        //@@author
     }
 
 }

@@ -34,9 +34,11 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void openHelpWindow() {
         String password = getModel().getPassword();
-        UnlockCommand testUnlockCommand = new UnlockCommand(password);
+        UnlockCommand testUnlockCommand = new UnlockCommand();
+        testUnlockCommand.setTestMode();
         testUnlockCommand.setData(getModel(), new CommandHistory(), new UndoRedoStack());
         testUnlockCommand.execute();
+        showAllPersons();
 
         //use accelerator
         getCommandBox().click();
@@ -53,7 +55,7 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
 
         getDetailPanel().click();
         getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowOpen();
+        assertHelpWindowNotOpen();
 
         //use menu button
         getMainMenu().openHelpWindowUsingMenu();

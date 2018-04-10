@@ -9,6 +9,7 @@ import seedu.address.model.notification.exceptions.TimetableEntryNotFoundExcepti
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.photo.Photo;
 
 /**
  * The API of the Model component.
@@ -40,15 +41,20 @@ public interface Model {
     void addNotification(Notification e) throws DuplicateTimetableEntryException;
     //@@author IzHoBX
 
-
+    //@@author crizyli
     /** Adds the given password */
     void setPassword(String e);
 
     /** Gets the password */
     String getPassword();
+    //@@author
 
+    ObservableList<Photo> getPhotoList();
+
+    //@@author Yoochard
     /** Sort existing employees by any field in alphabetical order */
     void sort(String field);
+    //@@author
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

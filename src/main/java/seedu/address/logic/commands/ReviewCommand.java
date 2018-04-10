@@ -1,9 +1,11 @@
+//@@author emer7
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -85,17 +87,34 @@ public class ReviewCommand extends UndoableCommand {
      * edited with {@code editPersonDescriptor}.
      */
     private static Person createEditedPerson(Person personToEdit,
-                                             EditCommand.EditPersonDescriptor editPersonDescriptor) {
+                                             EditCommand.EditPersonDescriptor editPersonDescriptor
+    ) throws CommandException {
         assert personToEdit != null;
+        assert editPersonDescriptor.getReviews().isPresent();
 
-        Set<Review> updatedReviews = editPersonDescriptor.getReviews().orElse(new HashSet<Review>());
+        Set<Review> oldReviews = personToEdit.getReviews();
+        Set<Review> newReviews = editPersonDescriptor.getReviews().get();
+        HashSet<Review> updatedReviews = new HashSet<Review>();
+
+        Review newReview = newReviews.iterator().next();
+        String newReviewer = newReview.reviewer;
+        String newValue = newReview.value;
+        Iterator<Review> iterator = oldReviews.iterator();
+        while (iterator.hasNext()) {
+            Review oldReview = iterator.next();
+            String oldReviewer = oldReview.reviewer;
+            if (!oldReviewer.equals(newReviewer)) {
+                updatedReviews.add(oldReview);
+            }
+        }
+        updatedReviews.add(newReview);
 
         Person toReturn = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getTags(), personToEdit.getCalendarId());
         toReturn.setRating(personToEdit.getRating());
         toReturn.setReviews(updatedReviews);
         toReturn.setId(personToEdit.getId());
-
+        toReturn.setPhotoName(personToEdit.getPhotoName());
         return toReturn;
     }
 

@@ -244,6 +244,7 @@ public abstract class AddressBookSystemTest {
         assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
     }
 
+    //@@author Yoochard
     /**
      * Asserts that the command box and result display shows the default style.
      */
@@ -260,6 +261,7 @@ public abstract class AddressBookSystemTest {
         assertEquals(errorStyleOfResultDisplay, getResultDisplay().getStyleClass());
     }
 
+    //@@author
     /**
      * Asserts that the entire status bar remains the same.
      */

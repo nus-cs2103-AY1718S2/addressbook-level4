@@ -1,5 +1,7 @@
+/* @@author Yoochard */
+/* Part of css file*/
 .background {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(saddlebrown, 20%);
     background-color: #383838; /* Used in the default.html file */
 }
 
@@ -41,9 +43,9 @@
 }
 
 .table-view {
-    -fx-base: #1d1d1d;
-    -fx-control-inner-background: #1d1d1d;
-    -fx-background-color: #1d1d1d;
+    -fx-base: saddlebrown;
+    -fx-control-inner-background: saddlebrown;
+    -fx-background-color: saddlebrown;
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-padding: 5;
@@ -77,9 +79,10 @@
     -fx-background-color: -fx-focus-color;
 }
 
+/* vertical color bar between person card and info*/
 .split-pane:horizontal .split-pane-divider {
     -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-border-color: transparent transparent transparent #4d4d4d;
+    -fx-border-color: transparent transparent transparent #1d1d1d;
 }
 
 .split-pane {
@@ -89,10 +92,10 @@
 }
 
 .list-view {
-     -fx-background-insets: 0;
-     -fx-padding: 0;
-     -fx-background-color: derive(#1d1d1d, 20%);
- }
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
 
 .list-cell {
     -fx-label-padding: 0 0 0 0;
@@ -101,20 +104,20 @@
 }
 
 .list-cell:filled:even {
-    -fx-background-color: #424d5f;
+    -fx-background-color: #005588;
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: slategrey;
+    -fx-background-color: #3366cc;
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: steelblue;
+    -fx-background-color: darkslateblue;
 }
 
 .list-cell:filled:selected #cardPane {
-    -fx-border-color: #3e7b91;
-    -fx-border-width: 1;
+    -fx-border-color: #4d4d4d;
+    -fx-border-width: 5;
 }
 
 /* @@author IzHoBX*/
@@ -127,9 +130,9 @@
 }
 
 .notification-card-first-stage {
-     -fx-background-color: #3399ff;
-     -fx-text-fill: #000000;
-     -fx-opacity: 0.8;
+    -fx-background-color: #3399ff;
+    -fx-text-fill: #000000;
+    -fx-opacity: 0.8;
 }
 
 .notification-card-second-stage {
@@ -149,16 +152,16 @@
     -fx-text-fill: #000000;
     -fx-opacity: 1;
 }
-/* @@author */
+/* @@author Yoochard*/
 
 .cell_big_label {
-    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-family: "sans-serif";
     -fx-font-size: 16px;
     -fx-text-fill: white;
 }
 
 .cell_small_label {
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "cursive";
     -fx-font-size: 13px;
     -fx-text-fill: white;
 }
@@ -169,7 +172,7 @@
     -fx-font-size: 13px;
     -fx-text-fill: #FFFF00;
 }
-/* @@author */
+/* @@author Yoochard*/
 
 .anchor-pane {
     -fx-background-color: derive(#1d1d1d, 20%);
@@ -188,7 +191,7 @@
 
 .result-display {
     -fx-background-color: transparent;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: ".SF NS Text";
     -fx-font-size: 13pt;
     -fx-text-fill: white;
 }
@@ -324,8 +327,8 @@
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: derive(#1d1d1d, 50%);
-    -fx-background-insets: 3;
+    -fx-background-color: derive(lightslategrey, 50%);
+    -fx-background-insets: 1;
 }
 
 .scroll-bar .increment-button, .scroll-bar .decrement-button {
@@ -375,6 +378,10 @@
     -fx-background-radius: 0;
 }
 
+#reviews {
+    -fx-vgap: 10;
+}
+
 #tags {
     -fx-hgap: 7;
     -fx-vgap: 3;
@@ -388,13 +395,13 @@
 }
 
 #tags .red {
-    -fx-text-fill: black;
+    -fx-text-fill: white;
     -fx-background-color: red;
 }
 
 #tags .yellow {
-    -fx-background-color: yellow;
     -fx-text-fill: black;
+    -fx-background-color: yellow;
 }
 
 #tags .blue {
@@ -403,7 +410,7 @@
 }
 
 #tags .orange {
-    -fx-text-fill: black;
+    -fx-text-fill: white;
     -fx-background-color: orange;
 }
 
@@ -413,6 +420,6 @@
 }
 
 #tags .green {
-    -fx-text-fill: black;
+    -fx-text-fill: white;
     -fx-background-color: green;
 }

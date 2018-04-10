@@ -1,5 +1,7 @@
 package seedu.address.model.theme;
 
+//@@author Yoochard
+
 import static java.util.Objects.requireNonNull;
 
 import java.util.Arrays;

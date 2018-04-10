@@ -1,5 +1,7 @@
 package seedu.address.commons.events.ui;
 
+//@@author Yoochard
+
 import seedu.address.commons.events.BaseEvent;
 
 /**

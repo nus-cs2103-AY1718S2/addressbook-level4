@@ -1,9 +1,6 @@
 package seedu.address.logic.parser;
-
-import static java.util.Objects.requireNonNull;
+//@@author crizyli
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import java.util.Scanner;
 
 import seedu.address.logic.commands.SetPasswordCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -19,18 +16,10 @@ public class SetPasswordCommandParser implements Parser<SetPasswordCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public SetPasswordCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        String trimmedArgs = args.trim();
-        Scanner sc = new Scanner(trimmedArgs);
-        if (!sc.hasNext()) {
+        if (!args.trim().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetPasswordCommand.MESSAGE_USAGE));
         }
-        String oldPsw = sc.next();
-        if (!sc.hasNext()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetPasswordCommand.MESSAGE_USAGE));
-        }
-        String newPsw = sc.next();
 
-        return new SetPasswordCommand(oldPsw, newPsw);
+        return new SetPasswordCommand();
     }
 }

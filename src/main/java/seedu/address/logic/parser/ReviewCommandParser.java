@@ -1,3 +1,4 @@
+//@@author emer7
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
@@ -51,31 +52,33 @@ public class ReviewCommandParser implements Parser<ReviewCommand> {
         EventsCenter.getInstance().registerHandler(this);
         EventsCenter.getInstance().post(new ShowReviewDialogEvent());
 
-        if (reviewerInput == null) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReviewCommand.MESSAGE_USAGE));
-        } else if (reviewerInput.isEmpty()) {
-            reviewerInput = "-";
+        try {
+            assert reviewerInput != null;
+            assert !reviewerInput.isEmpty();
+
+            String reviewer = ParserUtil.parseEmail(reviewerInput).value;
+
+            assert reviewInput != null;
+
+            if (reviewInput.isEmpty()) {
+                reviewInput = "-";
+            }
+            String review = reviewInput.trim();
+
+            String combined = reviewer + "\n" + review;
+            HashSet<Review> combinedSet = new HashSet<Review>();
+            combinedSet.add(new Review(combined));
+
+            EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
+            editPersonDescriptor.setReviews(combinedSet);
+            if (!editPersonDescriptor.isAnyFieldEdited()) {
+                throw new ParseException(ReviewCommand.MESSAGE_NOT_EDITED);
+            }
+
+            return new ReviewCommand(index, editPersonDescriptor);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
         }
-        String reviewer = reviewerInput.trim();
-
-        if (reviewInput == null) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReviewCommand.MESSAGE_USAGE));
-        } else if (reviewInput.isEmpty()) {
-            reviewInput = "-";
-        }
-        String review = reviewInput.trim();
-
-        String combined = reviewer + "\n" + review;
-        HashSet<Review> combinedSet = new HashSet<Review>();
-        combinedSet.add(new Review(combined));
-
-        EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
-        editPersonDescriptor.setReviews(combinedSet);
-        if (!editPersonDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(ReviewCommand.MESSAGE_NOT_EDITED);
-        }
-
-        return new ReviewCommand(index, editPersonDescriptor);
     }
 
     @Subscribe

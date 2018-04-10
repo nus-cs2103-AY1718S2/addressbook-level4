@@ -6,7 +6,7 @@
       "x" : 300,
       "y" : 100
     },
-    "theme" : "dark"
+    "theme" : "bright"
   },
   "addressBookFilePath" : "addressbook.xml",
   "addressBookName" : "TypicalAddressBookName"

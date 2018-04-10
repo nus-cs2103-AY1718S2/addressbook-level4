@@ -27,6 +27,7 @@ public class DetailsPanel extends UiPart<Region> {
     private BrowserPanel browserPanel;
     private CalendarPanel calendarPanel;
     private EmailPanel emailPanel;
+    private GoogleLoginPanel googleLoginPanel;
 
     private final Logger logger = LogsCenter.getLogger(ContactDetailsDisplay.class);
 
@@ -41,6 +42,9 @@ public class DetailsPanel extends UiPart<Region> {
 
     @FXML
     private Tab email;
+
+    @FXML
+    private Tab googlelogin;
 
     @FXML
     private TabPane tabPane;
@@ -84,6 +88,14 @@ public class DetailsPanel extends UiPart<Region> {
     public void addEmailPanel() {
         emailPanel = new EmailPanel();
         email.setContent(emailPanel.getRoot());
+    }
+
+    /**
+     * Adds the GoogleLoginPanel to the DetailsPanel
+     */
+    public void addGoogleLoginPanel() {
+        googleLoginPanel = new GoogleLoginPanel();
+        googlelogin.setContent(googleLoginPanel.getRoot());
     }
 
     //@@author kush1509

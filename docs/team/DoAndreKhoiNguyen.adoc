@@ -1,0 +1,74 @@
+= Do Andre Khoi Nguyen - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: contactHeRo
+
+---
+
+== Overview
+
+contactHeRo is a desktop contact management application
+made for Human Resource (HR) managers, specifically for
+recruiters in a company.
+
+== Summary of contributions
+
+* *Major enhancement*: added *a calendar and the ability to arrange appointments on this calendar.*
+** What it does: allows the user to arrange appointments on a calendar.
+** Justification: This feature is beneficial to HR managers as they have many appointments. +
+By putting those appointments on contactHeRo, they can easily add and check their appointments without switching tabs.
+** Highlights: This enhancement has potentials for further development such as integrating with Google Calendar.It required working with all the main components of contactHeRo and a third-party API.
+** Credits: calendarFX, stackoverflow.com
+
+* *Minor enhancement*: added Profile Picture.
+** What it does: allows the user to add people's profile picture.
+** Justification: This feature is beneficial to HR managers as they need to contact with many people. +
+By having profile pictures on contactHeRo, they can easily recognize and memorize people.
+** Highlights: This enhancement has many approaches. Hence, it is challenging to choose the most suitable approach. This feature also helps me to familiarise with the code, especially the connection between model and UI
+** Credits: stackoverflow.com.
+
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W09-B2/main/blob/master/collated/functional/trafalgarandre.md[Functional code]]
+[https://github.com/CS2103JAN2018-W09-B2/main/blob/master/collated/test/trafalgarandre.md[Test code]] +
+* *Other contributions*:
+
+** Project management:
+*** Created and closed issues.
+** Enhancements to existing features:
+*** Added ProfilePicture attribute to addCommand (Pull request https://github.com/CS2103JAN2018-W09-B2/main/pull/56[#56]).
+** Documentation:
+*** Made user guide and developer guide more friendly (Pull requests https://github.com/CS2103JAN2018-W09-B2/main/pull/58[#58], https://github.com/CS2103JAN2018-W09-B2/main/pull/159[#159], https://github.com/CS2103JAN2018-W09-B2/main/pull/115[#115]).
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W09-B2/main/pull/114[#114], https://github.com/CS2103JAN2018-W09-B2/main/pull/213[#213], https://github.com/CS2103JAN2018-W09-B2/main/pull/87[#87].
+
+** Tools:
+*** Integrated a third party library (CalendarFX) to the project (Pull request https://github.com/CS2103JAN2018-W09-B2/main/pull/121[#121])
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=calendar]
+
+include::../UserGuide.adoc[tag=faq]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=intro]
+
+include::../DeveloperGuide.adoc[tag=profilepicture]
+
+
+
+
+---
+

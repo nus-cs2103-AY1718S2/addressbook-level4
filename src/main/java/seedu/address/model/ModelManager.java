@@ -117,10 +117,26 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeSkill(t);
         indicateAddressBookChanged();
     }
+
+    //@@author kush1509
     @Override
     public synchronized void addJob(Job job) throws DuplicateJobException {
         addressBook.addJob(job);
         updateFilteredJobList(PREDICATE_SHOW_ALL_JOBS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateJob(Job target, Job editedJob)
+            throws DuplicateJobException, JobNotFoundException {
+        requireAllNonNull(target, editedJob);
+        addressBook.updateJob(target, editedJob);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteJob(Job target) throws JobNotFoundException {
+        addressBook.removeJob(target);
         indicateAddressBookChanged();
     }
 
@@ -168,13 +184,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void setUser(Account account) {
         user = user.ofNullable(account);
-    }
-
-    //@@author kush1509
-    @Override
-    public synchronized void deleteJob(Job target) throws JobNotFoundException {
-        addressBook.removeJob(target);
-        indicateAddressBookChanged();
     }
 
     //@@author trafalgarandre

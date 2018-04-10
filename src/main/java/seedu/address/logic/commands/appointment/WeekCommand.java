@@ -16,7 +16,7 @@ public class WeekCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": View week. "
             + "Parameters: YEAR WEEK (optional, but must be in format YYYY WW if have)\n"
-            + "Example: " + COMMAND_WORD + " 2018";
+            + "Example: " + COMMAND_WORD + " 2018 10";
 
     public static final String MESSAGE_SUCCESS = "View week: %1$s";
     public static final String WEEK_VALIDATION_REGEX = "^$|^[1-3][0-9][0-9][0-9]\\s([1-4][0-9]|0[1-9]|5[0-2])";

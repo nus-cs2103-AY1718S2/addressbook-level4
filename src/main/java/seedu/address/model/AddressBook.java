@@ -11,6 +11,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.EditPersonEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
@@ -144,7 +146,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: the skills master list will be updated even though the below line fails.
         // This can cause the skills master list to have additional skills that are not tagged to any person
         // in the person list.
-        persons.setPerson(target, syncedEditedPerson);
+        int index = persons.setPerson(target, syncedEditedPerson);
+        EventsCenter.getInstance().post(new EditPersonEvent(persons.getPerson(index)));
     }
 
     /**
@@ -268,6 +271,26 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the skills master list to have additional skills that are not tagged to any person
         // in the person list.
         jobs.add(job);
+    }
+
+    /**
+     * Replaces the given job {@code target} with {@code editedJob}.
+     *
+     * @throws DuplicateJobException if updating the person's details causes the job to be equivalent to
+     *      another existing job in the list.
+     * @throws JobNotFoundException if {@code target} could not be found in the list.
+     *
+     * @see #syncJobWithMasterSkillList(Job)
+     */
+    void updateJob(Job target, Job editedJob)
+            throws DuplicateJobException, JobNotFoundException {
+        requireNonNull(editedJob);
+
+        Job syncedEditedJob = syncJobWithMasterSkillList(editedJob);
+        // TODO: the skills master list will be updated even though the below line fails.
+        // This can cause the skills master list to have additional skills that are not tagged to any person
+        // in the person list.
+        jobs.setJob(target, syncedEditedJob);
     }
 
     /**

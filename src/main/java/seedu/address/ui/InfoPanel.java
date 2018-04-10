@@ -11,7 +11,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BirthdayListEvent;
 import seedu.address.commons.events.ui.GoogleMapsEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.TimeTableEvent;
 import seedu.address.commons.events.ui.VenueTableEvent;
 import seedu.address.model.person.Person;
 
@@ -25,7 +24,6 @@ public class InfoPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
 
-    private BrowserPanel browserPanel;
     private BirthdayList birthdayList;
     private VenueTable venueTable;
     private TimeTablePanel timeTablePanel;
@@ -58,7 +56,7 @@ public class InfoPanel extends UiPart<Region> {
     }
 
     public void freeResources() {
-        browserPanel.freeResources();
+
     }
 
     /**
@@ -67,9 +65,6 @@ public class InfoPanel extends UiPart<Region> {
     public void fillInnerParts() {
         personDetailsCard = new PersonDetailsCard();
         userDetailsPlaceholder.getChildren().add(personDetailsCard.getRoot());
-
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         birthdayList = new BirthdayList();
         birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
@@ -121,11 +116,11 @@ public class InfoPanel extends UiPart<Region> {
         Person person = event.getNewSelection().person;
         int oddEvenIndex = event.getOddEvenIndex();
 
-        personDetailsCard.update(person,oddEvenIndex);
+        personDetailsCard.update(person, oddEvenIndex);
         userDetailsPlaceholder.toFront();
     }
     //@@author
-     /*
+    /*
     @Subscribe
     private void handleTimeTableEvent(TimeTableEvent event) {
 

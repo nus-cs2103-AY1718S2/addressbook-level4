@@ -10,11 +10,8 @@ import com.calendarfx.view.page.MonthPage;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
 import seedu.address.commons.core.LogsCenter;
@@ -79,10 +76,11 @@ public class CalendarPanel extends UiPart<Region> {
     }
 
     public void setEventHandlerForEntrySelectionEvent() {
-        calendarView.setEntryDetailsPopOverContentCallback(new Callback<DateControl.EntryDetailsPopOverContentParameter, Node>() {
+        calendarView.setEntryDetailsPopOverContentCallback(new Callback<DateControl.EntryDetailsPopOverContentParameter,
+                Node>() {
             @Override
             public Node call(DateControl.EntryDetailsPopOverContentParameter param) {
-                param.getPopOver().setTitle(param.getEntry().getTitle());
+                param.getPopOver().hide();
                 return null;
             }
         });

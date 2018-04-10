@@ -43,7 +43,7 @@ public class UniqueToDoList implements Iterable<ToDo> {
                 numberOfDoneToDos++;
             }
         }
-        double completeRatio = ((double) numberOfDoneToDos)/((double) internalList.size());
+        double completeRatio = ((double) numberOfDoneToDos) / ((double) internalList.size());
         return completeRatio;
     }
 

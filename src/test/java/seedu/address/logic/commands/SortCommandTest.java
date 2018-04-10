@@ -24,23 +24,7 @@ import seedu.address.model.person.Person;
 
 public class SortCommandTest {
 
-    private Model testModel;
-
     //featureUnderTest_testScenario_expectedBehavior()
-
-    /**
-     *  helper function to set up model and import contacts to sort
-     */
-    public void setupModelWithImportedContacts() throws Exception {
-        ImportContactsCommand icc = new ImportContactsCommand("data/Test_contacts_unsorted.csv");
-        icc.model = new ModelManager();
-        try {
-            icc.executeUndoableCommand();
-        } catch (CommandException cr) {
-            System.out.println("Failed in setupModelWithImportedContacts");
-        }
-        testModel = icc.model;
-    }
 
     /**
      * helper function to print people given model parameter
@@ -94,22 +78,44 @@ public class SortCommandTest {
         return isSorted;
     }
 
+    /**
+     *  helper function to set up model and import contacts to sort
+
+    public void setupModelWithImportedContacts() throws Exception {
+        try {
+        } catch (CommandException cr) {
+            System.out.println("Failed in setupModelWithImportedContacts");
+        }
+        testModel = icc.model;
+    }
+    */
+
     @Test
     public void sortAddressBookCallingModel_functionCallWithImportedData_personsAreInCorrectOrder()
             throws Exception {
-        testModel = null; //reset model so there are no duplicates
-        setupModelWithImportedContacts();
-        assertFalse(checkSorted(testModel));
-        testModel.sortAddressBookAlphabeticallyByName();
-        assertTrue(checkSorted(testModel));
+        ImportContactsCommand icc = new ImportContactsCommand("data/Test_contacts_unsorted.csv");
+        icc.model = new ModelManager();
+        icc.executeUndoableCommand();
+
+        assertFalse(checkSorted(icc.model));
+        icc.model.sortAddressBookAlphabeticallyByName();
+        assertTrue(checkSorted(icc.model));
     }
 
     @Test
     public void executeUndoableCommand_sortImportedPersons_personsCorrectlySorted() throws Exception {
-        testModel = null; //reset model so there are no duplicates
-        setupModelWithImportedContacts();
+        ImportContactsCommand icc = new ImportContactsCommand("data/Test_contacts_unsorted.csv");
+        icc.model = new ModelManager();
+
+        try {
+            icc.executeUndoableCommand();
+        } catch (CommandException cr) {
+            System.out.println("Failed in setupModelWithImportedContacts\n" + cr.getStackTrace());
+        }
+
         SortCommand sc = new SortCommand();
-        sc.model = testModel;
+        sc.model = icc.model;
+
         assertFalse(checkSorted(sc.model));
         CommandResult cr = sc.executeUndoableCommand();
         assertTrue(checkSorted(sc.model));

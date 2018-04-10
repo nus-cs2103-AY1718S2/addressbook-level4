@@ -24,14 +24,14 @@ import seedu.address.model.UserPrefs;
 //@@author karenfrilya97
 public class ImportCommandTest {
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/ImportCommandTest/");
     private static final String ASSIGNMENT3_DEMO1_FILE_PATH = TEST_DATA_FOLDER + "validImportFile.xml";
     private static final String MISSING_FILE_PATH = TEST_DATA_FOLDER + "missing.xml";
     private static final String ILLEGAL_VALUES_FILE_PATH = TEST_DATA_FOLDER + "illegalValues.xml";
     private static final String DUPLICATE_ACTIVITY_FILE_PATH = TEST_DATA_FOLDER + "duplicateActivity.xml";
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     private Model validModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
 

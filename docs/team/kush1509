@@ -1,0 +1,78 @@
+= Kushagra Goyal - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+
+== PROJECT: contactHeRo
+
+---
+
+== Overview
+
+contactHeRo is a contact management solution for recruiters across companies who need a quick and efficient way to manage the contact details and profiles of their potential recruits. It is a Command Line Interface(CLI) application with intuitive usage and effective features. You can manage details of prospective employees and job openings in your company through easy to use add, delete and edit features. Matching jobs to employees is also a great feature that makes the hiring process easy for you. Other than that, you can also view the linkedIn profiles of your potential employees, send emails and arrange meetings.
+
+This portfolio is to collate my contributions towards the developing of contactHeRo. It showcases the software programming knowledge I have learned during the course of CS2103T, as well as how I utilized this knowledge and applied it to a real-world project. This portfolio also contains some enhancements I would suggest to be developed for contactHeRo in the future.
+
+== Summary of contributions
+
+* *Major enhancement*: added *job openings section*
+** What it does: allows the user to maintain a list of current job openings using add, delete, find and edit commands and match these job openings to potential employees using skill-matching.
+** Justification: A recruiter needs the list of the job openings in the company so he/she knows what are the current job openings and what skillsets to look for in people. This way, the user can better search for potential employees. Hence, this feature is an essential feature of any recruitment-management software.
+** Highlights: This enhancement required the addition of six new commands, namely, `addjob`, `deletejob`, `editjob`, `findjob`, `listjob` and `matchjob`. New attributes, currentPosition and company were added to the Person which required hanges to existing commands like `add` and `edit` as well.
+
+* *Minor enhancement*: added a Contact-Details and LinkedIn-Search display.
+** Justification: Viewing the contact details in a separate focused panel makes them easier to read for the user as the Person card can now just contain limited information like the person’s name, current position and company, also allowing more number of contacts to be displayed at a time since amount of information is reduced. Moreover, recruiters need to keep a track of the professional progress of his/her potential recruits and having easy access to their LinkedIn profiles will help them do this efficiently.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W09-B2/main/blob/master/collated/functional/kush1509.md[Functional code]] [https://github.com/CS2103JAN2018-W09-B2/main/blob/master/collated/test/kush1509.md[Test code]] _{give links to collated code files}_
+
+* *Other contributions*:
+
+** Took the role of Team Leader to make important decisions regarding development of product.
+** Features:
+*** Auto-complete: added functionality for commands to be auto-completed on pressing `TAB` https://github.com/CS2103JAN2018-W09-B2/main/pull/35[Pull request #35], https://github.com/CS2103JAN2018-W09-B2/main/pull/186[Pull request #186]
+*** Improved User Interface by adding Tabbed Details Panel: added a tab display for Details Panel which was used by many features like LinkedIn, Email and Calendar.
+** Project management:
+*** Managed all releases `v1.3` - `v1.5rc` on GitHub
+*** Managed all milestones `v1.1` - `v1.5rc` (5 milestones) on GitHub
+*** Managed project effectively to keep track of issues, merging pull requests by resolving conflicts and keeping track of deadlines and deliverables.
+** Enhancements to existing features:
+*** Added curentPosition and company attributes to Person https://github.com/CS2103JAN2018-W09-B2/main/pull/118[Pull request #118]
+*** Updated Ui to contain icons https://github.com/CS2103JAN2018-W09-B2/main/pull/136/commits/7b9ac8bb2d99af8a63d7bf9ee68d17a0b48bea58[Commit #7b9ac8]
+
+** Documentation:
+*** Made User Guide more reader-friendly by adding screenshots and organising features into sections: https://github.com/CS2103JAN2018-W09-B2/main/pull/114/[Pull request #114], https://github.com/CS2103JAN2018-W09-B2/main/pull/217[Pull request #217]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W09-B2/main/pull/173[Pull request #173], https://github.com/CS2103JAN2018-W09-B2/main/pull/55[Pull request #55], https://github.com/CS2103JAN2018-W09-B2/main/pull/152[Pull request #152],
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F09-B1/main/issues/85[Issue #85], https://github.com/CS2103JAN2018-F09-B1/main/issues/95[Issue #95], https://github.com/CS2103JAN2018-F09-B1/main/issues/69[Issue #69], https://github.com/CS2103JAN2018-F09-B1/main/issues/76[Issue #76], https://github.com/CS2103JAN2018-F09-B1/main/issues/83[Issue #83])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=intro]
+
+include::../UserGuide.adoc[tag=linkedIn]
+
+include::../UserGuide.adoc[tag=autoComplete]
+
+include::../UserGuide.adoc[tag=jobs]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=details]
+
+include::../DeveloperGuide.adoc[tag=product]
+
+
+//== PROJECT: PowerPointLabs
+//
+//---
+//
+//_{Optionally, you may include other projects in your portfolio.}_

@@ -217,9 +217,11 @@ public class EditAppointmentCommand extends UndoableCommand {
             setName(toCopy.name);
             setDateTime(toCopy.dateTime);
             setTimeZone(toCopy.timeZone);
-            UniquePersonList newPersons = new UniquePersonList();
-            newPersons.setPersons(toCopy.persons);
-            setPersons(newPersons);
+            if (!Objects.isNull(toCopy.persons)) {
+                UniquePersonList newPersons = new UniquePersonList();
+                newPersons.setPersons(toCopy.persons);
+                setPersons(newPersons);
+            }
         }
 
         /**

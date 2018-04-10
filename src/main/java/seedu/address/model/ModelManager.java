@@ -102,6 +102,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
+    //@@author XavierMaYuqian
     @Override
     public synchronized void sort() {
         addressBook.sort();

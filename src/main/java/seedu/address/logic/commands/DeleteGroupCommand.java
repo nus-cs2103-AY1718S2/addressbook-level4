@@ -1,9 +1,6 @@
 //@@author jas5469
 package seedu.address.logic.commands;
 
-
-import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -22,8 +19,8 @@ public class DeleteGroupCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the group identified by the group Name used.\n"
-            + "Parameters: g/GroupName(Must exist) n/KEYWORD ...\n"
-            + PREFIX_GROUP + "CS1010";
+            + "Parameters: GroupName(Must exist) KEYWORD ...\n"
+            + "CS1010";
 
     public static final String MESSAGE_DELETE_GROUP_SUCCESS = "Deleted group: %1$s";
     public static final String MESSAGE_NO_SUCH_GROUP = "Group not found";

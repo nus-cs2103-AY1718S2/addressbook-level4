@@ -543,6 +543,10 @@ List of medical appointments on current month. User can also navigate to other m
 
 IMDB will be able to view the schedule for a patient across all specialists so that medical staff can arrange non-conflicting appointments.
 
+==== Viewing the schedule for doctors across all specialists `[coming in v2.0]`
+
+IMDB will be able to view the schedule for doctors across all specialists so that medical staff can make arrangements if patient specifies which doctor he or she would like to visit for the appointment.
+
 === Saving the data
 
 IMDB data are saved in the hard disk automatically after any command that changes the data. +

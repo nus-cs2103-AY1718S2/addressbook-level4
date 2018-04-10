@@ -29,6 +29,20 @@ public class Template {
     }
 
     @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(" Purpose: ")
+                .append(getPurpose())
+                .append(",")
+                .append(" Subject: ")
+                .append(getTitle())
+                .append(",")
+                .append(" Message: ")
+                .append(getMessage());
+        return builder.toString();
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;

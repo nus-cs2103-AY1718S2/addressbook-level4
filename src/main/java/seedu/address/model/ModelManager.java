@@ -84,6 +84,13 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AppointmentDeletedEvent(appointments));
     }
     //@@author
+    private void indicateTemplateAdded(Template template) {
+        //raise(new NewTemplateAddedEvent(template)); TO IMPLEMENT
+    }
+    //@@author ng95junwei
+
+
+    //@@author
 
     //=========== Person Mutators =============================================================
 
@@ -141,6 +148,9 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addTemplate(Template template) throws DuplicateTemplateException {
         addressBook.addTemplate(template);
+        updateFilteredTemplateList(PREDICATE_SHOW_ALL_TEMPLATES);
+        indicateTemplateAdded(template);
+        indicateAddressBookChanged();
     }
     //@@author
     //========== Template Accessors =================================================================

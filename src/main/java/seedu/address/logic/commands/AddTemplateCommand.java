@@ -22,10 +22,10 @@ public class AddTemplateCommand extends UndoableCommand {
             + "Parameters: "
             + PREFIX_PURPOSE + "PURPOSE "
             + PREFIX_SUBJECT + "SUBJECT "
-            + PREFIX_MESSAGE + "MESSAGE BODY "
+            + PREFIX_MESSAGE + "MESSAGE BODY \n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_PURPOSE + "greeting "
-            + PREFIX_SUBJECT + "Hello there"
+            + PREFIX_SUBJECT + "Hello there "
             + PREFIX_MESSAGE + "Luke, I am your father";
 
     public static final String MESSAGE_SUCCESS = "New template added: %1$s";

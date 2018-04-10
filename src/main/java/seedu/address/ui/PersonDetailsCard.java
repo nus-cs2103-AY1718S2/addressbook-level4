@@ -55,24 +55,26 @@ public class PersonDetailsCard extends UiPart<Region> {
     }
 
 
-    public PersonDetailsCard(Person person) {
+    public PersonDetailsCard(Person person, int oddEvenIndex) {
         super(FXML);
         this.person = person;
-        update(person);
+        timeTablePanel = new TimeTablePanel();
+        timetablePlaceholder.getChildren().add(timeTablePanel.getRoot());
+        update(person, oddEvenIndex);
     }
 
     /**
      * Updates the {@code PersonDetailsCard} for the new person selected
      * @param person the Person that is currently selected
      */
-    public void update(Person person) {
+    public void update(Person person, int oddEvenIndex) {
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         birthday.setText(person.getBirthday().value);
         initializeTags(person);
-        initializeTimetable(person);
+        initializeTimetable(person, oddEvenIndex);
     }
 
     /**
@@ -104,9 +106,8 @@ public class PersonDetailsCard extends UiPart<Region> {
     /**
      * Initializes the timetable for {@code person}.
      */
-    private void initializeTimetable(Person person) {
+    private void initializeTimetable(Person person, int oddEvenIndex) {
         Timetable timeTable = person.getTimetable();
-        int oddEvenIndex = StringUtil.getOddEven("odd");
         ArrayList<ArrayList<String>> personTimeTable = timeTable.getTimetable().get(oddEvenIndex);
         ObservableList<ArrayList<String>> timeTableList = FXCollections.observableArrayList(personTimeTable);
         timeTablePanel = new TimeTablePanel(timeTableList);

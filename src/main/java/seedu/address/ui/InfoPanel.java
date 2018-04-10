@@ -117,17 +117,20 @@ public class InfoPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Person person = event.getNewSelection().person;
 
-        personDetailsCard.update(person);
+        personDetailsCard.update(person,0);
         userDetailsPlaceholder.toFront();
     }
-
+    //@@author
+     /*
     @Subscribe
     private void handleTimeTableEvent(TimeTableEvent event) {
+
         userDetailsPlaceholder.getChildren().removeAll();
         timeTablePanel = new TimeTablePanel(event.getTimeTable());
         userDetailsPlaceholder.getChildren().add(timeTablePanel.getRoot());
         userDetailsPlaceholder.toFront();
         timeTablePanel.setStyle();
+
     }
-    //@@author
+    */
 }

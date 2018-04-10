@@ -66,6 +66,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
      */
     private void initializeCalendar() {
         calendar = new Calendar("Appointments");
+        calendar.setStyle(Calendar.Style.STYLE2);
     }
 
     /**
@@ -79,6 +80,11 @@ public class CalendarPanel extends UiPart<CalendarView> {
 
         calendarView.setRequestedTime(LocalTime.now());
         calendarView.showMonthPage();
+        calendarView.setShowPageToolBarControls(false);
+        calendarView.setShowAddCalendarButton(false);
+        calendarView.setShowPrintButton(false);
+        calendarView.setShowSourceTrayButton(false);
+        calendarView.setShowSearchField(false);
         pageBase = calendarView.getSelectedPage();
     }
 

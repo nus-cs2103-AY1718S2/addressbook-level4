@@ -30,7 +30,6 @@ import seedu.organizer.model.user.UserWithQuestionAnswer;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
     public static final String MESSAGE_WRONG_PART_COUNT = "Number of parts is incorrect";
 
     /**
@@ -84,23 +83,23 @@ public class ParserUtil {
 
     //@@author dominickenn
     /**
-     * Parses a {@code String username} into a {@code String}.
+     * Parses a {@code username} into a {@code String}
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code username} is invalid.
+     * @throws IllegalValueException if the given {@code username} is invalid
      */
-    public static String parseUsername(String name) throws IllegalValueException {
-        requireNonNull(name);
-        String trimmedUsername = name.trim();
+    public static String parseUsername(String username) throws IllegalValueException {
+        requireNonNull(username);
+        String trimmedUsername = username.trim();
         if (!User.isValidUsername(trimmedUsername)) {
             throw new IllegalValueException(User.MESSAGE_USERNAME_CONSTRAINTS);
         }
-        return name;
+        return username;
     }
 
     /**
-     * Parses a {@code Optional<String> username} into an {@code Optional<String>} if {@code username} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
+     * Parses an {@code Optional<String> username} into an {@code Optional<String>} if {@code username} is present
+     * See header comment of this class regarding the use of {@code Optional} parameters
      */
     public static Optional<String> parseUsername(Optional<String> username) throws IllegalValueException {
         requireNonNull(username);
@@ -108,8 +107,8 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String password} into a {@code String}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Parses a {@code String password} into a {@code String}
+     * Leading and trailing whitespaces will be trimmed
      *
      * @throws IllegalValueException if the given {@code password} is invalid.
      */

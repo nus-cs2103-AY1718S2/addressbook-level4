@@ -31,5 +31,17 @@ public class AnswerCommandParserTest {
 
         // missing all prefixes
         assertParseFailure(parser, " admin answer", expectedMessage);
+
+        // missing username
+        assertParseFailure(parser, "u/ a/answer", expectedMessage);
+
+        // missing answer
+        assertParseFailure(parser, "u/admin a/", expectedMessage);
+
+        // missing all fields
+        assertParseFailure(parser, "u/ a/", expectedMessage);
+
+        // no arguments
+        assertParseFailure(parser, "", expectedMessage);
     }
 }

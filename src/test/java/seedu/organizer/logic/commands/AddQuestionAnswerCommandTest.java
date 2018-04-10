@@ -37,12 +37,12 @@ public class AddQuestionAnswerCommandTest {
     public void setUp() {
         try {
             model.loginUser(ADMIN_USER);
-        } catch (UserNotFoundException e) {
-            e.printStackTrace();
-        } catch (CurrentlyLoggedInException e) {
-            e.printStackTrace();
-        } catch (UserPasswordWrongException e) {
-            e.printStackTrace();
+        } catch (UserNotFoundException unf) {
+            throw new AssertionError("Admin user should exist");
+        } catch (CurrentlyLoggedInException cli) {
+            throw new AssertionError("No user should be currently logged in");
+        } catch (UserPasswordWrongException upw) {
+            throw new AssertionError("Admin user password should not be wrong");
         }
     }
 

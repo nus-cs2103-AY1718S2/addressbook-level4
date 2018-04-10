@@ -51,5 +51,4 @@ public class UserTest {
         Assert.assertThrows(NullPointerException.class, () -> User.passwordMatches(null, user));
         Assert.assertThrows(NullPointerException.class, () -> User.passwordMatches(null, null));
     }
-
 }

@@ -12,8 +12,8 @@ import static seedu.organizer.commons.util.AppUtil.checkArgument;
  */
 public class Priority {
 
-    public static final String MESSAGE_PRIORITY_CONSTRAINTS =
-            "Priority numbers can only be 0 to 9, 0 being the lowest priority, and 9 being the highest priority";
+    public static final String MESSAGE_PRIORITY_CONSTRAINTS = "Priority numbers can only be 0 to 9\n"
+                    + "Lowest priority : 0 | Highest priority : 9";
     public static final String PRIORITY_VALIDATION_REGEX = "\\d{1}";
     public static final String LOWEST_PRIORITY_LEVEL = "0";
     public static final String HIGHEST_SETTABLE_PRIORITY_LEVEL = "9";
@@ -31,7 +31,7 @@ public class Priority {
     }
 
     /**
-     * Returns true if a given string is a valid task priority number.
+     * Returns true if a given string is a valid task priority level.
      */
     public static boolean isValidPriority(String test) {
         return test.matches(PRIORITY_VALIDATION_REGEX);

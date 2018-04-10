@@ -1,7 +1,5 @@
 package seedu.organizer.logic.commands;
 
-//@@author dominickenn
-
 import static junit.framework.TestCase.assertEquals;
 import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
 
@@ -12,12 +10,12 @@ import org.junit.rules.ExpectedException;
 
 import seedu.organizer.logic.CommandHistory;
 import seedu.organizer.logic.UndoRedoStack;
-import seedu.organizer.logic.commands.exceptions.CommandException;
 import seedu.organizer.model.Model;
 import seedu.organizer.model.ModelManager;
 import seedu.organizer.model.user.UserWithQuestionAnswer;
 import seedu.organizer.model.user.exceptions.DuplicateUserException;
 
+//@@author dominickenn
 /**
  * Contains unit tests for ForgotPasswordCommand.
  */
@@ -34,8 +32,8 @@ public class ForgotPasswordCommandTest {
         model = new ModelManager();
         try {
             model.addUser(ADMIN_USER);
-        } catch (DuplicateUserException e) {
-            e.printStackTrace();
+        } catch (DuplicateUserException du) {
+            throw new AssertionError("There should not be any duplicate users");
         }
         forgotPasswordCommand = new ForgotPasswordCommand("admin");
     }
@@ -67,11 +65,8 @@ public class ForgotPasswordCommandTest {
     /**
      * Asserts that {@code command} is successfully executed, and<br>
      * - the command feedback is equal to {@code expectedMessage}<br>
-     *
-     * @throws CommandException If an error occurs during command execution.
      */
-    protected void assertCommandSuccess(ForgotPasswordCommand command, String expectedMessage)
-            throws CommandException {
+    protected void assertCommandSuccess(ForgotPasswordCommand command, String expectedMessage) {
         forgotPasswordCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         CommandResult commandResult = command.execute();
         assertEquals(expectedMessage, commandResult.feedbackToUser);

@@ -40,7 +40,7 @@ public interface Model {
     void addUser(User user) throws DuplicateUserException;
 
     /** Login a user */
-    void loginUser(User user) throws UserNotFoundException, CurrentlyLoggedInException, UserPasswordWrongException;
+    void loginUser(User user) throws UserNotFoundException, UserPasswordWrongException, CurrentlyLoggedInException;
 
     /** Logout from organizer */
     void logout();

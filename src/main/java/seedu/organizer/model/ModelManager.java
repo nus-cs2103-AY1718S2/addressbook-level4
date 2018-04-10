@@ -93,13 +93,17 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void addUser(User user) throws DuplicateUserException {
+        requireNonNull(user);
         organizer.addUser(user);
         indicateOrganizerChanged();
     }
 
     @Override
     public synchronized void loginUser(User user)
-            throws UserNotFoundException, CurrentlyLoggedInException, UserPasswordWrongException {
+            throws UserNotFoundException,
+            UserPasswordWrongException,
+            CurrentlyLoggedInException {
+        requireNonNull(user);
         organizer.loginUser(user);
         currentlyLoggedInUser = organizer.getCurrentLoggedInUser();
         updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);

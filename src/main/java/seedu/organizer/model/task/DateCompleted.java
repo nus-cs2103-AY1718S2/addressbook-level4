@@ -25,7 +25,7 @@ public class DateCompleted {
     public final LocalDate date;
 
     /**
-     * Constructs an {@code DateCompleted}.
+     * Constructs a {@code DateCompleted}.
      *
      * @param dateCompleted A valid date.
      */
@@ -51,8 +51,8 @@ public class DateCompleted {
     /**
      * Constructs a DateCompleted that is empty
      */
-    public DateCompleted(boolean completed) {
-        if (!completed) {
+    public DateCompleted(boolean isCompleted) {
+        if (!isCompleted) {
             this.date = null;
         } else {
             LocalDate currentDate = LocalDate.now();

@@ -37,8 +37,8 @@ public class UniqueUserList implements Iterable<User> {
     public UniqueUserList() {}
 
     /**
-     * Creates a UniqueUserList using given users.
-     * Enforces no nulls.
+     * Creates a UniqueUserList using given {@code users}
+     * Enforces no nulls
      */
     public UniqueUserList(Set<User> users) {
         requireAllNonNull(users);
@@ -48,7 +48,7 @@ public class UniqueUserList implements Iterable<User> {
     }
 
     /**
-     * Sets currentLoggedInUser to user
+     * Sets currentLoggedInUser to {@code userToLogin}
      */
     public void setCurrentLoggedInUser(User userToLogIn)
             throws UserNotFoundException,
@@ -56,25 +56,37 @@ public class UniqueUserList implements Iterable<User> {
             UserPasswordWrongException {
 
         requireNonNull(userToLogIn);
+
         if (currentLoggedInUser != null) {
             throw new CurrentlyLoggedInException();
         }
 
+        if (userExistsInUserList(userToLogIn)) {
+            this.currentLoggedInUser = userToLogIn;
+        }
+    }
+
+    /**
+     * Returns the true if {@code userToLogin} is found
+     * @Throws UserNotFoundException if not found
+     */
+    private boolean userExistsInUserList(User userToLogIn) throws UserPasswordWrongException, UserNotFoundException {
+        requireNonNull(userToLogIn);
         User userFound = null;
         for (User user : internalList) {
-            userFound = attemptToMatchUser(userToLogIn, user);
+            userFound = returnUserIfMatch(userToLogIn, user);
         }
         if (userFound == null) {
             throw new UserNotFoundException();
         }
-        this.currentLoggedInUser = userToLogIn;
+        return true;
     }
 
     /**
      * Attempts to match {@code userToLogin} and {@code user}
      * Both password and username have to match before a user is returned
      */
-    private User attemptToMatchUser(User userToLogIn, User user) throws UserPasswordWrongException {
+    private User returnUserIfMatch(User userToLogIn, User user) throws UserPasswordWrongException {
         User userFound = null;
         if (usernameMatches(user, userToLogIn)) {
             if (passwordMatches(user, userToLogIn)) {
@@ -113,20 +125,6 @@ public class UniqueUserList implements Iterable<User> {
     }
 
     /**
-     * Ensures every user in the argument list exists in this object.
-     */
-    public void mergeFrom(UniqueUserList from) {
-        final Set<User> alreadyInside = this.toSet();
-        from.internalList.stream()
-                .filter(user -> !alreadyInside.contains(user))
-                .forEach(internalList::add);
-
-        assert CollectionUtil.elementsAreUnique(internalList);
-
-        currentLoggedInUser = from.currentLoggedInUser;
-    }
-
-    /**
      * Returns true if the list contains an equivalent User as the given argument.
      */
     public boolean contains(User toCheck) {
@@ -152,9 +150,8 @@ public class UniqueUserList implements Iterable<User> {
     /**
      * Replaces a user with another user in internalList
      */
-    public void updateUserToUserWithQuestionAnswer(
-            User toRemove, UserWithQuestionAnswer toAdd) throws UserNotFoundException {
-
+    public void updateUserToUserWithQuestionAnswer(User toRemove, UserWithQuestionAnswer toAdd)
+            throws UserNotFoundException {
         requireAllNonNull(toRemove, toAdd);
         if (!internalList.contains(toRemove)) {
             throw new UserNotFoundException();
@@ -168,14 +165,17 @@ public class UniqueUserList implements Iterable<User> {
     public User getUserByUsername(String username) throws UserNotFoundException {
         requireNonNull(username);
         User userWithUsername = null;
+
         for (User u : internalList) {
             if (u.username.equals(username)) {
                 userWithUsername = u;
             }
         }
+
         if (userWithUsername == null) {
             throw new UserNotFoundException();
         }
+
         return userWithUsername;
     }
 
@@ -206,5 +206,4 @@ public class UniqueUserList implements Iterable<User> {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.hashCode();
     }
-
 }

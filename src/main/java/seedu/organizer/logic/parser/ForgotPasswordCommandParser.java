@@ -1,7 +1,5 @@
 package seedu.organizer.logic.parser;
 
-//@@author dominickenn
-
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_USERNAME;
 
@@ -24,12 +22,14 @@ public class ForgotPasswordCommandParser implements Parser<ForgotPasswordCommand
      * @throws ParseException if the user input does not conform the expected format
      */
     public ForgotPasswordCommand parse(String args) throws ParseException {
+
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_USERNAME);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_USERNAME)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ForgotPasswordCommand.MESSAGE_USAGE));
         }
+
         try {
             String username = ParserUtil.parseUsername(argMultimap.getValue(PREFIX_USERNAME)).get();
             return new ForgotPasswordCommand(username);

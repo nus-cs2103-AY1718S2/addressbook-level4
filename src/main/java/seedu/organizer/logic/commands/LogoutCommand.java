@@ -1,8 +1,10 @@
 package seedu.organizer.logic.commands;
 
+import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
+
 //@@author dominickenn
 /**
- * Logout from organizer.
+ * Logout current user from PrioriTask.
  */
 public class LogoutCommand extends Command {
 
@@ -14,9 +16,9 @@ public class LogoutCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        requireAllNonNull(model, history);
         model.logout();
         history.clear();
         return new CommandResult(MESSAGE_LOGOUT_ACKNOWLEDGEMENT);
     }
-
 }

@@ -1,6 +1,9 @@
 
 package seedu.organizer.storage;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
+
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.organizer.commons.exceptions.IllegalValueException;
@@ -9,7 +12,7 @@ import seedu.organizer.model.user.UserWithQuestionAnswer;
 
 //@@author dominickenn
 /**
- * JAXB-friendly adapted version of the Tag.
+ * JAXB-friendly adapted version of the User.
  */
 public class XmlAdaptedUser {
 
@@ -29,18 +32,20 @@ public class XmlAdaptedUser {
     public XmlAdaptedUser() {}
 
     /**
-     * Constructs a {@code XmlAdaptedUser} with the given {@code usernamename} and {@code password}.
+     * Constructs a {@code XmlAdaptedUser} with the given {@code username} and {@code password}.
      */
     public XmlAdaptedUser(String username, String password) {
+        requireAllNonNull(username, password);
         this.username = username;
         this.password = password;
     }
 
     /**
      * Constructs a {@code XmlAdaptedUser} with the given
-     * {@code usernamename}, {@code password}, {@code question}, {@code answer}.
+     * {@code usernamename}, {@code password}, {@code question}, and {@code answer}.
      */
     public XmlAdaptedUser(String username, String password, String question, String answer) {
+        requireAllNonNull(username, password, question, answer);
         this.username = username;
         this.password = password;
         this.question = question;
@@ -53,6 +58,7 @@ public class XmlAdaptedUser {
      * @param source future changes to this will not affect the created
      */
     public XmlAdaptedUser(User source) {
+        requireNonNull(source);
         username = source.username;
         password = source.password;
     }
@@ -63,6 +69,7 @@ public class XmlAdaptedUser {
      * @param source future changes to this will not affect the created
      */
     public XmlAdaptedUser(UserWithQuestionAnswer source) {
+        requireNonNull(source);
         username = source.username;
         password = source.password;
         question = source.question;
@@ -78,11 +85,12 @@ public class XmlAdaptedUser {
     }
 
     /**
-     * Converts this jaxb-friendly adapted user object into the model's User object.
+     * Converts this jaxb-friendly adapted user object into the model's User object
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted task
+     * @throws IllegalValueException if there were any data constraints violated in the adapted user
      */
     public User toUserModelType() throws IllegalValueException {
+        requireAllNonNull(username, password);
         if (!User.isValidUsername(username)) {
             throw new IllegalValueException(User.MESSAGE_USERNAME_CONSTRAINTS);
         }
@@ -93,11 +101,12 @@ public class XmlAdaptedUser {
     }
 
     /**
-     * Converts this jaxb-friendly adapted user object into the model's UserWithQuestionAnswer object.
+     * Converts this jaxb-friendly adapted user object into the model's UserWithQuestionAnswer object
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted task
+     * @throws IllegalValueException if there were any data constraints violated in the adapted user
      */
     public UserWithQuestionAnswer toUserQuestionAnswerModelType() throws IllegalValueException {
+        requireAllNonNull(username, password, question, answer);
         if (!User.isValidUsername(username)) {
             throw new IllegalValueException(User.MESSAGE_USERNAME_CONSTRAINTS);
         }

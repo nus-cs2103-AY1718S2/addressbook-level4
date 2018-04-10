@@ -1,6 +1,7 @@
 package seedu.organizer.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_USERNAME;
 
@@ -31,7 +32,8 @@ public class SignUpCommand extends Command {
     private final User toAdd;
 
     /**
-     * Creates an SignUpCommand to add the specified {@code User}
+     * Creates a SignUpCommand
+     * to add the specified {@code User}
      */
     public SignUpCommand(User user) {
         requireNonNull(user);
@@ -40,11 +42,11 @@ public class SignUpCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        requireNonNull(model);
+        requireAllNonNull(toAdd, model);
         try {
             model.addUser(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicateUserException e) {
+        } catch (DuplicateUserException du) {
             throw new CommandException(MESSAGE_DUPLICATE_USER);
         }
 

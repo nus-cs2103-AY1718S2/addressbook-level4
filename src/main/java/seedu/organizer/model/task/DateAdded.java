@@ -5,6 +5,8 @@ import static seedu.organizer.commons.util.AppUtil.checkArgument;
 
 import java.time.LocalDate;
 
+import seedu.organizer.commons.exceptions.IllegalValueException;
+
 //@@author dominickenn
 /**
  * Represents a Task's dateAdded in the organizer.
@@ -13,7 +15,7 @@ import java.time.LocalDate;
 public class DateAdded {
 
     public static final String MESSAGE_DATEADDED_CONSTRAINTS =
-            "Dates should be in the format YYYY-MM-DD, and it should not be blank";
+            "Dates should be in the format YYYY-MM-DD, and should not be blank";
 
     /*
      * The first character must not be a whitespace, otherwise " " (a blank string) becomes a valid input.
@@ -26,13 +28,14 @@ public class DateAdded {
     /**
      * Constructs an {@code DateAdded}.
      *
-     * @param dateAdded A valid date.
+     * @param dateAdded A valid DateAdded.
+     * @throws IllegalValueException if the {@code LocalDate} class is unable to parse {@code dateAdded}.
      */
     public DateAdded(String dateAdded) {
         requireNonNull(dateAdded);
         checkArgument(isValidDateAdded(dateAdded), MESSAGE_DATEADDED_CONSTRAINTS);
-        //temporary fix for xml file bug due to PrioriTask's dependence on the current date
         if (dateAdded.equals("current_date")) {
+            //fix for xml file bug due to PrioriTask's dependence on the current date
             this.date = LocalDate.now();
         } else {
             //actual code that is run when tests are not running
@@ -53,7 +56,8 @@ public class DateAdded {
      * Returns true if a given string is a valid task deadline.
      */
     public static boolean isValidDateAdded(String test) {
-        return test.matches("current_date") || test.matches(DATEADDED_VALIDATION_REGEX);
+        return test.matches("current_date") //fix for xml file bug due to PrioriTask's dependence on the current date
+                || test.matches(DATEADDED_VALIDATION_REGEX); //actual code that is run when tests are not running
     }
 
     @Override

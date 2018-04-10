@@ -155,6 +155,7 @@ public class UniqueTaskList implements Iterable<Task> {
     //@@author dominickenn
     /**
      * Sorts all tasks in uniqueTaskList according to priority
+     * Higher priority tasks are given preference
      */
     private void sortTasks() {
         internalList.sort(Task.priorityComparator());
@@ -180,7 +181,7 @@ public class UniqueTaskList implements Iterable<Task> {
         long dayDifferenceAddedToDeadline = Duration.between(dateAdded.atStartOfDay(),
                                                             deadline.atStartOfDay()).toDays();
 
-        if (dateAdded.isEqual(LocalDate.now()) && dayDifferenceCurrentToDeadline >= 0) {
+        if (dateAdded.isEqual(currentDate) && dayDifferenceCurrentToDeadline >= 0) {
             newTask = new Task(task.getName(), task.getPriority(), task.getDeadline(), task.getDateAdded(),
                     task.getDateCompleted(), task.getDescription(), task.getStatus(), task.getTags(),
                     task.getSubtasks(), task.getUser());

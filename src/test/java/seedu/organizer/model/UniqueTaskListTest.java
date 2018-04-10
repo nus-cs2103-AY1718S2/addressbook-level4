@@ -32,7 +32,7 @@ public class UniqueTaskListTest {
         UniqueTaskList expectedUniqueTaskList = new UniqueTaskList();
         LocalDate currentDate = LocalDate.now();
 
-        //CurrentDate equals to AddedDate
+        // CurrentDate equals to AddedDate and not before Deadline
         Task taskCurrentDateEqualsToAddedDate = new TaskBuilder().withDeadline("2999-01-01")
                                             .withDateAdded(currentDate.toString()).build();
         Task expectedTaskCurrentDateEqualsToAddedDate = new TaskBuilder().withDeadline("2999-01-01")
@@ -42,10 +42,11 @@ public class UniqueTaskListTest {
         expectedUniqueTaskList.add(expectedTaskCurrentDateEqualsToAddedDate);
         assertEquals(uniqueTaskList, expectedUniqueTaskList);
 
+        // Reset lists
         uniqueTaskList = new UniqueTaskList();
         expectedUniqueTaskList = new UniqueTaskList();
 
-        //CurrentDate before Deadline
+        // CurrentDate before Deadline
         Task taskCurrentDateBeforeDeadline = new TaskBuilder().withDeadline("2035-01-01")
                 .withDateAdded("1900-01-01").build();
         Task expectedTaskCurrentDateBeforeDeadline = new TaskBuilder().withDeadline("2035-01-01")
@@ -55,10 +56,11 @@ public class UniqueTaskListTest {
         expectedUniqueTaskList.add(expectedTaskCurrentDateBeforeDeadline);
         assertEquals(uniqueTaskList, expectedUniqueTaskList);
 
+        // Reset lists
         uniqueTaskList = new UniqueTaskList();
         expectedUniqueTaskList = new UniqueTaskList();
 
-        //CurrentDate after Deadline
+        // CurrentDate after Deadline
         Task taskCurrentDateAfterDeadline = new TaskBuilder().withDeadline("1999-01-01")
                 .withDateAdded("1950-01-01").build();
         Task expectedTaskCurrentDateAfterDeadline = new TaskBuilder().withDeadline("1999-01-01")

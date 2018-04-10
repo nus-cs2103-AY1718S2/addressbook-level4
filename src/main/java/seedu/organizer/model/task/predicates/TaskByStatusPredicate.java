@@ -1,12 +1,11 @@
 package seedu.organizer.model.task.predicates;
 
-//@@author dominickenn
-
 import java.util.function.Predicate;
 
 import seedu.organizer.model.task.Status;
 import seedu.organizer.model.task.Task;
 
+//@@author dominickenn
 /**
  * Tests that a {@code Task}'s {@code Status} matches the given status.
  */
@@ -30,4 +29,3 @@ public class TaskByStatusPredicate implements Predicate<Task> {
                 && this.status.equals(((TaskByStatusPredicate) other).status)); // state check
     }
 }
-

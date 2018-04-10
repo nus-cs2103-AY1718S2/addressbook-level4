@@ -26,5 +26,4 @@ public class TaskCreatedContainsDateAddedTest {
                 new HashSet<Tag>());
         assertNotNull(task.getDateAdded());
     }
-
 }

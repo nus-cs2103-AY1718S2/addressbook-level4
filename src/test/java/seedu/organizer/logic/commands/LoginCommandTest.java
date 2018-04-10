@@ -44,7 +44,7 @@ public class LoginCommandTest {
     }
 
     @Test
-    public void execute_userAcceptedByModel_addSuccessful() throws Exception {
+    public void execute_userAcceptedByModel_loginSuccessful() throws Exception {
         ModelStubLoginAccepted modelStub = new ModelStubLoginAccepted();
         User validUser = new User("david", "david123");
 
@@ -66,7 +66,7 @@ public class LoginCommandTest {
 
     @Test
     public void execute_wrongPassword_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingWrongPasswordException();
+        ModelStub modelStub = new ModelStubThrowingUserPasswordWrongException();
         User invalidUser = new User("admin", "wrongPassword");
 
         thrown.expect(CommandException.class);
@@ -90,7 +90,7 @@ public class LoginCommandTest {
         assertTrue(loginAliceCommand.equals(loginAliceCommandCopy));
 
         // different types -> returns false
-        assertFalse(loginAliceCommand.equals(1));
+        assertFalse(loginAliceCommand.equals(new SignUpCommand(alice)));
 
         // null -> returns false
         assertFalse(loginAliceCommand.equals(null));
@@ -206,7 +206,7 @@ public class LoginCommandTest {
     /**
      * A Model stub that always throw a UserPasswordWrongException when trying to login.
      */
-    private class ModelStubThrowingWrongPasswordException extends ModelStub {
+    private class ModelStubThrowingUserPasswordWrongException extends ModelStub {
         @Override
         public void loginUser(User user) throws UserPasswordWrongException {
             throw new UserPasswordWrongException();
@@ -219,7 +219,7 @@ public class LoginCommandTest {
     }
 
     /**
-     * A Model stub that always accept login request.
+     * A Model stub that always accepts a login request.
      */
     private class ModelStubLoginAccepted extends ModelStub {
         final ArrayList<User> users = new ArrayList<>();

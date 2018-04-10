@@ -1,6 +1,7 @@
 package seedu.organizer.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_USERNAME;
 
@@ -12,7 +13,7 @@ import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
 //@@author dominickenn
 /**
- * Adds a user to the organizer.
+ * Login a user to PrioriTask.
  */
 public class LoginCommand extends Command {
 
@@ -29,13 +30,14 @@ public class LoginCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "User log in successful : %1$s";
     public static final String MESSAGE_USER_NOT_FOUND = "This user does not exist";
-    public static final String MESSAGE_CURRENTLY_LOGGED_IN = "A user is currently loggd in";
+    public static final String MESSAGE_CURRENTLY_LOGGED_IN = "A user is currently logged in";
     public static final String MESSAGE_WRONG_PASSWORD = "Wrong password";
 
     private final User toLogin;
 
     /**
-     * Creates an LoginCommand to add the specified {@code User}
+     * Creates a LoginCommand
+     * to login the specified {@code User}
      */
     public LoginCommand(User user) {
         requireNonNull(user);
@@ -44,17 +46,17 @@ public class LoginCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        requireNonNull(model);
+        requireAllNonNull(toLogin, model, history);
         try {
             model.loginUser(toLogin);
             history.clear();
             return new CommandResult(String.format(MESSAGE_SUCCESS, toLogin));
         } catch (UserNotFoundException unf) {
-            throw new CommandException(MESSAGE_USER_NOT_FOUND);
+            throw new CommandException(String.format(MESSAGE_USER_NOT_FOUND, toLogin));
+        } catch (UserPasswordWrongException upw) {
+            throw new CommandException(MESSAGE_WRONG_PASSWORD);
         } catch (CurrentlyLoggedInException cli) {
             throw new CommandException(MESSAGE_CURRENTLY_LOGGED_IN);
-        } catch (UserPasswordWrongException e) {
-            throw new CommandException(MESSAGE_WRONG_PASSWORD);
         }
     }
 

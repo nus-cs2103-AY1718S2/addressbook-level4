@@ -15,7 +15,6 @@ public class ForgotPasswordCommandParserTest {
     @Test
     public void parse_allFieldsPresent_success() {
         String expectedUsername = "admin";
-
         assertParseSuccess(parser, " u/admin", new ForgotPasswordCommand(expectedUsername));
     }
 
@@ -25,5 +24,11 @@ public class ForgotPasswordCommandParserTest {
 
         // missing username prefix
         assertParseFailure(parser, " admin", expectedMessage);
+
+        // missing username
+        assertParseFailure(parser, "u/ ", expectedMessage);
+
+        // missing arguments
+        assertParseFailure(parser, "", expectedMessage);
     }
 }

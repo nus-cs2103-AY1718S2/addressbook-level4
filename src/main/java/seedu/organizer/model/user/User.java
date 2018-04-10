@@ -1,6 +1,5 @@
 package seedu.organizer.model.user;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.util.AppUtil.checkArgument;
 import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
 
@@ -8,8 +7,8 @@ import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
 /**
  * Represents a User in the organizer.
  * Guarantees: immutable;
- * username is valid as declared in {@link #isValidUsername(String)}
- * password is valid as declared in {@link #isValidPassword(String)}
+ * {@code username} is valid as declared in {@link #isValidUsername(String)}
+ * {@code password} is valid as declared in {@link #isValidPassword(String)}
  */
 public class User {
 
@@ -17,8 +16,8 @@ public class User {
                                                             + "be at least of length 5, "
                                                             + "and must not contain spaces";
     public static final String MESSAGE_PASSWORD_CONSTRAINTS = "Password should be alphanumeric"
-            + ", be at least of length 5, "
-            + " and must not contain spaces";
+                                                            + ", be at least of length 5, "
+                                                            + " and must not contain spaces";
     public static final String USERNAME_VALIDATION_REGEX = "\\p{Alnum}{5,}+";
     public static final String PASSWORD_VALIDATION_REGEX = "\\p{Alnum}{5,}+";
 
@@ -32,7 +31,7 @@ public class User {
      * @param password A valid password.
      */
     public User(String username, String password) {
-        requireNonNull(username, password);
+        requireAllNonNull(username, password);
         checkArgument(isValidUsername(username), MESSAGE_USERNAME_CONSTRAINTS);
         checkArgument(isValidPassword(password), MESSAGE_PASSWORD_CONSTRAINTS);
         this.username = username;
@@ -40,22 +39,22 @@ public class User {
     }
 
     /**
-     * Returns true if a given string is a valid username.
+     * Returns true if {@code username} is a valid username.
      */
-    public static boolean isValidUsername(String test) {
-        return test.matches(USERNAME_VALIDATION_REGEX);
+    public static boolean isValidUsername(String username) {
+        return username.matches(USERNAME_VALIDATION_REGEX);
     }
 
     /**
-     * Returns true if a given string is a valid password.
+     * Returns true if {@code password} is a valid password.
      */
-    public static boolean isValidPassword(String test) {
-        return test.matches(PASSWORD_VALIDATION_REGEX);
+    public static boolean isValidPassword(String password) {
+        return password.matches(PASSWORD_VALIDATION_REGEX);
     }
 
     /**
      * Used in login feature
-     * Used to check if two users' username matches
+     * Used to check if {@code user1}'s and {@code user2}'s usernames matches
      */
     public static boolean usernameMatches(User user1, User user2) {
         requireAllNonNull(user1, user2);
@@ -64,7 +63,7 @@ public class User {
 
     /**
      * Used in login feature
-     * Used to check if two users' password matches
+     * Used to check if {@code user1}'s and {@code user2}'s passwords matches
      */
     public static boolean passwordMatches(User user1, User user2) {
         requireAllNonNull(user1, user2);
@@ -72,7 +71,8 @@ public class User {
     }
 
     /**
-     * Used to ensure no duplicate users, since users with the same username are considered duplicates
+     * Used to ensure no duplicate users
+     * Users with the same username are considered duplicates
      */
     @Override
     public boolean equals(Object other) {
@@ -92,5 +92,4 @@ public class User {
     public String toString() {
         return username;
     }
-
 }

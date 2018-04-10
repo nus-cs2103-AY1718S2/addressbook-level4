@@ -5,7 +5,7 @@ import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
 
 //@@author dominickenn
 /**
- * A user class with a question-answer for password retrieval
+ * A user class with a question-answer set for password retrieval
  */
 public class UserWithQuestionAnswer extends User {
 
@@ -41,16 +41,16 @@ public class UserWithQuestionAnswer extends User {
     }
 
     /**
-     * Returns true if a given string is a valid question.
+     * Returns true if {@code question} is a valid question.
      */
-    public static boolean isValidQuestion(String test) {
-        return test.matches(QUESTION_VALIDATION_REGEX);
+    public static boolean isValidQuestion(String question) {
+        return question.matches(QUESTION_VALIDATION_REGEX);
     }
 
     /**
-     * Returns true if a given string is a valid answer.
+     * Returns true if {@code answer} is a valid answer.
      */
-    public static boolean isValidAnswer(String test) {
-        return test.matches(ANSWER_VALIDATION_REGEX);
+    public static boolean isValidAnswer(String answer) {
+        return answer.matches(ANSWER_VALIDATION_REGEX);
     }
 }

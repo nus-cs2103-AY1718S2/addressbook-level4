@@ -1,6 +1,5 @@
 package seedu.organizer.logic.commands;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_ANSWER;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_QUESTION;
@@ -12,7 +11,7 @@ import seedu.organizer.model.user.UserWithQuestionAnswer;
 
 //@@author dominickenn
 /**
- * Adds a question-answer to the currently logged in user.
+ * Adds a question-answer set to the currently logged in user.
  */
 public class AddQuestionAnswerCommand extends UndoableCommand {
 
@@ -35,7 +34,9 @@ public class AddQuestionAnswerCommand extends UndoableCommand {
     private String answer;
 
     /**
-     * Updates current user with a user with the given question and answer
+     * Creates an AddQuestionAnswerCommand
+     * to add the specified {@code question} and {@code answer} set
+     * to the currently logged in user
      */
     public AddQuestionAnswerCommand(String question, String answer) {
         requireAllNonNull(question, answer, getCurrentlyLoggedInUser());
@@ -47,6 +48,7 @@ public class AddQuestionAnswerCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+        requireAllNonNull(userToEdit, editedUser, model);
         model.addQuestionAnswerToUser(userToEdit, editedUser);
         return new CommandResult(String.format(MESSAGE_ADD_QUESTION_ANSWER_SUCCESS, editedUser));
     }
@@ -55,7 +57,7 @@ public class AddQuestionAnswerCommand extends UndoableCommand {
      * Creates and returns a UserWithQuestionAnswer with the current user, and the question and answer
      */
     private UserWithQuestionAnswer createEditedUser() {
-        requireNonNull(userToEdit);
+        requireAllNonNull(userToEdit, question, answer);
         return new UserWithQuestionAnswer(
                 userToEdit.username,
                 userToEdit.password,
@@ -76,10 +78,10 @@ public class AddQuestionAnswerCommand extends UndoableCommand {
         }
 
         // state check
-        AddQuestionAnswerCommand a = (AddQuestionAnswerCommand) other;
-        return userToEdit.equals(a.userToEdit)
-                && question.equals(a.question)
-                && answer.equals(a.answer);
+        AddQuestionAnswerCommand otherCommand = (AddQuestionAnswerCommand) other;
+        return userToEdit.equals(otherCommand.userToEdit)
+                && question.equals(otherCommand.question)
+                && answer.equals(otherCommand.answer);
     }
 
 }

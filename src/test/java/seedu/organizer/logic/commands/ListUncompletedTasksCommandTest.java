@@ -20,7 +20,7 @@ import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
 import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
-//@@author dominicekenn
+//@@author dominickenn
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListUncompletedTasksCommand.
  */
@@ -41,12 +41,12 @@ public class ListUncompletedTasksCommandTest {
         try {
             model.loginUser(ADMIN_USER);
             expectedModel.loginUser(ADMIN_USER);
-        } catch (UserNotFoundException e) {
-            throw new AssertionError("Admin user does not exist");
-        } catch (CurrentlyLoggedInException e) {
-            throw new AssertionError("A user should not be currently logged in");
-        } catch (UserPasswordWrongException e) {
-            e.printStackTrace();
+        } catch (UserNotFoundException unf) {
+            throw new AssertionError("Admin user should exist");
+        } catch (CurrentlyLoggedInException cli) {
+            throw new AssertionError("No user should be currently logged in");
+        } catch (UserPasswordWrongException upw) {
+            throw new AssertionError("Admin user password should not be wrong");
         }
 
         listCommand = new ListUncompletedTasksCommand();
@@ -55,7 +55,7 @@ public class ListUncompletedTasksCommandTest {
     }
 
     @Test
-    public void execute_listIsNotFiltered_showsSameList() {
+    public void execute_listIsNotFiltered_showsUncompletedTasks() {
         assertCommandSuccess(listCommand, model, ListUncompletedTasksCommand.MESSAGE_SUCCESS, expectedModel);
     }
 

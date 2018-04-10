@@ -32,6 +32,7 @@ public class OrganizerParserNotLoggedInTest {
     private final OrganizerParser parser = new OrganizerParser();
 
     private Model model = new ModelManager();
+
     private User user = ADMIN_USER;
     private String username = "admin";
 

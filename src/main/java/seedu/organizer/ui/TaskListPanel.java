@@ -61,10 +61,10 @@ public class TaskListPanel extends UiPart<Region> {
     class TaskListViewCell extends ListCell<TaskCard> {
 
         @Override
-        protected void updateItem(TaskCard task, boolean empty) {
-            super.updateItem(task, empty);
+        protected void updateItem(TaskCard task, boolean isEmpty) {
+            super.updateItem(task, isEmpty);
 
-            if (empty || task == null) {
+            if (isEmpty || task == null) {
                 setGraphic(null);
                 setText(null);
             } else {

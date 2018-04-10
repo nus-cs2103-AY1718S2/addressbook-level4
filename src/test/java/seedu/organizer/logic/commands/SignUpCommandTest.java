@@ -80,7 +80,7 @@ public class SignUpCommandTest {
         assertTrue(signUpAliceCommand.equals(addAliceCommandCopy));
 
         // different types -> returns false
-        assertFalse(signUpAliceCommand.equals(1));
+        assertFalse(signUpAliceCommand.equals(new LoginCommand(alice)));
 
         // null -> returns false
         assertFalse(signUpAliceCommand.equals(null));

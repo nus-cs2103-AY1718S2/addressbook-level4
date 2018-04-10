@@ -155,9 +155,7 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.setHeight(userPrefHeight < DEFAULT_HEIGHT ? DEFAULT_HEIGHT : userPrefHeight);
         primaryStage.setWidth(userPrefWidth < DEFAULT_WIDTH ? DEFAULT_WIDTH : userPrefWidth);
     }
-    //@@author
 
-    //@@author dominickenn
     /**
      * Sets the default position based on user preferences
      * If window was minimized during closure in previous session, set screen to center

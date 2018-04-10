@@ -36,8 +36,8 @@ public class AnswerCommandTest {
         model = new ModelManager();
         try {
             model.addUser(ADMIN_USER);
-        } catch (DuplicateUserException e) {
-            e.printStackTrace();
+        } catch (DuplicateUserException du) {
+            throw new AssertionError("There should not be any duplicate users");
         }
         answerCommand = new AnswerCommand("admin", "answer");
     }

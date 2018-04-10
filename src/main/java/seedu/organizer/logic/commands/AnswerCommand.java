@@ -34,6 +34,12 @@ public class AnswerCommand extends Command {
     private String username;
     private String answer;
 
+    /**
+     * Creates an AnswerCommand to answer
+     * the specified User with the {@code username}
+     * with the {@code answer}
+     * to attempt to retrieve the User's password
+     */
     public AnswerCommand(String username, String answer) {
         requireAllNonNull(username, answer);
         this.username = username;
@@ -42,16 +48,17 @@ public class AnswerCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+        requireAllNonNull(username, answer, model);
         User user;
         try {
             user = model.getUserByUsername(username);
-        } catch (UserNotFoundException e) {
+        } catch (UserNotFoundException unf) {
             throw new CommandException(MESSAGE_USER_DOES_NOT_EXIST);
         }
         if (user instanceof UserWithQuestionAnswer) {
             String answer = ((UserWithQuestionAnswer) user).answer;
             String password = user.password;
-            return answerQuestionAndGetResult(answer, password);
+            return answerQuestionAndReturnResult(answer, password);
         } else {
             return new CommandResult(String.format(MESSAGE_NO_QUESTION, username));
         }
@@ -60,7 +67,7 @@ public class AnswerCommand extends Command {
     /**
      * Returns the password if the answer is correct
      */
-    private CommandResult answerQuestionAndGetResult(String answer, String password) {
+    private CommandResult answerQuestionAndReturnResult(String answer, String password) {
         requireAllNonNull(answer, password);
         if (answer.equals(this.answer)) {
             return new CommandResult(String.format(MESSAGE_SUCCESS, password));
@@ -73,7 +80,7 @@ public class AnswerCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AnswerCommand // instanceof handles nulls
-                && this.username.equals(((AnswerCommand) other).username)
-                && this.answer.equals(((AnswerCommand) other).answer)); // state check
+                && this.username.equals(((AnswerCommand) other).username) // state check
+                && this.answer.equals(((AnswerCommand) other).answer));
     }
 }

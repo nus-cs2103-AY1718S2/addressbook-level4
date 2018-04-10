@@ -543,9 +543,9 @@ List of medical appointments on current month. User can also navigate to other m
 
 IMDB will be able to view the schedule for a patient across all specialists so that medical staff can arrange non-conflicting appointments.
 
-==== Viewing the schedule for doctors across all specialists `[coming in v2.0]`
+==== Viewing the duty schedule for doctors across all specialists `[coming in v2.0]`
 
-IMDB will be able to view the schedule for doctors across all specialists so that medical staff can make arrangements if patient specifies which doctor he or she would like to visit for the appointment.
+IMDB will be able to view the duty schedule for doctors across all specialists so that medical staff can make arrangements if patient specifies which doctor he or she would like to visit for the appointment.
 
 === Saving the data
 
@@ -580,9 +580,10 @@ e.g.`record` or `rec 1 in/2`
 * *Remover* : `remover` or `rr INDEX in/[RECORD INDEX]` +
 e.g.`remover` or `rr 1 in/2`
 * *Add patient into visiting queue* : `addq` or `aq`
-e.g.`addq john` or `aq john`
+e.g.`addq 2` or `aq 1`
 * *Remove patient from visiting queue* : `removeq` or `rq`
-* *View visiting queue* : `viewq` or `vq`
+* *Remove patient from visiting queue by index* : `removeq` or `rq`
+e.g.`removeq 2` or `rq 1`
 * *View appointments in calendar* : `viewappt` or `va` +
 e.g.`viewappt john` or `viewappt john`
 * *View appointments by patient name* : `viewappt` or `va`

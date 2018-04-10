@@ -15,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AppointmentChangedEvent;
 import seedu.address.commons.events.ui.ShowCalendarViewRequestEvent;
 import seedu.address.model.appointment.AppointmentEntry;
 
@@ -87,7 +88,7 @@ public class CalendarPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    public void handleShowCalendar(ShowCalendarViewRequestEvent scvre) {
-        setConnections(scvre.appointmentEntries);
+    public void handleShowCalendar(AppointmentChangedEvent ace) {
+        setConnections(ace.readOnlyImdb.getAppointmentEntryList());
     }
 }

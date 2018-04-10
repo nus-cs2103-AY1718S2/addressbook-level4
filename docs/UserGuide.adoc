@@ -64,6 +64,11 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [caption="Figure 2: "]
 image::ui_walkthrough.png[width="990"]
 
+.	Command box: where you can type command in
+.	Command result: where message will be displayed after a command is entered
+.	Multipurpose panel: where patient's details, appointments will be displayed here
+.	Patient list panel: where list of patients in the database is displayed
+.	Waiting list panel: where list of patients who are waiting for consultation is displayed
 
 *Command Format*
 

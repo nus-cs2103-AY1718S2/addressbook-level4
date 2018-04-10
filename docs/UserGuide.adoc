@@ -355,12 +355,12 @@ Examples:
 * `password test` +
 Encrypts `addressbook.xml` with "test" as the password.
 
-// end::dataencryption[]
-
 === Removal of password: `nopassword` (since v1.3)
 
 Removes the password of the application and unencrypts `addressbook.xml`. +
 Format: `nopassword`
+
+// end::dataencryption[]
 
 === Importing data : `import` (since v1.1)
 

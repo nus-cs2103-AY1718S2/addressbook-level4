@@ -397,7 +397,7 @@ image::ModelClassDiagram.png[width="800"]
 ===  Data Encryption
 ==== Current Implementation
 
-We are using `java.crypto.cipher` and `java.security.key` package for the encryption of the data. The `SecurityUtil` class is used to provide the `SHA-1` hashing and `AES` encryption/decryption required.
+We are using `javax.crypto.cipher` and `java.security.key` package for the encryption of the data. The `SecurityUtil` class is used to provide the `SHA-1` hashing and `AES` encryption/decryption required.
 
 Using a given password, it is first hashed using `SHA-1` to be used as the `AES` key.
 The first 128 bits of the digest created by the `SHA-1` hash is extracted.
@@ -436,7 +436,6 @@ This is secure as even if a malicious user were to somehow get a copy of the 128
 * **Alternative 2:**  Encryption and Decryption done where needed in `XmlUtil` and `XmlFileStorage`
 ** Pros: `addressbook.xml` is exposed minimally.
 ** Cons: Increase coupling of more classes and makes the implementation harder to understand.
-// end::dataencryption[]
 
 ===== Aspect: Where to save the password
 * **Alternative 1 (current choice):** Save in `addressbook.xml`
@@ -444,9 +443,10 @@ This is secure as even if a malicious user were to somehow get a copy of the 128
 ** Cons: Plaintext of `addressbook.xml` contains the 128 bit `AES` key used.
 However, this is still secure as even if a malicious user were to somehow get a copy of the 128 bit password, they would still need to use a computationally unfeasible pre-image attack.
 
-* **Alternative 2: Password not saved
+* **Alternative 2:** Password not saved
 ** Pros: No chance of password being compromised.
 ** Cons: Password reset after each reload of application.
+// end::dataencryption[]
 
 === Import AddressBook feature
 ==== Current Implementation
@@ -555,6 +555,7 @@ As shown in diagram above, all Rooms weekday schedule will be return in an `Arra
 ** Pros: User is able to see which rooms are vacant at current time immediately
 ** Cons: User is not able to see the room schedule for the whole day
 
+// tag::timetable[]
 === Timetable feature
 ==== Current Implementation
 When adding a Person using the Add Command, users can enter their NUSMods shortened link into the "tt/" field.
@@ -631,6 +632,7 @@ The `InfoPanel` will swap between `BrowsePanel`, `BirthdayList`, `VenueTable` an
 ** Pros: Customized Application for users.
 ** Cons: Implementation of this system would be complex and time-consuming, it would be implemented in later versions.
 Current implementation is the best in terms of variability and ease of implementation.
+// end::timetable[]
 
 === Logging
 

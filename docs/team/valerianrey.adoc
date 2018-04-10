@@ -9,3 +9,47 @@
 == Overview
 
 AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability create/edit/remove insurance policies, and to display and store them*
+** What it does: allows the user to create policies using `add_policy`, edit them using `edit_policy` and remove them using `remove_policy`.
+** Justification: This feature is important because it is a key tool to any insurance agent to keep track of which "product" each client has applied to.
+** Highlights: This enhancement adds 3 new commands. It required me to understand the parsing operations. Parsing a Policy-related command can be quite complicated,
+because it needs understanding of required fields, optional fields and optional multiple fields parsing. This results in a lot of code in the parser files. Since the Policy is an optional attribute of each person,
+the implementation of the storage of the policies was quite tricky too, but the resulting code is actually pretty short, so I did not include it in the collated folder.
+** Credits: I want to give credit to the structure of some commands, that inspired me to make the `add_policy` and `edit_policy` commands. For example, `edit_policy` takes the
+idea of `EditPersonDescriptor` from `EditCommand`. I had to name this class as `EditPolicyDescriptor` and modify it to make it fit the `EditPolicyCommand`, so I claimed it as my own in the end.
+
+* *Minor enhancement*: added the `policy` package to the model. It contains the enumerations `Issue` and `Month`, and the classes `Policy`, `Date`, `Coverage` and `Price`.
+This strongly linked to my major enhancement, as it is a requirement to make the latter possible. But since it could be developed independently from the rest, I chose this as my minor enhancement.
+The implementation was also a bit easier, even if I had to come up with some good algorithms to check the correctness of each parameters.
+
+* *Code contributed*:
+** Functional : [https://github.com/CS2103JAN2018-T15-B2/main/blob/master/collated/functional/ValerianRey.md]
+** Test : [https://github.com/CS2103JAN2018-T15-B2/main/blob/master/collated/test/ValerianRey.md]
+
+* *Other contributions*:
+
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W14-B1/main/issues/138, https://github.com/CS2103JAN2018-W14-B1/main/issues/136)
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=policy]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=policy]
+
+---

@@ -505,6 +505,7 @@ and b is the expected outcome. The name of the game is to find the
 weights that minimises the loss of the objective function A.
 The numerical solver used here is Stochastic Gradient Descent.
 
+// tag::policy[]
 === Policy Feature
 
 The `Policy` field is an optional field attached to a person. It contains all the data
@@ -559,6 +560,7 @@ inspired from the `EditPersonDescriptor` of the `EditCommand`. It works in the s
 To remove a Policy, the user should use the `remove_policy` command. He then only has to enter the index of the target
 user. The parsing of this command is pretty straightforward since it only has the index parameter, and it is done in
 `RemovePolicyCommandParser`. The command created is of type `RemovePolicyCommand`.
+// end::policy[]
 
 == Documentation
 

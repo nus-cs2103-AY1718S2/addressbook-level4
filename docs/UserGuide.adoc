@@ -344,7 +344,7 @@ this is to illustrate unrealistic extreme values might lead to divergent solutio
 
 
 
-
+// tag::policy[]
 === Add a policy : `add_policy`
 Add a policy to a person in the address book.
 
@@ -387,6 +387,8 @@ Format: `remove_policy INDEX`
 Examples:
 
 * `remove_policy 1`
+
+// end::policy[]
 
 === Clearing all entries : `clear`
 

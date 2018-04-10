@@ -78,12 +78,21 @@ public class GradientDescent {
         this.model.preparePredictionData(matrix, targets, normalizationConstant);
 
 
+        if (this.hasNaN(this.weights)) {
+            resetWeights();
+        }
+
         //solve
         descent(matrix, targets);
 
         if (this.hasNaN(this.weights)) {
             return new CommandResult(String.format(MESSAGE_PREDICTION_DIVERGENT));
         }
+
+        Double confidence = this.validate(matrix, targets);
+        this.logger.info("Confidence Level: " + confidence);
+
+
         //update results
         try {
             this.model.updatePredictionResult(this.getWeights());
@@ -92,6 +101,27 @@ public class GradientDescent {
             return new CommandResult(String.format(MESSAGE_PREDICTION_FAIL));
         }
     }
+
+```
+###### \java\seedu\address\logic\GradientDescent.java
+``` java
+
+    /**
+     * Validate the training results
+     */
+    private Double validate(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> targets) {
+        Double average = 0.0;
+        for (int i = 0; i < matrix.size(); i++) {
+            //loop thorugh each row
+
+            Double outcome = this.predict(matrix.get(i));
+            Double percentError = Math.abs((outcome - targets.get(i)) / targets.get(i));
+            average += percentError;
+        }
+
+        return average / targets.size();
+    }
+
 ```
 ###### \java\seedu\address\logic\GradientDescent.java
 ``` java

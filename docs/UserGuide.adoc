@@ -475,7 +475,7 @@ Edits the miscellaneous information of a student in the addressbook. +
 Format: `editMisc INDEX [al/ALLERGIES] [nokn/NEXT_OF_KIN_NAME] [nokp/NEXT_OF_KIN_PHONE] [r/REMARKS]`
 
 ****
-* Edits the student's miscellaneous info at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, …​ 
+* Edits the student's miscellaneous info at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, …
 * At least one optional field must be provided.
 * Existing values will be updated to and overwritten by the input values.
 ****

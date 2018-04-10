@@ -46,10 +46,18 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.0'
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.7.4'
     compile group: 'com.google.guava', name: 'guava', version: '19.0'
-    compile group: 'com.google.apis', name: 'google-api-services-oauth2', version: 'v1-rev139-1.23.0'
-    compile group: 'com.google.http-client', name: 'google-http-client-jackson2', version: '1.23.0'
-    compile group: 'com.google.oauth-client', name: 'google-oauth-client-jetty', version: '1.23.0'
-    compile group: 'com.google.apis', name: 'google-api-services-drive', version: 'v2-rev305-1.23.0'
+    compile (group: 'com.google.apis', name: 'google-api-services-oauth2', version: 'v1-rev139-1.23.0') {
+        exclude group: 'com.google.guava'
+    }
+    compile (group: 'com.google.http-client', name: 'google-http-client-jackson2', version: '1.23.0') {
+        exclude group: 'com.google.guava'
+    }
+    compile (group: 'com.google.oauth-client', name: 'google-oauth-client-jetty', version: '1.23.0') {
+        exclude group: 'com.google.guava'
+    }
+    compile (group: 'com.google.apis', name: 'google-api-services-drive', version: 'v2-rev305-1.23.0') {
+        exclude group: 'com.google.guava'
+    }
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.testfx', name: 'testfx-core', version: testFxVersion

@@ -104,7 +104,7 @@ Examples:
 === Adding an appointment: `addappoinmtment` `Since v1.3`
 
 Adds an appointment to the address book +
-Format: `add [INDEX]... n/NAME d/DATETIME tz/TIMEZONE`
+Format: `addappointment [INDEX]... n/NAME d/DATETIME tz/TIMEZONE`
 Alias: `aa`
 
 [TIP]
@@ -112,8 +112,9 @@ Datetime should be in the format YYYY-MM-DD HH:MM. +
 Timezone should be in the format {Area}/{City}, e.g. Asia/Singapore
 
 Examples:
-* `add n/Meeting d/2018-06-13 13:25 tz/Asia/Singapore`
-* `add 1 2 n/Meeting d/2018-06-13 13:25 tz/America/New_York`
+
+* `addappointment n/Meeting d/2018-06-13 13:25 tz/Asia/Singapore`
+* `addappointment 1 2 n/Meeting d/2018-06-13 13:25 tz/America/New_York`
 
 === Listing all persons excluding archived : `list`
 
@@ -184,6 +185,24 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+=== Editing an appointment : `editappointment` `Since v1.5rc`
+
+Edits an existing appointment in the address book. +
+Format: `editappointment INDEX [PERSON INDEX]... [n/NAME] [d/DATETIME] [tz/TIMEZONE]`
+Alias: `ea`
+
+****
+* Edits the appointment at the specified `INDEX`. The index refers to the index number shown in the last appointment listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing persons, if a person is present, he will be removed. Otherwise, he will be added.
+****
+
+Examples:
+
+* `editappointment 1 2 3 n/Sell laptop` +
+Edits the name of the appointment to "Sell laptop". Adds/Removes persons 2 and 3.
+
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
@@ -191,6 +210,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 Alias: `f`
 
 ****
+* Persons that are archived will be returned.
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
@@ -225,6 +245,23 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+
+=== Deleting a person : `deleteappointment` `Since v1.4`
+
+Deletes the specified appointment from the address book. +
+Format: `deleteappointment INDEX`
+Alias: `da`
+
+****
+* Deletes the appointment at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `delete 2` +
+Deletes the 2nd appointment in the address book.
 
 === Deleting a tag : `deletetag`
 
@@ -370,12 +407,14 @@ e.g. `unlock 123456`
 e.g. `setPassword 123456 123`
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tz/TIMEZONE c/COMMENT [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 tz/SGT c/He can speak French t/friend t/colleague`
-* *Add Appointment* `add [INDEX]... n/NAME d/DATETIME tz/TIMEZONE` +
+* *Add Appointment* `addappointment [INDEX]... n/NAME d/DATETIME tz/TIMEZONE` +
 e.g. `add 1 2 n/Meeting d/2018-06-13 13:25 tz/America/New_York`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Delete appointment* : `deleteappointment INDEX` +
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [ti/TIMEZONE] [t/TAG]...` +
+* *Edit appointment* : `editappointment 1 2 3 n/Sell laptop` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Note* : `note INDEX`
 * *Archive* : `archive INDEX`

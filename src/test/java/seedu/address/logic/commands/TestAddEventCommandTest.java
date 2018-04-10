@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
-
+//@@author crizyli
 //import static org.junit.Assert.assertEquals;
 //import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -16,6 +16,9 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.PersonBuilder;
 
+/**
+ * Contains integration tests (interaction with the Model) for {@code TestAddEventCommand}.
+ */
 public class TestAddEventCommandTest {
     private final Person testPerson = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")

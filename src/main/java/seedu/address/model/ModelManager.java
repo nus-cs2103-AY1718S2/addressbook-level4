@@ -103,8 +103,8 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
         indicateNotificationAdded(e);
     }
-    //@@author
 
+    //@@author crizyli
     @Override
     public void setPassword(String password) {
         addressBook.setPassword(password);
@@ -114,6 +114,7 @@ public class ModelManager extends ComponentManager implements Model {
     public String getPassword() {
         return addressBook.getPassword();
     }
+    //@@author
 
     public ObservableList<Photo> getPhotoList() {
         return addressBook.getPhotoList();

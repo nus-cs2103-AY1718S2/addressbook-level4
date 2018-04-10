@@ -1,5 +1,5 @@
 package seedu.address.model.listevent;
-
+//@@author crizyli
 import com.google.api.client.util.DateTime;
 
 /**
@@ -33,7 +33,7 @@ public class ListEvent {
         this.location = location;
     }
 
-    public DateTime getEndTime() {
+    public DateTime getStartTime() {
         return startTime;
     }
 

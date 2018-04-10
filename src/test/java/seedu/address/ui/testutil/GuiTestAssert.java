@@ -33,7 +33,7 @@ public class GuiTestAssert {
     /**
      * Asserts that {@code actualEventCard} displays the same values as {@code expectedEventCard}.
      */
-    public static void assertCardEqualsEvent(EventCardHandle expectedEventCard, EventCardHandle actualEventCard) {
+    public static void assertEventCardEquals(EventCardHandle expectedEventCard, EventCardHandle actualEventCard) {
         assertEquals(expectedEventCard.getId(), actualEventCard.getId());
         assertEquals(expectedEventCard.getName(), actualEventCard.getName());
         assertEquals(expectedEventCard.getStartDateTime(), actualEventCard.getStartDateTime());
@@ -60,7 +60,8 @@ public class GuiTestAssert {
     public static void assertCardDisplaysEvent(Activity expectedActivity, EventCardHandle actualEventCard) {
         Event expectedEvent = (Event) expectedActivity;
         assertEquals(expectedEvent.getName().fullName, actualEventCard.getName());
-        assertEquals(expectedEvent.getStartDateTime().toString(), actualEventCard.getStartDateTime());
+        assertEquals(expectedEvent.getStartDateTime().getLocalDateTime().toString(),
+                actualEventCard.getStartDateTime());
         assertEquals(expectedEvent.getEndDateTime().toString(), actualEventCard.getEndDateTime());
         assertEquals(expectedEvent.getLocation(), actualEventCard.getLocation());
         assertEquals(expectedEvent.getRemark().value, actualEventCard.getRemark());
@@ -79,6 +80,14 @@ public class GuiTestAssert {
     }
 
     /**
+     * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code activities} correctly and
+     * in the correct order.
+     */
+    public static void assertTaskListMatching(TaskListPanelHandle taskListPanelHandle, List<Activity> activities) {
+        assertTaskListMatching(taskListPanelHandle, activities.toArray(new Activity[0]));
+    }
+
+    /**
      * Asserts that the list in {@code eventListPanelHandle} displays the details of {@code events} correctly and
      * in the correct order.
      */
@@ -87,14 +96,6 @@ public class GuiTestAssert {
             Event event = (Event) activities[i];
             assertCardDisplaysEvent(event, eventListPanelHandle.getEventCardHandle(i));
         }
-    }
-
-    /**
-     * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code activities} correctly and
-     * in the correct order.
-     */
-    public static void assertTaskListMatching(TaskListPanelHandle taskListPanelHandle, List<Activity> activities) {
-        assertTaskListMatching(taskListPanelHandle, activities.toArray(new Activity[0]));
     }
 
     /**

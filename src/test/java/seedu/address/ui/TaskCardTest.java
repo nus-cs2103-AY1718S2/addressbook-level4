@@ -14,6 +14,8 @@ import seedu.address.testutil.TaskBuilder;
 //@@author jasmoon
 public class TaskCardTest extends GuiUnitTest {
 
+    /*
+    @Test
     public void display() {
         // no tags
         Activity activityWithNoTags = new TaskBuilder().withTags(new String[0]).build();
@@ -26,7 +28,7 @@ public class TaskCardTest extends GuiUnitTest {
         taskCard = new TaskCard(activityWithTags, 2);
         uiPartRule.setUiPart(taskCard);
         assertCardDisplay(taskCard, activityWithTags, 2);
-    }
+    }*/
 
     @Test
     public void equals() {

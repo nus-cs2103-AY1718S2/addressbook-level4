@@ -14,6 +14,8 @@ import seedu.address.testutil.EventBuilder;
 //@@author jasmoon
 public class EventCardTest extends GuiUnitTest {
 
+    /*
+    @Test
     public void display() {
         // no tags
         Activity activityWithNoTags = new EventBuilder().withTags(new String[0]).build();
@@ -26,7 +28,7 @@ public class EventCardTest extends GuiUnitTest {
         eventCard = new EventCard(activityWithTags, 2);
         uiPartRule.setUiPart(eventCard);
         assertCardDisplay(eventCard, activityWithTags, 2);
-    }
+    }*/
 
     @Test
     public void equals() {

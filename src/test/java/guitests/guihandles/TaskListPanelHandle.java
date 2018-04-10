@@ -9,6 +9,9 @@ import seedu.address.ui.TaskCard;
 
 
 //@@author jasmoon
+/**
+ * Provides a handle for {@code TaskListPanel}.
+ */
 public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
 
     public static final String TASK_LIST_VIEW_ID = "#taskListView";

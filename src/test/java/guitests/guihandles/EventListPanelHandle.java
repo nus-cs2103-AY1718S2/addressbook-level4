@@ -9,6 +9,10 @@ import seedu.address.model.activity.Event;
 import seedu.address.ui.EventCard;
 
 //@@author jasmoon
+
+/**
+ * Provides a handle for {@code EventListPanel}.
+ */
 public class EventListPanelHandle extends NodeHandle<ListView<EventCard>> {
 
     public static final String TASK_LIST_VIEW_ID = "#eventListView";

@@ -50,6 +50,9 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
             + PREFIX_OWEDUEDATE + " 5 May 2018 "
             + PREFIX_TAG + " owesMoney";
 
+    public static final String MESSAGE_INVALID_PREFIX = "You have entered a prefix applicable only to Customers" +
+            " (ty: c)";
+
     public static final String MESSAGE_SUCCESS = "New person added!\n%1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 

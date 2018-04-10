@@ -29,11 +29,14 @@ public class EmailCard extends UiPart<Region> {
     @FXML
     private Label preview;
 
+    private Message msg;
+
     public EmailCard(Message message, int index) {
         super(FXML);
         try {
             email.setText(message.getFrom()[0].toString());
             subject.setText(message.getSubject());
+            this.msg = message;
             //check if it is multipart
             if (message.getContent() instanceof String) {
                 preview.setText(((String) message.getContent()).substring(0, 20));
@@ -58,11 +61,11 @@ public class EmailCard extends UiPart<Region> {
     @FXML
     private void openEmail() throws IOException {
         try {
-            ComposeEmailWindow cew = new ComposeEmailWindow(this.email.getText());
+            OpenEmailWindow cew = new OpenEmailWindow(this.email.getText(),
+                    this.subject.getText(), this.msg);
         } catch (IOException e) {
             System.out.println("IOException");
         }
     }
-
 }
 

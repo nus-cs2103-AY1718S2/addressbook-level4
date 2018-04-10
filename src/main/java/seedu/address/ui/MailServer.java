@@ -67,7 +67,5 @@ public class MailServer {
         message.setText(msg);
         //send the message
         Transport.send(message);
-
-
     }
 }

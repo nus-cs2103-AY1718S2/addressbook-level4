@@ -28,7 +28,7 @@ Responsibilities: In charge of Model Component, Code Quality
 
 === Ang Jing Zhe
 image::AJZ1995.JPG[width="150", align="left"]
-{empty}[https://github.com/AJZ1995[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/AJZ1995[github]] [<<jingzhe#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI

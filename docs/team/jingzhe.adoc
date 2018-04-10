@@ -1,0 +1,54 @@
+= Ang Jing Zhe - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: ContactSails
+
+---
+
+== Overview
+
+ContactSails is built upon AddressBook - Level 4. It is a desktop application used for people in sales. The users will benefit from the application through the features in Contact Sails.
+ The user interacts with the application using Command Line Interface (CLI), and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: My major enhancement is the addition of a *person panel* in ContactSails.
+** What it does: It allows the user to see contacts' information in a neater and more detailed manner.
+** Justification: Sales people may want a better overview of their clients when making sales decisions. By introducing person panel in the application, this will aid the person in making better sales decisions by giving a better visual overview of the user through the size of the panel.
+** Highlights: This enhancement also show the groups and preferences the client have. A profile picture could have been added but because the implementation is too challenging, it may be a possible feature only in the future.
+
+* *Minor enhancement*: My minor enhacement is the addition of colours to groups and preferences.
+** Credits: The suggested enhancement in CS2103T appendix A aided me in this.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W13-B1/main/blob/master/collated/functional/AJZ1995.md[Functional code]] [https://github.com/CS2103JAN2018-W13-B1/main/blob/master/collated/test/AJZ1995.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** I have done my releases `v1.3` - `v1.5rc` on GitHub.
+** Enhancements to existing features:
+*** I have fixed a bug found by one of my team mate upon reviewing other bugs. (Pull request https://github.com/CS2103JAN2018-W13-B1/main/pull/185[#185])
+** Documentation:
+*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
+*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
+*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
+
+_{you can add/remove categories in the list above}_
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===

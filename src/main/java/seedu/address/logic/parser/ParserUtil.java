@@ -2,6 +2,9 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -164,13 +167,27 @@ public class ParserUtil {
      */
     public static LocalDateTime parseDateTime(String dateTime) throws IllegalValueException {
         requireNonNull(dateTime);
+
+        dateTime = dateTime.trim();
+
+        try {
+            String[] dateTimeArray = dateTime.split("\\s+");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            df.setLenient(false);
+            df.parse(dateTimeArray[0]);
+        } catch (ParseException e) {
+            throw new IllegalValueException("Please give a valid date based on the format!");
+        }
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime localDateTime = null;
         try {
             localDateTime = LocalDateTime.parse(dateTime, formatter);
         } catch (DateTimeParseException e) {
-            throw new IllegalValueException("Please follow the format of yyyy-MM-dd HH:mm");
+            throw new IllegalValueException("Please ensure all fields are valid "
+                    + "and follow the format of yyyy-MM-dd HH:mm!");
         }
+
         return localDateTime;
     }
 
@@ -186,7 +203,7 @@ public class ParserUtil {
     //@@author
     /**
      * Parses a {@code String email} into an {@code Email}.
-     * Leading and trailing whitesp                                                                aces will be trimmed.
+     * Leading and trailing whitespaces will be trimmed.
      *
      * @throws IllegalValueException if the given {@code email} is invalid.
      */

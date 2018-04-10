@@ -22,8 +22,12 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
+import seedu.address.model.petpatient.BloodType;
+import seedu.address.model.petpatient.Breed;
+import seedu.address.model.petpatient.Colour;
 import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
+import seedu.address.model.petpatient.Species;
 import seedu.address.model.tag.Tag;
 
 //@@Author wynonaK
@@ -117,12 +121,12 @@ public class FindCommandParser implements Parser<FindCommand> {
     }
 
     /**
-     * Gets the nric keywords from {@code argMultimapOwner}.
+     * Gets the nric keywords from {@code argMultimap}.
      * @throws ParseException if there is an illegal value found.
      */
-    private String[] getTagKeyword(ArgumentMultimap argMultimapOwner) throws ParseException {
+    private String[] getTagKeyword(ArgumentMultimap argMultimap) throws ParseException {
         try {
-            String tagWithoutPrefix = argMultimapOwner.getAllValues(PREFIX_TAG).get(0);
+            String tagWithoutPrefix = argMultimap.getAllValues(PREFIX_TAG).get(0);
             String[] tagKeywords = tagWithoutPrefix.trim().split("\\s+");
             for (String tagKeyword : tagKeywords) {
                 Tag tag = ParserUtil.parseTag(tagKeyword);
@@ -185,15 +189,71 @@ public class FindCommandParser implements Parser<FindCommand> {
     }
 
     /**
-     * Gets the keywords from {@code argMultimapPetPatient} with {@code prefix}.
+     * Gets the species keywords from {@code argMultimapPetPatient}
      * @throws ParseException if there is an illegal value found.
      */
-    private String[] getStringKeyword(ArgumentMultimap argMultimapPetPatient, Prefix prefix) throws ParseException {
-        String stringWithoutPrefix = argMultimapPetPatient.getAllValues(prefix).get(0);
-        if (stringWithoutPrefix.equals("")) {
-            throw new ParseException("Invalid keyword parameters!");
+    private String[] getSpeciesKeyword(ArgumentMultimap argMultimapPetPatient) throws ParseException {
+        try {
+            String speciesWithoutPrefix = argMultimapPetPatient.getAllValues(PREFIX_SPECIES).get(0);
+            String[] speciesKeywords = speciesWithoutPrefix.trim().split("\\s+");
+            for (String speciesKeyword : speciesKeywords) {
+                Species species = ParserUtil.parseSpecies(speciesKeyword);
+            }
+            return speciesKeywords;
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
         }
-        return stringWithoutPrefix.trim().split("\\s+");
+    }
+
+    /**
+     * Gets the breed keywords from {@code argMultimapPetPatient}.
+     * @throws ParseException if there is an illegal value found.
+     */
+    private String[] getBreedKeyword(ArgumentMultimap argMultimapPetPatient) throws ParseException {
+        try {
+            String breedWithoutPrefix = argMultimapPetPatient.getAllValues(PREFIX_BREED).get(0);
+            String[] breedKeywords = breedWithoutPrefix.trim().split("\\s+");
+            for (String breedKeyword : breedKeywords) {
+                Breed breed = ParserUtil.parseBreed(breedKeyword);
+            }
+            return breedKeywords;
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
+     * Gets the color keywords from {@code argMultimapPetPatient}.
+     * @throws ParseException if there is an illegal value found.
+     */
+    private String[] getColourKeyword(ArgumentMultimap argMultimapPetPatient) throws ParseException {
+        try {
+            String colourWithoutPrefix = argMultimapPetPatient.getAllValues(PREFIX_COLOUR).get(0);
+            String[] colourKeywords = colourWithoutPrefix.trim().split("\\s+");
+            for (String colourKeyword : colourKeywords) {
+                Colour colour = ParserUtil.parseColour(colourKeyword);
+            }
+            return colourKeywords;
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
+     * Gets the blood type keywords from {@code argMultimapPetPatient}.
+     * @throws ParseException if there is an illegal value found.
+     */
+    private String[] getBloodTypeKeyword(ArgumentMultimap argMultimapPetPatient) throws ParseException {
+        try {
+            String bloodTypeWithoutPrefix = argMultimapPetPatient.getAllValues(PREFIX_BLOODTYPE).get(0);
+            String[] bloodTypeKeywords = bloodTypeWithoutPrefix.trim().split("\\s+");
+            for (String bloodTypeKeyword : bloodTypeKeywords) {
+                BloodType bloodType = ParserUtil.parseBloodType(bloodTypeKeyword);
+            }
+            return bloodTypeKeywords;
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
     }
 
     /**
@@ -232,7 +292,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         if ((arePrefixesPresent(argMultimapPetPatient, PREFIX_SPECIES))) {
-            String[] stringKeywords = getStringKeyword(argMultimapPetPatient, PREFIX_SPECIES);
+            String[] stringKeywords = getSpeciesKeyword(argMultimapPetPatient);
             Predicate<PetPatient> stringPredicate =  petPatient -> Arrays.stream(stringKeywords)
                     .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getSpecies().species, keyword));
             if (finalPredicate == null) {
@@ -243,7 +303,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         if ((arePrefixesPresent(argMultimapPetPatient, PREFIX_BREED))) {
-            String[] stringKeywords = getStringKeyword(argMultimapPetPatient, PREFIX_BREED);
+            String[] stringKeywords = getBreedKeyword(argMultimapPetPatient);
             Predicate<PetPatient> stringPredicate =  petPatient -> Arrays.stream(stringKeywords)
                     .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getBreed().breed, keyword));
             if (finalPredicate == null) {
@@ -254,7 +314,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         if ((arePrefixesPresent(argMultimapPetPatient, PREFIX_COLOUR))) {
-            String[] stringKeywords = getStringKeyword(argMultimapPetPatient, PREFIX_COLOUR);
+            String[] stringKeywords = getColourKeyword(argMultimapPetPatient);
             Predicate<PetPatient> stringPredicate =  petPatient -> Arrays.stream(stringKeywords)
                     .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getColour().colour, keyword));
             if (finalPredicate == null) {
@@ -265,7 +325,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         if ((arePrefixesPresent(argMultimapPetPatient, PREFIX_BLOODTYPE))) {
-            String[] stringKeywords = getStringKeyword(argMultimapPetPatient, PREFIX_BLOODTYPE);
+            String[] stringKeywords = getBloodTypeKeyword(argMultimapPetPatient);
             Predicate<PetPatient> stringPredicate =  petPatient -> Arrays.stream(stringKeywords)
                     .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(
                             petPatient.getBloodType().bloodType, keyword));

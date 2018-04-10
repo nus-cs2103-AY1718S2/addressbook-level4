@@ -39,6 +39,9 @@ public interface Model {
     /** Deletes the given to-do. */
     void deleteToDo(ToDo target) throws ToDoNotFoundException;
 
+    /** Deletes the given group. */
+    void deleteGroup(Group target) throws GroupNotFoundException;
+
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
 

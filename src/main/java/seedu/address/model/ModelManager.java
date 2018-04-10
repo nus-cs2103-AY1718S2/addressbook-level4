@@ -106,6 +106,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void deleteGroup(Group target) throws GroupNotFoundException {
+        addressBook.removeGroup(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);

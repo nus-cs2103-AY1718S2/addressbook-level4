@@ -72,6 +72,7 @@ public class ParserUtil {
         return content.isPresent() ? Optional.of(parseContent(content.get())) : Optional.empty();
     }
 
+
     /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.

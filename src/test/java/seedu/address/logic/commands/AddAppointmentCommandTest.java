@@ -169,6 +169,12 @@ public class AddAppointmentCommandTest {
         }
 
         @Override
+        public void updateJob(Job target, Job editedJob)
+                throws DuplicateJobException {
+            Assert.fail("This method should not be called.");
+        }
+
+        @Override
         public void login(String username, String password) throws InvalidUsernameException,
                 InvalidPasswordException, MultipleLoginException {
             fail("This method should not be called.");

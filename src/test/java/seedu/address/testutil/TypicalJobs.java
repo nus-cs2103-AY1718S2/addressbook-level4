@@ -35,8 +35,8 @@ public class TypicalJobs {
             .withSkills("JavaScript", "Algorithms").build();
 
     // Manually added - Job's details found in {@code CommandTestUtil}
-    public static final Job INTERN = new JobBuilder().withPosition("Intern").withTeam("HR")
-            .withLocation("Singapore").withNumberOfPositions("1").withSkills("Word").build();
+    public static final Job INTERN = new JobBuilder().withPosition("Intern").withTeam("Human Resources")
+            .withLocation("Kuala Lampur, Malaysia").withNumberOfPositions("5").withSkills("Algorithms").build();
     public static final Job DATA_SCIENTIST = new JobBuilder().withPosition("Data Scientist").withTeam("Data Science")
             .withLocation("Singapore").withNumberOfPositions("1").withSkills("Analysis").build();
 

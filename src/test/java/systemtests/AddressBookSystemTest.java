@@ -32,6 +32,8 @@ import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.job.JobFindCommand;
+import seedu.address.logic.commands.job.JobListCommand;
 import seedu.address.logic.commands.person.FindCommand;
 import seedu.address.logic.commands.person.ListCommand;
 import seedu.address.logic.commands.person.SelectCommand;
@@ -164,6 +166,25 @@ public abstract class AddressBookSystemTest {
         assertTrue(getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size());
     }
 
+    // @@author kush1509
+
+    /**
+     * Displays all persons in the address book.
+     */
+    protected void showAllJobs() {
+        executeCommand(JobListCommand.COMMAND_WORD);
+        assertEquals(getModel().getAddressBook().getPersonList().size(), getModel().getFilteredPersonList().size());
+    }
+
+    /**
+     * Displays all jobs with any parts of their positions matching {@code keyword} (case-insensitive).
+     */
+    protected void showJobsWithPosition(String keyword) {
+        executeCommand(JobFindCommand.COMMAND_WORD + " p/" + keyword);
+        assertTrue(getModel().getFilteredJobList().size() < getModel().getAddressBook().getJobList().size());
+    }
+
+    // @@author
     /**
      * Selects the person at {@code index} of the displayed list.
      */

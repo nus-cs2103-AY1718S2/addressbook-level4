@@ -22,6 +22,7 @@ import seedu.address.logic.commands.appointment.WeekCommand;
 import seedu.address.logic.commands.appointment.YearCommand;
 import seedu.address.logic.commands.job.JobAddCommand;
 import seedu.address.logic.commands.job.JobDeleteCommand;
+import seedu.address.logic.commands.job.JobEditCommand;
 import seedu.address.logic.commands.job.JobMatchCommand;
 import seedu.address.logic.commands.person.AddCommand;
 import seedu.address.logic.commands.person.DeleteCommand;
@@ -54,6 +55,7 @@ public class CommandList {
         commandList.add(DeleteCommand.COMMAND_WORD);
         commandList.add(JobDeleteCommand.COMMAND_WORD);
         commandList.add(EditCommand.COMMAND_WORD);
+        commandList.add(JobEditCommand.COMMAND_WORD);
         commandList.add(EmailCommand.COMMAND_WORD);
         commandList.add(ExitCommand.COMMAND_WORD);
         commandList.add(FindCommand.COMMAND_WORD);
@@ -89,6 +91,9 @@ public class CommandList {
             return AddCommand.COMMAND_SYNTAX;
 
         case EditCommand.COMMAND_WORD:
+            return EditCommand.COMMAND_SYNTAX;
+
+        case JobEditCommand.COMMAND_WORD:
             return EditCommand.COMMAND_SYNTAX;
 
         case FindCommand.COMMAND_WORD:

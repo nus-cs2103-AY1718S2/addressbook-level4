@@ -13,10 +13,10 @@ import seedu.address.model.person.Person;
 /**
  * Tests that a {@code Person}'s {@code Skill} matches any of the tags given.
  */
-public class TagMatchesPredicate implements Predicate<Person> {
+public class SkillMatchesPredicate implements Predicate<Person> {
     private final Set<Skill> jobSkills;
 
-    public TagMatchesPredicate(Set<Skill> jobSkills) {
+    public SkillMatchesPredicate(Set<Skill> jobSkills) {
         this.jobSkills = jobSkills;
     }
 
@@ -31,7 +31,9 @@ public class TagMatchesPredicate implements Predicate<Person> {
     private String getTagsAsString(Set<Skill> skills) {
         Iterator tagsIterator = skills.iterator();
         StringBuilder sb = new StringBuilder();
-        sb.append(tagsIterator.next());
+        if (tagsIterator.hasNext()) {
+            sb.append(tagsIterator.next());
+        }
         while (tagsIterator.hasNext()) {
             sb.append(" " + tagsIterator.next());
         }
@@ -53,7 +55,7 @@ public class TagMatchesPredicate implements Predicate<Person> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof TagMatchesPredicate // instanceof handles nulls
-                && this.jobSkills.equals(((TagMatchesPredicate) other).jobSkills)); // state check
+                || (other instanceof SkillMatchesPredicate // instanceof handles nulls
+                && this.jobSkills.equals(((SkillMatchesPredicate) other).jobSkills)); // state check
     }
 }

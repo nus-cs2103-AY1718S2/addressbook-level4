@@ -145,6 +145,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateJob(Job target, Job editedJob)
+                throws DuplicateJobException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void deleteSkill(Skill t)
                 throws PersonNotFoundException, DuplicatePersonException, UniqueSkillList.DuplicateSkillException {
             fail("This method should not be called.");

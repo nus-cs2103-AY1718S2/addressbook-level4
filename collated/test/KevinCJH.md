@@ -1,53 +1,5 @@
 # KevinCJH
-
-###### \java\guitests\guihandles\EmailPanelHandle.java
-
-``` java
-/**
- * A handle to the {@code EmailPanel} in the GUI.
- */
-public class EmailPanelHandle extends NodeHandle<Node> {
-
-    private static final String RECIPIENT_ID = "#toTxtField";
-    private static final String BODY_ID = "#bodyTxtField";
-
-    private final TextField to;
-    private final HTMLEditor body;
-
-    public EmailPanelHandle(Node emailPanelNode) {
-        super(emailPanelNode);
-
-        this.to = getChildNode(RECIPIENT_ID);
-        this.body = getChildNode(BODY_ID);
-    }
-
-    public String getRecipient() {
-        return to.getText();
-    }
-
-    public String getBody() {
-        return body.getHtmlText().replaceAll("(?s)<[^>]*>(\\s*<[^>]*>)*", " ");
-    }
-
-}
-```
-
-###### \java\guitests\guihandles\PersonCardHandle.java
-
-``` java
-    public List<String> getSkillStyleClasses(String tag) {
-        return tagLabels
-                .stream()
-                .filter(label -> label.getText().equals(tag))
-                .map(Label::getStyleClass)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No such skill."));
-    }
-}
-```
-
-###### \java\seedu\address\logic\commands\EmailCommandTest.java
-
+###### /java/seedu/address/logic/commands/EmailCommandTest.java
 ``` java
 public class EmailCommandTest {
 
@@ -166,22 +118,7 @@ public class EmailCommandTest {
     }
 }
 ```
-
-###### \java\seedu\address\logic\GmailClientTest.java
-``` java
-public class GmailClientTest {
-
-    @Test
-    public void equals() {
-        GmailClient client1 = GmailClient.getInstance();
-        GmailClient client2 = GmailClient.getInstance();
-
-        assertTrue(client1.equals(client2));
-    }
-
-}
-```
-###### \java\seedu\address\logic\GoogleAuthenticationTest.java
+###### /java/seedu/address/logic/GoogleAuthenticationTest.java
 ``` java
 
 public class GoogleAuthenticationTest {
@@ -211,16 +148,21 @@ public class GoogleAuthenticationTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/GmailClientTest.java
 ``` java
+public class GmailClientTest {
+
     @Test
-    public void parseCommand_email() throws Exception {
-        EmailCommand command = (EmailCommand) parser.parseCommand(
-                EmailCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
-        assertEquals(new EmailCommand(INDEX_FIRST), command);
+    public void equals() {
+        GmailClient client1 = GmailClient.getInstance();
+        GmailClient client2 = GmailClient.getInstance();
+
+        assertTrue(client1.equals(client2));
     }
+
+}
 ```
-###### \java\seedu\address\logic\parser\EmailCommandParserTest.java
+###### /java/seedu/address/logic/parser/EmailCommandParserTest.java
 ``` java
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -244,7 +186,7 @@ public class EmailCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\FindCommandParserTest.java
+###### /java/seedu/address/logic/parser/FindCommandParserTest.java
 ``` java
     @Test
     public void parse_emptyArg_throwsParseException() {
@@ -285,8 +227,21 @@ public class EmailCommandParserTest {
 
 }
 ```
-###### \java\seedu\address\ui\EmailPanelTest.java
-
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_email() throws Exception {
+        EmailCommand command = (EmailCommand) parser.parseCommand(
+                EmailCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
+        assertEquals(new EmailCommand(INDEX_FIRST), command);
+    }
+```
+###### /java/seedu/address/ui/testutil/GuiTestAssert.java
+``` java
+        expectedCard.getSkills().forEach(tag ->
+            assertEquals(expectedCard.getSkillStyleClasses(tag), actualCard.getSkillStyleClasses(tag)));
+```
+###### /java/seedu/address/ui/EmailPanelTest.java
 ``` java
 public class EmailPanelTest extends GuiUnitTest {
 
@@ -315,10 +270,45 @@ public class EmailPanelTest extends GuiUnitTest {
     }
 }
 ```
-
-###### \java\seedu\address\ui\testutil\GuiTestAssert.java
+###### /java/guitests/guihandles/EmailPanelHandle.java
 ``` java
-        expectedCard.getSkills().forEach(tag ->
-            assertEquals(expectedCard.getSkillStyleClasses(tag), actualCard.getSkillStyleClasses(tag)));
-```
+/**
+ * A handle to the {@code EmailPanel} in the GUI.
+ */
+public class EmailPanelHandle extends NodeHandle<Node> {
 
+    private static final String RECIPIENT_ID = "#toTxtField";
+    private static final String BODY_ID = "#bodyTxtField";
+
+    private final TextField to;
+    private final HTMLEditor body;
+
+    public EmailPanelHandle(Node emailPanelNode) {
+        super(emailPanelNode);
+
+        this.to = getChildNode(RECIPIENT_ID);
+        this.body = getChildNode(BODY_ID);
+    }
+
+    public String getRecipient() {
+        return to.getText();
+    }
+
+    public String getBody() {
+        return body.getHtmlText().replaceAll("(?s)<[^>]*>(\\s*<[^>]*>)*", " ");
+    }
+
+}
+```
+###### /java/guitests/guihandles/PersonCardHandle.java
+``` java
+    public List<String> getSkillStyleClasses(String tag) {
+        return tagLabels
+                .stream()
+                .filter(label -> label.getText().equals(tag))
+                .map(Label::getStyleClass)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No such skill."));
+    }
+}
+```

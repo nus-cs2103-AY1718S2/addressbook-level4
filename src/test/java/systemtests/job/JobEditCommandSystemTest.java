@@ -1,4 +1,5 @@
-package systemtests;
+//@@author kush1509
+package systemtests.job;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -48,6 +49,7 @@ import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.skill.Skill;
 import seedu.address.testutil.JobBuilder;
 import seedu.address.testutil.JobUtil;
+import systemtests.AddressBookSystemTest;
 
 public class JobEditCommandSystemTest extends AddressBookSystemTest {
 

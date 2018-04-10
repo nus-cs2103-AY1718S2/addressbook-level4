@@ -155,6 +155,10 @@ public class MainWindow extends UiPart<Stage> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
+    void updateProgressIndicator() {
+        progressIndicator.setProgress(logic.getToDoListCompleteRatio());
+    }
+
     //@@author LeonidAgarth
     /**
      * Clears the old calendar and display an updated one

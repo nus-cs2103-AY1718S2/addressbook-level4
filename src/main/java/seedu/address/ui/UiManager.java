@@ -13,6 +13,7 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.events.ui.CalendarChangedEvent;
 import seedu.address.commons.events.ui.TimetableChangedEvent;
@@ -114,7 +115,12 @@ public class UiManager extends ComponentManager implements Ui {
     //==================== Event Handling Code ===============================================================
 
     @Subscribe
-    private void handleDataSavingExceptionEvent(DataSavingExceptionEvent event) {
+    public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
+        mainWindow.updateProgressIndicator();
+    }
+
+    @Subscribe
+    private void handleAddressBookChangedEvent(DataSavingExceptionEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showFileOperationAlertAndWait(FILE_OPS_ERROR_DIALOG_HEADER_MESSAGE, FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE,
                 event.exception);

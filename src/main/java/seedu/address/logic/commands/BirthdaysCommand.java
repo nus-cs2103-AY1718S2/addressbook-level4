@@ -32,6 +32,8 @@ public class BirthdaysCommand extends Command {
 
     public static final String SHOWING_BIRTHDAY_NOTIFICATION = "Displaying today's birthdays";
 
+    public static final String MESSAGE_NO_BIRTHDAY_TODAY = "No one is celebrating their birthdays today";
+
     private boolean isToday;
 
     public BirthdaysCommand(boolean todays) {
@@ -130,6 +132,10 @@ public class BirthdaysCommand extends Command {
                     && person.getBirthday().getMonth() == currentMonth) {
                 listOfPersonWithBirthdayToday.add(person);
             }
+        }
+
+        if (listOfPersonWithBirthdayToday.size() == 0) {
+            return MESSAGE_NO_BIRTHDAY_TODAY;
         }
 
         for (Person person: listOfPersonWithBirthdayToday) {

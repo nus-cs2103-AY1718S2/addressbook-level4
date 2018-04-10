@@ -63,6 +63,7 @@ is specified when adding a customer.
 //@@author
 
 //@@author jonleeyz
+// tag::dataencryption[]
 == Command Summary
 [NOTE]
 ====
@@ -134,7 +135,7 @@ is specified when adding a customer.
 |kbd:[Ctrl+Shift+A]
 |`assign RUNNER-INDEX c: CUSTOMER-INDEX [CUSTOMER-INDEX ...]`
 |===
-
+// end::dataencryption[]
 == Feature details
 
 === Showing command history : `history`
@@ -413,9 +414,7 @@ _Assigns customer at `INDEX2` to Runner at `INDEX1` based on the last shown list
 //@@author jonleeyz
 == Up and coming features [coming in v2.0]
 
-// tag::dataencryption[]
 * Adding multiple persons from an input file
-// end::dataencryption[]
 * Editing `Customer` and `Runner` specific fields.
 * Searching `Customer` and `Runner` specific fields.
 * Adding visitation history to `Customers`

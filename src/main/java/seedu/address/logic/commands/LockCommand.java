@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
-
+//@@author crizyli
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.HideDetailPanelEvent;
 import seedu.address.logic.LogicManager;
@@ -26,5 +26,11 @@ public class LockCommand extends Command {
         LogicManager.lock();
 
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof LockCommand);
     }
 }

@@ -67,10 +67,8 @@ public class ImageDownloader {
             File file = prepareImageFile(filePath);
             if (file != null) {
                 writeDataToFile(imageData, file);
-                return filePath;
-            } else {
-                return null;
             }
+            return filePath;
         } catch (IOException ioe) {
             throw new AssertionError(
                     "Something wrong happened when the app was trying to "

@@ -3,7 +3,6 @@ package seedu.recipe.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -12,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.CRC32;
 
+import org.junit.After;
 import org.junit.Test;
 
 import seedu.recipe.model.recipe.Image;
@@ -21,6 +21,9 @@ public class ImageDownloaderTest {
 
     private static final String INVALID_IMAGE_URL = "http://google.com";
     private static final String VALID_IMAGE_URL = "https://i.imgur.com/FhRsgCK.jpg";
+    private static final String VALID_IMAGE_MD5 = "2A78C63135CCB8BCECEF189FE0CD834C";
+    private static final String VALID_IMAGE_PATH =
+            Image.IMAGE_STORAGE_FOLDER + VALID_IMAGE_MD5 + "." + ImageDownloader.DOWNLOADED_IMAGE_FORMAT;
     private static final long VALID_IMAGE_CRC = 2184062566L;
 
     @Test
@@ -51,11 +54,15 @@ public class ImageDownloaderTest {
         File file = new File(fileName);
         assertTrue(file.exists());
         assertImageCrc(file, VALID_IMAGE_CRC);
+        assertEquals(VALID_IMAGE_PATH, fileName);
 
-        // Re-download will return null
-        assertNull(ImageDownloader.downloadImage(VALID_IMAGE_URL));
+        // Re-download will still return file name
+        assertEquals(VALID_IMAGE_PATH, ImageDownloader.downloadImage(VALID_IMAGE_URL));
+    }
 
-        // Clean up
+    @After
+    public void cleanUp() {
+        File file = new File(VALID_IMAGE_PATH);
         file.delete();
     }
 

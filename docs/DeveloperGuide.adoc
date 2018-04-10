@@ -796,6 +796,7 @@ This section describes various design considerations related to the implementati
 
 {empty} +
 
+// tag::storage[]
 === Storage for Task and Event
 
 This section describes the implementation and design considerations for the storage of Task and Event.
@@ -824,6 +825,7 @@ specialized. The inconvenience of creating 2 separate lists will be counterbalan
 the long run.
 {empty} +
 {empty} +
+// end::storage[]
 
 === Logging
 

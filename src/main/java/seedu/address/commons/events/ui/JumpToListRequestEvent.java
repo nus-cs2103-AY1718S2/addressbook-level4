@@ -9,9 +9,11 @@ import seedu.address.commons.events.BaseEvent;
 public class JumpToListRequestEvent extends BaseEvent {
 
     public final int targetIndex;
+    public final int oddEvenIndex;
 
-    public JumpToListRequestEvent(Index targetIndex) {
+    public JumpToListRequestEvent(Index targetIndex, Index oddEvenIndex) {
         this.targetIndex = targetIndex.getZeroBased();
+        this.oddEvenIndex = oddEvenIndex.getZeroBased();
     }
 
     @Override

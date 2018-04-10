@@ -67,7 +67,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedStudent);
 
-        /* Case: undo editing the last student in the list -> last student restored */
+        /* Case: undo editing the last student in the list -> last student restored. */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);

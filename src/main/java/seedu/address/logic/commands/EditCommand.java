@@ -20,7 +20,7 @@ import seedu.address.model.book.Rating;
 import seedu.address.model.book.Status;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
-
+//@@author 592363789
 /**
  * Edits the status, priority, and rating of an existing book.
  */
@@ -97,7 +97,7 @@ public class EditCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
         }
     }
-
+    //@@author
     /**
      * Creates and returns a {@code Book} with the details of {@code bookToEdit}
      * edited with {@code editDescriptor}.
@@ -133,7 +133,7 @@ public class EditCommand extends UndoableCommand {
                 && editDescriptor.equals(e.editDescriptor)
                 && Objects.equals(bookToEdit, e.bookToEdit);
     }
-
+    //@@author 592363789
     /**
      * Stores the details to edit the book with. Each non-empty field value will replace the
      * corresponding field value of the book.

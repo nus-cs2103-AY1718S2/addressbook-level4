@@ -24,6 +24,9 @@ import seedu.address.model.UserPrefs;
 //@@author karenfrilya97
 public class ImportCommandTest {
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/ImportCommandTest/");
     private static final String ASSIGNMENT3_DEMO1_FILE_PATH = TEST_DATA_FOLDER + "validImportFile.xml";
     private static final String MISSING_FILE_PATH = TEST_DATA_FOLDER + "missing.xml";
@@ -31,9 +34,6 @@ public class ImportCommandTest {
     private static final String DUPLICATE_ACTIVITY_FILE_PATH = TEST_DATA_FOLDER + "duplicateActivity.xml";
 
     private Model validModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void constructor_nullFilePath_throwsNullPointerException() {
@@ -65,8 +65,8 @@ public class ImportCommandTest {
     @Test
     public void execute_illegalValuesInFile_throwsCommandException() throws CommandException {
         thrown.expect(CommandException.class);
-        thrown.expectMessage(String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, "javax.xml.bind.UnmarshalException\n" +
-                " - with linked exception"));
+        thrown.expectMessage(String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, "javax.xml.bind.UnmarshalException\n"
+                + " - with linked exception"));
         ImportCommand importCommand = getImportCommandForGivenFilePath(ILLEGAL_VALUES_FILE_PATH, validModel);
         importCommand.executeUndoableCommand();
     }

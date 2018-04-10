@@ -33,7 +33,7 @@ public class ShowDueCommandTest {
     public void execute_correctMessage_success() {
         ShowDueCommand showDueCommand = prepareCommand(todaysDate);
         String expectedMessage = String.format(ShowDueCommand.MESSAGE_SUCCESS,
-            todaysDate.toLocalDate().toString());
+            todaysDate.toLocalDate().toString(), "");
         assertCommandSuccess(showDueCommand, model, expectedMessage, model);
     }
 

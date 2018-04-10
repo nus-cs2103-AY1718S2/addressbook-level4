@@ -97,6 +97,19 @@ public class Timetable {
         return data.getTimeTable();
     }
 
+    /**
+     * Returns the unified timetable
+     * @return Timetable as an Array
+     */
+    public static ArrayList<ArrayList<ArrayList<String>>> unionTimetable(ArrayList<Timetable> timetables) {
+        ArrayList<TimetableData> t = new ArrayList<TimetableData>();
+
+        for (Timetable timetable : timetables) {
+            t.add(timetable.data);
+        }
+        return TimetableData.unionTimeTable(t);
+    }
+
     @Override
     public String toString() {
         return value;

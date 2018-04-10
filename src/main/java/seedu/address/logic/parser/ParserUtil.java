@@ -204,6 +204,7 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
     }
 
+    //@@author Robert-Peng
     /**
      * Parses a {@code String nric} into a {@code NRIC}.
      * Leading and trailing whitespaces will be trimmed.
@@ -232,6 +233,7 @@ public class ParserUtil {
         return nric.isPresent() ? Optional.of(parseNric(nric.get())) : Optional.empty();
     }
 
+    //@@author
     /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.

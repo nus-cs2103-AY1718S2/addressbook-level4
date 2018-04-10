@@ -17,7 +17,7 @@ public class ImportCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "import";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Imports an address book "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Imports a StardyTogether addressbook "
             + "from filepath to the existing address book. "
             + "Parameters: FILEPATH PASSWORD\n"
             + "Example: " + COMMAND_WORD + " "
@@ -25,11 +25,11 @@ public class ImportCommand extends UndoableCommand {
             + "testpassword";
 
     public static final String MESSAGE_SUCCESS = "Persons, tags, and aliases from "
-            + "Addressbook file successfully imported.";
-    public static final String MESSAGE_FILE_NOT_FOUND = "Addressbook file is not found.";
-    public static final String MESSAGE_DATA_CONVERSION_ERROR = "Addressbook file found is not in correct "
+            + "StardyTogether file successfully imported.";
+    public static final String MESSAGE_FILE_NOT_FOUND = "StardyTogether file is not found.";
+    public static final String MESSAGE_DATA_CONVERSION_ERROR = "StardyTogether file found is not in correct "
             + "format or wrong password.";
-    public static final String MESSAGE_PASSWORD_WRONG = "Password wrong for Addressbook file.";
+    public static final String MESSAGE_PASSWORD_WRONG = "Password wrong for StardyTogether file.";
 
     private final String filepath;
     private final byte[] password;

@@ -1,6 +1,7 @@
 //@@author jas5469
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -17,7 +18,8 @@ public class ListGroupMembersCommandParserTest {
 
     @Test
     public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "  ", String.format(Information.MESSAGE_INFORMATION_CONSTRAINTS));
+        assertParseFailure(parser, "", String.format( String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ListGroupMembersCommand.MESSAGE_USAGE));
     }
 
     @Test

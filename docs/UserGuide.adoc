@@ -15,6 +15,7 @@ endif::[]
 
 By: `Team W15-B2`      Since: `March 2018`      Licence: `MIT`
 
+// tag::introduction[]
 == Introduction
 
 Integrated Medical DataBase (IMDB) is an application for the management of health records digitally.
@@ -23,7 +24,9 @@ while still having the benefits of a Graphical User Interface (GUI).
 This makes it perfect for doctors or staff who can type faster than they can navigate with a mouse.
 If your clinic has medical staff who can type fast, IMDB can get your patient management tasks done faster than traditional pen and paper or even normal GUI apps.
 Head to <<Quick Start>> to get started.
+// end::undoredo[]
 
+// tag::quickstart[]
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -51,6 +54,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
+// end::quickstart[]
+
 
 [[Features]]
 == Features
@@ -185,6 +190,7 @@ There will be an administrator role which can add a new username and password to
 
 The commands listed in this section are commands for managing a patient's details and records.
 
+// tag::add[]
 ==== Adding a patient: `add` or `a`
 
 Adds a patient to the IMDB +
@@ -198,6 +204,7 @@ Examples:
 
 * `add n/John Doe ic/S1234567A p/98765432 e/johnd@example.com a/John street, block 123, #01-01, dob/01/01/1991 b/A-`
 * `a n/Betsy Crowe ic/NRIC c/peanuts e/betsycrowe@example.com a/Newgate Prison p/1234567 dob/12/12/1992 b/B+ c/aspirin`
+// end::add[]
 
 ==== Deleting a patient : `delete` or `d` or `rm`
 
@@ -219,6 +226,7 @@ Deletes the 2nd patient in the IMDB.
 `d 1` +
 Deletes the 1st patient in the results of the `find` command.
 
+// tag::edit[]
 ==== Editing a patient : `edit` or `e`
 
 Edits an existing patient in the IMDB. +
@@ -239,6 +247,7 @@ Examples:
 Edits the phone number and email address of the 1st patient to be `91234567` and `johndoe@example.com` respectively.
 * `e 2 n/Betsy Crower c/` +
 Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing conditions.
+// end::edit[]
 
 // tag::remark[]
 ==== Editing remarks for a patient : `remark` or `rk` [since v1.2]
@@ -262,6 +271,7 @@ Edits the remark for the first patient to Likes to drink coffee.
 Removes the remark for the first patient.
 // end::remark[]
 
+// tag::addc[]
 ==== Adding a condition to an existing patient: `addc` [since v1.3]
 
 Adds a medical condition to an existing patient.
@@ -274,7 +284,9 @@ Examples:
 
 * `ac 2 c/asthma` +
 `asthma` will be added to the list of conditions that the patient at index `2` has.
+// end::addc[]
 
+// tag::delc[]
 ==== Removing the condition of an existing patient: `delc` [since v1.4]
 
 Removes a medical condition to an existing patient.
@@ -287,6 +299,7 @@ Examples:
 
 * `dc 2 c/asthma` +
 `asthma` will be removed from the list of conditions that the patient at index `2` has.
+// end::delc[]
 
 ==== Listing all patients : `list` or `ls`
 
@@ -313,6 +326,7 @@ Returns `john` and `John Doe`
 * `f Betsy Tim John` +
 Returns any patient having names `Betsy`, `Tim`, or `John`
 
+// tag::select[]
 ==== Selecting a patient : `select` or `s`
 
 Selects the patient identified by the index number used in the last patient listing. +
@@ -332,6 +346,7 @@ Selects the 2nd patient in the IMDB.
 * `find Betsy` +
 `s 1` +
 Selects the 1st patient in the results of the `find` command.
+// end::select[]
 
 // tag::record[]
 ==== Viewing and editing the medical records for a patient : `record` [since in v1.4]

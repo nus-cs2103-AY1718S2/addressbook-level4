@@ -28,7 +28,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_STUDENTS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalStudents.AMY;
 import static seedu.address.testutil.TypicalStudents.BOB;
-import static seedu.address.testutil.TypicalStudents.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalStudents.KEYWORD_MATCHING_MEIER;;
 
 import org.junit.Test;
 
@@ -122,7 +122,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
          * browser url changes
          */
         showAllStudents();
-        index = INDEX_FIRST_STUDENT;
+        index = INDEX_FIRST;
         //selectStudent(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;

@@ -138,9 +138,6 @@ public class ParserUtil {
     public static Title parseTitle(String title) throws IllegalValueException {
         requireNonNull(title);
         String trimmedTitle = title.trim();
-        if (!Title.isValidTitle(trimmedTitle)) {
-            throw new IllegalValueException(Title.MESSAGE_TITLE_CONSTRAINTS);
-        }
         return new Title(trimmedTitle);
     }
 
@@ -210,9 +207,6 @@ public class ParserUtil {
     public static Milestone parseMilestone(String milestone) throws IllegalValueException {
         requireNonNull(milestone);
         String trimmedMilestone = milestone.trim();
-        if (!Milestone.isValidMilestone(trimmedMilestone)) {
-            throw new IllegalValueException(Milestone.MESSAGE_MILESTONE_CONSTRAINTS);
-        }
         return new Milestone(trimmedMilestone);
     }
 

@@ -1,6 +1,13 @@
 package seedu.progresschecker.model.issues;
 
 import java.util.HashMap;
+import java.util.List;
+
+import org.kohsuke.github.GHIssueState;
+import org.kohsuke.github.GHMilestone;
+import org.kohsuke.github.GHRepository;
+
+import seedu.progresschecker.logic.commands.exceptions.CommandException;
 
 //@@author adityaa1998
 /**
@@ -8,20 +15,14 @@ import java.util.HashMap;
  */
 public final class MilestoneMap {
 
-    private static HashMap<Milestone, Integer> milestoneMap;
+    private static HashMap<String, GHMilestone> milestoneMap;
 
-    /* Milestone Mappings */
-    private static final Milestone MILESTONE_ONE = new Milestone("v1.1");
-    private static final Milestone MILESTONE_TWO = new Milestone("v1.2");
-    private static final Milestone MILESTONE_THREE = new Milestone("v1.3");
-    private static final Milestone MILESTONE_FOUR = new Milestone("v1.4");
-    private static final Milestone MILESTONE_FIVE_RC = new Milestone("v1.5rc");
-    private static final Milestone MILESTONE_FIVE = new Milestone("v1.5");
+    private GHRepository repository;
 
     /**
      * Returns a hashmap of milestones
      */
-    public static HashMap<Milestone, Integer> getMilestoneMap() {
+    public HashMap<String, GHMilestone> getMilestoneMap() throws CommandException {
         milestoneMap = new HashMap<>();
         createMilestoneHashMap();
         return milestoneMap;
@@ -30,14 +31,14 @@ public final class MilestoneMap {
     /**
      * creates a map with the milestone values
      */
-    private static void createMilestoneHashMap() {
-        //Adding values to the map
-        milestoneMap.put(MILESTONE_ONE, 1);
-        milestoneMap.put(MILESTONE_TWO, 2);
-        milestoneMap.put(MILESTONE_THREE, 3);
-        milestoneMap.put(MILESTONE_FOUR, 4);
-        milestoneMap.put(MILESTONE_FIVE_RC, 5);
-        milestoneMap.put(MILESTONE_FIVE, 6);
+    private void createMilestoneHashMap() {
+        List<GHMilestone> milestones = repository.listMilestones(GHIssueState.ALL).asList();
+        for (int i = 0; i < milestones.size(); i++) {
+            milestoneMap.put(milestones.get(i).getTitle(), milestones.get(i));
+        }
     }
 
+    public void setRepository(GHRepository repo) {
+        repository = repo;
+    }
 }

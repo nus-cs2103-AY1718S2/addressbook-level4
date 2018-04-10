@@ -57,12 +57,90 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
-
-=== Viewing help : `help`
+=== Basic Commands
+==== Viewing help : `help`
 
 Format: `help`
 
-=== Adding a student: `add`
+==== Listing entered commands : `history`
+
+Lists all the commands that you have entered in reverse chronological order. +
+Format: `history`
+
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
+
+// tag::undoredo[]
+==== Undoing previous command : `undo`
+
+Restores the address book to the state before the previous _undoable_ command was executed. +
+Format: `undo`
+
+[NOTE]
+====
+* Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+* The `undo` command currently does not supports reversing dashboard commands (`addMS`, `addTask`, `deleteMS`, `deleteTask` and `checkTask`)
+====
+
+Examples:
+
+* `delete 1` +
+`list` +
+`undo` (reverses the `delete 1` command) +
+
+* `select 1` +
+`list` +
+`undo` +
+The `undo` command fails as there are no undoable commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+
+==== Redoing the previously undone command : `redo`
+
+Reverses the most recent `undo` command. +
+Format: `redo`
+
+Examples:
+
+* `delete 1` +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+
+* `delete 1` +
+`redo` +
+The `redo` command fails as there are no `undo` commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+`redo` (reapplies the `clear` command) +
+// end::undoredo[]
+
+==== Exiting the program : `exit`
+
+Exits the program. +
+Format: `exit`
+
+==== Saving the data
+
+Address book data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
+
+// tag::dataencryption[]
+==== Encrypting data files `[coming in v2.0]`
+
+_{explain how the user can enable/disable data encryption}_
+// end::dataencryption[]
+
+=== AddressBook
+==== Adding a student: `add`
 
 Adds a student to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pl/PROGRAMMING_LANGUAGE [t/TAG]...`
@@ -75,7 +153,7 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pl/Java`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 pl/C t/criminal t/NoLife`
 
-=== Listing all students : `list`
+==== Listing all students : `list`
 
 Shows a list of all students in the address book. +
 Format: `list [-f]`
@@ -90,7 +168,7 @@ List only all student that you added to favourites
 * `list` +
 List all students
 
-=== Editing a student : `edit`
+==== Editing a student : `edit`
 
 Edits an existing student in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pl/PROGRAMMING_LANGUAGE] [t/TAG]...`
@@ -115,7 +193,7 @@ Edits the name of the 2nd student to be `Betsy Crower` and clears all existing t
 
 
 
-=== Locating students by name: `find`
+==== Locating students by name: `find`
 
 Finds students whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -135,7 +213,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any student having names `Betsy`, `Tim`, or `John`
 
-=== Locating students by tags: `findTag`
+==== Locating students by tags: `findTag`
 
 Finds students whose labels contain any of the given keywords. +
 Format: `findTag KEYWORD [MORE_KEYWORDS]`
@@ -158,7 +236,7 @@ Returns `John Doe`
 Returns any student having tags `friends`, `owesMoney`, i.e. `John Doe` and `Betsy`
 
 // tag::favUnfav[]
-=== Adding a student to favourites : `fav`
+==== Adding a student to favourites : `fav`
 
 Adds an existing student in the address book to your favourites. +
 Format: `fav INDEX`
@@ -177,7 +255,7 @@ Adds the 2nd student in the address book to favourites.
 `fav 1` +
 Adds the 1st student in the results of the `find` command to favourites
 
-=== Remove a student from favourites : `unfav`
+==== Remove a student from favourites : `unfav`
 
 Removes an existing student in the address book from your favourites. +
 Format: `unfav INDEX`
@@ -197,149 +275,13 @@ Removes the 2nd student in the address book from favourites.
 Removes the 1st student in the results of the `find` command from favourites
 // end::favUnfav[]
 
-// tag::dashboard[]
-=== Show the dashboard of a student: `showDB`
+==== Clearing all entries : `clear`
 
-Shows the dashboard of an existing student in the address book. +
-Format: `showDB INDEX`
-
-****
-* Shows the dashboard of the student at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-[TIP]
-A dashboard provides an at-a-glance view of your student's progress. Each dashboard contains a list of milestones and tasks that you can set for your student.
-
-Examples:
-
-* `list` +
-`showDB 2` +
-Shows the dashboard of the 2nd student in the address book.
-* `list -f` +
-`showDB 1` +
-Shows the dashboard of the 1st student the favourites list.
-
-=== Add a milestone to a student's dashboard: `addMS`
-
-Adds a milestone to the dashboard of an existing student in the address book. +
-Format: `addMS i/STUDENT_INDEX d/MILESTONE_DUE_DATE o/DESCRIPTION_OF_MILESTONE`
-
-****
-* Adds a milestone to the dashboard of a student at the specified `STUDENT_INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-* The milestone due date must be in this format: *DD/MM/YYYY HH:MM* where HH:MM is in 24-hour time notation
-****
-
-[TIP]
-A milestone signifies a *major step in the learning progress* of your student. Hence, you may want to create the milestones carefully such that completing every milestone signifies the completion of your tutoring objective with your student.
-
-Examples:
-
-* `list` +
-`addMS i/1 d/18/08/2018 23:59 o/Learn Arrays` +
-Adds a milestone to the dashboard of the 1st student in the address book. The milestone is due on 18/08/2018 23:59 and the objective is "Learn Arrays".
-* `find Betsey` +
-`addMS i/2 d/03/04/2019 10:30 o/Learn Recursion` +
-Adds a milestone to the dashboard of the 2nd person in the results of the `find` command. The milestone is due on 03/04/2019 10:30 and the objective is "Learn Recursion".
-
-=== Delete a milestone from a student's dashboard: `deleteMS`
-
-Deletes a milestone from the dashboard of an existing student in the address book. +
-Format: `deleteMS i/STUDENT_INDEX m/MILESTONE_INDEX`
-
-****
-* Deletes the milestone at the specified `MILESTONE_INDEX`
-* The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
-* Both indexes refer to the index number shown in the most recent listing.
-* Both indexes *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`deleteMS i/1 m/2` +
-Deletes the 2nd milestone from the dashboard of the 1st student in the address book.
-* `find Betsey` +
-`deleteMS i/3 m/4` +
-Deletes the 4th milestone from the dashboard of the 3rd student in the results of the `find` command.
-
-=== Add a task to a milestone: `addTask`
-
-Adds a task to an existing milestone in a dashboard. +
-Format: `addTask i/STUDENT_INDEX m/MILESTONE_INDEX n/NAME_OF_TASK o/DESCRIPTION_OF_TASK`
-
-****
-* Adds a task to the milestone at the specified `MILESTONE_INDEX`
-* The milestone is in the dashboard of the student at the specified `STUDENT_INDEX`
-* Both indexes refer to the index number shown in the most recent listing.
-* Both indexes *must be a positive integer* 1, 2, 3, ...
-****
-
-[TIP]
-A task signifies a *piece of work to be done to meet the milestone's objective*. Hence, a milestone's objective should be met when all its tasks are completed.
-
-Examples:
-
-* `list` +
-`addTask i/1 m/3 n/Learn Array Syntax o/Student to refer to the textbook` +
-Adds a task to the 3rd milestone in the dashboard of the 1st student in the address book. The name of the task is "Learn Array Syntax" and the description is "Student to refer to the textbook".
-* `find Betsey` +
-`addTask i/2 m/1 n/Practice Recursion Exercises o/Refer to problem set` +
-Adds a task to the 1st milestone in the dashboard of the 2nd student in the results of the `find` command. The name of the task is "Practice Recursion Exercises" and the description is "Refer to problem set".
-
-=== Delete a task from a milestone: `deleteTask`
-
-Deletes a task from an existing milestone in a dashboard. +
-Format: `deleteTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX`
-
-****
-* Deletes the task at the specified `TASK_INDEX`
-* The task is in the milestone at the specified `MILESTONE_INDEX`
-* The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
-* All indexes refer to the index number shown in the most recent listing.
-* Both indexes *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`deleteTask i/1 m/2 tk/3` +
-Deletes the 3rd task in the 2nd milestone. The milestone is in the dashboard of the 1st student in the address book.
-* `find Betsey` +
-`deleteTask i/2 m/3 tk/1` +
-Deletes the 1st task in the 3rd milestone. The milestone is in the dashboard of the 2nd student in the results of the `find` command.
+Clears all entries from the address book. +
+Format: `clear`
 
 
-=== Mark a task as completed: `checkTask`
-
-Marks a task in an existing milestone as completed. +
-Format: `checkTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX`
-
-****
-* Marks the task at the specified `TASK_INDEX` as completed
-* The task is in the milestone at the specified `MILESTONE_INDEX`
-* The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
-* All indexes refer to the index number shown in the most recent listing.
-* All indexes *must be a positive integer* 1, 2, 3, ...
-****
-
-[TIP]
-Marking a task as completed updates the progress of the milestone.
-
-Examples:
-
-* `list` +
-`checkTask i/1 m/2 tk/3` +
-Marks the 3rd task in the 2nd milestone as completed. The milestone is in the dashboard of the 1st student in the address book.
-* `find Betsey` +
-`checkTask i/2 m/3 tk/4` +
-Marks the 4th task in the 3rd milestone as completed. The milestone is in the dashboard of the 2nd student in the results of the `find` command.
-// end::dashboard[]
-
-=== Deleting a student : `delete`
+==== Deleting a student : `delete`
 
 Deletes the specified student from the address book. +
 Format: `delete INDEX`
@@ -359,7 +301,7 @@ Deletes the 2nd student in the address book.
 `delete 1` +
 Deletes the 1st student in the results of the `find` command.
 
-=== Selecting a student : `select`
+==== Selecting a student : `select`
 
 Selects the student identified by the index number used in the last student listing, and display their address on google maps. +
 Format: `select INDEX`
@@ -379,7 +321,9 @@ Selects the 2nd student in the address book.
 `select 1` +
 Selects the 1st student in the results of the `find` command.
 
-=== Viewing your schedule : `schedule`
+=== Schedule
+
+==== Viewing your schedule : `schedule`
 
 Shows your weekly schedule as a list of lessons. Displays lessons in chronological order. +
 Format: `schedule`
@@ -387,7 +331,7 @@ Format: `schedule`
 [NOTE]
 Currently displayed in the CommandResult Dialogue box. UI will be added in coming weeks.
 
-=== Adding a lesson to your schedule: `addLesson`
+==== Adding a lesson to your schedule: `addLesson`
 
 Adds a lesson to your schedule for a student identified by the index number in the last student listing. +
 Format: `addLesson INDEX [d/DAY] [st/START_TIME] [et/END_TIME]`
@@ -415,7 +359,7 @@ Adds a lesson for the 1st student of the `list` command. Lesson will be held on 
 `addLesson 1 d/tue st/12:00 et/13:30` +
 Adds a lesson for the 1st student of the `find Betsy` command. Lesson will be held on the day of `tue` and starting time will be `12:00` and ending time will be `13:30`.
 
-=== Deleting a lesson in your schedule: `deleteLesson`
+==== Deleting a lesson in your schedule: `deleteLesson`
 
 Deletes an existing lesson in your schedule identified by the index number in the last schedule listing. of day, i.e. `mon` for Monday, `fri` for Friday.
 
@@ -432,7 +376,186 @@ Examples:
 `deleteLesson 2` +
 Deletes the 2nd lesson listing in the schedule
 
-=== Full information page for each student : `moreInfo`
+==== Syncing with your Google Account
+
+Syncs your Schedule and AddressBook and uploads them to your Google Account.
+AddressBook is synced with Google Contacts: link:{contactsURL}[`contacts.google.com`].
+Schedule is synced with Google Calendar: link:{calendarURL}[`calendar.google.com`]
+
+===== Logging in to your Google Account
+
+Logs in to your Google Account. Authorizes your Google Account to communicate with our app and gives
+Codeducator permission to modify your data. +
+Opens a new window in your default browser to the Oauth2 screen +
+
+[NOTE]
+You must first be logged out to log in
+
+Format: `login`
+
+===== Logging out of your Google Account
+
+Logs out of your Google Account. Securely deletes the OAuth2 credential stored in the App. +
+[NOTE]
+You must first be logged in to log out
+
+Format: `logout`
+
+===== Syncing data with your Google Account
+
+Updates both Google Contacts and Google Calendar with Addressbook and Schedule. Deletes the old data that Codeducator
+has written before, and uploads the new updated copy, correct as of time of entering the `sync` command.+
+
+[NOTE]
+You must first be logged in to sync your data
+
+Format: `sync`
+
+=== Dashboard
+// tag::dashboard[]
+==== Show the dashboard of a student: `showDB`
+
+Shows the dashboard of an existing student in the address book. +
+Format: `showDB INDEX`
+
+****
+* Shows the dashboard of the student at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+[TIP]
+A dashboard provides an at-a-glance view of your student's progress. Each dashboard contains a list of milestones and tasks that you can set for your student.
+
+Examples:
+
+* `list` +
+`showDB 2` +
+Shows the dashboard of the 2nd student in the address book.
+* `list -f` +
+`showDB 1` +
+Shows the dashboard of the 1st student the favourites list.
+
+==== Add a milestone to a student's dashboard: `addMS`
+
+Adds a milestone to the dashboard of an existing student in the address book. +
+Format: `addMS i/STUDENT_INDEX d/MILESTONE_DUE_DATE o/DESCRIPTION_OF_MILESTONE`
+
+****
+* Adds a milestone to the dashboard of a student at the specified `STUDENT_INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The milestone due date must be in this format: *DD/MM/YYYY HH:MM* where HH:MM is in 24-hour time notation
+****
+
+[TIP]
+A milestone signifies a *major step in the learning progress* of your student. Hence, you may want to create the milestones carefully such that completing every milestone signifies the completion of your tutoring objective with your student.
+
+Examples:
+
+* `list` +
+`addMS i/1 d/18/08/2018 23:59 o/Learn Arrays` +
+Adds a milestone to the dashboard of the 1st student in the address book. The milestone is due on 18/08/2018 23:59 and the objective is "Learn Arrays".
+* `find Betsey` +
+`addMS i/2 d/03/04/2019 10:30 o/Learn Recursion` +
+Adds a milestone to the dashboard of the 2nd person in the results of the `find` command. The milestone is due on 03/04/2019 10:30 and the objective is "Learn Recursion".
+
+==== Delete a milestone from a student's dashboard: `deleteMS`
+
+Deletes a milestone from the dashboard of an existing student in the address book. +
+Format: `deleteMS i/STUDENT_INDEX m/MILESTONE_INDEX`
+
+****
+* Deletes the milestone at the specified `MILESTONE_INDEX`
+* The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
+* Both indexes refer to the index number shown in the most recent listing.
+* Both indexes *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`deleteMS i/1 m/2` +
+Deletes the 2nd milestone from the dashboard of the 1st student in the address book.
+* `find Betsey` +
+`deleteMS i/3 m/4` +
+Deletes the 4th milestone from the dashboard of the 3rd student in the results of the `find` command.
+
+==== Add a task to a milestone: `addTask`
+
+Adds a task to an existing milestone in a dashboard. +
+Format: `addTask i/STUDENT_INDEX m/MILESTONE_INDEX n/NAME_OF_TASK o/DESCRIPTION_OF_TASK`
+
+****
+* Adds a task to the milestone at the specified `MILESTONE_INDEX`
+* The milestone is in the dashboard of the student at the specified `STUDENT_INDEX`
+* Both indexes refer to the index number shown in the most recent listing.
+* Both indexes *must be a positive integer* 1, 2, 3, ...
+****
+
+[TIP]
+A task signifies a *piece of work to be done to meet the milestone's objective*. Hence, a milestone's objective should be met when all its tasks are completed.
+
+Examples:
+
+* `list` +
+`addTask i/1 m/3 n/Learn Array Syntax o/Student to refer to the textbook` +
+Adds a task to the 3rd milestone in the dashboard of the 1st student in the address book. The name of the task is "Learn Array Syntax" and the description is "Student to refer to the textbook".
+* `find Betsey` +
+`addTask i/2 m/1 n/Practice Recursion Exercises o/Refer to problem set` +
+Adds a task to the 1st milestone in the dashboard of the 2nd student in the results of the `find` command. The name of the task is "Practice Recursion Exercises" and the description is "Refer to problem set".
+
+==== Delete a task from a milestone: `deleteTask`
+
+Deletes a task from an existing milestone in a dashboard. +
+Format: `deleteTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX`
+
+****
+* Deletes the task at the specified `TASK_INDEX`
+* The task is in the milestone at the specified `MILESTONE_INDEX`
+* The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
+* All indexes refer to the index number shown in the most recent listing.
+* Both indexes *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`deleteTask i/1 m/2 tk/3` +
+Deletes the 3rd task in the 2nd milestone. The milestone is in the dashboard of the 1st student in the address book.
+* `find Betsey` +
+`deleteTask i/2 m/3 tk/1` +
+Deletes the 1st task in the 3rd milestone. The milestone is in the dashboard of the 2nd student in the results of the `find` command.
+
+
+==== Mark a task as completed: `checkTask`
+
+Marks a task in an existing milestone as completed. +
+Format: `checkTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX`
+
+****
+* Marks the task at the specified `TASK_INDEX` as completed
+* The task is in the milestone at the specified `MILESTONE_INDEX`
+* The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
+* All indexes refer to the index number shown in the most recent listing.
+* All indexes *must be a positive integer* 1, 2, 3, ...
+****
+
+[TIP]
+Marking a task as completed updates the progress of the milestone.
+
+Examples:
+
+* `list` +
+`checkTask i/1 m/2 tk/3` +
+Marks the 3rd task in the 2nd milestone as completed. The milestone is in the dashboard of the 1st student in the address book.
+* `find Betsey` +
+`checkTask i/2 m/3 tk/4` +
+Marks the 4th task in the 3rd milestone as completed. The milestone is in the dashboard of the 2nd student in the results of the `find` command.
+// end::dashboard[]
+
+=== Student Profile Picture
+==== Full information page for each student : `moreInfo`
 
 Displays the full information of a student on the browser panel. This includes his/her profile picture if one exists. +
 Format: `moreInfo INDEX`
@@ -447,7 +570,7 @@ Examples:
 * `moreInfo 2`
 Displays the full information of the 2nd student in the current listing.
 
-=== Edit the profile picture of a student : `editPicture`
+==== Edit the profile picture of a student : `editPicture`
 
 Edits the current profile picture of a student to a new picture from a specific file path indicated by the user. +
 Format: `editPicture i/STUDENT_INDEX pa/FILE_PATH_OF_PICTURE`
@@ -469,13 +592,13 @@ Examples:
 `editPicture i/1 pa/C:/Users/User/Desktop/test.jpg` +
 Changes the profile photo of the 1st student in the current listing to the image found at the specific file path.
 
-=== Edit the miscellaneous info of a student : `editMisc`
+==== Edit the miscellaneous info of a student : `editMisc`
 
 Edits the miscellaneous information of a student in the addressbook. +
 Format: `editMisc INDEX [al/ALLERGIES] [nokn/NEXT_OF_KIN_NAME] [nokp/NEXT_OF_KIN_PHONE] [r/REMARKS]`
 
 ****
-* Edits the student's miscellaneous info at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, …
+* Edits the student's miscellaneous info at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one optional field must be provided.
 * Existing values will be updated to and overwritten by the input values.
 ****
@@ -485,124 +608,9 @@ Examples:
 * `editMisc 1 al/Nuts r/Fast learner` +
 Edits the allergies information and remarks information of the 1st student to be `Nuts` and `Fast learner` respectively.
 
-=== Listing entered commands : `history`
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
-
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
-
-// tag::undoredo[]
-=== Undoing previous command : `undo`
-
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
-
-[NOTE]
-====
-* Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
-* The `undo` command currently does not supports reversing dashboard commands (`addMS`, `addTask`, `deleteMS`, `deleteTask` and `checkTask`)
-====
-
-Examples:
-
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-
-=== Redoing the previously undone command : `redo`
-
-Reverses the most recent `undo` command. +
-Format: `redo`
-
-Examples:
-
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
-
-=== Clearing all entries : `clear`
-
-Clears all entries from the address book. +
-Format: `clear`
-
-=== Syncing with your Google Account
-
-Syncs your Schedule and AddressBook and uploads them to your Google Account.
-AddressBook is synced with Google Contacts: link:{contactsURL}[`contacts.google.com`].
-Schedule is synced with Google Calendar: link:{calendarURL}[`calendar.google.com`]
-
-==== Logging in to your Google Account
-
-Logs in to your Google Account. Authorizes your Google Account to communicate with our app and gives
-Codeducator permission to modify your data. +
-Opens a new window in your default browser to the Oauth2 screen +
-
-[NOTE]
-You must first be logged out to log in
-
-Format: `login`
-
-==== Logging out of your Google Account
-
-Logs out of your Google Account. Securely deletes the OAuth2 credential stored in the App. +
-[NOTE]
-You must first be logged in to log out
-
-Format: `logout`
-
-==== Syncing data with your Google Account
-
-Updates both Google Contacts and Google Calendar with Addressbook and Schedule. Deletes the old data that Codeducator
-has written before, and uploads the new updated copy, correct as of time of entering the `sync` command.+
-
-[NOTE]
-You must first be logged in to sync your data
-
-Format: `sync`
-
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit`
-
-=== Saving the data
-
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
-
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
-
-=== Track student's homework in the dashboard `[coming in v2.0]`
+=== Coming in v2.0
+==== Track student's homework in the dashboard `[coming in v2.0]`
 
 == Interacting using free-form English
 

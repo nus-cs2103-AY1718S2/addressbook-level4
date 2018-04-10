@@ -338,3 +338,4 @@ e.g.`select 2`
 * *Export* : `export`
 * *Group* : `group`
 * *Password* : `password`
+e.g. `password set/123`

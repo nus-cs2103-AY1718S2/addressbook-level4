@@ -1,14 +1,17 @@
 package guitests.guihandles;
 
+import java.net.URL;
+
 import guitests.GuiRobot;
 import javafx.concurrent.Worker;
 import javafx.scene.Node;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
-import java.net.URL;
-
 //@@author jingyinno
+/**
+ * A handle for the {@code AlertDialog} of the UI.
+ */
 public class GoogleMapsDisplayHandle extends NodeHandle<Node> {
 
     public static final String MAP_ID = "#maps";

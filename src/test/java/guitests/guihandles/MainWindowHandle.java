@@ -57,6 +57,7 @@ public class MainWindowHandle extends StageHandle {
         return birthdayList;
     }
 
-    public GoogleMapsDisplayHandle getMapPanel() { return mapPanel; }
-
+    public GoogleMapsDisplayHandle getMapPanel() {
+        return mapPanel;
+    }
 }

@@ -1,11 +1,5 @@
 package systemtests;
 
-import org.junit.Test;
-import seedu.address.logic.commands.MapCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.model.Model;
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_ADDRESS_1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_ADDRESS_2;
@@ -21,9 +15,15 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TWO_LOCATIONS_3
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TWO_LOCATIONS_ADDRESS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TWO_LOCATIONS_BUILDING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TWO_LOCATIONS_POSTAL;
-
 import static seedu.address.logic.commands.MapCommand.MESSAGE_SUCCESS;
 import static seedu.address.model.building.Building.retrieveNusBuildingIfExist;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.MapCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.Model;
 
 //@@author jingyinno
 /**

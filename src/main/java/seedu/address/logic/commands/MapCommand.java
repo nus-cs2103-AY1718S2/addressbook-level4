@@ -3,8 +3,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.building.Building.retrieveNusBuildingIfExist;
 
-import java.util.Arrays;
-
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.GoogleMapsEvent;
 import seedu.address.logic.commands.exceptions.CommandException;

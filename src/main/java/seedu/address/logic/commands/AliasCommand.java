@@ -61,12 +61,10 @@ public class AliasCommand extends UndoableCommand {
             return new CommandResult(model.getAliasList().toString());
         }
         if (!commands.contains(toAdd.getCommand())) {
-            throw new CommandException(
-                    String.format(AliasCommand.MESSAGE_INVALID_COMMAND,
+            throw new CommandException(String.format(AliasCommand.MESSAGE_INVALID_COMMAND,
                             AliasCommand.MESSAGE_INVALID_COMMAND_DESCRIPTION));
         } else if (commands.contains(toAdd.getAlias())) {
-            throw new CommandException(
-                    String.format(AliasCommand.MESSAGE_INVALID_ALIAS,
+            throw new CommandException(String.format(AliasCommand.MESSAGE_INVALID_ALIAS,
                             AliasCommand.MESSAGE_INVALID_ALIAS_DESCRIPTION));
         }
 

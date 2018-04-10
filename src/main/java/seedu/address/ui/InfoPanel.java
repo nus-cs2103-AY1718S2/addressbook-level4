@@ -104,10 +104,7 @@ public class InfoPanel extends UiPart<Region> {
 
     @Subscribe
     private void handleGoogleMapsDisplayEvent(GoogleMapsEvent event) {
-        //mapsPlaceholder.getChildren().removeAll();
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        //mapsDisplay = new GoogleMapsDisplay();
-        //mapsPlaceholder.getChildren().add(mapsDisplay.getRoot());
         if (event.getIsOneLocationEvent()) {
             mapsDisplay.loadMapPage(event.getLocations());
         } else {

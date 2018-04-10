@@ -1,26 +1,22 @@
 package systemtests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_BUILDING_1;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_BUILDING_2;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_BUILDING_3;
+import static seedu.address.logic.commands.CommandTestUtil.MIXED_CASE_VACANT_COMMAND_WORD;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_BUILDING_1;
 import static seedu.address.logic.commands.VacantCommand.MESSAGE_INVALID_BUILDING;
 import static seedu.address.logic.commands.VacantCommand.MESSAGE_SUCCESS;
 import static seedu.address.model.building.Building.MESSAGE_BUILDING_CONSTRAINTS;
-import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
 import org.junit.Test;
 
-import guitests.GuiRobot;
-import guitests.guihandles.HelpWindowHandle;
-import seedu.address.logic.commands.*;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.VacantCommand;
 import seedu.address.model.Model;
-import seedu.address.testutil.BuildingBuilder;
-import seedu.address.ui.BrowserPanel;
-import seedu.address.ui.StatusBarFooter;
 
 /**
  * A system test class for the Venue Table table view, which contains interaction with other UI components.

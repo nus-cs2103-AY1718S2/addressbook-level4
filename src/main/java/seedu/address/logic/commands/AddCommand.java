@@ -107,8 +107,8 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
     public String getTemplate() {
         return COMMAND_WORD + " " + PREFIX_TYPE + "  " + PREFIX_NAME + "  "
                 + PREFIX_PHONE + "  " + PREFIX_EMAIL + "  " + PREFIX_ADDRESS + "  "
-                + PREFIX_MONEYOWED + "  " + PREFIX_INTEREST + "  " + PREFIX_OWESTARTDATE + "  "
-                + PREFIX_OWEDUEDATE + "  " + PREFIX_TAG + " ";
+                + PREFIX_OWESTARTDATE + "  " + PREFIX_OWEDUEDATE + "  "
+                + PREFIX_MONEYOWED + "  " + PREFIX_INTEREST + "  " + PREFIX_TAG + " ";
     }
 
     @Override

@@ -6,16 +6,41 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import javax.imageio.ImageIO;
+
 /**
  * Writes and reads files
  */
 public class FileUtil {
 
     private static final String CHARSET = "UTF-8";
+    private static final String TYPE_IMAGE = "image";
 
     public static boolean isFileExists(File file) {
         return file.exists() && file.isFile();
     }
+
+    //@@author RyanAngJY
+    /**
+     * Checks if a given file is an image file.
+     *
+     * @return true if a given file is a valid image file.
+     */
+    public static boolean isImageFile(File file) {
+        if (!isFileExists(file) || file.isDirectory()) {
+            return false;
+        } else {
+            try {
+                if (ImageIO.read(file) == null) {
+                    return false;
+                }
+            } catch (IOException exception) {
+                System.out.println("Error reading file");
+            }
+            return true;
+        }
+    }
+    //@@author
 
     /**
      * Creates a file if it does not exist along with its missing parent directories.

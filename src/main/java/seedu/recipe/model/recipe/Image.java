@@ -8,6 +8,7 @@ import java.io.File;
 import java.net.URL;
 
 import seedu.recipe.MainApp;
+import seedu.recipe.commons.util.FileUtil;
 
 /**
  * Represents a Recipe's image in the address book.
@@ -17,10 +18,13 @@ public class Image {
 
     public static final String NULL_IMAGE_REFERENCE = "-";
     public static final String FILE_PREFIX = "file:";
-    public static final String MESSAGE_IMAGE_CONSTRAINTS = "Image path should be valid";
+    public static final String IMAGE_STORAGE_FOLDER = "data/images/";
+    public static final String MESSAGE_IMAGE_CONSTRAINTS = "Image path should be valid,"
+            + " file should be a valid image file";
     public static final URL VALID_IMAGE = MainApp.class.getResource("/images/clock.png");
     public static final String VALID_IMAGE_PATH = VALID_IMAGE.toExternalForm().substring(5);
-    public final String value;
+    private String value;
+    private String imageName;
 
     /**
      * Constructs a {@code Image}.
@@ -31,6 +35,22 @@ public class Image {
         requireNonNull(imagePath);
         checkArgument(isValidImage(imagePath), MESSAGE_IMAGE_CONSTRAINTS);
         this.value = imagePath;
+        setImageName();
+    }
+
+    /**
+     * Sets the name of the image file
+     */
+    public void setImageName() {
+        if (this.value.equals(NULL_IMAGE_REFERENCE)) {
+            imageName = NULL_IMAGE_REFERENCE;
+        } else {
+            this.imageName = new File(this.value).getName();
+        }
+    }
+
+    public String getImageName() {
+        return imageName;
     }
 
     /**
@@ -41,14 +61,21 @@ public class Image {
             return true;
         }
         File image = new File(testImagePath);
-        if (image.exists() && !image.isDirectory()) {
-            return true;
+        return FileUtil.isImageFile(image);
+    }
+
+    /**
+     * Sets image path to follow internal image storage folder
+     */
+    public void setImageToInternalReference() {
+        if (!imageName.equals(NULL_IMAGE_REFERENCE)) {
+            this.value = IMAGE_STORAGE_FOLDER + imageName;
         }
-        return false;
     }
 
     public String getUsablePath() {
-        return FILE_PREFIX + value;
+        File imagePath = new File(this.value);
+        return FILE_PREFIX + imagePath.getAbsolutePath();
     }
 
     @Override

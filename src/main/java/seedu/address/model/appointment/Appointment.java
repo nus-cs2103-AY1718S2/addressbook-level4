@@ -123,7 +123,14 @@ public class Appointment {
         getAppointmentTags().forEach(builder::append);
         return builder.toString();
     }
-    //@@author
+
+    /**
+     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Tag> getTag() {
+        return Collections.unmodifiableSet(appointmentTags.toSet());
+    }
 
     //@@author Robert-Peng
     /**
@@ -142,5 +149,4 @@ public class Appointment {
         tagString.append(tag.tagName);
         return tagString.toString().trim();
     }
-    //@@author
 }

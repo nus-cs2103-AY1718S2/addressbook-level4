@@ -35,21 +35,52 @@ public interface Logic {
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
 
-    /** Returns a set of all command words */
+    /** Processes data of all pet patients in model. */
+    void processPetPatientsData();
+
+    /** Processes data of all persons in model. */
+    void processPersonsData();
+
+    /** Processes data of all appointments in model. */
+    void processAppointmentsData();
+
+    /** Returns a set of all command words. */
     Set<String> getAllCommandWords();
 
-    /** Returns a set of all prefixes */
+    /** Returns a set of all prefixes. */
     Set<String> getAllPrefixes();
 
-    /** Returns a set of all options used in command syntax */
+    /** Returns a set of all options used in command syntax. */
     Set<String> getAllOptions();
 
-    /** Returns a set of all Nric found in model*/
+    /** Returns a set of all Nric found in model. */
     Set<String> getAllNric();
 
-    /** Returns a set of all pet patient names found in model*/
+    /** Returns a set of all pet patient names found in model. */
     Set<String> getAllPetPatientNames();
 
-    /** Returns a set of all tag names found in model*/
-    Set<String> getAllTagNames();
+    /** Returns a set of all pet patient speices found in model. */
+    Set<String> getAllPetPatientSpecies();
+
+    /** Returns a set of all pet patient breeds found in model. */
+    Set<String> getAllPetPatientBreeds();
+
+    /** Returns a set of all pet patient colours found in model. */
+    Set<String> getAllPetPatientColours();
+
+    /** Returns a set of all pet patient blood types found in model. */
+    Set<String> getAllPetPatientBloodTypes();
+
+    /** Returns a set of all persons' tags found in model. */
+    Set<String> getAllPersonTags();
+
+    /** Returns a set of all pet patients' tags found in model. */
+    Set<String> getAllPetPatientTags();
+
+    /** Returns a set of all appointments' tags found in model. */
+    Set<String> getAllAppointmentTags();
+
+    /** Returns a set of all tags (persons', pet patients' & appointments') found in model. */
+    Set<String> getAllTagsInModel();
+
 }

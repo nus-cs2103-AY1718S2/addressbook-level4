@@ -59,6 +59,8 @@
 <ul class="sectlevel3">
 <li><a href="#post-job-command">4.4.1. Post Job Command</a></li>
 <li><a href="#match-job-command">4.4.2. Match Job Command</a></li>
+<li><a href="#edit-job-command">4.4.3. Edit Job Command</a></li>
+<li><a href="#delete-job-command">4.4.4. Delete Job Command</a></li>
 </ul>
 </li>
 <li><a href="#managing-interview">4.5. Managing Interview</a>
@@ -889,6 +891,38 @@ Saves the current statistics of the report. A new entry will be added at the end
 </li>
 </ul>
 </div>
+</div>
+<div class="sect3">
+<h4 id="edit-job-command"><a class="link" href="#edit-job-command">4.4.3. Edit Job Command</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Description:</strong> Edits an existing job posting in the Infinity Book.</p>
+</li>
+<li>
+<p><strong>Format:</strong> ` editjob INDEX [j/JOBTITLE] [l/LOCATION] [s/SKILLS] [t/TAG]`</p>
+</li>
+<li>
+<p><strong>Examples:</strong> ` editjob 1 j/Backend Engineer l/Singapore`</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="delete-job-command"><a class="link" href="#delete-job-command">4.4.4. Delete Job Command</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Description:</strong> Remove a job posting from Infinity Book using the index from latest listing.</p>
+</li>
+<li>
+<p><strong>Format:</strong> <code>deletejob INDEX</code></p>
+</li>
+<li>
+<p><strong>Examples:</strong> <code>deletejob 1</code></p>
+</li>
+</ul>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -897,7 +931,7 @@ Saves the current statistics of the report. A new entry will be added at the end
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Index to be used as displayed in the panel</p>
+<p>Index to be used as displayed in the panel.</p>
 </div>
 </td>
 </tr>
@@ -1352,7 +1386,7 @@ There is no need to save manually.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-10 07:42:34 UTC
+Last updated 2018-04-10 07:46:40 UTC
 </div>
 </div>
 </body>

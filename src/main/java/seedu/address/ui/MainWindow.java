@@ -7,10 +7,13 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
@@ -41,11 +44,16 @@ public class MainWindow extends UiPart<Stage> {
     private Timetable timetable;
     private PersonListPanel personListPanel;
     private ToDoListPanel todoListPanel;
+    private ProgressIndicator progressIndicator;
+    private Label progressIndicatorLabel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
     private StackPane calendarPlaceholder;
+
+    @FXML
+    private FlowPane progressIndicatorPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -135,6 +143,12 @@ public class MainWindow extends UiPart<Stage> {
         todoListPanel = new ToDoListPanel(logic.getFilteredToDoList());
         todoListPanelPlaceholder.getChildren().add(todoListPanel.getRoot());
 
+        progressIndicatorLabel = new Label("To-dos Completion");
+        progressIndicator = new ProgressIndicator(0);
+        progressIndicator.setPrefSize(150, 150);
+        progressIndicator.setProgress(logic.getToDoListCompleteRatio());
+        progressIndicatorPlaceholder.getChildren().addAll(progressIndicatorLabel, progressIndicator);
+
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -144,6 +158,10 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+    }
+
+    void updateProgressIndicator() {
+        progressIndicator.setProgress(logic.getToDoListCompleteRatio());
     }
 
     //@@author LeonidAgarth

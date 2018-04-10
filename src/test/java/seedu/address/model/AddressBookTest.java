@@ -196,5 +196,10 @@ public class AddressBookTest {
         public ObservableList<Event> getEventList() {
             return events;
         }
+
+        @Override
+        public double getToDoListCompleteRatio() {
+            return 0.0;
+        }
     }
 }

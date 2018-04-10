@@ -3,9 +3,11 @@ package seedu.recipe.ui.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -144,14 +146,14 @@ public class WikiaParser extends WebParser {
      */
     protected String trimTag(String tag) {
         if (tag.endsWith("ishes")) {
-            tag = tag.replace("Dishes", "");
-            tag = tag.replace("dishes", "");
+            tag = tag.replace("Dishes", "").replace("dishes", "");
         }
         if (tag.endsWith("ecipes")) {
-            tag = tag.replace("Recipes", "");
-            tag = tag.replace("recipes", "");
+            tag = tag.replace("Recipes", "").replace("recipes", "");
         }
-        return tag.trim();
+        return Arrays.stream(tag.split(" "))
+                .map(word -> Character.toTitleCase(word.charAt(0)) + word.substring(1))
+                .collect(Collectors.joining());
     }
 
     @Override

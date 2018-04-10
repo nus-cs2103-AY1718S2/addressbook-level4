@@ -448,6 +448,7 @@ However, this is still secure as even if a malicious user were to somehow get a 
 ** Cons: Password reset after each reload of application.
 // end::dataencryption[]
 
+// tag::datatransfer[]
 === Import AddressBook feature
 ==== Current Implementation
 
@@ -480,6 +481,7 @@ image::ImportCommandSequenceDiagram.png[width="800"]
 * **Alternative 2:** Adds selected `Person`,`Tag`, and `Alias` from imported AddressBook that are not a duplicate of existing `Person`, `Tag`, and `Alias` to the user's AddressBook.
 ** Pros: User is able to select which `Person`, `Tag` or `Alias` to be imported.
 ** Cons: User needs to indicate which `Person`, `Tag` or `Alias` to be imported.
+// end::datatransfer[]
 
 === Birthdays feature
 ==== Current Implementation
@@ -562,6 +564,7 @@ As shown in diagram above, all Rooms weekday schedule will be return in an `Arra
 * **Alternative 2:** Create a static list of rooms in the Building class which has a room schedule for the day
 ** Pros: Code is shorter
 ** Cons: The Room and Building class will have schedule-related code which makes the classes messy.
+// end::vacantroomfinder[]
 
 // tag::timetable[]
 === Timetable feature

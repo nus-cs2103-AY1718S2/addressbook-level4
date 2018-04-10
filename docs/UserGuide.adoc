@@ -152,6 +152,24 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+=== Editing an appointment : `editappointment` `Since v1.5rc`
+
+Edits an existing appointment in the address book. +
+Format: `editappointment INDEX [PERSON INDEX]... [n/NAME] [d/DATETIME] [tz/TIMEZONE]`
+Alias: `ea`
+
+****
+* Edits the appointment at the specified `INDEX`. The index refers to the index number shown in the last appointment listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing persons, if a person is present, he will be removed. Otherwise, he will be added.
+****
+
+Examples:
+
+* `editappointment 1 2 3 n/Sell laptop` +
+Edits the name of the appointment to "Sell laptop". Adds/Removes persons 2 and 3.
+
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
@@ -358,6 +376,7 @@ e.g. `add 1 2 n/Meeting d/2018-06-13 13:25 tz/America/New_York`
 e.g. `delete 3`
 * *Delete appointment* : `deleteappointment INDEX` +
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [ti/TIMEZONE] [t/TAG]...` +
+* *Edit appointment* : `editappointment 1 2 3 n/Sell laptop` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Note* : `note INDEX`
 * *Archive* : `archive INDEX`

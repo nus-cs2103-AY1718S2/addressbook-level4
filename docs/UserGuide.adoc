@@ -13,6 +13,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W09-B4/main
+:stem: latexmath
 
 By: `Flashy`      Since: `Mar 2018`      Licence: `MIT`
 
@@ -247,41 +248,48 @@ Examples:
 After adding and managing your flashcards, its time to get your A+!
 This section will teach you how to let Flashy's intelligent scheduling algorithm prompt you the best time to study!
 
-==== Showing a flashcard : `showDue`
+==== Showing a flashcard : `showdue`
+To start using a flashcard, you have to click on a flashcard first.
+`showdue` helps you filter out cards that are due by a certain date.
+Using it without any arguments will show cards due by today.
 
-Reveals the answer of the flashcard identified by the index number used in the list. +
-Format: `show INDEX`
+Format: `showdue d/DAY m/MONTH y/YEAR`
 
-****
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
+[NOTE]
+`showdue` can be used without any options, this will just show the flashcards due by today. +
+You can omit some parameters in `showdue`. suppose to day is `13/04/2018`,
+paramters that you omit would be implicitly assumed to be the current day, month or year.
+If you key in `showdue d/28` without typing in `m/04 y/2018`,
+the month and year are assumed to be the current month. +
+This would show you card due before `28/04/2018`.
 
 Examples:
 
-* `show 2` +
-Shows the 2nd flashcard in the list.
-* `show 1` +
-Shows the 1st flashcard in the list.
+* `showdue d/28 m/04 y/2018` +
+Show cards due before 28/04/2018
+* `showdue d/28` +
+Suppose today is 13/04/2018, although `m/04 y/2018` is not typed,
+they are implicitly assumed to be the current month and year.
 
-==== Answering flashcards: `Answer`
-Answer to give feedback to the scheduling algorithm to schedule the cards for future review.
+==== Answering flashcards: `answer`
+After using `showdue` to show a list of flashcards, you have to click on it to use the flashcard.
+`answer` uses our spaced repetition algorithm to intelligently schedule the card to the right time in the future for review.
 
-Format: `schedule CONFIDENCE`
+Format: `answer c/CONFIDENCE_LEVEL`
 
-****
-* The confidence can only be 0, 1, 2.
-* `show` cammand must be used first before `schedule` can be used.
-****
+[IMPORTANT]
+CONDENCE_LEVEL can only be 0, 1 or 2. +
+Card must be selected first before answering.
+// wait for select card to appear then I link here to there wit ha note.
 
-There are 3 `CONFIDENCE` levels
+===== What does `CONFIDENCE_LEVEL` mean?
 
-* `answer 0` +
-Go again. I don't know the answer to this card. Card will then be requeued into the same session again.
-* `answer 1` +
-Pass. I kind of know the answer, but need more practice. Card will then be scheduled for the near future. To get more practice.
-* `answer 2` +
-Easy A+. Card will then be scheduled further into the future. Other cards need more review than this one.
+* `answer c/0` Again +
+I don't know the answer to this card. Card will then be requeued into the same session again.
+* `answer c/1` Passable +
+I kind of know the answer, but need more practice. Card will then be scheduled for the near future. To get more practice.
+* `answer c/2` Easy A+ +
+Card will then be scheduled further into the future. Other cards need more review than this one.
 
 [TIP]
 ====
@@ -290,21 +298,27 @@ This gives feedback to the scheduler algorithm to automatically schedule the car
 This design is based off the well known forgetting curve, you can read more about it here https://en.wikipedia.org/wiki/Forgetting_curve
 ====
 
+==== Show flashcards for review: `Schedule`
+Using the `answer` command to answer a flash card will automatically schedule the card based on our spaced repetition algorithm.
+However sometimes when you need to manually `schedule` a card for review you can do so as well.
+
+Format: `schedule  d/DAY m/MONTH y/YEAR`
+
+[NOTE]
+`schedule` can be used without any options, this will just schedule the cards for today. +
+You can omit some parameters in `schedule`. suppose to day is `13/04/2018`,
+paramters that you omit would be implicitly assumed to be the current day, month or year.
+If you key in `schedule d/28` without typing in `m/04 y/2018`,
+the month and year are assumed to be the current month. +
+This would schedule the card for `28/04/2018`.
+
 Examples:
 
-* `schedule 1` +
-Card will be resheduled into near future.
-
-==== Show flashcards for review: `Schedule`
-Lists and show flashcards due for review today.
-
-Format: `Today`
-
-Example:
-
-* `Today`
-
-Lists and show flashcards due for review today.
+* `schedule d/28 m/04 y/2018` +
+Schedule card for 28/04/2018
+* `schedule d/28` +
+Suppose today is 13/04/2018, although `m/04 y/2018` is not typed,
+they are implicitly assumed to be the current month and year.
 
 === Misc
 ==== Autocompleting

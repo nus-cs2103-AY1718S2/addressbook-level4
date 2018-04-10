@@ -154,8 +154,10 @@ public class ParserUtil {
         requireNonNull(birthday);
         String trimmedBirthday = birthday.trim();
 
-        if (!Birthday.isValidBirthday(trimmedBirthday)) {
-            throw new IllegalValueException(Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
+        try {
+            Birthday.isValidBirthday(trimmedBirthday);
+        } catch (IllegalArgumentException iae) {
+            throw new IllegalValueException(iae.getMessage());
         }
         return new Birthday(trimmedBirthday);
     }
@@ -179,7 +181,7 @@ public class ParserUtil {
         requireNonNull(timetableUrl);
         String trimmedUrl = timetableUrl.trim();
 
-        if (!Timetable.isValidUrl(timetableUrl)) {
+        if (!trimmedUrl.equals(Timetable.EMPTY_LINK) && !Timetable.isValidUrl(timetableUrl)) {
             throw new IllegalValueException(Timetable.MESSAGE_URL_CONSTRAINTS);
         }
         return new Timetable(trimmedUrl);

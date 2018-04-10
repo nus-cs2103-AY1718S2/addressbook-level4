@@ -121,10 +121,8 @@ public final class ImportContactsCommand extends UndoableCommand {
             System.out.println("Opening... " + fileAddress);
             openFile(); //open the file to add users
         } catch (Exception e) {
-            throw new CommandException("Cannot open file in executeUndoableCommand in "
-                    + "ImportContactsCommand Class\n"
-                    + "Make sure the path is not in quotations and contains .csv at the end"
-                    + e.getMessage());
+            throw new CommandException("We were not able to open your file.\n"
+                    + "Make sure the file path contains \".csv\" at the end and is not in quotations.");
         }
 
         try {

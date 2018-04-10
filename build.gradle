@@ -60,7 +60,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveName = "addressbook.jar"
+    archiveName = "sellit.jar"
 
     destinationDir = file("${buildDir}/jar/")
 }

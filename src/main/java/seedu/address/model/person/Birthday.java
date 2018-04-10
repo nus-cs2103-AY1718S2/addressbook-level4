@@ -28,7 +28,7 @@ public class Birthday {
 
     /**
      * Constructs a {@code Birthday}.
-     *  @param birthday A valid birthday number.
+     *  @param birthday A birthday number.
      */
     public Birthday(String birthday) {
         requireNonNull(birthday);
@@ -44,7 +44,10 @@ public class Birthday {
     }
 
     /**
-     * Returns true if a given string is a valid person birthday.
+     * Checks if given birthday string is valid
+     * @param test Birthday to be tested
+     * @return true if birthday is valid
+     * @throws IllegalArgumentException if birthday is invalid
      */
     public static boolean isValidBirthday(String test) throws IllegalArgumentException {
         LocalDate today = LocalDate.now();
@@ -132,7 +135,7 @@ public class Birthday {
      * Parses Day from Birthday string
      * isValidBirthday() should be called before this method
      * @param birthday assumed to be of format DDMMYYYY
-     * @return integer Day
+     * @return int Day
      */
     private static int parseDay(String birthday) {
         return Integer.parseInt(birthday.substring(0, 2));

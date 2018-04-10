@@ -33,6 +33,7 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
         guiRobot.pauseForHuman();
 
         guiRobot.type(KeyCode.ENTER);
+        guiRobot.type(KeyCode.ENTER);
 
         return !getStyleClass().contains(CommandBox.ERROR_STYLE_CLASS);
     }
@@ -46,8 +47,8 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
 
     //@@author aquarinte
     /**
-     * Type text into the command box and set caret at the end of text.
-     * Overwrite previous input.
+     * Types text into the command box and sets caret at the end of text.
+     * Overwrites previous input.
      */
     public void setText(String input) {
         guiRobot.interact(() -> getRootNode().setText(input));
@@ -55,7 +56,7 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     }
 
     /**
-     * Insert text into command box.
+     * Inserts text into command box.
      */
     public void insertText(String input) {
         int caretPos = getRootNode().getCaretPosition();
@@ -64,8 +65,7 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     }
 
     /**
-     * Remove change listener for autocomplete,
-     * so that it will not interfere with JUnit System Tests.
+     * Removes change listener for autocomplete, so that it will not interfere with JUnit System Tests.
      */
     public void disableAutocomplete() {
         getRootNode().textProperty().removeListener(CommandBox.getAutocompleteListener());

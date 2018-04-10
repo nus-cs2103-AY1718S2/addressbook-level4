@@ -16,6 +16,7 @@ endif::[]
 
 By: `Team W09-B2`      Since: `Feb 2018`      Licence: `MIT`
 
+// tag::intro[]
 == Introduction
 
 Welcome to *contactHeRo*! contactHeRo is the *perfect contact management solution for recruiters* across companies who need a *quick and efficient way* to manage the contact details and profiles of their potential recruits. It is a *Command Line Interface(CLI) application* with intuitive usage and effective features. You can manage details of prospective employees and job openings in your company through easy to use `add`, `delete` and `edit` features. Matching jobs to employees is also a great feature that makes the hiring process easy for you.
@@ -33,7 +34,7 @@ This will represent something you should take a note of.
 This will represent a useful tip.
 
 `This will represent an input/output statement in contactHeRo`
-
+// end::intro[]
 
 == Quick Start
 
@@ -275,7 +276,7 @@ On running this command, you should see a similar result as the following (refer
 .Select Command Execution
 image::selectCommand.png[width="790", align="center"]
 
-
+// tag::linkedIn[]
 ==== Searching a person on LinkedIn: `linkedIn`
 
 You can select a person identified by the index number used in the last person listing to search him/her on LinkedIn using the following format. +
@@ -303,7 +304,9 @@ On running the above command and after you have logged in, you should a similar 
 
 .LinkedIn Command Execution
 image::linkedInCommand.png[width="790", align="center"]
+// end::linkedIn[]
 
+// tag::jobs[]
 === Managing Job Openings
 This section describes the commands you can use to manage person profiles in contactHeRo.
 
@@ -389,6 +392,7 @@ Examples:
 * `list` +
 `matchjob 1` +
 This will show any person whose skills match any of those required for the job opening at index 1.
+// end::jobs[]
 
 // tag::calendar[]
 === Managing Appointments
@@ -676,6 +680,7 @@ On running the above command, you should see the following success message: +
 You can exit the program using the following format. +
 Format: `exit`
 
+// tag::autoComplete[]
 ==== Auto-complete command
 
 To save your time, after typing a partial command, you can press TAB for the command to be auto-completed.
@@ -689,6 +694,7 @@ Examples:
 
 * Typing `h` and pressing `TAB` gives: +
      `help`
+// end::autoComplete[]
 
 ==== Saving the data
 

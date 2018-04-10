@@ -417,7 +417,7 @@ Format: `upload FILENAME PASSWORD`
 
 ****
 * Application will redirect you to a browser url to request for access to Google Drive
-* Uploads an instance of StardyTogether to the specified `FILENAME`.
+* Uploads an instance of StardyTogether with the specified `FILENAME`.
 * Encrypt that instance using the `PASSWORD` provided.
 * If no `PASSWORD` is provided, the instance will be exported without encryption.
 * The filepath refers to the filepath where the instance file will be stored.

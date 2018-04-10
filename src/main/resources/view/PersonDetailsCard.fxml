@@ -14,7 +14,15 @@
          <children>
             <HBox prefHeight="174.0" prefWidth="173.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="106.0" prefWidth="94.0" spacing="5" />
+                  <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="154.0" prefWidth="100.0" spacing="5">
+                           <children>
+                              <FlowPane fx:id="tags" prefHeight="143.0" prefWidth="82.0" rowValignment="TOP" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                   <VBox prefHeight="166.0" prefWidth="482.0">
                      <children>
                         <VBox alignment="CENTER" prefHeight="60.0" prefWidth="366.0">
@@ -23,7 +31,6 @@
                               <HBox prefHeight="100.0" prefWidth="200.0">
                                  <children>
                                     <HBox prefHeight="8.0" prefWidth="16.0" />
-                                    <FlowPane fx:id="tags" prefHeight="9.0" prefWidth="451.0" rowValignment="TOP" />
                                  </children>
                               </HBox>
                            </children>

@@ -69,7 +69,7 @@ public class PersonCard extends UiPart<Region> {
         return new Image(MainApp.class.getResourceAsStream(imagePath));
     }
 
-    //@@author KevinCJHc
+    //@@author KevinCJH
     /**
      * Returns the color style for {@code skillName}'s label.
      */

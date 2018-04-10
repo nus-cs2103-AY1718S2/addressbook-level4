@@ -40,6 +40,28 @@ public class UniquePatientVisitingQueueTest {
     }
 
     @Test
+    public void execute_removePatientByIndex_removeSuccessful() throws Exception {
+        UniquePatientVisitingQueue anotherQueue = new UniquePatientVisitingQueue();
+        anotherQueue.add(2);
+        anotherQueue.add(4);
+        anotherQueue.add(1);
+        queueToTest.add(2);
+        queueToTest.add(4);
+        queueToTest.add(1);
+        anotherQueue.removePatient(4);
+        queueToTest.removePatient(4);
+        assertEquals(anotherQueue, queueToTest);
+    }
+
+    @Test
+    public void execute_removeByIndexPatientNotInTheQueue_throwsPatientNotFoundException() throws Exception {
+        queueToTest.add(4);
+        queueToTest.add(2);
+        thrown.expect(PatientNotFoundException.class);
+        queueToTest.removePatient(3);
+    }
+
+    @Test
     public void execute_duplicatePatient_throwsDuplicateException() throws Exception {
         queueToTest.add(1);
 
@@ -49,9 +71,15 @@ public class UniquePatientVisitingQueueTest {
     }
 
     @Test
-    public void execute_removeEmptyQueue_throwsNoSuchElementException() throws Exception {
+    public void execute_removeEmptyQueue_throwsPatientNotFoundException() throws Exception {
         thrown.expect(PatientNotFoundException.class);
         queueToTest.removePatient();
+    }
+
+    @Test
+    public void execute_removeByIndexEmptyQueue_throwsPatientNotFoundException() throws Exception {
+        thrown.expect(PatientNotFoundException.class);
+        queueToTest.removePatient(3);
     }
 
     @Test

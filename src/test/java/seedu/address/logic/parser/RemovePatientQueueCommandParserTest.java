@@ -14,11 +14,6 @@ public class RemovePatientQueueCommandParserTest {
     private RemovePatientQueueCommandParser parser = new RemovePatientQueueCommandParser();
 
     @Test
-    public void parse_emptyArg_returnsRemovePatientQueueCommand() {
-        assertParseSuccess(parser, "", new RemovePatientQueueCommand());
-    }
-
-    @Test
     public void parse_validArgs_returnsRemovePatientQueueCommand() throws IllegalValueException {
         assertParseSuccess(parser, "1", new RemovePatientQueueCommand(INDEX_FIRST_PERSON));
     }
@@ -26,12 +21,12 @@ public class RemovePatientQueueCommandParserTest {
     @Test
     public void parse_invalidArgsNegativeValue_throwsParserException() {
         assertParseFailure(parser, "-1", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                RemovePatientQueueCommand.MESSAGE_USAGE));
+                RemovePatientQueueCommand.MESSAGE_USAGE_INDEX));
     }
 
     @Test
     public void parse_invalidArgsAlphaValue_throwsParserException() {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                RemovePatientQueueCommand.MESSAGE_USAGE));
+                RemovePatientQueueCommand.MESSAGE_USAGE_INDEX));
     }
 }

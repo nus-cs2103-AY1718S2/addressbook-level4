@@ -155,6 +155,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public Patient removePatientFromQueueByIndex(Index targetIndex) throws PatientNotFoundException {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public ObservableList<Patient> getVisitingQueue() {
             fail("This method should not be called.");
             return null;    //update later

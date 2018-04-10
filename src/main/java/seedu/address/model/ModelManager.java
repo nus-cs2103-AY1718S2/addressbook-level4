@@ -188,6 +188,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public Patient removePatientFromQueueByIndex(Index targetIndex) throws PatientNotFoundException {
+        imdb.removePatientFromQueueByIndex(targetIndex.getZeroBased());
+        indicateQueueChanged();
+        return filteredPatients.get(targetIndex.getZeroBased());
+    }
+
+    @Override
     public ObservableList<Patient> getVisitingQueue() {
         return imdb.getUniquePatientQueue();
     }

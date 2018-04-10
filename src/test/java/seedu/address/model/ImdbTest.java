@@ -152,9 +152,34 @@ public class ImdbTest {
     }
 
     @Test
+    public void removePatientFromQueueByIndex_queueUpdate() throws DuplicatePatientException, PatientNotFoundException {
+        imdbWithAmyAndBob.addPatientToQueue(2);
+        imdbWithAmyAndBob.addPatientToQueue(1);
+        Imdb expectedImdb = new ImdbBuilder().withPerson(AMY).withPerson(BOB).build();
+        expectedImdb.addPatientToQueue(2);
+        expectedImdb.addPatientToQueue(1);
+        imdbWithAmyAndBob.removePatientFromQueueByIndex(1);
+        expectedImdb.removePatientFromQueueByIndex(1);
+        assertEquals(imdbWithAmyAndBob, expectedImdb);
+    }
+
+    @Test
+    public void removePatientByIndex_notInQueue() throws DuplicatePatientException, PatientNotFoundException {
+        imdbWithAmyAndBob.addPatientToQueue(2);
+        thrown.expect(PatientNotFoundException.class);
+        imdbWithAmyAndBob.removePatientFromQueueByIndex(1);
+    }
+
+    @Test
     public void removePatientFromQueue_emptyQueue() throws PatientNotFoundException {
         thrown.expect(PatientNotFoundException.class);
         imdbWithAmyAndBob.removePatientFromQueue();
+    }
+
+    @Test
+    public void removePatientByIndex_emptyQueue() throws PatientNotFoundException {
+        thrown.expect(PatientNotFoundException.class);
+        imdbWithAmyAndBob.removePatientFromQueueByIndex(2);
     }
 
     //@@author

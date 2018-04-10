@@ -30,7 +30,7 @@ public class RemovePatientQueueCommandParser implements Parser<RemovePatientQueu
             return new RemovePatientQueueCommand(index);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    RemovePatientQueueCommand.MESSAGE_USAGE));
+                    RemovePatientQueueCommand.MESSAGE_USAGE_INDEX));
         }
     }
 }

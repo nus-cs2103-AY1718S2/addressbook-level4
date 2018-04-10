@@ -2,6 +2,7 @@
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
+
 == PROJECT: ContactHeRo
 
 ---
@@ -26,6 +27,9 @@ This portfolio is to collate my contributions towards the developing of contactH
 
 * *Other contributions*:
 
+** Features:
+*** Auto-complete: added functionality for commands to be auto-completed on pressing `TAB` (Pull request https://github.com/CS2103JAN2018-W09-B2/main/pull/35, https://github.com/CS2103JAN2018-W09-B2/main/pull/186)
+*** Tab Display: added a tab display for Contact Details and LinkedIn features which was later used by other features like Email and Calendar.
 ** Project management:
 *** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
 *** Managed milestones `v1.1` - `v1.5rc` (5 milestones) on GitHub
@@ -35,15 +39,10 @@ This portfolio is to collate my contributions towards the developing of contactH
 *** Updated Ui to contain icons (Commit https://github.com/CS2103JAN2018-W09-B2/main/pull/136/commits/7b9ac8bb2d99af8a63d7bf9ee68d17a0b48bea58)
 
 ** Documentation:
-*** Made User Guide more reader-friendly by adding screenshots and reorganising content: https://github.com/CS2103JAN2018-W09-B2/main/pull/114/, https://github.com/CS2103JAN2018-W09-B2/main/pull/217
+*** Made User Guide more reader-friendly by adding screenshots and organising features into sections: https://github.com/CS2103JAN2018-W09-B2/main/pull/114/, https://github.com/CS2103JAN2018-W09-B2/main/pull/217
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
-** Tools:
-*** Integrated a third party library (Natty) to the project (https://github.com[#42])
-*** Integrated a new Github plugin (CircleCI) to the team repo
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W09-B2/main/pull/173, https://github.com[#32], https://github.com/CS2103JAN2018-W09-B2/main/pull/55, https://github.com/CS2103JAN2018-W09-B2/main/pull/152, 
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F09-B1/main/issues/85, https://github.com/CS2103JAN2018-F09-B1/main/issues/95, https://github.com/CS2103JAN2018-F09-B1/main/issues/69, https://github.com/CS2103JAN2018-F09-B1/main/issues/76, https://github.com/CS2103JAN2018-F09-B1/main/issues/83)
 
 _{you can add/remove categories in the list above}_
 

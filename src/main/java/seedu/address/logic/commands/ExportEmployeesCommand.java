@@ -1,10 +1,5 @@
 package seedu.address.logic.commands;
 //@@author crizyli
-import javafx.collections.ObservableList;
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.logic.GetEmployeesRequestEvent;
-import seedu.address.commons.events.model.ReturnedEmployeesEvent;
-import seedu.address.model.person.Person;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,6 +7,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.google.common.eventbus.Subscribe;
+
+import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.logic.GetEmployeesRequestEvent;
+import seedu.address.commons.events.model.ReturnedEmployeesEvent;
+import seedu.address.model.person.Person;
 
 /**
  * export employees to a csv file.
@@ -43,9 +44,8 @@ public class ExportEmployeesCommand extends Command {
         File csv = new File(EXPORT_FILE_PATH);
 
         BufferedWriter bw = null;
-        try
-        {
-            bw = new BufferedWriter( new FileWriter(csv));
+        try {
+            bw = new BufferedWriter(new FileWriter(csv));
             bw.write("Name,Phone,Email,Address,Tags\n");
             for (Person p : employees) {
                 String temp = p.getName().fullName + "," + p.getPhone().value + "," + p.getEmail().value + ","
@@ -57,7 +57,7 @@ public class ExportEmployeesCommand extends Command {
                 temp = temp + "\n";
                 bw.write(temp);
             }
-        } catch ( IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return new CommandResult(MESSAGE_FAIL);
         }

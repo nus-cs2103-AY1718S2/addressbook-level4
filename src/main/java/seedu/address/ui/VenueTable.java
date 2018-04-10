@@ -52,6 +52,10 @@ public class VenueTable extends UiPart<Region> {
     @FXML
     private TableColumn<ArrayList<String>, String> eightPm;
 
+    public VenueTable() {
+        this(null);
+    }
+
     public VenueTable(ObservableList<ArrayList<String>> schedules) {
         super(FXML);
         venueTable.setItems(schedules);

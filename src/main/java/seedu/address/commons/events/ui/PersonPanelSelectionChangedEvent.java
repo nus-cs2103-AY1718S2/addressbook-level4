@@ -10,9 +10,11 @@ public class PersonPanelSelectionChangedEvent extends BaseEvent {
 
 
     private final PersonCard newSelection;
+    private final int oddEvenIndex;
 
-    public PersonPanelSelectionChangedEvent(PersonCard newSelection) {
+    public PersonPanelSelectionChangedEvent(PersonCard newSelection, int oddEvenIndex) {
         this.newSelection = newSelection;
+        this.oddEvenIndex =  oddEvenIndex;
     }
 
     @Override
@@ -22,5 +24,9 @@ public class PersonPanelSelectionChangedEvent extends BaseEvent {
 
     public PersonCard getNewSelection() {
         return newSelection;
+    }
+
+    public int getOddEvenIndex() {
+        return oddEvenIndex;
     }
 }

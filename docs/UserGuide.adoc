@@ -371,6 +371,7 @@ Format: `decrypt`
 
 // end::dataencryption[]
 
+// tag::datatransfer[]
 ==== Importing data : `import` (since v1.1)
 
 Imports an encrypted or unencrypted StardyTogether instance from filepath to the existing StardyTogether application. Persons, Tags, and Aliases that are not in your StardyTogether will be added. +
@@ -405,6 +406,7 @@ Example:
 
 * `export data/addressBook.xml testpassword` +
 Exports the current list of StardyTogether application to the `addressBook.xml` file at data folder using "testpassword" as the password for encryption.
+// end::datatransfer[]
 
 ==== Exiting the program : `exit`
 

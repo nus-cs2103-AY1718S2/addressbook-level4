@@ -1,0 +1,50 @@
+= Loh Cai Jun - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: StardyTogether
+StardyTogether is a desktop contacts and venues manager application specially for NUS students to help them find free time and rooms to study together with their friends.
+
+Most of the user interactions are via CLI, while there exists a GUI created with JavaFX. It is written in Java and has
+about 10k LoC.
+
+The source code is based on the  https://github.com/se-edu/addressbook-level4[AddressBook-Level4] project created by SE-EDU initiative.
+
+*Code contributed*: [https://github.com/CS2103JAN2018-W11-B4/main/blob/master/collated/functional/Caijun7.md[Functional code]] +
+[https://github.com/CS2103JAN2018-W11-B4/main/blob/master/collated/functional/Caijun7-reused.md[Functional code (reused)]] +
+[https://github.com/CS2103JAN2018-W11-B4/main/blob/master/collated/test/Caijun7.md[Test code]] +
+[https://github.com/CS2103JAN2018-W11-B4/main/blob/master/collated/test/Caijun7-reused.md[Test code (reused)]] +
+
+== Feature Contributions
+* *Major enhancement*: Data transferring which includes import, export, and upload feature
+** What it does: Allows students to transfer StardyTogether file easily which includes importing all of the persons, tags, and aliases of StardyTogether file, exporting the selected persons in StardyTogether to a specified filepath, and upload the selected persons in StardyTogether to Google Drive.
+** Justification: Students can transfer data between one another easily. Students can store backup in Google Drive and transfer between computers easily.
+
+* *Minor enhancement*: Vacant Room Finder model and storage component
+** What it does: Shows the list of all rooms' weekday schedule in the building that the student is searching for the day.
+** Justification: This allows students to easily find empty rooms for them to study in with their friends. This feature displays the schedule of the rooms for the whole day so that students can find the room that is vacant for the longest time.
+
+* *Other contributions*:
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W11-B4/main/pull/74[#74], https://github.com/CS2103JAN2018-W11-B4/main/pull/138[#138]
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=datatransfer]
+
+include::../UserGuide.adoc[tag=vacant]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=datatransfer]
+
+include::../DeveloperGuide.adoc[tag=vacantroomfinder]

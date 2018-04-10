@@ -542,15 +542,15 @@ The `_HtmlFormatter_` class is responsible for the HTML formatting of a recipe.
 When an *`add`* or *`edit`* command has an image field input, that input will be checked if it is a valid image URL using `ImageIO` (implementation below).
 [source,java]
 ----
-private static boolean isValidImageUrl(String testUrl) {
-    URL imageUrl = null;
+public static boolean isValidImageUrl(String testUrl) {
+    URL imageUrl;
     try {
         imageUrl = new URL(testUrl);
     } catch (MalformedURLException e) {
         return false;
     }
 
-    BufferedImage image = null;
+    BufferedImage image;
     try {
         image = ImageIO.read(imageUrl);
     } catch (IOException ioe) {
@@ -567,11 +567,11 @@ private static boolean isValidImageUrl(String testUrl) {
 }
 ----
 
-If the input is indeed a URL that links to an image, `Image` will go through several steps to download the image and set the new image path (<<fig-DownloadImageAD>>).
+If the input is indeed a URL that links to an image, `ImageDownloader` will go through several steps to download the image and set the new image path (<<fig-DownloadImageAD>>).
 
 [[fig-DownloadImageAD]]
 .Activity diagram of an image downloading process
-image::DownloadImageAD.png[width="400"]
+image::DownloadImageAD.png[width="800"]
 {nbsp} +
 
 A particular step that might seems out of place here is the checksum calculation. Because the `BufferedImage` object created by `ImageIO` has different hash code based on the execution configuration, using `hashCode()` does not guarantee the same file name for an image. However, we can be sure the same image data will return the same <<MD5>> checksum, and MD5 checksum is sufficient for the scale of our product. Therefore, using MD5 checksum for the file name will almost guarantee no hash collision and no image duplication. +
@@ -592,7 +592,7 @@ public static String downloadImage(String imageUrlString) {
     /* Exception catching */
 ----
 
-For the detailed implementation of each step, see link:{repoURL}/src/main/java/seedu/recipe/model/recipe/Image.java[`Image.java`].
+For the detailed implementation of each step, see link:{repoURL}/src/main/java/seedu/recipe/storage/ImageDownloader.java[`ImageDownloader.java`].
 
 ==== Design considerations
 

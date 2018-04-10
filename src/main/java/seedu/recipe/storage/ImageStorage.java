@@ -15,7 +15,7 @@ import seedu.recipe.model.recipe.Image;
  * A class to save RecipeBook image data stored on the hard disk.
  */
 public class ImageStorage {
-    private static final String IMAGE_FOLDER = "images/";
+    public static final String IMAGE_FOLDER = "images/";
     private static final String RECIPE_BOOK_FILENAME = "recipebook.xml";
 
     /**

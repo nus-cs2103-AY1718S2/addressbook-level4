@@ -40,7 +40,14 @@ public class FileUtil {
             return true;
         }
     }
-    //@@author
+    //@@author kokonguyen191
+    /**
+     * Returns true if {@code testPath} is a valid file path and points to an image.
+     */
+    public static boolean isImageFile(String testPath) {
+        File file = new File(testPath);
+        return isImageFile(file);
+    }
 
     /**
      * Creates a file if it does not exist along with its missing parent directories.

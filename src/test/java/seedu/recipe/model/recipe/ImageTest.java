@@ -1,14 +1,8 @@
 //@@author RyanAngJY
 package seedu.recipe.model.recipe;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.zip.CRC32;
 
 import org.junit.Test;
 
@@ -18,7 +12,6 @@ public class ImageTest {
     private static final String INVALID_IMAGE_URL = "http://google.com";
     private static final String NOT_AN_IMAGE_PATH = "build.gradle";
     private static final String VALID_IMAGE_URL = "https://i.imgur.com/FhRsgCK.jpg";
-    private static final long VALID_IMAGE_CRC = 2184062566L;
 
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -53,33 +46,6 @@ public class ImageTest {
         assertTrue(Image.isValidImage(VALID_IMAGE_URL));
         // invalid image url
         assertFalse(Image.isValidImage(INVALID_IMAGE_URL));
-    }
-
-    //@@author kokonguyen191
-    @Test
-    public void downloadImage_invalidUrl_throwsAssertionError() {
-        Assert.assertThrows(AssertionError.class, () -> Image.downloadImage(INVALID_IMAGE_URL));
-    }
-
-    @Test
-    public void downloadImage_validUrl_returnsImageName() throws Exception {
-        String fileName = Image.downloadImage(VALID_IMAGE_URL);
-        File file = new File(fileName);
-        assertTrue(file.exists());
-
-        InputStream in = new FileInputStream(file);
-        CRC32 crc32 = new CRC32();
-        byte[] buffer = new byte[1000];
-        int bytes;
-        while ((bytes = in.read(buffer)) != -1) {
-            crc32.update(buffer, 0, bytes);
-        }
-        long crc = crc32.getValue();
-        in.close();
-
-        assertEquals(VALID_IMAGE_CRC, crc);
-
-        file.delete();
     }
 
     @Test

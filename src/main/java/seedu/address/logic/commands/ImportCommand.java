@@ -7,7 +7,6 @@ import java.io.IOException;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.DeskBoard;
 import seedu.address.model.FilePath;
 import seedu.address.model.ReadOnlyDeskBoard;
 import seedu.address.storage.XmlDeskBoardStorage;

@@ -225,6 +225,7 @@ public class XmlAdaptedRecipeTest {
                     VALID_PREPARATION_TIME, VALID_CALORIES, VALID_SERVINGS, VALID_URL,
                     INVALID_IMAGE, VALID_TAGS).toModelType();
         } catch (Exception e) {
+            System.out.println("Unable to create recipe");
         }
         assertTrue(recipe.getImage().toString().equals(Image.NULL_IMAGE_REFERENCE));
     }

@@ -97,7 +97,7 @@ public class XmlAdaptedRecipe {
             tagged.add(new XmlAdaptedTag(tag));
         }
     }
-    
+
     /**
      * Converts this jaxb-friendly adapted recipe object into the model's Recipe object.
      *

@@ -14,6 +14,7 @@ public class MainWindowHandle extends StageHandle {
     private final MainMenuHandle mainMenu;
     private final BrowserPanelHandle browserPanel;
     private final BirthdayListHandle birthdayList;
+    private final GoogleMapsDisplayHandle mapPanel;
 
     public MainWindowHandle(Stage stage) {
         super(stage);
@@ -25,6 +26,7 @@ public class MainWindowHandle extends StageHandle {
         mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
         browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
         birthdayList = new BirthdayListHandle(getChildNode(BirthdayListHandle.BIRTHDAYS_LIST_ID));
+        mapPanel = new GoogleMapsDisplayHandle(getChildNode(GoogleMapsDisplayHandle.MAP_ID));
     }
 
     public PersonListPanelHandle getPersonListPanel() {
@@ -55,4 +57,7 @@ public class MainWindowHandle extends StageHandle {
         return birthdayList;
     }
 
+    public GoogleMapsDisplayHandle getMapPanel() {
+        return mapPanel;
+    }
 }

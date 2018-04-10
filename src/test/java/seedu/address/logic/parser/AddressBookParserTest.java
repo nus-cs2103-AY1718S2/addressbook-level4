@@ -27,17 +27,22 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.MapCommand;
 import seedu.address.logic.commands.PasswordCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemovePasswordCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UnaliasCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.VacantCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.Alias;
+import seedu.address.model.building.Building;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.AliasBuilder;
 import seedu.address.testutil.AliasUtil;
+import seedu.address.testutil.BuildingBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -61,6 +66,29 @@ public class AddressBookParserTest {
         Alias alias = new AliasBuilder().build();
         AliasCommand command = (AliasCommand) parser.parseCommand(AliasUtil.getAliasCommand(alias));
         assertEquals(new AliasCommand(alias), command);
+    }
+
+    @Test
+    public void parseCommand_unalias() throws Exception {
+        Alias toUnalias = new AliasBuilder().build();
+        String unalias = toUnalias.getAlias();
+        UnaliasCommand command = (UnaliasCommand) parser.parseCommand(AliasUtil.getUnliasCommand(unalias));
+        assertEquals(new UnaliasCommand(unalias), command);
+    }
+
+    @Test
+    public void parseCommand_vacant() throws Exception {
+        Building building = new BuildingBuilder().build();
+        VacantCommand command = (VacantCommand) parser.parseCommand(VacantCommand.COMMAND_WORD
+                + " " + building.getBuildingName());
+        assertEquals(new VacantCommand(building), command);
+    }
+
+    @Test
+    public void parseCommand_map() throws Exception {
+        String locations = "com1";
+        MapCommand command = (MapCommand) parser.parseCommand(MapCommand.COMMAND_WORD + " " + locations);
+        assertEquals(new MapCommand(locations), command);
     }
     //@@author
 

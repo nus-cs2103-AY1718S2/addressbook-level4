@@ -15,6 +15,7 @@ import seedu.progresschecker.commons.core.LogsCenter;
 import seedu.progresschecker.commons.events.ui.JumpToListRequestEvent;
 import seedu.progresschecker.model.issues.Issue;
 
+//@@author adityaa1998
 /**
  * Panel containing the issues on github.
  */

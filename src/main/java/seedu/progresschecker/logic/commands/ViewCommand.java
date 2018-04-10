@@ -14,8 +14,8 @@ public class ViewCommand extends Command {
     public static final String COMMAND_FORMAT = COMMAND_WORD + " TYPE";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Change the tab view to profiles, tasks or exercises.\n"
-            + "Parameters: TYPE (must be either 'profile', 'task', or 'exercise')\n"
+            + ": Change the tab view to profiles, tasks exercises, issues.\n"
+            + "Parameters: TYPE (must be either 'profile', 'task', 'exercise', 'issues')\n"
             + "Example: " + COMMAND_WORD + " exercise";
 
     public static final String MESSAGE_SUCCESS = "Viewing tab %1$s";

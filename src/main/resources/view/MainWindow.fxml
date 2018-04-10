@@ -69,7 +69,7 @@
                <Tab fx:id="exercisePlaceholder" text="Exercise">
                    <StackPane fx:id="exerciseListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
                </Tab>
-               <Tab text="Issues">
+               <Tab fx:id ="issuePlaceholder" text="Issues">
                    <StackPane fx:id="issuePanelPlaceholder" />
                </Tab>
            </tabs>

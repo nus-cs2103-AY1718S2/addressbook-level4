@@ -80,7 +80,8 @@ public class ParserUtil {
      */
     public static String parseTabType(String type) throws IllegalValueException {
         String trimmedType = type.trim();
-        if (!trimmedType.equals("profile") && !trimmedType.equals("task") && !trimmedType.equals("exercise")) {
+        if (!trimmedType.equals("profile") && !trimmedType.equals("task")
+                && !trimmedType.equals("exercise") && !trimmedType.equals("issues")) {
             throw new IllegalValueException(MESSAGE_INVALID_TAB_TYPE);
         }
         return trimmedType;

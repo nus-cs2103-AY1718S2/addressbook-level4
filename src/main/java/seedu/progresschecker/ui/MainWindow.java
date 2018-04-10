@@ -93,6 +93,9 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private Tab exercisePlaceholder;
 
+    @FXML
+    private Tab issuePlaceholder;
+
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -302,8 +305,12 @@ public class MainWindow extends UiPart<Region> {
         case "exercise":
             selectionModel.select(exercisePlaceholder);
             break;
+        case "issues":
+            selectionModel.select(issuePlaceholder);
+            break;
         default:
             selectionModel.select(selectionModel.getSelectedItem());
         }
     }
+    //@@author
 }

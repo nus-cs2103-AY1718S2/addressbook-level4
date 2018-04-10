@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.progresschecker.model.issues.Issue;
 
+//@@author adityaa1998
 /**
  * An UI component that displays information of a {@code Person}.
  */

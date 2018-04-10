@@ -208,15 +208,22 @@ public class StringUtilTest {
         assertEquals(0, StringUtil.containsWordFuzzyIgnoreCase("    ", "123"));
 
         // Matches a partial word only
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase("aaa bbb ccc", "bb")); // Sentence word bigger than query word
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase("aaa bbb ccc", "bbbb")); // Query word bigger than sentence word
+        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase(
+                "aaa bbb ccc", "bb")); // Sentence word bigger than query word
+        assertEquals(75, StringUtil.containsWordFuzzyIgnoreCase(
+                "aaa bbb ccc", "bbbb")); // Query word bigger than sentence word
 
         // Matches word in the sentence, different upper/lower case letters
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase("aaa bBb ccc", "Bbb")); // First word (boundary case)
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase("aaa bBb ccc@1", "CCc@1")); // Last word (boundary case)
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase("  AAA   bBb   ccc  ", "aaa")); // Sentence has extra spaces
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase("Aaa", "aaa")); // Only one word in sentence (boundary case)
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase("aaa bbb ccc", "  ccc  ")); // Leading/trailing spaces
+        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase(
+                "aaa bBb ccc", "Bbb")); // First word (boundary case)
+        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase(
+                "aaa bBb ccc@1", "CCc@1")); // Last word (boundary case)
+        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase(
+                "  AAA   bBb   ccc  ", "aaa")); // Sentence has extra spaces
+        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase(
+                "Aaa", "aaa")); // Only one word in sentence (boundary case)
+        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase(
+                "aaa bbb ccc", "  ccc  ")); // Leading/trailing spaces
 
         // Matches multiple words in sentence
         assertTrue(StringUtil.containsWordIgnoreCase("AAA bBb ccc  bbb", "bbB"));

@@ -1,6 +1,6 @@
-= John Doe - Project Portfolio
-:imagesDir: ../images
-:stylesDir: ../stylesheets
+= Lim Zheng Kai - Project Portfolio
+:imagesDir: ../images/zhengkai.jpeg
+:stylesDir: ../stylesheets/
 
 == PROJECT: reInsurance
 
@@ -42,8 +42,6 @@ The implementation was challenging as it requires changes to how the application
 *** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W13-B1/main/issues/149[1], https://github.com/CS2103JAN2018-W13-B1/main/issues/153[2], https://github.com/CS2103JAN2018-W13-B1/main/issues/168[3])
 
-_{you can add/remove categories in the list above}_
-
 == Contributions to the User Guide
 
 
@@ -51,9 +49,11 @@ _{you can add/remove categories in the list above}_
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=sort]
 
-include::../UserGuide.adoc[tag=dataencryption]
+include::../UserGuide.adoc[tag=group]
+
+include::../UserGuide.adoc[tag=password]
 
 == Contributions to the Developer Guide
 

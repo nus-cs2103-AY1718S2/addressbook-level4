@@ -35,9 +35,10 @@ public class EditAppointmentCommandParser implements Parser<EditAppointmentComma
         try {
             indexes = ParserUtil.parseIndexes(argMultimap.getPreamble());
 
-            if (indexes.isEmpty())
+            if (indexes.isEmpty()) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                         EditAppointmentCommand.MESSAGE_USAGE));
+            }
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EditAppointmentCommand.MESSAGE_USAGE));

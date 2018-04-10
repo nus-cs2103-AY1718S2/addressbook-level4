@@ -65,7 +65,8 @@ public class EditAppointmentCommand extends UndoableCommand {
      * @param index of the appointment in the filtered appointment list to edit
      * @param editAppointmentDescriptor details to edit the appointment with
      */
-    public EditAppointmentCommand(Index index, EditAppointmentDescriptor editAppointmentDescriptor, List<Index> personIndexes) {
+    public EditAppointmentCommand(Index index, EditAppointmentDescriptor editAppointmentDescriptor,
+                                  List<Index> personIndexes) {
         requireNonNull(index);
         requireNonNull(editAppointmentDescriptor);
         requireNonNull(personIndexes);
@@ -111,7 +112,9 @@ public class EditAppointmentCommand extends UndoableCommand {
             }
         }
 
-        if (!personIndexes.isEmpty()) editAppointmentDescriptor.setPersons(personList);
+        if (!personIndexes.isEmpty()) {
+            editAppointmentDescriptor.setPersons(personList);
+        }
 
         editedAppointment = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
     }

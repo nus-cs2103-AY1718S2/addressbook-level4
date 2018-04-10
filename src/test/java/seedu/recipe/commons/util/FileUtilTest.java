@@ -1,12 +1,18 @@
 package seedu.recipe.commons.util;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import seedu.recipe.MainApp;
+import seedu.recipe.model.recipe.Image;
+import seedu.recipe.testutil.Assert;
 
 public class FileUtilTest {
 
@@ -27,4 +33,24 @@ public class FileUtilTest {
         thrown.expect(AssertionError.class);
         FileUtil.getPath("folder");
     }
+
+    //@@author RyanAngJY
+    @Test
+    public void isImageFile() {
+        // file is not an image file
+        File file = new File(MainApp.class.getResource("/view/bootstrap.css").toExternalForm());
+        assertFalse(FileUtil.isImageFile(file));
+
+        // file is directory
+        file = new File(MainApp.class.getResource("/view").toExternalForm());
+        assertFalse(FileUtil.isImageFile(file));
+
+        // file is null pointer
+        Assert.assertThrows(NullPointerException.class, () -> FileUtil.isImageFile(null));
+
+        // valid image file
+        file = new File(Image.VALID_IMAGE_PATH);
+        assertTrue(FileUtil.isImageFile(file));
+    }
+    //@@author
 }

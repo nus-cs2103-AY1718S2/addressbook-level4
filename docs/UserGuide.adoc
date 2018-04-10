@@ -425,7 +425,7 @@ Format: `upload FILENAME PASSWORD`
 
 Example:
 
-* `upload data/addressBook.xml testpassword` +
+* `upload addressBook.xml testpassword` +
 Uploads the current list of StardyTogether application to the `addressBook.xml` file in Google Drive using "testpassword" as the password for encryption.
 // end::datatransfer[]
 

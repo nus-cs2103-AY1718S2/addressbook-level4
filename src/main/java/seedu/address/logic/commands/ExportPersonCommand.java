@@ -1,5 +1,4 @@
 package seedu.address.logic.commands;
-//@@author crizyli
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,6 +13,7 @@ import seedu.address.commons.events.model.GetPersonRequestEvent;
 import seedu.address.commons.events.model.ReturnedPersonEvent;
 import seedu.address.model.person.Person;
 
+//@@author XavierMaYuqian
 /**
  * export employees to a csv file.
  */

@@ -16,7 +16,6 @@ import javafx.scene.layout.Region;
 import javafx.util.Callback;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AppointmentChangedEvent;
-import seedu.address.commons.events.ui.ShowCalendarViewRequestEvent;
 import seedu.address.model.appointment.AppointmentEntry;
 
 /**

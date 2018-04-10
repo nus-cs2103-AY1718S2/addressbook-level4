@@ -26,13 +26,15 @@ public class BirthdaysCommandParser implements Parser<BirthdaysCommand> {
                 return new BirthdaysCommand(true);
             } else if (trimmedArgs[0].equalsIgnoreCase("")) {
                 return new BirthdaysCommand(false);
+            } else {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, BirthdaysCommand.MESSAGE_USAGE));
             }
         } else {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, BirthdaysCommand.MESSAGE_USAGE));
         }
 
-        return new BirthdaysCommand(false);
     }
 
 }

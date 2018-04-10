@@ -18,6 +18,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AliasCommand;
+import seedu.address.logic.commands.BirthdaysCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -128,6 +129,21 @@ public class AddressBookParserTest {
         assertEquals(new ImportCommand("/data/addressbook.xml", "test"), command);
     }
     //@@author
+
+    //@@author AzuraAiR
+    @Test
+    public void parseCommand_birthdays() throws Exception {
+        BirthdaysCommand command = (BirthdaysCommand) parser.parseCommand(
+                BirthdaysCommand.COMMAND_WORD);
+        assertEquals(new BirthdaysCommand(false), command);
+    }
+
+    @Test
+    public void parseCommand_birthdaysToday() throws Exception {
+        BirthdaysCommand command = (BirthdaysCommand) parser.parseCommand(
+                BirthdaysCommand.COMMAND_WORD + " " + BirthdaysCommand.ADDITIONAL_COMMAND_PARAMETER);
+        assertEquals(new BirthdaysCommand(true), command);
+    }
 
     @Test
     public void parseCommand_edit() throws Exception {

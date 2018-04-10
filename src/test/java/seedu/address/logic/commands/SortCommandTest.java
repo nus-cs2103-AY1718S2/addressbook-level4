@@ -111,7 +111,7 @@ public class SortCommandTest {
         assertTrue(checkSorted(icc.model));
     }
 */
-    
+
     @Test
     public void executeUndoableCommand_sortImportedPersons_personsCorrectlySorted() throws Exception {
         ImportContactsCommand icc = new ImportContactsCommand("data/Test_contacts_unsorted.csv");

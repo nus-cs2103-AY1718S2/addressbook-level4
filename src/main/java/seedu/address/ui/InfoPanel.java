@@ -11,8 +11,8 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BirthdayListEvent;
 import seedu.address.commons.events.ui.GoogleMapsEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.TimeTableEvent;
 import seedu.address.commons.events.ui.VenueTableEvent;
+import seedu.address.model.person.Person;
 
 /**
  * Container for both browser panel and person information panel
@@ -23,20 +23,19 @@ public class InfoPanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private BrowserPanel browserPanel;
     private BirthdayList birthdayList;
     private VenueTable venueTable;
-    private TimeTablePanel timeTablePanel;
     private GoogleMapsDisplay mapsDisplay;
+    private PersonDetailsCard personDetailsCard;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane placeholder;
     @FXML
     private StackPane birthdayPlaceholder;
     @FXML
     private StackPane venuePlaceholder;
     @FXML
-    private StackPane timetablePlaceholder;
+    private StackPane userDetailsPlaceholder;
     @FXML
     private StackPane mapsPlaceholder;
 
@@ -44,42 +43,19 @@ public class InfoPanel extends UiPart<Region> {
     public InfoPanel() {
         super(FXML);
 
-        fillInnerParts();
-
-        venueTable = new VenueTable(null);
+        personDetailsCard = new PersonDetailsCard();
+        userDetailsPlaceholder.getChildren().add(personDetailsCard.getRoot());
+        venueTable = new VenueTable();
         venuePlaceholder.getChildren().add(venueTable.getRoot());
-
         mapsDisplay = new GoogleMapsDisplay();
         mapsPlaceholder.getChildren().add(mapsDisplay.getRoot());
-
-        browserPlaceholder.toFront();
+        birthdayList = new BirthdayList();
+        birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
+        placeholder.toFront();
         registerAsAnEventHandler(this);
     }
 
     public void freeResources() {
-        browserPanel.freeResources();
-    }
-
-    /**
-     * Helper method to fill UI placeholders
-     */
-    public void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
-        birthdayList = new BirthdayList();
-        birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
-
-        timeTablePanel = new TimeTablePanel();
-        timetablePlaceholder.getChildren().add(timeTablePanel.getRoot());
-    }
-
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        browserPanel.loadPersonPage(event.getNewSelection().person);
-
-        browserPlaceholder.toFront();
     }
 
     //@@author AzuraAiR
@@ -116,12 +92,28 @@ public class InfoPanel extends UiPart<Region> {
 
     //@@author yeggasd
     @Subscribe
-    private void handleTimeTableEvent(TimeTableEvent event) {
-        timetablePlaceholder.getChildren().removeAll();
-        timeTablePanel = new TimeTablePanel(event.getTimeTable());
-        timetablePlaceholder.getChildren().add(timeTablePanel.getRoot());
-        timetablePlaceholder.toFront();
-        timeTablePanel.setStyle();
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        venuePlaceholder.toBack();
+        mapsPlaceholder.toBack();
+        birthdayPlaceholder.toBack();
+        Person person = event.getNewSelection().person;
+        int oddEvenIndex = event.getOddEvenIndex();
+
+        personDetailsCard.update(person, oddEvenIndex);
+        userDetailsPlaceholder.toFront();
     }
     //@@author
+    /*
+    @Subscribe
+    private void handleTimeTableEvent(TimeTableEvent event) {
+
+        userDetailsPlaceholder.getChildren().removeAll();
+        timeTablePanel = new TimeTablePanel(event.getTimeTable());
+        userDetailsPlaceholder.getChildren().add(timeTablePanel.getRoot());
+        userDetailsPlaceholder.toFront();
+        timeTablePanel.setStyle();
+
+    }
+    */
 }

@@ -24,6 +24,10 @@ public class GoogleMapsDisplay extends UiPart<Region> {
     private WebView maps;
 
     public GoogleMapsDisplay() {
+        this(null);
+    }
+
+    public GoogleMapsDisplay(String locations) {
         super(FXML);
 
         // To prevent triggering events for typing inside the loaded Web page.

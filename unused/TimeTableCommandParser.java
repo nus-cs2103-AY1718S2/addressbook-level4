@@ -7,7 +7,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.TimeTableCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-//@@author yeggasd
+//@@author yeggasd-unused
 /**
  * Parses input arguments and creates a new TimeTableCommand object
  */

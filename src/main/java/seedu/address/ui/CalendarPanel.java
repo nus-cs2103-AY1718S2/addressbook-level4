@@ -4,12 +4,17 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.CalendarView;
+import com.calendarfx.view.DayViewBase;
+import com.calendarfx.view.DetailedWeekView;
 import com.calendarfx.view.page.PageBase;
 import com.google.common.eventbus.Subscribe;
 
@@ -92,6 +97,20 @@ public class CalendarPanel extends UiPart<CalendarView> {
         calendarView.setOnMouseClicked(null);
 
         calendar.setReadOnly(true);
+
+        calendarView.getWeekPage().setShowNavigation(false);
+        calendarView.getWeekPage().setShowDate(false);
+        calendarView.weekFieldsProperty().setValue(WeekFields.of(Locale.FRANCE)); // Start week from Monday
+        LocalTime startTime = LocalTime.of(7, 00);
+        LocalTime endTime = LocalTime.of(22, 00);
+        calendarView.setStartTime(startTime);
+        calendarView.setEndTime(endTime);
+
+        DetailedWeekView detailedWeekView = calendarView.getWeekPage().getDetailedWeekView();
+        detailedWeekView.setEarlyLateHoursStrategy(DayViewBase.EarlyLateHoursStrategy.HIDE);
+        detailedWeekView.setHoursLayoutStrategy(DayViewBase.HoursLayoutStrategy.FIXED_HOUR_COUNT);
+        detailedWeekView.setVisibleHours((int) ChronoUnit.HOURS.between(startTime, endTime));
+        detailedWeekView.setShowScrollBar(false);
     }
 
     /**

@@ -70,10 +70,12 @@ public class Imdb implements ReadOnlyImdb {
         this.tags.setTags(tags);
     }
 
+    //@@author Kyholmes
     public void setQueue(Set<Integer> queueNos) {
         this.visitingQueue.setVisitingQueue(queueNos);
     }
 
+    //@@author
     /**
      * Resets the existing data of this {@code Imdb} with {@code newData}.
      */
@@ -100,7 +102,7 @@ public class Imdb implements ReadOnlyImdb {
     }
 
     //// patient-level operations
-
+    //@@author
     /**
      * Adds a patient to the address book.
      * Also checks the new patient's tags and updates {@link #tags} with any new tags found,
@@ -159,6 +161,7 @@ public class Imdb implements ReadOnlyImdb {
                 patient.getRemark(), patient.getRecordList(), correctTagReferences, patient.getAppointments());
     }
 
+    //@@author Kyholmes
     /**
      *  Updates the master appointment list to include appointment in all patients.
      */
@@ -172,6 +175,7 @@ public class Imdb implements ReadOnlyImdb {
         }
     }
 
+    //@@author
     /**
      * Removes {@code key} from this {@code Imdb}.
      * @throws PatientNotFoundException if the {@code key} is not in this {@code Imdb}.
@@ -190,6 +194,7 @@ public class Imdb implements ReadOnlyImdb {
         tags.add(t);
     }
 
+    //@@author Kyholmes
     /**
      * remove a patient appointment
      * @throws UniqueAppointmentList.DuplicatedAppointmentException
@@ -209,7 +214,6 @@ public class Imdb implements ReadOnlyImdb {
         appointments.add(appointmentEntry);
     }
 
-    //@@author Kyholmes
     /**
      * Adds a patient to the visiting queue.
      * Also checks the new patient's tags and updates {@link #tags} with any new tags found,
@@ -280,6 +284,7 @@ public class Imdb implements ReadOnlyImdb {
         return tags.asObservableList();
     }
 
+    //@@author Kyholmes
     @Override
     public ObservableList<AppointmentEntry> getAppointmentEntryList() {
         return appointments.asObservableList();
@@ -320,6 +325,7 @@ public class Imdb implements ReadOnlyImdb {
         return patient.deletePatientAppointment(index);
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

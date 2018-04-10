@@ -71,6 +71,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ImdbChangedEvent(imdb));
     }
 
+    //@@author Kyholmes
     private void indicateAppointmentChanged(Patient patient) {
         raise(new AppointmentChangedEvent(patient, imdb));
     }
@@ -79,7 +80,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ShowCalendarViewRequestEvent(imdb.getAppointmentEntryList()));
     }
 
-    //@@author Kyholmes
+
     private void indicateQueueChanged() {
         raise(new QueueChangedEvent(imdb));
     }
@@ -132,6 +133,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPatients.setPredicate(predicate);
     }
 
+    //@@author Kyholmes
     public Patient getPatientFromList(Predicate<Patient> predicate) {
         filteredPatients.setPredicate(predicate);
         if (filteredPatients.size() > 0) {
@@ -164,7 +166,6 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAppointmentChanged(patient);
     }
 
-    //@@author Kyholmes
     @Override
     public ObservableList<Integer> getPatientListIndexInQueue() {
         return imdb.getUniquePatientQueueNo();

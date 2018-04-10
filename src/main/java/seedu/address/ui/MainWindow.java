@@ -215,6 +215,8 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author Kyholmes
     @Subscribe
     private void handleShowPatientAppointment(ShowPatientAppointmentRequestEvent event) throws ParseException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

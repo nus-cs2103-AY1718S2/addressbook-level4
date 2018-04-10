@@ -16,6 +16,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.LoginEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -27,6 +28,7 @@ import seedu.address.model.UserPrefs;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+    private static final String FXML_0 = "LoginWindow.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -39,6 +41,10 @@ public class MainWindow extends UiPart<Stage> {
     private UserPrefs prefs;
     private DetailsPanel detailsPanel;
     private JobListPanel jobListPanel;
+    private DisplayPanel displayPanel;
+    private ResultDisplay resultDisplay;
+    private StatusBarFooter statusBarFooter;
+    private CommandBox commandBox;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -64,7 +70,28 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    @FXML
+    private StackPane displayPanelPlaceholder;
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
+        super(FXML_0, primaryStage);
+
+        // Set dependencies
+        this.primaryStage = primaryStage;
+        this.logic = logic;
+        this.config = config;
+        this.prefs = prefs;
+
+        // Configure the UI
+        setTitle(config.getAppTitle());
+        setWindowDefaultSize(prefs);
+
+        setAccelerators();
+        registerAsAnEventHandler(this);
+    }
+
+    // Constructor for test purpose
+    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic, int i) {
         super(FXML, primaryStage);
 
         // Set dependencies
@@ -119,32 +146,51 @@ public class MainWindow extends UiPart<Stage> {
         });
     }
 
+    //@@author Jason1im
     /**
-     * Fills up all the placeholders of this window.
+     * Initialize all the Panels in Main Window
      */
-    void fillInnerParts() {
-
+    void init() {
         detailsPanel = new DetailsPanel();
         detailsPanel.addBrowserPanel();
         detailsPanel.addContactDetailsDisplayPanel();
         detailsPanel.addCalendarPanel(logic.getAppointmentList());
         detailsPanel.addEmailPanel();
         detailsPanel.addGoogleLoginPanel();
-        detailsPlaceholder.getChildren().add(detailsPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-
-        ResultDisplay resultDisplay = new ResultDisplay();
-        resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         jobListPanel = new JobListPanel(logic.getFilteredJobList());
-        jobListPanelPlaceholder.getChildren().add(jobListPanel.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
-        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
+        displayPanel = new DisplayPanel();
 
-        CommandBox commandBox = new CommandBox(logic);
+        statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+
+        resultDisplay = new ResultDisplay();
+
+        commandBox = new CommandBox(logic);
+
+    }
+
+    //@@author
+    /**
+     * Fills up all the placeholders of this window.
+     */
+    void fillInnerParts(boolean hasLogin) {
+        if (hasLogin) {
+            detailsPlaceholder.getChildren().add(detailsPanel.getRoot());
+
+            personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+            jobListPanelPlaceholder.getChildren().add(jobListPanel.getRoot());
+
+            statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
+        } else {
+            displayPanelPlaceholder.getChildren().add(displayPanel.getRoot());
+        }
+
+        resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
@@ -205,6 +251,27 @@ public class MainWindow extends UiPart<Stage> {
         detailsPanel.releaseResources();
     }
 
+    //@@author Jason1im
+    /**
+     * Switches the fxml file loaded onto primaryStage
+     */
+    private void switchView(boolean isLogin) {
+        if (isLogin) {
+            loadFxmlFile(getFxmlFileUrl(FXML), primaryStage);
+            fillInnerParts(true);
+        } else {
+            loadFxmlFile(getFxmlFileUrl(FXML_0), primaryStage);
+            fillInnerParts(false);
+        }
+    }
+
+    @Subscribe
+    private void handleLoginEvent(LoginEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switchView(event.isLogin);
+    }
+
+    //@@author
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

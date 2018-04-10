@@ -146,4 +146,9 @@ public class NotificationCard extends UiPart<Region> {
     public String getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "Title: " + title.getText() + " Owner: " + ownerName.getText();
+    }
 }

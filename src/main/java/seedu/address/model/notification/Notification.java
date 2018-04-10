@@ -46,4 +46,9 @@ public class Notification {
     public String getEndDateDisplay() {
         return getEndDate().substring(13, 23) + " " + getEndDate().substring(24, 32);
     }
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }

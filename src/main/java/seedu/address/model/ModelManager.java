@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.logic.RequestToDeleteNotificationEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.AddressBookPasswordChangedEvent;
@@ -24,6 +25,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.photo.Photo;
+import seedu.address.ui.NotificationCard;
 import seedu.address.ui.NotificationCenter;
 
 /**
@@ -79,9 +81,24 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author IzHoBX
     @Override
     public synchronized void deleteNotification(String id) throws NotificationNotFoundException {
-        addressBook.deleteNotification(id);
-        notificationCenter.deleteNotification(id);
+        try {
+            addressBook.deleteNotification(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            notificationCenter.deleteNotification(id);
+        } catch (NullPointerException e) {
+            logger.info("NullPointerException encountered when deleting notification for deleted person");
+        }
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public NotificationCard deleteNotificationByIndex(Index targetIndex) throws NotificationNotFoundException {
+        NotificationCard toDelete = notificationCenter.getNotificationCard(targetIndex);
+        deleteNotification(notificationCenter.getIdByIndex(targetIndex));
+        return toDelete;
     }
 
     private void indicateNotificationAdded(Notification e) {
@@ -210,6 +227,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     public void setNotificationCenter(NotificationCenter notificationCenter) {
         this.notificationCenter = notificationCenter;
+    }
+
+    public NotificationCenter getNotificationCenter() {
+        return  notificationCenter;
     }
 
     //@@author

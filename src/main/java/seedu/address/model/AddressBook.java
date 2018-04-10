@@ -4,14 +4,17 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.Semaphore;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.notification.exceptions.NotificationNotFoundException;
@@ -227,9 +230,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Removes a timetable entry from the address book.
      */
-    public void deleteNotification(String notificationId) throws NotificationNotFoundException {
+    public void deleteNotification(String notificationId) throws NotificationNotFoundException, InterruptedException {
         boolean found = false;
-        for (Notification t: notifications) {
+        Iterator<Notification> iterator = notifications.iterator();
+        while (iterator.hasNext()) {
+            Notification t = iterator.next();
             if (t != null && t.getId() != null && t.getId().equals(notificationId)) {
                 notifications.remove(t);
                 found = true;

@@ -202,8 +202,8 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     private void showDelayedNotifications() {
-        for (ShowNotificationEvent e: delayedNotifications) {
-            showNotificationInApp(e);
+        while (!delayedNotifications.isEmpty()) {
+            showNotificationInApp(delayedNotifications.poll());
         }
     }
 

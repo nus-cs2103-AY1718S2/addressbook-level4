@@ -109,7 +109,7 @@ public class NotificationCenter {
             notificationCards.remove(nc);
         }
         for (NotificationCard nc: notificationCardCopy) {
-            if (nc.getId().equals(id)) {
+            if (nc!=null && nc.getId().equals(id)) {
                 notificationCardCopy.remove(nc);
                 break;
             }

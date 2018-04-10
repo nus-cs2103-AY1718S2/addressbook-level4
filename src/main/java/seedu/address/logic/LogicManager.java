@@ -151,9 +151,14 @@ public class LogicManager extends ComponentManager implements Logic {
                             .format(Calendar.getInstance().getTimeInMillis()));
                 }
                 Notification notification = timerTaskToTimetableEntryMap.get(this);
-                String ownerName = ((ModelManager) model).getNameById(notification.getOwnerId());
-                raise(new ShowNotificationEvent(ownerName, notification));
-                //raise(new RequestToDeleteNotificationEvent(timerTaskToTimetableEntryMap.get(this).getId()));
+                String ownerName;
+                try {
+                    ownerName = ((ModelManager) model).getNameById(notification.getOwnerId());
+                    raise(new ShowNotificationEvent(ownerName, notification));
+                } catch (NullPointerException e) {
+                    logger.info("Corresponding person is deleted. Ignoring this notification");
+                    raise(new RequestToDeleteNotificationEvent(notification.getId()));
+                }
             }
         };
         timetableEntriesStatus.put(task, true);

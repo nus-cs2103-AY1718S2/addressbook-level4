@@ -20,9 +20,9 @@ import java.util.logging.Logger;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.JsonUtil;
-import seedu.address.model.event.WeeklyEvent;
 import seedu.address.database.module.Module;
 import seedu.address.database.module.Schedule;
+import seedu.address.model.event.WeeklyEvent;
 import seedu.address.model.person.TimeTableLink;
 
 /**

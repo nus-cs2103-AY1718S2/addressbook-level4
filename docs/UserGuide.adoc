@@ -63,7 +63,7 @@ is specified when adding a customer.
 //@@author
 
 //@@author jonleeyz
-// tag::dataencryption[]
+// tag::commandsummary[]
 == Command Summary
 [NOTE]
 ====
@@ -135,7 +135,7 @@ is specified when adding a customer.
 |kbd:[Ctrl+Shift+A]
 |`assign RUNNER-INDEX c: CUSTOMER-INDEX [CUSTOMER-INDEX ...]`
 |===
-// end::dataencryption[]
+// end::commandsummary[]
 == Feature details
 
 === Showing command history : `history`

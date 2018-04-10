@@ -3,7 +3,7 @@
 :stylesDir: ../stylesheets
 
 
-== PROJECT: ContactHeRo
+== PROJECT: contactHeRo
 
 ---
 
@@ -27,22 +27,23 @@ This portfolio is to collate my contributions towards the developing of contactH
 
 * *Other contributions*:
 
+** Took the role of Team Leader to make important decisions regarding development of product.
 ** Features:
-*** Auto-complete: added functionality for commands to be auto-completed on pressing `TAB` (Pull request https://github.com/CS2103JAN2018-W09-B2/main/pull/35, https://github.com/CS2103JAN2018-W09-B2/main/pull/186)
-*** Tab Display: added a tab display for Contact Details and LinkedIn features which was later used by other features like Email and Calendar.
+*** Auto-complete: added functionality for commands to be auto-completed on pressing `TAB` https://github.com/CS2103JAN2018-W09-B2/main/pull/35[Pull request #35], https://github.com/CS2103JAN2018-W09-B2/main/pull/186[Pull request #186]
+*** Improved User Interface by adding Tabbed Details Panel: added a tab display for Details Panel which was used by many features like LinkedIn, Email and Calendar.
 ** Project management:
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
-*** Managed milestones `v1.1` - `v1.5rc` (5 milestones) on GitHub
-*** Created issues and labels for issues
+*** Managed all releases `v1.3` - `v1.5rc` on GitHub
+*** Managed all milestones `v1.1` - `v1.5rc` (5 milestones) on GitHub
+*** Managed project effectively to keep track of issues, merging pull requests by resolving conflicts and keeping track of deadlines and deliverables.
 ** Enhancements to existing features:
-*** Added cuurentPosition and company attributes to Person (Pull request https://github.com/CS2103JAN2018-W09-B2/main/pull/118)
-*** Updated Ui to contain icons (Commit https://github.com/CS2103JAN2018-W09-B2/main/pull/136/commits/7b9ac8bb2d99af8a63d7bf9ee68d17a0b48bea58)
+*** Added curentPosition and company attributes to Person https://github.com/CS2103JAN2018-W09-B2/main/pull/118[Pull request #118]
+*** Updated Ui to contain icons https://github.com/CS2103JAN2018-W09-B2/main/pull/136/commits/7b9ac8bb2d99af8a63d7bf9ee68d17a0b48bea58[Commit #7b9ac8]
 
 ** Documentation:
-*** Made User Guide more reader-friendly by adding screenshots and organising features into sections: https://github.com/CS2103JAN2018-W09-B2/main/pull/114/, https://github.com/CS2103JAN2018-W09-B2/main/pull/217
+*** Made User Guide more reader-friendly by adding screenshots and organising features into sections: https://github.com/CS2103JAN2018-W09-B2/main/pull/114/[Pull request #114], https://github.com/CS2103JAN2018-W09-B2/main/pull/217[Pull request #217]
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W09-B2/main/pull/173, https://github.com[#32], https://github.com/CS2103JAN2018-W09-B2/main/pull/55, https://github.com/CS2103JAN2018-W09-B2/main/pull/152, 
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F09-B1/main/issues/85, https://github.com/CS2103JAN2018-F09-B1/main/issues/95, https://github.com/CS2103JAN2018-F09-B1/main/issues/69, https://github.com/CS2103JAN2018-F09-B1/main/issues/76, https://github.com/CS2103JAN2018-F09-B1/main/issues/83)
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W09-B2/main/pull/173[Pull request #173], https://github.com/CS2103JAN2018-W09-B2/main/pull/55[Pull request #55], https://github.com/CS2103JAN2018-W09-B2/main/pull/152[Pull request #152], 
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F09-B1/main/issues/85[Issue #85], https://github.com/CS2103JAN2018-F09-B1/main/issues/95[Issue #95], https://github.com/CS2103JAN2018-F09-B1/main/issues/69[Issue #69], https://github.com/CS2103JAN2018-F09-B1/main/issues/76[Issue #76], https://github.com/CS2103JAN2018-F09-B1/main/issues/83[Issue #83])
 
 == Contributions to the User Guide
 

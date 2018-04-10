@@ -53,6 +53,10 @@ public class SortCommandTest {
         requireNonNull(myModel);
         Object[] parray = myModel.getFilteredPersonList().toArray();
 
+        if (parray.length < 1) {
+            return false;
+        }
+
         if (!parray[0].toString().substring(0, 1).equals("A")) {
             isSorted = false;
         }
@@ -95,7 +99,12 @@ public class SortCommandTest {
             throws Exception {
         ImportContactsCommand icc = new ImportContactsCommand("data/Test_contacts_unsorted.csv");
         icc.model = new ModelManager();
-        icc.executeUndoableCommand();
+
+        try {
+            icc.executeUndoableCommand();
+        } catch (CommandException cr) {
+            System.out.println("Failed in setupModelWithImportedContacts\n" + cr.getStackTrace());
+        }
 
         assertFalse(checkSorted(icc.model));
         icc.model.sortAddressBookAlphabeticallyByName();

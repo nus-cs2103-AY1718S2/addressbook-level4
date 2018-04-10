@@ -14,6 +14,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.commands.DeleteBeforeCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteTemplateCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -151,6 +152,11 @@ public class AddressBookParser {
         case AddTemplateCommand.COMMAND_ALIAS:
             return new AddTemplateCommandParser().parse(arguments);
 
+        case DeleteTemplateCommand.COMMAND_WORD:
+            return new DeleteTemplateCommandParser().parse(arguments);
+
+        case DeleteTemplateCommand.COMMAND_ALIAS:
+            return new DeleteTemplateCommandParser().parse(arguments);
         //@@author
 
         //@@author luca590

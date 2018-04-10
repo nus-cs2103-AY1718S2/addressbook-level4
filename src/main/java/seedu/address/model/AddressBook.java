@@ -20,6 +20,7 @@ import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.email.Template;
 import seedu.address.model.email.UniqueTemplateList;
 import seedu.address.model.email.exceptions.DuplicateTemplateException;
+import seedu.address.model.email.exceptions.TemplateNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -103,6 +104,14 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void addTemplate(Template template) throws DuplicateTemplateException {
         templates.add(template);
+    }
+
+    public boolean removeTemplate(String purpose) throws TemplateNotFoundException {
+        if (templates.remove(purpose)) {
+            return true;
+        } else {
+            throw new TemplateNotFoundException();
+        }
     }
 
     public void setTemplates() throws DuplicateTemplateException {

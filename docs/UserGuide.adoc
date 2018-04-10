@@ -68,7 +68,7 @@ image::ui_walkthrough.png[width="990"]
 .	Command result: where message will be displayed after a command is entered
 .	Multipurpose panel: where patient's details, appointments will be displayed here
 .	Patient list panel: where list of patients in the database is displayed
-.	Waiting list panel: where list of patients who are waiting for consultation is displayed
+.	Visiting queue panel: where list of patients who are waiting for consultation is displayed
 
 *Command Format*
 
@@ -411,25 +411,31 @@ Format: `print INDEX` or `p INDEX`
 
 IMDB will be able to attach images(X-ray scans) to a patient and retrieve the images for viewing.
 
-=== Queue Commands
+=== Visiting Queue Commands
 
 The commands listed in this section are commands that pertain to the queue.
 
-==== Adding a patient into the visiting queue with patient name: `addq` [since v1.2]
+==== Adding a patient into the visiting queue with index: `addq` [since v1.2]
 
 Adds patient into visiting queue (registration).
 
-*This command is only accessible to medical staffs.* +
+*This command is only accessible to medical staffs and is not undoable.* +
 
-Format: `addq PATIENT_NAME` or `aq PATIENT_NAME`
+Format: `addq INDEX` or `aq INDEX`
 
 Examples:
 
-* `addq Betsy` +
-Betsy will be added at the back of the visiting queue.
+* `list` +
+`addq 3` +
+Charlotte Oliveiro will be added into the visiting queue.
 
-* `aq John` +
-John will be added at the back of the visiting queue.
+* `find bernice` +
+`aq 2` +
+Bernice Lee will be added into the visiting queue as shown in Figure 3 below.
+
+.Add patient to queue according to list index
+[caption="Figure 3: "]
+image::addq_duplicate.png[width="990"]
 
 ==== Removing a patient from the visiting queue with patient name: `removeq` [since v1.2]
 

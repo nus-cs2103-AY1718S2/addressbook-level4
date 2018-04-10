@@ -75,7 +75,6 @@ public class EmailPanel extends UiPart<Region> {
             clearAllFields();
 
         } catch (Exception e) {
-            e.printStackTrace();
             showAlertDialogAndWait("Email not sent",
                     "Please ensure you are connected to the internet and has logged into google");
         }

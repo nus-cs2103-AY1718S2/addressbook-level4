@@ -227,6 +227,7 @@ public class UiManager extends ComponentManager implements Ui {
     }
     //@@author
 
+    //@@author crizyli
     @Subscribe
     private void handleShowTodoListEvent(ShowTodoListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -246,4 +247,5 @@ public class UiManager extends ComponentManager implements Ui {
             System.out.println(e2.getMessage());
         }
     }
+    //@@author
 }

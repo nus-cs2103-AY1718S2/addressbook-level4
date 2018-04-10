@@ -107,6 +107,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
     }
 
+    //@@author crizyli
     @Test
     public void parseCommand_addEvent() throws Exception {
         assertTrue(parser.parseCommand(TestAddEventCommand.COMMAND_WORD
@@ -151,6 +152,7 @@ public class AddressBookParserTest {
     public void parseCommand_authen() throws Exception {
         assertTrue(parser.parseCommand(AuthenCommand.COMMAND_WORD) instanceof AuthenCommand);
     }
+    //@@author
 
     @Test
     public void parseCommand_select() throws Exception {

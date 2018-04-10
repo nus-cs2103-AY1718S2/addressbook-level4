@@ -473,4 +473,5 @@ public class MainWindow extends UiPart<Stage> {
             raise(new SetPasswordEnteredEvent("incomplete"));
         }
     }
+    //@@author
 }

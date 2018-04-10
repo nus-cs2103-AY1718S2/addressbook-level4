@@ -295,8 +295,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setNextId(int nextId) {
         this.nextId = nextId;
     }
-    //@@author
 
+    //@@author crizyli
     @Override
     public String getPassword() {
         return password;

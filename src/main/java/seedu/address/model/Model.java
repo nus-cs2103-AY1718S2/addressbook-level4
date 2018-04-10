@@ -41,12 +41,13 @@ public interface Model {
     void addNotification(Notification e) throws DuplicateTimetableEntryException;
     //@@author IzHoBX
 
-
+    //@@author crizyli
     /** Adds the given password */
     void setPassword(String e);
 
     /** Gets the password */
     String getPassword();
+    //@@author
 
     ObservableList<Photo> getPhotoList();
 

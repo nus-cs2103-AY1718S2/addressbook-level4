@@ -51,5 +51,18 @@ public class EmailCard extends UiPart<Region> {
         }
     }
 
+    /**
+     * opens popup window prefilled with email when email from inbox is clicked
+     * @throws IOException
+     */
+    @FXML
+    private void openEmail() throws IOException {
+        try {
+            ComposeEmailWindow cew = new ComposeEmailWindow(this.email.getText());
+        } catch (IOException e) {
+            System.out.println("IOException");
+        }
+    }
+
 }
 

@@ -70,6 +70,9 @@ public interface Model {
      */
     void updateFilteredTemplateList(Predicate<Template> predicate);
 
+    /** Deletes the given template */
+    void deleteTemplate(String purpose) throws TemplateNotFoundException;
+
     /** Selects template based on search string */
     Template selectTemplate(String search) throws TemplateNotFoundException;
 

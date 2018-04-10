@@ -36,7 +36,6 @@ public class AddTemplateCommandParser implements Parser<AddTemplateCommand> {
             String purpose = (argMultimap.getValue(PREFIX_PURPOSE)).get().trim();
             String subject = (argMultimap.getValue(PREFIX_SUBJECT)).get().trim();
             String message = (argMultimap.getValue(PREFIX_MESSAGE)).get().trim();
-            System.out.println(purpose + subject + message);
 
             Template template = new Template(purpose, subject, message);
 

@@ -70,13 +70,15 @@ public class UniqueTemplateList implements Iterable<Template> {
      *
      * @throws TemplateNotFoundException if no such template could be found in the list.
      */
-    public boolean remove(Template toRemove) throws TemplateNotFoundException {
-        requireNonNull(toRemove);
-        final boolean templateFoundAndDeleted = internalList.remove(toRemove);
-        if (!templateFoundAndDeleted) {
-            throw new TemplateNotFoundException();
+    public boolean remove(String purpose) throws TemplateNotFoundException {
+        requireNonNull(purpose);
+        for (Template template : internalList) {
+            if (template.getPurpose().equals(purpose)) {
+                internalList.remove(template);
+                return true;
+            }
         }
-        return templateFoundAndDeleted;
+        throw new TemplateNotFoundException();
     }
 
     public void setTemplates(UniqueTemplateList replacement) {

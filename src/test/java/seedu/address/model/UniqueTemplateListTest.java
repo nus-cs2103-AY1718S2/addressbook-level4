@@ -35,7 +35,7 @@ public class UniqueTemplateListTest {
     public void asObservableList_modifyList_throwsTemplateNotFoundException() throws TemplateNotFoundException {
         UniqueTemplateList uniqueTemplateList = new UniqueTemplateList();
         thrown.expect(TemplateNotFoundException.class);
-        uniqueTemplateList.remove(new Template("test", "test", "test"));
+        uniqueTemplateList.remove("test");
     }
 
 }

@@ -13,7 +13,7 @@ import seedu.address.model.email.exceptions.DuplicateTemplateException;
 /**
  * Adds an appointment to the address book.
  */
-public class AddTemplateCommand extends UndoableCommand {
+public class AddTemplateCommand extends Command {
 
     public static final String COMMAND_WORD = "addtemplate";
     public static final String COMMAND_ALIAS = "at";
@@ -43,7 +43,7 @@ public class AddTemplateCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
         try {
             model.addTemplate(toAdd);

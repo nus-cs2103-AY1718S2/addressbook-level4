@@ -85,6 +85,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
     //@@author ng95junwei
+    /** Raises an event to indicate a template has been deleted */
+    private void indicateTemplateDeleted(String purpose) {
+        //raise(new NewTemplateAddedEvent(template)); TO IMPLEMENT
+    }
+    /** Raises an event to indicate a template has been added */
     private void indicateTemplateAdded(Template template) {
         //raise(new NewTemplateAddedEvent(template)); TO IMPLEMENT
     }
@@ -146,6 +151,14 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author
     //========== Template Mutators ==================================================================
     //@@author ng95junwei
+    @Override
+    public synchronized void deleteTemplate(String purpose) throws TemplateNotFoundException {
+        addressBook.removeTemplate(purpose);
+        updateFilteredTemplateList(PREDICATE_SHOW_ALL_TEMPLATES);
+        indicateTemplateDeleted(purpose);
+        indicateAddressBookChanged();
+    }
+
     @Override
     public synchronized void addTemplate(Template template) throws DuplicateTemplateException {
         addressBook.addTemplate(template);

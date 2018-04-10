@@ -1,5 +1,6 @@
 = ProgressChecker - User Guide
 :toc:
+:toclevels: 4
 :toc-title:
 :toc-placement: preamble
 :sectnums:
@@ -17,334 +18,172 @@ endif::[]
 By: `Team T09-B3`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
-
 === About the App
 
 ProgressChecker is for *students* who *prefer to use a desktop app* to keep track of their learning progress throughout the certain module. (Current version is available for CS2103/T) +
 
-For the current version, students can add their teammates into the app. They can create a new task list through google task. By default, app will display all the link:DeveloperGuide.adoc#Learning-Outcomes[Learning Outcomes] for this week in the task list. Students can use this task list to track their weekly homework and the progress of the project.
+For the current version, you can add your teammates details into ProgressChecker. You can also create a new task list through google task. By default, app will display all the link:DeveloperGuide.adoc#Learning-Outcomes[Learning Outcomes] for this week in the task list. Students can use this task list to track their weekly homework and the progress of the project.
 
-More importantly, ProgressChecker is *optimized for students who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI).
+More importantly, ProgressChecker is *optimized for students who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (link:DeveloperGuide.adoc#GUI[GUI]).
 If you can type fast, ProgressChecker can get your learning outcome tasks done faster than traditional GUI apps. +
 
-Interested? Jump to the <<Quick Start,Quick Start>> to get started. Enjoy!
+Interested? Now you are ready to jump to the <<Quick Start,Quick Start>> to get started. Enjoy!
 
 === Icons Meaning
+You will be seeing these icons throughout the guide. Each icon display specific information.
 
 [TIP]
-Tip
+This lightbulb icon means tips that you can try when using ProgressChecker.
 
 [NOTE]
-Note
+This info icon means notes that you should pay attention to when using ProgressChecker.
 
 == Quick Start
 
 Getting started with ProgressChecker is as easy as downloading and launching the software in a couple of clicks! Listed below are the important *steps* that you will need to follow to get started:
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Please ensure that you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `progresschecker.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your ProgressChecker.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  You can download the latest `progresschecker.jar` link:{repoURL}/releases[here].
+.  Next, you can create a new folder on your Desktop and name it _ProgressChecker_. Then, place the downloaded progresschecker.jar file into the new folder you've just created. +
+Your jar file should now be residing in C:\Users\%UserProfile%\Desktop\ProgressChecker.
++
+image::download3.png[width="790"]
++
+.  You can double-click the file to launch the app. A GUI as shown below should appear in a few seconds.
 +
 image::Ui.png[width="790"]
 +
-[NOTE]
-====
-The viewing of learning outcomes and exercises are not ready yet! Currently, only some of week 11's exercises are reflected.
-====
+. You should also notice that the following files shown below will have been automatically generated in the same directory as where your progresschecker.jar file is in upon launch.
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+image::download2.png[width="790"]
 +
-[TIP]
-You can type a command and press `Tab` to auto bring out all the command parameters.
-
-* *`list`* : lists all contacts
-
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com m/Computer Science y/2` : adds a contact named `John Doe` to the Address Book. He is in his 2nd year majoring in computer engineering.
-
-* **`+issue`**`ti/TestIssue` : creates an issue on github in the team repo
-
-* *`nl`* : adds the default TODO list
-
-* *`vt`* : views the TODO list
-
-* **`ct`**`3` : mark task No.3 as completed
-
-* **`rt`**`3` : reset task No.3 as incompleted
-
-* **`ans`**`11.1.1 sample answer` : answer exercise 11.1.1 with `sample answer`
-
-* *`exit`* : exits the app
-
-.  Refer to <<Features,Features>> for details of each command.
+Now, you are ready to start to explore ProgressChecker!
 
 [[Features]]
 == Features
 
-You may find having to learn a large new number of commands rather intimidating. The section below specifies all the commands in details with examples to help you overcome that learning curve and let you make the best out of ProgressChecker.
+ProgressChecker is filled with lots of functionalities that are easy to use. If you're new to using CLI, our next section will give you a quick start to end process of using CLI with ProgressChecker.
 
+The section below specifies all the commands in details with examples to help you be more familiar how to use our app and let you make the best out of ProgressChecker.
+
+=== Using CLI with ProgressChecker
+
+Now you come to use the ProgressChecker. You can type the command in the command box and press kbd:[Enter] to execute it. Here are the features that you can try:
+
+[TIP]
+You can type a command and press `Tab` to auto bring out all the command parameters.
+
+*List of Example Commands*
+
+* *`help`* : you can open the help window in case you have any questions.
+
+* *`list`* : you can see all contacts will be listed on the left side of the window.
+
+* *`add n/John Doe p/98765432 e/johnd@example.com m/Computer Science y/2 g/johndoe`* : you can add the contact indormation of your friend `John Doe` to the ProgressChecker. He is in his 2nd year majoring in computer engineering. His username of the Github is johndoe.
+
+* *`+issue ti/TestIssue`* : you can create an issue on github in your team repo.
+
+* *`nl`* : you can create the default TODO list for your the tasks to complete this week.
+
+* *`vt`* : you can view the tasks in the TODO list.
+
+* *`ct 3`* : you can mark task No.3 as completed when you finish it.
+
+* *`rt 3`* : you can reset task No.3 as incompleted if you mark it completed by mistake or you want to update more details.
+
+* *`ans 11.1.1 your answer`* : you can answer exercise 11.1.1 with `your answer`.
+
+* *`exit`* : you can exit the app.
+
+Refer to <<Default,below>> for details of each command.
 ====
-*Command Format*
+*Notes:*
 
 * The commands are case-insensitive. However, for simplicity all the examples have the commands in lower case.
 * You can auto-complete any command by pressing tab key.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Items with `…` after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Adding a teammate: `add` OR `a`
+=== General
 
-Adds a teammate to the ProgressChecker. +
-*Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...` +
-OR +
-`a n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...`
+==== Helping user with User Guide : `help` OR `h`
 
-[TIP]
-A teammate can have any number of tags (including 0)
-
-*Examples:*
-
-* `add n/John Doe p/98765432 e/johnd@example.com m/Computer Science y/2`
-* `a n/John Doe p/98765432 e/johnd@example.com m/Computer Science y/2`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com m/Computer Engineering p/1234567 y/3 t/criminal`
-* `a n/Betsy Crowe t/friend e/betsycrowe@example.com m/Information Security y/2 p/1234567 t/criminal`
-
-// tag::answer[]
-=== Answering and saving an exercise : `answer` `[since v1.4r]`
-
-Answer an exercise based off the given question number. +
-*Format:* `answer INDEX ANSWER`
-
-****
-*Instructions:*
-
-* Answer an exercise at the specified `INDEX`.
-* The index refers to the question number.
-* The index must be of format `section number`.`question number`, 2.1.1, 3.2.5, 6.1.7
-****
-
-*Examples:*
-
-* `answer 2.1.1 Procedural languages work at simple data structures and functions level`
-// end::answer[]
-
-=== Clearing all entries : `clear` OR `c`
-
-Clear all information inside the ProgressChecker. +
-*Format:* `clear` OR `c`
-
-*Examples:*
-
-* `clear`
-* `c`
-
-=== Closing an issue on Github: `-issue` OR `cli`
-
-Closes an issue on github. +
-*Format:* `-issue INDEX` OR `cli INDEX`
-
-[TIP]
-`INDEX` refers to the #INDEX of an issue on github
-
-*Examples:*
-
-* `-issue 1`
-* `cli 3`
-
-=== Completing a task: `complete` OR `ct`
-
-Mark a task as completed. +
-*Format:* `complete INDEX` OR `ct INDEX`
-
-****
-*Instructions:*
-
-* Mark the task with index number `INDEX` as completed.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-[TIP]
-The command requires Internet connection. You may be brought to a login page in your browser. Please do not close the tab without accepting/declining request,
-otherwise the application will hang.
-
-Examples:
-
-* `complete 3`
-* `ct 3`
-
-=== Creating an issue on Github: `+issue` OR `ci`
-
-Creates an issue on github in the team repo. +
-*Format:* `+issue ti/TITLE [a/ASSIGNEES]... [ms/MILESTONE] [b/BODY] [l/LABELS]...` +
-OR +
-`ci ti/TITLE [a/ASSIGNEES]... [ms/MILESTONE] [b/BODY] [l/LABELS]...`
-
-[TIP]
-An issue has only 'title' field as compulsory. Rest are all optional. +
-An issue can have more than one assignees and labels.
-
-*Examples:*
-
-* `+issue ti/complete issue a/johndoe ms/v1.1 b/CS2103T is a software engineering module l/type.task l/CS2103T`
-* `+issue ti/TestIssue`
-* `ci ti/Issue with only body b/test body l/type.test`
-
-=== Deleting a teammate : `delete` OR `d`
-
-Deletes the specified teammate from the ProgressChecker. +
-*Format:* `delete INDEX` OR `d INDEX`
-
-****
-*Instructions:*
-
-* Deletes the teammate at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-*Examples:*
-
-* `list` +
-`delete 2` +
-Deletes the 2nd teammate in the ProgressChecker.
-* `find Betsy` +
-`d 1` +
-Deletes the 1st teammate in the results of the `find` command.
-
-=== Editing a teammate : `edit` OR `ed`
-
-Edits an existing teammate in the ProgressChecker. +
-*Format:* `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-OR +
-`ed INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-
-****
-*Instructions:*
-
-* Edits the teammate at the specified `INDEX`. The index refers to the index number shown in the last teammate listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the teammate will be removed i.e adding of tags is not cumulative.
-* You can remove all the teammate's tags by typing `t/` without specifying any tags after it.
-****
-
-*Examples:*
-
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st teammate to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd teammate to be `Betsy Crower` and clears all existing tags.
-
-=== Exiting the program : `exit` OR `e`
-
-Exits the program. +
-*Format:* `exit` OR `e`
-
-*Examples:*
-
-* `exit`
-* `e`
-
-=== Finding/Searching teammates by the keywords of name: `find` OR `search`
-
-Finds teammates whose names contain any of the given keywords. +
-*Format:* `find KEYWORD [MORE_KEYWORDS] OR search KEYWORD [MORE_KEYWORDS]`
-
-****
-*Instructions:*
-
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The search is dynamic. As the user types alphabets, the results will be shown without the need to press enter key
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Teammates matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-*Examples:*
-
-* `find John` +
-Returns `john` and `John Doe`
-* `search Betsy Tim John` +
-Returns any teammate having names `Betsy`, `Tim`, or `John`
-
-=== Github logging in: `gitlogin` OR `gl`
-
-Creates an issue on github in the team repo. +
-*Format:* `gitlogin gu/USERNAME pc/PASSWORD r/REPO` +
-OR +
-`gl gu/USERNAME pc/PASSWORD r/REPOSITORY`
-
-[TIP]
-Your git details are not saved in our app for sercurity reasons. Hence, you will need to login everytime you start the software. +
-You need to login and mention the repo where you need to create/edit issues.
-
-*Examples:*
-
-* `gitlogin gu/johndoe pc/dummy123 r/CS2103T/main`
-
-=== Helping user with User Guide : `help` OR `h`
-
-Displays the User Guide. +
+You may want to refer to the User Guide when you have a question. You can read it in a separate window. +
 *Format:* `help` OR `h`
 
-Examples:
+*Examples:*
 
 * `help`
 * `h`
 
-=== History viewing the list of entered commands : `history`
+// tag::view[]
+==== Viewing a different tab : `view` OR `v`
 
-Lists all the commands that you have entered in reverse chronological order. +
-*Format:* `history`
+You can change the tab view to show either profiles, tasks, or exercises window. +
+*Format:* `view TYPE` OR `v TYPE`
 
-[NOTE]
 ====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+*Notes:*
+
+* You can change the tab view to specified `TYPE`.
+* The type refers to the tab name.
+* The tab name must be `profile`, `task`, or `exercise`.
 ====
-
-*Example:*
-
-* `history`
-
-=== Listing all teammates : `list` OR `l`
-
-Shows a list of all teammates in the ProgressChecker. +
-*Format:* `list` OR `l`
 
 *Examples:*
 
-* `list`
-* `l`
+* `view exercise`
+// end::view[]
 
-=== New TODO list by dafault: `newtasklist` OR `nl`
+==== Toggling theme : `theme` OR `t`
 
-Adds the default TODO list to the ProgressChecker and your Google Tasks. +
-*Format:* `newtasklist` OR `nl`
-
-[TIP]
-The command requires Internet connection. You may be brought to a login page in your browser. Please do not close the tab without accepting/declining request,
-otherwise the application will hang.
+You can change the style of the app between a light and dark theme according to your preference. +
+*Format:* `theme` OR `t`
 
 *Examples:*
 
-* `newtasklist`
-* `nl`
+* `theme`
+* `t`
 
 // tag::undoredo[]
-=== Redoing the previously undone command : `redo` OR `r`
+==== Undoing previous command : `undo` OR `u`
 
-Reverses the most recent `undo` command. +
+You may type some commands wrongly, or some unexpected changes happen. You can restore the ProgressChecker to the state before the previous _undoable_ command is executed. +
+*Format:* `undo` OR `u`
+
+====
+*Notes:*
+
+* Undoable commands: those commands that modify the ProgressChecker's content (`add`, `delete`, `edit` and `clear`).
+====
+
+*Examples:*
+
+* `delete 1` +
+`list` +
+`u` (reverses the `delete 1` command)
+
+* `select 1` +
+`list` +
+`undo` +
+The `undo` command fails as there are no undoable commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`u` (reverses the `delete 1` command)
+
+==== Redoing the previously undone command : `redo` OR `r`
+
+You can reverse the most recent `undo` command if you want to go back to the previous state. +
 *Format:* `redo` OR `r`
 
 *Examples:*
@@ -365,9 +204,21 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command)
 // end::undoredo[]
 
-=== Refreshing the content : `refresh` OR `rf` `[coming in v2.0]`
+==== History viewing the list of entered commands : `history`
 
-Refreshes the program to update its content. +
+You can retrace all the commands that you have entered in reverse chronological order. +
+*Format:* `history`
+
+[TIP]
+You can press the kbd:[&uarr;] and kbd:[&darr;] arrows. The previous and next input respectively will display in the command box.
+
+*Example:*
+
+* `history`
+
+==== Refreshing the content : `refresh` OR `rf` `[coming in v2.0]`
+
+You can refresh the program to update it to the latest content. +
 *Format:* `refresh`
 
 *Examples:*
@@ -375,9 +226,97 @@ Refreshes the program to update its content. +
 * `refresh`
 * `rf`
 
-=== Reopening an issue on Github: `reopenissue` OR `ri`
+==== Clearing all entries : `clear` OR `c`
 
-Reopens an issue on github. +
+You can clear all information and data inside the ProgressChecker if you want to restore the app. +
+*Format:* `clear` OR `c`
+
+*Examples:*
+
+* `clear`
+* `c`
+
+==== Exiting the program : `exit` OR `e`
+
+You can exits the program when you are done with the work. +
+*Format:* `exit` OR `e`
+
+*Examples:*
+
+* `exit`
+* `e`
+
+=== Exercise
+
+// tag::answer[]
+==== Answering and saving an exercise : `answer` `[since v1.4r]`
+
+You can answer an exercise based off the given question number with your answer and save the answer. +
+*Format:* `answer INDEX ANSWER`
+
+====
+*Notes:*
+
+* You can answer an exercise at the specified `INDEX`.
+* The index refers to the question number.
+* The index must be of format `section number`.`question number`, 2.1.1, 3.2.5, 6.1.7
+====
+
+*Examples:*
+
+* `answer 2.1.1 Procedural languages work at simple data structures and functions level`
+// end::answer[]
+
+=== Issue Tracker
+
+==== Github logging in: `gitlogin` OR `gl`
+
+You can login with your Github account and prepare to work with the issues in your team repo. +
+*Format:* `gitlogin gu/USERNAME pc/PASSWORD r/REPO` +
+OR +
+`gl gu/USERNAME pc/PASSWORD r/REPOSITORY`
+
+[TIP]
+Your git details are not saved in our app for sercurity reasons. Hence, you will need to login every time you start the software. +
+You need to login and mention the repo where you need to create/edit issues.
+
+*Examples:*
+
+* `gitlogin gu/johndoe pc/dummy123 r/CS2103T/main`
+
+==== Creating an issue on Github: `+issue` OR `ci`
+
+You can create a new issue in the team repo. Other than write the description and title, you can also set assignees, milestone and labels to it. +
+*Format:* `+issue ti/TITLE [a/ASSIGNEES]... [ms/MILESTONE] [b/BODY] [l/LABELS]...` +
+OR +
+`ci ti/TITLE [a/ASSIGNEES]... [ms/MILESTONE] [b/BODY] [l/LABELS]...`
+
+[TIP]
+An issue has only 'title' field as compulsory. Rest are all optional. +
+An issue can have more than one assignees and labels.
+
+*Examples:*
+
+* `+issue ti/complete issue a/johndoe ms/v1.1 b/CS2103T is a software engineering module l/type.task l/CS2103T`
+* `+issue ti/TestIssue`
+* `ci ti/Issue with only body b/test body l/type.test`
+
+==== Closing an issue on Github: `-issue` OR `cli`
+
+You can close the certain issue on github when you have resolved it. +
+*Format:* `-issue INDEX` OR `cli INDEX`
+
+[TIP]
+`INDEX` refers to the #INDEX of an issue on github
+
+*Examples:*
+
+* `-issue 1`
+* `cli 3`
+
+==== Reopening an issue on Github: `reopenissue` OR `ri`
+
+You can reopen the certain issue on github when you want to work on it. +
 *Format:* `reopenissue INDEX` OR `ri INDEX`
 
 [TIP]
@@ -388,18 +327,12 @@ Reopens an issue on github. +
 * `reopenissue 1`
 * `reopenissue 3`
 
-=== Resetting a task as incompleted: `reset` OR `rt`
+=== Task List
 
-Reset a task as incompleted. +
-*Format:* `reset INDEX` OR `rt INDEX`
+==== New TODO list by dafault: `newtasklist` OR `nl`
 
-****
-*Instructions:*
-
-* Reset the task with index number `INDEX` as incompleted.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
+You can add the default TODO list to the ProgressChecker and your Google Tasks to prepare for your new week work. +
+*Format:* `newtasklist` OR `nl`
 
 [TIP]
 The command requires Internet connection. You may be brought to a login page in your browser. Please do not close the tab without accepting/declining request,
@@ -407,21 +340,165 @@ otherwise the application will hang.
 
 *Examples:*
 
-* `reset 3`
-* `rt 3`
+* `newtasklist`
+* `nl`
 
-=== Selecting a teammate : `select` OR `s`
+==== Viewing the default TODO list: `viewtask` OR `vt`
 
-Selects the teammate identified by the index number used in the last teammate listing. +
+You can view the current default TODO list in the browser panel in ProgressChecker. +
+*Format:* `viewtask` OR `vt`
+
+[TIP]
+The command requires Internet connection. You may be brought to a login page in your browser. Please do not close the tab without accepting/declining request,
+otherwise the application will hang.
+
+*Examples:*
+
+* `-issue 1`
+* `cli 3`
+
+==== Completing a task: `complete` OR `ct`
+
+You can mark the task as completed when you finish it. +
+*Format:* `complete INDEX` OR `ct INDEX`
+
+====
+*Notes:*
+
+* You can mark the task with index number `INDEX` as completed.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+====
+
+[TIP]
+The command requires Internet connection. You may be brought to a login page in your browser. Please do not close the tab without accepting/declining request,
+otherwise the application will hang.
+
+*Examples:*
+
+* `complete 3`
+* `ct 3`
+
+==== Resetting a task as incompleted: `reset` OR `rt`
+
+You can reset a task as incompleted when you want to work on it. +
+*Format:* `reset INDEX` OR `rt INDEX`
+
+****
+*Notes:*
+
+* You can reset the task with index number `INDEX` as incompleted.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+[TIP]
+An issue has only 'title' field as compulsory. Rest are all optional. +
+An issue can have more than one assignees and labels.
+
+*Examples:*
+
+* `+issue ti/complete issue a/johndoe ms/v1.1 b/CS2103T is a software engineering module l/type.task l/CS2103T`
+* `+issue ti/TestIssue`
+* `ci ti/Issue with only body b/test body l/type.test`
+
+=== Teammate
+
+==== Adding a teammate: `add` OR `a`
+
+You can add the contact information of a new teammate to the ProgressChecker. +
+*Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR g/GITHUB_USERNAME [t/TAG]...` +
+OR +
+`a n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR g/GITHUB_USERNAME [t/TAG]...`
+
+[TIP]
+A teammate can have any number of tags (including 0)
+
+*Examples:*
+
+* `add n/John Doe p/98765432 e/johnd@example.com m/Computer Science y/2 g/johndoe`
+* `a n/John Doe p/98765432 e/johnd@example.com m/Computer Science y/2 g/johndoe`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com m/Computer Engineering p/1234567 y/3 g/betsycrowe t/criminal`
+* `a n/Betsy Crowe t/friend e/betsycrowe@example.com m/Information Security y/2 p/1234567 g/betsycrowe t/criminal`
+
+==== Editing a teammate : `edit` OR `ed`
+
+You can edit the information of the certain existing teammate in the ProgressChecker. +
+*Format:* `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [m/MAJOR] [y/YEAR] [g/GITHUB_USERNAME] [t/TAG]...` +
+OR +
+`ed INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [m/MAJOR] [y/YEAR] [g/GITHUB_USERNAME] [t/TAG]...`
+
+====
+*Notes:*
+
+* You can edit the information of the teammate at the specified `INDEX`. The index refers to the index number shown in the last teammate listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the teammate will be removed i.e adding of tags is not cumulative.
+* You can remove all the teammate's tags by typing `t/` without specifying any tags after it.
+====
+
+*Examples:*
+
+* `edit 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st teammate to be `91234567` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crower t/` +
+Edits the name of the 2nd teammate to be `Betsy Crower` and clears all existing tags.
+
+==== Listing all teammates : `list` OR `l`
+
+You can view the list of all your teammates in the ProgressChecker. +
+*Format:* `list` OR `l`
+
+*Examples:*
+
+* `list`
+* `l`
+
+==== Sorting all teammates : `sort`
+
+You can view the list of all your teammates in the ProgressChecker with their names in alphabetical order. +
+*Format:* `sort`
+
+*Example:*
+
+* `sort`
+
+==== Finding/Searching teammates by the keywords of name: `find` OR `search`
+
+You can find the certain teammates with their names contain any of the given keywords. +
+*Format:* `find KEYWORD [MORE_KEYWORDS] OR search KEYWORD [MORE_KEYWORDS]`
+
+====
+*Notes:*
+
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The search is dynamic. As the user types alphabets, the results will be shown without the need to press enter key
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Teammates matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+====
+
+*Examples:*
+
+* `find John` +
+Returns `john` and `John Doe`
+* `search Betsy Tim John` +
+Returns any teammate having names `Betsy`, `Tim`, or `John`
+
+==== Selecting a teammate : `select` OR `s`
+
+You can select the teammate identified by the index number used in the last teammate listing. +
 *Format:* `select INDEX` OR `s INDEX`
 
-****
-*Instructions:*
+====
+*Notes:*
 
-* Selects the teammate and loads the Google search page the teammate at the specified `INDEX`.
+* You can select the teammate and loads the Google search page the teammate at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
-****
+====
 
 *Examples:*
 
@@ -432,85 +509,27 @@ Selects the 2nd teammate in the ProgressChecker.
 `s 1` +
 Selects the 1st teammate in the results of the `find` command.
 
-=== Sorting all teammates : `sort`
+==== Deleting a teammate : `delete` OR `d`
 
-Sorts all teammates in the ProgressChecker with their names in alphabetical order. +
-*Format:* `sort`
+You can remove the specified teammate from the ProgressChecker. +
+*Format:* `delete INDEX` OR `d INDEX`
 
-*Example:*
-
-* `sort`
-
-=== Toggling theme : `theme` OR `t`
-
-Toggle between a light and dark theme. +
-*Format:* `theme` OR `t`
-
-*Examples:*
-
-* `theme`
-* `t`
-
-// tag::undoredo[]
-=== Undoing previous command : `undo` OR `u`
-
-Restores the ProgressChecker to the state before the previous _undoable_ command was executed. +
-*Format:* `undo` OR `u`
-
-[NOTE]
 ====
-Undoable commands: those commands that modify the ProgressChecker's content (`add`, `delete`, `edit` and `clear`).
+*Notes:*
+
+* You can remove the teammate at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
 ====
 
 *Examples:*
 
-* `delete 1` +
-`list` +
-`u` (reverses the `delete 1` command)
-
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`u` (reverses the `delete 1` command)
-// end::undoredo[]
-
-// tag::view[]
-=== Viewing a different tab : `view` OR `v`
-
-Change the tab view to show either profiles, tasks, or exercises. +
-*Format:* `view TYPE` OR `v TYPE`
-
-****
-*Instructions:*
-
-* Change the tab view to specified `TYPE`.
-* The type refers to the tab name.
-* The tab name must be `profile`, `task`, or `exercise`.
-****
-
-*Examples:*
-
-* `view exercise`
-// end::view[]
-
-=== Viewing the default TODO list: `viewtask` OR `vt`
-
-Dispays the current default TODO list to the browser panel in ProgressChecker. +
-*Format:* `viewtask` OR `vt`
-
-[TIP]
-The command requires Internet connection. You may be brought to a login page in your browser. Please do not close the tab without accepting/declining request,
-otherwise the application will hang.
-
-*Examples:*
-
-* `viewtask`
-* `vt`
+* `list` +
+`delete 2` +
+Deletes the 2nd teammate in the ProgressChecker.
+* `find Betsy` +
+`d 1` +
+Deletes the 1st teammate in the results of the `find` command.
 
 === Saving the data
 
@@ -650,5 +669,5 @@ ri 1
 |
 
 |===
-{sp}+
+
 Back to the <<Introduction,TOP>>

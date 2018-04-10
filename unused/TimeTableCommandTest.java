@@ -31,7 +31,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
-//@@author yeggasd
+//@@author yeggasd-unused
 /**
  * Contains integration tests (interaction with the Model) for {@code TimeTableCommand}.
  */

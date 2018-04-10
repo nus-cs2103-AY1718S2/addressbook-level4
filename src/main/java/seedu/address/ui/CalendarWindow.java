@@ -152,6 +152,8 @@ public class CalendarWindow extends UiPart<Region> {
         calendarView.setShowSearchResultsTray(false);
         calendarView.setShowPrintButton(false);
         calendarView.setShowSourceTrayButton(false);
+        calendarView.setShowPageSwitcher(false);
+        calendarView.setShowToolBar(false);
         calendarView.showDayPage();
     }
 

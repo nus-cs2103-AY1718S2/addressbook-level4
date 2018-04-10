@@ -116,15 +116,15 @@ public class DetailPanel extends UiPart<Region> {
     }
 
     //@@author emer7
-    /*@Subscribe
+    @Subscribe
     public void handlePersonEditedEvent(PersonEditedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        /*logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Person newPerson = event.getNewPerson();
         name.setText(newPerson.getName().fullName);
         address.setText(newPerson.getAddress().value);
         reviews.getChildren().clear();
         newPerson.getReviews().forEach(review -> reviews.getChildren().add(new Label(review.toString())));
-        loadPersonPage(event.getNewPerson());
-    }*/
+        loadPersonPage(event.getNewPerson());*/
+    }
     //@@author
 }

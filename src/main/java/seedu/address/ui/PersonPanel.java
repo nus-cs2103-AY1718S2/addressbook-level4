@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ResetPersonPanelEvent;
 import seedu.address.model.person.Person;
 
 /**
@@ -42,6 +43,19 @@ public class PersonPanel extends UiPart<Region> {
     public PersonPanel() {
         super(FXML);
         registerAsAnEventHandler(this);
+        loadBlankPersonPage();
+    }
+
+    /**
+     * Loads a blank page when no contact is selected.
+     */
+    private void loadBlankPersonPage() {
+        name.setText("");
+        phone.setText("");
+        address.setText("");
+        email.setText("");
+        groups.getChildren().clear();
+        preferences.getChildren().clear();
     }
 
     @Subscribe
@@ -56,7 +70,14 @@ public class PersonPanel extends UiPart<Region> {
 
     @Subscribe
     public void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        loadBlankPersonPage();
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handlePersonPanelNoSelectionEvent(ResetPersonPanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadBlankPersonPage();
     }
 }

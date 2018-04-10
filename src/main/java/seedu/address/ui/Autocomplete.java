@@ -15,7 +15,7 @@ import seedu.address.logic.Logic;
 //@@author aquarinte
 /**
  * Handles case-insensitive autocompletion of command line syntax
- * and also some user input parameters: Nric, pet patient name, tags etc.
+ * and also some user input parameters: Nric, pet patient name, species, tags etc.
  */
 public class Autocomplete {
 
@@ -44,23 +44,12 @@ public class Autocomplete {
     }
 
     /**
-     * Find suggestions for current user-input in commandTextField.
+     * Finds suggestions for current user-input in commandTextField.
      */
     public List<String> getSuggestions(TextField commandTextField) {
         int cursorPosition = commandTextField.getCaretPosition();
-
-        if (commandTextField.getText().length() > cursorPosition) {
-            words = commandTextField.getText(0, cursorPosition + 1).split("((?<= )|(?= ))", -1);
-        } else {
-            words = commandTextField.getText(0, cursorPosition).split("((?<= )|(?= ))", -1);
-        }
-
+        words = commandTextField.getText(0, cursorPosition).split("((?<= )|(?= ))", -1);
         targetWord = words[words.length - 1].toLowerCase();
-
-        String updateInput = String.join(",", words);
-        System.out.println(updateInput);
-        System.out.println("TARGET: " + targetWord);
-        System.out.println("cursor: " + cursorPosition + "\ttextlength: " + commandTextField.getText().length());
 
         if (words.length <= 2) {
             return getCommandWordSuggestions();
@@ -104,7 +93,6 @@ public class Autocomplete {
         } else {
             return getPrefixSuggestions();
         }
-
     }
 
     /**
@@ -154,7 +142,7 @@ public class Autocomplete {
      */
     private List<String> getTagSuggestions() {
         if (targetWord.equals("t/")) {
-            List<String> suggestions = logic.getAllPersonTags()
+            List<String> suggestions = logic.getAllTagsInModel()
                     .stream()
                     .sorted()
                     .collect(Collectors.toList());
@@ -162,7 +150,7 @@ public class Autocomplete {
         } else {
             String[] splitByPrefix = targetWord.split("/");
             String targetTag = splitByPrefix[1];
-            List<String> suggestions = logic.getAllPersonTags()
+            List<String> suggestions = logic.getAllTagsInModel()
                     .stream()
                     .filter(t -> t.toLowerCase().startsWith(targetTag) && !t.toLowerCase().equals(targetTag))
                     .sorted()

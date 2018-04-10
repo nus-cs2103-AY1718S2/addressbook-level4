@@ -3,6 +3,7 @@ package seedu.address.ui;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -47,19 +48,25 @@ public class CommandBox extends UiPart<Region> {
         this.logic = logic;
         suggestionBox = new ContextMenu();
         commandTextField.setContextMenu(suggestionBox);
+        autocompleteLogic.init(logic);
+        historySnapshot = logic.getHistorySnapshot();
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
-        historySnapshot = logic.getHistorySnapshot();
 
-        // autocomplete
-        autocompleteLogic.init(logic);
+        //@@author aquarinte-reused
+        /** Caret position bug fix from https://bugs.openjdk.java.net/browse/JDK-8088614 */
         autocompleteListener = new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                triggerAutocomplete(newValue);
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        triggerAutocomplete(newValue);
+                    }
+                });
             }
         };
         commandTextField.textProperty().addListener(autocompleteListener);
+        //@@author
     }
 
     /**
@@ -197,7 +204,8 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Append autocomplete selection to commandTextField (do not append repeated characters).
+     * Updates text in commandTextField with autocomplete selection {@code toAdd}.
+     * Supports insertion of autocomplete selection in the middle of commandTextField.
      * user input: 'a', selected autocomplete 'add' --> commandTextField will show 'add' and not 'aadd'.
      * user input: 'nr/F012', selected autocomplete 'F0123456B' --> commandTextField will show 'nr/F0123456B'
      * and not 'nr/F012F0123456B'.

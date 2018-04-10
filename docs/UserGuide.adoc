@@ -1,5 +1,6 @@
 = contactHeRo - User Guide
 :toc:
+:toclevels: 6
 :toc-title:
 :toc-placement: preamble
 :sectnums:
@@ -49,12 +50,11 @@ Not sure how to install Java? Visit the oracle website link below for more infor
 
 
 .  Download the latest `contactHeRo.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for contactHeRo.
+.  Copy the file to the folder you want to use as the home folder for contactHeRo, i.e. where  you want to store the `contactHeRo.jar` and the subsequently generated data files.
 .  Double-click the file to start the app. The user interface should appear in a few seconds as shown below (Refer to figure 1).
 +
 .contactHeRo on launch
 image::Ui.png[width="790", align="center"]
-
 Now you can start using contactHeRo.
 
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
@@ -74,10 +74,9 @@ Thank you for choosing us as your contact management solution!
 == Features
 contactHeRo is a *Command Line Interface(CLI) application*. Hence you need to type in the commands in order to use its features.
 
-Below is the interface(refer to figure 2) that contactHeRo provides for you to type your command. +
+Below is the interface(refer to figure 2) that contactHeRo provides for you to type your command.
 
 .Command Box in contactHeRo
-
 image::commandBox.png[width="790", align="center"]
 
 *Command Format* +
@@ -97,17 +96,51 @@ In case you make a mistake while typing the command, contactHeRo will show you t
 
 Now that you have understood the command format, let's explore the features.
 
-=== Viewing help : `help`
+=== Managing your contactHeRo account
 
-You can get help using the following format. +
-Format: `help`
+This section describes the commands which enable to you use the login system to secure your data stored in contactHeRo.
 
-This will open the help window (refer to figure 3).
+==== Registering a new account : `signup`
 
-.Help Window in contactHeRo
-image::helpWindow.png[width="790", align="center"]
+You can create a new user account through the command line by using the following format. +
+Format: `signup u/USERNAME pw/PASSWORD`
 
-=== Adding a person : `add`
+****
+* Username has to be at least 3 characters starting with a alphanumeric character. +
+* Password should be at least 4 characters long. +
+* Both username and password should not contain any whitespaces. +
+****
+
+Examples:
+
+* `signup u/JohnDoe pw/doe123`
++
+On running the above command, you should see the following success message: +
+  `You have signup successfully!`
+
+==== Logging in : `login`
+You can login through the command line by using the following this format. +
+Format: `login u/USERNAME pw/PASSWORD`
+
+Examples:
+
+* `login u/JohnDoe pw/doe123`
++
+On running the above command, you should see the following success message: +
+ `You have successfully login as JohnDoe`
+
+==== Logging out : `logout`
+You can logout through the command line by using the following this format. +
+Format: `logout`
+
+On running this command, you should see the following success message: +
+ `You have logout successfully!`
+
+=== Managing Persons
+
+This section describes the commands you can use to manage person profiles in contactHeRo.
+
+==== Adding a person : `add`
 
 You can add a person to contactHero using the following format. +
 
@@ -128,13 +161,12 @@ On running the above command, you should see the following success message: +
  New person added: John Doe Phone: 98765432 Email: johnd@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Skills:
 
 * `add n/Betsy Crowe s/Java e/betsycrowe@example.com a/Newgate Prison p/1234567 cp/Student cc/NUS s/C++`
-
++
 On running the above command, you should see the following success message: +
 
  New person added: Betsy Crowe Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS  Skills: [C++]
 
-
-=== Editing a person : `edit`
+==== Editing a person : `edit`
 
 You can edit an existing person in contactHero using this format. +
 
@@ -159,12 +191,17 @@ On running the above command, you should see the following success message: +
 
 * `edit 2 n/Betsy Crower s/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing skills.
-
++
 On running the above command, you should see the following success message: +
 
  Edited Person: Betsy Crower Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS Skills:
 
-=== Locating persons by name : `find`
+==== Listing all persons : `list`
+
+You can see a list of all persons in contactHeRo using the following format. +
+Format: `list`
+
+==== Locating persons by name : `find`
 
 You can find all the persons whose names or skills contain any of the given keywords using the following format. +
 Format: `find n/KEYWORD [MORE_KEYWORDS]` to find by name or `find s/KEYWORD [MORE_KEYWORDS]` to find by skill
@@ -186,7 +223,7 @@ This will show `Jane Doe` whose skill is `designer`.
 * `find n/Betsy Tim John` +
 This will show any person having any of the names `Betsy`, `Tim`, or `John`.
 
-=== Deleting a person : `delete`
+==== Deleting a person : `delete`
 
 You can delete a specified person from contactHeRo using the following format. +
 Format: `delete INDEX`
@@ -208,12 +245,11 @@ This deletes the 2nd person in contactHeRo and on running the above command, you
 
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command and on running the above command, you should see the following success message: +
+This deletes the 1st person in the results of the `find` command and on running the above command, you should see the following success message: +
 
   Deleted Person: Betsy Crower Phone: 1234567 Email: betsycrowe@example.com Address: Newgate Prison Current Position: Student Company: NUS Skills:
 
-
-=== Viewing the contact details of a person: `select`
+==== Viewing the contact details of a person: `select`
 
 You can select a person identified by the index number used in the last person listing to view his/her contact details using the following format. +
 Format: `select INDEX`
@@ -228,46 +264,50 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in contactHeRo.
+This selects the 2nd person in contactHeRo.
 
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
-
-On running the above command, you should see a similar result as the following (refer to figure 4).
+This selects the 1st person in the results of the `find` command. +
++
+On running this command, you should see a similar result as the following (refer to figure 4). Betsy is selected in the person list and her contact details are visible in the Contact Details Tab.
 
 .Select Command Execution
 image::selectCommand.png[width="790", align="center"]
 
 
-=== Viewing the LinkedIn search of a person: `linkedIn`
+==== Searching a person on LinkedIn: `linkedIn`
 
-You can select a person identified by the index number used in the last person listing to view his/her LinkedIn search using the following format. +
+You can select a person identified by the index number used in the last person listing to search him/her on LinkedIn using the following format. +
 Format: `linkedIn INDEX`
 
 ****
-* Loads the LinkedIn search of the person at the specified `INDEX`.
+* This loads the LinkedIn search of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
-* You *will have to login to LinkedIn* the first time to use this command in order to search the person.
 ****
+[NOTE]
+You will have to login to LinkedIn the first time to use this command in order to search the person.
 
 Examples:
 
 * `list` +
 `linkedIn 2` +
-Loads the LinkedIn search of the 2nd person in the contactHeRo.
+This loads the LinkedIn search of the 2nd person in the contactHeRo.
 
 * `find Betsy` +
 `select 1` +
-Loads the LinkedIn search of 1st person in the results of the `find` command.
-
-On running the above command and after you have logged in, you should a similar result as the following (refer to figure 5):
+This loads the LinkedIn search of 1st person in the results of the `find` command. +
++
+On running the above command and after you have logged in, you should a similar result as the following (refer to figure 5). Betsy is selected in the person list and she is searched on LinkedIn in the LinkedIn Tab.
 
 .LinkedIn Command Execution
 image::linkedInCommand.png[width="790", align="center"]
 
-=== Adding a job opening: `addjob`
+=== Managing Job Openings
+This section describes the commands you can use to manage person profiles in contactHeRo.
+
+==== Adding a job opening: `addjob`
 
 You can add a job opening to contactHero using the following format. +
 Format: `addjob p/POSITION t/TEAM l/LOCATION n/NUMBER_OF_POSITIONS s/REQUIRED_SKILLS`
@@ -275,18 +315,46 @@ Format: `addjob p/POSITION t/TEAM l/LOCATION n/NUMBER_OF_POSITIONS s/REQUIRED_SK
 Examples:
 
 * `addjob p/Software Engineer t/Cloud Services l/Singapore n/1 s/Java`
-
++
 On running the above command, you should see the following success message: +
 
  New job opening added: Software Engineer Team: Cloud Services Location: Singapore Number of Positions: 1 Skills: [Java]
 
 * `addjob p/Marketing Intern t/Social Media Marketing l/Singapore n/1 s/Excel`
-
++
 On running the above command, you should see the following success message: +
 
  New job opening added: Marketing Intern Team: Social Media Marketing Location: Singapore Number of Positions: 1 Skills: [Excel]
 
-=== Deleting a job opening: `deletejob`
+==== Editing a job opening : `editjob`
+
+You can edit an existing job opening in contactHero using this format. +
+
+Format: `editjob INDEX [p/POSITION] [t/TEAM] [l/LOCATION] [n/NUMBER_OF_POSITIONS] [s/SKILL]...`
+
+****
+* Edits the job opening at the specified `INDEX`. Remember that the index refers to the index number shown in the last job listing. The index *must be a positive integer* 1, 2, 3, ...
+* You need to provide at least one of the optional.
+* Existing values will be updated to the input values.
+* When you edit skills, the existing skills of the job opening will be removed i.e adding of job's skills is not cumulative.
+* Unlike editing a person feature, you cannot remove all the job's skills by typing `s/` because a job opening requires atleast one skill.
+****
+
+Examples:
+
+* `editjob 1 p/Hardware Engineer t/Hardware Products` +
+Edits the position and team of the 1st job opening to be `Hardware Engineer` and `Hardware Products` respectively.
++
+On running the above command, you should see the following success message: +
+
+ Edited Job: Hardware Engineer Team: Hardware Products Location: Singapore Number of Positions: 1 Skills: [Java]
+
+==== Listing all job openings : `listjob`
+
+You can see a list of all job openings in contactHeRo using the following format. +
+Format: `listjob`
+
+==== Deleting a job opening: `deletejob`
 
 You can delete a specified job opening from contactHeRo using the following format. +
 Format: `deletejob INDEX`
@@ -299,13 +367,13 @@ Format: `deletejob INDEX`
 
 Examples:
 
-* `list` +
+* `listjob` +
 `deletejob 2` +
 This deletes the 2nd job opening in contactHeRo and on running the above command, you should see the following success message: +
 
  Deleted Job: Marketing Intern Team: Social Media Marketing Location: Kuala Lampur, Malaysia Number of Positions: 1 Skills: [Excel][Writing]
 
-=== Matching a job opening to a person: `matchjob`
+==== Matching a job opening to a person: `matchjob`
 
 You can see potential candidates for a specified job opening in contactHeRo using the following format. +
 Format: `matchjob INDEX`
@@ -320,233 +388,47 @@ Examples:
 
 * `list` +
 `matchjob 1` +
-This will show any person whose skills match any of those required for the job at index 1.
-
-=== Listing entered commands : `history`
-
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
-
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
-
-=== Clearing list of entered commands : `clearhistory`
-
-You can clear your history of entered commands using the following format. +
-Format: `clearhistory`
-
-On running the above command, you should see the following success message: +
- `Your history has been cleared.`
-
-// tag::undoredo[]
-=== Undoing previous command : `undo`
-
-You can restore contactHeRo to the state before the previous _undoable_ command was executed using the following format. +
-Format: `undo`
-
-[NOTE]
-====
-Undoable commands: those commands that modify the contactHeRo's content (`add`, `delete`, `edit` and `clear`, `addjob`).
-====
-
-Examples:
-
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-
-=== Redoing the previously undone command : `redo`
-
-You can reverse the most recent `undo` command using the following format. +
-Format: `redo`
-
-Examples:
-
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
-
-// tag::googlelogin[]
-=== Login to Google : `googlelogin`
-
-You will have to login to google in order to use features like
-emailing. This process is simple and fast like how you normally login
-using the web browser. +
-Format: `googlelogin`
-
-****
-* Opens up the `Google` tab. This is contactHeRo's built-in browser for Google logins. Simply enter your email and password to login.
-* You will have to login in order to use the `Email` command to send email.
-* *IMPORTANT*: Please do not go to other webpage in the `Google` tab after you have logged in. +
-+
-This is because contactHeRo has to use the login information from the webpage after you have login to send your email.
-
-* *NOTE*: We do not save or log any of your Google credentials or information as we respect your privacy.
-Therefore, everytime you restart contactHeRo, you will have to login again.
-****
-
-Examples:
-
-* `googlelogin` +
-This will open up the `Google` tab for you to login. On running the above command, you should see the following success message: +
-
- Please log in to Google.
-+
-You should also see the login screen as shown below.
-
-.The Google log in page
-image::googlelogin1.PNG[width="600"]
-
-[NOTE]
-Please do not go to any other webpages in the `Google` tab after you have logged in.
-
-Now that you have logged in, you are ready to use the `Email` feature to send out emails!
-// end::googlelogin[]
-
-// tag::email[]
-=== Emailing your contact : `email`
-
-You can send email to any person you have saved in contactHeRo using the following format. +
-Format: `email INDEX`
-
-*Important*: You must have logged in to Google using `googlelogin`. Otherwise, you will not be able to send out emails.
-
-****
-* Opens up the `Draft Email` tab. This is an User Interface for you to draft your emails.
-* Collects the information of the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-* The collected information will be used to help you fill up details in the draft like the person's email address.
-* *NOTE*: Please ensure that you have internet connection before sending the email!
-****
-
-Examples:
-
-* `list` +
-`email 2` +
-This will open up the `Draft Email` tab and then
-collect the information of the 2nd person in the list. On running the above command, you should see the following success message: +
-
- Drafting email to: berniceyu@example.com
-+
-The collected information will be used automatically to fill up details as shown below.
-
-.The User Interface to draft your email
-image::emailSS1.PNG[width="600"]
-
-[TIP]
-You can use keyboard short-cuts like `Ctrl-B` to *bold* your text while drafting
-your email.
-
-Finally, after you are done drafting up the email, simply hit the `Send`
-button to send your email. If the email is sent successfully, you should see
-a pop-up message as shown below.
-
-.Pop-up message
-image::emailSS2.PNG[width="400"]
-// end::email[]
-
-=== Clearing all entries : `clear`
-
-You can clear all your contacts from contactHeRo using the following format. +
-Format: `clear`
-
-On running the above command, you should see the following success message: +
-`contactHeRo has been cleared!`
-
-=== Exiting the program : `exit`
-
-You can exit the program using the following format. +
-Format: `exit`
-
-=== Registering new account : `signup`
-
-You can create a new user account through the command line by using the following format. +
-Format: `signup u/USERNAME pw/PASSWORD`
-
-[NOTE]
-===
-* Username has to be at least 3 characters starting with a alphanumeric character. +
-* Password should be at least 4 characters long. +
-* Both username and password should not contain any whitespaces. +
-===
-Examples
-* signup u/JohnDoe pw/doe123
-
-On running the above command, you should see the following success message: +
-  `You have signup successfully!`
-
-=== Logging in : `login`
-You can login through the command line by using the following this format. +
-Format: `login u/USERNAME pw/PASSWORD`
-
-Examples
-* login u/JohnDoe pw/doe123
-
-On running the above command, you should see the following success message: +
- `You have successfully login as JohnDoe`
-
-=== Logging out : `logout`
-You can logout through the command line by using the following this format. +
-Format: `logout`
-
-On running this command, you should see the following success message: +
- `You have logout successfully!`
-
-Examples
-
-=== Auto-complete command
-
-To save your time, after typing a partial command, you can press TAB for the command to be auto-completed.
-[NOTE]
-The first lexicographically matched command is returned.
-
-Examples:
-
-* Typing `ad` and pressing `TAB` gives: +
-    `add n/ e/ a/ [s/]...`
-
-* Typing `h` and pressing `TAB` gives: +
-     `help`
-
-=== Saving the data
-
-You do not need to save manually. contactHeRo saves the data into the hard disk for you automatically. +
+This will show any person whose skills match any of those required for the job opening at index 1.
 
 // tag::calendar[]
+=== Managing Appointments
 
-=== Opening the calendar `calendar`
+This section describes the commands you can use to manage appointments in contactHeRo.
+
+==== Adding appointment : `addapp`
+You can add appointment by using the following format. +
+
+Format: `addapp t/TITLE sdt/START_DATE_TIME edt/END_DATE_TIME`
+
+Examples:
+
+* `addapp t/Meeting sdt/2018-04-05 14:00 edt/2018-04-05 15:00`
++
+On running the above command, you should see the following success message: +
+
+ New appointment added: Meeting Start Date Time: 2018-04-05 14:00 End Date Time: 2018-04-05 15:00
+
+==== Deleting appointment : `delapp`
+You can delete appointment by using the following format. +
+
+Format: `delapp t/TITLE sdt/START_DATE_TIME edt/END_DATE_TIME`
+
+Examples:
+
+* `delapp t/Meeting sdt/2018-04-05 14:00 edt/2018-04-05 15:00`
++
+On running the above command, you should see the following success message: +
+
+ Appointment deleted: Meeting Start Date Time: 2018-04-05 14:00 End Date Time: 2018-04-05 15:00
+
+=== Viewing the Calendar
+This section describes the commands you can use view the calendar in contactHeRo.
+
+==== Opening the calendar: `calendar`
 You can switch to the calendar tab using the following format. +
 Format: `calendar`
 
-=== Viewing calendar
-You can view your calendar using these commands: +
-
-==== Viewing a specific date or switch to the date view `date`
+==== Viewing a specific date or switch to the date view: `date`
 You can view a specifc date or switch to the date view by using the following format. +
 Format: `date [DATE]` +
 
@@ -620,51 +502,210 @@ Example: `year`
 
 .Year view
 image::yearView.png[width="400"]
-
-=== Adding appointment : `addapp`
-You can add appointment by using the following format. +
-
-Format: `addapp t/TITLE sdt/START_DATE_TIME edt/END_DATE_TIME`
-
-Examples:
-
-* `addapp t/Meeting sdt/2018-04-05 14:00 edt/2018-04-05 15:00`
-
-On running the above command, you should see the following success message: +
-
- New appointment added: Meeting Start Date Time: 2018-04-05 14:00 End Date Time: 2018-04-05 15:00
-
-=== Deleting appointment : `delapp`
-You can delete appointment by using the following format. +
-
-Format: `delapp t/TITLE sdt/START_DATE_TIME edt/END_DATE_TIME`
-
-Examples:
-
-* `delapp t/Meeting sdt/2018-04-05 14:00 edt/2018-04-05 15:00`
-
-On running the above command, you should see the following success message: +
-
- Appointment deleted: Meeting Start Date Time: 2018-04-05 14:00 End Date Time: 2018-04-05 15:00
 // end::calendar[]
-=== Editing a job opening `[coming in v1.5]`
 
-You will soon be able to edit a job opening in contactHeRo.
+=== Managing Emails
 
-=== Arranging meetings with Gmail calendar `[coming in v2.0]`
+// tag::googlelogin[]
+==== Login to Google : `googlelogin`
+
+You will have to login to google in order to use features like
+emailing. This process is simple and fast like how you normally login
+using the web browser. +
+Format: `googlelogin`
+
+****
+* Opens up the `Google` tab. This is contactHeRo's built-in browser for Google logins. Simply enter your email and password to login.
+* You will have to login in order to use the `Email` command to send email.
+* *IMPORTANT*: Please do not go to other webpage in the `Google` tab after you have logged in. +
++
+This is because contactHeRo has to use the login information from the webpage after you have login to send your email.
+
+* *NOTE*: We do not save or log any of your Google credentials or information as we respect your privacy.
+Therefore, everytime you restart contactHeRo, you will have to login again.
+****
+
+Examples:
+
+* `googlelogin` +
+This will open up the `Google` tab for you to login. On running the above command, you should see the following success message: +
+
+ Please log in to Google.
++
+You should also see the login screen as shown below.
+
+.The Google log in page
+image::googlelogin1.PNG[width="600"]
+
+[NOTE]
+Please do not go to any other webpages in the `Google` tab after you have logged in.
+
+Now that you have logged in, you are ready to use the `Email` feature to send out emails!
+// end::googlelogin[]
+
+// tag::email[]
+==== Emailing your contact : `email`
+
+You can send email to any person you have saved in contactHeRo using the following format. +
+Format: `email INDEX`
+
+****
+* Opens up the Draft Email tab. This is an User Interface for you to draft your emails.
+* Collects the information of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The collected information will be used to help you fill up details in the draft like the person's email address.
+****
+
+Examples:
+
+* `list` +
+`email 2` +
+This will open up the Draft Email tab and then
+collect the information of the 2nd person in the list. On running the above command, you should see the following success message: +
+
+ Drafting email to: berniceyu@example.com
++
+The collected information will be used automatically to fill up details as shown below in figure 5	.
+
+.The User Interface to draft your email
+image::emailSS1.PNG[width="790", align="center"]
+
+[TIP]
+You can use keyboard short-cuts like `Ctrl-B` to *bold* your text while drafting
+your email.
+
+Finally, after you are done drafting up the email, simply hit the `Send`
+button to send your email. If the email is sent successfully, you should see
+a pop-up message as shown below.
+
+.Pop-up message
+image::emailSS2.PNG[width="400"]
+// end::email[]
+
+=== Utility Features
+
+==== Viewing help : `help`
+
+In case you get stuck while using contactHeRo and would like to see the User Guide, you can do so by using the following format. +
+Format: `help`
+
+This opens the help window as shown below in figure 3.
+
+.Help Window in contactHeRo
+image::helpWindow.png[width="790", align="center"]
+
+==== Listing entered commands : `history`
+
+Lists all the commands that you have entered in reverse chronological order. +
+Format: `history`
+
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
+
+==== Clearing list of entered commands : `clearhistory`
+
+You can clear your history of entered commands using the following format. +
+Format: `clearhistory`
+
+On running the above command, you should see the following success message: +
+ `Your history has been cleared.`
+
+// tag::undoredo[]
+==== Undoing previous command : `undo`
+
+You can restore contactHeRo to the state before the previous _undoable_ command(refer to note below) was executed in case you make a mistake or otherwise, using the following format. +
+Format: `undo`
+
+[NOTE]
+====
+Undoable commands: those commands that modify the contactHeRo's content (`add`, `delete`, `edit`, `addjob`, `deletejob`, `editjob`, `addapp` and `delapp` and `clear`).
+====
+
+Examples:
+
+* `delete 1` +
+`list` +
+`undo` (reverses the `delete 1` command) +
+
+* `select 1` +
+`list` +
+`undo` +
+The `undo` command fails as there are no undoable commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+
+==== Redoing the previously undone command : `redo`
+
+You can reverse the most recent `undo` command using the following format. +
+Format: `redo`
+
+Examples:
+
+* `delete 1` +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+
+* `delete 1` +
+`redo` +
+The `redo` command fails as there are no `undo` commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+`redo` (reapplies the `clear` command) +
+// end::undoredo[]
+
+==== Clearing all entries : `clear`
+
+You can clear all your contacts from contactHeRo using the following format. +
+Format: `clear`
++
+On running the above command, you should see the following success message: +
+`contactHeRo has been cleared!`
+
+==== Exiting the program : `exit`
+
+You can exit the program using the following format. +
+Format: `exit`
+
+==== Auto-complete command
+
+To save your time, after typing a partial command, you can press TAB for the command to be auto-completed.
+[NOTE]
+The first lexicographically matched command is returned.
+
+Examples:
+
+* Typing `ad` and pressing `TAB` gives: +
+    `add n/ e/ a/ [s/]...`
+
+* Typing `h` and pressing `TAB` gives: +
+     `help`
+
+==== Saving the data
+
+You do not need to save manually. contactHeRo saves the data into the hard disk for you automatically. +
+
+=== Coming in V2.0
+
+==== Arranging meetings with Gmail calendar `[coming in v2.0]`
 
 You will soon be able to arrange meeting on Gmail calender using contactHero.
 
-=== Add reminders `[coming in v2.0]`
+==== Add reminders `[coming in v2.0]`
 
 You will soon be able to set reminders for meetings, appointments or any other event and contactHeRo will remind you of the event.
 
-=== Login system `[coming in v2.0]`
-
-The login system shall provide security to your data stored in contactHeRo.
-
 // tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+==== Encrypting data files `[coming in v2.0]`
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
@@ -681,7 +722,7 @@ To ask more questions, please send your email to contactHeRo@gmail.com. +
 We are willing to help you. +
 // end::faq[]
 
-== ContachHeRo Cheat Sheet
+== contactHeRo Cheat Sheet
 
 These are all the commands that you can use for the latest version of contactHeRo:
 

@@ -27,4 +27,7 @@ public interface Logic {
 
     /** Returns a visiting queue */
     ObservableList<Patient> getPatientVisitingQueue();
+
+    /**Returns the list of index of patients who are in the queue */
+    public ObservableList<Integer> getPatientIndexInQueue();
 }

@@ -7,7 +7,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.appointment.UniqueAppointmentEntryList;
 import seedu.address.model.appointment.UniqueAppointmentList;
-import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -54,9 +53,10 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Patient> predicate);
 
+    //@@author Kyholmes
     /** Adds patient into visiting queue
      * @throws NullPointerException if {@code Patient} is null.*/
-    Patient addPatientToQueue(NameContainsKeywordsPredicate predicate) throws DuplicatePatientException,
+    Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException,
             PatientNotFoundException;
 
     /** Remove a patient from the visiting queue*/
@@ -78,4 +78,7 @@ public interface Model {
     void addPatientAppointment(Patient patient, String dateTimeString) throws
             UniqueAppointmentList.DuplicatedAppointmentException,
             UniqueAppointmentEntryList.DuplicatedAppointmentEntryException;
+
+    /** Get list index of patient in the queue*/
+    ObservableList<Integer> getPatientListIndexInQueue();
 }

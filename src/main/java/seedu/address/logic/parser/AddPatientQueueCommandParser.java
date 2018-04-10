@@ -4,11 +4,10 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.util.Arrays;
-
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddPatientQueueCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.patient.NameContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new AddPatientQueueCommand object
@@ -25,13 +24,12 @@ public class AddPatientQueueCommandParser implements Parser<AddPatientQueueComma
         requireNonNull(args);
         String trimmedArgs = args.trim();
 
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                   String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPatientQueueCommand.MESSAGE_USAGE));
+        try {
+            Index index = ParserUtil.parseIndex(trimmedArgs);
+            return new AddPatientQueueCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AddPatientQueueCommand.MESSAGE_USAGE));
         }
-
-        String[] nameKeywords = trimmedArgs.split("\\s");
-
-        return new AddPatientQueueCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 }

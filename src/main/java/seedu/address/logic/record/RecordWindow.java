@@ -4,10 +4,8 @@ package seedu.address.logic.record;
 import java.io.IOException;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
@@ -17,18 +15,6 @@ import seedu.address.model.patient.Record;
  * Class for initializing login popup GUI
  */
 public class RecordWindow extends Application {
-
-    @FXML
-    private TextField dateField;
-
-    @FXML
-    private TextField symptomField;
-
-    @FXML
-    private TextField illnessField;
-
-    @FXML
-    private TextField treatmentField;
 
     private Stage primaryStage;
     private AnchorPane rootLayout;

@@ -183,7 +183,7 @@ public class RemarkCommandTest {
     }
 
     @Test
-    public void equals() throws Exception {
+    public void equals() {
         final RemarkCommand standardCommand = prepareCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_AMY));
 
         // same values -> returns true

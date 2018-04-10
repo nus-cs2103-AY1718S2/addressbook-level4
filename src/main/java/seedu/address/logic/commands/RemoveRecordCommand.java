@@ -135,9 +135,6 @@ public class RemoveRecordCommand extends UndoableCommand {
     public Index getRecordIndex() {
         return recordIndex;
     }
-    public Patient getToEdit() {
-        return patientToEdit;
-    }
     public Patient getEdited() {
         return editedPatient;
     }

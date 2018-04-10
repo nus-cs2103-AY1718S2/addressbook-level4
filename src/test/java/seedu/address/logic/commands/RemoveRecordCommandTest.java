@@ -189,7 +189,7 @@ public class RemoveRecordCommandTest {
     }
 
     @Test
-    public void equals() throws Exception {
+    public void equals() {
         final RemoveRecordCommand standardCommand = prepareCommand(INDEX_FIRST_PERSON, 1, model);
 
         // same values -> returns true

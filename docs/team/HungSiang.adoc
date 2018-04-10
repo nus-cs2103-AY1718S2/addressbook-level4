@@ -1,0 +1,47 @@
+= Ng Hung Siang - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Integrated Medical DataBase (IMDB)
+
+---
+
+== Overview
+
+IMDB is an application for the management of health records digitally by private clinics with multiple branches. The user (either a medical staff or a doctor) interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *records for each patient and the ability to edit those records*
+** What it does: allows the doctor to add, modify and delete a patient's medical records which store information pertaining to a particular visit they made to the clinic.
+** Justification: This feature improves the product significantly because the doctor can track a patient's symptoms, illnesses, suspected diseases and treatments administered over a period of time. This allows a doctor to accurately gauge a patient's current health status.
+** Highlights: This enhancement includes a new variable to the patient class. It required an in-depth analysis of design alternatives as it stores a list of records, which then stored various other new classes. The implementation too was challenging as it required a way to
+store and retrieve a list of nested classes. Its also implemented a new window which needed to accept and authenticate user inputs to ensure a valid medical record.
+
+* *Minor enhancement*: added a remark class and command that allows the medical staff to navigate to enter miscellaneous information of a patient that did not belong to any existing fields.
+
+* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]]
+
+* *Other contributions*:
+
+** Community:
+*** PR reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W15-B2/main/pull/101[#101]
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=record]
+
+include::../UserGuide.adoc[tag=remark]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=record]

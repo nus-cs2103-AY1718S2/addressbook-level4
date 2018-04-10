@@ -11,10 +11,11 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.layout.HBox?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="450" minHeight="600">
   <icons>
-    <Image url="@/images/address_book_32.png" />
+    <Image url="@/images/imdb.png" />
   </icons>
   <scene>
     <Scene>
@@ -61,6 +62,18 @@
           </StackPane>
         </SplitPane>
 
+        <!--@@author Kyholmes -->
+        <StackPane VBox.vgrow="NEVER" fx:id="queueList" styleClass="pane-with-border"
+                   minHeight="50" prefHeight="100" maxHeight="60">
+          <HBox minHeight="50" prefHeight="60">
+            <padding>
+              <Insets top="5" right="10" bottom="5" left="10" />
+            </padding>
+            <StackPane fx:id="queuePanelPlaceholder" HBox.hgrow="ALWAYS"/>
+          </HBox>
+        </StackPane>
+
+        <!--@@author -->
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
       </VBox>
     </Scene>

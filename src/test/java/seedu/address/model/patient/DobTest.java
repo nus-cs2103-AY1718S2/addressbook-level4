@@ -29,6 +29,10 @@ public class DobTest {
         // invalid dob
         assertFalse(DateOfBirth.isValidDob("")); // empty string
         assertFalse(DateOfBirth.isValidDob(" ")); // spaces only
+        assertFalse(DateOfBirth.isValidDob("ab/cd/efgh")); // non-digits
+        assertFalse(DateOfBirth.isValidDob("99/99/9999")); // invalid range
+        assertFalse(DateOfBirth.isValidDob("12/31/1990")); // non ddmmyyyy format
+        assertFalse(DateOfBirth.isValidDob("1990/12/12")); // non ddmmyyyy format
 
         // valid dob
         assertTrue(DateOfBirth.isValidDob("11/11/1991")); // standard format

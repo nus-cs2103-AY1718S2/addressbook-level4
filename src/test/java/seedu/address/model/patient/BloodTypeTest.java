@@ -29,11 +29,19 @@ public class BloodTypeTest {
         // invalid blood type
         assertFalse(BloodType.isValidBloodType("")); // empty string
         assertFalse(BloodType.isValidBloodType(" ")); // spaces only
+        assertFalse(BloodType.isValidBloodType("A")); // alphabet only
+        assertFalse(BloodType.isValidBloodType("AB")); // alphabets only
+        assertFalse(BloodType.isValidBloodType("+")); // sign only
+        assertFalse(BloodType.isValidBloodType("+-")); // signs only
 
         // valid blood type
-        assertTrue(BloodType.isValidBloodType("A")); // only one alphabet
-        assertTrue(BloodType.isValidBloodType("AB")); // only two alphabets
-        assertTrue(BloodType.isValidBloodType("A+")); // one alphabet and one sign
-        assertTrue(BloodType.isValidBloodType("AB+")); // two alphabets and one sign
+        assertTrue(BloodType.isValidBloodType("A+"));
+        assertTrue(BloodType.isValidBloodType("A-"));
+        assertTrue(BloodType.isValidBloodType("B+"));
+        assertTrue(BloodType.isValidBloodType("B-"));
+        assertTrue(BloodType.isValidBloodType("O+"));
+        assertTrue(BloodType.isValidBloodType("O-"));
+        assertTrue(BloodType.isValidBloodType("AB+"));
+        assertTrue(BloodType.isValidBloodType("AB-"));
     }
 }

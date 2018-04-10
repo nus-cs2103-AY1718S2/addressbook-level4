@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--@@author Kyholmes -->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox prefHeight="45.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="index" alignment="CENTER_RIGHT" text="\$index">
+         <HBox.margin>
+            <Insets right="5.0" />
+         </HBox.margin></Label>
+      <Label fx:id="name" text="\$name" />
+   </children>
+   <padding>
+      <Insets left="5.0" right="5.0" top="5.0" />
+   </padding>
+</HBox>

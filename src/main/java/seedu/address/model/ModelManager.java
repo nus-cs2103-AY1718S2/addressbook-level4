@@ -14,11 +14,11 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AppointmentChangedEvent;
 import seedu.address.commons.events.model.ImdbChangedEvent;
+import seedu.address.commons.events.model.QueueChangedEvent;
 import seedu.address.commons.events.ui.ShowCalendarViewRequestEvent;
 import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.appointment.UniqueAppointmentEntryList;
 import seedu.address.model.appointment.UniqueAppointmentList;
-import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -79,6 +79,12 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ShowCalendarViewRequestEvent(imdb.getAppointmentEntryList()));
     }
 
+    //@@author Kyholmes
+    private void indicateQueueChanged() {
+        raise(new QueueChangedEvent(imdb));
+    }
+
+    //@@author
     @Override
     public synchronized void deletePerson(Patient target) throws PatientNotFoundException {
         imdb.removePerson(target);
@@ -136,19 +142,6 @@ public class ModelManager extends ComponentManager implements Model {
         return null;
     }
 
-    private int getPatientIndex(Predicate<Patient> predicate) throws PatientNotFoundException {
-
-        filteredPatients.setPredicate(predicate);
-        int patientIndex;
-        if (filteredPatients.size() > 0) {
-            patientIndex = filteredPatients.getSourceIndex(0);
-            updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            return patientIndex;
-        }
-
-        throw new PatientNotFoundException();
-    }
-
     @Override
     public synchronized boolean deletePatientAppointment(Patient patient, Index index) {
         requireAllNonNull(patient, index);
@@ -171,21 +164,26 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAppointmentChanged(patient);
     }
 
+    //@@author Kyholmes
     @Override
-    public synchronized Patient addPatientToQueue(NameContainsKeywordsPredicate predicate) throws
-            DuplicatePatientException, PatientNotFoundException {
-        requireNonNull(predicate);
-        int patientIndex = getPatientIndex(predicate);
-        imdb.addPatientToQueue(patientIndex);
-        indicateAddressBookChanged();
+    public ObservableList<Integer> getPatientListIndexInQueue() {
+        return imdb.getUniquePatientQueueNo();
+    }
 
-        return filteredPatients.get(patientIndex);
+    @Override
+    public synchronized Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException {
+        requireNonNull(targetIndex);
+        int patientIndex = filteredPatients.getSourceIndex(targetIndex.getZeroBased());
+        imdb.addPatientToQueue(patientIndex);
+        indicateQueueChanged();
+
+        return filteredPatients.get(targetIndex.getZeroBased());
     }
 
     @Override
     public synchronized Patient removePatientFromQueue() throws PatientNotFoundException {
         int patientIndexToRemove = imdb.removePatientFromQueue();
-        indicateAddressBookChanged();
+        indicateQueueChanged();
         return filteredPatients.get(patientIndexToRemove);
     }
 
@@ -194,6 +192,7 @@ public class ModelManager extends ComponentManager implements Model {
         return imdb.getUniquePatientQueue();
     }
 
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

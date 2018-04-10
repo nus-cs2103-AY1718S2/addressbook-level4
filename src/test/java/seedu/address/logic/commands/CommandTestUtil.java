@@ -47,7 +47,7 @@ public class CommandTestUtil {
     public static final String VALID_DOB_AMY = "10/10/1991";
     public static final String VALID_DOB_BOB = "11/11/1991";
     public static final String VALID_BLOODTYPE_AMY = "B+";
-    public static final String VALID_BLOODTYPE_BOB = "A";
+    public static final String VALID_BLOODTYPE_BOB = "A+";
     public static final String VALID_REMARK_AMY = "Monthly blood test";
     public static final String VALID_REMARK_BOB = "Weekly checkup";
     public static final String VALID_RECORD_AMY = "1 in/1 d/1st March 2018 s/Headache, runny nose i/Flu t/Zyrtec";

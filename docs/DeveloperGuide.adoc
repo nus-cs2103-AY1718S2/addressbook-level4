@@ -1057,32 +1057,6 @@ Use case resumes from step 3
 Use case resumes from step 3
 
 [discrete]
-=== Use case: Filter displayed patient details
-
-Preconditions: User is logged in, patient details are on screen
-
-*MSS*
-
-1.  User requests to use a filter
-2.  IMDB requests user to input filter number
-3.  IMDB displays filtered patient details only
-+
-Use case ends
-
-*Extensions*
-
-[none]
-* 2a. Filter number does not exist
-+
-[none]
-** 2a1. IMDB shows an error message
-** 2a2. IMDB requests user to input filter number
-** 2a3. User inputs filter number
-** Steps 2a1-2a3 are repeated until the inputs are valid
-+
-Use case resumes from step 3
-
-[discrete]
 === Use case: Export patient records for printing
 
 Preconditions: User is logged in

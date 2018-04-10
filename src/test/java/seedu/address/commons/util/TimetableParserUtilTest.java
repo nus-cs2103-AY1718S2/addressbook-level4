@@ -1,6 +1,7 @@
 package seedu.address.commons.util;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -11,7 +12,7 @@ import seedu.address.model.person.timetable.Timetable;
 import seedu.address.testutil.Assert;
 import seedu.address.testutil.TimetableBuilder;
 
-
+//@@author AzuraAiR
 public class TimetableParserUtilTest {
 
     private static final String EMPTY_URL = " ";
@@ -47,7 +48,7 @@ public class TimetableParserUtilTest {
                 TimetableParserUtil.parseUrl(VALID_URL).getLessonFromSlot(VALID_WEEK, VALID_DAY, VALID_TIMESLOT)
                         .toString());
         } catch (IllegalValueException pe) {
-            // should never happen
+            fail("Unexpected exception thrown " + pe);
         }
     }
 

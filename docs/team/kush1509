@@ -8,14 +8,16 @@
 
 == Overview
 
-Welcome to contactHeRo! contactHeRo is the perfect contact management solution for recruiters across companies who need a quick and efficient way to manage the contact details and profiles of their potential recruits. It is a Command Line Interface(CLI) application with intuitive usage and effective features. You can manage details of prospective employees and job openings in your company through easy to use add, delete and edit features. Matching jobs to employees is also a great feature that makes the hiring process easy for you. Other than that, you can also view the linkedIn profiles of your potential employees, send emails and arrange meetings.
+contactHeRo is a contact management solution for recruiters across companies who need a quick and efficient way to manage the contact details and profiles of their potential recruits. It is a Command Line Interface(CLI) application with intuitive usage and effective features. You can manage details of prospective employees and job openings in your company through easy to use add, delete and edit features. Matching jobs to employees is also a great feature that makes the hiring process easy for you. Other than that, you can also view the linkedIn profiles of your potential employees, send emails and arrange meetings.
+
+This portfolio is to collate my contributions towards the developing of contactHeRo. It showcases the software programming knowledge I have learned during the course of CS2103T, as well as how I utilized this knowledge and applied it to a real-world project. This portfolio also contains some enhancements I would suggest to be developed for contactHeRo in the future.
 
 == Summary of contributions
 
 * *Major enhancement*: added *job openings section*
 ** What it does: allows the user to maintain a list of current job openings using add, delete, find and edit commands and match these job openings to potential employees using skill-matching.
 ** Justification: A recruiter needs the list of the job openings in the company so he/she knows what are the current job openings and what skillsets to look for in people. This way, the user can better search for potential employees. Hence, this feature is an essential feature of any recruitment-management software.
-** Highlights: This enhancement required addition of a lot of new commands that required 
+** Highlights: This enhancement required the addition of six new commands, namely, `addjob`, `deletejob`, `editjob`, `findjob`, `listjob` and `matchjob`. New attributes, currentPosition and company were added to the Person which required hanges to existing commands like `add` and `edit` as well.
 
 * *Minor enhancement*: added a Contact-Details and LinkedIn-Search display.
 ** Justification: Viewing the contact details in a separate focused panel makes them easier to read for the user as the Person card can now just contain limited information like the person’s name, current position and company, also allowing more number of contacts to be displayed at a time since amount of information is reduced. Moreover, recruiters need to keep a track of the professional progress of his/her potential recruits and having easy access to their LinkedIn profiles will help them do this efficiently.

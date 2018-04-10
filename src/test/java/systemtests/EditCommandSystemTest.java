@@ -28,7 +28,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_STUDENTS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalStudents.AMY;
 import static seedu.address.testutil.TypicalStudents.BOB;
-import static seedu.address.testutil.TypicalStudents.KEYWORD_MATCHING_MEIER;;
+import static seedu.address.testutil.TypicalStudents.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 

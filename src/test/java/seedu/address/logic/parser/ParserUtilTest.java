@@ -265,22 +265,22 @@ public class ParserUtilTest {
     @Test
     public void parseDateTime_invalidDateTimeIncomplete_throwsIllegalValueException() {
         Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseDateTime(INVALID_DATETIME_INCOMPLETE));
-        Assert.assertThrows(IllegalValueException.class,
-                () -> ParserUtil.parseDateTime(Optional.of(INVALID_DATETIME_INCOMPLETE)));
+        Assert.assertThrows(IllegalValueException.class, (
+            ) -> ParserUtil.parseDateTime(Optional.of(INVALID_DATETIME_INCOMPLETE)));
     }
 
     @Test
     public void parseDateTime_invalidDate_throwsIllegalValueException() {
         Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseDateTime(INVALID_DATETIME_DATE));
-        Assert.assertThrows(IllegalValueException.class,
-                () -> ParserUtil.parseDateTime(Optional.of(INVALID_DATETIME_DATE)));
+        Assert.assertThrows(IllegalValueException.class, (
+        ) -> ParserUtil.parseDateTime(Optional.of(INVALID_DATETIME_DATE)));
     }
 
     @Test
     public void parseDateTime_invalidTime_throwsIllegalValueException() {
         Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseDateTime(INVALID_DATETIME_TIME));
-        Assert.assertThrows(IllegalValueException.class,
-                () -> ParserUtil.parseDateTime(Optional.of(INVALID_DATETIME_TIME)));
+        Assert.assertThrows(IllegalValueException.class, (
+        ) -> ParserUtil.parseDateTime(Optional.of(INVALID_DATETIME_TIME)));
     }
 
     @Test

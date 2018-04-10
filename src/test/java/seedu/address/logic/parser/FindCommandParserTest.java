@@ -2,23 +2,15 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Predicate;
 
 import org.junit.Test;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.petpatient.BloodType;
 import seedu.address.model.petpatient.Breed;
 import seedu.address.model.petpatient.Colour;
-import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.petpatient.Species;
 import seedu.address.model.tag.Tag;

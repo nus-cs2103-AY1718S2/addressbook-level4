@@ -88,8 +88,8 @@ public class ComposeEmailWindow {
             results.setText("Email Sent Successfully");
             results.setTextFill(Color.web("#4cc486"));
         } catch (MessagingException e) {
-                results.setText(e.getCause().toString());
-                results.setTextFill(Color.web("Red"));
+            results.setText(e.getCause().toString());
+            results.setTextFill(Color.web("Red"));
         }
         puWindow.getScene().setRoot(confirm);
         puWindow.show();
@@ -122,9 +122,9 @@ public class ComposeEmailWindow {
     /**
      *loads the scene
      */
-    private FXMLLoader loadScene (String FXML) {
+    private FXMLLoader loadScene (String fxml) {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL fxmlFileUrl = MainApp.class.getResource(FXML);
+        URL fxmlFileUrl = MainApp.class.getResource(fxml);
         fxmlLoader.setLocation(fxmlFileUrl);
         fxmlLoader.setController(this);
         fxmlLoader.setRoot(null);

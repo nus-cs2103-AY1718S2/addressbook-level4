@@ -31,6 +31,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.storage.GoogleDriveStorage;
 import seedu.address.storage.XmlAddressBookStorage;
 import seedu.address.storage.exceptions.GoogleAuthorizationException;
+import seedu.address.storage.exceptions.RequestTimeoutException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -185,7 +186,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public void uploadAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
-                                                                             GoogleAuthorizationException {
+            GoogleAuthorizationException, RequestTimeoutException {
         GoogleDriveStorage googleDriveStorage = new GoogleDriveStorage("googledrive/" + filepath);
         exportAddressBook("googledrive/" + filepath, password);
         googleDriveStorage.uploadFile();

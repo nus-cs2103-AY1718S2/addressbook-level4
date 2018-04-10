@@ -1,5 +1,7 @@
 package seedu.address.storage;
 
+import static com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp.browse;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,9 +9,9 @@ import java.io.OutputStream;
 import java.util.Collections;
 import java.util.logging.Logger;
 
+import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl;
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
+import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -28,6 +30,7 @@ import com.google.api.services.drive.model.File;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.storage.exceptions.GoogleAuthorizationException;
+import seedu.address.storage.exceptions.RequestTimeoutException;
 
 //@@author Caijun7-reused
 /**
@@ -58,7 +61,7 @@ public class GoogleDriveStorage {
     private final String uploadFilePath;
     private final java.io.File uploadFile;
 
-    public GoogleDriveStorage(String uploadFilePath) throws GoogleAuthorizationException {
+    public GoogleDriveStorage(String uploadFilePath) throws GoogleAuthorizationException, RequestTimeoutException {
         this.uploadFilePath = uploadFilePath;
         uploadFile = new java.io.File(uploadFilePath);
         userAuthorize();
@@ -70,7 +73,7 @@ public class GoogleDriveStorage {
      *
      * @throws GoogleAuthorizationException     When application is unable to gain user's authorization
      */
-    private void userAuthorize() throws GoogleAuthorizationException {
+    private void userAuthorize() throws GoogleAuthorizationException, RequestTimeoutException {
         Preconditions.checkArgument(
                 !uploadFilePath.startsWith("Enter ") && !DIR_FOR_DOWNLOADS.startsWith("Enter "),
                 "Please enter the upload file path and download directory in %s", GoogleDriveStorage.class);
@@ -86,6 +89,9 @@ public class GoogleDriveStorage {
         } catch (IOException e) {
             logger.warning(e.getMessage());
             throw new GoogleAuthorizationException();
+        } catch (RuntimeException e) {
+            logger.warning(e.getMessage());
+            throw new RequestTimeoutException();
         } catch (Exception e) {
             logger.warning(e.getMessage());
         }
@@ -108,7 +114,29 @@ public class GoogleDriveStorage {
                 Collections.singleton(DriveScopes.DRIVE_FILE)).setDataStoreFactory(dataStoreFactory)
                 .build();
 
-        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+
+        CancellableServerReceiver receiver = new CancellableServerReceiver();
+        try {
+            Credential credential = flow.loadCredential("user");
+            if (credential != null
+                    && (credential.getRefreshToken() != null ||
+                    credential.getExpiresInSeconds() == null ||
+                    credential.getExpiresInSeconds() > 60)) {
+                return credential;
+            }
+            // open in browser
+            String redirectUri = receiver.getRedirectUri();
+            AuthorizationCodeRequestUrl authorizationUrl =
+                    flow.newAuthorizationUrl().setRedirectUri(redirectUri);
+            browse(authorizationUrl.build());
+            // receive authorization code and exchange it for an access token
+            String code = receiver.waitForCode();
+            TokenResponse response = flow.newTokenRequest(code).setRedirectUri(redirectUri).execute();
+            // store credential and return it
+            return flow.createAndStoreCredential(response, "user");
+        } finally {
+            receiver.stop();
+        }
     }
 
     /**

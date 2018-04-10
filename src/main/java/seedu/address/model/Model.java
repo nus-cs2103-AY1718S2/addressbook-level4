@@ -20,6 +20,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.storage.exceptions.GoogleAuthorizationException;
+import seedu.address.storage.exceptions.RequestTimeoutException;
 
 /**
  * The API of the Model component.
@@ -104,7 +105,7 @@ public interface Model {
      * @param password
      */
     void uploadAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
-                                                                      GoogleAuthorizationException;
+            GoogleAuthorizationException, RequestTimeoutException;
     //@@author
 
     //@@author yeggasd

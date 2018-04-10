@@ -6,12 +6,17 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.GetPersonRequestEvent;
+import seedu.address.commons.events.model.PasswordChangedEvent;
+import seedu.address.commons.events.model.ReturnedPersonEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
@@ -187,6 +192,11 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons)
                 && filteredAppointments.equals(other.filteredAppointments);
+    }
+
+    @Subscribe
+    public void handleGetPersonRequestEvent(GetPersonRequestEvent event) {
+        EventsCenter.getInstance().post(new ReturnedPersonEvent(addressBook.getPersonList()));
     }
 
 }

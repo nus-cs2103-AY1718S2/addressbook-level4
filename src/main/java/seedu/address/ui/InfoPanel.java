@@ -23,15 +23,13 @@ public class InfoPanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-
     private BirthdayList birthdayList;
     private VenueTable venueTable;
-    private TimeTablePanel timeTablePanel;
     private GoogleMapsDisplay mapsDisplay;
     private PersonDetailsCard personDetailsCard;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane placeholder;
     @FXML
     private StackPane birthdayPlaceholder;
     @FXML
@@ -45,30 +43,21 @@ public class InfoPanel extends UiPart<Region> {
     public InfoPanel() {
         super(FXML);
 
-        fillInnerParts();
+        venueTable = new VenueTable();
 
-        venueTable = new VenueTable(null);
+        mapsDisplay = new GoogleMapsDisplay();
 
-        mapsDisplay = new GoogleMapsDisplay(null);
-
-        browserPlaceholder.toFront();
-        registerAsAnEventHandler(this);
-    }
-
-    public void freeResources() {
-
-    }
-
-    /**
-     * Helper method to fill UI placeholders
-     */
-    public void fillInnerParts() {
         personDetailsCard = new PersonDetailsCard();
         userDetailsPlaceholder.getChildren().add(personDetailsCard.getRoot());
 
         birthdayList = new BirthdayList();
         birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
 
+        placeholder.toFront();
+        registerAsAnEventHandler(this);
+    }
+
+    public void freeResources() {
     }
 
     //@@author AzuraAiR

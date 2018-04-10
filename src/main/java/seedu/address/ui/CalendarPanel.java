@@ -66,6 +66,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
      */
     private void initializeCalendar() {
         calendar = new Calendar("Appointments");
+        calendar.setStyle(Calendar.Style.STYLE2);
     }
 
     /**

@@ -7,7 +7,6 @@ import java.io.IOException;
 import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Password;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 //@@author Caijun7
 /**
@@ -29,7 +28,6 @@ public class ExportCommand extends UndoableCommand {
     public static final String MESSAGE_FILE_UNABLE_TO_SAVE = "Unable to save or overwrite to given filepath. "
             + "Please give another filepath.";
     public static final String MESSAGE_INVALID_PASSWORD = "Password is in invalid format for Addressbook file.";
-    public static final String MESSAGE_IMPOSSIBLE_ERROR = "Unexpected error has occurred.";
 
     private final String filepath;
     private final Password password;
@@ -65,8 +63,6 @@ public class ExportCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_FILE_UNABLE_TO_SAVE);
         } catch (WrongPasswordException e) {
             throw new CommandException(MESSAGE_INVALID_PASSWORD);
-        } catch (DuplicatePersonException e) {
-            throw new CommandException(MESSAGE_IMPOSSIBLE_ERROR);
         }
     }
 

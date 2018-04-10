@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -13,6 +14,7 @@ import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.building.Building;
 import seedu.address.model.building.exceptions.BuildingNotFoundException;
 import seedu.address.model.building.exceptions.CorruptedVenueInformationException;
+import seedu.address.model.building.exceptions.NoRoomsInBuildingException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -40,6 +42,9 @@ public interface Model {
     //@@author jingyinno
     /** Adds the given alias */
     void addAlias(Alias alias) throws DuplicateAliasException;
+
+    /** Returns a hashmap of command mapped to alias */
+    HashMap<String, String> getAliasList();
     //@@author
 
     /**
@@ -80,8 +85,7 @@ public interface Model {
      * Exports the current view of {@code AddressBook} to the filepath.
      * @param filepath
      */
-    void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
-                                                                        DuplicatePersonException;
+    void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException;
     //@@author
 
     //@@author yeggasd
@@ -100,7 +104,7 @@ public interface Model {
 
     //@@author Caijun7
     /** Returns rooms for the given building */
-    ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building) throws BuildingNotFoundException,
-                                                                                    CorruptedVenueInformationException;
+    ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building)
+            throws BuildingNotFoundException, CorruptedVenueInformationException, NoRoomsInBuildingException;
     //@@author
 }

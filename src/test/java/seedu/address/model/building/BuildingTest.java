@@ -11,6 +11,7 @@ import java.util.HashMap;
 import org.junit.Test;
 
 import seedu.address.model.building.exceptions.CorruptedVenueInformationException;
+import seedu.address.model.building.exceptions.NoRoomsInBuildingException;
 import seedu.address.testutil.BuildingBuilder;
 import seedu.address.testutil.RoomBuilder;
 
@@ -51,11 +52,11 @@ public class BuildingTest {
     }
 
     @Test
-    public void retrieveAllRoomsSchedule_invalidNusBuildingsAndRooms_throwsCorruptedVenueInformationException() {
+    public void retrieveAllRoomsSchedule_invalidNusBuildingsAndRooms_throwsNoRoomsInBuildingException() {
         HashMap<String, ArrayList<String>> invalidNusBuildingsAndRooms = new HashMap<>();
         invalidNusBuildingsAndRooms.put("COM2", null);
         Building.setNusBuildingsAndRooms(invalidNusBuildingsAndRooms);
-        assertThrows(CorruptedVenueInformationException.class, () -> building.retrieveAllRoomsSchedule());
+        assertThrows(NoRoomsInBuildingException.class, () -> building.retrieveAllRoomsSchedule());
     }
 
     @Test
@@ -78,11 +79,11 @@ public class BuildingTest {
     }
 
     @Test
-    public void retrieveAllRoomsInBuilding_invalidNusBuildingsAndRooms_throwsCorruptedVenueInformationException() {
+    public void retrieveAllRoomsInBuilding_invalidNusBuildingsAndRooms_throwsNoRoomsInBuildingException() {
         HashMap<String, ArrayList<String>> invalidNusBuildingsAndRooms = new HashMap<>();
         invalidNusBuildingsAndRooms.put("COM2", null);
         Building.setNusBuildingsAndRooms(invalidNusBuildingsAndRooms);
-        assertThrows(CorruptedVenueInformationException.class, () -> building.retrieveAllRoomsInBuilding());
+        assertThrows(NoRoomsInBuildingException.class, () -> building.retrieveAllRoomsInBuilding());
     }
 
     @Test

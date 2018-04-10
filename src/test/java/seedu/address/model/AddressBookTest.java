@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Rule;
@@ -166,6 +167,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Alias> getAliasList() {
             return aliases;
+        }
+
+        @Override
+        public HashMap<String, String> getAliasMapping() {
+            return null;
         }
 
         @Override

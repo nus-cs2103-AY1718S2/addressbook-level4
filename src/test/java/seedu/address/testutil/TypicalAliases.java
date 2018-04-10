@@ -27,6 +27,7 @@ public class TypicalAliases {
     public static final Alias LIST = new AliasBuilder().withCommand("list").withAlias("list1").build();
     public static final Alias REDO = new AliasBuilder().withCommand("redo").withAlias("redo1").build();
     public static final Alias UNDO = new AliasBuilder().withCommand("undo").withAlias("undo1").build();
+    public static final Alias UNKNOWN = new AliasBuilder().withCommand("unknownCommand").withAlias("add1").build();
 
 
     private TypicalAliases() {} // prevents instantiation

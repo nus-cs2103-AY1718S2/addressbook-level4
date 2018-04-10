@@ -13,6 +13,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.building.Building;
 import seedu.address.model.building.exceptions.BuildingNotFoundException;
 import seedu.address.model.building.exceptions.CorruptedVenueInformationException;
+import seedu.address.model.building.exceptions.NoRoomsInBuildingException;
 
 //@@author jingyinno
 /**
@@ -31,6 +32,7 @@ public class VacantCommand extends Command {
             + Arrays.toString(Building.NUS_BUILDINGS);
     public static final String MESSAGE_CORRUPTED_VENUE_INFORMATION_FILE =
             "Unable to read from venueinformation.json, file is corrupted. Please re-download the file.";
+    public static final String MESSAGE_NO_ROOMS_IN_BUILDING = "Building has no rooms available";
 
     private final Building building;
 
@@ -54,6 +56,8 @@ public class VacantCommand extends Command {
             throw new CommandException(MESSAGE_INVALID_BUILDING);
         } catch (CorruptedVenueInformationException e) {
             throw new CommandException(MESSAGE_CORRUPTED_VENUE_INFORMATION_FILE);
+        } catch (NoRoomsInBuildingException e) {
+            throw new CommandException(MESSAGE_NO_ROOMS_IN_BUILDING);
         }
 
     }

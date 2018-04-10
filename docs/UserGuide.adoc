@@ -17,7 +17,11 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-AddSurance is for insurance agents who *prefer to use a desktop app for managing contacts with current or potential clients*. More importantly, AddSurance is *optimized for insurance agents who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AddSurance can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+AddSurance is targeted at insurance agents who *prefer to use a desktop app for managing contacts with current or potential clients*.
+It allows insurance agents to manage a huge list of contacts in batches, as well as keep track of appointments with clients.
+More importantly, AddSurance is *optimized for insurance agents who prefer to work with a Command Line Interface* (CLI) while still having
+the benefits of a Graphical User Interface (GUI). If you can type fast, AddSurance can get your contact management tasks done faster
+than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -48,6 +52,9 @@ e.g. typing *`help`* or *`h`* and pressing kbd:[Enter] will open the help window
 
 .  Refer to <<Features>> for details of each command.
 
+== UI Layout and Explanations
+image::UiExplanations.png[width="900"]
+
 [[Features]]
 == Features
 
@@ -55,17 +62,96 @@ e.g. typing *`help`* or *`h`* and pressing kbd:[Enter] will open the help window
 *Command Format*
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/client` or as `n/John Doe`.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/client`, `t/client t/owes money` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 * Actual command words can be replaced by their aliases e.g. for the help command, user can use its alias, *`h`*, instead.
 ====
 
-=== Viewing help : `help` or `h`
+=== General Features
+
+==== Viewing help : `help` or `h`
 
 Format: `help` or `h`
 
-=== Adding a person: `add` or `a`
+// tag::undoredo[]
+==== Undoing previous command : `undo` or `u`
+
+Restores the address book to the state before the previous _undoable_ command was executed. +
+Format: `undo` or `u`
+
+[NOTE]
+====
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+====
+
+Examples:
+
+* `delete 1` +
+`list` +
+`undo` (reverses the `delete 1` command) +
+
+* `select 1` +
+`list` +
+`undo` +
+The `undo` command fails as there are no undoable commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+
+==== Redoing the previously undone command : `redo` or `r`
+
+Reverses the most recent `undo` command. +
+Format: `redo` or `r`
+
+Examples:
+
+* `delete 1` +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+
+* `delete 1` +
+`redo` +
+The `redo` command fails as there are no `undo` commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+`redo` (reapplies the `clear` command) +
+// end::undoredo[]
+
+==== Listing entered commands : `history` or `hist`
+
+Lists all the commands that you have entered in reverse chronological order. +
+Format: `history` or `hist`
+
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
+
+==== Clearing all entries : `clear` or `c`
+
+Clears all entries from the address book. +
+Format: `clear` or `c`
+
+==== Exiting the program : `exit` or `ex`
+
+Exits the program. +
+Format: `exit` or `ex`
+
+==== Saving the data
+
+Address book data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
+
+=== Contacts Features
+
+==== Adding a person: `add` or `a`
 
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
@@ -76,14 +162,14 @@ A person can have any number of tags (including 0)
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe t/client e/betsycrowe@example.com a/New Hill Village p/1234567 t/owes money`
 
-=== Listing all persons : `list` or `l`
+==== Listing all persons : `list` or `l`
 
 Shows a list of all persons in the address book. +
 Format: `list` or `l`
 
-=== Editing a person : `edit` or `e`
+==== Editing a person : `edit` or `e`
 
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
@@ -103,7 +189,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by detail: `find` or `f`
+==== Locating persons by detail: `find` or `f`
 
 Finds persons whose details contain any of the given keywords or part thereof. +
 Format: `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
@@ -123,7 +209,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names containing `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete` or `d`
+==== Deleting a person : `delete` or `d`
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX` or `d INDEX`
@@ -143,7 +229,8 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command
 
-=== Deleting dated persons  : `deletebefore` or `db`
+// tag::deletebefore[]
+==== Deleting dated persons  : `deletebefore` or `db`
 
 Deletes all persons added before a specified date with specified tags. +
 Format: `deletebefore d/DATE t/TAG...` or `db d/DATE t/TAG...`
@@ -155,14 +242,21 @@ Format: `deletebefore d/DATE t/TAG...` or `db d/DATE t/TAG...`
 * The input `DATE` *must be in the following format: dd/MM/yyyy*.
 ****
 
+TIP: You are encouraged to *attach tags to persons* representing different groups.
+This way, you can delete persons of a particular group that is added before a date.
+_For example, to delete contacts relating to non-clients in batch, you can attach *"non-client"* tag to these persons and
+use the `deletebefore` command._
+
 Examples:
 
 * `deletebefore d/12/12/2017 t/non-clients` +
 Deletes all non-clients added before 12/12/2017 in the address book.
+// end::deletebefore[]
 
 // tag::emailing[]
 
 === Emailing a person : `email` or `em`
+
 
 Emails a person based on the specified name.
 Format: `email KEYWORD TEMPLATE`
@@ -236,7 +330,7 @@ Format: `history` or `hist`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-=== Importing contacts from CSV : `import_contacts` or `ic`
+==== Importing contacts from CSV : `import_contacts` or `ic`
 
 Imports contacts from a csv file that contains the header (Name, Email, Phone, Address) +
 Format: `import_contacts f/PATH`
@@ -246,7 +340,7 @@ For example `import_contacts f/examplefile.csv` will import the contacts contain
 [NOTE]
 Please include the file extension (.csv), do include the full file path, and do not include quotations ("...") around the file path.
 
-=== Exporting contacts to CSV: `export_contacts` or `ec`
+==== Exporting contacts to CSV: `export_contacts` or `ec`
 
 Export all contacts to a .csv file.
 
@@ -263,26 +357,57 @@ It is not necessary to include a file path after the command. If no file path is
 * You may also give the path to a file name that doesn't yet exist. For example, you may call `ec data/newFileExample.csv` where `data/newFileExample.csv` does not yet exist. In this case, a new .csv file will be automatically created and written to.
 ****
 
+// tag::select[]
+==== Selecting a person : `select` or `s` `[Coming in v2.0]`
+
+Selects the person identified by the index number used in the last person listing. +
+Format: `select INDEX` or `s INDEX`
+
+****
+* Selects the person and loads the profile page of the person at the specified `INDEX`.
+* The profile page includes the person's personal details and insurance policies.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd person in the address book and shows the profile page of the person.
+* `find Betsy` +
+`select 1` +
+Selects the 1st person in the results of the `find` command and shows the profile page of the person.
+// end::select[]
 
 // tag::scheduling[]
-=== Adding an appointment : `addappointment` or `aa`
+=== Scheduling Features
 
-Adds an appointment with a person in the address book that will be shown in the calendar panel. +
+==== Adding an appointment : `addappointment` or `aa`
+
+Adds an appointment to the address book that will be shown in the calendar panel. +
 Format: `addappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` or `aa n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION`
 
 ****
 * Adds an appointment with the person named `NAME`, with the specified `DATE`, `STARTTIME`, `ENDTIME` and `LOCATION` respectively
+* The input *`STARTTIME` must precede `ENDTIME`*
 * The input date *must be in the following format: dd/MM/yyyy*.
 * The input time *must be in the following format: HH:mm (24hr format)*.
 * The calendar panel will be updated accordingly.
 ****
 
+NOTE: The appointment added *need not relate to any person existing in the address book*. This gives you the flexibility
+to keep track of appointments with anyone, without having to add that person into the address book.
+
+CAUTION: You are *not allowed to add appointments that clash in time.*
+
 Examples:
 
+image::aaScreenshot.png[width="800"]
 * `aa n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate` +
 Creates an appointment with Betsy on 12/12/2017 from 12:30pm to 1:30pm at Gold Park Estate.
 
-=== Deleting an appointment : `deleteappointment` or `da`
+==== Deleting an appointment : `deleteappointment` or `da`
 
 Deletes an appointment in the address book. +
 Format: `deleteappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` or `da n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION`
@@ -294,12 +419,16 @@ Format: `deleteappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` or 
 * The calendar panel will be updated accordingly.
 ****
 
+NOTE: In the current version, the deleteappointment command requires you to input all fields of the appointment to be deleted.
+This command will be upgraded to the <<da_enhanced, enhanced deleteappointment command>> which will be available in v2.0.
+
 Examples:
 
+image::daScreenshot.png[width="800"]
 * `da n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate` +
 Deletes the appointment previously arranged with Betsy on 12/12/2017 from 12:30pm to 1:30pm at Gold Park Estate.
 
-=== Zooming in calendar view : `zoomin` or `zi`
+==== Zooming in calendar view : `zoomin` or `zi`
 
 Zooms in the calendar panel to show a more detailed calendar view  +
 Format: `zoomin` or `zi`
@@ -310,10 +439,11 @@ Format: `zoomin` or `zi`
 
 Examples:
 
+image::ziScreenshot.png[width="800"]
 * `zi` +
-If the calendar panel is previously showing the Year View, it will now be showing the Month View.
+If the calendar panel is previously showing the Month View, it will now be showing the Week View.
 
-=== Zooming out calendar view : `zoomout` or `zo`
+==== Zooming out calendar view : `zoomout` or `zo`
 
 Zooms out the calendar panel to show a wider calendar view  +
 Format: `zoomout` or `zo`
@@ -324,30 +454,33 @@ Format: `zoomout` or `zo`
 
 Examples:
 
+image::zoScreenshot.png[width="800"]
 * `zo` +
 If the calendar panel is previously showing the Day View, it will now be showing the Week View.
 
-=== Going back on calendar view : `gobackward` or `gb` `[Coming in v1.5]`
+==== Going back on calendar view : `gobackward` or `gb`
 
 Makes the calendar view go backward in time from the currently displaying date. +
 Format: `gobackward` or `gb`
 
 Examples:
 
+image::gbScreenshot.png[width="800"]
 * `gb` +
 If the calendar panel is currently displaying Day View for 02/02/2018, it will change the Day View to 01/02/2018
 
-=== Going forward on calendar view : `goforward` or `gf` `[Coming in v1.5]`
+==== Going forward on calendar view : `goforward` or `gf`
 
 Makes the calendar view go forward in time from the currently displaying date. +
 Format: `goforward` or `gf`
 
 Examples:
 
+image::gfScreenshot.png[width="800"]
 * `gf` +
 If the calendar panel is currently displaying Day View for 02/02/2018, it will change the Day View to 03/02/2018
 
-=== Finding an appointment : `findappointment` or `fa` `[Coming in v2.0]`
+==== Finding an appointment : `findappointment` or `fa` `[Coming in v2.0]`
 
 Finds appointments with details containing any of the given keywords or part thereof. +
 Format: `findappointment KEYWORD...` or `fa KEYWORD...`
@@ -366,7 +499,7 @@ Returns any appointment that is scheduled on 12/12/2018
 * `findappointment Betsy Tim John` +
 Returns any appointment with `Betsy`, `Tim`, or `John`
 
-=== Editing an appointment : `editappointment` or `ea` `[Coming in v2.0]`
+==== Editing an appointment : `editappointment` or `ea` `[Coming in v2.0]`
 
 Edits an appointment in the address book. +
 Format: `editappointment INDEX [n/NAME] [d/DATE] [st/STARTTIME] [et/ENDTIME] [l/LOCATION]`
@@ -388,7 +521,26 @@ Examples:
 `editappointment 1 d/25/12/2017 l/Parkway Parade` +
 Edits the date and location of the first appointment with Betsy in the listing to 25/12/2017 and Parkway Parade respectively.
 
-=== Configuring calendar theme : `configcalendar` or `cc` `[Coming in v2.0]`
+[[da_enhanced]]
+==== Deleting an appointment (enhanced) : `deleteappointment` or `da` `[Coming in v2.0]`
+
+Deletes the specified appointment in the address book. +
+Format: `deleteappointment INDEX` or `da INDEX`
+
+****
+* Deletes the appointment ar the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The calendar panel will be updated accordingly.
+****
+
+Examples:
+
+* `findappointment 12/12/2018` +
+`deleteappointment 1` +
+Deletes the 1st appointment in the results of the `findappointment` command
+
+==== Configuring calendar theme : `configcalendar` or `cc` `[Coming in v2.0]`
 
 Configures the calendar view. +
 Format: `configcalendar s/STYLE` or `cc s/STYLE`
@@ -403,77 +555,6 @@ Examples:
 Set the calendar theme to the predefined `STYLE_2`.
 // end::scheduling[]
 
-// tag::undoredo[]
-=== Undoing previous command : `undo` or `u`
-
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo` or `u`
-
-[NOTE]
-====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
-====
-
-Examples:
-
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-
-=== Redoing the previously undone command : `redo` or `r`
-
-Reverses the most recent `undo` command. +
-Format: `redo` or `r`
-
-Examples:
-
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
-
-=== Clearing all entries : `clear` or `c`
-
-Clears all entries from the address book. +
-Format: `clear` or `c`
-
-=== Exiting the program : `exit` or `ex`
-
-Exits the program. +
-Format: `exit` or `ex`
-
-=== Saving the data
-
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
-
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
-
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -483,35 +564,37 @@ _{explain how the user can enable/disable data encryption}_
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add Appointment* : `addappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` +
+e.g. `addappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate`
+* *Calendar Go Back* : `gobackward`
+* *Calendar Go Forward* : `goforward`
 * *Clear* : `clear`
+* *Configure Calendar Theme `[Coming in v2.0]`* : `configcalendar s/STYLE`
+e.g. `configcalendar s/STYLE_2`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Delete Appointment* : `deleteappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` +
+e.g. `deleteappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate`
+* *Delete Appointment (Enhanced) `[Coming in v2.0]`* : `deleteappointment INDEX` +
+e.g. `deleteappointment 3`
 * *Delete Before* : `deletebefore d/DATE [t/TAG]...` +
 e.g. `deletebefore d/12/12/2017 t/friends`
 * *Email* : `email KEYWORD TEMPLATE` +
 e.g. `email James followup`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Edit Appointment `[Coming in v2.0]`*: `editappointment INDEX [n/NAME] [d/DATE] [st/STARTTIME] [et/ENDTIME] [l/LOCATION]` +
+e.g. `editappointment 1 d/25/12/2017 l/Parkway Parade`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
+* *Find Appointment `[Coming in v2.0]`*: `findappointment KEYWORD...` +
+e.g. `findappointment 12/12/2018`
 * *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
 * *History* : `history`
-* *Add Appointment* : `addappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` +
-e.g. `addappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate`
-* *Delete Appointment* : `deleteappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` +
-e.g. `deleteappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate`
+* *List* : `list`
+* *Redo* : `redo`
+* *Select `[Coming in v2.0]`* : `select INDEX` +
+e.g.`select 2`
+* *Undo* : `undo`
 * *Zoom In* : `zoomin`
 * *Zoom Out* : `zoomout`
-* *Calendar Go Back* : `gobackward`
-* *Calendar Go Forward* : `goforward`
-* *Find Appointment*: `findappointment KEYWORD...` +
-e.g. `findappointment 12/12/2018`
-* *Edit Appointment*: `editappointment INDEX [n/NAME] [d/DATE] [st/STARTTIME] [et/ENDTIME] [l/LOCATION]` +
-e.g. `editappointment 1 d/25/12/2017 l/Parkway Parade`
-* *Configure Calendar Theme* : `configcalendar s/STYLE`
-e.g. `configcalendar s/STYLE_2`
-* *Undo* : `undo`
-* *Redo* : `redo`

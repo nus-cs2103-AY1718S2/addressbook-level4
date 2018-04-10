@@ -77,7 +77,7 @@ implementation.
 
 *** Maintained the team repository:
 **** Managed the team workflow (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/94[#94])
-**** Managed continual integration of project (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/56[#56])
+**** Managed continual integration of project (PR: https://github.com/CS2103JAN2018-W10-B4/main/pull/56[#56], https://github.com/CS2103JAN2018-W10-B4/main/pull/44[#44])
 **** In charge of reviewing and merging Pull Requests
 **** Managed issue tracking and milestones which includes creation and maintenance of labels and milestones, backtracking of issues,
 labelling and assignment of issues (https://github.com/CS2103JAN2018-W10-B4/main/milestones[Milestones],

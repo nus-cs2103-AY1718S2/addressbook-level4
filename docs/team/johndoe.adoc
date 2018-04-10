@@ -9,6 +9,7 @@
 == Overview
 
 CLIndar is a desktop application that helps university computing students to manage their tasks and events. The user interacts with it using a CLI. It has a GUI created with JavaFX, and is written in Java.
+
 == Summary of contributions
 
 * *Major enhancement*: added *the ability to undo/redo previous commands*

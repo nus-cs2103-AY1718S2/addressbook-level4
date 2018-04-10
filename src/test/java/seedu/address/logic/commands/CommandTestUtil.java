@@ -20,6 +20,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.NameContainsKeywordsPredicate;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
@@ -146,6 +147,8 @@ public class CommandTestUtil {
             model.deleteStudent(firstStudent);
         } catch (StudentNotFoundException pnfe) {
             throw new AssertionError("Student in filtered list must exist in model.", pnfe);
+        } catch (LessonNotFoundException lnfe) {
+            throw new AssertionError("Lesson in Schedule to be deleted must exist in model.", lnfe);
         }
     }
 

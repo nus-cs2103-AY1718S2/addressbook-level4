@@ -18,6 +18,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
+import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 
@@ -123,6 +124,9 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
             model.deleteStudent(targetStudent);
         } catch (StudentNotFoundException pnfe) {
             throw new AssertionError("targetStudent is retrieved from model.");
+        } catch (LessonNotFoundException lnfe) {
+            throw new AssertionError(
+                    "Lessons associated with targetStudent is retrieved from model.");
         }
         return targetStudent;
     }

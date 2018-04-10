@@ -43,18 +43,20 @@ public class InfoPanel extends UiPart<Region> {
     public InfoPanel() {
         super(FXML);
 
-        venueTable = new VenueTable();
-
-        mapsDisplay = new GoogleMapsDisplay();
-
         personDetailsCard = new PersonDetailsCard();
         userDetailsPlaceholder.getChildren().add(personDetailsCard.getRoot());
+      
+        venueTable = new VenueTable();
+        venuePlaceholder.getChildren().add(venueTable.getRoot());
 
-        birthdayList = new BirthdayList();
-        birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
+        mapsDisplay = new GoogleMapsDisplay();
+        mapsPlaceholder.getChildren().add(mapsDisplay.getRoot());
 
         placeholder.toFront();
         registerAsAnEventHandler(this);
+    }
+
+    public void freeResources() {
     }
 
     public void freeResources() {
@@ -82,14 +84,11 @@ public class InfoPanel extends UiPart<Region> {
 
     @Subscribe
     private void handleGoogleMapsDisplayEvent(GoogleMapsEvent event) {
-        mapsPlaceholder.getChildren().removeAll();
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mapsDisplay = new GoogleMapsDisplay(event.getLocations());
-        mapsPlaceholder.getChildren().add(mapsDisplay.getRoot());
         if (event.getIsOneLocationEvent()) {
-            mapsDisplay.loadMapPage();
+            mapsDisplay.loadMapPage(event.getLocations());
         } else {
-            mapsDisplay.loadMapDirections();
+            mapsDisplay.loadMapDirections(event.getLocations());
         }
         mapsPlaceholder.toFront();
     }

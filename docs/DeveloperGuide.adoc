@@ -623,7 +623,7 @@ Below is the class diagram of the `GmailClient`:
 .Class Diagram of GmailClient and GoogleAuthentication
 image::GmailClassDiagram.png[width="600", align="center"]
 
-This newly created `GmailClient` class will provide all the services that uses the Google API.
+This newly created `GmailClient` class will provide all the services that use the Google API.
 
 Now that the `GmailClient` is created, we can use it send out emails!
 
@@ -660,11 +660,11 @@ public static void sendEmail(MimeMessage emailContent) throws MessagingException
 ===== Aspect: How to login to Google
 * Alternative 1: Using `GoogleAuthorizationCodeFlow` to log in.
 ** Pros: Very simple to implement and handle. `Token` and `Credential` are handled by the API.
-** Cons: It opens a default web browser, which users are able to close. `GoogleAuthorizationCodeFlow` will stall the
-main thread in order to wait for user to authenticate, if user close the browser, the app will crash.
-* Alternative 2 (current choice): Using built-in web browser to get the `Token` from the URL.
+** Cons: It opens a default web browser, which the users are able to close. `GoogleAuthorizationCodeFlow` will stall the
+main thread in order to wait for the user to authenticate, if the user close the browser, the app will crash.
+* Alternative 2 (current choice): Using a built-in web browser to get the `Token` from the URL.
 ** Pros: User cannot close the built in browser. The authentication process will not stall the main thread.
-** Cons: If user changes the URL in the web browser, the `Token` is gone and user have to re-login.
+** Cons: If the user changes the URL in the web browser, the `Token` is gone and the user have to re-login.
 
 ===== Aspect: How to send an email
 * Alternative 1 (current choice): Using Gmail API to send an email.

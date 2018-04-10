@@ -3,6 +3,39 @@
     background-color: #383838; /* Used in the default.html file */
 }
 
+//@@author Robert-Peng
+
+.tab-pane .tab-header-area .tab-background{
+-fx-opacity: 0;
+}
+
+#owner-Tab {
+    -fx-background-color: #A52A2A;
+}
+
+#petPatient-Tab {
+    -fx-background-color: #3e7b91;
+}
+
+#owner-pane {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-base: transparent;
+    -fx-border-color: null;
+    -fx-background-color: transparent;
+
+}
+
+#petPatient-pane {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-base: transparent;
+    -fx-border-color: null;
+    -fx-background-color: transparent;
+}
+
+//@@author
+
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";

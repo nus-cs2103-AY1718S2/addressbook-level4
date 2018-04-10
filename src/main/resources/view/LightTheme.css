@@ -3,6 +3,36 @@
     background-color: white; /* Used in the default.html file */
 }
 
+.tab-pane .tab-header-area .tab-background{
+-fx-opacity: 0;
+}
+
+#owner-Tab {
+    -fx-background-color: #66CDAA;
+    -fx-text-fill: white;
+}
+
+#petPatient-Tab {
+    -fx-background-color: FFA500;
+}
+
+#owner-pane {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-base: derive(white, 20%);
+    -fx-border-color: null;
+    -fx-text-fill: white;
+
+}
+
+#petPatient-pane {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-base: white;
+    -fx-border-color: white;
+    -fx-background-color: white;
+}
+
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";

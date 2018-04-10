@@ -11,6 +11,7 @@ import seedu.address.logic.commands.ClearHistoryCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.GoogleLoginCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.LoginCommand;
@@ -135,6 +136,9 @@ public class AddressBookParser {
 
         case EmailCommand.COMMAND_WORD:
             return new EmailCommandParser().parse(arguments);
+
+        case GoogleLoginCommand.COMMAND_WORD:
+            return new GoogleLoginCommand();
 
         case SignupCommand.COMMAND_WORD:
             return new SignupCommandParser().parse(arguments);

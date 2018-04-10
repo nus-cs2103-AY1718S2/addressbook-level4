@@ -390,24 +390,65 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::googlelogin[]
+=== Login to Google : `googlelogin`
+
+You will have to login to google in order to use features like
+emailing. This process is simple and fast like how you normally login
+using the web browser. +
+Format: `googlelogin`
+
+****
+* Opens up the `Google` tab. This is contactHeRo's built-in browser for Google logins. Simply enter your email and password to login.
+* You will have to login in order to use the `Email` command to send email.
+* *IMPORTANT*: Please do not go to other webpage in the `Google` tab after you have logged in. +
++
+This is because contactHeRo has to use the login information from the webpage after you have login to send your email.
+
+* *NOTE*: We do not save or log any of your Google credentials or information as we respect your privacy.
+Therefore, everytime you restart contactHeRo, you will have to login again.
+****
+
+Examples:
+
+* `googlelogin` +
+This will open up the `Google` tab for you to login. On running the above command, you should see the following success message: +
+
+ Please log in to Google.
++
+You should also see the login screen as shown below.
+
+.The Google log in page
+image::googlelogin1.PNG[width="600"]
+
+[NOTE]
+Please do not go to any other webpages in the `Google` tab after you have logged in.
+
+Now that you have logged in, you are ready to use the `Email` feature to send out emails!
+// end::googlelogin[]
+
+// tag::email[]
 === Emailing your contact : `email`
 
 You can send email to any person you have saved in contactHeRo using the following format. +
 Format: `email INDEX`
 
+*Important*: You must have logged in to Google using `googlelogin`. Otherwise, you will not be able to send out emails.
+
 ****
-* Opens up the Draft Email tab. This is an User Interface for you to draft your emails.
+* Opens up the `Draft Email` tab. This is an User Interface for you to draft your emails.
 * Collects the information of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 * The collected information will be used to help you fill up details in the draft like the person's email address.
+* *NOTE*: Please ensure that you have internet connection before sending the email!
 ****
 
 Examples:
 
 * `list` +
 `email 2` +
-This will open up the Draft Email tab and then
+This will open up the `Draft Email` tab and then
 collect the information of the 2nd person in the list. On running the above command, you should see the following success message: +
 
  Drafting email to: berniceyu@example.com
@@ -415,7 +456,7 @@ collect the information of the 2nd person in the list. On running the above comm
 The collected information will be used automatically to fill up details as shown below.
 
 .The User Interface to draft your email
-image::emailSS1.PNG[width="790"]
+image::emailSS1.PNG[width="600"]
 
 [TIP]
 You can use keyboard short-cuts like `Ctrl-B` to *bold* your text while drafting
@@ -427,6 +468,7 @@ a pop-up message as shown below.
 
 .Pop-up message
 image::emailSS2.PNG[width="400"]
+// end::email[]
 
 === Clearing all entries : `clear`
 
@@ -664,7 +706,8 @@ e.g.`select 2`
 * *<<redoing-the-previously-undone-command-code-redo-code, Redo>>* : `redo`
 * *<<viewing-the-linkedin-search-of-a-person-code-linkedin-code, LinkedIn>>*: `linkedIn INDEX` +
 e.g. `linkedIn 2`
-* *<<emailing-your-contact, Email>>* : `email INDEX` +
+* *<<login-to-google-code-googlelogin-code, Login to Google>>* : `googlelogin` +
+* *<<emailing-your-contact-code-email-code, Email>>* : `email INDEX` +
 e.g. `email 1`
 * *<<adding-a-job-opening, Add job opening>>* : `addjob p/POSITION t/TEAM l/LOCATION n/NUMBER_OF_POSITIONS` +
 e.g. `addjob p/Software Engineer t/Cloud Services l/Singapore n/2`

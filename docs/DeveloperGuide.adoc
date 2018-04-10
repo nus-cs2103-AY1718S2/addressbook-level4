@@ -592,31 +592,77 @@ https://docs.oracle.com/javafx/2/api/javafx/scene/image/Image.html
 ** Pros: Less memory consumption.
 ** Cons: Original Image may be lost.
 
-=== Emailing a contact
+// tag::email[]
+
+=== Emailing a contact using Google API
 
 ==== Current implementation
-The `EmailCommand` class will allow user to open an email interface to send email to the chosen contact. `EmailCommand` extends the `Command` class. It takes in an index through the `EmailCommandParser`,
+The sending of email will be implemented using the Google API.
+
+Firstly, to access the Google API, the user must login to Google using the `googlelogin` command.
+The `GoogleLoginCommand` class will open the Google authentication webpage in the built-in web browser for user to login.
+
+The `GoogleAuthentication` class will handle the authentication process of Google login.
+After authentication is successful, the user will be redirected to the Google homepage,
+where the `Token` is stored in the URL.
+
+Below is the sequence diagram of the `googlelogin` command:
+
+.Sequence Diagram of the GoogleLoginCommand
+image::GoogleLoginSequence.png[width="600", align="center"]
+
+Next, a `GmailClient` is created using the `GoogleAuthentication` class and `Token`.
+The `Token` is obtained from the redirected URL, meaning that the user must not navigate to other URL
+after they have logged in.
+
+Below is the class diagram of the `GmailClient`:
+
+.Class Diagram of GmailClient and GoogleAuthentication
+image::GmailClassDiagram.png[width="600", align="center"]
+
+This newly created `GmailClient` class will provide all the services that use the Google API.
+
+Now that the `GmailClient` is created, we can use it send out emails!
+
+The user will use the `email` command to start this process.
+The `EmailCommand` class will open an email interface to send email to the chosen contact. `EmailCommand` extends the `Command` class. It takes in an index through the `EmailCommandParser`,
 similar to the implementation of `DeleteCommand` and `DeleteCommandParser`.
 
-The sending of email will be implemented using the Gmail API.
-
-Firstly, `GoogleAuthorizationCodeFlow` is used to build and request for authorization from user.
-Then it saves the user authorization into `Credential`, which is saved into a local file so that they do not need to repeat the authorization step.
-This authorization is handled in the `GmailAuthentication` class.
-
-Next, a `GmailClient` is created using the `Credential` that was created by `GmailAuthentication`.
-The `GmailClient` class provides all the services that uses the Gmail API.
-
 The `EmailPanel` is the UI for user to draft their email. The UI has 3 inputs, *To*, *Subject* and *Body*. *From* is not needed here as we already have
-the authorised user's email address, which we can retrieve using `GmailClient`.
+the authorised user's email address in `GoogleAuthentication`.
 
-The `GmailMessage` class will take in the values inputted by the user
+The `GmailMessage` class will take in the values input by the user
 in the UI. These values will be stored in `GmailMessage`
 and packaged into a `MimeMessage` ready to be send out.
+[source, java]
+public static MimeMessage createEmailContent(String to, String from, String subject, String bodyText) throws MessagingException {
+        Properties props = new Properties();
+        Session session = Session.getDefaultInstance(props, null);
+        MimeMessage emailContent = new MimeMessage(session);
+        emailContent.setFrom(new InternetAddress(from));
+        emailContent.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(to));
+        emailContent.setSubject(subject);
+        emailContent.setContent(bodyText, "text/html; charset=utf-8");
+        return emailContent;
+    }
 
 Finally, `GmailClient` will send out the `MimeMessage` of `GmailMessage` as an email.
+[source, java]
+public static void sendEmail(MimeMessage emailContent) throws MessagingException, IOException {
+        Message message = createMessageWithEmail(emailContent);
+        message = service.users().messages().send("me", message).execute();
+    }
 
 ==== Design consideration
+===== Aspect: How to login to Google
+* Alternative 1: Using `GoogleAuthorizationCodeFlow` to log in.
+** Pros: Very simple to implement and handle. `Token` and `Credential` are handled by the API.
+** Cons: It opens a default web browser, which the users are able to close. `GoogleAuthorizationCodeFlow` will stall the
+main thread in order to wait for the user to authenticate, if the user close the browser, the app will crash.
+* Alternative 2 (current choice): Using a built-in web browser to get the `Token` from the URL.
+** Pros: User cannot close the built in browser. The authentication process will not stall the main thread.
+** Cons: If the user changes the URL in the web browser, the `Token` is gone and the user have to re-login.
+
 ===== Aspect: How to send an email
 * Alternative 1 (current choice): Using Gmail API to send an email.
 ** Pros: Able to customize the UI that the user will use to send out an email.
@@ -624,6 +670,8 @@ Finally, `GmailClient` will send out the `MimeMessage` of `GmailMessage` as an e
 * Alternative 2: Using `Webview` to display the Gmail drafting url.
 ** Pros: Faster implementation as similar feature has been done before.
 ** Cons: Not customizable and text may appear small in `Webview`.
+
+// end::email[]
 
 == Documentation
 

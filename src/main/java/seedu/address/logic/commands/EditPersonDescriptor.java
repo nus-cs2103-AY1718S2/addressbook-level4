@@ -9,6 +9,8 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NameOfKin;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Remark;
 import seedu.address.model.subject.Subject;
@@ -27,6 +29,7 @@ public class EditPersonDescriptor {
     private Remark remark;
     private Cca cca;
     private InjuriesHistory injuriesHistory;
+    private NameOfKin nameOfKin;
 
     public EditPersonDescriptor() {}
 
@@ -42,6 +45,7 @@ public class EditPersonDescriptor {
         setRemark(toCopy.remark);
         setCca(toCopy.cca);
         setInjuriesHistory(toCopy.injuriesHistory);
+        setNameOfKin(toCopy.nameOfKin);
     }
 
     /**
@@ -67,6 +71,13 @@ public class EditPersonDescriptor {
         return Optional.ofNullable(nric);
     }
 
+    public void setNameOfKin(NameOfKin nameOfKin) {
+        this.nameOfKin = nameOfKin;
+    }
+
+    public Optional<NameOfKin> getNameOfKin() {
+        return Optional.ofNullable(nameOfKin);
+    }
     /**
      * Sets {@code tags} to this object's {@code tags}.
      * A defensive copy of {@code tags} is used internally.

@@ -162,6 +162,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void addNextOfKin(NextOfKin nextOfKin) throws DuplicatePersonException {
+        addressBook.addNextOfKin(nextOfKin);
+
     }
 
     @Override

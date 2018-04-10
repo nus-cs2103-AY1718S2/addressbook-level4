@@ -15,6 +15,7 @@ import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NameOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
@@ -102,9 +103,11 @@ public class AddCcaCommand extends UndoableCommand {
                 editPersonDescriptor.getCca().get().toString());
         InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
                 .orElse(personToEdit.getInjuriesHistory());
+        NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin()
+                .orElse(personToEdit.getNameOfKin());
 
         return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
-                            updatedInjuriesHistory);
+                            updatedInjuriesHistory, updatedNameOfKin);
     }
 
     @Override

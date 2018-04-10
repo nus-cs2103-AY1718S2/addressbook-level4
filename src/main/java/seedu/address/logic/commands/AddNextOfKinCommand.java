@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Person;
@@ -26,7 +28,7 @@ public class AddNextOfKinCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_NRIC + "S9876543H "
-            + PREFIX_REMARK + "English Rep ";
+            + PREFIX_REMARK + "Father ";
 
     public static final String MESSAGE_SUCCESS = "New NextOfKin added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
@@ -44,17 +46,17 @@ public class AddNextOfKinCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException, IOException {
         requireNonNull(model);
-        //try {
-            //model.addPerson(toAdd);
+        try {
+            model.addNextOfKin(toAdd);
             //model.addPage(toAdd);
 
             //EventsCenter.getInstance().post(new JumpToListRequestEvent(model.getFilteredPersonList().size() - 1));
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
 
 
-        //} catch (DuplicatePersonException e) {
-        //    throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        //}
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
 
     }
 

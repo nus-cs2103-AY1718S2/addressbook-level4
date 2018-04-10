@@ -9,9 +9,12 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NameOfKin;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
@@ -39,6 +42,8 @@ public class XmlAdaptedPerson {
     private String cca;
     @XmlElement
     private String injuriesHistory;
+    @XmlElement
+    private String nameOfKin;
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -50,7 +55,7 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String nric, List<XmlAdaptedTag> tagged, List<XmlAdaptedSubject> subjects,
-                            String remark, String cca, String injuriesHistory) {
+                            String remark, String cca, String injuriesHistory, String nameOfKin) {
         this.name = name;
         this.nric = nric;
         this.remark = remark;
@@ -62,6 +67,7 @@ public class XmlAdaptedPerson {
         }
         this.cca = cca;
         this.injuriesHistory = injuriesHistory;
+        this.nameOfKin = nameOfKin;
     }
 
     /**
@@ -83,6 +89,7 @@ public class XmlAdaptedPerson {
         remark = source.getRemark().value;
         cca = source.getCca().value;
         injuriesHistory = source.getInjuriesHistory().value;
+        nameOfKin = source.getNameOfKin().fullName;
     }
 
     /**
@@ -120,22 +127,30 @@ public class XmlAdaptedPerson {
         final Set<Subject> subjects = new HashSet<>(personSubjects);
 
         if (this.remark == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Remark.class.getSimpleName()));
         }
         final Remark remark = new Remark(this.remark);
 
         if (this.cca == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Cca.class.getSimpleName()));
         }
         final Cca cca = new Cca(this.cca);
 
         if (this.injuriesHistory == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    InjuriesHistory.class.getSimpleName()));
         }
 
         final InjuriesHistory injuriesHistory = new InjuriesHistory(this.injuriesHistory);
 
-        return new Person(name, nric, tags, subjects, remark, cca, injuriesHistory);
+        if (this.nameOfKin == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    NameOfKin.class.getSimpleName()));
+        }
+
+        final NameOfKin nameOfKin = new NameOfKin(this.nameOfKin);
+
+        return new Person(name, nric, tags, subjects, remark, cca, injuriesHistory, nameOfKin);
     }
 
     @Override

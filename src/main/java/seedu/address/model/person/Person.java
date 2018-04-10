@@ -33,13 +33,13 @@ public class Person {
     private final Remark remark;
     private final Cca cca;
     private final InjuriesHistory injuriesHistory;
-    //private final NextOfKin nextOfKin;
+    private final NameOfKin nameOfKin;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Nric nric, Set<Tag> tags, Set<Subject> subjects, Remark remark, Cca cca,
-                  InjuriesHistory injuriesHistory/*, NextOfKin nextOfKin*/) {
+                  InjuriesHistory injuriesHistory, NameOfKin nameOfKin) {
         requireAllNonNull(name, nric, tags, subjects, cca);
         this.name = name;
         this.nric = nric;
@@ -49,7 +49,7 @@ public class Person {
         this.remark = remark;
         this.cca = cca;
         this.injuriesHistory = injuriesHistory;
-        //this.nextOfKin = nextOfKin;
+        this.nameOfKin = nameOfKin;
     }
 
     public Name getName() {
@@ -71,11 +71,11 @@ public class Person {
     public InjuriesHistory getInjuriesHistory() {
         return injuriesHistory;
     }
-/*
-    public NextOfKin getNextOfKin() {
-        return nextOfKin;
+
+    public NameOfKin getNameOfKin() {
+        return nameOfKin;
     }
-*/
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -195,7 +195,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, nric, tags, subjects, remark, cca, injuriesHistory);
+        return Objects.hash(name, nric, tags, subjects, remark, cca, injuriesHistory, nameOfKin);
     }
 
     @Override
@@ -212,7 +212,7 @@ public class Person {
                .append(getRemark());
         builder.append(" Cca: ").append(getCca());
         builder.append(" InjuriesHistory: ").append(getInjuriesHistory());
-        //builder.append("  NextOfKin: ").append(getNextOfKin());
+        builder.append("  NextOfKin: ").append(getNameOfKin());
         return builder.toString();
     }
 

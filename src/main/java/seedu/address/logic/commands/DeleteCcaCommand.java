@@ -6,6 +6,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NameOfKin;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
@@ -105,6 +107,7 @@ public class DeleteCcaCommand extends UndoableCommand {
                 .orElse(personToEdit.getInjuriesHistory());
         String[] ccaArray = personToEdit.getCca().toString().split("\n");
         String updateCca = "";
+        NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin().orElse(personToEdit.getNameOfKin());
         boolean ccaIsFound = false;
         for (String cca : ccaArray) {
             if (!cca.contains(editPersonDescriptor.getCca().get().toString())) {
@@ -117,7 +120,7 @@ public class DeleteCcaCommand extends UndoableCommand {
         if (ccaIsFound) {
             Cca updatedCca = parseCca(updateCca);
             return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
-                    updatedInjuriesHistory);
+                    updatedInjuriesHistory, updatedNameOfKin);
         } else {
             throw new CommandException("The target cca cannot be missing.");
         }

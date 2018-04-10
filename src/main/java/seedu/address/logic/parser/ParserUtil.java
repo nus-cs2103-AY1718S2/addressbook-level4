@@ -19,10 +19,14 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NameOfKin;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Remark;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
+
+import javax.naming.NamingEnumeration;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -296,6 +300,7 @@ public class ParserUtil {
         requireNonNull(cca);
         String trimmedCca = cca.trim();
         return new Cca(trimmedCca);
+
     }
 
     /**
@@ -326,6 +331,31 @@ public class ParserUtil {
     public static Optional<InjuriesHistory> parseInjuriesHistory(Optional<String> injuriesHistory) {
         requireNonNull(injuriesHistory);
         return injuriesHistory.isPresent() ? Optional.of(parseInjuriesHistory(injuriesHistory.get()))
+                : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static NameOfKin parseNameOfKin(String nameOfKin) throws IllegalValueException{
+        requireNonNull(nameOfKin);
+        String trimmedNameOfKin = nameOfKin.trim();
+        if (!NameOfKin.isValidName(trimmedNameOfKin)) {
+            throw new IllegalValueException(NameOfKin.MESSAGE_NAME_CONSTRAINTS);
+        }
+        return new NameOfKin(trimmedNameOfKin);
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<NameOfKin> parseNameOfKin(Optional<String> nameOfKin) throws IllegalValueException {
+        requireNonNull(nameOfKin);
+        return nameOfKin.isPresent() ? Optional.of(parseNameOfKin(nameOfKin.get()))
                 : Optional.empty();
     }
 }

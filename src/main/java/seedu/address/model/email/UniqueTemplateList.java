@@ -42,7 +42,13 @@ public class UniqueTemplateList implements Iterable<Template> {
      */
     public boolean contains(Template toCheck) {
         requireNonNull(toCheck);
-        return internalList.contains(toCheck);
+        String newPurpose = toCheck.getPurpose();
+        for(Template t : internalList) {
+            if(t.getPurpose().equals(newPurpose)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

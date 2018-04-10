@@ -79,6 +79,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     //@@author
 
+    //// Template related operations
+
     //@@author ng95junwei
 
     /**
@@ -97,6 +99,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         list.add(template1);
         list.add(template2);
         return list;
+    }
+
+    public void addTemplate(Template template) throws DuplicateTemplateException {
+        templates.add(template);
     }
 
     public void setTemplates() throws DuplicateTemplateException {
@@ -269,6 +275,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Appointment> getAppointmentList() {
         return appointments.asObservableList();
+    }
+    //@@author
+
+    //@@author ng95junwei
+    @Override
+    public ObservableList<Template> getTemplateList() {
+        return templates.asObservableList();
     }
     //@@author
 

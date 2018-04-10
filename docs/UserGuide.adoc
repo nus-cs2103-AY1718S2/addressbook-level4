@@ -57,6 +57,32 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Some commands have command aliases which can be used in place of the command, e.g. `a` for `add`.
 ====
 
+=== Login : `unlock`
+
+You need to login to the APP to do any actions. The initial password is 123456.+
+Format: `unlock [PASSWORD]`
+alias: `ulk`
+
+Examples:
+
+* `unlock 123456`
+
+=== Logout : `lock`
+
+You need to logout after using the APP. The initial password is 123456.+
+Format: `lock`
+alias: `lk`
+
+=== Reset password : `setPassword`
+
+You may change the password of login. The initial password is 123456.+
+Format: `setPassword [OLD_PASSWORD] [NEW_PASSWORD]`
+alias: `sp`
+
+Examples:
+
+* `setPassword 123456 123`
+
 === Viewing help : `help`
 
 Format: `help`

@@ -22,7 +22,7 @@ import seedu.address.commons.events.ui.PanelSelectionChangedEvent;
 import seedu.address.model.activity.Activity;
 
 /**
- * Panel containing the list of activities.
+ * Panel containing the list of tasks.
  */
 public class TaskListPanel extends UiPart<Region> {
     private static final String FXML = "TaskListPanel.fxml";

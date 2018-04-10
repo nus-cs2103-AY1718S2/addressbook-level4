@@ -12,8 +12,8 @@ import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
 import com.calendarfx.view.CalendarView;
-
 import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.ObservableList;
 import javafx.scene.layout.Region;
 import seedu.address.commons.events.model.CalendarRemoveActivityEvent;
@@ -23,6 +23,9 @@ import seedu.address.model.activity.Event;
 import seedu.address.model.activity.Task;
 
 //@@author jasmoon
+/**
+ * Panel containing the calendar.
+ */
 public class CalendarPanel extends UiPart<Region> {
 
     private static final String FXML = "CalendarPanel.fxml";
@@ -39,6 +42,9 @@ public class CalendarPanel extends UiPart<Region> {
 
     }
 
+    /**
+     * Configures the contents to display of the calendar.
+     */
     private void configureCalendar()   {
         calendarView.setRequestedTime(LocalTime.now());
         calendarView.setToday(LocalDate.now());
@@ -50,15 +56,18 @@ public class CalendarPanel extends UiPart<Region> {
         calendarView.showMonthPage();
     }
 
-
+    /**
+     * Syncs the calender with UniqueActivityList at start.
+     * @param activityList
+     */
     private void syncCalendarWithActivities(ObservableList<Activity> activityList)  {
-        CalendarSource activityCS = new CalendarSource("Activity Calendar");
+        CalendarSource activityCalendarSource = new CalendarSource("Activity Calendar");
         Calendar taskCalendar = new Calendar("Task Calendar");
         taskCalendar.setStyle(Calendar.Style.getStyle(1));
-        activityCS.getCalendars().add(taskCalendar);
+        activityCalendarSource.getCalendars().add(taskCalendar);
 
-        for(Activity activity: activityList)    {
-            if(activity.getActivityType().equals("TASK")) {
+        for (Activity activity: activityList)    {
+            if (activity.getActivityType().equals("TASK")) {
                 Task task = (Task) activity;
                 LocalDateTime dueDateTime = task.getDueDateTime().getLocalDateTime();
                 Entry entry = new Entry(task.getName().fullName);
@@ -69,10 +78,10 @@ public class CalendarPanel extends UiPart<Region> {
 
         Calendar eventCalendar = new Calendar("Event Calendar");
         eventCalendar.setStyle(Calendar.Style.getStyle(4));
-        activityCS.getCalendars().add(eventCalendar);
+        activityCalendarSource.getCalendars().add(eventCalendar);
 
-        for(Activity activity: activityList)    {
-            if(activity.getActivityType().equals("EVENT")) {
+        for (Activity activity: activityList)    {
+            if (activity.getActivityType().equals("EVENT")) {
                 Event event = (Event) activity;
                 LocalDateTime startDateTime = event.getStartDateTime().getLocalDateTime();
                 LocalDateTime endDateTime = event.getEndDateTime().getLocalDateTime();
@@ -81,7 +90,7 @@ public class CalendarPanel extends UiPart<Region> {
                 eventCalendar.addEntry(entry);
             }
         }
-        calendarView.getCalendarSources().add(activityCS);
+        calendarView.getCalendarSources().add(activityCalendarSource);
     }
 
     @Subscribe
@@ -92,16 +101,16 @@ public class CalendarPanel extends UiPart<Region> {
     @Subscribe
     private void handleCalendarRemoveActivityEvent(CalendarRemoveActivityEvent event)   {
         Activity activityToRemove = event.activityToRemove;
-        if(activityToRemove.getActivityType().equals("TASK")) {
+        if (activityToRemove.getActivityType().equals("TASK")) {
             Task taskToRemove = (Task) activityToRemove;
-            List<Entry<?>> taskEntryList = calendarView.getCalendarSources().get(0).getCalendars().get(0).
-                    findEntries(taskToRemove.getName().fullName);
+            List<Entry<?>> taskEntryList = calendarView.getCalendarSources().get(0).getCalendars().get(0)
+                    .findEntries(taskToRemove.getName().fullName);
 
             Entry<?> entryToRemove = taskEntryList.get(0);
-            if(taskEntryList.size()>1)  {
+            if (taskEntryList.size() > 1)  {
                 LocalDate taskEntryDueDate = taskToRemove.getDueDateTime().getLocalDateTime().toLocalDate();
-                Map<LocalDate, List<Entry<?>>> mapEntry = calendarView.getCalendarSources().get(0).getCalendars().get(0).
-                        findEntries(taskEntryDueDate, taskEntryDueDate, ZoneId.systemDefault());
+                Map<LocalDate, List<Entry<?>>> mapEntry = calendarView.getCalendarSources().get(0)
+                        .getCalendars().get(0).findEntries(taskEntryDueDate, taskEntryDueDate, ZoneId.systemDefault());
                 entryToRemove = mapEntry.get(taskEntryDueDate).get(0);
             }
             calendarView.getCalendarSources().get(0).getCalendars().get(0)

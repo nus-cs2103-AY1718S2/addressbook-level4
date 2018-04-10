@@ -3,7 +3,10 @@ package seedu.address.commons.events.model;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.activity.Activity;
 
-public class CalendarRemoveActivityEvent extends BaseEvent{
+/**
+ * Indicates the an activity has been removed in the model.
+ */
+public class CalendarRemoveActivityEvent extends BaseEvent {
 
     public final Activity activityToRemove;
 

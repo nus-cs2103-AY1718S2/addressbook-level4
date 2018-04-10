@@ -199,4 +199,13 @@ public class LogicManager extends ComponentManager implements Logic {
             appointmentTagsInModel.addAll(a.getTag());
         }
     }
+
+    @Override
+    public Set<String> getAllTagsInModel() {
+        Set<String> tagsInModel = new HashSet<>();
+        for (Tag t : model.getTagList()) {
+            tagsInModel.add(t.tagName);
+        }
+        return tagsInModel;
+    }
 }

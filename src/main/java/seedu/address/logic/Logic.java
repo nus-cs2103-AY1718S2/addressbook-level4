@@ -80,4 +80,7 @@ public interface Logic {
     /** Returns a set of all appointments' tags found in model. */
     Set<String> getAllAppointmentTags();
 
+    /** Returns a set of all tags (persons', pet patients' & appointments') found in model. */
+    Set<String> getAllTagsInModel();
+
 }

@@ -537,7 +537,7 @@ Examples:
 
 You do not need to save manually. contactHeRo saves the data into the hard disk for you automatically. +
 
-// tag::dataencryption[]
+// tag::calendar[]
 
 === Opening the calendar `calendar`
 You can switch to the calendar tab using the following format. +
@@ -646,7 +646,7 @@ Examples:
 On running the above command, you should see the following success message: +
 
  Appointment deleted: Meeting Start Date Time: 2018-04-05 14:00 End Date Time: 2018-04-05 15:00
-
+// end::calendar[]
 === Editing a job opening `[coming in v1.5]`
 
 You will soon be able to edit a job opening in contactHeRo.
@@ -673,12 +673,13 @@ _{explain how the user can enable/disable data encryption}_
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
-
+// tag::faq[]
 *Q*: How do I report bugs to the developers? +
 *A*: Please send an email to contactHeRo@gmail.com if you find a bug. Thank you.
 
 To ask more questions, please send your email to contactHeRo@gmail.com. +
 We are willing to help you. +
+// end::faq[]
 
 == ContachHeRo Cheat Sheet
 

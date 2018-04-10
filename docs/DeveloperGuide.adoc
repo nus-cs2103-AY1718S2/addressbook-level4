@@ -410,12 +410,17 @@ Birthday prefix "b/" has been added to the add command so that users can add the
 *Since V1.5*
 
 ==== Current Implementation
-The sort command allows the users to sort their clients according to the lexicographical order of their name. It is facilitated by a custom comparator. The sort command would be implemented as an not undoable command.
+The sort command allows the users to sort their clients according to the lexicographical order of their name. It is facilitated by a custom comparator. The sort command would be implemented as an undoable command.
 
-The following sequence diagram shows how the sortCommand operation works. In the sequence diagram, the sortCommand is passed to the AddressBookParser, which executes the parseCommand method. The Model then executes the sortedFilteredPersonList,  which sorts the internalList using a comparator.
+The following sequence diagram shows how the sortCommand operation works.
+
+image::sortdia[width="600"]
+
+In the sequence diagram, the sortCommand is passed to the AddressBookParser, which executes the parseCommand method. The Model then executes the sortedFilteredPersonList,  which sorts the internalList using a comparator.
 
 Suppose that the user has a list of clients in the application as shown in the diagram below, after executing the command, the list of clients will be as follows.
 
+image::sortedlist[width="600"]
 ==== Design Considerations
 
 ===== Aspect: Implementation of SortCommand
@@ -447,8 +452,6 @@ Suppose that the user has a list of clients in the application as shown in the d
 The Group feature will allow users to group their clients according to a specified group.
 
 Users will be required to add their clients to a group when adding a new user. Users can change the grouping of their clients later on if they wish to do so.
-
-The following sequence diagram shows how the group feature is being implemented.
 
 ==== Design Considerations
 
@@ -518,6 +521,10 @@ Data is encrypted using a AES-256 bits encryption. File is automatically encrypt
 
 The current implementation is just a proof of concept and will be improved upon in upcoming version.
 
+[NOTE]
+The standard version of the JRE/JDK are under export restrictions. That also includes that some cryptographic algorithms are not allowed to be shipped in the standard version.
+Replace files in library with Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files 8. Download the files http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html[Here].
+
 ==== Design Considerations
 
 ===== Aspect: Implementation of SecretKey
@@ -555,6 +562,9 @@ The password feature will be created as a class of it's own. There will be no de
 
 Users can decide whether to set a password. The current implementation is just a proof of concept and will be improved upon in upcoming version.
 
+The sequence diagram shows how the password command works. In the following diagram, the `password set/123` is executed.
+
+image::passdia[width="600"]
 
 ==== Design Considerations
 

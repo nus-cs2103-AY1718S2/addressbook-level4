@@ -86,7 +86,12 @@ public class CalendarPanel extends UiPart<CalendarView> {
         calendarView.setShowAddCalendarButton(false);
         calendarView.showWeekPage();
         calendarView.setShowDeveloperConsole(true);
+        calendarView.setShowSearchResultsTray(false);
+        calendarView.setShowToolBar(false);
+
         calendarView.setOnMouseClicked(null);
+
+        calendar.setReadOnly(true);
     }
 
     /**

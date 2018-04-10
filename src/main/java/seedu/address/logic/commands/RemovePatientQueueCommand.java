@@ -22,9 +22,9 @@ public class RemovePatientQueueCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes the first patient from the visiting queue.";
 
     public static final String MESSAGE_USAGE_INDEX = COMMAND_WORD
-            + ": Removes a specific patient from the visiting queue.\n"
+            + ": Removes a specific patient from the visiting queue."
             + "Parameters: "
-            + "INDEX (must be a positive integer)"
+            + "INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_REMOVE_SUCCESS = "%1$s is removed from the waiting list";

@@ -6,7 +6,6 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.animation.Animation;
 import javafx.fxml.FXML;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -87,8 +86,8 @@ public class PersonCard extends UiPart<Region> {
             return;
         }
 
-        cardPhotoMask.widthProperty().addListener((observable, oldValue, newValue) -> resizePhoto());
-        cardPhotoMask.heightProperty().addListener((observable, oldValue, newValue) -> resizePhoto());
+        cardPhoto.fitWidthProperty().bind(cardPhotoMask.widthProperty());
+        cardPhoto.fitHeightProperty().bind(cardPhotoMask.heightProperty());
 
         Image profileImage = person.getProfileImage().getImage();
         if (profileImage == null) {
@@ -116,31 +115,6 @@ public class PersonCard extends UiPart<Region> {
         } else {
             cardPersonRating.setText(UiUtil.toFixed(rating, 2));
             iconRating.setVisible(true);
-        }
-    }
-
-    /**
-     * Resize the photo to cover the ImageView
-     */
-    private void resizePhoto() {
-        cardPhoto.setFitWidth(cardPhotoMask.getWidth());
-        cardPhoto.setFitHeight(cardPhotoMask.getHeight());
-        Image image = cardPhoto.getImage();
-
-        if (image != null) {
-            double aspectRatio = cardPhotoMask.getWidth() / cardPhotoMask.getHeight();
-            double imageWidth = image.getWidth();
-            double imageHeight = image.getHeight();
-            double fitSize = Math.min(imageWidth, imageHeight);
-            double actualSize = fitSize * aspectRatio;
-
-            if (imageWidth > imageHeight) {
-                double x = (imageWidth - actualSize) / 2.0;
-                cardPhoto.setViewport(new Rectangle2D(x, 0, actualSize, fitSize));
-            } else {
-                double y = (imageHeight - actualSize) / 2.0;
-                cardPhoto.setViewport(new Rectangle2D(0, y, fitSize, actualSize));
-            }
         }
     }
 

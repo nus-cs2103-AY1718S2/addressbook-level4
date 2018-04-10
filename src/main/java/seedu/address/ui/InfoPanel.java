@@ -468,9 +468,7 @@ public class InfoPanel extends UiPart<Region> {
         // Update if the person changed is what is currently shown
         // Don't update if the person is the same (+ quickfix for Rating and Resume)
         if (currentSelectedPerson != null && currentSelectedPerson.equals(source) && target != null
-                && (!currentSelectedPerson.equals(target)
-                    || !currentSelectedPerson.getRating().equals(target.getRating())
-                    || !currentSelectedPerson.getResume().equals(target.getResume()))) {
+                && !currentSelectedPerson.infoEquals(target)) {
             currentSelectedPerson = target;
             animateUpdateInfoPanel(false);
         }

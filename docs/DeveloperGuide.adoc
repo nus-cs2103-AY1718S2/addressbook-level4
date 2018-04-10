@@ -434,7 +434,7 @@ Once the task is successfully added, it will be reflected in the CLIndar GUI its
 `Event` is the second and last type of entry in the desk board in CLIndar.
 `Event` represents an activity with fixed start and end times, such as a test or a doctor appointment etc.
 
-_Figure 13_ below shows how `Event` is implemented in the application.
+_Figure 21_ below shows how `Event` is implemented in the application.
 
 .UML Class Diagram for Event
 image::EventUMLDiagram.png[width="550"]
@@ -488,40 +488,9 @@ Following is a snippet which illustrates the function of `UniqueActivityList`:
 `Task` and `Event` objects can be removed through the use of the `RemoveCommand`
 by specifying the `Task` or `Event` and the index of the task/event reflected in the GUI.
 
-=== Task
-Task refer to a piece of work to be done that can be added by a user of the application. After being added,
-tasks can be edited, completed or removed. When a task is not completed within the deadline, it will be
-automatically be marked as overdue.
-{empty} +
-{empty} +
-
-
-==== Current Implementation
-
-*_Figure 14_* below shows how `Task` is represented in the application.
-
-.UML Class Diagram for Task
-image::TaskUMLDiagram.png[width="550"]
-
-A brief description of each of the attributes of `Task` is given below:
-
-* Name: name of the task. This attribute is compulsory.
-* dueDateTime: due date and time of the task. This attribute is compulsory.
-* Remark: a short description or reminder pertaining to the task.
-* Tags: Groupings or representation for the task.
-
-Operations that manipulate `Task` can been done using `TaskCommand`, `CompleteCommand`,
-`RemoveCommand`, `EditCommand` commands. These commands are described in more detail below.
-{empty} +
-{empty} +
-
-
-===== Adding tasks
-Tasks can be added through the use of the `TaskCommand`.
-
-The following is a snippet shows how the `executeUndoableCommand()` of `TaskCommand` updates `UniqueActivityList`
-residing in model of CLIndar by adding `toAdd`. Note that `toAdd` will not be added if a duplicate task
-has been found or the `Name` or `DateTime` field is left empty.
+The following snippet shows the `executeUndoableCommand()` of the `RemoveCommand` class.
+`UniqueActivityList` resides in the `Model` will be updated by having `activityToDelete` deleted from it.
+If the index of an activity is not found, an `ActivityNotFoundException` will be thrown.
 
 [source,java]
 ----
@@ -609,10 +578,40 @@ are displayed using `EventListPanel`. Below are examples of a `TaskListCard` and
 .TaskListCard example
 image::TaskCard.png[width="550"]
 
+.EventListCard example
+image::EventCard.png[width='550']
 
+`ListCommand` allows the user to only view `Task` only, `Event` only or both in the GUI.
+
+The following snippet shows how `execute()` of `ListCommand` displays `Task` and/or `Event` objects in the GUI.
+If an invalid request for `ListCommand` happens, a `CommandException` will be thrown.
+
+[source,java]
+----
+    public CommandResult execute() throws CommandException {
+
+        switch(commandRequest)  {
+        case "task":
+            EventsCenter.getInstance().post(new ShowTaskOnlyRequestEvent());
+            return new CommandResult(MESSAGE_SUCCESS_TASK);
+        case "event":
+            EventsCenter.getInstance().post(new ShowEventOnlyRequestEvent());
+            return new CommandResult(MESSAGE_SUCCESS_EVENT);
+        /..some code../
+
+        default:
+            throw new CommandException(String.format(Messages.MESSAGE_INVALID_LIST_REQUEST, commandRequest));
+        }
+    }
+----
+
+If `ListCommand` is successful:
 Operations that manipulate the GUI with respect to `Task` class includes `ListCommand`, `OverdueCommand`.
 These commands are described in more detail below.
 
+* `list task` will show only `Task` objects;
+* `list event` will show only `Event` objects; and
+* `list` will show both `Task` and `Event` objects.
 {empty} +
 {empty} +
 

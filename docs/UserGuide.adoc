@@ -169,6 +169,7 @@ Selects the 2nd person in StardyTogether.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::birthdays[]
 ==== Viewing a collated birthday list: `birthdays` (since v1.3)
 
 Displays a list that contains all the birthdays of all contacts ordered by date +
@@ -188,12 +189,14 @@ Examples:
 Displays a list of all birthdays
 * `birthdays today` +
 Displays a window with the birthdays today
+// end::birthdays[]
 
 === NUS Commands
+// tag::union[]
 ==== Viewing common time slots in timetable: `union` (coming in v2.0)
 
 Displays the common free time of multiple people in StardyTogether.(Minimum: 2) +
-Format: `free ODD/EVEN INDEX INDEX [INDEX]...`
+Format: `union ODD/EVEN INDEX INDEX [INDEX]...`
 
 ****
 * Only indexes of the current filtered list are valid
@@ -202,11 +205,12 @@ Format: `free ODD/EVEN INDEX INDEX [INDEX]...`
 
 Examples:
 
-* `free Odd 1 2 3` +
+* `union Odd 1 2 3` +
 Displays the combined odd timetable for persons at Index 1, 2 and 3.
 
-* `free Even 1 2` +
+* `union Even 1 2` +
 Displays the combined even timetable for persons at Index 1 and 2.
+// end:union[]
 
 // tag::vacant[]
 ==== Vacant study rooms finder : `vacant` (since v1.3)
@@ -439,7 +443,7 @@ Format: `exit`
 StardyTogether data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-
+// tag::FAQ[]
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -476,6 +480,7 @@ image::NUSMods_Screenshot_Second.PNG[width="790"]
 +
 .   Paste it in StardyTogether at the tt/TIMETABLE field
 ****
+// end::FAQ[]
 
 == Command Summary
 [width="790",cols="<15%,<23%, 45%",options="header",]

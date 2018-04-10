@@ -1,0 +1,58 @@
+= Wayne Neo - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: StardyTogether
+StardyTogether is a desktop contacts and venues manager application specially for NUS students to help them find free time and rooms to study together with their friends.
+
+Most of the user interactions are via CLI, while there exists a GUI created with JavaFX. It is written in Java and has
+about 10kLoC.
+
+The source code is based on the  https://github.com/se-edu/addressbook-level4[AddressBook-Level4] project created by SE-EDU initiative.
+
+*Code contributed*: [https://github.com/CS2103JAN2018-W11-B4/main/blob/master/collated/functional/AzuraAiR.md[Functional code]]
+[https://github.com/CS2103JAN2018-W11-B4/main/blob/master/collated/test/AzuraAiR.md[Test code]] +
+
+== Feature Contributions
+* *Major enhancement*: Timetable Attribute and Union Command
+** What it does: Allows students to import their NUSMods timetables into
+** Justification: This feature makes the adoption and use of StardyTogether much more convenient as students can now remove the hassle of manually entering their timetables and use StardyTogether along with their existing tools. +
+The union of the timetable also allows students to easily plan study sessions today during their free breaks.
+** Credits: Timetable importing features obtains data from NUSMods API (http://api.nusmods.com)
+
+
+* *Minor enhancement*: Birthday Attribute and Command
+** What it does: Shows a list of birthdays and notification of birthdays occurring today
+** Justification: This allows students to fulfill their social obligations with their friends by reminding them of their friends' birthdays at the start of the app.
+Students can also open a list to plan for birthdays ahead of time.
+
+
+* *Other contributions*:
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W11-B4/main/pull/74[#74]
+*** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2103JAN2018-T16-B1/main/issues/70[1], https://github.com/CS2103JAN2018-T16-B1/main/issues/76[2], https://github.com/CS2103JAN2018-T16-B1/main/issues/82[3], https://github.com/CS2103JAN2018-T16-B1/main/issues/86[4])
+** Tools:
+*** Uses a third party library (NUSMods API) for timetable feature (Pull Request https://github.com/CS2103JAN2018-W11-B4/main/pull/138[#138])
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=birthdays]
+
+include::../UserGuide.adoc[tag=union]
+
+include::../UserGuide.adoc[tag=FAQ]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=birthdays]
+
+include::../DeveloperGuide.adoc[tag=timetables]

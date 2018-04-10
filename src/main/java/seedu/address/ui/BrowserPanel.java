@@ -26,6 +26,7 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowDefaultPageEvent;
 import seedu.address.commons.events.ui.ShowMultiLocationFromHeadQuarterEvent;
+import seedu.address.commons.events.ui.ShowRouteFromHeadQuarterToOneEvent;
 import seedu.address.commons.events.ui.ShowRouteFromOneToAnotherEvent;
 import seedu.address.logic.GetDistance;
 
@@ -196,6 +197,14 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
+    public void handleShowFromHeadQuaterToOneEvent(ShowRouteFromHeadQuarterToOneEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        StringBuilder url = new StringBuilder(SEARCH_PAGE_URL);
+        url.append(event.destination);
+        loadPage(url.toString() + "?dg=dbrw&newdg=1");
+    }
+
+    @Subscribe
     public void handleShowFromOneToAnotherEvent(ShowRouteFromOneToAnotherEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         StringBuilder url = new StringBuilder("https://www.google.com.sg/maps/dir/");
@@ -203,9 +212,10 @@ public class BrowserPanel extends UiPart<Region> {
             url.append(address);
             url.append("/");
         }
+        url.deleteCharAt(url.length() - 1);
         additionalInfo.setText("Estimated Required Time for Deliveries: "
                 + FilterCommand.getDuration(event.sortedList));
-        loadPage(url.toString());
+        loadPage(url.toString() + "?dg=dbrw&newdg=1");
     }
 
     @Subscribe

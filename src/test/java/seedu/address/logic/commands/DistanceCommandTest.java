@@ -19,6 +19,7 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.ShowRouteFromHeadQuarterToOneEvent;
 import seedu.address.commons.events.ui.ShowRouteFromOneToAnotherEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.GetDistance;
@@ -118,14 +119,15 @@ public class DistanceCommandTest {
         try {
             CommandResult commandResult = distanceCommand.execute();
             String address = person.getAddress().toString();
+            String personName = person.getName().toString();
             String headQuarterAddress = "Kent Ridge MRT";
             GetDistance route = new GetDistance();
             Double distance = route.getDistance(headQuarterAddress, address);
 
-            JumpToListRequestEvent lastEvent =
-                    (JumpToListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
-            assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
-            assertEquals(String.format(DistanceCommand.MESSAGE_DISTANCE_FROM_HQ_SUCCESS, distance),
+            ShowRouteFromHeadQuarterToOneEvent lastEvent =
+                    (ShowRouteFromHeadQuarterToOneEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+            assertEquals(address, lastEvent.destination);
+            assertEquals(String.format(DistanceCommand.MESSAGE_DISTANCE_FROM_HQ_SUCCESS, personName, distance),
                     commandResult.feedbackToUser);
         } catch (Exception ce) {
             System.out.println(ce.getMessage());

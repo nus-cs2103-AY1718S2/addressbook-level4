@@ -113,7 +113,8 @@ public class Person implements Comparable<Person> {
                 && otherPerson.getMatricNumber().equals(this.getMatricNumber())
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
-                && otherPerson.getAddress().equals(this.getAddress());
+                && otherPerson.getAddress().equals(this.getAddress())
+                && otherPerson.getParticipation().equals(this.getParticipation());
     }
 
     @Override

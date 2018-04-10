@@ -161,10 +161,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addDeleteItem(String filepath) {
-        }
-
-        @Override
         public List<String> getItemList() {
             return null;
         }

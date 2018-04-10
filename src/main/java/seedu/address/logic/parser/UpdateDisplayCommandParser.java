@@ -39,8 +39,7 @@ public class UpdateDisplayCommandParser implements Parser<UpdateDisplayCommand> 
         }
 
         try {
-            DisplayPic dp = ParserUtil.parseEditDisplayPic(argMultimap.getValue(PREFIX_DISPLAY_PIC),
-                    PLACE_HOLDER_HASH).get();
+            DisplayPic dp = ParserUtil.parseEditDisplayPic(argMultimap.getValue(PREFIX_DISPLAY_PIC)).get();
             return new UpdateDisplayCommand(index, dp);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

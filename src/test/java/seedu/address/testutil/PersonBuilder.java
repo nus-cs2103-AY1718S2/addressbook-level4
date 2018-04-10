@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.DisplayPic;
 import seedu.address.model.person.Email;
@@ -13,6 +14,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
+import seedu.address.storage.DisplayPicStorage;
 
 /**
  * A utility class to help with building Person objects.
@@ -119,18 +121,18 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code DisplayPic} of the {@code Person} that we are building to null.
-     */
-    public PersonBuilder withoutDisplayPic() {
-        this.displayPic = null;
-        return this;
-    }
-
-    /**
      * Sets the {@code Participation} of the {@code Person} that we are building.
      */
     public PersonBuilder withParticipation(String participation) {
         this.participation = new Participation(participation);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Participation} of the {@code Person} that we are building to null.
+     */
+    public PersonBuilder withoutParticipation() {
+        this.participation = null;
         return this;
     }
 

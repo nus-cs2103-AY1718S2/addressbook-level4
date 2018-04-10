@@ -178,19 +178,19 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the given {@code displayPic} is invalid.
      */
-    public static DisplayPic parseDisplayPic(String displayPic, String toHash)
+    public static DisplayPic parseDisplayPic(String displayPic)
             throws IllegalValueException {
         if (displayPic == null) {
             return new DisplayPic();
         } else {
             String trimmedDisplayPath = displayPic.trim();
             if (!DisplayPicStorage.isValidPath(trimmedDisplayPath)) {
-                throw new IllegalValueException(Messages.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
+                throw new IllegalValueException(DisplayPic.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
             }
             if (!DisplayPicStorage.isValidImage(trimmedDisplayPath)) {
-                throw new IllegalValueException(Messages.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
+                throw new IllegalValueException(DisplayPic.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
             }
-            return new DisplayPic(displayPic, toHash);
+            return new DisplayPic(displayPic);
         }
     }
 
@@ -199,12 +199,11 @@ public class ParserUtil {
      * if {@code displayPic} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<DisplayPic> parseDisplayPic(Optional<String> displayPic,
-                                                       String toHash) throws IllegalValueException {
+    public static Optional<DisplayPic> parseDisplayPic(Optional<String> displayPic) throws IllegalValueException {
         if (displayPic.isPresent()) {
-            return Optional.of(parseDisplayPic(displayPic.get(), toHash));
+            return Optional.of(parseDisplayPic(displayPic.get()));
         } else {
-            return Optional.of(parseDisplayPic((String) null, toHash));
+            return Optional.empty();
         }
     }
 
@@ -213,10 +212,9 @@ public class ParserUtil {
      * if {@code displayPic} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<DisplayPic> parseEditDisplayPic(Optional<String> displayPic,
-                                                       String toHash) throws IllegalValueException {
+    public static Optional<DisplayPic> parseEditDisplayPic(Optional<String> displayPic) throws IllegalValueException {
         requireNonNull(displayPic);
-        return displayPic.isPresent() ? Optional.of(parseDisplayPic(displayPic.get(), toHash)) : Optional.empty();
+        return displayPic.isPresent() ? Optional.of(parseDisplayPic(displayPic.get())) : Optional.empty();
     }
 
     /**

@@ -17,6 +17,10 @@ public class DisplayPic {
 
     public static final String DEFAULT_DISPLAY_PIC = "/images/displayPic/default.png";
     public static final String DEFAULT_IMAGE_LOCATION = "data/displayPic/";
+    public static final String MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS =
+            "The filepath should lead to a file that exists.";
+    public static final String MESSAGE_DISPLAY_PIC_NOT_IMAGE =
+            "The filepath should point to a valid image file.";
 
     public final String originalPath;
     private String value;
@@ -31,22 +35,10 @@ public class DisplayPic {
      *
      * @param filePath A valid string containing the path to the file.
      */
-    public DisplayPic(String filePath, String personDetails) throws IllegalValueException {
-        requireNonNull(filePath);
-        String trimmedFilePath = filePath.trim();
-        this.originalPath = trimmedFilePath;
-        checkArgument(DisplayPicStorage.isValidPath(trimmedFilePath),
-                Messages.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
-        checkArgument(DisplayPicStorage.isValidImage(trimmedFilePath), Messages.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
-        String fileType = FileUtil.getFileType(trimmedFilePath);
-        String uniqueFileName = HashUtil.generateUniqueName(personDetails);
-        this.value = DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType;
-    }
-
     public DisplayPic(String filePath) {
         requireNonNull(filePath);
-        checkArgument(DisplayPicStorage.isValidPath(filePath), Messages.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
-        checkArgument(DisplayPicStorage.isValidImage(filePath), Messages.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
+        checkArgument(DisplayPicStorage.isValidPath(filePath), MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
+        checkArgument(DisplayPicStorage.isValidImage(filePath), MESSAGE_DISPLAY_PIC_NOT_IMAGE);
         this.originalPath = filePath;
         this.value = filePath;
     }

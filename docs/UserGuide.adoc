@@ -614,49 +614,30 @@ Edits the allergies information and remarks information of the 1st student to be
 
 == Interacting using free-form English
 
-Our application allows the user to use functions of the applications using everyday english sentences, without the need to remember specific command words.
+CodEducator also allows you to use features of the applications using everyday english sentences, without the need to remember specific command words.
 
-[NOTE]
-Only certain commands are covered: `Clear`,`Redo`,`Undo`,`Help`,`Exit`,`History`,`List`,`Schedule`,`Delete`,`Select`
+You can refer to the table below to see which are the features that you are able to invoke using conversational English.
 
-Examples for each command:
+[TIP]
+The examples below are just for your reference. Any phrase or sentence can be used, so long as your *intention* is precise and clear!
 
-`Clear`
-Examples: "Empty everything", "I want everyone to be gone"
+[IMPORTANT]
+Currently, the commands `Delete` and `Select` only detects English names!
+[width="100%", <40%, <40%",options="header",]
+|=======================================================================
+| Example | Command
+.2+|`Clear`|"I want everyone to be gone" | "Empty everything"
+.2+|`Redo`|"do it again" | "reuse previous"
+.2+|`Undo`|"revert back" | "negate the previous action"
+.2+|`Help`|"I am lost"| "I need assistance"
+.2+|`Exit`|"I'm done here"| "i wish to quit"
+.2+|`History`|"what are my previous commands"| "archives of commands entered"
+.2+|`List`|"Show me all my students"| "enumerate everyone"
+.2+|'Schedule'|"what is my agenda"| "show me my timetable"
+.2+|`Delete`| "Erase Susan"| "Remove Jason"
+.2+|`Select`| "Choose Susan"| "Single out Jason"
+|=======================================================================
 
-`Redo`
-Examples: "do it again", "reuse previous"
-
-`Undo`
-Examples: "revert", "negate the previous action"
-
-`Help`
-Examples: "I am lost", "I need assistance"
-
-
-`Exit`
-Examples: "I'm done here", "i wish to quit"
-
-`History`
-Examples: "what are my previous commands", "archives of commands entered"
-
-`List`
-Examples: "Show me all my students", "enumerate everyone"
-
-'Schedule'
-Examples: "what is my agenda", "show me my timetable"
-
-`Delete`
-[NOTE]
-Only English names are detectable by the application
-
-Examples: "Erase Susan", "Remove Jason"
-
-`Select`
-[NOTE]
-Only English names are detectable by the application
-
-Examples: "Choose Susan", "Single out Jason"
 
 == FAQ
 

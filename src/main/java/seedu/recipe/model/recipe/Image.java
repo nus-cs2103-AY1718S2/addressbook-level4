@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
 import seedu.recipe.MainApp;
+import seedu.recipe.commons.util.FileUtil;
 import seedu.recipe.commons.core.LogsCenter;
 
 /**
@@ -28,12 +29,15 @@ public class Image {
 
     public static final String NULL_IMAGE_REFERENCE = "-";
     public static final String FILE_PREFIX = "file:";
-    public static final String MESSAGE_IMAGE_CONSTRAINTS = "Image path should be valid";
+    public static final String IMAGE_STORAGE_FOLDER = "data/images/";
+    public static final String MESSAGE_IMAGE_CONSTRAINTS = "Image path should be valid,"
+            + " file should be a valid image file";
     public static final URL VALID_IMAGE = MainApp.class.getResource("/images/clock.png");
     public static final String VALID_IMAGE_PATH = VALID_IMAGE.toExternalForm().substring(5);
     public static final String IMAGE_DIRECTORY = "data/images/";
     public static final String DOWNLOADED_IMAGE_FORMAT = "jpg";
-    public final String value;
+    private String value;
+    private String imageName;
 
     /**
      * Constructs a {@code Image}.
@@ -47,6 +51,22 @@ public class Image {
             imagePath = downloadImage(imagePath);
         }
         this.value = imagePath;
+        setImageName();
+    }
+
+    /**
+     * Sets the name of the image file
+     */
+    public void setImageName() {
+        if (this.value.equals(NULL_IMAGE_REFERENCE)) {
+            imageName = NULL_IMAGE_REFERENCE;
+        } else {
+            this.imageName = new File(this.value).getName();
+        }
+    }
+
+    public String getImageName() {
+        return imageName;
     }
 
     //@@author kokonguyen191
@@ -55,6 +75,11 @@ public class Image {
      * Returns true if a given string is a valid file path, or no file path has been assigned
      */
     public static boolean isValidImage(String testImageInput) {
+//        if (testImagePath.equals(NULL_IMAGE_REFERENCE)) {
+//            return true;
+//        }
+//        File image = new File(testImagePath);
+//        return FileUtil.isImageFile(image);
         if (testImageInput.equals(NULL_IMAGE_REFERENCE)) {
             return true;
         } else {
@@ -204,8 +229,18 @@ public class Image {
     }
     //@@author RyanAngJY
 
+    /**
+     * Sets image path to follow internal image storage folder
+     */
+    public void setImageToInternalReference() {
+        if (!imageName.equals(NULL_IMAGE_REFERENCE)) {
+            this.value = IMAGE_STORAGE_FOLDER + imageName;
+        }
+    }
+
     public String getUsablePath() {
-        return FILE_PREFIX + value;
+        File imagePath = new File(this.value);
+        return FILE_PREFIX + imagePath.getAbsolutePath();
     }
 
     @Override

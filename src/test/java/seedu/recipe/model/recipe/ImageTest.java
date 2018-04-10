@@ -81,5 +81,12 @@ public class ImageTest {
 
         file.delete();
     }
+
+    @Test
+    public void setImageToInternalReference() {
+        Image imageStub = new Image(Image.VALID_IMAGE_PATH);
+        imageStub.setImageToInternalReference();
+        assertTrue(imageStub.toString().equals(Image.IMAGE_STORAGE_FOLDER + imageStub.getImageName()));
+    }
 }
 //@@author

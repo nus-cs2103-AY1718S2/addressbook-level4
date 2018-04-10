@@ -20,14 +20,22 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-import seedu.address.model.*;
+import seedu.address.model.AddressBook;
+import seedu.address.model.LoginManager;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.LoginStorageManager;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.XmlLoginStorage;
+import seedu.address.ui.LoginUiManager;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -39,30 +47,63 @@ public class MainApp extends Application {
     public static final Version VERSION = new Version(1, 3, 0, true);
     private static boolean isTest = true;
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
-    private static final String DEFAULT_FILEPATH = "data/addressbook.xml";
+    private static final String LOGIN_FILEPATH = "data/login.xml";
 
+    protected Ui loginUi;
     protected Ui ui;
-    protected Logic logic;
-    protected Storage storage;
     protected Model model;
+    protected Storage storage;
+    protected Logic logic;
+    protected LoginStorageManager loginStorage;
+    protected LoginManager login;
     protected Config config;
     protected UserPrefs userPrefs;
 
     public void init() throws Exception {
-        runInitSequence(DEFAULT_FILEPATH);
+        runInitSequence();
     }
 
     /**
      * runs the initialising sequence.
      */
-    private void runInitSequence(String filePath) throws Exception {
+    private void runInitSequence() throws Exception {
         logger.info("=============================[ Initializing AddressBook ]===========================");
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
-        userPrefs = initPrefs(userPrefsStorage, filePath);
+        userPrefs = initPrefs(userPrefsStorage);
+
+        XmlLoginStorage xmlLoginStorage = new XmlLoginStorage(LOGIN_FILEPATH);
+        loginStorage = new LoginStorageManager(xmlLoginStorage);
+
+        initLogging(config);
+
+        login = loginStorage.readLogin();
+
+        login.setUserPrefsStorage(userPrefsStorage);
+
+        login.setConfig(config);
+
+        login.setUserPrefs(userPrefs);
+
+        loginUi = new LoginUiManager(login);
+
+        initEventsCenter();
+    }
+
+    /**
+     * runs the test initialising sequence.
+     */
+    public void runTestInitSequence() throws Exception {
+        logger.info("=============================[ Initializing AddressBook ]===========================");
+        super.init();
+
+        config = initConfig(getApplicationParameter("config"));
+
+        UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+        userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
 
@@ -75,13 +116,15 @@ public class MainApp extends Application {
         ui = new UiManager(logic, config, userPrefs);
 
         initEventsCenter();
-
-        setIsTest(false);
     }
 
     private String getApplicationParameter(String parameterName) {
         Map<String, String> applicationParameters = getParameters().getNamed();
         return applicationParameters.get(parameterName);
+    }
+
+    private void initLogging(Config config) {
+        LogsCenter.init(config);
     }
 
     /**
@@ -107,10 +150,6 @@ public class MainApp extends Application {
         }
 
         return new ModelManager(initialData, userPrefs);
-    }
-
-    private void initLogging(Config config) {
-        LogsCenter.init(config);
     }
 
     /**
@@ -154,21 +193,21 @@ public class MainApp extends Application {
      * or a new {@code UserPrefs} with default configuration if errors occur when
      * reading from the file.
      */
-    protected UserPrefs initPrefs(UserPrefsStorage storage, String filePath) {
+    protected UserPrefs initPrefs(UserPrefsStorage storage) {
         String prefsFilePath = storage.getUserPrefsFilePath();
         logger.info("Using prefs file : " + prefsFilePath);
 
         UserPrefs initializedPrefs;
         try {
             Optional<UserPrefs> prefsOptional = storage.readUserPrefs();
-            initializedPrefs = prefsOptional.orElse(new UserPrefs(filePath));
+            initializedPrefs = prefsOptional.orElse(new UserPrefs());
         } catch (DataConversionException e) {
             logger.warning("UserPrefs file at " + prefsFilePath + " is not in the correct format. "
                     + "Using default user prefs");
-            initializedPrefs = new UserPrefs(DEFAULT_FILEPATH);
+            initializedPrefs = new UserPrefs();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
-            initializedPrefs = new UserPrefs(DEFAULT_FILEPATH);
+            initializedPrefs = new UserPrefs();
         }
 
         //Update prefs file in case it was missing to begin with or there are new/unused fields
@@ -188,24 +227,25 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
-        ui.start(primaryStage);
+        login.setPrimaryStage(primaryStage);
+        loginUi.start(primaryStage);
     }
 
     @Override
     public void stop() {
         logger.info("============================ [ Stopping Address Book ] =============================");
+        this.ui = login.getUi();
         ui.stop();
         try {
+            loginStorage.saveLogin(login);
+            this.storage = login.getStorage();
+            this.userPrefs = login.getUserPrefs();
             storage.saveUserPrefs(userPrefs);
         } catch (IOException e) {
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
         }
         Platform.exit();
         System.exit(0);
-    }
-
-    public void setIsTest(boolean set) {
-        isTest = set;
     }
 
     @Subscribe

@@ -1,7 +1,6 @@
 package seedu.address.storage;
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.ComponentManager;
@@ -26,7 +25,7 @@ public class LoginStorageManager extends ComponentManager {
     // ================ Login methods ==============================
 
     public String getLoginFilePath() {
-        return "Login.xml";
+        return "login.xml";
     }
 
     public LoginManager readLogin() throws DataConversionException, IOException {

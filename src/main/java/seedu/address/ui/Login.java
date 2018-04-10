@@ -10,6 +10,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.LoginManager;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
+
 /**
  * The UI component that is responsible for receiving user command inputs.
  */
@@ -30,9 +31,6 @@ public class Login extends UiPart<Region> {
     public Login(LoginManager login) {
         super(FXML);
         this.login = login;
-        // calls #setStyleToDefault() whenever there is a change to the text of the command box.
-        username.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
-        password.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
     }
 
     /**
@@ -45,12 +43,5 @@ public class Login extends UiPart<Region> {
         } catch (DuplicateUserException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Sets the command box style to use the default style.
-     */
-    private void setStyleToDefault() {
-        username.getStyleClass().remove(ERROR_STYLE_CLASS);
     }
 }

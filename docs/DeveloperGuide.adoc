@@ -487,7 +487,7 @@ Execution of the `find` command comprises the following steps:
 In the current implementation, creating the `Predicate<Person>` object is done in the `FindUtil` class. As more predicates get added in the future, we may need to consider breaking up the utility methods into separate classes.
 //end::findcommand
 
-//tag::filtercommand
+//tag::filtercommand[]
 === Filter Command
 
 ==== Current Implementation
@@ -545,8 +545,7 @@ image::FilterCommandSequenceDiagram.png[width="800"]
 ** Pros: It is an easier logical pattern for developers to understand.
 
 ** Cons: It is user unfriendly. The only way for user to filter the persons who is in Computer Science, graduating in 2020 and has a GPA greater than 4.6 is to use 3 filter commands.
-
-//end::filtercommand
+//end::filtercommand[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption

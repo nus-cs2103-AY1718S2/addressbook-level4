@@ -533,6 +533,85 @@ The `_HtmlFormatter_` class is responsible for the HTML formatting of a recipe.
 
 // end::displaying-a-recipe[]
 
+=== Downloading an image
+
+// tag::download-image[]
+==== Current Implementation
+
+When an *`add`* or *`edit`* command has an image field input, that input will be checked if it is a valid image URL using `ImageIO` (implementation below).
+[source,java]
+----
+public static boolean isValidImageUrl(String testUrl) {
+    URL imageUrl;
+    try {
+        imageUrl = new URL(testUrl);
+    } catch (MalformedURLException e) {
+        return false;
+    }
+
+    BufferedImage image;
+    try {
+        image = ImageIO.read(imageUrl);
+    } catch (IOException ioe) {
+        LogsCenter.getLogger(Image.class).warning("Cannot get image from "
+                + testUrl + ". It is likely the app is not connected to the Internet.");
+        return false;
+    }
+
+    if (image != null) {
+        return true;
+    } else {
+        return false;
+    }
+}
+----
+
+If the input is indeed a URL that links to an image, `ImageDownloader` will go through several steps to download the image and set the new image path (<<fig-DownloadImageAD>>).
+
+[[fig-DownloadImageAD]]
+.Activity diagram of an image downloading process
+image::DownloadImageAD.png[width="800"]
+{nbsp} +
+
+A particular step that might seems out of place here is the checksum calculation. Because the `BufferedImage` object created by `ImageIO` has different hash code based on the execution configuration, using `hashCode()` does not guarantee the same file name for an image. However, we can be sure the same image data will return the same <<MD5>> checksum, and MD5 checksum is sufficient for the scale of our product. Therefore, using MD5 checksum for the file name will almost guarantee no hash collision and no image duplication. +
+Below is the implementation of `downloadImage()`:
+
+[source,java]
+----
+public static String downloadImage(String imageUrlString) {
+    assert isValidImageUrl(imageUrlString);
+
+    try {
+        byte[] imageData = getImageData(imageUrlString);
+        String md5Checksum = calculateMd5Checksum(imageData);
+        String filePath = getImageFilePathFromImageName(md5Checksum);
+        File file = prepareImageFile(filePath);
+        if (file != null) {
+            writeDataToFile(imageData, file);
+            return filePath;
+        } else {
+            return null;
+        }
+    /* Exceptions catching */
+----
+
+For the detailed implementation of each step, see link:{repoURL}/src/main/java/seedu/recipe/storage/ImageDownloader.java[`ImageDownloader.java`].
+
+==== Design considerations
+
+===== Aspect: Image file name.
+
+* **Alternative 1 (current choice):** Use MD5 of the image data.
+** Pros: MD5 can ensure that there won't be duplicates of an image.
+** Cons: MD5 is significantly more computationally expensive compared to a simple `hashCode()`.
+* **Alternative 2:** Use `hashCode()` of the `BufferedImage` object.
+** Pros: This approach is simple, fast, easy to implement.
+** Cons: Due to the way `hashCode()` works, different run configurations will make `hashCode()` return different values. Therefore, it is always certain that the same image from one URL will be downloaded several times into several duplicates.
+* **Alternative 3:** Use the recipe name.
+** Pros: This is by far the most intuitive approach.
+** Cons: However this approach looks a lot easier than it seems. Furthermore, it would be hard to update the file name if the recipe name is changed.
+// end::download-image[]
+
 // tag::embedded-url[]
 === Embedded URL
 

@@ -1,7 +1,7 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
-//import static seedu.address.testutil.EventsUtil.postNow;
+import static seedu.address.testutil.EventsUtil.postNow;
 
 import java.util.List;
 
@@ -46,10 +46,10 @@ public class BirthdayListTest extends GuiUnitTest {
         assertEquals("", birthdaysListHandle.getText());
 
         // new event received
-        //postNow(birthdayListEventStub);
-        //birthdayList.loadList(birthdayListEventStub.getBirthdayList()); // Manual loading
-        //guiRobot.pauseForHuman();
-        //assertEquals(expectedResult, birthdaysListHandle.getText());
+        postNow(birthdayListEventStub);
+        birthdayList.loadList(birthdayListEventStub.getBirthdayList()); // Manual loading
+        guiRobot.pauseForHuman();
+        assertEquals(expectedResult, birthdaysListHandle.getText());
     }
 
 }

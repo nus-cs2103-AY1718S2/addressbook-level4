@@ -12,7 +12,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class BirthdaysCommandParser implements Parser<BirthdaysCommand> {
 
-
     /**
      * Parses the given {@code String} of arguments in the context of the BirthdaysCommand
      * and returns an BirthdaysCommand object for execution.

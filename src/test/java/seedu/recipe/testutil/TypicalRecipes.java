@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.recipe.model.RecipeBook;
+import seedu.recipe.model.recipe.Image;
 import seedu.recipe.model.recipe.Recipe;
 import seedu.recipe.model.recipe.exceptions.DuplicateRecipeException;
 
@@ -149,6 +150,33 @@ public class TypicalRecipes {
             .withServings("2")
             .withUrl("-")
             .withImage("-").build();
+    public static final Recipe HAINANESE_CHICKEN_RICE = new RecipeBuilder()
+            .withName("Hainanese Chicken Rice")
+            .withIngredient("chicken, salt, spring onion, pandan leaves, ginger, ginger,"
+                    + " garlic, cinnamon, cloves, star anise, chicken broth, pandan leaves,"
+                    + " salt, light soy sauce, sesame oil, cucumber, tomatoes, coriander,"
+                    + " lettuce, pineapple, fresh chillies, ginger, garlic, vinegar,"
+                    + " fish sauce, sugar, sweet soy sauce")
+            .withInstruction("Boil water with spring Onion, ginger and pandan leaves, "
+                    + "put in Chicken and cook till done, do not over cook. briefly dip in "
+                    + "cold water and set aside to cool. Keep broth heated.\n"
+                    + "Wash rice and drain. Finely shred ginger and garlic, fry in oil with"
+                    + " cloves, cinammon and star anise till fragrant, add in rice and fry "
+                    + "for several minutes. Transfer into rice cooker, add chicken broth, pinch"
+                    + " of salt, pandan leaves and start cooking.\n"
+                    + "Put all chili sauce ingredient in a mixer and grind till fine.\n"
+                    + "Slice and arrange tomatoes and cucumbers on a big plate, cut Chicken into"
+                    + " small pieces and put on top. Splash some light soy sauce and sesame oil"
+                    + " over, throw a bunch of coriander on top.\n"
+                    + "Next, Put broth in a bowl with lettuce, get ready chili sauce and sweet"
+                    + " soy sauce. #Serve rice on a plate with spoon and folk.")
+            .withCookingTime("-")
+            .withPreparationTime("-")
+            .withCalories("-")
+            .withServings("-")
+            .withUrl("http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice?useskin=wikiamobile")
+            .withImage(Image.IMAGE_DIRECTORY + "3932C00C102BA7C2C093FD62FB1AAE2A." + Image.DOWNLOADED_IMAGE_FORMAT)
+            .build();
 
     // Manually added - Recipe's details found in {@code CommandTestUtil}
     public static final Recipe AMY = new RecipeBuilder()

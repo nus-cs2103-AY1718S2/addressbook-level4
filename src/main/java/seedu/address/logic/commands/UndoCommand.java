@@ -14,7 +14,8 @@ public class UndoCommand extends Command implements ImmediatelyExecutableCommand
 
     public static final String COMMAND_WORD = "undo";
     public static final String COMMAND_ALIAS = "u";
-    public static final String MESSAGE_SUCCESS = "Undo success!";
+    public static final String MESSAGE_SUCCESS =
+            "Undo success!  Press Ctrl + Y or type \"redo\" to reverse the last undo command.";
     public static final String MESSAGE_FAILURE = "No more commands to undo!";
 
     @Override

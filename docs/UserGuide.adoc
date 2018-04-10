@@ -20,9 +20,9 @@ By: `Huat Ah Finance Pte Ltd`      Since: `Feb 2018`      Licence: `MIT`
 If you:
 
 * are a 21st Century modern loan shark boss,
-* prefers to use a desktop app for managing operations,
-* prefers to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI),
-* can type fast,
+* prefer to use a desktop app for managing operations,
+* prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI),
+* can type fast and prefer a keyboard as your main input method,
 
 LoanShark Tycoon can get your operations management tasks done faster than traditional GUI apps. Interested? Jump to <<Quick Start>> to get
 started. Enjoy!
@@ -63,6 +63,7 @@ is specified when adding a customer.
 //@@author
 
 //@@author jonleeyz
+// tag::commandsummary[]
 == Command Summary
 [NOTE]
 ====
@@ -99,7 +100,7 @@ is specified when adding a customer.
 
 |add (`a`)
 |kbd:[Ctrl+Space]
-|`add n: NAME ty: r(or c) [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
+|`add n: NAME ty: r(or c) [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] ...`
 
 |delete (`d`)
 |kbd:[Ctrl+D]
@@ -107,7 +108,7 @@ is specified when adding a customer.
 
 |edit (`e`)
 |kbd:[Ctrl+E]
-|`edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [t: TAG] ...`
+|`edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] ...`
 
 |find (`f`)
 |kbd:[Ctrl+F]
@@ -134,7 +135,7 @@ is specified when adding a customer.
 |kbd:[Ctrl+Shift+A]
 |`assign RUNNER-INDEX c: CUSTOMER-INDEX [CUSTOMER-INDEX ...]`
 |===
-
+// end::commandsummary[]
 == Feature details
 
 === Showing command history : `history`
@@ -152,22 +153,32 @@ is specified when adding a customer.
 * This command adds a new `Customer` or `Runner` with the specified details.
 * A person can have any number of tags (including 0).
 * `NAME` and `TYPE` must be provided. The other details are optional.
+* The additional details after type and name can be entered in any order.
+* The start and end dates can be specified in natural language (eg. "today", "this Friday", etc).
+* Interest will be compounded weekly.
 ====
 
 *Usage examples:*
 
 ====
- add n: John Doe ty: c p: 98765432 e: johnd@example.com a: John street, block 123, #01-01
+ add ty: c n: Xiao Ming p: 88888888 e: xiao@ming.com a: W Hotel s: today d: 5 May 2018 m: 31415926535897 i: 9.71 t: richxiaoming
 
-_Adds a new `Customer` named "John Doe", with phone number "98765432", email address "johnd@example.com"
-and address "John street, block 123, #01-01"._
+_Adds a new `Customer` named "Xiao Ming", with phone number "88888888", email address "xiao@ming.com", address "W Hotel",
+and tag "richxiaoming", who borrows $31 415 926 535 897 at a weekly interest rate of 9.71% on the date this command is
+entered and is due to return the full amount on 5 May 2018._
 ====
 
 ====
- add n: Betsy Crowe ty: r t: friend e: betsycrowe@example.com a: Newgate Prison p: 1234567 t: criminal
+ add ty: c  p: 88888888 n: Xiao Ming e: xiao@ming.com s: today a: W Hotel d: 5 May 2018 m: 31415926535897 i: 9.71 t: richxiaoming
 
-_Adds a new `Runner` named "Betsy Crowe", with phone number "1234567", email address "betsycrowe@example.com"
-and address "Newgate Prison"._
+_Adds the same `Customer` as above, just with values specified in a different order._
+====
+
+====
+ add ty: r n: Ping An p: 93698369 e: pingan@houseofahlong.com a: Ang Mo Kio Police Divison HQ t: undercoverrunner t: tripleagent
+
+_Adds a new `Runner` named "Ping An", with phone number "93698369", email address "pingan@houseofahlong.com",
+address "Ang Mo Kio Police Divison HQ" and tags "undercoverrunner" and "tripleagent"._
 ====
 ***
 === Deleting a person : `delete`
@@ -204,21 +215,22 @@ _Deletes the first person in the results of the `find` command._
 ** The `INDEX` must be a *positive integer*: 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+* Only fields common to both Customer and Runner can be edited
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t:` without specifying any tags after it.
 ====
 
 *Usage examples:*
 ====
- edit 1 p: 91234567 e: johndoe@example.com
+ edit 1 p: 999 e: ahlong@houseofhuat.com
 
-_Edits the phone number and email address of the first person to be `91234567` and `johndoe@example.com` respectively._
+_Edits the phone number and email address of the first person to be `999` and `ahlong@houseofhuat.com` respectively._
 ====
 
 ====
- edit 2 n: Betsy Crower t:
+ edit 2 n: Kimmy Aunty t:
 
-_Edits the name of the second person to be `Betsy Crower` and clears all existing tags._
+_Edits the name of the second person to be `Kimmy Aunty` and clears all existing tags._
 ====
 ***
 === Searching for relevant persons : `find` [since v1.1]
@@ -227,6 +239,7 @@ _Edits the name of the second person to be `Betsy Crower` and clears all existin
 ====
 * This command searches for relevant persons with the specified information.
 * Name, phone, email, address and tags are searched by default (no `SPECIFIER` or `-all` `SPECIFIERS`)
+* `Customer` and `Runner` specific fields cannot be searched.
 * Only one `SPECIFIER` can be used at a time.
 * If more than one `SPECIFIER` is specified, only the first will be considered. The others will be ignored.
 * Description of `SPECIFIERS`:
@@ -272,6 +285,7 @@ _Returns all persons with phone number "91234567"._
 [NOTE]
 ====
 * This command identifies a person by name, email, phone or tags and displays their address using Google Maps.
+* For details on the specifiers and parameters, refer to the <<Searching for relevant persons : `find` [since v1.1], find command section>>.
 * Alternatively, this command displays the given address and displays the person associated with that address in the PersonListPanel.
 ====
 
@@ -401,9 +415,9 @@ _Assigns customer at `INDEX2` to Runner at `INDEX1` based on the last shown list
 //@@author jonleeyz
 == Up and coming features [coming in v2.0]
 
-// tag::dataencryption[]
 * Adding multiple persons from an input file
-// end::dataencryption[]
+* Editing `Customer` and `Runner` specific fields.
+* Searching `Customer` and `Runner` specific fields.
 * Adding visitation history to `Customers`
 * Adding job history to `Runners`
 * Scheduling jobs for `Runners`

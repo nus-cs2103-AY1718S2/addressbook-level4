@@ -16,12 +16,20 @@ import seedu.address.ui.MainWindow;
 public class LocateCommand extends Command implements PopulatableCommand {
     public static final String COMMAND_WORD = "locate";
     public static final String COMMAND_ALIAS = "lo";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Locate person whose fields contain any of "
-            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Valid specifiers are -n, -p, -e, -a, -t, for NAME, PHONE, EMAIL, ADDRESS and TAGS"
-            + " respectively \n"
-            + "Parameters: [SPECIFIER] KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " -n alice bob charlie";
+    public static final String MESSAGE_USAGE =
+            COMMAND_WORD + " | Locates all persons whose fields contain any of the specified keywords "
+            + "(case-insensitive) and displays them as a list with index numbers."
+            + "\n\t"
+            + "Refer to the User Guide (press \"F1\") for detailed information about this command!"
+            + "\n\t"
+            + "Parameters:\t"
+            + COMMAND_WORD + " "
+            + "[SPECIFIER] KEYWORD [MORE_KEYWORDS]..."
+            + "\n\t"
+            + "Specifiers:\t\t"
+            + "-all, -n, -p, -e, -a, -t : ALL, NAME, PHONE, EMAIL, ADDRESS and TAGS respectively."
+            + "\n\t"
+            + "Example:\t\t" + COMMAND_WORD + " -n alice bob charlie";
 
     public static final String MESSAGE_LOCATE_SUCCESS = "Locate successful";
     public static final String MESSAGE_LOCATE_SELECT = "More than one person found! "
@@ -76,7 +84,7 @@ public class LocateCommand extends Command implements PopulatableCommand {
 
     @Override
     public String getTemplate() {
-        return COMMAND_WORD + "-";
+        return COMMAND_WORD + " -";
     }
 
     @Override

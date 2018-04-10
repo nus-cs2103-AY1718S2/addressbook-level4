@@ -19,13 +19,13 @@ import seedu.address.model.tag.Tag;
  */
 public class OverdueCheckerUtil {
 
-    public static void isMarkedOverdue(Task task, Model model)
+    public static void markAsOverdue(Task task, Model model)
             throws ActivityNotFoundException, DuplicateActivityException {
         Task newTask = computeNewTask(task);
         model.updateActivity(task, newTask);
     }
 
-    public static void isMarkedCompleted(Event event, Model model)
+    public static void markAsFinished(Event event, Model model)
             throws ActivityNotFoundException, DuplicateActivityException {
         Event newEvent = computeNewEvent(event);
         model.updateActivity(event, newEvent);
@@ -37,7 +37,7 @@ public class OverdueCheckerUtil {
         Remark remark = task.getRemark();
         Boolean isCompleted = task.isCompleted();
 
-        HashSet<Tag> tags = new HashSet<>(task.getTags());
+        HashSet<Tag> tags = new HashSet<>(task.getTags()); // copy constructor
         tags.add(new Tag("Overdue"));
 
         return new Task(name, dateTime, remark, tags, isCompleted);

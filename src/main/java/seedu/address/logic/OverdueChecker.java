@@ -1,7 +1,7 @@
 package seedu.address.logic;
 
-import static seedu.address.logic.commands.util.OverdueCheckerUtil.isMarkedCompleted;
-import static seedu.address.logic.commands.util.OverdueCheckerUtil.isMarkedOverdue;
+import static seedu.address.logic.commands.util.OverdueCheckerUtil.markAsFinished;
+import static seedu.address.logic.commands.util.OverdueCheckerUtil.markAsOverdue;
 
 import java.time.LocalDateTime;
 
@@ -20,13 +20,17 @@ import seedu.address.model.activity.exceptions.DuplicateActivityException;
  * respectively.
  *
  * A task that has passed its due date is tagged as overdue.
+ * A completed task will not be tagged as overdue, even though it has passed its due date.
  * An event that has passed its end date is tagged as finished.
+ *
+ * This class also records the number of tasks tagged "Overdue".
  */
 public class OverdueChecker implements Runnable {
 
     private Model model;
     private ObservableList<Activity> taskList;
     private ObservableList<Activity> eventList;
+    private static int numOverdueTasks;
 
     // Constructor
     public OverdueChecker(Model model) {
@@ -36,39 +40,46 @@ public class OverdueChecker implements Runnable {
     }
 
     public void run() {
+        numOverdueTasks = 0;
         LocalDateTime currentDateTime = LocalDateTime.now();
 
         // Platform.runLater is needed as you cannot update UI components
         // from a thread other than the JavaFx Application thread
         Platform.runLater(() -> {
             try {
-                markAsOverdue(taskList, currentDateTime);
-                markAsCompleted(eventList, currentDateTime);
+                markingAsOverdue(taskList, currentDateTime);
+                markingAsFinished(eventList, currentDateTime);
             } catch (ActivityNotFoundException e) {
-                e.printStackTrace();
+                e.printStackTrace(); // impossible to reach here
             } catch (DuplicateActivityException e) {
-                e.printStackTrace();
+                e.printStackTrace(); // impossible to reach here
             }
         });
     }
 
-    private void markAsOverdue(ObservableList<Activity> taskList, LocalDateTime currentDateTime)
+    private void markingAsOverdue(ObservableList<Activity> taskList, LocalDateTime currentDateTime)
             throws ActivityNotFoundException, DuplicateActivityException {
         for (int i = 0; i < taskList.size(); i++) {
             Task task = (Task) taskList.get(i);
-            if (task.getDueDateTime().getLocalDateTime().isBefore(currentDateTime)) {
-                isMarkedOverdue(task, model);
+            if (task.getDueDateTime().getLocalDateTime().isBefore(currentDateTime)
+                    && !task.isCompleted()) {
+                markAsOverdue(task, model);
+                numOverdueTasks++;
             }
         }
     }
 
-    private void markAsCompleted(ObservableList<Activity> eventList, LocalDateTime currentDateTime)
+    private void markingAsFinished(ObservableList<Activity> eventList, LocalDateTime currentDateTime)
             throws ActivityNotFoundException, DuplicateActivityException {
         for (int i = 0; i < eventList.size(); i++) {
             Event event = (Event) eventList.get(i);
             if (event.getEndDateTime().getLocalDateTime().isBefore(currentDateTime)) {
-                isMarkedCompleted(event, model);
+                markAsFinished(event, model);
             }
         }
+    }
+
+    public static int getNumOverdueTasks() {
+        return numOverdueTasks;
     }
 }

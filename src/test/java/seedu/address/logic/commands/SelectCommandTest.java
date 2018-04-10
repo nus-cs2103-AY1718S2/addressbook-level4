@@ -8,6 +8,8 @@ import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+import static seedu.address.testutil.TypicalOddEven.EVEN;
+import static seedu.address.testutil.TypicalOddEven.ODD;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Before;
@@ -39,27 +41,29 @@ public class SelectCommandTest {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     }
 
+    //@@author yeggasd
     @Test
     public void execute_validIndexUnfilteredList_success() {
         Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON);
-        assertExecutionSuccess(INDEX_THIRD_PERSON);
-        assertExecutionSuccess(lastPersonIndex);
+        assertExecutionSuccess(INDEX_FIRST_PERSON, ODD);
+        assertExecutionSuccess(INDEX_FIRST_PERSON, EVEN);
+        assertExecutionSuccess(INDEX_THIRD_PERSON, EVEN);
+        assertExecutionSuccess(lastPersonIndex, EVEN);
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_failure() {
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
 
-        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertExecutionFailure(outOfBoundsIndex, ODD, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_validIndexFilteredList_success() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON);
+        assertExecutionSuccess(INDEX_FIRST_PERSON, ODD);
     }
 
     @Test
@@ -70,19 +74,20 @@ public class SelectCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertExecutionFailure(outOfBoundsIndex, ODD, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
-        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_PERSON);
-        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_PERSON);
+        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_PERSON, ODD);
+        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_PERSON, ODD);
+        SelectCommand selectThirdCommand = new SelectCommand(INDEX_FIRST_PERSON, EVEN);
 
         // same object -> returns true
         assertTrue(selectFirstCommand.equals(selectFirstCommand));
 
         // same values -> returns true
-        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_PERSON);
+        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_PERSON, ODD);
         assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
 
         // different types -> returns false
@@ -93,18 +98,21 @@ public class SelectCommandTest {
 
         // different person -> returns false
         assertFalse(selectFirstCommand.equals(selectSecondCommand));
+
+        //different odd/even -> returns false
+        assertFalse(selectFirstCommand.equals(selectThirdCommand));
     }
 
     /**
      * Executes a {@code SelectCommand} with the given {@code index}, and checks that {@code JumpToListRequestEvent}
      * is raised with the correct index.
      */
-    private void assertExecutionSuccess(Index index) {
-        SelectCommand selectCommand = prepareCommand(index);
+    private void assertExecutionSuccess(Index index, String oddEven) {
+        SelectCommand selectCommand = prepareCommand(index, oddEven);
 
         try {
             CommandResult commandResult = selectCommand.execute();
-            assertEquals(String.format(SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS, index.getOneBased()),
+            assertEquals(String.format(SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS, index.getOneBased(), oddEven),
                     commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
@@ -118,8 +126,8 @@ public class SelectCommandTest {
      * Executes a {@code SelectCommand} with the given {@code index}, and checks that a {@code CommandException}
      * is thrown with the {@code expectedMessage}.
      */
-    private void assertExecutionFailure(Index index, String expectedMessage) {
-        SelectCommand selectCommand = prepareCommand(index);
+    private void assertExecutionFailure(Index index, String oddEven, String expectedMessage) {
+        SelectCommand selectCommand = prepareCommand(index, oddEven);
 
         try {
             selectCommand.execute();
@@ -133,8 +141,8 @@ public class SelectCommandTest {
     /**
      * Returns a {@code SelectCommand} with parameters {@code index}.
      */
-    private SelectCommand prepareCommand(Index index) {
-        SelectCommand selectCommand = new SelectCommand(index);
+    private SelectCommand prepareCommand(Index index, String oddEven) {
+        SelectCommand selectCommand = new SelectCommand(index, oddEven);
         selectCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return selectCommand;
     }

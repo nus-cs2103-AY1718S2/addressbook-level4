@@ -6,6 +6,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import seedu.address.commons.core.index.Index;
+
 /**
  * Helper functions for handling strings.
  */
@@ -85,12 +87,12 @@ public class StringUtil {
      * @param s The string to be checked
      * @return 0 is string is even else 1.
      */
-    public static int getOddEven(String s) {
+    public static Index getOddEven(String s) {
         requireNonNull(s);
         if (s.equalsIgnoreCase("even")) {
-            return 0;
+            return Index.fromZeroBased(0);
         } else {
-            return 1;
+            return Index.fromZeroBased(1);
         }
     }
 

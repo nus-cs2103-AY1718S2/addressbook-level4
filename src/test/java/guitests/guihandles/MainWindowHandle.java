@@ -12,7 +12,6 @@ public class MainWindowHandle extends StageHandle {
     private final CommandBoxHandle commandBox;
     private final StatusBarFooterHandle statusBarFooter;
     private final MainMenuHandle mainMenu;
-    private final BrowserPanelHandle browserPanel;
     private final BirthdayListHandle birthdayList;
     private final GoogleMapsDisplayHandle mapPanel;
 
@@ -24,7 +23,6 @@ public class MainWindowHandle extends StageHandle {
         commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
         mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
-        browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
         birthdayList = new BirthdayListHandle(getChildNode(BirthdayListHandle.BIRTHDAYS_LIST_ID));
         mapPanel = new GoogleMapsDisplayHandle(getChildNode(GoogleMapsDisplayHandle.MAP_ID));
     }
@@ -47,10 +45,6 @@ public class MainWindowHandle extends StageHandle {
 
     public MainMenuHandle getMainMenu() {
         return mainMenu;
-    }
-
-    public BrowserPanelHandle getBrowserPanel() {
-        return browserPanel;
     }
 
     public BirthdayListHandle getBirthdayList() {

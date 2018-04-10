@@ -1,6 +1,6 @@
 /* @@author Yoochard */
 .background {
-    -fx-background-color: derive(saddlebrown, 20%);
+    -fx-background-color: derive(beige, 20%);
     background-color: beige; /* Used in the default.html file */
 }
 
@@ -94,7 +94,7 @@
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
-    -fx-background-color: derive(beige, 20%);
+    -fx-background-color: derive(white, 20%);
 }
 
 .list-cell {
@@ -274,7 +274,7 @@
 }
 
 .button:pressed, .button:default:hover:pressed {
-    -fx-background-color: beige;
+    -fx-background-color: white;
     -fx-text-fill: #1d1d1d;
 }
 

@@ -27,11 +27,11 @@ public class WeeklyEvent extends Event {
     public WeeklyEvent(Module mod, Schedule schedule) {
         requireAllNonNull(mod, schedule);
         this.name = mod.getModuleCode();
-        this.venue = schedule.getClassNo();
+        this.venue = schedule.getVenue();
         this.startTime = schedule.getStartTime();
         this.endTime = schedule.getEndTime();
         this.day = schedule.getDayText();
-        this.details = new String[]{};
+        this.details = new String[]{schedule.getLessonType() + ' ' + schedule.getClassNo(), mod.getModuleTitle()};
     }
 
     public String getDay() {

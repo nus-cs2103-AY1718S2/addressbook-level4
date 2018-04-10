@@ -592,9 +592,6 @@ https://docs.oracle.com/javafx/2/api/javafx/scene/image/Image.html
 ** Pros: Less memory consumption.
 ** Cons: Original Image may be lost.
 
-
-diagrams::ModelComponentClassDiagram.pptx[width="650"]
-
 // tag::email[]
 
 === Emailing a contact using Google API

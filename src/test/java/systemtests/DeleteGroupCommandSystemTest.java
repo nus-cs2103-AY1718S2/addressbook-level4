@@ -31,8 +31,7 @@ public class DeleteGroupCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: delete the first group in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
-        String command = "  " + DeleteGroupCommand.COMMAND_WORD + "  " + "Group A" + "  "
-                ;
+        String command = "  " + DeleteGroupCommand.COMMAND_WORD + "  " + "Group A" + "  ";
         Group deletedGroup = removeGroup(expectedModel, INDEX_FIRST_GROUP);
         String expectedResultMessage = String.format(MESSAGE_DELETE_GROUP_SUCCESS,
                 deletedGroup.getInformation().toString());

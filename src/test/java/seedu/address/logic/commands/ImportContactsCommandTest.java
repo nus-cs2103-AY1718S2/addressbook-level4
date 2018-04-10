@@ -11,10 +11,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -31,10 +27,8 @@ import seedu.address.logic.parser.FindCommandParser;
 import seedu.address.logic.parser.ImportContactsCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ModelManager;
-import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 
@@ -140,16 +134,6 @@ public class ImportContactsCommandTest {
 
         requireNonNull(personToAdd);
 
-        String name;
-        String email;
-        String phone;
-        String address;
-        Set<Tag> tagSet = new HashSet<>();
-
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date();
-        DateAdded addDate;
-
         //initialize UniquePersonList for test case
         UniquePersonList upl = new UniquePersonList();
 
@@ -159,7 +143,6 @@ public class ImportContactsCommandTest {
             throw new CommandException("Failed to add person in ImportContactsCommand, execute()\n"
                     + e);
         }
-
     }
 
     @Test

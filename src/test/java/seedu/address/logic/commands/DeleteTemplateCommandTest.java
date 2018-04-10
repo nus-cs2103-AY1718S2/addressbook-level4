@@ -46,14 +46,6 @@ public class DeleteTemplateCommandTest {
         assertCommandFailure(command, model, expectedMessage);
     }
 
-
-    public DeleteTemplateCommand generateDeleteCommand(String userInput, Model model) {
-        DeleteTemplateCommand command = new DeleteTemplateCommand(userInput);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-
-        return command;
-    }
-
     @Test
     public void equals() {
         DeleteTemplateCommand command1 = new DeleteTemplateCommand("test");
@@ -74,6 +66,19 @@ public class DeleteTemplateCommandTest {
 
         //null - false
         assertFalse(command1.equals(null));
+    }
+
+    /**
+     * helper function to return a command with data already set
+     * @param userInput
+     * @param model
+     * @return
+     */
+    public DeleteTemplateCommand generateDeleteCommand(String userInput, Model model) {
+        DeleteTemplateCommand command = new DeleteTemplateCommand(userInput);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+
+        return command;
     }
 
 }

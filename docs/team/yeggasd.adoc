@@ -1,0 +1,64 @@
+= Lee Yong Ler - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: AddressBook - Level 4
+
+---
+
+== Overview
+
+StardyTogether is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *Password Encryption*
+** What it does: allows the student to encrypt their data
+** Justification: This feature gives the student an option of encrypting their data to ensure the privacy of their data.
+* *Minor enhancement*: added Timetable UI
+** What it does: visualises the timetable for students to see their friend's timetable.
+** Justification: This feature enhances the looks of StardyTogether, making the user experience better.
+* *Minor enhancement*: added PersonDetailCard UI
+** What it does: allows the student have a detailed overview of his/her friend.
+** Justification: This feature makes it easy for the student to get all the information needed.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W11-B4/main/blob/master/collated/main/yeggasd.md[Functional code]] [https://github.com/CS2103JAN2018-W11-B4/main/blob/master/collated/test/yeggasd.md[Test code]]
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` - `v1.5rc` (4 releases) on GitHub
+** Enhancements to existing features:
+*** Updated the Tag color scheme (Pull requests , https://github.com/CS2103JAN2018-W11-B4/main/pull/5[#5])
+** Documentation:
+*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com/CS2103JAN2018-W11-B4/main/pull/79[#79] https://github.com/CS2103JAN2018-W11-B4/main/pull/105[#105] https://github.com/CS2103JAN2018-W11-B4/main/pull/161[#161]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W11-B4/main/pull/135[#135], https://github.com/CS2103JAN2018-W11-B4/main/pull/138[#138], https://github.com/CS2103JAN2018-W11-B4/main/pull/191[#191]
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-T09-B2/main/issues/178[1], https://github.com/CS2103JAN2018-T09-B2/main/issues/191[2], https://github.com/CS2103JAN2018-T09-B2/main/issues/186[3])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=dataencryption]
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=dataencryption]
+
+include::../DeveloperGuide.adoc[tag=timetable]
+
+
+
+== PROJECT: PowerPointLabs
+
+---
+
+_{Optionally, you may include other projects in your portfolio.}_

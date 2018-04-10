@@ -56,7 +56,7 @@ public class CommandTestUtil {
     public static final String VALID_LOCATION = "Silver Way";
     public static final String VALID_PURPOSE = "Test Purpose";
     public static final String VALID_SUBJECT = "Test Subject";
-    public static final String VALID_MESSAGE ="Test Message Body";
+    public static final String VALID_MESSAGE = "Test Message Body";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;

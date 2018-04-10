@@ -2,10 +2,6 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Arrays;
-
-import javax.jws.WebParam;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -30,7 +26,7 @@ public class AddTemplateCommandTest {
     }
 
     @Test
-    public void execute_successful_addTemplate() throws Exception{
+    public void execute_successful_addTemplate() throws Exception {
         Model modelStub = new ModelManager();
         Template validTemplate = new TemplateBuilder().build();
         int countBefore = modelStub.getFilteredTemplateList().size();
@@ -42,7 +38,7 @@ public class AddTemplateCommandTest {
     }
 
     @Test
-    public void execute_duplicateTemplate_throwsCommandException() throws Exception{
+    public void execute_duplicateTemplate_throwsCommandException() throws Exception {
         Model modelStub = new ModelManager();
         Template validTemplate = new TemplateBuilder().build();
 

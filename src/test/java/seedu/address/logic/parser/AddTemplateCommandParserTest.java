@@ -5,11 +5,11 @@ import static seedu.address.logic.commands.CommandTestUtil.MESSAGE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
 import static seedu.address.logic.commands.CommandTestUtil.PURPOSE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.SUBJECT_DESC;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_MESSAGE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PURPOSE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_SUBJECT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_MESSAGE;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.Test;
 

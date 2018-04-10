@@ -16,7 +16,7 @@ public class FindCommand extends Command implements PopulatableCommand {
     public static final String COMMAND_ALIAS = "f";
 
     public static final String MESSAGE_USAGE =
-            COMMAND_WORD + ": Finds all persons whose fields contain any of the specified keywords (case-insensitive) "
+            COMMAND_WORD + " | Finds all persons whose fields contain any of the specified keywords (case-insensitive) "
             + "and displays them as a list with index numbers."
             + "\n\t"
             + "Refer to the User Guide (press \"F1\") for detailed information about this command!"

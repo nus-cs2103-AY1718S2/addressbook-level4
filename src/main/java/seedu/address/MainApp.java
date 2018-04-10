@@ -3,7 +3,6 @@ package seedu.address;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Scanner;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -22,6 +21,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.AddressBook;
+import seedu.address.model.LoginManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -29,10 +29,13 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.LoginStorageManager;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.XmlLoginStorage;
+import seedu.address.ui.LoginUiManager;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -44,45 +47,56 @@ public class MainApp extends Application {
     public static final Version VERSION = new Version(1, 3, 0, true);
     private static boolean isTest = true;
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+    private static final String LOGIN_FILEPATH = "data/login.xml";
 
+    protected Ui loginUi;
     protected Ui ui;
-    protected Logic logic;
-    protected Storage storage;
     protected Model model;
+    protected Storage storage;
+    protected Logic logic;
+    protected LoginStorageManager loginStorage;
+    protected LoginManager login;
     protected Config config;
     protected UserPrefs userPrefs;
 
-
-    @Override
     public void init() throws Exception {
-        if (isTest) {
-            runInitSequence();
-        } else {
-            Scanner sc = new Scanner(System.in);
-            System.out.println("Enter username: ");
-
-            String username = sc.nextLine();
-
-            if (username.equals("correctUsername")) {
-                System.out.println("Enter password: ");
-
-                String password = sc.nextLine();
-
-                if (password.equals("correctPassword")) {
-                    runInitSequence();
-                } else {
-                    System.out.println("Wrong password entered. Try again.");
-                }
-            } else {
-                System.out.println("Wrong username entered. Try again.");
-            }
-        }
+        runInitSequence();
     }
 
     /**
      * runs the initialising sequence.
      */
     private void runInitSequence() throws Exception {
+        logger.info("=============================[ Initializing AddressBook ]===========================");
+        super.init();
+
+        config = initConfig(getApplicationParameter("config"));
+
+        UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+        userPrefs = initPrefs(userPrefsStorage);
+
+        XmlLoginStorage xmlLoginStorage = new XmlLoginStorage(LOGIN_FILEPATH);
+        loginStorage = new LoginStorageManager(xmlLoginStorage);
+
+        initLogging(config);
+
+        login = loginStorage.readLogin();
+
+        login.setUserPrefsStorage(userPrefsStorage);
+
+        login.setConfig(config);
+
+        login.setUserPrefs(userPrefs);
+
+        loginUi = new LoginUiManager(login);
+
+        initEventsCenter();
+    }
+
+    /**
+     * runs the test initialising sequence.
+     */
+    public void runTestInitSequence() throws Exception {
         logger.info("=============================[ Initializing AddressBook ]===========================");
         super.init();
 
@@ -102,13 +116,15 @@ public class MainApp extends Application {
         ui = new UiManager(logic, config, userPrefs);
 
         initEventsCenter();
-
-        setIsTest(false);
     }
 
     private String getApplicationParameter(String parameterName) {
         Map<String, String> applicationParameters = getParameters().getNamed();
         return applicationParameters.get(parameterName);
+    }
+
+    private void initLogging(Config config) {
+        LogsCenter.init(config);
     }
 
     /**
@@ -134,10 +150,6 @@ public class MainApp extends Application {
         }
 
         return new ModelManager(initialData, userPrefs);
-    }
-
-    private void initLogging(Config config) {
-        LogsCenter.init(config);
     }
 
     /**
@@ -215,24 +227,25 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
-        ui.start(primaryStage);
+        login.setPrimaryStage(primaryStage);
+        loginUi.start(primaryStage);
     }
 
     @Override
     public void stop() {
         logger.info("============================ [ Stopping Address Book ] =============================");
+        this.ui = login.getUi();
         ui.stop();
         try {
+            loginStorage.saveLogin(login);
+            this.storage = login.getStorage();
+            this.userPrefs = login.getUserPrefs();
             storage.saveUserPrefs(userPrefs);
         } catch (IOException e) {
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
         }
         Platform.exit();
         System.exit(0);
-    }
-
-    public void setIsTest(boolean set) {
-        isTest = set;
     }
 
     @Subscribe

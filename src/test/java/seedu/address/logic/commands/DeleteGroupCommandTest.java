@@ -12,9 +12,7 @@ import static seedu.address.testutil.TypicalGroups.GROUP_B;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_GROUP;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-
 import org.junit.Test;
-
 
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;

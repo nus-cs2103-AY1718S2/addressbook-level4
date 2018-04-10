@@ -453,18 +453,21 @@ Betsy will be removed if she is the first patient in the queue.
 * `rq` +
 John will be removed if he is the first patient in the queue.
 
-==== Viewing visiting queue: `viewq` [since v1.2]
+==== Removing a patient from the visiting queue by index: `removeq` [since v1.5rc]
 
-Show the list of patients in the visiting queue.
+Removes a specific patient from the visiting queue by index (check-out).
 
-*This command is accessible both to medical staffs and doctors.* +
+*This command is only accessible to medical staffs and is not undoable.* +
 
-Format: `viewq` or `vq`
+Format: `removeq` or `rq`
 
 Examples:
 
-* `viewq` +
-List of patients in the visiting queue will be displayed.
+* `removeq 4` +
+Bernice will be removed if she is the 4th patient in the patient list and she is in the visiting queue.
+
+* `rq 2` +
+Alex will be removed if he is the 2nd patient in the patient list and he is in the visiting queue.
 
 === Appointment Commands
 

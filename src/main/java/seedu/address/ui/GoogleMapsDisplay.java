@@ -24,6 +24,10 @@ public class GoogleMapsDisplay extends UiPart<Region> {
     @FXML
     private WebView maps;
 
+    public GoogleMapsDisplay() {
+        this(null);
+    }
+
     public GoogleMapsDisplay(String locations) {
         super(FXML);
 

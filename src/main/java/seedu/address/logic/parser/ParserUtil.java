@@ -227,6 +227,8 @@ public class ParserUtil {
         String trimmedProfilePicture = profilePicture.trim();
         if (!ProfilePicture.isValidProfilePicture(trimmedProfilePicture)) {
             throw new IllegalValueException(ProfilePicture.MESSAGE_PROFILEPICTURE_CONSTRAINTS);
+        } else if (!ProfilePicture.hasValidProfilePicture(trimmedProfilePicture)) {
+            throw new IllegalValueException(ProfilePicture.MESSAGE_PROFILEPICTURE_NOT_EXISTS);
         }
         return new ProfilePicture(trimmedProfilePicture);
     }
@@ -292,6 +294,7 @@ public class ParserUtil {
         return title.isPresent() ? Optional.of(parseTitle(title.get())) : Optional.empty();
     }
 
+    //@@author trafalgarandre
     /**
      * Parses a {@code String startDateTime} into a {@code StartDateTime}.
      * Leading and trailing whitespaces will be trimmed.
@@ -303,6 +306,13 @@ public class ParserUtil {
         String trimmedStartDateTime = startDateTime.trim();
         if (!StartDateTime.isValidStartDateTime(trimmedStartDateTime)) {
             throw new IllegalValueException(StartDateTime.MESSAGE_START_DATE_TIME_CONSTRAINTS);
+        } else {
+            int year = Integer.parseInt(trimmedStartDateTime.substring(0, 4));
+            int month = Integer.parseInt(trimmedStartDateTime.substring(5, 7));
+            int date = Integer.parseInt(trimmedStartDateTime.substring(8, 10));
+            if (!checkValidDate(year, month, date)) {
+                throw new IllegalValueException(MESSAGE_DATE_TIME_CONSTRAINTS);
+            }
         }
         return new StartDateTime(trimmedStartDateTime);
     }
@@ -329,6 +339,13 @@ public class ParserUtil {
         String trimmedEndDateTime = endDateTime.trim();
         if (!EndDateTime.isValidEndDateTime(trimmedEndDateTime)) {
             throw new IllegalValueException(EndDateTime.MESSAGE_END_DATE_TIME_CONSTRAINTS);
+        } else {
+            int year = Integer.parseInt(trimmedEndDateTime.substring(0, 4));
+            int month = Integer.parseInt(trimmedEndDateTime.substring(5, 7));
+            int date = Integer.parseInt(trimmedEndDateTime.substring(8, 10));
+            if (!checkValidDate(year, month, date)) {
+                throw new IllegalValueException(MESSAGE_DATE_TIME_CONSTRAINTS);
+            }
         }
         return new EndDateTime(trimmedEndDateTime);
     }
@@ -342,6 +359,7 @@ public class ParserUtil {
         return endDateTime.isPresent() ? Optional.of(parseEndDateTime(endDateTime.get())) : Optional.empty();
     }
 
+    //@@author
     /**
      * Parses a {@code String position} into a {@code Position}.
      * Leading and trailing whitespaces will be trimmed.
@@ -429,7 +447,6 @@ public class ParserUtil {
         return new NumberOfPositions(trimmedNumberOfPositions);
     }
 
-    //@@author trafalgarandre
     /**
      * Parses a {@code Optional<String> numberOfPositions} into an {@code Optional<String>}
      * if {@code numberOfPositions} is present.
@@ -442,6 +459,7 @@ public class ParserUtil {
                 : Optional.empty();
     }
 
+    //@@author trafalgarandre
     /**
      * Parses a {@code String yearMonth} into a {@code yearMonth}.
      * Leading and trailing whitespaces will be trimmed.
@@ -474,6 +492,7 @@ public class ParserUtil {
         if (trimmedDate.length() == 0) {
             return null;
         } else {
+
             return LocalDate.parse(trimmedDate);
         }
     }
@@ -492,6 +511,12 @@ public class ParserUtil {
         if (trimmedDateTime.length() == 0) {
             return null;
         } else {
+            int year = Integer.parseInt(trimmedDateTime.substring(0, 4));
+            int month = Integer.parseInt(trimmedDateTime.substring(5, 7));
+            int date = Integer.parseInt(trimmedDateTime.substring(8, 10));
+            if (!checkValidDate(year, month, date)) {
+                throw new IllegalValueException(MESSAGE_DATE_TIME_CONSTRAINTS);
+            }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             return LocalDateTime.parse(trimmedDateTime, formatter);
         }
@@ -549,5 +574,37 @@ public class ParserUtil {
         } else {
             return Integer.parseInt(trimmedArgs.substring(5));
         }
+    }
+
+    /**
+     * Check valid date
+     */
+    private static boolean checkValidDate(int year, int month, int day) {
+        switch (month) {
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
+            return day < 32;
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+            return day < 31;
+        case 2:
+            int modulo100 = year % 100;
+            if ((modulo100 == 0 && year % 400 == 0) || (modulo100 != 0 && year % 4 == 0)) {
+                //its a leap year
+                return day < 30;
+            } else {
+                return day < 29;
+            }
+        default:
+            break;
+        }
+        return true;
     }
 }

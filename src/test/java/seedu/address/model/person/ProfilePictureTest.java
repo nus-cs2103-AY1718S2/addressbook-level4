@@ -17,6 +17,12 @@ public class ProfilePictureTest {
     }
 
     @Test
+    public void constructor_nonExistProfilePicture_throwsIllegalArgumentException() {
+        String invalidProfilePicture = "/abc.jpg";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new ProfilePicture(invalidProfilePicture));
+    }
+
+    @Test
     public void isValidProfilePicture() {
 
         String temp;

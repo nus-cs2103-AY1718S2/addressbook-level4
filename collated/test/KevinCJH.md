@@ -1,5 +1,53 @@
 # KevinCJH
-###### /java/seedu/address/logic/commands/EmailCommandTest.java
+
+###### \java\guitests\guihandles\EmailPanelHandle.java
+
+``` java
+/**
+ * A handle to the {@code EmailPanel} in the GUI.
+ */
+public class EmailPanelHandle extends NodeHandle<Node> {
+
+    private static final String RECIPIENT_ID = "#toTxtField";
+    private static final String BODY_ID = "#bodyTxtField";
+
+    private final TextField to;
+    private final HTMLEditor body;
+
+    public EmailPanelHandle(Node emailPanelNode) {
+        super(emailPanelNode);
+
+        this.to = getChildNode(RECIPIENT_ID);
+        this.body = getChildNode(BODY_ID);
+    }
+
+    public String getRecipient() {
+        return to.getText();
+    }
+
+    public String getBody() {
+        return body.getHtmlText().replaceAll("(?s)<[^>]*>(\\s*<[^>]*>)*", " ");
+    }
+
+}
+```
+
+###### \java\guitests\guihandles\PersonCardHandle.java
+
+``` java
+    public List<String> getSkillStyleClasses(String tag) {
+        return tagLabels
+                .stream()
+                .filter(label -> label.getText().equals(tag))
+                .map(Label::getStyleClass)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No such skill."));
+    }
+}
+```
+
+###### \java\seedu\address\logic\commands\EmailCommandTest.java
+
 ``` java
 public class EmailCommandTest {
 
@@ -64,7 +112,8 @@ public class EmailCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        JumpToListRequestEvent lastEvent = (JumpToListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        JumpToPersonListRequestEvent lastEvent =
+                (JumpToPersonListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
         assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
 
     }
@@ -117,7 +166,8 @@ public class EmailCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/GmailClientTest.java
+
+###### \java\seedu\address\logic\GmailClientTest.java
 ``` java
 public class GmailClientTest {
 
@@ -131,7 +181,46 @@ public class GmailClientTest {
 
 }
 ```
-###### /java/seedu/address/logic/parser/EmailCommandParserTest.java
+###### \java\seedu\address\logic\GoogleAuthenticationTest.java
+``` java
+
+public class GoogleAuthenticationTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private GoogleAuthentication googleAuthentication = new GoogleAuthentication();
+
+    /**
+     * Checks if Login url generated is valid
+     */
+    @Test
+    public void execute_authenticate_url() {
+        assertTrue(googleAuthentication.getAuthenticationUrl().contains(
+                "https://accounts.google.com/o/oauth2/auth?client_id"));
+    }
+
+    /**
+     * Exception should be thrown as no token is generated.
+     */
+    @Test
+    public void execute_invalidToken() throws Exception {
+        thrown.expect(GoogleAuthenticationException.class);
+        googleAuthentication.getToken();
+    }
+
+}
+```
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_email() throws Exception {
+        EmailCommand command = (EmailCommand) parser.parseCommand(
+                EmailCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
+        assertEquals(new EmailCommand(INDEX_FIRST), command);
+    }
+```
+###### \java\seedu\address\logic\parser\EmailCommandParserTest.java
 ``` java
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -155,7 +244,7 @@ public class EmailCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/FindCommandParserTest.java
+###### \java\seedu\address\logic\parser\FindCommandParserTest.java
 ``` java
     @Test
     public void parse_emptyArg_throwsParseException() {
@@ -176,7 +265,7 @@ public class EmailCommandParserTest {
 
         // no leading and trailing whitespaces
         FindCommand expectedFindTagCommand =
-                new FindCommand(new SkillContainsKeywordsPredicate(Arrays.asList("developer", "accountant")));
+                new FindCommand(new PersonSkillContainsKeywordsPredicate(Arrays.asList("developer", "accountant")));
         assertParseSuccess(parser, " s/developer accountant", expectedFindTagCommand);
 
         // multiple whitespaces between keywords
@@ -196,88 +285,8 @@ public class EmailCommandParserTest {
 
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_email() throws Exception {
-        EmailCommand command = (EmailCommand) parser.parseCommand(
-                EmailCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
-        assertEquals(new EmailCommand(INDEX_FIRST), command);
-    }
-```
-###### /java/seedu/address/model/tag/TagContainsKeywordsPredicateTest.java
-``` java
-public class TagContainsKeywordsPredicateTest {
+###### \java\seedu\address\ui\EmailPanelTest.java
 
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("first");
-        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
-
-        TagContainsKeywordsPredicate firstPredicate = new TagContainsKeywordsPredicate(firstPredicateKeywordList);
-        TagContainsKeywordsPredicate secondPredicate = new TagContainsKeywordsPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        TagContainsKeywordsPredicate firstPredicateCopy = new TagContainsKeywordsPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_tagContainsKeywords_returnsTrue() {
-        // One keyword
-        TagContainsKeywordsPredicate predicate =
-                new TagContainsKeywordsPredicate(Collections.singletonList("developer"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("developer", "geek").build()));
-
-        // Multiple keywords
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("developer", "geek"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("developer", "geek").build()));
-
-        // Only one matching keyword
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("developer", "accountant"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("accountant", "manager").build()));
-
-        // Mixed-case keywords
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("deVeloper", "acCounTant"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("developer", "accountant").build()));
-    }
-
-    @Test
-    public void test_nameDoesNotContainKeywords_returnsFalse() {
-        // Zero keywords
-        TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withTags("developer").build()));
-
-        // Non-matching keyword
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("projectmanager"));
-        assertFalse(predicate.test(new PersonBuilder().withTags("developer", "designer").build()));
-
-        // Keywords match name, phone, email and address, but does not match tag
-        predicate = new TagContainsKeywordsPredicate(
-                Arrays.asList("Alice", "12345", "alice@company.com", "Main", "Street"));
-        assertFalse(predicate.test(new PersonBuilder().withTags("developer").withPhone("12345")
-                .withEmail("alice@company.com").withAddress("Main Street").withName("Alice").build()));
-    }
-}
-```
-###### /java/seedu/address/ui/testutil/GuiTestAssert.java
-``` java
-        expectedCard.getSkills().forEach(tag ->
-            assertEquals(expectedCard.getSkillStyleClasses(tag), actualCard.getSkillStyleClasses(tag)));
-```
-###### /java/seedu/address/ui/EmailPanelTest.java
 ``` java
 public class EmailPanelTest extends GuiUnitTest {
 
@@ -306,45 +315,10 @@ public class EmailPanelTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/guitests/guihandles/EmailPanelHandle.java
+
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
 ``` java
-/**
- * A handle to the {@code EmailPanel} in the GUI.
- */
-public class EmailPanelHandle extends NodeHandle<Node> {
-
-    private static final String RECIPIENT_ID = "#toTxtField";
-    private static final String BODY_ID = "#bodyTxtField";
-
-    private final TextField to;
-    private final HTMLEditor body;
-
-    public EmailPanelHandle(Node emailPanelNode) {
-        super(emailPanelNode);
-
-        this.to = getChildNode(RECIPIENT_ID);
-        this.body = getChildNode(BODY_ID);
-    }
-
-    public String getRecipient() {
-        return to.getText();
-    }
-
-    public String getBody() {
-        return body.getHtmlText().replaceAll("(?s)<[^>]*>(\\s*<[^>]*>)*", " ");
-    }
-
-}
+        expectedCard.getSkills().forEach(tag ->
+            assertEquals(expectedCard.getSkillStyleClasses(tag), actualCard.getSkillStyleClasses(tag)));
 ```
-###### /java/guitests/guihandles/PersonCardHandle.java
-``` java
-    public List<String> getSkillStyleClasses(String tag) {
-        return tagLabels
-                .stream()
-                .filter(label -> label.getText().equals(tag))
-                .map(Label::getStyleClass)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No such skill."));
-    }
-}
-```
+

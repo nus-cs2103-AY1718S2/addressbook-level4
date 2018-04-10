@@ -1,8 +1,13 @@
 package seedu.address.model.appointment;
 
+import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.ParserUtil;
 
 //@@author trafalgarandre
 /**
@@ -10,6 +15,8 @@ import java.util.Objects;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Appointment {
+
+    public static final String MESSAGE_APPOINTMENT_CONSTRAINTS = "Start date time must be before end date time.";
 
     private final Title title;
     private final StartDateTime startDateTime;
@@ -20,6 +27,11 @@ public class Appointment {
      */
     public Appointment(Title title, StartDateTime startDateTime, EndDateTime endDateTime) {
         requireAllNonNull(title, startDateTime, endDateTime);
+        try {
+            checkArgument(isSdtLessThanEdt(startDateTime, endDateTime), MESSAGE_APPOINTMENT_CONSTRAINTS);
+        } catch (IllegalValueException e) {
+            throw new IllegalArgumentException("Invalid date time");
+        }
         this.title = title;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
@@ -35,6 +47,16 @@ public class Appointment {
 
     public EndDateTime getEndDateTime() {
         return endDateTime;
+    }
+
+    /**
+     * Check whethere the appointment has sdt < edt
+     */
+    private boolean isSdtLessThanEdt(StartDateTime startDateTime, EndDateTime endDateTime)
+            throws IllegalValueException {
+        LocalDateTime edt = ParserUtil.parseDateTime(endDateTime.endDateTime);
+        LocalDateTime sdt = ParserUtil.parseDateTime(startDateTime.startDateTime);
+        return edt.isAfter(sdt);
     }
 
     @Override

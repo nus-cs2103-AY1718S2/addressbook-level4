@@ -8,7 +8,6 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToPersonListRequestEvent;
 import seedu.address.commons.events.ui.SwitchTabRequestEvent;
-import seedu.address.logic.GmailClient;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 
@@ -50,8 +49,6 @@ public class EmailCommand extends Command {
 
         EventsCenter.getInstance().post(new SwitchTabRequestEvent(TAB_ID_EMAIL));
         EventsCenter.getInstance().post(new JumpToPersonListRequestEvent(targetIndex));
-
-        GmailClient.getInstance();
 
         return new CommandResult(String.format(MESSAGE_EMAIL_PERSON_SUCCESS, personToEmail.getEmail()));
 

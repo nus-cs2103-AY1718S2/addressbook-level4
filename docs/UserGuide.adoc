@@ -469,6 +469,22 @@ Examples:
 `editPicture i/1 pa/C:/Users/User/Desktop/test.jpg` +
 Changes the profile photo of the 1st student in the current listing to the image found at the specific file path.
 
+=== Edit the miscellaneous info of a student : `editMisc`
+
+Edits the miscellaneous information of a student in the addressbook. +
+Format: `editMisc INDEX [al/ALLERGIES] [nokn/NEXT_OF_KIN_NAME] [nokp/NEXT_OF_KIN_PHONE] [r/REMARKS]`
+
+****
+* Edits the student's miscellaneous info at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, …​ 
+* At least one optional field must be provided.
+* Existing values will be updated to and overwritten by the input values.
+****
+
+Examples:
+
+* `editMisc 1 al/Nuts r/Fast learner` +
+Edits the allergies information and remarks information of the 1st student to be `Nuts` and `Fast learner` respectively.
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -634,5 +650,7 @@ e.g. `deleteLesson 2`
 * *Full information page* : `moreInfo INDEX`
 * *Edit the profile picture* : `editPicture i/STUDENT_INDEX pa/FILE_PATH_OF_PICTURE` +
 e.g. `editPicture i/1 pa/C:/Users/User/Desktop/test.jpg`
+* *Edit the miscellaneous info of a student* :  `editMisc INDEX [al/ALLERGIES] [nokn/NEXT_OF_KIN_NAME] [nokp/NEXT_OF_KIN_PHONE] [r/REMARKS]
+e.g. `editMisc 2 al/seafood`
 
 

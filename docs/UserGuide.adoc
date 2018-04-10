@@ -604,6 +604,50 @@ _{explain how the user can enable/disable data encryption}_
 
 === Track student's homework in the dashboard `[coming in v2.0]`
 
+== Interacting using free-form English
+
+Our application allows the user to use functions of the applications using everyday english sentences, without the need to remember specific command words.
+
+[NOTE]
+Only certain commands are covered: `Clear`,`Redo`,`Undo`,`Help`,`Exit`,`History`,`List`,`Schedule`,`Delete`,`Select`
+
+Examples for each command:
+
+`Clear`
+Examples: "Empty everything", "I want everyone to be gone"
+
+`Redo`
+Examples: "do it again", "reuse previous"
+
+`Undo`
+Examples: "revert", "negate the previous action"
+
+`Help`
+Examples: "I am lost", "I need assistance"
+
+
+`Exit`
+Examples: "I'm done here", "i wish to quit"
+
+`History`
+Examples: "what are my previous commands", "archives of commands entered"
+
+`List`
+Examples: "Show me all my students", "enumerate everyone"
+
+'Schedule'
+Examples: "what is my agenda", "show me my timetable"
+
+`Delete`
+[NOTE]
+Only English names are detectable by the application
+Examples: "Erase Susan", "Remove Jason"
+
+`Select`
+[NOTE]
+Only English names are detectable by the application
+Examples: "Choose Susan", "Single out Jason"
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +

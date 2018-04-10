@@ -485,8 +485,7 @@ with functionality to manage the filtered list of `Template`.
 ===== Current Implementation
 The add Template function is implemented as the `AddTemplateCommand` together
 with its associated `AddTemplateCommandParser` class. This function supports the adding of an `Template` to the address book.
-The `AddTemplateCommand` inherits from the `UndoableCommand` to allow user to undo the addition of an `Template`. The
-implementation of the `AddTemplateCommand` is similar to that of the `AddCommand`.
+The implementation of the `AddTemplateCommand` is similar to that of the `AddCommand`.
 
 To enhance the logic of this function, checks are implemented to ensure that no two templates can have the same `Purpose`
 

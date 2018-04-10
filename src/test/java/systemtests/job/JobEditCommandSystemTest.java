@@ -49,6 +49,7 @@ import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.skill.Skill;
 import seedu.address.testutil.JobBuilder;
 import seedu.address.testutil.JobUtil;
+import systemtests.AddressBookSystemTest;
 
 public class JobEditCommandSystemTest extends AddressBookSystemTest {
 

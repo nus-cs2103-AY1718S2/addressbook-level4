@@ -23,6 +23,9 @@ public class FindCommand extends Command {
             + " the specified option, prefixes & keywords (case-sensitive)"
             + " and displays them as a list with index numbers.\n"
             + "Parameters: OPTION PREFIX/KEYWORD [MORE_PREFIX/MORE_KEYWORDS]...\n"
+            + "Accepted Options: -o (OWNER-RELATED), -p (PET-PATIENT-RELATED)\n"
+            + "Accepted Prefixes for Owner: n/NAME, nr/NRIC, t/TAG\n"
+            + "Accepted Prefixes for Pet Patient: n/NAME, s/SPECIES, b/BREED, c/COLOUR, bt/BLOODTYPE, t/TAG\n"
             + "Example: " + COMMAND_WORD + "-o n/alice bob charlie";
 
     private Predicate<Person> personPredicate = null;

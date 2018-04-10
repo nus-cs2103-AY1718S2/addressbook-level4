@@ -59,7 +59,6 @@ public class PasswordBox extends UiPart<Region> {
         }
     }
 
-
     /**
      * Handles the Enter button pressed event.
      */

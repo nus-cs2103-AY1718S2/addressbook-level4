@@ -580,8 +580,9 @@ In the event the url provided is invalid or empty, a empty Timetable will be cre
 Do take note that there are dummy urls for the purpose of testing. While normal users should not be able to know of their existence,
 entering a dummy link will result in a preset timetable being built.
 
-When the user uses the `TimeTableCommand`, it will raise the `TimeTableEvent` which will be caught and handled by the `InfoPanel`.
-The `InfoPanel` will swap between `BrowsePanel`, `BirthdayList`, `VenueTable` and `TimeTablePanel` so that the UI would not be too cluttered.
+When the user uses the `TimetableUnionCommand`, the indexes selected will be parsed and a union of the timetables selected will be created.
+Afterwards, it will raise the `TimeTableEvent` which will be caught and handled by the `InfoPanel`.
+The `InfoPanel` will swap between `UserDetailsPanel`, `BirthdayList`, `VenueTable` and `TimetableUnionPanel` so that the UI would not be too cluttered.
 
 ==== Design Considerations
 
@@ -611,7 +612,7 @@ The `InfoPanel` will swap between `BrowsePanel`, `BirthdayList`, `VenueTable` an
 ** Cons: Although unlikely, user may be able to enter the dummy link as his own timetable (unintended behaviour)
 * ** Alternative 2**: Changing value to be non-final, settable with a method
 ** Pros: Easy to implement
-** Cons: Allows possible unauthorized access to Timetable
+** Cons: Violates coding conventions, allows possible unauthorized access to Timetable
 
 ===== Aspect: Displaying of Timetable in UI
 * **Alternative 1 (Current choice):** Change between the different panels

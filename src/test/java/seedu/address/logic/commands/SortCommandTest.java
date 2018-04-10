@@ -21,6 +21,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.testutil.PersonBuilder;
 
 public class SortCommandTest {
 
@@ -66,18 +67,6 @@ public class SortCommandTest {
         if (!parray[2].toString().substring(0, 1).equals("C")) {
             isSorted = false;
         }
-        if (!parray[3].toString().substring(0, 1).equals("D")) {
-            isSorted = false;
-        }
-        if (!parray[4].toString().substring(0, 1).equals("E")) {
-            isSorted = false;
-        }
-        if (!parray[5].toString().substring(0, 1).equals("G")) {
-            isSorted = false;
-        }
-        if (!parray[6].toString().substring(0, 1).equals("H")) {
-            isSorted = false;
-        }
 
         return isSorted;
     }
@@ -112,13 +101,20 @@ public class SortCommandTest {
 */
     @Test
     public void executeUndoableCommand_sortImportedPersons_personsCorrectlySorted() throws Exception {
-        ImportContactsCommand icc = new ImportContactsCommand("data/Test_contacts_unsorted.csv");
-        icc.model = new ModelManager();
-        icc.executeUndoableCommand();
+        PersonBuilder pb = new PersonBuilder();
+        pb.withName("Aal");
+        Person p1 = pb.build();
+        pb.withName("Ccar");
+        Person p2 = pb.build();
+        pb.withName("Bbob");
+        Person p3 = pb.build();
 
         SortCommand sc = new SortCommand();
-        sc.model = icc.model;
-        requireNonNull(sc.model);
+        sc.model = new ModelManager();
+
+        sc.model.addPerson(p1);
+        sc.model.addPerson(p2);
+        sc.model.addPerson(p3);
 
         assertFalse(checkSorted(sc.model));
         CommandResult cr = sc.executeUndoableCommand();

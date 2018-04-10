@@ -37,6 +37,9 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 //@@author jingyinno
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for VacantCommand.
+ */
 public class VacantCommandTest {
 
     @Rule

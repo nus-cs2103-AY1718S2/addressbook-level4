@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,8 +19,10 @@ import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 
 import seedu.address.MainApp;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.GameEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowDefaultPageEvent;
 import seedu.address.commons.events.ui.ShowMultiLocationFromHeadQuarterEvent;
@@ -161,6 +165,10 @@ public class BrowserPanel extends UiPart<Region> {
         } catch (Exception e) {
             additionalInfo.setText("This person address cannot be found.");
         }
+
+        String personName = event.getNewSelection().person.getName().toString();
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(String.format(MESSAGE_SELECT_PERSON_SUCCESS,
+                personName)));
         loadPersonDirection(event.getNewSelection().person);
     }
 

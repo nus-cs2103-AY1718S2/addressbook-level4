@@ -4,12 +4,19 @@ import java.util.logging.Logger;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
+import com.calendarfx.model.Entry;
+import com.calendarfx.view.DateControl;
 import com.calendarfx.view.page.MonthPage;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
+import javafx.util.Callback;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ShowCalendarViewRequestEvent;
 import seedu.address.model.appointment.AppointmentEntry;
@@ -45,6 +52,7 @@ public class CalendarPanel extends UiPart<Region> {
         calendar.setReadOnly(true);
         calendar.setStyle(Calendar.Style.STYLE2);
         calendarSource.getCalendars().add(calendar);
+
         setConnections(entries);
         registerAsAnEventHandler(this);
     }
@@ -58,8 +66,26 @@ public class CalendarPanel extends UiPart<Region> {
         for (AppointmentEntry entry : entries) {
             calendar.addEntry(entry.getAppointmentEntry());
         }
-        calendarView.getCalendarSources().add(calendarSource);
 
+        calendarView.setEntryFactory(new Callback<DateControl.CreateEntryParameter, Entry<?>>() {
+            @Override
+            public Entry<?> call(DateControl.CreateEntryParameter param) {
+                return null;
+            }
+        });
+
+        calendarView.getCalendarSources().add(calendarSource);
+        setEventHandlerForEntrySelectionEvent();
+    }
+
+    public void setEventHandlerForEntrySelectionEvent() {
+        calendarView.setEntryDetailsPopOverContentCallback(new Callback<DateControl.EntryDetailsPopOverContentParameter, Node>() {
+            @Override
+            public Node call(DateControl.EntryDetailsPopOverContentParameter param) {
+                param.getPopOver().setTitle(param.getEntry().getTitle());
+                return null;
+            }
+        });
     }
 
     @Subscribe

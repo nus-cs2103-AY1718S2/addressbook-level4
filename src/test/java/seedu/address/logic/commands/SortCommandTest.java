@@ -118,6 +118,7 @@ public class SortCommandTest {
 
         SortCommand sc = new SortCommand();
         sc.model = icc.model;
+        requireNonNull(sc.model);
 
         assertFalse(checkSorted(sc.model));
         CommandResult cr = sc.executeUndoableCommand();

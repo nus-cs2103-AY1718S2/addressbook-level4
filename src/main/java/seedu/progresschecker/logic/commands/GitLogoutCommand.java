@@ -1,19 +1,10 @@
 package seedu.progresschecker.logic.commands;
 
-//@@author adityaa1998
-
-import static java.util.Objects.requireNonNull;
-import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_GIT_PASSCODE;
-import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_GIT_REPO;
-import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_GIT_USERNAME;
-
-import java.io.IOException;
-
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
-import seedu.progresschecker.model.credentials.GitDetails;
 
+//@@author adityaa1998
 /**
- * Logins into github from app for issue creation
+ * Logs out of github
  */
 public class GitLogoutCommand extends Command {
 
@@ -23,7 +14,7 @@ public class GitLogoutCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD;
     public static final String MESSAGE_SUCCESS = "You have successfully logged out of github!";
-    public static final String MESSAGE_FAILURE = "You haven't logged out yet";
+    public static final String MESSAGE_FAILURE = "You are currently not logged in";
 
     @Override
     public CommandResult execute() throws CommandException {
@@ -31,7 +22,7 @@ public class GitLogoutCommand extends Command {
         try {
             model.logoutGithub();
             return new CommandResult(MESSAGE_SUCCESS);
-        } catch (IOException e) {
+        } catch (CommandException e) {
             throw new CommandException(MESSAGE_FAILURE);
         }
     }

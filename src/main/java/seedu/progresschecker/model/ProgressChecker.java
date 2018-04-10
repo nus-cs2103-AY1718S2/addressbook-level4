@@ -180,7 +180,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     /**
      * Logout of github
      */
-    public void logoutGithub(){
+    public void logoutGithub() throws CommandException {
         issues.clearCredentials();
     }
 

@@ -103,7 +103,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateProgressCheckerChanged();
     }
     @Override
-    public synchronized void logoutGithub() {
+    public synchronized void logoutGithub() throws CommandException {
         progressChecker.logoutGithub();
         indicateProgressCheckerChanged();
     }

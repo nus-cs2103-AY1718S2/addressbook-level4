@@ -197,11 +197,15 @@ public class GitIssueList implements Iterable<Issue> {
     /**
      * Authorises with github
      */
-    private void clearCredentials() throws CommandException{
-        internalList = null;
-        github = null;
+    public void clearCredentials() throws CommandException {
+        if (github == null) {
+            throw new CommandException("No one has logged into github at the moment");
+        } else {
+            internalList.remove(0, internalList.size());
+            github = null;
+        }
     }
-        
+
     /**
      * Check if the github credentials are authorised
      */

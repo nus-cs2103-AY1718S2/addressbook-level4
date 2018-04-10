@@ -38,7 +38,7 @@ This app will not work with earlier versions of Java 8.
 +
 .IMDB in action
 [caption="Figure 1: "]
-image::Ui.png[width="790"]
+image::Ui_new.PNG[width="990"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.

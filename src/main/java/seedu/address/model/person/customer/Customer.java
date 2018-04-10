@@ -113,24 +113,24 @@ public class Customer extends Person {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Name: ")
-                .append(getName())
+                .append(getName() + ";")
                 .append(" Phone: ")
-                .append(getPhone())
+                .append(getPhone() + ";")
                 .append(" Email: ")
-                .append(getEmail())
+                .append(getEmail() + ";")
                 .append(" Address: ")
-                .append(getAddress())
+                .append(getAddress() + ";")
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         builder.append("\nMoney Owed: ")
-                .append(getMoneyCurrentlyOwed())
-                .append(" Standard Interest Rate: ")
+                .append(String.format("$%.2f", getMoneyCurrentlyOwed()))
+                .append(" Weekly Interest Rate: ")
                 .append(getStandardInterest())
                 .append(" Start Date: ")
                 .append(getOweStartDate())
                 .append(" Due Date: ")
                 .append(getOweDueDate())
-                .append("\nrunner: ")
+                .append("\nRunner Assigned: ")
                 .append(runner.getName());
         return builder.toString();
     }

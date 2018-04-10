@@ -73,4 +73,3 @@ public class TaskCardTest extends GuiUnitTest {
     }
 
 }
-

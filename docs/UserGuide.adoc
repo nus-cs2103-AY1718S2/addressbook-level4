@@ -445,7 +445,7 @@ Format: `addMS i/STUDENT_INDEX d/MILESTONE_DUE_DATE o/DESCRIPTION_OF_MILESTONE`
 * Adds a milestone to the dashboard of a student at the specified `STUDENT_INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
-* The milestone due date must be in this format: *DD/MM/YYYY HH:MM* where HH:MM is in 24-hour time notation
+* The milestone due date must be in this format: *DD/MM/YYYY hh:mm* where DD/MM/YYYY is the calendar date and hh:mm is the time in 24-hour notation
 ****
 
 [TIP]

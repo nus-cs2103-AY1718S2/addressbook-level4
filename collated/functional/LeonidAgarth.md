@@ -759,8 +759,8 @@ import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.module.Module;
-import seedu.address.model.module.Schedule;
+import seedu.address.database.module.Module;
+import seedu.address.database.module.Schedule;
 
 /**
  * Events, such as lectures, tutorial slots, to appear in timetable

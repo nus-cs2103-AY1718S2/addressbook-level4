@@ -1,4 +1,4 @@
-package seedu.address.model.module;
+package seedu.address.database.module;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 

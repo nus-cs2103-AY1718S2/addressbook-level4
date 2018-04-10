@@ -33,7 +33,6 @@ public class TimetableParserUtil {
     public static final String URL_MINUS_SIGN_REGEX = "-";
     public static final String URL_COMMA_SIGN_REGEX = ",";
     public static final String URL_COLON_REGEX = ":";
-    
     public static final int SEMSTER_NUMBER_URL_INDEX = 4;
     public static final int SEMSTER_NUMBER_INTEGER_INDEX = 1;
     public static final int LAST_STRING_URL_INDEX = 5;

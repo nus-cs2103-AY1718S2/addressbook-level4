@@ -25,8 +25,8 @@ It also provides a better user experience as users do not need to switch to anot
 ** Credits: stackoverflow.com, googledevelopers.com
 
 * *Minor enhancement*: added the *ability to find by tag*, which allows the user to find their contact using the skills tag.
-** What it does: It allows user to search for a contact based on their skills tag.
-** Justification: Sometimes user might not remember the name of the person they have shortlisted.
+** What it does: It allows the user to search for a contact based on their skills tag.
+** Justification: Sometimes the user might not remember the name of the person they have shortlisted.
 The skills required for the job is easier to remember and therefore, this feature is very useful in helping them find a contact easily.
 ** Highlights: This enhancement allows me to familiarise myself with the code base of Addressbook Level 4, as the Find command touches on multiple components of the app.
 It required the ability to read and understand codes written by others and also adding your own contributions to the codebase.

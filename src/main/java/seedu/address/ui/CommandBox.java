@@ -29,6 +29,8 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private int tabNumber = 0;
+    private String prevText = "";
 
     @FXML
     private TextField commandTextField;
@@ -61,31 +63,44 @@ public class CommandBox extends UiPart<Region> {
         case TAB:
             keyEvent.consume();
             autoCompleteCommand(commandTextField.getText());
+            tabNumber++;
             break;
         default:
+            prevText = "";
+            tabNumber = 0;
             // let JavaFx handle the keypress
         }
     }
 
+    // @@author kush1509
     /**
      * Auto-completes the partial command {@code text} entered with the first command matched
      * in the lexicographically sorted command list
      */
     private void autoCompleteCommand(String text) {
+        if (text.equals("")) {
+            return;
+        }
+
+        if (!text.startsWith(prevText) || prevText.equals("")) {
+            prevText = text;
+            tabNumber = 0;
+        }
 
         CommandList commandListObj = new CommandList();
 
-        List<String> matchedCommands = commandListObj.commandList.stream().filter(u -> u.startsWith(text))
+        List<String> matchedCommands = commandListObj.commandList.stream().filter(u -> u.startsWith(prevText))
                 .collect(Collectors.toList());
 
         if (matchedCommands.size() > 0) {
-            String textToDisplay = commandListObj.getSyntax(matchedCommands.get(0));
+            String textToDisplay = commandListObj.getSyntax(matchedCommands.get(tabNumber % matchedCommands.size()));
 
             replaceText(textToDisplay);
             commandTextField.positionCaret(matchedCommands.get(0).length() + 1);
         }
     }
 
+    // @@author
     /**
      * Updates the text field with the previous input in {@code historySnapshot},
      * if there exists a previous input in {@code historySnapshot}

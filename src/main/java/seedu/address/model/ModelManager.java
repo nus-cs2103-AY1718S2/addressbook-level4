@@ -165,7 +165,7 @@ public class ModelManager extends ComponentManager implements Model {
         imdb.addAppointment(patient, dateTimeString);
         indicateAppointmentChanged(patient);
     }
-    
+
     @Override
     public ObservableList<Integer> getPatientListIndexInQueue() {
         return imdb.getUniquePatientQueueNo();

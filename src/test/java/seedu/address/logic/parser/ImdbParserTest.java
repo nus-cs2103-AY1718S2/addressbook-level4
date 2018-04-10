@@ -374,21 +374,33 @@ public class ImdbParserTest {
     }
 
     @Test
-    public void parseCommand_removePatientQueue() throws Exception {
+    public void parseCommand_removePatientQueue_emptyArgs() throws Exception {
         LoginManager.authenticate("bob", "password456");
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        RemovePatientQueueCommand command = (RemovePatientQueueCommand) parser.parseCommand(
-                RemovePatientQueueCommand.COMMAND_WORD);
-        assertEquals(new RemovePatientQueueCommand(), command);
+        assertTrue(parser.parseCommand(RemovePatientQueueCommand.COMMAND_WORD) instanceof RemovePatientQueueCommand);
+        assertTrue(parser.parseCommand(
+                RemovePatientQueueCommand.COMMAND_WORD + " ") instanceof RemovePatientQueueCommand);
     }
 
     @Test
-    public void parseCommand_removePatientQueueAlias() throws Exception {
-        LoginManager.authenticate("bob", "password456");
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+    public void parseCommand_removePatientQueue_byIndex() throws Exception {
         RemovePatientQueueCommand command = (RemovePatientQueueCommand) parser.parseCommand(
-                RemovePatientQueueCommand.COMMAND_ALIAS);
-        assertEquals(new RemovePatientQueueCommand(), command);
+                RemovePatientQueueCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new RemovePatientQueueCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_removePatientQueueAlias_emptyArgs() throws Exception {
+        LoginManager.authenticate("bob", "password456");
+        assertTrue(parser.parseCommand(RemovePatientQueueCommand.COMMAND_ALIAS) instanceof RemovePatientQueueCommand);
+        assertTrue(parser.parseCommand(
+                RemovePatientQueueCommand.COMMAND_ALIAS + " ") instanceof RemovePatientQueueCommand);
+    }
+
+    @Test
+    public void parseCommand_removePatientQueueAlias_byIndex() throws Exception {
+        RemovePatientQueueCommand command = (RemovePatientQueueCommand) parser.parseCommand(
+                RemovePatientQueueCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new RemovePatientQueueCommand(INDEX_FIRST_PERSON), command);
     }
 
     //@@author

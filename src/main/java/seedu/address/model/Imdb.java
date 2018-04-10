@@ -226,6 +226,10 @@ public class Imdb implements ReadOnlyImdb {
         return visitingQueue.removePatient();
     }
 
+    public void removePatientFromQueueByIndex(int p) throws PatientNotFoundException {
+        visitingQueue.removePatient(p);
+    }
+
     //@@author
     /**
      * Remove {@code tag} from {@code patient}

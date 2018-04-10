@@ -477,7 +477,7 @@ The commands listed in this section are commands that pertain to the patient's a
 
 Adds a medical appointment with patient name, date, time.
 
-*This command is only accessible to medical staffs.* +
+*This command is only accessible to medical staffs and is not undoable.* +
 
 Format: `addappt PATIENT_NAME DATE TIME` or `aa PATIENT_NAME DATE TIME`
 
@@ -509,7 +509,7 @@ List of medical appointments made by John.
 
 Deletes a medical appointment of the patient.
 
-*This command is only accessible to medical staffs.* +
+*This command is only accessible to medical staffs and is not undoable.* +
 
 Format: `delappt PATIENT_NAME APPOINTMENT_INDEX_NO` or `da PATIENT_NAME APPOINTMENT_INDEX_NO`
 

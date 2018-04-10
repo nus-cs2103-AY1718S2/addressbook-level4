@@ -29,10 +29,13 @@ public class WebViewUtil {
         new GuiRobot().waitForEvent(browserPanelHandle::isLoaded);
     }
 
+    //@@author jingyinno
     /**
-     * If the {@code browserPanelHandle}'s {@code WebView} is loading, sleeps the thread till it is successfully loaded.
+     * If the {@code googleMapsDisplayHandle}'s {@code WebView} is loading, sleeps the thread till it is
+     * successfully loaded.
      */
     public static void waitUntilBrowserLoaded(GoogleMapsDisplayHandle googleMapsDisplayHandle) {
         new GuiRobot().waitForEvent(googleMapsDisplayHandle::isLoaded);
     }
+    //@@author
 }

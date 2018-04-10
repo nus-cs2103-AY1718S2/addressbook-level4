@@ -8,6 +8,7 @@ import javafx.scene.web.WebView;
 
 import java.net.URL;
 
+//@@author jingyinno
 public class GoogleMapsDisplayHandle extends NodeHandle<Node> {
 
     public static final String MAP_ID = "#maps";

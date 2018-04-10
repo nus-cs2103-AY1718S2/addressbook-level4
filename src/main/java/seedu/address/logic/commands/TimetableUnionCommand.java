@@ -51,7 +51,7 @@ public class TimetableUnionCommand extends Command {
 
         preprocess();
 
-        int oddEvenIndex = StringUtil.getOddEven(oddEven);
+        int oddEvenIndex = StringUtil.getOddEven(oddEven).getZeroBased();
         ArrayList<ArrayList<String>> commonTimeTable = Timetable.unionTimetable(timetablesToShow).get(oddEvenIndex);
         ObservableList<ArrayList<String>> timeTableList = FXCollections.observableArrayList(commonTimeTable);
         EventsCenter.getInstance().post(new TimeTableEvent(timeTableList));

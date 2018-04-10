@@ -136,7 +136,7 @@ public class TimetableUnionCommandTest {
         }
         sb.append("\n");
 
-        int oddEvenIndex = StringUtil.getOddEven(oddEven);
+        int oddEvenIndex = StringUtil.getOddEven(oddEven).getZeroBased();
         ArrayList<ArrayList<ArrayList<String>>> targetList = Timetable.unionTimetable(timetables);
         try {
             CommandResult commandResult = timetableUnionCommand.execute();

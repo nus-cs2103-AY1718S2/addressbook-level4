@@ -11,6 +11,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BirthdayListEvent;
 import seedu.address.commons.events.ui.GoogleMapsEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.TimeTableEvent;
 import seedu.address.commons.events.ui.VenueTableEvent;
 import seedu.address.model.person.Person;
 
@@ -27,6 +28,7 @@ public class InfoPanel extends UiPart<Region> {
     private VenueTable venueTable;
     private GoogleMapsDisplay mapsDisplay;
     private PersonDetailsCard personDetailsCard;
+    private TimetableUnionPanel timetableUnionPanel;
 
     @FXML
     private StackPane placeholder;
@@ -36,6 +38,8 @@ public class InfoPanel extends UiPart<Region> {
     private StackPane venuePlaceholder;
     @FXML
     private StackPane userDetailsPlaceholder;
+    @FXML
+    private StackPane timetableUnionPlaceholder;
     @FXML
     private StackPane mapsPlaceholder;
 
@@ -51,6 +55,8 @@ public class InfoPanel extends UiPart<Region> {
         mapsPlaceholder.getChildren().add(mapsDisplay.getRoot());
         birthdayList = new BirthdayList();
         birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
+        timetableUnionPanel = new TimetableUnionPanel();
+        timetableUnionPlaceholder.getChildren().add(timetableUnionPanel.getRoot());
         placeholder.toFront();
         registerAsAnEventHandler(this);
     }
@@ -97,6 +103,7 @@ public class InfoPanel extends UiPart<Region> {
         venuePlaceholder.toBack();
         mapsPlaceholder.toBack();
         birthdayPlaceholder.toBack();
+        timetableUnionPlaceholder.toBack();
         Person person = event.getNewSelection().person;
         int oddEvenIndex = event.getOddEvenIndex();
 
@@ -104,16 +111,16 @@ public class InfoPanel extends UiPart<Region> {
         userDetailsPlaceholder.toFront();
     }
     //@@author
-    /*
+
     @Subscribe
-    private void handleTimeTableEvent(TimeTableEvent event) {
+    private void handleTimeTableUnionEvent(TimeTableEvent event) {
 
         userDetailsPlaceholder.getChildren().removeAll();
-        timeTablePanel = new TimeTablePanel(event.getTimeTable());
-        userDetailsPlaceholder.getChildren().add(timeTablePanel.getRoot());
-        userDetailsPlaceholder.toFront();
-        timeTablePanel.setStyle();
+        timetableUnionPanel = new TimetableUnionPanel(event.getTimeTable());
+        timetableUnionPlaceholder.getChildren().add(timetableUnionPanel.getRoot());
+        timetableUnionPlaceholder.toFront();
+        timetableUnionPanel.setStyle();
 
     }
-    */
+    //@@author
 }

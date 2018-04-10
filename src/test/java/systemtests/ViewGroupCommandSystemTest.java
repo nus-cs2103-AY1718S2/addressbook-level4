@@ -28,8 +28,9 @@ public class ViewGroupCommandSystemTest extends RecipeBookSystemTest {
     public void group() throws Exception {
         Model expectedModel = getModel();
 
-        String groupCommand = GroupCommand.COMMAND_WORD + WHITESPACE + CliSyntax.PREFIX_GROUP_NAME + GROUP_THAT_EXISTS + WHITESPACE
-                + CliSyntax.PREFIX_INDEX + FIRST_INDEX + WHITESPACE + CliSyntax.PREFIX_INDEX + SECOND_INDEX;
+        String groupCommand = GroupCommand.COMMAND_WORD + WHITESPACE + CliSyntax.PREFIX_GROUP_NAME + GROUP_THAT_EXISTS
+                + WHITESPACE + CliSyntax.PREFIX_INDEX + FIRST_INDEX + WHITESPACE + CliSyntax.PREFIX_INDEX
+                + SECOND_INDEX;
         String expectedResultMessage = String.format(GroupCommand.MESSAGE_SUCCESS, GROUP_THAT_EXISTS);
         assertCommandSuccess(groupCommand, expectedResultMessage, expectedModel);
 

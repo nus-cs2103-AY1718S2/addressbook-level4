@@ -79,6 +79,7 @@ public class ExportContactsCommand extends UndoableCommand {
             }
 
             csvPrinter.flush();
+            csvPrinter.close();
 
         } catch (Exception e) {
             throw new CommandException("Failed in exporting Persons.\n"

@@ -192,20 +192,23 @@ Displays a list of all birthdays
 * `birthdays today` +
 Displays a window with the birthdays today
 
-=== Viewing common time slots in timetable: `free` (coming in v2.0)
+=== Viewing common time slots in timetable: `union` (since v1.5)
 
-Displays the common free time of two people in StardyTogether. +
-Format: `free p/[PERSON1] p/[PERSON2]`
+Displays the common free time of multiple people in StardyTogether. +
+Format: `free ODD/EVEN INDEX INDEX [INDEX]...`
 
 ****
-* Only full names will be matched e.g. `Han` will not match `Han Tan`
-* Overlap of the two persons' timetables will be displayed.
+* Only indexes of the current filtered list are valid
+* Overlap of the persons' timetables will be displayed.
 ****
 
 Examples:
 
-* `free p/John Doe p/Han Tan` +
-Displays the combined timetable for John Doe and Han Tan.
+* `free Odd 1 2 3` +
+Displays the combined odd timetable for persons at Index 1, 2 and 3.
+
+* `free Even 1 2` +
+Displays the combined even timetable for persons at Index 1 and 2.
 
 // tag::alias[]
 === Adding a command alias: `alias` (since v1.1)
@@ -481,6 +484,8 @@ e.g. `password test`
 * *Redo* : `redo`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Union* `union EVEN/ODD INDEX INDEX` +
+e.g. `union Odd 1 2`
 * *Unalias* `unalias CURRENT_ALIAS` +
 e.g. `unalias hist`
 * *Undo* : `undo`

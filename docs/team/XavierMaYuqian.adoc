@@ -26,7 +26,7 @@ SellIT is a desktop address book application used for businessman doing his busi
 * *Minor enhancement*: added a total person at status bar to show the total number of persons in the address book.
 
 
-* *Code contributed*: [main/collated/functional/XavierMaYuqian.md[Functional code]] [main/test/functional/XavierMaYuqian.md[Test code]]
+* *Code contributed*: [https://github.com/CS2103JAN2018-W10-B2/main/blob/master/collated/functional/XavierMaYuqian.md[Functional code]] [https://github.com/CS2103JAN2018-W10-B2/main/blob/master/collated/test/XavierMaYuqian.md[Test code]]
 
 * *Other contributions*:
 

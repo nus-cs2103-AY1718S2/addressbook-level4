@@ -75,7 +75,14 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     public void insertText(String input) {
         int caretPos = getRootNode().getCaretPosition();
         guiRobot.interact(() -> getRootNode().insertText(caretPos, input));
-        guiRobot.interact(() -> getRootNode().positionCaret(getInput().length()));
+        guiRobot.interact(() -> getRootNode().positionCaret(caretPos + input.length()));
+    }
+
+    /**
+     * Sets the caret position in the command box to {@code index}.
+     */
+    public void setCaretPosition(int index) {
+        guiRobot.interact(() -> getRootNode().positionCaret(index));
     }
 
     /**

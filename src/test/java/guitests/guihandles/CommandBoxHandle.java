@@ -33,6 +33,20 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
         guiRobot.pauseForHuman();
 
         guiRobot.type(KeyCode.ENTER);
+
+        return !getStyleClass().contains(CommandBox.ERROR_STYLE_CLASS);
+    }
+
+    /**
+     * Enters the given command in the Command Box and presses enter twice.
+     * @return true if the command succeeded, false otherwise.
+     */
+    public boolean run_withAutocomplete(String command) {
+        click();
+        guiRobot.interact(() -> getRootNode().setText(command));
+        guiRobot.pauseForHuman();
+
+        guiRobot.type(KeyCode.ENTER);
         guiRobot.type(KeyCode.ENTER);
 
         return !getStyleClass().contains(CommandBox.ERROR_STYLE_CLASS);

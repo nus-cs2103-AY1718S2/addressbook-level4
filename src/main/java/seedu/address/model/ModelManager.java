@@ -28,7 +28,6 @@ import seedu.address.model.person.Nric;
 
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.InvalidSubjectCombinationException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
@@ -93,6 +92,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         List<Subject> subjectList = person.getSubjectArray();
         int listSize = subjectList.size();
+        System.out.println(person.getSubjects());
         int i = 0;
         while (i < listSize) {
             String iString = Integer.toString(i + 1);
@@ -122,41 +122,6 @@ public class ModelManager extends ComponentManager implements Model {
         FileUtils.writeStringToFile(newHtmlFile, htmlString);
         //updatePage(person);
     }
-
-    /**
-     * @@ author Johnny Chan
-     * @param person
-     * @throws IOException
-     * Updates BrowserPanel html
-     */
-    public void updatePage(Person person) throws IOException {
-
-        // When Edit Command is being called, run this method
-        System.out.println("HERE");
-        Name titleName = person.getName();
-        String title = titleName.toString();
-        File htmlTemplateFile = new File("/Users/johnnychan/Documents/"
-                + "GitHub/main/src/main/resources/StudentPage/" + "template.html");
-        String htmlString = FileUtils.readFileToString(htmlTemplateFile);
-        List<Subject> subjectList = person.getSubjectArray();
-        int listSize = subjectList.size();
-        Nric identityNumberClass = person.getNric();
-        String identityNumber = identityNumberClass.toString();
-        htmlString = htmlString.replace("$title", title);
-        htmlString = htmlString.replace("$identityNumber", identityNumber);
-
-        int i = 0;
-        while (i < listSize) {
-            String iString = Integer.toString(i + 1);
-            htmlString = htmlString.replace("$subject" + iString, subjectList.get(i).nameToString());
-            htmlString = htmlString.replace("$percent" + iString, subjectList.get(i).gradeToPercent());
-            htmlString = htmlString.replace("$grade" + iString, subjectList.get(i).gradeToString());
-            i++;
-        }
-
-        FileUtils.writeStringToFile(htmlTemplateFile, htmlString);
-    }
-
 
     /**
      * @@author Johnny chan

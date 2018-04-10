@@ -54,7 +54,9 @@ public class XmlAdaptedEvent extends XmlAdaptedActivity {
     public XmlAdaptedEvent(Event source) {
         super((Activity) source);
         endDateTime = source.getEndDateTime().toString();
-        location = source.getLocation().toString();
+        if(source.getLocation() != null) {
+            location = source.getLocation().toString();
+        }
     }
 
     /**
@@ -95,16 +97,23 @@ public class XmlAdaptedEvent extends XmlAdaptedActivity {
             throw new IllegalValueException(DateTime.MESSAGE_DATETIME_CONSTRAINTS);
         }
         final DateTime endDateTime = new DateTime(this.endDateTime);
-
-        if (!Location.isValidLocation(this.location)) {
+        final Location location;
+        if(this.location == null) {
+            location = null;
+        } else if (!Location.isValidLocation(this.location)) {
             throw new IllegalValueException(Location.MESSAGE_LOCATION_CONSTRAINTS);
+        } else {
+            location = new Location(this.location);
         }
-        final Location location = new Location(this.location);
 
-        if (!Remark.isValidRemark(this.remark)) {
+        final Remark remark;
+        if(this.remark == null) {
+            remark = null;
+        } else if (!Remark.isValidRemark(this.remark)) {
             throw new IllegalValueException(Remark.MESSAGE_REMARK_CONSTRAINTS);
+        } else {
+            remark = new Remark(this.remark);
         }
-        final Remark remark = new Remark(this.remark);
 
         final Set<Tag> tags = new HashSet<>(activityTags);
         return new Event(name, startDateTime, endDateTime, location, remark, tags, this.iscompleted);

@@ -71,10 +71,14 @@ public class XmlAdaptedTask extends XmlAdaptedActivity {
         }
         final DateTime dateTime = new DateTime(this.dateTime);
 
-        if (!Remark.isValidRemark(this.remark)) {
+        final Remark remark;
+        if(this.remark == null) {
+            remark = null;
+        } else if (!Remark.isValidRemark(this.remark)) {
             throw new IllegalValueException(Remark.MESSAGE_REMARK_CONSTRAINTS);
+        } else {
+            remark = new Remark(this.remark);
         }
-        final Remark remark = new Remark(this.remark);
 
         final Set<Tag> tags = new HashSet<>(activityTags);
 

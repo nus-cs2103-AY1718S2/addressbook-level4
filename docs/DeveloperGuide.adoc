@@ -150,7 +150,7 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 . Click on the `Imports` tab.
 
 * For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
+* For `Import Layout`: Set the order to be `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
 After you do the steps above, the Settings window should appear as shown in the picure below.
 
@@ -207,8 +207,8 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* at app launch: initializing the components in the correct sequence and connecting them up with each other; and
-* at shut down: shutting down the components and invoking cleanup method where necessary.
+* at app launch: initializing other components in the correct sequence and connecting them up with each other; and
+* at shut down: shutting down other components and invoking cleanup method where necessary.
 
 <<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level:
 
@@ -232,6 +232,7 @@ For example, the `Logic` component defines its API in the `Logic.java` interface
 .The API of the `Logic` component
 image::LogicAPI.png[width="800"]
 
+[discrete]
 ==== Events-Driven Nature of the Design
 
 _Figure 11_ below shows how the components interact in a scenario where the user issues the command `delete 1`.
@@ -298,10 +299,10 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 The following describes the sequence of events executed by the Logic component:
 
-.  `Logic` uses the `DeskBoardParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a activity) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+*  `Logic` uses the `DeskBoardParser` class to parse the user command.
+*  This results in a `Command` object which is executed by the `LogicManager`.
+*  The command execution can affect the `Model` (e.g. adding a activity) and/or raise events.
+*  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("rm task 1")` API call.
 
@@ -532,7 +533,7 @@ If `CompleteCommand` is successful, 'Uncompleted' will be replaced by 'Completed
 {empty} +
 {empty} +
 
-==== Design Considerations
+==== Design considerations
 
 There are two ways to represent tasks and events in the application. The following shows the pros and cons for each alternative:
 
@@ -598,7 +599,7 @@ If an invalid request for `ListCommand` happens, a `CommandException` will be th
 ----
 If `ListCommand` is successful:
 
-* `list task` will show only `Task` objects;
+* `list` will show only `Task` objects;
 * `list event` will show only `Event` objects; and
 * `list` will show both `Task` and `Event` objects.
 {empty} +
@@ -897,7 +898,7 @@ The most reliable way to run tests is the 3rd one. The first two methods might f
 You can choose to run all tests or only a subset of tests.
 
 * To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`.
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`.
+* To run a subset of tests, right-click on a test package, test class, or a test and choose `Run 'ABC'`.
 
 {empty} +
 

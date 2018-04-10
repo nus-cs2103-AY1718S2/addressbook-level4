@@ -164,6 +164,27 @@ Shows a list of all completed tasks in the desk board. +
 
 *Format:* `ls complete task` or `ls com task`
 
+=== Locating task by name: `find task` `[Coming Soon in v2.0]`
+Shows a list of all tasks and/or event which contains given keyword in its name.
+
+*Format:* find task KEYWORD or find event KEYWORK or find KEYWORD
+
+*Examples:*
+
+* `find task CS2101` +
+Find all tasks with name contains CS2101
+
+* `find event exam` +
+Find all events wiih name contains exam
+
+* 'find CS2101` +
+Find all tasks and event with name contains CS2101
+
+[NOTE]
+====
+Use `list` command to retrieve the full list of event and task after this command
+====
+
 === Shows overdue tasks: `overdue` `[Coming Soon in  v1.5]`
 
 Shows a list of tasks that remain uncompleted after their respective due dates.
@@ -276,6 +297,10 @@ eg. `complete task 1` or `com task 2`
 
 * *List completed tasks*: `ls complete task` or `ls com task` +
 eg. `ls complete task` or `ls com task`
+
+
+* *Find task and/or event with name contains given keyword*: `find` or `find task` or `find event` +
+eg. `find CS2101` or `find event exam` or `find task CS2103`
 
 * *Show overdue tasks*: `overdue` +
 eg. `overdue`

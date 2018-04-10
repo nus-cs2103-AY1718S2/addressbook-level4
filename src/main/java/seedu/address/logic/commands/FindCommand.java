@@ -26,8 +26,8 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredActivityList(predicate);
-        model.updateFilteredActivityList(predicate.or(new TaskOnlyPredicate()));
-        model.updateFilteredActivityList(predicate.or(new EventOnlyPredicate()));
+        //model.updateFilteredActivityList(predicate.or(new TaskOnlyPredicate()));
+        //model.updateFilteredActivityList(predicate.or(new EventOnlyPredicate()));
         return new CommandResult(getMessageForActivityListShownSummary(model.getFilteredActivityList().size()));
     }
 

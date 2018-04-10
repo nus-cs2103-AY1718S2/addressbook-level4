@@ -22,7 +22,7 @@ public abstract class XmlAdaptedActivity {
     protected String name;
     @XmlElement(required = true)
     protected String dateTime;
-    @XmlElement(required = true)
+    @XmlElement
     protected String remark;
     @XmlElement
     protected boolean iscompleted;
@@ -56,7 +56,9 @@ public abstract class XmlAdaptedActivity {
     public XmlAdaptedActivity(Activity source) {
         name = source.getName().fullName;
         dateTime = source.getDateTime().toString();
-        remark = source.getRemark().value;
+        if(source.getRemark() != null) {
+            remark = source.getRemark().value;
+        }
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));

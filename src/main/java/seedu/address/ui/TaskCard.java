@@ -41,7 +41,11 @@ public class TaskCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(this.task.getName().fullName);
         dateTime.setText(getDisplayedDateTime(this.task));
-        remark.setText(this.task.getRemark().value);
+        if(this.task.getRemark() != null) {
+            remark.setText(this.task.getRemark().value);
+        } else {
+            remark.setVisible(false);
+        }
         task.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         if (task.isCompleted()) {
             status.getChildren().add(new Label("Completed"));

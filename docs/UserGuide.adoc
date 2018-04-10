@@ -242,10 +242,13 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
+
+// tag::sort[]
 === Sorting all entries : `sort`
 
 Sort all entries from reInsurance by given condition in lexicographical order. +
 Format: `sort`
+// end::sort[]
 
 === Clearing all entries : `clear`
 
@@ -275,6 +278,7 @@ Exports the data in the portfolio to a .csv file
 * Coming in v2.0, the user will be able to specify what the created calendar is called.
 ====
 
+// tag::group[]
 === Group entries : `group`
 
 Group all entries under the same group from reInsurance. +
@@ -284,12 +288,14 @@ Examples:
 
 * `group friends` +
 All entries under the group friends will be returned to the user as a list.
+// end::group[]
 
-
+// tag::password[]
 === Password : `password`
 
 Set a password for reInsurance as desired. No password required to access the program. +
 Format: `password` Alias: `pw`
+// end::group[]
 
 === Exiting the program : `exit`
 

@@ -261,7 +261,7 @@ public class ParserUtil {
      */
     public static Optional<Username> parseUsername(Optional<String> username) throws IllegalValueException {
         requireNonNull(username);
-        return username.isPresent() ? Optional.of(parseUsername(username.get().toLowerCase())) : Optional.empty();
+        return username.isPresent() ? Optional.of(parseUsername(username.get())) : Optional.empty();
     }
 
     /**

@@ -17,7 +17,7 @@ public class ListGroupMembersCommandParserTest {
 
     @Test
     public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser,"  ", String.format(Information.MESSAGE_INFORMATION_CONSTRAINTS));
+        assertParseFailure(parser, "  ", String.format(Information.MESSAGE_INFORMATION_CONSTRAINTS));
     }
 
     @Test
@@ -31,6 +31,6 @@ public class ListGroupMembersCommandParserTest {
     }
     @Test
     public void parse_invalidArg_throwsParseException() {
-        assertParseFailure(parser,"##!#@", String.format(Information.MESSAGE_INFORMATION_CONSTRAINTS));
+        assertParseFailure(parser, "##!#@", String.format(Information.MESSAGE_INFORMATION_CONSTRAINTS));
     }
 }

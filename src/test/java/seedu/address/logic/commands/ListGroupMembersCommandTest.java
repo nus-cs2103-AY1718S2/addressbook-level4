@@ -1,14 +1,13 @@
 //@@author jas5469
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -66,7 +65,7 @@ public class ListGroupMembersCommandTest {
         String expectedMessage = String.format("0 persons listed!");
         Model expectedModel = model;
         MembersInGroupPredicate predicate = new MembersInGroupPredicate(groupToList);
-        ListGroupMembersCommand command = prepareCommand( predicate, groupToList);
+        ListGroupMembersCommand command = prepareCommand(predicate, groupToList);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 

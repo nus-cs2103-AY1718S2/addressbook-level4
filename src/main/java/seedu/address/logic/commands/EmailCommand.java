@@ -4,8 +4,10 @@ import com.google.api.services.gmail.Gmail;
 
 import javafx.collections.ObservableList;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.util.GmailUtil;
 import seedu.address.model.email.Template;
+import seedu.address.model.email.exceptions.TemplateNotFoundException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 
@@ -35,6 +37,15 @@ public class EmailCommand extends Command {
         this.search = search;
     }
 
+    /**
+     *
+     * @param displaySize
+     * @return summary message for persons emailed
+     */
+    public static String getMessageForPersonEmailSummary(int displaySize) {
+        return String.format(Messages.MESSAGE_EMAIL_SENT, displaySize);
+    }
+
     @Override
     public CommandResult execute() {
         // Build a new authorized API client service.
@@ -49,12 +60,14 @@ public class EmailCommand extends Command {
                 handler.send(service, p.getEmail().toString(), "",
                         service.users().getProfile("me").getUserId(), template.getTitle(),
                         template.getMessage());
+            } catch (TemplateNotFoundException e) {
+                return new CommandResult(Messages.MESSAGE_TEMPLATE_NOT_FOUND);
             } catch (Exception e) {
                 System.out.println(e);
                 System.out.println("Some Exception occurred");
             }
         }
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        return new CommandResult(getMessageForPersonEmailSummary(model.getFilteredPersonList().size()));
     }
 
     @Override

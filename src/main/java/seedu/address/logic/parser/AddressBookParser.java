@@ -8,16 +8,20 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddTemplateCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.commands.DeleteBeforeCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteTemplateCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.ExportContactsCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.GoBackwardCommand;
+import seedu.address.logic.commands.GoForwardCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ImportContactsCommand;
@@ -136,12 +140,25 @@ public class AddressBookParser {
 
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
-
+        //@@author ng95junwei
         case EmailCommand.COMMAND_WORD:
             return new EmailCommandParser().parse(arguments);
 
         case EmailCommand.COMMAND_ALIAS:
             return new EmailCommandParser().parse(arguments);
+
+        case AddTemplateCommand.COMMAND_WORD:
+            return new AddTemplateCommandParser().parse(arguments);
+
+        case AddTemplateCommand.COMMAND_ALIAS:
+            return new AddTemplateCommandParser().parse(arguments);
+
+        case DeleteTemplateCommand.COMMAND_WORD:
+            return new DeleteTemplateCommandParser().parse(arguments);
+
+        case DeleteTemplateCommand.COMMAND_ALIAS:
+            return new DeleteTemplateCommandParser().parse(arguments);
+        //@@author
 
         //@@author luca590
         case ExportContactsCommand.COMMAND_WORD: //export contacts from csv
@@ -187,6 +204,18 @@ public class AddressBookParser {
 
         case ZoomOutCommand.COMMAND_ALIAS:
             return new ZoomOutCommand();
+
+        case GoBackwardCommand.COMMAND_WORD:
+            return new GoBackwardCommand();
+
+        case GoBackwardCommand.COMMAND_ALIAS:
+            return new GoBackwardCommand();
+
+        case GoForwardCommand.COMMAND_WORD:
+            return new GoForwardCommand();
+
+        case GoForwardCommand.COMMAND_ALIAS:
+            return new GoForwardCommand();
         //@@author
 
         default:

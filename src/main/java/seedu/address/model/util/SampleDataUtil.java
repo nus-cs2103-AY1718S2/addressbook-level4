@@ -11,6 +11,7 @@ import seedu.address.model.appointment.EndTime;
 import seedu.address.model.appointment.Location;
 import seedu.address.model.appointment.PersonName;
 import seedu.address.model.appointment.StartTime;
+import seedu.address.model.appointment.exceptions.ClashingAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.DateAdded;
@@ -80,6 +81,8 @@ public class SampleDataUtil {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
         } catch (DuplicateAppointmentException e) {
             throw new AssertionError("sample data cannot contain duplicate appointments", e);
+        } catch (ClashingAppointmentException e) {
+            throw new AssertionError("sample data cannot contain clashing appointments", e);
         }
     }
 

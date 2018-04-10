@@ -16,10 +16,15 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.logic.CalendarGoBackwardEvent;
+import seedu.address.commons.events.logic.CalendarGoForwardEvent;
 import seedu.address.commons.events.logic.ZoomInEvent;
 import seedu.address.commons.events.logic.ZoomOutEvent;
 import seedu.address.commons.events.model.AppointmentDeletedEvent;
 import seedu.address.commons.events.model.NewAppointmentAddedEvent;
+import seedu.address.commons.events.ui.MaxZoomInEvent;
+import seedu.address.commons.events.ui.MaxZoomOutEvent;
+import seedu.address.commons.events.ui.ZoomSuccessEvent;
 import seedu.address.model.appointment.Appointment;
 
 //@@author jlks96
@@ -61,6 +66,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
      */
     private void initializeCalendar() {
         calendar = new Calendar("Appointments");
+        calendar.setStyle(Calendar.Style.STYLE2);
     }
 
     /**
@@ -74,6 +80,11 @@ public class CalendarPanel extends UiPart<CalendarView> {
 
         calendarView.setRequestedTime(LocalTime.now());
         calendarView.showMonthPage();
+        calendarView.setShowPageToolBarControls(false);
+        calendarView.setShowAddCalendarButton(false);
+        calendarView.setShowPrintButton(false);
+        calendarView.setShowSourceTrayButton(false);
+        calendarView.setShowSearchField(false);
         pageBase = calendarView.getSelectedPage();
     }
 
@@ -134,9 +145,15 @@ public class CalendarPanel extends UiPart<CalendarView> {
     }
 
     /**
-     * Zooms in on the calendar if possible
+     * Zooms in on the calendar if possible and provides feedback to the {@code ZoomInCommand}
      */
     private void zoomIn() {
+        if (pageBase.equals(calendarView.getDayPage())) {
+            raise(new MaxZoomInEvent());
+        } else {
+            raise(new ZoomSuccessEvent());
+        }
+
         if (pageBase.equals(calendarView.getYearPage())) {
             calendarView.showMonthPage();
         } else if (pageBase.equals(calendarView.getMonthPage())) {
@@ -157,9 +174,15 @@ public class CalendarPanel extends UiPart<CalendarView> {
     }
 
     /**
-     * Zooms out on the calendar if possible
+     * Zooms out on the calendar if possible and provides feedback to the {@code ZoomOutCommand}
      */
     private void zoomOut() {
+        if (pageBase.equals(calendarView.getYearPage())) {
+            raise(new MaxZoomOutEvent());
+        } else {
+            raise(new ZoomSuccessEvent());
+        }
+
         if (pageBase.equals(calendarView.getDayPage())) {
             calendarView.showWeekPage();
         } else if (pageBase.equals(calendarView.getWeekPage())) {
@@ -168,6 +191,26 @@ public class CalendarPanel extends UiPart<CalendarView> {
             calendarView.showYearPage();
         }
         pageBase = calendarView.getSelectedPage();
+    }
+
+    /**
+     * Handles the event where user tries to make the calendar view go backward in time from the currently displaying
+     * date
+     */
+    @Subscribe
+    private void handleCalendarGoBackwardEvent(CalendarGoBackwardEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        calendarView.getSelectedPage().goBack();
+    }
+
+    /**
+     * Handles the event where user tries to make the calendar view go forward in time from the currently displaying
+     * date
+     */
+    @Subscribe
+    private void handleCalendarGoForwardEvent(CalendarGoForwardEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        calendarView.getSelectedPage().goForward();
     }
 
     /**

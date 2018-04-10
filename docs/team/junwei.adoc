@@ -1,0 +1,63 @@
+= Ng Jun Wei - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: AddSurance
+
+---
+
+== Overview
+
+AddSurance is a comprehensive, reliable and convenient address book for insurance agents built on a simple belief — 
+efficiency and elegance. With its minimalistic design, user interactions are greatly simplified using a CLI
+(Command Line Interface). With this application, you can maintain your huge list of contacts easily, at the same time,
+ managing your schedule efficiently. So, if you are a reasonably tech-savvy insurance agent, this application is absolutely designed for you!
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to email people with email templates*
+** What it does: Emails contacts in AddSurance a specified template.
+** Justification: This feature improves the product significantly because a user has to email a lot of people for various reasons. With this feature,
+the user will not need to manually email all his contacts and retype his emails.
+** Highlights: It required an in-depth analysis of the design pattern adopted by AddSurance. The implementation too was challenging
+ as it required affecting various models and going up and down different levels of abstraction.
+** Credits: _The actual SMTP handling was done through an api from GMail_
+
+* *Minor enhancement*: Modified find command to search across attributes, including tags and address and phone number.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W10-B4/main/blob/master/collated/functional/ng95junwei.md[Functional code]]
+[https://github.com/CS2103JAN2018-W10-B4/main/blob/master/collated/test/ng95junwei.md[Test code]]!
+
+
+* *Other contributions*:
+
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
+** Tools:
+*** Integrated a third party library (Gmail) to the project (https://github.com[#42])
+
+_{you can add/remove categories in the list above}_
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=emailing]
+
+include::../UserGuide.adoc[tag=templating]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=emailing]
+
+include::../DeveloperGuide.adoc[tag=templating]
+
+

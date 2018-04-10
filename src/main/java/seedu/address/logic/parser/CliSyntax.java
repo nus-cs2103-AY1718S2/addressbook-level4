@@ -15,5 +15,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_STARTTIME = new Prefix("st/");
     public static final Prefix PREFIX_ENDTIME = new Prefix("et/");
     public static final Prefix PREFIX_LOCATION = new Prefix("l/");
+    public static final Prefix PREFIX_SUBJECT = new Prefix("s/");
+    public static final Prefix PREFIX_MESSAGE = new Prefix("m/");
+    public static final Prefix PREFIX_PURPOSE = new Prefix("pu/");
 
 }

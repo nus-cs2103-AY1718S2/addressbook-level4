@@ -255,6 +255,19 @@ public class AddressBook implements ReadOnlyAddressBook {
         groups.add(group);
     }
 
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     *
+     * @throws ToDoNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeGroup(Group key) throws GroupNotFoundException {
+        if (groups.remove(key)) {
+            return true;
+        } else {
+            throw new GroupNotFoundException();
+        }
+    }
+
     ////Event operations
     /**
      * Adds an event to the address book.

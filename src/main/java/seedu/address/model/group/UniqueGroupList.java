@@ -14,7 +14,7 @@ import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
 
 /**
- * A list of to-dos that enforces uniqueness between its elements and does not allow nulls.
+ * A list of Groups that enforces uniqueness between its elements and does not allow nulls.
  *
  * Supports a minimal set of list operations.
  *
@@ -26,7 +26,7 @@ public class UniqueGroupList implements Iterable<Group> {
     private final ObservableList<Group> internalList = FXCollections.observableArrayList();
 
     /**
-     * Returns true if the list contains an equivalent to-do as the given argument.
+     * Returns true if the list contains an equivalent Group as the given argument.
      */
     public boolean contains(Group toCheck) {
         requireNonNull(toCheck);
@@ -34,9 +34,9 @@ public class UniqueGroupList implements Iterable<Group> {
     }
 
     /**
-     * Adds a to-do to the list.
+     * Adds a Group to the list.
      *
-     * @throws DuplicateGroupException if the to-do to add is a duplicate of an existing to-do in the list.
+     * @throws DuplicateGroupException if the Group to add is a duplicate of an existing Group in the list.
      */
     public void add(Group toAdd) throws DuplicateGroupException {
         requireNonNull(toAdd);
@@ -60,9 +60,23 @@ public class UniqueGroupList implements Iterable<Group> {
     }
 
     /**
+     * Removes the equivalent Group from the list.
+     *
+     * @throws GroupNotFoundException if no such Group could be found in the list.
+     */
+    public boolean remove(Group toRemove) throws GroupNotFoundException {
+        requireNonNull(toRemove);
+        final boolean groupFoundAndDeleted = internalList.remove(toRemove);
+        if (!groupFoundAndDeleted) {
+            throw new GroupNotFoundException();
+        }
+        return groupFoundAndDeleted;
+    }
+
+    /**
      * Replaces the group {@code target} in the list with {@code editedGroup}.
      *
-     * @throws DuplicateGroupException if the replacement is equivalent to another existing to-do in the list.
+     * @throws DuplicateGroupException if the replacement is equivalent to another existing Group in the list.
      * @throws GroupNotFoundException if {@code target} could not be found in the list.
      */
     public void setGroup(Group target, Group editedGroup)

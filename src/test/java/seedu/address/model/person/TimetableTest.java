@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -51,8 +52,9 @@ public class TimetableTest {
         // invalid urls
         assertFalse(Timetable.isValidUrl("  ")); // empty string
         assertFalse(Timetable.isValidUrl(INVALID_URL)); // not NUSMods
-        assertFalse(Timetable.isValidUrl("https://nusmods.com/timetable/sem-2/share?CS2103T=TUT:T6"));
         // long url
+        assertFalse(Timetable.isValidUrl("https://nusmods.com/timetable/sem-2/share?CS2103T=TUT:T6"));
+
 
     }
 
@@ -68,7 +70,7 @@ public class TimetableTest {
             assertEquals(23, TimetableDay.parseStartEndTime("2300"));
             assertEquals(12, TimetableDay.parseStartEndTime("1240"));
         } catch (IllegalValueException ie) {
-            // Should never go here
+            fail("Unexpected exception thrown " + ie);
         }
     }
 
@@ -79,7 +81,7 @@ public class TimetableTest {
             assertEquals(timetable.getLessonFromSlot(VALID_WEEK, VALID_DAY, VALID_TIMESLOT).toString(),
                     timetable.getLessonFromSlot(VALID_WEEK, VALID_DAY, VALID_TIMESLOT).toString());
         } catch (IllegalValueException ie) {
-            // should never go here
+            fail("Unexpected exception thrown " + ie);
         }
     }
 
@@ -108,7 +110,7 @@ public class TimetableTest {
             assertEquals(timetable.getLessonFromSlot(VALID_WEEK, VALID_DAY, VALID_TIMESLOT).toString(),
                     timetableToExpect.getLessonFromSlot(VALID_WEEK, VALID_DAY, VALID_TIMESLOT).toString());
         } catch (IllegalValueException ie) {
-            // should never go here
+            fail("Unexpected exception thrown " + ie);
         }
     }
 

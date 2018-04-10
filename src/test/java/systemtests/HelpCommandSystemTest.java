@@ -46,9 +46,11 @@ public class HelpCommandSystemTest extends ImdbSystemTest {
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 
+        /*
         getBrowserPanel().click();
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowNotOpen();
+        */
 
         //use menu button
         getMainMenu().openHelpWindowUsingMenu();

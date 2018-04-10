@@ -59,11 +59,9 @@ public class PersonListPanel extends UiPart<Region> {
         Platform.runLater(() -> {
             personListView.scrollTo(index);
             personListView.getSelectionModel().clearAndSelect(index);
-            if (currentOddEvenIndex != oddEvenIndex) {
-                raise(new PersonPanelSelectionChangedEvent(personListView.getSelectionModel().getSelectedItem(),
+            raise(new PersonPanelSelectionChangedEvent(personListView.getSelectionModel().getSelectedItem(),
                         oddEvenIndex));
                 currentOddEvenIndex = oddEvenIndex;
-            }
         });
 
     }

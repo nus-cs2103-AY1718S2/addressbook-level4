@@ -1,4 +1,4 @@
-package seedu.address.model.module;
+package seedu.address.database.module;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

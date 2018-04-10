@@ -763,8 +763,8 @@ import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.Test;
 
-import seedu.address.model.module.Module;
-import seedu.address.model.module.Schedule;
+import seedu.address.database.module.Module;
+import seedu.address.database.module.Schedule;
 
 public class WeeklyEventTest {
 

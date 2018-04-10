@@ -1,4 +1,4 @@
-package seedu.address.model.module;
+package seedu.address.database.module;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

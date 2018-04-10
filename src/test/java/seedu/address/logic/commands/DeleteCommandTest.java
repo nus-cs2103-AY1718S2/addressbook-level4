@@ -90,7 +90,7 @@ public class DeleteCommandTest {
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-        // delete -> first person deleted
+        // deleteNotification -> first person deleted
         deleteCommand.execute();
         undoRedoStack.push(deleteCommand);
 
@@ -135,7 +135,7 @@ public class DeleteCommandTest {
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
         Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        // delete -> deletes second person in unfiltered person list / first person in filtered person list
+        // deleteNotification -> deletes second person in unfiltered person list / first person in filtered person list
         deleteCommand.execute();
         undoRedoStack.push(deleteCommand);
 

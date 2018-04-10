@@ -23,7 +23,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
-import seedu.address.model.notification.exceptions.TimetableEntryNotFoundException;
+import seedu.address.model.notification.exceptions.NotificationNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -117,7 +117,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteNotification(String id) throws TimetableEntryNotFoundException {
+        public void deleteNotification(String id) throws NotificationNotFoundException {
 
         }
 

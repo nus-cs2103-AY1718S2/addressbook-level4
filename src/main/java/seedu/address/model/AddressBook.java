@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
 import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
-import seedu.address.model.notification.exceptions.TimetableEntryNotFoundException;
+import seedu.address.model.notification.exceptions.NotificationNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniqueEmployeeList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -227,7 +227,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Removes a timetable entry from the address book.
      */
-    public void deleteNotification(String notificationId) throws TimetableEntryNotFoundException {
+    public void deleteNotification(String notificationId) throws NotificationNotFoundException {
         boolean found = false;
         for (Notification t: notifications) {
             if (t != null && t.getId() != null && t.getId().equals(notificationId)) {
@@ -236,7 +236,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             }
         }
         if (!found) {
-            throw new TimetableEntryNotFoundException();
+            throw new NotificationNotFoundException();
         }
     }
     //@@author

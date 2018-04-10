@@ -29,6 +29,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.logic.AddressBookUnlockedEvent;
+import seedu.address.commons.events.logic.RequestToDeleteNotificationEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;
 import seedu.address.commons.events.ui.ShowTodoListEvent;
@@ -186,7 +187,6 @@ public class UiManager extends ComponentManager implements Ui {
 
     @Subscribe
     private void handleToggleNotificationEvent(ToggleNotificationCenterEvent event) {
-        System.out.println("Handling");
         if (!LogicManager.isLocked()) {
             mainWindow.toggleNotificationCenter();
         }
@@ -224,6 +224,12 @@ public class UiManager extends ComponentManager implements Ui {
         trayIcon.displayMessage("Task ended", event.getOwnerName() + " has " + event.getNotification().getTitle()
                 + " ended at " + event.getNotification().getEndDateDisplay(), TrayIcon.MessageType.INFO);
 
+    }
+
+    @Subscribe
+    private void handleRequestToDeleteNotificationEvent(RequestToDeleteNotificationEvent event) {
+        mainWindow.deleteNotificationCard(event.id);
+        System.out.println("notification center deleted");
     }
     //@@author
 

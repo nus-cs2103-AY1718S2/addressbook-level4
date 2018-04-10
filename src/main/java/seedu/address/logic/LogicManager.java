@@ -12,8 +12,8 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.logic.RequestToDeleteNotificationEvent;
 import seedu.address.commons.events.model.NotificationAddedEvent;
-import seedu.address.commons.events.model.NotificationDeletedEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -173,7 +173,7 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Subscribe
-    private void handleTimetableEntryDeletedEvent(NotificationDeletedEvent event) {
+    private void handleTimetableEntryDeletedEvent(RequestToDeleteNotificationEvent event) {
         TimerTask associatedTimerTask = scheduledTimerTasks.get(event.id);
         timetableEntriesStatus.put(associatedTimerTask, false);
         scheduledTimerTasks.remove(event.id);

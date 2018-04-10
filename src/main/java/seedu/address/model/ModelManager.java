@@ -17,10 +17,9 @@ import seedu.address.commons.events.logic.RequestToDeleteNotificationEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.AddressBookPasswordChangedEvent;
 import seedu.address.commons.events.model.NotificationAddedEvent;
-import seedu.address.commons.events.model.NotificationDeletedEvent;
 import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
-import seedu.address.model.notification.exceptions.TimetableEntryNotFoundException;
+import seedu.address.model.notification.exceptions.NotificationNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -77,14 +76,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author IzHoBX
     @Override
-    public synchronized void deleteNotification(String id) throws TimetableEntryNotFoundException {
+    public synchronized void deleteNotification(String id) throws NotificationNotFoundException {
         addressBook.deleteNotification(id);
-        indicateNotificationDeleted(id);
         indicateAddressBookChanged();
-    }
-
-    private void indicateNotificationDeleted(String id) {
-        raise(new NotificationDeletedEvent(id));
     }
 
     private void indicateNotificationAdded(Notification e) {
@@ -196,7 +190,7 @@ public class ModelManager extends ComponentManager implements Model {
     private void handleRequestToDeleteNotificationEvent(RequestToDeleteNotificationEvent event) {
         try {
             deleteNotification(event.id);
-        } catch (TimetableEntryNotFoundException e) {
+        } catch (NotificationNotFoundException e) {
             e.printStackTrace();
         }
     }

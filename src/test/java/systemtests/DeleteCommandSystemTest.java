@@ -31,9 +31,9 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void delete() {
-        /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
+        /* ----------------- Performing deleteNotification operation while an unfiltered list is being shown -------------------- */
 
-        /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
+        /* Case: deleteNotification the first person in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
         String password = expectedModel.getPassword();
         UnlockCommand testUnlockCommand = new UnlockCommand();
@@ -47,7 +47,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
-        /* Case: delete the last person in the list -> deleted */
+        /* Case: deleteNotification the last person in the list -> deleted */
         Model modelBeforeDeletingLast = getModel();
 
         Index lastPersonIndex = getLastIndex(modelBeforeDeletingLast);
@@ -64,19 +64,19 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
 
-        /* Case: delete the middle person in the list -> deleted */
+        /* Case: deleteNotification the middle person in the list -> deleted */
         Index middlePersonIndex = getMidIndex(getModel());
         assertCommandSuccess(middlePersonIndex);
 
-        /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
+        /* ------------------ Performing deleteNotification operation while a filtered list is being shown ---------------------- */
 
-        /* Case: filtered person list, delete index within bounds of address book and person list -> deleted */
+        /* Case: filtered person list, deleteNotification index within bounds of address book and person list -> deleted */
         showPersonsWithName(KEYPHRASE_MATCHING_MEIER);
         Index index = INDEX_FIRST_PERSON;
         assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
         assertCommandSuccess(index);
 
-        /* Case: filtered person list, delete index within bounds of address book but out of bounds of person list
+        /* Case: filtered person list, deleteNotification index within bounds of address book but out of bounds of person list
          * -> rejected
          */
         showPersonsWithName(KEYPHRASE_MATCHING_MEIER);
@@ -84,9 +84,9 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
-        /* --------------------- Performing delete operation while a person card is selected ------------------------ */
+        /* --------------------- Performing deleteNotification operation while a person card is selected ------------------------ */
 
-        /* Case: delete the selected person -> person list panel selects the person before the deleted person */
+        /* Case: deleteNotification the selected person -> person list panel selects the person before the deleted person */
         showAllPersons();
         expectedModel = getModel();
         Index selectedIndex = getLastIndex(expectedModel);
@@ -97,7 +97,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
 
-        /* --------------------------------- Performing invalid delete operation ------------------------------------ */
+        /* --------------------------------- Performing invalid deleteNotification operation ------------------------------------ */
 
         /* Case: invalid index (0) -> rejected */
         command = DeleteCommand.COMMAND_WORD + " 0";

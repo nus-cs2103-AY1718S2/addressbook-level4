@@ -98,6 +98,10 @@ public class XmlAdaptedRecipe {
         }
     }
 
+    public String getImage() {
+        return image.toString();
+    }
+
     /**
      * Converts this jaxb-friendly adapted recipe object into the model's Recipe object.
      *

@@ -1,8 +1,8 @@
 /* @@author Yoochard */
 /* Part of css file*/
 .background {
-    -fx-background-color: derive(saddlebrown, 20%);
-    background-color: #383838; /* Used in the default.html file */
+    -fx-background-color: derive(beige, 20%);
+    background-color: white; /* Used in the default.html file */
 }
 
 .label {

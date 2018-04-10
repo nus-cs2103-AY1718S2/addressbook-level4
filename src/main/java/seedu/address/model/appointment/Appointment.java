@@ -124,6 +124,14 @@ public class Appointment {
         return builder.toString();
     }
 
+    /**
+     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Tag> getTag() {
+        return Collections.unmodifiableSet(appointmentTags.toSet());
+    }
+
     //@@author Robert-Peng
     /**
      * Returns a list of tags as a string

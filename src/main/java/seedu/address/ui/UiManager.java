@@ -225,12 +225,6 @@ public class UiManager extends ComponentManager implements Ui {
                 + " ended at " + event.getNotification().getEndDateDisplay(), TrayIcon.MessageType.INFO);
 
     }
-
-    @Subscribe
-    private void handleRequestToDeleteNotificationEvent(RequestToDeleteNotificationEvent event) {
-        mainWindow.deleteNotificationCard(event.id);
-        System.out.println("notification center deleted");
-    }
     //@@author
 
     //@@author crizyli

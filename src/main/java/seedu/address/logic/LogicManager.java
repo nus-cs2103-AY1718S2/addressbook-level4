@@ -28,6 +28,7 @@ import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.NotificationTime;
 import seedu.address.model.person.Person;
 import seedu.address.storage.NotificationTimeParserUtil;
+import seedu.address.ui.NotificationCenter;
 
 /**
  * The main LogicManager of the app.
@@ -178,5 +179,10 @@ public class LogicManager extends ComponentManager implements Logic {
         timetableEntriesStatus.put(associatedTimerTask, false);
         scheduledTimerTasks.remove(event.id);
     }
+
+    public void setNotificationCenter(NotificationCenter notificationCenter) {
+        this.model.setNotificationCenter(notificationCenter);
+    }
+
     //@@author
 }

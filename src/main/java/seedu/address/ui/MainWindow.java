@@ -130,6 +130,7 @@ public class MainWindow extends UiPart<Stage> {
         //@@author IzHoBX
         shownNotificationCards = new LinkedList<>();
         notificationCenter = new NotificationCenter(notificationCardsBox, notificationCenterPlaceHolder);
+        logic.setNotificationCenter(notificationCenter);
         mainStage.getChildren().remove(notificationCenterPlaceHolder);
         notificationCenterStatus = HIDE;
         semaphore = new Semaphore(1);

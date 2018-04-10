@@ -1,9 +1,7 @@
-package seedu.address.logic.commands.person;
+package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.model.AddressBook;
 
 /**

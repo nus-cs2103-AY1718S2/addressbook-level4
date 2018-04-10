@@ -61,7 +61,7 @@ public class PersonListPanel extends UiPart<Region> {
             personListView.getSelectionModel().clearAndSelect(index);
             raise(new PersonPanelSelectionChangedEvent(personListView.getSelectionModel().getSelectedItem(),
                         oddEvenIndex));
-                currentOddEvenIndex = oddEvenIndex;
+            currentOddEvenIndex = oddEvenIndex;
         });
 
     }

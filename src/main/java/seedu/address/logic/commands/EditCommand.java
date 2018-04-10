@@ -31,6 +31,7 @@ import seedu.address.model.student.UniqueKey;
 import seedu.address.model.student.dashboard.Dashboard;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
+import seedu.address.model.student.miscellaneousinfo.MiscellaneousInfo;
 import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 import seedu.address.model.tag.Tag;
 
@@ -120,9 +121,11 @@ public class EditCommand extends UndoableCommand {
         Favourite isFavourite = studentToEdit.getFavourite();
         Dashboard dashboard = studentToEdit.getDashboard();
         ProfilePicturePath profilePicturePath = studentToEdit.getProfilePicturePath();
+        MiscellaneousInfo miscellaneousInfo = studentToEdit.getMiscellaneousInfo();
 
         return new Student(uniqueKey, updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedProgrammingLanguage, updatedTags, isFavourite, dashboard, profilePicturePath);
+                updatedProgrammingLanguage, updatedTags, isFavourite, dashboard, profilePicturePath,
+                miscellaneousInfo);
     }
 
     @Override

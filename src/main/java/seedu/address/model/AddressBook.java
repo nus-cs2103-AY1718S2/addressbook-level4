@@ -147,7 +147,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         return new Student(
                 student.getUniqueKey(), student.getName(), student.getPhone(), student.getEmail(),
                 student.getAddress(), student.getProgrammingLanguage(), correctTagReferences,
-                student.getFavourite(), student.getDashboard(), student.getProfilePicturePath());
+                student.getFavourite(), student.getDashboard(), student.getProfilePicturePath(),
+                student.getMiscellaneousInfo());
     }
 
     /**

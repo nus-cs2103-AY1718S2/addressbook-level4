@@ -29,6 +29,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Edits the profile picture of an existing student in the address book.
  */
+//@@author samuel
 public class EditPictureCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "editPicture";
@@ -129,3 +130,4 @@ public class EditPictureCommand extends UndoableCommand {
 
 
 }
+//@@author

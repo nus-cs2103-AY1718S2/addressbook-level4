@@ -7,7 +7,14 @@
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
 		<programmingLanguage isPrivate ="false">Java</programmingLanguage>
+		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
+		<miscellaneousInfo>
+            <allergies>Not updated</allergies>
+            <nextOfKinName>Not updated</nextOfKinName>
+            <nextOfKinPhone>000</nextOfKinPhone>
+            <remarks>No remarks</remarks>
+        </miscellaneousInfo>
     </students>
     <students>
         <key>b54d9e</key>
@@ -16,7 +23,14 @@
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
 		<programmingLanguage isPrivate ="false">Java</programmingLanguage>
+		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
+		<miscellaneousInfo>
+            <allergies>Not updated</allergies>
+            <nextOfKinName>Not updated</nextOfKinName>
+            <nextOfKinPhone>000</nextOfKinPhone>
+            <remarks>No remarks</remarks>
+        </miscellaneousInfo>
     </students>
     <students>
         <key>b54d9d</key>
@@ -25,7 +39,14 @@
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
 		<programmingLanguage isPrivate ="false">Java</programmingLanguage>
+		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
+		<miscellaneousInfo>
+            <allergies>Not updated</allergies>
+            <nextOfKinName>Not updated</nextOfKinName>
+            <nextOfKinPhone>000</nextOfKinPhone>
+            <remarks>No remarks</remarks>
+        </miscellaneousInfo>
     </students>
     <students>
         <key>b54d9c</key>
@@ -34,7 +55,14 @@
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
 		<programmingLanguage isPrivate ="false">Java</programmingLanguage>
+		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
+		<miscellaneousInfo>
+            <allergies>Not updated</allergies>
+            <nextOfKinName>Not updated</nextOfKinName>
+            <nextOfKinPhone>000</nextOfKinPhone>
+            <remarks>No remarks</remarks>
+        </miscellaneousInfo>
     </students>
     <students>
         <key>b54d9b</key>
@@ -43,7 +71,14 @@
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
 		<programmingLanguage isPrivate ="false">Java</programmingLanguage>
+		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
+		<miscellaneousInfo>
+            <allergies>Not updated</allergies>
+            <nextOfKinName>Not updated</nextOfKinName>
+            <nextOfKinPhone>000</nextOfKinPhone>
+            <remarks>No remarks</remarks>
+        </miscellaneousInfo>
     </students>
     <students>
         <key>b54d9a</key>
@@ -52,7 +87,14 @@
         <email isPrivate="false">lydia@example.com</email>
         <address isPrivate="false">little tokyo</address>
 		<programmingLanguage isPrivate ="false">Java</programmingLanguage>
+		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
+		<miscellaneousInfo>
+            <allergies>Not updated</allergies>
+            <nextOfKinName>Not updated</nextOfKinName>
+            <nextOfKinPhone>000</nextOfKinPhone>
+            <remarks>No remarks</remarks>
+        </miscellaneousInfo>
     </students>
     <students>
         <key>a54d9f</key>
@@ -61,7 +103,14 @@
         <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street</address>
 		<programmingLanguage isPrivate ="false">Java</programmingLanguage>
+		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
+		<miscellaneousInfo>
+            <allergies>Not updated</allergies>
+            <nextOfKinName>Not updated</nextOfKinName>
+            <nextOfKinPhone>000</nextOfKinPhone>
+            <remarks>No remarks</remarks>
+        </miscellaneousInfo>
     </students>
     <students>
         <key>b24d9f</key>
@@ -70,7 +119,14 @@
         <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
 		<programmingLanguage isPrivate ="false">Java</programmingLanguage>
+		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
+		<miscellaneousInfo>
+            <allergies>Not updated</allergies>
+            <nextOfKinName>Not updated</nextOfKinName>
+            <nextOfKinPhone>000</nextOfKinPhone>
+            <remarks>No remarks</remarks>
+        </miscellaneousInfo>
     </students>
     <students>
         <key>b54e9f</key>
@@ -79,6 +135,13 @@
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>
 		<programmingLanguage isPrivate ="false">Java</programmingLanguage>
+		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
+		<miscellaneousInfo>
+            <allergies>Not updated</allergies>
+            <nextOfKinName>Not updated</nextOfKinName>
+            <nextOfKinPhone>000</nextOfKinPhone>
+            <remarks>No remarks</remarks>
+        </miscellaneousInfo>
     </students>
 </addressbook>

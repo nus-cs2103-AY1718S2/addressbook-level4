@@ -40,6 +40,9 @@ public class ComposeEmailWindow {
     @FXML
     private Button sendButton;
 
+    @FXML
+    private Button cancelButton;
+
     /**
      * Creates a new Email compose window
      */
@@ -85,5 +88,10 @@ public class ComposeEmailWindow {
         default:
             // let JavaFx handle the keypress
         }
+    }
+
+    @FXML
+    private void cancelWindow() {
+        puWindow.close();
     }
 }

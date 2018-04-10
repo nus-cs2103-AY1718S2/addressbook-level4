@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 /**
+ * @@author demitycho
  * Represents a Student's day in a lesson in the Schedule.
  * Guarantees: immutable; is valid as declared in {@link #isValidDay String)}
  */

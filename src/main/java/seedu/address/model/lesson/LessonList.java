@@ -16,6 +16,7 @@ import seedu.address.model.lesson.exceptions.DuplicateLessonException;
 import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 
 /**
+ * @@author demitycho
  * A list of lessons that enforces uniqueness between its elements and does not allow nulls.
  *
  * Supports a minimal set of list operations.

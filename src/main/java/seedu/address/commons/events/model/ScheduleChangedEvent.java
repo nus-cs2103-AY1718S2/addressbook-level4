@@ -4,7 +4,10 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
 
-/** Indicates the AddressBook in the model has changed*/
+/**
+ * @@author demitycho
+ * Indicates the AddressBook in the model has changed
+ * */
 public class ScheduleChangedEvent extends BaseEvent {
 
     private final ReadOnlySchedule schedule;

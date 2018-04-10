@@ -22,6 +22,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
 
 /**
+ * @@author demitycho
  * Manages the two Google Services, Google Contacts as well as Google Calendar
  */
 public class GServiceManager {

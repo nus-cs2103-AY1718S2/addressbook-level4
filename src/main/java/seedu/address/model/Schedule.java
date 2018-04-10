@@ -15,6 +15,7 @@ import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.Student;
 
 /**
+ * @@author demitycho
  * Wraps all data at the schedule level
  * Duplicates are not allowed (by .equals comparison)
  */

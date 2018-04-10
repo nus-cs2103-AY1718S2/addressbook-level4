@@ -8,6 +8,7 @@ import seedu.address.model.student.Student;
 import seedu.address.model.student.UniqueKey;
 
 /**
+ * @@author demitycho
  * Represents a Student in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */

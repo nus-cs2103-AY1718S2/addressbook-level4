@@ -19,6 +19,7 @@ import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 
 /**
+ * @@author demitycho
  * Adds a lesson to the schedule for a student in the address book.
  */
 public class AddLessonCommand extends UndoableCommand {

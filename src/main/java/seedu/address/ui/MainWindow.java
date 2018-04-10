@@ -17,6 +17,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowScheduleEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -57,8 +58,6 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane statusbarPlaceholder;
 
-    @FXML
-    private StackPane calendarPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
@@ -120,8 +119,8 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         infoPanel = new InfoPanel();
-        CalendarPanel calendarPanel = new CalendarPanel(logic.getSchedule(), logic.getAddressBook());
-        infoPanelPlaceholder.getChildren().add(calendarPanel.getRoot());
+        infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
+        raise(new ShowScheduleEvent(logic.getSchedule(), logic.getAddressBook()));
 
         studentListPanel = new StudentListPanel(logic.getFilteredStudentList());
         studentListPanelPlaceholder.getChildren().add(studentListPanel.getRoot());
@@ -135,7 +134,6 @@ public class MainWindow extends UiPart<Stage> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-//        calendarPlaceholder.getChildren().add(calendarPanel.getRoot());
     }
 
     void hide() {

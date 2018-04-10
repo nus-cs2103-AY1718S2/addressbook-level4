@@ -19,6 +19,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.storage.exceptions.GoogleAuthorizationException;
+import seedu.address.storage.exceptions.RequestTimeoutException;
 
 /**
  * The API of the Model component.
@@ -76,16 +78,34 @@ public interface Model {
 
     //@@author Caijun7
     /**
-     * Imports specified {@code AddressBook} from filepath to current {@code AddressBook}
+     * Imports the specified {@code AddressBook} from the filepath to the current {@code AddressBook}.
+     * And decrypts the imported file with the {@code password} if password is not null.
+     *
+     * @param filepath
+     * @param password
      */
     void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
-            WrongPasswordException;
+                                                                    WrongPasswordException;
 
     /**
      * Exports the current view of {@code AddressBook} to the filepath.
+     * And encrypts the exported file with the {@code password} if the password is not null
+     *
      * @param filepath
+     * @param password
      */
     void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException;
+
+    /**
+     * Exports the current view of {@code AddressBook} to the googledrive folder of local storage.
+     * And encrypts the exported file with the {@code password} if the password is not null.
+     * Uploads the exported file to the specified filepath in Google Drive.
+     *
+     * @param filepath
+     * @param password
+     */
+    void uploadAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
+            GoogleAuthorizationException, RequestTimeoutException;
     //@@author
 
     //@@author yeggasd
@@ -103,7 +123,9 @@ public interface Model {
     //@@author
 
     //@@author Caijun7
-    /** Returns rooms for the given building */
+    /**
+     * Retrieves weekday schedule of all {@code Room}s in the {@code Building} in an ArrayList of ArrayList
+     */
     ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building)
             throws BuildingNotFoundException, CorruptedVenueInformationException, NoRoomsInBuildingException;
     //@@author

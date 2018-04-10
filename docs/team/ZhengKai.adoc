@@ -1,0 +1,70 @@
+= John Doe - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: reInsurance
+
+---
+
+== Overview
+
+reInsurance is customer relationship management software that aims to help insurance agents better manage their clients.
+It is based AddressBook - Level 4 a desktop address book application used for teaching Software Engineering principles.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to secure the application via passwords and data encryption *
+** What it does: allows the user to set a password for the application and ensures that the client's data is encrypted
+** Justification: Data should not be stored in plaintext. Encrypting the data improves the product significantly because reInsurance contains sensitive client's information and commissions earned from clients so only the user should be able to view the contents.
+The implementation of a passwords not only provided a layer of security but a means to prove the identity of the user.
+** Highlights: This feature added a layer of security to the application which was non-existent.
+Data encryption affects how data is stored. The implementation of a password requires an extensive analysis of design alternatives.
+The implementation was challenging as it requires changes to how the application is launched.
+** Credits: Made references from CS2103AUG2017-F11-B1 for password implementation
+
+* *Minor enhancement*: added a sort command that allows users to sort clients according to their names in lexicographical order
+* *Minor enhancement*: added a Group attribute that allows users to group their clients and sort them according to groups
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B3/main/tree/master/collated/functional[Functional code]] [https://github.com[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Collated code from releases `v1.4` - `v1.5` (3 releases) on GitHub
+** Enhancements to existing features:
+*** Updated the GUI color scheme (Pull requests https://github.com[#33])
+*** Updated the application icon (Pull requests https://github.com/CS2103JAN2018-T11-B3/main/pull/135[#135])
+*** Updated the storage component to include a backup API(Pull requests https://github.com/CS2103JAN2018-T11-B3/main/pull/8[#8])
+** Documentation:
+*** Updated the User Guide to remove unnecessary documentation: https://github.com/CS2103JAN2018-T11-B3/main/pull/58[#58]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W13-B1/main/issues/149[1], https://github.com/CS2103JAN2018-W13-B1/main/issues/153[2], https://github.com/CS2103JAN2018-W13-B1/main/issues/168[3])
+
+_{you can add/remove categories in the list above}_
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=undoredo]
+
+include::../UserGuide.adoc[tag=dataencryption]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+include::../DeveloperGuide.adoc[tag=group]
+
+include::../DeveloperGuide.adoc[tag=encryption]
+
+include::../DeveloperGuide.adoc[tag=password]

@@ -613,6 +613,40 @@
 
 
 
+/* Floating */
+
+#floatParseIcon {
+    -fx-background-color: #999;
+}
+
+#floatParseLabel {
+    -fx-text-fill: #999;
+}
+
+#floatParseRealTime {
+    -fx-background-color: rgba(248, 248, 248, 0.95);
+    -fx-border-width: 1;
+    -fx-border-color: #ddd;
+}
+
+#floatParseRealTime.parse-valid #floatParseIcon {
+    -fx-background-color: "#64B5F6";
+}
+
+#floatParseRealTime.parse-invalid #floatParseIcon {
+    -fx-background-color: "#E57373";
+}
+
+#floatParseRealTime.parse-valid #floatParseLabel {
+    -fx-text-fill: "#64B5F6";
+}
+
+#floatParseRealTime.parse-invalid #floatParseLabel {
+    -fx-text-fill: "#E57373";
+}
+
+
+
 /* SVG Graphics */
 
 .icon-help {

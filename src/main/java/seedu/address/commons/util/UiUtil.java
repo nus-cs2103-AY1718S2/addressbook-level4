@@ -1,6 +1,9 @@
 package seedu.address.commons.util;
 
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -19,6 +22,8 @@ import javafx.util.Duration;
  */
 public class UiUtil {
     public static final Interpolator EASE_OUT_CUBIC = Interpolator.SPLINE(0.215, 0.61, 0.355, 1);
+    private static final String FORMAT_DATE = "d MMM y";
+    private static final String FORMAT_TIME = "hh:mm:ssa";
 
     /**
      * Convert double into string with {@code points} amount of decimal places
@@ -101,5 +106,16 @@ public class UiUtil {
                                      double maxDuration, EventHandler<ActionEvent> callback) {
         double from = node.getOpacity();
         return fadeNode(node, fadeIn, from, maxDuration, callback);
+    }
+
+    /**
+     * Format date time to more readable format
+     * @param dateTime to be formatted
+     * @return the formatted date time
+     */
+    public static String formatDate(LocalDateTime dateTime) {
+        String date = DateTimeFormatter.ofPattern(FORMAT_DATE, Locale.ENGLISH).format(dateTime);
+        String time = DateTimeFormatter.ofPattern(FORMAT_TIME, Locale.ENGLISH).format(dateTime).toLowerCase();
+        return date + " " + time;
     }
 }

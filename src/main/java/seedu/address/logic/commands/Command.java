@@ -54,4 +54,12 @@ public abstract class Command {
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
         this.model = model;
     }
+
+    /**
+     * Return the parsed result of the command for real time parsing and validating
+     * @return the parsed result of the command, default to null
+     */
+    public String getParsedResult() {
+        return null;
+    }
 }

@@ -10,12 +10,14 @@ import javafx.animation.Animation;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
@@ -102,6 +104,12 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private AnchorPane bottomInfoPane;
 
+    // Floating box
+    @FXML
+    private HBox floatParseRealTime;
+
+    @FXML
+    private Label floatParseLabel;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
@@ -158,7 +166,7 @@ public class MainWindow extends UiPart<Stage> {
         topTitlePlaceholder.getChildren().add(titleBar.getRoot());
         setAccelerator(titleBar.getControlHelp(), KeyCombination.valueOf("F1"));
 
-        CommandBox commandBox = new CommandBox(logic);
+        CommandBox commandBox = new CommandBox(logic, floatParseRealTime, floatParseLabel);
         topCommandPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
@@ -273,10 +281,6 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowPanelRequestEvent(ShowPanelRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
-        // Pause all current running animation
-        allAnimation.forEach(Animation::pause);
-        allAnimation.clear();
-
         String requested = event.getRequestedPanel();
         Node toHide = activeNode;
         Animation fadeIn;
@@ -284,6 +288,10 @@ public class MainWindow extends UiPart<Stage> {
 
         // Don't animate if the currently active panel is what requested
         if (!Objects.equals(activePanel, requested)) {
+            // Pause all current running animation
+            allAnimation.forEach(Animation::pause);
+            allAnimation.clear();
+
             activePanel = requested;
 
             // Show relevant panel

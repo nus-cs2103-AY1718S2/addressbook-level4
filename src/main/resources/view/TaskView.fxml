@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane fx:id="taskView" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" styleClass="background"
+           dividerPositions="0.5" prefHeight="350.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
+    <items>
+        <VBox prefWidth="100.0" styleClass="VBox" VBox.vgrow="ALWAYS">
+            <children>
+                <StackPane id="taskListPanelPlaceholder" fx:id="taskListPanelPlaceholder"
+                           prefHeight="350.0" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets bottom="8.0" left="30.0" right="30.0" top="10.0"/>
+                    </VBox.margin>
+                </StackPane>
+            </children>
+        </VBox>
+
+        <StackPane id="calendarPanelPlaceholder" fx:id="calendarPanelPlaceholder"
+                   VBox.vgrow="ALWAYS">
+        </StackPane>
+    </items>
+</SplitPane>

@@ -1,11 +1,13 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -40,6 +42,10 @@ public class MainWindow extends UiPart<Stage> {
     private TaskListPanel taskListPanel;
     private Config config;
     private EventListPanel eventListPanel;
+    private CalendarPanel calendarPanel;
+    private MainView mainView;
+    private TaskView taskView;
+    private EventView eventView;
     private UserPrefs prefs;
 
     @FXML
@@ -52,10 +58,7 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane taskListPanelPlaceholder;
-
-    @FXML
-    private StackPane eventListPanelPlaceholder;
+    private StackPane centerStagePlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -123,11 +126,8 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         //@@author jasmoon
-        taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
-        taskListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
-
-        eventListPanel = new EventListPanel(logic.getFilteredEventList());
-        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+        mainView = new MainView(logic);
+        centerStagePlaceholder.getChildren().add(mainView.getRoot());
 
         //@@author
         ResultDisplay resultDisplay = new ResultDisplay();
@@ -204,16 +204,21 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     @Subscribe
-    private void handleShowEventOnlyRequestEvent(ShowEventOnlyRequestEvent event)   {
+    private void handleShowTaskOnlyRequestEvent(ShowTaskOnlyRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        taskListPanel.getTaskListView().setVisible(false);
-        eventListPanel.getEventListView().setVisible(true);
+        centerStagePlaceholder.getChildren().clear();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskView.fxml"));
+        taskView = new TaskView(logic);
+        centerStagePlaceholder.getChildren().add(taskView.getRoot());
     }
 
     @Subscribe
-    private void handleShowTaskOnlyRequestEvent(ShowTaskOnlyRequestEvent event) {
+    private void handleShowEventOnlyRequestEvent(ShowEventOnlyRequestEvent event)   {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        taskListPanel.getTaskListView().setVisible(true);
-        eventListPanel.getEventListView().setVisible(false);
+        centerStagePlaceholder.getChildren().clear();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("EventView.fxml"));
+        eventView = new EventView(logic);
+        centerStagePlaceholder.getChildren().add(eventView.getRoot());
     }
+
 }

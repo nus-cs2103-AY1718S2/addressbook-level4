@@ -20,6 +20,8 @@ import seedu.address.model.person.Person;
 public class ExportPersonCommand extends Command {
 
     public static final String COMMAND_WORD = "export";
+    
+    public static final String COMMAND_ALIAS = "ep";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Export current person to a csv file.\n"
             + "Example: " + COMMAND_WORD;

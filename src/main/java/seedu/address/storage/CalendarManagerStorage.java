@@ -1,5 +1,5 @@
 package seedu.address.storage;
-
+//@@author SuxianAlicia
 import java.io.IOException;
 import java.util.Optional;
 
@@ -9,7 +9,6 @@ import seedu.address.model.ReadOnlyCalendarManager;
 /**
  * Represents a storage for {@link seedu.address.model.CalendarManager}.
  */
-//@@author SuxianAlicia
 public interface CalendarManagerStorage {
     /**
      * Returns the file path of the data file.

@@ -220,6 +220,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         prefTags.add(p);
     }
 
+    //@@author SuxianAlicia
     /**
      * Removes group from all persons who has the group
      * @throws GroupNotFoundException if the {@code toRemove} is not in this {@code AddressBook}.
@@ -275,6 +276,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         setPreferenceTags(newList.toSet());
     }
+    //@@author
+
     //@@author amad-person
     //// order-level operations
 

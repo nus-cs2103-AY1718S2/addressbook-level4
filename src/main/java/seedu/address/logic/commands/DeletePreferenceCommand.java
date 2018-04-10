@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
-
+//@@author SuxianAlicia
 import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
@@ -11,7 +11,6 @@ import seedu.address.model.tag.exceptions.PreferenceNotFoundException;
 /**
  * Deletes a preference specified by user from address book.
  */
-//@@author SuxianAlicia
 public class DeletePreferenceCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "prefdelete";

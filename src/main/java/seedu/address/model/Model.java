@@ -121,8 +121,8 @@ public interface Model {
 
     /** Returns the CalendarManager */
     ReadOnlyCalendarManager getCalendarManager();
-
     //@@author
+
     /**
      * Replaces the given order {@code target} with {@code editedOrder}.
      *

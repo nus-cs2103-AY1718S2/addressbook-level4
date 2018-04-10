@@ -1,5 +1,5 @@
 package seedu.address.ui;
-
+//@@author SuxianAlicia
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalCalendarEntries.getTypicalCalendarEntries;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysEntry;

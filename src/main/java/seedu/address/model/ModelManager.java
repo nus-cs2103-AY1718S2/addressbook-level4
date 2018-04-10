@@ -75,20 +75,24 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
+    //@@author SuxianAlicia
     @Override
     public ReadOnlyCalendarManager getCalendarManager() {
         return calendarManager;
     }
+    //@@author
 
     /** Raises an event to indicate address book has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //@@author SuxianAlicia
     /** Raises an event to indicate calendar manager has changed */
     private void indicateCalendarManagerChanged() {
         raise(new CalendarManagerChangedEvent(calendarManager));
     }
+    //@@author
 
     @Override
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
@@ -112,6 +116,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author SuxianAlicia
     @Override
     public void deleteGroup(Group targetGroup) throws GroupNotFoundException {
         addressBook.removeGroup(targetGroup);
@@ -123,6 +128,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removePreference(targetPreference);
         indicateAddressBookChanged();
     }
+    //@@author
 
     //@@author amad-person
     @Override
@@ -147,7 +153,6 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
         indicateCalendarManagerChanged();
     }
-
 
     @Override
     public void deleteCalendarEntry(CalendarEntry entryToDelete) throws CalendarEntryNotFoundException {
@@ -237,8 +242,8 @@ public class ModelManager extends ComponentManager implements Model {
     public Calendar getCalendar() {
         return calendarManager.getCalendar();
     }
-
     //@@author
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

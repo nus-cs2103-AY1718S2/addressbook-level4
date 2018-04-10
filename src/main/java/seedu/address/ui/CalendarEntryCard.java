@@ -1,5 +1,5 @@
 package seedu.address.ui;
-
+//@@author SuxianAlicia
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -9,7 +9,6 @@ import seedu.address.model.event.CalendarEntry;
 /**
  * An UI component that displays information of a {@code CalendarEntry}.
  */
-//@@author SuxianAlicia
 public class CalendarEntryCard extends UiPart<Region> {
 
     private static final String FXML = "CalendarEntryCard.fxml";

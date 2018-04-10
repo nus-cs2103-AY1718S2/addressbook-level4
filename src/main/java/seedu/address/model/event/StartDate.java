@@ -1,5 +1,5 @@
 package seedu.address.model.event;
-
+//@@author SuxianAlicia
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.DateUtil.convertStringToDate;
@@ -12,7 +12,6 @@ import java.time.format.DateTimeParseException;
  * Represents Starting Date of a {@code CalendarEntry}.
  * Guarantees: immutable; is valid as declared in {@link seedu.address.commons.util.DateUtil#isValidDate(String)}
  */
-//@@author SuxianAlicia
 public class StartDate {
     public static final String MESSAGE_START_DATE_CONSTRAINTS =
             "Start Date should be DD-MM-YYYY, and it should not be blank";

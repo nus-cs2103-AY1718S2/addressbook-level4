@@ -1,5 +1,5 @@
 package seedu.address.model;
-
+//@@author SuxianAlicia
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
@@ -18,7 +18,6 @@ import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
 /**
  * Manages {@code Calendar} as defined in CalendarFX and its related data.
  */
-//@@author SuxianAlicia
 public class CalendarManager implements ReadOnlyCalendarManager {
     private final Calendar calendar;
     private final UniqueCalendarEntryList calendarEntryList;

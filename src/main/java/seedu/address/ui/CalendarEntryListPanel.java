@@ -1,5 +1,5 @@
 package seedu.address.ui;
-
+//@@author SuxianAlicia
 import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
@@ -16,7 +16,6 @@ import seedu.address.model.event.CalendarEntry;
 /**
  * Panel containing calendar entries present in calendar.
  */
-//@@author SuxianAlicia
 public class CalendarEntryListPanel extends UiPart<Region> {
 
     private static final String FXML = "CalendarEntryListPanel.fxml";

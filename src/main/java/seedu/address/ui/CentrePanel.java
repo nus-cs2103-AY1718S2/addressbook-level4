@@ -1,5 +1,5 @@
 package seedu.address.ui;
-
+//@@author SuxianAlicia
 import com.calendarfx.model.Calendar;
 import com.google.common.eventbus.Subscribe;
 
@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import seedu.address.commons.events.ui.ChangeCalendarPageRequestEvent;
 import seedu.address.commons.events.ui.DisplayCalendarRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ResetPersonPanelEvent;
@@ -14,9 +15,10 @@ import seedu.address.model.event.CalendarEntry;
 
 
 /**
- * The Centre Panel of the App that can switch between Person Panel and Calendar Panel
+ * The Centre Panel of the App that can switch between Person Panel and Calendar Panel.
+ * Centre Panel subscribes to Events meant for Person Panel and Calendar Panel
+ * in order to handle the switching between the displays.
  */
-//@@author SuxianAlicia
 public class CentrePanel extends UiPart<Region> {
 
     private static final String FXML = "CentrePanel.fxml";
@@ -59,6 +61,12 @@ public class CentrePanel extends UiPart<Region> {
     @Subscribe
     private void handleDisplayCalendarRequestEvent(DisplayCalendarRequestEvent event) {
         calendarPanel.handleDisplayCalendarRequestEvent(event);
+        displayCalendarPanel();
+    }
+
+    @Subscribe
+    public void handleChangeCalendarPageRequestEvent(ChangeCalendarPageRequestEvent event) {
+        calendarPanel.handleChangeCalendarPageRequestEvent(event);
         displayCalendarPanel();
     }
 

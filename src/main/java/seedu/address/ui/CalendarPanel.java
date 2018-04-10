@@ -1,5 +1,5 @@
 package seedu.address.ui;
-
+//@@author SuxianAlicia
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.logging.Logger;
@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.view.CalendarView;
-import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -15,6 +14,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeCalendarPageRequestEvent;
 import seedu.address.commons.events.ui.DisplayCalendarRequestEvent;
 import seedu.address.ui.util.CalendarFxUtil;
 
@@ -22,12 +22,15 @@ import seedu.address.ui.util.CalendarFxUtil;
  * Calendar Panel displaying calendar.
  * ContactSails implements CalendarFX to display Calendar.
  */
-//@@author SuxianAlicia
 public class CalendarPanel extends UiPart<Region> {
 
-    public static final String DAY_VIEW = "Day";
-    public static final String MONTH_VIEW = "Month";
-    public static final String WEEK_VIEW = "Week";
+    private static final String DAY_VIEW = "Day";
+    private static final String MONTH_VIEW = "Month";
+    private static final String WEEK_VIEW = "Week";
+
+    private static final String REQUEST_TODAY = "Today";
+    private static final String REQUEST_BACK = "Back";
+    private static final String REQUEST_NEXT = "Next";
 
     private static final String FXML = "CalendarPanel.fxml";
 
@@ -46,7 +49,6 @@ public class CalendarPanel extends UiPart<Region> {
 
         initialiseCalendar(calendar);
         createTimeThread();
-        registerAsAnEventHandler(this);
     }
 
     /**
@@ -88,7 +90,9 @@ public class CalendarPanel extends UiPart<Region> {
         calendarPanelholder.getChildren().setAll(calendarView);
     }
 
-    @Subscribe
+    /**
+     * Handles Request to display Calendar in specific viewing format.
+     */
     public void handleDisplayCalendarRequestEvent(DisplayCalendarRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         String view = event.getView();
@@ -103,4 +107,18 @@ public class CalendarPanel extends UiPart<Region> {
         }
     }
 
+    /**
+     * Handles request to change the current page of the Calendar.
+     */
+    public void handleChangeCalendarPageRequestEvent(ChangeCalendarPageRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        String request = event.getRequestType();
+        if (request.equals(REQUEST_TODAY)) {
+            calendarView.getSelectedPage().goToday();
+        } else if (request.equals(REQUEST_BACK)) {
+            calendarView.getSelectedPage().goBack();
+        } else if (request.equals(REQUEST_NEXT)) {
+            calendarView.getSelectedPage().goForward();
+        }
+    }
 }

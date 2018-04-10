@@ -1,5 +1,5 @@
 package seedu.address.model.person;
-
+//@@author SuxianAlicia
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -10,7 +10,6 @@ import seedu.address.commons.util.StringUtil;
 /**
  * Tests that a {@code Person} 's {@code Group}s' names matches any of the keywords given.
  */
-//@@author SuxianAlicia
 public class GroupsContainKeywordsPredicate implements Predicate<Person> {
     private final List<String> keywords;
 

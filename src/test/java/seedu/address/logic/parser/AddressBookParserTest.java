@@ -46,7 +46,10 @@ import seedu.address.logic.commands.ListOrderCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.ViewBackCommand;
 import seedu.address.logic.commands.ViewCalendarCommand;
+import seedu.address.logic.commands.ViewNextCommand;
+import seedu.address.logic.commands.ViewTodayCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.CalendarEntry;
 import seedu.address.model.order.Order;
@@ -441,6 +444,42 @@ public class AddressBookParserTest {
     public void parseCommand_viewCalendarCommandAlias_returnsViewCalendarCommand() throws Exception {
         assertTrue(parser.parseCommand(ViewCalendarCommand.COMMAND_ALIAS) instanceof ViewCalendarCommand);
         assertTrue(parser.parseCommand("cal DAY") instanceof ViewCalendarCommand);
+    }
+
+    @Test
+    public void parseCommand_viewBackCommand_returnsViewBackCommand() throws Exception {
+        assertTrue(parser.parseCommand(ViewBackCommand.COMMAND_WORD) instanceof ViewBackCommand);
+        assertTrue(parser.parseCommand("calendarback 2") instanceof ViewBackCommand);
+    }
+
+    @Test
+    public void parseCommand_viewBackCommandAlias_returnsViewBackCommand() throws Exception {
+        assertTrue(parser.parseCommand(ViewBackCommand.COMMAND_ALIAS) instanceof ViewBackCommand);
+        assertTrue(parser.parseCommand("calback 2") instanceof ViewBackCommand);
+    }
+
+    @Test
+    public void parseCommand_viewNextCommand_returnsViewNextCommand() throws Exception {
+        assertTrue(parser.parseCommand(ViewNextCommand.COMMAND_WORD) instanceof ViewNextCommand);
+        assertTrue(parser.parseCommand("calendarnext 1") instanceof ViewNextCommand);
+    }
+
+    @Test
+    public void parseCommand_viewNextCommandAlias_returnsViewNextCommand() throws Exception {
+        assertTrue(parser.parseCommand(ViewNextCommand.COMMAND_ALIAS) instanceof ViewNextCommand);
+        assertTrue(parser.parseCommand("calnext 1") instanceof ViewNextCommand);
+    }
+
+    @Test
+    public void parseCommand_viewTodayCommand_returnsViewTodayCommand() throws Exception {
+        assertTrue(parser.parseCommand(ViewTodayCommand.COMMAND_WORD) instanceof ViewTodayCommand);
+        assertTrue(parser.parseCommand("calendartoday 5") instanceof ViewTodayCommand);
+    }
+
+    @Test
+    public void parseCommand_viewTodayCommandAlias_returnsViewTodayCommand() throws Exception {
+        assertTrue(parser.parseCommand(ViewTodayCommand.COMMAND_ALIAS) instanceof ViewTodayCommand);
+        assertTrue(parser.parseCommand("caltoday 5") instanceof ViewTodayCommand);
     }
 
     @Test

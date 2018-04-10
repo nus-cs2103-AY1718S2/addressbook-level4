@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
-
+//@@author SuxianAlicia
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
@@ -17,9 +17,8 @@ import seedu.address.model.event.CalendarEntry;
 import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
 
 /**
- * Adds a calendar entry to the address book.
+ * Adds a calendar entry to calendar manager.
  */
-//@@author SuxianAlicia
 public class AddEntryCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "entryadd";

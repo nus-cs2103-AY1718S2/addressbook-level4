@@ -79,8 +79,13 @@ public class SampleDataUtil {
         return prefTags;
     }
 
+    //@@author SuxianAlicia
+    /**
+     * Returns a {@code CalendarManager} with no {@code CalendarEntry} in it.
+     */
     public static ReadOnlyCalendarManager getSampleCalendarManager() {
         CalendarManager sampleCm = new CalendarManager();
         return sampleCm;
     }
+    //@@author
 }

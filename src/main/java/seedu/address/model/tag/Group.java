@@ -1,5 +1,5 @@
 package seedu.address.model.tag;
-
+//@@author SuxianAlicia
 /**
  * Represents a Group in the address book.
  * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)} in parent class.

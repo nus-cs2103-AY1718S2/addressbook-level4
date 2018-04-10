@@ -403,29 +403,33 @@ Shows Calendar in Month-View.
 
 ==== Go to next page in the calendar : `calendarnext` `coming in v1.5`
 
-Goes to the next page in Calendar. +
+Displays next page of current displayed date in calendar. +
 Format: `calendarnext` +
 Command Alias: `calnext`
 
 ****
-* Depending on the current day/week/month calendar is displaying, this command will display the next day/week/month.
+* If calendar is displaying in day-view, command displays the next day of original date in day-view.
+* If calendar is displaying in week-view, command displays the next week of original date in week-view.
+* If calendar is displaying in month-view, command displays next month of original date in month-view.
 ****
 
-==== Go to previous page in the calendar : `calendarprev` `coming in v1.5`
+==== Go to previous page in the calendar : `calendarback` `coming in v1.5`
 
-Goes to the previous page in Calendar. +
-Format: `calendarprev` +
-Command Alias: `calprev`
+Displays previous page of current displayed date in calendar. +
+Format: `calendarback` +
+Command Alias: `calback`
 
 ****
-* Depending on the current day/week/month calendar is displaying, this command will display the previous day/week/month.
+* If calendar is displaying in day-view, command displays the previous day of original date in day-view.
+* If calendar is displaying in week-view, command displays the previous week of original date in week-view.
+* If calendar is displaying in month-view, command displays previous month of original date in month-view.
 ****
 
-==== Display current day in the calendar : `calendarnow` `coming in v1.5`
+==== Display current day in the calendar : `calendartoday` `coming in v1.5`
 
 Displays today's date in Calendar. +
-Format: `calendarnow` +
-Command Alias: `calnow`
+Format: `calendartoday` +
+Command Alias: `caltoday`
 
 ****
 * If calendar is displaying in day-view, command displays today's date in day-view.

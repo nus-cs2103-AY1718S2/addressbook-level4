@@ -1,12 +1,11 @@
 package seedu.address.model;
-
+//@@author SuxianAlicia
 import javafx.collections.ObservableList;
 import seedu.address.model.event.CalendarEntry;
 
 /**
  * Unmodifiable view of an calendar manager.
  */
-//@@author SuxianAlicia
 public interface ReadOnlyCalendarManager {
 
     /**

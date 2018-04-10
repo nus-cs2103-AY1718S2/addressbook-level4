@@ -1,5 +1,5 @@
 package seedu.address.model.event;
-
+//@@author SuxianAlicia
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
@@ -20,7 +20,6 @@ import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
  *
  * @see CalendarEntry#equals(Object)
  */
-//@@author SuxianAlicia
 public class UniqueCalendarEntryList implements Iterable<CalendarEntry> {
     private final ObservableList<CalendarEntry> internalList = FXCollections.observableArrayList();
 

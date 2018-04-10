@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
-
+//@@author SuxianAlicia
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.DisplayCalendarEntryListEvent;
 import seedu.address.model.Model;
@@ -7,7 +7,6 @@ import seedu.address.model.Model;
 /**
  * List and display all calendar entries in the address book to the user.
  */
-//@@author SuxianAlicia
 public class ListCalendarEntryCommand extends Command {
     public static final String COMMAND_WORD = "entrylist";
     public static final String COMMAND_ALIAS = "el";

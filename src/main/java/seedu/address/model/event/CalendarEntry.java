@@ -1,5 +1,5 @@
 package seedu.address.model.event;
-
+//@@author SuxianAlicia
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
@@ -8,7 +8,6 @@ import java.util.Objects;
  * Represents a Calendar Event in address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-//@@author SuxianAlicia
 public class CalendarEntry {
 
     private final EntryTitle entryTitle;

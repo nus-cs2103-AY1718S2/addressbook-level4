@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 //@@ author SuxianAlicia
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.EntryTimeConstraintsUtil.checkCalendarEntryTimeConstraints;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;

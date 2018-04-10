@@ -1,5 +1,5 @@
 package seedu.address.model.event;
-
+//@@author SuxianAlicia
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.TimeUtil.convertStringToTime;
@@ -12,7 +12,6 @@ import java.time.format.DateTimeParseException;
  * Represents starting Time of a {@code CalendarEntry}.
  * Guarantees: immutable; is valid as declared in {@link seedu.address.commons.util.TimeUtil#isValidTime(String)}
  */
-//@@author SuxianAlicia
 public class StartTime {
     public static final String MESSAGE_START_TIME_CONSTRAINTS =
             "Start Time should be HH:mm (24Hour Format), and it should not be blank";

@@ -1,5 +1,5 @@
 package seedu.address.storage;
-
+//@@author SuxianAlicia
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +14,6 @@ import seedu.address.model.ReadOnlyCalendarManager;
 /**
  * An Immutable CalendarManager that is serializable to XML format
  */
-//@@author SuxianAlicia
 @XmlRootElement(name = "calendarmanager")
 public class XmlSerializableCalendarManager {
     @XmlElement

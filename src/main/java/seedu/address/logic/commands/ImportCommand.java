@@ -25,9 +25,9 @@ public class ImportCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_FILE_PATH + "C:\\Users\\Karen\\IdeaProjects\\main\\data\\deskboard.xml";
 
+    public static final String MESSAGE_SUCCESS = "Data imported from: %1$s";
     public static final String MESSAGE_FILE_NOT_FOUND = "Desk board file %s not found";
     public static final String MESSAGE_ILLEGAL_VALUES_IN_FILE = "Illegal values found in file: %s";
-    public static final String MESSAGE_SUCCESS = "Data imported from: %1$s";
 
     private final FilePath filePath;
 

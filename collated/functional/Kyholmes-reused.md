@@ -3,96 +3,12 @@
 ``` java
         //Reused from https://github.com/se-edu/addressbook-level4/pull/799/files with minor modifications
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
-                logic.getPatientVisitingQueue().size());
+                logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
-    }
 
-    void hide() {
-        primaryStage.hide();
-    }
-
-    private void setTitle(String appTitle) {
-        primaryStage.setTitle(appTitle);
-    }
-
-    /**
-     * Sets the default size based on user preferences.
-     */
-    private void setWindowDefaultSize(UserPrefs prefs) {
-        primaryStage.setHeight(prefs.getGuiSettings().getWindowHeight());
-        primaryStage.setWidth(prefs.getGuiSettings().getWindowWidth());
-        if (prefs.getGuiSettings().getWindowCoordinates() != null) {
-            primaryStage.setX(prefs.getGuiSettings().getWindowCoordinates().getX());
-            primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
-        }
-    }
-
-    /**
-     * Returns the current size and the position of the main Window.
-     */
-    GuiSettings getCurrentGuiSetting() {
-        return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
-    }
-
-    /**
-     * Opens the help window.
-     */
-    @FXML
-    public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
-        helpWindow.show();
-    }
-
-    void show() {
-        primaryStage.show();
-    }
-
-    /**
-     * Closes the application.
-     */
-    @FXML
-    private void handleExit() {
-        raise(new ExitAppRequestEvent());
-    }
-
-    public PatientListPanel getPatientListPanel() {
-        return this.patientListPanel;
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
-    }
-
-    @Subscribe
-    private void handleShowHelpEvent(ShowHelpRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleHelp();
-    }
-    @Subscribe
-    private void handleShowPatientAppointment(ShowPatientAppointmentRequestEvent event) throws ParseException {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleShowPatientAppointment(event.data.getPastAppointmentList(),
-                event.data.getUpcomingAppointmentList());
-    }
-
-    private void handleShowPatientAppointment(ObservableList<Appointment> pastAppointments,
-                                              ObservableList<Appointment> upcomingAppointment) {
-
-        patientAppointmentPanel = new PatientAppointmentPanel(pastAppointments, upcomingAppointment);
-        browserPlaceholder.getChildren().add(patientAppointmentPanel.getRoot());
-    }
-
-    @Subscribe
-    private void handleShowCalendarAppointment(ShowCalendarViewRequestEvent scvre) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(scvre));
-        calendarPanel = new CalendarPanel(scvre.appointmentEntries);
-        browserPlaceholder.getChildren().add(calendarPanel.getRoot());
-    }
-}
 ```
 ###### \src\test\java\guitests\guihandles\PatientCardHandle.java
 ``` java
@@ -326,8 +242,8 @@
      * Selects the patient at {@code index} of the displayed list.
      */
     protected void selectPerson(Index index) {
-        //executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
-        //assertEquals(index.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
+        executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
+        assertEquals(index.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
     /**
      * Deletes all persons in the address book.
@@ -348,7 +264,7 @@
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getImdb(), testApp.readStorageAddressBook());
-        assertListMatching(getPersonListPanel(), expectedModel.getVisitingQueue());
+        assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
     }
 
     /**
@@ -449,11 +365,11 @@
         try {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
-            assertListMatching(getPersonListPanel(), getModel().getVisitingQueue());
+            assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
-            assertEquals(String.format(RECORD_NUMBER_STATUS, getModel().getImdb().getUniquePatientQueue().size()),
+            assertEquals(String.format(RECORD_NUMBER_STATUS, getModel().getImdb().getPersonList().size()),
                     getStatusBarFooter().getRecordNumber());
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);
@@ -475,7 +391,7 @@
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
         assertEquals(expectedSyncStatus, statusBarFooterHandle.getSyncStatus());
 
-        final int totalRecords = testApp.getModel().getImdb().getUniquePatientQueue().size();
+        final int totalRecords = testApp.getModel().getImdb().getPersonList().size();
         assertEquals(String.format(RECORD_NUMBER_STATUS, totalRecords), statusBarFooterHandle.getRecordNumber());
 
         assertFalse(statusBarFooterHandle.isSaveLocationChanged());

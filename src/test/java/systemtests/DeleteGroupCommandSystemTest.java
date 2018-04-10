@@ -1,6 +1,7 @@
 //@@author jas5469
 package systemtests;
 
+import static seedu.address.commons.core.Messages.MESSAGE_DID_YOU_MEAN;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_GROUP_NAME;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.DeleteGroupCommand.MESSAGE_DELETE_GROUP_SUCCESS;
@@ -71,7 +72,8 @@ public class DeleteGroupCommandSystemTest extends AddressBookSystemTest {
 
 
         /* Case: mixed case command word -> rejected */
-        assertCommandFailure("DelETEGroup Group A", MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure("DelETEGroup Group A",
+                MESSAGE_UNKNOWN_COMMAND + MESSAGE_DID_YOU_MEAN + DeleteGroupCommand.COMMAND_WORD);
     }
 
     /**

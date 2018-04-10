@@ -151,8 +151,9 @@ public class AddEventCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
-        command = "adds " + EventUtil.getEventDetails(toAdd);
-        assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
+        command = "addEvents " + EventUtil.getEventDetails(toAdd);
+        assertCommandFailure(command,
+                Messages.MESSAGE_UNKNOWN_COMMAND + Messages.MESSAGE_DID_YOU_MEAN + AddEventCommand.COMMAND_WORD);
 
         /* Case: invalid name -> rejected */
         command = AddEventCommand.COMMAND_WORD + INVALID_EVENT_NAME_DESC + EVENT_VENUE_DESC_F1 + EVENT_DATE_DESC_F1

@@ -32,7 +32,14 @@ public class ExportEmployeesCommand extends Command {
 
     private ObservableList<Person> employees;
 
+    private boolean isTest;
+
     public ExportEmployeesCommand() {
+        registerAsAnEventHandler(this);
+    }
+
+    public ExportEmployeesCommand(boolean isTest) {
+        this.isTest = isTest;
         registerAsAnEventHandler(this);
     }
 
@@ -41,7 +48,12 @@ public class ExportEmployeesCommand extends Command {
 
         EventsCenter.getInstance().post(new GetEmployeesRequestEvent());
 
-        File csv = new File(EXPORT_FILE_PATH);
+        File csv;
+        if (isTest) {
+            csv = new File("employees.csv");
+        } else {
+            csv = new File(EXPORT_FILE_PATH);
+        }
 
         BufferedWriter bw = null;
         try {

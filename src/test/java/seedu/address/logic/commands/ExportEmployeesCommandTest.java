@@ -29,7 +29,7 @@ public class ExportEmployeesCommandTest {
      * Generates a new {@code ExportEmployeesCommand} which upon execution, clears the contents in {@code model}.
      */
     private ExportEmployeesCommand prepareCommand(Model model) {
-        ExportEmployeesCommand command = new ExportEmployeesCommand();
+        ExportEmployeesCommand command = new ExportEmployeesCommand(true);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

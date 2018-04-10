@@ -13,7 +13,7 @@ SellIT is a desktop address book application used for businessman doing his busi
 == Summary of contributions
 
 * *Major enhancement*: added *the login/logout & reset password function*
-** What it does: allows the user to lock the addressbook when he/she does not need to use it and unlock the addressbook with password when he/she needs to use it. And the user can also change the password when neccessary. 
+** What it does: allows the user to lock the addressbook when he/she does not need to use it and unlock the addressbook with password when he/she needs to use it. And the user can also change the password when neccessary.
 ** Justification: This feature improves the product significantly because a user may needs privacy and wants to protect his personal data. This improve the security of the APP.
 ** Highlights: This enhancement does not affect existing commands and commands to be added in future. For future added features, just make sure it does not violate any requirements by this feature
 

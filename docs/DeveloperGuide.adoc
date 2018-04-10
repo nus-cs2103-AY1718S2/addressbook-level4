@@ -486,6 +486,8 @@ The ProfilePicture constructor is called when `AddCommand` or `EditCommand` is e
 
 diagrams::ModelComponentClassDiagram.pptx[width="650"]
 
+// tag::email[]
+
 === Emailing a contact
 
 ==== Current implementation
@@ -518,6 +520,8 @@ Finally, `GmailClient` will send out the `MimeMessage` of `GmailMessage` as an e
 * Alternative 2: Using `Webview` to display the Gmail drafting url.
 ** Pros: Faster implementation as similar feature has been done before.
 ** Cons: Not customizable and text may appear small in `Webview`.
+
+// end::email[]
 
 == Documentation
 

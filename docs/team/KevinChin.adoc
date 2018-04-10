@@ -1,0 +1,73 @@
+= Kevin Chin - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: contactHeRo
+
+---
+
+== Overview
+
+contactHeRo is a desktop contact management application
+made for Human Resource (HR) managers, specifically for
+recruiters in a company.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to send out email* in contactHeRo, using the Google API. Also provided a *framework to integrate Google API*.
+** What it does: allows the user to send email to their contact, using an in-app editor. To use the Google API to send email, users will have to login to Google. Our app provides a built-in browser to handle the user login and a framework to integrate Google API.
+** Justification: As we all know, recruiters will usually send out emails to potential employees to inform them of their job application progress or arranging for interview.
+This feature lets user take advantage of the fact that the information of the potential employees are already in the app, therefore it will be easier to draft an email than using other email applications.
+It also provides a better user experience as users do not need to switch to another application.
+** Highlights: This enhancement provides a framework for future feature which requires Google API, like Google Contacts, Google Drive or Google Calendar.
+ It required the programming ability to integrate third-party API and third-party code into our own app.
+ The implementation was challenging as you do not have control over the source code in the third-party API, which means you have to work your own code around it.
+** Credits: stackoverflow.com, googledevelopers.com
+
+* *Minor enhancement*: added the *ability to find by tag*, which allows the user to find their contact using the skills tag.
+** What it does: It allows user to search for a contact based on their skills tag.
+** Justification: Sometimes user might not remember the name of the person they have shortlisted.
+The skills required for the job is easier to remember and therefore, this feature is very useful in helping them find a contact easily.
+** Highlights: This enhancement allows me to familiarise myself with the code base of Addressbook Level 4, as the Find command touches on multiple components of the app.
+It required the ability to read and understand codes written by others and also adding your own contributions to the codebase.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W09-B2/main/blob/master/collated/functional/KevinCJH.md[Functional code]]
+[https://github.com/CS2103JAN2018-W09-B2/main/blob/master/collated/test/KevinCJH.md[Test code]] +
+
+* *Other contributions*:
+
+** Project management:
+*** Reach all the milestones `v1.1` - `v1.5rc` on GitHub.
+*** Created issues and milestones for the team.
+** Enhancements to existing features:
+*** Minor enhancements to the GUI: (Pull requests
+https://github.com/CS2103JAN2018-W09-B2/main/pull/34[#34])
+** Documentation:
+*** Did cosmetic tweaks and updates to existing contents of the User Guide: https://github.com/CS2103JAN2018-W09-B2/main/pull/55/files[#55], https://github.com/CS2103JAN2018-W09-B2/main/pull/89[#89]
+*** Did cosmetic tweaks to the README file: https://github.com/CS2103JAN2018-W09-B2/main/pull/60[#60]
+** Tools:
+*** Integrated Google API to the project: https://github.com/CS2103JAN2018-W09-B2/main/pull/117[#117], https://github.com/CS2103JAN2018-W09-B2/main/pull/213[#213]
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=googlelogin]
+
+include::../UserGuide.adoc[tag=email]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=email]
+
+== Other Projects
+https://github.com/KevinCJH/Neighber[Neighber] - An Android app that allows users to borrow items from their neighbours. (Runner-up for NUS Orbital 2016/2017 - Apollo 11)
+
+---

@@ -17,8 +17,8 @@ public class LocateCommand extends Command implements PopulatableCommand {
     public static final String COMMAND_WORD = "locate";
     public static final String COMMAND_ALIAS = "lo";
     public static final String MESSAGE_USAGE =
-            COMMAND_WORD + " | Locates all persons whose fields contain any of the specified keywords (case-insensitive) "
-            + "and displays them as a list with index numbers."
+            COMMAND_WORD + " | Locates all persons whose fields contain any of the specified keywords "
+            + "(case-insensitive) and displays them as a list with index numbers."
             + "\n\t"
             + "Refer to the User Guide (press \"F1\") for detailed information about this command!"
             + "\n\t"

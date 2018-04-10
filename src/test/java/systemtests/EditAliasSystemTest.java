@@ -53,6 +53,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
+//@@author jlks96-reused
 public class EditAliasSystemTest extends AddressBookSystemTest {
 
     @Test

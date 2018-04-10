@@ -36,6 +36,46 @@ public class AppointmentDeletedEventTest {
     }
 }
 ```
+###### \java\seedu\address\commons\event\CalendarGoBackwardEventTest.java
+``` java
+public class CalendarGoBackwardEventTest {
+    @Test
+    public void toString_comparedWithClassName_success() {
+        CalendarGoBackwardEvent event = new CalendarGoBackwardEvent();
+        assert(event.toString().equals("CalendarGoBackwardEvent"));
+    }
+}
+```
+###### \java\seedu\address\commons\event\CalendarGoForwardEventTest.java
+``` java
+public class CalendarGoForwardEventTest {
+    @Test
+    public void toString_comparedWithClassName_success() {
+        CalendarGoForwardEvent event = new CalendarGoForwardEvent();
+        assert(event.toString().equals("CalendarGoForwardEvent"));
+    }
+}
+```
+###### \java\seedu\address\commons\event\MaxZoomInEventTest.java
+``` java
+public class MaxZoomInEventTest {
+    @Test
+    public void toString_comparedWithClassName_success() {
+        MaxZoomInEvent event = new MaxZoomInEvent();
+        assert(event.toString().equals("MaxZoomInEvent"));
+    }
+}
+```
+###### \java\seedu\address\commons\event\MaxZoomOutEventTest.java
+``` java
+public class MaxZoomOutEventTest {
+    @Test
+    public void toString_comparedWithClassName_success() {
+        MaxZoomOutEvent event = new MaxZoomOutEvent();
+        assert(event.toString().equals("MaxZoomOutEvent"));
+    }
+}
+```
 ###### \java\seedu\address\commons\event\NewAppointmentAddedEventTest.java
 ``` java
 public class NewAppointmentAddedEventTest {
@@ -65,6 +105,16 @@ public class ZoomOutEventTest {
     public void toString_comparedWithClassName_success() {
         ZoomOutEvent event = new ZoomOutEvent();
         assert(event.toString().equals("ZoomOutEvent"));
+    }
+}
+```
+###### \java\seedu\address\commons\event\ZoomSuccessEventTest.java
+``` java
+public class ZoomSuccessEventTest {
+    @Test
+    public void toString_comparedWithClassName_success() {
+        ZoomSuccessEvent event = new ZoomSuccessEvent();
+        assert(event.toString().equals("ZoomSuccessEvent"));
     }
 }
 ```
@@ -103,6 +153,19 @@ public class AddAppointmentCommandTest {
 
         getAddAppointmentCommandForAppointment(validAppointment, modelStub).execute();
         getAddAppointmentCommandForAppointment(validAppointment, modelStub).execute();
+    }
+
+    @Test
+    public void execute_clashingAppointment_throwsCommandException() throws Exception {
+        Model modelStub = new ModelManager();
+        Appointment firstAppointment =  new AppointmentBuilder().build();
+        Appointment secondAppointment = new AppointmentBuilder().withPersonName("Bob").build();
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddAppointmentCommand.MESSAGE_CLASHING_APPOINTMENT);
+
+        getAddAppointmentCommandForAppointment(firstAppointment, modelStub).execute();
+        getAddAppointmentCommandForAppointment(secondAppointment, modelStub).execute();
     }
 
     @Test
@@ -350,25 +413,104 @@ public class DeleteBeforeCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ZoomInCommandTest.java
+###### \java\seedu\address\logic\commands\GoBackwardCommandTest.java
 ``` java
-public class ZoomInCommandTest {
-    private boolean eventRaised;
+public class GoBackwardCommandTest {
+    private boolean calendarGoBackwardEventRaised;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @Before
     public void setUp() {
-        eventRaised = false;
+        calendarGoBackwardEventRaised = false;
         EventsCenter.getInstance().registerHandler(this);
     }
 
     @Test
-    public void execute() {
+    public void execute_canGoBackward_success() {
+        GoBackwardCommand command = new GoBackwardCommand();
+        String expectedMessage = GoBackwardCommand.MESSAGE_SUCCESS;
+        CommandResult result = command.execute();
+        assertEquals(expectedMessage, result.feedbackToUser);
+        assertEquals(true, calendarGoBackwardEventRaised);
+    }
+
+    /**
+     * Handles the event where the user is trying to make the calendar view go backward in time from the currently
+     * displaying date
+     */
+    @Subscribe
+    private void handleCalendarGoBackwardEvent(CalendarGoBackwardEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        calendarGoBackwardEventRaised = true;
+    }
+}
+```
+###### \java\seedu\address\logic\commands\GoForwardCommandTest.java
+``` java
+public class GoForwardCommandTest {
+    private boolean calendarGoForwardEventRaised;
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    @Before
+    public void setUp() {
+        calendarGoForwardEventRaised = false;
+        EventsCenter.getInstance().registerHandler(this);
+    }
+
+    @Test
+    public void execute_canGoForward_success() {
+        GoForwardCommand command = new GoForwardCommand();
+        String expectedMessage = GoForwardCommand.MESSAGE_SUCCESS;
+        CommandResult result = command.execute();
+        assertEquals(expectedMessage, result.feedbackToUser);
+        assertEquals(true, calendarGoForwardEventRaised);
+    }
+
+    /**
+     * Handles the event where the user is trying to make the calendar view go forward in time from the currently
+     * displaying date
+     */
+    @Subscribe
+    private void handleCalendarGoForwardEvent(CalendarGoForwardEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        calendarGoForwardEventRaised = true;
+    }
+}
+```
+###### \java\seedu\address\logic\commands\ZoomInCommandTest.java
+``` java
+public class ZoomInCommandTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private boolean zoomInEventRaised;
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    @Before
+    public void setUp() {
+        zoomInEventRaised = false;
+        EventsCenter.getInstance().registerHandler(this);
+    }
+
+    @Test
+    public void execute_canZoomIn_success() throws CommandException {
+        ZoomSuccessEventRaiser eventRaiser = new ZoomSuccessEventRaiser();
+        EventsCenter.getInstance().registerHandler(eventRaiser);
         ZoomInCommand command = new ZoomInCommand();
         String expectedMessage = ZoomInCommand.MESSAGE_SUCCESS;
         CommandResult result = command.execute();
         assertEquals(expectedMessage, result.feedbackToUser);
-        assertEquals(true, eventRaised);
+        assertEquals(true, zoomInEventRaised);
+    }
+
+    @Test
+    public void execute_maxZoomIn_throwsCommandException() throws CommandException {
+        MaxZoomInEventRaiser eventRaiser = new MaxZoomInEventRaiser();
+        EventsCenter.getInstance().registerHandler(eventRaiser);
+        ZoomInCommand command = new ZoomInCommand();
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(MESSAGE_MAX_ZOOM_IN);
+        command.execute();
     }
 
     /**
@@ -377,29 +519,72 @@ public class ZoomInCommandTest {
     @Subscribe
     private void handleZoomInEvent(ZoomInEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        eventRaised = true;
+        zoomInEventRaised = true;
+    }
+
+    /**
+     * An event raiser that raises a {@code MaxZoomInEvent} when handling a {@code ZoomInEvent}.
+     */
+    private class MaxZoomInEventRaiser {
+        /**
+         * Raises a {@code MaxZoomInEvent}
+         */
+        @Subscribe
+        private void handleZoomInEvent(ZoomInEvent event) {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            EventsCenter.getInstance().post(new MaxZoomInEvent());
+        }
+    }
+
+    /**
+     * An event raiser that raises a {@code ZoomSuccessEvent} when handling a {@code ZoomInEvent}.
+     */
+    private class ZoomSuccessEventRaiser {
+        /**
+         * Raises a {@code ZoomSuccessEvent}
+         */
+        @Subscribe
+        private void handleZoomInEvent(ZoomInEvent event) {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            EventsCenter.getInstance().post(new ZoomSuccessEvent());
+        }
     }
 }
 ```
 ###### \java\seedu\address\logic\commands\ZoomOutCommandTest.java
 ``` java
 public class ZoomOutCommandTest {
-    private boolean eventRaised;
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private boolean zoomOutEventRaised;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @Before
     public void setUp() {
-        eventRaised = false;
+        zoomOutEventRaised = false;
         EventsCenter.getInstance().registerHandler(this);
     }
 
     @Test
-    public void execute() {
+    public void execute_canZoomOut_success() throws CommandException {
+        ZoomSuccessEventRaiser eventRaiser = new ZoomSuccessEventRaiser();
+        EventsCenter.getInstance().registerHandler(eventRaiser);
         ZoomOutCommand command = new ZoomOutCommand();
         String expectedMessage = ZoomOutCommand.MESSAGE_SUCCESS;
         CommandResult result = command.execute();
         assertEquals(expectedMessage, result.feedbackToUser);
-        assertEquals(true, eventRaised);
+        assertEquals(true, zoomOutEventRaised);
+    }
+
+    @Test
+    public void execute_maxZoomOut_throwsCommandException() throws CommandException {
+        MaxZoomOutEventRaiser eventRaiser = new MaxZoomOutEventRaiser();
+        EventsCenter.getInstance().registerHandler(eventRaiser);
+        ZoomOutCommand command = new ZoomOutCommand();
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(MESSAGE_MAX_ZOOM_OUT);
+        command.execute();
     }
 
     /**
@@ -408,7 +593,35 @@ public class ZoomOutCommandTest {
     @Subscribe
     private void handleZoomOutEvent(ZoomOutEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        eventRaised = true;
+        zoomOutEventRaised = true;
+    }
+
+    /**
+     * An event raiser that raises a {@code MaxZoomOutEvent} when handling a {@code ZoomOutEvent}.
+     */
+    private class MaxZoomOutEventRaiser {
+        /**
+         * Raises a {@code MaxZoomOutEvent}
+         */
+        @Subscribe
+        private void handleZoomOutEvent(ZoomOutEvent event) {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            EventsCenter.getInstance().post(new MaxZoomOutEvent());
+        }
+    }
+
+    /**
+     * An event raiser that raises a {@code ZoomSuccessEvent} when handling a {@code ZoomOutEvent}.
+     */
+    private class ZoomSuccessEventRaiser {
+        /**
+         * Raises a {@code ZoomSuccessEvent}
+         */
+        @Subscribe
+        private void handleZoomOutEvent(ZoomOutEvent event) {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            EventsCenter.getInstance().post(new ZoomSuccessEvent());
+        }
     }
 }
 ```
@@ -564,6 +777,30 @@ public class AddAppointmentCommandParserTest {
     public void parseCommand_zoomOutAlias() throws Exception {
         assertTrue(parser.parseCommand(ZoomOutCommand.COMMAND_ALIAS) instanceof ZoomOutCommand);
         assertTrue(parser.parseCommand(ZoomOutCommand.COMMAND_ALIAS + " 3") instanceof ZoomOutCommand);
+    }
+
+    @Test
+    public void parseCommand_goForward() throws Exception {
+        assertTrue(parser.parseCommand(GoForwardCommand.COMMAND_WORD) instanceof GoForwardCommand);
+        assertTrue(parser.parseCommand(GoForwardCommand.COMMAND_WORD + " 3") instanceof GoForwardCommand);
+    }
+
+    @Test
+    public void parseCommand_goForwardAlias() throws Exception {
+        assertTrue(parser.parseCommand(GoForwardCommand.COMMAND_ALIAS) instanceof GoForwardCommand);
+        assertTrue(parser.parseCommand(GoForwardCommand.COMMAND_ALIAS + " 3") instanceof GoForwardCommand);
+    }
+
+    @Test
+    public void parseCommand_goBackward() throws Exception {
+        assertTrue(parser.parseCommand(GoBackwardCommand.COMMAND_WORD) instanceof GoBackwardCommand);
+        assertTrue(parser.parseCommand(GoBackwardCommand.COMMAND_WORD + " 3") instanceof GoBackwardCommand);
+    }
+
+    @Test
+    public void parseCommand_goBackwardAlias() throws Exception {
+        assertTrue(parser.parseCommand(GoBackwardCommand.COMMAND_ALIAS) instanceof GoBackwardCommand);
+        assertTrue(parser.parseCommand(GoBackwardCommand.COMMAND_ALIAS + " 3") instanceof GoBackwardCommand);
     }
 ```
 ###### \java\seedu\address\logic\parser\CommandParserTestUtil.java
@@ -923,11 +1160,14 @@ public class DeleteBeforeCommandParserTest {
 ###### \java\seedu\address\model\appointment\AppointmentTest.java
 ``` java
 public class AppointmentTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     private final PersonName name = new PersonName("ALICE");
     private final Date date = new Date("01/01/2017");
     private final StartTime startTime = new StartTime("12:30");
     private final EndTime endTime = new EndTime("13:30");
+    private final EndTime invalidEndTime = new EndTime("11:30");
     private final Location location = new Location("Gold Park Mall");
     private final Appointment appointment = new Appointment(name, date, startTime, endTime, location);
 
@@ -948,6 +1188,13 @@ public class AppointmentTest {
         assertTrue(appointment.getEndTime().equals(endTime));
         assertTrue(appointment.getDate().equals(date));
         assertTrue(appointment.getLocation().equals(location));
+    }
+
+    @Test
+    public void areValidTimes_invalidTimes_throwsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage(MESSAGE_TIMES_CONSTRAINTS);
+        new Appointment(name, date, startTime, invalidEndTime, location);
     }
 
     @Test

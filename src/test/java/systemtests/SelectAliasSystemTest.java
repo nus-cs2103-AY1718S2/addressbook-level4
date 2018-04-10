@@ -17,6 +17,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 
+//@@author jlks96-reused
 public class SelectAliasSystemTest extends AddressBookSystemTest {
     @Test
     public void select() {

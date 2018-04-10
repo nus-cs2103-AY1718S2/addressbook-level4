@@ -1,4 +1,9 @@
 # ng95junwei
+###### \java\seedu\address\commons\core\Messages.java
+``` java
+    public static final String MESSAGE_EMAIL_SENT = "Email sent to %1$d persons!";
+    public static final String MESSAGE_TEMPLATE_NOT_FOUND = "No such templates found!";
+```
 ###### \java\seedu\address\commons\util\GmailUtil.java
 ``` java
 
@@ -156,6 +161,105 @@ public class GmailUtil {
 
 }
 ```
+###### \java\seedu\address\logic\commands\AddTemplateCommand.java
+``` java
+/**
+ * Adds an appointment to the address book.
+ */
+public class AddTemplateCommand extends Command {
+
+    public static final String COMMAND_WORD = "addtemplate";
+    public static final String COMMAND_ALIAS = "at";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a template to the address book. "
+            + "Parameters: "
+            + PREFIX_PURPOSE + "PURPOSE "
+            + PREFIX_SUBJECT + "SUBJECT "
+            + PREFIX_MESSAGE + "MESSAGE BODY \n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_PURPOSE + "greeting "
+            + PREFIX_SUBJECT + "Hello there "
+            + PREFIX_MESSAGE + "Luke, I am your father";
+
+    public static final String MESSAGE_SUCCESS = "New template added: %1$s";
+    public static final String MESSAGE_DUPLICATE_TEMPLATE = "A template with the "
+            + "same purpose already exists in the address book";
+
+    private final Template toAdd;
+
+    /**
+     * Creates an AddAppointmentCommand to add the specified {@code Appointment}
+     */
+    public AddTemplateCommand(Template template) {
+        requireNonNull(template);
+        toAdd = template;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.addTemplate(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (DuplicateTemplateException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_TEMPLATE);
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddTemplateCommand // instanceof handles nulls
+                && toAdd.equals(((AddTemplateCommand) other).toAdd)); // state check
+    }
+}
+```
+###### \java\seedu\address\logic\commands\DeleteTemplateCommand.java
+``` java
+/**
+ * Deletes an Template that matches all the input fields from the address book.
+ */
+public class DeleteTemplateCommand extends Command {
+
+    public static final String COMMAND_WORD = "deletetemplate";
+    public static final String COMMAND_ALIAS = "dt";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes the template which has the specified purpose.\n"
+            + "Parameters: PURPOSE "
+            + "Example: " + COMMAND_WORD + " "
+            + "greeting";
+
+    public static final String MESSAGE_DELETE_TEMPLATE_SUCCESS = "Deleted Template with purpose : %1$s";
+
+    private String purposeToDelete;
+
+    public DeleteTemplateCommand(String purposeToDelete) {
+
+        this.purposeToDelete = purposeToDelete;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        System.out.println(purposeToDelete);
+        requireNonNull(purposeToDelete);
+        try {
+            model.deleteTemplate(purposeToDelete);
+        } catch (TemplateNotFoundException e) {
+            throw new CommandException(Messages.MESSAGE_TEMPLATE_NOT_FOUND);
+        }
+
+        return new CommandResult(String.format(MESSAGE_DELETE_TEMPLATE_SUCCESS, purposeToDelete));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DeleteTemplateCommand // instanceof handles nulls
+                && this.purposeToDelete.equals(((DeleteTemplateCommand) other).purposeToDelete));
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\EmailCommand.java
 ``` java
 
@@ -183,6 +287,15 @@ public class EmailCommand extends Command {
         this.search = search;
     }
 
+    /**
+     *
+     * @param displaySize
+     * @return summary message for persons emailed
+     */
+    public static String getMessageForPersonEmailSummary(int displaySize) {
+        return String.format(Messages.MESSAGE_EMAIL_SENT, displaySize);
+    }
+
     @Override
     public CommandResult execute() {
         // Build a new authorized API client service.
@@ -197,12 +310,14 @@ public class EmailCommand extends Command {
                 handler.send(service, p.getEmail().toString(), "",
                         service.users().getProfile("me").getUserId(), template.getTitle(),
                         template.getMessage());
+            } catch (TemplateNotFoundException e) {
+                return new CommandResult(Messages.MESSAGE_TEMPLATE_NOT_FOUND);
             } catch (Exception e) {
                 System.out.println(e);
                 System.out.println("Some Exception occurred");
             }
         }
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        return new CommandResult(getMessageForPersonEmailSummary(model.getFilteredPersonList().size()));
     }
 
     @Override
@@ -215,6 +330,70 @@ public class EmailCommand extends Command {
 
 
 
+```
+###### \java\seedu\address\logic\parser\AddressBookParser.java
+``` java
+        case EmailCommand.COMMAND_WORD:
+            return new EmailCommandParser().parse(arguments);
+
+        case EmailCommand.COMMAND_ALIAS:
+            return new EmailCommandParser().parse(arguments);
+
+        case AddTemplateCommand.COMMAND_WORD:
+            return new AddTemplateCommandParser().parse(arguments);
+
+        case AddTemplateCommand.COMMAND_ALIAS:
+            return new AddTemplateCommandParser().parse(arguments);
+
+        case DeleteTemplateCommand.COMMAND_WORD:
+            return new DeleteTemplateCommandParser().parse(arguments);
+
+        case DeleteTemplateCommand.COMMAND_ALIAS:
+            return new DeleteTemplateCommandParser().parse(arguments);
+```
+###### \java\seedu\address\logic\parser\AddTemplateCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new AddAppointmentCommand object
+ */
+public class AddTemplateCommandParser implements Parser<AddTemplateCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the AddAppointmentCommand
+     * and returns an AddAppointmentCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public AddTemplateCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
+                args, PREFIX_PURPOSE, PREFIX_SUBJECT, PREFIX_MESSAGE);
+
+        if (!arePrefixesPresent(
+                argMultimap, PREFIX_PURPOSE, PREFIX_SUBJECT, PREFIX_MESSAGE)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTemplateCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            String purpose = (argMultimap.getValue(PREFIX_PURPOSE)).get().trim();
+            String subject = (argMultimap.getValue(PREFIX_SUBJECT)).get().trim();
+            String message = (argMultimap.getValue(PREFIX_MESSAGE)).get().trim();
+
+            Template template = new Template(purpose, subject, message);
+
+            return new AddTemplateCommand(template);
+        } catch (java.lang.IllegalArgumentException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+}
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
@@ -237,12 +416,42 @@ public class EmailCommand extends Command {
         return list;
     }
 
+    /**
+     * Adds a template to the unique template list
+     * @param template
+     * @throws DuplicateTemplateException
+     */
+    public void addTemplate(Template template) throws DuplicateTemplateException {
+        templates.add(template);
+    }
+
+    /**
+     * Removes template whose purpose is purpose
+     * @param purpose
+     * @return true if template was removed, throw an exception otherwise
+     * @throws TemplateNotFoundException
+     */
+    public boolean removeTemplate(String purpose) throws TemplateNotFoundException {
+        if (templates.remove(purpose)) {
+            return true;
+        } else {
+            throw new TemplateNotFoundException();
+        }
+    }
+
     public void setTemplates() throws DuplicateTemplateException {
         this.templates.setTemplates(generateTemplates());
     }
 
     public synchronized UniqueTemplateList getAllTemplates() {
         return this.templates;
+    }
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    @Override
+    public ObservableList<Template> getTemplateList() {
+        return templates.asObservableList();
     }
 ```
 ###### \java\seedu\address\model\email\exceptions\DuplicateTemplateException.java
@@ -297,7 +506,13 @@ public class UniqueTemplateList implements Iterable<Template> {
      */
     public boolean contains(Template toCheck) {
         requireNonNull(toCheck);
-        return internalList.contains(toCheck);
+        String newPurpose = toCheck.getPurpose();
+        for (Template t : internalList) {
+            if (t.getPurpose().equals(newPurpose)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -319,13 +534,15 @@ public class UniqueTemplateList implements Iterable<Template> {
      *
      * @throws TemplateNotFoundException if no such template could be found in the list.
      */
-    public boolean remove(Template toRemove) throws TemplateNotFoundException {
-        requireNonNull(toRemove);
-        final boolean templateFoundAndDeleted = internalList.remove(toRemove);
-        if (!templateFoundAndDeleted) {
-            throw new TemplateNotFoundException();
+    public boolean remove(String purpose) throws TemplateNotFoundException {
+        requireNonNull(purpose);
+        for (Template template : internalList) {
+            if (template.getPurpose().equals(purpose)) {
+                internalList.remove(template);
+                return true;
+            }
         }
-        return templateFoundAndDeleted;
+        throw new TemplateNotFoundException();
     }
 
     public void setTemplates(UniqueTemplateList replacement) {
@@ -370,10 +587,59 @@ public class UniqueTemplateList implements Iterable<Template> {
 ###### \java\seedu\address\model\Model.java
 ``` java
 
+    /**
+     * Updates the filter of the filtered template list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredTemplateList(Predicate<Template> predicate);
+
+    /** Deletes the given template */
+    void deleteTemplate(String purpose) throws TemplateNotFoundException;
+
+    /** Selects template based on search string */
     Template selectTemplate(String search) throws TemplateNotFoundException;
 
+    /** Adds the given template */
+    void addTemplate(Template template) throws DuplicateTemplateException;
+
+    /** Returns an unmodifiable view of all templates */
     ObservableList<Template> getAllTemplates();
 
+    /** Returns an unmodifiable view of the filtered template list */
+    ObservableList<Template> getFilteredTemplateList();
+
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    /** Raises an event to indicate a template has been deleted */
+    private void indicateTemplateDeleted(String purpose) {
+        //raise(new NewTemplateAddedEvent(template)); TO IMPLEMENT
+    }
+    /** Raises an event to indicate a template has been added */
+    private void indicateTemplateAdded(Template template) {
+        //raise(new NewTemplateAddedEvent(template)); TO IMPLEMENT
+    }
+
+
+
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public synchronized void deleteTemplate(String purpose) throws TemplateNotFoundException {
+        addressBook.removeTemplate(purpose);
+        updateFilteredTemplateList(PREDICATE_SHOW_ALL_TEMPLATES);
+        indicateTemplateDeleted(purpose);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addTemplate(Template template) throws DuplicateTemplateException {
+        addressBook.addTemplate(template);
+        updateFilteredTemplateList(PREDICATE_SHOW_ALL_TEMPLATES);
+        indicateTemplateAdded(template);
+        indicateAddressBookChanged();
+    }
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -387,4 +653,53 @@ public class UniqueTemplateList implements Iterable<Template> {
         return addressBook.getAllTemplates().search(search);
     }
 
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+
+    @Override
+    public void updateFilteredTemplateList(Predicate<Template> predicate) {
+        requireNonNull(predicate);
+        filteredTemplates.setPredicate(predicate);
+    }
+
+    @Override
+    public ObservableList<Template> getFilteredTemplateList() {
+        return FXCollections.unmodifiableObservableList(filteredTemplates);
+    }
+```
+###### \java\seedu\address\model\person\NameContainsKeywordsPredicate.java
+``` java
+public class NameContainsKeywordsPredicate implements Predicate<Person> {
+    private final List<String> keywords;
+
+    public NameContainsKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    @Override
+
+
+
+
+    public boolean test(Person person) {
+        final List<String> personDetails = person.toStringList();
+        return keywords.stream()
+                .anyMatch(keyword -> personDetails.stream()
+                        .anyMatch(details -> details.toLowerCase().contains(keyword.toLowerCase())));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof NameContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((NameContainsKeywordsPredicate) other).keywords)); // state check
+    }
+
+}
+
+```
+###### \java\seedu\address\model\ReadOnlyAddressBook.java
+``` java
+    ObservableList<Template> getTemplateList();
 ```

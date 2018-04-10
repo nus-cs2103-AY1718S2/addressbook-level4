@@ -122,8 +122,7 @@ public class TaskListPanel extends UiPart<Region> {
             }
         }
     }
-
-    //@@author jasmoon
+        
     /**
      * Getter method for taskListView
      * @return taskListView

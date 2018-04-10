@@ -215,6 +215,7 @@ Examples:
 * `free p/John Doe p/Han Tan` +
 Displays the combined timetable for John Doe and Han Tan.
 
+// tag::alias[]
 === Adding a command alias: `alias` (since v1.1)
 
 Creates customized aliases for any valid command. +
@@ -239,7 +240,9 @@ Format: `unalias [CURRENT_ALIAS]`
 Examples:
 
 * `unalias hist`
+// end::alias[]
 
+// tag::vacant[]
 === Vacant study rooms finder : `vacant` (since v1.3)
 
 Displays a list of rooms in the specified building and whether each room is vacant or not, in blocks of 1 hours. +
@@ -254,7 +257,9 @@ Examples:
 
 * `vacant COM1` +
 Finds the vacancy status of study rooms in COM1 building.
+// end::vacant[]
 
+// tag::maps[]
 === Google maps display : `map` (since v1.4)
 
 Launches Google Maps with the specified location(s).
@@ -275,6 +280,7 @@ Displays the location of BIZ1 (which is an NUS building name).
 Displays the directions from `Tampines Mall` to `COM1`.
 * `map Tampines Mall/COM1/Airport Blvd` +
 Displays the directions from `Tampines Mall` to `COM1` to `Airport Blvd`.
+// end::maps[]
 
 === Listing entered commands : `history`
 

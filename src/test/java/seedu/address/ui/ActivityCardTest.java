@@ -71,6 +71,5 @@ public class ActivityCardTest extends GuiUnitTest {
 
         // verify activity details are displayed correctly
         assertCardDisplays(expectedActivity, personCardHandle);
-    }
-}
-*/
+    }*/
+  

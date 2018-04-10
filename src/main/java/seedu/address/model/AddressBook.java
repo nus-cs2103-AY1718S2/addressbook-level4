@@ -187,7 +187,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return new Person(
                 person.getName(), person.getMatricNumber(),
                 person.getPhone(), person.getEmail(), person.getAddress(),
-                person.getDisplayPic(), correctTagReferences);
+                person.getDisplayPic(), person.getParticipation(), correctTagReferences);
     }
 
     /**
@@ -202,6 +202,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    ////tag-level operation
     //@@author Wu Di
     /**
      * Removes {@code key} from this {@code AddressBook}.

@@ -390,7 +390,7 @@ If the command is called directly from the menu bar, `handleChangeTheme()` will 
 . Changes the main page loaded on the `_BrowserPanel_`.
 . Changes the style using on the `_Stage_`.
 
-To understand the interaction between the components (refer to <<fig-ChangeThemeDetailsSD>>):
+For a visualization of the interaction between the components, refer to <<fig-ChangeThemeDetailsSD>>:
 
 [[fig-ChangeThemeDetailsSD]]
 .Component interactions for `handleChangeTheme()`
@@ -402,13 +402,15 @@ Below is the implementation for the two operations:
 [source,java]
 ----
 public void loadDefaultPage(boolean isDarkTheme) {
-    URL defaultPage;
-    if (isDarkTheme) {
-        defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_DARK);
-    } else {
-        defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_LIGHT);
+    if (!isLoaded()) {
+        URL defaultPage;
+        if (isDarkTheme) {
+            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_DARK);
+        } else {
+            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_LIGHT);
+        }
+        loadPage(defaultPage.toExternalForm());
     }
-    loadPage(defaultPage.toExternalForm());
 }
 
 private void loadStyle(boolean darkTheme) {
@@ -432,19 +434,16 @@ Currently the implementation of `loadDefaultPage()` reloads the `_BrowserPanel_`
 
 ===== Aspect: Handling of default page in `_BrowserPanel_`.
 
-* **Alternative 1 (current choice):** Reload the default page.
-** Pros: It is easy to implement.
-** Cons: Any page loaded on `_BrowserPanel_` will be lost during the operation.
+* **Alternative 1 (current choice):** Reload the default page if there is nothing loaded in `_BrowserPanel_`.
+** Pros: Any loaded page will not be lost.
+** Cons: This approach requires extra work to detect if there is any page loaded in `_BrowserPanel_`.
 * **Alternative 2:** Reload the style for the default page.
 ** Pros: It is possible to keep the status of the `_BrowserPanel_`, in other words, any page loaded may still retain.
 ** Cons: It is not entirely sure if this implementation is possible.
-* **Alternative 3:** Reload the default page *and* reload any page currently loaded on `_BrowserPanel_`.
-** Pros: It is possible to keep the status of the `_BrowserPanel_`, in other words, any page loaded may still retain.
-** Cons: This approach is obviously harder to implement, also it will sends an additional request to the server of the website.
-* **Alternative 4:** Save any page currently loaded on `_BrowserPanel_`, reload the default page then load the saved page.
-** Pros: This is the ideal output.
-** Cons: This is the ideal output, thus very hard to implement.
-* **Alternative 5:** Stop using the default page.
+* **Alternative 3:** Reload the default page.
+** Pros: It is easy to implement. This was the implementation until v1.5rc.
+** Cons: Any page loaded on `_BrowserPanel_` will be lost during the operation.
+* **Alternative 4:** Stop using the default page.
 ** Pros: It is somewhat easy to implement.
 ** Cons: Obviously there is no default page to display so we have to find another approach to make `_BrowserPanel_` display something as a placeholder, *without* using a default page.
 // end::change-theme[]

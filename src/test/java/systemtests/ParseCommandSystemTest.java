@@ -4,6 +4,7 @@ package systemtests;
 import static org.junit.Assert.assertEquals;
 import static seedu.recipe.testutil.TypicalIndexes.INDEX_FIRST_RECIPE;
 import static seedu.recipe.testutil.TypicalIndexes.INDEX_SECOND_RECIPE;
+import static seedu.recipe.testutil.TypicalIndexes.INDEX_THIRD_RECIPE;
 import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipeBook;
 import static seedu.recipe.testutil.TypicalRecipes.getTypicalRecipes;
 import static seedu.recipe.testutil.WikiaRecipes.HAINANESE_CHICKEN_RICE;
@@ -76,6 +77,12 @@ public class ParseCommandSystemTest extends RecipeBookSystemTest {
         getCommandBox().submitCommand();
         recipes.add(UGANDAN_CHICKEN_STEW);
         assertEquals(recipes, getModel().getFilteredRecipeList());
+
+
+        // Not supported site
+        command = SelectCommand.COMMAND_WORD + " " + INDEX_THIRD_RECIPE.getOneBased();
+        executeCommand(command);
+        assertCommandSuccess("");
     }
 
     @After

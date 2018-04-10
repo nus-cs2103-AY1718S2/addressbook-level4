@@ -48,6 +48,7 @@ public class FileUtil {
         File file = new File(testPath);
         return isImageFile(file);
     }
+    //@@author
 
     /**
      * Creates a file if it does not exist along with its missing parent directories.

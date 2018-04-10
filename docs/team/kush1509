@@ -52,9 +52,13 @@ This portfolio is to collate my contributions towards the developing of contactH
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=intro]
 
-include::../UserGuide.adoc[tag=dataencryption]
+include::../UserGuide.adoc[tag=linkedIn]
+
+include::../UserGuide.adoc[tag=autoComplete]
+
+include::../UserGuide.adoc[tag=jobs]
 
 == Contributions to the Developer Guide
 

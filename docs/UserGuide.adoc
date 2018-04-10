@@ -322,12 +322,28 @@ Examples:
 ==== Importing contacts from CSV : `import_contacts` or `ic`
 
 Imports contacts from a csv file that contains the header (Name, Email, Phone, Address) +
-Format: `import_contacts f/PATH`
 
-For example `import_contacts f/examplefile.csv` will import the contacts contained in the .csv file `examplefile.csv`
+Format: `import_contacts PATH.csv`
 
-[NOTE]
-Please include the file extension (.csv), do include the full file path, and do not include quotations ("...") around the file path.
+For example `import_contacts ~/PATH/examplefile.csv` will import the contacts contained in the .csv file `examplefile.csv` at `PATH`.
+
+[Note]
+*The _command_ should meet the following conditions:*
+
+* Include the file extension `.csv` at the end of the file path
+* Use the *full* (not the _relative_) file path
+* _No need_ to include quotations ("...") around the file path
+
+[Note]
+*The `.csv` file from which you are importing the contacts should:*
+
+* Have 4 headers in the following order: Name, Email, Phone, Address. The header is simply the first row of the .csv
+* Be a `.csv` file. `.txt` and other file endings are not supported
+* Each entry should follow the standard conditions for Name, Phone, Email, and Address. For example, phone numbers must be more than 3 numbers.
+
+An example of a suitable import file format is shown below.
+
+image::import_file_example.png[width="900"]
 
 ==== Exporting contacts to CSV: `export_contacts` or `ec`
 

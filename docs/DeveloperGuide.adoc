@@ -268,6 +268,18 @@ An example of the sort command would be: sort
 An example of the sort command alias would be: so
 //end::SortCommand[]
 
+//tag::ExportCommand[]
+=== ExportCommand feature
+==== Current Implementation
+The export command feature allows the sales person to export their clients to a csv file. This will allow for a more organized and neat address book.
+
+To export the adress book, simply type 'export' or the command alias 'ep'.
+
+An example of the sort command would be: export
+
+An example of the sort command alias would be: ep
+//end::ExportCommand[]
+
 // tag::DeleteTag[]
 === DeleteTag feature
 ==== Current Implementation
@@ -945,6 +957,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * *Minor*: A remove tag command that can remove tags from all the people in the address book.
 * *Minor*: A comment feature which allows the sales person to add the notes of their clients.
 * *Minor*: A total person at status bar to show the total number of persons in the address book.
+* *Minor*: A export command that can export all persons in the address book to a csv file.
 
 [appendix]
 == User Stories

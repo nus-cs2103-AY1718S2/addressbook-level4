@@ -2,24 +2,17 @@ package systemtests;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.BLOODTYPE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.BLOODTYPE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.DOB_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DOB_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
@@ -35,7 +28,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPatients.AMY;
 import static seedu.address.testutil.TypicalPatients.BOB;
 import static seedu.address.testutil.TypicalPatients.KEYWORD_MATCHING_MEIER;
 
@@ -131,21 +123,6 @@ public class EditCommandSystemTest extends ImdbSystemTest {
         int invalidIndex = getModel().getImdb().getPersonList().size();
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-
-        /* --------------------- Performing edit operation while a patient card is selected ------------------------- */
-
-        /* Case: selects first card in the patient list, edit a patient -> edited, card selection remains unchanged but
-         * browser url changes
-         */
-        showAllPersons();
-        index = INDEX_FIRST_PERSON;
-        selectPerson(index);
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + NRIC_DESC_AMY
-                + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + DOB_DESC_AMY + BLOODTYPE_DESC_AMY + TAG_DESC_FRIEND;
-        // this can be misleading: card selection actually remains unchanged but the
-        // browser's url is updated to reflect the new patient's name
-        assertCommandSuccess(command, index, AMY, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
 

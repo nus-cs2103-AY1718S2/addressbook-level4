@@ -32,22 +32,6 @@ public class PatientCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label phone;
-    @FXML
-    private Label address;
-    @FXML
-    private Label email;
-    @FXML
-    private Label remark;
-    @FXML
-    private Label nric;
-    @FXML
-    private Label dob;
-    @FXML
-    private Label bloodType;
-    @FXML
-    private Label recordList;
-    @FXML
     private FlowPane tags;
 
     public PatientCard(Patient patient, int displayedIndex) {
@@ -55,14 +39,6 @@ public class PatientCard extends UiPart<Region> {
         this.patient = patient;
         id.setText(displayedIndex + ". ");
         name.setText(patient.getName().fullName);
-        nric.setText(patient.getNric().value);
-        phone.setText(patient.getPhone().value);
-        address.setText(patient.getAddress().value);
-        dob.setText(patient.getDob().value);
-        bloodType.setText(patient.getBloodType().value);
-        email.setText(patient.getEmail().value);
-        remark.setText(patient.getRemark().value);
-        recordList.setText(patient.getRecordList().toString());
 
         initTagLabels(patient);
     }

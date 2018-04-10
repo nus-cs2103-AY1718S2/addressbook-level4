@@ -5,7 +5,10 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATETIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMEZONE;
+import static seedu.address.logic.parser.ParserUtil.parseAppointmentTime;
 
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -13,6 +16,7 @@ import java.util.Optional;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
@@ -33,8 +37,9 @@ public class EditAppointmentCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "ea";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the appointment identified "
-            + "by the index number used in the last appontment listing. "
+            + "by the index number used in the last appointment listing. "
             + "Existing values will be overwritten by the input values.\n"
+            + "For person indexes, if person is in appointment, he will be added. Otherwise, he will be removed.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[PERSON INDEX (must be a positive integer)]..."
             + "[" + PREFIX_NAME + "NAME] "
@@ -50,6 +55,7 @@ public class EditAppointmentCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the address book.";
 
     private final Index index;
+    private final List<Index> personIndexes;
     private final EditAppointmentDescriptor editAppointmentDescriptor;
 
     private Appointment appointmentToEdit;
@@ -59,12 +65,14 @@ public class EditAppointmentCommand extends UndoableCommand {
      * @param index of the appointment in the filtered appointment list to edit
      * @param editAppointmentDescriptor details to edit the appointment with
      */
-    public EditAppointmentCommand(Index index, EditAppointmentDescriptor editAppointmentDescriptor) {
+    public EditAppointmentCommand(Index index, EditAppointmentDescriptor editAppointmentDescriptor, List<Index> personIndexes) {
         requireNonNull(index);
         requireNonNull(editAppointmentDescriptor);
+        requireNonNull(personIndexes);
 
         this.index = index;
         this.editAppointmentDescriptor = new EditAppointmentDescriptor(editAppointmentDescriptor);
+        this.personIndexes = personIndexes;
     }
 
     @Override
@@ -88,6 +96,23 @@ public class EditAppointmentCommand extends UndoableCommand {
         }
 
         appointmentToEdit = lastShownList.get(index.getZeroBased());
+
+        List<Person> lastShownPersonList = model.getFilteredPersonList();
+        UniquePersonList personList = new UniquePersonList();
+
+        for (Index index : personIndexes) {
+            if (index.getZeroBased() >= lastShownPersonList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+            try {
+                personList.add(lastShownPersonList.get(index.getZeroBased()));
+            } catch (DuplicatePersonException e) {
+                // Ignore duplicate
+            }
+        }
+
+        if (!personIndexes.isEmpty()) editAppointmentDescriptor.setPersons(personList);
+
         editedAppointment = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
     }
 
@@ -95,17 +120,59 @@ public class EditAppointmentCommand extends UndoableCommand {
      * Creates and returns a {@code Appointment} with the details of {@code appointmentToEdit}
      * edited with {@code editAppointmentDescriptor}.
      */
-    private static Appointment createEditedAppointment(Appointment appointmentToEdit, EditAppointmentDescriptor editAppointmentDescriptor) {
+    private static Appointment createEditedAppointment(Appointment appointmentToEdit,
+                                                       EditAppointmentDescriptor editAppointmentDescriptor)
+                                 throws CommandException {
         assert appointmentToEdit != null;
 
         AppointmentName updatedName = editAppointmentDescriptor.getName().orElse(appointmentToEdit.getName());
-        AppointmentTime updatedTime = editAppointmentDescriptor.getTime().orElse(appointmentToEdit.getTime());
-        ObservableList<Person> personList = editAppointmentDescriptor.getPersons().orElse(appointmentToEdit.getPersons());
+        AppointmentTime updatedTime;
+        AppointmentTime originalTime = appointmentToEdit.getTime();
+
+        if (!editAppointmentDescriptor.getDateTime().isPresent()
+                && !editAppointmentDescriptor.getTimeZone().isPresent()) {
+            updatedTime = originalTime;
+        } else {
+
+            String dateTime = editAppointmentDescriptor.getDateTime()
+                    .orElse(originalTime.time.format(DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm")));
+
+            String timeZone = editAppointmentDescriptor.getTimeZone()
+                    .orElse(originalTime.time.format(DateTimeFormatter.ofPattern("VV")));
+
+            try {
+                updatedTime = parseAppointmentTime(dateTime, timeZone);
+            } catch (IllegalValueException ive) {
+                throw new CommandException(ive.getMessage());
+            }
+        }
+
         UniquePersonList updatedPersons = new UniquePersonList();
-        try {
-            updatedPersons.setPersons(personList);
-        } catch (DuplicatePersonException e) {
-            // Ignore exception, just don't add the person
+
+        Optional<ObservableList<Person>> optionalPersonList = editAppointmentDescriptor.getPersons();
+        if (!optionalPersonList.isPresent()) {
+            try {
+                updatedPersons.setPersons(appointmentToEdit.getPersons());
+            } catch (DuplicatePersonException e) {
+                throw new AssertionError("Impossible to have duplicate. Persons are from appointment");
+            }
+        } else {
+            List<Person> original = new ArrayList(appointmentToEdit.getPersons());
+            List<Person> newList = optionalPersonList.get();
+
+            for (Person person : newList) {
+                if (original.contains(person)) {
+                    original.remove(person);
+                } else {
+                    original.add(person);
+                }
+            }
+
+            try {
+                updatedPersons.setPersons(original);
+            } catch (DuplicatePersonException e) {
+                // Ignore duplicate
+            }
         }
 
         return new Appointment(updatedName, updatedTime, updatedPersons);
@@ -136,7 +203,8 @@ public class EditAppointmentCommand extends UndoableCommand {
      */
     public static class EditAppointmentDescriptor {
         private AppointmentName name;
-        private AppointmentTime time;
+        private String  dateTime;
+        private String timeZone;
         private UniquePersonList persons;
 
         public EditAppointmentDescriptor() {}
@@ -147,7 +215,8 @@ public class EditAppointmentCommand extends UndoableCommand {
          */
         public EditAppointmentDescriptor(EditAppointmentDescriptor toCopy) {
             setName(toCopy.name);
-            setTime(toCopy.time);
+            setDateTime(toCopy.dateTime);
+            setTimeZone(toCopy.timeZone);
             UniquePersonList newPersons = new UniquePersonList();
             newPersons.setPersons(toCopy.persons);
             setPersons(newPersons);
@@ -157,7 +226,7 @@ public class EditAppointmentCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.time, this.persons);
+            return CollectionUtil.isAnyNonNull(this.name, this.dateTime, this.timeZone, this.persons);
         }
 
         public void setName(AppointmentName name) {
@@ -168,12 +237,20 @@ public class EditAppointmentCommand extends UndoableCommand {
             return Optional.ofNullable(name);
         }
 
-        public void setTime(AppointmentTime time) {
-            this.time = time;
+        public void setDateTime(String dateTime) {
+            this.dateTime = dateTime;
         }
 
-        public Optional<AppointmentTime> getTime() {
-            return Optional.ofNullable(time);
+        public Optional<String> getDateTime() {
+            return Optional.ofNullable(dateTime);
+        }
+
+        public void setTimeZone(String timeZone) {
+            this.timeZone = timeZone;
+        }
+
+        public Optional<String> getTimeZone() {
+            return Optional.ofNullable(timeZone);
         }
 
         public void setPersons(UniquePersonList persons) {
@@ -200,7 +277,8 @@ public class EditAppointmentCommand extends UndoableCommand {
             EditAppointmentDescriptor e = (EditAppointmentDescriptor) other;
 
             return getName().equals(e.getName())
-                    && getTime().equals(e.getTime())
+                    && getDateTime().equals(e.getDateTime())
+                    && getTimeZone().equals(e.getTimeZone())
                     && getPersons().equals(e.getPersons());
         }
     }

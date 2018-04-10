@@ -97,11 +97,15 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         deletedPerson = removePerson(expectedModel, selectedIndex);
         expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
+    }
 
+    //@@author wynonaK
+    @Test
+    public void deleteFormatTest() {
         /* ----------------------- Performing invalid delete operation for owner ------------------------------------ */
 
         /* Case: invalid index (0) -> rejected */
-        command = DeleteCommand.COMMAND_WORD + " -o 0";
+        String command = DeleteCommand.COMMAND_WORD + " -o 0";
         assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT_OWNER);
 
         /* Case: invalid index (-1) -> rejected */
@@ -258,6 +262,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
                 MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
     }
 
+    //@@author
     /**
      * Removes the {@code Person} at the specified {@code index} in {@code model}'s address book.
      * @return the removed person

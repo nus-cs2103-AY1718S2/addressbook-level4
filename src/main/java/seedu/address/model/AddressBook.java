@@ -178,6 +178,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         petPatients.add(petPatient);
     }
 
+    //@@author chialejing
     /**
      * Replaces the given pet patient {@code target} in the list with {@code editedPetPatient}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPetPatient}.
@@ -214,6 +215,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         removeUselessTags();
     }
 
+    //@@author
     /**
      * Updates the master tag list to include tags in {@code person} that are not in the list.
      *
@@ -237,6 +239,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             person.getNric(), correctTagReferences);
     }
 
+    //@@author chialejing
     /**
      * Updates the master tag list to include tags in {@code petPatient} that are not in the list.
      *
@@ -371,7 +374,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         for (Appointment appointment : appointments) {
             if (appointment.getPetPatientName().equals(key.getName())
                     && appointment.getOwnerNric().equals(key.getOwner())) {
-                throw new AppointmentDependencyNotEmptyException();
+                throw new AppointmentDependencyNotEmptyException("Appointment dependency still exist!");
             }
         }
     }
@@ -382,7 +385,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private void petPatientDependenciesExist(Person key) throws PetDependencyNotEmptyException {
         for (PetPatient petPatient : petPatients) {
             if (petPatient.getOwner().equals(key.getNric())) {
-                throw new PetDependencyNotEmptyException();
+                throw new PetDependencyNotEmptyException("Pet Patient dependency still exist!");
             }
         }
     }

@@ -76,9 +76,10 @@ public class FindCommandParser implements Parser<FindCommand> {
                 ArgumentTokenizer.tokenize(personInfo, PREFIX_NAME, PREFIX_NRIC, PREFIX_TAG);
         if ((!arePrefixesPresent(argMultimapOwner, PREFIX_NAME)
                 && !arePrefixesPresent(argMultimapOwner, PREFIX_NRIC)
-                && !arePrefixesPresent(argMultimapOwner, PREFIX_TAG))) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    "Unknown prefix parameters!"));
+                && !arePrefixesPresent(argMultimapOwner, PREFIX_TAG)
+                || !argMultimapOwner.getPreamble().isEmpty())) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
         Predicate<Person> finalPredicate = null;
@@ -215,9 +216,10 @@ public class FindCommandParser implements Parser<FindCommand> {
                 && !arePrefixesPresent(argMultimapPetPatient, PREFIX_BREED)
                 && !arePrefixesPresent(argMultimapPetPatient, PREFIX_COLOUR)
                 && !arePrefixesPresent(argMultimapPetPatient, PREFIX_BLOODTYPE)
-                && !arePrefixesPresent(argMultimapPetPatient, PREFIX_TAG))) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    "Unknown prefix parameters!"));
+                && !arePrefixesPresent(argMultimapPetPatient, PREFIX_TAG)
+                || !argMultimapPetPatient.getPreamble().isEmpty())) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
         Predicate<PetPatient> finalPredicate = null;
@@ -232,7 +234,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         if ((arePrefixesPresent(argMultimapPetPatient, PREFIX_SPECIES))) {
             String[] stringKeywords = getStringKeyword(argMultimapPetPatient, PREFIX_SPECIES);
             Predicate<PetPatient> stringPredicate =  petPatient -> Arrays.stream(stringKeywords)
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getSpecies(), keyword));
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getSpecies().species, keyword));
             if (finalPredicate == null) {
                 finalPredicate = stringPredicate;
             } else {
@@ -243,7 +245,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         if ((arePrefixesPresent(argMultimapPetPatient, PREFIX_BREED))) {
             String[] stringKeywords = getStringKeyword(argMultimapPetPatient, PREFIX_BREED);
             Predicate<PetPatient> stringPredicate =  petPatient -> Arrays.stream(stringKeywords)
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getBreed(), keyword));
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getBreed().breed, keyword));
             if (finalPredicate == null) {
                 finalPredicate = stringPredicate;
             } else {
@@ -254,7 +256,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         if ((arePrefixesPresent(argMultimapPetPatient, PREFIX_COLOUR))) {
             String[] stringKeywords = getStringKeyword(argMultimapPetPatient, PREFIX_COLOUR);
             Predicate<PetPatient> stringPredicate =  petPatient -> Arrays.stream(stringKeywords)
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getColour(), keyword));
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getColour().colour, keyword));
             if (finalPredicate == null) {
                 finalPredicate = stringPredicate;
             } else {
@@ -265,7 +267,8 @@ public class FindCommandParser implements Parser<FindCommand> {
         if ((arePrefixesPresent(argMultimapPetPatient, PREFIX_BLOODTYPE))) {
             String[] stringKeywords = getStringKeyword(argMultimapPetPatient, PREFIX_BLOODTYPE);
             Predicate<PetPatient> stringPredicate =  petPatient -> Arrays.stream(stringKeywords)
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getBloodType(), keyword));
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(
+                            petPatient.getBloodType().bloodType, keyword));
             if (finalPredicate == null) {
                 finalPredicate = stringPredicate;
             } else {

@@ -8,6 +8,7 @@ import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalPersons.NRIC_KEYWORD_MATCHING_MEIER;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import seedu.address.model.tag.Tag;
 public class FindCommandSystemTest extends AddressBookSystemTest {
 
     @Test
-    public void find() {
+    public void findPerson() {
         /* Case: find multiple persons in address book, command with leading spaces and trailing spaces
          * -> 2 persons found
          */
@@ -149,7 +150,70 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         command = "FiNd -o n/Meier";
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
+    //@@author wynonaK
+    @Test
+    public void findNric() {
+        /* Case: find multiple persons by nric in address book, command with leading spaces and trailing spaces
+         * -> 2 persons found
+         */
+        String command = "   " + FindCommand.COMMAND_WORD + " -o nr/" + NRIC_KEYWORD_MATCHING_MEIER + "   ";
+        Model expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL); // first names of Benson and Daniel are "Meier"
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
 
+        /* Case: repeat previous find command where person list is displaying the persons we are finding
+         * -> 2 persons found
+         */
+        command = FindCommand.COMMAND_WORD + " -o nr/" + NRIC_KEYWORD_MATCHING_MEIER;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find nric where person list is not displaying the person we are finding -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " -o nr/F2345678U";
+        ModelHelper.setFilteredList(expectedModel, CARL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple nric in address book, 2 keywords -> 2 persons found */
+        command = FindCommand.COMMAND_WORD + " -o nr/S0123456Q T0123456L";
+        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple nric in address book, 2 keywords in reversed order -> 2 persons found */
+        command = FindCommand.COMMAND_WORD + " -o nr/T0123456L S0123456Q";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple nric in address book, 2 keywords with 1 repeat -> 2 persons found */
+        command = FindCommand.COMMAND_WORD + " -o nr/T0123456L S0123456Q T0123456L";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple nric in address book, 2 matching keywords and 1 non-matching keyword
+         * -> 2 persons found
+         */
+        command = FindCommand.COMMAND_WORD + " -o nr/S0123456Q T0123456L S9012389E";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find same persons in address book after deleting 1 of them -> 1 person found */
+        executeCommand(DeleteCommand.COMMAND_WORD + " -fo 1");
+        assertFalse(getModel().getAddressBook().getPersonList().contains(BENSON));
+        command = FindCommand.COMMAND_WORD + " -o nr/" + NRIC_KEYWORD_MATCHING_MEIER;
+        expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find nric not in address book -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " -o nr/T0014852E";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+    }
+    //@@author
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
      * box displays {@code Messages#MESSAGE_PERSONS_LISTED_OVERVIEW} with the number of people in the filtered list,

@@ -58,7 +58,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveName = "addressbook.jar"
+    archiveName = "medeina.jar"
 
     destinationDir = file("${buildDir}/jar/")
 }

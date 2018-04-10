@@ -22,17 +22,16 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PET_PATIENTS;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.descriptors.EditAppointmentDescriptor;
+import seedu.address.logic.descriptors.EditPersonDescriptor;
+import seedu.address.logic.descriptors.EditPetPatientDescriptor;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Remark;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
@@ -45,8 +44,12 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.petpatient.BloodType;
+import seedu.address.model.petpatient.Breed;
+import seedu.address.model.petpatient.Colour;
 import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
+import seedu.address.model.petpatient.Species;
 import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
 import seedu.address.model.petpatient.exceptions.PetPatientNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -398,10 +401,10 @@ public class EditCommand extends UndoableCommand {
         assert petPatientToEdit != null;
 
         PetPatientName updatedName = editPetPatientDescriptor.getName().orElse(petPatientToEdit.getName());
-        String updatedSpecies = editPetPatientDescriptor.getSpecies().orElse(petPatientToEdit.getSpecies());
-        String updatedBreed = editPetPatientDescriptor.getBreed().orElse(petPatientToEdit.getBreed());
-        String updatedColour = editPetPatientDescriptor.getColour().orElse(petPatientToEdit.getColour());
-        String updatedBloodType = editPetPatientDescriptor.getBloodType().orElse(petPatientToEdit.getBloodType());
+        Species updatedSpecies = editPetPatientDescriptor.getSpecies().orElse(petPatientToEdit.getSpecies());
+        Breed updatedBreed = editPetPatientDescriptor.getBreed().orElse(petPatientToEdit.getBreed());
+        Colour updatedColour = editPetPatientDescriptor.getColour().orElse(petPatientToEdit.getColour());
+        BloodType updatedBloodType = editPetPatientDescriptor.getBloodType().orElse(petPatientToEdit.getBloodType());
         Nric updatedOwnerNric = editPetPatientDescriptor.getOwnerNric().orElse(petPatientToEdit.getOwner());
         Set<Tag> updatedTags = editPetPatientDescriptor.getTags().orElse(petPatientToEdit.getTags());
 
@@ -461,353 +464,5 @@ public class EditCommand extends UndoableCommand {
         return index.equals(e.index)
                 && editPersonDescriptor.equals(e.editPersonDescriptor)
                 && Objects.equals(personToEdit, e.personToEdit);
-    }
-
-    /**
-     * Stores the details to edit the person with. Each non-empty field value will replace the
-     * corresponding field value of the person.
-     */
-    public static class EditPersonDescriptor {
-        private Name name;
-        private Phone phone;
-        private Email email;
-        private Address address;
-        private Nric nric;
-        private Set<Tag> tags;
-
-        public EditPersonDescriptor() {}
-
-        /**
-         * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public EditPersonDescriptor(EditPersonDescriptor toCopy) {
-            setName(toCopy.name);
-            setPhone(toCopy.phone);
-            setEmail(toCopy.email);
-            setAddress(toCopy.address);
-            setNric(toCopy.nric);
-            setTags(toCopy.tags);
-        }
-
-        /**
-         * Returns true if at least one field is edited.
-         */
-        public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email,
-                    this.address, this.nric, this.tags);
-        }
-
-        public void setName(Name name) {
-            this.name = name;
-        }
-
-        public Optional<Name> getName() {
-            return Optional.ofNullable(name);
-        }
-
-        public void setPhone(Phone phone) {
-            this.phone = phone;
-        }
-
-        public Optional<Phone> getPhone() {
-            return Optional.ofNullable(phone);
-        }
-
-        public void setEmail(Email email) {
-            this.email = email;
-        }
-
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
-        }
-
-        public void setAddress(Address address) {
-            this.address = address;
-        }
-
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
-        }
-
-        public void setNric(Nric nric) {
-            this.nric = nric;
-        }
-
-        public Optional<Nric> getNric() {
-            return Optional.ofNullable(nric);
-        }
-
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
-        }
-
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            // short circuit if same object
-            if (other == this) {
-                return true;
-            }
-
-            // instanceof handles nulls
-            if (!(other instanceof EditPersonDescriptor)) {
-                return false;
-            }
-
-            // state check
-            EditPersonDescriptor e = (EditPersonDescriptor) other;
-
-            return getName().equals(e.getName())
-                    && getPhone().equals(e.getPhone())
-                    && getEmail().equals(e.getEmail())
-                    && getAddress().equals(e.getAddress())
-                    && getNric().equals(e.getNric())
-                    && getTags().equals(e.getTags());
-        }
-    }
-
-    /**
-     * Stores the details to edit the pet patient with. Each non-empty field value will replace the
-     * corresponding field value of the pet patient.
-     */
-    public static class EditPetPatientDescriptor {
-        private PetPatientName name;
-        private String species;
-        private String breed;
-        private String colour;
-        private String bloodType;
-        private Nric ownerNric;
-        private Set<Tag> tags;
-
-        public EditPetPatientDescriptor() {}
-
-        /**
-         * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public EditPetPatientDescriptor(EditPetPatientDescriptor toCopy) {
-            setName(toCopy.name);
-            setSpecies(toCopy.species);
-            setBreed(toCopy.breed);
-            setColour(toCopy.colour);
-            setBloodType(toCopy.bloodType);
-            setOwnerNric(toCopy.ownerNric);
-            setTags(toCopy.tags);
-        }
-
-        /**
-         * Returns true if at least one field is edited.
-         */
-        public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.species, this.breed,
-                    this.colour, this.bloodType, this.ownerNric, this.tags);
-        }
-
-        public void setName(PetPatientName name) {
-            this.name = name;
-        }
-
-        public Optional<PetPatientName> getName() {
-            return Optional.ofNullable(name);
-        }
-
-        public void setSpecies(String species) {
-            this.species = species;
-        }
-
-        public Optional<String> getSpecies() {
-            return Optional.ofNullable(species);
-        }
-
-        public void setBreed(String breed) {
-            this.breed = breed;
-        }
-
-        public Optional<String> getBreed() {
-            return Optional.ofNullable(breed);
-        }
-
-        public void setColour(String colour) {
-            this.colour = colour;
-        }
-
-        public Optional<String> getColour() {
-            return Optional.ofNullable(colour);
-        }
-
-        public void setBloodType(String bloodType) {
-            this.bloodType = bloodType;
-        }
-
-        public Optional<String> getBloodType() {
-            return Optional.ofNullable(bloodType);
-        }
-
-        public void setOwnerNric(Nric nric) {
-            this.ownerNric = nric;
-        }
-
-        public Optional<Nric> getOwnerNric() {
-            return Optional.ofNullable(ownerNric);
-        }
-
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
-        }
-
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            // short circuit if same object
-            if (other == this) {
-                return true;
-            }
-
-            // instanceof handles nulls
-            if (!(other instanceof EditPetPatientDescriptor)) {
-                return false;
-            }
-
-            // state check
-            EditPetPatientDescriptor e = (EditPetPatientDescriptor) other;
-
-            return getName().equals(e.getName())
-                    && getSpecies().equals(e.getSpecies())
-                    && getBreed().equals(e.getBreed())
-                    && getColour().equals(e.getColour())
-                    && getBloodType().equals(e.getBloodType())
-                    && getOwnerNric().equals(e.getOwnerNric())
-                    && getTags().equals(e.getTags());
-        }
-    }
-
-    /**
-     * Stores the details to edit the appointment with. Each non-empty field value will replace the
-     * corresponding field value of the appointment.
-     */
-    public static class EditAppointmentDescriptor {
-        private Nric ownerNric;
-        private PetPatientName petPatientName;
-        private Remark remark;
-        private LocalDateTime localDateTime;
-        private Set<Tag> tags;
-
-        public EditAppointmentDescriptor() {}
-
-        /**
-         * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public EditAppointmentDescriptor(EditAppointmentDescriptor toCopy) {
-            setOwnerNric(toCopy.ownerNric);
-            setPetPatientName(toCopy.petPatientName);
-            setRemark(toCopy.remark);
-            setLocalDateTime(toCopy.localDateTime);
-            setTags(toCopy.tags);
-        }
-
-        /**
-         * Returns true if at least one field is edited.
-         */
-        public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.ownerNric, this.petPatientName, this.remark,
-                    this.localDateTime, this.tags);
-        }
-
-        public void setOwnerNric(Nric ownerNric) {
-            this.ownerNric = ownerNric;
-        }
-
-        public Optional<Nric> getOwnerNric() {
-            return Optional.ofNullable(ownerNric);
-        }
-
-        public void setPetPatientName(PetPatientName petPatientName) {
-            this.petPatientName = petPatientName;
-        }
-
-        public Optional<PetPatientName> getPetPatientName() {
-            return Optional.ofNullable(petPatientName);
-        }
-
-        public void setRemark(Remark remark) {
-            this.remark = remark;
-        }
-
-        public Optional<Remark> getRemark() {
-            return Optional.ofNullable(remark);
-        }
-
-        public void setLocalDateTime(LocalDateTime localDateTime) {
-            this.localDateTime = localDateTime;
-        }
-
-        public Optional<LocalDateTime> getLocalDateTime() {
-            return Optional.ofNullable(localDateTime);
-        }
-
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
-        }
-
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            // short circuit if same object
-            if (other == this) {
-                return true;
-            }
-
-            // instanceof handles nulls
-            if (!(other instanceof EditAppointmentDescriptor)) {
-                return false;
-            }
-
-            // state check
-            EditAppointmentDescriptor e = (EditAppointmentDescriptor) other;
-
-            return getOwnerNric().equals(e.getOwnerNric())
-                    && getPetPatientName().equals(e.getPetPatientName())
-                    && getRemark().equals(e.getRemark())
-                    && getLocalDateTime().equals(e.getLocalDateTime())
-                    && getTags().equals(e.getTags());
-        }
     }
 }

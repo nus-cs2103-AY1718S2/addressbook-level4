@@ -8,7 +8,7 @@ import seedu.address.model.email.Template;
  * Utility class to help with building default templates for testing
  */
 public class TemplateBuilder {
-    public static final String DEFAULT_PURPOSE = "Default Purpose";
+    public static final String DEFAULT_PURPOSE = "Purpose";
     public static final String DEFAULT_SUBJECT = "Default Subject";
     public static final String DEFAULT_MESSAGE = "Default Message";
 

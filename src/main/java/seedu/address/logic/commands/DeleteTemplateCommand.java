@@ -11,7 +11,7 @@ import seedu.address.model.email.exceptions.TemplateNotFoundException;
 /**
  * Deletes an Template that matches all the input fields from the address book.
  */
-public class DeleteTemplateCommand extends UndoableCommand {
+public class DeleteTemplateCommand extends Command {
 
     public static final String COMMAND_WORD = "deletetemplate";
     public static final String COMMAND_ALIAS = "dt";
@@ -32,7 +32,8 @@ public class DeleteTemplateCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
+        System.out.println(purposeToDelete);
         requireNonNull(purposeToDelete);
         try {
             model.deleteTemplate(purposeToDelete);

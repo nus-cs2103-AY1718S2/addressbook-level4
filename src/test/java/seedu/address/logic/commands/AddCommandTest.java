@@ -124,6 +124,10 @@ public class AddCommandTest {
 
         //@@author ng95junwei
         @Override
+        public void deleteTemplate(String purpose) {
+            fail("This method should not be called.");
+        }
+        @Override
         public ObservableList<Template> getFilteredTemplateList() {
             fail("This method should not be called.");
             return null;

@@ -1,0 +1,27 @@
+= Yuan Quan - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Overview
+
+CLIndar is a desktop application that helps university computing students to manage their tasks and events. The user interacts with it using a CLI. It has a GUI created with JavaFX, and is written in Java.
+
+== Summary of contributions
+*Major enhancement*: Modifying the Model component. This includes creation of Event and Task classes, as well as their superclass, Activity. Other classes relevant to tasks and events are also created, such as DateTime.
+
+*Minor enhancement*: Creating 'complete' command. This command marks a Task object as completed.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W13-B3/main/blob/master/collated/functional/YuanQLLer.md[Functional code]] [https://github.com/CS2103JAN2018-W13-B3/main/blob/master/collated/test/YuanQLLer.md[Test code]]
+
+* *Other contributions*:
+
+
+== Contributions to the User Guide
+
+include::../UserGuide.adoc[tag=find]
+
+== Contributions to the Developer Guide
+
+include::../DeveloperGuide.adoc[tag=model]
+
+include::../DeveloperGuide.adoc[tag=activitydesign]

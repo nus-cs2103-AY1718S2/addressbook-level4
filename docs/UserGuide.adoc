@@ -164,6 +164,7 @@ Shows a list of all completed tasks in the desk board. +
 
 *Format:* `ls complete task` or `ls com task`
 
+// tag::find[]
 === Locating task by name: `find task` `[Coming Soon in v2.0]`
 Shows a list of all tasks and/or event which contains given keyword in its name.
 
@@ -184,6 +185,7 @@ Find all tasks and event with name contains CS2101
 ====
 Use `list` command to retrieve the full list of event and task after this command
 ====
+// end::find[]
 
 === Shows overdue tasks: `overdue` `[Coming Soon in  v1.5]`
 

@@ -15,11 +15,12 @@ import seedu.address.model.activity.Task;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.model.tag.Tag;
 
-//@@author YuanQLLer
+
 /**
  * Contains utility methods for populating {@code DeskBoard} with sample data.
  */
 public class SampleDataUtil {
+    //@@author YuanQLLer
     public static Activity[] getSampleActivity() {
         return new Activity[] {
             new Task(new Name("Task 1"), new DateTime("01/01/2018 23:59"),

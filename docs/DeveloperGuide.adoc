@@ -311,6 +311,7 @@ image::DeletePersonSdForLogic.png[width="800"]
 
 {empty} +
 
+// tag::model[]
 [[Design-Model]]
 === Model Component
 
@@ -332,7 +333,7 @@ The `Model` component:
 * does not depend on any of the other three components.
 
 {empty} +
-
+// end::model[]
 [[Design-Storage]]
 === Storage Component
 
@@ -365,6 +366,7 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 This section describes some noteworthy details on how certain features are implemented.
 {empty} +
 {empty} +
+
 
 [[Implementation-Activity]]
 === Activity
@@ -508,6 +510,7 @@ will be reflected in the GUI.
 {empty} +
 {empty} +
 
+// tag::complete[]
 ===== Completing a task
 `Task` objects can be completed through the use of the `CompleteCommand` by specifying the `Task`'s index reflected
 in the GUI. Note that `CompleteCommand` can only be applied to `Task` objects.
@@ -532,7 +535,9 @@ to completed.
 If `CompleteCommand` is successful, 'Uncompleted' will be replaced by 'Completed' in the GUI.
 {empty} +
 {empty} +
+//end:complete[]
 
+//tag::activitydesign[]
 ==== Design considerations
 
 There are two ways to represent tasks and events in the application. The following shows the pros and cons for each alternative:
@@ -554,6 +559,7 @@ There is a clear distinction between the two classes.
 We will need to write codes for classes and methods related to `Task` and `Event` separately, when these could have been simplified by having classes and methods related to the superclass only.
 {empty} +
 {empty} +
+//end::activitydesign[]
 
 === GUI
 

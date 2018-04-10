@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import seedu.address.model.activity.Activity;
 
+
 /**
  * Finds and lists all activies in address book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.

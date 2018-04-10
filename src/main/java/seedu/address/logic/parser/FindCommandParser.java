@@ -12,6 +12,7 @@ import seedu.address.model.activity.EventOnlyPredicate;
 import seedu.address.model.activity.NameContainsKeywordsPredicate;
 import seedu.address.model.activity.TaskOnlyPredicate;
 
+
 /**
  * Parses input arguments and creates a new FindCommand object
  */
@@ -19,6 +20,7 @@ public class FindCommandParser implements Parser<FindCommand> {
     private static final String TYPE_TASK = "task";
     private static final String TYPE_EVENT = "event";
     private static final int FIRST_INDEX = 0;
+    //@@Author YuanQLLer
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindCommand object for execution.

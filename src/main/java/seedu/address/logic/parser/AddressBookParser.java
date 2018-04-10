@@ -123,7 +123,7 @@ public class    AddressBookParser {
         case ListGroupMembersCommand.COMMAND_WORD:
         case ListGroupMembersCommand.COMMAND_ALIAS:
             return new ListGroupMembersCommandParser().parse(arguments);
-         //@@author
+        //@@author
         case ListTagMembersCommand.COMMAND_WORD:
         case ListTagMembersCommand.COMMAND_ALIAS:
             return new ListTagMembersCommandParser().parse(arguments);

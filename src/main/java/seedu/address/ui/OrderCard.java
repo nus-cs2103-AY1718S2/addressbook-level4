@@ -1,13 +1,13 @@
 //@@author amad-person
 package seedu.address.ui;
 
+import java.text.DecimalFormat;
 import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.Price;
@@ -49,16 +49,31 @@ public class OrderCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         orderInformation.setText(order.getOrderInformation().toString());
         orderStatus.setText(order.getOrderStatus().getCurrentOrderStatus().toUpperCase());
-        priceAndQuantity.setText("S$" + order.getPrice().toString() + " X " + order.getQuantity().toString());
-        totalPrice.setText("Total: S$" + getTotalPrice(order.getPrice(), order.getQuantity()));
+        setPriceAndQuantity(order);
+        setTotalPrice(order);
         deliveryDate.setText("Deliver By: " + order.getDeliveryDate().toString());
+    }
+
+    private void setPriceAndQuantity(Order order) {
+        double priceValue = Double.valueOf(order.getPrice().toString());
+        DecimalFormat decimalFormat = new DecimalFormat("#.00");
+
+        priceAndQuantity.setText("S$" + String.valueOf(decimalFormat.format(priceValue))
+                + " X " + order.getQuantity().toString());
+    }
+
+    private void setTotalPrice(Order order) {
+        totalPrice.setText("Total: S$" + getTotalPrice(order.getPrice(), order.getQuantity()));
     }
 
     private String getTotalPrice(Price price, Quantity quantity) {
         double priceValue = Double.valueOf(price.toString());
         int quantityValue = Integer.valueOf(quantity.toString());
 
-        return String.valueOf(priceValue * quantityValue);
+        double totalPrice = priceValue * quantityValue;
+        DecimalFormat decimalFormat = new DecimalFormat("#.00");
+
+        return String.valueOf(decimalFormat.format(totalPrice));
     }
 
     @Override

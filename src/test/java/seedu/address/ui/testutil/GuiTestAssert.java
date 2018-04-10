@@ -3,6 +3,7 @@ package seedu.address.ui.testutil;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -149,13 +150,18 @@ public class GuiTestAssert {
     public static void assertCardDisplaysOrder(Order expectedOrder, OrderCardHandle actualCard) {
         assertEquals(expectedOrder.getOrderInformation().toString(), actualCard.getOrderInformation());
 
-        String expectedPriceAndQuantity = "S$" + expectedOrder.getPrice().toString() + " X "
-                + expectedOrder.getQuantity().toString();
+        double priceValue = Double.valueOf(expectedOrder.getPrice().toString());
+        DecimalFormat decimalFormat = new DecimalFormat("#.00");
+
+        String expectedPriceAndQuantity = "S$" + String.valueOf(decimalFormat.format(priceValue))
+                + " X " + expectedOrder.getQuantity().toString();
+
         assertEquals(expectedPriceAndQuantity, actualCard.getPriceAndQuantity());
 
-        String expectedTotalPrice = "Total: S$" + String.valueOf(
-                Double.parseDouble(expectedOrder.getPrice().toString())
-                        * Integer.parseInt(expectedOrder.getQuantity().toString()));
+        int quantityValue = Integer.valueOf(expectedOrder.getQuantity().toString());
+        double totalPrice = priceValue * quantityValue;
+
+        String expectedTotalPrice = "Total: S$" + String.valueOf(decimalFormat.format(totalPrice));
 
         assertEquals(expectedTotalPrice, actualCard.getTotalPrice());
 

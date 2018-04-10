@@ -10,7 +10,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Quantity {
     public static final String MESSAGE_QUANTITY_CONSTRAINTS =
-            "Quantity should only contain numeric characters, and it should not be blank";
+            "Quantity should only contain numeric characters, and it should not be blank.\n"
+                    + "Maximum value allowed for quantity is 1000000.";
 
     // Only positive integers are allowed
     public static final String QUANTITY_VALIDATION_REGEX = "^[0-9]*[1-9][0-9]*$";
@@ -33,7 +34,12 @@ public class Quantity {
      */
     public static boolean isValidQuantity(String test) {
         requireNonNull(test);
-        return test.matches(QUANTITY_VALIDATION_REGEX);
+
+        if (!test.matches(QUANTITY_VALIDATION_REGEX) || Integer.valueOf(test) > 1000000) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override

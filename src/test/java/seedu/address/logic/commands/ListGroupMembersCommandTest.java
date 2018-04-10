@@ -61,6 +61,7 @@ public class ListGroupMembersCommandTest {
 
     @Test
     public void execute_GroupFound_EmptyList_Success() {
+
         Group groupToList = new Group(new Information("Group A"));
         String expectedMessage = String.format("0 persons listed!");
         Model expectedModel = model;

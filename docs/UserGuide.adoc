@@ -215,21 +215,22 @@ _Deletes the first person in the results of the `find` command._
 ** The `INDEX` must be a *positive integer*: 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+* Only fields common to both Customer and Runner can be edited
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t:` without specifying any tags after it.
 ====
 
 *Usage examples:*
 ====
- edit 1 p: 91234567 e: johndoe@example.com
+ edit 1 p: 999 e: ahlong@houseofhuat.com
 
-_Edits the phone number and email address of the first person to be `91234567` and `johndoe@example.com` respectively._
+_Edits the phone number and email address of the first person to be `999` and `ahlong@houseofhuat.com` respectively._
 ====
 
 ====
- edit 2 n: Betsy Crower t:
+ edit 2 n: Kimmy Aunty t:
 
-_Edits the name of the second person to be `Betsy Crower` and clears all existing tags._
+_Edits the name of the second person to be `Kimmy Aunty` and clears all existing tags._
 ====
 ***
 === Searching for relevant persons : `find` [since v1.1]

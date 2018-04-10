@@ -47,6 +47,9 @@ public class ParserUtilTest {
     private static final String VALID_BUILDING = "COM1";
 
     private static final String INVALID_BUILDING = "COM*";
+
+    private static final String VALID_LOCATION = "com1";
+
     //@@author
 
     private static final String WHITESPACE = " \t\r\n";

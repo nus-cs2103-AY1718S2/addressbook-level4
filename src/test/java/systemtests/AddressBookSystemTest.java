@@ -24,6 +24,7 @@ import org.junit.ClassRule;
 import guitests.guihandles.BirthdayListHandle;
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.GoogleMapsDisplayHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
@@ -43,6 +44,7 @@ import seedu.address.model.Model;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CommandBox;
+import seedu.address.ui.GoogleMapsDisplay;
 
 /**
  * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
@@ -127,6 +129,12 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getBirthdayList();
     }
 
+    //@@author jingyinno
+    public GoogleMapsDisplayHandle getGoogleMapsDisplay() {
+        return mainWindowHandle.getMapPanel();
+    }
+    //@@author
+
     /**
      * Executes {@code command} in the application's {@code CommandBox}.
      * Method returns after UI components have been updated.
@@ -140,6 +148,7 @@ public abstract class AddressBookSystemTest {
         mainWindowHandle.getCommandBox().run(command);
 
         waitUntilBrowserLoaded(getBrowserPanel());
+        waitUntilBrowserLoaded(getGoogleMapsDisplay());
     }
 
     /**
@@ -188,6 +197,7 @@ public abstract class AddressBookSystemTest {
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
     }
 
+    //@@author jingyinno
     /**
      * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
      * {@code expectedResultMessage}, the model and storage contains the same alias objects as {@code expectedModel}
@@ -200,12 +210,35 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
+     * Asserts that the browser's url is changed to display the details of the person in the person list panel at
+     * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
+     * @see BrowserPanelHandle#isUrlChanged()
+     * @see PersonListPanelHandle#isSelectedPersonCardChanged()
+     */
+    protected void assertMapDisplayChanged(boolean isOneLocation, String query) {
+        URL expectedUrl;
+        try {
+            if (isOneLocation) {
+                expectedUrl = new URL(GoogleMapsDisplay.MAP_SEARCH_URL_PREFIX + query);
+            } else {
+                expectedUrl = new URL(GoogleMapsDisplay.MAP_DIRECTIONS_URL_PREFIX + query);
+            }
+        } catch (MalformedURLException mue) {
+            throw new AssertionError("URL expected to be valid.");
+        }
+        assertEquals(expectedUrl, getGoogleMapsDisplay().getLoadedUrl());
+    }
+
+    //@@author
+
+    /**
      * Calls {@code BrowserPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
      * their current state.
      */
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
         getBrowserPanel().rememberUrl();
+        getGoogleMapsDisplay().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();

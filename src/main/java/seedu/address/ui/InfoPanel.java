@@ -47,8 +47,10 @@ public class InfoPanel extends UiPart<Region> {
         fillInnerParts();
 
         venueTable = new VenueTable(null);
+        venuePlaceholder.getChildren().add(venueTable.getRoot());
 
-        mapsDisplay = new GoogleMapsDisplay(null);
+        mapsDisplay = new GoogleMapsDisplay();
+        mapsPlaceholder.getChildren().add(mapsDisplay.getRoot());
 
         browserPlaceholder.toFront();
         registerAsAnEventHandler(this);
@@ -102,14 +104,11 @@ public class InfoPanel extends UiPart<Region> {
 
     @Subscribe
     private void handleGoogleMapsDisplayEvent(GoogleMapsEvent event) {
-        mapsPlaceholder.getChildren().removeAll();
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mapsDisplay = new GoogleMapsDisplay(event.getLocations());
-        mapsPlaceholder.getChildren().add(mapsDisplay.getRoot());
         if (event.getIsOneLocationEvent()) {
-            mapsDisplay.loadMapPage();
+            mapsDisplay.loadMapPage(event.getLocations());
         } else {
-            mapsDisplay.loadMapDirections();
+            mapsDisplay.loadMapDirections(event.getLocations());
         }
         mapsPlaceholder.toFront();
     }

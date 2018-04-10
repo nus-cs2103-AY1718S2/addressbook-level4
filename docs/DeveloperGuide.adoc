@@ -742,14 +742,11 @@ The following sequence diagram shows how the undo operation works:
 .'Undo' and 'Redo' Stack Sequence Diagram
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-<<<<<<< HEAD
-=======
 The redo command does the exact opposite (pops from `redoStack`, pushes to `undoStack`, and restores the desk board to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
->>>>>>> 9eae3ae5b50943f9d6ba0532fcafbc67bc50acc6
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 .Adding 'ClearCommand' to the 'Undo' Stack

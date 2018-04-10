@@ -29,7 +29,7 @@ Responsibilities: Logic
 === Loh Cai Jun
 image::caijun7.jpg[width="150", align="left"]
 {empty}[http://github.com/caijun7[github]]
-{empty}[https://cs2103jan2018-w11-b4.github.io/main/team/caijun7.html[portfolio]]
+{empty}[https://cs2103jan2018-w11-b4.github.io/main/team/Caijun7.html[portfolio]]
 
 Role: Developer +
 Responsibilities: Model
@@ -39,7 +39,7 @@ Responsibilities: Model
 === Wayne Neo Wei Zhe
 image::azureair.jpg[width="150", align="left"]
 {empty}[http://github.com/AzuraAiR[github]]
-{empty}[https://cs2103jan2018-w11-b4.github.io/main/team/azureair.html[portfolio]]
+{empty}[https://cs2103jan2018-w11-b4.github.io/main/team/AzureAiR.html[portfolio]]
 
 Role: Developer +
 Responsibilities: Storage

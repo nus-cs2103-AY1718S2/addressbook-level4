@@ -28,11 +28,14 @@ This portfolio is to collate my contributions towards the developing of contactH
 
 ** Project management:
 *** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+*** Managed milestones `v1.1` - `v1.5rc` (5 milestones) on GitHub
+*** Created issues and labels for issues
 ** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+*** Added cuurentPosition and company attributes to Person (Pull request https://github.com/CS2103JAN2018-W09-B2/main/pull/118)
+*** Updated Ui to contain icons (Commit https://github.com/CS2103JAN2018-W09-B2/main/pull/136/commits/7b9ac8bb2d99af8a63d7bf9ee68d17a0b48bea58)
+
 ** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+*** Made User Guide more reader-friendly by adding screenshots and reorganising content: https://github.com/CS2103JAN2018-W09-B2/main/pull/114/, https://github.com/CS2103JAN2018-W09-B2/main/pull/217
 ** Community:
 *** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
 *** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])

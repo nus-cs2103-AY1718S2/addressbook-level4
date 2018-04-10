@@ -65,9 +65,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
+    public void resetData(ReadOnlyAddressBook newData, ReadOnlySchedule newSchedule) {
         addressBook.resetData(newData);
+        schedule.resetData(newSchedule);
         indicateAddressBookChanged();
+        indicateScheduleChanged();
     }
 
     @Override
@@ -81,9 +83,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deleteStudent(Student target) throws StudentNotFoundException {
+    public synchronized void deleteStudent(Student target)
+            throws StudentNotFoundException, LessonNotFoundException {
         addressBook.removeStudent(target);
+        schedule.removeStudentLesson(target);
         indicateAddressBookChanged();
+        indicateScheduleChanged();
     }
 
     @Override
@@ -103,6 +108,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updateStudent(target, editedStudent);
         indicateAddressBookChanged();
         indicateStudentInfoChanged();
+        indicateScheduleChanged();
     }
 
 

@@ -4,18 +4,20 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjusters;
 import java.util.logging.Logger;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.CalendarView;
+import com.calendarfx.view.DateControl;
 import com.calendarfx.view.page.PageBase;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
+import javafx.util.Callback;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.ScheduleChangedEvent;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -80,8 +82,17 @@ public class CalendarPanel extends UiPart<CalendarView> {
         calendarView.getCalendarSources().addAll(calendarSource);
 
         calendarView.setRequestedTime(LocalTime.now());
-        calendarView.showMonthPage();
-        pageBase = calendarView.getSelectedPage();
+        calendarView.showWeekPage();
+        calendarView.setShowAddCalendarButton(false);
+        calendarView.setShowPrintButton(false);
+        calendarView.setShowSourceTray(false);
+        calendarView.setShowSearchField(false);
+        calendarView.setShowPageToolBarControls(false);
+        calendarView.setShowPageSwitcher(false);
+        calendarView.setShowAddCalendarButton(false);
+        calendarView.showWeekPage();
+        calendarView.setShowDeveloperConsole(true);
+        calendarView.setOnMouseClicked(null);
     }
 
     /**

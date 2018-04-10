@@ -117,6 +117,16 @@ public class Schedule implements ReadOnlySchedule {
                     + " " + l.getStartTime() + " " + l.getEndTime());
         }
     }
+
+    public void removeStudentLesson(Student target) throws LessonNotFoundException {
+        for (Lesson lesson : lessons) {
+            if (lesson.getUniqueKey().equals(target.getUniqueKey())) {
+                removeLesson(lesson);
+            }
+        }
+    }
+
+
     //// util methods
 
     @Override

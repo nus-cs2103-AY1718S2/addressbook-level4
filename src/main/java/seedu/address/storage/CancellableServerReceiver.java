@@ -294,9 +294,8 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
             if (!CALLBACK_PATH.equals(target)) {
                 return;
             }
-            (
-                    (Request) request)
-                    .setHandled(true);
+            Request requestWrapper = (Request) request;
+            requestWrapper.setHandled(true);
             lock.lock();
             try {
                 error = request.getParameter("error");

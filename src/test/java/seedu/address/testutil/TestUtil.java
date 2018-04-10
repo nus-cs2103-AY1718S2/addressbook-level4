@@ -55,6 +55,14 @@ public class TestUtil {
     }
 
     /**
+     * Returns the last index of the group in the {@code model}'s to-do list.
+     */
+    public static Index getLastIndexGroup(Model model) {
+        return Index.fromOneBased(model.getAddressBook().getGroupList().size());
+    }
+
+
+    /**
      * Returns the person in the {@code model}'s person list at {@code index}.
      */
     public static Person getPerson(Model model, Index index) {

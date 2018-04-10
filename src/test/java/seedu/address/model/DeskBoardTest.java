@@ -17,7 +17,6 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.activity.Activity;
-import seedu.address.model.activity.Task;
 import seedu.address.model.tag.Tag;
 
 public class DeskBoardTest {

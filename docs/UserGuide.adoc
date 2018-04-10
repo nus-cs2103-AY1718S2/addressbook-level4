@@ -253,7 +253,10 @@ Examples:
 Deletes all non-clients added before 12/12/2017 in the address book.
 // end::deletebefore[]
 
+// tag::emailing[]
+
 ==== Emailing a person : `email` or `em`
+
 
 Emails a person based on the specified name.
 Format: `email KEYWORD TEMPLATE`
@@ -264,6 +267,38 @@ Format: `email KEYWORD TEMPLATE`
 * Search is case insensitive. e.g. hans will match Hans
 * Persons matching at least one keyword will be emailed. eg. Hans Bo will email Hans Gruber, Bo Yang
 ****
+
+// end::emailing[]
+
+// tag::templating[]
+
+==== Creating a new Template : `addTemplate` or `at`
+
+Creates a new template based on the specified purpose, subject and message.
+Format: `addTemplate pu/PURPOSE s/SUBJECT m/MESSAGE`
+
+TIP: You cannot create two templates with the same purpose
+
+Examples:
+
+* `addTemplate pu/greeting s/Hello There m/Luke I am your father`
+* `addTemplate pu/holiday s/Merry Christmas m/Santa Claus is coming to town!`
+
+==== Deleting a Template : `deleteTemplate` or `dt`
+
+Deletes a template in the address book. +
+Format: `deleteTemplate PURPOSE`
+
+****
+* Deletes a template with the specified purpose
+* A template with the specified purpose must exist in Addsurance
+****
+
+Examples:
+
+* `dt greeting` +
+Deletes the template with the purpose greeting.
+// end::templating[]
 
 ==== Importing contacts from CSV : `import_contacts` or `ic`
 

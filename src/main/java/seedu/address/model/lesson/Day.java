@@ -1,9 +1,14 @@
 package seedu.address.model.lesson;
 
+import org.joda.time.DateTimeConstants;
+import org.joda.time.LocalDate;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -115,7 +120,21 @@ public class Day implements Comparable<Day> {
         return dayToFullDayMap.get(this.value);
     }
 
+    public String toDateString() {
+        LocalDate now = new LocalDate();
+        LocalDate day = now.withDayOfWeek(dayToIntValue(this.toString()));
+        try {
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat format2 = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = format1.parse(day.toString());
+            System.out.println(format2.format(date));
+            return format2.format(date).toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        return "01/01/1994";
+    }
     @Override
     public String toString() {
         return value;

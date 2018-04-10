@@ -120,7 +120,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         infoPanel = new InfoPanel();
-        CalendarPanel calendarPanel = new CalendarPanel(logic.getSchedule());
+        CalendarPanel calendarPanel = new CalendarPanel(logic.getSchedule(), logic.getAddressBook());
         infoPanelPlaceholder.getChildren().add(calendarPanel.getRoot());
 
         studentListPanel = new StudentListPanel(logic.getFilteredStudentList());

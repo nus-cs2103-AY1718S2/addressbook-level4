@@ -18,10 +18,12 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.ScheduleChangedEvent;
+import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
 import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.Time;
+import seedu.address.model.student.Student;
 
 //@@author demitycho
 /**
@@ -40,11 +42,15 @@ public class CalendarPanel extends UiPart<CalendarView> {
     private Calendar calendar;
     private PageBase pageBase;
 
-    public CalendarPanel(ReadOnlySchedule readOnlySchedule) {
+    private Integer index = 1;
+
+    private ReadOnlyAddressBook addressBook;
+
+    public CalendarPanel(ReadOnlySchedule readOnlySchedule, ReadOnlyAddressBook addressBook) {
         super(FXML);
         initializeCalendar();
         setUpCalendarView();
-        loadEntries(readOnlySchedule);
+        loadEntries(readOnlySchedule, addressBook);
         updateTime();
         registerAsAnEventHandler(this);
     }
@@ -81,7 +87,9 @@ public class CalendarPanel extends UiPart<CalendarView> {
     /**
      * Loads {@code lessons} into the calendar
      */
-    private void loadEntries(ReadOnlySchedule readOnlySchedule) {
+    private void loadEntries(ReadOnlySchedule readOnlySchedule, ReadOnlyAddressBook addressBook) {
+        index = 1;
+        this.addressBook = addressBook;
         readOnlySchedule.getSchedule().stream().forEach(this::loadEntry);
     }
 
@@ -89,17 +97,18 @@ public class CalendarPanel extends UiPart<CalendarView> {
      * Creates an entry with the {@code lesson} details and loads it into the calendar
      */
     private void loadEntry(Lesson lesson) {
-        String dateString = "10/04/2018";
-        String startTimeString = "10:00";
-        String endTimeString = "10:30";
+        String dateString = lesson.getDay().toDateString();
+        String startTimeString = lesson.getStartTime().toString();
+        String endTimeString = lesson.getEndTime().toString();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
         LocalDateTime startDateTime = LocalDateTime.parse(dateString + " " + startTimeString, formatter);
         LocalDateTime endDateTime = LocalDateTime.parse(dateString + " " + endTimeString, formatter);
 
+        Student student = addressBook.findStudentByKey(lesson.getUniqueKey());
         Entry entry = new Entry();
         entry.setInterval(startDateTime, endDateTime);
-        entry.setTitle(ENTRY_TITLE + lesson.getUniqueKey());
+        entry.setTitle(index++ + " " + ENTRY_TITLE + student.getName());
         entry.setCalendar(calendar);
     }
 
@@ -112,7 +121,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
     private void handleScheduleChangedEvent(ScheduleChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         calendar.clear();
-        loadEntries(event.getLessons());
+        loadEntries(event.getLessons(), event.getAddressBook());
     }
 
 

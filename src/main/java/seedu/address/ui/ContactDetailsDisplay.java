@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.EditPersonEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
 
@@ -93,5 +94,11 @@ public class ContactDetailsDisplay extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showPersonDetails(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handleEditPersonEvent(EditPersonEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showPersonDetails(event.person);
     }
 }

@@ -11,6 +11,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.EditPersonEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
@@ -144,7 +146,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: the skills master list will be updated even though the below line fails.
         // This can cause the skills master list to have additional skills that are not tagged to any person
         // in the person list.
-        persons.setPerson(target, syncedEditedPerson);
+        int index = persons.setPerson(target, syncedEditedPerson);
+        EventsCenter.getInstance().post(new EditPersonEvent(persons.getPerson(index)));
     }
 
     /**

@@ -36,6 +36,7 @@ public class AddAppointmentCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New appointment added: %1$s";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the calendar";
+    public static final String MESSAGE_DATE_TIME_CONSTRAINTS = "Start date time must be before end date time";
 
     private final Appointment toAdd;
 

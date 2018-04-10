@@ -75,6 +75,16 @@ public class CalendarPanel extends UiPart<Region> {
     public void setUpCalendarView() {
         calendarView.getCalendarSources().addAll(source);
         calendarView.setRequestedTime(LocalTime.now());
+        calendarView.setShowAddCalendarButton(false);
+        calendarView.setShowPrintButton(false);
+        calendarView.setShowSourceTrayButton(false);
+        calendarView.setShowPageToolBarControls(false);
+        calendarView.setTransitionsEnabled(false);
+        calendarView.setShowPageSwitcher(false);
+        calendarView.setShowSearchField(false);
+        calendarView.setShowToolBar(false);
+        calendarView.setShowSourceTray(false);
+        calendarView.showMonthPage();
     }
 
     /**

@@ -1,5 +1,7 @@
 # KevinCJH
+
 ###### \java\guitests\guihandles\EmailPanelHandle.java
+
 ``` java
 /**
  * A handle to the {@code EmailPanel} in the GUI.
@@ -29,7 +31,9 @@ public class EmailPanelHandle extends NodeHandle<Node> {
 
 }
 ```
+
 ###### \java\guitests\guihandles\PersonCardHandle.java
+
 ``` java
     public List<String> getSkillStyleClasses(String tag) {
         return tagLabels
@@ -41,7 +45,9 @@ public class EmailPanelHandle extends NodeHandle<Node> {
     }
 }
 ```
+
 ###### \java\seedu\address\logic\commands\EmailCommandTest.java
+
 ``` java
 public class EmailCommandTest {
 
@@ -160,6 +166,7 @@ public class EmailCommandTest {
     }
 }
 ```
+
 ###### \java\seedu\address\logic\GmailClientTest.java
 ``` java
 public class GmailClientTest {
@@ -279,6 +286,7 @@ public class EmailCommandParserTest {
 }
 ```
 ###### \java\seedu\address\ui\EmailPanelTest.java
+
 ``` java
 public class EmailPanelTest extends GuiUnitTest {
 
@@ -307,8 +315,10 @@ public class EmailPanelTest extends GuiUnitTest {
     }
 }
 ```
+
 ###### \java\seedu\address\ui\testutil\GuiTestAssert.java
 ``` java
         expectedCard.getSkills().forEach(tag ->
             assertEquals(expectedCard.getSkillStyleClasses(tag), actualCard.getSkillStyleClasses(tag)));
 ```
+

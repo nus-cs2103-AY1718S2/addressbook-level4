@@ -15,7 +15,7 @@ public class DateCommand extends Command {
     public static final String COMMAND_WORD = "date";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": View date. "
-            + "Parameters: DATE (optional, but must be in format YYYY-MM-DD if have)\n"
+            + "Parameters: DATE (optional, but must be a valid date in format YYYY-MM-DD if have)\n"
             + "Example: " + COMMAND_WORD + " 2018-03-26";
 
     public static final String MESSAGE_SUCCESS = "View date: %1$s";

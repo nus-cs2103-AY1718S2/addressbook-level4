@@ -1,3 +1,4 @@
+//@@author jaronchan
 package seedu.address.ui;
 
 import com.google.api.client.util.DateTime;
@@ -7,6 +8,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
 import seedu.address.logic.OAuthManager;
+
+/**
+ * An UI component that displays information of a {@code Event}.
+ */
 
 public class ScheduledEventCard extends UiPart<Region> {
 
@@ -38,6 +43,9 @@ public class ScheduledEventCard extends UiPart<Region> {
         eventInfo.setText(formattedScheduledEvent);
     }
 
+    /**
+     * A method to format the scheduled event information of a {@code Event}.
+     */
     private String scheduledEventFormatter(Event event, int eventIndex) {
         String title = event.getSummary();
         DateTime startAsDateTime = event.getStart().getDateTime();

@@ -37,6 +37,20 @@ public class CliSyntax {
     public static final Prefix PREFIX_BLOODTYPE = new Prefix("bt/");
 
     //@@author aquarinte
+    /* Prefix with description */
+    public static final String PREFIX_NAME_DESC = PREFIX_NAME.toString() + "\t: name";
+    public static final String PREFIX_PHONE_DESC = PREFIX_PHONE.toString() + "\t: phone";
+    public static final String PREFIX_EMAIL_DESC = PREFIX_EMAIL.toString() + "\t: email";
+    public static final String PREFIX_ADDRESS_DESC = PREFIX_ADDRESS.toString() + "\t: address";
+    public static final String PREFIX_NRIC_DESC = PREFIX_NRIC.toString() + "\t: NRIC";
+    public static final String PREFIX_TAG_DESC = PREFIX_TAG.toString() + "\t: tag";
+    public static final String PREFIX_REMARK_DESC = PREFIX_REMARK.toString() + "\t: remark";
+    public static final String PREFIX_DATE_DESC = PREFIX_DATE.toString() + "\t: yyyy-mm-dd hh:mm";
+    public static final String PREFIX_SPECIES_DESC = PREFIX_SPECIES.toString() + "\t: species";
+    public static final String PREFIX_BREED_DESC = PREFIX_BREED.toString() + "\t: breed";
+    public static final String PREFIX_COLOUR_DESC = PREFIX_COLOUR.toString() + "\t: colour";
+    public static final String PREFIX_BLOODTYPE_DESC = PREFIX_BLOODTYPE.toString() + "\t: blood type";
+
     /* Option definitions */
     public static final String OPTION_OWNER = "-o";
     public static final String OPTION_PETPATIENT = "-p";
@@ -49,12 +63,23 @@ public class CliSyntax {
     public static final String OPTION_WEEK = "-w";
     public static final String OPTION_DAY = "-d";
 
+    public static final String OPTION_OWNER_DESC = OPTION_OWNER + "\t: person/owner";
+    public static final String OPTION_PETPATIENT_DESC = OPTION_PETPATIENT + "\t: pet patient";
+    public static final String OPTION_APPOINTMENT_DESC = OPTION_APPOINTMENT + "\t: appointment";
+    public static final String OPTIONFORCE_OWNER_DESC = OPTIONFORCE_OWNER + "\t: force delete person/owner";
+    public static final String OPTIONFORCE_PETPATIENT_DESC = OPTIONFORCE_PETPATIENT + "\t: force delete pet patient";
+    public static final String OPTIONFORCE_APPOINTMENT_DESC = OPTIONFORCE_APPOINTMENT + "\t: force delete appointment";
+    public static final String OPTION_YEAR_DESC = OPTION_YEAR + "\t: calendar year view";
+    public static final String OPTION_MONTH_DESC = OPTION_MONTH + "\t: calendar month view";
+    public static final String OPTION_WEEK_DESC = OPTION_WEEK + "\t: calendar week view";
+    public static final String OPTION_DAY_DESC = OPTION_DAY + "\t: calendar day view";
+
     private static CliSyntax instance;
 
     private static final Set<String> prefixes = Stream.of(
-            PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_NRIC, PREFIX_BREED, PREFIX_SPECIES,
-            PREFIX_COLOUR, PREFIX_BLOODTYPE, PREFIX_DATE, PREFIX_REMARK, PREFIX_TAG)
-            .map(p -> p.toString())
+            PREFIX_NAME_DESC, PREFIX_PHONE_DESC, PREFIX_EMAIL_DESC, PREFIX_ADDRESS_DESC, PREFIX_NRIC_DESC,
+            PREFIX_BREED_DESC, PREFIX_SPECIES_DESC, PREFIX_COLOUR_DESC, PREFIX_BLOODTYPE_DESC, PREFIX_DATE_DESC,
+            PREFIX_REMARK_DESC, PREFIX_TAG_DESC)
             .collect(Collectors.toSet());
 
     private static final Set<String> commandWords = Stream.of(
@@ -63,9 +88,9 @@ public class CliSyntax {
             HelpCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD,
             HistoryCommand.COMMAND_WORD, ListAppointmentCommand.COMMAND_WORD).collect(Collectors.toSet());
 
-    private static final Set<String> options = Stream.of(OPTION_OWNER, OPTION_PETPATIENT, OPTION_APPOINTMENT,
-            OPTIONFORCE_OWNER, OPTIONFORCE_PETPATIENT, OPTIONFORCE_APPOINTMENT, OPTION_YEAR, OPTION_MONTH,
-            OPTION_WEEK, OPTION_DAY)
+    private static final Set<String> options = Stream.of(OPTION_OWNER_DESC, OPTION_PETPATIENT_DESC,
+            OPTION_APPOINTMENT_DESC, OPTIONFORCE_OWNER_DESC, OPTIONFORCE_PETPATIENT_DESC, OPTIONFORCE_APPOINTMENT_DESC,
+            OPTION_YEAR_DESC, OPTION_MONTH_DESC, OPTION_WEEK_DESC, OPTION_DAY_DESC)
             .collect(Collectors.toSet());
 
     public static final int MAX_SYNTAX_SIZE = Math.max(commandWords.size(), Math.max(prefixes.size(), options.size()));

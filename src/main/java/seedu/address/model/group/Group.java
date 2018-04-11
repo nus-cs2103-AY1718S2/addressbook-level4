@@ -8,6 +8,7 @@ import java.util.Objects;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Represents a Group in the address book.
@@ -58,6 +59,20 @@ public class Group {
     }
 
     //@@author jas5469
+
+    /**
+     * Removes a person to the group's personList
+     * @param toRemove The Person to remove.
+     * @throws DuplicatePersonException
+     */
+    public void removePerson(Person toRemove) throws PersonNotFoundException {
+        if (!getPersonList().contains(toRemove)) {
+            throw new PersonNotFoundException();
+        } else {
+            this.personList.remove(toRemove);
+        }
+
+    }
     @Override
     public boolean equals(Object other) {
         if (other == this) {

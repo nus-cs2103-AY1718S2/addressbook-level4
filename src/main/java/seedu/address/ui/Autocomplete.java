@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.parser.CliSyntax;
 
@@ -25,9 +26,10 @@ public class Autocomplete {
     private static final int MAX_SUGGESTION_COUNT = CliSyntax.MAX_SYNTAX_SIZE;
     private static Autocomplete instance;
     private Logic logic;
-    private String targetWord;
-    private String[] words;
+    private String trimmedCommandInput;
+    private String[] trimmedCommandInputArray;
     private String option;
+    private String targetWord;
     private Set<String> tagSet;
 
     public static Autocomplete getInstance() {
@@ -49,18 +51,21 @@ public class Autocomplete {
     }
 
     /**
-     * Returns a list of suggestions for autocomplete based on current user input.
+     * Returns a list of suggestions for autocomplete based on user input (up to current caret position).
      *
      * @param commandTextField Command box that holds user input.
      */
     public List<String> getSuggestions(TextField commandTextField) {
         int cursorPosition = commandTextField.getCaretPosition();
-        // split string, but retain all whitespaces in array "words"
-        words = commandTextField.getText(0, cursorPosition).split("((?<= )|(?= ))", -1);
-        targetWord = words[words.length - 1].toLowerCase();
+        trimmedCommandInput = StringUtil.leftTrim(commandTextField.getText(0, cursorPosition));
+
+        // split string, but retain all whitespaces in array "trimmedCommandInputArray"
+        trimmedCommandInputArray = trimmedCommandInput.split("((?<= )|(?= ))", -1);
+
+        targetWord = trimmedCommandInputArray[trimmedCommandInputArray.length - 1].toLowerCase();
         setOption();
 
-        if (words.length <= 2) {
+        if (trimmedCommandInputArray.length <= 2) {
             return getCommandWordSuggestions();
         }
 
@@ -105,70 +110,82 @@ public class Autocomplete {
     }
 
     /**
-     * Checks if command input {@code words} contains the "add" command with reference to existing persons' Nric,
-     * to determine if autocomplete for persons' Nric is necessary.
+     * Checks if command input {@code trimmedCommandInputArray} contains the "add" command with reference to existing
+     * persons' Nric, and determine if autocomplete for persons' Nric is necessary.
      *
      * Returns false if the command input is to add a new person.
      */
     private boolean hasAddCommandReferNric() {
-        // returns false if adding a new person.
-        if (words[0].equals("add") && words[2].equals("-o")) {
+        if (trimmedCommandInputArray[0].equals("add") && trimmedCommandInputArray[2].equals("-o")) {
             return false;
         }
 
-        if (words[0].equals("add") && words[words.length - 3].equals("-o") && targetWord.startsWith("nr/")) {
+        if (trimmedCommandInputArray[0].equals("add") && trimmedCommandInputArray[trimmedCommandInputArray.length - 3]
+                .equals("-o") && targetWord.startsWith("nr/")) {
             return true;
         }
         return false;
     }
 
     /**
-     * Checks if command input {@code words} contains the "edit" command with reference to existing persons' Nric,
-     * to determine if autocomplete for persons' Nric is necessary.
+     * Checks if command input {@code trimmedCommandInputArray} contains the "edit" command with reference to existing
+     * persons' Nric, and determine if autocomplete for persons' Nric is necessary.
+     *
+     * Returns true if editing the owner's nric of a pet patient.
      */
     private boolean hasEditCommandReferNric() {
-        if (words[0].equals("edit") && option.equals("-p") && targetWord.startsWith("nr/")) {
+        if (trimmedCommandInputArray[0].equals("edit") && option.equals("-p") && targetWord.startsWith("nr/")) {
             return true;
         }
         return false;
     }
 
     /**
-     * Checks if command input {@code words} contains the "find" command with reference to existing persons' Nric,
-     * to determine if autocomplete for persons' Nric is necessary.
+     * Checks if command input {@code trimmedCommandInputArray} contains the "find" command with reference to existing
+     * persons' Nric, and determine if autocomplete for persons' Nric is necessary.
+     *
+     * Returns true if finding a person by nric.
      */
     private boolean hasFindCommandReferNric() {
-        if (words[0].equals("find") && option.equals("-o") && targetWord.startsWith("nr/")) {
+        if (trimmedCommandInputArray[0].equals("find") && option.equals("-o") && targetWord.startsWith("nr/")) {
             return true;
         }
         return false;
     }
 
     /**
-     * Checks if command input {@code words} has reference to existing pet patients' names to determine
-     * if autocomplete for pet patient names is necessary.
+     * Checks if command input {@code trimmedCommandInputArray} has reference to existing pet patients' names, and
+     * determine if autocomplete for pet patient names is necessary.
      *
-     * Returns false if command input is adding a new pet patient.
-     * Returns false if command input is adding a new owner, new pet patient, new appointment.
-     * Returns false if command input is editing a pet patient's name.
+     * Returns false if it is an add new pet patient command.
+     * Returns false if it is an add new owner, new pet patient & new appointment command.
+     * Returns false if it is an edit command.
+     * Returns false if it is a find command.
      */
     private boolean hasReferenceToExistingPetPatientNames() {
-        // add a new pet patient command format
-        if (words[0].equals("add") && words[2].equals("-p") && targetWord.startsWith("n/")) {
-            return false;
-        }
-
-        // adding a new owner, new pet patient, new appointment command format
-        if (words[0].equals("add") && words[2].equals("-o") && words[words.length - 3].equals("-p")
+        // Add new pet patient
+        if (trimmedCommandInputArray[0].equals("add") && trimmedCommandInputArray[2].equals("-p")
                 && targetWord.startsWith("n/")) {
             return false;
         }
 
-        if (words[0].equals("edit") && option.equals("-p") && targetWord.startsWith("n/")) {
+        // Add new owner, new pet patient & new appointment
+        if (trimmedCommandInputArray[0].equals("add") && trimmedCommandInputArray[2].equals("-o")
+                && trimmedCommandInputArray[trimmedCommandInputArray.length - 3].equals("-p")
+                && targetWord.startsWith("n/")) {
             return false;
         }
 
-        if (words[words.length - 3].equals("-p") && targetWord.startsWith("n/")) {
+        if (trimmedCommandInputArray[0].equals("edit")) {
+            return false;
+        }
+
+        if (trimmedCommandInputArray[0].equals("find")) {
+            return false;
+        }
+
+        if (trimmedCommandInputArray[trimmedCommandInputArray.length - 3].equals("-p")
+                && targetWord.startsWith("n/")) {
             return true;
         }
 
@@ -176,15 +193,14 @@ public class Autocomplete {
     }
 
     /**
-     * Sets {@code option} based on the last option found in {@code words}.
+     * Sets {@code option} based on the last option found in {@code trimmedCommandInput}.
      */
     private void setOption() {
         option = "nil";
-        String commandBoxInput = String.join("", words);
-        int index = commandBoxInput.lastIndexOf("-");
+        int index = trimmedCommandInput.lastIndexOf("-");
 
-        if (index > -1 && (commandBoxInput.length() >= index + 2)) {
-            option = commandBoxInput.substring(index, index + 2); // (inclusive, exclusive)
+        if (index > -1 && (trimmedCommandInput.length() >= index + 2)) {
+            option = trimmedCommandInput.substring(index, index + 2); // (inclusive, exclusive)
         }
     }
 
@@ -274,10 +290,10 @@ public class Autocomplete {
             return suggestions;
         } else {
             String[] splitByPrefix = targetWord.split("/");
-            String targetSpecie = splitByPrefix[1];
+            String targetSpecies = splitByPrefix[1];
             List<String> suggestions = logic.getAllPetPatientSpecies()
                     .stream()
-                    .filter(s -> s.toLowerCase().startsWith(targetSpecie) && !s.toLowerCase().equals(targetSpecie))
+                    .filter(s -> s.toLowerCase().startsWith(targetSpecies) && !s.toLowerCase().equals(targetSpecies))
                     .sorted(String::compareToIgnoreCase)
                     .limit(MAX_SUGGESTION_COUNT)
                     .collect(Collectors.toList());
@@ -394,7 +410,7 @@ public class Autocomplete {
     private List<String> getPrefixSuggestions() {
         List<String> suggestions = logic.getAllPrefixes()
                 .stream()
-                .filter(p -> p.startsWith(targetWord) && !p.equals(targetWord))
+                .filter(p -> p.startsWith(targetWord) && !(StringUtil.removeDescription(p).equals(targetWord)))
                 .sorted()
                 .collect(Collectors.toList());
         return suggestions;
@@ -406,7 +422,7 @@ public class Autocomplete {
     private List<String> getOptionSuggestions() {
         List<String> suggestions = logic.getAllOptions()
                 .stream()
-                .filter(o -> o.startsWith(targetWord) && !o.equals(targetWord))
+                .filter(o -> o.startsWith(targetWord) && !(StringUtil.removeDescription(o).equals(targetWord)))
                 .sorted()
                 .collect(Collectors.toList());
         return suggestions;

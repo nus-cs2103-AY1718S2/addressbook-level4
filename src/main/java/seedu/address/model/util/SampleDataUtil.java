@@ -31,7 +31,6 @@ import seedu.address.model.petpatient.Species;
 import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
 import seedu.address.model.tag.Tag;
 
-//@@author wynonaK
 /**
  * Contains utility methods for populating {@code AddressBook} with sample data.
  */
@@ -62,7 +61,7 @@ public class SampleDataUtil {
         };
     }
 
-    //@@author
+    //@@author wynonaK
     public static PetPatient[] getSamplePetPatients() {
         return new PetPatient[] {
             new PetPatient(new PetPatientName("Ane"), new Species("Cat"), new Breed("Siamese"),
@@ -92,7 +91,7 @@ public class SampleDataUtil {
         };
     }
 
-    //@@author wynonaK
+
     public static Appointment[] getSampleAppointments() {
         return new Appointment[] {
             new Appointment(new Nric("S0123456B"), new PetPatientName("Ane"), new Remark("nil"),

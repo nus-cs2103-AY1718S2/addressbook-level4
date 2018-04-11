@@ -16,6 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -198,7 +199,8 @@ public class CommandBox extends UiPart<Region> {
 
             for (String s : suggestions) {
                 MenuItem m = new MenuItem(s);
-                m.setOnAction(event -> handleAutocompleteSelection(m.getText()));
+                String autocompleteValue = StringUtil.removeDescription(s);
+                m.setOnAction(event -> handleAutocompleteSelection(autocompleteValue));
                 suggestionBox.getItems().add(m);
             }
 

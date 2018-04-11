@@ -5,11 +5,14 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.regex.Pattern;
 
 /**
  * Helper functions for handling strings.
  */
 public class StringUtil {
+
+    private static final Pattern STRING_LEFT_TRIM = Pattern.compile("^\\s+");
 
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
@@ -67,5 +70,29 @@ public class StringUtil {
         } catch (NumberFormatException nfe) {
             return false;
         }
+    }
+
+    //@@author aquarinte
+    /**
+     * Returns the actual required value of a String. Removes description (starts with "\t:").
+     */
+    public static String removeDescription(String s) {
+        int descriptionStart = s.indexOf("\t:");
+
+        if (descriptionStart > 0) {
+            return s.substring(0, descriptionStart);
+        }
+
+        return s;
+    }
+
+    //@@author aquarinte-reused
+    /**
+     * Returns a string with trailing whitespaces on the left removed.
+     *
+     * Reused from: http://tutorial4java.blogspot.sg/2013/05/trim-ltrim-and-rtrim-in-java.html
+     */
+    public static String leftTrim(String s) {
+        return STRING_LEFT_TRIM.matcher(s).replaceAll("");
     }
 }

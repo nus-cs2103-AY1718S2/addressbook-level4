@@ -1,0 +1,55 @@
+= Tan Heng Yeow - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: HR+
+
+---
+
+== Overview
+
+HR+ is a recruiting and talent management desktop application targeting University Talent Acquisition Specialists. It is built to help them manage a significant number of student contacts and find the best-fitting candidates. University Talent Acquisition Specialists interact with HR+ using a Command Line Interface(CLI). HR+ has a Graphical User Interface(GUI) created with JavaFX and it is written in Java with approximately kLOC.
+
+
+== Summary of contributions
+
+* *Major enhancement*: enhanced *find command to support a variety of search patterns*
+** What it does: The `find` command allows the user to search for a student easily through exact keyword match, fuzzy keyword match or wildcard keyword match.
+** Justification: This feature is important as users might be managing a large number of contacts and finding the contacts that they desire is not easy.
+** Highlights: This enhancement involves adding new predicates on top of existing ones. Various new classes are created to manage the new predicates. A singleton pattern class `FindResults` is created to store find results and provide utility functions for parsing predicates.
+
+* *Minor enhancement*: added `Major` and `GradePointAverage` fields to all students. These fields affect the `add` command and are editable by the `edit` command. They are also crucial details that affect the hiring decision of an university student.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W14-B3/main/blob/master/collated/functional/tanhengyeow.md[Functional code]] [https://github.com/CS2103JAN2018-W14-B3/main/blob/master/collated/test/tanhengyeow.md[Test code]]
+
+* *Other contributions*:
+
+** Project Management:
+*** Setup Travis, AppVeyor and Coveralls (https://github.com/CS2103JAN2018-W14-B3/main/pull/4[#4])
+*** Managed releases `v1.2 - v1.4` on GitHub
+*** Provide updates to main repo (https://github.com/nus-cs2103-AY1718S2/addressbook-level4/pull/8[#8])
+
+** Documentation:
+*** Updated User Guide and Developer Guide (https://github.com/CS2103JAN2018-W14-B3/main/pull/3[#3], https://github.com/CS2103JAN2018-W14-B3/main/pull/19[#19], https://github.com/CS2103JAN2018-W14-B3/main/pull/52[#52], https://github.com/CS2103JAN2018-W14-B3/main/pull/61[#61], https://github.com/CS2103JAN2018-W14-B3/main/pull/79[#79])
+
+** Community:
+*** Reported bugs and suggestions for other projects (https://github.com/CS2103JAN2018-W10-B2/main/issues/81[#81], https://github.com/CS2103JAN2018-W10-B2/main/issues/74[#74], https://github.com/CS2103JAN2018-W10-B2/main/issues/71[#71], https://github.com/CS2103JAN2018-W10-B2/main/issues/70[#70])
+*** Participated in forum discussion (https://github.com/nus-cs2103-AY1718S2/forum/issues/7[#7], https://github.com/nus-cs2103-AY1718S2/forum/issues/12[#12])
+*** Participated and assisted in queries on slack forum
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=find]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=findcommand]

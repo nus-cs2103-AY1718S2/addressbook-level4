@@ -1,4 +1,26 @@
 # crizyli-unused
+###### \java\seedu\address\model\person\CalendarId.java
+``` java
+
+import static java.util.Objects.requireNonNull;
+
+/**
+ * Represents a Person's calendarId
+ */
+public class CalendarId {
+
+    public final String value;
+
+    public CalendarId(String calendarId) {
+        requireNonNull(calendarId);
+        this.value = calendarId;
+    }
+
+    public String getValue() {
+        return value;
+    }
+}
+```
 ###### \java\seedu\address\storage\XmlAdaptedPassword.java
 ``` java
 import javax.xml.bind.annotation.XmlValue;

@@ -324,9 +324,9 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
     }
-
+    //@@author jas5469
     @Test
-    public void parseCommand_listGroupMembers() throws Exception {
+    public void parseCommand_listTagMembers() throws Exception {
         List<String> keywords = Arrays.asList("friends", "CS3230");
         ListTagMembersCommand command = (ListTagMembersCommand) parser.parseCommand(
                 ListTagMembersCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
@@ -334,13 +334,13 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_listGroupMembersAlias() throws Exception {
+    public void parseCommand_listTagGMembersAlias() throws Exception {
         List<String> keywords = Arrays.asList("friends", "CS3230");
         ListTagMembersCommand command = (ListTagMembersCommand) parser.parseCommand(
                 ListTagMembersCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new ListTagMembersCommand(new TagContainKeywordsPredicate(keywords)), command);
     }
-
+    //@@author
     @Test
     public void parseCommand_select() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(

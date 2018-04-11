@@ -1,0 +1,52 @@
+= Jason Leo - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Fastis - MeetUp Manager
+
+---
+
+== Overview
+
+Fastis is a desktop application that aims to help students who are studying at National University of Singapore (NUS) manage their group projects effectively. The application enables students to keep track of group members’ timetables, information, meetups agendas, to-dos and schedule suitable meetup time.
+
+== Summary of contributions
+
+* *Major enhancement*: added *group*
+**
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W15-B3/main/tree/master/collated/functional/jas5469.md[Functional code]] [https://github.com/CS2103JAN2018-W15-B3/main/blob/master/collated/test/jas5469.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.4` on GitHub
+*** Managed weekly milestones on GitHub
+** Enhancements to existing features:
+*** Wrote additional tests for existing features to increase coverage
+** Documentation:
+*** Update new screenshots of new commands for the User Guide
+** Community:
+*** Create weekly issues for team members
+*** Help team members fix bugs
+*** Reported bugs and suggestions
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=toDoList]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=addToDo]
+include::../DeveloperGuide.adoc[tag=checkToDo]
+
+---

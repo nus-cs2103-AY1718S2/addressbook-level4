@@ -89,7 +89,14 @@
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
-        loadPersonDetail(event.getNewSelection().person);
+    }
+
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    @Subscribe
+    private void handlePersonCardDoubleClick(PersonCardDoubleClick event) {
+        loadPersonDetail(event.getNewSelection());
     }
 }
 ```
@@ -173,6 +180,63 @@ public class PersonDetail extends UiPart<Stage> {
      */
     public void show() {
         getRoot().show();
+    }
+}
+```
+###### /java/seedu/address/ui/PersonCard.java
+``` java
+    private void setDoubleClickEvent() {
+        cardPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                    if (mouseEvent.getClickCount() == 2) {
+                        raise(new PersonCardDoubleClick(person));
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof PersonCard)) {
+            return false;
+        }
+
+        // state check
+        PersonCard card = (PersonCard) other;
+        return id.getText().equals(card.id.getText())
+                && person.equals(card.person);
+    }
+}
+```
+###### /java/seedu/address/commons/events/ui/PersonCardDoubleClick.java
+``` java
+/**
+ * Represents a double click event in the Person Card
+ */
+public class PersonCardDoubleClick extends BaseEvent {
+
+    private final Person newSelection;
+
+    public PersonCardDoubleClick(Person newSelection) {
+        this.newSelection = newSelection;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public Person getNewSelection() {
+        return newSelection;
     }
 }
 ```

@@ -159,6 +159,21 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::persondetail[]
+=== Opening Person Detail Window
+
+This is a feature that allows users to open a new window with the person's details. These are the following steps to do
+this:
+
+1. Ensure that at least 1 contact exists int eh addressbook.
+2. Navigate to the PersonCard on the left side of the application.
+3. Double click on the card to bring up the popup window.
+4. When done viewing the details, close the window.
+
+Multiple of these windows can be open at a time, allowing the user to compare contacts side by side.
+
+// end::persondetail[]
+
 // tag::appointment[]
 
 === Adding an appointment: `add_appointment`

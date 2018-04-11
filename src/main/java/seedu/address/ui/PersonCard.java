@@ -94,7 +94,7 @@ public class PersonCard extends UiPart<Region> {
         setDoubleClickEvent();
     }
 
-    //@author jstarw
+    //@@author jstarw
     private void setDoubleClickEvent() {
         cardPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

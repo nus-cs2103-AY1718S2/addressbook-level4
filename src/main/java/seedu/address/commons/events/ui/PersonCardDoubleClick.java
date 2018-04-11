@@ -3,6 +3,7 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.Person;
 
+//@@author jstarw
 /**
  * Represents a double click event in the Person Card
  */

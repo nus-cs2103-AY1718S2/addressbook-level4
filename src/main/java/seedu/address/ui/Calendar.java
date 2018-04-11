@@ -138,7 +138,7 @@ public class Calendar extends UiPart<Region> {
             int day = Integer.parseInt(dayMonthYear[0]);
             int month = Integer.parseInt(dayMonthYear[1]);
             int year = Integer.parseInt(dayMonthYear[2]);
-            if (month != currentYearMonth.getMonthValue()) {
+            if (month != currentYearMonth.getMonthValue() || year != currentYearMonth.getYear()) {
                 continue;
             }
             LocalDate date = LocalDate.of(year, month, day);

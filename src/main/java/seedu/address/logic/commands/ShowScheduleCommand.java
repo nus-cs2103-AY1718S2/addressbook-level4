@@ -8,7 +8,10 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.google.api.services.calendar.model.Event;
+
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.DailyScheduleShownChangedEvent;
 import seedu.address.commons.events.ui.ResetDirectionsEvent;
 import seedu.address.commons.events.ui.UpdateNumberOfButtonsEvent;
 import seedu.address.logic.OAuthManager;
@@ -50,6 +53,9 @@ public class ShowScheduleCommand extends Command {
             }
 
             //@@author jaronchan
+
+            List<Event> dailyEventsList = OAuthManager.getDailyEvents(user, localDate);
+            EventsCenter.getInstance().post(new DailyScheduleShownChangedEvent(dailyEventsList));
             EventsCenter.getInstance().post(new ResetDirectionsEvent());
             EventsCenter.getInstance().post(new UpdateNumberOfButtonsEvent(dailyEvents.size() - 1));
 

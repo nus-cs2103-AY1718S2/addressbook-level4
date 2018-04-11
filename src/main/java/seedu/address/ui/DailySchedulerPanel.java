@@ -11,6 +11,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.DailyScheduleShownChangedEvent;
 import seedu.address.commons.events.ui.LoadDirectionsEvent;
 import seedu.address.commons.events.ui.LoadMapPanelEvent;
 import seedu.address.commons.events.ui.RemoveMapPanelEvent;
@@ -41,6 +42,31 @@ public class DailySchedulerPanel extends UiPart<Region> {
         super(FXML);
         registerAsAnEventHandler(this);
     }
+
+    /**
+     * Fills schedule panel to with scheduled events for the specified date.
+     * If the day has no events, a placeholder text will be shown.
+     *
+     */
+//    private void showPlannedEvents() {
+//        if (person != null) {
+//            // Fill the labels with info from the person object.
+//            nameLabel.setText(person.getName().toString());
+//            phoneNumberLabel.setText(person.getPhone().toString());
+//            emailLabel.setText(person.getEmail().toString());
+//            addressLabel.setText(person.getAddress().toString());
+//            conditionLabel.setText("TO BE IMPLEMENTED IN 2.0");
+//            priorityLabel.setText("TO BE IMPLEMENTED IN 2.0");
+//        } else {
+//            // Person is null, remove all the text.
+//            nameLabel.setText("");
+//            phoneNumberLabel.setText("");
+//            emailLabel.setText("");
+//            addressLabel.setText("");
+//            conditionLabel.setText("TO BE IMPLEMENTED IN 2.0");
+//            priorityLabel.setText("TO BE IMPLEMENTED IN 2.0");
+//        }
+//    }
 
     /**
      * Buttons depending on how many trips to be made.
@@ -104,6 +130,12 @@ public class DailySchedulerPanel extends UiPart<Region> {
         if (directionPanel != null && directionPanelPlaceholder.getChildren().contains(directionPanel.getRoot())) {
             directionPanel.freeResources();
         }
+    }
+
+    @Subscribe
+    private void handleDailyScheduleShownChangedEvent(DailyScheduleShownChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
     }
 
     @Subscribe

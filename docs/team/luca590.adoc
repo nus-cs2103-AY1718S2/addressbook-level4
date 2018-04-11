@@ -1,0 +1,83 @@
+= Lucas Gaylord - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: AddSurance
+Addsurance is _the_ insurance book for teh-savy insurance agents. Built specifically to support the functionality you need to organize and maintain your massive and growing list of contacts and demanding schedule, so that you may scale your business with greater ease. The user design is minimalistic, based in a Command Line Interface, to help you get the job done without distractions.
+
+---
+
+== Overview
+
+*AddSurance*
+
+== Summary of contributions
+
+* *Major enhancement*:
+** Import and Export contacts to/from a `.csv` file
+*** Creating and implementing `ImportContactsCommand` class
+*** Creating and implementing `ExportContactsCommand` class
+*** Integration with `AddressBookParser` in both cases
+
+** *What it does*:
+
+This functionality allows the user to take a .csv file with a list of contact information and easily import that information into the AddressBook with 1 command. Additionally, the user may want to print the contacts or store them in another AddressBook and can similarly export the contacts to a specified `.csv`. If no file exists at the path specified by the user, one will automatically be created.
+
+** *Justification*:
+
+Users need portability. Without this functionality, a user would manually have to copy every entry from another contact list into our AddressBook. For an insurance agent with a large number of contacts this is just not feasible. Similarly, users may need their contacts outside the context of this AddressBook, which is provided by the export functionality.
+
+** *Highlights*:
+
+Creating new commands requires integration `AddressBookParser` and the model. Additionally, it uses the Apache Commons CSV dependency.
+
+* Credits: https://www.callicoder.com/java-read-write-csv-file-apache-commons-csv/[Apache Commons CSV]
+
+*Minor enhancement*:
+
+** Sorting alphabetically by name
+** *Justification*:
+*** Sorting makes it easier for an isurance agent to stay organized. Without this functionality, there would be no other way to organize contacts
+
+** *Highlights*:
+Although sorting seems like a simple task, it required full integration with all parts of the system excluding the UI. Functions were added to `AddressBook`, `Model`, `ModelManager`, and finally `AddressBookParser`. `SortCommand` and `PersonCompare` was a newly created and implemented class.
+
+*Code contributed*: [https://github.com/CS2103JAN2018-W10-B4/main/blob/master/collated/functional/luca590.md[Functional Code]][https://github.com/CS2103JAN2018-W10-B4/main/blob/master/collated/test/luca590.md[Test code]]
+
+
+*Other contributions*:
+
+
+** *Project management*:
+
+*** Subitting and resolving issues with PRs
+
+*** PRs reviewed (with non-trivial review comments): https://a.com[#1], https://a.com[#2], https://a.com[#3], https://a.com[#4]
+*** Reported bugs and suggestions (examples:  https://a.com[1], https://a.com[2], https://a.com[3])
+** Tools:
+*** Integrated a third party library, Apache Commons CSV with the codebase.
+
+== Contributions to the User Guide
+
+
+|===
+|Below are sections of the User Guide to which I contributed.
+|===
+
+include::../UserGuide.adoc[tag=import]
+
+include::../UserGuide.adoc[tag=export]
+
+include::../UserGuide.adoc[tag=sort]
+
+
+== Contributions to the Developer Guide
+
+|===
+| Below are sections of the Developer Guide to which I contributed.
+|===
+
+include::../DeveloperGuide.adoc[tag=import]
+
+include::../DeveloperGuide.adoc[tag=export]
+

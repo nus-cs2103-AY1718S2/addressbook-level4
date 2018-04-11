@@ -1,0 +1,67 @@
+= Kion Shi Rong - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: reInsurance
+
+---
+
+== Overview
+
+reInsurance is adapted from https://github.com/nus-cs2103-AY1718S2/addressbook-level4[AddressBook - Level 4], a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC. The application is aimed at insurance agents to provide them with a centralised system to keep track of their clients. It provide a calendar view which allows the user to have a good overview of upcoming appointments with their clients as well as their birthdays to keep in touch. This application also features calculation of commissions earned from clients so as to facilitate the insurance agent in deciding which customer has a higher priority.
+
+== Summary of contributions
+
+* *Major enhancement*: added birthday and appointments with a calendar view using Google Calendar API
+** What it does: allows the users to keep track of the birthday and appointment dates with clients. The calendar view allows the user to have a good over view of the dates.
+** Justification: Allowing the user to record appointments and birthdays are important to the product as these are formation which aids in a centralised management system of clients for an insurance agent. Furthermore, the calendar view allows a good overview which is key when planning for the week or month ahead.
+** Highlights: This enhancement includes the use of Google Calendar API which allows for much more future possibilities to integrate with Google. The feature for authentication with Google APIs have been done which would make integrating with other Google APIs in the future easier.
+** Credits: _https://developers.google.com/calendar/[Google Calendar API]_
+
+* *Minor enhancement*: added a findtag command that allows the user to find clients by tag(s).
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/collated/functional/cambioforma.md[Functional code]] [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/collated/test/cambioforma.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed release `v1.3` on GitHub
+*** Updated all test cases for `v1.3` on GitHub
+*** Created Jar file for `v1.3` to `v1.5` (3 releases) on GitHub
+** Enhancements to existing features (To be edited):
+*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+** Documentation (To be edited):
+*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+** Community (To be edited):
+*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
+*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
+*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
+** Tools:
+*** Integrated Google Calendar API to the project https://github.com/CS2103JAN2018-T11-B3/main/pull/152[#152]
+
+_{you can add/remove categories in the list above}_
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=findtag]
+
+include::../UserGuide.adoc[tag=add]
+
+include::../UserGuide.adoc[tag=edit]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=appointments]
+
+include::../DeveloperGuide.adoc[tag=findtag]

@@ -210,7 +210,7 @@ Displays the combined odd timetable for persons at Index 1, 2 and 3.
 
 * `union Even 1 2` +
 Displays the combined even timetable for persons at Index 1 and 2.
-// end:union[]
+// end::union[]
 
 // tag::vacant[]
 ==== Vacant study rooms finder : `vacant` (since v1.3)

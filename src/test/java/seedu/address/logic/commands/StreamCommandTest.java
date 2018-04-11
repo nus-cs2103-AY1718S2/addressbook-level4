@@ -15,7 +15,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
@@ -31,12 +30,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Cca;
-import seedu.address.model.person.InjuriesHistory;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Remark;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author TeyXinHui

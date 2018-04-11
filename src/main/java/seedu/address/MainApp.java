@@ -236,17 +236,36 @@ public class MainApp extends Application {
      */
     private void readWelcomeMessage() {
         try {
-            createFolderIfNeeded();
-            createScriptIfNeeded();
-            readWelcomeScript();
-        } catch (IOException e) {
-            logger.warning("Unable to read Welcome script");
+            readWelcomeScriptForMac();
+        } catch (IOException notMac){
+            try {
+                createFolderIfNeeded();
+                createScriptIfNeeded();
+                readWelcomeScript();
+            } catch (IOException e) {
+                logger.warning("Unable to read Welcome script");
+            }
         }
     }
 
+    /**
+     * Read welcome script for Mac
+     */
+    private void readWelcomeScriptForMac() throws IOException {
+        Runtime runtime = Runtime.getRuntime();
+        String[] argument = { "osascript", "-e", "say \"Welcome user\" using \"Alex\" "
+                + "speaking rate 180 pitch 42 modulation 60" };
+
+        Process process = runtime.exec(argument);
+        logger.info("Running welcome script on Mac");
+    }
+
+    /**
+     * Read welcome script for Window
+     */
     private void readWelcomeScript() throws IOException {
-        logger.info("Running welcome script");
         Runtime.getRuntime().exec("wscript.exe script\\Welcome.vbs");
+        logger.info("Running welcome script on Window");
     }
 
     /**

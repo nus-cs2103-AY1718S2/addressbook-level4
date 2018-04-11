@@ -89,16 +89,31 @@ public class BrowserPanel extends UiPart<Region> {
      */
     private void readPersonName(Person person) {
         try {
-            createFolderIfNeeded();
-            createScriptIfNeeded();
-            readPersonNameScript(person);
-        } catch (IOException e) {
-            logger.warning("Unable to read Introduce person script");
+            readPersonNameScriptForMac(person);
+        } catch (IOException notMac) {
+            try {
+                createFolderIfNeeded();
+                createScriptIfNeeded();
+                readPersonNameScript(person);
+            } catch (IOException e) {
+                logger.warning("Unable to read Introduce person script");
+            }
         }
     }
 
+    private void readPersonNameScriptForMac(Person person) throws IOException {
+        String personName = person.getName().toString();
+        String script = "say \"" + personName + "\" using \"Alex\" speaking rate 150 pitch 42 modulation 60";
+
+        Runtime runtime = Runtime.getRuntime();
+        String[] argument = { "osascript", "-e", script };
+
+        Process process = runtime.exec(argument);
+        logger.info("Running read person name script on Mac");
+    }
+
     private void readPersonNameScript(Person person) throws IOException {
-        logger.info("Running welcome script");
+        logger.info("Running read person name script on Window");
         Runtime.getRuntime().exec("wscript.exe script\\ReadPersonName.vbs"
                 + " " + person.getName().fullName);
     }

@@ -16,9 +16,6 @@ import seedu.address.model.subject.UniqueSubjectList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
-
-
-
 /**
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -93,12 +90,11 @@ public class Person {
     public Set<Subject> getSubjects() {
         return Collections.unmodifiableSet(subjects.toSet());
     }
+
     public List<Subject> getSubjectArray () {
         Set<Subject> set = getSubjects();
         List<Subject> list = new ArrayList<Subject>();
         list.addAll(set);
-        //Subject obj = list.get(0);
-        //System.out.println(obj);
         return list;
     }
 
@@ -152,7 +148,7 @@ public class Person {
             }
             // Check that if the student has at least one subject in each L1R5 category, else return error message
             if (checkLowest(subjectsToCheck, subjects) == 10) {
-                throw new InvalidSubjectCombinationException("Subjects taken do not fulfil the L1R5 requirements.");
+                throw new InvalidSubjectCombinationException();
             } else {
                 score += checkLowest(subjectsToCheck, subjects);
             }
@@ -161,6 +157,210 @@ public class Person {
         return score;
     }
 
+    //@@author TeyXinHui
+    /**
+     * Calculates the lowest possible score from the grades of the subjects of the selected person.
+     * @return L1B4-A score
+     */
+    public int calculateL1B4A() throws InvalidSubjectCombinationException {
+        int score = 0;
+        Set<Subject> subjects = new HashSet<>(this.getSubjects());
+        Set<Subject> subjectsToCheck = new HashSet<>();
+        for (int i = 0; i < 5; i++) {
+            for (Subject subject: subjects) {
+                switch (i) {
+                // Check if the subject is a L1 subject
+                case 0:
+                    if (Arrays.asList(Subject.L1_SUBJECT).contains(subject.subjectName)) {
+                        subjectsToCheck.add(subject);
+                    }
+                    break;
+                // Check if the subject is a R1 subject
+                case 1:
+                    if (Arrays.asList(Subject.R1A_SUBJECT).contains(subject.subjectName)) {
+                        subjectsToCheck.add(subject);
+                    }
+                    break;
+                // Check if the subject is a R2 subject
+                case 2:
+                    if (Arrays.asList(Subject.R2A_SUBJECT).contains(subject.subjectName)) {
+                        subjectsToCheck.add(subject);
+                    }
+                    break;
+                // Check if the subject is a R3 or R4 subject
+                case 3:
+                case 4:
+                    if (Arrays.asList(Subject.R3_R4_SUBJECT).contains(subject.subjectName)) {
+                        subjectsToCheck.add(subject);
+                    }
+                    break;
+                default:
+                    break;
+                }
+            }
+            // Check that if the student has at least one subject in each L1R5 category, else return error message
+            if (checkLowest(subjectsToCheck, subjects) == 10) {
+                throw new InvalidSubjectCombinationException();
+            } else {
+                score += checkLowest(subjectsToCheck, subjects);
+            }
+            subjectsToCheck.clear();
+        }
+        return score;
+    }
+    //@@author TeyXinHui
+    /**
+     * Calculates the lowest possible score from the grades of the subjects of the selected person.
+     * @return L1B4-B score
+     */
+    public int calculateL1B4B() throws InvalidSubjectCombinationException {
+        int score = 0;
+        Set<Subject> subjects = new HashSet<>(this.getSubjects());
+        Set<Subject> subjectsToCheck = new HashSet<>();
+        for (int i = 0; i < 5; i++) {
+            for (Subject subject: subjects) {
+                switch (i) {
+                // Check if the subject is a L1 subject
+                case 0:
+                    if (Arrays.asList(Subject.L1_SUBJECT).contains(subject.subjectName)) {
+                        subjectsToCheck.add(subject);
+                    }
+                    break;
+                // Check if the subject is a R1 subject
+                case 1:
+                    if (Arrays.asList(Subject.R1BCD_SUBJECT).contains(subject.subjectName)) {
+                        subjectsToCheck.add(subject);
+                    }
+                    break;
+                // Check if the subject is a R2 subject
+                case 2:
+                    if (Arrays.asList(Subject.R2B_SUBJECT).contains(subject.subjectName)) {
+                        subjectsToCheck.add(subject);
+                    }
+                    break;
+                // Check if the subject is a R3 or R4 subject
+                case 3:
+                case 4:
+                    if (Arrays.asList(Subject.R3_R4_SUBJECT).contains(subject.subjectName)) {
+                        subjectsToCheck.add(subject);
+                    }
+                    break;
+                default:
+                    break;
+                }
+            }
+            // Check that if the student has at least one subject in each L1R5 category, else return error message
+            if (checkLowest(subjectsToCheck, subjects) == 10) {
+                throw new InvalidSubjectCombinationException();
+            } else {
+                score += checkLowest(subjectsToCheck, subjects);
+            }
+            subjectsToCheck.clear();
+        }
+        return score;
+    }
+    //@@author TeyXinHui
+    /**
+     * Calculates the lowest possible score from the grades of the subjects of the selected person.
+     * @return L1B4-C score
+     */
+    public int calculateL1B4C() throws InvalidSubjectCombinationException {
+        int score = 0;
+        Set<Subject> subjects = new HashSet<>(this.getSubjects());
+        Set<Subject> subjectsToCheck = new HashSet<>();
+        for (int i = 0; i < 5; i++) {
+            for (Subject subject: subjects) {
+                switch (i) {
+                // Check if the subject is a L1 subject
+                case 0:
+                    if (Arrays.asList(Subject.L1_SUBJECT).contains(subject.subjectName)) {
+                        subjectsToCheck.add(subject);
+                    }
+                    break;
+                // Check if the subject is a R1 subject
+                case 1:
+                    if (Arrays.asList(Subject.R1BCD_SUBJECT).contains(subject.subjectName)) {
+                        subjectsToCheck.add(subject);
+                    }
+                    break;
+                // Check if the subject is a R2 subject
+                case 2:
+                    if (Arrays.asList(Subject.R2C_SUBJECT).contains(subject.subjectName)) {
+                        subjectsToCheck.add(subject);
+                    }
+                    break;
+                // Check if the subject is a R3 or R4 subject
+                case 3:
+                case 4:
+                    if (Arrays.asList(Subject.R3_R4_SUBJECT).contains(subject.subjectName)) {
+                        subjectsToCheck.add(subject);
+                    }
+                    break;
+                default:
+                    break;
+                }
+            }
+            // Check that if the student has at least one subject in each L1R5 category, else return error message
+            if (checkLowest(subjectsToCheck, subjects) == 10) {
+                throw new InvalidSubjectCombinationException();
+            } else {
+                score += checkLowest(subjectsToCheck, subjects);
+            }
+            subjectsToCheck.clear();
+        }
+        return score;
+    }
+    //@@author TeyXinHui
+    /**
+     * Calculates the lowest possible score from the grades of the subjects of the selected person.
+     * @return L1B4-D score
+     */
+    public int calculateL1B4D() throws InvalidSubjectCombinationException {
+        int score = 0;
+        Set<Subject> subjects = new HashSet<>(this.getSubjects());
+        Set<Subject> subjectsToCheck = new HashSet<>();
+        for (int i = 0; i < 5; i++) {
+            for (Subject subject: subjects) {
+                switch (i) {
+                // Check if the subject is a L1 subject
+                case 0:
+                    if (Arrays.asList(Subject.L1_SUBJECT).contains(subject.subjectName)) {
+                        subjectsToCheck.add(subject);
+                    }
+                    break;
+                // Check if the subject is a R1 subject
+                case 1:
+                    if (Arrays.asList(Subject.R1BCD_SUBJECT).contains(subject.subjectName)) {
+                        subjectsToCheck.add(subject);
+                    }
+                    break;
+                // Check if the subject is a R2 subject
+                case 2:
+                    if (Arrays.asList(Subject.R2D_SUBJECT).contains(subject.subjectName)) {
+                        subjectsToCheck.add(subject);
+                    }
+                    break;
+                // Check if the subject is a R3 or R4 subject
+                case 3:
+                case 4:
+                    if (Arrays.asList(Subject.R3_R4_SUBJECT).contains(subject.subjectName)) {
+                        subjectsToCheck.add(subject);
+                    }
+                    break;
+                default:
+                    break;
+                }
+            }
+            // Check that if the student has at least one subject in each L1R5 category, else return error message
+            if (checkLowest(subjectsToCheck, subjects) == 10) {
+                throw new InvalidSubjectCombinationException();
+            } else {
+                score += checkLowest(subjectsToCheck, subjects);
+            }
+            subjectsToCheck.clear();
+        }
+        return score;
+    }
     //@@author TeyXinHui
     /**
      * Takes in a set of subjects under the category of L1 or R5 and find the smallest grade score.

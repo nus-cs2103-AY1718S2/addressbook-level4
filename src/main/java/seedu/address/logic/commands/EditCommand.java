@@ -75,7 +75,8 @@ public class EditCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException, IOException {
         try {
             model.updatePerson(personToEdit, editedPerson);
-            model.updatePage(editedPerson);
+            model.deletePage(personToEdit);
+            model.addPage(editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {

@@ -34,15 +34,15 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_NRIC + "S9876543H "
             + PREFIX_TAG + "3A "
             + PREFIX_REMARK + "English Rep "
-            + PREFIX_SUBJECT + "English A2"
-            + "[" + PREFIX_NOK + "Jonathan Doe\n"
+            + PREFIX_SUBJECT + "English A2 Tamil A2 AMath B3 Phy A1 EMath A2 Hist A2"
+            + PREFIX_NOK + "Jonathan Doe\n"
             + "Example: " + COMMAND_ALIAS + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_NRIC + "S9876543H "
             + PREFIX_TAG + "3A "
             + PREFIX_REMARK + "English Rep "
-            + PREFIX_SUBJECT + "English A2"
-            + "[" + PREFIX_NOK + "Jonathan Doe";
+            + PREFIX_SUBJECT + "English A2 Tamil A2 AMath B3 Phy A1 EMath A2 Hist A2"
+            + PREFIX_NOK + "Jonathan Doe";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";

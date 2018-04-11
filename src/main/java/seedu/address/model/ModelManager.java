@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -21,6 +22,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.person.Cca;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
@@ -75,51 +77,52 @@ public class ModelManager extends ComponentManager implements Model {
         String path = new File("src/main/resources/StudentPage/template.html").getAbsolutePath();
         File htmlTemplateFile = new File(path);
         String htmlString = FileUtils.readFileToString(htmlTemplateFile);
+
         Name titleName = person.getName();
         String title = titleName.toString();
+        htmlString = htmlString.replace("$title", title);
+
         Nric identityNumberClass = person.getNric();
         String identityNumber = identityNumberClass.toString();
-        htmlString = htmlString.replace("$title", title);
         htmlString = htmlString.replace("$identityNumber", identityNumber);
 
-        String newPath = new File("src/main/resources/StudentPage/" + title + ".html").getAbsolutePath();
+        Set<Tag> tagList = person.getTags();
+        htmlString = htmlString.replace("Class not Included", tagList.toString());
 
+        //ADD L1R5
+
+        List<Subject> subjectList = person.getSubjectArray();
+        int listSize = subjectList.size();
+        System.out.println(person.getSubjects());
+        int i = 0;
+        while (i < listSize) {
+            String iString = Integer.toString(i + 1);
+            htmlString = htmlString.replace("Subject " + iString, subjectList.get(i).nameToString());
+            htmlString = htmlString.replace("$percent" + iString, subjectList.get(i).gradeToPercent());
+            htmlString = htmlString.replace("Grade " + iString, subjectList.get(i).gradeToString());
+            i++;
+        }
+
+        // ADD CCA
+        Cca ccaList = person.getCca();
+        String ccaString = ccaList.toString();
+        htmlString = htmlString.replace("CCA", ccaString);
+
+        // ADD REMARK
+
+        String remark = person.getRemark().toString();
+        htmlString = htmlString.replace("Remarks to facilitate teaching should be included here.", remark);
+
+
+        //ADD INJURY
+        String injury = person.getInjuriesHistory().toString();
+        htmlString = htmlString.replace("Insert injury history here", injury);
+
+        String newPath = new File("src/main/resources/StudentPage/" + title + ".html").getAbsolutePath();
         File newHtmlFile = new File(newPath);
         FileUtils.writeStringToFile(newHtmlFile, htmlString);
         //updatePage(person);
     }
-
-    /**
-     * @@ author Johnny Chan
-     * @param person
-     * @throws IOException
-     * Updates BrowserPanel html
-     */
-    public void updatePage(Person person) throws IOException {
-
-        // When Edit Command is being called, run this method
-        Name titleName = person.getName();
-        String title = titleName.toString();
-        File htmlTemplateFile = new File("/Users/johnnychan/Documents/"
-                + "GitHub/main/src/main/resources/StudentPage/" + title + ".html");
-        String htmlString = FileUtils.readFileToString(htmlTemplateFile);
-        //htmlTemplateFile.delete();
-        List<Subject> subjectList = person.getSubjectArray();
-        int listSize = subjectList.size();
-        //System.out.println(subjectList.toString());
-        //System.out.println(subjectList);
-        int i = 0;
-        while (i < listSize) {
-            String iString = Integer.toString(i + 1);
-            htmlString = htmlString.replace("$subject" + iString, subjectList.get(i).nameToString());
-            htmlString = htmlString.replace("$percent" + iString, subjectList.get(i).gradeToPercent());
-            htmlString = htmlString.replace("$grade" + iString, subjectList.get(i).gradeToString());
-            i++;
-        }
-
-        FileUtils.writeStringToFile(htmlTemplateFile, htmlString);
-    }
-
 
     /**
      * @@author Johnny chan

@@ -277,6 +277,8 @@ Retrieves events for specified day
 * `navigate 1` +
 Displays directions between the first and the second event of the day.
 
+
+// tag::calendar[]
 === Opening a calendar : `calendar-launch`
 
 Opens a calendar in a webview.
@@ -296,16 +298,24 @@ Logging in to the calendar interface DOES NOT perform the Oauth authentication p
 
 Allows a user to add an event directly to their calendar.
 
-Format: `calendar-add title/<eventname> start/<startdatetime> end/<enddatetime> loc/<location> lp/<linkedperson>(optional)`
+Format: `calendar-add title/<eventname> start/<startdatetime> end/<enddatetime> loc/<location>`
 
 [NOTE]
 ====
-Dates can be written in natural language (e.g. Today, This Friday, May 4, etc.)
+Start/End times can be written in natural language (e.g. Today, This Friday, May 4, etc.)
+
+The expected behaviour is such that if no time is provided with the date, the program will assume that the the desired
+time is the current time. For example, if current time is 12am and the user does not specify a start or end time for the
+two dates that they provide, then the application will use 12am as both the start and end time for their input dates.
+
+Similarly, if no date is provided with the time, the program will assume that the desired day was the current day.
+For example, if the current time is 4am, and the start date is 12am and the end date is 6am, the created event will
+start on the current day at 12am and end at 6am on the same day.
 
 `calendar-*` commands rely on Google Oauth to modify the calendar. Whenever a `calendar-*` command is executed, the
 Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
 app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
-to grant the SLAP app permission to edit. Failure authenticate will cause the program to freeze and crash.
+to grant the SLAP app permission to edit. Failure to authenticate will cause the program to freeze and crash.
 ====
 
 === List upcoming events in the command line: `calendar-list`
@@ -319,7 +329,7 @@ Format: `calendar-list`
 `calendar-*` commands rely on Google Oauth to modify the calendar. Whenever a `calendar-*` command is executed, the
 Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
 app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
-to grant the SLAP app permission to edit. Failure authenticate will cause the program to freeze and crash.
+to grant the SLAP app permission to edit. Failure to authenticate will cause the program to freeze and crash.
 ====
 
 === Deleting an event from the calendar : `calendar-delete`
@@ -333,7 +343,7 @@ Format: `calendar-delete INDEX`
 `calendar-*` commands rely on Google Oauth to modify the calendar. Whenever a `calendar-*` command is executed, the
 Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
 app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
-to grant the SLAP app permission to edit. Failure authenticate will cause the program to freeze and crash.
+to grant the SLAP app permission to edit. Failure to authenticate will cause the program to freeze and crash.
 ====
 
 === Editing an event in the calendar : `calendar-edit` [coming in v2.0]
@@ -353,7 +363,7 @@ Format: `reauthenticate`
 ====
 This command is used to manually reauthenticate the Oauth certificate. The SLAP app will launch the system default
 browser (i.e. not a WebView) and ask them to select the account that they wish to grant the SLAP app permission to
-edit. Failure authenticate will cause the program to freeze and crash.
+edit. Failure to authenticate will cause the program to freeze and crash.
 ====
 
 === List upcoming events in the command line: `show-schedule`
@@ -369,9 +379,11 @@ Date can be written in natural language (e.g. Today, This Friday, May 4, etc.)
 This command relies on Google Oauth to access the calendar. Whenever a Google Calendar-related command is executed, the
 Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
 app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
-to grant the SLAP app permission to edit. Failure authenticate will cause the program to freeze and crash.
+to grant the SLAP app permission to edit. Failure to authenticate will cause the program to freeze and crash.
 ====
+// end::calendar[]
 
+// tag::errorlog[]
 === Opening the Error Log : `errorlog`
 
 Opens the error log in a new window.
@@ -382,6 +394,7 @@ Format: `errorlog`
 ====
 The user can also open the error log by pressing `View > Show Error Log`
 ====
+// end::errorlog[]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`

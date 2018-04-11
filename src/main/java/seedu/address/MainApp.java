@@ -60,7 +60,7 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing SLAP App ]===========================");
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
@@ -226,7 +226,7 @@ public class MainApp extends Application {
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping Address Book ] =============================");
+        logger.info("============================ [ Stopping SLAP App ] =============================");
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);

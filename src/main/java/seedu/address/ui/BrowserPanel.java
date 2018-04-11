@@ -106,14 +106,14 @@ public class BrowserPanel extends UiPart<Region> {
 
         String platformToSearch = event.getPlatform();
 
-        if (StringUtil.containsWordIgnoreCase(platformToSearch, Facebook.PLATFORM_KEYWORD) ||
-                StringUtil.containsWordIgnoreCase(platformToSearch, Facebook.PLATFORM_ALIAS)) {
+        if (StringUtil.containsWordIgnoreCase(platformToSearch, Facebook.PLATFORM_KEYWORD)
+                || StringUtil.containsWordIgnoreCase(platformToSearch, Facebook.PLATFORM_ALIAS)) {
             logger.info(LogsCenter.getEventHandlingLogMessage(event));
             URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
             loadBrowserSearchPage(event.getSearchName());
             loadBrowser1Page(defaultPage.toExternalForm());
-        } else if (StringUtil.containsWordIgnoreCase(platformToSearch, Twitter.PLATFORM_KEYWORD) ||
-                StringUtil.containsWordIgnoreCase(platformToSearch, Twitter.PLATFORM_ALIAS)) {
+        } else if (StringUtil.containsWordIgnoreCase(platformToSearch, Twitter.PLATFORM_KEYWORD)
+                || StringUtil.containsWordIgnoreCase(platformToSearch, Twitter.PLATFORM_ALIAS)) {
             logger.info(LogsCenter.getEventHandlingLogMessage(event));
             URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
             loadBrowserPage(defaultPage.toExternalForm());

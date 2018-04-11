@@ -500,8 +500,7 @@ each implementation and the pros and cons of each implementation:
 The patient visiting queue mechanism is facilitated by `UniquePatientVisitingQueue`, `AddPatientQueueCommand` and `RemovePatientQueueCommand`.
 It supports adding and removing a patient from the visiting queue. `AddPatientQueueCommand` and `RemovePatientQueueCommand` inherit from `Command`.
 
-The add patient into visiting queue mechanism functions like that of the `AddCommand` but using the patient name only. It searches for the patient to be added based on the patient name provided
-by the user. If the patient already exists in the system then the patient will be added into the visiting queue. The `AddPatientQueueCommand` then calls for the utility method addPatientToQueue under `Model`, to update the visiting queue and trigger a IMDBChangedEvent to the `UI` to update PatientListPanel.
+The add patient into visiting queue mechanism functions like that of the `AddCommand` but using the index only. It store the actual index of patient in the patient list. User can find patients with certain keywords in patients' name using `FindCommand` then add patient into queue according to the list index displayed. The `AddPatientQueueCommand` then calls for the utility method addPatientToQueue under `Model`, to update the visiting queue and trigger a IMDBChangedEvent to the `UI` to update VisitingQueuePanel.
 
 Suppose that the user has just launched the application and logged in as a medical staff. The empty queue is shown in Figure 3.4.1.1 below.
 
@@ -510,13 +509,13 @@ image::emptyVisitQueue.png[width="800"]
 
 The user now decides to add a patient into the queue.
 
-`AddPatientQueueCommand` will search for the patient in the patient list. If the patient is found in the list, `AddPatientQueueCommand` will then call the for the utility method addPatientToQueue under `Model`, to add the patient into the visiting queue.
+`AddPatientQueueCommand` will check if the index given is valid and is in the bound of the current list displayed. If the given index is valid and in the bound, `AddPatientQueueCommand` will then call the for the utility method addPatientToQueue under `Model`, to add the patient index into the visiting queue.
 The updated queue is shown in the figure below.
 
 .The updated queue
 image::patientInQueue.png[width="800"]
 
-The remove patient from visiting queue mechanism functions like that of the `DeleteCommand` but without any parameters. It removes the first patient of the queue. The `RemovePatientQueueCommand` then calls for the utility method removePatientFromQueue under `Model`, to update the visiting queue and trigger a IMDBChangedEvent to `UI` to update PatientListPanel.
+The remove patient from visiting queue mechanism functions like that of the `DeleteCommand` with and without parameter. It removes the first patient of the queue if user do not provide any parameters. If user want to remove specific patient in the queue, the user can provide the patient index as parameter in the command. The `RemovePatientQueueCommand` then calls for the utility method removePatientFromQueue under `Model`, to update the visiting queue and trigger a IMDBChangedEvent to `UI` to update VisitingQueuePanel.
 
 Suppose that the queue contains patients as shown in the figure below.
 
@@ -539,9 +538,9 @@ each implementation and the pros and cons of each implementation:
 
 ===== Aspect: Data structure to support the AddPatientQueue and RemovePatientQueue command
 
-* **Alternative 1 (current choice):** Using LinkedList as queue to store patients
+* **Alternative 1 (current choice):** Using LinkedList as queue to store patient index only
 ** Pros: Will be easy to implement due to existing utility methods.
-** Cons: May have utility limitation.
+** Cons: May have utility limitation and have to take care how other commands affect the patient index in the list for example DeleteCommand
 * **Alternative 2:** Create a data structure class like linked list to store patient in a queue
 ** Pros: Can customise functionalities of the data structure.
 ** Cons: Will require time and more knowledge to do.
@@ -557,13 +556,53 @@ each implementation and the pros and cons of each implementation:
 
 ===== Aspect: Implementation of `RemovePatientQueueCommand`
 
-* **Alternative 1 (current choice):** Patient will only removed from the top of the list
+* **Alternative 1 (current choice):** Patient can be removed from the queue regardless which position he or she is in the queue.
 ** Pros: Easy to implement.
-** Cons: Cannot remove a patient in a certain position.
-* **Alternative 2:** Patient can be removed from the queue no matter which position the patient is in the queue
-** Pros: Improve the functionality of RemovePatientQueue command.
-** Cons: Will require another implentation to remove patient in the specified position from the queue.
+** Cons: Removing patient based on their index can be error prone since list index is flexible with the operation that user typed in.
+* **Alternative 2:** Patient can be removed from the queue by their NRIC
+** Pros: Get rid of the error caused by removing patient from queue by index.
+** Cons: Will require extra checking and verification.
 // end::addqremoveq
+
+// tag::addqremoveappt[]
+=== Patient Appointment
+==== Current Implementation
+
+The patient appointment mechanism is facilitated by `Appointment`, `AppointmentEntry`, `DateTime`, `UniqueAppointmentEntryList`, `UniqueAppointmentList`, `AddAppointmentCommand`, `DeleteAppointmentCommand`, `ViewAppoinmentCommand`, `AddAppointmenetCommandParser`, `DeleteAppoinmentCommandParser` and `ViewAppointmentCommandParser`.
+It supports adding, deleteting and viewing patient appointments. `AddAppointmentCommand`, `DeleteAppointmentCommand` and `ViewAppoinmentCommand` inherit from `Command`.
+
+The add new patient appointment mechanism functions like that of the `AddCommand` with patient index, date, and time as parameters. It create a new appointment object with date time and stored in patient's list of appointments record. User can find patients with certain keywords in patients' name using `FindCommand` then add a new appointment according to the list index displayed. The `AddPatientQueueCommand` then calls for the utility method addPatientAppointment under `Model`, to add a new patient appointment and trigger a IMDBChangedEvent to the `UI` to update PatientAppointmentPanel or CalendarPanel.
+
+Suppose that the user has just launched the application and logged in as a medical staff. The empty queue is shown in Figure below.
+
+
+The delete appointment mechanism functions like that of the `DeleteCommand` with patient index and appointment index in list of appointment for the particular patient.  The `RemovePatientQueueCommand` then calls for the utility method deletePatientAppointment under `Model`, to update the remove the patient appointment and trigger a IMDBChangedEvent to `UI` to update PatientAppointmentPanel or CalendarPanel.
+
+
+The view appointment mechanism functions like that of the `findCommand` and `listCommand` depends on whether patient index is provided.  If patient index is provided, the `viewAppointmentCommand` then calls for the utility method getPatientFromList by patient index under `Model`, to get the patient and trigger a IMDBChangedEvent to `UI` to update PatientAppointmentPanel to display list of past and future appoinments made by this patient. If patient index is not provided, the `viewAppointmentCommand` then calls for the utility method getAppointmentEntryList under `Model`, to get ta list of appointments made by all patients and trigger a IMDBChangedEvent to `UI` to update CalendarPanel.
+
+==== Design Considerations
+
+The following is an exploration of possible alternative implementations, the various aspects of
+each implementation and the pros and cons of each implementation:
+
+===== Aspect: Data structure to support the AddAppointmentCommand and DeleteAppointmentCommand and viewAppointmentCommand
+
+* **Alternative 1 (current choice):** Using separate customised data structure to store appointment for particular patient and appointments for all patient to be displayed on the calendar panel
+** Pros: Will be easy to implement due to existing utility methods.
+** Cons: May have redundant methods in both data structure
+* **Alternative 2:** Create a appointment superclass or interface and extends from it
+** Pros: Can customise functionalities of the data structure and get rid of redundant methods.
+** Cons: May not find similar behaviour between this two classes.
+
+===== Aspect: Implementation of AddAppointmentCommand
+
+
+
+===== Aspect: Implementation of DeleteAppointmentCommand
+
+
+// end::addqremoveappt
 
 // tag::record[]
 === Edit records feature

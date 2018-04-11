@@ -76,6 +76,11 @@ public class DistanceCommand extends Command {
             String personName = person.getName().toString();
             origin = "Kent Ridge MRT";
             destination = person.getAddress().toString();
+            if (destination.indexOf('#') > 2) {
+                int stringCutIndex;
+                stringCutIndex = destination.indexOf('#') - 2;
+                destination = destination.substring(0, stringCutIndex);
+            }
 
             GetDistance route = new GetDistance();
             Double distance = route.getDistance(origin, destination);
@@ -103,6 +108,20 @@ public class DistanceCommand extends Command {
             Person personDestination = lastShownList.get(indexZeroBasedDestination);
             origin = personOrigin.getAddress().toString();
             destination = personDestination.getAddress().toString();
+
+            //Trim addresses
+            if (origin.indexOf('#') > 2) {
+                int stringCutIndex;
+                stringCutIndex = origin.indexOf('#') - 2;
+                origin = origin.substring(0, stringCutIndex);
+            }
+
+            if (destination.indexOf('#') > 2) {
+                int stringCutIndex;
+                stringCutIndex = destination.indexOf('#') - 2;
+                destination = destination.substring(0, stringCutIndex);
+            }
+
             personNameOrigin = personOrigin.getName().toString();
             personNameDestination = personDestination.getName().toString();
 

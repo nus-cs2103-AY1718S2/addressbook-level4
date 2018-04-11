@@ -135,6 +135,7 @@ public class BrowserPanel extends UiPart<Region> {
      */
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
+        logger.info("Loaded " + url);
     }
 
     /**

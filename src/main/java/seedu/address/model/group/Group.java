@@ -50,7 +50,7 @@ public class Group {
      * @throws DuplicatePersonException
      */
     public void addPerson(Person toAdd) throws DuplicatePersonException {
-        if (getPersonList().contains(toAdd)){
+        if (getPersonList().contains(toAdd)) {
             throw new DuplicatePersonException();
         }
         this.personList.add(toAdd);

@@ -1,11 +1,11 @@
-package seedu.address.commons.events.ui;
+package seedu.address.commons.events.logic;
 //@@author crizyli
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * An event requesting to view my calendar page.
+ *  Event to request current list of employees
  */
-public class ShowMyCalendarEvent extends BaseEvent {
+public class GetEmployeesRequestEvent extends BaseEvent {
 
     @Override
     public String toString() {

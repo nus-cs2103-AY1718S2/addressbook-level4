@@ -14,8 +14,10 @@ import java.util.List;
 import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.logic.FileChoosedEvent;
+import seedu.address.commons.events.ui.PersonEditedEvent;
 import seedu.address.commons.events.ui.ResetPersonCardsEvent;
 import seedu.address.commons.events.ui.ShowFileChooserEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -27,7 +29,7 @@ import seedu.address.model.photo.Photo;
 /**
  * Adds a photo to an employee.
  */
-public class AddPhotoCommand extends Command {
+public class AddPhotoCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addPhoto";
 
@@ -48,7 +50,13 @@ public class AddPhotoCommand extends Command {
 
     private final Index targetIndex;
 
+    private Person targetPerson;
+
+    private Person editedPerson;
+
     private String path;
+
+    private String photoNameWithExtension;
 
     private boolean isTestMode;
 
@@ -64,7 +72,7 @@ public class AddPhotoCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
 
         //check if it is test mode.
         if (!isTestMode) {
@@ -85,9 +93,9 @@ public class AddPhotoCommand extends Command {
         }
 
         List<Person> lastShownList = model.getFilteredPersonList();
-        Person targetPerson = lastShownList.get(targetIndex.getZeroBased());
+        targetPerson = lastShownList.get(targetIndex.getZeroBased());
 
-        String photoNameWithExtension;
+
         if (!path.contains("/"))  { //windows
             this.osType = 1;
             photoNameWithExtension = path.substring(path.lastIndexOf("\\") + 1);
@@ -100,7 +108,7 @@ public class AddPhotoCommand extends Command {
             copyPhotoFileToStorage(photoNameWithExtension);
         }
 
-        Person editedPerson = createEditedPerson(targetPerson, photoNameWithExtension);
+        editedPerson = createEditedPerson(targetPerson, photoNameWithExtension);
 
         try {
             model.updatePerson(targetPerson, editedPerson);
@@ -113,6 +121,19 @@ public class AddPhotoCommand extends Command {
         EventsCenter.getInstance().post(new ResetPersonCardsEvent());
 
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        List<Person> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        targetPerson = lastShownList.get(targetIndex.getZeroBased());
+        editedPerson = createEditedPerson(targetPerson, photoNameWithExtension);
+        EventsCenter.getInstance().post(new PersonEditedEvent(editedPerson));
     }
 
     /**

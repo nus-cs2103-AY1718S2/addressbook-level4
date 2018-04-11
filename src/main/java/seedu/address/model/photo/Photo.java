@@ -1,5 +1,6 @@
 package seedu.address.model.photo;
 //@@author crizyli
+
 /**
  * Represents a Person's photo.
  * Guarantees: immutable; is valid as declared in {@link #isValidPhotoName(String)}
@@ -51,8 +52,4 @@ public class Photo {
                 && this.path.equals(((Photo) other).path)); // state check
     }
 
-    @Override
-    public int hashCode() {
-        return path.hashCode();
-    }
 }

@@ -82,6 +82,7 @@ public class Person {
         return id;
     }
 
+    //@@author crizyli
     public String getCalendarId() {
         return calendarId;
     }
@@ -89,6 +90,8 @@ public class Person {
     public String getPhotoName() {
         return photoName;
     }
+    //@@author
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

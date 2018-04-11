@@ -457,35 +457,113 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-//tag::findcommand
+//tag::findcommand[]
 === Find Command
 
 ==== Current Implementation
 
-The `find` command allows campus recruiters to search for students with exact keywords in `compulsory` fields of the student entry. This command is supported by the `FindCommandParser` class.
+The `find` command is facilitated by an `AllPredicate` class, which composes of predicates that determine the fields that are supported. Each field has its own set of predicates that determine the types of search patterns the user can perform. Search results of the keywords are stored in `FindResults`, which is a singleton pattern class.
 
-The `find` command will be supporting more compulsory fields that will be added in subsequent weeks.
+The following diagram, Figure 3.4.1.1 shows the composition of the `AllPredicate` class and the relationship between `FindResults`:
 
-The sequence diagram shown below illustrates how the `Logic` and `Model` component interacts when the `find` command is executed:
+image::AllPredicateComposition.png[width="800"]
+Figure 3.4.1.1 Composition of `AllPredicate` class
 
-image::FindCommandSequenceDiagram.png[width="800"]
+The following code snippet shows an example of one type of predicate:
 
-Execution of the `find` command comprises the following steps:
+[source,java]
+----
+public boolean test(Person person) {
+    return keywords.stream()
+            .anyMatch(keyword -> FindResults.getInstance()
+                    .containsWordIgnoreCase(person.getName().fullName, keyword,
+                    commandPrefix)
+                || keywords.stream()
+                    .anyMatch(fuzzyKeyword ->
+                    FindResults.getInstance().containsFuzzyMatchIgnoreCase(
+                            person.getName().fullName, fuzzyKeyword, commandPrefix,
+                            FindCommand.LEVENSHTEIN_DISTANCE_THRESHOLD)));
+}
+----
+
+The following sequence diagrams, Figure 3.4.1.2 and Figure 3.4.1.3 shows how the `find` command works:
+
+image::FindCommandSequenceDiagram1.png[width="800"]
+Figure 3.4.1.2 Sequence diagram of `find` command (1st part)
+
+image::FindCommandSequenceDiagram2.png[width="800"]
+Figure 3.4.1.3 Sequence diagram of `find` command (2nd part)
+
+The execution of the find command comprises the following steps:
 
 1. `LogicManager` invokes `parseCommand` method of `AddressbookParser`, taking user inputs as arguments.
 
-2. During the `parseCommand` method call, an instance of `FindCommandParser` will be created.
+2. `AddressbookParser` calls the `parse` method of `FindCommandParser` to parse the arguments and return a `FindCommand` object.
 
-3. `FindCommandParser` calls the `parseFindArgs` method of `FindUtil` and returns a `Predicate<Person>` object.
+3. `FindCommandParser` calls the `parseFindArgs` method of `FindUtil` , which calls either the `parseAllPredicates` or `parseSelectedPredicates` method from `PredicateUtil` depending on whether the argument starts with a prefix.
 
-4. The `FindCommand` object is initialized with this `Predicate<Person>` object.
+4. The `FindCommand` object is initialized with a combined `Predicate<Person>` object.
 
-5. The `FindCommand` object calls the method `updateFilteredPersonList` with this `Predicate<Person>` object.
+5. The `FindCommand` object calls the method `updateFilteredPersonList` with the `Predicate<Person>` object.
+
+The following code snippets show how methods `formOrPredicate` and `formAndPredicate` are implemented:
+[source,java]
+----
+public static Predicate<Person> formOrPredicate(Predicate<Person>... predicates) {
+    return Stream.of(predicates).filter(Objects::nonNull)
+            .reduce(condition -> false, Predicate::or);
+}
+
+public static Predicate<Person> formAndPredicate(Predicate<Person>... predicates) {
+    return Stream.of(predicates).filter(Objects::nonNull)
+            .reduce(condition -> true, Predicate::and);
+}
+----
+
+The following sequence diagram, Figure 3.4.1.4, shows how the `Logic` component retrieves search results from `FindResults` without interference from the `Model` component:
+
+image::FindCommandComponents.png[width="800"]
+Figure 3.4.1.4 Component interactions for `find` command
+
+[NOTE]
+Note how results are retrieved from `FindResults`. It is important to have `FindResults` as a singleton pattern class as there should only be one instance of search results for every search performed by the `find` command.
+
+The following activity diagram, Figure 3.4.1.5 summarizes what happens when an user executes the `find` command:
+
+image::FindCommandActivityDiagram.png[width="800"]
+Figure 3.4.1.5 Activity diagram when user executes `find` command
 
 ==== Design Considerations
 
-In the current implementation, creating the `Predicate<Person>` object is done in the `FindUtil` class. As more predicates get added in the future, we may need to consider breaking up the utility methods into separate classes.
-//end::findcommand
+==== Aspect: Implementation of find command
+
+* *Alternative 1 (current choice)*: Each field has its own field predicate composing of the predicates corresponding to the search pattern. The AllPredicate class is used to manage all these field predicates.
+
+** Pros: It is easy for new developers to understand. New developers can test each predicate easily, resulting in the debugging process to be smoother. They can also add or remove new predicates of each field easily as all predicates all grouped separately. This choice also adheres to Single Responsibility Principle and (SRP) and Separation of Concerns (SoC).
+
+** Cons: It results in a lot of classes to be created. Although there is increased cohesion, there is also increased coupling. Furthermore, this choice also violates Open-Closed Principle (OCP).
+
+* *Alternative 2*: Merge all predicates into one class
+
+** Pros: It is easy for new developers to manage this command. This choice also reduces the amount of code written significantly.
+
+** Cons: It is difficult to test existing and new predicates. This choice decreases cohesion although it decreases coupling.
+
+
+==== Aspect: Implementation of Levenshtein distance threshold
+
+* *Alternative 1 (current choice)*: Set a private static constant
+
+** Pros: It does not involve user intervention to set the threshold. It also decreases the chances of an increase in false positives should the user set a high threshold.
+
+** Cons: It does not allow users to set their desired threshold. Some users might need specific threshold to suit their needs
+
+* *Alternative 2*: Allow users to set their own threshold
+
+** Pros: It caters to more users with specific preferences.
+
+** Cons: It results in more implementation and tests to be written.
+//end::findcommand[]
 
 //tag::filtercommand[]
 === Filter Command

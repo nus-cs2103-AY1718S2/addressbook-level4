@@ -11,7 +11,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Tan Heng Yeow
 image::tanhengyeow.png[width="150", align="left"]
-{empty}[https://github.com/tanhengyeow[github]] [<<#, portfolio>>]
+{empty}[https://github.com/tanhengyeow[github]] [<<#tanhengyeow, portfolio>>]
 
 Role: Team Lead, Testing +
 Responsibilites: Logic, Model

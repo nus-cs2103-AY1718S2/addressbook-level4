@@ -2,10 +2,10 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_INFORMATION;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDGROUPMEMBER_INDEX;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDGROUPMEMBER_INFORMATION;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDGROUPMEMBER_NO_GROUP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_INFORMATION;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 

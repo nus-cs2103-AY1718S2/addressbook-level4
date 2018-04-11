@@ -48,9 +48,12 @@ public class ShowScheduleCommand extends Command {
             if (dailyEventsAsString.length() == 0) {
                 dailyEventsAsString = MESSAGE_NO_EVENTS;
             }
+
+            //@@author jaronchan
             EventsCenter.getInstance().post(new ResetDirectionsEvent());
             EventsCenter.getInstance().post(new UpdateNumberOfButtonsEvent(dailyEvents.size() - 1));
 
+            //@@author ifalluphill
             return new CommandResult(dailyEventsAsString);
         } catch (IOException e) {
             return new CommandResult(MESSAGE_ERROR);

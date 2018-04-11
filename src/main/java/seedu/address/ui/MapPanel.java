@@ -89,9 +89,17 @@ public class MapPanel extends UiPart<Region>
     public void showInvalidAddressOverlay(Boolean show) {
         invalidAddressOverlay.setVisible(show);
     }
+
+    /**
+     * Load the directions to display.
+     */
     public void loadDirections(String addressOrigin, String addressDestination) {
         mapManager.setDirectionsOnMap(addressOrigin, addressDestination);
     }
+
+    /**
+     * Resets the map to remove pre-existing directions from previous schedule.
+     */
     public void resetDirections() {
         mapManager.resetDirectionsMap();
         resetMap();

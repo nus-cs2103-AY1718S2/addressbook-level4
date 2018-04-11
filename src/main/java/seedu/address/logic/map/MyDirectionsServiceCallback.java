@@ -1,3 +1,4 @@
+//@@author jaronchan
 package seedu.address.logic.map;
 
 import com.lynden.gmapsfx.javascript.object.GoogleMap;

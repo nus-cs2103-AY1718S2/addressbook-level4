@@ -352,6 +352,8 @@ You will get an error message if you try to logout before logging in.
 * `glo`
 
 //end::issues[]
+
+// tag::tasks[]
 === Task List
 
 ==== New TODO list by dafault: `newtasklist` OR `nl`
@@ -426,6 +428,7 @@ An issue can have more than one assignees and labels.
 * `+issue ti/complete issue a/johndoe ms/v1.1 b/CS2103T is a software engineering module l/type.task l/CS2103T`
 * `+issue ti/TestIssue`
 * `ci ti/Issue with only body b/test body l/type.test`
+// end::tasks[]
 
 === Teammate
 

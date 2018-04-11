@@ -25,7 +25,6 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
-import seedu.address.model.person.Cca;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
@@ -128,10 +127,11 @@ public class ModelManager extends ComponentManager implements Model {
 
         int score = person.calculateL1R5();
         String scoreString = "-";
-        if (score == 0){
-            scoreString = "-";
-        }
-        else scoreString = Integer.toString(score);
+        if (score == 0)
+        {
+            scoreString = "-"; }
+
+        else { scoreString = Integer.toString(score); }
         htmlString = htmlString.replace("STUDENTS SCORE", scoreString);
 
         // ADD CCA
@@ -156,13 +156,13 @@ public class ModelManager extends ComponentManager implements Model {
 
         String nokName = person.getNameOfKin().toString();
         htmlString = htmlString.replace("NOK Name", nokName);
-/*
+        /*
         String nokEmail = person.getNextOfKin().getEmail().toString();
         htmlString = htmlString.replace("NOK Email", nokEmail);
 
         String nokPhone = person.getNextOfKin().getPhone().toString();
         htmlString = htmlString.replace("NOK Phone", nokPhone);
-*/
+        */
         BufferedWriter bw = new BufferedWriter(new FileWriter(f));
         bw.write(htmlString);
         bw.close();

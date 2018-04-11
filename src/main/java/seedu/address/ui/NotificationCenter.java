@@ -104,17 +104,28 @@ public class NotificationCenter {
         return notificationCenterPlaceHolder;
     }
 
+    /**
+     * Deletes all notification records associated with the given eventId
+     */
     public void deleteNotification(String id) throws NullPointerException{
+        if (!idToCard.containsKey(id))
+            return;
         for (javafx.scene.layout.Region nc: idToCard.get(id)) {
             notificationCardsBox.getChildren().remove(nc);
             notificationCards.remove(nc);
         }
+        idToCard.remove(id);
         Iterator<NotificationCard> iterator = notificationCardCopy.iterator();
         iterator.next();
         //to bypass the null at index 0
+        int toDecrement = 0;
         while (iterator.hasNext()) {
-            if (iterator.next().getId().equals(id)) {
+            NotificationCard curr = iterator.next();
+            if (curr.getId().equals(id)) {
                 iterator.remove();
+                toDecrement++;
+            } else if (toDecrement > 0) {
+                curr.decreaseIndex(toDecrement);
             }
         }
     }
@@ -131,6 +142,15 @@ public class NotificationCenter {
         notificationCardsBox.getChildren().remove(targetIndex.getZeroBased());
         idToCard.remove(notificationCards.get(targetIndex.getOneBased()).getId());
         notificationCards.remove(targetIndex.getOneBased());
+        Iterator<NotificationCard> iterator = notificationCardCopy.iterator();
+        for (int i = 0; i < notificationCardCopy.size(); i++) {
+            if (i <= targetIndex.getOneBased())
+                iterator.next();
+            else {
+                NotificationCard curr = iterator.next();
+                curr.decreaseIndex(1);
+            }
+        }
         return notificationCardCopy.remove(targetIndex.getOneBased());
     }
 }

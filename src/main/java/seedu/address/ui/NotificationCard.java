@@ -1,6 +1,8 @@
 //@@author IzHoBX
 package seedu.address.ui;
 
+import java.util.Scanner;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -67,7 +69,7 @@ public class NotificationCard extends UiPart<Region> {
     public NotificationCard(String title, String displayedIndex, String ownerName, String endTime, String ownerId,
                             boolean isFirstStage, boolean isForCenter, String id) {
         super(FXML);
-        this.index.setText(displayedIndex + ". ");
+        this.index.setText(displayedIndex);
         this.title.setText(title);
         this.ownerName.setText(ownerName);
         this.endTime.setText(endTime);
@@ -150,5 +152,17 @@ public class NotificationCard extends UiPart<Region> {
     @Override
     public String toString() {
         return "Title: " + title.getText() + " Owner: " + ownerName.getText();
+    }
+
+    public void decreaseIndex(int i) {
+        String currIndex = this.index.getText();
+        int j;
+        for ( j = 0; j < currIndex.length(); j++) {
+            if (currIndex.charAt(j) == '.') {
+                break;
+            }
+        }
+        int currIndexNumeric = Integer.parseInt(currIndex.substring(0, j));
+        this.index.setText((currIndexNumeric - i) + ". ");
     }
 }

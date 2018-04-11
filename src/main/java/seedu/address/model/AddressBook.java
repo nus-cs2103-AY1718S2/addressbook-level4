@@ -237,6 +237,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             Notification t = iterator.next();
             if (t != null && t.getId() != null && t.getId().equals(notificationId)) {
                 notifications.remove(t);
+                System.out.println("Deleted Successfully");
                 found = true;
             }
         }

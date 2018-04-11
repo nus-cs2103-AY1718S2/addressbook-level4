@@ -46,7 +46,7 @@ public class DismissCommand extends UndoableCommand {
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        if (targetIndex.getZeroBased() >= model.getNotificationCenter().getTotalUndismmissedNotificationCards()) {
+        if (targetIndex.getZeroBased() >= model.getNotificationCenter().getTotalUndismmissedNotificationCards() - 1) {
             throw new CommandException(Messages.MESSAGE_INVALID_NOTIFICATION_CARD_INDEX);
         }
     }

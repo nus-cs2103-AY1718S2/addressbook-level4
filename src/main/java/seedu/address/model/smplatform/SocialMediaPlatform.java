@@ -21,10 +21,10 @@ public abstract class SocialMediaPlatform {
      * Returns true if a given string is a valid social platform name.
      */
     public static boolean isValidPlatform(String test) {
-        if (test.equals(Facebook.PLATFORM_KEYWORD) ||
-                test.equals(Facebook.PLATFORM_ALIAS) ||
-                test.equals(Twitter.PLATFORM_KEYWORD) ||
-                test.equals(Twitter.PLATFORM_ALIAS)) {
+        if (test.equals(Facebook.PLATFORM_KEYWORD)
+                || test.equals(Facebook.PLATFORM_ALIAS)
+                || test.equals(Twitter.PLATFORM_KEYWORD)
+                || test.equals(Twitter.PLATFORM_ALIAS)) {
             return true;
         }
         return false;

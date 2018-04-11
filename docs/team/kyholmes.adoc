@@ -33,14 +33,14 @@ Integrated Medical DataBase (IMDB) is a desktop health records application which
 *** Added status bar in status bar footer to display number of records (https://github.com/CS2103JAN2018-W15-B2/main/pull/5[#5])
 *** Updated Application name and icon (https://github.com/CS2103JAN2018-W15-B2/main/pull/186[#186])
 ** Documentation:
-*** 
+***
 ** Community:
-*** 
+***
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F12-B4/main/issues/140[#140], https://github.com/CS2103JAN2018-F12-B4/main/issues/137[#137], https://github.com/CS2103JAN2018-F12-B4/main/issues/135[#135])
 *** Some parts of the history feature I added was adopted by several other class mates
 ** Tools:
 *** Integrated a third party library (CalendarFX) to the project (https://github.com/CS2103JAN2018-W15-B2/main/pull/144[#144])
-*** 
+***
 
 == Contributions to the User Guide
 

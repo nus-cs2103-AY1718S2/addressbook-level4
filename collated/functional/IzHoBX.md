@@ -331,7 +331,7 @@ public class RateCommand extends UndoableCommand {
 ```
 ###### \java\seedu\address\logic\commands\TestAddEventCommand.java
 ``` java
-        if (calendarId == null || calendarId.equals("")) {
+        if (calendarId == null || calendarId.equals("") || calendarId.equals("null")) {
             logger.info("calendarId null, attempting to create calendar");
             try {
                 calendarId = CreateNewCalendar.execute(personToAddEvent.getName().fullName);
@@ -588,6 +588,8 @@ public class RateCommandParser implements Parser<RateCommand> {
 
     /** Gets the password */
     String getPassword();
+
+    ObservableList<Photo> getPhotoList();
 
 ```
 ###### \java\seedu\address\model\ModelManager.java
@@ -1039,6 +1041,7 @@ public class XmlAdaptedNotification {
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
         return persons.equals(otherAb.persons)
                 && tags.equals(otherAb.tags)
+                && photos.equals(otherAb.photos)
                 && notifications.equals(otherAb.notifications);
     }
 }
@@ -1212,23 +1215,6 @@ public class XmlAdaptedNotification {
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY(), Theme.getTheme());
-    }
-
-    /**
-     * Opens calendar web page window.
-     */
-    public void handleShowMyCalendar() {
-        MyCalendarView myCalendarView = new MyCalendarView();
-        myCalendarView.start(new Stage());
-    }
-
-    /**
-     * Opens the help window.
-     */
-    @FXML
-    public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
-        helpWindow.show();
     }
 
 ```
@@ -1572,12 +1558,20 @@ public class NotificationCenter {
 ``` java
 package seedu.address.ui;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import seedu.address.logic.commands.AddPhotoCommand;
 import seedu.address.model.person.Person;
 
 /**
@@ -1606,13 +1600,13 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
-    private Label address;
-    @FXML
     private Label email;
     @FXML
     private Label rating;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView photo;
 
 ```
 ###### \java\seedu\address\ui\ResultDisplay.java
@@ -1715,6 +1709,48 @@ public class PersonCard extends UiPart<Region> {
 
     }
 ```
+###### \resources\view\BrightTheme.css
+``` css
+.notification-scroll-pane > .viewport {
+    -fx-background-color: #3366cc;
+}
+
+.notification-scroll-pane {
+    -fx-background-color: #3366cc;
+}
+
+.notification-card-first-stage {
+    -fx-background-color: #3399ff;
+    -fx-text-fill: #000000;
+    -fx-opacity: 0.8;
+}
+
+.notification-card-second-stage {
+    -fx-background-color: #cc3300;
+    -fx-text-fill: #000000;
+    -fx-opacity: 0.8;
+}
+
+.notification-card-notification-center-first-stage {
+    -fx-background-color: #3399ff;
+    -fx-text-fill: #000000;
+    -fx-opacity: 1;
+}
+
+.notification-card-notification-center-second-stage {
+    -fx-background-color: #cc3300;
+    -fx-text-fill: #000000;
+    -fx-opacity: 1;
+}
+```
+###### \resources\view\BrightTheme.css
+``` css
+.cell_small_label_rating {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: #FFFF00;
+}
+```
 ###### \resources\view\DarkTheme.css
 ``` css
 .notification-scroll-pane > .viewport {
@@ -1726,9 +1762,9 @@ public class PersonCard extends UiPart<Region> {
 }
 
 .notification-card-first-stage {
-     -fx-background-color: #3399ff;
-     -fx-text-fill: #000000;
-     -fx-opacity: 0.8;
+    -fx-background-color: #3399ff;
+    -fx-text-fill: #000000;
+    -fx-opacity: 0.8;
 }
 
 .notification-card-second-stage {
@@ -1760,7 +1796,7 @@ public class PersonCard extends UiPart<Region> {
 ###### \resources\view\Extensions.css
 ``` css
 .suggestion {
-    -fx-text-fill: #33cc33 !important; /* The error class should always override the default text-fill style */
+    -fx-text-fill: darkred !important; /* The error class should always override the default text-fill style */
 }
 ```
 ###### \resources\view\NotificationCard.fxml

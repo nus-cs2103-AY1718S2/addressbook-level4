@@ -4,6 +4,9 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Year;
+import java.time.YearMonth;
+import java.time.temporal.WeekFields;
 
 import com.calendarfx.model.Calendar;
 //import com.calendarfx.model.CalendarEvent;
@@ -11,7 +14,10 @@ import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
 import com.calendarfx.view.CalendarView;
+import com.calendarfx.view.DayView;
 
+import com.calendarfx.view.DayViewBase;
+import com.calendarfx.view.WeekView;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
@@ -21,7 +27,10 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.commons.events.ui.ChangeCalendarViewEvent;
+import seedu.address.commons.events.ui.ChangeDayViewRequestEvent;
+import seedu.address.commons.events.ui.ChangeMonthViewRequestEvent;
+import seedu.address.commons.events.ui.ChangeWeekViewRequestEvent;
+import seedu.address.commons.events.ui.ChangeYearViewRequestEvent;
 import seedu.address.model.appointment.Appointment;
 
 
@@ -56,6 +65,8 @@ public class CalendarWindow extends UiPart<Region> {
 
     @FXML
     private CalendarView calendarView;
+    private DayView dayView;
+    private WeekView weekView;
 
     /**
      *
@@ -65,13 +76,25 @@ public class CalendarWindow extends UiPart<Region> {
         super(DEFAULT_PAGE);
 
         this.appointmentList = appointmentList;
-
         calendarView = new CalendarView();
 
+
+        setView();
         setTime();
         setCalendar();
         disableViews();
         registerAsAnEventHandler(this);
+
+    }
+
+    private void setView() {
+        this.dayView = calendarView.getDayPage().getDetailedDayView().getDayView();
+        dayView.setHoursLayoutStrategy(DayViewBase.HoursLayoutStrategy.FIXED_HOUR_HEIGHT);
+        dayView.setHourHeight(150);
+
+        this.weekView = calendarView.getWeekPage().getDetailedWeekView().getWeekView();
+        weekView.setHoursLayoutStrategy(DayViewBase.HoursLayoutStrategy.FIXED_HOUR_HEIGHT);
+        weekView.setHourHeight(150);
     }
 
     private void setTime() {
@@ -89,8 +112,11 @@ public class CalendarWindow extends UiPart<Region> {
         CalendarSource calendarSource = new CalendarSource("Appointments");
         int styleNumber = 0;
         int appointmentCounter = 0;
+
         for (Appointment appointment : appointmentList) {
+
             Calendar calendar = createCalendar(styleNumber, appointment);
+            calendar.setReadOnly(true);
             calendarSource.getCalendars().add(calendar);
 
             LocalDateTime ldt = appointment.getDateTime();
@@ -98,7 +124,7 @@ public class CalendarWindow extends UiPart<Region> {
 
             Entry entry = new Entry (buildAppointment(appointment, appointmentCounter).toString());
 
-            entry.setInterval(new Interval(ldt, ldt.plusMinutes(30)));
+            entry.setInterval(new Interval(ldt, ldt.plusMinutes(60)));
 
             styleNumber++;
             styleNumber = styleNumber % 7;
@@ -119,12 +145,12 @@ public class CalendarWindow extends UiPart<Region> {
         final StringBuilder builder = new StringBuilder();
         builder.append(appointmentCounter)
             .append(". ")
-            //.append(appointment.getPetPatientName().toString())
-            // .append(" (")
-            .append(appointment.getOwnerNric() + " ");
-        //.append(") ");
-        appointment.getAppointmentTags().forEach(builder::append);
-        //builder.append(appointment.getRemark().toString());
+            .append(appointment.getPetPatientName().toString() + "\n")
+            .append("Owner Nric: " + appointment.getOwnerNric() + "\n")
+            .append("Appointment type: " + appointment.getTagString());
+
+        builder.append("\n");
+        builder.append("Remarks: " + appointment.getRemark().toString());
         return builder;
     }
 
@@ -153,36 +179,8 @@ public class CalendarWindow extends UiPart<Region> {
         calendarView.setShowPrintButton(false);
         calendarView.setShowSourceTrayButton(false);
         calendarView.showDayPage();
-    }
-
-    /**
-     *To switch between CalendarView displays
-     * @param character
-     */
-    private void switchViews(Character character) {
-        switch (character) {
-        case('d'):
-            calendarView.showDayPage();
-            return;
-        case('w'):
-            calendarView.showWeekPage();
-            return;
-        case('m'):
-            calendarView.showMonthPage();
-            return;
-        case('y'):
-            calendarView.showYearPage();
-            return;
-        default:
-            throw new AssertionError("Wrong showPage input");
-        }
-
-    }
-
-    @Subscribe
-    private void handleCalendarViewEvent(ChangeCalendarViewEvent event) {
-        Character character = event.character;
-        Platform.runLater(() -> switchViews(character));
+        calendarView.setShowSourceTray(false);
+        calendarView.setShowPageToolBarControls(false);
     }
 
     public CalendarView getRoot() {
@@ -193,9 +191,75 @@ public class CalendarWindow extends UiPart<Region> {
     private void handleNewAppointmentEvent(AddressBookChangedEvent event) {
         appointmentList = event.data.getAppointmentList();
         Platform.runLater(
-            this::setCalendar
+                this::setCalendar
         );
 
+    }
+
+    //@@author wynonaK
+    private void changeYearView(Year year) {
+        calendarView.showYear(year);
+    }
+
+    private void changeMonthView(YearMonth yearMonth) {
+        calendarView.showYearMonth(yearMonth);
+    }
+
+    /**
+     * changes the week view based on {@code date}.
+     * Does some particular checks (as weekFields give diff result from calendarFX),
+     * to ensure that it runs smoothly.
+     */
+    private void changeWeekView(LocalDate date) {
+        WeekFields weekFields = WeekFields.SUNDAY_START;
+        int week = date.get(weekFields.weekOfWeekBasedYear()) - 1;
+        System.out.println(week);
+
+        if (week == 0 && date.getMonthValue() == 12) {
+            //wraparound
+            week = 52;
+            calendarView.showWeek(Year.of(date.getYear()), week);
+        } else if (week == 0 && date.getMonthValue() == 1) {
+            //wraparound
+            LocalDate dateOfFirstJan = LocalDate.of(date.getYear(), 1, 1);
+            if (dateOfFirstJan.getDayOfWeek().getValue() != 7) {
+                week = 52;
+                calendarView.showWeek(Year.of(date.getYear() - 1), week);
+            } else {
+                week = 53;
+                calendarView.showWeek(Year.of(date.getYear() - 1), week);
+            }
+        } else {
+            calendarView.showWeek(Year.of(date.getYear()), week);
+        }
+    }
+
+    private void changeDayView(LocalDate date) {
+        calendarView.showDate(date);
+    }
+
+    @Subscribe
+    private void handleChangeYearView(ChangeYearViewRequestEvent event) {
+        Year year = event.year;
+        Platform.runLater(() -> changeYearView(year));
+    }
+
+    @Subscribe
+    private void handleChangeMonthView(ChangeMonthViewRequestEvent event) {
+        YearMonth yearMonth = event.yearMonth;
+        Platform.runLater(() -> changeMonthView(yearMonth));
+    }
+
+    @Subscribe
+    private void handleChangeWeekView(ChangeWeekViewRequestEvent event) {
+        LocalDate date = event.date;
+        Platform.runLater(() -> changeWeekView(date));
+    }
+
+    @Subscribe
+    private void handleChangeDayView(ChangeDayViewRequestEvent event) {
+        LocalDate date = event.date;
+        Platform.runLater(() -> changeDayView(date));
     }
 
 }

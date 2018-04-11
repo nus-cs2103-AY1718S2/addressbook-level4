@@ -19,10 +19,10 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class PetPatient {
     private final PetPatientName name;
-    private final String species; // e.g. dogs, cats, birds, etc.
-    private final String breed; // different varieties of the same species
-    private final String colour;
-    private final String bloodType;
+    private final Species species; // e.g. dogs, cats, birds, etc.
+    private final Breed breed; // different varieties of the same species
+    private final Colour colour;
+    private final BloodType bloodType;
 
     private final UniqueTagList tags;
 
@@ -32,10 +32,10 @@ public class PetPatient {
 
     //keep this constructor, as owner NRIC can be null initially when adding a new PetPatient
     public PetPatient(PetPatientName name,
-                      String species,
-                      String breed,
-                      String colour,
-                      String bloodType,
+                      Species species,
+                      Breed breed,
+                      Colour colour,
+                      BloodType bloodType,
                       Set<Tag> tags) {
         requireAllNonNull(name, species, breed, colour, bloodType, tags);
         this.name = name;
@@ -51,10 +51,10 @@ public class PetPatient {
     }
 
     public PetPatient(PetPatientName name,
-                      String species,
-                      String breed,
-                      String colour,
-                      String bloodType,
+                      Species species,
+                      Breed breed,
+                      Colour colour,
+                      BloodType bloodType,
                       Nric ownerNric,
                       Set<Tag> tags) {
         requireAllNonNull(name, species, breed, colour, bloodType, tags);
@@ -71,10 +71,10 @@ public class PetPatient {
 
     //keep this constructor
     public PetPatient(PetPatientName name,
-                      String species,
-                      String breed,
-                      String colour,
-                      String bloodType,
+                      Species species,
+                      Breed breed,
+                      Colour colour,
+                      BloodType bloodType,
                       Nric ownerNric,
                       Optional<Date> dateOfBirth,
                       Set<Tag> tags) {
@@ -98,19 +98,19 @@ public class PetPatient {
         return dateOfBirth;
     }
 
-    public String getSpecies() {
+    public Species getSpecies() {
         return species;
     }
 
-    public String getBreed() {
+    public Breed getBreed() {
         return breed;
     }
 
-    public String getColour() {
+    public Colour getColour() {
         return colour;
     }
 
-    public String getBloodType() {
+    public BloodType getBloodType() {
         return bloodType;
     }
 

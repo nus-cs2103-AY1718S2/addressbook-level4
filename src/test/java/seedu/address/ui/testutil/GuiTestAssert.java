@@ -55,10 +55,10 @@ public class GuiTestAssert {
      */
     public static void assertCardDisplaysPetPatient(PetPatient expectedPetPatient, PetPatientCardHandle actualCard) {
         assertEquals(expectedPetPatient.getName().toString(), actualCard.getName());
-        assertEquals(expectedPetPatient.getSpecies(), actualCard.getSpecies());
-        assertEquals(expectedPetPatient.getBreed(), actualCard.getBreed());
-        assertEquals(expectedPetPatient.getColour(), actualCard.getColour());
-        assertEquals(expectedPetPatient.getBloodType(), actualCard.getBloodType());
+        assertEquals(expectedPetPatient.getSpecies().toString(), actualCard.getSpecies());
+        assertEquals(expectedPetPatient.getBreed().toString(), actualCard.getBreed());
+        assertEquals(expectedPetPatient.getColour().toString(), actualCard.getColour());
+        assertEquals(expectedPetPatient.getBloodType().toString(), actualCard.getBloodType());
         assertEquals(expectedPetPatient.getOwner().toString(), actualCard.getOwnerNric());
 
         //assertTagsEqual(expectedPetPatient, actualCard);

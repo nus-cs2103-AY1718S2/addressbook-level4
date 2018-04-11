@@ -178,6 +178,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         petPatients.add(petPatient);
     }
 
+    //@@author chialejing
     /**
      * Replaces the given pet patient {@code target} in the list with {@code editedPetPatient}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPetPatient}.
@@ -214,6 +215,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         removeUselessTags();
     }
 
+    //@@author
     /**
      * Updates the master tag list to include tags in {@code person} that are not in the list.
      *
@@ -237,6 +239,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             person.getNric(), correctTagReferences);
     }
 
+    //@@author chialejing
     /**
      * Updates the master tag list to include tags in {@code petPatient} that are not in the list.
      *

@@ -19,16 +19,17 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.testutil.Assert;
 
+//@@author chialejing
 public class XmlAdaptedPetPatientTest {
     private static final String INVALID_NAME = "H@zel";
     private static final String EMPTY_FIELD = "";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = JEWEL.getName().toString();
-    private static final String VALID_SPECIES = JEWEL.getSpecies();
-    private static final String VALID_BREED = JEWEL.getBreed();
-    private static final String VALID_COLOUR = JEWEL.getColour();
-    private static final String VALID_BLOODTYPE = JEWEL.getBloodType();
+    private static final String VALID_SPECIES = JEWEL.getSpecies().toString();
+    private static final String VALID_BREED = JEWEL.getBreed().toString();
+    private static final String VALID_COLOUR = JEWEL.getColour().toString();
+    private static final String VALID_BLOODTYPE = JEWEL.getBloodType().toString();
     private static final String VALID_OWNER = JEWEL.getOwner().toString();
     private static final List<XmlAdaptedTag> VALID_TAGS = JEWEL.getTags().stream()
             .map(XmlAdaptedTag::new)

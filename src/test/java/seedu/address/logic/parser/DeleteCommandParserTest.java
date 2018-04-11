@@ -44,6 +44,7 @@ public class DeleteCommandParserTest {
     public void parse_validAppointmentArgs_returnsDeleteCommand() {
         assertParseSuccess(parser, "-a 1", new DeleteCommand(3, INDEX_FIRST_PERSON));
     }
+
     //@@author
     @Test
     public void parse_invalidArgs_throwsParseException() {

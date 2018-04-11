@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -123,4 +124,29 @@ public class Appointment {
         return builder.toString();
     }
 
+    /**
+     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Tag> getTag() {
+        return Collections.unmodifiableSet(appointmentTags.toSet());
+    }
+
+    //@@author Robert-Peng
+    /**
+     * Returns a list of tags as a string
+     */
+    public String getTagString() {
+        StringBuilder tagString = new StringBuilder();
+        Set<Tag> tagSet = Collections.unmodifiableSet(appointmentTags.toSet());
+        Iterator iterator = tagSet.iterator();
+        Tag tag = (Tag) iterator.next();
+        while (iterator.hasNext()) {
+            tagString.append(tag.tagName);
+            tagString.append(", ");
+            tag = (Tag) iterator.next();
+        }
+        tagString.append(tag.tagName);
+        return tagString.toString().trim();
+    }
 }

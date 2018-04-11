@@ -119,8 +119,8 @@ public class ParserUtil {
     public static String parseSearchName(String inputName) throws IllegalValueException {
         requireNonNull(inputName);
         String trimmedInputName = inputName.trim();
-        if (!Name.isValidName(trimmedInputName)) {
-            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+        if (!trimmedInputName.matches(SocialMediaPlatform.USERNAME_VALIDATION_REGEX)) {
+            throw new IllegalValueException(SocialMediaPlatform.MESSAGE_USERNAME_CONSTRAINTS);
         }
         return trimmedInputName;
     }

@@ -25,12 +25,19 @@ public class RateCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "rate";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " :Rates a candidate.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Rates a student based on technical, communication, problem solving skills and experience.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_TECHNICAL_SKILLS_SCORE + "TECHNICAL SKILLS SCORE "
-            + PREFIX_COMMUNICATION_SKILLS_SCORE + "COMMUNICATION SKILLS SCORE "
-            + PREFIX_PROBLEM_SOLVING_SKILLS_SCORE + "PROBLEM SOLVING SKILLS SCORE "
-            + PREFIX_EXPERIENCE_SCORE + "EXPERIENCE SCORE \n"
+            + PREFIX_TECHNICAL_SKILLS_SCORE
+            + "TECHNICAL SKILLS SCORE "
+            + PREFIX_COMMUNICATION_SKILLS_SCORE
+            + "COMMUNICATION SKILLS SCORE "
+            + PREFIX_PROBLEM_SOLVING_SKILLS_SCORE
+            + "PROBLEM SOLVING SKILLS SCORE "
+            + PREFIX_EXPERIENCE_SCORE
+            + "EXPERIENCE SCORE \n"
+            + "Note: 1. The scores must be numbers in the range of 1 to 5 (inclusive).\n"
+            + "2. Scores are rounded to two decimal places.\n"
             + "EXAMPLE: " + COMMAND_WORD + " 1 "
             + PREFIX_TECHNICAL_SKILLS_SCORE + "5 "
             + PREFIX_COMMUNICATION_SKILLS_SCORE + "4.5 "

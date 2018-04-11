@@ -1,0 +1,56 @@
+= Jeremy Lee - Project Portfolio
+:imagesDir: ../images/Sebry9.jpg
+:stylesDir: ../stylesheets
+
+== PROJECT: reInsurance
+
+---
+
+== Overview
+
+reInsurance is a desktop client tracking application used for insurance agent to keep track of his client's data. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: Insurance features
+** What it does: Allows the user to add in multiple insurance plans that their client have subscribed to. It also allow the commission that the insurance agent receive from the particular insurance to be added in. Afterwhich, the insurance agent can also view the total commission gained from that particular client.
+** Justification: The main purpose of an insurance agent is to gain more client to subscribe for their insurance plan, as the number of client increase, it may get increasing difficult to handle data's of clients thus the need to organize information.
+** Highlights: The implementation of this feature prove to be challenging for the part where multiple component needs to be edited.
+** Credits: Coding forums for the inspiration given.
+
+* *Minor enhancement*: added alias command for most existing commands such as add, edit, redo, undo etc.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/collated/functional/Sebry9.md[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+
+* *Other contributions*:
+
+** Project management:
+*** Monitoring the documentation status of the project.
+*** Organise weekly meeting to distribute workload.
+*** Project's time keeper.
+** Enhancements to existing features:
+*** Updated the Tag color scheme (Pull requests https://github.com/CS2103JAN2018-T11-B3/main/pull/6[#6])
+** Documentation:
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
+** Tools:
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+include::../UserGuide.adoc[tag=insurance]
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+include::../DeveloperGuide.adoc[tag=insurance]
+include::../DeveloperGuide.adoc[tag=commission]
+
+---
+

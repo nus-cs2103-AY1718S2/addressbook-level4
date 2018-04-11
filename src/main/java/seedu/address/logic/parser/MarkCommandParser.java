@@ -40,7 +40,7 @@ public class MarkCommandParser implements Parser<MarkCommand> {
         try {
             Integer marks = ParserUtil.parseMarks(argMultimap.getValue(PREFIX_MARK_PARTICIPATION).get());
             checkArgument(Participation.isValidParticipation(Integer.toString(marks)),
-                    Participation.MESSAGE_PARTICPATION_CONSTRAINTS);
+                    Participation.MESSAGE_PARTICIPATION_CONSTRAINTS);
             return new MarkCommand(index, marks);
         } catch (IllegalArgumentException | IllegalValueException ie) {
             throw new ParseException(MarkCommand.MESSAGE_INVALID_PARAMETER_VALUE);

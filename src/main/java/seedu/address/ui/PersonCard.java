@@ -14,7 +14,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import seedu.address.logic.commands.AddPhotoCommand;
 import seedu.address.model.person.Person;
 
 /**
@@ -66,11 +65,10 @@ public class PersonCard extends UiPart<Region> {
         //@@author crizyli
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
-        File file = new File(s + AddPhotoCommand.IMAGE_FOLDER_OTHER + person.getPhotoName());
+        File file = new File("data/personphoto/" + person.getPhotoName());
         Image image = null;
         try {
-            image = new Image(file.toURI().toURL().toExternalForm(),
-                    88, 88, false, false);
+            image = new Image(file.toURI().toURL().toExternalForm(), 88, 88, false, false);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

@@ -18,7 +18,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.ui.DetailPanel;
-import seedu.address.ui.StatusBarFooter;
+//import seedu.address.ui.StatusBarFooter;
 
 /**
  * A system test class for the help window, which contains interaction with other UI components.

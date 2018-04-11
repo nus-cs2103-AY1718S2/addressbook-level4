@@ -44,6 +44,7 @@ public class EditAppointmentCommand extends UndoableCommand {
     private final EditAppointmentDescriptor editAppointmentDescriptor;
 
     private AppointmentEntry appointmentEdited;
+    private AppointmentEntry appointmentToEdit;
 
 
     /**
@@ -61,7 +62,7 @@ public class EditAppointmentCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            model.editAppointment(searchText, appointmentEdited);
+            model.editAppointment(searchText, appointmentEdited, appointmentToEdit);
             return new CommandResult(String.format(MESSAGE_SUCCESS, appointmentEdited));
         } catch (EditAppointmentFailException e) {
             throw new CommandException(MESSAGE_FAIL_EDIT_APPOINTMENT);
@@ -71,7 +72,6 @@ public class EditAppointmentCommand extends UndoableCommand {
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        AppointmentEntry appointmentToEdit;
         try {
             appointmentToEdit = model.findAppointment(searchText);
         } catch (AppointmentNotFoundException e) {

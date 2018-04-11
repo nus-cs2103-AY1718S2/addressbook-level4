@@ -20,20 +20,20 @@ public class AppointmentEntry {
     public static final String DATE_VALIDATION = "d/MM/yyyy HH:mm";
 
 
-    private final Entry appointmentEntry;
+    private final CalendarEntry appointmentEntry;
     private Interval interval;
     private String givenTitle;
 
     public AppointmentEntry(String title, Interval timeSlot) {
         requireAllNonNull(title, timeSlot);
-        appointmentEntry = new Entry(title, timeSlot);
+        appointmentEntry = new CalendarEntry(title, timeSlot);
         interval = timeSlot;
         givenTitle = title;
     }
 
     public AppointmentEntry(AppointmentEntry clonedEntry) {
         requireAllNonNull(clonedEntry);
-        appointmentEntry = new Entry(clonedEntry.getGivenTitle(), clonedEntry.getInterval());
+        appointmentEntry = new CalendarEntry(clonedEntry.getGivenTitle(), clonedEntry.getInterval());
         interval = clonedEntry.getInterval();
         givenTitle = clonedEntry.getGivenTitle();
     }
@@ -89,5 +89,22 @@ public class AppointmentEntry {
 
         AppointmentEntry otherAppointment = (AppointmentEntry) other;
         return otherAppointment.givenTitle.equals(this.getGivenTitle());
+    }
+    /**
+     * CalendarFx Entry, overrides matches
+     */
+    public static class CalendarEntry extends Entry {
+        public CalendarEntry(String title, Interval interval) {
+            super(title, interval);
+        }
+
+        @Override
+        public boolean matches(String searchTerm) {
+            if (searchTerm.equals(this.getTitle())) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 }

@@ -7,7 +7,10 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Year;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
@@ -38,6 +41,10 @@ public class ParserUtilTest {
     private static final String INVALID_DATETIME_INCOMPLETE = "2018-02-28";
     private static final String INVALID_DATETIME_DATE = "2018-02-29";
     private static final String INVALID_DATETIME_TIME = "2018-02-28 25:30";
+    private static final String INVALID_YEAR = "3hrhnfian";
+    private static final String INVALID_YEAR_MONTH = "qurh9hp38";
+    private static final String INVALID_MONTH = "ai";
+    private static final String INVALID_DAY = "aiendoh3";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -45,9 +52,12 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
-
     private static final String VALID_REMARK = "nil";
     private static final String VALID_DATETIME = "2018-12-31 12:30";
+    private static final String VALID_YEAR = "2018";
+    private static final String VALID_YEAR_MONTH = "2018-12";
+    private static final String VALID_MONTH = "12";
+    private static final String VALID_DAY = "2018-12-31";
 
 
     private static final String WHITESPACE = " \t\r\n";
@@ -336,4 +346,127 @@ public class ParserUtilTest {
         assertEquals(expectedRemark, ParserUtil.parseRemark(remarkWithWhitespace));
         assertEquals(Optional.of(expectedRemark), ParserUtil.parseRemark(Optional.of(remarkWithWhitespace)));
     }
+
+    @Test
+    public void parseYear_null_returnsTodayYear() throws Exception {
+        Year expectedYear = Year.now();
+        assertEquals(expectedYear, ParserUtil.parseYear(""));
+        assertEquals(Optional.of(expectedYear), ParserUtil.parseYear(Optional.of("")));
+    }
+
+    @Test
+    public void parseYear_invalidYear_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseYear(INVALID_YEAR));
+        Assert.assertThrows(IllegalValueException.class, (
+        ) -> ParserUtil.parseYear(Optional.of(INVALID_YEAR)));
+    }
+
+    @Test
+    public void parseYear_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseYear(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseYear_validValueWithoutWhitespace_returnsYear() throws Exception {
+        Year expectedYear = Year.of(2018);
+        assertEquals(expectedYear, ParserUtil.parseYear(VALID_YEAR));
+        assertEquals(Optional.of(expectedYear), ParserUtil.parseYear(Optional.of(VALID_YEAR)));
+    }
+
+    @Test
+    public void parseYear_validValueWithWhitespace_returnsTrimmedYear() throws Exception {
+        String yearWithWhitespace = WHITESPACE + VALID_YEAR + WHITESPACE;
+        Year expectedYear = Year.of(2018);
+        assertEquals(expectedYear, ParserUtil.parseYear(yearWithWhitespace));
+        assertEquals(Optional.of(expectedYear), ParserUtil.parseYear(Optional.of(yearWithWhitespace)));
+    }
+
+    @Test
+    public void parseMonth_null_returnsTodayMonth() throws Exception {
+        YearMonth expectedYearMonth = YearMonth.now();
+        assertEquals(expectedYearMonth, ParserUtil.parseMonth(""));
+        assertEquals(Optional.of(expectedYearMonth), ParserUtil.parseMonth(Optional.of("")));
+    }
+
+    @Test
+    public void parseMonth_invalidMonth_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseMonth(INVALID_YEAR_MONTH));
+        Assert.assertThrows(IllegalValueException.class, (
+        ) -> ParserUtil.parseMonth(Optional.of(INVALID_YEAR_MONTH)));
+    }
+
+    @Test
+    public void parseMonth_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseMonth(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseMonth_validValueWithoutWhitespace_returnsMonth() throws Exception {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+        YearMonth expectedYearMonth = YearMonth.parse(VALID_YEAR_MONTH, formatter);
+        assertEquals(expectedYearMonth, ParserUtil.parseMonth(VALID_YEAR_MONTH));
+        assertEquals(Optional.of(expectedYearMonth), ParserUtil.parseMonth(Optional.of(VALID_YEAR_MONTH)));
+    }
+
+    @Test
+    public void parseMonthOnly_validValueWithoutWhitespace_returnsMonth() throws Exception {
+        YearMonth expectedYearMonth = YearMonth.now().withMonth(Integer.parseInt(VALID_MONTH));
+        assertEquals(expectedYearMonth, ParserUtil.parseMonth(VALID_MONTH));
+        assertEquals(Optional.of(expectedYearMonth), ParserUtil.parseMonth(Optional.of(VALID_MONTH)));
+    }
+
+    @Test
+    public void parseMonth_validValueWithWhitespace_returnsTrimmedMonth() throws Exception {
+        String yearMonthWithWhitespace = WHITESPACE + VALID_YEAR_MONTH + WHITESPACE;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+        YearMonth expectedYearMonth = YearMonth.parse(VALID_YEAR_MONTH, formatter);
+        assertEquals(expectedYearMonth, ParserUtil.parseMonth(yearMonthWithWhitespace));
+        assertEquals(Optional.of(expectedYearMonth), ParserUtil.parseMonth(Optional.of(yearMonthWithWhitespace)));
+    }
+
+
+    @Test
+    public void parseMonthOnly_validValueWithWhitespace_returnsTrimmedMonth() throws Exception {
+        String yearMonthWithWhitespace = WHITESPACE + VALID_MONTH + WHITESPACE;
+        YearMonth expectedYearMonth = YearMonth.now().withMonth(Integer.parseInt(VALID_MONTH));
+        assertEquals(expectedYearMonth, ParserUtil.parseMonth(yearMonthWithWhitespace));
+        assertEquals(Optional.of(expectedYearMonth), ParserUtil.parseMonth(Optional.of(yearMonthWithWhitespace)));
+    }
+
+    @Test
+    public void parseDay_null_returnsTodayDay() throws Exception {
+        LocalDate expectedLocalDate = LocalDate.now();
+        assertEquals(expectedLocalDate, ParserUtil.parseDate(""));
+        assertEquals(Optional.of(expectedLocalDate), ParserUtil.parseDate(Optional.of("")));
+    }
+
+    @Test
+    public void parseDay_invalidDay_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseDate(INVALID_DAY));
+        Assert.assertThrows(IllegalValueException.class, (
+        ) -> ParserUtil.parseYear(Optional.of(INVALID_DAY)));
+    }
+
+    @Test
+    public void parseDay_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDate(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseDay_validValueWithoutWhitespace_returnsDay() throws Exception {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate expectedDate = LocalDate.parse(VALID_DAY, formatter);
+        assertEquals(expectedDate, ParserUtil.parseDate((VALID_DAY)));
+        assertEquals(Optional.of(expectedDate), ParserUtil.parseDate(Optional.of(VALID_DAY)));
+    }
+
+    @Test
+    public void parseDay_validValueWithWhitespace_returnsTrimmedDay() throws Exception {
+        String dayWithWhitespace = WHITESPACE + VALID_DAY + WHITESPACE;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate expectedDate = LocalDate.parse(VALID_DAY, formatter);
+        assertEquals(expectedDate, ParserUtil.parseDate(dayWithWhitespace));
+        assertEquals(Optional.of(expectedDate), ParserUtil.parseDate(Optional.of(dayWithWhitespace)));
+    }
 }
+

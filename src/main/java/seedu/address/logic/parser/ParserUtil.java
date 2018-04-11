@@ -5,7 +5,11 @@ import static java.util.Objects.requireNonNull;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Year;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Collection;
@@ -176,7 +180,7 @@ public class ParserUtil {
             df.setLenient(false);
             df.parse(dateTimeArray[0]);
         } catch (ParseException e) {
-            throw new IllegalValueException("Please give a valid date based on the format!");
+            throw new IllegalValueException("Please give a valid date based on the format yyyy-MM-dd!");
         }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -192,12 +196,134 @@ public class ParserUtil {
     }
 
     /**
-     * Parses {@code Optional<String> dateTime} into an {@code Optional<LocalDatetime>} if {@code dateTime} is present.
+     * Parses {@code Optional<String> dateTime} into an {@code Optional<LocalDateTime>} if {@code dateTime} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<LocalDateTime> parseDateTime(Optional<String> dateTime) throws IllegalValueException {
         requireNonNull(dateTime);
         return dateTime.isPresent() ? Optional.of(parseDateTime(dateTime.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String date} into an {@code LocalDate} object.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code dateTime} is invalid.
+     */
+    public static LocalDate parseDate(String date) throws IllegalValueException {
+        LocalDate localDate = null;
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        date = date.trim();
+
+        if (date.isEmpty()) {
+            localDate = LocalDate.now();
+            return localDate;
+        }
+
+        try {
+            df.setLenient(false);
+            df.parse(date);
+            localDate = LocalDate.parse(date, formatter);
+        } catch (ParseException | DateTimeParseException e) {
+            throw new IllegalValueException("Please give a valid date based on the format yyyy-MM-dd!");
+        }
+
+        return localDate;
+    }
+
+    /**
+     * Parses {@code Optional<String> date} into an {@code Optional<LocalDate>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<LocalDate> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String stringYear} into an {@code Year} object.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code stringYear} is invalid.
+     */
+    public static Year parseYear(String stringYear) throws IllegalValueException {
+        Year year = null;
+        DateFormat df = new SimpleDateFormat("yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
+        stringYear = stringYear.trim();
+
+        if (stringYear.isEmpty()) {
+            year = Year.now();
+            return year;
+        }
+
+        try {
+            df.setLenient(false);
+            df.parse(stringYear);
+            year = Year.parse(stringYear, formatter);
+        } catch (ParseException | DateTimeParseException e) {
+            throw new IllegalValueException("Please give a valid year based on the format yyyy!");
+        }
+
+        return year;
+    }
+
+    /**
+     * Parses {@code Optional<String> month} into an {@code Optional<Year>} if {@code year} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Year> parseYear(Optional<String> year) throws IllegalValueException {
+        requireNonNull(year);
+        return year.isPresent() ? Optional.of(parseYear(year.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String stringMonth} into an {@code YearMonth} object.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code stringMonth} is invalid.
+     */
+    public static YearMonth parseMonth(String stringMonth) throws IllegalValueException {
+        YearMonth yearMonth = null;
+        DateFormat df = new SimpleDateFormat("yyyy-MM");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+        stringMonth = stringMonth.trim();
+
+        if (stringMonth.isEmpty()) {
+            yearMonth = YearMonth.now();
+            return yearMonth;
+        }
+
+        try {
+            if (stringMonth.length() == 2) {
+                int month = Integer.parseInt(stringMonth);
+                yearMonth = YearMonth.now().withMonth(month);
+                return yearMonth;
+            }
+
+            df.setLenient(false);
+            df.parse(stringMonth);
+            yearMonth = YearMonth.parse(stringMonth, formatter);
+        } catch (ParseException e) {
+            throw new IllegalValueException("Please give a valid year and month based on the format yyyy-MM!");
+        } catch (NumberFormatException nfe) {
+            throw new IllegalValueException("Please input integer for month in the format MM!");
+        } catch (DateTimeException dte) {
+            throw new IllegalValueException("Please give a valid month based on the format MM!");
+        }
+
+        return yearMonth;
+    }
+
+    /**
+     * Parses {@code Optional<String> month} into an {@code Optional<YearMonth>} if {@code month} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<YearMonth> parseMonth(Optional<String> month) throws IllegalValueException {
+        requireNonNull(month);
+        return month.isPresent() ? Optional.of(parseMonth(month.get())) : Optional.empty();
     }
 
     //@@author

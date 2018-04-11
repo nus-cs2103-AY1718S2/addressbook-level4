@@ -7,7 +7,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.CalendarViewCommand;
 import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
@@ -17,6 +16,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListAppointmentCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -54,11 +54,9 @@ public class AddressBookParser {
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
 
-        //@@author Robert-Peng
-        case CalendarViewCommand.COMMAND_ALIAS:
-        case CalendarViewCommand.COMMAND_WORD:
-            return new CalendarViewCommandParser().parse(arguments);
-        //@@author
+        case ListAppointmentCommand.COMMAND_ALIAS:
+        case ListAppointmentCommand.COMMAND_WORD:
+            return new ListAppointmentCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_ALIAS:
         case EditCommand.COMMAND_WORD:

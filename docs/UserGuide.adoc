@@ -298,11 +298,19 @@ Logging in to the calendar interface DOES NOT perform the Oauth authentication p
 
 Allows a user to add an event directly to their calendar.
 
-Format: `calendar-add title/<eventname> start/<startdatetime> end/<enddatetime> loc/<location> lp/<linkedperson>(optional)`
+Format: `calendar-add title/<eventname> start/<startdatetime> end/<enddatetime> loc/<location>`
 
 [NOTE]
 ====
-Dates can be written in natural language (e.g. Today, This Friday, May 4, etc.)
+Start/End times can be written in natural language (e.g. Today, This Friday, May 4, etc.)
+
+The expected behaviour is such that if no time is provided with the date, the program will assume that the the desired
+time is the current time. For example, if current time is 12am and the user does not specify a start or end time for the
+two dates that they provide, then the application will use 12am as both the start and end time for their input dates.
+
+Similarly, if no date is provided with the time, the program will assume that the desired day was the current day.
+For example, if the current time is 4am, and the start date is 12am and the end date is 6am, the created event will
+start on the current day at 12am and end at 6am on the same day.
 
 `calendar-*` commands rely on Google Oauth to modify the calendar. Whenever a `calendar-*` command is executed, the
 Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP

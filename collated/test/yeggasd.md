@@ -1,107 +1,70 @@
 # yeggasd
-###### /java/seedu/address/ui/PasswordBoxTest.java
+###### \java\guitests\guihandles\PasswordBoxHandle.java
 ``` java
-public class PasswordBoxTest extends GuiUnitTest {
-    private static final String CORRECT_PASSWORD = "test";
-    private static final String WRONG_PASSWORD = "wrong";
-    private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/PasswordBoxTest/");
+/**
+ * A handle to the {@code CommandBox} in the GUI.
+ */
+public class PasswordBoxHandle extends NodeHandle<TextField> {
+    public static final String PASSWORD_WINDOW_TITLE = "Password";
 
-    @Rule
-    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+    public static final String PASSWORD_INPUT_FIELD_ID = "#passwordTextField";
 
-    private ArrayList<String> defaultStyleOfPasswordBox;
-    private ArrayList<String> errorStyleOfPasswordBox;
-    private PasswordBoxHandle passwordBoxHandle;
-
-
-    @Before
-    public void setUp() throws Exception {
-
-        Storage storageManager = setUpStorage();
-        Model model = new ModelManager(storageManager.readAddressBook(new Password(CORRECT_PASSWORD)).get());
-
-        PasswordBox commandBox = new PasswordBox(storageManager, model);
-        passwordBoxHandle = new PasswordBoxHandle(getChildNode(commandBox.getRoot(),
-                PasswordBoxHandle.PASSWORD_INPUT_FIELD_ID));
-        uiPartRule.setUiPart(commandBox);
-
-        defaultStyleOfPasswordBox = new ArrayList<>(passwordBoxHandle.getStyleClass());
-
-        errorStyleOfPasswordBox = new ArrayList<>(defaultStyleOfPasswordBox);
-        errorStyleOfPasswordBox.add(CommandBox.ERROR_STYLE_CLASS);
-    }
-
-    private String getTestFilePath(String fileName) {
-        return TEST_DATA_FOLDER + fileName;
-    }
-    private Storage setUpStorage() {
-        XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTestFilePath(
-                                                                            "encryptedAddressBook.xml"));
-        JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTestFilePath("prefs"));
-        ReadOnlyJsonVenueInformation venueInformationStorage = new ReadOnlyJsonVenueInformation("vi");
-        return new StorageManager(addressBookStorage, userPrefsStorage, venueInformationStorage);
-    }
-
-    @Test
-    public void passwordBox_startingWithWrongPassword() {
-        assertBehaviorForWrongPassword();
-    }
-
-    @Test
-    public void passwordBox_startingWithCorrectPassword() {
-        assertBehaviorForCorrectPassword();
-    }
-
-    @Test
-    public void passwordBox_handleKeyPress() {
-        passwordBoxHandle.run(WRONG_PASSWORD);
-        assertEquals(errorStyleOfPasswordBox, passwordBoxHandle.getStyleClass());
-        guiRobot.push(KeyCode.ESCAPE);
-        assertEquals(errorStyleOfPasswordBox, passwordBoxHandle.getStyleClass());
-
-        guiRobot.push(KeyCode.A);
-        assertEquals(defaultStyleOfPasswordBox, passwordBoxHandle.getStyleClass());
+    public PasswordBoxHandle(TextField passwordBoxNode) {
+        super(passwordBoxNode);
     }
 
     /**
-     * Use a wrong password, then verifies that <br>
-     *      - the text remains resets <br>
-     *      - the command box's style is the same as {@code errorStyleOfCommandBox}.
+     * Returns the text in the command box.
      */
-    private void assertBehaviorForWrongPassword() {
-        passwordBoxHandle.run(WRONG_PASSWORD);
-        assertEquals("", passwordBoxHandle.getInput());
-        assertEquals(errorStyleOfPasswordBox, passwordBoxHandle.getStyleClass());
+    public String getInput() {
+        return getRootNode().getText();
     }
 
     /**
-     * Enters the correct password, then verifies that <br>
-     *      - the text is cleared <br>
-     *      - the event {@code PasswordCorrectEvent} is raised.
+     * Enters the given command in the Command Box and presses enter.
+     * @return true if the command succeeded, false otherwise.
      */
-    private void assertBehaviorForCorrectPassword() {
-        passwordBoxHandle.run(CORRECT_PASSWORD);
-        assertEquals("", passwordBoxHandle.getInput());
-        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof PasswordCorrectEvent);
+    public boolean run(String password) {
+        click();
+        guiRobot.interact(() -> getRootNode().setText(password));
+        guiRobot.pauseForHuman();
+
+        guiRobot.type(KeyCode.ENTER);
+
+        return !getStyleClass().contains(PasswordBox.ERROR_STYLE_CLASS);
+    }
+
+    /**
+     * Returns the list of style classes present in the command box.
+     */
+    public ObservableList<String> getStyleClass() {
+        return getRootNode().getStyleClass();
     }
 }
 ```
-###### /java/seedu/address/ui/testutil/GuiTestAssert.java
+###### \java\guitests\guihandles\PersonCardHandle.java
 ``` java
-    /**
-     * Asserts that the tags in {@code actualCard} matches all the tags in {@code expectedPerson} with the correct
-     * color.
-     */
-    private static void assertTagsEqual(Person expectedPerson, PersonCardHandle actualCard) {
-        List<String> expectedTags = expectedPerson.getTags().stream()
-                .map(tag -> tag.tagName).collect(Collectors.toList());
-        assertEquals(expectedTags, actualCard.getTags());
-        expectedTags.forEach(tag ->
-                assertEquals(Arrays.asList(LABEL_DEFAULT_STYLE, PersonCard.getColorStyleFor(tag)),
-                        actualCard.getTagStyleClasses(tag)));
+    public List<String> getTagStyleClasses(String tag) {
+        return tagLabels
+                .stream()
+                .filter(label -> label.getText().equals(tag))
+                .map(Label::getStyleClass)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No such tag."));
     }
 ```
-###### /java/seedu/address/commons/util/SecurityUtilTest.java
+###### \java\guitests\guihandles\PersonDetailsCardHandle.java
+``` java
+    public List<String> getTagStyleClasses(String tag) {
+        return tagLabels
+                .stream()
+                .filter(label -> label.getText().equals(tag))
+                .map(Label::getStyleClass)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No such tag."));
+    }
+```
+###### \java\seedu\address\commons\util\SecurityUtilTest.java
 ``` java
 public class SecurityUtilTest {
     private static final File TEST_DATA_FILE = new File("./src/test/data/sandbox/temp");
@@ -235,75 +198,7 @@ public class SecurityUtilTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/RemovePasswordCommandParserTest.java
-``` java
-/**
- * As we are only doing white-box testing, our test cases do not cover path variations
- * outside of the RemovePasswordCommand code. For example, inputs "1" and "1 abc" take the
- * same path through the RemovePasswordCommand, and therefore we test only one of them.
- * The path variation for those two cases occur inside the ParserUtil, and
- * therefore should be covered by the ParserUtilTest.
- */
-public class RemovePasswordCommandParserTest {
-
-    private RemovePasswordCommandParser parser = new RemovePasswordCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsParseCommand() {
-        Command command = parser.parse("");
-        assertTrue(command instanceof RemovePasswordCommand);
-    }
-}
-```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_password() throws Exception {
-        PasswordCommand command = (PasswordCommand) parser.parseCommand(
-                PasswordCommand.COMMAND_WORD + " test");
-        assertEquals(new PasswordCommand("test"), command);
-    }
-
-    @Test
-    public void parseCommand_nopassword() throws Exception {
-        assertTrue(parser.parseCommand(RemovePasswordCommand.COMMAND_WORD) instanceof RemovePasswordCommand);
-        assertTrue(parser.parseCommand(RemovePasswordCommand.COMMAND_WORD + " 3")
-                instanceof RemovePasswordCommand);
-    }
-
-    @Test
-    public void parseCommand_import() throws Exception {
-        ImportCommand command = (ImportCommand) parser.parseCommand(
-                ImportCommand.COMMAND_WORD + " /data/addressbook.xml test");
-        assertEquals(new ImportCommand("/data/addressbook.xml", "test"), command);
-    }
-```
-###### /java/seedu/address/logic/parser/PasswordCommandParserTest.java
-``` java
-/**
- * As we are only doing white-box testing, our test cases do not cover path variations
- * outside of the PasswordCommand code. For example, inputs "1" and "1 abc" take the
- * same path through the PasswordCommand, and therefore we test only one of them.
- * The path variation for those two cases occur inside the ParserUtil, and
- * therefore should be covered by the ParserUtilTest.
- */
-public class PasswordCommandParserTest {
-
-    private PasswordCommandParser parser = new PasswordCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsParseCommand() {
-        assertParseSuccess(parser, "1", new PasswordCommand("1"));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                PasswordCommand.INVALID_PASSWORD, PasswordCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### /java/seedu/address/logic/commands/ImportCommandTest.java
+###### \java\seedu\address\logic\commands\ImportCommandTest.java
 ``` java
     @Test
     public void execute_encryptedAddressBook_success() throws Exception {
@@ -323,7 +218,7 @@ public class PasswordCommandParserTest {
         importCommand.executeUndoableCommand();
     }
 ```
-###### /java/seedu/address/logic/commands/PasswordCommandTest.java
+###### \java\seedu\address\logic\commands\PasswordCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
@@ -377,7 +272,7 @@ public class PasswordCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/RemovePasswordCommandTest.java
+###### \java\seedu\address\logic\commands\RemovePasswordCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model and Password) and unit tests
@@ -417,23 +312,216 @@ public class RemovePasswordCommandTest {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlAdaptedPasswordTest.java
+###### \java\seedu\address\logic\commands\SelectCommandTest.java
 ``` java
-public class XmlAdaptedPasswordTest {
-
     @Test
-    public void toModelType_validPassword_returnsPassword() throws Exception {
-        Password pass = new Password(hash("test"), hash("test"));
-        XmlAdaptedPassword password = new XmlAdaptedPassword(pass);
-        assertEquals(pass, password.toModelType());
+    public void execute_validIndexUnfilteredList_success() {
+        Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
+
+        assertExecutionSuccess(INDEX_FIRST_PERSON, ODD);
+        assertExecutionSuccess(INDEX_FIRST_PERSON, EVEN);
+        assertExecutionSuccess(INDEX_THIRD_PERSON, EVEN);
+        assertExecutionSuccess(lastPersonIndex, EVEN);
     }
 
-    private byte[] hash(String password) {
-        return SecurityUtil.hashPassword(password);
+    @Test
+    public void execute_invalidIndexUnfilteredList_failure() {
+        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+
+        assertExecutionFailure(outOfBoundsIndex, ODD, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_validIndexFilteredList_success() {
+        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+
+        assertExecutionSuccess(INDEX_FIRST_PERSON, ODD);
+    }
+
+    @Test
+    public void execute_invalidIndexFilteredList_failure() {
+        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+
+        Index outOfBoundsIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        assertExecutionFailure(outOfBoundsIndex, ODD, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_PERSON, ODD);
+        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_PERSON, ODD);
+        SelectCommand selectThirdCommand = new SelectCommand(INDEX_FIRST_PERSON, EVEN);
+
+        // same object -> returns true
+        assertTrue(selectFirstCommand.equals(selectFirstCommand));
+
+        // same values -> returns true
+        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_PERSON, ODD);
+        assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(selectFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(selectFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(selectFirstCommand.equals(selectSecondCommand));
+
+        //different odd/even -> returns false
+        assertFalse(selectFirstCommand.equals(selectThirdCommand));
+    }
+
+    /**
+     * Executes a {@code SelectCommand} with the given {@code index}, and checks that {@code JumpToListRequestEvent}
+     * is raised with the correct index.
+     */
+    private void assertExecutionSuccess(Index index, String oddEven) {
+        SelectCommand selectCommand = prepareCommand(index, oddEven);
+
+        try {
+            CommandResult commandResult = selectCommand.execute();
+            assertEquals(String.format(SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS, index.getOneBased(), oddEven),
+                    commandResult.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+
+        JumpToListRequestEvent lastEvent = (JumpToListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
+    }
+
+    /**
+     * Executes a {@code SelectCommand} with the given {@code index}, and checks that a {@code CommandException}
+     * is thrown with the {@code expectedMessage}.
+     */
+    private void assertExecutionFailure(Index index, String oddEven, String expectedMessage) {
+        SelectCommand selectCommand = prepareCommand(index, oddEven);
+
+        try {
+            selectCommand.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException ce) {
+            assertEquals(expectedMessage, ce.getMessage());
+            assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
+        }
+    }
+
+    /**
+     * Returns a {@code SelectCommand} with parameters {@code index}.
+     */
+    private SelectCommand prepareCommand(Index index, String oddEven) {
+        SelectCommand selectCommand = new SelectCommand(index, oddEven);
+        selectCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return selectCommand;
     }
 }
 ```
-###### /java/seedu/address/storage/StorageManagerTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_password() throws Exception {
+        PasswordCommand command = (PasswordCommand) parser.parseCommand(
+                PasswordCommand.COMMAND_WORD + " test");
+        assertEquals(new PasswordCommand("test"), command);
+    }
+
+    @Test
+    public void parseCommand_nopassword() throws Exception {
+        assertTrue(parser.parseCommand(RemovePasswordCommand.COMMAND_WORD) instanceof RemovePasswordCommand);
+        assertTrue(parser.parseCommand(RemovePasswordCommand.COMMAND_WORD + " 3")
+                instanceof RemovePasswordCommand);
+    }
+
+    @Test
+    public void parseCommand_import() throws Exception {
+        ImportCommand command = (ImportCommand) parser.parseCommand(
+                ImportCommand.COMMAND_WORD + " /data/addressbook.xml test");
+        assertEquals(new ImportCommand("/data/addressbook.xml", "test"), command);
+    }
+```
+###### \java\seedu\address\logic\parser\PasswordCommandParserTest.java
+``` java
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the PasswordCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the PasswordCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class PasswordCommandParserTest {
+
+    private PasswordCommandParser parser = new PasswordCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsParseCommand() {
+        assertParseSuccess(parser, "1", new PasswordCommand("1"));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                PasswordCommand.INVALID_PASSWORD, PasswordCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\RemovePasswordCommandParserTest.java
+``` java
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the RemovePasswordCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the RemovePasswordCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class RemovePasswordCommandParserTest {
+
+    private RemovePasswordCommandParser parser = new RemovePasswordCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsParseCommand() {
+        Command command = parser.parse("");
+        assertTrue(command instanceof RemovePasswordCommand);
+    }
+}
+```
+###### \java\seedu\address\model\AddressBookTest.java
+``` java
+    @Test
+    public void createdWithPassword_passwordChanged_passwordChanged() throws Exception {
+        AddressBook addressBookUpdatedPassword = new AddressBook("new");
+        Password expectedPassword = new Password("new");
+        assertEquals(expectedPassword, addressBookUpdatedPassword.getPassword());
+    }
+
+    @Test
+    public void updatePasswordWithClass_passwordChanged_passwordUpdated() throws Exception {
+        AddressBook addressBookUpdatedPassword = new AddressBookBuilder().withPerson(BOB).withPassword("test").build();
+        addressBookUpdatedPassword.updatePassword(new Password("new"));
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BOB).withPassword("new").build();
+        assertEquals(expectedAddressBook, addressBookUpdatedPassword);
+    }
+
+    @Test
+    public void updatePasswordWithBytes_passwordChanged_passwordUpdated() throws Exception {
+        AddressBook addressBookUpdatedPassword = new AddressBookBuilder().withPerson(BOB).withPassword("test").build();
+        addressBookUpdatedPassword.updatePassword(SecurityUtil.hashPassword("new"));
+        addressBookUpdatedPassword.updatePassword(SecurityUtil.hashPassword("new"));
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BOB).withPassword("new").build();
+        assertEquals(expectedAddressBook, addressBookUpdatedPassword);
+    }
+```
+###### \java\seedu\address\model\AddressBookTest.java
+``` java
+        @Override
+        public Password getPassword() {
+            return password;
+        }
+```
+###### \java\seedu\address\storage\StorageManagerTest.java
 ``` java
     @Test
     public void addressBookEncryptedReadSaveWithPassword() throws Exception {
@@ -466,14 +554,30 @@ public class XmlAdaptedPasswordTest {
         assertEquals(original, new AddressBook(retrieved));
     }
 ```
-###### /java/seedu/address/storage/XmlAddressBookStorageTest.java
+###### \java\seedu\address\storage\XmlAdaptedPasswordTest.java
+``` java
+public class XmlAdaptedPasswordTest {
+
+    @Test
+    public void toModelType_validPassword_returnsPassword() throws Exception {
+        Password pass = new Password(hash("test"), hash("test"));
+        XmlAdaptedPassword password = new XmlAdaptedPassword(pass);
+        assertEquals(pass, password.toModelType());
+    }
+
+    private byte[] hash(String password) {
+        return SecurityUtil.hashPassword(password);
+    }
+}
+```
+###### \java\seedu\address\storage\XmlAddressBookStorageTest.java
 ``` java
     private java.util.Optional<ReadOnlyAddressBook> readAddressBook(String filePath, Password password)
                                                                             throws Exception {
         return new XmlAddressBookStorage(filePath).readAddressBook(addToTestDataPathIfNotNull(filePath), password);
     }
 ```
-###### /java/seedu/address/storage/XmlAddressBookStorageTest.java
+###### \java\seedu\address\storage\XmlAddressBookStorageTest.java
 ``` java
     @Test
     public void readAddressBookWithPassword_invalidAndValidPersonAddressBook_throwDataConversionException()
@@ -491,7 +595,7 @@ public class XmlAdaptedPasswordTest {
         readAddressBook(filePath, new Password("test"));
     }
 ```
-###### /java/seedu/address/storage/XmlAddressBookStorageTest.java
+###### \java\seedu\address\storage\XmlAddressBookStorageTest.java
 ``` java
     @Test
     public void readAndSaveEncryptedAddressBook_allInOrder_success() throws Exception {
@@ -535,40 +639,7 @@ public class XmlAdaptedPasswordTest {
         assertEquals(original, new AddressBook(readBack));
     }
 ```
-###### /java/seedu/address/model/AddressBookTest.java
-``` java
-    @Test
-    public void createdWithPassword_passwordChanged_passwordChanged() throws Exception {
-        AddressBook addressBookUpdatedPassword = new AddressBook("new");
-        Password expectedPassword = new Password("new");
-        assertEquals(expectedPassword, addressBookUpdatedPassword.getPassword());
-    }
-
-    @Test
-    public void updatePasswordWithClass_passwordChanged_passwordUpdated() throws Exception {
-        AddressBook addressBookUpdatedPassword = new AddressBookBuilder().withPerson(BOB).withPassword("test").build();
-        addressBookUpdatedPassword.updatePassword(new Password("new"));
-        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BOB).withPassword("new").build();
-        assertEquals(expectedAddressBook, addressBookUpdatedPassword);
-    }
-
-    @Test
-    public void updatePasswordWithBytes_passwordChanged_passwordUpdated() throws Exception {
-        AddressBook addressBookUpdatedPassword = new AddressBookBuilder().withPerson(BOB).withPassword("test").build();
-        addressBookUpdatedPassword.updatePassword(SecurityUtil.hashPassword("new"));
-        addressBookUpdatedPassword.updatePassword(SecurityUtil.hashPassword("new"));
-        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BOB).withPassword("new").build();
-        assertEquals(expectedAddressBook, addressBookUpdatedPassword);
-    }
-```
-###### /java/seedu/address/model/AddressBookTest.java
-``` java
-        @Override
-        public Password getPassword() {
-            return password;
-        }
-```
-###### /java/seedu/address/testutil/AddressBookBuilder.java
+###### \java\seedu\address\testutil\AddressBookBuilder.java
 ``` java
     /**
      * Parses {@code password} into a {@code Password} and updates the {@code AddressBook} 's password
@@ -579,57 +650,117 @@ public class XmlAdaptedPasswordTest {
         return this;
     }
 ```
-###### /java/guitests/guihandles/PersonCardHandle.java
-``` java
-    public List<String> getTagStyleClasses(String tag) {
-        return tagLabels
-                .stream()
-                .filter(label -> label.getText().equals(tag))
-                .map(Label::getStyleClass)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No such tag."));
-    }
-```
-###### /java/guitests/guihandles/PasswordBoxHandle.java
+###### \java\seedu\address\testutil\TypicalOddEven.java
 ``` java
 /**
- * A handle to the {@code CommandBox} in the GUI.
+ * A utility class containing Odd or Even String to be used in tests.
  */
-public class PasswordBoxHandle extends NodeHandle<TextField> {
-    public static final String PASSWORD_WINDOW_TITLE = "Password";
+public class TypicalOddEven {
+    public static final String ODD = "Odd";
+    public static final String EVEN = "Even";
+    public static final Index EVEN_INDEX = Index.fromZeroBased(0);
+    public static final Index ODD_INDEX = Index.fromZeroBased(1);
+}
+```
+###### \java\seedu\address\ui\PasswordBoxTest.java
+``` java
+public class PasswordBoxTest extends GuiUnitTest {
+    private static final String CORRECT_PASSWORD = "test";
+    private static final String WRONG_PASSWORD = "wrong";
+    private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/PasswordBoxTest/");
 
-    public static final String PASSWORD_INPUT_FIELD_ID = "#passwordTextField";
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
-    public PasswordBoxHandle(TextField passwordBoxNode) {
-        super(passwordBoxNode);
+    private ArrayList<String> defaultStyleOfPasswordBox;
+    private ArrayList<String> errorStyleOfPasswordBox;
+    private PasswordBoxHandle passwordBoxHandle;
+
+
+    @Before
+    public void setUp() throws Exception {
+
+        Storage storageManager = setUpStorage();
+        Model model = new ModelManager(storageManager.readAddressBook(new Password(CORRECT_PASSWORD)).get());
+
+        PasswordBox commandBox = new PasswordBox(storageManager, model);
+        passwordBoxHandle = new PasswordBoxHandle(getChildNode(commandBox.getRoot(),
+                PasswordBoxHandle.PASSWORD_INPUT_FIELD_ID));
+        uiPartRule.setUiPart(commandBox);
+
+        defaultStyleOfPasswordBox = new ArrayList<>(passwordBoxHandle.getStyleClass());
+
+        errorStyleOfPasswordBox = new ArrayList<>(defaultStyleOfPasswordBox);
+        errorStyleOfPasswordBox.add(CommandBox.ERROR_STYLE_CLASS);
+    }
+
+    private String getTestFilePath(String fileName) {
+        return TEST_DATA_FOLDER + fileName;
+    }
+    private Storage setUpStorage() {
+        XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTestFilePath(
+                                                                            "encryptedAddressBook.xml"));
+        JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTestFilePath("prefs"));
+        ReadOnlyJsonVenueInformation venueInformationStorage = new ReadOnlyJsonVenueInformation("vi");
+        return new StorageManager(addressBookStorage, userPrefsStorage, venueInformationStorage);
+    }
+
+    @Test
+    public void passwordBox_startingWithWrongPassword() {
+        assertBehaviorForWrongPassword();
+    }
+
+    @Test
+    public void passwordBox_startingWithCorrectPassword() {
+        assertBehaviorForCorrectPassword();
+    }
+
+    @Test
+    public void passwordBox_handleKeyPress() {
+        passwordBoxHandle.run(WRONG_PASSWORD);
+        assertEquals(errorStyleOfPasswordBox, passwordBoxHandle.getStyleClass());
+        guiRobot.push(KeyCode.ESCAPE);
+        assertEquals(errorStyleOfPasswordBox, passwordBoxHandle.getStyleClass());
+
+        guiRobot.push(KeyCode.A);
+        assertEquals(defaultStyleOfPasswordBox, passwordBoxHandle.getStyleClass());
     }
 
     /**
-     * Returns the text in the command box.
+     * Use a wrong password, then verifies that <br>
+     *      - the text remains resets <br>
+     *      - the command box's style is the same as {@code errorStyleOfCommandBox}.
      */
-    public String getInput() {
-        return getRootNode().getText();
+    private void assertBehaviorForWrongPassword() {
+        passwordBoxHandle.run(WRONG_PASSWORD);
+        assertEquals("", passwordBoxHandle.getInput());
+        assertEquals(errorStyleOfPasswordBox, passwordBoxHandle.getStyleClass());
     }
 
     /**
-     * Enters the given command in the Command Box and presses enter.
-     * @return true if the command succeeded, false otherwise.
+     * Enters the correct password, then verifies that <br>
+     *      - the text is cleared <br>
+     *      - the event {@code PasswordCorrectEvent} is raised.
      */
-    public boolean run(String password) {
-        click();
-        guiRobot.interact(() -> getRootNode().setText(password));
-        guiRobot.pauseForHuman();
-
-        guiRobot.type(KeyCode.ENTER);
-
-        return !getStyleClass().contains(PasswordBox.ERROR_STYLE_CLASS);
-    }
-
-    /**
-     * Returns the list of style classes present in the command box.
-     */
-    public ObservableList<String> getStyleClass() {
-        return getRootNode().getStyleClass();
+    private void assertBehaviorForCorrectPassword() {
+        passwordBoxHandle.run(CORRECT_PASSWORD);
+        assertEquals("", passwordBoxHandle.getInput());
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof PasswordCorrectEvent);
     }
 }
+```
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
+``` java
+    /**
+     * Asserts that the tags in {@code actualCard} matches all the tags in {@code expectedPerson} with the correct
+     * color.
+     */
+    private static void assertTagsEqual(Person expectedPerson, PersonCardHandle actualCard) {
+        List<String> expectedTags = expectedPerson.getTags().stream()
+                .map(tag -> tag.tagName).collect(Collectors.toList());
+        assertEquals(expectedTags, actualCard.getTags());
+        expectedTags.forEach(tag ->
+                assertEquals(Arrays.asList(LABEL_DEFAULT_STYLE, PersonCard.getColorStyleFor(tag)),
+                        actualCard.getTagStyleClasses(tag)));
+    }
 ```

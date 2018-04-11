@@ -31,7 +31,7 @@ public class TimeTableEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return null;
+        return timetable.toString();
     }
 }
 ```
@@ -83,7 +83,7 @@ public class SecurityUtil {
             Key secretAesKey = createKey(password);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretAesKey);
-            fileProcessor(cipher, file);
+            processFile(cipher, file);
         } catch (InvalidKeyException ike) {
             logger.severe("ERROR: Wrong key length " + StringUtil.getDetails(ike));
             throw new AssertionError("Wrong key length");
@@ -119,7 +119,7 @@ public class SecurityUtil {
             Key secretAesKey = createKey(password);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secretAesKey);
-            fileProcessor(cipher, file);
+            processFile(cipher, file);
         } catch (InvalidKeyException ike) {
             logger.severe("ERROR: Wrong key length " + StringUtil.getDetails(ike));
             throw new AssertionError("Wrong key length");
@@ -137,7 +137,7 @@ public class SecurityUtil {
      * @throws IOException if cannot open file
      * @throws WrongPasswordException if password used is wrong
      */
-    private static void fileProcessor(Cipher cipher, File file) throws IOException, WrongPasswordException {
+    private static void processFile(Cipher cipher, File file) throws IOException, WrongPasswordException {
         byte[] inputBytes = "Dummy".getBytes();
         try {
 
@@ -206,7 +206,7 @@ public class SecurityUtil {
      * @throws WrongPasswordException if password used is wrong
      */
     public static void encryptFile (File file, Password password) throws IOException, WrongPasswordException {
-        if (password.getPassword() != null) {
+        if (password != null && password.getPassword() != null) {
             encrypt(file, password.getPassword());
         }
     }
@@ -223,7 +223,7 @@ public class SecurityUtil {
      * @param e Contains the exception details to throw with WrongPasswordException
      * @throws WrongPasswordException if it is wrong password
      */
-    private static void  handleBadPaddingException(byte[] inputBytes, BadPaddingException e)
+    private static void handleBadPaddingException(byte[] inputBytes, BadPaddingException e)
                                                                             throws WrongPasswordException {
         if (!checkPlainText(inputBytes)) {
             logger.severe("ERROR: Wrong PASSWORD length used ");
@@ -277,12 +277,12 @@ public class SecurityUtil {
      * @param s The string to be checked
      * @return 0 is string is even else 1.
      */
-    public static int getOddEven(String s) {
+    public static Index getOddEven(String s) {
         requireNonNull(s);
         if (s.equalsIgnoreCase("even")) {
-            return 0;
+            return Index.fromZeroBased(0);
         } else {
-            return 1;
+            return Index.fromZeroBased(1);
         }
     }
 
@@ -319,10 +319,10 @@ public class SecurityUtil {
  */
 public class PasswordCommand extends Command {
 
-    public static final String COMMAND_WORD = "password";
+    public static final String COMMAND_WORD = "encrypt";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Updates the password used for en. "
-            + "Parameters: password PASSWORD"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Encrypts the data with the password provided. "
+            + "Parameters: encrypt PASSWORD"
             + "Example: " + COMMAND_WORD + "test";
     public static final String INVALID_PASSWORD = "Password cannot be blank!";
 
@@ -360,83 +360,13 @@ public class PasswordCommand extends Command {
  */
 public class RemovePasswordCommand extends Command {
 
-    public static final String COMMAND_WORD = "nopassword";
-    public static final String MESSAGE_SUCCESS = "Password removed.";
+    public static final String COMMAND_WORD = "decrypt";
+    public static final String MESSAGE_SUCCESS = "Password removed and data decrypted.";
     @Override
     public CommandResult execute() {
         requireNonNull(model);
         model.updatePassword(null);
         return new CommandResult(String.format(MESSAGE_SUCCESS));
-    }
-}
-```
-###### \java\seedu\address\logic\commands\TimeTableCommand.java
-``` java
-/**
- * Retrieves the timetable of a person identified using it's last displayed index from the address book.
- */
-public class TimeTableCommand extends Command {
-    public static final String COMMAND_WORD = "timetable";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds timetable of a person identified  \n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
-
-    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "%1$s Week Timetable of selected Person: %2$s";
-
-    private final Index targetIndex;
-    private final String oddEven;
-    private Person personToShow;
-    /**
-     * Creates a Timetable to retrieve the timetable of the given index
-     */
-    public TimeTableCommand(Index targetIndex, String oddEven) {
-        requireNonNull(targetIndex);
-        requireNonNull(oddEven);
-        this.targetIndex = targetIndex;
-        this.oddEven = oddEven;
-    }
-
-    @Override
-    public CommandResult execute() throws CommandException {
-        requireNonNull(model);
-
-        preprocess();
-
-        Timetable timeTable = personToShow.getTimetable();
-        int oddEvenIndex = StringUtil.getOddEven(oddEven);
-        ArrayList<ArrayList<String>> personTimeTable = timeTable.getTimetable().get(oddEvenIndex);
-        ObservableList<ArrayList<String>> timeTableList = FXCollections.observableArrayList(personTimeTable);
-        EventsCenter.getInstance().post(new TimeTableEvent(timeTableList));
-        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, StringUtil.capitalize(oddEven),
-                personToShow.getName()));
-    }
-
-    /**
-     * Preprocess the required data for execution.
-     * @throws CommandException when index out of bound
-     */
-    protected void preprocess() throws CommandException {
-        List<Person> lastShownList = model.getFilteredPersonList();
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-        personToShow = lastShownList.get(targetIndex.getZeroBased());
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof TimeTableCommand // instanceof handles nulls
-                && this.targetIndex.equals(((TimeTableCommand) other).targetIndex) // state check
-                && this.oddEven.equalsIgnoreCase(((TimeTableCommand) other).oddEven)
-                && Objects.equals(this.personToShow, ((TimeTableCommand) other).personToShow));
-
-    }
-
-    @Override
-    public String toString() {
-        return targetIndex.toString() + " " + oddEven + " " + personToShow;
     }
 }
 ```
@@ -459,13 +389,13 @@ public class TimeTableCommand extends Command {
 ###### \java\seedu\address\logic\parser\PasswordCommandParser.java
 ``` java
 /**
- * Parses input arguments and creates a new AddCommand object
+ * Parses input arguments and creates a new PasswordCommand object
  */
 public class PasswordCommandParser implements Parser<PasswordCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the AddCommand
-     * and returns an AddCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the PasswordCommand
+     * and returns an PasswordCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public PasswordCommand parse(String arguments) throws ParseException {
@@ -481,13 +411,13 @@ public class PasswordCommandParser implements Parser<PasswordCommand> {
 ###### \java\seedu\address\logic\parser\RemovePasswordCommandParser.java
 ``` java
 /**
- * Parses input arguments and creates a new AddCommand object
+ * Parses input arguments and creates a new RemovePasswordCommand object
  */
 public class RemovePasswordCommandParser implements Parser<RemovePasswordCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the AddCommand
-     * and returns an AddCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the RemovePasswordCommand
+     * and returns an RemovePasswordCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public RemovePasswordCommand parse(String arguments) {
@@ -495,38 +425,39 @@ public class RemovePasswordCommandParser implements Parser<RemovePasswordCommand
     }
 }
 ```
-###### \java\seedu\address\logic\parser\TimeTableCommandParser.java
+###### \java\seedu\address\logic\parser\SelectCommandParser.java
 ``` java
 /**
- * Parses input arguments and creates a new TimeTableCommand object
+ * Parses input arguments and creates a new SelectCommand object
  */
-public class TimeTableCommandParser implements Parser<TimeTableCommand> {
-    private static final String SPLIT_TOKEN = " ";
-    private static final int PERSON_INDEX = 0;
-    private static final int ODD_EVEN_INDEX = 1;
+public class SelectCommandParser implements Parser<SelectCommand> {
+
     /**
-     * Parses the given {@code String} of arguments in the context of the TimeTableCommand
-     * and returns an TimeTableCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the SelectCommand
+     * and returns an SelectCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public TimeTableCommand parse(String args) throws ParseException {
+    public SelectCommand parse(String args) throws ParseException {
         try {
             String trimmedArgs = args.trim();
-            String[] splitArgs = trimmedArgs.split(SPLIT_TOKEN);
-            if (splitArgs.length != 2) {
+            String[] argsArray = trimmedArgs.split("\\s+");
+            if (argsArray.length != 2) {
                 throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, TimeTableCommand.MESSAGE_USAGE));
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
             }
-            Index index = ParserUtil.parseIndex(splitArgs[PERSON_INDEX]);
-            String oddEven = ParserUtil.parseOddEven(splitArgs[ODD_EVEN_INDEX]);
-            return new TimeTableCommand(index, oddEven);
 
+            Index index = ParserUtil.parseIndex(argsArray[0]);
+            if (!StringUtil.isOddEven(argsArray[1])) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+            }
+            String oddEven = argsArray[1];
+            return new SelectCommand(index, oddEven);
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, TimeTableCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
         }
     }
-
 }
 ```
 ###### \java\seedu\address\model\AddressBook.java
@@ -757,12 +688,17 @@ public class XmlAdaptedPassword {
 ###### \java\seedu\address\ui\InfoPanel.java
 ``` java
     @Subscribe
-    private void handleTimeTableEvent(TimeTableEvent event) {
-        timetablePlaceholder.getChildren().removeAll();
-        timeTablePanel = new TimeTablePanel(event.getTimeTable());
-        timetablePlaceholder.getChildren().add(timeTablePanel.getRoot());
-        timetablePlaceholder.toFront();
-        timeTablePanel.setStyle();
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        venuePlaceholder.toBack();
+        mapsPlaceholder.toBack();
+        birthdayPlaceholder.toBack();
+        timetableUnionPlaceholder.toBack();
+        Person person = event.getNewSelection().person;
+        int oddEvenIndex = event.getOddEvenIndex();
+
+        personDetailsCard.update(person, oddEvenIndex);
+        userDetailsPlaceholder.toFront();
     }
 ```
 ###### \java\seedu\address\ui\PasswordBox.java
@@ -803,7 +739,6 @@ public class PasswordBox extends UiPart<Region> {
             // let JavaFx handle the keypress
         }
     }
-
 
     /**
      * Handles the Enter button pressed event.
@@ -936,6 +871,20 @@ public class PasswordUiManager extends ComponentManager implements Ui {
     private void handlePasswordCorrectEvent(PasswordCorrectEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         ui.start(primaryStage);
+        autoOpenBirthdayNotification();
+    }
+
+    /**
+     * Opens birthday notification
+     * Called after UI is called
+     */
+    private void autoOpenBirthdayNotification() {
+        LocalDate currentDate = LocalDate.now();
+
+        if (model != null) {
+            EventsCenter.getInstance().post(new BirthdayNotificationEvent(BirthdaysCommand
+                    .parseBirthdaysForNotification(model.getAddressBook().getPersonList(), currentDate), currentDate));
+        }
     }
 }
 ```
@@ -1001,6 +950,134 @@ public class PasswordWindow extends UiPart<Stage> {
     }
 
     void releaseResources() {
+    }
+}
+```
+###### \java\seedu\address\ui\PersonDetailsCard.java
+``` java
+/**
+ * An UI component that displays information of a {@code Person}.
+ */
+public class PersonDetailsCard extends UiPart<Region> {
+
+    private static final String FXML = "PersonDetailsCard.fxml";
+    private static final String[] TAG_COLOR_STYLES = { "teal", "cyan", "purple", "indigo", "lightgreen", "bluegrey",
+                                                         "amber", "yellow"};
+    /**
+     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
+     * As a consequence, UI elements' variable names cannot be set to such keywords
+     * or an exception will be thrown by JavaFX during runtime.
+     *
+     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
+     */
+
+    public final Person person;
+    private TimeTablePanel timeTablePanel;
+    private ArrayList<Label> tagLabels = new ArrayList<>();
+    @FXML
+    private Label name;
+    @FXML
+    private Label phone;
+    @FXML
+    private Label address;
+    @FXML
+    private Label email;
+    @FXML
+    private Label birthday;
+    @FXML
+    private FlowPane tags;
+    @FXML
+    private StackPane timetablePlaceholder;
+
+    public PersonDetailsCard() {
+        super(FXML);
+        person = null;
+    }
+
+
+    public PersonDetailsCard(Person person, int oddEvenIndex) {
+        super(FXML);
+        this.person = person;
+        timeTablePanel = new TimeTablePanel();
+        timetablePlaceholder.getChildren().add(timeTablePanel.getRoot());
+        update(person, oddEvenIndex);
+    }
+
+    /**
+     * Updates the {@code PersonDetailsCard} for the new person selected
+     * @param person the Person that is currently selected
+     */
+    public void update(Person person, int oddEvenIndex) {
+        name.setText(person.getName().fullName);
+        phone.setText(person.getPhone().value);
+        address.setText(person.getAddress().value);
+        email.setText(person.getEmail().value);
+        birthday.setText(person.getBirthday().value);
+        initializeTags(person);
+        initializeTimetable(person, oddEvenIndex);
+    }
+
+    /**
+     * Initializes the tag labels for {@code person}.
+     */
+    private void initializeTags(Person person) {
+        int i = 0;
+        for (Tag tag : person.getTags()) {
+            if (tagLabels.size() >  i) {
+                Label tagLabel = tagLabels.get(i);
+                tagLabel.setVisible(true);
+                tagLabel.getStyleClass().remove(getColorStyleFor(tagLabel.getText()));
+                tagLabels.get(i).setText(tag.tagName);
+                tagLabels.get(i).getStyleClass().add(getColorStyleFor(tag.tagName));
+            } else {
+                Label tagLabel = new Label(tag.tagName);
+                tagLabel.getStyleClass().add(getColorStyleFor(tag.tagName));
+
+                tagLabels.add(tagLabel);
+                tags.getChildren().add(tagLabel);
+            }
+            i++;
+        }
+        for (; i < tagLabels.size(); i++) {
+            tagLabels.get(i).setVisible(false);
+        }
+    }
+
+    /**
+     * Initializes the timetable for {@code person}.
+     */
+    private void initializeTimetable(Person person, int oddEvenIndex) {
+        Timetable timeTable = person.getTimetable();
+        ArrayList<ArrayList<String>> personTimeTable = timeTable.getTimetable().get(oddEvenIndex);
+        ObservableList<ArrayList<String>> timeTableList = FXCollections.observableArrayList(personTimeTable);
+        timeTablePanel = new TimeTablePanel(timeTableList);
+        timetablePlaceholder.getChildren().add(timeTablePanel.getRoot());
+        timeTablePanel.setStyle();
+    }
+
+    /**
+     * @param tagName
+     * @return colorStyle for {@code tagName}'s label.
+     */
+    public static String getColorStyleFor(String tagName) {
+        return TAG_COLOR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOR_STYLES.length];
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof PersonDetailsCard)) {
+            return false;
+        }
+
+        // state check
+        PersonDetailsCard card = (PersonDetailsCard) other;
+        return person.equals(card.person);
     }
 }
 ```
@@ -1117,6 +1194,7 @@ public class TimeTablePanel extends UiPart<Region> {
                             setText(null);
                             setStyle("");
                         } else {
+
                             setText(item);
                             removeAllStyle(this);
                             if ("".equals(getItem())) {
@@ -1191,9 +1269,7 @@ public class TimeTablePanel extends UiPart<Region> {
         <URL value="@DarkTheme.css" />
         <URL value="@Extensions.css" />
       </stylesheets>
-
       <VBox>
-
         <StackPane fx:id="passwordBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
           <padding>
             <Insets bottom="5" left="10" right="10" top="5" />
@@ -1207,7 +1283,7 @@ public class TimeTablePanel extends UiPart<Region> {
 ###### \resources\view\TimeTablePanel.fxml
 ``` fxml
 
-<StackPane fx:id="venuePlaceholder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="timetablePlaceholder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <TableView fx:id="timeTable" stylesheets="@DarkTheme.css">
          <columns>

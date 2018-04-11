@@ -210,6 +210,7 @@ public class MainWindow extends UiPart<Stage> {
         calendarPlaceholder.setVisible(false);
         dailySchedulerPlaceholder.setVisible(false);
         personListPanelPlaceholder.setVisible(false);
+        logger.fine("Hiding panels before login.");
     }
 
     /**
@@ -222,6 +223,8 @@ public class MainWindow extends UiPart<Stage> {
         calendarPlaceholder.setVisible(true);
         dailySchedulerPlaceholder.setVisible(true);
         personListPanelPlaceholder.setVisible(true);
+        logger.fine("Displaying panels after login.");
+
     }
     //@@author jaronchan
     /**

@@ -10,8 +10,6 @@ import java.util.Set;
 import seedu.address.model.Insurance.Commission;
 import seedu.address.model.Insurance.Insurance;
 import seedu.address.model.Insurance.UniqueInsuranceList;
-import seedu.address.model.group.Group;
-import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -52,7 +50,6 @@ public class Person {
         this.totalCommission = calculateTotalCommission(insurance);
         this.tags = new UniqueTagList(tags);
         this.groups = new UniqueGroupList(group);
-
     }
 
 

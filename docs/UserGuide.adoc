@@ -60,18 +60,21 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`, Alias: `h`
 
+[TIP]
+The help page can be accessed by moving the mouse over `Help` section of the navigation bar then clicking `Help`. The help page can also be accessed by pressing `F1` on the keyboard.
+
 === Adding a person: `add`
 
 Adds a person to reInsurance +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [d/APPOINTMENT] [t/TAG] [i/INSURANCE[COMMISSION]] [g/GROUP] ...` Alias: `a`
 
 [TIP]
-A person can have any number of tags, appointment and insurance plans (including 0)
+A person can have any number of tags, appointment and insurance plans (including 0) but only one group
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/09-12-1994 i/Health[100] g/family`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/29-10-1992 g/friends i/General t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/09-12-1994 d/05-05-2018 g/PRIORITY t/friends i/Health`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/29-10-1992 g/friends t/criminal i/General `
 
 === Listing all persons : `list`
 
@@ -102,6 +105,9 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+[TIP]
+Clearing the application can also be done by moving the mouse over `File` section of the navigation bar then clicking `Clear`.
 
 === Locating persons by name: `find`
 
@@ -242,16 +248,22 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
+
+// tag::sort[]
 === Sorting all entries : `sort`
 
 Sort all entries from reInsurance by given condition in lexicographical order. +
 Format: `sort`
+// end::sort[]
 
 === Clearing all entries : `clear`
 
 Clears all entries from reInsurance. +
 Alias: `c` +
 Format: `clear` Alias: `c`
+
+[TIP]
+Clearing all entries from reInsurance can also be done by moving the mouse over `File` section of the navigation bar then clicking `Clear`.
 
 === Export data : `export`
 
@@ -275,21 +287,42 @@ Exports the data in the portfolio to a .csv file
 * Coming in v2.0, the user will be able to specify what the created calendar is called.
 ====
 
+// tag::group[]
+=== Group entries : `group`
+
+Group all entries under the same group from reInsurance. +
+Format: `group` Alias: `g`
+
+Examples:
+
+* `group friends` +
+All entries under the group friends will be returned to the user as a list.
+// end::group[]
+
+// tag::password[]
+=== Password : `password`
+
+Set a password for reInsurance as desired. No password required to access the program. +
+Format: `password` Alias: `pw`
+// end::group[]
+
 === Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
 
+[TIP]
+Exiting the application can also be done by moving the mouse over `File` section of the navigation bar then clicking `Exit`.
+
 === Saving the data
 
 reInsurance data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+There is no need to save manually. Data will be encrypted.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+[NOTE]
+The standard version of the JRE/JDK are under export restrictions. That also includes that some cryptographic algorithms are not allowed to be shipped in the standard version.
+Replace files in library with Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files 8. Download the files http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html[Here].
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
 
 == FAQ
 
@@ -314,3 +347,7 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Export* : `export`
+* *Group* : `group`
+* *Password* : `password` +
+e.g. `password set/123`

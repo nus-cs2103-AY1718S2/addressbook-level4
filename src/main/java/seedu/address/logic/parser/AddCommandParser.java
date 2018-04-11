@@ -156,7 +156,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NRIC) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_PARAMETER_FORMAT,
-                    "Missing prefix \"nr/\" for NRIC after -o option"));
+                    AddCommand.MESSAGE_MISSING_NRIC_PREFIX));
         }
 
         try {

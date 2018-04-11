@@ -989,6 +989,7 @@ _{More to be added}_
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
+// tag::usecases[]
 [discrete]
 === Use case: Deliver a package to a specific customer
 
@@ -1023,8 +1024,7 @@ Use case resumes at step 1.
 5. User can start the delivery
 +
 Use case ends.
-
-_{More to be added}_
+// end::usecases[]
 
 [appendix]
 == Non Functional Requirements

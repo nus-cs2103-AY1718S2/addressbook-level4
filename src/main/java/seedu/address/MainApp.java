@@ -68,7 +68,7 @@ public class MainApp extends Application {
 
         model = initModelManager(storage, userPrefs);
 
-        logic = new LogicManager(model);
+        logic = new LogicManager(model, storage);
 
         ui = new UiManager(logic, config, userPrefs);
 
@@ -91,14 +91,14 @@ public class MainApp extends Application {
         try {
             deskBoardOptional = storage.readDeskBoard();
             if (!deskBoardOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample DeskBoard");
+                logger.info("Data file not found. Will be starting with a sample Desk Board");
             }
             initialData = deskBoardOptional.orElseGet(SampleDataUtil::getSampleDeskBoard);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty DeskBoard");
+            logger.warning("Data file not in the correct format. Will be starting with an empty Desk Board");
             initialData = new DeskBoard();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty DeskBoard");
+            logger.warning("Problem while reading from the file. Will be starting with an empty Desk Board");
             initialData = new DeskBoard();
         }
 

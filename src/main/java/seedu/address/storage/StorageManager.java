@@ -87,4 +87,11 @@ public class StorageManager extends ComponentManager implements Storage {
             raise(new DataSavingExceptionEvent(e));
         }
     }
+
+    //@@author karenfrilya97
+    @Override
+    public void exportDeskBoard(ReadOnlyDeskBoard deskBoard, String filePath) throws IOException {
+        logger.info("Exporting data to file: " + filePath);
+        deskBoardStorage.saveDeskBoard(deskBoard, filePath);
+    }
 }

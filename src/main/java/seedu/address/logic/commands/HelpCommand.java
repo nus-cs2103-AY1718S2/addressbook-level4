@@ -35,41 +35,47 @@ public class HelpCommand extends Command {
         } else   {
             switch(commandRequest) {
 
-            case TaskCommand.COMMAND_WORD:
-                return new CommandResult(TaskCommand.MESSAGE_USAGE);
+                case TaskCommand.COMMAND_WORD:
+                    return new CommandResult(TaskCommand.MESSAGE_USAGE);
 
-            case EventCommand.COMMAND_WORD:
-                return new CommandResult(EventCommand.MESSAGE_USAGE);
+                case EventCommand.COMMAND_WORD:
+                    return new CommandResult(EventCommand.MESSAGE_USAGE);
 
-            case CompleteCommand.COMMAND_WORD:
-                return new CommandResult(CompleteCommand.MESSAGE_USAGE);
+                case CompleteCommand.COMMAND_WORD:
+                    return new CommandResult(CompleteCommand.MESSAGE_USAGE);
 
-            //case EditCommand.COMMAND_WORD:
+                //case EditCommand.COMMAND_WORD:
                 //return new CommandResult(EditCommand.MESSAGE_USAGE);
 
-            //case SelectCommand.COMMAND_WORD:
+                //case SelectCommand.COMMAND_WORD:
                 //return new CommandResult(SelectCommand.MESSAGE_USAGE);
 
-            case RemoveCommand.COMMAND_WORD:
-                return new CommandResult(RemoveCommand.MESSAGE_USAGE);
+                case RemoveCommand.COMMAND_WORD:
+                    return new CommandResult(RemoveCommand.MESSAGE_USAGE);
 
-            case HelpCommand.COMMAND_WORD:
-                return new CommandResult(HelpCommand.MESSAGE_USAGE);
+                case HelpCommand.COMMAND_WORD:
+                    return new CommandResult(HelpCommand.MESSAGE_USAGE);
 
-            case HelpCommand.COMMAND_ALIAS:
-                return new CommandResult(HelpCommand.MESSAGE_USAGE);
+                case HelpCommand.COMMAND_ALIAS:
+                    return new CommandResult(HelpCommand.MESSAGE_USAGE);
 
-            case ListCommand.COMMAND_WORD:
-                return new CommandResult(ListCommand.MESSAGE_USAGE);
+                case ListCommand.COMMAND_WORD:
+                    return new CommandResult(ListCommand.MESSAGE_USAGE);
 
-            case ListCommand.COMMAND_ALIAS:
-                return new CommandResult(ListCommand.MESSAGE_USAGE);
+                case ListCommand.COMMAND_ALIAS:
+                    return new CommandResult(ListCommand.MESSAGE_USAGE);
 
-            //case FindCommand.COMMAND_WORD:
-                //return new CommandResult(FindCommand.MESSAGE_USAGE);
+                case FindCommand.COMMAND_WORD:
+                    return new CommandResult(FindCommand.MESSAGE_USAGE);
 
-            default:
-                throw new CommandException(MESSAGE_USAGE);
+                case ImportCommand.COMMAND_WORD:
+                    return new CommandResult(ImportCommand.MESSAGE_USAGE);
+
+                case ExportCommand.COMMAND_WORD:
+                    return new CommandResult(ExportCommand.MESSAGE_USAGE);
+
+                default:
+                    throw new CommandException(MESSAGE_USAGE);
             }
         }
     }

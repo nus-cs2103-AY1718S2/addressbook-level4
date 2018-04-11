@@ -1,8 +1,11 @@
 //@@author cxingkai
 package seedu.address.logic;
 
+import java.awt.*;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -40,6 +43,7 @@ public class PrintFormatter {
         writePatientInfo(patient);
         writeRecords(patient);
         document.close();
+        openPdf();
     }
 
     /**
@@ -142,6 +146,18 @@ public class PrintFormatter {
             document.add(paragraph);
         } catch (DocumentException de) {
             de.printStackTrace();
+        }
+    }
+
+    private void openPdf() {
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File myFile = new File(filePath);
+                Desktop.getDesktop().open(myFile);
+            } catch (IOException ex) {
+                // no application registered for PDFs
+                ex.printStackTrace();
+            }
         }
     }
 }

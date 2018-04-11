@@ -282,7 +282,7 @@ Exports the data in the portfolio to a .csv file
 ====
 * Coming in v2.0, there will be more options on the types of data to export.
 * As of v1.4, the application handles the command for the portfolio and calendar.
-* Default destination file is at `data/portfolio.csv` for the `export portfolio` command.
+* Default destination file is at `portfolio.csv` for the `export portfolio` command.
 * The default calendar created in Google Calendars is titled `reInsurance Events`, which contains birthdays and appointments.
 * Coming in v2.0, the user will be able to specify what the created calendar is called.
 ====

@@ -184,7 +184,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //@@author daviddalmaso
     /**
-     * Exports the current address book to data/portfolio.csv
+     * Exports the current address book to portfolio.csv
      */
     public void exportPortfolio() {
         try {

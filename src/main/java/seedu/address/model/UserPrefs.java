@@ -12,7 +12,7 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "reInsurance";
-    private String exportPortfolioFilePath = "data/portfolio.csv";
+    private String exportPortfolioFilePath = "portfolio.csv";
     private String calendarIdFilePath = "data/calendarId.txt";
     private String passwordFilePath = "data/password.txt";
 

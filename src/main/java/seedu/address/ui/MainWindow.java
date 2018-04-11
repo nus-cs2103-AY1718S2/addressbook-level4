@@ -141,8 +141,8 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
         welcomePanel = new WelcomePanel();
         bookDetailsPanel = new BookDetailsPanel();
-        bookReviewsPanel = new BookReviewsPanel(WebViewManager.getInstance());
-        bookInLibraryPanel = new BookInLibraryPanel(WebViewManager.getInstance());
+        bookReviewsPanel = new BookReviewsPanel();
+        bookInLibraryPanel = new BookInLibraryPanel();
         aliasListPanel = new AliasListPanel(logic.getDisplayAliasList());
         mainContentPlaceholder.getChildren().add(welcomePanel.getRoot());
         mainContentPlaceholder.getChildren().add(bookDetailsPanel.getRoot());

@@ -23,10 +23,10 @@ Thus, compared to traditional Graphical User Interface (GUI) applications, CLInd
 
 With CLIndar, you can:
 
-* Keep track of your tasks and events and be reminded of their due dates
-* Record all completed tasks and events, so that you know what you have done
+* Keep track of your tasks and events and be reminded of their due dates.
+* Record all completed tasks and events, so that you know what you have done.
 
-The current version of CLIndar is 1.4 and is available on Windows and Linux Operating Systems.
+The current version of CLIndar is 1.5 and is available on Windows and Linux Operating Systems.
 
 == Get Started
 
@@ -41,7 +41,7 @@ This app will not work with earlier versions of Java 8.
 
 .  Download the latest `CLIndar.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for CLIndar.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The GUI should appear in a few seconds, as seen below.
 +
 
 image::Ui.png[width="790"]
@@ -49,14 +49,15 @@ image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+
+Some example commands you can try:
 
 * *`task`* `n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/Enhance major component`: Adds Software Engineering task to the desk board in CLIndar
 * *`event`* `n/Software Project s/01/05/2018 8:00 e/01/08/2018 8:00 l/School of Computing`: Adds Software Project event to the desk board
 * *`ls task`* : list all uncompleted tasks
 * *`exit`* : exits the app
 
-.  Refer to <<Features>> for details of each command.
+Refer to <<Features>> for details of each command.
 
 [[Features]]
 == Features
@@ -95,11 +96,13 @@ Adds a task to the desk board.
 
 *Format:* `task n/NAME d/DUE_DATE_TIME [r/REMARK] [t/TAGS]`
 
+[NOTE]
+DUE_DATE_TIME parameter can be in d/m/y h:m or dd/mm/yy hh:mm
 
 *Examples:*
 
 * `task n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/urgent`
-* `task n/Programming Methodology Assignment 2 d/16/03/2018 23:59`
+* `task n/Programming Methodology Assignment 2 d/16/3/2018 23:59`
 
 === Adding an event: `event` `[As of  v1.3]`
 
@@ -107,20 +110,25 @@ Adds an event to the desk board. +
 
 *Format:* `event n/NAME s/START_TIME e/END_TIME [l/LOCATION] [r/REMARK]`
 
+[NOTE]
+
+Both START_TIME and END_TIME parameters can be in d/m/y h:m
+or dd/mm/yy hh:mm
+
 *Examples:*
 
 * `event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`
 * `event n/Blockchain Talk s/16/3/2018 16:00 e/16/03/2018 18:00`
 
-=== Listing uncompleted tasks and upcoming events: `list` or `ls` `[As of  v1.4]`
+=== Listing uncompleted tasks and upcoming events: `ls` `[As of  v1.4]`
 
 Shows one or two lists of tasks and events in the desk board as described below.
 
 *Format:*
 
-* `list task` or `ls task`: shows only uncompleted tasks.
-* `list event` or `ls event`: shows only upcoming events.
-* `list` or `ls`: shows both uncompleted tasks and upcoming events in 2 separate lists.
+* `ls task`: shows only uncompleted tasks.
+* `ls event`: shows only upcoming events.
+* `ls`: shows both uncompleted tasks and upcoming events in 2 separate lists.
 
 === Removing a task or event: `rm` `[As of  v1.4]`
 
@@ -163,6 +171,29 @@ Completes the 2nd task in the desk board.
 Shows a list of all completed tasks in the desk board. +
 
 *Format:* `ls complete task` or `ls com task`
+
+// tag::find[]
+=== Locating task by name: `find task` `[Coming Soon in v2.0]`
+Shows a list of all tasks and/or event which contains given keyword in its name.
+
+*Format:* find task KEYWORD or find event KEYWORK or find KEYWORD
+
+*Examples:*
+
+* `find task CS2101` +
+Find all tasks with name contains CS2101
+
+* `find event exam` +
+Find all events wiih name contains exam
+
+* 'find CS2101` +
+Find all tasks and event with name contains CS2101
+
+[NOTE]
+====
+Use `list` command to retrieve the full list of event and task after this command
+====
+// end::find[]
 
 === Shows overdue tasks: `overdue` `[Coming Soon in  v1.5]`
 
@@ -265,8 +296,8 @@ eg. `task n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/urgent`
 * *Add event*: `event n/NAME s/START_TIME e/END_TIME [l/LOCATION] [r/REMARK]` +
 eg. `event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`
 
-* *List uncompleted tasks and upcoming events*: `list` or `ls` +
-eg. `list` or `ls` or `list task` or `ls event`
+* *List uncompleted tasks and upcoming events*: `ls` +
+eg. `ls` or `ls task` or `ls event`
 
 * *Remove task or event*: `rm` +
 eg. `rm task 1` or `rm event 2`
@@ -276,6 +307,10 @@ eg. `complete task 1` or `com task 2`
 
 * *List completed tasks*: `ls complete task` or `ls com task` +
 eg. `ls complete task` or `ls com task`
+
+
+* *Find task and/or event with name contains given keyword*: `find` or `find task` or `find event` +
+eg. `find CS2101` or `find event exam` or `find task CS2103`
 
 * *Show overdue tasks*: `overdue` +
 eg. `overdue`

@@ -105,6 +105,7 @@ public class ModelManager extends ComponentManager implements Model {
         return result;
     }
 
+    //@@author YuanQLLer
     /**
      * Returns an unmodifiable view of the list of {@code Event} backed by the event list of
      * {@code deskBoard}

@@ -22,10 +22,10 @@ public abstract class XmlAdaptedActivity {
     protected String name;
     @XmlElement(required = true)
     protected String dateTime;
-    @XmlElement(required = true)
+    @XmlElement
     protected String remark;
     @XmlElement
-    protected boolean iscompleted;
+    protected boolean isCompleted;
     @XmlElement
     protected List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -45,7 +45,7 @@ public abstract class XmlAdaptedActivity {
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
-        iscompleted = false;
+        isCompleted = false;
     }
 
     /**
@@ -56,12 +56,14 @@ public abstract class XmlAdaptedActivity {
     public XmlAdaptedActivity(Activity source) {
         name = source.getName().fullName;
         dateTime = source.getDateTime().toString();
-        remark = source.getRemark().value;
+        if (source.getRemark() != null) {
+            remark = source.getRemark().value;
+        }
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
-        iscompleted = source.isCompleted();
+        isCompleted = source.isCompleted();
     }
 
     /**
@@ -88,6 +90,6 @@ public abstract class XmlAdaptedActivity {
                 && Objects.equals(dateTime, otherActivity.dateTime)
                 && Objects.equals(remark, otherActivity.remark)
                 && tagged.equals(otherActivity.tagged)
-                && this.iscompleted == otherActivity.iscompleted;
+                && this.isCompleted == otherActivity.isCompleted;
     }
 }

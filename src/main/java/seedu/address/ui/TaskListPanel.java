@@ -103,8 +103,6 @@ public class TaskListPanel extends UiPart<Region> {
         scrollTo(event.targetIndex);
     }
 
-
-
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code TaskCard}.
      */
@@ -123,10 +121,7 @@ public class TaskListPanel extends UiPart<Region> {
         }
     }
 
-    /**
-     * Getter method for taskListView
-     * @return taskListView
-     */
+    //@@author jasmoon
     public ListView<TaskCard> getTaskListView()   {
         return taskListView;
     }

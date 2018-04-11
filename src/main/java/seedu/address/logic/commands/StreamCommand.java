@@ -8,7 +8,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.InvalidSubjectCombinationException;
 //@@author TeyXinHui
 /**
  * Finds student at the specified index and returns a streaming score based on the streaming type provided.
@@ -65,49 +64,24 @@ public class StreamCommand extends Command {
 
         switch (type) {
         case(1):
-            try {
-                score = selectedPerson.calculateL1R5();
-                message = MESSAGE_L1R5_SUCCESS;
-            } catch (InvalidSubjectCombinationException isce) {
-                return result.append(String.format(MESSAGE_SELECT_STUDENT_SUCCESS, selectedPerson.getName()))
-                        .append(Messages.MESSAGE_INSUFFICIENT_SUBJECTS).toString();
-            }
+            score = selectedPerson.calculateL1R5();
+            message = MESSAGE_L1R5_SUCCESS;
             break;
         case(2):
-            try {
-                score = selectedPerson.calculateL1B4A();
-                message = MESSAGE_L1B4A_SUCCESS;
-            } catch (InvalidSubjectCombinationException isce) {
-                return result.append(String.format(MESSAGE_SELECT_STUDENT_SUCCESS, selectedPerson.getName()))
-                        .append(Messages.MESSAGE_INSUFFICIENT_SUBJECTS).toString();
-            }
+            score = selectedPerson.calculateL1B4A();
+            message = MESSAGE_L1B4A_SUCCESS;
             break;
         case(3):
-            try {
-                score = selectedPerson.calculateL1B4B();
-                message = MESSAGE_L1B4B_SUCCESS;
-            } catch (InvalidSubjectCombinationException isce) {
-                return result.append(String.format(MESSAGE_SELECT_STUDENT_SUCCESS, selectedPerson.getName()))
-                        .append(Messages.MESSAGE_INSUFFICIENT_SUBJECTS).toString();
-            }
+            score = selectedPerson.calculateL1B4B();
+            message = MESSAGE_L1B4B_SUCCESS;
             break;
         case(4):
-            try {
-                score = selectedPerson.calculateL1B4C();
-                message = MESSAGE_L1B4C_SUCCESS;
-            } catch (InvalidSubjectCombinationException isce) {
-                return result.append(String.format(MESSAGE_SELECT_STUDENT_SUCCESS, selectedPerson.getName()))
-                        .append(Messages.MESSAGE_INSUFFICIENT_SUBJECTS).toString();
-            }
+            score = selectedPerson.calculateL1B4C();
+            message = MESSAGE_L1B4C_SUCCESS;
             break;
         case(5):
-            try {
-                score = selectedPerson.calculateL1B4D();
-                message = MESSAGE_L1B4D_SUCCESS;
-            } catch (InvalidSubjectCombinationException isce) {
-                return result.append(String.format(MESSAGE_SELECT_STUDENT_SUCCESS, selectedPerson.getName()))
-                        .append(Messages.MESSAGE_INSUFFICIENT_SUBJECTS).toString();
-            }
+            score = selectedPerson.calculateL1B4D();
+            message = MESSAGE_L1B4D_SUCCESS;
             break;
         default:
             break;

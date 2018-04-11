@@ -15,7 +15,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
@@ -31,12 +30,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Cca;
-import seedu.address.model.person.InjuriesHistory;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Remark;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author TeyXinHui
@@ -70,41 +64,6 @@ public class StreamCommandTest {
         assertExecutionSuccess(INDEX_FIRST_PERSON, 3);
         assertExecutionSuccess(INDEX_FIRST_PERSON, 4);
         assertExecutionSuccess(lastPersonIndex, 5);
-    }
-
-    @Test
-    public void scoreCalculation_invalidSubjectCombinationForL1R5_throwException() {
-        Person selectedPerson = new Person(new Name("John"), new Nric("S9829849H"),
-                Collections.emptySet(), Collections.emptySet(), new Remark(""), new Cca(""), new InjuriesHistory(""));
-        StringBuilder result = new StringBuilder();
-        //test for L1R5
-        assertEquals(StreamCommand.scoreCalculation(selectedPerson, 1),
-                result.append(String.format(MESSAGE_SELECT_STUDENT_SUCCESS, selectedPerson.getName()))
-                .append(Messages.MESSAGE_INSUFFICIENT_SUBJECTS).toString());
-
-        //test for L1B4A
-        result = new StringBuilder();
-        assertEquals(StreamCommand.scoreCalculation(selectedPerson, 2),
-                result.append(String.format(MESSAGE_SELECT_STUDENT_SUCCESS, selectedPerson.getName()))
-                .append(Messages.MESSAGE_INSUFFICIENT_SUBJECTS).toString());
-
-        //test for L1B4B
-        result = new StringBuilder();
-        assertEquals(StreamCommand.scoreCalculation(selectedPerson, 3),
-                result.append(String.format(MESSAGE_SELECT_STUDENT_SUCCESS, selectedPerson.getName()))
-                .append(Messages.MESSAGE_INSUFFICIENT_SUBJECTS).toString());
-
-        //test for L1B4C
-        result = new StringBuilder();
-        assertEquals(StreamCommand.scoreCalculation(selectedPerson, 4),
-                result.append(String.format(MESSAGE_SELECT_STUDENT_SUCCESS, selectedPerson.getName()))
-                .append(Messages.MESSAGE_INSUFFICIENT_SUBJECTS).toString());
-
-        //test for L1B4D
-        result = new StringBuilder();
-        assertEquals(StreamCommand.scoreCalculation(selectedPerson, 5),
-                result.append(String.format(MESSAGE_SELECT_STUDENT_SUCCESS, selectedPerson.getName()))
-                .append(Messages.MESSAGE_INSUFFICIENT_SUBJECTS).toString());
     }
 
     @Test

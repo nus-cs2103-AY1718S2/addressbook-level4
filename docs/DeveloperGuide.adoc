@@ -364,21 +364,23 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 The 'findtag' feature is implemented with the same mechanism as the 'find' feature. It is used for finding stored persons with their tags instead of names. The key components of the feature are 'FindWithTagCommand', 'FindWithTagCommandParser', and 'TagContainsKeywordsPredicate'.
 
-The main component of 'findtag' is the 'FindWithTagCommand' which resides inside the logic component. It inherit from 'Command', as such, similar to 'find', 'findtag' is not an undoable command. The following diagram shows the inheritance diagram for 'FindWithTagCommand':
+The main component of 'findtag' is the 'FindWithTagCommand' which resides inside the logic component. It inherit from 'Command', as such, similar to 'find', 'findtag' is not an undoable command. From the class diagram of Logic class, we can see inheritance  of 'FindWithTagCommand' in comparison with other types of commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
 
 The user execute the FindWithTagCommand with the keyword ‘findtag’ following by the tag keywords, separated by whitespace. When the command is executed, the current list of persons shown in the GUI will only contain the persons with the tags same as the tag keywords. The following image shows the result of a 'findtag' execution:
 
-image::FindTagResultDiagram.png[width="800"]
+image::FindtagExecution.png[width="800"]
 
 Note that the tag keywords are not case sensitive; however, the command keyword is. For example, both 'findtag friends' and 'findtag FrIeNdS' can be executed and return a list of persons with the tag 'friends'. However 'FiNdTaG friends' cannot be executed and will result in a 'Unknown Command' feedback, as shown in the following:
 
-image::InvalidCommandKeywordDiagram.png[width="800"]
+image::DifferentCaseSize.png[width="800"]
 
-Note that the list of persons displayed will not change for in this case.
+Since the application does not recognize the command, the list of person displayed will not be changed.
 
 The 'findtag' command can handle multiple input tag keywords and, similar to 'find', 'findtag' is an ‘or’ search. For example, 'findtag friends owesMoney' will find any person with the tag ‘friends’ or ‘owesMoney’ or both.
+
+image::FindMultipleTags.png[width="800"]
 
 The following sequence diagram shows how the findtag operation works:
 
@@ -390,7 +392,7 @@ image::UndoRedoSequenceDiagram.png[width="800"]
 
 * **Alternative 1 (current choice):** Follow the mechanism of `FindCommand`
 ** Pros: 'findtag' works in the same mechanism as 'find', thus will not deviate from the overall architecture of the address book (i.e. Event Driven design).
-** Cons: May generate classes/ methods that are implemented with very similar style (i.e. a general pattern can be abstract out). Thus, additional work may be needed to handle the abstraction.
+** Cons: May generate classes/ methods that are implemented with very similar style, or in the worse case, we may have duplicate codes. Thus, additional attention needds to be given to ensure that the implementation of 'findtag' will not result in duplicate codes.
 * **Alternative 2:** Implement new mechanism specifically for `FindWithTagCommand`
 ** Pros: Does not generate similar classes/ methods.
 ** Cons: Hard to implement, risk deviating away from the overall architecture of the address book.

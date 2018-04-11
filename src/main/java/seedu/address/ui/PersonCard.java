@@ -46,7 +46,7 @@ public class PersonCard extends UiPart<Region> {
         initGroupTags(person);
         initPreferenceTags(person);
     }
-
+    //@@author AJZ1995
     /**
      * Returns the color style for {@code tagName}'s label.
      */
@@ -83,6 +83,7 @@ public class PersonCard extends UiPart<Region> {
             preferences.getChildren().add(tagLabel);
         });
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

@@ -84,7 +84,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
                 .map(Label::getText)
                 .collect(Collectors.toList());
     }
-
+    //@@author AJZ1995
     public List<String> getGroupTagStyleClasses(String tag) {
         return groupLabels
                 .stream()

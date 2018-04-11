@@ -12,19 +12,22 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.logic.Logic;
+import seedu.address.logic.parser.CliSyntax;
 
 //@@author aquarinte
 /**
- * Handles case-insensitive autocompletion of command line syntax
+ * Handles case-insensitive autocompletion of command line syntax,
  * and also some user input parameters: Nric, pet patient name, species, tags etc.
  */
 public class Autocomplete {
 
     private static final Logger logger = LogsCenter.getLogger(Autocomplete.class);
+    private static final int MAX_SUGGESTION_COUNT = CliSyntax.MAX_SYNTAX_SIZE;
     private static Autocomplete instance;
     private Logic logic;
     private String targetWord;
     private String[] words;
+    private String option;
     private Set<String> tagSet;
 
     public static Autocomplete getInstance() {
@@ -46,13 +49,16 @@ public class Autocomplete {
     }
 
     /**
-     * Finds suggestions for current user-input in commandTextField.
+     * Returns a list of suggestions for autocomplete based on current user input.
+     *
+     * @param commandTextField Command box that holds user input.
      */
     public List<String> getSuggestions(TextField commandTextField) {
         int cursorPosition = commandTextField.getCaretPosition();
-        // retain all whitespaces in array
+        // split string, but retain all whitespaces in array "words"
         words = commandTextField.getText(0, cursorPosition).split("((?<= )|(?= ))", -1);
         targetWord = words[words.length - 1].toLowerCase();
+        setOption();
 
         if (words.length <= 2) {
             return getCommandWordSuggestions();
@@ -63,7 +69,7 @@ public class Autocomplete {
                 return getNricSuggestions();
             }
 
-            if (words[words.length - 3].equals("-p") && targetWord.startsWith("n/")) {
+            if (hasReferenceToExistingPetPatientNames()) {
                 return getPetPatientNameSuggestions();
             }
 
@@ -80,7 +86,7 @@ public class Autocomplete {
             }
 
             if (targetWord.startsWith("bt/")) {
-                return getPetPatientBlootTypeSuggestions();
+                return getPetPatientBloodTypeSuggestions();
             }
 
             if (targetWord.startsWith("t/")) {
@@ -99,9 +105,17 @@ public class Autocomplete {
     }
 
     /**
-     * Checks if command input is the "add" command, and whether it has the form "-o nr/" at the end.
+     * Checks if command input {@code words} contains the "add" command with reference to existing persons' Nric,
+     * to determine if autocomplete for persons' Nric is necessary.
+     *
+     * Returns false if the command input is to add a new person.
      */
     private boolean hasAddCommandReferNric() {
+        // returns false if adding a new person.
+        if (words[0].equals("add") && words[2].equals("-o")) {
+            return false;
+        }
+
         if (words[0].equals("add") && words[words.length - 3].equals("-o") && targetWord.startsWith("nr/")) {
             return true;
         }
@@ -109,34 +123,82 @@ public class Autocomplete {
     }
 
     /**
-     * Checks if command input is the "edit -p" command, with the last word starting with "nr/".
+     * Checks if command input {@code words} contains the "edit" command with reference to existing persons' Nric,
+     * to determine if autocomplete for persons' Nric is necessary.
      */
     private boolean hasEditCommandReferNric() {
-        if (words[0].equals("edit") && words[2].equals("-p") && targetWord.startsWith("nr/")) {
+        if (words[0].equals("edit") && option.equals("-p") && targetWord.startsWith("nr/")) {
             return true;
         }
         return false;
     }
 
     /**
-     * Checks if command input is the "find -o" command, with the last word starting with "nr/".
+     * Checks if command input {@code words} contains the "find" command with reference to existing persons' Nric,
+     * to determine if autocomplete for persons' Nric is necessary.
      */
     private boolean hasFindCommandReferNric() {
-        if (words[0].equals("find") && words[2].equals("-o") && targetWord.startsWith("nr/")) {
+        if (words[0].equals("find") && option.equals("-o") && targetWord.startsWith("nr/")) {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Checks if command input {@code words} has reference to existing pet patients' names to determine
+     * if autocomplete for pet patient names is necessary.
+     *
+     * Returns false if command input is adding a new pet patient.
+     * Returns false if command input is adding a new owner, new pet patient, new appointment.
+     * Returns false if command input is editing a pet patient's name.
+     */
+    private boolean hasReferenceToExistingPetPatientNames() {
+        // add a new pet patient command format
+        if (words[0].equals("add") && words[2].equals("-p") && targetWord.startsWith("n/")) {
+            return false;
+        }
+
+        // adding a new owner, new pet patient, new appointment command format
+        if (words[0].equals("add") && words[2].equals("-o") && words[words.length - 3].equals("-p")
+                && targetWord.startsWith("n/")) {
+            return false;
+        }
+
+        if (words[0].equals("edit") && option.equals("-p") && targetWord.startsWith("n/")) {
+            return false;
+        }
+
+        if (words[words.length - 3].equals("-p") && targetWord.startsWith("n/")) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Sets {@code option} based on the last option found in {@code words}.
+     */
+    private void setOption() {
+        option = "nil";
+        String commandBoxInput = String.join("", words);
+        int index = commandBoxInput.lastIndexOf("-");
+
+        if (index > -1 && (commandBoxInput.length() >= index + 2)) {
+            option = commandBoxInput.substring(index, index + 2); // (inclusive, exclusive)
+        }
     }
 
     /**
      * Returns a sorted list of suggestions for tags.
+     * List size conforms to max size {@code MAX_SUGGESTION_COUNT}.
      */
     private List<String> getTagSuggestions() {
         setTagListBasedOnOption();
         if (targetWord.equals("t/")) {
             List<String> suggestions = tagSet
                     .stream()
-                    .sorted()
+                    .sorted(String::compareToIgnoreCase)
+                    .limit(MAX_SUGGESTION_COUNT)
                     .collect(Collectors.toList());
             return suggestions;
         } else {
@@ -145,23 +207,20 @@ public class Autocomplete {
             List<String> suggestions = tagSet
                     .stream()
                     .filter(t -> t.toLowerCase().startsWith(targetTag) && !t.toLowerCase().equals(targetTag))
-                    .sorted()
+                    .sorted(String::compareToIgnoreCase)
+                    .limit(MAX_SUGGESTION_COUNT)
                     .collect(Collectors.toList());
             return suggestions;
         }
     }
 
     /**
-     * Sets {@code tagList} based on last matched option.
+     * Sets {@code tagList} based on {@code option}.
      * -o option will set elements of {@code tagList} to be persons' tags.
      * -p option will set elements of {@code tagList} to be pet patients' tags.
      * -a option will set elements of {@code tagList} to be appointments' tags.
      */
     private void setTagListBasedOnOption() {
-        String commandBoxInput = String.join("", words);
-        int index = commandBoxInput.lastIndexOf("-");
-        String option = commandBoxInput.substring(index, index + 2);
-
         switch(option) {
         case "-o":
             tagSet = logic.getAllPersonTags();
@@ -179,12 +238,14 @@ public class Autocomplete {
 
     /**
      * Returns a sorted list of suggestions for pet patient names.
+     * List size conforms to max size {@code MAX_SUGGESTION_COUNT}.
      */
     private List<String> getPetPatientNameSuggestions() {
         if (targetWord.equals("n/")) {
             List<String> suggestions = logic.getAllPetPatientNames()
                     .stream()
-                    .sorted()
+                    .sorted(String::compareToIgnoreCase)
+                    .limit(MAX_SUGGESTION_COUNT)
                     .collect(Collectors.toList());
             return suggestions;
         } else {
@@ -193,7 +254,8 @@ public class Autocomplete {
             List<String> suggestions = logic.getAllPetPatientNames()
                     .stream()
                     .filter(pn -> pn.toLowerCase().startsWith(targetPetName) && !pn.toLowerCase().equals(targetPetName))
-                    .sorted()
+                    .sorted(String::compareToIgnoreCase)
+                    .limit(MAX_SUGGESTION_COUNT)
                     .collect(Collectors.toList());
             return suggestions;
         }
@@ -206,7 +268,8 @@ public class Autocomplete {
         if (targetWord.equals("s/")) {
             List<String> suggestions = logic.getAllPetPatientSpecies()
                     .stream()
-                    .sorted()
+                    .sorted(String::compareToIgnoreCase)
+                    .limit(MAX_SUGGESTION_COUNT)
                     .collect(Collectors.toList());
             return suggestions;
         } else {
@@ -215,7 +278,8 @@ public class Autocomplete {
             List<String> suggestions = logic.getAllPetPatientSpecies()
                     .stream()
                     .filter(s -> s.toLowerCase().startsWith(targetSpecie) && !s.toLowerCase().equals(targetSpecie))
-                    .sorted()
+                    .sorted(String::compareToIgnoreCase)
+                    .limit(MAX_SUGGESTION_COUNT)
                     .collect(Collectors.toList());
             return suggestions;
         }
@@ -223,12 +287,14 @@ public class Autocomplete {
 
     /**
      * Returns a sorted list of suggestions for pet patient breeds.
+     * List size conforms to max size {@code MAX_SUGGESTION_COUNT}.
      */
     private List<String> getPetPatientBreedSuggestions() {
         if (targetWord.equals("b/")) {
             List<String> suggestions = logic.getAllPetPatientBreeds()
                     .stream()
-                    .sorted()
+                    .sorted(String::compareToIgnoreCase)
+                    .limit(MAX_SUGGESTION_COUNT)
                     .collect(Collectors.toList());
             return suggestions;
         } else {
@@ -237,7 +303,8 @@ public class Autocomplete {
             List<String> suggestions = logic.getAllPetPatientBreeds()
                     .stream()
                     .filter(b -> b.toLowerCase().startsWith(targetBreed) && !b.toLowerCase().equals(targetBreed))
-                    .sorted()
+                    .sorted(String::compareToIgnoreCase)
+                    .limit(MAX_SUGGESTION_COUNT)
                     .collect(Collectors.toList());
             return suggestions;
         }
@@ -245,12 +312,14 @@ public class Autocomplete {
 
     /**
      * Returns a sorted list of suggestions for pet patient colours.
+     * List size conforms to max size {@code MAX_SUGGESTION_COUNT}.
      */
     private List<String> getPetPatientColourSuggestions() {
         if (targetWord.equals("c/")) {
             List<String> suggestions = logic.getAllPetPatientColours()
                     .stream()
-                    .sorted()
+                    .sorted(String::compareToIgnoreCase)
+                    .limit(MAX_SUGGESTION_COUNT)
                     .collect(Collectors.toList());
             return suggestions;
         } else {
@@ -260,7 +329,8 @@ public class Autocomplete {
                     .stream()
                     .filter(c -> c.toLowerCase().startsWith(targetPetColour)
                             && !c.toLowerCase().equals(targetPetColour))
-                    .sorted()
+                    .sorted(String::compareToIgnoreCase)
+                    .limit(MAX_SUGGESTION_COUNT)
                     .collect(Collectors.toList());
             return suggestions;
         }
@@ -268,12 +338,14 @@ public class Autocomplete {
 
     /**
      * Returns a sorted list of suggestions for pet patient blood types.
+     * List size conforms to max size {@code MAX_SUGGESTION_COUNT}.
      */
-    private List<String> getPetPatientBlootTypeSuggestions() {
+    private List<String> getPetPatientBloodTypeSuggestions() {
         if (targetWord.equals("bt/")) {
             List<String> suggestions = logic.getAllPetPatientBloodTypes()
                     .stream()
-                    .sorted()
+                    .sorted(String::compareToIgnoreCase)
+                    .limit(MAX_SUGGESTION_COUNT)
                     .collect(Collectors.toList());
             return suggestions;
         } else {
@@ -283,7 +355,8 @@ public class Autocomplete {
                     .stream()
                     .filter(bt -> bt.toLowerCase().startsWith(targetPetBloodType)
                             && !bt.toLowerCase().equals(targetPetBloodType))
-                    .sorted()
+                    .sorted(String::compareToIgnoreCase)
+                    .limit(MAX_SUGGESTION_COUNT)
                     .collect(Collectors.toList());
             return suggestions;
         }
@@ -291,12 +364,14 @@ public class Autocomplete {
 
     /**
      * Returns a sorted list of suggestions for Nric.
+     * List size conforms to max size {@code MAX_SUGGESTION_COUNT}.
      */
     private List<String> getNricSuggestions() {
         if (targetWord.equals("nr/")) {
             List<String> suggestions = logic.getAllNric()
                     .stream()
                     .sorted()
+                    .limit(MAX_SUGGESTION_COUNT)
                     .collect(Collectors.toList());
             return suggestions;
 
@@ -307,6 +382,7 @@ public class Autocomplete {
                     .stream()
                     .filter(n -> n.startsWith(targetNric) && !n.equals(targetNric))
                     .sorted()
+                    .limit(MAX_SUGGESTION_COUNT)
                     .collect(Collectors.toList());
             return suggestions;
         }

@@ -1293,6 +1293,7 @@ Use case resumes at step 2.
 +
 Use case ends.
 
+// tag::jaronUseCases[]
 [discrete]
 === Use case: Switch Views of Features
 
@@ -1333,6 +1334,8 @@ Use case ends.
 ** 2a1. AddressBook notifies user that there are no events.
 +
 Use case ends.
+
+// end::jaronUseCases[]
 
 [discrete]
 === Use case: User Login

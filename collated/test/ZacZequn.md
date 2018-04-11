@@ -1,0 +1,170 @@
+# ZacZequn
+###### \java\guitests\guihandles\PersonCardHandle.java
+``` java
+    public List<String> getTagStyleClasses(String tag) {
+        return tagLabels
+                .stream()
+                .filter(label -> label.getText().equals(tag))
+                .map(Label::getStyleClass)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No such tag."));
+    }
+```
+###### \java\seedu\address\logic\parser\AddCommandParserTest.java
+``` java
+        // multiple orders - last order accepted
+        assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + ORDER_DESC_AMY + ORDER_DESC_BOB
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+```
+###### \java\seedu\address\logic\parser\AddCommandParserTest.java
+``` java
+        // missing order prefix
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + VALID_ORDER_BOB + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB, expectedMessage);
+```
+###### \java\seedu\address\logic\parser\AddCommandParserTest.java
+``` java
+        // invalid order
+        assertParseFailure(parser, NAME_DESC_BOB +  PHONE_DESC_BOB + INVALID_ORDER_DESC + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Order.MESSAGE_ORDER_CONSTRAINTS);
+```
+###### \java\seedu\address\storage\XmlAdaptedPersonTest.java
+``` java
+    @Test
+    public void toModelType_invalidOrder_throwsIllegalValueException() {
+        XmlAdaptedPerson person =
+                new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, INVALID_ORDER, VALID_EMAIL,
+                        VALID_ADDRESS, VALID_HALAL, VALID_VEGETARIAN, VALID_TAGS);
+        String expectedMessage = Order.MESSAGE_ORDER_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullOrder_throwsIllegalValueException() {
+        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, null, VALID_EMAIL,
+                VALID_ADDRESS, VALID_HALAL, VALID_VEGETARIAN, VALID_TAGS);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Order.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+```
+###### \java\seedu\address\storage\XmlAdaptedPersonTest.java
+``` java
+    @Test
+    public void toModelType_invalidHalal_throwsIllegalValueException() {
+        XmlAdaptedPerson person =
+                new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_ORDER, VALID_EMAIL,
+                        VALID_ADDRESS, INVALID_HALAL, VALID_VEGETARIAN, VALID_TAGS);
+        String expectedMessage = Halal.MESSAGE_HALAL_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullHalal_throwsIllegalValueException() {
+        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_ORDER, VALID_EMAIL,
+                VALID_ADDRESS, null, VALID_VEGETARIAN, VALID_TAGS);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Halal.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidVegetarian_throwsIllegalValueException() {
+        XmlAdaptedPerson person =
+                new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_ORDER, VALID_EMAIL,
+                        VALID_ADDRESS, VALID_HALAL, INVALID_VEGETARIAN, VALID_TAGS);
+        String expectedMessage = Vegetarian.MESSAGE_VEGETARIAN_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullVegetarian_throwsIllegalValueException() {
+        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_ORDER, VALID_EMAIL,
+                VALID_ADDRESS, VALID_HALAL, null, VALID_TAGS);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Vegetarian.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+```
+###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
+``` java
+    /**
+     * Sets the {@code Order} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withOrder(String order) {
+        descriptor.setOrder(new Order(order));
+        return this;
+    }
+```
+###### \java\seedu\address\testutil\PersonBuilder.java
+``` java
+    /**
+     * Sets the {@code Order} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withOrder(String order) {
+        this.order = new Order(order);
+        return this;
+    }
+```
+###### \java\seedu\address\testutil\PersonBuilder.java
+``` java
+    /**
+     * Sets the {@code Halal} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withHalal(String halal) {
+        this.halal = new Halal(halal);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Vegetarian} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withVegetarian(String vegetarian) {
+        this.vegetarian = new Vegetarian(vegetarian);
+        return this;
+    }
+```
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
+``` java
+    /**
+     *  Returns the color style for {@code tagName}'s label. The tag's color is determined by looking up the color
+     *  in {@code PersonCard#TAG_COLOR_STYLES}, using an index generated by the hash code of the tag's content.
+     *
+     *  @see PersonCard#getTagColorStyleFor(String)
+     */
+    private static String getTagColorStyleFor(String tagName) {
+        switch (tagName) {
+        case "classmates":
+        case "owesMoney":
+            return "teal";
+
+        case "colleagues":
+        case "neighbours":
+            return "yellow";
+
+        case "family":
+        case "friend":
+            return "orange";
+
+        case "friends":
+            return "brown";
+
+        case "husband":
+            return "grey";
+
+        default:
+            fail(tagName + " does not have a color assigned.");
+            return "";
+        }
+    }
+
+    /**
+     *  Asserts that the tags in {@code actualCard} matches all the tags in {@code expectedPerson} with the correct
+     *  color.
+     */
+    private static void assertTagsEqual(Person expectedPerson, PersonCardHandle actualCard) {
+        List<String> expectedTags = expectedPerson.getTags().stream()
+                .map(tag -> tag.tagName).collect(Collectors.toList());
+        assertEquals(expectedTags, actualCard.getTags());
+        expectedTags.forEach(tag ->
+                assertEquals(Arrays.asList(LABEL_DEFAULT_STYLE, getTagColorStyleFor(tag)),
+                        actualCard.getTagStyleClasses(tag)));
+    }
+```

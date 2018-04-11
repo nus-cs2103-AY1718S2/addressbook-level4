@@ -103,3 +103,56 @@
     }
 
 ```
+###### \java\seedu\address\model\CustomerStatsTest.java
+``` java
+package seedu.address.model;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+
+import org.junit.Test;
+
+public class CustomerStatsTest {
+
+    private final CustomerStats customerStats = new CustomerStats();
+
+    @Test
+    public void constructor() {
+        assertEquals(new HashMap<String, Integer>(), customerStats.getOrdersCount());
+    }
+
+}
+```
+###### \java\seedu\address\storage\StorageManagerTest.java
+``` java
+    @Test
+    public void getCustomerStatsFilePath() {
+        assertNotNull(storageManager.getCustomerStatsFilePath());
+    }
+
+    @Test
+    public void handleCustomerStatsChangedEvent_exceptionThrown_eventRaised() {
+        // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
+        Storage storage = new StorageManager(new XmlAddressBookStorage("dummy"),
+                new JsonUserPrefsStorage("dummy"), new XmlCustomerStatsStorageExceptionThrowingStub("dummy"));
+        storage.handleCustomerStatsChangedEvent(new CustomerStatsChangedEvent(new CustomerStats()));
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
+    }
+
+    /**
+     * A Stub class for XmlCustomerStatsStorage to throw an exception when the save method is called
+     */
+    class XmlCustomerStatsStorageExceptionThrowingStub extends XmlCustomerStatsStorage {
+
+        public XmlCustomerStatsStorageExceptionThrowingStub(String filePath) {
+            super(filePath);
+        }
+
+        @Override
+        public void saveCustomerStats(ReadOnlyCustomerStats customerStats, String filePath) throws IOException {
+            throw new IOException("dummy exception");
+        }
+    }
+
+```

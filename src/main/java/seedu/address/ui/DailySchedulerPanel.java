@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -28,6 +29,9 @@ public class DailySchedulerPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private MapPanel directionPanel;
+
+    @FXML
+    private ListView<ScheduledEventCard> eventsListView;
 
     @FXML
     private StackPane directionPanelPlaceholder;

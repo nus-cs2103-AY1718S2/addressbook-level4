@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATETIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -46,11 +47,13 @@ public class EventCommandParser implements Parser<EventCommand> {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
             DateTime startDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_START_DATETIME)).get();
             DateTime endDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_END_DATETIME)).get();
-            Location location = ParserUtil.parseLocation(argMultimap.getValue(PREFIX_LOCATION)).get();
-            Remark remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
+            Optional<Location> location = ParserUtil.parseLocation(argMultimap.getValue(PREFIX_LOCATION));
+            Optional<Remark> remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK));
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            Event event = new Event(name, startDateTime, endDateTime, location, remark, tagList);
+            Event event = new Event(name, startDateTime, endDateTime,
+                    location.isPresent() ? location.get() : null,
+                    remark.isPresent() ? remark.get() : null, tagList);
 
             return new EventCommand(event);
         } catch (IllegalValueException ive) {

@@ -46,8 +46,16 @@ public class EventCard extends UiPart<Region> {
         name.setText(this.event.getName().fullName);
         startDateTime.setText(getDisplayedStartDateTime(this.event));
         endDateTime.setText(getDisplayedEndDateTime(this.event));
-        locationEvent.setText(this.event.getLocation().toString());
-        remark.setText(this.event.getRemark().value);
+        if (this.event.getLocation() != null) {
+            locationEvent.setText(this.event.getLocation().toString());
+        } else {
+            locationEvent.setVisible(false);
+        }
+        if (this.event.getLocation() != null) {
+            remark.setText(this.event.getRemark().value);
+        } else {
+            remark.setVisible(false);
+        }
         event.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 

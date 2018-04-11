@@ -178,7 +178,7 @@ public abstract class DeskBoardSystemTest {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
-        assertEquals(expectedModel.getDeskBoard(), testApp.readStorageAddressBook());
+        assertEquals(expectedModel.getDeskBoard(), testApp.readStorageDeskBoard());
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredActivityList());
     }
 

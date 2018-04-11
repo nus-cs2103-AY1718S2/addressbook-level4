@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.List;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.person.DisplayPic;
 import seedu.address.model.person.Person;
 
 /**

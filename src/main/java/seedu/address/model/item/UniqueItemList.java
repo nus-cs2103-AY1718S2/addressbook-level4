@@ -57,6 +57,10 @@ public class UniqueItemList {
         }
     }
 
+    /**
+     * Puts all the display picture paths into the UniqueItemList
+     * @param persons is a UniquePersonList which contains all the people in the application
+     */
     public void updateItemList(ObservableList<Person> persons) {
         for (Person p : persons) {
             add(p.getDisplayPic().toString());

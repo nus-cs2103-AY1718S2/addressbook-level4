@@ -541,6 +541,7 @@ A dialog will pop up like below in Figure 12. Fill in the input boxes with match
 .Pop-up set password dialog
 image::setPassword_dialog.png[width="790"][height="200"]
 
+// tag::sort[]
 === Sorting the employees by any existing field: `sort`
 
 Sorts existing employees by any field +
@@ -559,6 +560,7 @@ Examples:
 Sort the employees by name in alphabetical order (case-insensitive).
 * `sort rate` +
 Sort the employees by rating in descending order.
+// end::sort[]
 
 === Adding an event on one employee's timetable: `addEvent`
 
@@ -598,11 +600,20 @@ Format: `deleteEvent INDEX TITLE`
 * The index *must be a positive integer 1, 2, 3,* …​
 ****
 
+=== Changing the theme of Employees Tracker: `changeTheme`
+
+Changes the theme of ET to bright or dark.
+Format: `changeTheme THEME`
+
+****
+* The change of theme will be effective immediately.
+* the `THEME` parameter must be one of the following: bright, dark.
+****
+
 Examples:
 
-* `list` +
-`deleteEvent 2 some event` +
-Deletes the event with title "some event" in 2^nd^ employee's timetable.
+* `changeTheme bright` +
+Changes the theme of ET to bright theme
 
 === Clearing all entries : `clear`
 

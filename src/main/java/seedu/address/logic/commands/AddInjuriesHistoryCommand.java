@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURIES_HISTORY;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -105,8 +106,8 @@ public class AddInjuriesHistoryCommand extends UndoableCommand {
         InjuriesHistory updatedInjuriesHistory = ParserUtil.parseInjuriesHistory(editPersonDescriptor
                 .getInjuriesHistory().get().toString() + "\n" + personToEdit.getInjuriesHistory());
 
-        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
-                        updatedInjuriesHistory);
+        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, Collections.emptySet(), updatedRemark,
+                          updatedCca, updatedInjuriesHistory);
     }
 
     @Override

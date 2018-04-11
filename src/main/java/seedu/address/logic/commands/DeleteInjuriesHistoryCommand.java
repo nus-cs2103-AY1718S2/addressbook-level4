@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.ParserUtil.parseInjuriesHistory;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -117,7 +118,7 @@ public class DeleteInjuriesHistoryCommand extends UndoableCommand {
         }
         if (injuriesHistoryIsFound) {
             InjuriesHistory updatedInjuriesHistory = parseInjuriesHistory(updateInjuriesHistory);
-            return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
+            return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, Collections.emptySet(), updatedRemark, updatedCca,
                     updatedInjuriesHistory);
         } else {
             throw new CommandException("The target injuriesHistory cannot be missing.");

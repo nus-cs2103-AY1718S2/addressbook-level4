@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -111,7 +112,7 @@ public class EditCommand extends UndoableCommand {
         Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
         InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
                 .orElse(personToEdit.getInjuriesHistory());
-        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
+        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, Collections.emptySet(), updatedRemark, updatedCca,
                             updatedInjuriesHistory);
     }
 

@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.Collections;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -54,7 +55,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             } else {
                 remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
             }
-            Person person = new Person(name, nric, tagList, subjectList, remark, cca, injuriesHistory);
+            Person person = new Person(name, nric, tagList, subjectList, Collections.emptySet(), remark, cca,
+                    injuriesHistory);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

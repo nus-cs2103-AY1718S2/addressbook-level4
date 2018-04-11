@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.ParserUtil.parseRemark;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -116,8 +117,8 @@ public class DeleteRemarkCommand extends UndoableCommand {
             InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
                     .orElse(personToEdit.getInjuriesHistory());
 
-            return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
-                    updatedInjuriesHistory);
+            return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, Collections.emptySet(),
+                    updatedRemark, updatedCca, updatedInjuriesHistory);
         } else {
             throw new CommandException("The target remark cannot be missing.");
         }

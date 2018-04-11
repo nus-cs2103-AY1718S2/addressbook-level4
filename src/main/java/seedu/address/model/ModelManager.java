@@ -72,6 +72,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newAliasList) {
+        addressBook.resetData(newData, newAliasList);
+        addressBook.updatePassword(newData.getPassword());
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
     }

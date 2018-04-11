@@ -60,6 +60,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
+        // Quickfix: Reset the filtered person
+        personList.clear();
+        
         addressBook.resetData(newData);
         indicateAddressBookChanged();
     }

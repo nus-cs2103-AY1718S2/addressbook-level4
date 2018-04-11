@@ -4,6 +4,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -28,7 +29,11 @@
                     <Insets bottom="5" left="5" />
                   </padding>
                 </Label>
-                <VBox fx:id="eventsListStack" VBox.vgrow="ALWAYS" prefHeight="-1.0" prefWidth="-1.0" />
+                  <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
+                    <content>
+                      <VBox fx:id="eventsListStack" prefHeight="-1.0" prefWidth="-1.0" />
+                    </content>
+                  </ScrollPane>
               </children>
             </VBox>
           </children>

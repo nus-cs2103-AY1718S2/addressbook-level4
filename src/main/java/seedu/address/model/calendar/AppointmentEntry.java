@@ -3,6 +3,7 @@ package seedu.address.model.calendar;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
@@ -68,11 +69,12 @@ public class AppointmentEntry {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_VALIDATION);
         builder.append(givenTitle)
-                .append(" Start Date: ")
-                .append(interval.getStartDate().toString())
-                .append(" End Date: ")
-                .append(interval.getEndDate().toString());
+                .append(" Start Date Time: ")
+                .append(interval.getStartDateTime().format(formatter))
+                .append(" End Date Time: ")
+                .append(interval.getEndDateTime().format(formatter));
 
         return builder.toString();
     }

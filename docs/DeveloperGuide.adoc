@@ -667,6 +667,59 @@ image:aGMSequenceDiagram.png[width="800"]
 
 // end::addMembersToGroup[]
 
+// tag::deleteGroup[]
+=== Delete Group feature
+
+Fastis deletes a group named by the user from input.
+
+==== Current Implementation
+
+The delete groups mechanism is facilitated by `DeleteGroupCommand`, which resides inside `Logic` component. It supports deleting Group objects to the address book. AddGroupCommand inherits from `UndoableCommand`.
+
+Hence, DeleteGroupCommand can be undone using `UndoRedoStack`.
+With the extra layer, the AddGroupCommand that is undoable is implemented this way:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class AddGroupCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... delete logic ...
+    }
+}
+----
+
+The groups in the group list are facilitated by `Group` class. Each `Group` object have a `Information` object, representing the information of the group.
+Address book stores all groups in `UniqueGroupList`.
+`Group`,`Information` and `UniqueGroupList` class reside inside `Model` component. The following is the class diagram showing the relationship between `Group` and `Information`:
+
+image:GroupInformationClassDiagram.png[width ="800"]
+
+The user executes a new `DeleteGroupCommand` with `Information`, to delete a existing group with the same information to the address book.
+The new group is deleted from the `UniqueGroupList` and the current state of the address book is saved.
+The following sequence diagram shows how the deleteGroup operation works:
+
+
+
+==== Design Considerations
+
+===== Aspect: Implementation of `AddGroupCommand`
+* **Alternative 1 (current choice):** Add a new command method `deleteGroupCommand()`
+** Pros: It is easy for developers to modify method to suit what they want
+* **Alternative 2:** Add a new abstract method `executeDeleteGroupCommand()`
+** Pros: It is not able to lose any deleteGroup functionality as it is now part of the default behaviour. Classes that deal with `DeleteGroupCommand` do not have to know that `executeDeleteGroupCommand()` exist.
+** Cons: It is hard for new developers to understand the template pattern.
+
+// end::deleteGroup[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 

@@ -448,6 +448,7 @@ However, this is still secure as even if a malicious user were to somehow get a 
 ** Cons: Password reset after each reload of application.
 // end::dataencryption[]
 
+// tag::datatransfer[]
 === Import AddressBook feature
 ==== Current Implementation
 
@@ -480,7 +481,9 @@ image::ImportCommandSequenceDiagram.png[width="800"]
 * **Alternative 2:** Adds selected `Person`,`Tag`, and `Alias` from imported AddressBook that are not a duplicate of existing `Person`, `Tag`, and `Alias` to the user's AddressBook.
 ** Pros: User is able to select which `Person`, `Tag` or `Alias` to be imported.
 ** Cons: User needs to indicate which `Person`, `Tag` or `Alias` to be imported.
+// end::datatransfer[]
 
+// tag::birthdays[]
 === Birthdays feature
 ==== Current Implementation
 Birthdays Command uses the existing Events system and sends an event.
@@ -518,6 +521,7 @@ image::UiComponentBirthdayListSequenceDiagram.png[width="800"]
 * **Alternative 2:** Use Natural Language Processing
 ** Pros: Users can enter their birthday in their preferred format.
 ** Cons: External API will be used. May introduce unforeseen bugs.
+// end::birthdays[]
 
 // tag::vacantroomfinder[]
 === Vacant Room Finder feature
@@ -562,6 +566,7 @@ As shown in diagram above, all Rooms weekday schedule will be return in an `Arra
 * **Alternative 2:** Create a static list of rooms in the Building class which has a room schedule for the day
 ** Pros: Code is shorter
 ** Cons: The Room and Building class will have schedule-related code which makes the classes messy.
+// end::vacantroomfinder[]
 
 // tag::timetable[]
 === Timetable feature

@@ -14,14 +14,14 @@ import org.junit.Test;
 public class ViewCommandTest {
     @Test
     public void equals() {
-        ViewCommand viewFirstCommand = new ViewCommand(TYPE_TASK);
-        ViewCommand viewSecondCommand = new ViewCommand(TYPE_EXERCISE);
+        ViewCommand viewFirstCommand = new ViewCommand(TYPE_TASK, -1, false);
+        ViewCommand viewSecondCommand = new ViewCommand(TYPE_EXERCISE, 11, true);
 
         // same object -> returns true
         assertTrue(viewFirstCommand.equals(viewFirstCommand));
 
         // same values -> returns true
-        ViewCommand viewFirstCommandCopy = new ViewCommand(TYPE_TASK);
+        ViewCommand viewFirstCommandCopy = new ViewCommand(TYPE_TASK, -1, false);
         assertTrue(viewFirstCommand.equals(viewFirstCommandCopy));
 
         // different types -> returns false

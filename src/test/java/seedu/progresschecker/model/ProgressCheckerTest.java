@@ -17,6 +17,7 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.progresschecker.model.exercise.Exercise;
+import seedu.progresschecker.model.issues.Issue;
 import seedu.progresschecker.model.person.Person;
 import seedu.progresschecker.model.tag.Tag;
 
@@ -32,6 +33,7 @@ public class ProgressCheckerTest {
         assertEquals(Collections.emptyList(), progressChecker.getPersonList());
         assertEquals(Collections.emptyList(), progressChecker.getTagList());
         assertEquals(Collections.emptyList(), progressChecker.getExerciseList());
+        assertEquals(Collections.emptyList(), progressChecker.getIssueList());
     }
 
     @Test
@@ -77,6 +79,7 @@ public class ProgressCheckerTest {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<Exercise> exercises = FXCollections.observableArrayList();
+        private final ObservableList<Issue> issues = FXCollections.observableArrayList();
 
         ProgressCheckerStub(Collection<Person> persons, Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
@@ -96,6 +99,11 @@ public class ProgressCheckerTest {
         @Override
         public ObservableList<Exercise> getExerciseList() {
             return exercises;
+        }
+
+        @Override
+        public ObservableList<Issue> getIssueList() {
+            return issues;
         }
     }
 

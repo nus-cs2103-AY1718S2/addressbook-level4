@@ -43,7 +43,6 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     private final UniqueExerciseList exercises;
     private final GitIssueList issues;
 
-
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
@@ -98,6 +97,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
         try {
             setPersons(syncedPersonList);
             setExercises(newData.getExerciseList());
+
         } catch (DuplicatePersonException e) {
             throw new AssertionError("ProgressChecker should not have duplicate persons");
         } catch (DuplicateExerciseException e) {
@@ -178,6 +178,13 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     }
 
     /**
+     * Logout of github
+     */
+    public void logoutGithub() throws CommandException {
+        issues.clearCredentials();
+    }
+
+    /**
      * Creates issue on github
      *
      * @throws IOException if theres any fault in the input values or the authentication fails due to wrong input
@@ -212,7 +219,7 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
      * @throws IOException if there is any problem in git authentication or parameter
      *
      */
-    public void updateIssue(Index index, Issue editedIssue) throws IOException {
+    public void updateIssue(Index index, Issue editedIssue) throws IOException, CommandException {
         requireNonNull(editedIssue);
         issues.setIssue(index, editedIssue);
     }
@@ -327,8 +334,13 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     public ObservableList<Exercise> getExerciseList() {
         return exercises.asObservableList();
     }
-
     //@@author
+
+    @Override
+    public ObservableList<Issue> getIssueList() {
+        return issues.asObservableList();
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

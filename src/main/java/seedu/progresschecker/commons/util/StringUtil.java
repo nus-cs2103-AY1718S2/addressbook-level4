@@ -6,6 +6,8 @@ import static seedu.progresschecker.commons.util.AppUtil.checkArgument;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import seedu.progresschecker.logic.commands.ViewCommand;
+
 /**
  * Helper functions for handling strings.
  */
@@ -71,4 +73,22 @@ public class StringUtil {
         }
     }
 
+    //@@author iNekox3
+    /**
+     * Returns true if {@code s} is within the range 2 to 11.
+     * e.g. 2, 3, 4, ..., 11 <br>
+     * Will return false for any other non-null string input
+     * e.g. empty string, "-1", "0", "+1", and " 2 " (untrimmed), "3 0" (contains whitespace), "1 a" (contains letters)
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static boolean isWithinRange(String s) {
+        requireNonNull(s);
+
+        try {
+            int value = Integer.parseInt(s);
+            return value >= ViewCommand.MIN_WEEK_NUMBER && value <= ViewCommand.MAX_WEEK_NUMBER;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
 }

@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.progresschecker.commons.exceptions.IllegalValueException;
-import seedu.progresschecker.logic.commands.CreateIssue;
+import seedu.progresschecker.logic.commands.CreateIssueCommand;
 import seedu.progresschecker.logic.parser.exceptions.ParseException;
 import seedu.progresschecker.model.issues.Assignees;
 import seedu.progresschecker.model.issues.Body;
@@ -24,23 +24,23 @@ import seedu.progresschecker.model.issues.Title;
 
 //@@author adityaa1998
 /**
- * Parses input arguments and creates a new CreateIssue object
+ * Parses input arguments and creates a new CreateIssueCommand object
  */
-public class CreateIssueParser implements Parser<CreateIssue> {
+public class CreateIssueParser implements Parser<CreateIssueCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the CreateIssue
+     * Parses the given {@code String} of arguments in the context of the CreateIssueCommand
      * and returns an createIssue object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public CreateIssue parse(String args) throws ParseException {
+    public CreateIssueCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_TITLE, PREFIX_ASSIGNEES,
                         PREFIX_MILESTONE, PREFIX_BODY, PREFIX_LABEL);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_TITLE)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CreateIssue.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CreateIssueCommand.MESSAGE_USAGE));
         }
 
         try {
@@ -55,7 +55,7 @@ public class CreateIssueParser implements Parser<CreateIssue> {
 
             Issue issue = new Issue(title, assigneesList, milestone, body, labelsList);
 
-            return new CreateIssue(issue);
+            return new CreateIssueCommand(issue);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

@@ -110,6 +110,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void logoutGithub() throws CommandException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void createIssueOnGitHub(Issue issue) throws IOException {
             fail("This method should not be called. ");
         }
@@ -196,6 +201,17 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredExerciseList(Predicate<Exercise> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Issue> getFilteredIssueList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredIssueList(Predicate<Issue> predicate) {
             fail("This method should not be called.");
         }
     }

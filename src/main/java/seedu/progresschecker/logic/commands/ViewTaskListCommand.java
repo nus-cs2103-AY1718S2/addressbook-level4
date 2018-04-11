@@ -2,6 +2,7 @@ package seedu.progresschecker.logic.commands;
 
 import static seedu.progresschecker.logic.commands.AddDefaultTasksCommand.DEFAULT_LIST_ID;
 import static seedu.progresschecker.logic.commands.AddDefaultTasksCommand.DEFAULT_LIST_TITLE;
+import static seedu.progresschecker.model.task.TaskUtil.NOTE_TOKEN;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,6 +14,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.google.api.services.tasks.model.Task;
@@ -23,7 +25,7 @@ import seedu.progresschecker.commons.events.ui.LoadTaskEvent;
 import seedu.progresschecker.commons.events.ui.TabLoadChangedEvent;
 import seedu.progresschecker.commons.util.FileUtil;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
-import seedu.progresschecker.model.task.MyTaskList;
+import seedu.progresschecker.model.task.TaskListUtil;
 
 //@@author EdwardKSG
 /**
@@ -45,19 +47,33 @@ public class ViewTaskListCommand extends Command {
             + "49 characters (as specified by Google Task.";
     public static final String TASK_TAB = "task";
     public static final int MAX_TITLE_LENGTH = 49;
+    public static final int MAX_WEEK = 13;
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             // TODO: change description and parameter range when appropriate
-            + ": View the default task list.\n"
-            + "Parameters: No parameters\n"
-            + "Example: " + COMMAND_WORD;
+            + ": View tasks in the default task list, filtered to show only tasks at the input week.\n"
+            + "Parameters: WEEK (must be an integer ranging from 1 to 13, or an asterisk (*) "
+            + "which means all weeks\n"
+            + "Example: " + COMMAND_WORD + "3";
 
     public static final String MESSAGE_SUCCESS = "Viewing task list: %1$s";
+
+    private final int targetWeek;
+
+    public ViewTaskListCommand(int targetWeek) {
+        this.targetWeek = targetWeek;
+    }
 
     @Override
     public CommandResult execute() throws CommandException {
         updateView();
-        return new CommandResult(String.format(MESSAGE_SUCCESS, DEFAULT_LIST_TITLE));
+
+        if (targetWeek > 0) {
+            return new CommandResult(String.format(MESSAGE_SUCCESS,
+                    DEFAULT_LIST_TITLE + "  Week: " + targetWeek));
+        } else {
+            return new CommandResult(String.format(MESSAGE_SUCCESS, DEFAULT_LIST_TITLE));
+        }
     }
 
     /**
@@ -65,9 +81,28 @@ public class ViewTaskListCommand extends Command {
      * @throws CommandException
      */
     public void updateView() throws CommandException {
-        List<Task> list = MyTaskList.searchTaskListById(DEFAULT_LIST_ID);
+        List<Task> list = TaskListUtil.searchTaskListById(DEFAULT_LIST_ID);
+        List<Task> filteredList = new LinkedList<Task>();
+        List<Integer> indexList = new LinkedList<Integer>();
+        if (targetWeek > 0) {
+            int count = 1;
+            for (Task task : list) {
+                if (task.getTitle().contains("LO[W" + targetWeek)) {
+                    filteredList.add(task);
+                    indexList.add(count);
+                }
+                count++;
+            }
+        } else {
+            filteredList = list;
+            int size = list.size();
+            for (int i = 1; i <= size; i++) {
+                indexList.add(i);
+            }
+        }
+
         File htmlFile = new File(DATA_FOLDER + TASK_PAGE);
-        int progressInt = writeToHtml(list, htmlFile);
+        int progressInt = writeToHtml(filteredList, indexList, htmlFile);
         File htmlBarFile = new File(DATA_FOLDER + BAR_PAGE);
         writeToHtmlBar(progressInt, htmlBarFile);
         File htmlCheckerFile = new File(DATA_FOLDER + CHECKER_PAGE);
@@ -88,10 +123,12 @@ public class ViewTaskListCommand extends Command {
      * Writes the loaded task list to an html file. Loads the tasks.
      *
      * @param list task list serialized in a java List.
+     * @param indexList stores the corresponding index in the full list (the current showing list is a filtered
+     *                  result.
      * @param file File object of the html file.
      * @return progressInt the percentage of task completed (without the "%" sign)
      */
-    int writeToHtml(List<Task> list, File file) throws CommandException {
+    int writeToHtml(List<Task> list, List<Integer> indexList, File file) throws CommandException {
         double countCompleted = 0;
         double countIncomp = 0;
 
@@ -110,44 +147,88 @@ public class ViewTaskListCommand extends Command {
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw);
 
-            out.print("<!DOCTYPE html>\n" + "<html>\n"
-                    + "<body style=\"background-color:grey;\">\n");
-            out.print("<h1 style=\"font-family:verdana; color:white\">&#9764;"
-                    + DEFAULT_LIST_TITLE + "&#9764;</h1>\n" + "<hr />\n" + "<dl>\n");
+            out.print("<!DOCTYPE html>\n"
+                    + "<html lang=\"en\">\n"
+                    + "<head>\n"
+                    + "    <title>Task List</title>\n"
+                    + "    <meta charset=\"utf-8\">\n"
+                    + "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
+                    + "    <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7"
+                    + "/css/bootstrap.min.css\">\n"
+                    + "    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1"
+                    + "/jquery.min.js\"></script>\n"
+                    + "    <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7"
+                    + "/js/bootstrap.min.js\"></script>\n"
+                    + "</head>\n"
+                    + "<body  style=\"background-color:grey;\">"
+                    + "<div class=\"container\"  style=\"background-color:grey;\">");
+            if (targetWeek > 0) {
+                out.print("<h2 style=\"font-family:verdana; color:white\">"
+                        + DEFAULT_LIST_TITLE + "  Week: " + targetWeek + "</h2>\n<br>\n");
+            } else {
+                out.print("<h2 style=\"font-family:verdana; color:white\">"
+                        + DEFAULT_LIST_TITLE + "</h2>\n<br>\n");
+            }
 
             for (int i = 0; i < size; i++) {
                 Task task = list.get(i);
-                out.print("    <dt style=\"font-family:verdana; color:antiquewhite;\">"
-                        + (i + 1) + ". " + task.getTitle() + "</dt>\n");
-                out.print("    <dd style=\"font-family:verdana; color:white;\">&#9888; &nbsp;"
-                        + task.getDue().toString().substring(0, 10) + "</dd>\n");
+                int index = indexList.get(i);
+
                 String status = task.getStatus();
+                String notesWithUrl = task.getNotes();
+                String[] parts = notesWithUrl.split(NOTE_TOKEN);
+
+                String notes = parts[0];
+                String url = parts[1];
+
                 if (status.length() >= 11) {
-                    out.print("    <dd style=\"font-family:verdana; color:red;\">&#9873; &nbsp;"
-                            + "Please work on it! " + "&#9744;</dd>\n");
+                    out.print("        <div class=\"panel panel-danger\">\n"
+                            + "            <div class=\"panel-heading\">"
+                            + index + ". " + task.getTitle() + "</div>\n"
+                            + "            <div class=\"panel-body\">\n"
+                            + "                <dd style=\"font-family:verdana; color:black;\">&#9888; &nbsp;"
+                            + task.getDue().toString().substring(0, 10) + "</dd>\n"
+                            + "                <dd style=\"font-family:verdana; color:red;\">&#9873;"
+                            + " &nbsp;Please work on it :) &#9744;</dd>\n");
                     countIncomp++;
                 } else {
-                    out.print("    <dd style=\"font-family:verdana; color:darkseagreen;\">&#9873; &nbsp;"
-                            + "Completed! " + "&#9745;</dd>\n");
+                    out.print("        <div class=\"panel panel-success\">\n"
+                            + "            <div class=\"panel-heading\">"
+                            + index + ". " + task.getTitle() + "</div>\n"
+                            + "            <div class=\"panel-body\">\n"
+                            + "                <dd style=\"font-family:verdana; color:black;\">&#9888; &nbsp;"
+                            + task.getDue().toString().substring(0, 10) + "</dd>\n"
+                            + "                <dd style=\"font-family:verdana; color:darkseagreen;\">&#9873;"
+                            + " &nbsp;Completed! &#9745;</dd>\n");
                     countCompleted++;
                 }
 
-                out.print("    <dd style=\"font-family:verdana; color:white;\">&#9998; &nbsp;"
-                        + task.getNotes() + "</dd>\n");
-                out.print("    <hr />\n");
-
+                out.print("                <dd style=\"font-family:verdana; color:black;\">&#9998; &nbsp;"
+                        + notes + "</dd>\n"
+                        + "                <p><a href=\""
+                        + url
+                        + "\">"
+                        + url
+                        + "</a></p>\n"
+                        + "            </div>\n"
+                        + "        </div>\n");
             }
+
+            out.print("    </div>\n"
+                    + "</div>\n"
+                    + "\n");
 
             double percent = countCompleted / (countCompleted + countIncomp);
             int progressInt = (int) (percent * 100);
-            String progress = progressInt + "%";
+            String progressDevision = (int) countCompleted + "/" + (int) (countCompleted + countIncomp);
 
             out.print("</dl>\n");
 
-            out.print("<h2 style=\"font-family:verdana; color:white\">" + "You have completed " + progress
+            out.print("<h2 style=\"font-family:verdana; color:white\">" + "You have completed " + progressDevision
                     + " !" + "</h2>");
 
-            out.print("</body>\n" + "</html>\n");
+            out.print("</body>\n"
+                    + "</html>");
 
             out1.close();
             out.close();
@@ -195,8 +276,9 @@ public class ViewTaskListCommand extends Command {
                     + "</head>\n"
                     + "<body  style=\"background-color:grey;\">\n"
                     + "<div class=\"container\">\n"
-                    + "    <h2 style = \"font-size: medium; color: white;\">Your Progress: "
+                    + "    <h2 style = \"font-size: x-large; color: white;\">Your Progress: "
                     + percentage + "%</h2>\n"
+                    + "    <br>\n"
                     + "    <div class=\"progress\">\n"
                     + "        <div class=\"progress-bar progress-bar-striped active\" role=\"progressbar\" "
                     + "aria-valuenow=\"" + percentage + "\" aria-valuemin=\"0\" aria-valuemax=\"100\" "
@@ -218,7 +300,8 @@ public class ViewTaskListCommand extends Command {
     }
 
     /**
-     * Writes an html file to involve both the progress bar and task list (the file is for backup purposes.
+     * Writes an html file to involve both the progress bar and task list (the file is for backup,
+     * preview and debugging purposes.
      *
      * @param file File object of the html file.
      */

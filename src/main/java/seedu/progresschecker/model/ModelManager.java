@@ -2,6 +2,7 @@ package seedu.progresschecker.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.progresschecker.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.progresschecker.logic.commands.ViewCommand.MAX_WEEK_NUMBER;
 
 import java.io.IOException;
 import java.util.function.Predicate;
@@ -35,7 +36,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final ProgressChecker progressChecker;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Exercise> filteredExercises;
-
+    private final FilteredList<Issue> filteredIssues;
     /**
      * Initializes a ModelManager with the given progressChecker and userPrefs.
      */
@@ -48,6 +49,8 @@ public class ModelManager extends ComponentManager implements Model {
         this.progressChecker = new ProgressChecker(progressChecker);
         filteredPersons = new FilteredList<>(this.progressChecker.getPersonList());
         filteredExercises = new FilteredList<>(this.progressChecker.getExerciseList());
+        updateFilteredExerciseList(exercise -> exercise.getQuestionIndex().getWeekNumber() == MAX_WEEK_NUMBER);
+        filteredIssues = new FilteredList<>(this.progressChecker.getIssueList());
     }
 
     public ModelManager() {
@@ -98,6 +101,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void createIssueOnGitHub(Issue issue) throws IOException, CommandException {
         progressChecker.createIssueOnGitHub(issue);
+        updateFilteredIssueList(PREDICATE_SHOW_ALL_ISSUES);
+        indicateProgressCheckerChanged();
+    }
+    @Override
+    public synchronized void logoutGithub() throws CommandException {
+        progressChecker.logoutGithub();
         indicateProgressCheckerChanged();
     }
     //@@author
@@ -137,7 +146,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author adityaa1998
     @Override
-    public void updateIssue(Index index, Issue editedIssue) throws IOException {
+    public void updateIssue(Index index, Issue editedIssue) throws IOException, CommandException {
         requireAllNonNull(index, editedIssue);
 
         progressChecker.updateIssue(index, editedIssue);
@@ -161,6 +170,25 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+
+    //@@author adityaa1998
+    //=========== Filtered Issue List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Issue} backed by the internal list of
+     * {@code progressChecker}
+     */
+    @Override
+    public ObservableList<Issue> getFilteredIssueList() {
+        return FXCollections.unmodifiableObservableList(filteredIssues);
+    }
+
+    @Override
+    public void updateFilteredIssueList(Predicate<Issue> predicate) {
+        requireNonNull(predicate);
+        filteredIssues.setPredicate(predicate);
+    }
+    //@@author
 
     //@@author Livian1107
     @Override
@@ -213,5 +241,4 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredExercises.setPredicate(predicate);
     }
-
 }

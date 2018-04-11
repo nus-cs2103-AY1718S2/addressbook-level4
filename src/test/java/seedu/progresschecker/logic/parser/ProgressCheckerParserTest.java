@@ -134,8 +134,8 @@ public class ProgressCheckerParserTest {
     @Test
     public void parseCommand_view() throws Exception {
         ViewCommand command = (ViewCommand) parser.parseCommand(
-                ViewCommand.COMMAND_WORD + " " + TYPE_EXERCISE);
-        assertEquals(new ViewCommand(TYPE_EXERCISE), command);
+                ViewCommand.COMMAND_WORD + " " + TYPE_EXERCISE + " 11 true");
+        assertEquals(new ViewCommand(TYPE_EXERCISE, 11, true), command);
     }
 
     //@@author

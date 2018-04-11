@@ -1,6 +1,6 @@
 package seedu.progresschecker.logic.parser;
 
-import static seedu.progresschecker.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.progresschecker.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX_OR_FORMAT;
 
 import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.logic.commands.ResetTaskCommand;
@@ -23,7 +23,7 @@ public class ResetTaskCommandParser implements Parser<ResetTaskCommand> {
             return new ResetTaskCommand(index);
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ResetTaskCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_INDEX_OR_FORMAT, ResetTaskCommand.MESSAGE_USAGE));
         }
     }
 

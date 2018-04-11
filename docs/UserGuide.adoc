@@ -100,7 +100,8 @@ You can type a command and press `Tab` to auto bring out all the command paramet
 
 * *`exit`* : you can exit the app.
 
-Refer to <<Default,below>> for details of each command.
+Refer to <<General,below>> for details of each command.
+
 ====
 *Notes:*
 
@@ -127,22 +128,27 @@ You may want to refer to the User Guide when you have a question. You can read i
 // tag::view[]
 ==== Viewing a different tab : `view` OR `v`
 
-You can change the tab view to show either profiles, tasks, or exercises window. +
+You can change the tab view to show either `Profile`, `Task`, or `Exercise`. +
 *Format:* `view TYPE` OR `v TYPE`
+
+By default, the exercise tab shows exercises from the latest available school week. You can view the exercises in other weeks as well. +
+*Format:* `view exercise WEEK_NUMBER` OR `v exercise WEEK_NUMBER`
 
 ====
 *Notes:*
 
-* You can change the tab view to specified `TYPE`.
-* The type refers to the tab name.
-* The tab name must be `profile`, `task`, or `exercise`.
+* `TYPE` refers to the tab names you see in the GUI: `profile`, `task` or `exercise`.
+* `WEEK_NUMBER` refers to the school week number and *must be a positive integer* in the *range of 2 to 11* `2, 3, ..., 11`
 ====
 
 *Examples:*
 
+* `view task`
 * `view exercise`
+* `view exercise 5`
 // end::view[]
 
+// tag::theme[]
 ==== Toggling theme : `theme` OR `t`
 
 You can change the style of the app between a light and dark theme according to your preference. +
@@ -152,6 +158,7 @@ You can change the style of the app between a light and dark theme according to 
 
 * `theme`
 * `t`
+// end::theme[]
 
 // tag::undoredo[]
 ==== Undoing previous command : `undo` OR `u`
@@ -162,7 +169,7 @@ You may type some commands wrongly, or some unexpected changes happen. You can r
 ====
 *Notes:*
 
-* Undoable commands: those commands that modify the ProgressChecker's content (`add`, `delete`, `edit` and `clear`).
+* Undoable commands: those commands that modify the ProgressChecker's content (`add`, `answer`, `delete`, `edit` and `clear`).
 ====
 
 *Examples:*
@@ -249,17 +256,21 @@ You can exits the program when you are done with the work. +
 === Exercise
 
 // tag::answer[]
-==== Answering and saving an exercise : `answer` `[since v1.4r]`
+==== Answering an exercise : `answer` `[since v1.4r]`
 
-You can answer an exercise based off the given question number with your answer and save the answer. +
+You can answer an exercise based on the question index. Your answer will be saved automatically upon answering. +
 *Format:* `answer INDEX ANSWER`
+
+[TIP]
+If you accidentally overwrite your answer to an exercise, you can undo the change as this is an undoable command! Check out the <<undoing-previous-command-code-undo-code-or-code-u-code,undo>> and <<redoing-the-previously-undone-command-code-redo-code-or-code-r-code,redo>> commands on how you can achieve this.
 
 ====
 *Notes:*
 
-* You can answer an exercise at the specified `INDEX`.
-* The index refers to the question number.
-* The index must be of format `section number`.`question number`, 2.1.1, 3.2.5, 6.1.7
+* `INDEX` refers to the question index shown in the GUI and it must be of the format `WEEK_NUMBER`.`SECTION_NUMBER`.`QUESTION_NUMBER`, e.g. 2.1.1, 3.2.5, 6.1.7
+[NOTE]
+An exercise's `SECTION_NUMBER` is directly adopted from https://nus-cs2103-ay1718s2.github.io/website/index.html[CS2103/T's website].
+
 ====
 
 *Examples:*
@@ -269,6 +280,7 @@ You can answer an exercise based off the given question number with your answer 
 
 === Issue Tracker
 
+//tag::issues[]
 ==== Github logging in: `gitlogin` OR `gl`
 
 You can login with your Github account and prepare to work with the issues in your team repo. +
@@ -327,6 +339,19 @@ You can reopen the certain issue on github when you want to work on it. +
 * `reopenissue 1`
 * `reopenissue 3`
 
+==== Loggin out of Github: `gitlogout` OR `glo`
+
+You can logout of github after logging in. +
+
+[TIP]
+You will get an error message if you try to logout before logging in.
+
+*Examples:*
+
+* `gitlogout`
+* `glo`
+
+//end::issues[]
 === Task List
 
 ==== New TODO list by dafault: `newtasklist` OR `nl`
@@ -455,6 +480,27 @@ You can view the list of all your teammates in the ProgressChecker. +
 * `list`
 * `l`
 
+// tag::upload[]
+==== Uplpoading profile photo
+
+You can upload a image from your local PC as a profile photo for yourself or your teammates in ProgressChecker. +
+*Format* `upload INDEX PATH` OR `up INDEX PATH`
+
+====
+*Notes:*
+
+* You can update the profile photo of the teammate at the specified `INDEX`. The index refers to the index number shown in the last teammate listing. The index *must be a positive integer* 1, 2, 3, ...
+* The extension of the image to upload can only be _'jpg'_, _'jepg'_  or _'png'_.
+* Image to upload will be copied to the contact folder which is inside resources.
+====
+
+*Examples:*
+
+* `upload 1 C:\Users\User\Desktop\profilePhoto.png` +
+Uploads the image with local path _'C:\Users\User\profilePhoto.png'_ as the profile photo of the first person.
+// end::upload[]
+
+// tag::sort[]
 ==== Sorting all teammates : `sort`
 
 You can view the list of all your teammates in the ProgressChecker with their names in alphabetical order. +
@@ -463,6 +509,7 @@ You can view the list of all your teammates in the ProgressChecker with their na
 *Example:*
 
 * `sort`
+// end::sort[]
 
 ==== Finding/Searching teammates by the keywords of name: `find` OR `search`
 
@@ -619,6 +666,10 @@ OR `ed INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [m/MAJOR] [y/YEAR] [t/TAG]...`
 |`gitlogin OR gl`
 |
 
+|*Log out of Github*
+|`gitlogout OR glo`
+|
+
 |*Newtasklist*
 |`newtasklist` OR `nl`
 |
@@ -660,9 +711,15 @@ ri 1
 |`undo` OR `u`
 |
 
+|*Upload*
+|`upload INDEX PATH` OR `up INDEX PATH`
+|upload 1 C:\Users\User\Desktop\profile_photo.jpg
+
 |*View tab*
-|`view TYPE` OR `v TYPE`
-|view exercise
+|`view TYPE` OR `v TYPE` OR `view exercise WEEK_NUMBER`
+|view task +
+view exercise +
+view exercise 5
 
 |*View task*
 |`viewtask OR vt`

@@ -581,7 +581,7 @@ The entered key is not instantly updated in the command box thats why after the 
 |===
 // end::search[]
 
-// tag::answerexercise[]
+// tag::answer[]
 === [Planned] Answering an exercise
 ==== Planned Implementation
 
@@ -648,7 +648,7 @@ image::SDforExercisesEventHandling.png[width="800"]
 |Formatting the exercises becomes harder and the implementation is less modular.
 
 |===
-// end::answerexercise[]
+// end::answer[]
 {sp} +
 
 // tag::adddefaulttasklist[]

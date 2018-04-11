@@ -13,6 +13,7 @@ import javafx.scene.web.WebView;
 import seedu.progresschecker.MainApp;
 import seedu.progresschecker.commons.core.LogsCenter;
 import seedu.progresschecker.commons.events.ui.LoadTaskEvent;
+import seedu.progresschecker.commons.events.ui.LoadUrlEvent;
 import seedu.progresschecker.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.progresschecker.model.person.Person;
 
@@ -89,6 +90,12 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleLoadTaskEvent(LoadTaskEvent event)  {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadTaskPage(event.getContent());
+    }
+
+    @Subscribe
+    private void handleLoadUrlEvent(LoadUrlEvent event)  {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPage(event.getUrl());
     }
     //@@author
 }

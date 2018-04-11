@@ -1,7 +1,8 @@
 package seedu.progresschecker.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.progresschecker.model.Model.PREDICATE_SHOW_ALL_EXERCISES;
+import static seedu.progresschecker.logic.commands.ViewCommand.MAX_WEEK_NUMBER;
+import static seedu.progresschecker.logic.commands.ViewCommand.MIN_WEEK_NUMBER;
 
 import java.util.List;
 import java.util.Objects;
@@ -21,8 +22,6 @@ import seedu.progresschecker.model.exercise.exceptions.ExerciseNotFoundException
  * Edits details of student answer of an exercise in the ProgressChecker.
  */
 public class AnswerCommand extends UndoableCommand {
-    public static final int MIN_WEEK_NUMBER = 2;
-    public static final int MAX_WEEK_NUMBER = 13;
 
     public static final String COMMAND_WORD = "answer";
     public static final String COMMAND_ALIAS = "ans";
@@ -63,7 +62,8 @@ public class AnswerCommand extends UndoableCommand {
         } catch (ExerciseNotFoundException enfe) {
             throw new AssertionError("The target exercise cannot be missing");
         }
-        model.updateFilteredExerciseList(PREDICATE_SHOW_ALL_EXERCISES);
+        model.updateFilteredExerciseList(exercise -> exercise.getQuestionIndex().getWeekNumber()
+                == editedExercise.getQuestionIndex().getWeekNumber());
         return new CommandResult(String.format(MESSAGE_EDIT_EXERCISE_SUCCESS, questionIndex));
     }
 

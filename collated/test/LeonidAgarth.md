@@ -162,6 +162,11 @@ public class AddEventCommandTest {
         }
 
         @Override
+        public void deleteGroup(Group target) throws GroupNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updatePerson(Person target, Person editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -1447,6 +1452,7 @@ public class XmlAdaptedTagTest {
         original.addPerson(HOON);
         original.removePerson(ALICE);
         original.addToDo(TODO_D);
+        original.addGroup(GROUP_D);
         xmlAddressBookStorage.backupAddressBook(original, filePath);
         readBack = xmlAddressBookStorage.readAddressBookBackup(filePath).get();
         assertEquals(original, new AddressBook(readBack));
@@ -1454,6 +1460,7 @@ public class XmlAdaptedTagTest {
         //Back and read without specifying file path
         original.addPerson(IDA);
         original.addToDo(TODO_E);
+        original.addGroup(GROUP_E);
         xmlAddressBookStorage.backupAddressBook(original); //file path not specified
         readBack = xmlAddressBookStorage.readAddressBookBackup().get(); //file path not specified
         assertEquals(original, new AddressBook(readBack));
@@ -1685,9 +1692,7 @@ public class TypicalEvents {
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.testutil.GuiTestAssert.assertDateDisplaysEvent;
 
 import org.junit.Test;
@@ -1759,12 +1764,10 @@ public class CalendarTest extends GuiUnitTest {
 package systemtests;
 
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_COLOR;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLOR_BROWN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLOR_RED;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
 
@@ -1821,7 +1824,7 @@ public class ChangeTagColorCommandSystemTest extends AddressBookSystemTest {
     /**
      * Performs the verification: <br>
      * 1. Asserts that result display node displays the success message of executing {@code ChangeTagColorCommand}.<br>
-     * 2. Asserts that the model related components are updated to reflect the tag being updated to values 
+     * 2. Asserts that the model related components are updated to reflect the tag being updated to values
      * specified in {@code changeTagColoredTag}.<br>
      */
     private void assertCommandSuccess(String command, Tag changedTag) {

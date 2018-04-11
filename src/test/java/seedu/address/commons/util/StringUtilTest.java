@@ -138,6 +138,7 @@ public class StringUtilTest {
         assertTrue(StringUtil.containsWordIgnoreCase("AAA bBb ccc  bbb", "bbB"));
     }
 
+    //@@author Isaaaca
     //---------------- Tests for containsWordFuzzyIgnoreCase --------------------------------------
 
     /*
@@ -228,6 +229,7 @@ public class StringUtilTest {
         // Matches multiple words in sentence
         assertTrue(StringUtil.containsWordIgnoreCase("AAA bBb ccc  bbb", "bbB"));
     }
+    //@@author
 
     //---------------- Tests for getDetails --------------------------------------
 

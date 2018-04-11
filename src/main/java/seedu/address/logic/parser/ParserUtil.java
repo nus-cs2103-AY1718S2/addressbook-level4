@@ -168,6 +168,7 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
     }
 
+    //@@author Isaaaca
     /**
      * Parses a {@code String link} into an {@code TimeTableLink}.
      * Leading and trailing whitespaces will be trimmed.
@@ -191,6 +192,7 @@ public class ParserUtil {
         requireNonNull(link);
         return  link.isPresent() ? Optional.of(parseTimeTableLink(link.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses a {@code String detail} into a {@code Detail}.

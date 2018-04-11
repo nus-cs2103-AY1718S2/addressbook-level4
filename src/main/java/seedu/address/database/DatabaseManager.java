@@ -25,6 +25,7 @@ import seedu.address.database.module.Schedule;
 import seedu.address.model.event.WeeklyEvent;
 import seedu.address.model.person.TimeTableLink;
 
+//@@author Isaaaca
 /**
  * The main DatabaseManager of the app.
  */

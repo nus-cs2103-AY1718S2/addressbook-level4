@@ -44,6 +44,7 @@ public class StringUtil {
         return false;
     }
 
+    //@@author Isaaaca
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
      * Ignores case, but a full word match is required.
@@ -69,6 +70,7 @@ public class StringUtil {
                 + FuzzySearch.partialRatio(preppedWord, preppedSentence));
         return FuzzySearch.partialRatio(preppedWord, preppedSentence);
     }
+    //@@author
 
     /**
      * Returns a detailed message of the t, including the stack trace.

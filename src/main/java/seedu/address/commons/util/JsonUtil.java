@@ -78,6 +78,7 @@ public class JsonUtil {
         return Optional.of(jsonFile);
     }
 
+    //@@author Isaaaca
     /**
      * Returns the Json Array from the given file or an empty ArrayList if the file is not found.
      * If any values are missing from the file, default values will be used, as long as the file is a valid json file.
@@ -108,6 +109,7 @@ public class JsonUtil {
 
         return Optional.of(jsonFile).orElse(new ArrayList<T>());
     }
+    //@@author
 
     /**
      * Saves the Json object to the specified file.

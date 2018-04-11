@@ -18,6 +18,7 @@ import seedu.address.commons.events.model.UserDatabaseChangedEvent;
 import seedu.address.commons.events.model.UserDeletedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.login.Password;
+import seedu.address.model.login.UniqueUserList;
 import seedu.address.model.login.User;
 import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
@@ -58,7 +59,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs and a login status
+     * Initializes a ModelManager with the given addressBook and userPrefs and a given login status
      */
     public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, ReadOnlyUserDatabase userDatabase,
                         Storage storage, boolean loggedIn) {
@@ -68,7 +69,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs
                 + "and user database " + userDatabase);
         this.storage = storage;
-        this.userDatabase = new UserDatabase(userDatabase, true);
+        this.userDatabase = new UserDatabase(userDatabase, loggedIn);
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
@@ -220,6 +221,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void setLoginStatus(boolean status) {
         userDatabase.setLoginStatus(status);
+    }
+
+    @Override
+    public void setUsersList(UniqueUserList uniqueUserList) {
+        userDatabase.setUniqueUserList(uniqueUserList);
     }
 
     //@@author

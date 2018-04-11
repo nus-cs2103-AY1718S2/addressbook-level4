@@ -4,8 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.Model;
+import seedu.address.model.login.UniqueUserList;
+import seedu.address.model.login.User;
+import seedu.address.model.login.exceptions.DuplicateUserException;
 import seedu.address.model.person.Person;
 
 /**
@@ -29,6 +34,31 @@ public class ModelHelper {
     public static void setFilteredList(Model model, Person... toDisplay) {
         setFilteredList(model, Arrays.asList(toDisplay));
     }
+
+    //@@author kaisertanqr
+    /**
+     * Updates {@code model}'s users list.
+     */
+    public static void setUsersList(Model model, UniqueUserList uniqueUserList) {
+        model.setUsersList(uniqueUserList);
+    }
+
+    /**
+     * @see ModelHelper#setUsersList(Model, UniqueUserList)
+     */
+    public static void setUsersList(Model model, User... users) {
+        UniqueUserList uniqueUserList = new UniqueUserList();
+        for (User user : users){
+            try {
+                uniqueUserList.add(user);
+            } catch (DuplicateUserException e){
+                throw new AssertionError("not possible");
+            }
+        }
+        setUsersList(model, uniqueUserList);
+    }
+
+    //@@author
 
     /**
      * Returns a predicate that evaluates to true if this {@code Person} equals to {@code other}.

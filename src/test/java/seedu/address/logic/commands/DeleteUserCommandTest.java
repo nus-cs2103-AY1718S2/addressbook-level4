@@ -18,6 +18,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.login.Password;
+import seedu.address.model.login.UniqueUserList;
 import seedu.address.model.login.User;
 import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
@@ -177,6 +178,10 @@ public class DeleteUserCommandTest {
         @Override
         public void addLogToPerson(Person target, Person editedPersonWithNewLog)
                 throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+        @Override
+        public void setUsersList(UniqueUserList uniqueUserList) {
             fail("This method should not be called.");
         }
     }

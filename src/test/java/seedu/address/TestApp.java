@@ -102,6 +102,16 @@ public class TestApp extends MainApp {
         return copy;
     }
 
+    /**
+     * Returns a defensive copy of the model.
+     */
+    public Model getLoggedOutModel() {
+        this.initTestLoggedOut();
+        Model copy = new ModelManager((model.getAddressBook()), new UserPrefs(), new UserDatabase(), new TestStorage());
+        ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
+        return copy;
+    }
+
     @Override
     public void start(Stage primaryStage) {
 

@@ -298,9 +298,16 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Returns a defensive copy of the current model.
+     * Returns a defensive copy of the current model that is already logged in.
      */
     protected Model getModel() {
         return testApp.getModel();
+    }
+
+    /**
+     * Returns a defensive copy of the current model that has not been logged in.
+     */
+    protected Model getLoggedOutModel() {
+        return testApp.getLoggedOutModel();
     }
 }

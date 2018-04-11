@@ -27,7 +27,7 @@ public class UserDatabase implements ReadOnlyUserDatabase {
 
     private static final String AB_FILEPATH_PREFIX = "data/addressbook-";
     private static final String AB_FILEPATH_POSTFIX = ".xml";
-    private final UniqueUserList users;
+    private UniqueUserList users;
 
     private boolean hasLoggedIn;
     private User loggedInUser;
@@ -78,8 +78,8 @@ public class UserDatabase implements ReadOnlyUserDatabase {
     public User getLoggedInUser() {
         return loggedInUser;
     }
-    //@@author kaisertanqr
 
+    //@@author kaisertanqr
     /**
      * Returns the login status of the user.
      */
@@ -95,6 +95,12 @@ public class UserDatabase implements ReadOnlyUserDatabase {
         hasLoggedIn = status;
     }
 
+    /**
+     * Sets the unique users list to {@code uniqueUserList}
+     */
+    public void setUniqueUserList(UniqueUserList uniqueUserList){
+        users = uniqueUserList;
+    }
 
     /**
      * Checks the login credentials whether it matches any user in UserDatabase.

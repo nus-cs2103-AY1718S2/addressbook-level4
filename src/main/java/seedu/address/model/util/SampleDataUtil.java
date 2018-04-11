@@ -83,7 +83,7 @@ public class SampleDataUtil {
         return new Person[] {
             new Person(new Name("Alex Poh Yao Boon"), new Phone("87438807"), new Email("alexpoh@example.com"),
                 new Address("Blk 30 Geylang Street 29, #06-40"),
-                getTagSet("priorityhigh", "DrugAddiction", "Alzheimer'sDisease"),
+                getTagSet("priorityhigh", "DrugAddiction", "AlzheimersDisease"),
                 new SessionLogs(SAMPLE_SESSION_REPORT_B)),
             new Person(new Name("Stan Low"), new Phone("92624417"), new Email("st.low@example.com"),
                 new Address("Blk 45 Aljunied Street 85, #11-31"),

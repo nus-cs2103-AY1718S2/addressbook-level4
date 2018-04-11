@@ -86,11 +86,17 @@ public class MainApp extends Application {
 
     }
 
+
     /** Initialise for tests */
     public void initTest() {
-        User user = new User();
         model.setLoginStatus(true);
         ui.getMainWindow().showAfterLogin();
+    }
+
+    /** Initialise a logged out application for tests */
+    public void initTestLoggedOut() {
+        model.setLoginStatus(false);
+        ui.getMainWindow().hideBeforeLogin();
     }
 
     private String getApplicationParameter(String parameterName) {

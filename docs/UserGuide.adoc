@@ -41,7 +41,7 @@ This app will not work with earlier versions of Java 8.
 +
 .IMDB in action
 [caption="Figure 1: "]
-image::Ui.png[width="790"]
+image::Ui_new.PNG[width="990"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -61,6 +61,20 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 == Features
 
 ====
+*UI Walkthrough*
+
+*Before introducing the commands, a brief walkthrough of the user interface is shown in Figure 2 below.
+
+.User Interface Walkthrough of IMDB
+[caption="Figure 2: "]
+image::ui_walkthrough.png[width="990"]
+
+.	Command box: where you can type command in
+.	Command result: where message will be displayed after a command is entered
+.	Multipurpose panel: where patient's details, appointments will be displayed here
+.	Patient list panel: where list of patients in the database is displayed
+.	Visiting queue panel: where list of patients who are waiting for consultation is displayed
+
 *Command Format*
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
@@ -399,54 +413,63 @@ Format: `print INDEX` or `p INDEX`
 
 IMDB will be able to attach images(X-ray scans) to a patient and retrieve the images for viewing.
 
-=== Queue Commands
+=== Visiting Queue Commands
 
 The commands listed in this section are commands that pertain to the queue.
 
-==== Adding a patient into the visiting queue with patient name: `addq` [since v1.2]
+==== Adding a patient into the visiting queue with index: `addq` [since v1.2]
 
 Adds patient into visiting queue (registration).
 
-*This command is only accessible to medical staffs.* +
+*This command is only accessible to medical staffs and is not undoable.* +
 
-Format: `addq PATIENT_NAME` or `aq PATIENT_NAME`
+Format: `addq INDEX` or `aq INDEX`
 
 Examples:
 
-* `addq Betsy` +
-Betsy will be added at the back of the visiting queue.
+* `list` +
+`addq 3` +
+Charlotte Oliveiro will be added into the visiting queue.
 
-* `aq John` +
-John will be added at the back of the visiting queue.
+* `find bernice` +
+`aq 2` +
+Bernice Lee will be added into the visiting queue as shown in Figure 3 below.
 
-==== Removing a patient from the visiting queue with patient name: `removeq` [since v1.2]
+.Add patient to queue according to list index
+[caption="Figure 3: "]
+image::addq_duplicate.PNG[width="990"]
+
+==== Removing a patient from the visiting queue: `removeq` [since v1.2]
 
 Removes the first patient from the visiting queue (check-out).
 
-*This command is only accessible to medical staffs.* +
+*This command is only accessible to medical staffs and is not undoable.* +
 
 Format: `removeq` or `rq`
 
 Examples:
 
-* `removeq Betsy` +
+* `removeq` +
 Betsy will be removed if she is the first patient in the queue.
 
-* `rq John` +
+* `rq` +
 John will be removed if he is the first patient in the queue.
 
-==== Viewing visiting queue: `viewq` [since v1.2]
+==== Removing a patient from the visiting queue by index: `removeq` [since v1.5rc]
 
-Show the list of patients in the visiting queue.
+Removes a specific patient from the visiting queue by index (check-out).
 
-*This command is accessible both to medical staffs and doctors.* +
+*This command is only accessible to medical staffs and is not undoable.* +
 
-Format: `viewq` or `vq`
+Format: `removeq` or `rq`
 
 Examples:
 
-* `viewq` +
-List of patients in the visiting queue will be displayed.
+* `removeq 4` +
+Bernice will be removed if she is the 4th patient in the patient list and she is in the visiting queue.
+
+* `rq 2` +
+Alex will be removed if he is the 2nd patient in the patient list and he is in the visiting queue.
 
 === Appointment Commands
 
@@ -456,7 +479,7 @@ The commands listed in this section are commands that pertain to the patient's a
 
 Adds a medical appointment with patient name, date, time.
 
-*This command is only accessible to medical staffs.* +
+*This command is only accessible to medical staffs and is not undoable.* +
 
 Format: `addappt PATIENT_NAME DATE TIME` or `aa PATIENT_NAME DATE TIME`
 
@@ -488,7 +511,7 @@ List of medical appointments made by John.
 
 Deletes a medical appointment of the patient.
 
-*This command is only accessible to medical staffs.* +
+*This command is only accessible to medical staffs and is not undoable.* +
 
 Format: `delappt PATIENT_NAME APPOINTMENT_INDEX_NO` or `da PATIENT_NAME APPOINTMENT_INDEX_NO`
 
@@ -521,6 +544,10 @@ List of medical appointments on current month. User can also navigate to other m
 ==== Viewing the schedule for a patient across all specialists `[coming in v2.0]`
 
 IMDB will be able to view the schedule for a patient across all specialists so that medical staff can arrange non-conflicting appointments.
+
+==== Viewing the duty schedule for doctors across all specialists `[coming in v2.0]`
+
+IMDB will be able to view the duty schedule for doctors across all specialists so that medical staff can make arrangements if patient specifies which doctor he or she would like to visit for the appointment.
 
 === Saving the data
 
@@ -555,9 +582,10 @@ e.g.`record` or `rec 1 in/2`
 * *Remover* : `remover` or `rr INDEX in/[RECORD INDEX]` +
 e.g.`remover` or `rr 1 in/2`
 * *Add patient into visiting queue* : `addq` or `aq`
-e.g.`addq john` or `aq john`
+e.g.`addq 2` or `aq 1`
 * *Remove patient from visiting queue* : `removeq` or `rq`
-* *View visiting queue* : `viewq` or `vq`
+* *Remove patient from visiting queue by index* : `removeq` or `rq`
+e.g.`removeq 2` or `rq 1`
 * *View appointments in calendar* : `viewappt` or `va` +
 e.g.`viewappt john` or `viewappt john`
 * *View appointments by patient name* : `viewappt` or `va`

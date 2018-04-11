@@ -3,11 +3,11 @@ ifdef::env-github,env-browser[:relfileprefix: docs/]
 https://travis-ci.org/CS2103JAN2018-W15-B2[image:https://travis-ci.org/CS2103JAN2018-W15-B2/main.svg?branch=master[Build Status]]
 
 ifdef::env-github[]
-image::docs/images/Ui.png[width="600"]
+image::docs/images/Ui_new.PNG[width="800"]
 endif::[]
 
 ifndef::env-github[]
-image::images/Ui.png[width="600"]
+image::images/Ui_new.PNG[width="800"]
 endif::[]
 
 * This is a electronic health records application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
@@ -25,6 +25,6 @@ endif::[]
 
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
-* Libraries used: https://github.com/TomasMikula/EasyBind[EasyBind], https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit4[JUnit4]
+* Libraries used: https://github.com/TomasMikula/EasyBind[EasyBind], https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit4[JUnit4], https://github.com/dlemmermann/CalendarFX[CalendarFX]
 
 == Licence : link:LICENSE[MIT]

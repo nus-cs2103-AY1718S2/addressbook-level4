@@ -48,6 +48,7 @@ public class    AddressBookParser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
+    //@@author Isaaaca
     private static final List<String> COMMAND_WORDS = Arrays.asList(AddCommand.COMMAND_WORD,
             AddEventCommand.COMMAND_WORD,
             AddGroupCommand.COMMAND_WORD,
@@ -73,6 +74,7 @@ public class    AddressBookParser {
             SwitchCommand.COMMAND_WORD,
             UnCheckToDoCommand.COMMAND_WORD,
             UndoCommand.COMMAND_WORD);
+    //@@author
 
 
     /**
@@ -191,7 +193,7 @@ public class    AddressBookParser {
         case SwitchCommand.COMMAND_WORD:
         case SwitchCommand.COMMAND_ALIAS:
             return new SwitchCommand();
-        //@@author
+        //@@author Isaaaca
         default:
             ExtractedResult guess = FuzzySearch.extractOne(commandWord, COMMAND_WORDS);
             if (guess.getScore() >= 75) {

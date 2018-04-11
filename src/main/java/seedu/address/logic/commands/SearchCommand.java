@@ -19,7 +19,7 @@ public class SearchCommand extends Command {
             + ": Search for a person with the input name on the input social media platform if it is available.\n"
             + "If no platform is stated, then the search will be performed on all available social media platforms.\n"
             + "User can use alias to indicate the social media platform.\n"
-            + "Parameters: [PLATFORM], NAME (must only contain alphanumeric characters and spaces, and it should not be blank)\n"
+            + "Parameters: [PLATFORM], NAME (PLATFORM is case sensitive and NAME should not be blank)\n"
             + "Example: " + COMMAND_WORD + " " + Facebook.PLATFORM_KEYWORD + ", Tom\n"
             + "or\n"
             + "Example: " + COMMAND_WORD + " " + Twitter.PLATFORM_ALIAS + ", Sam\n"

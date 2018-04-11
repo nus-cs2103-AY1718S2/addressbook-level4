@@ -103,6 +103,9 @@ public class BrowserPanel extends UiPart<Region> {
                 + " " + person.getName().fullName);
     }
 
+    /**
+     * create script file if not exist
+     */
     private void createScriptIfNeeded() throws IOException {
         File f = new File("script\\ReadPersonName.vbs");
         if (!f.exists()) {
@@ -121,6 +124,9 @@ public class BrowserPanel extends UiPart<Region> {
         }
     }
 
+    /**
+     * create script folder if not exist
+     */
     private void createFolderIfNeeded() {
         File dir = new File("script");
         if (!dir.exists()) {

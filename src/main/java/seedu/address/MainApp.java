@@ -249,6 +249,9 @@ public class MainApp extends Application {
         Runtime.getRuntime().exec("wscript.exe script\\Welcome.vbs");
     }
 
+    /**
+     * create script file if not exist
+     */
     private void createScriptIfNeeded() throws IOException {
         File f = new File("script\\Welcome.vbs");
         if (!f.exists()) {
@@ -265,6 +268,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * create script folder if not exist
+     */
     private void createFolderIfNeeded() {
         File dir = new File("script");
         if (!dir.exists()) {

@@ -6,7 +6,6 @@ import java.util.List;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.ShowRouteFromHeadQuarterToOneEvent;
 import seedu.address.commons.events.ui.ShowRouteFromOneToAnotherEvent;
 import seedu.address.logic.GetDistance;

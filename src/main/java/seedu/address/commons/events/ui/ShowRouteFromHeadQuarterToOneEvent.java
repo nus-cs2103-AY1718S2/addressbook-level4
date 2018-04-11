@@ -1,7 +1,5 @@
 package seedu.address.commons.events.ui;
 
-import java.util.List;
-
 import seedu.address.commons.events.BaseEvent;
 
 //@@author ncaminh

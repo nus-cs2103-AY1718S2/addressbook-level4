@@ -27,7 +27,7 @@ public class AddMembersToGroupCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds person whose names contain any of "
             + "the specified keywords (case-sensitive) and adds them to group list them.\n"
             + "Parameters: INDEX (must be a positive integer) g/GroupName(Must exist) "
-            + "Example: " + COMMAND_WORD + " 1 " 
+            + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_GROUP + "CS1010";
 
     public static final String MESSAGE_NO_SUCH_GROUP = "No such group exist.";

@@ -29,10 +29,10 @@ public class TaskDescription {
         assert description != null : MESSAGE_DESCRIPTION_CONSTRAINTS;
         checkArgument(isValidDescription(description));
         this.value = description;
-        if (value.length() <= 7) {
+        if (value.length() <= 20) {
             shortDesc = value;
         } else {
-            shortDesc = value.substring(0, 7) + "...";
+            shortDesc = value.substring(0, 20) + "...";
         }
     }
 

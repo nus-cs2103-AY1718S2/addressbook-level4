@@ -35,6 +35,7 @@
           </Menu>
         </MenuBar>
 
+        <!-- @@author Wu Di -->
         <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
           <VBox fx:id="personList" minWidth="360" prefWidth="360" SplitPane.resizableWithParent="false">
             <TabPane fx:id="tabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
@@ -49,7 +50,7 @@
             </TabPane>
           </VBox>
 
-
+          <!-- @@author -->
           <StackPane fx:id="calendarPlaceholder" prefWidth="340">
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />

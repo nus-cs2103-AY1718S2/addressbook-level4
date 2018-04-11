@@ -16,8 +16,9 @@ public class CalendarViewTest extends GuiUnitTest {
     @Test
     public void display() {
         // no tags
-        ObservableList<Task> list = FXCollections.observableArrayList();
-        CalendarView calendar = new CalendarView(list);
+        ObservableList<Task>[][] lists = new ObservableList[1][1];
+        lists[0][0] = FXCollections.observableArrayList();
+        CalendarView calendar = new CalendarView(lists);
         uiPartRule.setUiPart(calendar);
         YearMonth yearMonth = YearMonth.now();
         String correctTitle = yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear());

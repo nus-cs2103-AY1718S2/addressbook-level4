@@ -8,8 +8,9 @@ import java.util.Objects;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Task {
+public class Task implements Comparable<Task> {
 
+    private final Title title;
     private final TaskDescription taskDesc;
     private final Deadline deadline;
     private final Priority priority;
@@ -17,13 +18,17 @@ public class Task {
     /**
      * Every field must be present and not null.
      */
-    public Task(TaskDescription taskDesc, Deadline deadline, Priority priority) {
-        requireAllNonNull(taskDesc, deadline, priority);
+    public Task(Title title, TaskDescription taskDesc, Deadline deadline, Priority priority) {
+        requireAllNonNull(title, taskDesc, deadline, priority);
+        this.title = title;
         this.taskDesc = taskDesc;
         this.deadline = deadline;
         this.priority = priority;
     }
 
+    public Title getTitle() {
+        return title;
+    }
     public TaskDescription getTaskDesc() {
         return taskDesc;
     }
@@ -58,10 +63,11 @@ public class Task {
             return false;
         }
 
-        seedu.address.model.task.Task otherPerson = (seedu.address.model.task.Task) other;
-        return otherPerson.getTaskDesc().equals(this.getTaskDesc())
-                && otherPerson.getDeadline().equals(this.getDeadline())
-                && otherPerson.getPriority().equals(this.getPriority());
+        seedu.address.model.task.Task otherTask = (seedu.address.model.task.Task) other;
+        return  otherTask.getTitle().equals(this.getTitle())
+                && otherTask.getTaskDesc().equals(this.getTaskDesc())
+                && otherTask.getDeadline().equals(this.getDeadline())
+                && otherTask.getPriority().equals(this.getPriority());
     }
 
     @Override
@@ -73,7 +79,9 @@ public class Task {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(" Task TaskDescription: ")
+        builder.append(" Title: ")
+                .append(getTitle())
+                .append(" Task TaskDescription: ")
                 .append(getTaskDesc())
                 .append(" Deadline: ")
                 .append(getDeadline())
@@ -81,6 +89,8 @@ public class Task {
                 .append(getPriority());
         return builder.toString();
     }
-
+    @Override
+    public int compareTo(Task task) {
+        return task.getPriority().value - this.getPriority().value;
+    }
 }
-

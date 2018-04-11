@@ -23,17 +23,17 @@ public class TypicalPetPatients {
             .withName("Jewel")
             .withSpecies("Cat")
             .withBreed("Persian Ragdoll")
-            .withColour("Calico")
+            .withColour("calico")
             .withBloodType("AB")
             .withOwnerNric(TypicalPersons.ALICE.getNric().toString())
-            .withTags("Depression", "Test").build();
+            .withTags("depression", "test").build();
 
     // Pet patient with no tags
     public static final PetPatient JOKER = new PetPatientBuilder()
             .withName("Joker")
             .withSpecies("Cat")
             .withBreed("Domestic Shorthair")
-            .withColour("Brown and White")
+            .withColour("brown and white")
             .withBloodType("A")
             .withOwnerNric(TypicalPersons.BENSON.getNric().toString())
             .withTags(new String[]{}).build();
@@ -43,17 +43,17 @@ public class TypicalPetPatients {
             .withName("Jenn")
             .withSpecies("Dog")
             .withBreed("Golden Retriever")
-            .withColour("Golden")
+            .withColour("golden")
             .withBloodType("DEA 4+")
             .withOwnerNric(TypicalPersons.BENSON.getNric().toString())
-            .withTags("3Legged").build();
+            .withTags("3legged").build();
 
     // Manually added
     public static final PetPatient KARUPIN = new PetPatientBuilder()
             .withName("Karupin")
             .withSpecies("Cat")
             .withBreed("Himalayan")
-            .withColour("Sealpoint")
+            .withColour("sealpoint")
             .withBloodType("AB")
             .withOwnerNric(TypicalPersons.HOON.getNric().toString())
             .withTags(new String[]{}).build();

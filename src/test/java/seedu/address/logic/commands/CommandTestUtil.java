@@ -97,9 +97,9 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String VALID_TAG_UNUSED = "unused";
-    public static final String VALID_TAG_FIV = "Fiv";
+    public static final String VALID_TAG_FIV = "fiv";
     public static final String TAG_DESC_FIV = " " + PREFIX_TAG + VALID_TAG_FIV;
-    public static final String VALID_TAG_DEPRESSION = "Depression";
+    public static final String VALID_TAG_DEPRESSION = "depression";
     public static final String TAG_DESC_DEPRESSION = " " + PREFIX_TAG + VALID_TAG_DEPRESSION;
     public static final String VALID_TAG_CHECKUP = "checkup";
     public static final String TAG_DESC_CHECKUP = " " + PREFIX_TAG + VALID_TAG_CHECKUP;
@@ -121,8 +121,8 @@ public class CommandTestUtil {
 
     // PetPatient: Joker
     public static final String VALID_NAME_JOKER = "Joker";
-    public static final String VALID_SPECIES_JOKER = "cat";
-    public static final String VALID_BREED_JOKER = "domestic shorthair";
+    public static final String VALID_SPECIES_JOKER = "Cat";
+    public static final String VALID_BREED_JOKER = "Domestic Shorthair";
     public static final String VALID_COLOUR_JOKER = "brown and white";
     public static final String VALID_BLOODTYPE_JOKER = "O";
     public static final String NAME_DESC_JOKER = " " + PREFIX_NAME + VALID_NAME_JOKER;
@@ -133,9 +133,9 @@ public class CommandTestUtil {
 
     // PetPatient: Nero
     public static final String VALID_NAME_NERO = "Nero";
-    public static final String VALID_SPECIES_NERO = "cat";
+    public static final String VALID_SPECIES_NERO = "Cat";
     public static final String VALID_BREED_NERO = "British Shorthair";
-    public static final String VALID_COLOUR_NERO = "Blue";
+    public static final String VALID_COLOUR_NERO = "blue";
     public static final String VALID_BLOODTYPE_NERO = "AB";
     public static final String NAME_DESC_NERO = " " + PREFIX_NAME + VALID_NAME_NERO;
     public static final String SPECIES_DESC_NERO = " " + PREFIX_SPECIES + VALID_SPECIES_NERO;
@@ -145,9 +145,9 @@ public class CommandTestUtil {
 
     // PetPatient: Hazel
     public static final String VALID_NAME_HAZEL = "Hazel";
-    public static final String VALID_SPECIES_HAZEL = "dog";
+    public static final String VALID_SPECIES_HAZEL = "Dog";
     public static final String VALID_BREED_HAZEL = "Poodle";
-    public static final String VALID_COLOUR_HAZEL = "White";
+    public static final String VALID_COLOUR_HAZEL = "white";
     public static final String VALID_BLOODTYPE_HAZEL = "A";
     public static final String NAME_DESC_HAZEL = " " + PREFIX_NAME + VALID_NAME_HAZEL;
     public static final String SPECIES_DESC_HAZEL = " " + PREFIX_SPECIES + VALID_SPECIES_HAZEL;

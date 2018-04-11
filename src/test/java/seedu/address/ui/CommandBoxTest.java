@@ -351,9 +351,9 @@ public class CommandBoxTest extends GuiUnitTest {
     @Test
     public void commandBox_autocompleteColour() {
         testAutocompleteForUserInput("find -p ", -1, "c/c", 1,
-                "find -p c/Calico");
+                "find -p c/calico");
         testAutocompleteForUserInput("find -p ", -1, "c/g", 1,
-                "find -p c/Golden");
+                "find -p c/golden");
     }
 
     @Test
@@ -374,9 +374,9 @@ public class CommandBoxTest extends GuiUnitTest {
 
         // pet patient tags
         testAutocompleteForUserInput("add -p ", -1, "t/d", 1,
-                "add -p t/Depression");
+                "add -p t/depression");
         testAutocompleteForUserInput("add -p ", -1, "t/", 1,
-                "add -p t/3Legged");
+                "add -p t/3legged");
 
         // appointment tags
         testAutocompleteForUserInput("add -a ", -1, "t/", 1,
@@ -393,7 +393,7 @@ public class CommandBoxTest extends GuiUnitTest {
                 "add -a -o -p n/Joker t/");
         testAutocompleteForUserInput("add -p n/joker s/cat b/persian c/brown bt/AB -o nr/S9600666G",
                 38, " t/D", 1,
-                "add -p n/joker s/cat b/persian c/brown t/Depression bt/AB -o nr/S9600666G");
+                "add -p n/joker s/cat b/persian c/brown t/depression bt/AB -o nr/S9600666G");
     }
 
     /**

@@ -203,13 +203,14 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Hides browser and person list panel.
      */
-    void hideBeforeLogin() {
+    public void hideBeforeLogin() {
         loginStatusBar.updateLoginStatus(false, null);
         featuresTabPane.setVisible(false);
         personDetailsPlaceholder.setVisible(false);
         calendarPlaceholder.setVisible(false);
         dailySchedulerPlaceholder.setVisible(false);
         personListPanelPlaceholder.setVisible(false);
+        logger.fine("Hiding panels before login.");
     }
 
     /**
@@ -222,6 +223,8 @@ public class MainWindow extends UiPart<Stage> {
         calendarPlaceholder.setVisible(true);
         dailySchedulerPlaceholder.setVisible(true);
         personListPanelPlaceholder.setVisible(true);
+        logger.fine("Displaying panels after login.");
+
     }
     //@@author jaronchan
     /**

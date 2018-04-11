@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.exceptions.DataConversionException;
@@ -18,8 +19,6 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.TestStorage;
 import seedu.address.model.UserDatabase;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.login.Password;
-import seedu.address.model.login.Username;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlSerializableAddressBook;
 import seedu.address.testutil.TestUtil;
@@ -29,9 +28,10 @@ import systemtests.ModelHelper;
  * This class is meant to override some properties of MainApp so that it will be suited for
  * testing
  */
-public class TestApp extends MainApp {
+public class TestAppWithLogin extends MainApp {
 
     public static final String SAVE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("sampleData.xml");
+    public static final String SAVE_USERS_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("sampleUsers.xml");
     public static final String APP_TITLE = "Test App";
 
     protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
@@ -39,11 +39,11 @@ public class TestApp extends MainApp {
     protected static final String ADDRESS_BOOK_NAME = "Test";
     protected Supplier<ReadOnlyAddressBook> initialDataSupplier = () -> null;
     protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;
+    protected String saveUsersLocation = SAVE_USERS_LOCATION_FOR_TESTING;
 
-    public TestApp() {
-    }
+    public TestAppWithLogin() {}
 
-    public TestApp(Supplier<ReadOnlyAddressBook> initialDataSupplier, String saveFileLocation) {
+    public TestAppWithLogin(Supplier<ReadOnlyAddressBook> initialDataSupplier, String saveFileLocation) {
         super();
         this.initialDataSupplier = initialDataSupplier;
         this.saveFileLocation = saveFileLocation;
@@ -71,6 +71,7 @@ public class TestApp extends MainApp {
         userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
         userPrefs.setAddressBookFilePath(saveFileLocation);
         userPrefs.setAddressBookName(ADDRESS_BOOK_NAME);
+        userPrefs.setUsersFilePath(saveUsersLocation);
         return userPrefs;
     }
 
@@ -99,15 +100,15 @@ public class TestApp extends MainApp {
      */
     public Model getModel() {
         Model copy = new ModelManager((model.getAddressBook()), new UserPrefs(), new UserDatabase(), new TestStorage());
-        ModelHelper.loginAs(copy, new Username("user"), new Password("pass"));
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
         return copy;
     }
 
+
     @Override
     public void start(Stage primaryStage) {
         ui.start(primaryStage);
-        this.initTest();
+        this.initTestWithLogin();
     }
 
     public static void main(String[] args) {

@@ -8,5 +8,6 @@
     }
   },
   "addressBookFilePath" : "addressbook.xml",
+  "usersFilePath" : "data/sandbox/users.xml",
   "addressBookName" : "TypicalAddressBookName"
 }

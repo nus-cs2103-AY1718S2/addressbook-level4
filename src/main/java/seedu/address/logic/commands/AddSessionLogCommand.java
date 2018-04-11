@@ -32,7 +32,7 @@ public class AddSessionLogCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "add-log";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds to session log of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an additional to person's session log"
             + "by the index number used in the last person listing. "
             + "Parameters: INDEX (must be a positive integer) "
             +  PREFIX_LOG + "LOG "
@@ -54,8 +54,8 @@ public class AddSessionLogCommand extends UndoableCommand {
     private Person editedPerson;
 
     /**
-     * @param index of the person in the filtered person list to edit
-     * @param sessionLogsToAdd details to edit the person with
+     * @param index of the person in the filtered person list to add session logs to.
+     * @param sessionLogsToAdd details to add to the person.
      */
     public AddSessionLogCommand(Index index, String sessionLogsToAdd) {
         requireNonNull(index);
@@ -90,8 +90,8 @@ public class AddSessionLogCommand extends UndoableCommand {
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Creates and returns a {@code Person} with the details of {@code personToReplace}
+     * which contains the new session logs.
      */
     private static Person createNewPerson(Person personToReplace, String sessionLogsToAdd) {
         assert personToReplace != null;
@@ -108,9 +108,8 @@ public class AddSessionLogCommand extends UndoableCommand {
     }
 
     /**
-     * Creates and returns a {@code String} with the formatted session Lo {@code personToEdit}
+     * Creates and returns a {@code String} with the formatted session logs
      * @param sessionLogsToAdd
-     * @return
      */
     private static String formatNewSessionLog(String sessionLogsToAdd) {
         Date date = new Date();

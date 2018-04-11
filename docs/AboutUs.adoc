@@ -19,7 +19,7 @@ Responsibilities: Model
 
 === Kai Yong
 image::Kyholmes.png[width="150", align="left"]
-{empty}[http://github.com/[github]] [<<kyholmes#, portfolio>>]
+{empty}[https://github.com/Kyholmes[github]] [<<kyholmes#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI

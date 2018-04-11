@@ -1,5 +1,6 @@
 package seedu.address.model.Insurance;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 //@@author Sebry9
@@ -30,6 +31,7 @@ public class Insurance {
      * @param insurance A valid insurance.
      */
     public Insurance(String insurance) {
+        requireNonNull(insurance);
         checkArgument(isValidInsurance(insurance), MESSAGE_INSURANCE_CONSTRAINTS);
         this.insuranceName = insurance;
     }
@@ -38,9 +40,6 @@ public class Insurance {
      * Returns true if a given string is a valid insurance.
      */
     public static boolean isValidInsurance(String test) {
-        if (test == null) {
-            return true;
-        }
         return test.matches(INSURANCE_VALIDATION_REGEX);
     }
 

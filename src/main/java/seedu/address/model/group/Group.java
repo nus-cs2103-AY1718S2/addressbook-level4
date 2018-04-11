@@ -68,7 +68,7 @@ public class Group {
     public void removePerson(Person toRemove) throws PersonNotFoundException {
         if (!getPersonList().contains(toRemove)) {
             throw new PersonNotFoundException();
-        }else {
+        } else {
             this.personList.remove(toRemove);
         }
 

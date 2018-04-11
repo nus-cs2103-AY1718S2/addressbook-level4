@@ -17,7 +17,6 @@ import seedu.address.commons.events.ui.TimetableChangedEvent;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.group.Group;
-import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
@@ -101,7 +100,7 @@ public class ModelManager extends ComponentManager implements Model {
         ObservableList<Group> groupList = addressBook.getGroupList();
         for (Group group : groupList) {
             UniquePersonList personList = group.getPersonList();
-            if(personList.contains(target)) {
+            if (personList.contains(target)) {
                 group.removePerson(target);
             }
         }

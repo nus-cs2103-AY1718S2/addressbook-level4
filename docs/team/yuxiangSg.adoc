@@ -55,4 +55,6 @@ include::../UserGuide.adoc[tag=task]
 |===
 
 include::../DeveloperGuide.adoc[tag=add_appointment]
+include::../DeveloperGuide.adoc[tag=model]
+include::../DeveloperGuide.adoc[ui=model]
 

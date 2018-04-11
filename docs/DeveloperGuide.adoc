@@ -156,8 +156,9 @@ The sections below give more details of each component.
 === UI component
 
 .Structure of the UI Component
+// tag::ui[]
 image::UiClassDiagram.png[width="800"]
-
+// end::ui[]
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `CalendarPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
@@ -197,8 +198,9 @@ image::DeletePersonSdForLogic.png[width="800"]
 === Model component
 
 .Structure of the Model Component
+// tag::model[]
 image::ModelClassDiagramUpdated.png[width="800"]
-
+// end::model[]
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 The `Model`,
@@ -399,6 +401,9 @@ updated with the addition of the new appointment. Addition of entry to the `Cale
 
 On the other hand, as a `AddressBookChangedEvent` is raised, the `EventCenter` calls the `Storage Manager` to handle this event and the
 added appointment is saved to persistent data
+
+
+image::AppointmentActivityDiagram.png[width="650"]
 ==== Design Considerations
 
 ===== Aspect: Implementation of `Appointment commands`

@@ -34,7 +34,7 @@ public class IssueListPanel extends UiPart<Region> {
 
     private void setConnections(ObservableList<Issue> issueList) {
         ObservableList<IssueCard> mappedList = EasyBind.map(
-                issueList, (issue) -> new IssueCard(issue, issueList.indexOf(issue) + 1));
+                issueList, (issue) -> new IssueCard(issue, issue.getIssueIndex()));
         issueListView.setItems(mappedList);
         issueListView.setCellFactory(listView -> new IssueListViewCell());
     }

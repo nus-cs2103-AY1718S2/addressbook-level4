@@ -17,6 +17,7 @@ public class Issue {
     private final Milestone milestone;
     private final Body body;
     private final List<Labels> labelsList;
+    private int issueIndex;
 
     /**
      * Every field must be present and not null.
@@ -48,6 +49,14 @@ public class Issue {
 
     public List<Labels> getLabelsList() {
         return labelsList;
+    }
+
+    public int getIssueIndex() {
+        return issueIndex;
+    }
+
+    public void setIssueIndex(int issueIndex) {
+        this.issueIndex = issueIndex;
     }
 
     @Override

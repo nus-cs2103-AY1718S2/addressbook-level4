@@ -105,6 +105,7 @@ public class GitIssueList implements Iterable<Issue> {
         Milestone existingMilestone = null;
         Body existingBody = new Body(i.getBody());
         Title title = new Title(i.getTitle());
+        Issue issue;
 
         if (i.getMilestone() == null) {
             existingMilestone = new Milestone("");
@@ -120,8 +121,12 @@ public class GitIssueList implements Iterable<Issue> {
             labelsList.add(new Labels(label.getName()));
         }
 
-        return new Issue(title, assigneesList, existingMilestone,
+        issue =  new Issue(title, assigneesList, existingMilestone,
                 existingBody, labelsList);
+
+        issue.setIssueIndex(i.getNumber());
+
+        return issue;
     }
 
     /**

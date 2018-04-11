@@ -116,7 +116,7 @@ public class XmlAdaptedEvent extends XmlAdaptedActivity {
         }
 
         final Set<Tag> tags = new HashSet<>(activityTags);
-        return new Event(name, startDateTime, endDateTime, location, remark, tags, this.iscompleted);
+        return new Event(name, startDateTime, endDateTime, location, remark, tags, this.isCompleted);
     }
 
     @Override

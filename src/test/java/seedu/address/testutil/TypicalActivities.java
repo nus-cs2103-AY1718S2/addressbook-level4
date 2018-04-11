@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import seedu.address.model.DeskBoard;
 import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.Event;
@@ -82,7 +84,20 @@ public class TypicalActivities {
         return new ArrayList<>(Arrays.asList(ASSIGNMENT1, ASSIGNMENT2, QUIZ, CCA, CIP, EXAM1, IFG));
     }
 
-    public static List<Activity> getTypicalTask() {
-        return new ArrayList<>(Arrays.asList(ASSIGNMENT1, ASSIGNMENT2, QUIZ));
+    //@@author Kyomian
+    /**
+     * Returns an {@code ObservableList} of typical tasks.
+     */
+    public static ObservableList<Activity> getTypicalTasks() {
+        List<Activity> taskList = Arrays.asList(ASSIGNMENT1, ASSIGNMENT2, QUIZ);
+        return FXCollections.observableList(taskList);
+    }
+
+    /**
+     * Returns an {@code ObservableList} of typical events.
+     */
+    public static ObservableList<Activity> getTypicalEvents() {
+        List<Activity> eventList = Arrays.asList(CCA, CIP, EXAM1, IFG);
+        return FXCollections.observableList(eventList);
     }
 }

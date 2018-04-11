@@ -1,6 +1,9 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.testutil.TypicalActivities.KEYWORD_MATCHING_MEIER;
+
+//import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
@@ -22,39 +25,35 @@ public class ClearCommandSystemTest extends DeskBoardSystemTest {
          * spaces -> cleared
          */
         assertCommandSuccess("   " + ClearCommand.COMMAND_WORD + " ab12   ");
-        assertSelectedTaskCardUnchanged();
-        assertSelectedEventCardUnchanged();
+        assertSelectedCardUnchanged();
 
         /* Case: undo clearing address book -> original address book restored */
         String command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command,  expectedResultMessage, defaultModel);
-        assertSelectedTaskCardUnchanged();
-        assertSelectedEventCardUnchanged();
+        assertSelectedCardUnchanged();
 
         /* Case: redo clearing address book -> cleared */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, expectedResultMessage, new ModelManager());
-        assertSelectedTaskCardUnchanged();
-        assertSelectedEventCardUnchanged();
+        assertSelectedCardUnchanged();
 
         /* Case: selects first card in activity list and clears address book -> cleared and no card selected */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
-        selectTask(Index.fromOneBased(1));
+        selectPerson(Index.fromOneBased(1));
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
-        assertSelectedTaskCardDeselected();
+        assertSelectedCardDeselected();
 
         /* Case: filters the activity list before clearing -> entire address book cleared */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
-        //showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        //assertCommandSuccess(ClearCommand.COMMAND_WORD);
-        //assertSelectedCardUnchanged();
+        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        assertCommandSuccess(ClearCommand.COMMAND_WORD);
+        assertSelectedCardUnchanged();
 
         /* Case: clear empty address book -> cleared */
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
-        assertSelectedTaskCardUnchanged();
-        assertSelectedEventCardUnchanged();
+        assertSelectedCardUnchanged();
 
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("ClEaR", MESSAGE_UNKNOWN_COMMAND);
@@ -98,7 +97,7 @@ public class ClearCommandSystemTest extends DeskBoardSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedTaskCardUnchanged();
+        assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }

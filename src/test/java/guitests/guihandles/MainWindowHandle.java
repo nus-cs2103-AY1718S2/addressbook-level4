@@ -2,14 +2,12 @@ package guitests.guihandles;
 
 import javafx.stage.Stage;
 
-//@@jasmoon
 /**
  * Provides a handle for {@code MainWindow}.
  */
 public class MainWindowHandle extends StageHandle {
 
-    private final TaskListPanelHandle taskListPanel;
-    private final EventListPanelHandle eventListPanel;
+    private final PersonListPanelHandle personListPanel;
     private final ResultDisplayHandle resultDisplay;
     private final CommandBoxHandle commandBox;
     private final StatusBarFooterHandle statusBarFooter;
@@ -19,8 +17,7 @@ public class MainWindowHandle extends StageHandle {
     public MainWindowHandle(Stage stage) {
         super(stage);
 
-        taskListPanel = new TaskListPanelHandle(getChildNode(TaskListPanelHandle.TASK_LIST_VIEW_ID));
-        eventListPanel = new EventListPanelHandle(getChildNode(EventListPanelHandle.TASK_LIST_VIEW_ID));
+        personListPanel = new PersonListPanelHandle(getChildNode(PersonListPanelHandle.PERSON_LIST_VIEW_ID));
         resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));
         commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
@@ -28,12 +25,8 @@ public class MainWindowHandle extends StageHandle {
         browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
     }
 
-    public TaskListPanelHandle getTaskListPanel() {
-        return taskListPanel;
-    }
-
-    public EventListPanelHandle getEventListPanel() {
-        return eventListPanel;
+    public PersonListPanelHandle getPersonListPanel() {
+        return personListPanel;
     }
 
     public ResultDisplayHandle getResultDisplay() {

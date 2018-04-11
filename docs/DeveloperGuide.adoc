@@ -461,7 +461,7 @@ image::AppointmentActivityDiagram.png[width="650"]
 ** Cons: breaks the layering of the current architecture
 // end::add_appointment[]
 
-
+// tag::age[]
 === Age Field feature (V1.2)
 ==== Current implementation
 
@@ -473,14 +473,30 @@ image::NewPersonListCard.png[width="800"]
 
 To add a person with an age field, one must specify the age prefixed with the indicator `/age`:
 
-```
-
-ADD n/NAME p/PHONE e/EMAIL a/ADDRESS i/INCOME as/ACTUALSPENDING es/EXPECTEDINCOME age/AGE [t/TAG]...
-```
 
 ==== Future Improvements
 * Include the age field when performing predictions
 * Filter clients by their age
+// end::age[]
+
+// tag::persondetail[]
+
+=== New Person Detail Popup Window
+
+A new window will pop up that will show a detailed page of a customer when the user double clicks the person card. This
+is demonstrated as such:
+
+image::persondetail.png[]
+
+This window will show various aspects of the customer, including a description that the user can add. Additionally, the
+use can change certain details by simply double clicking on each field and edit them.
+
+==== Current Implementation
+
+A new `.fxml` file is created that will display the persons attributes on a new window. A new event called
+`PersonCardDoubleClick` is created. This will listen to anytime a person card is double clicked. Subscribed listeners
+(eg. BrowserPanel) will be alerted and the new window will open.
+// end::persondetail[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption

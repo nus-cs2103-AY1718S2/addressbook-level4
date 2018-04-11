@@ -1,0 +1,51 @@
+= Jonathan Wen - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: AddressBook - Level 4
+
+---
+
+== Overview
+
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added the ability to open a *detailed description page* of a person in the addressbook
+** What it does: When the user double clicks on the person card, a new window appears, allowing the user to see a detailed description of the person and allow them to edit certain details.
+** Justification: This feature improves the product significantly because it makes it easier to keep track of multiple persons at a time. For example, one can open multiple customer pages and compare them side by side.
+** Highlights: There were various parts of the app that required changed due to this enhancement. New FXML files needed to be created, as well as new event listeners. A description field was also added, which required changes in all parts of the application.
+** Credits: Took parts from the PersonCard.java file as a base, but heavily expanded on it.
+
+* *Minor enhancement*: Added an Age field to help identify users more clearly. The user is able to add a new customer with an age by specifying /age to the argument.
+
+* *Code contributed*:
+** Functional: [https://github.com/CS2103JAN2018-T15-B2/main/blob/master/collated/functional/jstarw.md]
+** Test: [https://github.com/CS2103JAN2018-T15-B2/main/blob/master/collated/test/jstarw.md]
+
+* *Other contributions*:
+
+** Project management:
+*** Released tag version `1.3` on Github
+** Enhancements to existing features:
+*** Changed most functional tests to pass Travis tests when adding Age field.
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=persondetail]
+
+include::../DeveloperGuide.adoc[tag=age]
+
+---

@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import seedu.address.model.person.TimeTableLink;
 
-
+//@@author Isaaaca
 public class DatabaseManagerTest {
 
     private DatabaseManager test = DatabaseManager.getInstance();

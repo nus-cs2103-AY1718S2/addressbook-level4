@@ -44,6 +44,7 @@ public class StringUtil {
         return false;
     }
 
+    //@@author Isaaaca
     /**
      * Returns the partial ratio bewteen the {@code sentence} and the {@code word}.
      * Ignores case.
@@ -70,6 +71,7 @@ public class StringUtil {
                 + FuzzySearch.partialRatio(preppedWord, preppedSentence));
         return FuzzySearch.partialRatio(preppedWord, preppedSentence);
     }
+    //@@author
 
     /**
      * Returns a detailed message of the t, including the stack trace.

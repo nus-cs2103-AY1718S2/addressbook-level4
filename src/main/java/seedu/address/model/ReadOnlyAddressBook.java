@@ -31,6 +31,11 @@ public interface ReadOnlyAddressBook {
     ObservableList<ToDo> getToDoList();
 
     /**
+     * Returns the complete ratio of the todos list.
+     */
+    double getToDoListCompleteRatio();
+
+    /**
      * Returns an unmodifiable view of the group list.
      * This list will not contain any duplicate groups.
      */

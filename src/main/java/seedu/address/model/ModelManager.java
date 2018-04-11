@@ -152,7 +152,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updateToDo(target, editedToDo);
         indicateAddressBookChanged();
     }
-
+    //@@author jas5469
     @Override
     public void updateGroup(Group target, Group editedGroup)
             throws DuplicateGroupException, GroupNotFoundException {

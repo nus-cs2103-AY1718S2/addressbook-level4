@@ -301,6 +301,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public double getToDoListCompleteRatio() {
+        return todos.getCompleteRatio();
+    }
+
+    @Override
     public ObservableList<Group> getGroupList() {
         return groups.asObservableList();
     }
@@ -324,6 +329,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return Objects.hash(persons, tags);
     }
 
+    //@@author Isaaaca-unused
     /**
      * Removes {@code tag} from all {@code persons} in the {@code AddressBook} and from the {@code AddressBook}.
      */
@@ -392,7 +398,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                     + "a PersonNotFoundException. See Person#equals(Object).");
         }
     }
-    //@@author
+    //@@author Isaaaca
     /**
      * Removes {@code tag} from all {@code persons} in the {@code AddressBook}.
      */

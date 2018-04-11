@@ -262,6 +262,7 @@ Examples:
 image:AddEventCommandExample.png[width="500"] +
 Figure 2. Example of an event shown on the calendar
 
+// group::toDoList[]
 === Adding a to-do: `addToDo`
 
 Adds a to-do to the address book +
@@ -335,7 +336,9 @@ Examples:
 
 `deleteToDo 2` +
 Deletes the 2nd to-do in the address book.
+// end::toDoList[]
 
+// tag::listTag[]
 === List Tag Members: `listTagMembers`
 
 List out all persons with the given keywords(group tags). +
@@ -356,8 +359,9 @@ Refer to Figure 4 for example.
 image:lgmExample.png[width="500"] +
 
 Figure 4. Example of ListTagMembers
+// end::listTag[]
 
-
+// tag::addGroup[]
 === Add Group: `addGroup`
 
 Creates a group named `KEYWORD` +
@@ -394,7 +398,7 @@ This command is undoable.
 Examples:
 
 * `addGroupMember g/CS2010 n/David Li` +
-Added person `David Li` into group `CS2010`  refer to Figure 6. +
+Adds person `David Li` into group `CS2010`  refer to Figure 6. +
 image:addGroupMembersToGroupExample.png[width ="800"] +
 Figure 6. Example of addMembersToGroup +
 
@@ -403,7 +407,48 @@ If person already added, Fastis will output already added person in group.
 Refer to Figure 7. +
 image:addGroupMembersToGroupFailExample.png[width ="800"] +
 Figure 7. Example of addMembersToGroup +
-// end:AddGroup[]
+
+=== List Group Members : `listGroupMembers`
+List all the members under the group, that already exist in Fastis, named by user `INPUT`. +
+Alias: `lGM` +
+Format: `listGroupMembers INPUT`
+
+[NOTE]
+====
+INPUT cannot be an empty input. +
+INPUT must be the exact name of the person and it must be case-sensitive.
+====
+
+Examples:
+
+* `listGroupMembers CS2101 Oral Presentation`  +
+[NOTE]
+====
+`CS2101 Oral Presentation` is already stored in Fastis.
+====
+Lists out all members belonging to group `CS2010` in the left panel.
+// end:listGroupMembers[]
+
+=== Delete Group : `deleteGroup`
+Deltes the group, that already exist in Fastis, named by user `INPUT`.+
+Alias: `dG` +
+Format: `deleteGroup INPUT`
+
+[NOTE]
+====
+INPUT cannot be an empty input. +
+INPUT must be the exact name of the group and it must be case-sensitive.
+====
+
+Examples:
+
+* `deleteGroup CS3243`  +
+[NOTE]
+====
+`CS3243` is already stored in Fastis.
+====
+Deletes the group `CS3243`.
+// end:addGroup[]
 
 === Display Calendar : `display` `[coming in v2.0]`
 

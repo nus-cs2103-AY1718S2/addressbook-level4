@@ -1,5 +1,5 @@
-package seedu.address.model;
 //@@author jas5469
+package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
 

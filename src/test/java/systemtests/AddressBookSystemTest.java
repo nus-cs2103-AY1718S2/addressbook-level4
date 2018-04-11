@@ -275,7 +275,7 @@ public abstract class AddressBookSystemTest {
         assertFalse(handle.isSaveLocationChanged());
         assertFalse(handle.isTotalPersonsStatusChanged());
     }
-
+    //@@author jas5469
     /**
      * Asserts that the sync status in the status bar was changed to the timing of
      * {@code ClockRule#getInjectedClock()}, and total persons was changed to match the total
@@ -293,7 +293,7 @@ public abstract class AddressBookSystemTest {
 
         assertFalse(handle.isSaveLocationChanged());
     }
-
+    //@@author
     /**
      * Asserts that the starting state of the application is correct.
      */

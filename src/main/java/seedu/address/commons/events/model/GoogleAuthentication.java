@@ -19,7 +19,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 
-//@@author cambioforma
+//@@author cambioforma-unused
 /**
  * Authenticates with oAuth Google API
  */

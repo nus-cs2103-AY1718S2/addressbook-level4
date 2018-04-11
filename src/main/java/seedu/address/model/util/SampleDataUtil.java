@@ -6,6 +6,7 @@ import java.util.Set;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Insurance.Insurance;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.calendar.GoogleCalendar;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Birthday;
@@ -52,8 +53,10 @@ public class SampleDataUtil {
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();
+            GoogleCalendar calendar = new GoogleCalendar();
             for (Person samplePerson : getSamplePersons()) {
                 sampleAb.addPerson(samplePerson);
+                calendar.addPersonToCalendar(samplePerson);
             }
             return sampleAb;
         } catch (DuplicatePersonException e) {

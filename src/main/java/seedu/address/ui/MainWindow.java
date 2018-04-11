@@ -141,25 +141,25 @@ public class MainWindow extends UiPart<Stage> {
 
     //@@author jonleeyz
     private void setAccelerators() {
-        setAccelerator(homeMenuItem, KeyCombination.valueOf("Esc"));
+        setAccelerator(homeMenuItem, KeyCombination.valueOf("F1"));
         setAccelerator(exitMenuItem, KeyCombination.valueOf("Alt + Q"));
 
         setAccelerator(undoMenuItem, KeyCombination.valueOf("Ctrl + Z"));
         setAccelerator(redoMenuItem, KeyCombination.valueOf("Ctrl + Y"));
         setAccelerator(clearMenuItem, KeyCombination.valueOf("Ctrl + Shift + C"));
 
-        setAccelerator(historyMenuItem, KeyCombination.valueOf("Ctrl + H"));
+        setAccelerator(historyMenuItem, KeyCombination.valueOf("F3"));
         setAccelerator(listMenuItem, KeyCombination.valueOf("F2"));
         setAccelerator(findMenuItem, KeyCombination.valueOf("Ctrl + F"));
 
-        setAccelerator(addMenuItem, KeyCombination.valueOf("Ctrl + Space"));
+        setAccelerator(addMenuItem, KeyCombination.valueOf("Ctrl + I"));
         setAccelerator(deleteMenuItem, KeyCombination.valueOf("Ctrl + D"));
         setAccelerator(editMenuItem, KeyCombination.valueOf("Ctrl + E"));
         setAccelerator(locateMenuItem, KeyCombination.valueOf("Ctrl + L"));
         setAccelerator(selectMenuItem, KeyCombination.valueOf("Ctrl + S"));
         setAccelerator(assignMenuItem, KeyCombination.valueOf("Ctrl + Shift + A"));
 
-        setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(helpMenuItem, KeyCombination.valueOf("F12"));
     }
     //@@author
 

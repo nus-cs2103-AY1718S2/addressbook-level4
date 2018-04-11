@@ -12,6 +12,7 @@ import org.junit.Test;
 import seedu.address.commons.events.ui.ShowCalendarRequestEvent;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
+// Tests that the calendar-launch command opens the webview successfully.
 public class CalendarCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();

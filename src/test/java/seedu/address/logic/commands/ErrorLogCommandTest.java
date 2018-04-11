@@ -12,6 +12,7 @@ import org.junit.Test;
 import seedu.address.commons.events.ui.ShowErrorsRequestEvent;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
+// Tests that the errorlog command opens the webview successfully.
 public class ErrorLogCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();

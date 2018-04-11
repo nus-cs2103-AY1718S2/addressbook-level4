@@ -37,8 +37,8 @@ Responsibilities: Model
 
 === Wayne Neo Wei Zhe
 image::azureair.jpg[width="150", align="left"]
-{empty}[http://github.com/azuraAiR[github]]
-{empty}[https://cs2103jan2018-w11-b4.github.io/main/team/AzuraAiR.html[portfolio]]
+{empty}[http://github.com/azuraair[github]]
+{empty}[https://cs2103jan2018-w11-b4.github.io/main/team/azuraair.html[portfolio]]
 
 Role: Developer +
 Responsibilities: Storage

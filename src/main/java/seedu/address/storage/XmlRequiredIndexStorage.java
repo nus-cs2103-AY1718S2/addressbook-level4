@@ -88,7 +88,7 @@ public class XmlRequiredIndexStorage {
 
             String destinationOfFile = jarFolder + "/" + resourceName;
             File testIfExist = new File(destinationOfFile);
-            if(!testIfExist.exists()) {
+            if (!testIfExist.exists()) {
                 destinationOfFile = resourceName;
             }
             resStreamOut = new FileOutputStream(destinationOfFile);

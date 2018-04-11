@@ -242,8 +242,7 @@
 
 .menu-bar .label {
     -fx-font-size: 15pt;
-    -fx-font-family: ".SF NS Display";
-    -fx-font-weight: bold;
+    -fx-font-family: "Helvetica";
     -fx-text-fill: #0000bf;
     -fx-opacity: 0.95;
 }

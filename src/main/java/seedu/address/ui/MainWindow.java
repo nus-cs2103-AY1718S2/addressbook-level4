@@ -54,6 +54,7 @@ public class MainWindow extends UiPart<Stage> {
     private BookListPanel bookListPanel;
     private SearchResultsPanel searchResultsPanel;
     private RecentBooksPanel recentBooksPanel;
+    private HelpWindow helpWindow;
     private Config config;
     private UserPrefs prefs;
 
@@ -212,7 +213,9 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
+        if (helpWindow == null) {
+            helpWindow = new HelpWindow();
+        }
         helpWindow.show();
     }
 

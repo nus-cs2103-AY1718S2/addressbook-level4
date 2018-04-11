@@ -4,8 +4,10 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_ADD;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_ALIAS;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_CLEAR;
+import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_DECRYPT;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_DELETE;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_EDIT;
+import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_ENCRYPT;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_EXIT;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_FIND;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_HELP;
@@ -19,8 +21,10 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_ALIAS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ALIAS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_CLEAR;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_DECRYPT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_DELETE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_EDIT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ENCRYPT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_EXIT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_FIND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_HELP;
@@ -46,7 +50,9 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.PasswordCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemovePasswordCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.alias.Alias;
@@ -166,6 +172,22 @@ public class AliasCommandParserTest {
                 .withAlias(VALID_ALIAS_UNDO).build();
 
         assertParseSuccess(parser, ALIAS_DESC_UNDO, new AliasCommand(expectedUndoAlias));
+    }
+
+    @Test
+    public void parse_encryptAlias_success() {
+        Alias expectedUndoAlias = new AliasBuilder().withCommand(PasswordCommand.COMMAND_WORD)
+                .withAlias(VALID_ALIAS_ENCRYPT).build();
+
+        assertParseSuccess(parser, ALIAS_DESC_ENCRYPT, new AliasCommand(expectedUndoAlias));
+    }
+
+    @Test
+    public void parse_decryptAlias_success() {
+        Alias expectedUndoAlias = new AliasBuilder().withCommand(RemovePasswordCommand.COMMAND_WORD)
+                .withAlias(VALID_ALIAS_DECRYPT).build();
+
+        assertParseSuccess(parser, ALIAS_DESC_DECRYPT, new AliasCommand(expectedUndoAlias));
     }
 
     @Test

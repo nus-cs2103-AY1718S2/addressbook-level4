@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExecuteCommandRequestEvent;
+import seedu.address.commons.events.ui.HomeRequestEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.logic.ListElementPointer;
@@ -150,6 +151,16 @@ public class CommandBox extends UiPart<Region> {
     private void handleExecuteCommandRequestEvent(ExecuteCommandRequestEvent event) {
         replaceText(event.commandWord);
         handleCommandInputChanged();
+    }
+
+    /**
+     * Handles the event where the Esc key is pressed or "home" is input to the CommandBox.
+     * {@code HomeRequestEvent}.
+     */
+    @Subscribe
+    private void handleHomeRequestEvent(HomeRequestEvent event) {
+        replaceText("");
+        commandTextField.requestFocus();
     }
     //@@author
 

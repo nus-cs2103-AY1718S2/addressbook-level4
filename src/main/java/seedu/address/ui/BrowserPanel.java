@@ -91,4 +91,15 @@ public class BrowserPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }
+
+    /**
+     * Handles the event where the Esc key is pressed or "home" is input to the CommandBox.
+     * {@code HomeRequestEvent}.
+     */
+    @Subscribe
+    private void handleHomeRequestEvent(HomeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadDefaultPage();
+    }
+
 }

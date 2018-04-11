@@ -73,41 +73,6 @@ public class StreamCommandTest {
     }
 
     @Test
-    public void scoreCalculation_invalidSubjectCombinationForL1R5_throwException() {
-        Person selectedPerson = new Person(new Name("John"), new Nric("S9829849H"),
-                Collections.emptySet(), Collections.emptySet(), new Remark(""), new Cca(""), new InjuriesHistory(""));
-        StringBuilder result = new StringBuilder();
-        //test for L1R5
-        assertEquals(StreamCommand.scoreCalculation(selectedPerson, 1),
-                result.append(String.format(MESSAGE_SELECT_STUDENT_SUCCESS, selectedPerson.getName()))
-                .append(Messages.MESSAGE_INSUFFICIENT_SUBJECTS).toString());
-
-        //test for L1B4A
-        result = new StringBuilder();
-        assertEquals(StreamCommand.scoreCalculation(selectedPerson, 2),
-                result.append(String.format(MESSAGE_SELECT_STUDENT_SUCCESS, selectedPerson.getName()))
-                .append(Messages.MESSAGE_INSUFFICIENT_SUBJECTS).toString());
-
-        //test for L1B4B
-        result = new StringBuilder();
-        assertEquals(StreamCommand.scoreCalculation(selectedPerson, 3),
-                result.append(String.format(MESSAGE_SELECT_STUDENT_SUCCESS, selectedPerson.getName()))
-                .append(Messages.MESSAGE_INSUFFICIENT_SUBJECTS).toString());
-
-        //test for L1B4C
-        result = new StringBuilder();
-        assertEquals(StreamCommand.scoreCalculation(selectedPerson, 4),
-                result.append(String.format(MESSAGE_SELECT_STUDENT_SUCCESS, selectedPerson.getName()))
-                .append(Messages.MESSAGE_INSUFFICIENT_SUBJECTS).toString());
-
-        //test for L1B4D
-        result = new StringBuilder();
-        assertEquals(StreamCommand.scoreCalculation(selectedPerson, 5),
-                result.append(String.format(MESSAGE_SELECT_STUDENT_SUCCESS, selectedPerson.getName()))
-                .append(Messages.MESSAGE_INSUFFICIENT_SUBJECTS).toString());
-    }
-
-    @Test
     public void equals() {
         StreamCommand streamFirstCommand = new StreamCommand(INDEX_FIRST_PERSON, 1);
         StreamCommand streamSecondCommand = new StreamCommand(INDEX_SECOND_PERSON, 1);

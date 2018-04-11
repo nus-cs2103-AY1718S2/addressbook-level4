@@ -81,18 +81,17 @@ public class Person {
 
     public List<Subject> getSubjectArray () {
         Set<Subject> set = getSubjects();
-        List<Subject> list = new ArrayList<Subject>();
+        List<Subject> list = new ArrayList<>();
         list.addAll(set);
         return list;
     }
-
 
     //@@author TeyXinHui
     /**
      * Calculates the lowest possible score from the grades of the subjects of the selected person.
      * @return L1R5 score
      */
-    public int calculateL1R5() throws InvalidSubjectCombinationException {
+    public int calculateL1R5() {
         int score = 0;
         Set<Subject> subjects = new HashSet<>(this.getSubjects());
         Set<Subject> subjectsToCheck = new HashSet<>();
@@ -136,7 +135,7 @@ public class Person {
             }
             // Check that if the student has at least one subject in each L1R5 category, else return error message
             if (checkLowest(subjectsToCheck, subjects) == 10) {
-                throw new InvalidSubjectCombinationException();
+                score = 0;
             } else {
                 score += checkLowest(subjectsToCheck, subjects);
             }
@@ -150,7 +149,7 @@ public class Person {
      * Calculates the lowest possible score from the grades of the subjects of the selected person.
      * @return L1B4-A score
      */
-    public int calculateL1B4A() throws InvalidSubjectCombinationException {
+    public int calculateL1B4A() {
         int score = 0;
         Set<Subject> subjects = new HashSet<>(this.getSubjects());
         Set<Subject> subjectsToCheck = new HashSet<>();
@@ -188,7 +187,7 @@ public class Person {
             }
             // Check that if the student has at least one subject in each L1R5 category, else return error message
             if (checkLowest(subjectsToCheck, subjects) == 10) {
-                throw new InvalidSubjectCombinationException();
+                score = 0;
             } else {
                 score += checkLowest(subjectsToCheck, subjects);
             }
@@ -201,7 +200,7 @@ public class Person {
      * Calculates the lowest possible score from the grades of the subjects of the selected person.
      * @return L1B4-B score
      */
-    public int calculateL1B4B() throws InvalidSubjectCombinationException {
+    public int calculateL1B4B() {
         int score = 0;
         Set<Subject> subjects = new HashSet<>(this.getSubjects());
         Set<Subject> subjectsToCheck = new HashSet<>();
@@ -239,7 +238,7 @@ public class Person {
             }
             // Check that if the student has at least one subject in each L1R5 category, else return error message
             if (checkLowest(subjectsToCheck, subjects) == 10) {
-                throw new InvalidSubjectCombinationException();
+                score = 0;
             } else {
                 score += checkLowest(subjectsToCheck, subjects);
             }
@@ -252,7 +251,7 @@ public class Person {
      * Calculates the lowest possible score from the grades of the subjects of the selected person.
      * @return L1B4-C score
      */
-    public int calculateL1B4C() throws InvalidSubjectCombinationException {
+    public int calculateL1B4C() {
         int score = 0;
         Set<Subject> subjects = new HashSet<>(this.getSubjects());
         Set<Subject> subjectsToCheck = new HashSet<>();
@@ -288,9 +287,9 @@ public class Person {
                     break;
                 }
             }
-            // Check that if the student has at least one subject in each L1R5 category, else return error message
+            // Check that if the student has at least one subject in each L1R5 category, else return 0
             if (checkLowest(subjectsToCheck, subjects) == 10) {
-                throw new InvalidSubjectCombinationException();
+                score = 0;
             } else {
                 score += checkLowest(subjectsToCheck, subjects);
             }
@@ -303,7 +302,7 @@ public class Person {
      * Calculates the lowest possible score from the grades of the subjects of the selected person.
      * @return L1B4-D score
      */
-    public int calculateL1B4D() throws InvalidSubjectCombinationException {
+    public int calculateL1B4D() {
         int score = 0;
         Set<Subject> subjects = new HashSet<>(this.getSubjects());
         Set<Subject> subjectsToCheck = new HashSet<>();
@@ -341,7 +340,7 @@ public class Person {
             }
             // Check that if the student has at least one subject in each L1R5 category, else return error message
             if (checkLowest(subjectsToCheck, subjects) == 10) {
-                throw new InvalidSubjectCombinationException();
+                score = 0;
             } else {
                 score += checkLowest(subjectsToCheck, subjects);
             }

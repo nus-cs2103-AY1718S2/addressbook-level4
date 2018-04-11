@@ -21,6 +21,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class InterviewCommandParser implements Parser<InterviewCommand> {
 
     public static final String MESSAGE_DATETIME_PARSE_FAIL = "Failed to parse the date time from the string: %1$s";
+    private static final com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
 
     /**
      * Parses the given {@code String} of arguments in the context of the InterviewCommand
@@ -58,8 +59,6 @@ public class InterviewCommandParser implements Parser<InterviewCommand> {
      * @throws ParseException if the phrase cannot be converted to date and time
      */
     private LocalDateTime parseDateFromNaturalLanguage(String naturalLanguage) throws ParseException {
-        com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
-
         List<DateGroup> groups = parser.parse(naturalLanguage);
         if (groups.size() < 1) {
             throw new ParseException(String.format(MESSAGE_DATETIME_PARSE_FAIL, naturalLanguage));

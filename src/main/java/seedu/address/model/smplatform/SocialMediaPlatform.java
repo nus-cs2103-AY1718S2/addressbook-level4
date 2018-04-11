@@ -7,8 +7,8 @@ package seedu.address.model.smplatform;
 public abstract class SocialMediaPlatform {
 
     public static final String MESSAGE_USERNAME_CONSTRAINTS =
-            "Social media  usernames should only contain alphanumeric characters, " +
-                    "underscore,  and spaces, and it should not be blank";
+            "Social media  usernames should only contain alphanumeric characters, "
+                    + "underscore,  and spaces, and it should not be blank";
 
     public static final String USERNAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum}_ ]*";
 

@@ -16,6 +16,7 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 
+import seedu.address.logic.login.LoginManager;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Record;
 import seedu.address.model.patient.RecordList;
@@ -27,7 +28,7 @@ import seedu.address.model.patient.RecordList;
 public class PrintFormatter {
     private static Document document;
     private static String filePath;
-    private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
+    private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 20,
             Font.BOLD);
     private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,
             Font.BOLD);
@@ -118,7 +119,14 @@ public class PrintFormatter {
             paragraph.add(Chunk.NEWLINE);
 
             Record record = recordList.getRecord(recordIndex);
-            paragraph.add(new Chunk("Record #" + (recordIndex + 1), subFont));
+            Chunk recordNumberChunk = new Chunk("Record #" + (recordIndex + 1));
+            recordNumberChunk.setUnderline(0.1f, -2f);
+            recordNumberChunk.setFont(subFont);
+            paragraph.add(recordNumberChunk);
+            paragraph.add(Chunk.NEWLINE);
+
+            paragraph.add(new Chunk("Recorded by: ", smallBold));
+            paragraph.add(new Chunk(LoginManager.getUserName(), smallNormal));
             paragraph.add(Chunk.NEWLINE);
 
             paragraph.add(new Chunk("Date recorded: ", smallBold));

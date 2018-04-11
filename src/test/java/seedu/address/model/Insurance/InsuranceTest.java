@@ -1,6 +1,7 @@
 package seedu.address.model.Insurance;
 
 import org.junit.Test;
+
 import seedu.address.testutil.Assert;
 
 //@@author Sebry9

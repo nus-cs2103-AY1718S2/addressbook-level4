@@ -19,6 +19,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -85,6 +86,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author Wu Di
+    @Override
+    public void deleteTask(Task target) throws TaskNotFoundException {
+        addressBook.removeTask(target);
+        indicateAddressBookChanged();
+    }
+
+    //@@author
     @Override
     public synchronized void addTask(Task task) {
         addressBook.addTask(task);
@@ -109,6 +118,17 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author Wu Di
+    @Override
+    public void updateTask(Task target, Task editedTask)
+            throws TaskNotFoundException {
+        requireAllNonNull(target, editedTask);
+
+        addressBook.updateTask(target, editedTask);
+        indicateAddressBookChanged();
+    }
+
+    //@@author
     @Override
     public void sortPersons() {
         addressBook.sortList();
@@ -157,8 +177,6 @@ public class ModelManager extends ComponentManager implements Model {
     public List<String> getItemList() {
         return Collections.unmodifiableList(filteredDeleteItems);
     }
-
-
 
     @Override
     public boolean equals(Object obj) {

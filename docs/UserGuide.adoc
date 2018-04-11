@@ -20,6 +20,7 @@ By: `F09-B1`      Since: `Jun 2016`      Licence: `MIT`
 *Your TA* is for university teaching assistants who prefer to use a desktop application to manage student contacts and plan your schedule.
 More importantly, it is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). +
 If you can type fast, it can get your contact management and tasks scheduling done faster than traditional GUI applications. +
+Once you're ready, jump to <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -96,7 +97,6 @@ Command entered: +
 `add n/John Doe m/A0111111X p/98765432 e/johnd@example.com a/John street, block 123, #01-01 dp/C:\Users\Name\Desktop\John.jpg`: +
 [NOTE]
 The filepath after the `dp/` depends on where your image file is located.
-
 This will add a person, 'John Doe' into the list with his respective details into the application (Figure 3).
 
 .Application after John Doe has been Added +
@@ -206,7 +206,6 @@ Command entered: +
 `edit 3 n/Betsy Crower dp/C:\Users\Name\Desktop\Betsy.jpg t/`: +
 This changed the details of the person with index 3 (originally Betsy Crowe), in this case, her name and tags.
 It also updated her display picture. +
-Her tags are also cleared (Figure 12).
 
 .Name changed to "Betsy Crower" and All Tags Cleared. +
 image::SecondEdit.png[width="800"]
@@ -236,6 +235,7 @@ Returns Betsy as a result. Followed by: +
 `email 1` +
 Emails the 1st person in the results of the `find` command, in this case, Betsy.
 
+=======
 === Adding Participation Marks : `markPart`
 
 Adds to the participation marks of a person. The maximum limit for participation marks is 100
@@ -409,7 +409,6 @@ image::SecondRedo.png[width="800"]
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
-[NOTE]
 This command does not clear the unused Display Pictures from your hard drive.
 It will be updated to work in v1.5rc
 
@@ -561,4 +560,3 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-

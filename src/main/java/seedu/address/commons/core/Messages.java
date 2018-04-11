@@ -12,5 +12,6 @@ public class Messages {
     public static final String MESSAGE_MAIL_APP_ERROR = "Error opening the default mail app on this system";
     public static final String MESSAGE_UNSUPPORTED_DESKTOP =
             "The client does not support desktop operations on this system";
+    public static final String MESSAGE_INVALID_TASK_DISPLAYED_INDEX = "The task index provided is invalid";
 
 }

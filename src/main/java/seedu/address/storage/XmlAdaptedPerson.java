@@ -160,7 +160,6 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(Participation.MESSAGE_PARTICPATION_CONSTRAINTS);
         }
         final Participation participation = new Participation(this.participation);
-
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, matricNumber, phone, email, address, displayPic, participation, tags);
     }

@@ -20,6 +20,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.UniqueTaskList;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * Wraps all data at the address-book level
@@ -148,6 +149,16 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the given task {@code target} in the list with {@code editedTask}
+     * @throws TaskNotFoundException
+     */
+    public void updateTask(Task target, Task editedTask)
+            throws TaskNotFoundException {
+        requireNonNull(editedTask);
+        tasks.setTask(target, editedTask);
+    }
+
+    /**
      * Adds an item to be scheduled to be deleted to the address book.
      */
     public void addDeleteItem(String filepath) {
@@ -196,8 +207,22 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    //// tag-level operations
+    ////tag-level operation
+    //@@author Wu Di
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws TaskNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeTask(Task key) throws TaskNotFoundException {
+        if (tasks.remove(key)) {
+            return true;
+        } else {
+            throw new TaskNotFoundException();
+        }
+    }
 
+    //// tag-level operations
+    //@@author
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
@@ -242,7 +267,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     public List<String> getItemList() {
         return itemList.getItemList();
     }
-
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

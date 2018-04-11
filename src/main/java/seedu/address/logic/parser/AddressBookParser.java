@@ -77,7 +77,6 @@ public class AddressBookParser {
 
         case MarkCommand.COMMAND_WORD:
             return new MarkCommandParser().parse(arguments);
-
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:
             return new ClearCommand();

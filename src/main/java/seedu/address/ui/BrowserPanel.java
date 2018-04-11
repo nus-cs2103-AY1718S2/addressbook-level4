@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -40,14 +41,13 @@ public class BrowserPanel extends UiPart<Region> {
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
+
     /**
     * To load person page according to person name
     */
-    public void loadPersonPage(Person person)  {
-        URL personPage = MainApp.class.getResource(PROFILE_DIRECTORY + person.getName().fullName + PERSON_PAGE);
-        loadPage(personPage.toExternalForm());
-        //TimeUnit.MINUTES.sleep(1);
-        //loadPersonPage(person);
+    public void loadPersonPage(Person person) throws IOException {
+        URL personPage = MainApp.class.getResource("/StudentPage/template.html");
+        loadPage("file:" + System.getProperty("user.home") + "/StudentPage/" + person.getName() + ".html");
     }
 
     public void loadPage(String url) {
@@ -57,7 +57,7 @@ public class BrowserPanel extends UiPart<Region> {
     /**
      * Loads a default HTML file with a background that matches the general theme.
      */
-    private void loadDefaultPage() {
+    public void loadDefaultPage() {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         loadPage(defaultPage.toExternalForm());
     }
@@ -70,7 +70,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) throws IOException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }

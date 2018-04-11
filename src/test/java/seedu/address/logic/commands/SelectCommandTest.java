@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.logic.commands.SelectCommand.MESSAGE_L1R5_SUCCESS;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
@@ -28,7 +27,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.InvalidSubjectCombinationException;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
@@ -107,20 +105,12 @@ public class SelectCommandTest {
      */
     private void assertExecutionSuccess (Index index) {
         SelectCommand selectCommand = prepareCommand(index);
-        StringBuilder result = new StringBuilder();
         List<Person> lastShownList = model.getFilteredPersonList();
         Person selectedPerson = lastShownList.get(index.getZeroBased());
-        int score = 0;
-        try {
-            score = selectedPerson.calculateL1R5();
-        } catch (InvalidSubjectCombinationException error) {
-            //do nothing
-        }
 
         try {
             CommandResult commandResult = selectCommand.execute();
-            assertEquals(result.append(String.format(MESSAGE_SELECT_PERSON_SUCCESS, selectedPerson.getName()))
-                            .append(String.format(MESSAGE_L1R5_SUCCESS, score)).toString(),
+            assertEquals(String.format(MESSAGE_SELECT_PERSON_SUCCESS, selectedPerson.getName()),
                     commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);

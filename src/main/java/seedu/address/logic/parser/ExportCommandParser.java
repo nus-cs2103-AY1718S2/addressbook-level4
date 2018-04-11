@@ -12,7 +12,7 @@ import seedu.address.model.FilePath;
 
 //@@author karenfrilya97
 /**
- * Parses input arguments and creates a new ImportCommand object
+ * Parses input arguments and creates a new ExportCommand object
  */
 public class ExportCommandParser implements Parser<ExportCommand> {
 
@@ -21,7 +21,6 @@ public class ExportCommandParser implements Parser<ExportCommand> {
      * and returns an ExportCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format.
      */
-
     public ExportCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_FILE_PATH);

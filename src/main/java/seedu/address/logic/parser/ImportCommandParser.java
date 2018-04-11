@@ -21,7 +21,6 @@ public class ImportCommandParser implements Parser<ImportCommand> {
      * and returns an ImportCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format.
      */
-
     public ImportCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_FILE_PATH);

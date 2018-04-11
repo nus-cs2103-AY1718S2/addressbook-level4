@@ -6,7 +6,7 @@ import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.model.issues.Labels;
 
 /**
- * JAXB-friendly adapted version of the Tag.
+ * JAXB-friendly adapted version of the Labe;.
  */
 public class XmlAdaptedLabel {
 
@@ -14,13 +14,13 @@ public class XmlAdaptedLabel {
     private String label;
 
     /**
-     * Constructs an XmlAdaptedAssignee.
+     * Constructs an XmlAdaptedLabel.
      * This is the no-arg constructor that is required by JAXB.
      */
     public XmlAdaptedLabel() {}
 
     /**
-     * Constructs a {@code XmlAdaptedAssignee} with the given {@code assignee}.
+     * Constructs a {@code XmlAdaptedLabel} with the given {@code assignee}.
      */
     public XmlAdaptedLabel(String label) {
         this.label = label;
@@ -36,9 +36,9 @@ public class XmlAdaptedLabel {
     }
 
     /**
-     * Converts this jaxb-friendly adapted assignee object into the model's Assignee object.
+     * Converts this jaxb-friendly adapted label object into the model's Label object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws IllegalValueException if there were any data constraints violated in the adapted label
      */
     public Labels toModelType() throws IllegalValueException {
         return new Labels(label);
@@ -50,7 +50,7 @@ public class XmlAdaptedLabel {
             return true;
         }
 
-        if (!(other instanceof XmlAdaptedAssignee)) {
+        if (!(other instanceof XmlAdaptedLabel)) {
             return false;
         }
 

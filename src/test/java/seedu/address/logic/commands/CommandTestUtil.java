@@ -79,8 +79,10 @@ public class CommandTestUtil {
             + "src\\test\\resources\\images\\displayPic\\missing"; //Missing file
     public static final String INVALID_DISPLAY_TYPE_DESC = " " + PREFIX_DISPLAY_PIC
             + "src\\test\\resources\\images\\displayPic\\wrong.txt"; //not image file
-    public static final String INVALID_ALPHABET_MARK_DESC = " " + PREFIX_MARK_PARTICIPATION + INVALID_PARTICIPATION_MARK;
-    public static final String INVALID_OVER_MARK_DESC = " " + PREFIX_MARK_PARTICIPATION + INVALID_OVER_PARTICIPATION_MARK;
+    public static final String INVALID_ALPHABET_MARK_DESC = " "
+            + PREFIX_MARK_PARTICIPATION + INVALID_PARTICIPATION_MARK;
+    public static final String INVALID_OVER_MARK_DESC = " "
+            + PREFIX_MARK_PARTICIPATION + INVALID_OVER_PARTICIPATION_MARK;
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final String INVALID_FILE = "invalidFileTest.xml";

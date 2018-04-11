@@ -192,7 +192,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 DisplayPic.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
 
         /* Case: invalid display pic (not image) -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_DISPLAY_TYPE_DESC,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " "
+                        + INDEX_FIRST_PERSON.getOneBased() + INVALID_DISPLAY_TYPE_DESC,
                 DisplayPic.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
         //@@author
 

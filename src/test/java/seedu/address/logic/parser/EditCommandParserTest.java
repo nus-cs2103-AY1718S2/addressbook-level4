@@ -91,9 +91,13 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_NAME_DESC, Name.MESSAGE_NAME_CONSTRAINTS); // invalid name
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC, Phone.MESSAGE_PHONE_CONSTRAINTS); // invalid phone
         assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS); // invalid email
-        assertParseFailure(parser, "1" + INVALID_ADDRESS_DESC, Address.MESSAGE_ADDRESS_CONSTRAINTS); // invalid address
-        assertParseFailure(parser, "1" + INVALID_DISPLAY_DESC, DisplayPic.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS); //invalid (missing) display
-        assertParseFailure(parser, "1" + INVALID_DISPLAY_TYPE_DESC, DisplayPic.MESSAGE_DISPLAY_PIC_NOT_IMAGE); //invalid (not image) display
+        assertParseFailure(parser, "1"
+                + INVALID_ADDRESS_DESC, Address.MESSAGE_ADDRESS_CONSTRAINTS); // invalid address
+        assertParseFailure(parser, "1"
+                + INVALID_DISPLAY_DESC,
+                DisplayPic.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS); //invalid (missing) display
+        assertParseFailure(parser, "1"
+                + INVALID_DISPLAY_TYPE_DESC, DisplayPic.MESSAGE_DISPLAY_PIC_NOT_IMAGE); //invalid (not image) display
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
 
         // invalid phone followed by valid email

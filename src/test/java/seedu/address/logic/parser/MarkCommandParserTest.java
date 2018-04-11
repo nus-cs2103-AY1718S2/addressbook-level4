@@ -6,14 +6,13 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_OVER_MARK_DES
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PARTICIPATION_MARK;
 import static seedu.address.logic.commands.CommandTestUtil.PARTICIPATION_DESC_MARK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_INT_PART_MARK;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PARTICIPATION_MARK;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
+
 import seedu.address.logic.commands.MarkCommand;
-import seedu.address.logic.commands.SelectCommand;
 
 /**
  * Test scope: similar to {@code DeleteCommandParserTest}.
@@ -26,7 +25,8 @@ public class MarkCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsMarkCommand() {
-        assertParseSuccess(parser, "1" + PARTICIPATION_DESC_MARK, new MarkCommand(INDEX_FIRST_PERSON, VALID_INT_PART_MARK));
+        assertParseSuccess(parser, "1"
+                + PARTICIPATION_DESC_MARK, new MarkCommand(INDEX_FIRST_PERSON, VALID_INT_PART_MARK));
     }
 
     @Test

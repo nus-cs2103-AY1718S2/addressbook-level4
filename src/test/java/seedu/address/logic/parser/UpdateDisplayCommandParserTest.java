@@ -3,16 +3,10 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.DISPLAY_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DISPLAY_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ALPHABET_MARK_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DISPLAY_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DISPLAY_TYPE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_OVER_MARK_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_PARTICIPATION_MARK;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PARTICIPATION_DESC_MARK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DISPLAY_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DISPLAY_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_INT_PART_MARK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -20,8 +14,8 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 
 import org.junit.Test;
+
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.MarkCommand;
 import seedu.address.logic.commands.UpdateDisplayCommand;
 import seedu.address.model.person.DisplayPic;
 

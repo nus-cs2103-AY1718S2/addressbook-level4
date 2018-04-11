@@ -463,7 +463,7 @@ image::OauthModelDiagram.png[width="800"]
 ** Pros: Does not require Oauth and is therefore easier to implement.
 ** Cons: Requires the user to confirm the event addition through a GUI action, thus not allowing for a true CLI-only experience.
 
-===== Aspect: Implementation of `ViewEventsCommand` -> `calendar`
+===== Aspect: Implementation of `ViewEventsCommand` -> `calendar-launch`
 * **Alternative 1 (current choice):** Open a Webview (either as a new window or within the main application gui)
 ** Pros: Low development cost as the webview exists already.
 ** Cons: Requires an internet connection. Has no CLI-friendly output.
@@ -976,10 +976,10 @@ up in the morning to take her to the lawyer’s office to file for a divorce fro
 **Jason Manson-Hing**
 
 `Major Feature:` Calendar Integration
-* Functional calendar within the application with add/view/delete/edit functionality.
+* Functional calendar within the application with add/view/delete functionality.
 * This is useful for social workers to keep track of all of the things that they have to do now and in the future.
 This calendar will be seperate from their personal calendar so as to keep business and personal information seperate.
-Additionally, this calendar will integrat with the daily scheduler function to help optimize their time in a day.
+Additionally, this calendar will integrate with the daily scheduler function to help optimize their time in a day.
 
 `Minor Feature:` Daily Scheduler (Events)
 * Collates the user's list of calendar events for the day into an easily consumable view.
@@ -1157,6 +1157,8 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+
+//@@author ifalluphill
 [discrete]
 === Use case: Add Calendar Event
 
@@ -1249,6 +1251,27 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
+=== Use case: View Daily Schedule Events
+
+*MSS*
+
+1.  User requests to view events scheduled for a particular day.
+2.  AddressBook shows the user the relevant calendar events.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There are no calendar events.
++
+[none]
+** 1a1. AddressBook notifies user that there are no events.
++
+Use case ends.
+
+
+[discrete]
 === Use case: Show Error Log
 
 *MSS*
@@ -1265,6 +1288,8 @@ Use case resumes at step 2.
 ** 1a1. AddressBook notifies user that there is no error log.
 +
 Use case ends.
+
+//@@author
 
 [discrete]
 === Use case: Switch Views of Features
@@ -1362,17 +1387,19 @@ Use case resumes at step 1.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Should come with automated unit tests and open source code.
+//@@author ifalluphill
 .  Should preserve user data when the program is restarted or updated.
 .  Should still retain basic functionality even when not connected to the internet.
 .  Should support both 32-bit and 64-bit operating systems.
 .  Should not be graphically intensive for maximum compatibility.
-.  Should be backward compatible with previous versions of AddressBook.
+.  Should be backward compatible with previous versions of SLAP app.
 .  Should have all features and commands documented.
 .  Should be easily usable by an infrequent computer user.
 .  Should gracefully handle incorrect user input and return friendly error messages to the user.
 .  Should be easy to setup and install for an infrequent computer user.
 .  Should not unnecessarily collect data about a user.
 .  Should sanitize sensitive user data before logging.
+//@@author
 .  Should not allow non-users to access storage file
 .  Should not allow non-users to read storage file
 .  Should not exit the program without encrypting the storage file

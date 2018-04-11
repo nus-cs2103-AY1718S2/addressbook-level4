@@ -1,0 +1,109 @@
+= Jason Manson-Hing - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Session Logger and Planner (SLAP) for Social Workers
+
+---
+
+== Overview
+
+The Sesion Logger and Planner (SLAP) application for Social Workers is a desktop client used to help
+social workers manager their day. By creating an easy to use command-line interface with graphical
+elements, social workers can quickly manage their contacts (e.g. beneficiaries) as well as their
+schedule (i.e. their calendar) from one central location efficiently via the command line.
+In addition to a fully-featured address book and calendar through the use of command line input,
+the client also allows for social workers to take session notes and attach them to their
+beneficiaries, as well as generate an optimal route of their daily schedule to help organize their day.
+
+On top of these features, a robust login system was implemented such that multiple users can securely
+switch between different accounts and have distinct address books, session reports, and calendars
+isolated from each other. Thus, not only does this allow for increased security, but it also
+allows for multiple users to use the same application on the same system, which has the added
+benefit of saving money as several people can share the same application on the same system
+without affecting the data of another person.
+
+The social worker is to interact with the application primarily through the command line. The GUI was created
+using JavaFX.
+
+== Summary of contributions
+
+* *Major enhancement*: added *Google Calendar integration using OAuth 2.0*
+** Added commands that require OAuth2.0 to function properly: **
+```
+calendar-launch / switch calendar
+calendar-delete [args..]
+calendar-list
+reauthenticate
+show-schedule [args..]
+```
+** What it does: allows the user interact directly with their Google Calendar via the command line. Users can view,
+add, and delete calendar events straight from the CLI, as well as view their calendar as a GUI by signing in to the
+included WebView built into the application.
+** Justification: This feature improves the product significantly because not only does it enable social workers to view
+their calendar straight within the application, but it also allows them to add/delete events through the CLI as well.
+This can potentially greatly increase their productivity as it allows them to view all of their important day-to-day
+information in one consolidated application and perform all major functions without leaving the application.
+** Highlights: This feature powers the underlying workings of several commands, views, and UIs within the application.
+*** The implementation of this new Manager Class was challenging as it required completely new logic and classes to be created to handle
+the API and authentication process.
+*** The `calendar-list` and `show-schedule d/DATE` commands store their most recently retrieved event location such that the same events list retrieved
+can be interacted with via the `calendar-delete` and `navigate` commands respectively.
+*** This feature supports multiple users through our custom log in feature. This was challenging to implement as it required
+a unique data store location that could be generated on the fly as new users were added.
+*** Natural language dates are supported when defining start and end times for the events.
+** Credits: https://developers.google.com/calendar/[Google Calendar API] for Handling OAuth 2.0 authentication and methods to operate directly on
+a user's Google Calendar, http://natty.joestelmach.com/[Natty] for Natural Language Date Parsing
+
+* *Minor enhancement*: Backend work on daily-scheduler. Having successfully connected the SLAP application with Google Calendar,
+I assisted my teammates minor enhancement of the nagiate command by creating the necessary backend logic and command classes for
+the `show-schedule d/DATE` command to work. This feature accepts a date in most formats (including natural language), and
+fetches the list of events that the user has scheduled for said date. Additionally, the command also generates the necessary
+hooks required for the `nagivate` command to function (i.e. generating a list of events for the particular day).
+
+* *Minor enhancement*: added an command and menu option to display the current error log to the user. This was implemented
+in order to allow for users that encounter issues to have a more programmatic way of sending error log details without
+having to look around their computer to locate the actual error log file. This was an important feature to add as
+managing multiple contacts and events must be a seamless process, and so in the off chance that an error is encountered,
+it was essential to provide an easy way to generate the error log on demand to help simplify the troubleshooting process.
+
+* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.2` - `v1.4` (3 releases), co-managed release `v1.5rc` on GitHub
+** Enhancements to existing features:
+*** Updated the menu to include option to open standalone calendar instance as well as view the error log (Pull requests https://github.com/CS2103JAN2018-T15-B3/main/pull/1[#1], https://github.com/CS2103JAN2018-T15-B3/main/pull/21[#21])
+*** Set up issue labels, created milestones each week, wrote detailed issues every week, and ensured that housekeeping was performed weekly (i.e. closing issues and milestones, creating releases, etc.) in accordance to their deadlines
+** Documentation:
+*** : Wrote most of the user stories in the Developer Guide https://github.com[#14]
+*** : Added 6 use cases to the Developer Guide https://github.com[#14]
+*** : Defined most of the NFRs for the Developer Guide https://github.com[#14]
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples:  )
+** Tools:
+*** Integrated a third party library http://natty.joestelmach.com/[Natty] to the project for natural langauge date parsing (https://github.com/CS2103JAN2018-T15-B3/main/pull/58[#58])
+*** Integrated a Google OAuth 2.0 and https://developers.google.com/calendar/[Google Calendar APIs] to the project for to enable seamless command line interaction with Google Calendar (https://github.com/CS2103JAN2018-T15-B3/main/pull/46[#46])
+*** Set up TravisCI and Coveralls for the team
+
+_{you can add/remove categories in the list above}_
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=calendar]
+
+include::../UserGuide.adoc[tag=errorlog]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=calendarview]

@@ -31,7 +31,6 @@ public class Person {
 
     private final UniqueInsuranceList insurance;
     private final UniqueTagList tags;
-    private final UniqueGroupList groups;
 
     /**
      * Every field must be present and not null.
@@ -49,7 +48,6 @@ public class Person {
         this.insurance = new UniqueInsuranceList(insurance);
         this.totalCommission = calculateTotalCommission(insurance);
         this.tags = new UniqueTagList(tags);
-        this.groups = new UniqueGroupList(group);
     }
 
 

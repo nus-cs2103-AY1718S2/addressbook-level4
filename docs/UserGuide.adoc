@@ -364,6 +364,8 @@ e.g.`select 2`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Export* : `export`
-* *Group* : `group`
+* *Sort* : `sort`
+* *Group* : `group` +
+e.g. `group priority`
 * *Password* : `password` +
 e.g. `password set/123`

@@ -1,28 +1,6 @@
-package seedu.address.commons.util;
-
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.security.KeyStore;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-
-import seedu.address.model.UserPrefs;
-
-//@@author limzk1994-unused
-/*
-Initial idea was to generate a secret key and store it in a keystore is the data folder
-However, the secret key will still be exposed, thus I changed secretKey the implementation to a
-password based one, remove the need to use this SecretKeyUtil. Some functions are not fully refactored
-since they won't be used.
-*/
+# limzk1994-unused
+###### /SecretKeyUtil.java
+``` java
 public class SecretKeyUtil {
 
     private static final char[]KEYSTORE_PASSWORD = {'p','a','s','s'};
@@ -227,3 +205,4 @@ public class SecretKeyUtil {
     }
 
 }
+```

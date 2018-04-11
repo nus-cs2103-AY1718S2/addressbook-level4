@@ -76,20 +76,6 @@ public class PersonListPanel extends UiPart<Region> {
     private void handleListChange(ObservableList<Person> personList) {
         ObservableList<PersonCard> mappedList = FXCollections.observableArrayList();
         ArrayList<Person> newList = new ArrayList<>(personList);
-        int changeCount = 0;
-        int updatedPersonIndex = 0;
-
-        // Allow single value change (usually edit/update)
-        if (newList.size() == currentPersonList.size()) {
-            for (int i = 0; i < newList.size(); i++) {
-                if (!newList.get(i).equals(currentPersonList.get(i))) {
-                    updatedPersonIndex = i;
-                    changeCount++;
-                }
-            }
-        } else {
-            changeCount = Integer.MAX_VALUE;
-        }
 
         int index = 1;
         for (Person person : personList) {
@@ -98,15 +84,9 @@ public class PersonListPanel extends UiPart<Region> {
         }
 
         if (animated) {
-            // Minor update
-            if (changeCount == 1) {
-                mappedList.set(updatedPersonIndex,
-                        new PersonCard(newList.get(updatedPersonIndex), updatedPersonIndex + 1));
-            } else if (changeCount > 1) {
-                Animation fadeOut = UiUtil.fadeNode(listPersons, false, 1, MAX_ANIMATION_TIME_MS,
-                    e -> postHandleListChange(personList, mappedList));
-                fadeOut.play();
-            }
+            Animation fadeOut = UiUtil.fadeNode(listPersons, false, 1, MAX_ANIMATION_TIME_MS,
+                e -> postHandleListChange(personList, mappedList));
+            fadeOut.play();
         } else {
             postHandleListChange(personList, mappedList);
         }

@@ -292,7 +292,7 @@ public class OAuthManager {
     /**
      * Formats date-time string as a human-readable string.
      */
-    private static String getDateTimeAsHumanReadable(DateTime inputDateTime) {
+    public static String getDateTimeAsHumanReadable(DateTime inputDateTime) {
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
         System.out.println(inputDateTime.toString());
         LocalDateTime dateTime = LocalDateTime.parse(inputDateTime.toString(), inputFormatter);

@@ -1,8 +1,10 @@
 //@@author jaronchan
 package seedu.address.ui;
 
+import java.util.List;
 import java.util.logging.Logger;
 
+import com.google.api.services.calendar.model.Event;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
@@ -11,10 +13,11 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.DailyScheduleShownChangedEvent;
 import seedu.address.commons.events.ui.LoadDirectionsEvent;
 import seedu.address.commons.events.ui.LoadMapPanelEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.RemoveMapPanelEvent;
+import seedu.address.commons.events.ui.ResetDirectionsEvent;
 import seedu.address.commons.events.ui.UpdateNumberOfButtonsEvent;
 
 /**
@@ -29,6 +32,9 @@ public class DailySchedulerPanel extends UiPart<Region> {
     private MapPanel directionPanel;
 
     @FXML
+    private VBox eventsListStack;
+
+    @FXML
     private StackPane directionPanelPlaceholder;
 
     @FXML
@@ -40,6 +46,29 @@ public class DailySchedulerPanel extends UiPart<Region> {
     public DailySchedulerPanel() {
         super(FXML);
         registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Fills schedule panel to with scheduled events for the specified date.
+     * If the day has no events, a placeholder text will be shown.
+     *
+     */
+    private void showPlannedEvents(List<Event> dailyEventsList) {
+
+        int numOfEvents = dailyEventsList.size();
+        if (numOfEvents != 0) {
+            for (int i = 0; i < numOfEvents; i++) {
+                ScheduledEventCard card = new ScheduledEventCard(dailyEventsList.get(i), i + 1);
+                eventsListStack.getChildren().add(card.getRoot());
+            }
+        }
+    }
+
+    /**
+     * Resets schedule panel.
+     */
+    private void removePlannedEvents() {
+        eventsListStack.getChildren().clear();
     }
 
     /**
@@ -89,6 +118,15 @@ public class DailySchedulerPanel extends UiPart<Region> {
     }
 
     /**
+     * Resets the directions on the map.
+     */
+    public void resetDirections() {
+        if (directionPanel != null && directionPanelPlaceholder.getChildren().contains(directionPanel.getRoot())) {
+            directionPanel.resetDirections();
+        }
+    }
+
+    /**
      * Frees resources allocated to the direction panel if direction panel is not empty.
      */
     public void freeResources() {
@@ -98,8 +136,11 @@ public class DailySchedulerPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handleDailyScheduleShownChangedEvent(DailyScheduleShownChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        removePlannedEvents();
+        showPlannedEvents(event.getDailyEventsList());
+
     }
 
     @Subscribe
@@ -122,6 +163,12 @@ public class DailySchedulerPanel extends UiPart<Region> {
     private void handleLoadDirectionsEvent(LoadDirectionsEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         updateDirections(event.getAddressOrigin(), event.getGetAddressDestination());
+    }
+
+    @Subscribe
+    private void handleResetDirectionsEvent(ResetDirectionsEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        resetDirections();
     }
 
     @Subscribe

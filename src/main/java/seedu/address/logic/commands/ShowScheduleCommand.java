@@ -8,7 +8,11 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.google.api.services.calendar.model.Event;
+
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.DailyScheduleShownChangedEvent;
+import seedu.address.commons.events.ui.ResetDirectionsEvent;
 import seedu.address.commons.events.ui.UpdateNumberOfButtonsEvent;
 import seedu.address.logic.OAuthManager;
 import seedu.address.model.login.User;
@@ -48,8 +52,14 @@ public class ShowScheduleCommand extends Command {
                 dailyEventsAsString = MESSAGE_NO_EVENTS;
             }
 
+            //@@author jaronchan
+
+            List<Event> dailyEventsList = OAuthManager.getDailyEvents(user, localDate);
+            EventsCenter.getInstance().post(new DailyScheduleShownChangedEvent(dailyEventsList));
+            EventsCenter.getInstance().post(new ResetDirectionsEvent());
             EventsCenter.getInstance().post(new UpdateNumberOfButtonsEvent(dailyEvents.size() - 1));
 
+            //@@author ifalluphill
             return new CommandResult(dailyEventsAsString);
         } catch (IOException e) {
             return new CommandResult(MESSAGE_ERROR);

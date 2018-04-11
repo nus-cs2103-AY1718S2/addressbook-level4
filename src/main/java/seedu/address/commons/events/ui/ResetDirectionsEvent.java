@@ -1,12 +1,13 @@
+//@@author jaronchan
 package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * Signals a removal of listed direction.
+ * Signals a reset of direction map.
  */
 
-public class RemoveDirectionsEvent extends BaseEvent {
+public class ResetDirectionsEvent extends BaseEvent {
 
     @Override
     public String toString() {

@@ -66,6 +66,7 @@ public class ProfilePanel extends UiPart<Region>  {
 
     }
 
+    //@@author iNekox3
     /**
      * Get a deterministic tag color based off tag's name value.
      */
@@ -74,6 +75,18 @@ public class ProfilePanel extends UiPart<Region>  {
         return TAG_COLORS[index];
     }
 
+    /**
+     * Adds each letter of given string into an integer.
+     */
+    private int getValueOfString(String tagName) {
+        int sum = 0;
+        for (char c : tagName.toCharArray()) {
+            sum += c;
+        }
+        return sum;
+    }
+
+    //@@author Livian1107
     /**
      * Loads the default person
      */
@@ -103,11 +116,13 @@ public class ProfilePanel extends UiPart<Region>  {
         year.setText(person.getYear().value);
         email.setText(person.getEmail().value);
         username.setText(person.getUsername().username);
+        //@@author iNekox3
         person.getTags().forEach(tag -> {
             Label label = new Label(tag.tagName);
             label.getStyleClass().add(getTagColor(tag.tagName));
             tags.getChildren().add(label);
         });
+        //@@author Livian1107
         loadPhoto();
 
         currentlyViewedPerson = person;
@@ -140,17 +155,6 @@ public class ProfilePanel extends UiPart<Region>  {
                     MainApp.class.getResourceAsStream(person.getDefaultPath()));
             profile.setFill(new ImagePattern(profilePhoto));
         }
-    }
-
-    /**
-     * Adds each letter of given string into an integer.
-     */
-    private int getValueOfString(String tagName) {
-        int sum = 0;
-        for (char c : tagName.toCharArray()) {
-            sum += c;
-        }
-        return sum;
     }
 
     @Subscribe

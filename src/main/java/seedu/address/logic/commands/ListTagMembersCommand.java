@@ -10,7 +10,7 @@ import seedu.address.model.person.TagContainKeywordsPredicate;
 public class ListTagMembersCommand extends Command {
 
     public static final String COMMAND_WORD = "listTagMembers";
-    public static final String COMMAND_ALIAS = "ltm";
+    public static final String COMMAND_ALIAS = "lTM";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose tags contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"

@@ -1,0 +1,56 @@
+= Koh Yee Ru - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: ProgressChecker
+
+---
+
+== Overview
+
+ProgressChecker is *a desktop application for CS2103/T students to have a centralized hub that tracks their learning progress and project development* throughout the module. The current release is meant to be used alongside with CS2103/T module website. ProgressChecker has a JavaFX GUI, but users will interact with it via CLI for efficiency.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to view and answer weekly exercises taken from CS2103/T module website*
+** *What it does:* allows students to view exercises by week and save their answers down for it. Answers are stored automatically and loaded the next time the software runs.
+** *Justification:* this feature solves a significant issue that students faced: they can't find the exercises easily in the website, or save their answers down directly for that matter
+** *Highlights:* This enhancement touches on all 4 components in the code base. It required an in-depth analysis of the existing architecture on how each components work with one another in order to implement it in an optimal way.
+** *Credits:* Much of the implementation was heavily inspired by the existing code base that has originally implemented the listing, modifying and storing of persons.
+
+* *Minor enhancement*: added a view command that allows the user to navigate between different window tabs of information
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T09-B3/main/blob/master/collated/functional/iNekox3.md[Functional code]] [https://github.com/CS2103JAN2018-T09-B3/main/blob/master/collated/test/iNekox3.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed listing of type.epic and type.stories issues on issue tracker to kickstart the team's type.task issues managment
+*** Tracked and made sure pull requests and their relevant issues are assigned the correct milestone and have been closed accordingly
+** Enhancements to existing features:
+*** Updated tags in PersonCard to have differing colors https://github.com/CS2103JAN2018-T09-B3/main/pull/2[#2]
+** Documentation:
+*** Added prefaces to User and Developer Guide for each section https://github.com/CS2103JAN2018-T09-B3/main/pull/124[#124]
+*** Contributed to User Stories and Use Cases https://github.com/CS2103JAN2018-T09-B3/main/pull/76[#76] https://github.com/CS2103JAN2018-T09-B3/main/pull/4[#4]
+** Community:
+*** Pull requests reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-T09-B3/main/pull/209[#209] https://github.com/CS2103JAN2018-T09-B3/main/pull/100[#100] https://github.com/CS2103JAN2018-T09-B3/main/pull/17[#17]
+*** Reported bugs and suggestions for other teams in the class https://github.com/CS2103JAN2018-W14-B1/main/issues/139[#139] https://github.com/CS2103JAN2018-W14-B1/main/issues/137[#137]
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=answer]
+
+include::../UserGuide.adoc[tag=view]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=answer]

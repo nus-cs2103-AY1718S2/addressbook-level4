@@ -96,6 +96,7 @@ public class    AddressBookParser {
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
 
+        //@@author jas5469
         case AddGroupCommand.COMMAND_WORD:
         case AddGroupCommand.COMMAND_ALIAS:
             return new AddGroupCommandParser().parse(arguments);
@@ -103,6 +104,7 @@ public class    AddressBookParser {
         case AddMembersToGroupCommand.COMMAND_WORD:
         case AddMembersToGroupCommand.COMMAND_ALIAS:
             return new AddMembersToGroupCommandParser().parse(arguments);
+        //@@author
 
         case AddToDoCommand.COMMAND_WORD:
         case AddToDoCommand.COMMAND_ALIAS:
@@ -154,12 +156,14 @@ public class    AddressBookParser {
         case ListGroupMembersCommand.COMMAND_WORD:
         case ListGroupMembersCommand.COMMAND_ALIAS:
             return new ListGroupMembersCommandParser().parse(arguments);
-        //@@author
+
         case ListTagMembersCommand.COMMAND_WORD:
         case ListTagMembersCommand.COMMAND_ALIAS:
             return new ListTagMembersCommandParser().parse(arguments);
 
-        case HistoryCommand.COMMAND_WORD:
+        //@@author
+
+            case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
 

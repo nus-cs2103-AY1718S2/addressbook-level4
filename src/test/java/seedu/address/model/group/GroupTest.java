@@ -1,5 +1,6 @@
-package seedu.address.model.group;
 //@@author jas5469
+package seedu.address.model.group;
+
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

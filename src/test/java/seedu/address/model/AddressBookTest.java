@@ -93,7 +93,7 @@ public class AddressBookTest {
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
     }
-
+    //@@author jas5469
     @Test
     public void resetData_withDuplicateGroups_throwsAssertionError() {
         // Repeat GROUP_A twice
@@ -107,7 +107,7 @@ public class AddressBookTest {
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
     }
-
+    //@@author
     @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);

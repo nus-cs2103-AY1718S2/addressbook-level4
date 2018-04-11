@@ -1,5 +1,5 @@
-package seedu.address.storage;
 //@@author jas5469
+package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

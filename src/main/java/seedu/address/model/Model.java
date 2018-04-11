@@ -67,8 +67,6 @@ public interface Model {
 
     ReadOnlySchedule getSchedule();
 
-    String printSchedule();
-
     void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException;
 
     void updateProfilePicture(Student target, Student editedStudent, Student finalEditedStudent)

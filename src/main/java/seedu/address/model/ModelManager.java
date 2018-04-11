@@ -85,10 +85,10 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deleteStudent(Student target)
             throws StudentNotFoundException, LessonNotFoundException {
-        addressBook.removeStudent(target);
         schedule.removeStudentLesson(target);
-        indicateAddressBookChanged();
         indicateScheduleChanged();
+        addressBook.removeStudent(target);
+        indicateAddressBookChanged();
     }
 
     @Override
@@ -169,11 +169,6 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate an update of the student index required at the moment in storage */
     private void indicateRequiredStudentIndexChange(int studentIndex) {
         raise(new RequiredStudentIndexChangeEvent(studentIndex));
-    }
-
-    @Override
-    public String printSchedule() {
-        return schedule.print(addressBook);
     }
 
     @Override

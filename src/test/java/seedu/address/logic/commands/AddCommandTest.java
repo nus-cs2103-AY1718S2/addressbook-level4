@@ -183,13 +183,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public String printSchedule() {
-            fail("This method should not be called");
-            return null;
-        }
-
-
-        @Override
         public void loginGoogleAccount() throws CredentialsException {
             fail("This method should not be called");
         }

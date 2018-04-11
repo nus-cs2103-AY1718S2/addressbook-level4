@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.student.dashboard.Date;
 import seedu.address.model.student.dashboard.Milestone;
@@ -24,6 +26,8 @@ public class MilestoneBuilder {
      * Initializes the MilestoneBuilder with the data of {@code milestoneToCopy}.
      */
     public MilestoneBuilder(Milestone milestoneToCopy) {
+        requireNonNull(milestoneToCopy);
+
         dueDate = milestoneToCopy.getDueDate();
         taskList = milestoneToCopy.getTaskList();
         progress = milestoneToCopy.getProgress();
@@ -36,6 +40,8 @@ public class MilestoneBuilder {
      * @throws DuplicateTaskException if the new task is a duplicate of an existing task in the milestone.
      */
     public MilestoneBuilder withNewTask(Task newTask) throws DuplicateTaskException {
+        requireNonNull(newTask);
+
         taskList.add(newTask);
         progress = new ProgressBuilder(progress).withOneNewIncompletedTaskToTotal().build();
 
@@ -48,6 +54,8 @@ public class MilestoneBuilder {
      * @throws TaskNotFoundException if the task is not found in the milestone.
      */
     public MilestoneBuilder withoutTask(Task task) throws TaskNotFoundException {
+        requireNonNull(task);
+
         taskList.remove(task);
         if (task.isCompleted()) {
             progress = new ProgressBuilder(progress).withOneLessCompletedTaskFromTotal().build();
@@ -62,8 +70,9 @@ public class MilestoneBuilder {
      * Marks the specified {@code Task} in the {@code taskList} of the {@code Milestone} we are building as completed.
      */
     public MilestoneBuilder withTaskCompleted(Index taskIndex) throws DuplicateTaskException, TaskNotFoundException {
-        Task targetTask = taskList.get(taskIndex);
+        requireNonNull(taskIndex);
 
+        Task targetTask = taskList.get(taskIndex);
         if (!targetTask.isCompleted()) {
             Task completedTargetTask = new TaskBuilder(targetTask).asCompleted().build();
             taskList.setTask(targetTask, completedTargetTask);

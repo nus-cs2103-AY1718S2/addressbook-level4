@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 import javafx.collections.FXCollections;
@@ -115,6 +116,13 @@ public class UniqueAliasList {
         requireAllNonNull(aliases);
         internalList.setAll(aliases);
         assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
+     * Replaces the aliases in this hashlist with those.
+     */
+    public void replaceHashmap(HashMap<String, String> aliases) {
+        hashList = aliases;
     }
 
     /**

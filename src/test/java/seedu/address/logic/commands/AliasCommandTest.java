@@ -209,9 +209,13 @@ public class AliasCommandTest {
         }
 
         @Override
-        public HashMap<String, String> getAliasList() {
+        public void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newAliasList) {
             fail("This method should not be called.");
-            return null;
+        }
+
+        @Override
+        public HashMap<String, String> getAliasList() {
+            return new HashMap<String, String>();
         }
 
         @Override

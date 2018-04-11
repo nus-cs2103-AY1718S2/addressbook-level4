@@ -43,6 +43,9 @@ public interface Model {
     /** Adds the given alias */
     void addAlias(Alias alias) throws DuplicateAliasException;
 
+//    /** Resets alias list in addressbook with new alias list */
+    void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newAliasList);
+
     /** Returns a hashmap of command mapped to alias */
     HashMap<String, String> getAliasList();
     //@@author

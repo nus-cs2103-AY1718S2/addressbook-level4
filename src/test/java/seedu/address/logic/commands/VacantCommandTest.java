@@ -178,6 +178,11 @@ public class VacantCommandTest {
         }
 
         @Override
+        public void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newAliasList) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public HashMap<String, String> getAliasList() {
             fail("This method should not be called.");
             return null;

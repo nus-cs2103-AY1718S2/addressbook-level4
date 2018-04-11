@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.model.tag.Tag.AVAILABLE_COLORS;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -14,8 +16,7 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
     //@@author jas5469
-    private static final String[] TAG_COLOR_STYLES =
-        {"teal", "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey"};
+    private static final String[] TAG_COLOR_STYLES = AVAILABLE_COLORS;
 
     /**
      * Define tag colour styles
@@ -65,7 +66,7 @@ public class PersonCard extends UiPart<Region> {
     private String getTagColorStyleFor(String tagName) {
         // use the hash code of the tag name to generate a random color, so that the color remain consistent
         // between different runs of the program while still making it random enough between tags.
-        return TAG_COLOR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOR_STYLES.length];
+        return TAG_COLOR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOR_STYLES.length - 1];
     }
 
     /**

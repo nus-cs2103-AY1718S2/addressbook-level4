@@ -353,9 +353,14 @@
     -fx-font-size: 11;
 }
 
+#tags .blue {
+    -fx-text-fill: white;
+    -fx-background-color: blue;
+}
+
 #tags .teal {
     -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
+    -fx-background-color: teal;
 }
 
 #tags .red {
@@ -366,11 +371,6 @@
 #tags .yellow {
     -fx-background-color: yellow;
     -fx-text-fill: black;
-}
-
-#tags .blue {
-    -fx-text-fill: white;
-    -fx-background-color: blue;
 }
 
 #tags .orange {
@@ -401,6 +401,41 @@
 #tags .grey {
     -fx-text-fill: black;
     -fx-background-color: grey;
+}
+
+#tags .purple {
+    -fx-text-fill: yellow;
+    -fx-background-color: purple;
+}
+
+#tags .lime {
+    -fx-text-fill: red;
+    -fx-background-color: lime;
+}
+
+#tags .magenta {
+    -fx-text-fill: black;
+    -fx-background-color: magenta;
+}
+
+#tags .navy {
+    -fx-text-fill: yellow;
+    -fx-background-color: navy;
+}
+
+#tags .aqua {
+    -fx-text-fill: red;
+    -fx-background-color: aqua;
+}
+
+#tags .gold {
+    -fx-text-fill: purple;
+    -fx-background-color: gold;
+}
+
+#tags .white {
+    -fx-text-fill: black;
+    -fx-background-color: white;
 }
 
 /* @@author LeonidAgarth */
@@ -495,6 +530,7 @@
 #calendarPlaceholder .timecell {
     -fx-border-width: 0;
     -fx-pref-width: 100;
+    -fx-min-width: 50;
 }
 
 #calendarPlaceholder .time {

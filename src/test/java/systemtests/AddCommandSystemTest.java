@@ -186,9 +186,9 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: add a pet patient with all fields same as another pet patient in the address book except name
         -> added */
-        toAddPet = new PetPatientBuilder().withName("Joseph").withSpecies(VALID_SPECIES_NERO).withBreed(VALID_BREED_NERO)
-                .withColour(VALID_COLOUR_NERO).withBloodType(VALID_BLOODTYPE_NERO).withTags()
-                .withOwnerNric(bobNric.toString()).build();
+        toAddPet = new PetPatientBuilder().withName("Joseph").withSpecies(VALID_SPECIES_NERO)
+                .withBreed(VALID_BREED_NERO).withColour(VALID_COLOUR_NERO).withBloodType(VALID_BLOODTYPE_NERO)
+                .withTags().withOwnerNric(bobNric.toString()).build();
         command = AddCommand.COMMAND_WORD + OPTION_PET + " n/Joseph" + SPECIES_DESC_NERO + BREED_DESC_NERO
                 + COLOUR_DESC_NERO + BLOODTYPE_DESC_NERO + OPTION_OWNER + NRIC_DESC_BOB;
         assertCommandSuccess(command, toAddPet, bobNric);

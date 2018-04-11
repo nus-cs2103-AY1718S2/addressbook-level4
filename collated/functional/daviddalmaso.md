@@ -1,4 +1,18 @@
 # daviddalmaso
+###### /java/seedu/address/ui/MainWindow.java
+``` java
+    /**
+     * Clears the reInsurance data
+     */
+    @FXML
+    private void handleClear() {
+        try {
+            logic.execute("clear");
+        } catch (CommandException | ParseException e) {
+            logger.log(Level.WARNING, "Unable to clear the reInsurance data");
+        }
+    }
+```
 ###### /java/seedu/address/logic/commands/CountCommand.java
 ``` java
 /**
@@ -232,7 +246,7 @@ public class GoogleCalendarClient {
 ###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
-     * Exports the current address book to data/portfolio.csv
+     * Exports the current address book to portfolio.csv
      */
     public void exportPortfolio() {
         try {

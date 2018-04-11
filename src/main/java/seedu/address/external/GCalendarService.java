@@ -26,8 +26,9 @@ import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.Time;
 import seedu.address.model.student.Student;
 
+// @@author demitycho
+
 /**
- * @@author demitycho
  * Constructs a new GContactsService object to communicate with Google's APIs
  */
 public class GCalendarService {
@@ -172,7 +173,7 @@ public class GCalendarService {
         EventAttendee newAttendee = new EventAttendee();
         newAttendee.setDisplayName(student.getName().toString());
         newAttendee.setEmail(student.getEmail().toString());
-        //newAttendee.setResponseStatus()
+
         return Arrays.asList(newAttendee);
     }
 
@@ -191,7 +192,7 @@ public class GCalendarService {
 
         com.google.api.services.calendar.model.Calendar createdCalendar =
                 service.calendars().insert(newCalendar).execute();
-        System.out.println(createdCalendar.getId());
+
         return createdCalendar.getId();
     }
 

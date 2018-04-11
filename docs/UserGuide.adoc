@@ -192,6 +192,7 @@ Displays a window with the birthdays today
 // end::birthdays[]
 
 === NUS Commands
+
 // tag::union[]
 ==== Viewing common time slots in timetable: `union` (coming in v2.0)
 

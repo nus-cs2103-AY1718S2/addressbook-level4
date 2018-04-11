@@ -54,7 +54,9 @@
             <!-- @@author Livian1107 -->
          <TabPane fx:id="tabPlaceholder" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
            <tabs>
-             <Tab fx:id="profilePlaceholder" text="Profile" />
+             <Tab fx:id="profilePlaceholder" text="Profile">
+                 <StackPane fx:id="profilePanelPlaceholder" VBox.vgrow="ALWAYS"/>
+             </Tab>
              <Tab fx:id="taskPlaceholder" text="Task">
              <!-- @@author -->
                  <!-- @@author EdwardKSG -->

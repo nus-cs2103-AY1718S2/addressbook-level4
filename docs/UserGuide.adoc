@@ -428,26 +428,26 @@ An issue can have more than one assignees and labels.
 ==== Adding a teammate: `add` OR `a`
 
 You can add the contact information of a new teammate to the ProgressChecker. +
-*Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR g/GITHUB_USERNAME [t/TAG]...` +
+*Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL g/GITHUB_USERNAME m/MAJOR y/YEAR [t/TAG]...` +
 OR +
-`a n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR g/GITHUB_USERNAME [t/TAG]...`
+`a n/NAME p/PHONE_NUMBER e/EMAIL g/GITHUB_USERNAME m/MAJOR y/YEAR [t/TAG]...`
 
 [TIP]
 A teammate can have any number of tags (including 0)
 
 *Examples:*
 
-* `add n/John Doe p/98765432 e/johnd@example.com m/Computer Science y/2 g/johndoe`
-* `a n/John Doe p/98765432 e/johnd@example.com m/Computer Science y/2 g/johndoe`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com m/Computer Engineering p/1234567 y/3 g/betsycrowe t/criminal`
-* `a n/Betsy Crowe t/friend e/betsycrowe@example.com m/Information Security y/2 p/1234567 g/betsycrowe t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com g/johndoeGithub m/Computer Science y/2`
+* `a n/John Doe p/98765432 e/johnd@example.com g/johndoeGithub m/Computer Science y/2`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com g/betsycroweGithub m/Computer Engineering p/1234567 y/3 t/criminal`
+* `a n/Betsy Crowe t/friend e/betsycrowe@example.com g/betsycroweGithub m/Information Security y/2 p/1234567 t/criminal`
 
 ==== Editing a teammate : `edit` OR `ed`
 
 You can edit the information of the certain existing teammate in the ProgressChecker. +
-*Format:* `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [m/MAJOR] [y/YEAR] [g/GITHUB_USERNAME] [t/TAG]...` +
+*Format:* `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [g/GITHUB_USERNAME] [m/MAJOR] [y/YEAR] [t/TAG]...` +
 OR +
-`ed INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [m/MAJOR] [y/YEAR] [g/GITHUB_USERNAME] [t/TAG]...`
+`ed INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [g/GITHUB_USERNAME] [m/MAJOR] [y/YEAR] [t/TAG]...`
 
 ====
 *Notes:*
@@ -580,9 +580,9 @@ If you're looking for a quick reference list of commands without all the details
 |===
 |Function | Command | Example
 |*Add*
-|`add n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...` +
-OR `a n/NAME p/PHONE_NUMBER e/EMAIL m/MAJOR y/YEAR [t/TAG]...`
-|add n/James Ho p/22224444 e/jamesho@example.com m/Computer Science y/2 t/friend t/colleague
+|`add n/NAME p/PHONE_NUMBER e/EMAIL g/USERNAME m/MAJOR y/YEAR [t/TAG]...` +
+OR `a n/NAME p/PHONE_NUMBER e/EMAIL g/USERNAME m/MAJOR y/YEAR [t/TAG]...`
+|add n/James Ho p/22224444 e/jamesho@example.com g/JamesGithub m/Computer Science y/2 t/friend t/colleague
 
 |*Answer*
 |`answer INDEX ANSWER`

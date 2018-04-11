@@ -564,6 +564,46 @@ each implementation and the pros and cons of each implementation:
 ** Cons: Will require extra checking and verification.
 // end::addqremoveq
 
+// tag::addqremoveappt[]
+=== Patient Appointment
+==== Current Implementation
+
+The patient appointment mechanism is facilitated by `Appointment`, `AppointmentEntry`, `DateTime`, `UniqueAppointmentEntryList`, `UniqueAppointmentList`, `AddAppointmentCommand`, `DeleteAppointmentCommand`, `ViewAppoinmentCommand`, `AddAppointmenetCommandParser`, `DeleteAppoinmentCommandParser` and `ViewAppointmentCommandParser`.
+It supports adding, deleteting and viewing patient appointments. `AddAppointmentCommand`, `DeleteAppointmentCommand` and `ViewAppoinmentCommand` inherit from `Command`.
+
+The add new patient appointment mechanism functions like that of the `AddCommand` with patient index, date, and time as parameters. It create a new appointment object with date time and stored in patient's list of appointments record. User can find patients with certain keywords in patients' name using `FindCommand` then add a new appointment according to the list index displayed. The `AddPatientQueueCommand` then calls for the utility method addPatientAppointment under `Model`, to add a new patient appointment and trigger a IMDBChangedEvent to the `UI` to update PatientAppointmentPanel or CalendarPanel.
+
+Suppose that the user has just launched the application and logged in as a medical staff. The empty queue is shown in Figure below.
+
+
+The delete appointment mechanism functions like that of the `DeleteCommand` with patient index and appointment index in list of appointment for the particular patient.  The `RemovePatientQueueCommand` then calls for the utility method deletePatientAppointment under `Model`, to update the remove the patient appointment and trigger a IMDBChangedEvent to `UI` to update PatientAppointmentPanel or CalendarPanel.
+
+
+The view appointment mechanism functions like that of the `findCommand` and `listCommand` depends on whether patient index is provided.  If patient index is provided, the `viewAppointmentCommand` then calls for the utility method getPatientFromList by patient index under `Model`, to get the patient and trigger a IMDBChangedEvent to `UI` to update PatientAppointmentPanel to display list of past and future appoinments made by this patient. If patient index is not provided, the `viewAppointmentCommand` then calls for the utility method getAppointmentEntryList under `Model`, to get ta list of appointments made by all patients and trigger a IMDBChangedEvent to `UI` to update CalendarPanel.
+
+==== Design Considerations
+
+The following is an exploration of possible alternative implementations, the various aspects of
+each implementation and the pros and cons of each implementation:
+
+===== Aspect: Data structure to support the AddAppointmentCommand and DeleteAppointmentCommand and viewAppointmentCommand
+
+* **Alternative 1 (current choice):** Using separate customised data structure to store appointment for particular patient and appointments for all patient to be displayed on the calendar panel
+** Pros: Will be easy to implement due to existing utility methods.
+** Cons: May have redundant methods in both data structure
+* **Alternative 2:** Create a appointment superclass or interface and extends from it
+** Pros: Can customise functionalities of the data structure and get rid of redundant methods.
+** Cons: May not find similar behaviour between this two classes.
+
+===== Aspect: Implementation of `AddAppointmentCommand`
+
+
+
+===== Aspect: Implementation of `DeleteAppointmentCommand`
+
+
+// end::addqremoveq
+
 // tag::record[]
 === Edit records feature
 ==== Current Implementation

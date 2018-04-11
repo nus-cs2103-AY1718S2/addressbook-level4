@@ -51,4 +51,7 @@ public class Tag {
         return '[' + tagName + ']';
     }
 
+    public String tagForBrowser() {
+        return tagName;
+    }
 }

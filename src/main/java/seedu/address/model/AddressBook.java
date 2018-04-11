@@ -14,7 +14,9 @@ import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.UniqueNextOfKinList;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -35,6 +37,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueTagList tags;
     private final UniqueSubjectList subjects;
     private final UniqueAppointmentList appointments;
+    private final UniqueNextOfKinList nextOfKins;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -48,6 +51,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags = new UniqueTagList();
         subjects = new UniqueSubjectList();
         appointments = new UniqueAppointmentList();
+        nextOfKins = new UniqueNextOfKinList();
     }
 
     public AddressBook() {}
@@ -66,6 +70,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
+        this.appointments.setAppointments(appointments);
+    }
+
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
@@ -82,11 +90,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagSubjectList)
                 .collect(Collectors.toList());
-
+        List<Appointment> syncedAppointmentList = newData.getAppointmentList().stream()
+                .collect(Collectors.toList());
         try {
             setPersons(syncedPersonList);
+            setAppointments(syncedAppointmentList);
         } catch (DuplicatePersonException e) {
-            throw new AssertionError("AddressBooks should not have duplicate persons");
+            throw new AssertionError("EduBuddy should not have duplicate persons");
+        } catch (DuplicateAppointmentException e) {
+            throw new AssertionError("EduBuddy should not have duplicate appointments");
         }
     }
 
@@ -106,6 +118,21 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.add(person);
+    }
+
+    /**
+     * Adds a person to the address book.
+     * Also checks the new person's tags and subjects and updates {@link #tags #subjects} with any new
+     * tags or subjects found, and updates the Tag objects and Subject objects in the person
+     * to point to those in {@link #tags #subjects}.
+     *
+     * @throws DuplicatePersonException if an equivalent person already exists.
+     */
+    public void addNextOfKin(NextOfKin p) throws DuplicatePersonException {
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the person list.
+        nextOfKins.add(p);
     }
 
     /**
@@ -176,7 +203,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Subject> correctSubjectReferences = new HashSet<>();
         personSubjects.forEach(subject -> correctSubjectReferences.add(masterSubjectObjects.get(subject)));
         return new Person(
-                person.getName(), person.getNric(), correctTagReferences, correctSubjectReferences, person.getRemark());
+                person.getName(), person.getNric(), correctTagReferences, correctSubjectReferences, person.getRemark(),
+                person.getCca(), person.getInjuriesHistory(), person.getNameOfKin());
     }
 
     /**
@@ -260,7 +288,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         Set<Tag> tagList = new HashSet<>(person.getTags());
         if (tagList.remove(tag)) {
             Person newPerson = new Person(person.getName(), person.getNric(), tagList, person.getSubjects(),
-                                        person.getRemark());
+                                        person.getRemark(), person.getCca(), person.getInjuriesHistory(),
+                                        person.getNameOfKin());
             try {
                 updatePerson(person, newPerson);
             } catch (DuplicatePersonException error1) {
@@ -284,7 +313,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         if (tagList.remove(tagToBeReplaced)) {
             tagList.add(tagToBePlaced);
             Person newPerson = new Person(person.getName(), person.getNric(), tagList, person.getSubjects(),
-                                        person.getRemark());
+                                        person.getRemark(), person.getCca(), person.getInjuriesHistory(),
+                                        person.getNameOfKin());
 
             try {
                 updatePerson(person, newPerson);
@@ -309,6 +339,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Person> getPersonList() {
         return persons.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Appointment> getAppointmentList() {
+        return appointments.asObservableList();
     }
 
     @Override

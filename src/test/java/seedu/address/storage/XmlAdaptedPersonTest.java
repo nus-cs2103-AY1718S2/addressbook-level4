@@ -26,6 +26,8 @@ public class XmlAdaptedPersonTest {
             .map(XmlAdaptedTag::new)
             .collect(Collectors.toList());
     private static final String VALID_REMARK = BENSON.getRemark().toString();
+    private static final String VALID_CCA = BENSON.getCca().toString();
+    private static final String VALID_INJURIES_HISTORY = BENSON.getInjuriesHistory().toString();
     /*private static final List<XmlAdaptedSubject> VALID_SUBJECTS = BENSON.getSubjects().stream()
             .map(XmlAdaptedSubject::new)
             .collect(Collectors.toList());*/
@@ -39,14 +41,16 @@ public class XmlAdaptedPersonTest {
     @Test
     public void toModelType_invalidName_throwsIllegalValueException() {
         XmlAdaptedPerson person =
-                new XmlAdaptedPerson(INVALID_NAME, VALID_PHONE, VALID_TAGS, null, VALID_REMARK);
+                new XmlAdaptedPerson(INVALID_NAME, VALID_PHONE, VALID_TAGS, null, VALID_REMARK,
+                                    VALID_CCA, VALID_INJURIES_HISTORY, VALID_NAME);
         String expectedMessage = Name.MESSAGE_NAME_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
     @Test
     public void toModelType_nullName_throwsIllegalValueException() {
-        XmlAdaptedPerson person = new XmlAdaptedPerson(null, VALID_PHONE, VALID_TAGS, null, VALID_REMARK);
+        XmlAdaptedPerson person = new XmlAdaptedPerson(null, VALID_PHONE, VALID_TAGS, null, VALID_REMARK,
+                                                        VALID_CCA, VALID_INJURIES_HISTORY, VALID_NAME);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -54,14 +58,16 @@ public class XmlAdaptedPersonTest {
     @Test
     public void toModelType_invalidPhone_throwsIllegalValueException() {
         XmlAdaptedPerson person =
-                new XmlAdaptedPerson(VALID_NAME, INVALID_PHONE, VALID_TAGS, null, VALID_REMARK);
+                new XmlAdaptedPerson(VALID_NAME, INVALID_PHONE, VALID_TAGS, null, VALID_REMARK,
+                                    VALID_CCA, VALID_INJURIES_HISTORY, VALID_NAME);
         String expectedMessage = Nric.MESSAGE_NRIC_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
     @Test
     public void toModelType_nullPhone_throwsIllegalValueException() {
-        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, null, VALID_TAGS, null, VALID_REMARK);
+        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, null, VALID_TAGS, null, VALID_REMARK,
+                                                        VALID_CCA, VALID_INJURIES_HISTORY, VALID_NAME);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Nric.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -71,7 +77,8 @@ public class XmlAdaptedPersonTest {
         List<XmlAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
         invalidTags.add(new XmlAdaptedTag(INVALID_TAG));
         XmlAdaptedPerson person =
-                new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, invalidTags, null, VALID_REMARK);
+                new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, invalidTags, null, VALID_REMARK, VALID_CCA,
+                                        VALID_INJURIES_HISTORY, VALID_NAME);
         Assert.assertThrows(IllegalValueException.class, person::toModelType);
     }
 

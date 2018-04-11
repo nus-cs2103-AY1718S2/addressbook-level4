@@ -580,7 +580,7 @@ html file called by the function.
 
 A new remark component is added to the person model.
 
-image::ModelClassDiagram.png[width="800"]
+image::ModelClassDiagramWithRemark.png[width="800"]
 
 This remark feature allows the user to add remarks to the student profile of the specified student.
 

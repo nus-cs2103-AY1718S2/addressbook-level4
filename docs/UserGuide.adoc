@@ -35,7 +35,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for _EduBuddy_.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::UI.png[width="800"]
+image::Ui.png[width="800"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -61,36 +61,43 @@ Command input is *case insensitive*, e.g `fInD Alex` and `find Alex` works the s
 
 === Viewing help : `help`
 
-Shows the help page. +
+If you are unsure about the features of the _EduBuddy_, or require any technical assistance, type `help` and you will be shown with the help page. +
 Format: `help`
+
+*_return to <<toc,Table of Contents>>_*
 
 === Adding a student: `add` or `a`
 
 Adds a student to _EduBuddy_ +
-Format: `add n/NAME p/PHONE_NUMBER ic/NRIC t/CLASS t/CLASS_REGISTER sub/SUBJECT_NAME SUBJECT_GRADE SUBJECT_NAME2 SUBJECT_GRADE2...` +
-Abbreviation Format: `a n/NAME p/PHONE_NUMBER ic/NRIC t/CLASS t/CLASS_REGISTER sub/SUBJECT_NAME SUBJECT_GRADE SUBJECT_NAME2 SUBJECT_GRADE2...`
-
-[NOTE]
-Students with the same name can be added, provided that their IC numbers are different.
+Format: `add n/NAME ic/NRIC nok/NAME_OF_KIN [t/CLASS] [r/REMARK] [sub/SUBJECT_NAME SUBJECT_GRADE ...]` +
+Abbreviation Format: `a n/NAME ic/NRIC nok/NAME_OF_KIN [t/CLASS] [r/REMARK] [sub/SUBJECT_NAME SUBJECT_GRADE ...]`
 
 [IMPORTANT]
+When adding a student, at least a `NAME`, a `NRIC` and a `NAME_OF_KIN` should be provided. +
 A `SPACE` should be inserted between each `SUBJECT_NAME` and `SUBJECT_GRADE`. +
-At least 1 subject from each L1R5 category should be assigned to a student. +
-For example: English, EMath(Elementary Mathematics), Hist(History), Chinese, Phy(Physics), Music. +
-For more examples on what subjects and subject grades can be added, please refer to the <<FAQ>> section below.
+
+[NOTE]
+* At least 1 subject from each L1R5 category should be assigned to a student. +
+* For example: English, EMath(Elementary Mathematics), Hist(History), Chinese, Phy(Physics), Music. +
+* For more examples on what subjects and subject grades can be added, please refer to the <<FAQ>> section below.
+* If you want to change the details later, you can use the `Edit` feature at <<Editing a student : `edit` or `e`>>.
 
 Examples:
 
-* `add n/John Doe p/91234567 ic/S9500186H t/1A t/20 sub/English B3 EMath A2`
-* `add n/Betsy Crowe p/91234567 t/2B t/21 ic/S9511111I`
-* `a n/John Doe p/91234567 ic/S9500186H t/1A t/2 sub/English B3 EMath A2`
-* `a n/Betsy Crowe p/91234567 t/2B t/21 ic/S9511111I`
+* `add n/John Doe ic/S9500186H nok/Jonathan t/1A r/English Rep
+sub/English B3 EMath A2 Chinese A1 Phy A1 AMath A1 Hist A2`
+* `add n/Betsy Crowe ic/S9511111I nok/Betty Crowe`
+* `a n/John Doe ic/S9500186H nok/Jonathan t/1A r/English Rep sub/English B3 EMath A2 Chinese A1 Phy A1 AMath A1 Hist A2`
+* `a n/Betsy Crowe ic/S9511111I nok/Betty`
+
+*_return to <<toc,Table of Contents>>_*
 
 === Listing all students : `list` or `l`
-
 Shows a list of all students in _EduBuddy_. +
 Format: `list` +
 Abbreviation Format: `l`
+
+*_return to <<toc,Table of Contents>>_*
 
 === Sorting all students : `sort` [since v1.2]
 
@@ -107,18 +114,20 @@ Sorts the list of students by name in alphabetical order (case insensitive).
 * `sort tag` +
 Sorts the list of students by tag in alphabetical and numerical order (case insensitive)
 
+*_return to <<toc,Table of Contents>>_*
+
 === Editing a student : `edit` or `e`
 Edits an existing student in _EduBuddy_.The existing fields will then be updated accordingly. +
-Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
-Abbreviation Format: `e INDEX [n/NAME] [p/PHONE_NUMBER] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE]`
+Format: `edit INDEX [n/NAME] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE ...]` +
+Abbreviation Format: `e INDEX [n/NAME] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE ...]`
 
 [NOTE]
 Edits the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. +
 
-
 [IMPORTANT]
-At least one of the optional fields must be provided. +
-`INDEX` *must be a positive integer*: 1, 2, 3, ...
+* At least one of the optional fields must be provided. +
+* `INDEX` *must be a positive integer*: 1, 2, 3, ... +
+* When editing subjects, the previous subjects will be overwritten by the new subjects.
 
 Examples:
 
@@ -182,24 +191,23 @@ Deletes the 1st student in the results of the `find` command.
 
 === Deleting a tag : `tagdelete` or `td` [since v1.1]
 
-Deletes the specified tag from every student in _EduBuddy_. +
+When you have added the wrong `Class tag`,
+or when the secondary 4 students have moved to the next higher education level,
+and you want to remove the `Class tag` from every student who has the `Class tag` assigned to them.
+
+This command deletes the specified tag from every student in _EduBuddy_. +
 Format: `tagdelete TAGNAME` +
 Abbreviation Format: `td TAGNAME`
-
-[NOTE]
-The tag refers to the index number shown in the most recent listing.
 
 [IMPORTANT]
 The tag must be a valid tag name that is assigned to at least one student in the _EduBuddy_.
 
-If successful, you will see the following result:
-
-image::TagDeleteResult.png[width="800"]
-
 Examples:
 
-* `tagdelete Class1A` or `td Class1A` +
-Deletes the 'Class 1A' tag from every student in the _EduBuddy_.
+image::TagDeleteResult.png[width="650"]
+
+* `tagdelete 4A` or `td 4A` +
+Deletes the '4A' tag from every student in the _EduBuddy_.
 
 *_return to <<toc,Table of Contents>>_*
 
@@ -225,11 +233,12 @@ Examples:
 * `tagreplace t/Class1A t/Class2A` or `tr t/Class1A t/Class2A` +
 Replaces the 'Class 1A' tag from every student in _EduBuddy_ with 'Class 2A'.
 
-*_return to <<toc,Table of Contents>>_*
-
 image::TagReplaceCommand.png[width="650"]
 
-=== Adding a remark : `addremark`
+*_return to <<toc,Table of Contents>>_*
+
+
+=== Adding a remark : `addremark` [Since v1.4]
 
 Adds a remark to a specified student in EduBuddy.
 Format: `addremark INDEX r/REMARK`
@@ -244,11 +253,11 @@ Format: `addremark INDEX r/REMARK`
 Examples:
 * `list` +
 `addremark 2 r/Class Monitor` +
-Adds a remark to the 2nd student in EduBuddy.
+Adds a remark, Class Monitor, to the 2nd student in EduBuddy.
 
 image::AddRemarkCommand.png[width="650"]
 
-=== Deleting a remark : `deleteremark`
+=== Deleting a remark : `deleteremark` [Since v1.4]
 
 Delete a remark to a specified student in EduBuddy.
 Format: `deleteremark INDEX r/REMARK`
@@ -269,24 +278,28 @@ image::DeleteRemarkCommand.png[width="650"]
 
 === Selecting a person : `select` or `s`
 
+When you want to view a student's personal details like academic grades, cca grades etc, you can view it by selecting the student.
+
 Selects the student identified by the index number used in the last student listing. +
 Format: `select INDEX` +
 Abbreviation Format: `s INDEX`
 
 [NOTE]
-Checks that the student selected has the expected number of subjects (minimum 6) and the right subject combination assigned to him/her. +
-Selects the student and loads the student profile of the student at the specified `INDEX`. +
-The index refers to the index number shown in the most recent listing.
+* Selects the student and loads the student profile of the student at the specified `INDEX`. +
+* The index refers to the index number shown in the most recent listing.
 
 [IMPORTANT]
 The index *must be a positive integer*: 1, 2, 3, ...
 
 Examples:
 
+image::SelectCommandSuccess.png[width="800"]
+
 * `list` +
-`select 2` +
-Selects the 2nd student in _EduBuddy_.
-* `find Betsy` +
+`select 4` +
+Selects the 4th student in _EduBuddy_.
+
+* `find Johnny` +
 `s 1` +
 Selects the 1st student in the results of the `find` command.
 
@@ -359,41 +372,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `r` (reapplies the `clear` command) +
 // end::undoredo[]
 
-// tag::remarks Command[]
-=== Remarks Command `[Since v1.3]`
-
-Adds a remark to the student. +
-Format: `remark INDEX r/REMARK` +
-
-****
-* Adds a remark to the student profile of the student at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`remark 2` +
-Adds a remark to the 2nd student in EduBuddy.
-* `find Betsy` +
-`remark 1` +
-Adds a remark to the 1st student in the results of the `find` command.
-
-// end::remarks Command[]
-
 *_return to <<toc,Table of Contents>>_*
-
-=== Clearing all entries : `clear` or `c`
-
-Clears all student entries from _EduBuddy_. +
-Format: `clear` +
-Abbreviation Format: `c`
-
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit`
 
 === Creating an appointment: `appointment` or `appt` [since v1.4]
 
@@ -405,9 +384,13 @@ Format: `appointment INDEX d/DATE s/START_TIME e/END_TIME` +
 Abbreviation Format: `appt INDEX d/DATE s/START_TIME e/END_TIME`
 
 [IMPORTANT]
-`DATE` should be in *DDMMYYYY* format e.g. 25th Dec 2018 would be 25122018. +
-`START_TIME` and `END_TIME` should be in *24 hour* format e.g. 3:30p.m. would be 1530. +
-`INDEX` *must be a positive integer*: 1, 2, 3, ...
+* `DATE` should be in *DDMMYYYY* format e.g. 25th Dec 2018 would be 25122018. +
+* `START_TIME` and `END_TIME` should be in *24 hour* format e.g. 3:30p.m. would be 1530. +
+* `INDEX` *must be a positive integer*: 1, 2, 3, ...
+
+[NOTE]
+After the appointment is successfully created, right click on the calendar and select
+`Reload page` to see your appointment.
 
 Examples:
 
@@ -418,11 +401,68 @@ Creates an appointment with the 3rd student on 20th Apr 2018 from 9:30a.m. to 11
 
 *_return to <<toc,Table of Contents>>_*
 
+=== Viewing streaming score: `stream` [since v1.5]
+
+If you want to know if the student is qualified to enter the next education level, Junior College or Polytechnic, you can view the respective streaming score using this command.
+
+Format: `stream INDEX STREAM_TYPE`
+You will be able to see a success message in the CommandBox, For example: `Student: John Doe. L1R5 Score: 8`.
+
+[NOTE]
+* Selects the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. +
+* `STREAM_TYPE` refers to the different streaming categories.
+[width="85%",cols="<23%,<23%",options="header",]
+|=======================================================================
+|STREAM_TYPE|Streaming categories
+|1| L1R5
+|2| L1B4-A or L1R2B2-A
+|3| L1B4-B or L1R2B2-B
+|4| L1B4-C or L1R2B2-C
+|5| L1B4-D or L1R2B2-D
+|=======================================================================
+
+[IMPORTANT]
+* `INDEX` *must be a positive integer*: 1, 2, ...
+* `STREAM_TYPE` *must be a positive integer*: 1, 2, 3, 4, 5.
+* The `Student` should have the right subject combination to calculate the respective score.
+* If you want to change the subject details, you can use the `Edit` feature at <<Editing a student : `edit` or `e`>>.
+
+Examples:
+
+* `stream 1 1` +
+Returns the L1R5 score obtained by the student based on his/her grades.
+* `stream 1 2` +
+Returns the L1B4-A score obtained by the student based on his/her grades.
+
+*_return to <<toc,Table of Contents>>_*
+
+=== Adding a CCA to a student : `addcca` [since v1.5]
+Adds a CCA to the student records in _EduBuddy_. +
+Format: `addcca 1 cca/CCA pos/POSITION` +
+You will be able to see the success message, `CCA added: CCA: POSITION` +
+`Person: NAME`
+
+=== Clearing all entries : `clear` or `c`
+
+Clears all student entries from _EduBuddy_. +
+Format: `clear` +
+Abbreviation Format: `c`
+
+*_return to <<toc,Table of Contents>>_*
+
+=== Exiting the program : `exit`
+
+Exits the program. +
+Format: `exit`
+
+*_return to <<toc,Table of Contents>>_*
 
 // tag::CCA section[]
 === CCA section `[coming in v2.0]`
 
 _{Allows the teachers to key in which CCA the students are in and to keep track of attendance.}_
+
+*_return to <<toc,Table of Contents>>_*
 
 // end::CCA section[]
 
@@ -431,12 +471,17 @@ _{Allows the teachers to key in which CCA the students are in and to keep track 
 
 _{Allows the teachers to key in the levels attained by the student for the various domains in L.E.A.P.S
   to calculate the Co-Curricular Attainment of the student.}_
+
 // end::L.E.A.P.S System[]
+*_return to <<toc,Table of Contents>>_*
+
 
 === Saving the data
 
 EduBuddy data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+*_return to <<toc,Table of Contents>>_*
 
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
@@ -451,20 +496,28 @@ _{explain how the user can enable/disable data encryption}_
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous EduBuddy folder.
 
-*Q*: What is L1B4? +
+*Q*: What is L1B4 (as known as L1R2B2)? +
 *A*: A grading system for Secondary School students taking "O-Level Examination" at the end of their four years of studies in Secondary School.
      The score obtained from the grading system will be used to determine the eligibility of the students to enter the next level of education, Polytechnic.
      `L1` represents the First language subject and `B4` represents 2 relevant subjects, according to the polytechnic course applied, and 2 other best subjects.
-     The score will be calculated by considering the subjects' grades. Each subject can only be considered once.
+     The category the relevant subject is under(for example: L1B4-A, L1B4-B, L1B4-C, L1B4D), will determine which subjects are the relevant subjects.
+The score will be calculated by considering the subjects' grades. Each subject can only be considered once.
+
+If you want to find out more about the subject categories (L1B4-A, L1B4-B, L1B4-C, L1B4D),
+please visit:
+
+* Singapore Polytechnic: https://www.sp.edu.sg/wps/portal/vp-spws/!ut/p/a0/04_Sj9CPykssy0xPLMnMz0vMAfGjzOJDPUxdjdxMTQws3J1cDDwt_MJMXZxDDE3cDfQLsh0VAYY7oWE!/?PC_Z7_UH5E2F540G6P00IO8K5AU61JM5027774_WCM_CONTEXT=/wps/wcm/connect/lib-spws/site-spwebsite/future+students/admissions/selection+criteria+for+gce+o+level+holders+-+aggregate+computation++%28admissions+-+course+intakes+and+cut-off+points%29
+* Temasek Polytechnic: http://www.tp.edu.sg/admissions/gce-o-level-aggregate-scores-computation
+* Other Polytechnics: https://www.moe.gov.sg/education/post-secondary#polytechnics
 
 *Q*: What is L1R5? +
 *A*: L1R5 is a grading system used in Singapore to determine the secondary school students' proficiency in the subjects taken for "O-Level Examination".
 The score is used for the students to enroll into Junior Colleges, which is the next higher level of education. "L1" refers to the first language subject taken by the student, while "R5" refers to the 5 relevant subjects that are examinable by the students.
 The grade of L1R5 is then determined by taking the best grades of each category and summing them up, for example, if a student scores A1 for all 6 subjects are from each category, the score will be 6. Each subject can only be considered once.
+For more information, please visit: https://www.moe.gov.sg/admissions/direct-admissions/dsa-jc/eligibility
 
 *Q*: How are the grades for the subjects determined? +
 *A*: The level of achievement in each subject is indicated by the grade obtained, with A1 being the highest achievable grade and F9 the lowest:
-
 [width="85%",cols="22%,<23%",options="header",]
 |=======================================================================
 |Grade|Percentage of Competency
@@ -482,7 +535,9 @@ The grade of L1R5 is then determined by taking the best grades of each category 
 *Q*: What are the subjects are in the L1R5 category? +
 *A*: These are the following subjects that are examinable in "O-level Examinations" in Singapore (as of Year 2018).
 [NOTE]
-The subjects in the brackets are not to be used as input. The subjects not in brackets are preferred for better efficiency in typing.
+The subjects in the brackets are not to be used as input. The subjects not in brackets are preferred for better efficiency in typing. +
+For example, type in: `Hist A1` *not* `History A1`
+
 [width="85%",cols="22%,<23%",options="header",]
 |=======================================================================
 |Subject Category|Subjects
@@ -500,6 +555,48 @@ The subjects in the brackets are not to be used as input. The subjects not in br
 
 * The following subjects can be assigned to students but are not considered as O-Level subjects: ChiB (Chinese B), MalayB (Malay B), TamilB(Tamil B).
 
+*Q*: What is CCA and CCA score? +
+*A*:
+CCA stands for Co-Curricular Activities. It functions as a non-academic activity where students can have a more enriching experience in school. Find out more at: https://www.moe.gov.sg/education/programmes/co-curricular-activities. +
+
+CCA score is used as an indicator of the students' contribution in the non-academic aspect, and can be used to improve the students' streaming score.
+For more information about CCA score, please visit: https://www.moe.gov.sg/docs/default-source/document/education/programmes/co-curricular-activities/leaps-2.pdf
+
+*Q*: What is LEAPS? +
+*A*: It stands for Leadership, Enrichment, Achievement, Participation, and Service. It is a grading system for the schools to determine the CCA score for each student. +
+For more information about LEAPS, please visit: https://www.moe.gov.sg/docs/default-source/document/education/programmes/co-curricular-activities/leaps-2.pdf
+
+*Q*: What comprises the post-secondary education? +
+*A*: There are many different platforms of post-secondary education. We are currently focusing on Polytechnics and Junior Colleges.
+For more information about the platforms, please visit:
+https://www.moe.gov.sg/education/post-secondary
+
+*Q*: Why the information in the User Guide is not updated? +
+*A*: The _EduBuddy_ is created in the Year 2018, so the information are all based in 2018. And, we are not part of the Ministry of Education so we may be lacking in expertise in this area.
+If you want to see the latest update on the education system, you can visit: https://www.moe.gov.sg/home.
+
+* If you want us to update the _EduBuddy_, you can post issues on our website, https://github.com/CS2103JAN2018-T09-B1/main/issues.
+Please go through the following 2 steps to post an issue:
+
+[[IMPORTANT]]
+You should have a `GitHub` account to post an issue. If you don't, you can create one at https://github.com/join.
+
+.Step 1: Create new issue
+image::NewIssueStep1.png[width="800"]
+.Step 2: Submit new issue
+image::NewIssueStep2.png[width="800"]
+
+* If you want to see that your issue is posted, you can follow the next 2 steps.
+
+.Step 3: Return to main issue page
+image::NewIssueStep3.png[width="800"]
+or you can go back to https://github.com/CS2103JAN2018-T09-B1/main/issues.
+
+.Step 4: View issue
+image::NewIssueStep4.png[width="800"]
+
+We will let you know through your `GitHub` account or the email linked to your `GitHub` account once we have address your issue.
+
 *_return to <<toc,Table of Contents>>_*
 
 == Command Summary
@@ -513,9 +610,9 @@ The table below provides a quick summary of all the commands available in EduBud
 |*Add* |Adds a student entry |`add n/NAME ic/NRIC t/CLASS t/CLASS_REGISTER sub/SUBJECT_NAME SUBJECT_GRADE` +
 OR +
 `a n/NAME ic/NRIC t/CLASS t/CLASS_REGISTER sub/SUBJECT_NAME SUBJECT_GRADE`
-|`add n/James Ho p/22224444 ic/S9500186H t/1A t/20 sub/English A2` +
+|`add n/James Ho ic/S9500186H t/1A t/20 sub/English A2 EMath A1 Chinese A1 Phy A1 AMath A1 Hist A2` +
 OR +
-`a n/James Ho p/22224444 ic/S9500186H t/1A t/20 sub/English A2`
+`a n/James Ho ic/S9500186H t/1A t/20 sub/English A2 EMath A1 Chinese A1 Phy A1 AMath A1 Hist A2`
 
 |*Appointment* |Creates an appointment |`appointment INDEX d/DATE s/START_TIME e/END_TIME` +
 OR +
@@ -588,6 +685,10 @@ OR +
 OR +
 `sort tag`
 
+|*Stream* |Returns a specific streaming score of a student |`stream INDEX STREAM_TYPE`|`stream 1 1` +
+OR +
+`stream 1 2`
+
 |*TagDelete* |Deletes a tag from every student|`tagdelete TAGNAME` +
 OR +
 `td TAGNAME`
@@ -597,10 +698,11 @@ OR +
 
 |*TagReplace* |Replaces a tag for every student|`tagreplace t/TAGNAME t/TAGNAME` +
 OR +
-`tr t/TAGNAME t/TAGNAME`
-|`tagreplace t/CLASS2A t/CLASS3A` +
-OR +
-`tr t/CLASS2A t/CLASS3A`
+`tr t/TAGNAME t/TAGNAME`|
+
+|*AddRemark* |Adds a remark to a specific student|`addremark 1 r/REMARK`|
+
+|*DeleteRemark* |Deletes a remark from a specific student|`deleteremark 1 r/REMARK`|
 
 |*Undo* |Undo previous command |`undo` +
 OR +

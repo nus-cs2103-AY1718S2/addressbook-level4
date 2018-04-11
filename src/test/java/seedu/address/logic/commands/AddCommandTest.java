@@ -24,6 +24,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -113,6 +114,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addNextOfKin(NextOfKin nextOfKin) {
+
+        }
+
+        @Override
         public void addPage(Person person) throws IOException {
 
         }
@@ -171,6 +177,17 @@ public class AddCommandTest {
         @Override
         public void addAppointment(Appointment appointment) {
             fail("This method should not be called");
+        }
+
+        @Override
+        public ObservableList<Appointment> getFilteredAppointmentList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredAppointmentList(Predicate<Appointment> predicate) {
+            fail("This method should not be called.");
         }
     }
 

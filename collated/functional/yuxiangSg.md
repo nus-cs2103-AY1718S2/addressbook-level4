@@ -111,6 +111,7 @@ public class EditAppointmentCommand extends UndoableCommand {
     private final EditAppointmentDescriptor editAppointmentDescriptor;
 
     private AppointmentEntry appointmentEdited;
+    private AppointmentEntry appointmentToEdit;
 
 
     /**
@@ -128,7 +129,7 @@ public class EditAppointmentCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            model.editAppointment(searchText, appointmentEdited);
+            model.editAppointment(searchText, appointmentEdited, appointmentToEdit);
             return new CommandResult(String.format(MESSAGE_SUCCESS, appointmentEdited));
         } catch (EditAppointmentFailException e) {
             throw new CommandException(MESSAGE_FAIL_EDIT_APPOINTMENT);
@@ -138,28 +139,36 @@ public class EditAppointmentCommand extends UndoableCommand {
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        AppointmentEntry appointmentToEdit;
         try {
             appointmentToEdit = model.findAppointment(searchText);
         } catch (AppointmentNotFoundException e) {
             throw new CommandException(MESSAGE_FAIL_EDIT_APPOINTMENT);
         }
 
-        appointmentEdited = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
+        try {
+            appointmentEdited = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
+        } catch (IllegalValueException e) {
+            throw new CommandException(AppointmentEntry.MESSAGE_INTERVAL_CONSTRAINTS);
+        }
     }
 
     /**
      * Creates and returns a {@code Appointment} with the details of Appointmententry found by SearchText
      * edited with {@code editAppointmentDescriptor}.
      */
-    private static AppointmentEntry createEditedAppointment(AppointmentEntry appointmentToEdit,
-                                                            EditAppointmentDescriptor descriptor) {
+    private static AppointmentEntry createEditedAppointment(
+            AppointmentEntry appointmentToEdit, EditAppointmentDescriptor descriptor) throws IllegalValueException {
         requireNonNull(appointmentToEdit);
 
         String updatedTitle = descriptor.getGivenTitle().orElse(appointmentToEdit.getGivenTitle());
         LocalDateTime updatedStartDateTime =
                 descriptor.getStartDateTime().orElse(appointmentToEdit.getStartDateTime());
         LocalDateTime updatedEndDateTime = descriptor.getEndDateTime().orElse(appointmentToEdit.getEndDateTime());
+
+        if (!AppointmentEntry.isValidInterval(updatedStartDateTime, updatedEndDateTime)) {
+            throw new IllegalValueException(AppointmentEntry.MESSAGE_INTERVAL_CONSTRAINTS);
+        }
+
         Interval updatedInterval = new Interval(updatedStartDateTime, updatedEndDateTime);
 
         return new AppointmentEntry(updatedTitle, updatedInterval);
@@ -249,7 +258,7 @@ public class EditAppointmentCommand extends UndoableCommand {
 public class LookDateCommand extends Command {
     public static final String COMMAND_WORD = "look";
 
-    public static final String DATE_VALIDATION = "d/MM/yyyy";
+    public static final String DATE_VALIDATION = "d/MM/uuuu";
 
     public static final String MESSAGE_DATE_CONSTRAINTS =
             "Date should be in the format of dd/MM/yyyy";
@@ -367,8 +376,12 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
             String appointmentTitle = ParserUtil.parseString(argMultimap.getValue(PREFIX_NAME)).get();
             LocalDateTime startDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_START_INTERVAL)).get();
             LocalDateTime endDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_END_INTERVAL)).get();
-            Interval interval = new Interval(startDateTime, endDateTime);
 
+            if (!AppointmentEntry.isValidInterval(startDateTime, endDateTime)) {
+                throw new IllegalValueException(AppointmentEntry.MESSAGE_INTERVAL_CONSTRAINTS);
+            }
+
+            Interval interval = new Interval(startDateTime, endDateTime);
 
             AppointmentEntry appointmentEntry = new AppointmentEntry(appointmentTitle, interval);
 
@@ -517,8 +530,8 @@ public class LookDateCommandParser implements Parser<LookDateCommand> {
     static LocalDateTime parseDateTime(String input) throws  IllegalValueException {
         requireNonNull(input);
         String trimmedInput = input.trim();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppointmentEntry.DATE_VALIDATION);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppointmentEntry.DATE_TIME_VALIDATION)
+                .withResolverStyle(ResolverStyle.STRICT);
 
         try {
 
@@ -551,8 +564,8 @@ public class LookDateCommandParser implements Parser<LookDateCommand> {
     static LocalDate parseDate(String input) throws  IllegalValueException {
         requireNonNull(input);
         String trimmedInput = input.trim();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(LookDateCommand.DATE_VALIDATION);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(LookDateCommand.DATE_VALIDATION)
+                .withResolverStyle(ResolverStyle.STRICT);
 
         try {
 
@@ -649,9 +662,9 @@ public class RemoveAppointmentCommandParser implements Parser<RemoveAppointments
      *
      * @throws EditAppointmentFailException if an equivalent appointment already exists.
      */
-    public void editAppointment(String searchText, AppointmentEntry referenceEntry)
+    public void editAppointment(String searchText, AppointmentEntry referenceEntry, AppointmentEntry original)
             throws EditAppointmentFailException {
-        calendar.editAppointmentEntry(searchText, referenceEntry);
+        calendar.editAppointmentEntry(searchText, referenceEntry, original);
     }
 
     /**
@@ -679,23 +692,25 @@ public class RemoveAppointmentCommandParser implements Parser<RemoveAppointments
 public class AppointmentEntry {
 
     public static final String MESSAGE_DATE_TIME_CONSTRAINTS =
-            "Date and Time should be in the format of dd/MM/yyyy HH:mm";
-    public static final String DATE_VALIDATION = "d/MM/yyyy HH:mm";
+            "Date and Time should be in the format of d/MM/yyyy HH:mm and the date time must exist";
+    public static final String MESSAGE_INTERVAL_CONSTRAINTS = "Start date time must be before end date time";
+    public static final String DATE_TIME_VALIDATION = "d/MM/uuuu HH:mm";
 
-    private final Entry appointmentEntry;
+
+    private final CalendarEntry appointmentEntry;
     private Interval interval;
     private String givenTitle;
 
     public AppointmentEntry(String title, Interval timeSlot) {
         requireAllNonNull(title, timeSlot);
-        appointmentEntry = new Entry(title, timeSlot);
+        appointmentEntry = new CalendarEntry(title, timeSlot);
         interval = timeSlot;
         givenTitle = title;
     }
 
     public AppointmentEntry(AppointmentEntry clonedEntry) {
         requireAllNonNull(clonedEntry);
-        appointmentEntry = new Entry(clonedEntry.getGivenTitle(), clonedEntry.getInterval());
+        appointmentEntry = new CalendarEntry(clonedEntry.getGivenTitle(), clonedEntry.getInterval());
         interval = clonedEntry.getInterval();
         givenTitle = clonedEntry.getGivenTitle();
     }
@@ -720,14 +735,22 @@ public class AppointmentEntry {
         return interval;
     }
 
+    /**
+     * checks if the startDateTime is before the endDateTime
+     */
+    public static boolean isValidInterval(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        return startDateTime.isBefore(endDateTime);
+    }
+
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_VALIDATION);
         builder.append(givenTitle)
-                .append(" Start Date: ")
-                .append(interval.getStartDate().toString())
-                .append(" End Date: ")
-                .append(interval.getEndDate().toString());
+                .append(" Start Date Time: ")
+                .append(interval.getStartDateTime().format(formatter))
+                .append(" End Date Time: ")
+                .append(interval.getEndDateTime().format(formatter));
 
         return builder.toString();
     }
@@ -744,6 +767,23 @@ public class AppointmentEntry {
 
         AppointmentEntry otherAppointment = (AppointmentEntry) other;
         return otherAppointment.givenTitle.equals(this.getGivenTitle());
+    }
+    /**
+     * CalendarFx Entry, overrides matches
+     */
+    public static class CalendarEntry extends Entry {
+        public CalendarEntry(String title, Interval interval) {
+            super(title, interval);
+        }
+
+        @Override
+        public boolean matches(String searchTerm) {
+            if (searchTerm.equals(this.getTitle())) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 }
 ```
@@ -833,6 +873,17 @@ public class InsuranceCalendar {
     }
 
     /**
+     * Adds back an deleted appointment to the calendar.
+     *
+     */
+    public void addBackAppointment(AppointmentEntry entry) {
+
+        calendar.addEntry(new AppointmentEntry(entry).getAppointmentEntry());
+        appointmentEntries.add(entry);
+
+    }
+
+    /**
      * Remove appointments found with the given keywords in the calendar.
      *
      * @throws AppointmentNotFoundException if the appointment to remove does not exist.
@@ -869,7 +920,7 @@ public class InsuranceCalendar {
      *
      * @throws EditAppointmentFailException if the appointment to remove does not exist or duplicate appointment to add.
      */
-    public void editAppointmentEntry(String searchText, AppointmentEntry referenceEntry)
+    public void editAppointmentEntry(String searchText, AppointmentEntry referenceEntry, AppointmentEntry originalEntry)
             throws EditAppointmentFailException {
 
         try {
@@ -881,6 +932,7 @@ public class InsuranceCalendar {
         try {
             addAppointment(referenceEntry);
         } catch (DuplicateAppointmentException e) {
+            addBackAppointment(originalEntry);
             throw new EditAppointmentFailException();
         }
     }
@@ -945,7 +997,8 @@ public class InsuranceCalendar {
     void removeAppointment(String searchText) throws AppointmentNotFoundException;
 
     /** edit appointment associated with the given searchText */
-    void editAppointment(String searchText, AppointmentEntry reference) throws EditAppointmentFailException;
+    void editAppointment(String searchText, AppointmentEntry reference, AppointmentEntry original)
+            throws EditAppointmentFailException;
 
     /** find an appointment associated with the given searchText */
     AppointmentEntry findAppointment(String searchText) throws AppointmentNotFoundException;
@@ -969,8 +1022,9 @@ public class InsuranceCalendar {
     }
 
     @Override
-    public void editAppointment(String searchText, AppointmentEntry reference) throws EditAppointmentFailException {
-        addressBook.editAppointment(searchText, reference);
+    public void editAppointment(String searchText, AppointmentEntry reference, AppointmentEntry original)
+            throws EditAppointmentFailException {
+        addressBook.editAppointment(searchText, reference, original);
         indicateAddressBookChanged();
 
     }

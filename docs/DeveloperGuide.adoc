@@ -595,14 +595,14 @@ each implementation and the pros and cons of each implementation:
 ** Pros: Can customise functionalities of the data structure and get rid of redundant methods.
 ** Cons: May not find similar behaviour between this two classes.
 
-===== Aspect: Implementation of `AddAppointmentCommand`
+===== Aspect: Implementation of AddAppointmentCommand
 
 
 
-===== Aspect: Implementation of `DeleteAppointmentCommand`
+===== Aspect: Implementation of DeleteAppointmentCommand
 
 
-// end::addqremoveq
+// end::addqremoveappt
 
 // tag::record[]
 === Edit records feature

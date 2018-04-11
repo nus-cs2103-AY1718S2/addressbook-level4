@@ -6,15 +6,14 @@ import java.util.function.Predicate;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.conditions.AmountHeldCondition;
 import seedu.address.logic.conditions.CodeCondition;
+import seedu.address.logic.conditions.CurrentPriceCondition;
 import seedu.address.logic.conditions.DollarsBoughtCondition;
 import seedu.address.logic.conditions.DollarsSoldCondition;
 import seedu.address.logic.conditions.MadeCondition;
-import seedu.address.logic.conditions.PriceCondition;
 import seedu.address.logic.conditions.TagCondition;
 import seedu.address.logic.conditions.WorthCondition;
 import seedu.address.model.coin.Amount;
 import seedu.address.model.coin.Coin;
-import seedu.address.model.coin.Price;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -92,7 +91,6 @@ public class ConditionGenerator {
      */
     Predicate<Coin> getPredicateFromPrefix(TokenType type) throws IllegalValueException {
         BiPredicate<Amount, Amount> amountComparator;
-        BiPredicate<Price, Price> priceComparator;
         Double specifiedAmount;
         switch (type) {
         case PREFIX_HELD:
@@ -116,9 +114,9 @@ public class ConditionGenerator {
             return new MadeCondition(new Amount(specifiedAmount), amountComparator);
 
         case PREFIX_PRICE:
-            priceComparator = getPriceComparatorFromToken(tokenStack.popToken());
+            amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseDouble(tokenStack.popToken().getPattern());
-            return new PriceCondition(new Price(specifiedAmount), priceComparator);
+            return new CurrentPriceCondition(new Amount(specifiedAmount), amountComparator);
 
         case PREFIX_WORTH:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
@@ -139,19 +137,6 @@ public class ConditionGenerator {
     }
 
     private static BiPredicate<Amount, Amount> getAmountComparatorFromToken(Token token) {
-        switch (token.getPattern()) {
-        case "=":
-            return (amount1, amount2) -> amount1.getValue().equals(amount2.getValue());
-        case ">":
-            return (amount1, amount2) -> amount1.getValue() > amount2.getValue();
-        case "<":
-            return (amount1, amount2) -> amount1.getValue() < amount2.getValue();
-        default:
-            return null;
-        }
-    }
-
-    private static BiPredicate<Price, Price> getPriceComparatorFromToken(Token token) {
         switch (token.getPattern()) {
         case "=":
             return (amount1, amount2) -> amount1.getValue().equals(amount2.getValue());

@@ -1,8 +1,11 @@
 package seedu.progresschecker.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.progresschecker.logic.commands.ViewTaskListCommand.ALL_WEEK;
+import static seedu.progresschecker.logic.commands.ViewTaskListCommand.COMPULSORY;
 import static seedu.progresschecker.logic.commands.ViewTaskListCommand.MAX_TITLE_LENGTH;
 import static seedu.progresschecker.logic.commands.ViewTaskListCommand.MESSAGE_TITLE_CONSTRAINTS;
+import static seedu.progresschecker.logic.commands.ViewTaskListCommand.SUBMISSION;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -43,7 +46,8 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INVALID_INDEX_OR_FORMAT = "Wrong format or index is not a positive integer.";
-    public static final String MESSAGE_INVALID_WEEK = "Week number is not an integer 1~13 or *.";
+    public static final String MESSAGE_INVALID_TASK_FILTER = "Filter keyword is not an integer 1~13 "
+            + "or * or \"submission\" or \"sub\" or \"compulsory\" or \"com\".";
     public static final String MESSAGE_INVALID_TAB_TYPE = "Given type must be 'profile', 'task', or 'exercise'";
     public static final String MESSAGE_INVALID_WEEK_NUMBER = "Given week number must be between the range 2 to 12"
             + " (boundary numbers inclusive).";
@@ -85,15 +89,19 @@ public class ParserUtil {
     public static int parseTaskWeek(String week) throws IllegalValueException {
         String trimmedWeek = week.trim();
         if (trimmedWeek.equals("*")) {
-            return 0;
+            return ALL_WEEK;
+        } else if (trimmedWeek.equals("sub") || trimmedWeek.equals("submission")) {
+            return SUBMISSION;
+        } else if (trimmedWeek.equals("com") || trimmedWeek.equals("compulsory")) {
+            return COMPULSORY;
         } else if (!StringUtil.isNonZeroUnsignedInteger(trimmedWeek)) {
-            throw new IllegalValueException(MESSAGE_INVALID_WEEK);
+            throw new IllegalValueException(MESSAGE_INVALID_TASK_FILTER);
         }
         int intWeek = Integer.parseInt(trimmedWeek);
         if (intWeek >= 1 && intWeek <= 13) {
             return intWeek;
         } else {
-            throw new IllegalValueException(MESSAGE_INVALID_WEEK);
+            throw new IllegalValueException(MESSAGE_INVALID_TASK_FILTER);
         }
     }
     //@@author

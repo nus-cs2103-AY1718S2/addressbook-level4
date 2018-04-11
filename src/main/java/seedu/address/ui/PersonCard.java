@@ -68,7 +68,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private void writeEmail() throws IOException {
         try {
-            ComposeEmailWindow cew = new ComposeEmailWindow(this.email.getText());
+            ComposeEmailWindow cew = new ComposeEmailWindow("", this.email.getText(), "", "");
         } catch (IOException e) {
             System.out.println("IOException");
         }

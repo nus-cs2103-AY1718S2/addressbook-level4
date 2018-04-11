@@ -31,6 +31,7 @@ public class ComposeEmailWindow {
     private static final String composeWindow = "/view/emailcompose.fxml";
     private static final String successWindow = "/view/successwindow.fxml";
     private Stage puWindow = new Stage();
+    private String content;
 
     @FXML
     private AnchorPane successPopup;
@@ -62,11 +63,15 @@ public class ComposeEmailWindow {
     /**
      * Creates a new Email compose window
      */
-    public ComposeEmailWindow(String email) throws IOException, SyntaxException {
+    public ComposeEmailWindow(String type, String email, String sub, String content) throws IOException, SyntaxException {
         //get URL
         FXMLLoader fxmlLoader = loadScene(composeWindow);
         Parent root = (Parent) fxmlLoader.load();
         recipients.setText(email);
+        subject.setText(type + sub);
+        if (content != "") {
+            this.content = content;
+        }
         puWindow.initModality(Modality.APPLICATION_MODAL);
         puWindow.initStyle(StageStyle.UNDECORATED);
         puWindow.setTitle("Compose Email");

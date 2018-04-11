@@ -79,7 +79,7 @@ public class OpenEmailWindow {
         try {
             if (message.getContent() instanceof String) {
                 msgContent.setText((String) message.getContent());
-            } else {
+            } else if (message.isMimeType("multipart/*")) {
                 Multipart multipart = (Multipart) message.getContent();
                 if (multipart.getCount() > 0) {
                     int i;
@@ -88,6 +88,10 @@ public class OpenEmailWindow {
                     }
                     msgContent.setText(content);
                 }
+            }
+            //handle nested message/rfc822 messages
+            else {
+                msgContent.setText("This message is in an unsupported format.")
             }
         } catch (IOException e) {
             System.out.println("ioexception");
@@ -117,7 +121,7 @@ public class OpenEmailWindow {
     @FXML
     private void openComposeWindow() {
         try {
-            ComposeEmailWindow cew = new ComposeEmailWindow("");
+            ComposeEmailWindow cew = new ComposeEmailWindow("", "", "", "");
         } catch (IOException e) {
             System.out.println("IOException");
         }
@@ -129,7 +133,8 @@ public class OpenEmailWindow {
     @FXML
     private void openReplyWindow() {
         try {
-            ComposeEmailWindow cew = new ComposeEmailWindow(this.fromContent.getText());
+            ComposeEmailWindow cew = new ComposeEmailWindow("RE: ", this.fromContent.getText(),
+                    this.subjectContent.getText(), this.msgContent.getText());
         } catch (IOException e) {
             System.out.println("IOException");
         }
@@ -141,7 +146,8 @@ public class OpenEmailWindow {
     @FXML
     private void openForwardWindow() {
         try {
-            ComposeEmailWindow cew = new ComposeEmailWindow("");
+            ComposeEmailWindow cew = new ComposeEmailWindow("FWD: ", this.fromContent.getText(),
+                     this.subjectContent.getText(), this.msgContent.getText());
         } catch (IOException e) {
             System.out.println("IOException");
         }

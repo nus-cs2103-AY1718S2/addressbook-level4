@@ -16,7 +16,6 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
-import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.CalendarListEntry;
@@ -31,16 +30,10 @@ import seedu.address.model.person.UniquePersonList;
  * Client for the Google Calendar API
  */
 public class GoogleCalendarClient {
+
     /** Application name. */
     private static final String applicationName =
             "reInsurance Events";
-
-    /** Directory to store user credentials for this application. */
-    private static final java.io.File dataStoreDir = new java.io.File(
-            System.getProperty("user.home"), ".credentials/calendar-java-quickstart");
-
-    /** Global instance of the {@link FileDataStoreFactory}. */
-    private static FileDataStoreFactory dataStoreFactory;
 
     /** Global instance of the JSON factory. */
     private static final JsonFactory jsonFactory =
@@ -52,7 +45,7 @@ public class GoogleCalendarClient {
     /** Global instance of the scopes required by this quickstart.
      *
      * If modifying these scopes, delete your previously saved credentials
-     * at ~/.credentials/calendar-java-quickstart
+     * at ~/.credentials/export-calendar-java-credentials
      */
     private static final List<String> SCOPES =
             Arrays.asList(CalendarScopes.CALENDAR);
@@ -60,7 +53,6 @@ public class GoogleCalendarClient {
     static {
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-            dataStoreFactory = new FileDataStoreFactory(dataStoreDir);
         } catch (Throwable t) {
             t.printStackTrace();
             System.exit(1);
@@ -73,13 +65,13 @@ public class GoogleCalendarClient {
      */
     public static Credential authorize() {
         try {
-            InputStream in = GoogleCalendarClient.class.getResourceAsStream("/client_secret.json");
+            InputStream in = GoogleCalendarClient.class.getResourceAsStream("/oAuth/client_secret.json");
             InputStreamReader inputStreamReader = new InputStreamReader(in);
             GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory,
                     inputStreamReader);
             GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                     httpTransport, jsonFactory, clientSecrets, SCOPES
-            ).setDataStoreFactory(dataStoreFactory).build();
+            ).build();
 
             return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
         } catch (Exception e) {

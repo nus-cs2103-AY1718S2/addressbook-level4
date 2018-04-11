@@ -54,16 +54,17 @@ public class ModelManagerTest {
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
         modelManager.removeTag(new Tag(VALID_TAG_FRIEND));
 
-        Person expectedAmy = new PersonBuilder(AMY).withTags().build();
+        Person expectedAmy = new PersonBuilder(AMY).build();
         Person expectedBob = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
-        AddressBook expecetedAddressBook = new AddressBookBuilder()
+        AddressBook expectedAddressBook = new AddressBookBuilder()
                 .withPerson(expectedBob).withPerson(expectedAmy).build();
 
-        ModelManager expectedModelManager = new ModelManager(expecetedAddressBook, userPrefs);
+        ModelManager expectedModelManager = new ModelManager(expectedAddressBook, userPrefs);
         assertEquals(expectedModelManager, modelManager);
 
     }
     //@@author
+
 
     @Test
     public void equals() {

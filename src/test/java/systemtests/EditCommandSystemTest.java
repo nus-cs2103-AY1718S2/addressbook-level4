@@ -103,7 +103,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: clear tags -> cleared */
         index = INDEX_FIRST_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_TAG.getPrefix();
-        editedPerson = new PersonBuilder(personToEdit).withTags().build();
+        editedPerson = new PersonBuilder(personToEdit).build();
         assertCommandSuccess(command, index, editedPerson);
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */

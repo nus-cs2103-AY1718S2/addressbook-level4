@@ -85,11 +85,11 @@ public class GuiTestAssert {
      */
     private static String getTagColorStyleFor(String tagName) {
         switch (tagName) {
-        case "classmates":
-
         case "owesMoney":
+            return "blue";
+
         case "CS3230":
-            return "teal";
+            return "navy";
 
         case "colleagues":
         case "neighbours":
@@ -99,8 +99,9 @@ public class GuiTestAssert {
         case "friend":
             return "orange";
 
+        case "classmates":
         case "friends":
-            return "brown";
+            return "teal";
 
         case "husband":
             return "grey";

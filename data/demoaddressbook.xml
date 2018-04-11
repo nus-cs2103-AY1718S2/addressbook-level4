@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <date>2018-03-22</date>
+        <tagged>priority</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <date>2018-03-23</date>
+        <tagged>fragile</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <date>2018-03-24</date>
+        <tagged>fragile</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <date>2018-03-22</date>
+        <tagged>priority</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <date>2018-03-25</date>
+        <tagged>repeat</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <date>2018-03-25</date>
+        <tagged>fragile</tagged>
+        <tagged>priority</tagged>
+    </persons>
+    <persons>
+        <name>Adam Bird</name>
+        <phone>12344321</phone>
+        <email>adam@gmail.com</email>
+        <address>25 Bencoolen St</address>
+        <date>2018-05-01</date>
+    </persons>
+    <persons>
+        <name>Ben Cander</name>
+        <phone>32144321</phone>
+        <email>ben@gmail.com</email>
+        <address>35 Temple St</address>
+        <date>2018-05-01</date>
+    </persons>
+    <persons>
+        <name>Chris Dirk</name>
+        <phone>09877890</phone>
+        <email>chris@gmail.com</email>
+        <address>301 Serangoon Road</address>
+        <date>2018-05-01</date>
+    </persons>
+    <persons>
+        <name>Duke Ellery</name>
+        <phone>76544567</phone>
+        <email>duke@gmail.com</email>
+        <address>320 Orchard Road</address>
+        <date>2018-05-01</date>
+        <tagged>priority</tagged>
+    </persons>
+    <persons>
+        <name>Ethan Fanshaw</name>
+        <phone>98567654</phone>
+        <email>ethan@gmail.com</email>
+        <address>17 Balmoral Road</address>
+        <date>2018-05-02</date>
+    </persons>
+    <persons>
+        <name>Felix Gao</name>
+        <phone>87654321</phone>
+        <email>felix@gmail.com</email>
+        <address>8 Orange grove Road</address>
+        <date>2018-05-01</date>
+        <tagged>fragile</tagged>
+    </persons>
+    <persons>
+        <name>Gary Howard</name>
+        <phone>54322345</phone>
+        <email>gary@gmail.com</email>
+        <address>10 Bayfront Avenue</address>
+        <date>2018-05-02</date>
+    </persons>
+    <persons>
+        <name>Homer Ingle</name>
+        <phone>09877890</phone>
+        <email>homer@gmail.com</email>
+        <address>1 Chinese Gardens Rd</address>
+        <date>2018-05-02</date>
+    </persons>
+    <persons>
+        <name>Ines James</name>
+        <phone>76767676</phone>
+        <email>ines@gmail.com</email>
+        <address>50 Nanyang Avenue</address>
+        <date>2018-05-02</date>
+        <tagged>priority</tagged>
+    </persons>
+    <persons>
+        <name>Jake King</name>
+        <phone>98989898</phone>
+        <email>jake@gmail.com</email>
+        <address>1 Rochor Canal Rd</address>
+        <date>2018-05-03</date>
+    </persons>
+    <persons>
+        <name>Kim Lim</name>
+        <phone>89789879</phone>
+        <email>kim@gmail.com</email>
+        <address>54 Kallang Bahru</address>
+        <date>2018-05-03</date>
+    </persons>
+    <persons>
+        <name>Lace Masterson</name>
+        <phone>77777777</phone>
+        <email>lace@gmail.com</email>
+        <address>34 Whampoa west</address>
+        <date>2018-05-03</date>
+    </persons>
+    <persons>
+        <name>Mo Neville</name>
+        <phone>64566456</phone>
+        <email>mo@gmail.com</email>
+        <address>511 Guillemard Road</address>
+        <date>2018-05-03</date>
+    </persons>
+    <persons>
+        <name>Neil Opal</name>
+        <phone>87654325</phone>
+        <email>neil@hotmail.com</email>
+        <address>334 Kreta Ayer Road</address>
+        <date>2018-05-04</date>
+    </persons>
+    <persons>
+        <name>Lingxin Yan</name>
+        <phone>64335435</phone>
+        <email>lingxin@gmail.com</email>
+        <address>112 East Coast Road</address>
+        <date>2018-05-04</date>
+    </persons>
+    <persons>
+        <name>Rachel Thomas</name>
+        <phone>98789879</phone>
+        <email>rachel@gmail.com</email>
+        <address>90 Hougang Avenue</address>
+        <date>2018-05-04</date>
+    </persons>
+    <persons>
+        <name>Mike Wang</name>
+        <phone>87878766</phone>
+        <email>mike@gmail.com</email>
+        <address>80 Genting Lane</address>
+        <date>2018-05-06</date>
+    </persons>
+    <persons>
+        <name>Hua Fung</name>
+        <phone>33335555</phone>
+        <email>hua@gmail.com</email>
+        <address>390 Havelock Rd</address>
+        <date>2018-05-06</date>
+    </persons>
+    <tags>repeat</tags>
+    <tags>fragile</tags>
+    <tags>priority</tags>
+</addressbook>

@@ -2,6 +2,9 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 /**
  * Represents a Person's appointment in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidAppointment(String)}
@@ -31,7 +34,20 @@ public class Appointment {
         if (test == null || test.equals("")) {
             return true;
         }
-        return test.matches(APPOINTMENT_VALIDATION_REGEX);
+        if (!test.matches(APPOINTMENT_VALIDATION_REGEX)) {
+            return false;
+        }
+        if (test == null) {
+            return false;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        sdf.setLenient(false);
+        try {
+            sdf.parse(test);
+        } catch (ParseException e) {
+            return false;
+        }
+        return true;
     }
 
     @Override

@@ -70,6 +70,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [d/APPOINTMENT] 
 
 [TIP]
 A person can have any number of tags, appointment and insurance plans (including 0) but only one group
+Dates are in the format dd-mm-yyyy
 
 Examples:
 

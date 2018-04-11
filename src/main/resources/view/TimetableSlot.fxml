@@ -18,7 +18,6 @@
             <Insets bottom="5" left="5" right="5" top="5" />
          </padding>
          <Text fx:id="module" styleClass="thisMonthDate"/>
-         <Text fx:id="moduleTitle"/>
          <Text fx:id="lectureType"/>
          <Text fx:id="venue"/>
       </VBox>

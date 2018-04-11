@@ -26,8 +26,6 @@ public class TimetableSlot extends UiPart<Region> {
     @FXML
     private Text module;
     @FXML
-    private Text moduleTitle;
-    @FXML
     private Text lectureType;
     @FXML
     private Text venue;
@@ -77,7 +75,6 @@ public class TimetableSlot extends UiPart<Region> {
         module.setText(mod.getName());
         if (!mod.getDetails().isEmpty() && mod.getDetails().size() >= 2) {
             lectureType.setText(mod.getDetails().get(0));
-            moduleTitle.setText(mod.getDetails().get(1));
         }
         venue.setText(mod.getVenue());
     }

@@ -15,6 +15,7 @@ import seedu.address.commons.events.ui.LoadDirectionsEvent;
 import seedu.address.commons.events.ui.LoadMapPanelEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.RemoveMapPanelEvent;
+import seedu.address.commons.events.ui.ResetDirectionsEvent;
 import seedu.address.commons.events.ui.UpdateNumberOfButtonsEvent;
 
 /**
@@ -89,17 +90,21 @@ public class DailySchedulerPanel extends UiPart<Region> {
     }
 
     /**
+     * Resets the directions on the map.
+     */
+    public void resetDirections() {
+        if (directionPanel != null && directionPanelPlaceholder.getChildren().contains(directionPanel.getRoot())) {
+            directionPanel.resetDirections();
+        }
+    }
+
+    /**
      * Frees resources allocated to the direction panel if direction panel is not empty.
      */
     public void freeResources() {
         if (directionPanel != null && directionPanelPlaceholder.getChildren().contains(directionPanel.getRoot())) {
             directionPanel.freeResources();
         }
-    }
-
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
     }
 
     @Subscribe
@@ -122,6 +127,12 @@ public class DailySchedulerPanel extends UiPart<Region> {
     private void handleLoadDirectionsEvent(LoadDirectionsEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         updateDirections(event.getAddressOrigin(), event.getGetAddressDestination());
+    }
+
+    @Subscribe
+    private void handleResetDirectionsEvent(ResetDirectionsEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        resetDirections();
     }
 
     @Subscribe

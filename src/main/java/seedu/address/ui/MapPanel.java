@@ -92,9 +92,10 @@ public class MapPanel extends UiPart<Region>
     public void loadDirections(String addressOrigin, String addressDestination) {
         mapManager.setDirectionsOnMap(addressOrigin, addressDestination);
     }
-    //    public void removeDirections() {
-    //
-    //    }
+    public void resetDirections() {
+        mapManager.resetDirectionsMap();
+        resetMap();
+    }
     public void freeResources() {
         map = null;
     }

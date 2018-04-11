@@ -3,12 +3,9 @@ package seedu.address.logic.map;
 
 import com.lynden.gmapsfx.javascript.object.DirectionsPane;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
-import com.lynden.gmapsfx.service.directions.DirectionStatus;
 import com.lynden.gmapsfx.service.directions.DirectionsRenderer;
 import com.lynden.gmapsfx.service.directions.DirectionsRequest;
-import com.lynden.gmapsfx.service.directions.DirectionsResult;
 import com.lynden.gmapsfx.service.directions.DirectionsService;
-import com.lynden.gmapsfx.service.directions.DirectionsServiceCallback;
 import com.lynden.gmapsfx.service.directions.TravelModes;
 import com.lynden.gmapsfx.service.geocoding.GeocodingService;
 
@@ -50,6 +47,10 @@ public class MapManager {
         directionsRequest = new DirectionsRequest(addressOrigin, addressDestination, TravelModes.DRIVING);
         directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
         directionsService.getRoute(directionsRequest, new MyDirectionsServiceCallback(map), directionsRenderer);
+    }
+
+    public void resetDirectionsMap() {
+        directionsRenderer.clearDirections();
     }
 }
 

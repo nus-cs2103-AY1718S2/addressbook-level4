@@ -437,10 +437,104 @@ Returns the L1B4-A score obtained by the student based on his/her grades.
 *_return to <<toc,Table of Contents>>_*
 
 === Adding a CCA to a student : `addcca` [since v1.5]
-Adds a CCA to the student records in _EduBuddy_. +
-Format: `addcca 1 cca/CCA pos/POSITION` +
-You will be able to see the success message, `CCA added: CCA: POSITION` +
+Adds a CCA and the student's position in the CCA into the student records in _EduBuddy_. +
+Format: `addcca INDEX cca/CCA pos/POSITION` +
+You will be able to see the success message, +
+`CCA added: CCA: POSITION` +
 `Person: NAME`
+
+[NOTE]
+Adds a CCA and the student's position in the CCA to the student at the specified `INDEX`. +
+The index refers to the index number shown in the most recent listing.
+
+[IMPORTANT]
+`INDEX` *must be a positive integer*: 1, 2, 3, ...
+
+Examples:
+
+* `list` +
+`addcca 2 cca/Basketball pos/Member` +
+Adds the cca basketball with the position member to the 2nd student in _EduBuddy_.
+* `find Betsy` +
+`addcca 1 cca/Choir pos/Member` +
+Adds the cca Choir with the position member to the 1st student in the results of the `find` command.
+
+*_return to <<toc,Table of Contents>>_*
+
+=== Deleting a CCA from a student : `deletecca` [since v1.5]
+Deletes a CCA and the student's position in the CCA from the student records in _EduBuddy_. +
+Format: `deletecca INDEX cca/CCA pos/POSITION` +
+You will be able to see the success message, +
+`CCA deleted: CCA: POSITION` +
+`Person: NAME`
+
+[NOTE]
+Deletes a CCA and the student's position in the CCA from the student at the specified `INDEX`. +
+The index refers to the index number shown in the most recent listing.
+
+[IMPORTANT]
+`INDEX` *must be a positive integer*: 1, 2, 3, ...
+
+Examples:
+
+* `list` +
+`deletecca 2 cca/Basketball pos/Member` +
+Deletes the cca basketball with the position member from the 2nd student in _EduBuddy_.
+* `find Betsy` +
+`addcca 1 cca/Choir pos/Member` +
+Deletes the cca Choir with the position member from the 1st student in the results of the `find` command.
+
+*_return to <<toc,Table of Contents>>_*
+
+=== Adding a injury history to a student : `addinjuries` [since v1.5]
+Adds an injury history to the student of the specified index, in the student records in _EduBuddy_. +
+Format: `addinjuries INDEX injuries/INJURY` +
+You will be able to see the success message, +
+`Injuries History added: INJURY` +
+`Person: NAME`
+
+[NOTE]
+Adds an injury history to the student at the specified `INDEX`. +
+The index refers to the index number shown in the most recent listing.
+
+[IMPORTANT]
+`INDEX` *must be a positive integer*: 1, 2, 3, ...
+
+Examples:
+
+* `list` +
+`addinjuries 2 injuries/Dislocated Right Shoulder` +
+Adds the injury, dislocated right shoulder to the 2nd student in _EduBuddy_.
+* `find Betsy` +
+`addinjuries 1 injuries/Right Ligament Tear` +
+Adds the injury, right ligament tear to the 1st student in the results of the `find` command.
+
+*_return to <<toc,Table of Contents>>_*
+
+=== Deleting a injuries history from a student : `deleteinjuries` [since v1.5]
+Deletes a injury history from the student records in _EduBuddy_. +
+Format: `deleteinjuries INDEX injuries/INJURIES` +
+You will be able to see the success message, +
+`Injuries deleted: INJURIES` +
+`Person: NAME`
+
+[NOTE]
+Deletes a injury history from the student at the specified `INDEX`. +
+The index refers to the index number shown in the most recent listing.
+
+[IMPORTANT]
+`INDEX` *must be a positive integer*: 1, 2, 3, ...
+
+Examples:
+
+* `list` +
+`deleteinjuries 2 injuries/Torn Ligament` +
+Deletes the injury history,torn ligament from the 2nd student in _EduBuddy_.
+* `find Betsy` +
+`deleteinjuries 1 injuries/Dislocated Shoulder` +
+Deletes the injury history from the 1st student in the results of the `find` command.
+
+*_return to <<toc,Table of Contents>>_*
 
 === Clearing all entries : `clear` or `c`
 
@@ -456,15 +550,6 @@ Exits the program. +
 Format: `exit`
 
 *_return to <<toc,Table of Contents>>_*
-
-// tag::CCA section[]
-=== CCA section `[coming in v2.0]`
-
-_{Allows the teachers to key in which CCA the students are in and to keep track of attendance.}_
-
-*_return to <<toc,Table of Contents>>_*
-
-// end::CCA section[]
 
 // tag::L.E.A.P.S System[]
 === L.E.A.P.S System `[coming in v2.0]`

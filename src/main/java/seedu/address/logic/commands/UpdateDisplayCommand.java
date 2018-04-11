@@ -65,14 +65,9 @@ public class UpdateDisplayCommand extends UndoableCommand {
         try {
             model.updatePerson(personToUpdate, updatedPerson);
         } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new AssertionError("There cannot be a duplicate when just updating the display pic");
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
-        }
-        try {
-            updatedPerson.getDisplayPic().saveDisplay(updatedPerson.getDetails());
-        } catch (IllegalValueException ive) {
-            throw new CommandException(ive.getMessage());
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));

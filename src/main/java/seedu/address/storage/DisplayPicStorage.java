@@ -121,7 +121,6 @@ public class DisplayPicStorage {
         if (!display1.equals(display2)) {
             try {
                 display1.saveDisplay(details);
-                display1.updateDisplay(details);
                 return display1;
             } catch (IllegalValueException ive) {
                 display1.updateToDefault();

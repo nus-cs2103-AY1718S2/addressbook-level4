@@ -1,20 +1,19 @@
-package seedu.address.logic.commands;
-
 //@@author jas5469
+package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import java.util.List;
 
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-
 
 /**
  * Finds and groups all persons in Fastis whose name contains any of the argument keywords to a specific group.
@@ -27,24 +26,25 @@ public class AddMembersToGroupCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds person whose names contain any of "
             + "the specified keywords (case-sensitive) and adds them to group list them.\n"
-            + "Parameters: g/GroupName(Must exist) n/KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD
-            + PREFIX_GROUP + "CS1010"
-            + PREFIX_NAME + "alice";
+            + "Parameters: INDEX (must be a positive integer) g/GroupName(Must exist) "
+            + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_GROUP + "CS1010";
 
     public static final String MESSAGE_NO_SUCH_GROUP = "No such group exist.";
     public static final String MESSAGE_ADD_PERSON_TO_GROUP_SUCCESS = "%1$s added to group %2$s";
-    public static final String MESSAGE_PERSON_NOT_FOUND = "No such person in Fastis";
     public static final String MESSAGE_DUPLICATE_PERSON = "Person already in Group";
     public static final String MESSAGE_GROUP_NOT_FOUND = "No such Group in Fastis";
     public static final String MESSAGE_DUPLICATE_GROUP = "Group already in Group";
+    public static final String MESSAGE_INVALID_INDEX = "Index is invalid";
 
+    private Index index;
     private Person personToAdd;
     private Group groupToAdd;
     private Group groupAdded;
 
-    public AddMembersToGroupCommand(Person personToAdd, Group groupToAdd) {
-        this.personToAdd = personToAdd;
+    public AddMembersToGroupCommand(Index index, Group groupToAdd) {
+        requireNonNull(index);
+        this.index = index;
         this.groupToAdd = groupToAdd;
     }
 
@@ -53,17 +53,9 @@ public class AddMembersToGroupCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         List<Group> groupList = model.getFilteredGroupList();
-        List<Person> personList = model.getFilteredPersonList();
-        for (int i = 0; i < personList.size(); i++) {
-            if (personList.get(i).getName().equals(personToAdd.getName())) {
-                personToAdd = personList.get(i);
-            }
-        }
+
         if (!groupList.contains(groupToAdd)) {
             throw new CommandException(MESSAGE_NO_SUCH_GROUP);
-        }
-        if (!personList.contains(personToAdd)) {
-            throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
         } else {
             for (Group group : groupList) {
                 if (groupToAdd.getInformation().equals(group.getInformation())) {
@@ -83,6 +75,18 @@ public class AddMembersToGroupCommand extends UndoableCommand {
             return new CommandResult(String.format(MESSAGE_ADD_PERSON_TO_GROUP_SUCCESS, personToAdd.getName(),
                     groupToAdd.getInformation().toString()));
         }
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        List<Person> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        personToAdd = lastShownList.get(index.getZeroBased());
+
     }
 
     @Override

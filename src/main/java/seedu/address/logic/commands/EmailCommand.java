@@ -36,7 +36,7 @@ public class EmailCommand extends Command {
         optimizedRoute = route.getAddresses(model);
         String duration = FilterCommand.getStringDuration();
 
-        if(optimizedRoute.size() == 0) {
+        if (optimizedRoute.size() == 0) {
             throw new CommandException("No address has be found, email not sent!");
         }
 

@@ -32,10 +32,13 @@ public final class CommandFormatListUtil {
         commandFormatList.add(UploadCommand.COMMAND_FORMAT);
         commandFormatList.add(ViewCommand.COMMAND_FORMAT);
         commandFormatList.add(ViewTaskListCommand.COMMAND_FORMAT);
-        commandFormatList.add(CreateIssue.COMMAND_FORMAT);
+        commandFormatList.add(CreateIssueCommand.COMMAND_FORMAT);
         commandFormatList.add(EditIssueCommand.COMMAND_FORMAT);
         commandFormatList.add(ReopenIssueCommand.COMMAND_FORMAT);
         commandFormatList.add(CloseIssueCommand.COMMAND_FORMAT);
+        commandFormatList.add(GitLoginCommand.COMMAND_FORMAT);
+        commandFormatList.add(ThemeCommand.COMMAND_FORMAT);
+        commandFormatList.add(GitLogoutCommand.COMMAND_WORD);
 
         //sorting the commandFormatList
         Collections.sort(commandFormatList);
@@ -85,12 +88,12 @@ public class CloseIssueCommand extends Command {
     }
 }
 ```
-###### \java\seedu\progresschecker\logic\commands\CreateIssue.java
+###### \java\seedu\progresschecker\logic\commands\CreateIssueCommand.java
 ``` java
 /**
  * Create an issue on github
  */
-public class CreateIssue extends Command {
+public class CreateIssueCommand extends Command {
 
     public static final String COMMAND_WORD = "+issue";
     public static final String COMMAND_ALIAS = "ci";
@@ -120,9 +123,9 @@ public class CreateIssue extends Command {
     private final Issue toCreate;
 
     /**
-     * Creates an CreateIssue to create the specified {@code Issue}
+     * Creates an CreateIssueCommand to create the specified {@code Issue}
      */
-    public CreateIssue(Issue issue) {
+    public CreateIssueCommand(Issue issue) {
         requireNonNull(issue);
         toCreate = issue;
     }
@@ -401,6 +404,83 @@ public class EditIssueCommand extends Command {
     }
 }
 ```
+###### \java\seedu\progresschecker\logic\commands\GitLoginCommand.java
+``` java
+/**
+ * Logins into github from app for issue creation
+ */
+public class GitLoginCommand extends Command {
+
+    public static final String COMMAND_WORD = "gitlogin";
+    public static final String COMMAND_ALIAS = "gl";
+    public static final String COMMAND_FORMAT = COMMAND_WORD + " "
+            + PREFIX_GIT_USERNAME + "USERNAME "
+            + PREFIX_GIT_PASSCODE + "PASSCODE "
+            + PREFIX_GIT_REPO + "REPOSITORY ";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Logs into github \n"
+            + "Parameters: "
+            + PREFIX_GIT_USERNAME + "USERNAME "
+            + PREFIX_GIT_PASSCODE + "PASSCODE "
+            + PREFIX_GIT_REPO + "REPOSITORY \n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_GIT_USERNAME + "johndoe "
+            + PREFIX_GIT_PASSCODE + "dummy123 "
+            + PREFIX_GIT_REPO + "CS2103/main ";
+    public static final String MESSAGE_SUCCESS = "You have successfully authenticated github!";
+    public static final String MESSAGE_FAILURE = "Oops? Maybe the password or the username is incorrect";
+
+    private final GitDetails toAuthenticate;
+
+    /**
+     * Creates an GitDetails object to authenticate with github {@code GitDetails}
+     */
+    public GitLoginCommand(GitDetails gitDetails) {
+        requireNonNull(gitDetails);
+        toAuthenticate = gitDetails;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        try {
+            model.loginGithub(toAuthenticate);
+            return new CommandResult(MESSAGE_SUCCESS);
+        } catch (IOException e) {
+            throw new CommandException(MESSAGE_FAILURE);
+        }
+    }
+
+}
+```
+###### \java\seedu\progresschecker\logic\commands\GitLogoutCommand.java
+``` java
+/**
+ * Logs out of github
+ */
+public class GitLogoutCommand extends Command {
+
+    public static final String COMMAND_WORD = "gitlogout";
+    public static final String COMMAND_ALIAS = "glo";
+    public static final String COMMAND_FORMAT = COMMAND_WORD;
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD;
+    public static final String MESSAGE_SUCCESS = "You have successfully logged out of github!";
+    public static final String MESSAGE_FAILURE = "You are currently not logged in";
+
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        try {
+            model.logoutGithub();
+            return new CommandResult(MESSAGE_SUCCESS);
+        } catch (CommandException e) {
+            throw new CommandException(MESSAGE_FAILURE);
+        }
+    }
+
+}
+```
 ###### \java\seedu\progresschecker\logic\commands\ReopenIssueCommand.java
 ``` java
 /**
@@ -445,6 +525,14 @@ public class ReopenIssueCommand extends Command {
 }
 
 ```
+###### \java\seedu\progresschecker\logic\LogicManager.java
+``` java
+    @Override
+    public ObservableList<Issue> getFilteredIssueList() {
+        return model.getFilteredIssueList();
+    }
+
+```
 ###### \java\seedu\progresschecker\logic\parser\CloseIssueCommandParser.java
 ``` java
 /**
@@ -472,23 +560,23 @@ public class CloseIssueCommandParser implements Parser<CloseIssueCommand> {
 ###### \java\seedu\progresschecker\logic\parser\CreateIssueParser.java
 ``` java
 /**
- * Parses input arguments and creates a new CreateIssue object
+ * Parses input arguments and creates a new CreateIssueCommand object
  */
-public class CreateIssueParser implements Parser<CreateIssue> {
+public class CreateIssueParser implements Parser<CreateIssueCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the CreateIssue
+     * Parses the given {@code String} of arguments in the context of the CreateIssueCommand
      * and returns an createIssue object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public CreateIssue parse(String args) throws ParseException {
+    public CreateIssueCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_TITLE, PREFIX_ASSIGNEES,
                         PREFIX_MILESTONE, PREFIX_BODY, PREFIX_LABEL);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_TITLE)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CreateIssue.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CreateIssueCommand.MESSAGE_USAGE));
         }
 
         try {
@@ -503,7 +591,7 @@ public class CreateIssueParser implements Parser<CreateIssue> {
 
             Issue issue = new Issue(title, assigneesList, milestone, body, labelsList);
 
-            return new CreateIssue(issue);
+            return new CreateIssueCommand(issue);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -604,6 +692,50 @@ public class EditIssueCommandParser implements Parser<EditIssueCommand> {
     }
 }
 ```
+###### \java\seedu\progresschecker\logic\parser\GitLoginCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new GitDetails object
+ */
+public class GitLoginCommandParser implements Parser<GitLoginCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the GitLoginCommand
+     * and returns an GitLoginCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public GitLoginCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_GIT_USERNAME, PREFIX_GIT_PASSCODE, PREFIX_GIT_REPO);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_GIT_USERNAME, PREFIX_GIT_PASSCODE, PREFIX_GIT_REPO)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GitLoginCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            Username username = ParserUtil.parseGitUsername(argMultimap.getValue(PREFIX_GIT_USERNAME)).get();
+            Passcode passcode = ParserUtil.parsePasscode(argMultimap.getValue(PREFIX_GIT_PASSCODE)).get();
+            Repository repository = ParserUtil.parseRepository(argMultimap.getValue(PREFIX_GIT_REPO)).get();
+
+            GitDetails details = new GitDetails(username, passcode, repository);
+
+            return new GitLoginCommand(details);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+}
+```
 ###### \java\seedu\progresschecker\logic\parser\ParserUtil.java
 ``` java
     /**
@@ -616,9 +748,6 @@ public class EditIssueCommandParser implements Parser<EditIssueCommand> {
     public static Title parseTitle(String title) throws IllegalValueException {
         requireNonNull(title);
         String trimmedTitle = title.trim();
-        if (!Title.isValidTitle(trimmedTitle)) {
-            throw new IllegalValueException(Title.MESSAGE_TITLE_CONSTRAINTS);
-        }
         return new Title(trimmedTitle);
     }
 
@@ -688,9 +817,6 @@ public class EditIssueCommandParser implements Parser<EditIssueCommand> {
     public static Milestone parseMilestone(String milestone) throws IllegalValueException {
         requireNonNull(milestone);
         String trimmedMilestone = milestone.trim();
-        if (!Milestone.isValidMilestone(trimmedMilestone)) {
-            throw new IllegalValueException(Milestone.MESSAGE_MILESTONE_CONSTRAINTS);
-        }
         return new Milestone(trimmedMilestone);
     }
 
@@ -715,12 +841,67 @@ public class EditIssueCommandParser implements Parser<EditIssueCommand> {
     }
 
     /**
-     * Parses a {@code Optional<String> bodu} into an {@code Optional<Body>} if {@code body} is present.
+     * Parses a {@code Optional<String> body} into an {@code Optional<Body>} if {@code body} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Body> parseBody(Optional<String> body) throws IllegalValueException {
         requireNonNull(body);
         return body.isPresent() ? Optional.of(parseBody(body.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String username} into a {@code Username}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Username parseGitUsername(String username) {
+        requireNonNull(username);
+        String trimmedUsername = username.trim();
+        return new Username(trimmedUsername);
+    }
+
+    /**
+     Parses a {@code Optional<String> username} into an {@code Optional<Username>} if {@code username} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Username> parseGitUsername(Optional<String> username) throws IllegalValueException {
+        requireNonNull(username);
+        return username.isPresent() ? Optional.of(parseGitUsername(username.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String passcode} into a {@code Passcode}.
+     */
+    public static Passcode parsePasscode(String passcode) {
+        requireNonNull(passcode);
+        return new Passcode(passcode);
+    }
+
+    /**
+     Parses a {@code Optional<String> Passcode} into an {@code Optional<Passcode>} if {@code passcpde} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Passcode> parsePasscode(Optional<String> passcode) throws IllegalValueException {
+        requireNonNull(passcode);
+        return passcode.isPresent() ? Optional.of(parsePasscode(passcode.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String repositroy} into a {@code Repository}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Repository parseRepository(String repository) {
+        requireNonNull(repository);
+        String trimmedRepository = repository.trim();
+        return new Repository(trimmedRepository);
+    }
+
+    /**
+     Parses a {@code Optional<String> Repository} into an {@code Optional<Repository>} if {@code repository} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Repository> parseRepository(Optional<String> repository) throws IllegalValueException {
+        requireNonNull(repository);
+        return repository.isPresent() ? Optional.of(parseRepository(repository.get())) : Optional.empty();
     }
 ```
 ###### \java\seedu\progresschecker\logic\parser\ReopenIssueCommandParser.java
@@ -746,6 +927,153 @@ public class ReopenIssueCommandParser implements Parser<ReopenIssueCommand> {
     }
 }
 
+```
+###### \java\seedu\progresschecker\model\credentials\GitDetails.java
+``` java
+/**
+ * Represents an Issue.
+ * Guarantees: details are present and not null, field values are validated, immutable.
+ */
+public class GitDetails {
+
+    private final Username username;
+    private final Repository repository;
+    private final Passcode passcode;
+
+    /**
+     * Every field must be present and not null.
+     */
+    public GitDetails(Username username, Passcode passcode, Repository repository) {
+        requireAllNonNull(username, repository, passcode);
+        this.username = username;
+        this.repository = repository;
+        this.passcode = passcode;
+    }
+
+    public Username getUsername() {
+        return username;
+    }
+
+    public Repository getRepository() {
+        return repository;
+    }
+
+    public Passcode getPasscode() {
+        return passcode;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof seedu.progresschecker.model.credentials.GitDetails)) {
+            return false;
+        }
+
+        seedu.progresschecker.model.credentials.GitDetails otherGitDetails =
+                (seedu.progresschecker.model.credentials.GitDetails) other;
+        return otherGitDetails.getUsername().equals(this.getUsername())
+                && otherGitDetails.getRepository().equals(this.getRepository())
+                && otherGitDetails.getPasscode().equals(this.getPasscode());
+    }
+
+    @Override
+    public int hashCode() {
+        // use this method for custom fields hashing instead of implementing your own
+        return Objects.hash(username, repository, passcode);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(" Username: ")
+                .append(getUsername())
+                .append(" Repository: ")
+                .append(getRepository());
+        return builder.toString();
+    }
+
+}
+
+```
+###### \java\seedu\progresschecker\model\credentials\Passcode.java
+``` java
+/**
+ * Represents a github passcode
+ */
+public class Passcode {
+
+    public final String passcode;
+
+    /**
+     * Constructs a {@code Passcode}.
+     *
+     * @param passcode A valid assignees.
+     */
+    public Passcode(String passcode) {
+        requireNonNull(passcode);
+        this.passcode = passcode;
+    }
+
+    @Override
+    public String toString() {
+        return passcode;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof seedu.progresschecker.model.credentials.Passcode // instanceof handles nulls
+                && this.passcode.equals(((Passcode) other).passcode)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return passcode.hashCode();
+    }
+
+}
+
+```
+###### \java\seedu\progresschecker\model\credentials\Username.java
+``` java
+/**
+ * Represents the username of a user on github
+ */
+public class Username {
+
+    public final String username;
+
+    /**
+     * Constructs a {@code Username}.
+     *
+     * @param username A valid username.
+     */
+    public Username(String username) {
+        requireNonNull(username);
+        this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return username;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof seedu.progresschecker.model.credentials.Username // instanceof handles nulls
+                && this.username.equals(((Username) other).username)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return username.hashCode();
+    }
+
+}
 ```
 ###### \java\seedu\progresschecker\model\issues\Assignees.java
 ``` java
@@ -831,6 +1159,279 @@ public class Body {
 
 }
 ```
+###### \java\seedu\progresschecker\model\issues\GitIssueList.java
+``` java
+/**
+ * A list of persons that enforces uniqueness between its elements and does not allow nulls.
+ *
+ * Supports a minimal set of list operations.
+ *
+ * @see Person#equals(Object)
+ * @see CollectionUtil#elementsAreUnique(Collection)
+ */
+public class GitIssueList implements Iterable<Issue> {
+
+    private final ObservableList<Issue> internalList = FXCollections.observableArrayList();
+    private String repoName;
+    private String userLogin;
+    private String userAuthentication;
+    private GitHub github;
+    private GHRepository repository;
+    private GHIssueBuilder issueBuilder;
+    private GHIssue issue;
+    private GHIssue toEdit;
+
+    /**
+     * Initialises github credentials
+     */
+    public void initialiseCredentials(GitDetails gitdetails) throws CommandException, IOException {
+        repoName = gitdetails.getRepository().toString();
+        userLogin = gitdetails.getUsername().toString();
+        userAuthentication = gitdetails.getPasscode().toString();
+        authoriseGithub();
+    }
+
+    /**
+     * Authorises with github
+     */
+    private void authoriseGithub () throws CommandException, IOException {
+        if (github != null) {
+            throw new CommandException("You have already logged in as " + userLogin + ". Please logout first.");
+        }
+        try {
+            github = GitHub.connectUsingPassword(userLogin, userAuthentication);
+            if (!github.isCredentialValid()) {
+                github = null;
+                throw new IOException();
+            }
+        } catch (IOException ie) {
+            throw new CommandException("Enter correct username and password");
+        }
+        try {
+            repository = github.getRepository(repoName);
+        } catch (IOException ie) {
+            throw new CommandException("Enter correct repository name");
+        }
+        updateInternalList();
+    }
+
+    /**
+     * Updates the internal list by fetching data from github
+     */
+    private void updateInternalList() throws IOException {
+        internalList.remove(0, internalList.size());
+        List<GHIssue> gitIssues = repository.getIssues(GHIssueState.OPEN);
+        for (GHIssue issueOnGit : gitIssues) {
+            Issue toBeAdded = convertToIssue(issueOnGit);
+            internalList.add(toBeAdded);
+        }
+    }
+
+    /**
+     * Converts GHIssue to issue
+     */
+    private Issue convertToIssue(GHIssue i) throws IOException {
+
+        List<GHUser> gitAssigneeList = i.getAssignees();
+        ArrayList<GHLabel> gitLabelsList = new ArrayList<>(i.getLabels());
+        List<Assignees> assigneesList = new ArrayList<>();
+        List<Labels> labelsList = new ArrayList<>();
+        Milestone existingMilestone = null;
+        Body existingBody = new Body(i.getBody());
+        Title title = new Title(i.getTitle());
+        Issue issue;
+
+        if (i.getMilestone() == null) {
+            existingMilestone = new Milestone("");
+        } else {
+            existingMilestone = new Milestone(i.getMilestone().getTitle());
+        }
+
+        for (GHUser assignee : gitAssigneeList) {
+            assigneesList.add(new Assignees(assignee.getLogin()));
+        }
+
+        for (GHLabel label : gitLabelsList) {
+            labelsList.add(new Labels(label.getName()));
+        }
+
+        issue =  new Issue(title, assigneesList, existingMilestone,
+                existingBody, labelsList);
+
+        issue.setIssueIndex(i.getNumber());
+
+        return issue;
+    }
+
+    /**
+     * Creates an issue on github
+     *
+     * @throws IOException if there is any problem creating an issue on github;
+     */
+    public void createIssue(Issue toAdd) throws IOException, CommandException {
+        checkGitAuthentication();
+        issueBuilder = repository.createIssue(toAdd.getTitle().toString());
+        issueBuilder.body(toAdd.getBody().toString());
+
+        List<Assignees> assigneesList = toAdd.getAssignees();
+        List<Labels> labelsList = toAdd.getLabelsList();
+
+        ArrayList<GHUser> listOfUsers = new ArrayList<>();
+        ArrayList<String> listOfLabels = new ArrayList<>();
+        MilestoneMap obj = new MilestoneMap();
+        obj.setRepository(getRepository());
+        HashMap<String, GHMilestone> milestoneMap = obj.getMilestoneMap();
+        GHMilestone check = null;
+
+        for (int ct = 0; ct < assigneesList.size(); ct++) {
+            listOfUsers.add(github.getUser(assigneesList.get(ct).toString()));
+        }
+
+        for (int ct = 0; ct < labelsList.size(); ct++) {
+            listOfLabels.add(labelsList.get(ct).toString());
+        }
+
+        if (toAdd.getMilestone() != null) {
+            if (milestoneMap.get(toAdd.getMilestone().toString()) == null) {
+                throw new CommandException("Milestone doesn't exist");
+            } else {
+                check = milestoneMap.get(toAdd.getMilestone().toString());
+            }
+        }
+        GHIssue createdIssue = issueBuilder.create();
+        if (check != null) {
+            createdIssue.setMilestone(check);
+        }
+        createdIssue.setAssignees(listOfUsers);
+        createdIssue.setLabels(listOfLabels.toArray(new String[0]));
+        updateInternalList();
+    }
+
+    /**
+     * Reopens an issue on github
+     */
+    public void reopenIssue(Index index) throws IOException, CommandException {
+        checkGitAuthentication();
+        issue = repository.getIssue(index.getOneBased());
+        if (issue.getState() == GHIssueState.OPEN) {
+            throw new CommandException("Issue #" + index.getOneBased() + " is already open");
+        }
+        issue.reopen();
+        updateInternalList();
+    }
+
+    /**
+     * Closes an issue on github
+     */
+    public void closeIssue(Index index) throws IOException, CommandException {
+
+        checkGitAuthentication();
+        issue = repository.getIssue(index.getOneBased());
+        if (issue.getState() == GHIssueState.CLOSED) {
+            throw new CommandException("Issue #" + index.getOneBased() + " is already closed");
+        }
+        issue.close();
+        updateInternalList();
+    }
+    /**
+     * Authorises with github
+     */
+    public void clearCredentials() throws CommandException {
+        if (github == null) {
+            throw new CommandException("No one has logged into github at the moment");
+        } else {
+            internalList.remove(0, internalList.size());
+            github = null;
+        }
+    }
+
+    /**
+     * Check if the github credentials are authorised
+     */
+    private void checkGitAuthentication() throws CommandException {
+        if (github == null) {
+            throw new CommandException("Github not authenticated. "
+                    + "Use 'gitlogin' command to first authenticate your github account");
+        }
+    }
+
+    /**
+     * Replaces the person {@code target} in the list with {@code editedPerson}.
+     *
+     * @throws IOException if the replacement is equivalent to another existing person in the list.
+     */
+    public void setIssue(Index index, Issue editedIssue)
+            throws IOException, CommandException {
+        requireNonNull(editedIssue);
+        toEdit = repository.getIssue(index.getOneBased());
+
+        List<Assignees> assigneesList = editedIssue.getAssignees();
+        List<Labels> labelsList = editedIssue.getLabelsList();
+
+        ArrayList<GHUser> listOfUsers = new ArrayList<>();
+        ArrayList<String> listOfLabels = new ArrayList<>();
+        MilestoneMap obj = new MilestoneMap();
+        HashMap<String, GHMilestone> milestoneMap = obj.getMilestoneMap();
+
+        for (Assignees assignee : assigneesList) {
+            listOfUsers.add(github.getUser(assignee.toString()));
+        }
+
+        for (Labels label : labelsList) {
+            listOfLabels.add(label.toString());
+        }
+
+        if (editedIssue.getMilestone() != null) {
+            GHMilestone check = milestoneMap.get(editedIssue.getMilestone().toString());
+            toEdit.setMilestone(check);
+        }
+        toEdit.setTitle(editedIssue.getTitle().toString());
+        toEdit.setBody(editedIssue.getBody().toString());
+        toEdit.setAssignees(listOfUsers);
+        toEdit.setLabels(listOfLabels.toArray(new String[0]));
+
+    }
+
+    /**
+     * Returns github object
+     */
+    public GitHub getGithub() {
+        return github;
+    }
+
+    /**
+     * Returns github repository
+     */
+    public GHRepository getRepository() {
+        return repository;
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<Issue> asObservableList() {
+        return FXCollections.unmodifiableObservableList(internalList);
+    }
+
+    @Override
+    public Iterator<Issue> iterator() {
+        return internalList.iterator();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof GitIssueList // instanceof handles nulls
+                && this.internalList.equals(((GitIssueList) other).internalList));
+    }
+
+    @Override
+    public int hashCode() {
+        return internalList.hashCode();
+    }
+}
+
+```
 ###### \java\seedu\progresschecker\model\issues\Issue.java
 ``` java
 /**
@@ -844,6 +1445,7 @@ public class Issue {
     private final Milestone milestone;
     private final Body body;
     private final List<Labels> labelsList;
+    private int issueIndex;
 
     /**
      * Every field must be present and not null.
@@ -875,6 +1477,14 @@ public class Issue {
 
     public List<Labels> getLabelsList() {
         return labelsList;
+    }
+
+    public int getIssueIndex() {
+        return issueIndex;
+    }
+
+    public void setIssueIndex(int issueIndex) {
+        this.issueIndex = issueIndex;
     }
 
     @Override
@@ -964,15 +1574,6 @@ public class Labels {
  */
 public class Milestone {
 
-    public static final String MESSAGE_MILESTONE_CONSTRAINTS =
-            "Milestone of the issue can be anything, but should not be blank space";
-
-    /*
-     * The first character of the title must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    public static final String MILESTONE_VALIDATION_REGEX = "[^\\s].*";
-
     public final String fullMilestone;
 
     /**
@@ -981,18 +1582,9 @@ public class Milestone {
      * @param milestone A valid milestone.
      */
     public Milestone(String milestone) {
-        requireNonNull(milestone);
-        checkArgument(isValidMilestone(milestone), MESSAGE_MILESTONE_CONSTRAINTS);
+        //requireNonNull(milestone);
         this.fullMilestone = milestone;
     }
-
-    /**
-     * Returns true if a given string is a issue title.
-     */
-    public static boolean isValidMilestone(String test) {
-        return test.matches(MILESTONE_VALIDATION_REGEX);
-    }
-
 
     @Override
     public String toString() {
@@ -1020,20 +1612,14 @@ public class Milestone {
  */
 public final class MilestoneMap {
 
-    private static HashMap<Milestone, Integer> milestoneMap;
+    private static HashMap<String, GHMilestone> milestoneMap;
 
-    /* Milestone Mappings */
-    private static final Milestone MILESTONE_ONE = new Milestone("v1.1");
-    private static final Milestone MILESTONE_TWO = new Milestone("v1.2");
-    private static final Milestone MILESTONE_THREE = new Milestone("v1.3");
-    private static final Milestone MILESTONE_FOUR = new Milestone("v1.4");
-    private static final Milestone MILESTONE_FIVE_RC = new Milestone("v1.5rc");
-    private static final Milestone MILESTONE_FIVE = new Milestone("v1.5");
+    private GHRepository repository;
 
     /**
      * Returns a hashmap of milestones
      */
-    public static HashMap<Milestone, Integer> getMilestoneMap() {
+    public HashMap<String, GHMilestone> getMilestoneMap() throws CommandException {
         milestoneMap = new HashMap<>();
         createMilestoneHashMap();
         return milestoneMap;
@@ -1042,16 +1628,16 @@ public final class MilestoneMap {
     /**
      * creates a map with the milestone values
      */
-    private static void createMilestoneHashMap() {
-        //Adding values to the map
-        milestoneMap.put(MILESTONE_ONE, 1);
-        milestoneMap.put(MILESTONE_TWO, 2);
-        milestoneMap.put(MILESTONE_THREE, 3);
-        milestoneMap.put(MILESTONE_FOUR, 4);
-        milestoneMap.put(MILESTONE_FIVE_RC, 5);
-        milestoneMap.put(MILESTONE_FIVE, 6);
+    private void createMilestoneHashMap() {
+        List<GHMilestone> milestones = repository.listMilestones(GHIssueState.ALL).asList();
+        for (int i = 0; i < milestones.size(); i++) {
+            milestoneMap.put(milestones.get(i).getTitle(), milestones.get(i));
+        }
     }
 
+    public void setRepository(GHRepository repo) {
+        repository = repo;
+    }
 }
 ```
 ###### \java\seedu\progresschecker\model\issues\Title.java
@@ -1061,15 +1647,6 @@ public final class MilestoneMap {
  */
 public class Title {
 
-    public static final String MESSAGE_TITLE_CONSTRAINTS =
-            "Title of the issue can be anything, but should not be blank space";
-
-    /*
-     * The first character of the title must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    public static final String TITLE_VALIDATION_REGEX = "[^\\s].*";
-
     public final String fullMessage;
 
     /**
@@ -1078,18 +1655,8 @@ public class Title {
      * @param title A valid description.
      */
     public Title(String title) {
-        requireNonNull(title);
-        checkArgument(isValidTitle(title), MESSAGE_TITLE_CONSTRAINTS);
         this.fullMessage = title;
     }
-
-    /**
-     * Returns true if a given string is a issue title.
-     */
-    public static boolean isValidTitle(String test) {
-        return test.matches(TITLE_VALIDATION_REGEX);
-    }
-
 
     @Override
     public String toString() {
@@ -1112,9 +1679,14 @@ public class Title {
 ```
 ###### \java\seedu\progresschecker\model\Model.java
 ``` java
+    /** authenticates git using password */
+    void loginGithub(GitDetails gitdetails) throws IOException, CommandException;
+
+    /** authenticates git using password */
+    void logoutGithub() throws CommandException;
 
     /** creates an issue on github */
-    void createIssueOnGitHub(Issue issue) throws IOException;
+    void createIssueOnGitHub(Issue issue) throws IOException, CommandException;
 
     /** reopen issue on github */
     void reopenIssueOnGithub(Index index) throws IOException, CommandException;
@@ -1127,8 +1699,16 @@ public class Title {
      *
      * @throws IOException if while updating the issue there is some problem in authentication
      */
-    void updateIssue(Index index, Issue editedIssue) throws IOException;
+    void updateIssue(Index index, Issue editedIssue) throws IOException, CommandException;
 
+    /** Returns unmodifiable view of the filtered issue list */
+    ObservableList<Issue> getFilteredIssueList();
+
+    /**
+     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredIssueList(Predicate<Issue> predicate);
 ```
 ###### \java\seedu\progresschecker\model\ModelManager.java
 ``` java
@@ -1141,11 +1721,30 @@ public class Title {
 ###### \java\seedu\progresschecker\model\ModelManager.java
 ``` java
     @Override
-    public void updateIssue(Index index, Issue editedIssue) throws IOException {
+    public void updateIssue(Index index, Issue editedIssue) throws IOException, CommandException {
         requireAllNonNull(index, editedIssue);
 
         progressChecker.updateIssue(index, editedIssue);
         indicateProgressCheckerChanged();
+    }
+```
+###### \java\seedu\progresschecker\model\ModelManager.java
+``` java
+    //=========== Filtered Issue List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Issue} backed by the internal list of
+     * {@code progressChecker}
+     */
+    @Override
+    public ObservableList<Issue> getFilteredIssueList() {
+        return FXCollections.unmodifiableObservableList(filteredIssues);
+    }
+
+    @Override
+    public void updateFilteredIssueList(Predicate<Issue> predicate) {
+        requireNonNull(predicate);
+        filteredIssues.setPredicate(predicate);
     }
 ```
 ###### \java\seedu\progresschecker\model\ProgressChecker.java
@@ -1154,40 +1753,29 @@ public class Title {
     //issue-level operations
 
     /**
+     * Login to github
+     *
+     * @throws IOException is there is any problem in authentication
+     *
+     */
+    public void loginGithub(GitDetails gitdetails) throws IOException, CommandException {
+        issues.initialiseCredentials(gitdetails);
+    }
+
+    /**
+     * Logout of github
+     */
+    public void logoutGithub() throws CommandException {
+        issues.clearCredentials();
+    }
+
+    /**
      * Creates issue on github
      *
      * @throws IOException if theres any fault in the input values or the authentication fails due to wrong input
      */
-    public void createIssueOnGitHub(Issue i) throws IOException {
-        GitHub github = GitHub.connectUsingPassword(userLogin, userAuthentication);
-        GHRepository repository = github.getRepository(repoName);
-        GHIssueBuilder issueBuilder = repository.createIssue(i.getTitle().toString());
-        issueBuilder.body(i.getBody().toString());
-
-        List<Assignees> assigneesList = i.getAssignees();
-        List<Labels> labelsList = i.getLabelsList();
-
-        ArrayList<GHUser> listOfUsers = new ArrayList<>();
-        ArrayList<String> listOfLabels = new ArrayList<>();
-        MilestoneMap obj = new MilestoneMap();
-        HashMap<Milestone, Integer> getMilestone = obj.getMilestoneMap();
-
-        for (int ct = 0; ct < assigneesList.size(); ct++) {
-            listOfUsers.add(github.getUser(assigneesList.get(ct).toString()));
-        }
-
-        for (int ct = 0; ct < labelsList.size(); ct++) {
-            listOfLabels.add(labelsList.get(ct).toString());
-        }
-
-        GHIssue createdIssue = issueBuilder.create();
-        //GHMilestone check = repository.getMilestone(1);
-        if (i.getMilestone() != null) {
-            GHMilestone check = repository.getMilestone(getMilestone.get(i.getMilestone()));
-            createdIssue.setMilestone(check);
-        }
-        createdIssue.setAssignees(listOfUsers);
-        createdIssue.setLabels(listOfLabels.toArray(new String[0]));
+    public void createIssueOnGitHub(Issue i) throws IOException, CommandException {
+        issues.createIssue(i);
     }
 
     /**
@@ -1197,12 +1785,7 @@ public class Title {
      * @throws IOException if the index mentioned is not valid or he's closed
      */
     public void reopenIssueOnGithub(Index index) throws IOException, CommandException {
-        GitHub github = GitHub.connectUsingPassword(userLogin, userAuthentication);
-        GHRepository repository = github.getRepository(repoName);
-        GHIssue issue = repository.getIssue(index.getOneBased());
-        if (issue.getState() == GHIssueState.OPEN) {
-            throw new CommandException("Issue is already open");
-        }
+        issues.reopenIssue(index);
     }
 
     /**
@@ -1211,13 +1794,7 @@ public class Title {
      * @throws IOException if the index mentioned is not valid or he's closed
      */
     public void closeIssueOnGithub(Index index) throws IOException, CommandException {
-        GitHub github = GitHub.connectUsingPassword(userLogin, userAuthentication);
-        GHRepository repository = github.getRepository(repoName);
-        GHIssue issue = repository.getIssue(index.getOneBased());
-        if (issue.getState() == GHIssueState.CLOSED) {
-            throw new CommandException("This issue is already closed");
-        }
-        issue.close();
+        issues.closeIssue(index);
     }
 
     /**
@@ -1227,38 +1804,126 @@ public class Title {
      * @throws IOException if there is any problem in git authentication or parameter
      *
      */
-    public void updateIssue(Index index, Issue editedIssue) throws IOException {
+    public void updateIssue(Index index, Issue editedIssue) throws IOException, CommandException {
         requireNonNull(editedIssue);
-        GitHub github = GitHub.connectUsingPassword(userLogin, userAuthentication);
-        GHRepository repository = github.getRepository(repoName);
-        GHIssue toEdit = repository.getIssue(index.getOneBased());
-
-        List<Assignees> assigneesList = editedIssue.getAssignees();
-        List<Labels> labelsList = editedIssue.getLabelsList();
-
-        ArrayList<GHUser> listOfUsers = new ArrayList<>();
-        ArrayList<String> listOfLabels = new ArrayList<>();
-        MilestoneMap obj = new MilestoneMap();
-        HashMap<Milestone, Integer> getMilestone = obj.getMilestoneMap();
-
-        for (int ct = 0; ct < assigneesList.size(); ct++) {
-            listOfUsers.add(github.getUser(assigneesList.get(ct).toString()));
-        }
-
-        for (int ct = 0; ct < labelsList.size(); ct++) {
-            listOfLabels.add(labelsList.get(ct).toString());
-        }
-
-        if (editedIssue.getMilestone() != null) {
-            GHMilestone check = repository.getMilestone(getMilestone.get(editedIssue.getMilestone()));
-            toEdit.setMilestone(check);
-        }
-        toEdit.setTitle(editedIssue.getTitle().toString());
-        toEdit.setBody(editedIssue.getBody().toString());
-        toEdit.setAssignees(listOfUsers);
-        toEdit.setLabels(listOfLabels.toArray(new String[0]));
+        issues.setIssue(index, editedIssue);
     }
 
+```
+###### \java\seedu\progresschecker\storage\XmlAdaptedIssue.java
+``` java
+/**
+ * JAXB-friendly version of the Issue.
+ */
+public class XmlAdaptedIssue {
+
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Issue's %s field is missing!";
+
+    @XmlElement(required = true)
+    private String title;
+    @XmlElement(required = false)
+    private String body;
+    @XmlElement(required = false)
+    private String milestone;
+
+    @XmlElement
+    private List<XmlAdaptedAssignee> assignees = new ArrayList<>();
+
+    @XmlElement
+    private List<XmlAdaptedLabel> labelled = new ArrayList<>();
+
+    /**
+     * Constructs an XmlAdaptedIssue.
+     * This is the no-arg constructor that is required by JAXB.
+     */
+    public XmlAdaptedIssue() {}
+
+    /**
+     * Constructs an {@code XmlAdaptedPerson} with the given person details.
+     */
+    public XmlAdaptedIssue(
+            String title, String body, String milestone,
+            List<XmlAdaptedAssignee> assignees, List<XmlAdaptedLabel> labelled) {
+        this.title = title;
+        this.body = body;
+        this.milestone = milestone;
+
+        if (assignees != null) {
+            this.assignees = new ArrayList<>(assignees);
+        }
+        if (labelled != null) {
+            this.labelled = new ArrayList<>(labelled);
+        }
+    }
+
+    /**
+     * Converts a given Issue into this class for JAXB use.
+     *
+     * @param source future changes to this will not affect the created XmlAdaptedIssue
+     */
+    public XmlAdaptedIssue(Issue source) {
+        title = source.getTitle().fullMessage;
+        body = source.getBody().fullBody;
+        if (source.getMilestone() == null) {
+            milestone = "";
+        } else {
+            milestone = source.getMilestone().fullMilestone;
+        }
+        assignees = new ArrayList<>();
+        for (Assignees assignee : source.getAssignees()) {
+            assignees.add(new XmlAdaptedAssignee(assignee));
+        }
+        for (Labels label : source.getLabelsList()) {
+            labelled.add(new XmlAdaptedLabel(label));
+        }
+    }
+
+    /**
+     * Converts this jaxb-friendly adapted issue object into the model's Issue object.
+     *
+     * @throws IllegalValueException if there were any data constraints violated in the adapted issue
+     */
+    public Issue toModelType() throws IllegalValueException {
+        final List<Assignees> issueAssignees = new ArrayList<>();
+        final List<Labels> issueLabels = new ArrayList<>();
+        for (XmlAdaptedAssignee assigneeIssue : assignees) {
+            issueAssignees.add(assigneeIssue.toModelType());
+        }
+
+        for (XmlAdaptedLabel labelIssue : labelled) {
+            issueLabels.add(labelIssue.toModelType());
+        }
+
+        if (this.title == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Title.class.getSimpleName()));
+        }
+        final Title title = new Title(this.title);
+
+        final Body body = new Body(this.body);
+
+        final Milestone milestone = new Milestone(this.milestone);
+
+        return new Issue(title, issueAssignees, milestone, body, issueLabels);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof XmlAdaptedIssue)) {
+            return false;
+        }
+
+        XmlAdaptedIssue otherIssue = (XmlAdaptedIssue) other;
+        return Objects.equals(title, otherIssue.title)
+                && Objects.equals(body, otherIssue.body)
+                && Objects.equals(milestone, otherIssue.milestone)
+                && Objects.equals(assignees, otherIssue.assignees)
+                && Objects.equals(labelled, otherIssue.labelled);
+    }
+}
 ```
 ###### \java\seedu\progresschecker\ui\CommandBox.java
 ``` java
@@ -1291,4 +1956,213 @@ public class Title {
                 logger.info("Invalid command: " + commandTextField.getText());
                 raise(new NewResultAvailableEvent(e.getMessage()));
             }
+```
+###### \java\seedu\progresschecker\ui\IssueCard.java
+``` java
+/**
+ * An UI component that displays information of a {@code Issue}.
+ */
+public class IssueCard extends UiPart<Region> {
+
+    private static final String FXML = "IssueListCard.fxml";
+    private static final String[] LABEL_COLORS = { "red", "orange", "yellow", "green", "blue", "purple" };
+    /**
+     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
+     * As a consequence, UI elements' variable names cannot be set to such keywords
+     * or an exception will be thrown by JavaFX during runtime.
+     *
+     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
+     */
+
+    public final Issue issue;
+
+    @javafx.fxml.FXML
+    private HBox cardPane;
+    @FXML
+    private Label title;
+    @FXML
+    private Label id;
+    @FXML
+    private Label body;
+    @FXML
+    private Label milestone;
+    @FXML
+    private FlowPane labelled;
+    @FXML
+    private FlowPane assignees;
+
+    public IssueCard(Issue issue, int displayedIndex) {
+        super(FXML);
+        this.issue = issue;
+        id.setText("#" + displayedIndex + " ");
+        title.setText(issue.getTitle().toString());
+        body.setText(issue.getBody().fullBody);
+        milestone.setText(issue.getMilestone().fullMilestone);
+        issue.getLabelsList().forEach(labels -> {
+            Label label = new Label(labels.fullLabels);
+            label.getStyleClass().add(getLabelColor(labels.fullLabels));
+            labelled.getChildren().add(label);
+        });
+        issue.getAssignees().forEach(assignee -> {
+            Label label = new Label(assignee.fullAssignees);
+            label.getStyleClass().add(getLabelColor(assignee.fullAssignees));
+            assignees.getChildren().add(label);
+        });
+    }
+
+    /**
+     * Get a deterministic label color based off label's name value.
+     */
+    private String getLabelColor(String labelName) {
+        int index = getValueOfString(labelName) % LABEL_COLORS.length;
+        return LABEL_COLORS[index];
+    }
+
+    /**
+     * Adds each letter of given string into an integer.
+     */
+    private int getValueOfString(String labelName) {
+        int sum = 0;
+        for (char c : labelName.toCharArray()) {
+            sum += c;
+        }
+        return sum;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof IssueCard)) {
+            return false;
+        }
+
+        // state check
+        IssueCard card = (IssueCard) other;
+        return id.getText().equals(card.id.getText())
+                && issue.equals(card.issue);
+    }
+}
+```
+###### \java\seedu\progresschecker\ui\IssueListPanel.java
+``` java
+/**
+ * Panel containing the issues on github.
+ */
+public class IssueListPanel extends UiPart<Region> {
+    private static final String FXML = "IssueListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(IssueListPanel.class);
+
+    @javafx.fxml.FXML
+    private ListView<IssueCard> issueListView;
+
+    public IssueListPanel(ObservableList<Issue> issueList) {
+        super(FXML);
+        setConnections(issueList);
+        registerAsAnEventHandler(this);
+    }
+
+    private void setConnections(ObservableList<Issue> issueList) {
+        ObservableList<IssueCard> mappedList = EasyBind.map(
+                issueList, (issue) -> new IssueCard(issue, issue.getIssueIndex()));
+        issueListView.setItems(mappedList);
+        issueListView.setCellFactory(listView -> new IssueListViewCell());
+    }
+
+    /**
+     * Scrolls to the {@code IssueCard} at the {@code index} and selects it.
+     */
+    private void scrollTo(int index) {
+        Platform.runLater(() -> {
+            issueListView.scrollTo(index);
+            issueListView.getSelectionModel().clearAndSelect(index);
+        });
+    }
+
+    @Subscribe
+    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(event.targetIndex);
+    }
+
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code IssueCard}.
+     */
+    class IssueListViewCell extends ListCell<IssueCard> {
+
+        @Override
+        protected void updateItem(IssueCard issue, boolean empty) {
+            super.updateItem(issue, empty);
+
+            if (empty || issue == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(issue.getRoot());
+            }
+        }
+    }
+
+}
+```
+###### \resources\view\IssueListCard.fxml
+``` fxml
+<HBox id="cardPane" fx:id="cardPane" prefHeight="140.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+    <GridPane prefHeight="140.0" prefWidth="380.0" HBox.hgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+        </columnConstraints>
+        <HBox prefHeight="140.0" prefWidth="216.0">
+            <children>
+                <VBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="140.0" prefWidth="216.0">
+                    <padding>
+                        <Insets bottom="5" left="15" right="5" top="5" />
+                    </padding>
+                    <HBox alignment="CENTER_LEFT" spacing="5">
+                        <Label fx:id="id" styleClass="cell_big_label">
+                            <minWidth>
+                                <!-- Ensures that the label text is never truncated -->
+                                <Region fx:constant="USE_PREF_SIZE" />
+                            </minWidth>
+                        </Label>
+                        <Label fx:id="title" styleClass="cell_big_label" text="\$first" />
+                    </HBox>
+                    <FlowPane fx:id="labelled" />
+                    <GridPane prefHeight="80.0" prefWidth="332.0">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="10.0" prefWidth="74.0" />
+                            <ColumnConstraints hgrow="ALWAYS" maxWidth="300.0" minWidth="10.0" prefWidth="200.0" />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="21.0" minHeight="0.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="23.0" minHeight="7.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                        </rowConstraints>
+                        <children>
+                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Body: " />
+                            <Label fx:id="body" styleClass="cell_small_label" text="\$body" GridPane.columnIndex="1" />
+                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Assignees: " GridPane.rowIndex="2" />
+                            <FlowPane fx:id="assignees" prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Milestone: " GridPane.rowIndex="1" />
+                            <Label fx:id="milestone" styleClass="cell_small_label" text="\$milestone" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        </children>
+                    </GridPane>
+                </VBox>
+            </children>
+        </HBox>
+        <rowConstraints>
+            <RowConstraints />
+        </rowConstraints>
+    </GridPane>
+</HBox>
+```
+###### \resources\view\IssueListPanel.fxml
+``` fxml
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <ListView fx:id="issueListView" VBox.vgrow="ALWAYS" />
+</VBox>
 ```

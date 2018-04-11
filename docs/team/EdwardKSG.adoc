@@ -34,7 +34,7 @@ ProgressChecker is *a desktop application that enables CS2103/T students to trac
 *** Wrote the first version of introduction in User and Developer Guide
 *** Contributed to User Stories and Use Cases https://github.com/CS2103JAN2018-T09-B3/main/pull/111[#111]
 ** Community:
-*** Pull requests reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-T09-B3/main/pull/209[#209] https://github.com/CS2103JAN2018-T09-B3/main/pull/26[#26] https://github.com/CS2103JAN2018-T09-B3/main/pull/8[#8]
+*** Pull requests reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-T09-B3/main/pull/212[#212] https://github.com/CS2103JAN2018-T09-B3/main/pull/209[#209] https://github.com/CS2103JAN2018-T09-B3/main/pull/26[#26] https://github.com/CS2103JAN2018-T09-B3/main/pull/8[#8]
 *** Reported bugs and suggestions for other teams in the class https://github.com/CS2103JAN2018-F14-B4/main/issues/149[#149] https://github.com/CS2103JAN2018-F14-B4/main/issues/146[#146]
 ** Tools:
 *** Integrated a https://developers.google.com/google-apps/tasks/[Google Tasks Java API](com.google.api.services.tasks) to the project https://github.com/CS2103JAN2018-T09-B3/main[ProgressChecker].

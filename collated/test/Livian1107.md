@@ -1,4 +1,33 @@
 # Livian1107
+###### \java\seedu\progresschecker\logic\commands\ThemeCommandTest.java
+``` java
+/**
+ * Contains assertion tests for {@code ThemeCommand}.
+ */
+public class ThemeCommandTest {
+    @Test
+    public void equals() {
+        ThemeCommand dayTheme = new ThemeCommand(DAY_THEME);
+        ThemeCommand nightTheme = new ThemeCommand(NIGHT_THEME);
+
+        // same object -> returns true
+        assertTrue(dayTheme.equals(dayTheme));
+
+        // same values -> returns true
+        ThemeCommand dayThemeCopy = new ThemeCommand(DAY_THEME);
+        assertTrue(dayTheme.equals(dayThemeCopy));
+
+        // different types -> returns false
+        assertFalse(dayTheme.equals(1));
+
+        // null -> returns false
+        assertFalse(dayTheme.equals(null));
+
+        // different type -> returns false
+        assertFalse(dayTheme.equals(nightTheme));
+    }
+}
+```
 ###### \java\seedu\progresschecker\logic\commands\UploadCommandTest.java
 ``` java
 public class UploadCommandTest {
@@ -20,5 +49,15 @@ public class UploadCommandTest {
         assertFalse(UploadCommand.isValidLocalPath("C:\\\\1.jpg")); // too many backslashes
         assertFalse(UploadCommand.isValidLocalPath("C:\\")); // no file name
     }
+}
+```
+###### \java\seedu\progresschecker\testutil\TypicalThemes.java
+``` java
+/**
+ * A utility class containing a list of {@code String} objects to be used in tests.
+ */
+public class TypicalThemes {
+    public static final String DAY_THEME = "day";
+    public static final String NIGHT_THEME = "night";
 }
 ```

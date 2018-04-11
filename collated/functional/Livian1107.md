@@ -1,4 +1,26 @@
 # Livian1107
+###### \java\seedu\progresschecker\commons\events\ui\ChangeThemeEvent.java
+``` java
+/**
+ * Represents the change of the theme of ProgressChecker.
+ */
+public class ChangeThemeEvent extends BaseEvent {
+    public final String theme;
+
+    public ChangeThemeEvent(String theme) {
+        this.theme = theme;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+}
+```
 ###### \java\seedu\progresschecker\logic\commands\SortCommand.java
 ``` java
 /**
@@ -17,6 +39,45 @@ public class SortCommand extends UndoableCommand {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
+}
+```
+###### \java\seedu\progresschecker\logic\commands\ThemeCommand.java
+``` java
+/**
+ * Changes the thmem of ProgressChecker.
+ */
+public class ThemeCommand extends UndoableCommand {
+    public static final String COMMAND_WORD = "theme";
+    public static final String COMMAND_ALIAS = "t";
+
+    public static final String COMMAND_FORMAT = COMMAND_WORD + " "
+            + " THEME";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Change theme of ProgressChecker.\n"
+            + "Parameters: " + "Theme(either 'day' or 'night')\n"
+            + "Example: " + COMMAND_WORD + "day";
+
+    public static final String MESSAGE_SUCCESS = "Change to theme %1$s";
+
+    public final String theme;
+
+    public ThemeCommand(String theme) {
+        this.theme = theme;
+    }
+
+    @Override
+    protected CommandResult executeUndoableCommand() {
+        EventsCenter.getInstance().post(new ChangeThemeEvent(theme));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, theme));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ThemeCommand // instanceof handles nulls
+                && this.theme.equals(((ThemeCommand) other).theme)); // state check
+    }
 }
 ```
 ###### \java\seedu\progresschecker\logic\commands\UploadCommand.java
@@ -154,6 +215,45 @@ public class UploadCommand extends UndoableCommand {
             createMissing(savedPhoto);
         } catch (IOException e) {
             assert false : "Fail to create the file!";
+        }
+    }
+}
+```
+###### \java\seedu\progresschecker\logic\parser\ParserUtil.java
+``` java
+    /**
+     * Parses {@code type} into a {@code String} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified theme is invalid (not of string "day" or "night").
+     */
+    public static String parseTheme(String theme) throws IllegalValueException {
+        String trimmedType = theme.trim();
+        if (!trimmedType.equals("day") && !trimmedType.equals("night")) {
+            throw new IllegalValueException(MESSAGE_INVALID_TAB_TYPE);
+        }
+        return trimmedType;
+    }
+
+```
+###### \java\seedu\progresschecker\logic\parser\ThemeCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ThemeCommand object
+ */
+public class ThemeCommandParser implements Parser<ThemeCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ViewCommand
+     * and returns an ViewCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ThemeCommand parse(String args) throws ParseException {
+        try {
+            String theme = ParserUtil.parseTheme(args);
+            return new ThemeCommand(theme);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
         }
     }
 }
@@ -432,7 +532,7 @@ public class UniquePhotoList implements Iterable<PhotoPath> {
     @FXML
     public void handleNightTheme() {
         Scene scene = primaryStage.getScene();
-        scene.getStylesheets().setAll("view/DarkTheme.css");
+        scene.getStylesheets().setAll(DARK_THEME);
         primaryStage.setScene(scene);
         show();
     }
@@ -443,7 +543,7 @@ public class UniquePhotoList implements Iterable<PhotoPath> {
     @FXML
     public void handleDayTheme() {
         Scene scene = primaryStage.getScene();
-        scene.getStylesheets().setAll("view/DayTheme.css");
+        scene.getStylesheets().setAll(DAY_THEME);
         primaryStage.setScene(scene);
         show();
     }
@@ -465,6 +565,133 @@ public class UniquePhotoList implements Iterable<PhotoPath> {
         primaryStage.setMinHeight(MIN_HEIGHT);
         primaryStage.setMinWidth(MIN_WIDTH);
     }
+
+```
+###### \java\seedu\progresschecker\ui\ProfilePanel.java
+``` java
+
+/**
+ * Panel contains the information of person
+ */
+public class ProfilePanel extends UiPart<Region>  {
+
+    private static final String FXML = "ProfilePanel.fxml";
+    private static String DEFAULT_PHOTO = "/images/profile_photo.jpg";
+
+    private static final String[] TAG_COLORS = { "red", "orange", "yellow", "green", "blue", "purple" };
+    /**
+     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
+     * As a consequence, UI elements' variable names cannot be set to such keywords
+     * or an exception will be thrown by JavaFX during runtime.
+     *
+     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
+     */
+
+    private Person person;
+    private Person currentlyViewedPerson;
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    @FXML
+    private Label name;
+    @FXML
+    private Label phone;
+    @FXML
+    private Label major;
+    @FXML
+    private Label year;
+    @FXML
+    private Label email;
+    @FXML
+    private Label username;
+    @FXML
+    private FlowPane tags;
+    @FXML
+    private Ellipse profile;
+
+    public ProfilePanel() {
+        super(FXML);
+        this.person = null;
+        loadDefaultPerson();
+        registerAsAnEventHandler(this);
+
+    }
+
+```
+###### \java\seedu\progresschecker\ui\ProfilePanel.java
+``` java
+    /**
+     * Loads the default person
+     */
+    private void loadDefaultPerson() {
+        name.setText("Person X");
+        phone.setText("");
+        username.setText("");
+        email.setText("");
+        year.setText("");
+        major.setText("");
+        tags.getChildren().clear();
+
+        setDefaultInfoPhoto();
+        currentlyViewedPerson = null;
+        logger.info("Currently Viewing: Default Person");
+    }
+
+    /**
+     * Loads the info of the selected person
+     */
+    private void loadPerson(Person person) {
+        this.person = person;
+        tags.getChildren().clear();
+        name.setText(person.getName().fullName);
+        phone.setText(person.getPhone().value);
+        major.setText(person.getMajor().value);
+        year.setText(person.getYear().value);
+        email.setText(person.getEmail().value);
+        username.setText(person.getUsername().username);
+```
+###### \java\seedu\progresschecker\ui\ProfilePanel.java
+``` java
+        loadPhoto();
+
+        currentlyViewedPerson = person;
+        logger.info("Currently Viewing: " + currentlyViewedPerson.getName());
+    }
+
+    /**
+     * Sets the default info photo.
+     */
+    public void setDefaultInfoPhoto() {
+        Image defaultImage = new Image(MainApp.class.getResourceAsStream(DEFAULT_PHOTO));
+        profile.setFill(new ImagePattern(defaultImage));
+    }
+
+    /**
+     * Loads profile photo
+     */
+    private void loadPhoto() {
+        String photoPath = person.getPhotoPath();
+        Image profilePhoto;
+        if (photoPath.contains("contact")) {
+            File photo = new File(photoPath);
+            if (photo.exists() && !photo.isDirectory()) {
+                String url = photo.toURI().toString();
+                profilePhoto = new Image(url);
+                profile.setFill(new ImagePattern(profilePhoto));
+            }
+        } else {
+            profilePhoto = new Image(
+                    MainApp.class.getResourceAsStream(person.getDefaultPath()));
+            profile.setFill(new ImagePattern(profilePhoto));
+        }
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangeEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPerson(event.getNewSelection().person);
+    }
+}
 ```
 ###### \resources\view\MainWindow.fxml
 ``` fxml
@@ -475,15 +702,67 @@ public class UniquePhotoList implements Iterable<PhotoPath> {
 ```
 ###### \resources\view\MainWindow.fxml
 ``` fxml
-         <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+         <TabPane fx:id="tabPlaceholder" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
            <tabs>
-             <Tab text="Profile" />
-             <Tab text="Task">
-                 <StackPane fx:id="browserPlaceholder"/>
+             <Tab fx:id="profilePlaceholder" text="Profile">
+                 <StackPane fx:id="profilePanelPlaceholder" VBox.vgrow="ALWAYS"/>
              </Tab>
-               <Tab text="Exercise">
-                   <StackPane fx:id="exerciseListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-               </Tab>
-           </tabs>
-         </TabPane>
+             <Tab fx:id="taskPlaceholder" text="Task">
+```
+###### \resources\view\ProfilePanel.fxml
+``` fxml
+
+<Pane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="profileBackground" fitHeight="500.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/profile_background.png" />
+         </image>
+      </ImageView>
+      <Ellipse fx:id="profile" centerX="300.0" centerY="100.0" fill="WHITE" layoutX="200.0" radiusX="100.0" radiusY="80.0" stroke="BLACK" strokeType="INSIDE" />
+      <GridPane layoutX="400.0" layoutY="180.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="65.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="146.0" minWidth="10.0" prefWidth="135.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Text>
+            <Label fx:id="name" prefHeight="17.0" prefWidth="136.0" text="\$name" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+      <FlowPane fx:id="tags" layoutX="28.0" layoutY="20.0" prefHeight="28.0" prefWidth="135.0" />
+      <GridPane layoutX="400.0" layoutY="250.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="69.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="135.0" minWidth="10.0" prefWidth="131.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="phone" prefHeight="17.0" prefWidth="128.0" text="\$phone" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="email" prefHeight="17.0" prefWidth="134.0" text="\$email" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="username" prefHeight="17.0" prefWidth="132.0" text="\$username" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="major" prefHeight="17.0" prefWidth="135.0" text="\$major" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="year" prefHeight="17.0" prefWidth="130.0" text="\$year" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone:" GridPane.rowIndex="1" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" GridPane.rowIndex="2" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GitHub:" GridPane.rowIndex="3" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Major:" GridPane.rowIndex="4" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Year:" GridPane.rowIndex="5" />
+         </children>
+      </GridPane>
+   </children>
+</Pane>
 ```

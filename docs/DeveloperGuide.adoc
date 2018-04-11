@@ -395,6 +395,7 @@ The details of implementation are as follow:
 . `edited` Person will be created, by obtaining the new value for modified fields from `EditPersonDescriptor`. The value of unmodified field(s) are obtained from `toEdit` Person.
 . `edited` Person is used to replace `toEdit` Person in `AddressBook`.
 
+// tag::emer7[]
 === Review system
 
 A `Review` consists of the _review_ content itself and the _reviewer_. _Review_ and _reviewer_ are separated by a single newline character.
@@ -427,6 +428,7 @@ The old `Review` value is obtained from `Person` _personToEdit_.
 . `Person` _editedPerson_ is used to replace `Person` _personToEdit_ in `AddressBook`.
 
 `Review` uses JavaFX's `Dialog` to get the review input from the user instead of from command box.
+// end::emer7[]
 
 === Lock and unlock Employees Tracker
 

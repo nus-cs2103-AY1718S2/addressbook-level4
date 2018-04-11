@@ -107,7 +107,7 @@ public class ShowReviewDialogEvent extends BaseEvent {
         toReturn.setRating(updatedRating);
         toReturn.setReviews(updatedReviews);
         toReturn.setId(personToEdit.getId());
-
+        toReturn.setPhotoName(personToEdit.getPhotoName());
         return toReturn;
 ```
 ###### \java\seedu\address\logic\commands\EditCommand.java
@@ -136,7 +136,7 @@ public class ShowReviewDialogEvent extends BaseEvent {
         toReturn.setRating(updatedRating);
         toReturn.setReviews(personToEdit.getReviews());
         toReturn.setId(personToEdit.getId());
-
+        toReturn.setPhotoName(personToEdit.getPhotoName());
         return toReturn;
 ```
 ###### \java\seedu\address\logic\commands\ReviewCommand.java
@@ -147,8 +147,10 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
@@ -227,20 +229,34 @@ public class ReviewCommand extends UndoableCommand {
      * edited with {@code editPersonDescriptor}.
      */
     private static Person createEditedPerson(Person personToEdit,
-                                             EditCommand.EditPersonDescriptor editPersonDescriptor) {
+                                             EditCommand.EditPersonDescriptor editPersonDescriptor
+    ) throws CommandException {
         assert personToEdit != null;
+        assert editPersonDescriptor.getReviews().isPresent();
 
+        Set<Review> oldReviews = personToEdit.getReviews();
+        Set<Review> newReviews = editPersonDescriptor.getReviews().get();
         HashSet<Review> updatedReviews = new HashSet<Review>();
 
-        updatedReviews.addAll(editPersonDescriptor.getReviews().orElse(new HashSet<Review>()));
-        updatedReviews.addAll(personToEdit.getReviews());
+        Review newReview = newReviews.iterator().next();
+        String newReviewer = newReview.reviewer;
+        String newValue = newReview.value;
+        Iterator<Review> iterator = oldReviews.iterator();
+        while (iterator.hasNext()) {
+            Review oldReview = iterator.next();
+            String oldReviewer = oldReview.reviewer;
+            if (!oldReviewer.equals(newReviewer)) {
+                updatedReviews.add(oldReview);
+            }
+        }
+        updatedReviews.add(newReview);
 
         Person toReturn = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getTags(), personToEdit.getCalendarId());
         toReturn.setRating(personToEdit.getRating());
         toReturn.setReviews(updatedReviews);
         toReturn.setId(personToEdit.getId());
-
+        toReturn.setPhotoName(personToEdit.getPhotoName());
         return toReturn;
     }
 
@@ -263,6 +279,10 @@ public class ReviewCommand extends UndoableCommand {
                 && Objects.equals(personToEdit, e.personToEdit);
     }
 }
+```
+###### \java\seedu\address\logic\commands\UnlockCommand.java
+``` java
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
@@ -342,31 +362,33 @@ public class ReviewCommandParser implements Parser<ReviewCommand> {
         EventsCenter.getInstance().registerHandler(this);
         EventsCenter.getInstance().post(new ShowReviewDialogEvent());
 
-        if (reviewerInput == null) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReviewCommand.MESSAGE_USAGE));
-        } else if (reviewerInput.isEmpty()) {
-            reviewerInput = "-";
+        try {
+            assert reviewerInput != null;
+            assert !reviewerInput.isEmpty();
+
+            String reviewer = ParserUtil.parseEmail(reviewerInput).value;
+
+            assert reviewInput != null;
+
+            if (reviewInput.isEmpty()) {
+                reviewInput = "-";
+            }
+            String review = reviewInput.trim();
+
+            String combined = reviewer + "\n" + review;
+            HashSet<Review> combinedSet = new HashSet<Review>();
+            combinedSet.add(new Review(combined));
+
+            EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
+            editPersonDescriptor.setReviews(combinedSet);
+            if (!editPersonDescriptor.isAnyFieldEdited()) {
+                throw new ParseException(ReviewCommand.MESSAGE_NOT_EDITED);
+            }
+
+            return new ReviewCommand(index, editPersonDescriptor);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
         }
-        String reviewer = reviewerInput.trim();
-
-        if (reviewInput == null) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReviewCommand.MESSAGE_USAGE));
-        } else if (reviewInput.isEmpty()) {
-            reviewInput = "-";
-        }
-        String review = reviewInput.trim();
-
-        String combined = reviewer + "\n" + review;
-        HashSet<Review> combinedSet = new HashSet<Review>();
-        combinedSet.add(new Review(combined));
-
-        EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
-        editPersonDescriptor.setReviews(combinedSet);
-        if (!editPersonDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(ReviewCommand.MESSAGE_NOT_EDITED);
-        }
-
-        return new ReviewCommand(index, editPersonDescriptor);
     }
 
     @Subscribe
@@ -377,6 +399,11 @@ public class ReviewCommandParser implements Parser<ReviewCommand> {
     }
 }
 ```
+###### \java\seedu\address\MainApp.java
+``` java
+        model.updateFilteredPersonList(new HideAllPersonPredicate());
+        EventsCenter.getInstance().post(new HideDetailPanelEvent());
+```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
         Person toReturn = new Person(
@@ -385,6 +412,7 @@ public class ReviewCommandParser implements Parser<ReviewCommand> {
         toReturn.setRating(person.getRating());
         toReturn.setReviews(person.getReviews());
         toReturn.setId(person.getId());
+        toReturn.setPhotoName(person.getPhotoName());
         return toReturn;
 ```
 ###### \java\seedu\address\model\person\FieldContainKeyphrasesPredicate.java
@@ -445,6 +473,13 @@ public class FieldContainKeyphrasesPredicate implements Predicate<Person> {
     public String getPersonUrl() {
         return "https://calendar.google.com/calendar/embed?src="
                 + calendarId.replaceAll("@", "%40") + "&ctz=Asia%2FSingapore";
+    }
+
+    /**
+     * Set the photo field which is the path to the photo.
+     */
+    public void setPhotoName(String photoName) {
+        this.photoName = photoName;
     }
 
     public void setRating(Rating rating) {
@@ -538,6 +573,7 @@ public class TagContainsKeyphrasesPredicate implements Predicate<Person> {
 package seedu.address.model.review;
 
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.model.person.Email.EMAIL_VALIDATION_REGEX;
 
 /**
  * Represents a Person's review in the address book.
@@ -546,8 +582,6 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Review {
     public static final String MESSAGE_REVIEW_CONSTRAINTS =
             "Person reviewer and review can take any values, and they should not be blank.";
-    public static final String REVIEWER_VALIDATION_REGEX = "[^\\s].*";
-    public static final String REVIEW_VALIDATION_REGEX = "[^\\s].*";
     private static final String DEFAULT_REVIEWER = "-";
     private static final String DEFAULT_REVIEW = "-";
 
@@ -569,31 +603,23 @@ public class Review {
      */
     public Review(String combined) {
         checkArgument(isValidCombined(combined), MESSAGE_REVIEW_CONSTRAINTS);
-        this.reviewer = combined.split("[\\r\\n]+")[0].trim();
-        this.value = combined.split("[\\r\\n]+")[1].trim();
-    }
-
-    /**
-     * Returns true if a given string is a valid reviewer.
-     */
-    public static boolean isValidReviewer(String test) {
-        return test.matches(REVIEWER_VALIDATION_REGEX);
-    }
-
-    /**
-     * Returns true if a given string is a valid review.
-     */
-    public static boolean isValidReview(String test) {
-        return test.matches(REVIEW_VALIDATION_REGEX);
+        this.reviewer = combined.split("[\\r\\n]+", 2)[0].trim();
+        this.value = combined.split("[\\r\\n]+", 2)[1].trim();
     }
 
     /**
      * Returns true if a given string is a valid combined reviewer and review.
      */
     public static boolean isValidCombined(String test) {
-        return test.split("[\\r\\n]+").length == 2 && (
-                isValidReviewer(test.split("[\\r\\n]+")[0].trim())
-                && isValidReview(test.split("[\\r\\n]+")[1].trim()));
+        return test.split("[\\r\\n]+", 2).length == 2
+                && (isValidReviewer(test.split("[\\r\\n]+", 2)[0].trim()));
+    }
+
+    /**
+     * Returns true if a given string is a valid reviewer.
+     */
+    public static boolean isValidReviewer(String test) {
+        return test.matches(EMAIL_VALIDATION_REGEX);
     }
 
     @Override
@@ -764,7 +790,7 @@ public class UniqueReviewList implements Iterable<Review> {
 ###### \java\seedu\address\model\util\SampleDataUtil.java
 ``` java
     /**
-     * Returns a tag set containing the list of strings given.
+     * Returns a review set containing the list of strings given.
      */
     public static Set<Review> getReviewSet(String... strings) {
         HashSet<Review> reviews = new HashSet<>();
@@ -785,6 +811,8 @@ public class UniqueReviewList implements Iterable<Review> {
         toReturn.setRating(rating);
         toReturn.setReviews(reviews);
         toReturn.setId(id);
+        toReturn.setPhotoName(photo.getName());
+        //System.out.println(toReturn.getName().fullName + "  " + toReturn.getPhotoName());
 
         return toReturn;
 ```
@@ -860,59 +888,35 @@ public class XmlAdaptedReview {
     @FXML
     private Label name;
     @FXML
-    private Label phone;
-    @FXML
     private Label address;
     @FXML
-    private Label email;
-    @FXML
-    private Label rating;
-    @FXML
     private FlowPane reviews;
-    @FXML
-    private FlowPane tags;
 ```
 ###### \java\seedu\address\ui\DetailPanel.java
 ``` java
         name = null;
-        phone = null;
         address = null;
-        email = null;
-        rating = null;
         reviews = null;
-        tags = null;
 ```
 ###### \java\seedu\address\ui\DetailPanel.java
 ``` java
         Person person = event.getNewSelection().person;
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
-        rating.setText(person.getRatingDisplay());
-        rating.setTextFill(Color.RED);
         reviews.getChildren().clear();
         person.getReviews().forEach(review -> reviews.getChildren().add(new Label(review.toString())));
-        tags.getChildren().clear();
-        initTags(person);
 ```
 ###### \java\seedu\address\ui\DetailPanel.java
 ``` java
     @Subscribe
     public void handlePersonEditedEvent(PersonEditedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        /*logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Person newPerson = event.getNewPerson();
         name.setText(newPerson.getName().fullName);
-        phone.setText(newPerson.getPhone().value);
         address.setText(newPerson.getAddress().value);
-        email.setText(newPerson.getEmail().value);
-        rating.setText(newPerson.getRatingDisplay());
-        rating.setTextFill(Color.RED);
         reviews.getChildren().clear();
         newPerson.getReviews().forEach(review -> reviews.getChildren().add(new Label(review.toString())));
-        tags.getChildren().clear();
-        initTags(newPerson);
-        loadPersonPage(event.getNewPerson());
+        loadPersonPage(event.getNewPerson());*/
     }
 ```
 ###### \java\seedu\address\ui\MainWindow.java
@@ -923,6 +927,7 @@ public class XmlAdaptedReview {
         ReviewDialog reviewDialog = new ReviewDialog();
         reviewDialog.show();
     }
+
 ```
 ###### \java\seedu\address\ui\ReviewDialog.java
 ``` java
@@ -952,6 +957,8 @@ import seedu.address.commons.events.logic.ReviewInputEvent;
  */
 public class ReviewDialog {
 
+    public static final String REVIEW_DIALOG_PANE_FIELD_ID = "reviewDialogPane";
+
     private Dialog<Pair<String, String>> dialog;
     private ButtonType reviewButtonType;
     private TextField reviewer;
@@ -962,8 +969,11 @@ public class ReviewDialog {
 
     public ReviewDialog() {
         dialog = new Dialog<>();
+        dialog.getDialogPane().setId(REVIEW_DIALOG_PANE_FIELD_ID);
         dialog.setTitle("Review Dialog");
-        dialog.setHeaderText("Review accepts any character except new line and has no length limit.");
+        dialog.setHeaderText("Reviewer must be a valid email address"
+                + "\n"
+                + "Review accepts any characters and has no length limit.");
 
         reviewButtonType = new ButtonType("Review", ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(reviewButtonType, ButtonType.CANCEL);
@@ -974,9 +984,9 @@ public class ReviewDialog {
         grid.setPadding(new Insets(20, 150, 10, 10));
 
         reviewer = new TextField();
-        reviewer.setPromptText("Reviewer");
+        reviewer.setPromptText("Enter your email address here");
         review = new TextArea();
-        review.setPromptText("Review");
+        review.setPromptText("Enter your review here");
 
         grid.add(new Label("Reviewer:"), 0, 0);
         grid.add(reviewer, 1, 0);
@@ -1013,4 +1023,85 @@ public class ReviewDialog {
         });
     }
 }
+```
+###### \resources\view\DetailPanel.fxml
+``` fxml
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
+
+<StackPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane fx:id="detailPanel" gridLinesVisible="true" maxWidth="1.7976931348623157E308" style="-fx-background-color: white;">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="132.40000610351564" minWidth="10.0" prefWidth="99.99998168945312" />
+          <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="101.60001831054687" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="20.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="20.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Name">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Label>
+            <Label layoutX="10.0" layoutY="75.0" text="Address" GridPane.rowIndex="1">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </Label>
+            <Label text="Reviews" GridPane.rowIndex="3">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </Label>
+            <Label text="Calendar" GridPane.rowIndex="2">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </Label>
+            <Label fx:id="name" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></Label>
+            <Label fx:id="address" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></Label>
+            <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <content>
+                  <FlowPane fx:id="reviews" maxHeight="1.7976931348623157E308" orientation="VERTICAL" />
+               </content>
+            </ScrollPane>
+            <WebView fx:id="browser" minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+   </children>
+</StackPane>
 ```

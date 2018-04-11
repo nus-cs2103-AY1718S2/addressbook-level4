@@ -550,6 +550,11 @@ Address book data are saved in the hard disk automatically after any command tha
  changes the data. +
 There is no need to save manually.
 
+=== Encrypting data files
+
+Address book data are automatically encrypted after any command that
+ changes the data.
+
 === View tutee fees `[coming in v2.0]
 View the current amount that has to be paid by a tutee.
 
@@ -570,11 +575,6 @@ Edits date, time, duration or description of an existing task and reflects the c
 View the location of a specific contact's address on google map and the shortest route from the current location will be displayed.
 // end::ChoChihTunV2.0[]
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
-
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
 
 == FAQ
 

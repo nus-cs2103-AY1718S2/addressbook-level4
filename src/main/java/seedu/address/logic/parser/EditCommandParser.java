@@ -75,6 +75,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         return Optional.of(ParserUtil.parseTags(tagSet));
     }
 
+    //@@author TeyXinHui
     /**
      * Parses {@code Collection<String> subjects} into a {@code Set<Subject>} if {@code subjects} is non-empty.
      * If {@code subjects} contain only one element which is an empty string, it will be parsed into a
@@ -90,4 +91,5 @@ public class EditCommandParser implements Parser<EditCommand> {
                 ? Collections.emptySet() : subjects;
         return Optional.of(ParserUtil.parseSubjects(subjectSet));
     }
+    //@@author
 }

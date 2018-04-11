@@ -793,7 +793,7 @@ raising functionality
 ** Cons: Might over complicate things for these simple commands.
 // end::scheduling[]
 
-
+// tag::import[]
 === Import Contacts from CSV file
 
 ==== Current Implementation
@@ -821,7 +821,9 @@ image::ImportContactDiagram.png[width="900"]
 * **Alternative 1 (current choice):** Parses the argument and creates a new `ImportContactsCommand` passing it a file path if there is any
 
 * **Alternative 2:** Because we know there can only be 1 valid argument, we could check for validity and correctness in the `ImportContactsCommand` class and not implement a parser. This could simplify the overall architecture, but it would increase coupling and decrease cohesion, which is against modern software design principles.
+//end::import[]
 
+//tag::export[]
 === Exporting Persons Command
 The exporting persons mechanism allows the user to write the current `Person` list from the `ReadOnlyAddressBook` to a .csv file. The core functionality of this mechanism is contained in the `ExportContactsCommand` class, with a parser written in `ExportContactsCommandParser`.
 
@@ -844,6 +846,7 @@ image::ExportContactDiagram.png[width="900"]
 * **Alternative 1 (current choice):** The `ExportContactsCommandParser.parse(String args)` function uses the condition `if(args.length() < 1)` to check whether the String, `args` is _null_.
 
 * **Alternative 2:** An alternative would be to simply check `if(args == null)` the problem with this approach is that it does not function correctly. The the user inputs `ec`, args is not returned as null, nor is it returned as an empty string. Instead it's returned as a _non-null string_ with `agrs.length() = 0`. Therefore the best way to check whether the user entered a file path is simply check the length of the String *args*.
+//end::export[]
 
 == Documentation
 

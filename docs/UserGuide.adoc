@@ -303,6 +303,7 @@ Examples:
 Deletes the template with the purpose greeting.
 // end::templating[]
 
+//tag::sort[]
 ==== Sorting contacts in address book : `sort_by_name` or `sort`
 
 Sorts the contacts in the address book in alphabetical order by name. Sorting will not distinguish between first and last names, but will sort by the full text entered for a contacts name.
@@ -318,7 +319,9 @@ Examples:
 
 * `sort`
 * `sort_by_name`
+//end::sort[]
 
+//tag::import[]
 ==== Importing contacts from CSV : `import_contacts` or `ic`
 
 Imports contacts from a csv file that contains the header (Name, Email, Phone, Address) +
@@ -344,7 +347,9 @@ For example `import_contacts ~/PATH/examplefile.csv` will import the contacts co
 An example of a suitable import file format is shown below.
 
 image::import_file_example.png[width="900"]
+//end::import[]
 
+//tag:export[]
 ==== Exporting contacts to CSV: `export_contacts` or `ec`
 
 Export all contacts to a .csv file.
@@ -361,6 +366,7 @@ It is not necessary to include a file path after the command. If no file path is
 * Can write absolute or local file path
 * You may also give the path to a file name that doesn't yet exist. For example, you may call `ec data/newFileExample.csv` where `data/newFileExample.csv` does not yet exist. In this case, a new .csv file will be automatically created and written to.
 ****
+//end::export[]
 
 // tag::select[]
 ==== Selecting a person : `select` or `s` `[Coming in v2.0]`

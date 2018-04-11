@@ -43,7 +43,7 @@ public class IssueCard extends UiPart<Region> {
     public IssueCard(Issue issue, int displayedIndex) {
         super(FXML);
         this.issue = issue;
-        id.setText(displayedIndex + ". ");
+        id.setText("#" + displayedIndex + " ");
         title.setText(issue.getTitle().toString());
         body.setText(issue.getBody().fullBody);
         milestone.setText(issue.getMilestone().fullMilestone);

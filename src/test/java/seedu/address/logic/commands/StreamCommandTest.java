@@ -58,7 +58,6 @@ public class StreamCommandTest {
     @Test
     public void execute_validInput_success() {
         Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
-
         assertExecutionSuccess(INDEX_FIRST_PERSON, 1);
         assertExecutionSuccess(INDEX_THIRD_PERSON, 2);
         assertExecutionSuccess(INDEX_FIRST_PERSON, 3);

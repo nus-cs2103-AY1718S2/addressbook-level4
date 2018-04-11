@@ -52,7 +52,6 @@ public class RadarChart extends UiPart<Region> {
     private boolean animated;
 
     // Canvas info
-    private Canvas canvas;
     private GraphicsContext context;
     private double width;
     private double height;
@@ -72,7 +71,7 @@ public class RadarChart extends UiPart<Region> {
         this.maxValue = maxValue;
         this.animated = animated;
 
-        canvas = new Canvas(MIN_WIDTH, MIN_HEIGHT);
+        Canvas canvas = new Canvas(MIN_WIDTH, MIN_HEIGHT);
         context = canvas.getGraphicsContext2D();
         radarChart.getChildren().add(canvas);
 

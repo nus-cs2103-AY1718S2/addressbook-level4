@@ -34,11 +34,12 @@ public class ShowCommandParser {
     private ShowCommand.Panel parsePanel(String panel) throws ParseException {
         String trimmed = panel.trim();
 
-        if (panel.equals(ShowCommand.PANEL_INFO)) {
+        switch (trimmed) {
+        case ShowCommand.PANEL_INFO:
             return ShowCommand.Panel.INFO;
-        } else if (panel.equals(ShowCommand.PANEL_RESUME)) {
+        case ShowCommand.PANEL_RESUME:
             return ShowCommand.Panel.RESUME;
-        } else {
+        default:
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowCommand.MESSAGE_USAGE));
         }
     }

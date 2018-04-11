@@ -14,6 +14,18 @@ endif::[]
 
 By: `Team T09-B3`      Since: `Feb 2018`      Licence: `MIT`
 
+== Introduction
+
+ProgressChecker is for *students* who *prefer to use a desktop app* to keep track of their learning progress throughout the certain module. (Current version is available for CS2103/T) +
+
+For the current version, you can add your teammates details into ProgressChecker. You can also create a new task list through google task. By default, app will display all the link:DeveloperGuide.adoc#Learning-Outcomes[Learning Outcomes] for this week in the task list. Students can use this task list to track their weekly homework and the progress of the project.
+
+More importantly, ProgressChecker is *optimized for students who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (link:DeveloperGuide.adoc#GUI[GUI]).
+If you can type fast, ProgressChecker can get your learning outcome tasks done faster than traditional GUI apps. +
+
+Now you are ready to jump to the <<Setting-up,Setting up>> to get started. Enjoy!
+
+
 == Setting up
 
 There are some things you will need to set up before getting started in contributing to ProgressChecker. Below lists the important key elements you will have to configure.
@@ -94,9 +106,9 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+Now you are ready to start coding! You can:
 
-1. Get some sense of the overall design by reading <<Design-Architecture>>.
+1. Get some sense of the overall design by reading <<Design-Architecture,Design Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
 
 == Design
@@ -107,18 +119,20 @@ ProgressChecker consists of multiple components that work together via an event-
 
 === Architecture
 
+The *_Architecture Diagram_* given below explains the high-level design of the App. Given below is a quick overview of each component.
+
 .Architecture Diagram
 image::Architecture.png[width="600"]
-
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
-
+{sp} +
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/progresschecker/MainApp.java[`MainApp`]. It is responsible for,
+{sp} +
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/progresschecker/MainApp.java[`MainApp`]. It is responsible for: +
+
+* Initializing the components in the correct sequence, and connects them up with each other at app launch.
+* Shutting down the components and invokes cleanup method where necessary.
 
 <<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
@@ -142,24 +156,35 @@ For example, the `Logic` component (see the class diagram given below) defines i
 .Class Diagram of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
+{sp}+
+
 [discrete]
 ==== Events-Driven nature of the design
 
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 .Component interactions for `delete 1` command (part 1)
+
 image::SDforDeletePerson.png[width="800"]
+
+{sp}+
 
 [NOTE]
 Note how the `Model` simply raises a `ProgressCheckerChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+
+{sp} +
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 .Component interactions for `delete 1` command (part 2)
 image::SDforDeletePersonEventHandling.png[width="800"]
 
+{sp} +
+
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+
+{sp} +
 
 The sections below give more details of each component.
 
@@ -339,42 +364,75 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: Implementation of `UndoableCommand`
 
-* **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`
-** Pros: We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
-** Cons: Hard for new developers to understand the template pattern.
-* **Alternative 2:** Just override `execute()`
-** Pros: Does not involve the template pattern, easier for new developers to understand.
-** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
+|===
+|Alternative | Pros | Cons
+
+|**Add a new abstract method `executeUndoableCommand()`** +
+(current choice)
+|We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
+|Hard for new developers to understand the template pattern.
+
+|**Override `execute()`**
+|Does not involve the template pattern, easier for new developers to understand.
+|Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
+
+|===
+
+{sp}+
 
 ===== Aspect: How undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire ProgressChecker.
-** Pros: Easy to implement.
-** Cons: May have performance issues in terms of memory usage.
-* **Alternative 2:** Individual command knows how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for `delete`, just save the teammate being deleted).
-** Cons: We must ensure that the implementation of each individual command are correct.
+|===
+|Alternative | Pros | Cons
+|**Save the entire ProgressChecker** +
+(current choice)
+|Easy to implement.
+|May have performance issues in terms of memory usage.
 
+|**Individual command knows how to undo/redo by itself**
+|Will use less memory (e.g. for `delete`, just save the teammate being deleted).
+|We must ensure that the implementation of each individual command are correct.
+
+|===
+
+{sp} +
 
 ===== Aspect: Type of commands that can be undone/redone
 
-* **Alternative 1 (current choice):** Only include commands that modifies the ProgressChecker (`add`, `clear`, `edit`).
-** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
-** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
-* **Alternative 2:** Include all commands.
-** Pros: Might be more intuitive for the user.
-** Cons: User have no way of skipping such commands if he or she just want to reset the state of the address * book and not the view.
+|===
+|Alternative | Pros | Cons
+|**Only include commands that modifies the ProgressChecker (`add`, `clear`, `edit`)** +
+(current choice)
+|We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
+|User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
+
+|**Include all commands**
+|Might be more intuitive for the user.
+| User have no way of skipping such commands if he or she just want to reset the state of the ProgressChecker and not the view.
+
+|===
+
+[NOTE]
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
+{sp} +
 
 ===== Aspect: Data structure to support the undo/redo commands
 
-* **Alternative 1 (current choice):** Use separate stack for undo and redo
-** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
-** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
-* **Alternative 2:** Use `HistoryManager` for undo/redo
-** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
-** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
+|===
+|Alternative | Pros | Cons
+
+|**Use separate stack for undo and redo** +
+(current choice)
+|Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
+|Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
+
+|**Use `HistoryManager` for undo/redo**
+|We do not need to maintain a separate stack, and just reuse what is already in the codebase.
+|Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
+
+|===
+
 // end::undoredo[]
 
 // tag::upload[]
@@ -383,10 +441,14 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 The Upload command will allow users to upload their preferred image to replace the default profile photo.
 
-Upload can be undoable. The following diagram shows the inheritance diagram for upload command:
+The valid photo to be upload will be copies from local path inside resources folder under /images/contact. The name of the file will be renamed according to the time that the photo is uploaded.
 
-.Structure of Commands in the Logic Component
-image::LogicCommandClassDiagram.png[width="800"]
+Upload can be undoable. The diagram below shows how the `EventsCenter` reacts to `uploadPhoto` event.
+
+.Component Interactions for `uploadPhoto` Command
+image::SDforUploadPhoto.png[width="800"]
+
+{sp} +
 
 UploadCommand is implemented this way:
 [source,java]
@@ -394,32 +456,64 @@ UploadCommand is implemented this way:
 public class UploadCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(model);
+        requireNonNull(personToUpdate);
         try {
-            model.uploadPhoto(toUpload);
+            model.addPhoto(photoPath);
+            model.uploadPhoto(personToUpdate, savePath);
             return new CommandResult(MESSAGE_SUCCESS);
-        } catch (FileNotFoundException e) {
-            throw new CommandException(MESSAGE_IMAGE_NOT_FOUND);
-        } catch (IOException e) {
-            throw new CommandException("Caught IOException!");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        } catch (DuplicatePhotoException e) {
+            throw new CommandException(MESSAGE_IMAGE_DUPLICATE);
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_IMAGE_DUPLICATE);
         }
     }
 }
 ----
 
 [NOTE]
-If the path is invalid or the image cannot be found, the upload will not be successful. User will be asked to write the correct path to image again. Users are allowed to reload the image if they want to update the profile photo.
+Users are allowed to reload the image if they want to update the profile photo.
+
+Here is the code to copy the photo from local path inside resources folder.
+[source,java]
+----
+public String copyLocalPhoto(String localPath) throws IOException {
+    File localFile = new File(localPath);
+    String newPath = createSavePath(localPath);
+    if (!localFile.exists()) {
+        throw new FileNotFoundException(MESSAGE_LOCAL_PATH_CONSTRAINTS);
+    }
+    createSavedPhoto(newPath);
+    try {
+        copyFile(localPath, newPath);
+    } catch (IOException e) {
+        throw new IOException(MESSAGE_COPY_FAIL);
+    }
+    return newPath;
+}
+----
+
+[NOTE]
+If the local path is invalid or the image cannot be found, the upload will not be successful. The extension of the file can only be 'jpg', 'jpeg' or 'png'. User will be asked to write the correct path to image again.
 
 ==== Design Considerations
 
 ===== Aspect: Implementation of `UploadCommand`
 
-* **Alternative 1 (current choice):** user will provide the path of image
-** Pros: The path can be used directly to find the image and display it in the app.
-** Cons: Image may be a local file. When other users open the app, they cannot see the update.
-* **Alternative 2:** user will upload image into our github folder manually
-** Pros: Everyone can see the update of profile photo.
-** Cons: Quite trobulesome to upload photo manually first.
+|===
+|Alternative | Pros | Cons
+
+|**User will provide the path of image** +
+(current choice)
+|The path can be used directly to find the image and display it in the app.
+|Image may be a local file. When other users open the app, they cannot see the update.
+
+|**User will upload image into our github folder manually**
+|Everyone can see the update of profile photo.
+|Quite trobulesome to upload photo manually first.
+
+|===
 // end::upload[]
 
 // tag::search[]
@@ -469,18 +563,22 @@ private void handleKeyPress(KeyEvent keyEvent) {
 The entered key is not instantly updated in the command box thats why after the `commandTextField.getText()` is executed we need to append\delete a character for the
  code to the result to process the right input - the one that the user can see on their screens.
 
-[discrete]
 ==== Design consideration
+===== Aspect: User Interface (UI)
 
-**Aspect**: User Interface (UI)
+|===
+|Alternative | Pros | Cons
 
-**Alternative 1 (current choice):** Show the search results without actually highlighting the keywords. +
-**Pros**: Allows more readability of the of the results as they contain multiple fields and not just user name. +
-**Cons**: User needs to manually search for the keywords entered by him in the search results.
+|**Show the search results without actually highlighting the keywords** +
+(current choice)
+|Allows more readability of the of the results as they contain multiple fields and not just user name.
+|User needs to manually search for the keywords entered by him in the search results.
 
-**Alternative 2:** Show the search results WITH highlighting the keywords in the searched name. +
-**Pros**: It will make it easier for the user to view the user to identify the searched keyword in the displayed results. +
-**Cons**: Adding highlights to the results might make the displayed results a bit too cluttered specially with the presence of tags which are colored as well.
+|**Show the search results WITH highlighting the keywords in the searched name** +
+|It will make it easier for the user to view the user to identify the searched keyword in the displayed results.
+|Adding highlights to the results might make the displayed results a bit too cluttered specially with the presence of tags which are colored as well.
+
+|===
 // end::search[]
 
 // tag::answerexercise[]
@@ -502,6 +600,8 @@ The diagram below shows how the `EventsCenter` reacts to that event, which event
 .Component interactions for `answer 2.1.1 a d` command (part 2)
 image::SDforExercisesEventHandling.png[width="800"]
 
+{sp} +
+
 ==== Design Considerations
 
 ===== Aspect: Implementation of `AnswerCommand`
@@ -510,13 +610,21 @@ image::SDforExercisesEventHandling.png[width="800"]
 
 ===== Aspect: Format of answer command
 
-* **Alternative 1 (current choice):** Use same command formatting `answer INDEX ANSWER` regardless of the type of question (e.g. text based question, multiple choice question)
-** Pros: Less parser files to manage altogether
-** Cons: Can be unintuitive for users when it comes to answer different question with the same formatting
+|===
+|Alternative | Pros | Cons
 
-* **Alternative 2:** Use different command based on the type of question (e.g. `answert INDEX ANSWER` for answering text based question and `answerm INDEX CHOICE` for answering multiple choice questions)
-** Pros: Can be clearer on what is being answered for the user
-** Cons: More commands and formatting to learn and remember
+|**Use same command formatting `answer INDEX ANSWER` regardless of the type of question (e.g. text based question, multiple choice question)** +
+(current choice):
+|Less parser files to manage altogether.
+|Can be unintuitive for users when it comes to answer different question with the same formatting.
+
+|**Use different command based on the type of question (e.g. `answert INDEX ANSWER` for answering text based question and `answerm INDEX CHOICE` for answering multiple choice questions)** +
+(current choice)
+|Can be clearer on what is being answered for the user.
+|More commands and formatting to learn and remember.
+
+|===
+{sp}+
 
 ===== Aspect: How answering executes
 
@@ -526,14 +634,22 @@ image::SDforExercisesEventHandling.png[width="800"]
 
 ===== Aspect: Storing of exercise questions
 
-* **Alternative 1 (current choice):** Load from a local file
-** Pros: Implementation becomes a lot more modular.
-** Cons: Have to implement extra text file parser and involves `Storage` that might be seen as extra load to learn for new programmers
+|===
+|Alternative | Pros | Cons
 
-* **Alternative 2:** Include in `UI` file together with where the text display is being changed at
-** Pros: Easier to see where everything is
-** Cons: Formatting the exercises becomes harder and the implementation is less modular
+|**Load from a local file** +
+(current choice)
+|Implementation becomes a lot more modular.
+|Have to implement extra text file parser and involves `Storage` that might be seen as extra load to learn for new programmers
+
+|**Include in `UI` file together with where the text display is being changed at** +
+(current choice)
+|Easier to see where everything is.
+|Formatting the exercises becomes harder and the implementation is less modular.
+
+|===
 // end::answerexercise[]
+{sp} +
 
 // tag::adddefaulttasklist[]
 === [Ongoing] add default task command (Google Tasks API relevant commands)
@@ -546,8 +662,12 @@ The _Sequence Diagram_ below shows how the components interact for the scenario 
 .Component Interactions for `newtasklist` Command
 image::SDforAddDefaultTaskList.png[width="800"]
 
+{sp} +
+
 [NOTE]
 This command has no parameter regarding user input. The arguments passed are pre-initialized constant variables stored in the AddDefaultTasksCommand Class itself.
+
+{sp} +
 
 We apply Google Tasks API to help us save user tasks data online (there will be cases where data of teammates are needed, thus only local data is not enough).
 To use Google Tasks API, we fist need to register this project on google developer console and retrieve a client credential file (client_id.json) to authorize our project.
@@ -613,8 +733,7 @@ public static TaskList searchTaskList(String listTitle) throws CommandException 
 
 ===== Aspect: Format of add default task list command
 
-* **Alternative 1 (current choice):** only one command word, without any other argument
-** Pros: Less parser files to manage altogether. Very simple and easy to type.
+* There is only one command word, without any other argument. Therefore, less parser files are needed to manage altogether. This is very simple and easy to type.
 
 ===== Aspect: How the task is added
 
@@ -1116,7 +1235,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |search information in our module website based on keywords |navigate and reference the information I need quickly
 
-|`* * *` |user |view my to-do learning outcomes |know all the weekly deliverables and not miss them out
+|`* * *` |user |view my to-do <<learning outcomes,learning outcomes>> |know all the weekly deliverables and not miss them out
 
 |`* * *` |user |mark a to-do learning outcome as completed |focus on the tasks I have not done
 
@@ -1124,7 +1243,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |know if my answer for an exercise is correct |learn from any mistakes I made
 
-|`* * *` |user |see the list of completed/incomplete learning outcomes of my teammates |help to remind my teammate of the task or know which task to offer help with if they are having difficulties
+|`* * *` |user |see the list of completed/incomplete <<learning outcomes,learning outcomes>> of my teammates |help to remind my teammate of the task or know which task to offer help with if they are having difficulties
 
 |`* * *` |user |list issues (tasks) on GitHub |easily inform my teammates of my upcoming plans even before I send any pull requests to the team's repository
 
@@ -1429,16 +1548,19 @@ Build automation is the process of automating the creation of a software build a
 Gradle is an open-source build automation system.
 
 [[GUI]] GUI::
-Graphical User Interface
+Graphical User Interface.
+
+[[Learning-Outcomes]] Learning Outcomes::
+Exercises that need to be done through github for module CS2103/T.
 
 [[mainstream-os]] Mainstream OS::
-Windows, Linux, Unix, OS-X
+Windows, Linux, Unix, OS-X.
 
 [[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+A contact detail that is not meant to be shared with others.
 
 [[sequence-diagram]] Sequence Diagram::
-A sequence diagram shows object interactions shown in time sequence.
+A <<sequence diagram,sequence diagram>> shows object interactions shown in time sequence.
 
 [appendix]
 == Instructions for Manual Testing
@@ -1485,3 +1607,5 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+Back to <<Setting up,TOP>>

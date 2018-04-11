@@ -58,7 +58,7 @@ public class OpenEmailWindow {
      * Open the email message window
      */
     public OpenEmailWindow(String email, String subject, Message msg) throws IOException, SyntaxException {
-        String ERROR_MESSAGE = "Please ensure that you are connected to the internet.";
+        String errorMsg = "Please ensure that you are connected to the internet.";
         //get URL
         FXMLLoader fxmlLoader = loadScene(openWindow);
         Parent root = (Parent) fxmlLoader.load();
@@ -67,7 +67,7 @@ public class OpenEmailWindow {
         if (msg != null) {
             setContent(msg);
         } else {
-            msgContent.setText(ERROR_MESSAGE);
+            msgContent.setText(errorMsg);
         }
         puWindow.initModality(Modality.APPLICATION_MODAL);
         puWindow.initStyle(StageStyle.UNDECORATED);
@@ -94,9 +94,7 @@ public class OpenEmailWindow {
                     }
                     msgContent.setText(content);
                 }
-            }
-            //handle nested message/rfc822 messages
-            else {
+            } else {
                 msgContent.setText("This message is in an unsupported format.");
             }
         } catch (IOException e) {

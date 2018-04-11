@@ -35,11 +35,11 @@ public class EmailCard extends UiPart<Region> {
 
     public EmailCard(Message message) {
         super(FXML);
-        String ERROR_MESSAGE = "Please ensure that you are connected to the internet.";
+        String errorMsg = "Please ensure that you are connected to the internet.";
         if (message == null) {
             email.setText("unknown@unknown.com");
             subject.setText("Error: Unable to retrieve message");
-            preview.setText(ERROR_MESSAGE);
+            preview.setText(errorMsg);
             this.msg = null;
         } else if (message != null) {
             try {

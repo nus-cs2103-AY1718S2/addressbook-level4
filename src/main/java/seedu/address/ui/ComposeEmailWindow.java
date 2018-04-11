@@ -63,7 +63,8 @@ public class ComposeEmailWindow {
     /**
      * Creates a new Email compose window
      */
-    public ComposeEmailWindow(String type, String email, String sub, String content) throws IOException, SyntaxException {
+    public ComposeEmailWindow(String type, String email, String sub, String content)
+            throws IOException, SyntaxException {
         //get URL
         FXMLLoader fxmlLoader = loadScene(composeWindow);
         Parent root = (Parent) fxmlLoader.load();

@@ -90,11 +90,11 @@ public class CalendarWindow extends UiPart<Region> {
     private void setView() {
         this.dayView = calendarView.getDayPage().getDetailedDayView().getDayView();
         dayView.setHoursLayoutStrategy(DayViewBase.HoursLayoutStrategy.FIXED_HOUR_HEIGHT);
-        dayView.setHourHeight(150);
+        dayView.setHourHeight(250);
 
         this.weekView = calendarView.getWeekPage().getDetailedWeekView().getWeekView();
         weekView.setHoursLayoutStrategy(DayViewBase.HoursLayoutStrategy.FIXED_HOUR_HEIGHT);
-        weekView.setHourHeight(150);
+        weekView.setHourHeight(250);
     }
 
     private void setTime() {
@@ -124,7 +124,7 @@ public class CalendarWindow extends UiPart<Region> {
 
             Entry entry = new Entry (buildAppointment(appointment, appointmentCounter).toString());
 
-            entry.setInterval(new Interval(ldt, ldt.plusMinutes(60)));
+            entry.setInterval(new Interval(ldt, ldt.plusMinutes(30)));
 
             styleNumber++;
             styleNumber = styleNumber % 7;
@@ -178,6 +178,8 @@ public class CalendarWindow extends UiPart<Region> {
         calendarView.setShowSearchResultsTray(false);
         calendarView.setShowPrintButton(false);
         calendarView.setShowSourceTrayButton(false);
+        calendarView.setShowPageSwitcher(false);
+        calendarView.setShowToolBar(false);
         calendarView.showDayPage();
         calendarView.setShowSourceTray(false);
         calendarView.setShowPageToolBarControls(false);

@@ -9,8 +9,10 @@ import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentDependencyNotEmptyException;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.ConcurrentAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
+import seedu.address.model.appointment.exceptions.PastAppointmentException;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicateNricException;
@@ -64,7 +66,8 @@ public interface Model {
     void deleteTag(Tag tag);
 
     /** Adds the given appointment */
-    void addAppointment(Appointment appointment) throws DuplicateAppointmentException, DuplicateDateTimeException;
+    void addAppointment(Appointment appointment) throws DuplicateAppointmentException, DuplicateDateTimeException,
+        ConcurrentAppointmentException, PastAppointmentException;
 
     /** Deletes the given appointment. */
     void deleteAppointment(Appointment target) throws AppointmentNotFoundException;

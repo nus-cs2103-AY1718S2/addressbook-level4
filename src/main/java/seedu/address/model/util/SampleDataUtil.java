@@ -9,8 +9,10 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Remark;
+import seedu.address.model.appointment.exceptions.ConcurrentAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
+import seedu.address.model.appointment.exceptions.PastAppointmentException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 //import seedu.address.model.person.NRIC;
@@ -136,6 +138,10 @@ public class SampleDataUtil {
             throw new AssertionError("sample data cannot contain double booked appointments", e);
         } catch (DuplicateAppointmentException e) {
             throw new AssertionError("sample data cannot contain duplicate appointments", e);
+        } catch (ConcurrentAppointmentException cae) {
+            throw new AssertionError("AddressBook should not add appointments to on-going appointment slots");
+        } catch (PastAppointmentException pae) {
+            throw new AssertionError("AddressBook should not add appointments with past DateTime");
         }
     }
 

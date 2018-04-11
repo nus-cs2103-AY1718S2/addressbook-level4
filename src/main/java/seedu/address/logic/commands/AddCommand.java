@@ -16,8 +16,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.ConcurrentAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
+import seedu.address.model.appointment.exceptions.PastAppointmentException;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicateNricException;
@@ -208,6 +210,10 @@ public class AddCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
         } catch (DuplicateDateTimeException e) {
             throw new CommandException(MESSAGE_DUPLICATE_DATETIME);
+        } catch (ConcurrentAppointmentException e) {
+            throw new AssertionError("Concurrent appointment.");
+        } catch (PastAppointmentException e) {
+            throw new AssertionError("Past-date appointment.");
         }
     }
 
@@ -232,7 +238,7 @@ public class AddCommand extends UndoableCommand {
      * Add a new appointment for an existing pet patient under an existing person.
      */
     private CommandResult addNewAppt() throws CommandException, DuplicateAppointmentException,
-            DuplicateDateTimeException {
+            DuplicateDateTimeException, ConcurrentAppointmentException, PastAppointmentException {
         person = model.getPersonWithNric(ownerNric);
         petPatient = model.getPetPatientWithNricAndName(ownerNric, petPatientName);
 
@@ -253,7 +259,8 @@ public class AddCommand extends UndoableCommand {
      * (New appointment for the new patient under a new person).
      */
     private CommandResult addAllNew() throws DuplicatePersonException, DuplicateNricException,
-            DuplicatePetPatientException, DuplicateAppointmentException, DuplicateDateTimeException {
+            DuplicatePetPatientException, DuplicateAppointmentException, DuplicateDateTimeException,
+        ConcurrentAppointmentException, PastAppointmentException {
         model.addPerson(person);
         model.addPetPatient(petPatient);
         model.addAppointment(appt);

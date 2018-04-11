@@ -3,6 +3,7 @@ package seedu.organizer.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -228,9 +229,9 @@ public class Organizer implements ReadOnlyOrganizer {
         final Set<Tag> correctTagReferences = new HashSet<>();
         taskTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Task(
-                task.getName(), task.getPriority(), task.getDeadline(), task.getDateAdded(),
-                task.getDateCompleted(), task.getDescription(), task.getStatus(), correctTagReferences,
-                task.getSubtasks(), task.getUser());
+                task.getName(), task.getUpdatedPriority(), task.getBasePriority(), task.getDeadline(),
+                task.getDateAdded(), task.getDateCompleted(), task.getDescription(), task.getStatus(),
+                correctTagReferences, task.getSubtasks(), task.getUser(), task.getRecurrence());
     }
 
     /**
@@ -252,6 +253,7 @@ public class Organizer implements ReadOnlyOrganizer {
         tags.add(t);
     }
 
+    //@@author natania
     /**
      * Removes {@code tag} from {@code task} in this {@code Organizer}.
      * @throws TaskNotFoundException if the {@code task} is not in this {@code Organizer}.
@@ -264,8 +266,9 @@ public class Organizer implements ReadOnlyOrganizer {
         }
 
         Task newTask =
-                new Task(task.getName(), task.getPriority(), task.getDeadline(),
-                        task.getDateAdded(), task.getDateCompleted(), task.getDescription(), newTags, task.getUser());
+                new Task(task.getName(), task.getUpdatedPriority(), task.getBasePriority(), task.getDeadline(),
+                        task.getDateAdded(), task.getDateCompleted(), task.getDescription(), task.getStatus(),
+                        newTags, task.getSubtasks(), task.getUser(), task.getRecurrence());
 
         try {
             updateTask(task, newTask);
@@ -288,6 +291,22 @@ public class Organizer implements ReadOnlyOrganizer {
         }
     }
 
+    /**
+     * Recurs a task weekly in the organizer for the given number of times.
+     * Recurs by adding new tasks with the same parameters as the task to be recurred,
+     * except for deadline, which is changed to be on the same day as the task to be recurred,
+     * but on later weeks.
+     *
+     * @throws DuplicateTaskException if an equivalent task already exists.
+     */
+    public void recurTask(Task task, int times) throws DuplicateTaskException {
+        LocalDate oldDeadline = task.getDeadline().date;
+        for (int i = 1; i <= times; i++) {
+            LocalDate newDeadline = oldDeadline.plusWeeks(i);
+            tasks.addRecurringTask(task, newDeadline.toString());
+        }
+    }
+    //@@author
 
     //// util methods
 

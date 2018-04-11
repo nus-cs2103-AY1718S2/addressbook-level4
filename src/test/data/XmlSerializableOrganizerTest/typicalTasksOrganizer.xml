@@ -4,7 +4,8 @@
 <organizer>
     <tasks>
         <name>Grocery</name>
-        <priority>0</priority>
+        <updatedPriority>0</updatedPriority>
+        <basePriority>0</basePriority>
         <deadline>2019-03-11</deadline>
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
@@ -15,10 +16,15 @@
             <username>admin</username>
             <password>admin</password>
         </user>
+        <recurrence>
+            <isRecurring>false</isRecurring>
+            <recurrenceGroup>0</recurrenceGroup>
+        </recurrence>
     </tasks>
     <tasks>
         <name>Spring cleaning</name>
-        <priority>1</priority>
+        <updatedPriority>1</updatedPriority>
+        <basePriority>1</basePriority>
         <deadline>2019-09-08</deadline>
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
@@ -30,10 +36,15 @@
             <username>admin</username>
             <password>admin</password>
         </user>
+        <recurrence>
+            <isRecurring>false</isRecurring>
+            <recurrenceGroup>0</recurrenceGroup>
+        </recurrence>
     </tasks>
     <tasks>
         <name>Prepare breakfast</name>
-        <priority>2</priority>
+        <updatedPriority>2</updatedPriority>
+        <basePriority>2</basePriority>
         <deadline>2019-11-12</deadline>
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
@@ -43,10 +54,15 @@
             <username>admin</username>
             <password>admin</password>
         </user>
+        <recurrence>
+            <isRecurring>false</isRecurring>
+            <recurrenceGroup>0</recurrenceGroup>
+        </recurrence>
     </tasks>
     <tasks>
         <name>Do homework</name>
-        <priority>3</priority>
+        <updatedPriority>3</updatedPriority>
+        <basePriority>3</basePriority>
         <deadline>2019-03-21</deadline>
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
@@ -56,10 +72,15 @@
             <username>admin</username>
             <password>admin</password>
         </user>
+        <recurrence>
+            <isRecurring>false</isRecurring>
+            <recurrenceGroup>0</recurrenceGroup>
+        </recurrence>
     </tasks>
     <tasks>
         <name>Do project</name>
-        <priority>4</priority>
+        <updatedPriority>4</updatedPriority>
+        <basePriority>4</basePriority>
         <deadline>2019-09-14</deadline>
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
@@ -69,10 +90,15 @@
             <username>admin</username>
             <password>admin</password>
         </user>
+        <recurrence>
+            <isRecurring>false</isRecurring>
+            <recurrenceGroup>0</recurrenceGroup>
+        </recurrence>
     </tasks>
     <tasks>
         <name>Revision</name>
-        <priority>5</priority>
+        <updatedPriority>5</updatedPriority>
+        <basePriority>5</basePriority>
         <deadline>2019-04-05</deadline>
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
@@ -82,10 +108,15 @@
             <username>admin</username>
             <password>admin</password>
         </user>
+        <recurrence>
+            <isRecurring>false</isRecurring>
+            <recurrenceGroup>0</recurrenceGroup>
+        </recurrence>
     </tasks>
     <tasks>
         <name>Mock exam</name>
-        <priority>6</priority>
+        <updatedPriority>6</updatedPriority>
+        <basePriority>6</basePriority>
         <deadline>2019-05-23</deadline>
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
@@ -95,6 +126,10 @@
             <username>admin</username>
             <password>admin</password>
         </user>
+        <recurrence>
+            <isRecurring>false</isRecurring>
+            <recurrenceGroup>0</recurrenceGroup>
+        </recurrence>
     </tasks>
     <tags>friends</tags>
     <tags>owesMoney</tags>
@@ -102,4 +137,8 @@
         <username>admin</username>
         <password>admin</password>
     </users>
+    <recurrence>
+        <isRecurring>false</isRecurring>
+        <recurrenceGroup>0</recurrenceGroup>
+    </recurrence>
 </organizer>

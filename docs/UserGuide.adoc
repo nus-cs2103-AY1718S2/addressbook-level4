@@ -114,7 +114,7 @@ _This section explains the functions and usages of PrioriTask's different featur
 
 === The Different Sections of PrioriTask
 
-The PrioriTask application consists of six different sections (refer to <<fig-DifferentComponents>>).
+PrioriTask consists of six different sections (refer to <<fig-DifferentComponents>>).
 
 [[fig-DifferentComponents]]
 .The Different Sections of PrioriTask
@@ -342,7 +342,7 @@ _This section explains what a *Task* is, and the commands to manage them._
 
 === Adding a task: `add` or `a`
 
-Add a task to the PrioriTask. +
+Add a task to PrioriTask. +
 
 [.format]
 ====
@@ -359,7 +359,7 @@ Add a task to the PrioriTask. +
 
 === Deleting a task : `delete` or `d`
 
-Delete the specified task from the PrioriTask. +
+Delete the specified task from PrioriTask. +
 
 [.format]
 ====
@@ -376,7 +376,7 @@ Delete the specified task from the PrioriTask. +
 
 * [example]#`list`# +
 [example]#`delete 2`# +
-Deletes the 2nd task in the PrioriTask.
+Deletes the 2nd task in PrioriTask.
 * [example]#`find Developer`# +
 [example]#`delete 1`# +
 Deletes the 1st task in the results of the `find` command.
@@ -384,7 +384,7 @@ Deletes the 1st task in the results of the `find` command.
 
 === Editing a task : `edit` or `e`
 
-Edit an existing task in the PrioriTask. +
+Edit an existing task in PrioriTask. +
 
 [.format]
 ====
@@ -534,7 +534,7 @@ Returns any task having deadlines `2018-03-17`, `2018-09-04`, or `2018-03-21`.
 
 _Locate all tasks with a common tag_
 
-=== Mark task as complete: `toggle` or `t` `[since v1.2]`
+=== Marking task as complete: `toggle` or `t` `[since v1.2]`
 
 Toggle the status of the task identified by the index number used in the last task listing
 between `Completed` and `Not Completed`. +
@@ -554,7 +554,7 @@ between `Completed` and `Not Completed`. +
 
 * [example]#`list`# +
 [example]#`toggle 1`# +
-Toggle the first task in the PrioriTask.
+Toggle the first task in PrioriTask.
 * [example]#`find homework`# +
 [example]#`toggle 1`# +
 Toggle the first task in th result of `find homework` command.
@@ -568,6 +568,32 @@ Clear all of your tasks from PrioriTask. +
 ====
 [format-title]#Format:# `clear`
 ====
+
+=== Recurring a task : `recurw` or `rw` `[since v1.5rc]`
+
+Recurs an existing task in PrioriTask.
+
+[.format]
+====
+[format-title]#Format:# `recurw INDEX x/TIMES`
+====
+
+* Recurs the task at the specified `INDEX`. The index refers to the index number shown in the last task listing. The index *must be a positive integer* (i.e. 1, 2, 3, ...).
+* The task is recurred for the specified number of `TIMES`, not inclusive of the original existing task.
+* The 1st recurred task has the deadline set to be 1 week after the original task's deadline. The 2nd recurred task has the deadline set to be 2 weeks after the original task's deadline, and so on.
+* Priority of the recurred tasks is set to be the original task's priority when it was last edited using `edit` or when it was first set using `add`.
+* The recurred tasks will be set set as `Not Completed` by default.
+* All subtasks of the recurred tasks will also be set as `Not Completed` by default.
+
+
+[.example]
+====
+[example-title]#Examples:#
+
+* [example]#`recurw 1 x/3# +
+Recurs the 1st task weekly for 3 times.
+====
+
 
 == Subtask Management Features
 
@@ -607,7 +633,7 @@ Adds a subtask with name `Submit report` to the 1st task.
 
 === Deleting a subtask from a task: `delete-subtask` or `ds` `[since v1.3]`
 
-Delete the specified subtask from the PrioriTask. +
+Delete the specified subtask from PrioriTask. +
 
 [.format]
 ====
@@ -624,7 +650,7 @@ Delete the specified subtask from the PrioriTask. +
 
 * [example]#`list`# +
 [example]#`delete-subtask 1 1`# +
-Deletes the first subtask of the first task in the PrioriTask.
+Deletes the first subtask of the first task in PrioriTask.
 * [example]#`find cleaning`# +
 [example]#`delete-subtask 2 4`# +
 Deletes the fourth subtask of the second task in th result of `find cleaning` command.
@@ -654,7 +680,7 @@ between `Completed` and `Not Completed`. +
 
 * [example]#`list`# +
 [example]#`toggle-subtask 1 1`# +
-Toggles the first subtask of the first task in the PrioriTask.
+Toggles the first subtask of the first task in PrioriTask.
 * [example]#`find homework`# +
 [example]#`toggle-subtask 2 4`# +
 Toggles the fourth subtask of the second task in th result of `find homework` command.
@@ -758,7 +784,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 === Undoing previous command : `undo`
 
-Restore the PrioriTask to the state before the previous _undoable_ command was executed. +
+Restore PrioriTask to the state before the previous _undoable_ command was executed. +
 
 [.format]
 ====
@@ -767,7 +793,7 @@ Restore the PrioriTask to the state before the previous _undoable_ command was e
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the PrioriTask's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify PrioriTask's content (`add`, `delete`, `edit`, `clear` and `recurw`).
 ====
 
 [.example]
@@ -888,6 +914,8 @@ e.g. [example-no-box]#`findd 2018-03-17 2018-09-07`#
 * *Toggle* : [format-no-box]#`toggle INDEX`# +
 e.g.[example-no-box]#`toggle 3`#
 * *Clear* : [format-no-box]#`clear`#
+* *Recur weekly* : [format-no-box]#`recurw INDEX x/TIMES`# +
+e.g.[example-no-box]#`recurw 2 x/2`#
 
 === Subtask Management Features
 * *Add Subtask* : [format-no-box]#`adds INDEX n/NAME`# +

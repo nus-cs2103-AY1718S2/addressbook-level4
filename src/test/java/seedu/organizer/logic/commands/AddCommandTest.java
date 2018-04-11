@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import junit.framework.TestCase;
 import seedu.organizer.logic.CommandHistory;
 import seedu.organizer.logic.UndoRedoStack;
 import seedu.organizer.logic.commands.exceptions.CommandException;
@@ -174,6 +175,11 @@ public class AddCommandTest {
         @Override
         public void deleteTag(Tag tag) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void recurTask(Task task, int times) throws DuplicateTaskException {
+            TestCase.fail("This method should not be called.");
         }
     }
 

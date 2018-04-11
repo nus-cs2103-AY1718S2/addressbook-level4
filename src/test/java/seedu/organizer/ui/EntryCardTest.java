@@ -66,7 +66,7 @@ public class EntryCardTest extends GuiUnitTest {
      */
     private void assertTaskEquals(Task expectedTask, Task actualTask) {
         assertEquals(expectedTask.getName(), actualTask.getName());
-        assertEquals(expectedTask.getPriority(), actualTask.getPriority());
+        assertEquals(expectedTask.getUpdatedPriority(), actualTask.getUpdatedPriority());
         assertEquals(expectedTask.getDeadline(), actualTask.getDeadline());
         assertEquals(expectedTask.getDateAdded(), actualTask.getDateAdded());
         assertEquals(expectedTask.getDateCompleted(), actualTask.getDateCompleted());

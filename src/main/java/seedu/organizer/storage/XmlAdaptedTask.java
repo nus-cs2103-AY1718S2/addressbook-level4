@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.organizer.commons.exceptions.IllegalValueException;
+import seedu.organizer.model.recurrence.Recurrence;
 import seedu.organizer.model.subtask.Subtask;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.DateAdded;
@@ -31,7 +32,9 @@ public class XmlAdaptedTask {
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
-    private String priority;
+    private String updatedPriority;
+    @XmlElement(required = true)
+    private String basePriority;
     @XmlElement(required = true)
     private String deadline;
     @XmlElement(required = true)
@@ -51,6 +54,8 @@ public class XmlAdaptedTask {
 
     @XmlElement(required = true)
     private XmlAdaptedUser user;
+    @XmlElement(required = true)
+    private XmlAdaptedRecurrence recurrence;
 
     /**
      * Constructs an XmlAdaptedTask.
@@ -62,11 +67,12 @@ public class XmlAdaptedTask {
     /**
      * Constructs an {@code XmlAdaptedTask} with the given task details.
      */
-    public XmlAdaptedTask(String name, String priority, String deadline, String dateadded, String datecompleted,
-                          String description, Boolean status, List<XmlAdaptedTag> tagged,
-                          List<XmlAdaptedSubtask> subtasks, XmlAdaptedUser user) {
+    public XmlAdaptedTask(String name, String updatedPriority, String basePriority, String deadline, String dateadded,
+                          String datecompleted, String description, Boolean status, List<XmlAdaptedTag> tagged,
+                          List<XmlAdaptedSubtask> subtasks, XmlAdaptedUser user, XmlAdaptedRecurrence recurrence) {
         this.name = name;
-        this.priority = priority;
+        this.updatedPriority = updatedPriority;
+        this.basePriority = basePriority;
         this.deadline = deadline;
         this.dateadded = dateadded;
         this.datecompleted = datecompleted;
@@ -79,6 +85,7 @@ public class XmlAdaptedTask {
             this.subtasks = new ArrayList<>(subtasks);
         }
         this.user = user;
+        this.recurrence = recurrence;
     }
 
     /**
@@ -88,7 +95,8 @@ public class XmlAdaptedTask {
      */
     public XmlAdaptedTask(Task source) {
         name = source.getName().fullName;
-        priority = source.getPriority().value;
+        updatedPriority = source.getUpdatedPriority().value;
+        basePriority = source.getBasePriority().value;
         deadline = source.getDeadline().toString();
         dateadded = source.getDateAdded().toString();
         datecompleted = source.getDateCompleted().toString();
@@ -103,6 +111,7 @@ public class XmlAdaptedTask {
             subtasks.add(new XmlAdaptedSubtask(subtask));
         }
         user = new XmlAdaptedUser(source.getUser());
+        recurrence = new XmlAdaptedRecurrence(source.getRecurrence());
     }
 
     /**
@@ -140,14 +149,23 @@ public class XmlAdaptedTask {
         }
         final Name name = new Name(this.name);
 
-        if (this.priority == null) {
+        if (this.updatedPriority == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                                                 Priority.class.getSimpleName()));
         }
-        if (!Priority.isValidPriority(this.priority)) {
+        if (!Priority.isValidPriority(this.updatedPriority)) {
             throw new IllegalValueException(Priority.MESSAGE_PRIORITY_CONSTRAINTS);
         }
-        final Priority priority = new Priority(this.priority);
+        final Priority updatedPriority = new Priority(this.updatedPriority);
+
+        if (this.basePriority == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Priority.class.getSimpleName()));
+        }
+        if (!Priority.isValidPriority(this.basePriority)) {
+            throw new IllegalValueException(Priority.MESSAGE_PRIORITY_CONSTRAINTS);
+        }
+        final Priority basePriority = new Priority(this.basePriority);
 
         if (this.deadline == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Deadline.class.getSimpleName
@@ -191,7 +209,17 @@ public class XmlAdaptedTask {
 
         final List<Subtask> subtasks = new ArrayList<>(taskSubtasks);
 
-        return new Task(name, priority, deadline, dateadded, datecompleted, description, status, tags, subtasks, user);
+        if (this.recurrence == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Recurrence.class.getSimpleName()));
+        }
+        final Recurrence recurrence = new Recurrence(this.recurrence.getIsRecurring(),
+                this.recurrence.getRecurrenceGroup());
+
+        return new Task(name, updatedPriority, basePriority, deadline, dateadded, datecompleted, description,
+                status, tags, subtasks, user, recurrence);
+
+
     }
 
     @Override
@@ -206,7 +234,7 @@ public class XmlAdaptedTask {
 
         XmlAdaptedTask otherTask = (XmlAdaptedTask) other;
         return Objects.equals(name, otherTask.name)
-                && Objects.equals(priority, otherTask.priority)
+                && Objects.equals(updatedPriority, otherTask.updatedPriority)
                 && Objects.equals(deadline, otherTask.deadline)
                 && Objects.equals(dateadded, otherTask.dateadded)
                 && Objects.equals(datecompleted, otherTask.datecompleted)

@@ -33,6 +33,7 @@ import seedu.organizer.logic.commands.LoginCommand;
 import seedu.organizer.logic.commands.LogoutCommand;
 import seedu.organizer.logic.commands.NextMonthCommand;
 import seedu.organizer.logic.commands.PreviousMonthCommand;
+import seedu.organizer.logic.commands.RecurWeeklyCommand;
 import seedu.organizer.logic.commands.RedoCommand;
 import seedu.organizer.logic.commands.SignUpCommand;
 import seedu.organizer.logic.commands.ToggleCommand;
@@ -234,6 +235,12 @@ public class OrganizerParser {
 
         case CurrentMonthCommand.COMMAND_ALIAS:
             return new CurrentMonthCommand();
+
+        case RecurWeeklyCommand.COMMAND_WORD:
+            return new RecurWeeklyCommandParser().parse(arguments);
+
+        case RecurWeeklyCommand.COMMAND_ALIAS:
+            return new RecurWeeklyCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

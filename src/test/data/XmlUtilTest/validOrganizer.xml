@@ -2,7 +2,8 @@
 <organizer>
     <tasks>
         <name>Study</name>
-        <priority isPrivate="false">9</priority>
+        <updatedPriority isPrivate="false">9</updatedPriority>
+        <basePriority>9</basePriority>
         <deadline isPrivate="false">2018-09-16</deadline>
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
@@ -11,10 +12,15 @@
             <username>admin</username>
             <password>admin</password>
         </user>
+        <recurrence>
+            <isRecurring>false</isRecurring>
+            <recurrenceGroup>0</recurrenceGroup>
+        </recurrence>
     </tasks>
     <tasks>
         <name>Exam</name>
-        <priority isPrivate="false">8</priority>
+        <updatedPriority isPrivate="false">8</updatedPriority>
+        <basePriority>8</basePriority>
         <deadline isPrivate="false">2018-07-06</deadline>
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
@@ -23,10 +29,15 @@
             <username>admin</username>
             <password>admin</password>
         </user>
+        <recurrence>
+            <isRecurring>false</isRecurring>
+            <recurrenceGroup>0</recurrenceGroup>
+        </recurrence>
     </tasks>
     <tasks>
         <name>Grocery</name>
-        <priority isPrivate="false">9</priority>
+        <updatedPriority isPrivate="false">9</updatedPriority>
+        <basePriority>9</basePriority>
         <deadline isPrivate="false">2018-03-11</deadline>
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
@@ -35,10 +46,15 @@
             <username>admin</username>
             <password>admin</password>
         </user>
+        <recurrence>
+            <isRecurring>false</isRecurring>
+            <recurrenceGroup>0</recurrenceGroup>
+        </recurrence>
     </tasks>
     <tasks>
         <name>Housework</name>
-        <priority isPrivate="false">8</priority>
+        <updatedPriority isPrivate="false">8</updatedPriority>
+        <basePriority>8</basePriority>
         <deadline isPrivate="false">2018-10-11</deadline>
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
@@ -47,10 +63,15 @@
             <username>admin</username>
             <password>admin</password>
         </user>
+        <recurrence>
+            <isRecurring>false</isRecurring>
+            <recurrenceGroup>0</recurrenceGroup>
+        </recurrence>
     </tasks>
     <tasks>
         <name>BirthdayCard</name>
-        <priority isPrivate="false">9</priority>
+        <updatedPriority isPrivate="false">9</updatedPriority>
+        <basePriority>9</basePriority>
         <deadline isPrivate="false">2018-09-12</deadline>
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
@@ -59,10 +80,15 @@
             <username>admin</username>
             <password>admin</password>
         </user>
+        <recurrence>
+            <isRecurring>false</isRecurring>
+            <recurrenceGroup>0</recurrenceGroup>
+        </recurrence>
     </tasks>
     <tasks>
         <name>Homework</name>
-        <priority isPrivate="false">9</priority>
+        <updatedPriority isPrivate="false">9</updatedPriority>
+        <basePriority>9</basePriority>
         <deadline isPrivate="false">2018-07-04</deadline>
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
@@ -71,10 +97,15 @@
             <username>admin</username>
             <password>admin</password>
         </user>
+        <recurrence>
+            <isRecurring>false</isRecurring>
+            <recurrenceGroup>0</recurrenceGroup>
+        </recurrence>
     </tasks>
     <tasks>
         <name>Revision</name>
-        <priority isPrivate="false">9</priority>
+        <updatedPriority isPrivate="false">9</updatedPriority>
+        <basePriority>9</basePriority>
         <deadline isPrivate="false">2018-04-02</deadline>
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
@@ -83,10 +114,15 @@
             <username>admin</username>
             <password>admin</password>
         </user>
+        <recurrence>
+            <isRecurring>false</isRecurring>
+            <recurrenceGroup>0</recurrenceGroup>
+        </recurrence>
     </tasks>
     <tasks>
         <name>SendEmail</name>
-        <priority isPrivate="false">8</priority>
+        <updatedPriority isPrivate="false">8</updatedPriority>
+        <basePriority>8</basePriority>
         <deadline isPrivate="false">2018-12-24</deadline>
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
@@ -95,10 +131,15 @@
             <username>admin</username>
             <password>admin</password>
         </user>
+        <recurrence>
+            <isRecurring>false</isRecurring>
+            <recurrenceGroup>0</recurrenceGroup>
+        </recurrence>
     </tasks>
     <tasks>
         <name>InterviewPrep</name>
-        <priority isPrivate="false">8</priority>
+        <updatedPriority isPrivate="false">8</updatedPriority>
+        <basePriority>8</basePriority>
         <deadline isPrivate="false">2018-11-11</deadline>
         <dateadded>current_date</dateadded>
         <datecompleted>not completed</datecompleted>
@@ -107,6 +148,10 @@
             <username>admin</username>
             <password>admin</password>
         </user>
+        <recurrence>
+            <isRecurring>false</isRecurring>
+            <recurrenceGroup>0</recurrenceGroup>
+        </recurrence>
     </tasks>
     <users>
         <username>admin</username>

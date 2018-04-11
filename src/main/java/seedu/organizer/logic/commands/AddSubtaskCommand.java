@@ -12,6 +12,7 @@ import java.util.Set;
 import seedu.organizer.commons.core.Messages;
 import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.logic.commands.exceptions.CommandException;
+import seedu.organizer.model.recurrence.Recurrence;
 import seedu.organizer.model.subtask.Subtask;
 import seedu.organizer.model.subtask.UniqueSubtaskList;
 import seedu.organizer.model.tag.Tag;
@@ -34,7 +35,7 @@ public class AddSubtaskCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "adds";
     public static final String COMMAND_ALIAS = "as";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a subttask to a task. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a subtask to a task. "
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_NAME + "NAME "
             + "Example: " + COMMAND_WORD + " 1 "
@@ -90,7 +91,8 @@ public class AddSubtaskCommand extends UndoableCommand {
         assert taskToEdit != null;
 
         Name updatedName = taskToEdit.getName();
-        Priority updatedPriority = taskToEdit.getPriority();
+        Priority updatedPriority = taskToEdit.getUpdatedPriority();
+        Priority basePriority = taskToEdit.getBasePriority();
         Deadline updatedDeadline = taskToEdit.getDeadline();
         DateAdded oldDateAdded = taskToEdit.getDateAdded();
         DateCompleted oldDateCompleted = taskToEdit.getDateCompleted();
@@ -98,11 +100,13 @@ public class AddSubtaskCommand extends UndoableCommand {
         Set<Tag> updatedTags = taskToEdit.getTags();
         UniqueSubtaskList updatedSubtasks = new UniqueSubtaskList(taskToEdit.getSubtasks());
         Status updatedStatus = taskToEdit.getStatus();
+        Recurrence updatedRecurrence = taskToEdit.getRecurrence();
 
         updatedSubtasks.add(toAdd);
 
-        return new Task(updatedName, updatedPriority, updatedDeadline, oldDateAdded, oldDateCompleted,
-                updatedDescription, updatedStatus, updatedTags, updatedSubtasks.toList(), getCurrentlyLoggedInUser());
+        return new Task(updatedName, updatedPriority, basePriority, updatedDeadline, oldDateAdded, oldDateCompleted,
+                updatedDescription, updatedStatus, updatedTags, updatedSubtasks.toList(), getCurrentlyLoggedInUser(),
+                updatedRecurrence);
     }
 
     @Override

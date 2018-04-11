@@ -26,7 +26,7 @@ public class XmlAdaptedTaskTest {
     private static final String INVALID_DEADLINE = "2018/09/09";
     private static final String INVALID_TAG = "#friend";
     private static final String VALID_NAME = SPRINGCLEAN.getName().toString();
-    private static final String VALID_PRIORITY = SPRINGCLEAN.getPriority().toString();
+    private static final String VALID_PRIORITY = SPRINGCLEAN.getUpdatedPriority().toString();
     private static final String VALID_DEADLINE = SPRINGCLEAN.getDeadline().toString();
     private static final String VALID_DATEADDED = SPRINGCLEAN.getDateAdded().toString();
     private static final String VALID_DATECOMPLETED = SPRINGCLEAN.getDateCompleted().toString();
@@ -38,6 +38,8 @@ public class XmlAdaptedTaskTest {
     private static final List<XmlAdaptedSubtask> VALID_SUBTASKS = SPRINGCLEAN.getSubtasks().stream()
             .map(XmlAdaptedSubtask::new)
             .collect(Collectors.toList());
+    private static final XmlAdaptedRecurrence VALID_RECURRENCE = new XmlAdaptedRecurrence(false,
+            0);
 
     @Test
     public void toModelType_validTaskDetails_returnsTask() throws Exception {
@@ -48,18 +50,20 @@ public class XmlAdaptedTaskTest {
     @Test
     public void toModelType_invalidName_throwsIllegalValueException() {
         XmlAdaptedTask task =
-                new XmlAdaptedTask(INVALID_NAME, VALID_PRIORITY, VALID_DEADLINE, VALID_DATEADDED, VALID_DATECOMPLETED,
+                new XmlAdaptedTask(INVALID_NAME, VALID_PRIORITY, VALID_PRIORITY,
+                        VALID_DEADLINE, VALID_DATEADDED, VALID_DATECOMPLETED,
                         VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS,
-                        VALID_SUBTASKS, VALID_XML_ADAPTED_USER);
+                        VALID_SUBTASKS, VALID_XML_ADAPTED_USER, VALID_RECURRENCE);
         String expectedMessage = Name.MESSAGE_NAME_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, task::toModelType);
     }
 
     @Test
     public void toModelType_nullName_throwsIllegalValueException() {
-        XmlAdaptedTask task = new XmlAdaptedTask(null, VALID_PRIORITY, VALID_DEADLINE, VALID_DATEADDED,
+        XmlAdaptedTask task = new XmlAdaptedTask(null, VALID_PRIORITY, VALID_PRIORITY,
+                VALID_DEADLINE, VALID_DATEADDED,
                 VALID_DATECOMPLETED, VALID_DESCRIPTION, VALID_STATUS,
-                VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER);
+                VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER, VALID_RECURRENCE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, task::toModelType);
     }
@@ -67,18 +71,20 @@ public class XmlAdaptedTaskTest {
     @Test
     public void toModelType_invalidPriority_throwsIllegalValueException() {
         XmlAdaptedTask task =
-                new XmlAdaptedTask(VALID_NAME, INVALID_PRIORITY, VALID_DEADLINE, VALID_DATEADDED, VALID_DATECOMPLETED,
+                new XmlAdaptedTask(VALID_NAME, INVALID_PRIORITY, VALID_PRIORITY,
+                        VALID_DEADLINE, VALID_DATEADDED, VALID_DATECOMPLETED,
                         VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS,
-                        VALID_SUBTASKS, VALID_XML_ADAPTED_USER);
+                        VALID_SUBTASKS, VALID_XML_ADAPTED_USER, VALID_RECURRENCE);
         String expectedMessage = Priority.MESSAGE_PRIORITY_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, task::toModelType);
     }
 
     @Test
     public void toModelType_nullPriority_throwsIllegalValueException() {
-        XmlAdaptedTask task = new XmlAdaptedTask(VALID_NAME, null, VALID_DEADLINE, VALID_DATEADDED,
+        XmlAdaptedTask task = new XmlAdaptedTask(VALID_NAME, null, VALID_PRIORITY,
+                VALID_DEADLINE, VALID_DATEADDED,
                 VALID_DATECOMPLETED, VALID_DESCRIPTION, VALID_STATUS,
-                VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER);
+                VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER, VALID_RECURRENCE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Priority.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, task::toModelType);
     }
@@ -86,18 +92,20 @@ public class XmlAdaptedTaskTest {
     @Test
     public void toModelType_invalidDeadline_throwsIllegalValueException() {
         XmlAdaptedTask task =
-                new XmlAdaptedTask(VALID_NAME, VALID_PRIORITY, INVALID_DEADLINE, VALID_DATEADDED,
+                new XmlAdaptedTask(VALID_NAME, VALID_PRIORITY, VALID_PRIORITY,
+                        INVALID_DEADLINE, VALID_DATEADDED,
                         VALID_DATECOMPLETED, VALID_DESCRIPTION, VALID_STATUS,
-                        VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER);
+                        VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER, VALID_RECURRENCE);
         String expectedMessage = Deadline.MESSAGE_DEADLINE_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, task::toModelType);
     }
 
     @Test
     public void toModelType_nullDeadline_throwsIllegalValueException() {
-        XmlAdaptedTask task = new XmlAdaptedTask(VALID_NAME, VALID_PRIORITY, null, VALID_DATEADDED,
+        XmlAdaptedTask task = new XmlAdaptedTask(VALID_NAME, VALID_PRIORITY, VALID_PRIORITY,
+                null, VALID_DATEADDED,
                 VALID_DATECOMPLETED, VALID_DESCRIPTION, VALID_STATUS,
-                VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER);
+                VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER, VALID_RECURRENCE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Deadline.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, task::toModelType);
     }
@@ -105,9 +113,10 @@ public class XmlAdaptedTaskTest {
     @Test
 
     public void toModelType_nullDescription_throwsIllegalValueException() {
-        XmlAdaptedTask task = new XmlAdaptedTask(VALID_NAME, VALID_PRIORITY, VALID_DEADLINE, VALID_DATEADDED,
+        XmlAdaptedTask task = new XmlAdaptedTask(VALID_NAME, VALID_PRIORITY, VALID_PRIORITY,
+                VALID_DEADLINE, VALID_DATEADDED,
                 VALID_DATECOMPLETED, null, VALID_STATUS,
-                VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER);
+                VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER, VALID_RECURRENCE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Description.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, task::toModelType);
     }
@@ -117,9 +126,10 @@ public class XmlAdaptedTaskTest {
         List<XmlAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
         invalidTags.add(new XmlAdaptedTag(INVALID_TAG));
         XmlAdaptedTask task =
-                new XmlAdaptedTask(VALID_NAME, VALID_PRIORITY, VALID_DEADLINE, VALID_DATEADDED,
+                new XmlAdaptedTask(VALID_NAME, VALID_PRIORITY, VALID_PRIORITY,
+                        VALID_DEADLINE, VALID_DATEADDED,
                         VALID_DATECOMPLETED, VALID_DESCRIPTION, VALID_STATUS,
-                        invalidTags, VALID_SUBTASKS, VALID_XML_ADAPTED_USER);
+                        invalidTags, VALID_SUBTASKS, VALID_XML_ADAPTED_USER, VALID_RECURRENCE);
         Assert.assertThrows(IllegalValueException.class, task::toModelType);
     }
 

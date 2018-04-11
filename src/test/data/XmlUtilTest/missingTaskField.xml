@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!-- Task with missing name field -->
 <task>
-    <priority>9</priority>
+    <updatedPriority>9</updatedPriority>
+    <basePriority>9</basePriority>
     <deadline>2018-07-16</deadline>
     <dateadded>current_date</dateadded>
     <datecompleted>not completed</datecompleted>
@@ -15,4 +16,8 @@
         <username>admin</username>
         <password>admin</password>
     </user>
+    <recurrence>
+        <isRecurring>false</isRecurring>
+        <recurrenceGroup>0</recurrenceGroup>
+    </recurrence>
 </task>

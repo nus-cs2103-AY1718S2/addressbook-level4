@@ -148,9 +148,17 @@ public class ModelManager extends ComponentManager implements Model {
         indicateOrganizerChanged();
     }
 
+    //@@author natania
     @Override
     public void deleteTag(Tag tag) {
         organizer.removeTag(tag);
+    }
+
+    @Override
+    public synchronized void recurTask(Task task, int times) throws DuplicateTaskException {
+        organizer.recurTask(task, times);
+        updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        indicateOrganizerChanged();
     }
 
     //=========== Filtered Task List Accessors =============================================================

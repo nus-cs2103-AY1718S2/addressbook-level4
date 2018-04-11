@@ -9,6 +9,7 @@ import java.util.Set;
 import seedu.organizer.commons.core.Messages;
 import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.logic.commands.exceptions.CommandException;
+import seedu.organizer.model.recurrence.Recurrence;
 import seedu.organizer.model.subtask.Subtask;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.DateAdded;
@@ -81,7 +82,8 @@ public class ToggleCommand extends UndoableCommand {
         assert taskToEdit != null;
 
         Name updatedName = taskToEdit.getName();
-        Priority updatedPriority = taskToEdit.getPriority();
+        Priority updatedPriority = taskToEdit.getUpdatedPriority();
+        Priority basePriority = taskToEdit.getBasePriority();
         Deadline updatedDeadline = taskToEdit.getDeadline();
         DateAdded oldDateAdded = taskToEdit.getDateAdded();
         DateCompleted updatedDateCompleted = taskToEdit.getDateCompleted().toggle();
@@ -89,10 +91,11 @@ public class ToggleCommand extends UndoableCommand {
         Set<Tag> updatedTags = taskToEdit.getTags();
         List<Subtask> updatedSubtasks = taskToEdit.getSubtasks();
         Status updatedStatus = taskToEdit.getStatus().getInverse();
+        Recurrence updatedRecurrence = taskToEdit.getRecurrence();
 
-        return new Task(updatedName, updatedPriority, updatedDeadline, oldDateAdded,
+        return new Task(updatedName, updatedPriority, basePriority, updatedDeadline, oldDateAdded,
                 updatedDateCompleted, updatedDescription, updatedStatus,
-                updatedTags, updatedSubtasks, getCurrentlyLoggedInUser());
+                updatedTags, updatedSubtasks, getCurrentlyLoggedInUser(), updatedRecurrence);
     }
 
     @Override

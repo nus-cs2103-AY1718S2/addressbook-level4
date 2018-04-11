@@ -227,6 +227,33 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
 
+    //@@author natania
+    /**
+     * Parses a {@code String times} into an int.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static int parseTimes(String times) throws IllegalValueException {
+        requireNonNull(times);
+        String trimmedTimes = times.trim();
+        int time = Integer.parseInt(trimmedTimes);
+        if (time <= 0) {
+            throw new IllegalValueException("This is an invalid number of times.");
+        }
+        return time;
+    }
+
+    /**
+     * Parses a {@code Optional<String> times} into an {@code Optional<Integer>} if times is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Integer> parseTimes(Optional<String> times) throws IllegalValueException {
+        requireNonNull(times);
+        return times.isPresent() ? Optional.of(parseTimes(times.get())) : Optional.empty();
+    }
+
+    //@@author
     /**
      * Parses a {@code String organizer} into an {@code Description}.
      * Leading and trailing whitespaces will be trimmed.

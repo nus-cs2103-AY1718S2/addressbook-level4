@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.organizer.model.Organizer;
+import seedu.organizer.storage.XmlAdaptedRecurrence;
 import seedu.organizer.storage.XmlAdaptedSubtask;
 import seedu.organizer.storage.XmlAdaptedTag;
 import seedu.organizer.storage.XmlAdaptedTask;
@@ -43,7 +43,6 @@ public class XmlUtilTest {
     private static final String VALID_NAME = "Work on PrioriTask";
     private static final String VALID_PRIORITY = "9";
     private static final String VALID_DEADLINE = "2018-07-16";
-    private static final String VALID_DATEADDED = LocalDate.now().toString();
     private static final String VALID_DATECOMPLETED = "not completed";
     private static final String VALID_DESCRIPTION = "Refactor Address to Description";
     private static final Boolean VALID_STATUS = null;
@@ -52,6 +51,8 @@ public class XmlUtilTest {
             "Find some friends to play dota or csgo", false));
     //temporary fix for xml file bug due to PrioriTask's dependence on the current date
     private static final String current_date = "current_date";
+    private static final XmlAdaptedRecurrence VALID_RECURRENCE = new XmlAdaptedRecurrence(false,
+            0);
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -92,8 +93,8 @@ public class XmlUtilTest {
         XmlAdaptedTask actualTask = XmlUtil.getDataFromFile(
                 MISSING_TASK_FIELD_FILE, XmlAdaptedTaskWithRootElement.class);
         XmlAdaptedTask expectedTask = new XmlAdaptedTask(
-                null, VALID_PRIORITY, VALID_DEADLINE, current_date, VALID_DATECOMPLETED,
-                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER);
+                null, VALID_PRIORITY, VALID_PRIORITY, VALID_DEADLINE, current_date, VALID_DATECOMPLETED,
+                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER, VALID_RECURRENCE);
         assertEquals(expectedTask, actualTask);
     }
 
@@ -102,8 +103,8 @@ public class XmlUtilTest {
         XmlAdaptedTask actualTask = XmlUtil.getDataFromFile(
                 INVALID_TASK_FIELD_FILE, XmlAdaptedTaskWithRootElement.class);
         XmlAdaptedTask expectedTask = new XmlAdaptedTask(
-                VALID_NAME, INVALID_PRIORITY, VALID_DEADLINE, current_date, VALID_DATECOMPLETED,
-                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER);
+                VALID_NAME, INVALID_PRIORITY, VALID_PRIORITY, VALID_DEADLINE, current_date, VALID_DATECOMPLETED,
+                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER, VALID_RECURRENCE);
         assertEquals(expectedTask, actualTask);
     }
 
@@ -112,8 +113,8 @@ public class XmlUtilTest {
         XmlAdaptedTask actualTask = XmlUtil.getDataFromFile(
                 VALID_TASK_FILE, XmlAdaptedTaskWithRootElement.class);
         XmlAdaptedTask expectedTask = new XmlAdaptedTask(
-                VALID_NAME, VALID_PRIORITY, VALID_DEADLINE, current_date, VALID_DATECOMPLETED,
-                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER);
+                VALID_NAME, VALID_PRIORITY, VALID_PRIORITY, VALID_DEADLINE, current_date, VALID_DATECOMPLETED,
+                VALID_DESCRIPTION, VALID_STATUS, VALID_TAGS, VALID_SUBTASKS, VALID_XML_ADAPTED_USER, VALID_RECURRENCE);
         assertEquals(expectedTask, actualTask);
     }
 

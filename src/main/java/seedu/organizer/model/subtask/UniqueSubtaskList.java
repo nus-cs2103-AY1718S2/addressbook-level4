@@ -129,4 +129,14 @@ public class UniqueSubtaskList implements Iterable<Subtask> {
         }
     }
 
+    //@@author natania
+    /**
+     * Makes the {@code Status} of all the subtasks in list not done.
+     */
+    public void makeAllSubtasksUndone(List<Subtask> subtasks) {
+        for (Subtask subtask : subtasks) {
+            ;
+        }
+    }
+
 }

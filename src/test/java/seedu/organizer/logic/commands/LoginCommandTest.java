@@ -186,6 +186,11 @@ public class LoginCommandTest {
         public void deleteTag(Tag tag) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void recurTask(Task task, int times) throws DuplicateTaskException {
+            fail("This method should not be called.");
+        }
     }
 
     /**

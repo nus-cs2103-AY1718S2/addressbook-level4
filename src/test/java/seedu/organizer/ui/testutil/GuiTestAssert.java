@@ -41,7 +41,7 @@ public class GuiTestAssert {
     public static void assertCardDisplaysTask(Task expectedTask, TaskCardHandle actualCard) {
         assertEquals(expectedTask.getName().fullName, actualCard.getName());
         assertEquals("[" + expectedTask.getStatus().toString() + "]", actualCard.getStatus());
-        assertEquals("Priority : " + expectedTask.getPriority().value, actualCard.getPriority());
+        assertEquals("Priority : " + expectedTask.getUpdatedPriority().value, actualCard.getPriority());
         assertEquals("Deadline : " + expectedTask.getDeadline().toString(), actualCard.getDeadline());
         assertEquals("Date Added : " + expectedTask.getDateAdded().toString(), actualCard.getDateAdded());
         assertEquals("Description : " + expectedTask.getDescription().value, actualCard.getDescription());

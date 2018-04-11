@@ -137,7 +137,8 @@ public class DeleteSubtaskCommandTest {
         subtasks.remove(index.getZeroBased());
         return new Task(
                 task.getName(),
-                task.getPriority(),
+                task.getUpdatedPriority(),
+                task.getBasePriority(),
                 task.getDeadline(),
                 task.getDateAdded(),
                 task.getDateCompleted(),
@@ -145,8 +146,8 @@ public class DeleteSubtaskCommandTest {
                 task.getStatus(),
                 task.getTags(),
                 subtasks,
-                task.getUser()
-        );
+                task.getUser(),
+                task.getRecurrence());
     }
 
     /**

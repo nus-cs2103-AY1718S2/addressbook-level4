@@ -106,15 +106,16 @@ public class ToggleCommandTest {
     private Task toggleTask(Task task) {
         return new Task(
                 task.getName(),
-                task.getPriority(),
+                task.getUpdatedPriority(),
+                task.getBasePriority(),
                 task.getDeadline(),
                 task.getDateAdded(),
                 task.getDateCompleted(), task.getDescription(),
                 task.getStatus().getInverse(),
                 task.getTags(),
                 task.getSubtasks(),
-                task.getUser()
-        );
+                task.getUser(),
+                task.getRecurrence());
     }
 
     /**

@@ -156,7 +156,8 @@ public class ToggleSubtaskCommandTest {
         subtasks.set(index.getZeroBased(), newSubtask);
         return new Task(
                 task.getName(),
-                task.getPriority(),
+                task.getUpdatedPriority(),
+                task.getBasePriority(),
                 task.getDeadline(),
                 task.getDateAdded(),
                 task.getDateCompleted(),
@@ -164,8 +165,8 @@ public class ToggleSubtaskCommandTest {
                 task.getStatus(),
                 task.getTags(),
                 subtasks,
-                task.getUser()
-        );
+                task.getUser(),
+                task.getRecurrence());
     }
 
     /**

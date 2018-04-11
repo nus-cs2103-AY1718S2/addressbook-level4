@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.organizer.model.recurrence.Recurrence;
 import seedu.organizer.model.subtask.Subtask;
 import seedu.organizer.model.subtask.UniqueSubtaskList;
 import seedu.organizer.model.tag.Tag;
@@ -22,13 +23,15 @@ import seedu.organizer.model.user.User;
 public class Task {
 
     private final Name name;
-    private final Priority priority;
+    private final Priority updatedPriority;
+    private final Priority basePriority;
     private final Deadline deadline;
     private final DateAdded dateAdded;
     private final DateCompleted dateCompleted;
     private final Description description;
     private final Status status;
     private final User user;
+    private final Recurrence recurrence;
 
     private final UniqueTagList tags;
     private final UniqueSubtaskList subtasks;
@@ -39,7 +42,8 @@ public class Task {
     public Task(Name name, Priority priority, Deadline deadline, Description description, Set<Tag> tags) {
         requireAllNonNull(name, priority, deadline, description, tags);
         this.name = name;
-        this.priority = priority;
+        this.updatedPriority = priority;
+        this.basePriority = priority;
         this.deadline = deadline;
         this.dateAdded = new DateAdded();
         this.dateCompleted = new DateCompleted(false);
@@ -49,15 +53,18 @@ public class Task {
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.subtasks = new UniqueSubtaskList();
+        this.recurrence = new Recurrence();
     }
 
     /**
      * Every field must be present and not null except status and dateCompleted
      */
-    public Task(Name name, Priority priority, Deadline deadline, Description description, Set<Tag> tags, User user) {
+    public Task(Name name, Priority priority, Deadline deadline, Description description,
+                Set<Tag> tags, User user) {
         requireAllNonNull(name, priority, deadline, description, tags, user);
         this.name = name;
-        this.priority = priority;
+        this.updatedPriority = priority;
+        this.basePriority = priority;
         this.deadline = deadline;
         this.dateAdded = new DateAdded();
         this.dateCompleted = new DateCompleted(false);
@@ -67,35 +74,19 @@ public class Task {
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.subtasks = new UniqueSubtaskList();
-    }
-
-    /**
-     * Every field must be present and not null except status
-     */
-    public Task(Name name, Priority priority, Deadline deadline, DateAdded dateAdded,
-                DateCompleted dateCompleted, Description description, Set<Tag> tags, User user) {
-        requireAllNonNull(name, priority, deadline, description, tags, user);
-        this.name = name;
-        this.priority = priority;
-        this.deadline = deadline;
-        this.dateAdded = dateAdded;
-        this.dateCompleted = dateCompleted;
-        this.description = description;
-        this.status = null;
-        this.user = user;
-        // protect internal tags from changes in the arg list
-        this.tags = new UniqueTagList(tags);
-        this.subtasks = new UniqueSubtaskList();
+        this.recurrence = new Recurrence();
     }
 
     /**
      * Another constructor with custom status and subtask
      */
-    public Task(Name name, Priority priority, Deadline deadline, DateAdded dateAdded, DateCompleted dateCompleted,
-                Description description, Status status, Set<Tag> tags, List<Subtask> subtasks, User user) {
-        requireAllNonNull(name, priority, deadline, description, tags);
+    public Task(Name name, Priority updatedPriority, Priority basePriority, Deadline deadline, DateAdded dateAdded,
+                DateCompleted dateCompleted, Description description, Status status, Set<Tag> tags,
+                List<Subtask> subtasks, User user, Recurrence recurrence) {
+        requireAllNonNull(name, updatedPriority, deadline, description, tags);
         this.name = name;
-        this.priority = priority;
+        this.updatedPriority = updatedPriority;
+        this.basePriority = basePriority;
         this.deadline = deadline;
         this.dateAdded = dateAdded;
         this.dateCompleted = dateCompleted;
@@ -105,14 +96,19 @@ public class Task {
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.subtasks = new UniqueSubtaskList(subtasks);
+        this.recurrence = recurrence;
     }
 
     public Name getName() {
         return name;
     }
 
-    public Priority getPriority() {
-        return priority;
+    public Priority getUpdatedPriority() {
+        return updatedPriority;
+    }
+
+    public Priority getBasePriority() {
+        return basePriority;
     }
 
     public Deadline getDeadline() {
@@ -145,6 +141,10 @@ public class Task {
         return user;
     }
 
+    public Recurrence getRecurrence() {
+        return recurrence;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -169,7 +169,7 @@ public class Task {
 
         Task otherTask = (Task) other;
         return otherTask.getName().equals(this.getName())
-                && otherTask.getPriority().equals(this.getPriority())
+                && otherTask.getUpdatedPriority().equals(this.getUpdatedPriority())
                 && otherTask.getDeadline().equals(this.getDeadline())
                 && otherTask.getDescription().equals(this.getDescription())
                 && otherTask.getUser().equals(this.getUser());
@@ -178,7 +178,7 @@ public class Task {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, priority, deadline, description, tags, status, user);
+        return Objects.hash(name, updatedPriority, deadline, description, tags, status, user, recurrence);
     }
 
     @Override
@@ -186,7 +186,7 @@ public class Task {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
                 .append(" Priority: ")
-                .append(getPriority())
+                .append(getUpdatedPriority())
                 .append(" Deadline: ")
                 .append(getDeadline())
                 .append(" Status: ")
@@ -209,8 +209,8 @@ public class Task {
         return new Comparator<Task>() {
             @Override
             public int compare(Task task1, Task task2) {
-                return (task2.getPriority().value)
-                        .compareTo(task1.getPriority().value);
+                return (task2.getUpdatedPriority().value)
+                        .compareTo(task1.getUpdatedPriority().value);
             }
         };
     }

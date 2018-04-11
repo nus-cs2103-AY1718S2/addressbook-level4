@@ -96,11 +96,14 @@ public class BrowserPanel extends UiPart<Region> {
                 createScriptIfNeeded();
                 readPersonNameScript(person);
             } catch (IOException e) {
-                logger.warning("Unable to read Introduce person script");
+                logger.warning("Unable to read person name script");
             }
         }
     }
 
+    /**
+     * Read script for Mac
+     */
     private void readPersonNameScriptForMac(Person person) throws IOException {
         String personName = person.getName().toString();
         String script = "say \"" + personName + "\" using \"Alex\" speaking rate 150 pitch 42 modulation 60";
@@ -112,6 +115,9 @@ public class BrowserPanel extends UiPart<Region> {
         logger.info("Running read person name script on Mac");
     }
 
+    /**
+     * Read script for Window
+     */
     private void readPersonNameScript(Person person) throws IOException {
         logger.info("Running read person name script on Window");
         Runtime.getRuntime().exec("wscript.exe script\\ReadPersonName.vbs"

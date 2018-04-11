@@ -114,6 +114,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newAliasList) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ReadOnlyAddressBook getAddressBook() {
             fail("This method should not be called.");
             return null;
@@ -153,8 +158,7 @@ public class AddCommandTest {
 
         @Override
         public HashMap<String, String> getAliasList() {
-            fail("This method should not be called.");
-            return null;
+            return new HashMap<String, String>();
         }
 
         @Override

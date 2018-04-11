@@ -118,6 +118,13 @@ public class UniqueAliasList {
     }
 
     /**
+     * Replaces the aliases in this hashlist with those.
+     */
+    public void replaceHashmap(HashMap<String, String> aliases) {
+        hashList = aliases;
+    }
+
+    /**
      * Clears hashList, for clear command.
      */
     public void resetHashmap() {

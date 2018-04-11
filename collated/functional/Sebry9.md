@@ -1,58 +1,4 @@
 # Sebry9
-###### /resources/view/PersonListCard.fxml
-``` fxml
-         <Label prefHeight="134.0" prefWidth="131.0" text="Client Image">
-            <graphic>
-               <ImageView fitHeight="150.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@../images/test.jpg" />
-                  </image>
-               </ImageView>
-            </graphic></Label>
-         <Label text="Total Commission:" />
-         <Label fx:id="commission" text="\$commission">
-            <VBox.margin>
-               <Insets />
-            </VBox.margin>
-            <padding>
-               <Insets bottom="10.0" left="30.0" right="10.0" top="10.0" />
-            </padding>
-         </Label>
-      </children>
-   </VBox>
-  <GridPane prefWidth="201.0" HBox.hgrow="ALWAYS">
-    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
-    </columnConstraints>
-    <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
-      <padding>
-        <Insets bottom="5" left="15" right="5" top="5" />
-      </padding>
-      <HBox alignment="CENTER_LEFT" spacing="5">
-        <Label fx:id="id" styleClass="cell_big_label">
-          <minWidth>
-            <!-- Ensures that the label text is never truncated -->
-            <Region fx:constant="USE_PREF_SIZE" />
-          </minWidth>
-        </Label>
-        <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
-      </HBox>
-      <FlowPane fx:id="tags" />
-         <FlowPane fx:id="insurances" />
-        <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-      <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday" />
-      <Label fx:id="appointment" styleClass="cell_small_label" text="\$appointment" />
-        <Label fx:id="group" styleClass="cell_small_label" text="\$group" />
-    </VBox>
-      <rowConstraints>
-         <RowConstraints />
-      </rowConstraints>
-  </GridPane>
-   <Group />
-</HBox>
-```
 ###### /java/seedu/address/ui/PersonCard.java
 ``` java
     private String getTagColorStyleFor(String tag) {
@@ -60,15 +6,13 @@
         switch(tag) {
         case "friends":
         case "friend":
+        case "family":
             return TAG_COLOR_STYLES[0]; //yellow
 
         case "teacher":
         case "classmates":
-            return TAG_COLOR_STYLES[1]; //blue
-
-        case "family":
         case "husband":
-            return TAG_COLOR_STYLES[3]; //green
+            return TAG_COLOR_STYLES[1]; //blue
 
         case "enemy":
         case "owesMoney":
@@ -199,7 +143,6 @@ public class Person {
 
     private final UniqueInsuranceList insurance;
     private final UniqueTagList tags;
-    private final UniqueGroupList groups;
 
     /**
      * Every field must be present and not null.
@@ -217,8 +160,6 @@ public class Person {
         this.insurance = new UniqueInsuranceList(insurance);
         this.totalCommission = calculateTotalCommission(insurance);
         this.tags = new UniqueTagList(tags);
-        this.groups = new UniqueGroupList(group);
-
     }
 
 
@@ -572,6 +513,7 @@ public class Insurance {
      * @param insurance A valid insurance.
      */
     public Insurance(String insurance) {
+        requireNonNull(insurance);
         checkArgument(isValidInsurance(insurance), MESSAGE_INSURANCE_CONSTRAINTS);
         this.insuranceName = insurance;
     }
@@ -580,9 +522,6 @@ public class Insurance {
      * Returns true if a given string is a valid insurance.
      */
     public static boolean isValidInsurance(String test) {
-        if (test == null) {
-            return true;
-        }
         return test.matches(INSURANCE_VALIDATION_REGEX);
     }
 

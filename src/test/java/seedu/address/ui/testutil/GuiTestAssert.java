@@ -45,6 +45,7 @@ public class GuiTestAssert {
 
         assertTagsEqual(expectedPerson, actualCard);
     }
+    //@@author Sebry9
     /**
      * Return the color style for {@code tagName}'s label.
      * @see PersonCard#getTagColorStyleFor(String)
@@ -54,15 +55,13 @@ public class GuiTestAssert {
         switch(tagName) {
         case "friends":
         case "friend":
+        case "family":
             return "yellow";
 
         case "teacher":
         case "classmates":
-            return "blue";
-
-        case "family":
         case "husband":
-            return "green";
+            return "blue";
 
         case "enemy":
         case "owesMoney":

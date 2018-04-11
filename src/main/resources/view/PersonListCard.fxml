@@ -3,8 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -14,33 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <VBox prefHeight="200.0" prefWidth="100.0">
-      <children>
-          <!-- @@author Sebry9 -->
-         <Label prefHeight="134.0" prefWidth="131.0" text="Client Image">
-            <graphic>
-               <ImageView fitHeight="150.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@../images/test.jpg" />
-                  </image>
-               </ImageView>
-            </graphic></Label>
-         <Label text="Total Commission:" />
-         <Label fx:id="commission" text="\$commission">
-            <VBox.margin>
-               <Insets />
-            </VBox.margin>
-            <padding>
-               <Insets bottom="10.0" left="30.0" right="10.0" top="10.0" />
-            </padding>
-         </Label>
-      </children>
-   </VBox>
   <GridPane prefWidth="201.0" HBox.hgrow="ALWAYS">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
     </columnConstraints>
-    <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
+    <VBox alignment="CENTER_LEFT" minHeight="38.0" prefHeight="58.0" prefWidth="202.0" GridPane.columnIndex="0">
       <padding>
         <Insets bottom="5" left="15" right="5" top="5" />
       </padding>
@@ -55,14 +31,34 @@
       </HBox>
       <FlowPane fx:id="tags" />
          <FlowPane fx:id="insurances" />
-        <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-      <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday" />
-      <Label fx:id="appointment" styleClass="cell_small_label" text="\$appointment" />
-        <Label fx:id="group" styleClass="cell_small_label" text="\$group" />
     </VBox>
+      <Label text="Total Commission:" GridPane.rowIndex="7" />
+      <Label fx:id="commission" text="\$commission" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+         <padding>
+            <Insets bottom="10.0" left="30.0" right="10.0" top="10.0" />
+         </padding>
+      </Label>
+     <Label fx:id="group" styleClass="cell_small_label" text="\$group" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+   <Label fx:id="appointment" styleClass="cell_small_label" text="\$appointment" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+   <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+   <Label fx:id="email" styleClass="cell_small_label" text="\$email" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+   <Label fx:id="address" styleClass="cell_small_label" text="\$address" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+     <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Label text="Phone:" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
+      <Label text="Address:" GridPane.rowIndex="2" />
+      <Label text="Email:" GridPane.rowIndex="3" />
+      <Label text="Birthday:" GridPane.rowIndex="4" />
+      <Label text="Appointment:" GridPane.rowIndex="5" />
+      <Label text="Group:" GridPane.rowIndex="6" />
       <rowConstraints>
+         <RowConstraints percentHeight="0.0" />
+         <RowConstraints minHeight="10.0" />
+         <RowConstraints minHeight="10.0" />
+         <RowConstraints minHeight="10.0" />
+         <RowConstraints minHeight="10.0" />
+         <RowConstraints minHeight="10.0" />
+         <RowConstraints minHeight="10.0" />
+         <RowConstraints />
          <RowConstraints />
       </rowConstraints>
   </GridPane>

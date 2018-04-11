@@ -6,5 +6,8 @@ package seedu.address.model.appointment.exceptions;
  */
 public class PastAppointmentException extends Exception {
 
-    public PastAppointmentException() { super();}
+    public PastAppointmentException() {
+        super();
+    }
 }
+

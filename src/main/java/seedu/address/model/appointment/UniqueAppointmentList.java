@@ -53,7 +53,7 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
             throw new PastAppointmentException();
         }
 
-        ArrayList<LocalDateTime> timeList = ArrayList<>;
+        ArrayList<LocalDateTime> timeList = new ArrayList<>();
 
         for (Appointment a : internalList) {
             timeList.add(a.getDateTime());

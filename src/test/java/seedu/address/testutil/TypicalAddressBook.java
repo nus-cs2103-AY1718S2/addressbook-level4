@@ -2,8 +2,10 @@ package seedu.address.testutil;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.ConcurrentAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
+import seedu.address.model.appointment.exceptions.PastAppointmentException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicateNricException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -44,6 +46,10 @@ public class TypicalAddressBook {
                 throw new AssertionError("Duplicate appointment.");
             } catch (DuplicateDateTimeException e) {
                 throw new AssertionError("Duplicate date time.");
+            } catch (ConcurrentAppointmentException e) {
+                throw new AssertionError("Concurrent appointment.");
+            } catch (PastAppointmentException e) {
+                throw new AssertionError("Past-date appointment.");
             }
         }
         return ab;

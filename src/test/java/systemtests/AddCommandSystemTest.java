@@ -1,6 +1,7 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PARAMETER_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.BLOODTYPE_DESC_NERO;
@@ -16,6 +17,7 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_JOKER;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_NERO;
 import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_BOB;
@@ -32,10 +34,15 @@ import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_BLOODTYPE_NERO;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_BREED_JOKER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_BREED_NERO;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_COLOUR_NERO;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_NERO;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_CHARLIE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_DION;
@@ -43,6 +50,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_ELIAS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_FION;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SPECIES_JOKER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SPECIES_NERO;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -76,6 +85,7 @@ import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.PetPatientBuilder;
 import seedu.address.testutil.PetPatientUtil;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
@@ -178,6 +188,52 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a pet patient, missing tags -> added */
         assertCommandSuccess(KARUPIN, KARUPIN.getOwner());
 
+        /* Case: add a pet patient with all fields same as another pet patient in the address book except name
+        -> added */
+        toAddPet = new PetPatientBuilder().withName("Joseph").withSpecies(VALID_SPECIES_NERO).withBreed(VALID_BREED_NERO)
+                .withColour(VALID_COLOUR_NERO).withBloodType(VALID_BLOODTYPE_NERO).withTags()
+                .withOwnerNric(bobNric.toString()).build();
+        command = AddCommand.COMMAND_WORD + OPTION_PET + " n/Joseph" + SPECIES_DESC_NERO + BREED_DESC_NERO
+                + COLOUR_DESC_NERO + BLOODTYPE_DESC_NERO + OPTION_OWNER + NRIC_DESC_BOB;
+        assertCommandSuccess(command, toAddPet, bobNric);
+
+        /* Case: add a pet patient with all fields same as another pet patient in the address book except species
+        -> added */
+        toAddPet = new PetPatientBuilder().withName(VALID_NAME_NERO).withSpecies("dog").withBreed(VALID_BREED_NERO)
+                .withColour(VALID_COLOUR_NERO).withBloodType(VALID_BLOODTYPE_NERO).withTags()
+                .withOwnerNric(bobNric.toString()).build();
+        command = AddCommand.COMMAND_WORD + OPTION_PET + NAME_DESC_NERO + " s/dog" + BREED_DESC_NERO
+                + COLOUR_DESC_NERO + BLOODTYPE_DESC_NERO + OPTION_OWNER + NRIC_DESC_BOB;
+        assertCommandSuccess(command, toAddPet, bobNric);
+
+        /* Case: add a pet patient with all fields same as another pet patient in the address book except breed
+        -> added */
+        toAddPet = new PetPatientBuilder().withName(VALID_NAME_NERO).withSpecies(VALID_SPECIES_NERO)
+                .withBreed("maltese").withColour(VALID_COLOUR_NERO).withBloodType(VALID_BLOODTYPE_NERO).withTags()
+                .withOwnerNric(bobNric.toString()).build();
+        command = AddCommand.COMMAND_WORD + OPTION_PET + NAME_DESC_NERO + SPECIES_DESC_NERO + " b/maltese"
+                + COLOUR_DESC_NERO + BLOODTYPE_DESC_NERO + OPTION_OWNER + NRIC_DESC_BOB;
+        assertCommandSuccess(command, toAddPet, bobNric);
+
+        /* Case: add a pet patient with all fields same as another pet patient in the address book except colour
+        -> added */
+        toAddPet = new PetPatientBuilder().withName(VALID_NAME_NERO).withSpecies(VALID_SPECIES_NERO)
+                .withBreed(VALID_BREED_NERO).withColour("silver").withBloodType(VALID_BLOODTYPE_NERO).withTags()
+                .withOwnerNric(bobNric.toString()).build();
+        command = AddCommand.COMMAND_WORD + OPTION_PET + NAME_DESC_NERO + SPECIES_DESC_NERO + BREED_DESC_NERO
+                + " c/silver" + BLOODTYPE_DESC_NERO + OPTION_OWNER + NRIC_DESC_BOB;
+        assertCommandSuccess(command, toAddPet, bobNric);
+
+        /* Case: add a pet patient with all fields same as another pet patient in the address book except blood type
+        -> added */
+        toAddPet = new PetPatientBuilder().withName(VALID_NAME_NERO).withSpecies(VALID_SPECIES_NERO)
+                .withBreed(VALID_BREED_NERO).withColour(VALID_COLOUR_NERO).withBloodType("A").withTags()
+                .withOwnerNric(bobNric.toString()).build();
+        command = AddCommand.COMMAND_WORD + OPTION_PET + NAME_DESC_NERO + SPECIES_DESC_NERO + BREED_DESC_NERO
+                + COLOUR_DESC_NERO + " bt/A" + OPTION_OWNER + NRIC_DESC_BOB;
+        assertCommandSuccess(command, toAddPet, bobNric);
+
+
         //@author
 
         /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
@@ -208,28 +264,28 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: missing name -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + NRIC_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PERSON));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PERSON));
 
         /* Case: missing phone -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + NRIC_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PERSON));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PERSON));
 
         /* Case: missing email -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY
                 + NRIC_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PERSON));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PERSON));
 
         /* Case: missing address -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + NRIC_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PERSON));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PERSON));
 
         //@@author Robert-Peng
         /* Case: missing nric -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PERSON));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PERSON));
         //@@author
 
         /* Case: invalid keyword -> rejected */
@@ -267,6 +323,39 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + PHONE_DESC_AMY
             + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NRIC_DESC_AMY + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
+
+        //@@author aquarinte
+        /* Case: add a duplicate pet patient -> rejected */
+        command = AddCommand.COMMAND_WORD + " " + OPTION_PET + NAME_DESC_NERO + SPECIES_DESC_NERO + BREED_DESC_NERO
+                + COLOUR_DESC_NERO + BLOODTYPE_DESC_NERO + OPTION_OWNER + NRIC_DESC_BOB;
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PET_PATIENT);
+
+        /* Case: missing pet patient name -> rejected */
+        command = AddCommand.COMMAND_WORD + " " + OPTION_PET + SPECIES_DESC_NERO + BREED_DESC_NERO
+                + COLOUR_DESC_NERO + BLOODTYPE_DESC_NERO + OPTION_OWNER + NRIC_DESC_BOB;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PETPATIENT));
+
+        /* Case: missing pet patient species -> rejected */
+        command = AddCommand.COMMAND_WORD + " " + OPTION_PET + NAME_DESC_NERO + BREED_DESC_NERO
+                + COLOUR_DESC_NERO + BLOODTYPE_DESC_NERO + OPTION_OWNER + NRIC_DESC_BOB;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PETPATIENT));
+
+        /* Case: missing pet patient breed -> rejected */
+        command = AddCommand.COMMAND_WORD + " " + OPTION_PET + NAME_DESC_NERO + SPECIES_DESC_NERO
+                + COLOUR_DESC_NERO + BLOODTYPE_DESC_NERO + OPTION_OWNER + NRIC_DESC_BOB;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PETPATIENT));
+
+        /* Case: missing pet patient colour -> rejected */
+        command = AddCommand.COMMAND_WORD + " " + OPTION_PET + NAME_DESC_NERO + SPECIES_DESC_NERO
+                + BREED_DESC_NERO + BLOODTYPE_DESC_NERO + OPTION_OWNER + NRIC_DESC_BOB;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PETPATIENT));
+
+        /* Case: missing pet patient blood type -> rejected */
+        command = AddCommand.COMMAND_WORD + " " + OPTION_PET + NAME_DESC_NERO + SPECIES_DESC_NERO
+                + BREED_DESC_NERO + COLOUR_DESC_NERO + OPTION_OWNER + NRIC_DESC_BOB;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PETPATIENT));
+
+        //@@author
     }
 
     /**

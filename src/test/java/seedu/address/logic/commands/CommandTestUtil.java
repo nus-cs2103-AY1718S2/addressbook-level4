@@ -5,8 +5,11 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE_DESC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED_DESC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COLOUR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COLOUR_DESC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -14,6 +17,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES_DESC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -173,10 +177,15 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_NRIC = "&2345678M"; // '&' not allowed in NRIC
     public static final String INVALID_NRIC_DESC = " " + PREFIX_NRIC + "&2345678M"; // '&' not allowed in NRIC
+    public static final String INVALID_SPECIES_DESC = " " + PREFIX_SPECIES + ""; // blank
+    public static final String INVALID_BREED_DESC = " " + PREFIX_BREED + "p3rsi4n";
+    public static final String INVALID_COLOUR_DESC = " " + PREFIX_COLOUR + "siv3r";
+    public static final String INVALID_BLOODTYPE_DESC = " " + PREFIX_BLOODTYPE_DESC + ""; // blank
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_OWNER_DESC = " " + PREFIX_NRIC + "S000000000T"; // invalid Nric
     public static final String INVALID_REMARK_DESC = " " + PREFIX_REMARK; //empty string not allowed for remark
-    public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "twelvemarchtwozerooneeight"; //follows format
+    public static final String INVALID_DATETIME_DESC = " " + PREFIX_DATE + "twelvemarchtwozerooneeight"; //follow format
+    public static final String INVALID_TIME_DESC = " " + PREFIX_DATE + "2018-08-09 1230"; //follows format, wrong time
     public static final String INVALID_THEME_PINK = "pink";
     public static final String INVALID_THEME_LIGHTT = "lightt";
     public static final String INVALID_OPTION = " -z";

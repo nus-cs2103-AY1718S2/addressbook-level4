@@ -13,12 +13,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.appointment.exceptions.AppointmentDependencyNotEmptyException;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.ConcurrentAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
+import seedu.address.model.appointment.exceptions.PastAppointmentException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicateNricException;
@@ -78,11 +81,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     public void setAppointments(List<Appointment> appointments)
-            throws DuplicateAppointmentException, DuplicateDateTimeException {
+            throws DuplicateAppointmentException, DuplicateDateTimeException,
+        ConcurrentAppointmentException, PastAppointmentException {
         this.appointments.setAppointments(appointments);
     }
 
-    public void setPetPatients(List<PetPatient> petPatients) throws DuplicatePetPatientException {
+    public void setPetPatients(List<PetPatient> petPatients) throws DuplicatePetPatientException,
+        ConcurrentAppointmentException, PastAppointmentException {
         this.petPatients.setPetPatients(petPatients);
     }
 
@@ -114,6 +119,10 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new AssertionError("AddressBook should not have duplicate appointments.");
         } catch (DuplicateDateTimeException ddte) {
             throw new AssertionError("AddressBook should not have appointments on the same slot");
+        } catch (ConcurrentAppointmentException cae) {
+            throw new AssertionError("AddressBook should not add appointments to on-going appointment slots");
+        } catch (PastAppointmentException pae) {
+            throw new AssertionError("AddressBook should not add appointments with past DateTime");
         }
 
         setTags(new HashSet<>(newData.getTagList()));
@@ -125,6 +134,10 @@ public class AddressBook implements ReadOnlyAddressBook {
             setPetPatients(syncedPetPatientList);
         } catch (DuplicatePetPatientException e) {
             throw new AssertionError("AddressBooks should not have duplicate pet patients");
+        } catch (ConcurrentAppointmentException cae) {
+            throw new AssertionError("AddressBook should not add appointments to on-going appointment slots");
+        } catch (PastAppointmentException pe) {
+            throw new AssertionError("AddressBook should not add appointments with past DateTime");
         }
     }
 
@@ -299,7 +312,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws DuplicateAppointmentException if an equivalent person already exists.
      */
-    public void addAppointment(Appointment a) throws DuplicateAppointmentException, DuplicateDateTimeException {
+    public void addAppointment(Appointment a) throws DuplicateAppointmentException, DuplicateDateTimeException,
+        ConcurrentAppointmentException, PastAppointmentException {
         Appointment appointment = syncWithMasterTagList(a);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any appointment

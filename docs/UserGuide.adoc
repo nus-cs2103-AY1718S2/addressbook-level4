@@ -342,7 +342,7 @@ Deletes the 2nd to-do in the address book.
 === List Tag Members: `listTagMembers`
 
 List out all persons with the given keywords(group tags). +
-Alias: `ltm` +
+Alias: `lTM` +
 Format: `listTagMembers INPUT`
 
 ****

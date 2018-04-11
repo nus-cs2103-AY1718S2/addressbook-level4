@@ -28,6 +28,11 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.petpatient.BloodType;
+import seedu.address.model.petpatient.Breed;
+import seedu.address.model.petpatient.Colour;
+import seedu.address.model.petpatient.PetPatientName;
+import seedu.address.model.petpatient.Species;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.Assert;
 
@@ -59,6 +64,17 @@ public class ParserUtilTest {
     private static final String VALID_MONTH = "12";
     private static final String VALID_DAY = "2018-12-31";
 
+    private static final String VALID_PET_PATIENT_NAME = "Jay";
+    private static final String VALID_PET_PATIENT_SPECIES = "Cat";
+    private static final String VALID_PET_PATIENT_BREED = "Domestic Shorthair";
+    private static final String VALID_PET_PATIENT_COLOUR = "white";
+    private static final String VALID_PET_PATIENT_BLOOD_TYPE = "DEA1.0+";
+
+    private static final String INVALID_PET_PATIENT_NAME = "H@zel+";
+    private static final String INVALID_PET_PATIENT_SPECIES = "1cat@$";
+    private static final String INVALID_PET_PATIENT_BREED = "s0mebr33d";
+    private static final String INVALID_PET_PATIENT_COLOUR = "bl@ck";
+    private static final String INVALID_PET_PATIENT_BLOOD_TYPE = "\\x00";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -468,5 +484,216 @@ public class ParserUtilTest {
         assertEquals(expectedDate, ParserUtil.parseDate(dayWithWhitespace));
         assertEquals(Optional.of(expectedDate), ParserUtil.parseDate(Optional.of(dayWithWhitespace)));
     }
-}
 
+    //@@author chialejing
+
+    // Tests for PetPatientName
+
+    @Test
+    public void parsePetPatientName_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePetPatientName((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePetPatientName((Optional<String>) null));
+    }
+
+    @Test
+    public void parsePetPatientName_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil
+                .parsePetPatientName(INVALID_PET_PATIENT_NAME));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil
+                .parsePetPatientName(Optional.of(INVALID_PET_PATIENT_NAME)));
+    }
+
+    @Test
+    public void parsePetPatientName_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parsePetPatientName(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parsePetPatientName_validValueWithoutWhitespace_returnsPetPatientName() throws Exception {
+        PetPatientName expectedPetPatientName = new PetPatientName(VALID_PET_PATIENT_NAME);
+        assertEquals(expectedPetPatientName, ParserUtil.parsePetPatientName(VALID_PET_PATIENT_NAME));
+        assertEquals(
+                Optional.of(expectedPetPatientName),
+                ParserUtil.parsePetPatientName(Optional.of(VALID_PET_PATIENT_NAME))
+        );
+    }
+
+    @Test
+    public void parsePetPatientName_validValueWithWhitespace_returnsTrimmedPetPatientName() throws Exception {
+        String petPatientNameWithWhitespace = WHITESPACE + VALID_PET_PATIENT_NAME + WHITESPACE;
+        PetPatientName expectedPetPatientName = new PetPatientName(VALID_PET_PATIENT_NAME);
+        assertEquals(expectedPetPatientName, ParserUtil.parsePetPatientName(petPatientNameWithWhitespace));
+        assertEquals(
+                Optional.of(expectedPetPatientName),
+                ParserUtil.parsePetPatientName(Optional.of(petPatientNameWithWhitespace))
+        );
+    }
+
+    // Tests for Species
+
+    @Test
+    public void parseSpecies_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseSpecies((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseSpecies((Optional<String>) null));
+    }
+
+    @Test
+    public void parseSpecies_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil
+                .parseSpecies(INVALID_PET_PATIENT_SPECIES));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil
+                .parseSpecies(Optional.of(INVALID_PET_PATIENT_SPECIES)));
+    }
+
+    @Test
+    public void parseSpecies_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseSpecies(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseSpecies_validValueWithoutWhitespace_returnsSpecies() throws Exception {
+        Species expectedSpecies = new Species(VALID_PET_PATIENT_SPECIES);
+        assertEquals(expectedSpecies, ParserUtil.parseSpecies(VALID_PET_PATIENT_SPECIES));
+        assertEquals(
+                Optional.of(expectedSpecies),
+                ParserUtil.parseSpecies(Optional.of(VALID_PET_PATIENT_SPECIES))
+        );
+    }
+
+    @Test
+    public void parseSpecies_validValueWithWhitespace_returnsTrimmedSpecies() throws Exception {
+        String speciesWithWhitespace = WHITESPACE + VALID_PET_PATIENT_SPECIES + WHITESPACE;
+        Species expectedSpecies = new Species(VALID_PET_PATIENT_SPECIES);
+        assertEquals(expectedSpecies, ParserUtil.parseSpecies(speciesWithWhitespace));
+        assertEquals(
+                Optional.of(expectedSpecies),
+                ParserUtil.parseSpecies(Optional.of(speciesWithWhitespace))
+        );
+    }
+
+    // Tests for Breed
+
+    @Test
+    public void parseBreed_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseBreed((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseBreed((Optional<String>) null));
+    }
+
+    @Test
+    public void parseBreed_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil
+                .parseBreed(INVALID_PET_PATIENT_BREED));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil
+                .parseBreed(Optional.of(INVALID_PET_PATIENT_BREED)));
+    }
+
+    @Test
+    public void parseBreed_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseBreed(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseBreed_validValueWithoutWhitespace_returnsBreed() throws Exception {
+        Breed expectedBreed = new Breed(VALID_PET_PATIENT_BREED);
+        assertEquals(expectedBreed, ParserUtil.parseBreed(VALID_PET_PATIENT_BREED));
+        assertEquals(
+                Optional.of(expectedBreed),
+                ParserUtil.parseBreed(Optional.of(VALID_PET_PATIENT_BREED))
+        );
+    }
+
+    @Test
+    public void parseBreed_validValueWithWhitespace_returnsTrimmedBreed() throws Exception {
+        String breedWithWhitespace = WHITESPACE + VALID_PET_PATIENT_BREED + WHITESPACE;
+        Breed expectedBreed = new Breed(VALID_PET_PATIENT_BREED);
+        assertEquals(expectedBreed, ParserUtil.parseBreed(breedWithWhitespace));
+        assertEquals(
+                Optional.of(expectedBreed),
+                ParserUtil.parseBreed(Optional.of(breedWithWhitespace))
+        );
+    }
+
+    // Tests for Colour
+
+    @Test
+    public void parseColour_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseColour((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseColour((Optional<String>) null));
+    }
+
+    @Test
+    public void parseColour_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil
+                .parseColour(INVALID_PET_PATIENT_COLOUR));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil
+                .parseColour(Optional.of(INVALID_PET_PATIENT_COLOUR)));
+    }
+
+    @Test
+    public void parseColour_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseColour(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseColour_validValueWithoutWhitespace_returnsColour() throws Exception {
+        Colour expectedColour = new Colour(VALID_PET_PATIENT_COLOUR);
+        assertEquals(expectedColour, ParserUtil.parseColour(VALID_PET_PATIENT_COLOUR));
+        assertEquals(
+                Optional.of(expectedColour),
+                ParserUtil.parseColour(Optional.of(VALID_PET_PATIENT_COLOUR))
+        );
+    }
+
+    @Test
+    public void parseColour_validValueWithWhitespace_returnsTrimmedColour() throws Exception {
+        String colourWithWhitespace = WHITESPACE + VALID_PET_PATIENT_COLOUR + WHITESPACE;
+        Colour expectedColour = new Colour(VALID_PET_PATIENT_COLOUR);
+        assertEquals(expectedColour, ParserUtil.parseColour(colourWithWhitespace));
+        assertEquals(
+                Optional.of(expectedColour),
+                ParserUtil.parseColour(Optional.of(colourWithWhitespace))
+        );
+    }
+
+    // Tests for Blood Type
+
+    @Test
+    public void parseBloodType_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseBloodType((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseBloodType((Optional<String>) null));
+    }
+
+    @Test
+    public void parseBloodType_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil
+                .parseBloodType(INVALID_PET_PATIENT_BLOOD_TYPE));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil
+                .parseBloodType(Optional.of(INVALID_PET_PATIENT_BLOOD_TYPE)));
+    }
+
+    @Test
+    public void parseBloodType_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseBloodType(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseBloodType_validValueWithoutWhitespace_returnsBloodType() throws Exception {
+        BloodType expectedBloodType = new BloodType(VALID_PET_PATIENT_BLOOD_TYPE);
+        assertEquals(expectedBloodType, ParserUtil.parseBloodType(VALID_PET_PATIENT_BLOOD_TYPE));
+        assertEquals(
+                Optional.of(expectedBloodType),
+                ParserUtil.parseBloodType(Optional.of(VALID_PET_PATIENT_BLOOD_TYPE))
+        );
+    }
+
+    @Test
+    public void parseBloodType_validValueWithWhitespace_returnsTrimmedBloodType() throws Exception {
+        String bloodTypeWithWhitespace = WHITESPACE + VALID_PET_PATIENT_BLOOD_TYPE + WHITESPACE;
+        BloodType expectedBloodType = new BloodType(VALID_PET_PATIENT_BLOOD_TYPE);
+        assertEquals(expectedBloodType, ParserUtil.parseBloodType(bloodTypeWithWhitespace));
+        assertEquals(
+                Optional.of(expectedBloodType),
+                ParserUtil.parseBloodType(Optional.of(bloodTypeWithWhitespace))
+        );
+    }
+}

@@ -30,7 +30,7 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
             + "tests on headless mode. See UsingGradle.adoc on how to do so.";
 
     // Stub from Typical Persons
-    private static final String expectedResultStub = "1/1/1995 Alice Pauline\n"
+    private static final String expectedResult = "1/1/1995 Alice Pauline\n"
             + "2/1/1989 Benson Meier\n"
             + "3/1/1991 Carl Kurz\n"
             + "6/1/1994 Fiona Kunz\n"
@@ -45,7 +45,7 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
         //use command box
         executeCommand(BirthdaysCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
-        assertEquals(expectedResultStub, getBirthdayList().getText());
+        assertEquals(expectedResult, getBirthdayList().getText());
     }
 
     @Test
@@ -55,9 +55,6 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
         executeCommand("   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
                 + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   b/"
                 + buildBirthday(true) + " " + TIMETABLE_DESC_AMY + TAG_DESC_FRIEND + " ");
-
-        // Create expected result
-
 
         // use command
         executeCommand(BirthdaysCommand.COMMAND_WORD + " " + BirthdaysCommand.ADDITIONAL_COMMAND_PARAMETER);
@@ -84,7 +81,7 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
         BirthdayNotificationHandle alertDialog = new BirthdayNotificationHandle(guiRobot
                 .getStage("Birthdays Today"));
 
-        assertEquals("", alertDialog.getContentText());
+        assertEquals(BirthdaysCommand.MESSAGE_NO_BIRTHDAY_TODAY, alertDialog.getContentText());
     }
 
     /**

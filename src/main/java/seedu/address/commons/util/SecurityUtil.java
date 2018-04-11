@@ -58,7 +58,7 @@ public class SecurityUtil {
             Key secretAesKey = createKey(password);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretAesKey);
-            fileProcessor(cipher, file);
+            processFile(cipher, file);
         } catch (InvalidKeyException ike) {
             logger.severe("ERROR: Wrong key length " + StringUtil.getDetails(ike));
             throw new AssertionError("Wrong key length");
@@ -94,7 +94,7 @@ public class SecurityUtil {
             Key secretAesKey = createKey(password);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secretAesKey);
-            fileProcessor(cipher, file);
+            processFile(cipher, file);
         } catch (InvalidKeyException ike) {
             logger.severe("ERROR: Wrong key length " + StringUtil.getDetails(ike));
             throw new AssertionError("Wrong key length");
@@ -112,7 +112,7 @@ public class SecurityUtil {
      * @throws IOException if cannot open file
      * @throws WrongPasswordException if password used is wrong
      */
-    private static void fileProcessor(Cipher cipher, File file) throws IOException, WrongPasswordException {
+    private static void processFile(Cipher cipher, File file) throws IOException, WrongPasswordException {
         byte[] inputBytes = "Dummy".getBytes();
         try {
 
@@ -181,7 +181,7 @@ public class SecurityUtil {
      * @throws WrongPasswordException if password used is wrong
      */
     public static void encryptFile (File file, Password password) throws IOException, WrongPasswordException {
-        if (password.getPassword() != null) {
+        if (password != null && password.getPassword() != null) {
             encrypt(file, password.getPassword());
         }
     }
@@ -198,7 +198,7 @@ public class SecurityUtil {
      * @param e Contains the exception details to throw with WrongPasswordException
      * @throws WrongPasswordException if it is wrong password
      */
-    private static void  handleBadPaddingException(byte[] inputBytes, BadPaddingException e)
+    private static void handleBadPaddingException(byte[] inputBytes, BadPaddingException e)
                                                                             throws WrongPasswordException {
         if (!checkPlainText(inputBytes)) {
             logger.severe("ERROR: Wrong PASSWORD length used ");

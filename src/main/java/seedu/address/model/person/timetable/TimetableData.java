@@ -104,4 +104,23 @@ public class TimetableData {
         return timetable;
     }
 
+    /**
+     * Returns the unified Time Table
+     * @return ArrayList with the  Time Table
+     */
+    public static ArrayList<ArrayList<ArrayList<String>>> unionTimeTable(ArrayList<TimetableData> timetables) {
+        ArrayList<ArrayList<ArrayList<String>>> commonTimetable = new ArrayList<>();
+
+
+        for (int i = 0; i < NUM_OF_WEEKS; i++) {
+            ArrayList<TimetableWeek> t = new ArrayList<TimetableWeek>();
+            for (TimetableData timetable : timetables) {
+                t.add(timetable.timetableWeeks[i]);
+            }
+            commonTimetable.add(TimetableWeek.unionTimetableWeek(t));
+        }
+
+        return commonTimetable;
+    }
+
 }

@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import seedu.address.logic.commands.AliasCommand;
+import seedu.address.logic.commands.UnaliasCommand;
 import seedu.address.model.alias.Alias;
 
 //@@author jingyinno
@@ -14,6 +15,13 @@ public class AliasUtil {
      */
     public static String getAliasCommand(Alias alias) {
         return AliasCommand.COMMAND_WORD + " " + getAliasDetails(alias);
+    }
+
+    /**
+     * Returns an unalias command string for removing the {@code alias}.
+     */
+    public static String getUnliasCommand(String unalias) {
+        return UnaliasCommand.COMMAND_WORD + " " + unalias;
     }
 
     /**

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.timetable.Lesson;
-import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author AzuraAiR
 /**
@@ -38,9 +37,9 @@ public class TimetableWeek {
     /**
      * Add lesson to its respective day
      * @param lesson Lesson to be added
-     * @throws ParseException when Day is invalid
+     * @throws IllegalValueException when Day is invalid
      */
-    public void addLessonToWeek(Lesson lesson) throws ParseException {
+    public void addLessonToWeek(Lesson lesson) throws IllegalValueException {
         try {
             switch (lesson.getDay()) {
             case MONDAY_IDENTIFIER:
@@ -64,10 +63,10 @@ public class TimetableWeek {
                 break;
 
             default:
-                throw new ParseException(MESSAGE_INVALID_DAY);
+                throw new IllegalValueException(MESSAGE_INVALID_DAY);
             }
         } catch (IllegalValueException ie) {
-            throw new ParseException(ie.getMessage());
+            throw new IllegalValueException(MESSAGE_INVALID_DAY);
         }
     }
 
@@ -132,4 +131,44 @@ public class TimetableWeek {
         }
         return timetable;
     }
+
+    /**
+     * Returns the unified Time Table for the week
+     * @return ArrayList with the Time Table
+     */
+    public static ArrayList<ArrayList<String>> unionTimetableWeek(ArrayList<TimetableWeek> timetables) {
+        ArrayList<ArrayList<String>> commonTimetable = new ArrayList<>();
+
+        for (int i = 0; i < NUM_OF_DAYS; i++) {
+            ArrayList<TimetableDay> t = new ArrayList<TimetableDay>();
+            for (TimetableWeek timetable : timetables) {
+                t.add(timetable.timetableDays[i]);
+            }
+
+            ArrayList<String> dailyTimeTable = TimetableDay.unionTimetableDay(t);
+            switch (i) {
+            case 0:
+                dailyTimeTable.add(0, MONDAY_IDENTIFIER);
+                break;
+            case 1:
+                dailyTimeTable.add(0, TUESDAY_IDENTIFIER);
+                break;
+            case 2:
+                dailyTimeTable.add(0, WEDNESDAY_IDENTIFIER);
+                break;
+            case 3:
+                dailyTimeTable.add(0, THURSDAY_IDENTIFIER);
+                break;
+            case 4:
+                dailyTimeTable.add(0, FRIDAY_IDENTIFIER);
+                break;
+            default:
+                break;
+            }
+            commonTimetable.add(dailyTimeTable);
+        }
+        return commonTimetable;
+    }
+
+
 }

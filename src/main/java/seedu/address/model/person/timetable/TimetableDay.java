@@ -13,6 +13,8 @@ public class TimetableDay {
 
     public static final int NUM_OF_SLOTS = 24;
     public static final String MESSAGE_INVALID_TIMESLOT = "Time slot is invalid";
+    public static final String TITLE_OCCUPIED = "Occupied";
+    public static final String EMPTY_SLOT_STRING = "";
 
     // Cut into 24-h slots. 0000 being timetableSlots[0] and 2300 being timetableSlots[23]
     private TimetableSlot[] timetableSlots;
@@ -43,7 +45,7 @@ public class TimetableDay {
      * @param time timing from NUSMods
      * @return index for slot array
      */
-    private int parseStartEndTime(String time) throws IllegalValueException {
+    public static int parseStartEndTime(String time) throws IllegalValueException {
         int value = Integer.parseInt(time) / 100;
 
         if (isValidTimeSlot(value)) {
@@ -72,7 +74,7 @@ public class TimetableDay {
      * @param index
      * @return true or false
      */
-    private boolean isValidTimeSlot(int index) {
+    private static boolean isValidTimeSlot(int index) {
         return (index < NUM_OF_SLOTS && index >= 0);
     }
 
@@ -87,5 +89,32 @@ public class TimetableDay {
             timetable.add(t.toString());
         }
         return timetable;
+    }
+
+    /**
+     * Returns the unified Timetable
+     * @return ArrayList with the Time Table
+     */
+    public static ArrayList<String> unionTimetableDay(ArrayList<TimetableDay> timetables) {
+        ArrayList<String> commonTimetable = new ArrayList<>();
+        boolean checker;
+
+        for (int i = 8; i < 22; i++) {
+            checker = false;
+            for (TimetableDay timetable : timetables) {
+                TimetableSlot t = timetable.timetableSlots[i];
+                if (!t.toString().equals(EMPTY_SLOT_STRING)) {
+                    checker = true;
+                    break;
+                }
+            }
+
+            if (checker) {
+                commonTimetable.add(TITLE_OCCUPIED);
+            } else {
+                commonTimetable.add(EMPTY_SLOT_STRING);
+            }
+        }
+        return commonTimetable;
     }
 }

@@ -1,7 +1,8 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
+
+import java.time.LocalDate;
 
 //@@author AzuraAiR
 /**
@@ -10,9 +11,14 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Birthday {
 
-
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthday date can only contain numbers, and should follow the DDMMYYYY format";
+    public static final String MESSAGE_INVALID_BIRTHDAY =
+            "Birthday day is invalid";
+    public static final String MESSAGE_INVALID_BIRTHMONTH =
+            "Birthday month is invalid";
+    public static final String MESSAGE_FUTURE_BIRTHDAY =
+            "Birthday is set in the future";
     public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{8,8}";
     public final String value;
 
@@ -22,35 +28,90 @@ public class Birthday {
 
     /**
      * Constructs a {@code Birthday}.
-     *  @param birthday A valid birthday number.
-     *
+     *  @param birthday A birthday number.
      */
     public Birthday(String birthday) {
         requireNonNull(birthday);
-        checkArgument(isValidBirthday(birthday), MESSAGE_BIRTHDAY_CONSTRAINTS);
-        this.value = birthday;
-        this.day = parseDay(birthday);
-        this.month = parseMonth(birthday);
-        this.year = parseYear(birthday);
+
+        if (isValidBirthday(birthday)) {
+            this.value = birthday;
+            this.day = parseDay(birthday);
+            this.month = parseMonth(birthday);
+            this.year = parseYear(birthday);
+        } else {
+            this.value = null;
+        }
     }
 
     /**
-     * Returns true if a given string is a valid person birthday.
+     * Checks if given birthday string is valid
+     * @param test Birthday to be tested
+     * @return true if birthday is valid
+     * @throws IllegalArgumentException if birthday is invalid
      */
-    public static boolean isValidBirthday(String test) {
-        int testDay = 0;
-        int testMonth = 0;
+    public static boolean isValidBirthday(String test) throws IllegalArgumentException {
+        LocalDate today = LocalDate.now();
+        int testDay;
+        int testMonth;
+        int testYear;
 
-        // Initial check for DDMMYYYY format
+        // Check for DDMMYYYY format
         if (test.matches(BIRTHDAY_VALIDATION_REGEX)) {
             testDay = parseDay(test);
             testMonth = parseMonth(test);
+            testYear = parseYear(test);
         } else {
-            return false;
+            throw new IllegalArgumentException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+        }
+        // Check for valid year
+        if (today.getYear() < testYear) {
+            throw new IllegalArgumentException(MESSAGE_FUTURE_BIRTHDAY);
+        }
+        // Check for valid day
+        if (testDay == 0) {
+            throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
         }
 
-        // Secondary check for valid day and month
-        return (testDay <= 31) && (testDay != 0) && (testMonth <= 12) && (testMonth != 0);
+        // Check for valid month and day
+        switch (testMonth) {
+        case 1:     // Jan
+        case 3:     // Mar
+        case 5:     // May
+        case 7:     // Jul
+        case 8:     // Aug
+        case 10:    // Oct
+        case 12:    // Dec
+            if (testDay > 31) {
+                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
+            }
+            break;
+        case 4: // Apr
+        case 6: // Jun
+        case 9: // Sep
+        case 11: // Nov
+            if (testDay > 30) {
+                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
+            }
+            break;
+        case 2: // Feb
+            if (testDay > 28) {
+                throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHDAY);
+            }
+            break;
+        default:
+            throw new IllegalArgumentException(MESSAGE_INVALID_BIRTHMONTH);
+        }
+
+        // Check for future date
+        if (today.getYear() == testYear) {
+            if (today.getMonthValue() < testMonth) {
+                throw new IllegalArgumentException(MESSAGE_FUTURE_BIRTHDAY);
+            } else if (today.getMonthValue() == testMonth && today.getDayOfMonth() < testDay) {
+                throw new IllegalArgumentException(MESSAGE_FUTURE_BIRTHDAY);
+            }
+        }
+
+        return true;
     }
 
     @Override
@@ -71,17 +132,17 @@ public class Birthday {
     }
 
     /**
-     * Static method to parse Day from Birthday string
+     * Parses Day from Birthday string
      * isValidBirthday() should be called before this method
      * @param birthday assumed to be of format DDMMYYYY
-     * @return integer Day
+     * @return int Day
      */
     private static int parseDay(String birthday) {
         return Integer.parseInt(birthday.substring(0, 2));
     }
 
     /**
-     * Static method to parse Month from Birthday string
+     * Parses Month from Birthday string
      * isValidBirthday() should be called before this method
      * @param birthday assumed to be of format DDMMYYYY
      * @return integer Month
@@ -91,7 +152,7 @@ public class Birthday {
     }
 
     /**
-     * Static method to parse Year from Birthday string
+     * Parses Year from Birthday string
      * isValidBirthday() should be called before this method
      * @param birthday assumed to be of format DDMMYYYY
      * @return integer Year

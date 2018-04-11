@@ -183,6 +183,11 @@ public class AddCommandTest {
         public void exportAddressBook(String filepath, Password password) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void uploadAddressBook(String filepath, Password password) {
+            fail("This method should not be called.");
+        }
     }
 
     /**

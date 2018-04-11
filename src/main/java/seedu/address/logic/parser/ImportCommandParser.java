@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new ImportCommand object
  */
 public class ImportCommandParser implements Parser<ImportCommand> {
-    private static final String SPLIT_TOKEN = " ";
+    private static final String SPLIT_TOKEN = "\\s+";
     /**
      * Parses the given {@code String} of arguments in the context of the ImportCommand
      * and returns an ImportCommand object for execution.

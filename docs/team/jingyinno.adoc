@@ -1,0 +1,54 @@
+= Ong Jing Yin - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: StardyTogether
+StardyTogether is a desktop contacts and venues manager application specially for NUS students to help them find free time and rooms to study together with their friends.
+
+Most of the user interactions are via CLI, while there exists a GUI created with JavaFX. It is written in Java and has
+about 6kLoC.
+
+The source code is based on the  https://github.com/se-edu/addressbook-level4[AddressBook-Level4] project created by SE-EDU initiative.
+
+*Code contributed*: [https://github.com/CS2103JAN2018-W11-B4/main/blob/master/collated/functional/jingyinno.md[Functional code]]
+[https://github.com/CS2103JAN2018-W11-B4/main/blob/master/collated/test/jingyinno.md[Test code]] +
+
+== Feature Contributions
+* *Major enhancement*: Customized alias
+** What it does: Allows students to create their own aliases for all the commands and delete/unalias their created aliases if they do not want them anymore.
+** Justification: This feature makes the use of CLI much more convenient as students can now type faster and in their own style. It improves the overall user experience from using the application as it makes it more personalized and user-friendly.
+
+* *Minor enhancement*: Vacant Room Finder logic, parser and UI
+** What it does: Shows the vacant rooms in the building that the student is searching for for the day.
+** Justification: This allows students to easily find empty rooms for them to study in with their friends. Since students can have many pockets of free time in school, this feature displays the schedule of the rooms for the whole day so that students to plan their study venue.
+
+* *Minor enhancement*: Google Maps location and direction navigator
+** What it does: Finds the location of the specified address or the directions from place to place. This navigator recognises NUS building names and finds their respective locations, which makes it convenient for students to search for NUS venues.
+** Justification: This allows students to find their way in NUS easily by searching for the buildings' common names rather than their postal codes or addresses.
+
+* *Other contributions*:
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W11-B4/main/pull/110[#110], https://github.com/CS2103JAN2018-W11-B4/main/pull/146[#146]
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=alias]
+
+include::../UserGuide.adoc[tag=vacant]
+
+include::../UserGuide.adoc[tag=maps]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=customizedalias]
+
+include::../DeveloperGuide.adoc[tag=vacantroomfinder]

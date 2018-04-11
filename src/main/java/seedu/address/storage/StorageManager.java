@@ -102,8 +102,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
     //@@author AzuraAiR-reused
     @Override
-    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException,
-                                                                            WrongPasswordException {
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException, WrongPasswordException {
         logger.fine("Attempting to write to backup data file: ");
         addressBookStorage.backupAddressBook(addressBook);
     }

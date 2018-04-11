@@ -18,16 +18,18 @@ Role: Project Advisor
 
 === Ong Jing Yin
 image::jingyinno.jpg[width="150", align="left"]
-{empty}[http://github.com/jingyinno[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/jingyinno[github]]
+{empty}[https://cs2103jan2018-w11-b4.github.io/main/team/jingyinno.html[portfolio]]
 
 Role: Team Lead +
 Responsibilities: Logic
 
 '''
 
-=== Low Cai Jun
+=== Loh Cai Jun
 image::caijun7.jpg[width="150", align="left"]
-{empty}[http://github.com/caijun7[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/caijun7[github]]
+{empty}[https://cs2103jan2018-w11-b4.github.io/main/team/Caijun7.html[portfolio]]
 
 Role: Developer +
 Responsibilities: Model
@@ -36,7 +38,8 @@ Responsibilities: Model
 
 === Wayne Neo Wei Zhe
 image::azureair.jpg[width="150", align="left"]
-{empty}[http://github.com/AzuraAiR[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/AzuraAiR[github]]
+{empty}[https://cs2103jan2018-w11-b4.github.io/main/team/AzureAiR.html[portfolio]]
 
 Role: Developer +
 Responsibilities: Storage
@@ -45,7 +48,8 @@ Responsibilities: Storage
 
 === Lee Yong Ler
 image::yeggasd.jpg[width="150", align="left"]
-{empty}[http://github.com/yeggasd[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/yeggasd[github]]
+{empty}[https://cs2103jan2018-w11-b4.github.io/main/team/yeggasd.html[portfolio]]
 
 Role: Developer +
 Responsibilities: UI

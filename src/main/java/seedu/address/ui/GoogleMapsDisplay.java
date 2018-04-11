@@ -19,26 +19,28 @@ public class GoogleMapsDisplay extends UiPart<Region> {
     public static final String MAP_SEARCH_URL_PREFIX = "https://www.google.com/maps/search/";
     public static final String MAP_DIRECTIONS_URL_PREFIX = "https://www.google.com/maps/dir/";
     private static final String FXML = "GoogleMapsDisplay.fxml";
-    private String locations;
 
     @FXML
     private WebView maps;
 
+    public GoogleMapsDisplay() {
+        this(null);
+    }
+
     public GoogleMapsDisplay(String locations) {
         super(FXML);
 
-        this.locations = locations;
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
         loadDefaultPage();
     }
 
-    public void loadMapPage() {
-        loadPage(MAP_SEARCH_URL_PREFIX + locations);
+    public void loadMapPage(String location) {
+        loadPage(MAP_SEARCH_URL_PREFIX + location);
     }
 
-    public void loadMapDirections() {
+    public void loadMapDirections(String locations) {
         loadPage(MAP_DIRECTIONS_URL_PREFIX + locations);
     }
 

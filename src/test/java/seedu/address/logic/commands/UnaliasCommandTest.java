@@ -40,6 +40,9 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AliasBuilder;
 
 //@@author jingyinno
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for UnaliasCommand.
+ */
 public class UnaliasCommandTest {
 
     @Rule
@@ -177,6 +180,11 @@ public class UnaliasCommandTest {
 
         @Override
         public void exportAddressBook(String filepath, Password password) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void uploadAddressBook(String filepath, Password password) {
             fail("This method should not be called.");
         }
 

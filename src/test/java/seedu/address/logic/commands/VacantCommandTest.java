@@ -37,6 +37,9 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 //@@author jingyinno
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for VacantCommand.
+ */
 public class VacantCommandTest {
 
     @Rule
@@ -105,9 +108,6 @@ public class VacantCommandTest {
     /**
      * A default model stub that have all of the methods failing.
      */
-    /**
-     * A default model stub that have all of the methods failing.
-     */
     private class ModelStub implements Model {
         @Override
         public void addPerson(Person person) throws DuplicatePersonException {
@@ -169,6 +169,11 @@ public class VacantCommandTest {
 
         @Override
         public void exportAddressBook(String filepath, Password password) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void uploadAddressBook(String filepath, Password password) {
             fail("This method should not be called.");
         }
 

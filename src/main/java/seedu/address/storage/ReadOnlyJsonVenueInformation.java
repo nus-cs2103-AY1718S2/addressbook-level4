@@ -32,6 +32,7 @@ public class ReadOnlyJsonVenueInformation implements ReadOnlyVenueInformation {
 
     /**
      * Converts Json file into HashMap of NUS Rooms
+     *
      * @param venueInformationFilePath location of the data. Cannot be null.
      * @throws DataConversionException if the file format is not as expected.
      */
@@ -46,6 +47,7 @@ public class ReadOnlyJsonVenueInformation implements ReadOnlyVenueInformation {
 
     /**
      * Converts Json file into HashMap of NUS Buildings and Rooms
+     *
      * @param buildingsAndRoomsInformationFilePath location of the data. Cannot be null.
      * @throws DataConversionException if the file format is not as expected.
      */

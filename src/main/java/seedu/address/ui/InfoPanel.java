@@ -13,6 +13,7 @@ import seedu.address.commons.events.ui.GoogleMapsEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.TimeTableEvent;
 import seedu.address.commons.events.ui.VenueTableEvent;
+import seedu.address.model.person.Person;
 
 /**
  * Container for both browser panel and person information panel
@@ -23,20 +24,22 @@ public class InfoPanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private BrowserPanel browserPanel;
     private BirthdayList birthdayList;
     private VenueTable venueTable;
-    private TimeTablePanel timeTablePanel;
     private GoogleMapsDisplay mapsDisplay;
+    private PersonDetailsCard personDetailsCard;
+    private TimetableUnionPanel timetableUnionPanel;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane placeholder;
     @FXML
     private StackPane birthdayPlaceholder;
     @FXML
     private StackPane venuePlaceholder;
     @FXML
-    private StackPane timetablePlaceholder;
+    private StackPane userDetailsPlaceholder;
+    @FXML
+    private StackPane timetableUnionPlaceholder;
     @FXML
     private StackPane mapsPlaceholder;
 
@@ -44,40 +47,21 @@ public class InfoPanel extends UiPart<Region> {
     public InfoPanel() {
         super(FXML);
 
-        fillInnerParts();
-
-        venueTable = new VenueTable(null);
-
-        mapsDisplay = new GoogleMapsDisplay(null);
-
-        browserPlaceholder.toFront();
+        personDetailsCard = new PersonDetailsCard();
+        userDetailsPlaceholder.getChildren().add(personDetailsCard.getRoot());
+        venueTable = new VenueTable();
+        venuePlaceholder.getChildren().add(venueTable.getRoot());
+        mapsDisplay = new GoogleMapsDisplay();
+        mapsPlaceholder.getChildren().add(mapsDisplay.getRoot());
+        birthdayList = new BirthdayList();
+        birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
+        timetableUnionPanel = new TimetableUnionPanel();
+        timetableUnionPlaceholder.getChildren().add(timetableUnionPanel.getRoot());
+        placeholder.toFront();
         registerAsAnEventHandler(this);
     }
 
     public void freeResources() {
-        browserPanel.freeResources();
-    }
-
-    /**
-     * Helper method to fill UI placeholders
-     */
-    public void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
-        birthdayList = new BirthdayList();
-        birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
-
-        timeTablePanel = new TimeTablePanel();
-        timetablePlaceholder.getChildren().add(timeTablePanel.getRoot());
-    }
-
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        browserPanel.loadPersonPage(event.getNewSelection().person);
-
-        browserPlaceholder.toFront();
     }
 
     //@@author AzuraAiR
@@ -85,7 +69,9 @@ public class InfoPanel extends UiPart<Region> {
     private void handleBirthdayListEvent(BirthdayListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
+        birthdayPlaceholder.getChildren().removeAll();
         birthdayList.loadList(event.getBirthdayList());
+        birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
         birthdayPlaceholder.toFront();
     }
     //@@author
@@ -102,14 +88,11 @@ public class InfoPanel extends UiPart<Region> {
 
     @Subscribe
     private void handleGoogleMapsDisplayEvent(GoogleMapsEvent event) {
-        mapsPlaceholder.getChildren().removeAll();
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mapsDisplay = new GoogleMapsDisplay(event.getLocations());
-        mapsPlaceholder.getChildren().add(mapsDisplay.getRoot());
         if (event.getIsOneLocationEvent()) {
-            mapsDisplay.loadMapPage();
+            mapsDisplay.loadMapPage(event.getLocations());
         } else {
-            mapsDisplay.loadMapDirections();
+            mapsDisplay.loadMapDirections(event.getLocations());
         }
         mapsPlaceholder.toFront();
     }
@@ -117,12 +100,29 @@ public class InfoPanel extends UiPart<Region> {
 
     //@@author yeggasd
     @Subscribe
-    private void handleTimeTableEvent(TimeTableEvent event) {
-        timetablePlaceholder.getChildren().removeAll();
-        timeTablePanel = new TimeTablePanel(event.getTimeTable());
-        timetablePlaceholder.getChildren().add(timeTablePanel.getRoot());
-        timetablePlaceholder.toFront();
-        timeTablePanel.setStyle();
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        venuePlaceholder.toBack();
+        mapsPlaceholder.toBack();
+        birthdayPlaceholder.toBack();
+        timetableUnionPlaceholder.toBack();
+        Person person = event.getNewSelection().person;
+        int oddEvenIndex = event.getOddEvenIndex();
+
+        personDetailsCard.update(person, oddEvenIndex);
+        userDetailsPlaceholder.toFront();
+    }
+    //@@author
+
+    @Subscribe
+    private void handleTimeTableUnionEvent(TimeTableEvent event) {
+
+        userDetailsPlaceholder.getChildren().removeAll();
+        timetableUnionPanel = new TimetableUnionPanel(event.getTimeTable());
+        timetableUnionPlaceholder.getChildren().add(timetableUnionPanel.getRoot());
+        timetableUnionPlaceholder.toFront();
+        timetableUnionPanel.setStyle();
+
     }
     //@@author
 }

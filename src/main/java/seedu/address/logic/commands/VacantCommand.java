@@ -22,7 +22,7 @@ import seedu.address.model.building.exceptions.NoRoomsInBuildingException;
 public class VacantCommand extends Command {
     public static final String COMMAND_WORD = "vacant";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds vacant study rooms in a building \n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds vacant study rooms in a building. "
             + "Parameters: [BUILDING_NAME]\n"
             + "Example: " + COMMAND_WORD + " COM1";
 

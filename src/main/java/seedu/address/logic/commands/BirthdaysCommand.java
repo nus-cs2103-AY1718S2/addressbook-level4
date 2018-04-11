@@ -32,11 +32,20 @@ public class BirthdaysCommand extends Command {
 
     public static final String SHOWING_BIRTHDAY_NOTIFICATION = "Displaying today's birthdays";
 
+    public static final String MESSAGE_NO_BIRTHDAY_TODAY = "No one is celebrating their birthdays today";
+
     private boolean isToday;
 
     public BirthdaysCommand(boolean todays) {
         requireNonNull(todays);
         this.isToday = todays;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof BirthdaysCommand // instanceof handles nulls
+                && isToday == ((BirthdaysCommand) other).isToday);
     }
 
     @Override
@@ -130,6 +139,10 @@ public class BirthdaysCommand extends Command {
                     && person.getBirthday().getMonth() == currentMonth) {
                 listOfPersonWithBirthdayToday.add(person);
             }
+        }
+
+        if (listOfPersonWithBirthdayToday.size() == 0) {
+            return MESSAGE_NO_BIRTHDAY_TODAY;
         }
 
         for (Person person: listOfPersonWithBirthdayToday) {

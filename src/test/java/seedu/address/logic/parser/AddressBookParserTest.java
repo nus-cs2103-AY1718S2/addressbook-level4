@@ -6,7 +6,10 @@ import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalOddEven.EVEN;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,8 +18,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AliasCommand;
+import seedu.address.logic.commands.BirthdaysCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -27,17 +32,23 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.MapCommand;
 import seedu.address.logic.commands.PasswordCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemovePasswordCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.TimetableUnionCommand;
+import seedu.address.logic.commands.UnaliasCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.VacantCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.Alias;
+import seedu.address.model.building.Building;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.AliasBuilder;
 import seedu.address.testutil.AliasUtil;
+import seedu.address.testutil.BuildingBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -61,6 +72,29 @@ public class AddressBookParserTest {
         Alias alias = new AliasBuilder().build();
         AliasCommand command = (AliasCommand) parser.parseCommand(AliasUtil.getAliasCommand(alias));
         assertEquals(new AliasCommand(alias), command);
+    }
+
+    @Test
+    public void parseCommand_unalias() throws Exception {
+        Alias toUnalias = new AliasBuilder().build();
+        String unalias = toUnalias.getAlias();
+        UnaliasCommand command = (UnaliasCommand) parser.parseCommand(AliasUtil.getUnliasCommand(unalias));
+        assertEquals(new UnaliasCommand(unalias), command);
+    }
+
+    @Test
+    public void parseCommand_vacant() throws Exception {
+        Building building = new BuildingBuilder().build();
+        VacantCommand command = (VacantCommand) parser.parseCommand(VacantCommand.COMMAND_WORD
+                + " " + building.getBuildingName());
+        assertEquals(new VacantCommand(building), command);
+    }
+
+    @Test
+    public void parseCommand_map() throws Exception {
+        String locations = "com1";
+        MapCommand command = (MapCommand) parser.parseCommand(MapCommand.COMMAND_WORD + " " + locations);
+        assertEquals(new MapCommand(locations), command);
     }
     //@@author
 
@@ -97,6 +131,33 @@ public class AddressBookParserTest {
         ImportCommand command = (ImportCommand) parser.parseCommand(
                 ImportCommand.COMMAND_WORD + " /data/addressbook.xml test");
         assertEquals(new ImportCommand("/data/addressbook.xml", "test"), command);
+    }
+    //@@author
+
+    //@@author AzuraAiR
+    @Test
+    public void parseCommand_birthdays() throws Exception {
+        BirthdaysCommand command = (BirthdaysCommand) parser.parseCommand(
+                BirthdaysCommand.COMMAND_WORD);
+        assertEquals(new BirthdaysCommand(false), command);
+    }
+
+    @Test
+    public void parseCommand_birthdaysToday() throws Exception {
+        BirthdaysCommand command = (BirthdaysCommand) parser.parseCommand(
+                BirthdaysCommand.COMMAND_WORD + " " + BirthdaysCommand.ADDITIONAL_COMMAND_PARAMETER);
+        assertEquals(new BirthdaysCommand(true), command);
+    }
+
+    @Test
+    public void parseCommand_timeTableUnion() throws Exception {
+        TimetableUnionCommand command = (TimetableUnionCommand) parser
+                .parseCommand(TimetableUnionCommand.COMMAND_WORD + " Odd 1 2");
+        ArrayList<Index> indexes = new ArrayList<Index>();
+        indexes.add(INDEX_FIRST_PERSON);
+        indexes.add(INDEX_SECOND_PERSON);
+
+        assertEquals(new TimetableUnionCommand(indexes, "Odd"), command);
     }
     //@@author
 
@@ -151,8 +212,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_select() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
-                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " " + EVEN);
+        assertEquals(new SelectCommand(INDEX_FIRST_PERSON, EVEN), command);
     }
 
     @Test

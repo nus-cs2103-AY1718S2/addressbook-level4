@@ -25,9 +25,10 @@ import seedu.address.logic.commands.PasswordCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemovePasswordCommand;
 import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.TimeTableCommand;
+import seedu.address.logic.commands.TimetableUnionCommand;
 import seedu.address.logic.commands.UnaliasCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UploadCommand;
 import seedu.address.logic.commands.VacantCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.UniqueAliasList;
@@ -105,6 +106,9 @@ public class AddressBookParser {
         case ExportCommand.COMMAND_WORD:
             return new ExportCommandParser().parse(arguments);
 
+        case UploadCommand.COMMAND_WORD:
+            return new UploadCommandParser().parse(arguments);
+
         case AliasCommand.COMMAND_WORD:
             return new AliasCommandParser().parse(arguments);
 
@@ -123,11 +127,11 @@ public class AddressBookParser {
         case RemovePasswordCommand.COMMAND_WORD:
             return new RemovePasswordCommandParser().parse(arguments);
 
-        case TimeTableCommand.COMMAND_WORD:
-            return new TimeTableCommandParser().parse(arguments);
-
         case MapCommand.COMMAND_WORD:
             return new MapCommandParser().parse(arguments);
+
+        case TimetableUnionCommand.COMMAND_WORD:
+            return new TimetableUnionCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

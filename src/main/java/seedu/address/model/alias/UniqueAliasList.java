@@ -83,7 +83,7 @@ public class UniqueAliasList {
     }
 
     /**
-     * Converts HashMap into an observable list
+     * Converts HashMap of alias and command pairing into an observable list of Alias objects
      */
     public void convertToList() {
         for (String key : hashList.keySet()) {

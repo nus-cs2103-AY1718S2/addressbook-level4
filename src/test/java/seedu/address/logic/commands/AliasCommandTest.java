@@ -40,6 +40,9 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AliasBuilder;
 
 //@@author jingyinno
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for AliasCommand.
+ */
 public class AliasCommandTest {
 
     @Rule
@@ -136,9 +139,6 @@ public class AliasCommandTest {
     /**
      * A default model stub that have all of the methods failing.
      */
-    /**
-     * A default model stub that have all of the methods failing.
-     */
     private class ModelStub implements Model {
         @Override
         public void addPerson(Person person) throws DuplicatePersonException {
@@ -200,6 +200,11 @@ public class AliasCommandTest {
 
         @Override
         public void exportAddressBook(String filepath, Password password) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void uploadAddressBook(String filepath, Password password) {
             fail("This method should not be called.");
         }
 

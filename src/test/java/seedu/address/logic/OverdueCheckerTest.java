@@ -10,6 +10,7 @@ import java.util.function.Predicate;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import seedu.address.model.DeskBoard;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyDeskBoard;
 import seedu.address.model.activity.Activity;
@@ -62,6 +63,11 @@ public class OverdueCheckerTest {
 
         @Override
         public void addActivity(Activity activity) throws DuplicateActivityException {
+
+        }
+
+        @Override
+        public void addActivities(ReadOnlyDeskBoard deskBoard) {
 
         }
 

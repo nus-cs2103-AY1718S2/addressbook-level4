@@ -32,10 +32,10 @@ Responsibilities: Logic, Storage
 
 === Jason Leo
 image::JasonLeo.jpg[width="150", align="left"]
-{empty}[https://github.com/jas5469[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/jas5469[github]] [<<jasonleo#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: Logic, Model
 
 '''
 

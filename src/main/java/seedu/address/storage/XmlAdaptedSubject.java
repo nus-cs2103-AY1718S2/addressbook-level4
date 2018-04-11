@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.subject.Subject;
-
+//@@author TeyXinHui
 /**
  *
  */
@@ -59,15 +59,17 @@ public class XmlAdaptedSubject {
 
     @Override
     public boolean equals(Object other) {
-        if (other == this) {
+        if (other == null) {
+            return false;
+        }
+        if (this == other) { //same object
             return true;
         }
-
         if (!(other instanceof XmlAdaptedSubject)) {
             return false;
         }
-
-        return (subjectName.equals(((XmlAdaptedSubject) other).subjectName)
-                && subjectGrade.equals(((XmlAdaptedSubject) other).subjectGrade));
+        XmlAdaptedSubject object = (XmlAdaptedSubject) other;
+        return this.subjectName == object.subjectName && this.subjectGrade == object.subjectGrade;
     }
 }
+//@@author

@@ -1,9 +1,12 @@
 package seedu.address.model;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -23,11 +26,20 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
+    void deletePage(Person target);
+
     /** Deletes the given person. */
     void deletePerson(Person target) throws PersonNotFoundException;
 
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
+
+
+    void addPage(Person person) throws IOException;
+
+
+    /** Adds the given appointment */
+    void addAppointment(Appointment appointment) throws DuplicateAppointmentException;
 
     /** Sorts the person list by name in alphabetical order */
     void sortPersonList(String parameter);
@@ -44,24 +56,26 @@ public interface Model {
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
-
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    //@@author TeyXinHui
     /**
      * Removes a specific tag from everyone in the address book.
      * @param tag
      * @throws TagNotFoundException
      */
     void deleteTag(Tag tag) throws TagNotFoundException;
+    //@@author
 
+    //@@author chuakunhong
     /**
      * Replaces a specific tag for everyone in the address book.
      * @param tagSet
-     * @throws TagNotFoundException
      */
-    void replaceTag(List<Tag> tagSet) throws TagNotFoundException;
+    void replaceTag(List<Tag> tagSet);
+    //@@author
 }

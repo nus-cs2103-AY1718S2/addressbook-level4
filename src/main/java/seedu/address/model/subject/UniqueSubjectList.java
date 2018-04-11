@@ -11,7 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
-
+//@@author TeyXinHui
 /**
  * A list of subjects that enforces no nulls and uniqueness between its elements.
  *
@@ -92,20 +92,6 @@ public class UniqueSubjectList implements Iterable<Subject> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
-    /**
-     * Remove a specific Subject from the list.
-     * @param toRemove
-     */
-    public void remove(Subject toRemove) {
-        requireNonNull(toRemove);
-        if (!contains(toRemove)) {
-            //throw new exception?
-        }
-        internalList.remove(toRemove);
-
-        assert CollectionUtil.elementsAreUnique(internalList);
-    }
-
     @Override
     public Iterator<Subject> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);
@@ -154,3 +140,4 @@ public class UniqueSubjectList implements Iterable<Subject> {
     }
 
 }
+//@@author

@@ -11,12 +11,12 @@ import seedu.address.model.person.Person;
 
 /**
  * Selects a person identified using it's last displayed index from the address book.
+ * Calls L1R5 function in Model to calculate L1R5 score and outputs L1R5 score of selected person.
  */
 public class SelectCommand extends Command {
 
     public static final String COMMAND_WORD = "select";
     public static final String COMMAND_ALIAS = "s";
-
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the person identified by the index number used in the last person listing.\n"
@@ -25,7 +25,6 @@ public class SelectCommand extends Command {
             + "Example: " + COMMAND_ALIAS + " 1";
 
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected Person: %1$s";
-
     private final Index targetIndex;
 
     public SelectCommand(Index targetIndex) {
@@ -41,8 +40,10 @@ public class SelectCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
+        Person selectedPerson = lastShownList.get(targetIndex.getZeroBased());
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
-        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+
+        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, selectedPerson.getName()));
 
     }
 

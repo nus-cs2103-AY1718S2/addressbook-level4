@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
@@ -27,6 +28,8 @@ public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_NRIC = "+651234";
     private static final String INVALID_TAG = "#friend";
+    private static final Collection<String> INVALID_SUBJECT_NAME_SET = Arrays.asList("efwjblkjnwef A1");
+    private static final Collection<String> INVALID_SUBJECT_GRADE_SET = Arrays.asList("English B2");
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_NRIC = "S1234561Z";
@@ -169,8 +172,34 @@ public class ParserUtilTest {
     @Test
     public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
         Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
-        Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
+        Set<Tag> expectedTagSet = new HashSet<>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
     }
+
+    //@@author TeyXinHui
+    @Test
+    public void parseSubject_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseSubject(null, null);
+    }
+
+    @Test
+    public void parseSubject_invalidSubjectName_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseSubject(INVALID_SUBJECT_NAME_SET, null);
+    }
+
+    @Test
+    public void parseSubject_invalidSubjectGrade_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseSubject(INVALID_SUBJECT_GRADE_SET, null);
+    }
+
+    @Test
+    public void parseSubjects_emptyCollection_returnsEmptySet() throws Exception {
+        assertTrue(ParserUtil.parseSubjects(Collections.emptyList()).isEmpty());
+    }
+    //@@author
+
 }

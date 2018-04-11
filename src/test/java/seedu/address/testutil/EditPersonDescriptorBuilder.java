@@ -4,10 +4,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditPersonDescriptor;
+import seedu.address.model.person.Cca;
+import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Remark;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 
@@ -35,6 +38,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setNric(person.getNric());
         descriptor.setTags(person.getTags());
         descriptor.setSubjects(person.getSubjects());
+        descriptor.setRemark(person.getRemark());
     }
 
     /**
@@ -48,7 +52,7 @@ public class EditPersonDescriptorBuilder {
     /**
      * Sets the {@code Nric} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withPhone(String nric) {
+    public EditPersonDescriptorBuilder withNric(String nric) {
         descriptor.setNric(new Nric(nric));
         return this;
     }
@@ -70,6 +74,30 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder withSubjects(String... subjects) {
         Set<Subject> subjectSet = Stream.of(subjects).map(Subject::new).collect(Collectors.toSet());
         descriptor.setSubjects(subjectSet);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Remark} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withRemark(String remark) {
+        descriptor.setRemark(new Remark(remark));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Remark} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withCca(String cca) {
+        descriptor.setCca(new Cca(cca));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Remark} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withInjuriesHistory(String injuriesHistory) {
+        descriptor.setInjuriesHistory(new InjuriesHistory(injuriesHistory));
         return this;
     }
 

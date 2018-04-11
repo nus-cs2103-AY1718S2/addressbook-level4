@@ -15,7 +15,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
@@ -86,8 +86,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (subjects.isEmpty()) {
             return Optional.empty();
         }
-        Collection<String> subjectSet = subjects.size() == 1 && subjects.contains("") ? Collections.emptySet()
-                : subjects;
+        Collection<String> subjectSet = subjects.size() == 1 && subjects.contains("")
+                ? Collections.emptySet() : subjects;
         return Optional.of(ParserUtil.parseSubjects(subjectSet));
     }
 }

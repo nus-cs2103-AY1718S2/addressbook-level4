@@ -3,7 +3,7 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-EduBuddy was developed by https://github.com/CS2103JAN2018-T09-B1/main[T09-B2] team. +
+EduBuddy was developed by https://github.com/CS2103JAN2018-T09-B1/main[T09-B1] team. +
 
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 

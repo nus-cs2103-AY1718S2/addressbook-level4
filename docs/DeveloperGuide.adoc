@@ -12,13 +12,19 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team T09-B1`      Since: `Mar 2018`      Licence: `MIT`
+By: `CS2103JAN2018-T09-B1`      Since: `Mar 2018`      Licence: `MIT`
 
+== Introduction
+Welcome to _EduBuddy_! This application is based on a Command Line Interface(CLI),
+and is designed for secondary school teachers to manage student profiles in
+a simple and efficient manner.
 
-
-
+This developer guide will help to provide you with a detailed walk-through of _EduBuddy_,
+from the application set up procedure, to the explanation of the features and
+troubleshooting methods.
 
 == Setting up
+This section helps to guide you through the necessary steps to launch our application.
 
 === Prerequisites
 
@@ -95,7 +101,11 @@ When you are ready to start coding,
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
 
+*_return to <<toc,Table of Contents>>_*
+
 == Design
+This section illustrates the overall design of our application and provides
+the details of its individual components.
 
 [[Design-Architecture]]
 === Architecture
@@ -230,6 +240,8 @@ The `Storage` component,
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
+*_return to <<toc,Table of Contents>>_*
+
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
@@ -362,12 +374,228 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+*_return to <<toc,Table of Contents>>_*
+
+// tag::Sorting[]
+=== Sort feature
+
+==== Current Implementation
+
+The sorting feature allows the user to sort the list of students according to certain
+parameters like name and tag. After the sorting process has completed, the user will be
+presented with a read only view of the sorted list on the `UI`, and the state of the
+list will not be modified.
+
+The figure below shows the Sequence Diagram for the interactions within the `Logic`
+component when "sort name" is typed into the `CommandBox` by the user.
+
+image::SortCommandSequenceDiagram.png[width="650"]
+
+. `Logic` uses `AddressBookParser` class to parse the user command,
+. A `SortCommand` object is created which is then executed by the `LogicManager`.
+. The command executes and calls the `sortPersonList(parameter)` method, which then affects
+  the `Model`.
+. After the sorting process has been completed, the result is encapsulated as a
+  `CommandResult` object, which is then passed back to the `Ui` as a message shown
+  to the user.
+
+Below is an example of how the list looks like before and after the command "sort name"
+is executed.
+
+image::SortCommandByName.png[width="650"]
+
+==== Design Considerations
+
+===== Aspect: How the list appears after sorting is done and the app is restarted
+* ** Alternative 1 (current choice): ** List remains in its initial state after each
+                                        restart of the app
+** Pros: Some users might prefer the default list that was created by themselves e.g. the need
+         to track which student was added last.
+** Cons: It will be a hassle to sort the list every time the app starts up if there
+         are not many changes to the list.
+* ** Alternative 2: ** List is in the sorted form after the app is restarted every time
+** Pros: Reduces the time taken to sort the list for each start up of the app.
+** Cons: If the default list is required, `SortCommand` will have to be implemented
+         as an `UndoableCommand` as well.
+// end::Sorting[]
+
+*_return to <<toc,Table of Contents>>_*
+
+// tag::TagReplace[]
+=== TagReplace feature
+
+==== Current Implementation
+The tag replace is a command that replaces the target tag with the tag that we want.
+The tags would be passed in via the argument multimap which would extract the tags with t/ prefix.
+It would then be separated into two different tags, tag to be replaced and the tag to be placed.
+Then the Addressbook would proceed to look for the persons with the unwanted tag to remove the unwanted
+tag and to add the new tag to the person.
+
+The figure below shows the Sequence Diagram for the interactions within the `Logic`
+component when "tagreplace t/TAGNAME t/TAGNAME" is typed into the `CommandBox` by the user.
+
+image::TagReplaceCommandSequenceDiagram.png[width="650"]
+
+.  `Logic` uses the `AddressBookParser` class to parse the  command.
+.  This results in a `TagReplaceCommand` object which is executed by the `LogicManager`.
+.  The command execution calls the `replaceTag` method which then affects the `Model`.
+.  The tag is then replaced and the result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+
+Below is an example of how the list looks like before and after the command "tagreplace t/3G t/4G"
+is executed.
+
+image::TagReplaceCommand.png[width="650"]
+
+==== Design Considerations.
+===== Aspect: Data structure to support the tag replace command
+* ** Alternative 1: ** Reuse the set that exist in the Addressbook.
+** Pros: Need not introduce a new data structure to store the tags that are passed in.
+** Cons: A set arranges its elements in alphabetical order. This disrupts the order in which the user has entered,
+         and it would cause the wanted tag to be removed instead of the unwanted one.
+
+// end::TagReplace[]
+
+*_return to <<toc,Table of Contents>>_*
+
+// tag::subject[]
+=== Subject streaming calculation feature
+==== Current Implementation
+The subject streaming calculation features will be supported by calculation algorithms, `calculateL1R5` and `calculateL1B4` , which will be located in `Person.java`. The calculation algorithm will be called by the `SelectCommand`.
+It will help to analyse the subjects that are assigned to the student, and determine which combination of subjects will produce the lowest `L1R5` or `L1B4` score. The score will then be projected in the `Command Box`.
+
+.Sequence Diagram of implementation of Subject streaming calculation
+image::EditSelectCommandMarks.png[width="800"]
+
+. When the `SelectCommand` is executing, it retrieves the `Student` object that the user was referencing to and calls the `calculateL1R5/L1B4` method.
+. In the calculation method, it will store the subject list of the student in `List<Subject> subjects` and loop through the list according to the `L1` subject category.
+. The relevant subjects of the subject category will be saved in a temporary `List<Subject> subjectsToCheck` and the list will be passed into a `checkLowest()` method.
+. In `checkLowest()`, the subject grades will be compared and the best subject will be removed from the list `subjects`.
+. The best grade will be returned back to `calculateL1R5/L1B4` and stored in a temporary `int` variable, `score`. The function will then move on to check the other subject categories.
+. After the calculation, `score` will be returned to the `SelectCommand` which will project the result in the `Command Box`.
+
+[NOTE]
+The subjects and their respective grades can be assigned to the students by the `AddCommand`, with a subject prefix `sub/` followed by the `Subject Name` and `Subject Grade`.
+As the students are required to take at least 6 subjects, the subjects will be stored in as a parameter of each individual student as a `List<Subject>`.
+
+===== Aspect: Implementation of command to call `calculateL1R5` and `calculateL1B4`
+
+* **Alternative 1:** Add new command classes `L1R5Command` and `L1B4Command`
+** Pros: It would be easy to implement as there is no need to worry about affecting other classes.
+** Cons: More commands for the user to remember.
+* **Alternative 2 (current choice):** Just override `execute()` of `SelectCommand`
+** Pros: Easier to update the `Display Panel` later on when the user wants to access the `Student's` details.
+** Cons: Need to update the test cases accordingly due to the change in the `execute()` function.
+
+===== Aspect: Implementation of calculation function `L1R5` and `L1B4`
+
+* **Alternative 1 (current choice):** Add the calculation function in `Person.java`
+** Pros: Easier to understand as the function needs to access the subject list of the student for calculation.
+** Cons:
+* **Alternative 2 :** Implement the calculation function in `execute()` of `SelectCommand`
+** Pros: Reduce the amount of coupling between `SelectCommand` and `Person`.
+** Cons: Makes the `SelectCommand` more complicated as it is performing more than it should.
+// end::subject[]
+
+*_return to <<toc,Table of Contents>>_*
+
+// tag::masstagremoval[]
+=== Mass Tag Removal feature
+==== Current Implementation
+
+The Mass Tag Removal feature is supported through the suggested Tag Removal feature for the Model Component in <<GetStartedProgramming-EachComponent>>.
+The command `TagDeleteCommand` is implemented to call the `deleteTag()` function in the `Model` interface.
+The `deleteTag()` function will loop through the students in the `AddressBook` and will remove the specified Tag from every student that has the specified Tag and the students' `Tag List` will be updated.
+
+A `TagDeleteCommand` is where the user inputs `tagdelete [TAG_NAME]` or `td [TAG_NAME]` in the `Command Box`. When the user input fulfils the criteria of the expected input format, the command will execute.
+The `deleteTag()` function will be called and loops through the students in the `AddressBook`.
+
+* If the specified tag is not found tagged to any student, a `TagNotFoundException` will be thrown and a error message will be returned to the user.
+* Else, the `Tag List` of each student will be loaded and stored in a temporary `List` variable and the specified tag will be removed from it.
+Then a new student object with the updated `Tag List` will be replace the original student object. Thus the `AddressBook` will eventually have the updated list of students where the specified tag have been removed.
+
+. Logic uses the AddressBookParser class to parse the command.
+. This results in a TagDeleteCommand object which is executed by the LogicManager.
+. The command execution calls the deleteTag method which then affects the Model.
+. The tag is then deleted and the result of the command execution is encapsulated as a CommandResult object which is passed back to the Ui.
+The user will see a message on the `Command Box` in the format: `Deleted Tag: [TAG_NAME]` and the `Tag` will be removed.
+
+.Sequence Diagram of TagDeleteCommand if the specified tag exists.
+image::TagDeleteSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `TagDeleteCommand`
+
+* **Alternative 1:** Create a new method in `TagDeleteCommand` to delete tag
+** Pros: Easier to understand the structure of `TagDeleteCommand`.
+** Cons: The `deleteTag()` function that was implemented would be redundant.
+* **Alternative 2 (current choice):** Call the `deleteTag()` function
+** Pros: Implementation of the command would be easier as the main algorithm to delete the tag is within the code.
+** Cons: Increases coupling between `Model` and `TagDeleteCommand`.
+
+// end::masstagremoval[]
+
+*_return to <<toc,Table of Contents>>_*
+
 // tag::dataencryption[]
+
 === [Proposed] Data Encryption
 
 _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
+
+// tag::browserpanel[]
+=== Browser Panel Revamp
+
+.First Half of Browser Panel
+image::browser1.png[width="600"]
+.Second Half of Browser Panel
+image::browser2.png[width="600"]
+
+We will use a html page with w3.css framework support to implement the new Browser Panel.
+The browser panel can be controlled from the CLI interface, which manipulates the data in the browser panel.
+
+The browser will be invoked by the selection of a student from ui/BrowserPanel. loadPersonPage() invokes the html file
+of the student selected stored in resources/StudentPage.
+
+*To Be implemented*
+Creation of a html StudentPage file:
+
+After add command is called successfully, a template file from StudentPage will be duplicated as a backup,
+and renamed as the name that is called from the add command.
+
+*To Be implemented*
+Editing StudentPage file:
+After edit command is called, list of new string will be stored into a javascript file and parsed into the
+html file called by the function.
+
+// end::browserpanel[]
+
+*_return to <<toc,Table of Contents>>_*
+
+// tag::Remark Feature[]
+=== Remark Feature
+==== Current Implementation
+
+A new remark component is added to the person model.
+
+image::ModelClassDiagramWithRemark.png[width="800"]
+
+This remark feature allows the user to add remarks to the student profile of the specified student.
+
+image::RemarkClassSequenceDiagram.png[width="800"]
+
+Figure 15. Sequence Diagram of AddRemarkCommand
+
+==== Design Considerations
+===== Aspect: Implementation of the `Remark` feature
+* ** Alternative 1:** Using just one method to add and delete the remark.
+** Pros: Need not create 2 command just to add and delete the remarks.
+** Cons: The remark attached to the student in our student profile would not be able to exceed one line.
+
+*_return to <<toc,Table of Contents>>_*
+// end::Remark Feature[]
 
 === Logging
 
@@ -388,6 +616,8 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+*_return to <<toc,Table of Contents>>_*
 
 == Documentation
 
@@ -419,8 +649,12 @@ Here are the steps to convert the project documentation files to PDF format.
 .Saving documentation as PDF files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
 
+*_return to <<toc,Table of Contents>>_*
+
 [[Testing]]
 == Testing
+This section explains the various testing methods available in our application
+and also provides some troubleshooting techniques.
 
 === Running Tests
 
@@ -469,6 +703,8 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
+*_return to <<toc,Table of Contents>>_*
+
 == Dev Ops
 
 === Build Automation
@@ -500,6 +736,8 @@ Here are the steps to create a new release.
 A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
+
+*_return to <<toc,Table of Contents>>_*
 
 [[GetStartedProgramming]]
 [appendix]
@@ -654,6 +892,8 @@ Do take a look at <<Design-Storage>> before attempting to modify the `Storage` c
 ** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
 ****
 
+*_return to <<toc,Table of Contents>>_*
+
 [[GetStartedProgramming-RemarkCommand]]
 === Creating a new command: `remark`
 
@@ -781,15 +1021,17 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
+*_return to <<toc,Table of Contents>>_*
+
 [appendix]
 == Product Scope
 
 *Target user profile*:
 
 * is a secondary school teacher
-* needs to know more about students they teach
+* needs to know more about the students that they have taught
 * has a need to track results
-* has a need to manage a significant number of contacts
+* has a need to manage a significant number of students
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
@@ -797,7 +1039,9 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Value proposition*: manage contacts faster than a typical mouse/GUI driven app
 
+*_return to <<toc,Table of Contents>>_*
 
+[appendix]
 == Feature Contribution
 
 [width="85%",cols="22%,<23%,<40%",options="header",]
@@ -805,17 +1049,17 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 |Name | Major |Minor
 |Johnny  |Display Panel: Add display panel functionalities to UI window | Data Integration: Integrate data input from user into display window
 
-|Xin Hui |Subject Window: Add L1R5 calculation support into subject inputs | Subject Class Database: Create subject class and integrate input into command.
+|Xin Hui |Academic Section: Help teachers to view and manage students' academic information | Subject Class Database: Create subject class and integrate input into command. Add L1R5 calculation support into subject inputs.
 
-|Kun Hong |Administrative Information: Add support for automatic register number calculation and class allocation | Tag Support: Enhance tag functionalities in EduBuddy
+|Kun Hong |Administrative Information: Add student administrative information into EduBuddy | Tag Support: Enhance tag functionalities in EduBuddy
 
-|Keng Seng |Advanced Sorting Functionalities: Add advanced sorting functionalities into EduBuddy | Command Support: Adding commands to EduBuddy to enhance user experience
+
+
+|Keng Seng |Calendar: Add calendar features which supports different administrative tasks | Sorting feature: Add sorting functionalities based on various parameters
 
 |=======================================================================
 
-
-
-
+*_return to <<toc,Table of Contents>>_*
 
 [appendix]
 == User Stories
@@ -831,7 +1075,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |teacher |update students' classes |know which classes they are in easily
 
+|`* * *` |teacher |update students' academic results |view and obtain students' streaming score (eg.L1R5)
+
 |`* * *` |teacher |access student's academic and non-academic achievements |stream the students properly (e.g. Normal Academic, Normal Technical, Express)
+
+
+|`* * *` |teacher |access student profiles easily  | have first hand information on all my students without going through a lot of documentation
 
 |`* * *` |teacher |edit remarks of each individual student |update the students' individual needs that occur during class
 
@@ -846,12 +1095,23 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |teacher |look up on student's identity |recognize who the student is
 
 |`*` |teacher |know which subjects that I have taught them before |customize my teaching methods for different students
+
+|`*` |teacher |can track the student's progress in the CCA |decide whether to involve the student more
+
+|`*` |teacher |key in the levels attained by the students in the various domains in L.E.A.P.S system
+|calculate the Co-Curricular Attainment achieved by the student.
+
+|`*` |teacher |view the student's injuries history |to know the need of my students.
+
+|`*` |teacher |know which subjects that I have taught them before |customize my teaching methods for different students
 |=======================================================================
+
+*_return to <<toc,Table of Contents>>_*
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `EduBuddy` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -971,24 +1231,128 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Update students' academic results
+
+*Main Success Scenario*
+
+1.  User requests to list or find persons
+2.  AddressBook shows a list of persons
+3.  User requests to update students' academic results
+4.  AddressBook shows updated details of academic results
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Sort students by the students' academic streaming results
+
+*Main Success Scenario*
+
+1.  User requests to list or find persons
+2.  AddressBook shows a list of persons
+3.  User requests to sort students by students' academic results
+4.  AddressBook shows sorted list of students
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. Students do not have subjects assigned to them.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+*_return to <<toc,Table of Contents>>_*
+
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 450,000 students
+.  Should be able to hold up to 1,200 students
  without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-.
-_{More to be added}_
+
+*_return to <<toc,Table of Contents>>_*
 
 [appendix]
 == Glossary
+
+[[Grade]] Grade::
+The grading of the subjects by the level of competence the students show during the "O-Level examination".
+The level of achievement in each subject is indicated by the grade obtained, with A1 being the highest achievable grade and F9 the lowest:
+[width="30%",cols="22%,<23%",options="header",]
+|=======================================================================
+|Grade|Percentage of Competency
+|A1| 75% - 100%
+|A2| 70% - 74%
+|B3| 65% - 69%
+|B4| 60% - 64%
+|C5| 55% - 59%
+|C6| 50% - 54%
+|D7| 45% - 49%
+|E8| 40% - 44%
+|F9| 0% - 39%
+|=======================================================================
+[[L1B4]] L1B4::
+A grading system for Secondary School students taking "O-Level Examination" at the end of their four years of studies in Secondary School.
+The score obtained from the grading system will be used to determine the eligibility of the students to enter the next level of education, Polytechnic.
+`L1` represents the First language subject and `B4` represents 2 relevant subjects, according to the polytechnic course applied, and 2 other best subjects.
+The score will be calculated by considering the subjects' grades. Each subject can only be considered once.
+
+[[L1R5]] L1R5::
+A grading system for Secondary School students taking "O-Level Examination" at the end of their four years of studies in Secondary School.
+The score obtained from the grading system will be used to determine the eligibility of the students to enter the next level of education, Junior College.
+`L1` represents the First language subject and `R5` represents 5 relevant subjects. The score will be calculated by considering the subjects' grades. Each subject can only be considered once.
 
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[Subject]] Subject::
+These are the following subjects that are examinable in O-level Examinations in Singapore (as of Year 2018).
+[NOTE]
+The subjects in the brackets are not to be used as input. The subjects not in brackets are preferred for better efficiency in typing.
+[width="85%",cols="22%,<23%",options="header",]
+|=======================================================================
+|Subject Category|Subjects
+|L1| English, HTamil(Higher Tamil), HChi(Higher Chinese), HMalay(Higher Malay)
+|R1| Hist(History), Geog(Geography), ComHum(Combined Humanities), ELit(English Literature), CLit(Chinese Literature),
+     MLit(Malay Literature), TLit(Tamil Literature), HArt(Higher Art), HMusic(Higher Music), BIndo(Bahasa Indonesia),
+     CSP(Chinese Special Programme), MSP(Malay Special Programme)
+|R2| EMath(Elementary Mathematics), AMath(Additional Mathematics), Phy(Physics), Chem(Chemistry), Bio(Biology), Sci(Combined Science)
+|R3| Consist of both R1 and R2 subjects
+|R4| Consist of L1, R1 and R2 subjects. French, German, Spanish, Hindi, Urdu, Gujarati, Panjabi, Bengali, Burmese,
+     Thai, Jap(Japanese), Tamil, Chinese, Malay, DnT(Design and Technology), Comp(Computing), FnN(Food and Nutrition), PoA(Principles of Accounting),
+     Econs(Economics), Drama, PE(Physical Education), Biz(Business Studies), Biotech(Biotechnology), Design(Design Studies)
+|R5| Consist of R4 subjects
+|=======================================================================
+
+* The following subjects can be assigned to students but are not considered as O-Level subjects: ChiB (Chinese B), MalayB (Malay B), TamilB(Tamil B).
+
+*_return to <<toc,Table of Contents>>_*
 
 [appendix]
 == Product Survey
@@ -1006,6 +1370,8 @@ Cons:
 
 * ...
 * ...
+
+*_return to <<toc,Table of Contents>>_*
 
 [appendix]
 == Instructions for Manual Testing
@@ -1029,8 +1395,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
-
 === Deleting a person
 
 . Deleting a person while all persons are listed
@@ -1043,12 +1407,10 @@ _{ more test cases ... }_
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
-
 === Saving data
 
 . Dealing with missing/corrupted data files
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
-_{ more test cases ... }_
+*_return to <<toc,Table of Contents>>_*

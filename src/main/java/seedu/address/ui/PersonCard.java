@@ -40,6 +40,8 @@ public class PersonCard extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Label remark;
 
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
@@ -48,8 +50,10 @@ public class PersonCard extends UiPart<Region> {
         name.setText(person.getName().fullName);
         nric.setText(person.getNric().value);
         setTags(person);
+        remark.setText(person.getRemark().value);
     }
 
+    //@@author kengsengg
     /**
      * Generates different colors for different tag labels
      *
@@ -71,6 +75,7 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

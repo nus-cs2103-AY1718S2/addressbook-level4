@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -9,12 +10,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Semaphore;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.notification.exceptions.NotificationNotFoundException;
@@ -39,6 +40,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private LinkedList<Notification> notifications;
     private int nextId;
     private String password;
+    private Semaphore semaphore;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -54,6 +56,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         notifications = new LinkedList<>();
         nextId = 0;
         password = "admin";
+        semaphore = new Semaphore(1);
     }
 
     public AddressBook() {}
@@ -197,6 +200,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removePerson(Person key) throws PersonNotFoundException {
+        removeNotificationsWithOwnerId(key.getId());
         if (persons.remove(key)) {
             return true;
         } else {
@@ -221,28 +225,58 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Adds a notification to the address book.
      */
     public void addNotification(Notification notification) throws DuplicateTimetableEntryException {
+        try {
+            semaphore.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (notifications.contains(notification)) {
             throw new DuplicateTimetableEntryException();
         }
         notifications.add(notification);
+        semaphore.release();
     }
 
     /**
      * Removes a timetable entry from the address book.
      */
-    public void deleteNotification(String notificationId) throws NotificationNotFoundException, InterruptedException {
+    public void deleteNotification(String notificationId) throws NotificationNotFoundException {
         boolean found = false;
-        Iterator<Notification> iterator = notifications.iterator();
-        while (iterator.hasNext()) {
-            Notification t = iterator.next();
-            if (t != null && t.getId() != null && t.getId().equals(notificationId)) {
-                notifications.remove(t);
-                System.out.println("Deleted Successfully");
+        LinkedList<Notification> toDelete = new LinkedList<>();
+        for (Notification n: notifications) {
+            if (n.getId().equals(notificationId)) {
+                toDelete.add(n);
                 found = true;
             }
         }
-        if (!found) {
+        if (found) {
+            for (Notification n: toDelete) {
+                notifications.remove(n);
+            }
+        } else {
             throw new NotificationNotFoundException();
+        }
+    }
+
+    /**
+     * Removes all notifications associated with a person id.
+     */
+    private void removeNotificationsWithOwnerId(Integer id) {
+        boolean deletedSuccessfully = false;
+        while (!deletedSuccessfully) {
+            try {
+                for (Notification n : notifications) {
+                    if (Integer.parseInt(n.getOwnerId()) == id)
+                        notifications.remove(n);
+                }
+                deletedSuccessfully = true;
+            } catch (ConcurrentModificationException e) {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+            }
         }
     }
     //@@author

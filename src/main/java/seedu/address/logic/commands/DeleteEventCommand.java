@@ -82,7 +82,7 @@ public class DeleteEventCommand extends Command {
         if (eventId != null) {
             try {
                 service.events().delete(calendarId, eventId).execute();
-                EventsCenter.getInstance().post(new RequestToDeleteNotificationEvent(eventId));
+                EventsCenter.getInstance().post(new RequestToDeleteNotificationEvent(eventId, false));
             } catch (IOException e) {
                 e.printStackTrace();
             }

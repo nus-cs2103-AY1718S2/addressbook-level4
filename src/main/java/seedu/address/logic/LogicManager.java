@@ -157,7 +157,7 @@ public class LogicManager extends ComponentManager implements Logic {
                     raise(new ShowNotificationEvent(ownerName, notification));
                 } catch (NullPointerException e) {
                     logger.info("Corresponding person is deleted. Ignoring this notification");
-                    raise(new RequestToDeleteNotificationEvent(notification.getId()));
+                    raise(new RequestToDeleteNotificationEvent(notification.getId(), true));
                 }
             }
         };

@@ -38,7 +38,7 @@ public interface Model {
 
     //@@author IzHoBX
     /** Deletes a timetable entry given its id. */
-    void deleteNotification(String id) throws NotificationNotFoundException;
+    void deleteNotification(String id, boolean deleteFromAddressBookOnly) throws NotificationNotFoundException;
 
     /** Adds the given person */
     void addNotification(Notification e) throws DuplicateTimetableEntryException;

@@ -74,34 +74,35 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
+        int targetId = target.getId();
         addressBook.removePerson(target);
+        notificationCenter.removeNotificationForPerson(targetId);
         indicateAddressBookChanged();
     }
 
     //@@author IzHoBX
     @Override
-    public synchronized void deleteNotification(String id) throws NotificationNotFoundException {
+    public synchronized void deleteNotification(String id, boolean deleteFromAddressBookOnly) throws
+            NotificationNotFoundException {
         try {
             addressBook.deleteNotification(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        try {
-            notificationCenter.deleteNotification(id);
-        } catch (NullPointerException e) {
-            logger.info("NullPointerException encountered when deleting notification for deleted person");
+        if (!deleteFromAddressBookOnly) {
+            try {
+                notificationCenter.deleteNotification(id);
+            } catch (NullPointerException e) {
+                logger.info("NullPointerException encountered when deleting notification for deleted person");
+            }
         }
         indicateAddressBookChanged();
     }
 
     @Override
     public NotificationCard deleteNotificationByIndex(Index targetIndex) throws NotificationNotFoundException {
-        try {
-            addressBook.deleteNotification(notificationCenter.getIdByIndex(targetIndex));
-            indicateAddressBookChanged();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        addressBook.deleteNotification(notificationCenter.getIdByIndex(targetIndex));
+        indicateAddressBookChanged();
         NotificationCard toDelete = notificationCenter.deleteNotificationByIndex(targetIndex);
         return toDelete;
     }
@@ -214,7 +215,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Subscribe
     private void handleRequestToDeleteNotificationEvent(RequestToDeleteNotificationEvent event) {
         try {
-            deleteNotification(event.id);
+            deleteNotification(event.id, event.deleteFromAddressbookOnly);
         } catch (NotificationNotFoundException e) {
             e.printStackTrace();
         }

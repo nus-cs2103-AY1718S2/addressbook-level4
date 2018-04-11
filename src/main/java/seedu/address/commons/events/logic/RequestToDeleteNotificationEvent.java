@@ -8,9 +8,11 @@ import seedu.address.commons.events.BaseEvent;
 public class RequestToDeleteNotificationEvent extends BaseEvent {
 
     public final String id;
+    public final boolean deleteFromAddressbookOnly;
 
-    public RequestToDeleteNotificationEvent(String id) {
+    public RequestToDeleteNotificationEvent(String id, boolean deleteFromAddressbookOnly) {
         this.id = id;
+        this.deleteFromAddressbookOnly = deleteFromAddressbookOnly;
     }
 
     @Override

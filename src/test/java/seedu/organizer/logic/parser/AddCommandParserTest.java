@@ -29,19 +29,45 @@ import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.organizer.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.organizer.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.organizer.logic.commands.AddCommand;
+import seedu.organizer.model.Model;
+import seedu.organizer.model.ModelManager;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Deadline;
 import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Priority;
 import seedu.organizer.model.task.Task;
+import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
+import seedu.organizer.model.user.exceptions.DuplicateUserException;
+import seedu.organizer.model.user.exceptions.UserNotFoundException;
+import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 import seedu.organizer.testutil.TaskBuilder;
 
 public class AddCommandParserTest {
+
+    private Model model = new ModelManager();
     private AddCommandParser parser = new AddCommandParser();
+
+    @Before
+    public void setUp() {
+        try {
+            model.addUser(ADMIN_USER);
+            model.loginUser(ADMIN_USER);
+        } catch (DuplicateUserException du) {
+            throw new AssertionError("There should not be any duplicate users");
+        } catch (UserNotFoundException unf) {
+            throw new AssertionError("Admin user should exist");
+        } catch (CurrentlyLoggedInException cli) {
+            throw new AssertionError("No user should be currently logged in");
+        } catch (UserPasswordWrongException upw) {
+            throw new AssertionError("Admin user password should not be wrong");
+        }
+    }
 
     @Test
     public void parse_allFieldsPresent_success() {

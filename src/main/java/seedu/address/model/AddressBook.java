@@ -197,7 +197,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         personSubjects.forEach(subject -> correctSubjectReferences.add(masterSubjectObjects.get(subject)));
         return new Person(
                 person.getName(), person.getNric(), correctTagReferences, correctSubjectReferences,
-                Collections.emptySet(), person.getRemark(), person.getCca(), person.getInjuriesHistory(), person.getNameOfKin());
+                Collections.emptySet(), person.getRemark(), person.getCca(), person.getInjuriesHistory(),
+                person.getNameOfKin());
     }
 
     /**

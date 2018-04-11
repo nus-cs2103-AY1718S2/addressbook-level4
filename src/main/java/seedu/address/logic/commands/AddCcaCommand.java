@@ -23,7 +23,6 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.score.Score;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 

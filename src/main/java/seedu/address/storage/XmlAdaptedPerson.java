@@ -59,7 +59,8 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String nric, List<XmlAdaptedTag> tagged, List<XmlAdaptedSubject> subjects,
-                            List<XmlAdaptedScore> scores, String remark, String cca, String injuriesHistory, String nameOfKin) {
+                            List<XmlAdaptedScore> scores, String remark, String cca, String injuriesHistory,
+                            String nameOfKin) {
         this.name = name;
         this.nric = nric;
         this.remark = remark;

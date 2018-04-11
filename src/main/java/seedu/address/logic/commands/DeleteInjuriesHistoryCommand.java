@@ -120,8 +120,8 @@ public class DeleteInjuriesHistoryCommand extends UndoableCommand {
         }
         if (injuriesHistoryIsFound) {
             InjuriesHistory updatedInjuriesHistory = parseInjuriesHistory(updateInjuriesHistory);
-            return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, Collections.emptySet(), updatedRemark, updatedCca,
-                    updatedInjuriesHistory, updatedNameOfKin);
+            return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, Collections.emptySet(),
+                    updatedRemark, updatedCca, updatedInjuriesHistory, updatedNameOfKin);
         } else {
             throw new CommandException("The target injuriesHistory cannot be missing.");
         }

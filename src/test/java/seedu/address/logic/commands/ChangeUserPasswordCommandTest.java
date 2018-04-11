@@ -176,6 +176,12 @@ public class ChangeUserPasswordCommandTest {
             fail("This method should not be called.");
             return null;
         };
+
+        @Override
+        public void addLogToPerson(Person target, Person editedPersonWithNewLog)
+                throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
     }
 
 

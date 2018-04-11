@@ -116,6 +116,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the given person {@code target} in the list with {@code editedPersonWithNewLog}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPersonWithNewLog}.
+     *
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     */
+    public void addLogToPerson(Person target, Person editedPersonWithNewLog)
+            throws PersonNotFoundException {
+        requireNonNull(editedPersonWithNewLog);
+        persons.addLogToPerson(target, editedPersonWithNewLog);
+    }
+
+    /**
      *  Updates the master tag list to include tags in {@code person} that are not in the list.
      *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
      *  list.
@@ -134,7 +146,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         Person correctPerson = new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences,
+                person.getSessionLogs());
         return correctPerson;
     }
 

@@ -120,6 +120,14 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author kaisertanqr
 
+    @Override
+    public void addLogToPerson(Person target, Person editedPersonWithNewLog)
+            throws PersonNotFoundException {
+        requireAllNonNull(target, editedPersonWithNewLog);
+        addressBook.addLogToPerson(target, editedPersonWithNewLog);
+        indicateAddressBookChanged();
+    }
+
     /**
      * Reloads and updates the addressBook and its storage path using the {@code username} provided.
      * @param username

@@ -147,6 +147,7 @@ public class ParserUtil {
         return phone.isPresent() ? Optional.of(parsePhone(phone.get())) : Optional.empty();
     }
 
+
     /**
      * Parses a {@code String address} into an {@code Address}.
      * Leading and trailing whitespaces will be trimmed.
@@ -240,6 +241,8 @@ public class ParserUtil {
         return trimmedFeature;
     }
 
+    //@@author kaisertanqr
+
     /**
      * Parses a {@code String username} into an {@code Username}.
      * Leading and trailing whitespaces will be trimmed.
@@ -261,7 +264,7 @@ public class ParserUtil {
      */
     public static Optional<Username> parseUsername(Optional<String> username) throws IllegalValueException {
         requireNonNull(username);
-        return username.isPresent() ? Optional.of(parseUsername(username.get())) : Optional.empty();
+        return username.isPresent() ? Optional.of(parseUsername(username.get().toLowerCase())) : Optional.empty();
     }
 
     /**

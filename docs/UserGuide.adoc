@@ -402,7 +402,8 @@ Format: `remind INDEX`
 Searches for the contact's address in the map displayed once that contact is selected.
 Format : `select INDEX`
 // end::selectAddress[]
-=== Converts your balance in a desired currency: `convert` or `cv` [Since v1.4]`
+// tag::convert[]
+=== Converts your balance in a desired currency: `convert` or `cv` [Since v1.4]
 
 Converts an entries certain balance in a currency of your choice.
 Format: `convert` INDEX FROM_CURRENCY TO_CURRENCY` or `cv` INDEX FROM_CURRENCY TO_CURRENCY
@@ -410,7 +411,7 @@ Format: `convert` INDEX FROM_CURRENCY TO_CURRENCY` or `cv` INDEX FROM_CURRENCY T
 Example: `convert 2 USD JPY`
 Example: `convert 1 SGD USD`
 
-
+// end::convert[]
 === Delete an Existing Item : `itemdelete` or `id` [Since v1.5rc]
 
 Deleting an item from a specified person. +

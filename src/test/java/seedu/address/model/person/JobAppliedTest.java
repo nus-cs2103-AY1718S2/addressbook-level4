@@ -9,6 +9,9 @@ import seedu.address.testutil.Assert;
 
 //@@author kexiaowen
 public class JobAppliedTest {
+
+    private final JobApplied jobApplied = new JobApplied("Software Engineer");
+
     @Test
     public void constructor_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> new JobApplied(null));
@@ -35,5 +38,32 @@ public class JobAppliedTest {
         assertTrue(JobApplied.isValidJobApplied("1 software engineer 2 DevOps")); // alphanumeric characters
         assertTrue(JobApplied.isValidJobApplied("Software Engineer")); // with capital letters
         assertTrue(JobApplied.isValidJobApplied("Software Engineer & Web Developer")); // long names
+    }
+
+    @Test
+    public void equals_sameObject_returnsTrue() {
+        assertTrue(jobApplied.equals(jobApplied));
+    }
+
+    @Test
+    public void equals_sameValues_returnsTrue() {
+        JobApplied jobAppliedCopy = new JobApplied("Software Engineer");
+        assertTrue(jobApplied.equals(jobAppliedCopy));
+    }
+
+    @Test
+    public void equals_differentTypes_returnsFalse() {
+        assertFalse(jobApplied.equals(1));
+    }
+
+    @Test
+    public void equals_null_returnsFalse() {
+        assertFalse(jobApplied.equals(null));
+    }
+
+    @Test
+    public void equals_differentValues_returnsFalse() {
+        JobApplied differentJobApplied = new JobApplied("Front-end Developer");
+        assertFalse(jobApplied.equals(differentJobApplied));
     }
 }

@@ -136,6 +136,7 @@ public class AddCommandTest {
             return null;
         }
 
+        //@@author kexiaowen
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
@@ -155,6 +156,7 @@ public class AddCommandTest {
         public void sortPersonListDescOrder(SortCommand.SortField sortField) {
             fail("This method should not be called.");
         }
+        //@@author
     }
 
     /**

@@ -45,7 +45,7 @@ public class JobApplied {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Name // instanceof handles nulls
+                || (other instanceof JobApplied // instanceof handles nulls
                 && this.value.equals(((JobApplied) other).value)); // state check
     }
 

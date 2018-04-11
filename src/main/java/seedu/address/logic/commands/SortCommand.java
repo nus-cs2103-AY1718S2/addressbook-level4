@@ -75,9 +75,10 @@ public class SortCommand extends Command {
      */
     public static boolean isValidSortField(String sortField) {
         requireNonNull(sortField);
-        return sortField.equals(SORT_FIELD_GPA)
-                || sortField.equals(SORT_FIELD_NAME)
-                || sortField.equals(SORT_FIELD_RATING);
+        String lowercaseSortField = sortField.toLowerCase();
+        return lowercaseSortField.equals(SORT_FIELD_GPA)
+                || lowercaseSortField.equals(SORT_FIELD_NAME)
+                || lowercaseSortField.equals(SORT_FIELD_RATING);
     }
 
 

@@ -75,7 +75,7 @@ public class Person {
         return address;
     }
 
-    public SessionLogs getSessionLogs(){
+    public SessionLogs getSessionLogs() {
         return sessionLogs;
     }
 

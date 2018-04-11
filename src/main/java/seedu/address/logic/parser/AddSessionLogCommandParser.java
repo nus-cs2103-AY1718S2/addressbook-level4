@@ -16,7 +16,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new AddSessionLogCommand object
  */
-public class AddSessionLogCommandParser implements Parser<AddSessionLogCommand>{
+public class AddSessionLogCommandParser implements Parser<AddSessionLogCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteCommand
@@ -43,13 +43,13 @@ public class AddSessionLogCommandParser implements Parser<AddSessionLogCommand>{
     }
 
 
-        /**
-         * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-         * {@code ArgumentMultimap}.
-         */
-        private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-            return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-        }
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
 
 
 

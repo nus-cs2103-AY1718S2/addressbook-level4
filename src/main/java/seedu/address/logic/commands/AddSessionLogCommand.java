@@ -4,7 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -19,7 +21,6 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.SessionLogs;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -34,14 +35,15 @@ public class AddSessionLogCommand extends UndoableCommand {
             + "by the index number used in the last person listing. "
             + "Parameters: INDEX (must be a positive integer) "
             +  PREFIX_LOG + "LOG "
-            + "Example: " + COMMAND_WORD + " 1 "
+            + "Example: " + COMMAND_WORD
+            + " 1 "
             + PREFIX_LOG + "The patient report that he has been feeling down lately. She has a flat affect and "
             + "speaks in a quiet tone of voice...";
 
     public static final String MESSAGE_ADD_SESSION_LOG_SUCCESS = "Added new log to %1$s";
 
-    public static final String SESSION_LOG_DIVIDER = "\n\n======================================================" +
-            "===============";
+    public static final String SESSION_LOG_DIVIDER = "\n\n======================================================"
+            + "===============";
     public static final String SESSION_LOG_DATE_PREFIX = "\nSession log date added: ";
 
 
@@ -64,7 +66,7 @@ public class AddSessionLogCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand(){
+    public CommandResult executeUndoableCommand() {
         try {
             model.addLogToPerson(personToReplace, editedPerson);
         } catch (PersonNotFoundException pnfe) {
@@ -99,17 +101,22 @@ public class AddSessionLogCommand extends UndoableCommand {
         Address address = personToReplace.getAddress();
         Set<Tag> tags = personToReplace.getTags();
         SessionLogs sessionLogs = new SessionLogs(personToReplace.getSessionLogs().toString()
-                + createNewSessionLogs(sessionLogsToAdd));
+                + formatNewSessionLog(sessionLogsToAdd));
 
         return new Person(name, phone, email, address, tags, sessionLogs);
     }
 
-    private static String createNewSessionLogs(String sessionLogsToAdd){
-        Date d = new Date();
-        SimpleDateFormat form = new SimpleDateFormat("dd-mm-yyyy hh:mm");
-        String date = form.format(d);
+    /**
+     * Creates and returns a {@code String} with the formatted session Lo {@code personToEdit}
+     * @param sessionLogsToAdd
+     * @return
+     */
+    private static String formatNewSessionLog(String sessionLogsToAdd) {
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-        return SESSION_LOG_DIVIDER + SESSION_LOG_DATE_PREFIX + date + "\n\n" + sessionLogsToAdd;
+        return SESSION_LOG_DIVIDER + SESSION_LOG_DATE_PREFIX + dateFormat.format(date)+ "\n\n"
+                + sessionLogsToAdd + SESSION_LOG_DIVIDER;
     }
 
     @Override

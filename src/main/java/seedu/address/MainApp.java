@@ -82,8 +82,8 @@ public class MainApp extends Application {
 
     /**
      * Returns a {@code ModelManager} with the data from {@code storage}'s desk board and {@code userPrefs}. <br>
-     * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
-     * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
+     * The data from the sample desk board will be used instead if {@code storage}'s desk board is not found,
+     * or an empty desk board will be used instead if errors occur when reading {@code storage}'s desk board.
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyDeskBoard> deskBoardOptional;

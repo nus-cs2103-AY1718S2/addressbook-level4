@@ -11,7 +11,9 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CompleteCommand;
 import seedu.address.logic.commands.EventCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -72,8 +74,8 @@ public class DeskBoardParser {
         case ClearCommand.COMMAND_ALIAS:
             return new ClearCommand();
 
-        //case FindCommand.COMMAND_WORD:
-            //return new FindCommandParser().parse(arguments);
+        case FindCommand.COMMAND_WORD:
+            return new FindCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
             return new ListCommandParser().parse(arguments);
@@ -81,8 +83,8 @@ public class DeskBoardParser {
         case ListCommand.COMMAND_ALIAS:
             return new ListCommandParser().parse(arguments);
 
-        //case HistoryCommand.COMMAND_WORD:
-            //return new HistoryCommand();
+        case HistoryCommand.COMMAND_WORD:
+            return new HistoryCommand();
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

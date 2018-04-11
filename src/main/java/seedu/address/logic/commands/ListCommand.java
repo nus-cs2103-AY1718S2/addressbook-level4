@@ -6,6 +6,7 @@ import seedu.address.commons.events.ui.ShowActivityRequestEvent;
 import seedu.address.commons.events.ui.ShowEventOnlyRequestEvent;
 import seedu.address.commons.events.ui.ShowTaskOnlyRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 
 /**
   * Lists task or events, or both.
@@ -35,6 +36,7 @@ public class ListCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+        model.updateFilteredActivityList(Model.PREDICATE_SHOW_ALL_ACTIVITY);
 
         if (commandRequest == null)  {
             EventsCenter.getInstance().post(new ShowActivityRequestEvent());

@@ -91,7 +91,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         String htmlString = Resources.toString(personPage, Charsets.UTF_8);
 
-        File f = new File(System.getProperty("user.home") + "/StudentPage/" + person.getName() + ".html");
+        File f = new File(System.getProperty("user.home") + File.separator + "StudentPage"
+                + File.separator + person.getName() + ".html");
         if (!f.exists()) {
             f.createNewFile();
         }
@@ -127,9 +128,9 @@ public class ModelManager extends ComponentManager implements Model {
 
         int score = person.calculateL1R5();
         String scoreString = "-";
-        if (score == 0)
-        {
-            scoreString = "-"; }
+        if (score == 0) {
+            scoreString = "-";
+        }
 
         else { scoreString = Integer.toString(score); }
         htmlString = htmlString.replace("STUDENTS SCORE", scoreString);
@@ -176,7 +177,8 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void deletePage(Person person) {
 
-        File f = new File(System.getProperty("user.home") + "/StudentPage/" + person.getName() + ".html");
+        File f = new File(System.getProperty("user.home") + File.separator + "StudentPage"
+                + File.separator + person.getName() + ".html");
         boolean bool = f.delete();
     }
 

@@ -48,6 +48,9 @@ public interface Model {
     /** authenticates git using password */
     void loginGithub(GitDetails gitdetails) throws IOException, CommandException;
 
+    /** authenticates git using password */
+    void logoutGithub() throws CommandException;
+
     /** creates an issue on github */
     void createIssueOnGitHub(Issue issue) throws IOException, CommandException;
 

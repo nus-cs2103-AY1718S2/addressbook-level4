@@ -178,6 +178,13 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     }
 
     /**
+     * Logout of github
+     */
+    public void logoutGithub() throws CommandException {
+        issues.clearCredentials();
+    }
+
+    /**
      * Creates issue on github
      *
      * @throws IOException if theres any fault in the input values or the authentication fails due to wrong input

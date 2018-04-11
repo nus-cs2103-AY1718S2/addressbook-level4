@@ -102,6 +102,11 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredIssueList(PREDICATE_SHOW_ALL_ISSUES);
         indicateProgressCheckerChanged();
     }
+    @Override
+    public synchronized void logoutGithub() throws CommandException {
+        progressChecker.logoutGithub();
+        indicateProgressCheckerChanged();
+    }
     //@@author
 
     @Override

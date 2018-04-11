@@ -55,9 +55,9 @@ public class ChangeThemeCommandTest {
 
     @Test
     public void executeChangeThemeCommandSuccess() throws Exception {
-        ChangeThemeCommand changeThemeCommand = prepareCommand("dark");
+        ChangeThemeCommand changeThemeCommand = prepareCommand("bright");
 
-        String expectedMessage = String.format(ChangeThemeCommand.MESSAGE_CHANGE_THEME_SUCCESS, "dark");
+        String expectedMessage = String.format(ChangeThemeCommand.MESSAGE_CHANGE_THEME_SUCCESS, "bright");
 
         UserPrefs expectedUserPrefs = new UserPrefs();
         expectedUserPrefs.setGuiSettings(

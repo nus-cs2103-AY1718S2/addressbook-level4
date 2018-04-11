@@ -61,6 +61,13 @@ public class ToDoListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
+                this.getStyleClass().clear();
+                if (todo.isDone()) {
+                    this.getStyleClass().add("tododone");
+                } else {
+                    this.getStyleClass().add("todoundone");
+                }
+
                 setGraphic(todo.getRoot());
             }
         }

@@ -125,10 +125,6 @@ public class PrintFormatter {
             paragraph.add(recordNumberChunk);
             paragraph.add(Chunk.NEWLINE);
 
-            paragraph.add(new Chunk("Recorded by: ", smallBold));
-            paragraph.add(new Chunk(LoginManager.getUserName(), smallNormal));
-            paragraph.add(Chunk.NEWLINE);
-
             paragraph.add(new Chunk("Date recorded: ", smallBold));
             paragraph.add(new Chunk(record.getDate(), smallNormal));
             paragraph.add(Chunk.NEWLINE);

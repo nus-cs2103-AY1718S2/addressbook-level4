@@ -192,8 +192,9 @@ Displays a window with the birthdays today
 // end::birthdays[]
 
 === NUS Commands
+
 // tag::union[]
-==== Viewing common time slots in timetable: `union` (coming in v2.0)
+==== Viewing common time slots in timetable: `union` (since v1.5)
 
 Displays the common free time of multiple people in StardyTogether.(Minimum: 2) +
 Format: `union ODD/EVEN INDEX INDEX [INDEX]...`

@@ -10,7 +10,8 @@ about 10kLoC.
 
 The source code is based on the  https://github.com/se-edu/addressbook-level4[AddressBook-Level4] project created by SE-EDU initiative.
 
-*Code contributed*: [https://github.com/CS2103JAN2018-W11-B4/main/blob/master/collated/functional/AzuraAiR.md[Functional code]]
+*Code contributed*: [https://github.com/CS2103JAN2018-W11-B4/main/blob/master/collated/functional/AzuraAiR.md[Functional code]] +
+[https://github.com/CS2103JAN2018-W11-B4/main/blob/master/collated/functional/AzuraAiR-reused.md[Functional code-reused]]
 [https://github.com/CS2103JAN2018-W11-B4/main/blob/master/collated/test/AzuraAiR.md[Test code]] +
 
 == Feature Contributions

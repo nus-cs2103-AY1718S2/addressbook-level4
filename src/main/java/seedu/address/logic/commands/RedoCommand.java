@@ -14,7 +14,8 @@ public class RedoCommand extends Command implements ImmediatelyExecutableCommand
 
     public static final String COMMAND_WORD = "redo";
     public static final String COMMAND_ALIAS = "r";
-    public static final String MESSAGE_SUCCESS = "Redo success!";
+    public static final String MESSAGE_SUCCESS =
+            "Redo success! Press Ctrl + Z or type \"undo\" to reverse the last redo command.";
     public static final String MESSAGE_FAILURE = "No more commands to redo!";
 
     @Override

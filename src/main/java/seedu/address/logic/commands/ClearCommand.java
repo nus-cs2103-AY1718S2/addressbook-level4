@@ -11,7 +11,10 @@ public class ClearCommand extends UndoableCommand implements ImmediatelyExecutab
 
     public static final String COMMAND_WORD = "clear";
     public static final String COMMAND_ALIAS = "c";
-    public static final String MESSAGE_SUCCESS = "Address book has been cleared!";
+    public static final String MESSAGE_SUCCESS =
+            "Database cleared!"
+            + "\n\n"
+            + "Press Ctrl + Z or type \"undo\" to restore the cleared entries.";
 
     @Override
     public CommandResult executeUndoableCommand() {

@@ -43,12 +43,26 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
     public static final String COMMAND_WORD = "assign";
     public static final String COMMAND_ALIAS = "as";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": assigns customers to a runner "
-            + "by the index number used in the last person listing.\n"
-            + "Parameters: RUNNER-INDEX (positive integer) "
+    public static final String MESSAGE_USAGE =
+            COMMAND_WORD + " | assigns customers to a runner associated with the index number used in the last "
+            + "person listing."
+            + "\n\t"
+            + "Refer to the User Guide (press \"F1\") for detailed information about this command!"
+
+            + "\n\t"
+            + "Parameters:\t"
+            + COMMAND_WORD + " "
+            + "RUNNER-INDEX (positive integer) "
             + PREFIX_CUSTOMERS + " CUSTOMER-INDEX (positive integer) "
-            + "[ CUSTOMER-2-INDEX...]\n"
-            + "Example: " + COMMAND_WORD + " 5 " + PREFIX_CUSTOMERS + " 2 ";
+            + "[ CUSTOMER-2-INDEX...]"
+
+            + "\n\t"
+            + "Example:\t\t"
+            + COMMAND_WORD + " 5 " + PREFIX_CUSTOMERS + " 2"
+
+            + "\n\t"
+            + "Example:\t\t"
+            + COMMAND_WORD + " 5 " + PREFIX_CUSTOMERS + " 1 2 3";
 
     public static final String MESSAGE_ASSIGN_PERSON_SUCCESS = "Successfully assigned!\nUpdated Runner Info:\n%1$s";
     // message

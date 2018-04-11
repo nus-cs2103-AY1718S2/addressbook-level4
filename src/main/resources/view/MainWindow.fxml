@@ -51,7 +51,7 @@
           </Menu>
           <!--@@author -->
           <Menu mnemonicParsing="false" text="Help">
-            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="User Guide" />
           </Menu>
         </MenuBar>
 
@@ -62,7 +62,7 @@
         </StackPane>
 
         <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                   minHeight="100" prefHeight="100" maxHeight="100">
+                   minHeight="156" prefHeight="156" maxHeight="156">
           <padding>
             <Insets top="5" right="10" bottom="5" left="10" />
           </padding>

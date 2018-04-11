@@ -82,6 +82,7 @@ public class XmlSerializableProgressChecker {
         }
 
         XmlSerializableProgressChecker otherAb = (XmlSerializableProgressChecker) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags) && issues.equals(otherAb.issues) && exercises.equals(otherAb.issues);
+        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags)
+                && issues.equals(otherAb.issues) && exercises.equals(otherAb.issues);
     }
 }

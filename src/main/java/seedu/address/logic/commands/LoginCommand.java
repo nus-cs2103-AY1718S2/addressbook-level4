@@ -30,12 +30,26 @@ public class LoginCommand extends Command {
         Stage stage = new Stage();
         loginWindow.start(stage);
 
-        return new CommandResult(MESSAGE_LOGIN_SUCCESS + LoginManager.getUserName());
+        return new CommandResult(processResultString());
     }
 
     @Override
     public boolean equals (Object other) {
         return other == this // short circuit if same object
                 || (other instanceof LoginCommand); // instanceof handles nulls
+    }
+
+    /**
+     * Creates output String for user feedback
+     */
+    public String processResultString() {
+        String userRole = null;
+        if (LoginManager.getUserState() == LoginManager.DOCTOR_LOGIN) {
+            userRole = "Doctor";
+        } else if (LoginManager.getUserState() == LoginManager.MEDICAL_STAFF_LOGIN) {
+            userRole = "Staff";
+        }
+
+        return MESSAGE_LOGIN_SUCCESS + LoginManager.getUserName() + " (" + userRole + ")";
     }
 }
